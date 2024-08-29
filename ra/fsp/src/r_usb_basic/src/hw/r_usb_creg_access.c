@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -3818,7 +3804,7 @@ void hw_usb_clear_idpsinke (usb_utr_t * ptr)
     {
   #if defined(USB_HIGH_SPEED_MODULE)
         ptr->ipp1->BCCTRL = (uint16_t) (ptr->ipp1->BCCTRL & (~USB_IDPSINKE));
-  #endif                               /* defined(BSP_MCU_GROUP_RA6M3) || defined(BSP_MCU_GROUP_RA6M5) */
+  #endif                               /* vdefined (USB_HIGH_SPEED_MODULE) */
     }
 }
 
@@ -3940,6 +3926,73 @@ void hw_usb_clear_uckselc (void)
  ******************************************************************************/
 
 #endif                                 /* defined(USB_SUPPORT_HOCO_MODULE) */
+
+#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+
+/******************************************************************************
+ * Function Name   : hw_usb_typec_module_init
+ * Description     : Initialization of USB TypeC module
+ * Arguments       : none
+ * @retval FSP_SUCCESS           Success.
+ * @retval FSP_ERR_USB_BUSY      USB is in use.
+ ******************************************************************************/
+fsp_err_t hw_usb_typec_module_init (void)
+{
+ #if defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+    FSP_ERROR_RETURN(0 != R_MSTP->MSTPCRB_b.MSTPB14, FSP_ERR_USB_BUSY)
+
+    /* Enable module start for TypeC module */
+    R_BSP_MODULE_START(FSP_IP_USBCC, 0);
+
+    /* Type-C Reset Processing */
+    R_USBCC->TCC |= USB_TYPEC_TCC_RESET;
+    while (0 != (R_USBCC->TCC & USB_TYPEC_TCC_RESET))
+    {
+        ;
+    }
+
+    /* CC1 and CC2 pin setting */
+
+    /* CCC-PHY not Power Down  */
+    R_USBCC->CCC = (R_USBCC->CCC & (~USB_TYPEC_CCC_PDOWN));
+
+    /* Change to Unattached_SNK */
+    R_USBCC->MEC |= USB_TYPEC_MEC_GUS;
+ #endif                                /* defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE) */
+
+    return FSP_SUCCESS;
+}
+
+/******************************************************************************
+ * End of function hw_usb_typec_module_init
+ ******************************************************************************/
+
+/******************************************************************************
+ * Function Name   : hw_usb_typec_module_uninit
+ * Description     : Uninitialization of USB TypeC module
+ * Arguments       : none
+ * Return value    : none
+ ******************************************************************************/
+void hw_usb_typec_module_uninit (void)
+{
+ #if defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
+
+    /* Change to Unattached_SNK */
+    R_USBCC->MEC |= USB_TYPEC_MEC_GD;
+
+    /* CCC-PHY Power Down  */
+    R_USBCC->CCC |= USB_TYPEC_CCC_PDOWN;
+
+    /* Disable module start for TypeC module */
+    R_BSP_MODULE_STOP(FSP_IP_USBCC, 0);
+ #endif                                /* defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE) */
+}
+
+/******************************************************************************
+ * End of function hw_usb_typec_module_uninit
+ ******************************************************************************/
+
+#endif                                 /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 
 /******************************************************************************
  * End of file

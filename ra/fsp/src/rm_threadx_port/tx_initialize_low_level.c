@@ -1,4 +1,5 @@
 /**************************************************************************/
+
 /*                                                                        */
 /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
 /*                                                                        */
@@ -8,7 +9,6 @@
 /*       and in the root directory of this software.                      */
 /*                                                                        */
 /**************************************************************************/
-
 
 /**************************************************************************/
 /**************************************************************************/
@@ -105,7 +105,7 @@ VOID _tx_initialize_low_level (VOID)
     /* Set system stack pointer from vector value.  */
     _tx_thread_system_stack_ptr = TX_VECTOR_TABLE[0];
 
-#if defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__)
+#if defined(RENESAS_CORTEX_M4) || defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
 
     /* Enable the cycle count register.  */
     DWT->CTRL |= (uint32_t) DWT_CTRL_CYCCNTENA_Msk;

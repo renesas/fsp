@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -124,18 +110,19 @@ static uint32_t gp_prv_agt_periods[BSP_FEATURE_AGT_AGT_CHANNEL_COUNT + BSP_FEATU
 /** AGT Implementation of General Timer Driver  */
 const timer_api_t g_timer_on_agt =
 {
-    .open         = R_AGT_Open,
-    .stop         = R_AGT_Stop,
-    .start        = R_AGT_Start,
-    .reset        = R_AGT_Reset,
-    .enable       = R_AGT_Enable,
-    .disable      = R_AGT_Disable,
-    .periodSet    = R_AGT_PeriodSet,
-    .dutyCycleSet = R_AGT_DutyCycleSet,
-    .infoGet      = R_AGT_InfoGet,
-    .statusGet    = R_AGT_StatusGet,
-    .callbackSet  = R_AGT_CallbackSet,
-    .close        = R_AGT_Close,
+    .open            = R_AGT_Open,
+    .stop            = R_AGT_Stop,
+    .start           = R_AGT_Start,
+    .reset           = R_AGT_Reset,
+    .enable          = R_AGT_Enable,
+    .disable         = R_AGT_Disable,
+    .periodSet       = R_AGT_PeriodSet,
+    .dutyCycleSet    = R_AGT_DutyCycleSet,
+    .compareMatchSet = R_AGT_CompareMatchSet,
+    .infoGet         = R_AGT_InfoGet,
+    .statusGet       = R_AGT_StatusGet,
+    .callbackSet     = R_AGT_CallbackSet,
+    .close           = R_AGT_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -491,6 +478,24 @@ fsp_err_t R_AGT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
 }
 
 /*******************************************************************************************************************//**
+ * Placeholder for unsupported compareMatch function. Implements @ref timer_api_t::compareMatchSet.
+ *
+ * @retval FSP_ERR_UNSUPPORTED      AGT compare match is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_AGT_CompareMatchSet (timer_ctrl_t * const        p_ctrl,
+                                 uint32_t const              compare_match_value,
+                                 timer_compare_match_t const match_channel)
+{
+    /* This function isn't supported. It is defined only to implement a required function of timer_api_t.
+     * Mark the input parameter as unused since this function isn't supported. */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(compare_match_value);
+    FSP_PARAMETER_NOT_USED(match_channel);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
  * Gets timer information and store it in provided pointer p_info. Implements @ref timer_api_t::infoGet.
  *
  * Example:
@@ -722,17 +727,6 @@ static fsp_err_t r_agt_open_param_checking (agt_instance_ctrl_t * p_instance_ctr
     /* AGT_CLOCK_AGT_UNDERFLOW is not allowed on even AGT channels. */
     agt_extended_cfg_t const * p_extend = (agt_extended_cfg_t const *) p_cfg->p_extend;
     FSP_ASSERT((AGT_CLOCK_AGT_UNDERFLOW != p_extend->count_source) || (p_cfg->channel & 1U));
-
-    /* Devices with RTCCR.TCEN support P402/P403/P404 as count sources. */
- #if !BSP_FEATURE_RTC_HAS_TCEN
-    if (AGT_PRV_IS_AGTW(p_instance_ctrl))
-    {
-        /* Return error for MCUs that do not support P402, P403 and P404 as count sources*/
-        FSP_ASSERT(AGT_CLOCK_P402 != p_extend->count_source);
-        FSP_ASSERT(AGT_CLOCK_P403 != p_extend->count_source);
-        FSP_ASSERT(AGT_CLOCK_P404 != p_extend->count_source);
-    }
- #endif
 
     /* Validate divider. */
     if (AGT_CLOCK_PCLKB == p_extend->count_source)

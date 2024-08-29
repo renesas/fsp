@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -31,18 +17,19 @@
 
 #define LPM_LPSCR_SYSTEM_ACTIVE                  (0x0U)
 #define LPM_LPSCR_SOFTWARE_STANDBY_MODE          (0x4U)
+#define LPM_LPSCR_SOFTWARE_STANDBY_MODE2         (0x5U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE1    (0x8U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE2    (0x9U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE3    (0xAU)
 
 /* Clock control register addresses */
-#define LPM_CLOCK_HOCOCR                         ((uint8_t *) 0x4001E036U)
-#define LPM_CLOCK_MOCOCR                         ((uint8_t *) 0x4001E038U)
-#define LPM_CLOCK_LOCOCR                         ((uint8_t *) 0x4001E490U)
-#define LPM_CLOCK_MOSCCR                         ((uint8_t *) 0x4001E032U)
-#define LPM_CLOCK_SOSCCR                         ((uint8_t *) 0x4001E480U)
-#define LPM_CLOCK_PLLCR                          ((uint8_t *) 0x4001E02AU)
-#define LPM_CLOCK_PLL2CR                         ((uint8_t *) 0x4001E04AU)
+#define LPM_CLOCK_HOCOCR                         (&R_SYSTEM->HOCOCR)
+#define LPM_CLOCK_MOCOCR                         (&R_SYSTEM->MOCOCR)
+#define LPM_CLOCK_LOCOCR                         (&R_SYSTEM->LOCOCR)
+#define LPM_CLOCK_MOSCCR                         (&R_SYSTEM->MOSCCR)
+#define LPM_CLOCK_SOSCCR                         (&R_SYSTEM->SOSCCR)
+#define LPM_CLOCK_PLLCR                          (&R_SYSTEM->PLLCR)
+#define LPM_CLOCK_PLL2CR                         (&R_SYSTEM->PLL2CR)
 #define LPM_CLOCK_HOCO                           0 // The high speed on chip oscillator.
 #define LPM_CLOCK_MOCO                           1 // The middle speed on chip oscillator.
 #define LPM_CLOCK_LOCO                           2 // The low speed on chip oscillator.
@@ -61,6 +48,7 @@
 
 #define LPM_SNZREQCR1_OFFSET                     (32ULL)
 #define LPM_WUPEN1_OFFSET                        (32ULL)
+#define LPM_SBYEDCR1_OFFSET                      (32ULL)
 
 #define LPM_OPEN                                 (0x524c504d)
 
@@ -72,7 +60,7 @@
  * Private global variables
  **********************************************************************************************************************/
 
-#if BSP_FEATURE_LPM_HAS_SNOOZE
+#ifdef R_SYSTEM_SNZCR_SNZE_Msk
 
 /* This array stores the address of the register containing the stop bit for each clock. All of these registers are
  * 8-bit registers and only bit 0 is valid.  All other bits are read as 0 and should be written to 0.  Bit 0 of each
@@ -116,7 +104,7 @@ const lpm_api_t g_lpm_on_lpm =
 static fsp_err_t r_lpm_configure(lpm_cfg_t const * const p_cfg);
 static fsp_err_t r_lpm_low_power_enter(lpm_instance_ctrl_t * const p_instance_ctrl);
 
-#if BSP_FEATURE_LPM_HAS_SNOOZE
+#ifdef R_SYSTEM_SNZCR_SNZE_Msk
 static fsp_err_t r_lpm_check_clocks(uint32_t clock_source);
 
 #endif
@@ -254,6 +242,9 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
     }
  #endif
 #endif
+#if BSP_FEATURE_LPM_STANDBY_MODE_CLEAR_DTCST == 1
+    uint8_t saved_dtcst = 0;
+#endif
 
     /* Wait for ongoing operating mode transition (OPCMTSF, SOPCMTSF) */
     r_lpm_wait_for_operating_mode_flags();
@@ -273,6 +264,18 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
  #endif
 #endif
 
+#if BSP_FEATURE_LPM_STANDBY_MODE_CLEAR_DTCST == 1
+    if (((LPM_MODE_STANDBY == p_ctrl->p_cfg->low_power_mode) ||
+         ((LPM_MODE_STANDBY_SNOOZE == p_ctrl->p_cfg->low_power_mode) && !p_ctrl->p_cfg->dtc_state_in_snooze)) &&
+        (0 == R_MSTP->MSTPCRA_b.MSTPA22))
+    {
+        /* Store the previous state of DTCST. */
+        saved_dtcst = R_DTC->DTCST;
+
+        /* If DTC is not used for requesting snooze mode, it should be stopped before entering standby or snooze mode. */
+        R_DTC->DTCST = 0U;
+    }
+#endif
     fsp_err_t err = r_lpm_low_power_enter(p_ctrl);
 
 #if LPM_CFG_STANDBY_LIMIT
@@ -289,6 +292,16 @@ fsp_err_t R_LPM_LowPowerModeEnter (lpm_ctrl_t * const p_api_ctrl)
     }
  #endif
 #endif
+#if BSP_FEATURE_LPM_STANDBY_MODE_CLEAR_DTCST == 1
+    if (((LPM_MODE_STANDBY == p_ctrl->p_cfg->low_power_mode) ||
+         ((LPM_MODE_STANDBY_SNOOZE == p_ctrl->p_cfg->low_power_mode) && !p_ctrl->p_cfg->dtc_state_in_snooze)) &&
+        (0 == R_MSTP->MSTPCRA_b.MSTPA22))
+    {
+        /* If DTC was stopped prior to entering standby or snooze mode, then start it again. */
+        R_DTC->DTCST = saved_dtcst;
+    }
+#endif
+
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
 
     return err;
@@ -386,10 +399,14 @@ fsp_err_t r_lpm_mcu_specific_low_power_check (lpm_cfg_t const * const p_cfg)
         if (LPM_MODE_STANDBY_SNOOZE == p_cfg->low_power_mode)
         {
  #if BSP_FEATURE_LPM_HAS_SNOOZE
+  #if BSP_FEATURE_LPM_SNZREQCR_MASK > 0
             FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->snooze_request_source & (~BSP_FEATURE_LPM_SNZREQCR_MASK)),
                              FSP_ERR_INVALID_ARGUMENT);
+  #endif
+  #if BSP_FEATURE_LPM_SNZEDCR_MASK > 0
             FSP_ERROR_RETURN(0U == ((uint32_t) p_cfg->snooze_end_sources & (~BSP_FEATURE_LPM_SNZEDCR_MASK)),
                              FSP_ERR_INVALID_ARGUMENT);
+  #endif
  #endif
         }
         else if (LPM_MODE_DEEP == p_cfg->low_power_mode)
@@ -419,9 +436,21 @@ fsp_err_t r_lpm_mcu_specific_low_power_check (lpm_cfg_t const * const p_cfg)
             /* Do nothing. */
         }
 
+ #if BSP_FEATURE_ICU_WUPEN_MASK > 0
         FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->standby_wake_sources & ~BSP_FEATURE_ICU_WUPEN_MASK),
                          FSP_ERR_INVALID_MODE);
+ #endif
+ #if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
+        FSP_ERROR_RETURN(0U == ((uint64_t) p_cfg->standby_wake_sources & ~BSP_FEATURE_ICU_SBYEDCR_MASK),
+                         FSP_ERR_INVALID_MODE);
+ #endif
     }
+
+ #if BSP_FEATURE_LPM_HAS_HOCO_STARTUP_SPEED_MODE
+    FSP_ERROR_RETURN(((R_SYSTEM->FOCOSCR_b.CKSEL == 0) && (R_SYSTEM->FMAINSCR_b.CKSEL == 0) &&
+                      (R_SYSTEM->ICLKSCR_b.CKSEL == 0) && (R_SYSTEM->HOCODIV == 0)),
+                     FSP_ERR_INVALID_MODE);
+ #endif
 
     return FSP_SUCCESS;
 }
@@ -461,7 +490,11 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
     fsp_err_t err = r_lpm_mcu_specific_low_power_check(p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
-#if BSP_FEATURE_LPM_HAS_SNOOZE
+#if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
+    uint32_t sbyedcr0 = 0;
+    uint32_t sbyedcr1 = 0;
+#endif
+#ifdef R_SYSTEM_SNZCR_SNZE_Msk
     uint32_t snzcr = 0;
 #endif
     uint32_t sbycr = 0;
@@ -517,6 +550,8 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
         /* Configure Snooze registers */
         if (LPM_MODE_STANDBY_SNOOZE == p_cfg->low_power_mode)
         {
+ #if BSP_FEATURE_LPM_SNZREQCR_MASK > 0
+
             /* Configure RXD0 falling edge detect */
             if (LPM_SNOOZE_REQUEST_RXD0_FALLING == p_cfg->snooze_request_source)
             {
@@ -525,20 +560,38 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
 
             /* Set the request condition that can trigger entry in to snooze mode */
             R_SYSTEM->SNZREQCR = (uint32_t) p_cfg->snooze_request_source & UINT32_MAX;
-
+ #endif
  #if BSP_FEATURE_LPM_HAS_SNZREQCR1 == 1
             R_SYSTEM->SNZREQCR1 = (uint32_t) (p_cfg->snooze_request_source >> LPM_SNZREQCR1_OFFSET) & UINT32_MAX;
  #endif
+ #if BSP_FEATURE_LPM_HAS_HOCO_STARTUP_SPEED_MODE
+
+            /* Set the startup speed of the HOCO when entering snooze mode. */
+            sbycr |= (uint32_t) (p_cfg->lpm_hoco_startup_speed << R_SYSTEM_SBYCR_FWKUP_Pos);
+ #endif
+ #if BSP_FEATURE_LPM_HAS_STANDBY_SOSC_SELECT
+
+            /* Set the SOSC state in snooze mode. */
+            sbycr |= (uint32_t) (p_cfg->lpm_standby_sosc << R_SYSTEM_SBYCR_RTCLPC_Pos);
+ #endif
+ #ifdef R_SYSTEM_SNZCR_SNZE_Msk
 
             /* Enable/disable DTC operation */
             snzcr |= (uint32_t) (p_cfg->dtc_state_in_snooze << R_SYSTEM_SNZCR_SNZDTCEN_Pos);
 
             /* Set the source that can cause an exit from snooze to normal mode */
             R_ICU->SELSR0_b.SELS = R_ICU_SELSR0_SELS_Msk & p_cfg->snooze_cancel_sources;
+ #endif
+ #if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
+
+            /* Set the source that can cause an exit from snooze to normal mode */
+            sbyedcr0 |= (uint32_t) p_cfg->snooze_cancel_sources & UINT32_MAX;;
+ #endif
+ #if BSP_FEATURE_LPM_SNZREQCR_MASK > 0
 
             /* Set all sources that can cause an exit from snooze mode to software standby. */
             R_SYSTEM->SNZEDCR = (uint8_t) p_cfg->snooze_end_sources & UINT8_MAX;
-
+ #endif
  #if BSP_FEATURE_LPM_HAS_SNZEDCR1 == 1
             R_SYSTEM->SNZEDCR1 = (uint8_t) (p_cfg->snooze_end_sources >> 8U) & UINT8_MAX;
  #endif
@@ -564,6 +617,15 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
 
             /* Configure Standby RAM retention in software standby and deep software standby modes. */
             dpsbycr |= (uint8_t) (p_cfg->ram_retention_cfg.standby_ram_retention << R_SYSTEM_DPSBYCR_SRKEEP_Pos);
+#endif
+        }
+
+        if ((LPM_MODE_SLEEP == p_cfg->low_power_mode) || (LPM_MODE_STANDBY_SNOOZE == p_cfg->low_power_mode))
+        {
+#if BSP_FEATURE_LPM_HAS_FLASH_MODE_SELECT
+
+            /* Flash mode in sleep mode or in snooze mode. */
+            sbycr |= (uint32_t) (p_cfg->lpm_flash_mode_select << R_SYSTEM_SBYCR_FLSTP_Pos);
 #endif
         }
 
@@ -607,11 +669,25 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
                 R_SYSTEM->HOCOLDOCR_b.SKEEP = (uint8_t) (p_cfg->ldo_standby_cfg.hoco_ldo & 0x01);
             }
 #endif
+#if BSP_FEATURE_LPM_HAS_STANDBY_SOSC_SELECT
+
+            /* Set the SOSC state in standby Mode. */
+            sbycr |= (uint32_t) (p_cfg->lpm_standby_sosc << R_SYSTEM_SBYCR_RTCLPC_Pos);
+#endif
         }
 
+#if BSP_FEATURE_ICU_WUPEN_MASK > 0
         R_ICU->WUPEN = (uint32_t) p_cfg->standby_wake_sources & UINT32_MAX;
-#if BSP_FEATURE_ICU_HAS_WUPEN1 == 1
+#endif
+#if BSP_FEATURE_ICU_HAS_WUPEN1
         R_ICU->WUPEN1 = (uint32_t) (p_cfg->standby_wake_sources >> LPM_WUPEN1_OFFSET) & UINT32_MAX;
+#endif
+#if BSP_FEATURE_ICU_HAS_WUPEN2
+        R_ICU->WUPEN2 = (uint32_t) p_cfg->standby_wake_sources_2 & UINT32_MAX;
+#endif
+#if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
+        sbyedcr0 |= (uint32_t) p_cfg->standby_wake_sources & UINT32_MAX;
+        sbyedcr1 |= (uint32_t) (p_cfg->standby_wake_sources >> LPM_SBYEDCR1_OFFSET) & UINT32_MAX;
 #endif
     }
     else
@@ -619,11 +695,19 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
         /* Set SBYCR to Sleep mode. */
 #if BSP_FEATURE_LPM_SBYCR_WRITE1_B14
         sbycr = 1U << R_SYSTEM_SBYCR_OPE_Pos;
+#elif BSP_FEATURE_LPM_HAS_FLASH_MODE_SELECT
+
+        /* Flash mode in sleep mode or in snooze mode. */
+        sbycr |= (uint32_t) (p_cfg->lpm_flash_mode_select << R_SYSTEM_SBYCR_FLSTP_Pos);
 #else
         sbycr = 0;
 #endif
     }
 
+#if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
+    R_ICU->SBYEDCR0 = sbyedcr0;
+    R_ICU->SBYEDCR1 = sbyedcr1;
+#endif
 #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
  #if LPM_CFG_STANDBY_LIMIT
     R_SYSTEM->SBYCR = (uint16_t) (sbycr & ~(1U << R_SYSTEM_SBYCR_SSBY_Pos));
@@ -642,7 +726,7 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
  #endif
 #endif
 
-#if BSP_FEATURE_LPM_HAS_SNOOZE
+#ifdef R_SYSTEM_SNZCR_SNZE_Msk
     R_SYSTEM->SNZCR = (uint8_t) snzcr;
 #endif
 
@@ -655,7 +739,7 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
     return FSP_SUCCESS;
 }
 
-#if BSP_FEATURE_LPM_HAS_SNOOZE
+#ifdef R_SYSTEM_SNZCR_SNZE_Msk
 
 /*******************************************************************************************************************//**
  * Check the clock settings
@@ -724,6 +808,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     uint32_t stopped_modules = 0;
  #endif
 #endif
+
 #if BSP_PRV_POWER_USE_DCDC
     bsp_power_mode_t power_mode = BSP_POWER_MODE_LDO;
 #endif
@@ -741,7 +826,6 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         p_ostde = (uint8_t volatile *) ((uint32_t) p_ostde | BSP_FEATURE_TZ_NS_OFFSET);
     }
 #endif
-
 #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
     if (1U == R_SYSTEM->SBYCR_b.SSBY)
 #else
@@ -759,20 +843,19 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 #if BSP_FEATURE_LPM_HAS_SNOOZE
 
         /* Get system clock */
+ #if BSP_FEATURE_CGC_STARTUP_SCKSCR
         uint32_t clock_source = R_SYSTEM->SCKSCR;
+ #endif
 #endif
 
 #if !BSP_FEATURE_LPM_HAS_DEEP_STANDBY
- #if BSP_FEATURE_LPM_HAS_SNOOZE
+ #ifdef R_SYSTEM_SNZCR_SNZE_Msk
         if (1U == R_SYSTEM->SNZCR_b.RXDREQEN)
         {
             /* Verify clock settings. */
             FSP_ERROR_RETURN(FSP_SUCCESS == r_lpm_check_clocks(clock_source), FSP_ERR_INVALID_MODE);
         }
  #endif
-
-        /* Enable writing to CGC register. */
-        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
 #else
 
         /* Save the OPCCR and SOPCCR registers. When transitioning from Software Standby mode to Normal or Snooze mode
@@ -893,6 +976,8 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 #if BSP_FEATURE_LPM_HAS_SNOOZE
     if (LPM_MODE_STANDBY_SNOOZE == p_instance_ctrl->p_cfg->low_power_mode)
     {
+ #ifdef R_SYSTEM_SNZCR_SNZE_Msk
+
         /* Enable Snooze mode (SNZCR.SNZE = 1) immediately before entering to Software Standby mode.
          * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
         R_SYSTEM->SNZCR_b.SNZE = 1;
@@ -900,6 +985,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         /* Dummy read required.
          * infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dai0321a/BIHICBGB.html */
         R_SYSTEM->SNZCR;
+ #endif
     }
 #endif
 
@@ -909,6 +995,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         /* Set the SLEEPDEEP bit. */
         SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
     }
+#endif
+
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Disable RTC Register Read/Write Clock to reduce power consumption. */
+    bool rtc_register_clock_state = bsp_prv_rtc_register_clock_set(false);
 #endif
 
 #if BSP_CFG_SLEEP_MODE_DELAY_ENABLE
@@ -925,6 +1017,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     bsp_prv_clock_prepare_post_sleep(clock_slowed);
 #endif
 
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+
+    /* Enable the RTC Register Read/Write clock if it was disabled prior to entering LPM. */
+    bsp_prv_rtc_register_clock_set(rtc_register_clock_state);
+#endif
+
 #if BSP_FEATURE_LPM_HAS_DEEP_SLEEP
     if (LPM_MODE_SLEEP != p_instance_ctrl->p_cfg->low_power_mode)
     {
@@ -933,13 +1031,12 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
     }
 #endif
 
-#if BSP_FEATURE_LPM_HAS_SNOOZE
+#ifdef R_SYSTEM_SNZCR_SNZE_Msk
 
     /* Disable Snooze mode (SNZCR.SNZE = 0) immediately after canceling Snooze mode.
      * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
     R_SYSTEM->SNZCR_b.SNZE = 0;
 #endif
-
 #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY || (BSP_PRV_POWER_USE_DCDC)
  #if BSP_FEATURE_LPM_HAS_SBYCR_SSBY
     if (1U == R_SYSTEM->SBYCR_b.SSBY)
@@ -954,6 +1051,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 
         /* Restore system registers to the values prior to entering standby. */
         *p_opccr = saved_opccr & R_SYSTEM_OPCCR_OPCM_Msk;
+
   #if BSP_FEATURE_CGC_HAS_SOPCCR
         R_SYSTEM->SOPCCR = saved_sopccr & R_SYSTEM_SOPCCR_SOPCM_Msk;
   #endif
@@ -988,10 +1086,13 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
  **********************************************************************************************************************/
 void r_lpm_wait_for_operating_mode_flags (void)
 {
+#if BSP_FEATURE_CGC_HAS_OPCCR
+
     /* Wait for transition to complete. */
     FSP_HARDWARE_REGISTER_WAIT((FSP_STYPE3_REG8_READ(R_SYSTEM->OPCCR,
                                                      !R_SYSTEM->LPMSAR_b.NONSEC0) & R_SYSTEM_OPCCR_OPCMTSF_Msk),
                                0U);
+#endif
 
 #if BSP_FEATURE_CGC_HAS_SOPCCR
 

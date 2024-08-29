@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup ETHER
@@ -91,11 +77,50 @@ typedef struct st_ether_instance_descriptor
     struct st_ether_instance_descriptor * p_next;
 } ether_instance_descriptor_t;
 
+/** Event mask for EESR register */
+typedef enum e_ether_eesr_event_mask
+{
+    ETHER_EESR_EVENT_MASK_CERF  = (1U << 0U),  ///< CERF event
+    ETHER_EESR_EVENT_MASK_PRE   = (1U << 1U),  ///< PRE event
+    ETHER_EESR_EVENT_MASK_RTSF  = (1U << 2U),  ///< RTSF event
+    ETHER_EESR_EVENT_MASK_RTLF  = (1U << 3U),  ///< RTLF event
+    ETHER_EESR_EVENT_MASK_RRF   = (1U << 4U),  ///< PRF event
+    ETHER_EESR_EVENT_MASK_RMAF  = (1U << 7U),  ///< RMAF event
+    ETHER_EESR_EVENT_MASK_TRO   = (1U << 8U),  ///< TRO event
+    ETHER_EESR_EVENT_MASK_CD    = (1U << 9U),  ///< CD event
+    ETHER_EESR_EVENT_MASK_DLC   = (1U << 10U), ///< DLC event
+    ETHER_EESR_EVENT_MASK_CND   = (1U << 11U), ///< CND event
+    ETHER_EESR_EVENT_MASK_RFOF  = (1U << 16U), ///< RFOF event
+    ETHER_EESR_EVENT_MASK_RDE   = (1U << 17U), ///< RDE event
+    ETHER_EESR_EVENT_MASK_FR    = (1U << 18U), ///< FR event
+    ETHER_EESR_EVENT_MASK_TFUF  = (1U << 19U), ///< TFUF event
+    ETHER_EESR_EVENT_MASK_TDE   = (1U << 20U), ///< TDE event
+    ETHER_EESR_EVENT_MASK_TC    = (1U << 21U), ///< TC event
+    ETHER_EESR_EVENT_MASK_ECI   = (1U << 22U), ///< ECI event
+    ETHER_EESR_EVENT_MASK_ADE   = (1U << 23U), ///< ADE event
+    ETHER_EESR_EVENT_MASK_RFCOF = (1U << 24U), ///< RFCOF event
+    ETHER_EESR_EVENT_MASK_RABT  = (1U << 25U), ///< RABT event
+    ETHER_EESR_EVENT_MASK_TABT  = (1U << 26U), ///< TABT event
+    ETHER_EESR_EVENT_MASK_TWB   = (1U << 30U), ///< TWB event
+} ether_eesr_event_mask_t;
+
+/** Event mask for ECSR register */
+typedef enum e_ether_ecsr_event_mask
+{
+    ETHER_ECSR_EVENT_MASK_ICD   = (1U << 0U), ///< ICD event
+    ETHER_ECSR_EVENT_MASK_MPD   = (1U << 1U), ///< MPD event
+    ETHER_ECSR_EVENT_MASK_LCHNG = (1U << 2U), ///< LCHNG event
+    ETHER_ECSR_EVENT_MASK_PSRTO = (1U << 4U), ///< PSRTO event
+    ETHER_ECSR_EVENT_MASK_BFR   = (1U << 5U), ///< BFR event
+} ether_ecsr_event_mask_t;
+
 /** ETHER extension configures the buffer descriptor for ETHER. */
 typedef struct st_ether_extended_cfg
 {
     ether_instance_descriptor_t * p_rx_descriptors; ///< Receive descriptor buffer pool
     ether_instance_descriptor_t * p_tx_descriptors; ///< Transmit descriptor buffer pool
+    uint32_t eesr_event_filter;                     ///< Filter for EESR related event
+    uint8_t  ecsr_event_filter;                     ///< Filter for ECSR related event
 } ether_extended_cfg_t;
 
 /** ETHER control block. DO NOT INITIALIZE.  Initialization occurs when @ref ether_api_t::open is called. */

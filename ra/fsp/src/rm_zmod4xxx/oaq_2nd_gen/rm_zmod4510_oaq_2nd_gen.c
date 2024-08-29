@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /**********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -88,6 +74,9 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_rel_iaq_data_calculate(rm_zmod4xxx_ctrl
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_pbaq_data_calculate(rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
                                                              rm_zmod4xxx_raw_data_t * const  p_raw_data,
                                                              rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data);
+static fsp_err_t rm_zmod4510_oaq_2nd_gen_no2_o3_data_calculate(rm_zmod4xxx_ctrl_t * const        p_api_ctrl,
+                                                               rm_zmod4xxx_raw_data_t * const    p_raw_data,
+                                                               rm_zmod4xxx_no2_o3_data_t * const p_zmod4xxx_data);
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_device_error_check(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 
@@ -111,6 +100,7 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4510_oaq_2nd_gen =
     .raqDataCalculate          = rm_zmod4510_oaq_2nd_gen_raq_data_calculate,
     .relIaqDataCalculate       = rm_zmod4510_oaq_2nd_gen_rel_iaq_data_calculate,
     .pbaqDataCalculate         = rm_zmod4510_oaq_2nd_gen_pbaq_data_calculate,
+    .no2O3DataCalculate        = rm_zmod4510_oaq_2nd_gen_no2_o3_data_calculate,
     .temperatureAndHumiditySet = rm_zmod4510_oaq_2nd_gen_temperature_and_humidity_set,
     .deviceErrorCheck          = rm_zmod4510_oaq_2nd_gen_device_error_check,
 };
@@ -156,6 +146,7 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_open (rm_zmod4xxx_ctrl_t * const      p
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
  * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
+ * @retval FSP_ERR_SENSOR_INVALID_DATA            Sensor probably damaged. Algorithm results may be incorrect.
  **********************************************************************************************************************/
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_data_calculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                                          rm_zmod4xxx_raw_data_t * const     p_raw_data,
@@ -183,10 +174,12 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_data_calculate (rm_zmod4xxx_ctrl_t * co
         p_zmod4xxx_data->rmox[i] = p_results->rmox[i];
     }
 
+    p_zmod4xxx_data->temperature         = p_results->temperature;
     p_zmod4xxx_data->ozone_concentration = p_results->O3_conc_ppb;
     p_zmod4xxx_data->fast_aqi            = p_results->FAST_AQI;
     p_zmod4xxx_data->epa_aqi             = p_results->EPA_AQI;
     FSP_ERROR_RETURN(OAQ_2ND_GEN_STABILIZATION != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
+    FSP_ERROR_RETURN(OAQ_2ND_GEN_DAMAGE != lib_err, FSP_ERR_SENSOR_INVALID_DATA);
 
     return FSP_SUCCESS;
 }
@@ -389,6 +382,22 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_rel_iaq_data_calculate (rm_zmod4xxx_ctr
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_pbaq_data_calculate (rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
                                                               rm_zmod4xxx_raw_data_t * const  p_raw_data,
                                                               rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_raw_data);
+    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * @brief  Unsupported API.
+ *
+ * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
+ **********************************************************************************************************************/
+static fsp_err_t rm_zmod4510_oaq_2nd_gen_no2_o3_data_calculate (rm_zmod4xxx_ctrl_t * const        p_api_ctrl,
+                                                                rm_zmod4xxx_raw_data_t * const    p_raw_data,
+                                                                rm_zmod4xxx_no2_o3_data_t * const p_zmod4xxx_data)
 {
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_raw_data);

@@ -1,21 +1,9 @@
-/**********************************************************************************************************************
- * DISCLAIMER
- * This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products. No
- * other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
- * applicable laws, including copyright laws.
- * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
- * THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED. TO THE MAXIMUM
- * EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES
- * SHALL BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO
- * THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- * Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability of
- * this software. By using this software, you agree to the additional terms and conditions found by accessing the
- * following link:
- * http://www.renesas.com/disclaimer
- *
- * Copyright (C) 2015-2020 Renesas Electronics Corporation. All rights reserved.
- *********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
+
 /**********************************************************************************************************************
  * File Name    : r_sce_if.h
  * Version      : 1.10
@@ -605,29 +593,29 @@ typedef struct sce_rsa4096_private_key_index
 /* RSA 1024bit key index pair structure */
 typedef struct sce_rsa1024_key_pair_index
 {
-    sce_rsa1024_private_key_index_t    private;
-    sce_rsa1024_public_key_index_t     public;
+    sce_rsa1024_private_key_index_t    priv_key;
+    sce_rsa1024_public_key_index_t     pub_key;
 } sce_rsa1024_key_pair_index_t;
 
 /* RSA 2048bit key index pair structure */
 typedef struct sce_rsa2048_key_pair_index
 {
-    sce_rsa2048_private_key_index_t    private;
-    sce_rsa2048_public_key_index_t     public;
+    sce_rsa2048_private_key_index_t    priv_key;
+    sce_rsa2048_public_key_index_t     pub_key;
 } sce_rsa2048_key_pair_index_t;
 
 /* RSA 3072bit key index pair structure */
 typedef struct sce_rsa3072_key_pair_index
 {
-    sce_rsa3072_private_key_index_t    private;
-    sce_rsa3072_public_key_index_t     public;
+    sce_rsa3072_private_key_index_t    priv_key;
+    sce_rsa3072_public_key_index_t     pub_key;
 } sce_rsa3072_key_pair_index_t;
 
 /* RSA 4096bit key index pair structure */
 typedef struct sce_rsa4096_key_pair_index
 {
-    sce_rsa4096_private_key_index_t    private;
-    sce_rsa4096_public_key_index_t     public;
+    sce_rsa4096_private_key_index_t    priv_key;
+    sce_rsa4096_public_key_index_t     pub_key;
 } sce_rsa4096_key_pair_index_t;
 
 /* ECC P-192/224/256 public key index data structure */
@@ -652,8 +640,8 @@ typedef struct sce_ecc_private_key_index
 /* ECC key index pair structure */
 typedef struct sce_ecc_key_pair_index
 {
-    sce_ecc_private_key_index_t    private;
-    sce_ecc_public_key_index_t     public;
+    sce_ecc_private_key_index_t    priv_key;
+    sce_ecc_public_key_index_t     pub_key;
 } sce_ecc_key_pair_index_t;
 
 /* ECDH key index data structure */

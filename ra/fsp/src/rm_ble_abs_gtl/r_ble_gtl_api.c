@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -25,6 +11,7 @@
 
 #include "qe_ble_profile.h"
 #include "r_ble_gtl.h"
+#include "r_ble_gtl_security.h"
 
 /***********************************************************************************************************************
  * Defines
@@ -423,10 +410,17 @@ ble_status_t R_BLE_GAP_GetRemDevInfo (uint16_t conn_hdl)
 
 ble_status_t R_BLE_GAP_SetPairingParams (st_ble_gap_pairing_param_t * p_pair_param)
 {
-    FSP_PARAMETER_NOT_USED(p_pair_param);
+    ble_status_t status = BLE_ERR_UNSPECIFIED;
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    status = R_BLE_GTL_GAP_SetPairingParams(p_pair_param);
+
+    /* Generate and register keys */
+    if(status == BLE_SUCCESS)
+    {
+        status = r_ble_gtl_sec_generate_and_store_ltk_keys_req(BLE_GAP_EDIV_SIZE + BLE_GAP_RAND_64_BIT_SIZE + BLE_GAP_LTK_SIZE);
+    }
+
+    return status;
 }
 
 ble_status_t R_BLE_GAP_SetLocIdInfo (st_ble_dev_addr_t * p_lc_id_addr, uint8_t * p_lc_irk)
@@ -448,19 +442,20 @@ ble_status_t R_BLE_GAP_SetLocCsrk (uint8_t * p_local_csrk)
 
 ble_status_t R_BLE_GAP_StartPairing (uint16_t conn_hdl)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
+    ble_status_t status = BLE_ERR_UNSPECIFIED;
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    status = r_ble_gtl_security_cmd (conn_hdl);
+    
+    return status;
 }
 
 ble_status_t R_BLE_GAP_ReplyPairing (uint16_t conn_hdl, uint8_t response)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
-    FSP_PARAMETER_NOT_USED(response);
+    ble_status_t status = BLE_ERR_UNSPECIFIED;
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    status = r_ble_gtl_send_gapc_bond_cfm(conn_hdl, R_BLE_GTL_GAPC_PAIRING_RSP, response, NULL_TK_VAL);
+
+    return status;
 }
 
 ble_status_t R_BLE_GAP_StartEnc (uint16_t conn_hdl)
@@ -473,12 +468,11 @@ ble_status_t R_BLE_GAP_StartEnc (uint16_t conn_hdl)
 
 ble_status_t R_BLE_GAP_ReplyPasskeyEntry (uint16_t conn_hdl, uint32_t passkey, uint8_t response)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
-    FSP_PARAMETER_NOT_USED(passkey);
-    FSP_PARAMETER_NOT_USED(response);
+    ble_status_t status = BLE_ERR_UNSPECIFIED;
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    status = r_ble_gtl_send_gapc_bond_cfm(conn_hdl, R_BLE_GTL_GAPC_TK_EXCH, response, passkey);
+
+    return status;
 }
 
 ble_status_t R_BLE_GAP_ReplyNumComp (uint16_t conn_hdl, uint8_t response)
@@ -510,10 +504,21 @@ ble_status_t R_BLE_GAP_GetDevSecInfo (uint16_t conn_hdl, st_ble_gap_auth_info_t 
 
 ble_status_t R_BLE_GAP_ReplyExKeyInfoReq (uint16_t conn_hdl)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
+    ble_status_t status = BLE_ERR_UNSUPPORTED;
+    uint8_t loc_key_dist_var = r_ble_gtl_sec_get_loc_key_dist_var();
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    /* Verify the keys of local device distribution*/
+    if (loc_key_dist_var & BLE_GAP_KEY_DIST_ENCKEY)
+    {
+        status = r_ble_gtl_send_gapc_bond_cfm(conn_hdl, R_BLE_GTL_GAPC_LTK_EXCH, true, NULL_TK_VAL);
+    }
+    else
+    {
+        /* Functionality not yet implemented */
+        status = BLE_ERR_UNSUPPORTED;
+    }   
+
+    return status;
 }
 
 ble_status_t R_BLE_GAP_SetRemOobData (st_ble_dev_addr_t * p_addr, uint8_t oob_data_flag, st_ble_gap_oob_data_t * p_oob)
@@ -558,13 +563,24 @@ void R_BLE_GAP_DeleteBondInfo (int32_t               local,
 
 ble_status_t R_BLE_GAP_ReplyLtkReq (uint16_t conn_hdl, uint16_t ediv, uint8_t * p_peer_rand, uint8_t response)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
-    FSP_PARAMETER_NOT_USED(ediv);
-    FSP_PARAMETER_NOT_USED(p_peer_rand);
-    FSP_PARAMETER_NOT_USED(response);
+	FSP_PARAMETER_NOT_USED(response);
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    bool comp_resp = r_ble_gtl_sec_encryption_req_resp(ediv, p_peer_rand);
+
+    if(comp_resp)
+    {
+        /* Values found in db */
+        r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_ACCEPT);
+    }
+    else
+    {
+        /* Values NOT found in db */
+        r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_DENY); 
+    }         
+   
+    r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, comp_resp);
+
+    return BLE_SUCCESS;
 }
 
 ble_status_t R_BLE_GATT_GetMtu (uint16_t conn_hdl, uint16_t * p_mtu)

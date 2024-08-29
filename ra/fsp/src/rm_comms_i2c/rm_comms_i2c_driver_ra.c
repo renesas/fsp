@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -34,18 +20,22 @@
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
-static void rm_comms_i2c_process_in_callback(rm_comms_ctrl_t * const          p_api_ctrl,
-                                             rm_comms_callback_args_t * const p_args);
 static fsp_err_t rm_comms_i2c_bus_reconfigure(rm_comms_ctrl_t * const p_api_ctrl);
 
 #if BSP_CFG_RTOS
-static fsp_err_t rm_comms_i2c_os_recursive_mutex_acquire(rm_comms_i2c_mutex_t const * p_mutex, uint32_t const timeout);
-static fsp_err_t rm_comms_i2c_os_recursive_mutex_release(rm_comms_i2c_mutex_t const * p_mutex);
 static fsp_err_t rm_comms_i2c_os_semaphore_acquire(rm_comms_i2c_semaphore_t const * p_semaphore,
                                                    uint32_t const                   timeout);
 static fsp_err_t rm_comms_i2c_os_semaphore_release_from_ISR(rm_comms_i2c_semaphore_t const * p_semaphore);
 
 #endif
+
+/**********************************************************************************************************************
+ * Extern functions
+ **********************************************************************************************************************/
+
+/**********************************************************************************************************************
+ * Extern variables
+ **********************************************************************************************************************/
 
 /***********************************************************************************************************************
  * Private global variables
@@ -55,6 +45,13 @@ fsp_err_t rm_comms_i2c_bus_read(rm_comms_ctrl_t * const p_api_ctrl, uint8_t * co
 fsp_err_t rm_comms_i2c_bus_write(rm_comms_ctrl_t * const p_api_ctrl, uint8_t * const p_src, uint32_t const bytes);
 fsp_err_t rm_comms_i2c_bus_write_read(rm_comms_ctrl_t * const            p_api_ctrl,
                                       rm_comms_write_read_params_t const write_read_params);
+void rm_comms_i2c_process_in_callback(rm_comms_ctrl_t * const p_api_ctrl, rm_comms_callback_args_t * const p_args);
+
+#if BSP_CFG_RTOS
+fsp_err_t rm_comms_i2c_os_recursive_mutex_acquire(rm_comms_i2c_mutex_t const * p_mutex, uint32_t const timeout);
+fsp_err_t rm_comms_i2c_os_recursive_mutex_release(rm_comms_i2c_mutex_t const * p_mutex);
+
+#endif
 
 /***********************************************************************************************************************
  * Global variables
@@ -101,27 +98,42 @@ fsp_err_t rm_comms_i2c_bus_read (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * c
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Clear transfer data */
-    p_ctrl->p_transfer_data     = NULL;
-    p_ctrl->transfer_data_bytes = 0;
+    if (!p_ctrl->smbus_operation)
+    {
+        p_ctrl->p_transfer_data     = NULL;
+        p_ctrl->transfer_data_bytes = 0;
+    }
+    else
+    {
+        /* In case SMBus is used, store the destination buffer for PEC byte calculation at SMBus callback */
+        p_ctrl->p_transfer_data     = p_dest;
+        p_ctrl->transfer_data_bytes = bytes;
+    }
 
     /* Use RA I2C driver to read data */
     err = p_driver_instance->p_api->read(p_driver_instance->p_ctrl, p_dest, bytes, false);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS
-    if (NULL != p_ctrl->p_bus->p_blocking_semaphore)
+    fsp_err_t sem_err   = FSP_SUCCESS;
+    fsp_err_t mutex_err = FSP_SUCCESS;
+    if ((FSP_SUCCESS == err) && (NULL != p_ctrl->p_bus->p_blocking_semaphore))
     {
         /* Acquire a semaphore for blocking */
-        err = rm_comms_i2c_os_semaphore_acquire(p_ctrl->p_bus->p_blocking_semaphore, p_ctrl->p_cfg->semaphore_timeout);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        sem_err = rm_comms_i2c_os_semaphore_acquire(p_ctrl->p_bus->p_blocking_semaphore,
+                                                    p_ctrl->p_cfg->semaphore_timeout);
     }
 
     if (NULL != p_ctrl->p_bus->p_bus_recursive_mutex)
     {
         /* Release a mutex for bus */
-        err = rm_comms_i2c_os_recursive_mutex_release(p_ctrl->p_bus->p_bus_recursive_mutex);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        mutex_err = rm_comms_i2c_os_recursive_mutex_release(p_ctrl->p_bus->p_bus_recursive_mutex);
     }
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == sem_err, sem_err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == mutex_err, mutex_err);
+#else
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
     return FSP_SUCCESS;
@@ -148,22 +160,28 @@ fsp_err_t rm_comms_i2c_bus_write (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * 
 
     /* Use RA I2C driver to write data */
     err = p_driver_instance->p_api->write(p_driver_instance->p_ctrl, p_src, bytes, false);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS
-    if (NULL != p_ctrl->p_bus->p_blocking_semaphore)
+    fsp_err_t sem_err   = FSP_SUCCESS;
+    fsp_err_t mutex_err = FSP_SUCCESS;
+    if ((FSP_SUCCESS == err) && (NULL != p_ctrl->p_bus->p_blocking_semaphore))
     {
         /* Acquire a semaphore for blocking */
-        err = rm_comms_i2c_os_semaphore_acquire(p_ctrl->p_bus->p_blocking_semaphore, p_ctrl->p_cfg->semaphore_timeout);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        sem_err = rm_comms_i2c_os_semaphore_acquire(p_ctrl->p_bus->p_blocking_semaphore,
+                                                    p_ctrl->p_cfg->semaphore_timeout);
     }
 
     if (NULL != p_ctrl->p_bus->p_bus_recursive_mutex)
     {
         /* Release a mutex for bus */
-        err = rm_comms_i2c_os_recursive_mutex_release(p_ctrl->p_bus->p_bus_recursive_mutex);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        mutex_err = rm_comms_i2c_os_recursive_mutex_release(p_ctrl->p_bus->p_bus_recursive_mutex);
     }
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == sem_err, sem_err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == mutex_err, mutex_err);
+#else
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
     return FSP_SUCCESS;
@@ -173,7 +191,6 @@ fsp_err_t rm_comms_i2c_bus_write (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * 
  * @brief  Writes to I2C bus, then reads with restart.
  *
  * @retval FSP_SUCCESS              successfully configured.
- * @retval FSP_ERR_UNSUPPORTED      unsupported when SAU I2C is selected for the bus interface.
  **********************************************************************************************************************/
 fsp_err_t rm_comms_i2c_bus_write_read (rm_comms_ctrl_t * const            p_api_ctrl,
                                        rm_comms_write_read_params_t const write_read_params)
@@ -196,24 +213,27 @@ fsp_err_t rm_comms_i2c_bus_write_read (rm_comms_ctrl_t * const            p_api_
                                           write_read_params.src_bytes,
                                           true);
 
-    /* When the 4th argument "restart" of Write API of r_sau_i2c is set to "true", FSP_ERR_ASSERTION is returned. */
-    FSP_ERROR_RETURN(FSP_ERR_ASSERTION != err, FSP_ERR_UNSUPPORTED);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
 #if BSP_CFG_RTOS
-    if (NULL != p_ctrl->p_bus->p_blocking_semaphore)
+    fsp_err_t sem_err   = FSP_SUCCESS;
+    fsp_err_t mutex_err = FSP_SUCCESS;
+    if ((FSP_SUCCESS == err) && (NULL != p_ctrl->p_bus->p_blocking_semaphore))
     {
         /* Acquire a semaphore for blocking */
-        err = rm_comms_i2c_os_semaphore_acquire(p_ctrl->p_bus->p_blocking_semaphore, p_ctrl->p_cfg->semaphore_timeout);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        sem_err = rm_comms_i2c_os_semaphore_acquire(p_ctrl->p_bus->p_blocking_semaphore,
+                                                    p_ctrl->p_cfg->semaphore_timeout);
     }
 
     if (NULL != p_ctrl->p_bus->p_bus_recursive_mutex)
     {
         /* Release a mutex for bus */
-        err = rm_comms_i2c_os_recursive_mutex_release(p_ctrl->p_bus->p_bus_recursive_mutex);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        mutex_err = rm_comms_i2c_os_recursive_mutex_release(p_ctrl->p_bus->p_bus_recursive_mutex);
     }
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == sem_err, sem_err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == mutex_err, mutex_err);
+#else
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
     return FSP_SUCCESS;
@@ -298,8 +318,7 @@ void rm_comms_i2c_callback (i2c_master_callback_args_t * p_args)
 /*******************************************************************************************************************//**
  * @brief Process in callback function. Release semaphores in RTOS and call user callback.
  **********************************************************************************************************************/
-static void rm_comms_i2c_process_in_callback (rm_comms_ctrl_t * const          p_api_ctrl,
-                                              rm_comms_callback_args_t * const p_args)
+void rm_comms_i2c_process_in_callback (rm_comms_ctrl_t * const p_api_ctrl, rm_comms_callback_args_t * const p_args)
 {
     rm_comms_i2c_instance_ctrl_t * p_ctrl = (rm_comms_i2c_instance_ctrl_t *) p_api_ctrl;
 
@@ -352,7 +371,7 @@ static fsp_err_t rm_comms_i2c_bus_reconfigure (rm_comms_ctrl_t * const p_api_ctr
 
         /* Set callback function and current control block */
         err = p_driver_instance->p_api->callbackSet(p_driver_instance->p_ctrl,
-                                                    (void (*)(i2c_master_callback_args_t *))rm_comms_i2c_callback,
+                                                    p_lower_level_cfg->p_callback,
                                                     p_ctrl,
                                                     NULL);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -369,7 +388,7 @@ static fsp_err_t rm_comms_i2c_bus_reconfigure (rm_comms_ctrl_t * const p_api_ctr
  * @retval FSP_SUCCESS              successfully configured.
  * @retval FSP_ERR_INTERNAL         RTOS internal error.
  *********************************************************************************************************************/
-static fsp_err_t rm_comms_i2c_os_recursive_mutex_acquire (rm_comms_i2c_mutex_t const * p_mutex, uint32_t const timeout)
+fsp_err_t rm_comms_i2c_os_recursive_mutex_acquire (rm_comms_i2c_mutex_t const * p_mutex, uint32_t const timeout)
 {
  #if BSP_CFG_RTOS == 1                 // ThreadX
     UINT status;
@@ -390,7 +409,7 @@ static fsp_err_t rm_comms_i2c_os_recursive_mutex_acquire (rm_comms_i2c_mutex_t c
  * @retval FSP_SUCCESS              successfully configured.
  * @retval FSP_ERR_INTERNAL         RTOS internal error.
  *********************************************************************************************************************/
-static fsp_err_t rm_comms_i2c_os_recursive_mutex_release (rm_comms_i2c_mutex_t const * p_mutex)
+fsp_err_t rm_comms_i2c_os_recursive_mutex_release (rm_comms_i2c_mutex_t const * p_mutex)
 {
  #if BSP_CFG_RTOS == 1                 // ThreadX
     UINT status;

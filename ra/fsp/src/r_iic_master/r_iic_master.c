@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -240,9 +226,6 @@ fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cf
         FSP_ASSERT((BSP_FEATURE_IIC_FAST_MODE_PLUS & (1U << p_cfg->channel)));
     }
 #endif
-#if IIC_MASTER_CFG_DTC_ENABLE
-    fsp_err_t err = FSP_SUCCESS;
-#endif
 
     p_ctrl->p_reg = (R_IIC0_Type *) ((uint32_t) R_IIC0 + (p_cfg->channel * ((uint32_t) R_IIC1 - (uint32_t) R_IIC0)));
 
@@ -263,7 +246,7 @@ fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cf
 #if IIC_MASTER_CFG_DTC_ENABLE
 
     /* Open the IIC transfer interface if available */
-    err = iic_master_transfer_open(p_cfg);
+    fsp_err_t err = iic_master_transfer_open(p_cfg);
     if (FSP_SUCCESS != err)
     {
         R_BSP_MODULE_STOP(FSP_IP_IIC, p_cfg->channel);
@@ -823,8 +806,8 @@ static void iic_master_open_hw_master (iic_master_instance_ctrl_t * const p_ctrl
  *
  * @param[in]       p_ctrl  Pointer to control structure of specific device.
  *
- * @retval  FSP_SUCCESS       Data transfer success.
- * @retval  FSP_ERR_IN_USE    If data transfer is in progress.
+ * @retval  FSP_SUCCESS             Data transfer success.
+ * @retval  FSP_ERR_IN_USE          If data transfer is in progress.
  **********************************************************************************************************************/
 static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_ctrl)
 {
@@ -877,20 +860,30 @@ static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_
 
     /* TMOL 'Timeout L Count Control' and TMOH 'Timeout H Count Control' will be set at the time of I2C reset.
      * This will enable time out detection for both SCLn high and low.
-     * Only Set/Clear TMOS here to select long or short mode.
+     *
+     * Register configuration:
+     *  - Set/Clear TMOS here to select long or short mode.
      * (see Section 36.2.4 'I2C Bus Mode Register 2 (ICMR2)' of the RA6M3 manual R01UH0886EJ0100).
+     *  - Set SDDL and DLCS. If SMBus is disabled, assign default value.
      */
+    iic_master_extended_cfg_t * p_extend = (iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
     p_ctrl->p_reg->ICMR2 = (uint8_t) (IIC_MASTER_BUS_MODE_REGISTER_2_MASK |
-                                      (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT ==
-                                                 ((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->timeout_mode)
+                                      (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT == (p_extend->timeout_mode))
                                       |
-                                      (uint8_t) (((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
-                                                 timeout_scl_low << R_IIC0_ICMR2_TMOL_Pos));
+                                      (uint8_t) (p_extend->timeout_scl_low << R_IIC0_ICMR2_TMOL_Pos)
+                                      |
+                                      (uint8_t) (p_extend->clock_settings.sddl_value << R_IIC0_ICMR2_SDDL_Pos)
+                                      |
+                                      (uint8_t) (p_extend->clock_settings.dlcs_value << R_IIC0_ICMR2_DLCS_Pos));
 
     /* Set the response as ACK */
     p_ctrl->p_reg->ICMR3_b.ACKWP = 1;  /* Write Enable */
     p_ctrl->p_reg->ICMR3_b.ACKBT = 0;  /* Write */
     p_ctrl->p_reg->ICMR3_b.ACKWP = 0;
+
+    /* Enable SMBus communication for I2C module if requested */
+    p_ctrl->p_reg->ICMR3_b.SMBS = p_extend->smbus_operation;
 
     /* Enable timeout function */
     p_ctrl->p_reg->ICFER_b.TMOE = 1U;
@@ -982,6 +975,10 @@ static void iic_master_rxi_master (iic_master_instance_ctrl_t * p_ctrl)
             p_ctrl->activation_on_rxi = true;
         }
 #endif
+        if (((iic_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+        {
+            iic_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+        }
 
         /* Do a dummy read to clock the data into the ICDRR. */
         dummy_read = p_ctrl->p_reg->ICDRR;
@@ -1004,6 +1001,11 @@ static void iic_master_rxi_master (iic_master_instance_ctrl_t * p_ctrl)
     /* ICDRR contain valid received data */
     else if (0U < p_ctrl->remain)
     {
+        if (((iic_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+        {
+            iic_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+        }
+
         iic_master_rxi_read_data(p_ctrl);
     }
     else
@@ -1028,6 +1030,19 @@ static void iic_master_txi_master (iic_master_instance_ctrl_t * p_ctrl)
     }
     else if (!p_ctrl->read)
     {
+        /* If previous event is an error event and this TXI is triggered by ERI, do not invoke SMBus callback. Because
+         * the internal function which used to issue callback will clear the error flag in the control block and cause
+         * incorrect behavior at ERI event after this TXI.
+         *
+         * Number of loaded byte must larger or equal to 1 because it helps to ensure that SMBus callback only be invoked
+         * after slave addess already transmitted (omit first 2 TDRE raise event).
+         */
+        if ((((iic_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation) &&
+            ((!p_ctrl->err) && (0U < p_ctrl->loaded)))
+        {
+            iic_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+        }
+
 #if IIC_MASTER_CFG_DTC_ENABLE
 
         /* If this is the interrupt that got fired after DTC transfer,
@@ -1056,6 +1071,7 @@ static void iic_master_txi_master (iic_master_instance_ctrl_t * p_ctrl)
         /* We are done loading ICDRT, wait for TEND to send a stop/restart */
         if (0U == p_ctrl->remain)
         {
+            /* Disable the Transmit Data Empty Interrupt. */
             p_ctrl->p_reg->ICIER_b.TIE = 0U;
 
             /* Wait for the value to reflect at the peripheral.
@@ -1089,6 +1105,11 @@ static void iic_master_txi_master (iic_master_instance_ctrl_t * p_ctrl)
 static void iic_master_tei_master (iic_master_instance_ctrl_t * p_ctrl)
 {
     uint32_t timeout_count = IIC_MASTER_PERIPHERAL_REG_MAX_WAIT;
+
+    if (((iic_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+    {
+        iic_master_notify(p_ctrl, I2C_MASTER_EVENT_BYTE_ACK);
+    }
 
     /* This is a 10 bit address read, issue a restart prior to the last address byte transmission  */
     if ((p_ctrl->read) && (p_ctrl->addr_remain == 1U) && (false == p_ctrl->address_restarted))
@@ -1130,7 +1151,7 @@ static void iic_master_tei_master (iic_master_instance_ctrl_t * p_ctrl)
             /* Clear STOP flag and set SP.
              * It is ok to clear other status' as this transaction is over.
              */
-            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(IIC_MASTER_ICSR2_STOP_BIT);;
+            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(IIC_MASTER_ICSR2_STOP_BIT);
 
             /* Request IIC to issue the stop condition */
             p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */
@@ -1198,10 +1219,16 @@ static void iic_master_err_master (iic_master_instance_ctrl_t * p_ctrl)
 
         /* Request IIC to issue the stop condition */
         p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */
-        /* Allow timeouts to be generated on the low value of SCL using either long or short mode */
+
+        /* Allow timeouts to be generated on the low value of SCL using either long or short mode and re-assign value
+         * of SDDL and DLCS. */
         p_ctrl->p_reg->ICMR2 = (uint8_t) 0x02U |
-                               (uint8_t) (IIC_MASTER_TIMEOUT_MODE_SHORT ==
-                                          ((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->timeout_mode);
+                               (uint8_t) (((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->timeout_mode) |
+                               (uint8_t) (((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
+                                          clock_settings.sddl_value << R_IIC0_ICMR2_SDDL_Pos)
+                               |
+                               (uint8_t) (((iic_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
+                                          clock_settings.dlcs_value << R_IIC0_ICMR2_DLCS_Pos);
         p_ctrl->p_reg->ICFER_b.TMOE = 1;
 
         /* This interrupt will be fired again when wither stop condition is sent
@@ -1238,6 +1265,13 @@ static void iic_master_err_master (iic_master_instance_ctrl_t * p_ctrl)
 
         /* Notify anyone waiting */
         iic_master_notify(p_ctrl, event);
+    }
+    else if (errs_events & (uint8_t) IIC_MASTER_ERR_EVENT_START)
+    {
+        if (((iic_master_extended_cfg_t *) (p_ctrl->p_cfg->p_extend))->smbus_operation)
+        {
+            iic_master_notify(p_ctrl, I2C_MASTER_EVENT_START);
+        }
     }
     else
     {
@@ -1300,7 +1334,7 @@ static void iic_master_rxi_read_data (iic_master_instance_ctrl_t * const p_ctrl)
             /* Clear STOP flag and set SP.
              * It is ok to clear other status' as this transaction is over.
              */
-            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(IIC_MASTER_ICSR2_STOP_BIT);;
+            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(IIC_MASTER_ICSR2_STOP_BIT);
 
             /* Request IIC to issue the stop condition */
             p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */

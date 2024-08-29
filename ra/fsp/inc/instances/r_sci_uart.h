@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_SCI_UART_H
 #define R_SCI_UART_H
@@ -178,6 +164,38 @@ typedef struct st_sci_uart_rs485_setting
     bsp_io_port_pin_t            de_control_pin; ///< UART Driver Enable pin.
 } sci_uart_rs485_setting_t;
 
+/** IrDA Enable/Disable. */
+typedef enum e_sci_uart_irda_enable
+{
+    SCI_UART_IRDA_DISABLED = 0,        ///< IrDA disabled.
+    SCI_UART_IRDA_ENABLED  = 1,        ///< IrDA enabled.
+} sci_uart_irda_enable_t;
+
+/** IrDA Polarity Switching. */
+typedef enum e_sci_uart_irda_polarity
+{
+    SCI_UART_IRDA_POLARITY_NORMAL   = 0, ///< IrDA Tx/Rx polarity not inverted.
+    SCI_UART_IRDA_POLARITY_INVERTED = 1, ///< IrDA Tx/Rx polarity inverted.
+} sci_uart_irda_polarity_t;
+
+/** Configuration settings for IrDA interface. */
+typedef struct st_sci_uart_irda_setting
+{
+    union
+    {
+        uint8_t ircr_bits;
+
+        struct
+        {
+            uint8_t         : 2;
+            uint8_t irrxinv : 1;       ///< IRRXD Polarity Switching
+            uint8_t irtxinv : 1;       ///< IRTXD Polarity Switching
+            uint8_t         : 3;
+            uint8_t ire     : 1;       ///< Enable IrDA pulse encoding and decoding.
+        } ircr_bits_b;
+    };
+} sci_uart_irda_setting_t;
+
 /** UART on SCI device Configuration */
 typedef struct st_sci_uart_extended_cfg
 {
@@ -189,6 +207,7 @@ typedef struct st_sci_uart_extended_cfg
     bsp_io_port_pin_t             flow_control_pin; ///< UART Driver Enable pin
     sci_uart_flow_control_t       flow_control;     ///< CTS/RTS function of the SSn pin
     sci_uart_rs485_setting_t      rs485_setting;    ///< RS-485 settings.
+    sci_uart_irda_setting_t       irda_setting;     ///< IrDA settings
 } sci_uart_extended_cfg_t;
 
 /**********************************************************************************************************************

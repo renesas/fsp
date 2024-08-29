@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -81,11 +67,8 @@
 /* Used for checking maximum divider value with falling or rising edge (2 to 131072) */
 #define TAU_MAXIMUM_FALLING_RISING_EDGE_DIVIDER_FUNCTION    (131072)
 
-/* Convert to micro second */
-#define TAU_CONVERT_TO_MICRO_SECOND                         (1000000U)
-
-/* Timer TDR overflow value */
-#define TAU_TDR_OVF_VALUE                                   (0x10000UL)
+/* Bitmask to convert TAU function into count direction */
+#define TAU_PRV_COUNT_DIRECTION_MASK                        (0x70U)
 
 /* Operation clock CK00, CK01 Mask */
 #define TAU_OPERATION_CLOCK_CK00_CK01_MASK                  (0x0FU)
@@ -98,13 +81,19 @@
 
 #define TAU_TDR_WRITE_MSK_BY_TIMER_MODE                     (0x8FU)
 #define TAU_SUPPORT_8BIT_MSK_BY_TIMER_MODE                  (0x87U)
-#define TAU_TDR_MASK                                        (0xFFFFU)
 
 /* Use for functions which support output pin */
 #define TAU_FUNCTION_SUPPORTED_OUTPUT_MASK                  (0x0AU)
 
 /* Use for functions which support input pin */
 #define TAU_FUNCTION_SUPPORTED_INPUT_MASK                   (0xFCU)
+
+/* Shifted mask for TPS0.PRS2 and .PRS3 bitfields */
+#define TAU_PRV_PRS2_PRS3_MASK                              (0x3U)
+
+/* Divisor settings for CK02 and CK03 */
+#define TAU_PRV_TPS0_PRS3_SETTING                           ((BSP_CFG_TAU_CK03 >> 1) & TAU_PRV_PRS2_PRS3_MASK)
+#define TAU_PRV_TPS0_PRS2_SETTING                           ((BSP_CFG_TAU_CK02 >> 1) & TAU_PRV_PRS2_PRS3_MASK)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -125,10 +114,9 @@ typedef enum e_tau_timer_mode
  **********************************************************************************************************************/
 
 static fsp_err_t r_tau_config_set(tau_instance_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg);
-static fsp_err_t r_tau_cnt_set(tau_instance_ctrl_t * const p_ctrl, uint32_t period_counts, uint32_t period_8bit_counts);
+static fsp_err_t r_tau_cnt_set(timer_cfg_t const * const p_cfg, uint32_t period_counts, uint32_t period_8bit_counts);
 
 #if TAU_CFG_INPUT_SUPPORT_ENABLE
-static void r_tau_wait_time(tau_instance_ctrl_t * const p_ctrl, uint32_t delay_cycles);
 static void r_tau_config_input_set(tau_instance_ctrl_t * const p_ctrl);
 
 #endif
@@ -138,26 +126,28 @@ static void r_tau_config_output_set(tau_instance_ctrl_t * const p_ctrl);
 
 #endif
 
-static uint32_t r_tau_clock_frequency_get(tau_instance_ctrl_t * const p_instance_ctrl);
-
 #if TAU_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_tau_open_param_checking(tau_instance_ctrl_t * p_instance_ctrl, timer_cfg_t const * const p_cfg);
-static fsp_err_t r_tau_cnt_check(tau_instance_ctrl_t * const p_ctrl, uint32_t period_counts,
-                                 uint32_t period_8bit_counts);
+static fsp_err_t r_tau_cnt_check(timer_cfg_t const * const p_cfg, uint32_t period_counts, uint32_t period_8bit_counts);
 
 #endif
 
+#if TAU_CFG_INTERRUPT_SUPPORT_ENABLE
 static void r_tau_disable_irq(IRQn_Type irq);
-
 static void r_tau_enable_irq(IRQn_Type const irq, uint32_t priority, void * p_context);
 
-static void r_tau_operation_clock_set(tau_operation_ck_t operation_clock, timer_source_div_t source_div);
+static void tau_generic_isr(timer_event_t event);
+
+#endif
 
 /***********************************************************************************************************************
  * ISR prototypes
  **********************************************************************************************************************/
+#if TAU_CFG_INTERRUPT_SUPPORT_ENABLE
 void tau_tmi_isr(void);
 void tau_tmih_isr(void);
+
+#endif
 
 /***********************************************************************************************************************
  * Private global variables
@@ -220,51 +210,22 @@ static const uint16_t tau_func_setting_lut[TAU_FUNCTIONS_COUNT] =
         (0 << R_TAU_TMR0_CCS_Pos)                                     ///< Operation clock (fMCK).
 };
 
-/* Look-up table for bit mode channel  */
-static const uint16_t channel_bitmode_lut[] =
-{
-    [TAU_BIT_MODE_16BIT]             = TAU_TS0_TT0_16BIT_MODE_MASK,
-    [TAU_BIT_MODE_HIGHER_8BIT]       = TAU_TS0_TT0_HIGHER_8BIT_MODE_MASK,
-    [TAU_BIT_MODE_LOWER_8BIT]        = TAU_TS0_TT0_LOWER_8BIT_MODE_MASK,
-    [TAU_BIT_MODE_HIGHER_LOWER_8BIT] = TAU_TS0_TT0_HIGHER_LOWER_8BIT_MODE_MASK
-};
-
-/* Look-up table for operation clock CK02, CK03 */
-static const uint8_t operation_clock_ck02_ck03_lut[] =
-{
-    [TIMER_SOURCE_DIV_2]     = 0,
-    [TIMER_SOURCE_DIV_4]     = 1,
-    [TIMER_SOURCE_DIV_16]    = 2,
-    [TIMER_SOURCE_DIV_64]    = 3,
-    [TIMER_SOURCE_DIV_256]   = 0,
-    [TIMER_SOURCE_DIV_1024]  = 1,
-    [TIMER_SOURCE_DIV_4096]  = 2,
-    [TIMER_SOURCE_DIV_16384] = 3
-};
-
-static const uint8_t prs0_offset_lut[] =
-{
-    [TAU_OPERATION_CK00] = 0,
-    [TAU_OPERATION_CK01] = 4,
-    [TAU_OPERATION_CK02] = 8,
-    [TAU_OPERATION_CK03] = 12,
-};
-
 /* TAU implementation of timer interface  */
 const timer_api_t g_timer_on_tau =
 {
-    .open         = R_TAU_Open,
-    .stop         = R_TAU_Stop,
-    .start        = R_TAU_Start,
-    .reset        = R_TAU_Reset,
-    .enable       = R_TAU_Enable,
-    .disable      = R_TAU_Disable,
-    .periodSet    = R_TAU_PeriodSet,
-    .dutyCycleSet = R_TAU_DutyCycleSet,
-    .infoGet      = R_TAU_InfoGet,
-    .statusGet    = R_TAU_StatusGet,
-    .callbackSet  = R_TAU_CallbackSet,
-    .close        = R_TAU_Close,
+    .open            = R_TAU_Open,
+    .stop            = R_TAU_Stop,
+    .start           = R_TAU_Start,
+    .reset           = R_TAU_Reset,
+    .enable          = R_TAU_Enable,
+    .disable         = R_TAU_Disable,
+    .periodSet       = R_TAU_PeriodSet,
+    .compareMatchSet = R_TAU_CompareMatchSet,
+    .dutyCycleSet    = R_TAU_DutyCycleSet,
+    .infoGet         = R_TAU_InfoGet,
+    .statusGet       = R_TAU_StatusGet,
+    .callbackSet     = R_TAU_CallbackSet,
+    .close           = R_TAU_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -296,7 +257,6 @@ const timer_api_t g_timer_on_tau =
 fsp_err_t R_TAU_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg)
 {
     tau_instance_ctrl_t * p_instance_ctrl = (tau_instance_ctrl_t *) p_ctrl;
-    fsp_err_t             err             = FSP_SUCCESS;
 
 #if TAU_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_cfg);
@@ -304,10 +264,11 @@ fsp_err_t R_TAU_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     FSP_ASSERT(NULL != p_instance_ctrl);
 #endif
 
-    p_instance_ctrl->channel_mask = (uint16_t) (1U << p_cfg->channel);
+    uint32_t channel = p_cfg->channel;
+    p_instance_ctrl->channel_mask = (uint16_t) (1U << channel);
 
 #if TAU_CFG_PARAM_CHECKING_ENABLE
-    err = r_tau_open_param_checking(p_instance_ctrl, p_cfg);
+    fsp_err_t err = r_tau_open_param_checking(p_instance_ctrl, p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
@@ -316,23 +277,37 @@ fsp_err_t R_TAU_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     p_instance_ctrl->p_context  = p_cfg->p_context;
 
     /* Enable the TAU channel and reset the registers to their initial state. */
-    R_BSP_MODULE_START(FSP_IP_TAU, p_cfg->channel);
+    R_BSP_MODULE_START(FSP_IP_TAU, channel);
 
     /* Set the TAU configuration settings provided in ::tau_cfg_t and :: tau_extended_cfg_t. */
-    err = r_tau_config_set(p_ctrl, p_cfg);
-
 #if TAU_CFG_PARAM_CHECKING_ENABLE
+    err = r_tau_config_set(p_instance_ctrl, p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#else
+    r_tau_config_set(p_instance_ctrl, p_cfg);
 #endif
 
+#if TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
+    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_cfg->p_extend;
+    tau_bit_mode_t       bit_mode = p_extend->bit_mode;
+    p_instance_ctrl->channel_bitmode_mask = (uint16_t) (((bit_mode != TAU_BIT_MODE_HIGHER_8BIT) |
+                                                         ((bit_mode & TAU_BIT_MODE_HIGHER_8BIT) << 8)) << channel);
+#else
+    p_instance_ctrl->channel_bitmode_mask = (uint16_t) (1U << channel);
+#endif
+
+#if TAU_CFG_INTERRUPT_SUPPORT_ENABLE
     r_tau_enable_irq(p_cfg->cycle_end_irq, p_cfg->cycle_end_ipl, p_instance_ctrl);
+ #if TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
+    r_tau_enable_irq(p_extend->higher_8bit_cycle_end_irq, p_extend->higher_8bit_cycle_end_ipl, p_instance_ctrl);
+ #endif
+#endif
 
-    r_tau_enable_irq(((tau_extended_cfg_t *) p_cfg->p_extend)->higher_8bit_cycle_end_irq,
-                     ((tau_extended_cfg_t *) p_cfg->p_extend)->higher_8bit_cycle_end_ipl, p_instance_ctrl);
-
+#if TAU_CFG_PARAM_CHECKING_ENABLE
     p_instance_ctrl->open = TAU_OPEN;
+#endif
 
-    return err;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -354,11 +329,12 @@ fsp_err_t R_TAU_Stop (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-
-    R_TAU->TT0 = (uint16_t) (channel_bitmode_lut[p_extend->bit_mode] << p_instance_ctrl->p_cfg->channel);
+    R_TAU->TT0 = p_instance_ctrl->channel_bitmode_mask;
 
 #if TAU_CFG_OUTPUT_SUPPORT_ENABLE
+    timer_cfg_t const  * p_cfg    = p_instance_ctrl->p_cfg;
+    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_cfg->p_extend;
+
     if (TAU_PIN_OUTPUT_CFG_DISABLED != p_extend->initial_output)
     {
         R_TAU->TOE0 &= (uint16_t) (~(p_instance_ctrl->channel_mask));
@@ -387,10 +363,10 @@ fsp_err_t R_TAU_Start (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    uint8_t              channel  = p_instance_ctrl->p_cfg->channel;
-
 #if TAU_CFG_OUTPUT_SUPPORT_ENABLE
+    timer_cfg_t const  * p_cfg    = p_instance_ctrl->p_cfg;
+    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_cfg->p_extend;
+
     if (TAU_PIN_OUTPUT_CFG_DISABLED != p_extend->initial_output)
     {
         R_TAU->TOE0 |= p_instance_ctrl->channel_mask;
@@ -398,8 +374,7 @@ fsp_err_t R_TAU_Start (timer_ctrl_t * const p_ctrl)
 #endif
 
     /* Start timer */
-    R_TAU->TS0 =
-        (uint16_t) ((channel_bitmode_lut[p_extend->bit_mode] << channel));
+    R_TAU->TS0 = p_instance_ctrl->channel_bitmode_mask;
 
     return FSP_SUCCESS;
 }
@@ -424,11 +399,9 @@ fsp_err_t R_TAU_Reset (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    tau_extended_cfg_t * p_extend      = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    uint16_t             timer_channel =
-        (uint16_t) (channel_bitmode_lut[p_extend->bit_mode] << p_instance_ctrl->p_cfg->channel);
+    uint16_t timer_channel = p_instance_ctrl->channel_bitmode_mask;
 
-    if (0 < (timer_channel & R_TAU->TE0))
+    if (timer_channel & R_TAU->TE0)
     {
         /* Stop counting. */
         R_TAU->TT0 = timer_channel;
@@ -459,11 +432,8 @@ fsp_err_t R_TAU_Enable (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-
     /* Start counting. */
-    R_TAU->TS0 =
-        (uint16_t) ((channel_bitmode_lut[p_extend->bit_mode] << p_instance_ctrl->p_cfg->channel));
+    R_TAU->TS0 = p_instance_ctrl->channel_bitmode_mask;
 
     return FSP_SUCCESS;
 }
@@ -489,11 +459,8 @@ fsp_err_t R_TAU_Disable (timer_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-
     /* Stop counting. */
-    R_TAU->TT0 =
-        (uint16_t) ((channel_bitmode_lut[p_extend->bit_mode] << p_instance_ctrl->p_cfg->channel));
+    R_TAU->TT0 = p_instance_ctrl->channel_bitmode_mask;
 
     return FSP_SUCCESS;
 }
@@ -504,8 +471,8 @@ fsp_err_t R_TAU_Disable (timer_ctrl_t * const p_ctrl)
  * This Function is not supported for Input pulse Function, High-Low Measurement Function.
  * Implements @ref timer_api_t::periodSet.
  *
- * @note if timer mode is Lower and Higher 8-bit Timer Mode, the last 9 bits are the lower 8-bits of the timer,
- * and the subsequent 9 bits are the higher 8-bits of the timer
+ * @note if timer mode is Lower and Higher 8-bit Timer Mode, the last 8 bits are the lower 8-bits of the timer,
+ * and the subsequent 8 bits are the higher 8-bits of the timer
  *
  * Example:
  * @snippet r_tau_example.c R_TAU_PeriodSet
@@ -524,30 +491,51 @@ fsp_err_t R_TAU_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if TAU_CFG_PARAM_CHECKING_ENABLE || TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
     tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    if ((1U << p_extend->tau_func) & TAU_TDR_WRITE_MSK_BY_TIMER_MODE)
+#endif
+
+#if TAU_CFG_PARAM_CHECKING_ENABLE
+    FSP_ERROR_RETURN((1U << p_extend->tau_func) & TAU_TDR_WRITE_MSK_BY_TIMER_MODE, FSP_ERR_UNSUPPORTED);
+#endif
+
+    uint32_t period = period_counts;
+
+#if TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
+    uint32_t period_higher = period_counts;
+
+    if (TAU_BIT_MODE_HIGHER_LOWER_8BIT == p_extend->bit_mode)
     {
-        uint32_t period_higher = period_counts;
-        uint32_t period        = period_counts;
-
-        if (TAU_BIT_MODE_HIGHER_LOWER_8BIT == p_extend->bit_mode)
-        {
-            uint32_t tdr = period_counts - 1;
-            period        = (uint32_t) ((tdr & TAU_8BIT_MODE_MASK) + 1);
-            period_higher = (uint32_t)
-                            (((tdr >> TAU_BIT_MODE_HIGHER_8BIT_SHIFT) & TAU_8BIT_MODE_MASK) + 1);
-        }
-
-        r_tau_cnt_set(p_instance_ctrl, period, period_higher);
+        uint32_t tdr = period_counts - 1;
+        period        = (uint32_t) ((tdr & TAU_8BIT_MODE_MASK) + 1);
+        period_higher = (uint32_t)
+                        (((tdr >> TAU_BIT_MODE_HIGHER_8BIT_SHIFT) & TAU_8BIT_MODE_MASK) + 1);
     }
-    else
-    {
 
-        /* Input Pulse Function and High-Low Measurement Function are not supported for this function */
-        return FSP_ERR_UNSUPPORTED;
-    }
+    r_tau_cnt_set(p_instance_ctrl->p_cfg, period, period_higher);
+#else
+    r_tau_cnt_set(p_instance_ctrl->p_cfg, period, 0);
+#endif
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Placeholder for unsupported compareMatch function. Implements @ref timer_api_t::compareMatchSet.
+ *
+ * @retval FSP_ERR_UNSUPPORTED      TAU compare match is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_TAU_CompareMatchSet (timer_ctrl_t * const        p_ctrl,
+                                 uint32_t const              compare_match_value,
+                                 timer_compare_match_t const match_channel)
+{
+    /* This function isn't supported. It is defined only to implement a required function of timer_api_t.
+     * Mark the input parameter as unused since this function isn't supported. */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(compare_match_value);
+    FSP_PARAMETER_NOT_USED(match_channel);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**
@@ -577,28 +565,54 @@ fsp_err_t R_TAU_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
  **********************************************************************************************************************/
 fsp_err_t R_TAU_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_info)
 {
-    tau_instance_ctrl_t   * p_instance_ctrl      = (tau_instance_ctrl_t *) p_ctrl;
-    const timer_direction_t function_direction[] =
-    {
-        TIMER_DIRECTION_DOWN, TIMER_DIRECTION_DOWN, TIMER_DIRECTION_DOWN,
-        TIMER_DIRECTION_DOWN, TIMER_DIRECTION_UP,   TIMER_DIRECTION_UP,  TIMER_DIRECTION_UP,
-        TIMER_DIRECTION_DOWN
-    };
+    tau_instance_ctrl_t * p_instance_ctrl = (tau_instance_ctrl_t *) p_ctrl;
+
 #if TAU_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_info);
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    uint8_t             specific_divider;
+    timer_cfg_t const * p_cfg = p_instance_ctrl->p_cfg;
+
     /* Get and store period */
-    p_info->period_counts = (uint32_t) (R_TAU->TDR0[p_instance_ctrl->p_cfg->channel].TDR0n) + 1;
+    p_info->period_counts = (uint32_t) (R_TAU->TDR0[p_cfg->channel].TDR0n) + 1;
 
     /* Get and store clock counting direction. Read count direction setting */
-    p_info->count_direction =
-        function_direction[((tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->tau_func];
+    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_cfg->p_extend;
+    p_info->count_direction = (timer_direction_t) ((TAU_PRV_COUNT_DIRECTION_MASK >> p_extend->tau_func) & 1U);
 
     /* Get and store clock frequency */
-    p_info->clock_frequency = r_tau_clock_frequency_get(p_instance_ctrl);
+    switch (p_extend->operation_clock)
+    {
+        case TAU_OPERATION_CK01:
+        {
+            specific_divider = BSP_CFG_TAU_CK01;
+            break;
+        }
+
+        case TAU_OPERATION_CK02:
+        {
+            specific_divider = BSP_CFG_TAU_CK02;
+            break;
+        }
+
+        case TAU_OPERATION_CK03:
+        {
+            specific_divider = BSP_CFG_TAU_CK03;
+            break;
+        }
+
+        case TAU_OPERATION_CK00:
+        default:
+        {
+            specific_divider = BSP_CFG_TAU_CK00;
+            break;
+        }
+    }
+
+    p_info->clock_frequency = SystemCoreClock >> specific_divider;
 
     return FSP_SUCCESS;
 }
@@ -623,22 +637,15 @@ fsp_err_t R_TAU_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * const p
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    p_status->state = TIMER_STATE_STOPPED;
-    uint8_t channel = p_instance_ctrl->p_cfg->channel;
-
-    /* Get counter state for higher 8-bit mode, lower 8-bit mode, higher-lower 8-bit mode or 16-bit mode. */
-    p_status->state = (((channel_bitmode_lut[p_extend->bit_mode] << channel) &
-                        R_TAU->TE0) > 0 ? TIMER_STATE_COUNTING : TIMER_STATE_STOPPED);
-
-    /* Get counter value */
-    p_status->counter = R_TAU->TCR0[channel];
+    p_status->state =
+        (p_instance_ctrl->channel_bitmode_mask & R_TAU->TE0) ? TIMER_STATE_COUNTING : TIMER_STATE_STOPPED;
+    p_status->counter = R_TAU->TCR0[p_instance_ctrl->p_cfg->channel];
 
     return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
- * Updates the user callback with the option to provide memory for the callback argument structure.
+ * Updates the user callback.
  * Implements @ref timer_api_t::callbackSet.
  *
  * @retval  FSP_SUCCESS                  Callback updated successfully.
@@ -650,19 +657,28 @@ fsp_err_t R_TAU_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
                              void const * const            p_context,
                              timer_callback_args_t * const p_callback_memory)
 {
-    tau_instance_ctrl_t * p_ctrl = (tau_instance_ctrl_t *) p_api_ctrl;
     FSP_PARAMETER_NOT_USED(p_callback_memory);
 
-#if TAU_CFG_PARAM_CHECKING_ENABLE
+#if TAU_CFG_INTERRUPT_SUPPORT_ENABLE
+    tau_instance_ctrl_t * p_ctrl = (tau_instance_ctrl_t *) p_api_ctrl;
+
+ #if TAU_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_ctrl);
     FSP_ASSERT(p_callback);
     FSP_ERROR_RETURN(TAU_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     p_ctrl->p_callback = p_callback;
     p_ctrl->p_context  = p_context;
 
     return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_callback);
+    FSP_PARAMETER_NOT_USED(p_context);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -679,27 +695,33 @@ fsp_err_t R_TAU_Close (timer_ctrl_t * const p_ctrl)
 #if TAU_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
-
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
     /* Mark driver as closed */
     p_instance_ctrl->open = TAU_CLOSE;
-    uint8_t channel = p_instance_ctrl->p_cfg->channel;
+#endif
 
-    R_TAU->TT0 =
-        (uint16_t) ((channel_bitmode_lut[p_extend->bit_mode] << channel));
+    /* Stop timer */
+    R_TAU->TT0 = p_instance_ctrl->channel_bitmode_mask;
+
+#if TAU_CFG_OUTPUT_SUPPORT_ENABLE || (TAU_CFG_8BIT_MODE_SUPPORT_ENABLE && TAU_CFG_INTERRUPT_SUPPORT_ENABLE)
+    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+#endif
 
 #if TAU_CFG_OUTPUT_SUPPORT_ENABLE
     if (TAU_PIN_OUTPUT_CFG_DISABLED != p_extend->initial_output)
     {
+        /* Disable timer output */
         R_TAU->TOE0 &= (uint16_t) (~(p_instance_ctrl->channel_mask));
     }
 #endif
 
-    /* Disable interrupts. */
+    /* Disable interrupts */
+#if TAU_CFG_INTERRUPT_SUPPORT_ENABLE
     r_tau_disable_irq(p_instance_ctrl->p_cfg->cycle_end_irq);
+ #if TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
     r_tau_disable_irq(p_extend->higher_8bit_cycle_end_irq);
+ #endif
+#endif
 
     /* Return the error code */
     return FSP_SUCCESS;
@@ -874,18 +896,16 @@ static fsp_err_t r_tau_open_param_checking (tau_instance_ctrl_t * p_instance_ctr
 /*******************************************************************************************************************//**
  * Parameter checking valid range of period.
  *
- * @param[in]  p_ctrl                Pointer to TAU control structure
- * @param[in]  period_counts         Current timer period
+ * @param[in]  p_cfg                  Pointer to TAU config structure
+ * @param[in]  period_counts          Current timer period
  * @param[in]  period_8bit_counts     Current higher 8-bit timer period
  *
- * @retval FSP_SUCCESS                 Initialization was successful and timer has started.
- * @retval FSP_ERR_ASSERTION           The period is not in the valid range
+ * @retval FSP_SUCCESS                Initialization was successful and timer has started.
+ * @retval FSP_ERR_ASSERTION          The period is not in the valid range
  **********************************************************************************************************************/
-static fsp_err_t r_tau_cnt_check (tau_instance_ctrl_t * const p_ctrl,
-                                  uint32_t                    period_counts,
-                                  uint32_t                    period_8bit_counts)
+static fsp_err_t r_tau_cnt_check (timer_cfg_t const * const p_cfg, uint32_t period_counts, uint32_t period_8bit_counts)
 {
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_cfg->p_extend;
 
     uint32_t min_timer = 1;
     uint32_t max_timer = TAU_MAXIMUM_16BIT_TIMER_MODE;
@@ -896,7 +916,7 @@ static fsp_err_t r_tau_cnt_check (tau_instance_ctrl_t * const p_ctrl,
         case TAU_FUNCTION_INTERVAL:
         case TAU_FUNCTION_SQUARE_WAVE:
         {
-            if (TIMER_SOURCE_DIV_1 == p_ctrl->p_cfg->source_div)
+            if (TIMER_SOURCE_DIV_1 == p_cfg->source_div)
             {
                 min_timer = 2;
             }
@@ -973,75 +993,65 @@ static fsp_err_t r_tau_cnt_check (tau_instance_ctrl_t * const p_ctrl,
  **********************************************************************************************************************/
 static fsp_err_t r_tau_config_set (tau_instance_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg)
 {
+#if !(TAU_CFG_INPUT_SUPPORT_ENABLE || TAU_CFG_OUTPUT_SUPPORT_ENABLE)
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+#endif
+
     tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_cfg->p_extend;
 
-    uint16_t tmr_split = (uint16_t) ((p_extend->bit_mode == TAU_BIT_MODE_16BIT) ? 0U : R_TAU_TMR0_MASTER_SPLIT_Msk);
+    uint32_t tmr_split = (p_extend->bit_mode == TAU_BIT_MODE_16BIT) ? 0U : R_TAU_TMR0_MASTER_SPLIT_Msk;
 
     /* Setting Function timer */
-    uint16_t tmr = ((uint16_t) (p_extend->operation_clock << R_TAU_TMR0_CKS_Pos) |
-                    (uint16_t) (p_extend->opirq << R_TAU_TMR0_OPIRQ_Pos) |
+    uint32_t tmr = ((((uint32_t) p_extend->operation_clock) << R_TAU_TMR0_CKS_Pos) |
+                    (((uint32_t) p_extend->opirq) << R_TAU_TMR0_OPIRQ_Pos) |
                     tmr_split | tau_func_setting_lut[p_extend->tau_func]);
 
 #if TAU_CFG_INPUT_SUPPORT_ENABLE
+    tau_function_t tau_func = p_extend->tau_func;
 
-    /* Setting trigger edge */
-    if ((1 << p_extend->tau_func) & TAU_FUNCTION_SUPPORTED_INPUT_MASK)
+    if ((1 << tau_func) & TAU_FUNCTION_SUPPORTED_INPUT_MASK)
     {
-        if (TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT == p_extend->tau_func)
+        /* Setting trigger edge */
+        uint32_t tmr0_cis;
+
+        if (TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT == tau_func)
         {
-            tmr |= (uint16_t) (TAU_INPUT_LOW_LEVEL_MEASUREMENT_SETTING << R_TAU_TMR0_CIS_Pos);
+            tmr0_cis = TAU_INPUT_LOW_LEVEL_MEASUREMENT_SETTING;
         }
-        else if (TAU_FUNCTION_HIGH_LEVEL_WIDTH_MEASUREMENT == p_extend->tau_func)
+        else if (TAU_FUNCTION_HIGH_LEVEL_WIDTH_MEASUREMENT == tau_func)
         {
-            tmr |= (uint16_t) (TAU_INPUT_HIGH_LEVEL_MEASUREMENT_SETTING << R_TAU_TMR0_CIS_Pos);
+            tmr0_cis = TAU_INPUT_HIGH_LEVEL_MEASUREMENT_SETTING;
         }
         else
         {
-            tmr |= (uint16_t) (p_extend->trigger_edge << R_TAU_TMR0_CIS_Pos);
+            tmr0_cis = p_extend->trigger_edge;
         }
+
+        tmr |= tmr0_cis << R_TAU_TMR0_CIS_Pos;
 
         r_tau_config_input_set(p_ctrl);
     }
 #endif
 
-    r_tau_operation_clock_set(p_extend->operation_clock, p_cfg->source_div);
+    /* Set TAU divisors based on BSP settings */
+    R_TAU->TPS0 = (uint16_t) ((TAU_PRV_TPS0_PRS3_SETTING << R_TAU_TPS0_PRS3_Pos) |
+                              (TAU_PRV_TPS0_PRS2_SETTING << R_TAU_TPS0_PRS2_Pos) |
+                              (BSP_CFG_TAU_CK01 << R_TAU_TPS0_PRS1_Pos) | BSP_CFG_TAU_CK00);
 
-    /* Setting Timer Mode register */
-    R_TAU->TMR0[p_ctrl->p_cfg->channel] = tmr;
+    /* Set timer mode */
+    R_TAU->TMR0[p_cfg->channel] = (uint16_t) tmr;
 
-    fsp_err_t err = r_tau_cnt_set(p_ctrl, p_cfg->period_counts, p_extend->period_higher_8bit_counts);
+#if TAU_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(FSP_SUCCESS == r_tau_cnt_set(p_cfg, p_cfg->period_counts, p_extend->period_higher_8bit_counts));
+#else
+    r_tau_cnt_set(p_cfg, p_cfg->period_counts, p_extend->period_higher_8bit_counts);
+#endif
 
 #if TAU_CFG_OUTPUT_SUPPORT_ENABLE
     r_tau_config_output_set(p_ctrl);
 #endif
 
-    return err;
-}
-
-/*******************************************************************************************************************//**
- * Configures operation clock for TAU based on user configurations.
- *
- * @param[in]     operation_clock  Operation clock
- * @param[in]     source_div       Clock Divier
- **********************************************************************************************************************/
-static void r_tau_operation_clock_set (tau_operation_ck_t operation_clock, timer_source_div_t source_div)
-{
-    uint8_t prs_offset = prs0_offset_lut[operation_clock];
-    uint8_t prs_mask   = TAU_OPERATION_CLOCK_CK00_CK01_MASK;
-    uint8_t prs_value  = (uint8_t) source_div;
-
-    if ((operation_clock == TAU_OPERATION_CK02) || (operation_clock == TAU_OPERATION_CK03))
-    {
-        prs_mask  = TAU_OPERATION_CLOCK_CK02_CK03_MASK;
-        prs_value = operation_clock_ck02_ck03_lut[source_div];
-    }
-
-    uint16_t tps0_value = R_TAU->TPS0;
-
-    tps0_value &= (uint16_t) ~(prs_mask << prs_offset);
-    tps0_value |= (prs_value << prs_offset);
-
-    R_TAU->TPS0 = tps0_value;
+    return FSP_SUCCESS;
 }
 
 #if TAU_CFG_INPUT_SUPPORT_ENABLE
@@ -1053,18 +1063,25 @@ static void r_tau_operation_clock_set (tau_operation_ck_t operation_clock, timer
  **********************************************************************************************************************/
 static void r_tau_config_input_set (tau_instance_ctrl_t * const p_ctrl)
 {
+ #if TAU_CFG_EXTRA_INPUT_SUPPORT_ENABLE
     tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-    uint8_t              tnfen    = R_PORGA->TNFEN;
-    tnfen         &= (uint8_t) (~p_ctrl->channel_mask);
-    tnfen         |= (uint8_t) (p_extend->tau_filter << p_ctrl->p_cfg->channel);
+
+    uint32_t channel      = p_ctrl->p_cfg->channel;
+    uint32_t channel_mask = p_ctrl->channel_mask;
+
+    uint8_t tnfen = R_PORGA->TNFEN;
+    tnfen         &= (uint8_t) (~channel_mask);
+    tnfen         |= (uint8_t) (p_extend->tau_filter << channel);
     R_PORGA->TNFEN = tnfen;
 
-    if (p_ctrl->channel_mask & TAU_INPUT_RXD2_CAPABLE_CHANNEL_MASK)
+    tau_input_source_t input_source = p_extend->input_source;
+
+    if (channel_mask & TAU_INPUT_RXD2_CAPABLE_CHANNEL_MASK)
     {
         uint8_t isc_value = R_PORGA->ISC;
         isc_value &= (uint8_t) (~R_PORGA_ISC_ISC1_Msk);
 
-        if (TAU_INPUT_SOURCE_RXD2_PIN == p_extend->input_source)
+        if (TAU_INPUT_SOURCE_RXD2_PIN == input_source)
         {
             isc_value |= R_PORGA_ISC_ISC1_Msk;
         }
@@ -1072,33 +1089,28 @@ static void r_tau_config_input_set (tau_instance_ctrl_t * const p_ctrl)
         R_PORGA->ISC = isc_value;
     }
 
-    if (p_ctrl->channel_mask & TAU_ELC_CAPABLE_CHANNELS_MASK)
+    if (channel_mask & TAU_ELC_CAPABLE_CHANNELS_MASK)
     {
         uint8_t tis1_value = R_PORGA->TIS1;
-        tis1_value &= (uint8_t) (~p_ctrl->channel_mask);
+        tis1_value &= (uint8_t) (~channel_mask);
 
-        if (TAU_INPUT_SOURCE_ELC == p_extend->input_source)
+        if (TAU_INPUT_SOURCE_ELC == input_source)
         {
-            tis1_value |= (1 << p_ctrl->p_cfg->channel);
+            tis1_value |= (uint8_t) channel_mask;
         }
 
         R_PORGA->TIS1 = tis1_value;
     }
 
-    if (p_ctrl->channel_mask & TAU_INPUT_CLOCK_CAPABLE_CHANNEL_MASK)
+    if (channel_mask & TAU_INPUT_CLOCK_CAPABLE_CHANNEL_MASK)
     {
-        uint8_t tis0_value = (p_extend->input_source & R_PORGA_TIS0_TIS_Msk);
+        uint8_t tis0_value = (input_source & R_PORGA_TIS0_TIS_Msk);
         R_PORGA->TIS0 = tis0_value;
     }
 
-    /* When bits 12 (CCS), 9 and 8 (STS[1:0]) in the timer mode register mn (TMRmn) are 0 and then one of them is
-     * set to 1, wait for at least two or four(if noise filter is enabled) cycles of the operating clock (fMCK),
-     * and then set the operation
-     * enable trigger bit in the timer channel start register (TSm). */
-    if (TAU_FUNCTION_EXTERNAL_EVENT_COUNT < p_extend->tau_func)
-    {
-        r_tau_wait_time(p_ctrl, TAU_DELAY_2_CYCLE_FMCK * (p_extend->tau_filter + 1));
-    }
+ #else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+ #endif
 }
 
 #endif
@@ -1114,30 +1126,21 @@ static void r_tau_config_output_set (tau_instance_ctrl_t * const p_ctrl)
 {
     tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    /* Sets master channel output mode. Note: r_tau does not support slave functionality.*/
-    uint8_t inverted_channel_mask = (uint8_t) (~p_ctrl->channel_mask);
-
-    if (p_ctrl->channel_mask > 0x01U)
-    {
-        R_TAU->TOM0 &= inverted_channel_mask;
-        R_TAU->TOL0 &= inverted_channel_mask;
-    }
-
-    uint16_t to0_value  = R_TAU->TO0 & inverted_channel_mask;
-    uint16_t toe0_value = R_TAU->TOE0 & inverted_channel_mask;
-
     if ((1 << p_extend->tau_func) & TAU_FUNCTION_SUPPORTED_OUTPUT_MASK)
     {
+        /* Sets master channel output mode. Note: r_tau does not support slave functionality.*/
+        uint8_t inverted_channel_mask = (uint8_t) (~p_ctrl->channel_mask);
+
+        uint16_t to0_value = R_TAU->TO0 & inverted_channel_mask;
+
         if (TAU_PIN_OUTPUT_CFG_START_LEVEL_HIGH == p_extend->initial_output)
         {
             to0_value |= p_ctrl->channel_mask;
         }
 
-        toe0_value |= p_ctrl->channel_mask;
+        R_TAU->TO0   = to0_value;
+        R_TAU->TOE0 |= p_ctrl->channel_mask;
     }
-
-    R_TAU->TO0  = to0_value;
-    R_TAU->TOE0 = toe0_value;
 }
 
 #endif
@@ -1145,116 +1148,50 @@ static void r_tau_config_output_set (tau_instance_ctrl_t * const p_ctrl)
 /*******************************************************************************************************************//**
  * Set TAU counter registers based on user configurations.
  *
- * @param[in]  p_ctrl                Pointer to TAU control structure
+ * @param[in]  p_cfg                 Pointer to TAU config structure
  * @param[in]  period_counts         Current timer period (lower 8-bit or 16-bit timer)
  * @param[in]  period_8bit_counts    Current higher 8-bit timer period
  *
  * @retval FSP_SUCCESS               The counter was successful updated.
  * @retval FSP_ERR_ASSERTION         The period is not in the valid range
  **********************************************************************************************************************/
-static fsp_err_t r_tau_cnt_set (tau_instance_ctrl_t * const p_ctrl, uint32_t period_counts, uint32_t period_8bit_counts)
+static fsp_err_t r_tau_cnt_set (timer_cfg_t const * const p_cfg, uint32_t period_counts, uint32_t period_8bit_counts)
 {
-    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    tau_extended_cfg_t * p_extend = (tau_extended_cfg_t *) p_cfg->p_extend;
+
 #if TAU_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(FSP_ERR_ASSERTION != r_tau_cnt_check(p_ctrl, period_counts, period_8bit_counts));
+    FSP_ASSERT(FSP_SUCCESS == r_tau_cnt_check(p_cfg, period_counts, period_8bit_counts));
+#elif !TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
+    FSP_PARAMETER_NOT_USED(period_8bit_counts);
 #endif
 
-    uint8_t  channel  = p_ctrl->p_cfg->channel;
-    uint16_t tdr      = (uint16_t) (period_counts - 1);
-    uint8_t  tdr_8bit = ((uint8_t) period_8bit_counts - 1);
+    uint32_t tdr = period_counts - 1;
 
     if ((TAU_FUNCTION_DIVIDER == p_extend->tau_func) && (TAU_TRIGGER_EDGE_BOTH != p_extend->trigger_edge))
     {
-        tdr = (uint16_t) ((period_counts >> 1) - 1);
+        tdr = (period_counts >> 1) - 1;
     }
 
-    uint16_t tdr_mask = 0;
+    volatile uint8_t * tdr0 = (volatile uint8_t *) &(R_TAU->TDR0[p_cfg->channel]);
 
-    if ((1U << p_extend->tau_func) & TAU_TDR_WRITE_MSK_BY_TIMER_MODE)
+#if TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
+    uint32_t       tdr_8bit = period_8bit_counts - 1;
+    tau_bit_mode_t bit_mode = p_extend->bit_mode;
+
+    if ((TAU_BIT_MODE_HIGHER_8BIT == bit_mode) || (TAU_BIT_MODE_HIGHER_LOWER_8BIT == bit_mode))
     {
-        tdr_mask = TAU_TDR_MASK;
+        /* In 8-bit modes, the upper 8 bits can only be written with an 8-bit write */
+        *(tdr0 + 1) = (uint8_t) tdr_8bit;
     }
+#endif
 
-    R_TAU->TDR0[channel].TDR0n = (tdr & tdr_mask);
-
-    if ((TAU_BIT_MODE_HIGHER_8BIT == p_extend->bit_mode) || (TAU_BIT_MODE_HIGHER_LOWER_8BIT == p_extend->bit_mode))
-    {
-        R_TAU->TDR0[channel].TDR0nH = tdr_8bit & ((uint8_t) tdr_mask);
-    }
+    /* The upper 8 bits of this write are truncated in 8-bit modes */
+    *(volatile uint16_t *) tdr0 = (uint16_t) tdr;
 
     return FSP_SUCCESS;
 }
 
-#if TAU_CFG_INPUT_SUPPORT_ENABLE
-
-/*******************************************************************************************************************//**
- * This function implements waiting for at least 4 cycles of CPU clock.
- * @param[in] p_ctrl          Pointer to instance control block.
- * @param[in] delay_cycles    Delay cycles value of the operating clock (fMCK).
- **********************************************************************************************************************/
-static void r_tau_wait_time (tau_instance_ctrl_t * const p_ctrl, uint32_t delay_cycles)
-{
-    /* Calculate frequency TAU operation clock */
-    uint32_t fmck = r_tau_clock_frequency_get(p_ctrl);
-
-    uint32_t cpu_count = (uint32_t) (SystemCoreClock / fmck);
-
-    if (cpu_count > 4)
-    {
-        uint32_t count = (cpu_count * delay_cycles);
-
-        /* Waiting for the period */
-        bsp_prv_software_delay_loop(count / 4);
-    }
-}
-
-#endif
-
-/*******************************************************************************************************************//**
- * Calculates clock frequency of TAU counter.
- *
- * @param[in]  p_instance_ctrl           Instance control block
- *
- * @return     Clock frequency of the TAU counter.
- **********************************************************************************************************************/
-static uint32_t r_tau_clock_frequency_get (tau_instance_ctrl_t * const p_instance_ctrl)
-{
-    /* Look-up table for operation clock CK02 */
-    const uint8_t convert_to_ck02_clockdiv_lut[] =
-    {
-        [0] = TIMER_SOURCE_DIV_2,
-        [1] = TIMER_SOURCE_DIV_4,
-        [2] = TIMER_SOURCE_DIV_16,
-        [3] = TIMER_SOURCE_DIV_64,
-    };
-
-    /* Look-up table for operation clock CK03 */
-    const uint8_t convert_to_ck03_clockdiv_lut[] =
-    {
-        [0] = TIMER_SOURCE_DIV_8,
-        [1] = TIMER_SOURCE_DIV_1024,
-        [2] = TIMER_SOURCE_DIV_4096,
-        [3] = TIMER_SOURCE_DIV_16384,
-    };
-
-    /* This table is indexed by tau_operation_ck_t. */
-    const uint8_t operation_clock_table[] =
-    {
-        R_TAU->TPS0_b.PRS0,
-        convert_to_ck02_clockdiv_lut[R_TAU->TPS0_b.PRS2],
-        R_TAU->TPS0_b.PRS1,
-        convert_to_ck03_clockdiv_lut[R_TAU->TPS0_b.PRS3]
-    };
-
-    /* Get TAU clock divider */
-    timer_source_div_t divisor = (timer_source_div_t) operation_clock_table[((tau_extended_cfg_t *)
-                                                                             (p_instance_ctrl->p_cfg->p_extend))->
-                                                                            operation_clock];
-
-    uint32_t freq_hz = R_FSP_SystemClockHzGet(BSP_FEATURE_TAU_CLOCK_SOURCE);
-
-    return freq_hz >> divisor;
-}
+#if TAU_CFG_INTERRUPT_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
  * Disables interrupt if it is a valid vector number.
@@ -1267,7 +1204,6 @@ static void r_tau_disable_irq (IRQn_Type irq)
     if (irq >= 0)
     {
         R_BSP_IrqDisable(irq);
-        R_FSP_IsrContextSet(irq, NULL);
     }
 }
 
@@ -1298,41 +1234,31 @@ static void r_tau_call_callback (tau_instance_ctrl_t * p_ctrl, timer_event_t eve
     timer_callback_args_t args;
 
     args.event     = event;
-    args.capture   = capture;
     args.p_context = p_ctrl->p_context;
 
     if (TIMER_EVENT_CAPTURE_EDGE == event)
     {
-        if (0 != (R_TAU->TSR0[p_ctrl->p_cfg->channel] & 0x01))
-        {
-            args.capture = (capture + 1UL) + TAU_TDR_OVF_VALUE;
-        }
-        else
-        {
-            args.capture = (capture + 1UL);
-        }
+        /* Add in overflow if it occurred */
+        capture += 1 + (((uint32_t) R_TAU->TSR0[p_ctrl->p_cfg->channel]) << 16);
     }
 
-    /* If the project is not Trustzone Secure,
-     * then it will never need to change security state in order to call the callback.
-     */
+    args.capture = capture;
+
+    /* Call the callback */
     p_ctrl->p_callback(&args);
 }
 
 /*******************************************************************************************************************//**
- * Stops the timer if one-shot mode, clears interrupts, and calls callback if one was provided in the open function.
+ * Generic ISR function to handle both TAU interrupts.
+ *
+ * @param[in]     event      Event code
  **********************************************************************************************************************/
-void tau_tmi_isr (void)
+static void tau_generic_isr (timer_event_t event)
 {
-    /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE;
-
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
     /* Recover ISR context saved in open. */
     tau_instance_ctrl_t * p_instance_ctrl = (tau_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
-
-    timer_event_t event = TIMER_EVENT_CYCLE_END;
 
     tau_function_t func    = ((tau_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->tau_func;
     uint32_t       counter = 0;
@@ -1350,10 +1276,23 @@ void tau_tmi_isr (void)
     {
         r_tau_call_callback(p_instance_ctrl, event, counter);
     }
+}
+
+/*******************************************************************************************************************//**
+ * Stops the timer if one-shot mode, clears interrupts, and calls callback if one was provided in the open function.
+ **********************************************************************************************************************/
+void tau_tmi_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE;
+
+    tau_generic_isr(TIMER_EVENT_CYCLE_END);
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE;
 }
+
+ #if TAU_CFG_8BIT_MODE_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
  * Only supported for higher 8-bit timer mode. Notifies application of trough event.
@@ -1363,18 +1302,11 @@ void tau_tmih_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 
-    IRQn_Type irq = R_FSP_CurrentIrqGet();
-
-    /* Recover ISR context saved in open. */
-    tau_instance_ctrl_t * p_instance_ctrl = (tau_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
-
-    timer_event_t event = TIMER_EVENT_HIGHER_8BIT_CYCLE_END;
-
-    if (NULL != p_instance_ctrl->p_callback)
-    {
-        r_tau_call_callback(p_instance_ctrl, event, 0);
-    }
+    tau_generic_isr(TIMER_EVENT_HIGHER_8BIT_CYCLE_END);
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE;
 }
+
+ #endif
+#endif

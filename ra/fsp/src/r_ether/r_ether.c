@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -144,6 +130,29 @@
 
 /* PAUSE link mask and shift values */
 
+#define ETHER_NO_DATA                                   (0)
+
+/* Event mask for EESR register. */
+#define ETHER_EESR_ERR_GLOBAL_MASK                      (ETHER_EESR_EVENT_MASK_CERF | ETHER_EESR_EVENT_MASK_PRE |  \
+                                                         ETHER_EESR_EVENT_MASK_RTSF | ETHER_EESR_EVENT_MASK_RTLF | \
+                                                         ETHER_EESR_EVENT_MASK_RRF | ETHER_EESR_EVENT_MASK_RMAF |  \
+                                                         ETHER_EESR_EVENT_MASK_TRO | ETHER_EESR_EVENT_MASK_CD |    \
+                                                         ETHER_EESR_EVENT_MASK_DLC | ETHER_EESR_EVENT_MASK_CND |   \
+                                                         ETHER_EESR_EVENT_MASK_ADE | ETHER_EESR_EVENT_MASK_RFCOF | \
+                                                         ETHER_EESR_EVENT_MASK_RABT | ETHER_EESR_EVENT_MASK_TWB)
+#define ETHER_EESR_RX_COMPLETE_MASK                     (ETHER_EESR_EVENT_MASK_FR)
+#define ETHER_EESR_RX_MESSAGE_LOST_MASK                 (ETHER_EESR_EVENT_MASK_RFOF | ETHER_EESR_EVENT_MASK_RDE)
+#define ETHER_EESR_TX_ABORTED_MASK                      (ETHER_EESR_EVENT_MASK_TABT)
+#define ETHER_EESR_TX_BUFFER_EMPTY_MASK                 (ETHER_EESR_EVENT_MASK_TFUF | ETHER_EESR_EVENT_MASK_TDE)
+#define ETHER_EESR_TX_COMPLETE_MASK                     (ETHER_EESR_EVENT_MASK_TC)
+
+/* Event mask for ECSR register. */
+#define ETHER_ECSR_ERR_GLOBAL_MASK                      (ETHER_ECSR_EVENT_MASK_ICD)
+#define ETHER_ECSR_WAKEON_LAN_MASK                      (ETHER_ECSR_EVENT_MASK_MPD)
+
+#define ETHER_EESR_EVENT_NUM                            (6)
+#define ETHER_ECSR_EVENT_NUM                            (2)
+
 /***********************************************************************************************************************
  * Typedef definitions
  ***********************************************************************************************************************/
@@ -152,6 +161,12 @@ typedef void (BSP_CMSE_NONSECURE_CALL * ether_prv_ns_callback)(ether_callback_ar
 #elif defined(__GNUC__)
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile ether_prv_ns_callback)(ether_callback_args_t * p_args);
 #endif
+
+typedef struct st_ether_event_mask
+{
+    ether_event_t event;               // Event code which is passed to user callback
+    uint32_t      mask;                // Mask to determine whether to call callback
+} ether_event_mask_t;
 
 /***********************************************************************************************************************
  * Exported global functions (to be accessed by other files)
@@ -242,6 +257,25 @@ static const ether_pause_resolution_t pause_resolution[ETHER_PAUSE_TABLE_ENTRIES
     {ETHER_PAUSE_MASKF, ETHER_PAUSE_VALC, ETHER_PAUSE_XMIT_OFF, ETHER_PAUSE_RECV_OFF  },
     {ETHER_PAUSE_MASKF, ETHER_PAUSE_VALD, ETHER_PAUSE_XMIT_OFF, ETHER_PAUSE_RECV_ON   }
 };
+
+#if (!ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
+
+static const ether_event_mask_t ether_eesr_event_mask[ETHER_EESR_EVENT_NUM] =
+{
+    {.event = ETHER_EVENT_RX_COMPLETE,     .mask           = ETHER_EESR_RX_COMPLETE_MASK    },
+    {.event = ETHER_EVENT_RX_MESSAGE_LOST, .mask           = ETHER_EESR_RX_MESSAGE_LOST_MASK},
+    {.event = ETHER_EVENT_TX_COMPLETE,     .mask           = ETHER_EESR_TX_COMPLETE_MASK    },
+    {.event = ETHER_EVENT_TX_BUFFER_EMPTY, .mask           = ETHER_EESR_TX_BUFFER_EMPTY_MASK},
+    {.event = ETHER_EVENT_TX_ABORTED,      .mask           = ETHER_EESR_TX_ABORTED_MASK     },
+    {.event = ETHER_EVENT_ERR_GLOBAL,      .mask           = ETHER_EESR_ERR_GLOBAL_MASK     },
+};
+
+static const ether_event_mask_t ether_ecsr_event_mask[ETHER_ECSR_EVENT_NUM] =
+{
+    {.event = ETHER_EVENT_WAKEON_LAN, .mask = ETHER_ECSR_WAKEON_LAN_MASK},
+    {.event = ETHER_EVENT_ERR_GLOBAL, .mask = ETHER_EESR_ERR_GLOBAL_MASK},
+};
+#endif
 
 /*******************************************************************************************************************//**
  * @addtogroup ETHER
@@ -1865,11 +1899,13 @@ static void ether_call_callback (ether_instance_ctrl_t * p_instance_ctrl, ether_
         args = *p_args;
     }
 
-    p_args->event       = p_callback_args->event;
+    p_args->event     = p_callback_args->event;
+    p_args->channel   = p_instance_ctrl->p_ether_cfg->channel;
+    p_args->p_context = p_instance_ctrl->p_context;
+#if (ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
     p_args->status_ecsr = p_callback_args->status_ecsr;
     p_args->status_eesr = p_callback_args->status_eesr;
-    p_args->channel     = p_instance_ctrl->p_ether_cfg->channel;
-    p_args->p_context   = p_instance_ctrl->p_context;
+#endif
 
 #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE
 
@@ -1919,6 +1955,9 @@ void ether_eint_isr (void)
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     ether_instance_ctrl_t * p_instance_ctrl = (ether_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+#if (!ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
+    ether_extended_cfg_t * p_ether_extended_cfg = (ether_extended_cfg_t *) p_instance_ctrl->p_ether_cfg->p_extend;
+#endif
 
     p_reg_etherc = (R_ETHERC0_Type *) p_instance_ctrl->p_reg_etherc;
     p_reg_edmac  = (R_ETHERC_EDMAC_Type *) p_instance_ctrl->p_reg_edmac;
@@ -1970,12 +2009,38 @@ void ether_eint_isr (void)
     /* If a callback is provided, then call it with callback argument. */
     if (NULL != p_instance_ctrl->p_callback)
     {
-        callback_arg.channel     = p_instance_ctrl->p_ether_cfg->channel;
+        callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
+        callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
+#if (ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
         callback_arg.event       = ETHER_EVENT_INTERRUPT;
         callback_arg.status_ecsr = status_ecsr;
         callback_arg.status_eesr = status_eesr;
-        callback_arg.p_context   = p_instance_ctrl->p_ether_cfg->p_context;
         ether_call_callback(p_instance_ctrl, &callback_arg);
+#else
+
+        /* Callbacks for events related to EESR. */
+        for (int i = 0; i < ETHER_EESR_EVENT_NUM; i++)
+        {
+            if (status_eesr & ether_eesr_event_mask[i].mask & p_ether_extended_cfg->eesr_event_filter)
+            {
+                callback_arg.event = ether_eesr_event_mask[i].event;
+                ether_call_callback(p_instance_ctrl, &callback_arg);
+            }
+        }
+
+        /* Callbacks for events related to ECSR. */
+        if (status_eesr & ETHER_EDMAC_INTERRUPT_FACTOR_ECI)
+        {
+            for (int i = 0; i < ETHER_ECSR_EVENT_NUM; i++)
+            {
+                if (status_ecsr & ether_ecsr_event_mask[i].mask & p_ether_extended_cfg->ecsr_event_filter)
+                {
+                    callback_arg.event = ether_ecsr_event_mask[i].event;
+                    ether_call_callback(p_instance_ctrl, &callback_arg);
+                }
+            }
+        }
+#endif
     }
 
     /* Clear pending interrupt flag to make sure it doesn't fire again

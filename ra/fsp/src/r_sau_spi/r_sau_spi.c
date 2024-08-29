@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -24,34 +10,99 @@
 #include <string.h>
 #include "r_sau_spi.h"
 #include "r_sau_spi_cfg.h"
+#if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+ #include "r_dtc.h"
+#endif
 
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
 
-#define SAU_SPI_SCR_RX_MSK           (0x4000U)
-#define SAU_SPI_SCR_TX_MSK           (0x8000U)
-#define R_SAU0_SCR_DCP1_Pos          (13U)
+#define R_SAU0_SCR_DCP1_Pos                               (13U)
+#define SAU_SPI_PRV_DTC_RX_FOR_READ_TRANSFER_SETTINGS     ((TRANSFER_MODE_NORMAL <<              \
+                                                            TRANSFER_SETTINGS_MODE_BITS) |       \
+                                                           (TRANSFER_CHAIN_MODE_EACH <<          \
+                                                            TRANSFER_SETTINGS_CHAIN_MODE_BITS) | \
+                                                           (TRANSFER_SIZE_1_BYTE <<              \
+                                                            TRANSFER_SETTINGS_SIZE_BITS) |       \
+                                                           (TRANSFER_ADDR_MODE_FIXED <<          \
+                                                            TRANSFER_SETTINGS_SRC_ADDR_BITS) |   \
+                                                           (TRANSFER_IRQ_END <<                  \
+                                                            TRANSFER_SETTINGS_IRQ_BITS) |        \
+                                                           (TRANSFER_ADDR_MODE_INCREMENTED <<    \
+                                                            TRANSFER_SETTINGS_DEST_ADDR_BITS))
 
-#define SAU_REG_SIZE                 (R_SAU1_BASE - R_SAU0_BASE)
-#define SAU_SPI_SMR_INIT_VALUE       (0x0020U)
-#define SAU_SPI_SCR_INIT_VALUE       (0x0007U)
+#define SAU_SPI_PRV_DTC_TX_FOR_READ_TRANSFER_SETTINGS     ((TRANSFER_MODE_NORMAL <<              \
+                                                            TRANSFER_SETTINGS_MODE_BITS) |       \
+                                                           (TRANSFER_CHAIN_MODE_DISABLED <<      \
+                                                            TRANSFER_SETTINGS_CHAIN_MODE_BITS) | \
+                                                           (TRANSFER_SIZE_1_BYTE <<              \
+                                                            TRANSFER_SETTINGS_SIZE_BITS) |       \
+                                                           (TRANSFER_ADDR_MODE_FIXED <<          \
+                                                            TRANSFER_SETTINGS_SRC_ADDR_BITS) |   \
+                                                           (TRANSFER_IRQ_END <<                  \
+                                                            TRANSFER_SETTINGS_IRQ_BITS) |        \
+                                                           (TRANSFER_ADDR_MODE_INCREMENTED <<    \
+                                                            TRANSFER_SETTINGS_DEST_ADDR_BITS))
 
-#define SAU_SPI_PSR_MIN_DIV_2        (2U)
-#define SAU_SPI_PSR_MIN_DIV_4        (4U)
-#define SAU_SPI_SDR_STCLK_MAX_DIV    (256U)
-#define SAU_SPI_PSR_MAX_DIV          (32768U)
-#define R_SAU_SDR_DUMMY_DATA         (0xFFU)
-#if SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE == 1
- #define SAU_REG                     (R_SAU0)
-#elif SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE == 2
- #define SAU_REG                     (R_SAU1)
+#define SAU_SPI_PRV_DTC_TX_FOR_WRITE_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL <<              \
+                                                            TRANSFER_SETTINGS_MODE_BITS) |       \
+                                                           (TRANSFER_CHAIN_MODE_DISABLED <<      \
+                                                            TRANSFER_SETTINGS_CHAIN_MODE_BITS) | \
+                                                           (TRANSFER_SIZE_1_BYTE <<              \
+                                                            TRANSFER_SETTINGS_SIZE_BITS) |       \
+                                                           (TRANSFER_ADDR_MODE_INCREMENTED <<    \
+                                                            TRANSFER_SETTINGS_SRC_ADDR_BITS) |   \
+                                                           (TRANSFER_IRQ_END <<                  \
+                                                            TRANSFER_SETTINGS_IRQ_BITS) |        \
+                                                           (TRANSFER_ADDR_MODE_FIXED <<          \
+                                                            TRANSFER_SETTINGS_DEST_ADDR_BITS))
+
+#define SAU_REG_SIZE                                      (R_SAU1_BASE - R_SAU0_BASE)
+#define SAU_SPI_SMR_INIT_VALUE                            (0x0020U)
+#define SAU_SPI_SCR_INIT_VALUE                            (0x0007U | \
+                                                           (SAU_SPI_TRANSFER_OPERATION_MODE << R_SAU0_SCR_TRXE_Pos))
+#define SAU0_SPS_REG_INIT                                 ((BSP_CFG_SAU_CK01_DIV << R_SAU0_SPS_PRS1_Pos) | \
+                                                           BSP_CFG_SAU_CK00_DIV)
+#define SAU1_SPS_REG_INIT                                 ((BSP_CFG_SAU_CK11_DIV << R_SAU0_SPS_PRS1_Pos) | \
+                                                           BSP_CFG_SAU_CK10_DIV)
+
+#define SAU_SPI_PSR_MIN_DIV_2                             (2U)
+#define SAU_SPI_PSR_MIN_DIV_4                             (4U)
+#define SAU_SPI_SDR_STCLK_MAX_DIV                         (256U)
+#define SAU_SPI_PSR_MAX_DIV                               (32768U)
+#define R_SAU_SDR_DUMMY_DATA                              (0xFFU)
+#define SAU_SPI_STCLK_MAX                                 (127)
+
+#if 0 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI00 used (Unit 0 Channel 0) */
+ #define SAU_SPI_PRV_CHANNEL                              (0)
+ #define SAU_SPI_PRV_UNIT                                 (0)
+ #define SAU_REG                                          (R_SAU0)
+ #define SAU_SPS_REG_INIT                                 (SAU0_SPS_REG_INIT)
+#elif 20 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI20 used (Unit 1 Channel 0) */
+ #define SAU_SPI_PRV_CHANNEL                              (0)
+ #define SAU_SPI_PRV_UNIT                                 (1)
+ #define SAU_REG                                          (R_SAU1)
+ #define SAU_SPS_REG_INIT                                 (SAU1_SPS_REG_INIT)
+#elif 11 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI11 used (Unit 0 Channel 3) */
+ #define SAU_SPI_PRV_CHANNEL                              (3)
+ #define SAU_SPI_PRV_UNIT                                 (0)
+ #define SAU_REG                                          (R_SAU0)
+ #define SAU_SPS_REG_INIT                                 (SAU0_SPS_REG_INIT)
+#endif
+
+#if -1 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Single channel configuration disabled. */
+ #define SAU_REG                                          (p_ctrl->p_reg)
+ #define SAU_SPI_PRV_UNIT                                 (p_extend->sau_unit)
+ #define SAU_SPI_PRV_CHANNEL_DECLARATION                  uint8_t channel = p_ctrl->p_cfg->channel
+ #define SAU_SPI_PRV_CHANNEL                              (channel)
+ #define SAU_SPS_REG_INIT                                 (SAU_SPI_PRV_UNIT ? SAU1_SPS_REG_INIT : SAU0_SPS_REG_INIT)
 #else
- #define SAU_REG                     (p_ctrl->p_reg)
+ #define SAU_SPI_PRV_CHANNEL_DECLARATION
 #endif
 
 /** "SAU" in ASCII, used to determine if channel is open. */
-#define SAU_SPI_OPEN                 (0x53415553ULL)
+#define SAU_SPI_OPEN    (0x53415553ULL)
 
 /***********************************************************************************************************************
  * Private global variables.
@@ -75,6 +126,20 @@ const spi_api_t g_spi_on_sau =
  * Private function declarations.
  **********************************************************************************************************************/
 
+#if SAU_SPI_CFG_DTC_SUPPORT_ENABLE == 1
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION || \
+    SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION
+
+/* constant used as the source location for the DTC dummy write */
+static const uint8_t g_dummy_write_data_for_read_op = R_SAU_SDR_DUMMY_DATA;
+ #endif
+static fsp_err_t r_sau_spi_transfer_config(sau_spi_instance_ctrl_t * const p_ctrl);
+static void      r_sau_spi_reconfigure_for_transfer(sau_spi_instance_ctrl_t * const p_ctrl, uint8_t const length);
+
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION
+static uint8_t dummy_rx;
+ #endif
+#endif
 static void r_sau_spi_hw_config(sau_spi_instance_ctrl_t * const p_ctrl);
 
 static fsp_err_t r_sau_spi_write_read_common(sau_spi_instance_ctrl_t * const p_ctrl,
@@ -97,15 +162,16 @@ static void r_sau_spi_receive(sau_spi_instance_ctrl_t * p_ctrl);
 static void r_sau_spi_call_callback(sau_spi_instance_ctrl_t * p_ctrl, spi_event_t event);
 
 #if (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION)
-static void r_sau_spi_do_transmission(sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const * p_cfg);
+static void r_sau_spi_do_transmission(sau_spi_instance_ctrl_t * p_ctrl);
 
 #elif (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION)
-static void r_sau_spi_do_reception(sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const * p_cfg);
+static void r_sau_spi_do_reception(sau_spi_instance_ctrl_t * p_ctrl);
 
 #else
-static void r_sau_spi_do_transmission_reception(sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const * p_cfg);
+static void r_sau_spi_do_transmission_reception(sau_spi_instance_ctrl_t * p_ctrl);
 
 #endif
+
 void sau_spi_txrxi_isr(void);
 
 /***********************************************************************************************************************
@@ -141,7 +207,6 @@ fsp_err_t R_SAU_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
 #if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_cfg);
 #endif
-    sau_spi_extended_cfg_t * p_extend = (sau_spi_extended_cfg_t *) p_cfg->p_extend;
 
 #if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
@@ -150,16 +215,25 @@ fsp_err_t R_SAU_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
     FSP_ASSERT(NULL != p_cfg->p_callback);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
 #endif
-#if !SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE
-    p_ctrl->p_reg = ((R_SAU0_Type *) (R_SAU0_BASE + (SAU_REG_SIZE * p_extend->sau_unit)));
+#if -1 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE
+    sau_spi_extended_cfg_t const * const p_extend = (sau_spi_extended_cfg_t *) p_cfg->p_extend;
+    p_ctrl->p_reg = ((R_SAU0_Type *) (R_SAU0_BASE + (SAU_REG_SIZE * SAU_SPI_PRV_UNIT)));
 #endif
     p_ctrl->p_cfg = p_cfg;
 
-    p_ctrl->p_callback = p_cfg->p_callback;
-    p_ctrl->p_context  = p_cfg->p_context;
+    p_ctrl->p_callback           = p_cfg->p_callback;
+    p_ctrl->p_context            = p_cfg->p_context;
+    p_ctrl->transfer_in_progress = false;
+
+#if SAU_SPI_CFG_DTC_SUPPORT_ENABLE == 1
+
+    /* Open the SAU SPI transfer interface if available. */
+    err = r_sau_spi_transfer_config(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
 
     /* Enable Clock for the SAU Channel. */
-    R_BSP_MODULE_START(FSP_IP_SAU, p_extend->sau_unit);
+    R_BSP_MODULE_START(FSP_IP_SAU, SAU_SPI_PRV_UNIT);
 
     /* Write user configuration to registers. */
     r_sau_spi_hw_config(p_ctrl);
@@ -190,7 +264,7 @@ fsp_err_t R_SAU_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
  * @param      p_api_ctrl           Pointer to the control structure.
  * @param      p_dest               Pointer to the destination buffer.
  * @param[in]  length               The number of bytes to transfer.
- * @param[in]  bit_width            Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).
+ * @param[in]  bit_width            Data frame length (Set to SPI_BIT_WIDTH_7_BITS or SPI_BIT_WIDTH_8_BITS).
  *
  * @retval     FSP_SUCCESS          Read operation successfully completed.
  * @retval     FSP_ERR_ASSERTION    One of the following invalid parameters passed:
@@ -211,18 +285,23 @@ fsp_err_t R_SAU_SPI_Read (spi_ctrl_t * const    p_api_ctrl,
                           uint32_t const        length,
                           spi_bit_width_t const bit_width)
 {
-#if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_api_ctrl);
-
-    /* Check bit_width parameter, in simple SPI, 7 or 8 bits operation is allowed. */
-    FSP_ERROR_RETURN((SPI_BIT_WIDTH_8_BITS == bit_width) || (SPI_BIT_WIDTH_7_BITS == bit_width), FSP_ERR_UNSUPPORTED);
+#if SAU_SPI_TRANSFER_OPERATION_MODE != SAU_SPI_TRANSFER_MODE_TRANSMISSION
+ #if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
 
     /* Check the destination, should not be NULL. */
     FSP_ASSERT(NULL != p_dest);
-#endif
+ #endif
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) p_api_ctrl;
 
     return r_sau_spi_write_read_common(p_ctrl, NULL, p_dest, length, bit_width);
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_dest);
+    FSP_PARAMETER_NOT_USED(length);
+    FSP_PARAMETER_NOT_USED(bit_width);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -242,7 +321,7 @@ fsp_err_t R_SAU_SPI_Read (spi_ctrl_t * const    p_api_ctrl,
  * @param      p_api_ctrl           Pointer to the control structure.
  * @param      p_src                Pointer to the source buffer.
  * @param[in]  length               The number of bytes to transfer.
- * @param[in]  bit_width            Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).
+ * @param[in]  bit_width            Data frame length (Set to SPI_BIT_WIDTH_7_BITS or SPI_BIT_WIDTH_8_BITS).
  *
  * @retval     FSP_SUCCESS          Write operation successfully completed.
  * @retval     FSP_ERR_ASSERTION    One of the following invalid parameters passed:
@@ -263,14 +342,21 @@ fsp_err_t R_SAU_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
                            uint32_t const        length,
                            spi_bit_width_t const bit_width)
 {
-#if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_api_ctrl);
-    FSP_ERROR_RETURN((SPI_BIT_WIDTH_8_BITS == bit_width) || (SPI_BIT_WIDTH_7_BITS == bit_width), FSP_ERR_UNSUPPORTED);
+#if SAU_SPI_TRANSFER_OPERATION_MODE != SAU_SPI_TRANSFER_MODE_RECEPTION
+ #if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_src);
-#endif
+ #endif
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) p_api_ctrl;
 
     return r_sau_spi_write_read_common(p_ctrl, p_src, NULL, length, bit_width);
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_src);
+    FSP_PARAMETER_NOT_USED(length);
+    FSP_PARAMETER_NOT_USED(bit_width);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -294,7 +380,7 @@ fsp_err_t R_SAU_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
  * @param      p_src                Pointer to the source buffer.
  * @param      p_dest               Pointer to the destination buffer.
  * @param[in]  length               The number of bytes to transfer.
- * @param[in]  bit_width            Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).
+ * @param[in]  bit_width            Data frame length (Set to SPI_BIT_WIDTH_7_BITS or SPI_BIT_WIDTH_8_BITS).
  *
  * @retval     FSP_SUCCESS          Write operation successfully completed.
  * @retval     FSP_ERR_ASSERTION    One of the following invalid parameters passed:
@@ -317,15 +403,23 @@ fsp_err_t R_SAU_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
                                uint32_t const        length,
                                spi_bit_width_t const bit_width)
 {
-#if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_api_ctrl);
-    FSP_ERROR_RETURN((SPI_BIT_WIDTH_8_BITS == bit_width) || (SPI_BIT_WIDTH_7_BITS == bit_width), FSP_ERR_UNSUPPORTED);
+#if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION
+ #if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_src);
     FSP_ASSERT(NULL != p_dest);
-#endif
+ #endif
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) p_api_ctrl;
 
     return r_sau_spi_write_read_common(p_ctrl, p_src, p_dest, length, bit_width);
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(p_src);
+    FSP_PARAMETER_NOT_USED(p_dest);
+    FSP_PARAMETER_NOT_USED(length);
+    FSP_PARAMETER_NOT_USED(bit_width);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -343,7 +437,7 @@ fsp_err_t R_SAU_SPI_CallbackSet (spi_ctrl_t * const          p_api_ctrl,
 {
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) p_api_ctrl;
 
-#if (SAU_SPI_CFG_PARAM_CHECKING_ENABLE)
+#if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_ctrl);
     FSP_ASSERT(p_callback);
     FSP_ERROR_RETURN(SAU_SPI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -375,17 +469,19 @@ fsp_err_t R_SAU_SPI_Close (spi_ctrl_t * const p_api_ctrl)
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(SAU_SPI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
-    spi_cfg_t const * p_cfg = p_ctrl->p_cfg;
+
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
 
     /* Clear the RE and TE bits in SCR. */
-    SAU_REG->SCR[p_cfg->channel] = 0;
+    SAU_REG->SCR[SAU_SPI_PRV_CHANNEL] = 0;
 
 #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
     FSP_CRITICAL_SECTION_DEFINE;
     FSP_CRITICAL_SECTION_ENTER;
 #endif
-    SAU_REG->ST  |= (uint16_t) (1 << p_cfg->channel);
-    SAU_REG->SOE &= (uint16_t) ~(1 << p_cfg->channel);
+    SAU_REG->ST  |= (uint16_t) (1 << SAU_SPI_PRV_CHANNEL);
+    SAU_REG->SOE &= (uint16_t) ~(1 << SAU_SPI_PRV_CHANNEL);
 #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
     FSP_CRITICAL_SECTION_EXIT;
 #endif
@@ -393,21 +489,26 @@ fsp_err_t R_SAU_SPI_Close (spi_ctrl_t * const p_api_ctrl)
 
     p_ctrl->open = 0U;
 
+#if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+    p_ctrl->p_cfg->p_transfer_tx->p_api->close(p_ctrl->p_cfg->p_transfer_tx->p_ctrl);
+#endif
+
     return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
  * Calculate the register settings required to achieve the desired bitrate.
  *
- * @param[in]  bitrate            bitrate [bps]. For example, 250,000; 500,00; 16,000,000 (max), etc.
- * @param      sclk_div           Pointer to sau_spi_div_setting_t used to configure baudrate settings.
- * @param      sau_unit           Sau unit.
- * @param      channel            Sau channel.
+ * @note This function calculates the bitrate settings with both operation clocks CK0 and CK1, then selects the operation
+ * clock and register setting combination that would produce the lowest error.
  *
- * @retval     FSP_SUCCESS        Baud rate is set successfully.
- * @retval     FSP_ERR_ASSERTION  Baud rate is not achievable.
- * @note       The application must pause for 1 bit time after the BRR register is loaded before transmitting/receiving
- *             to allow time for the clock to settle.
+ * @param[in]  bitrate            bitrate [bps]. For example, 250,000; 500,00; 16,000,000 (max), etc.
+ * @param[out] sclk_div           Pointer to sau_spi_div_setting_t used to configure baudrate settings.
+ * @param      sau_unit           SAU unit.
+ * @param      channel            SAU channel.
+ *
+ * @retval     FSP_SUCCESS        Bitrate is calculated successfully.
+ * @retval     FSP_ERR_ASSERTION  Bitrate is not achievable or not valid for the selected unit/channel.
  **********************************************************************************************************************/
 fsp_err_t R_SAU_SPI_CalculateBitrate (uint32_t                bitrate,
                                       sau_spi_div_setting_t * sclk_div,
@@ -421,38 +522,53 @@ fsp_err_t R_SAU_SPI_CalculateBitrate (uint32_t                bitrate,
     FSP_ASSERT(bitrate);
     if ((0 == sau_unit) && (0 == channel))
     {
-        FSP_ASSERT(bitrate <= (peripheral_clock) / SAU_SPI_PSR_MIN_DIV_2);
+        FSP_ASSERT(bitrate <= peripheral_clock / SAU_SPI_PSR_MIN_DIV_2);
     }
     else
     {
-        FSP_ASSERT(bitrate <= (peripheral_clock) / SAU_SPI_PSR_MIN_DIV_4);
+        FSP_ASSERT(bitrate <= peripheral_clock / SAU_SPI_PSR_MIN_DIV_4);
     }
 
-    FSP_ASSERT(bitrate >= (peripheral_clock) / SAU_SPI_SDR_STCLK_MAX_DIV / SAU_SPI_PSR_MAX_DIV);
+    FSP_ASSERT(bitrate >= peripheral_clock / SAU_SPI_SDR_STCLK_MAX_DIV / SAU_SPI_PSR_MAX_DIV);
 #else
-    FSP_PARAMETER_NOT_USED(sau_unit);
     FSP_PARAMETER_NOT_USED(channel);
 #endif
-    uint32_t temp_sdr            = 0;
-    uint32_t delta_error         = INT32_MAX;
-    uint32_t temp_delta_error    = 0;
-    uint32_t temp_actual_bitrate = 0;
+    uint32_t best_delta_error = UINT32_MAX;
 
-    for (uint8_t i = 0; i <= R_SAU0_SPS_PRS0_Msk; i++)
+#if SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE != -1
+    const uint32_t sps = SAU_SPS_REG_INIT;
+    FSP_PARAMETER_NOT_USED(sau_unit);
+#else
+    const uint32_t sps = sau_unit ? SAU1_SPS_REG_INIT : SAU0_SPS_REG_INIT;
+#endif
+
+    /* Calculate settings twice, once for CK0 and once for CK1, selecting the result with the lowest error */
+    for (uint8_t prs_shift = 0; prs_shift <= R_SAU0_SPS_PRS1_Pos; prs_shift += R_SAU0_SPS_PRS1_Pos)
     {
-        /* Calculate BRR so that the bit rate is the largest possible value less than or equal to the desired
-         * bitrate. */
-        temp_sdr            = (uint32_t) (((peripheral_clock >> (i + 1)) / bitrate - 1) + 0.5); // NOLINT(readability-magic-numbers)
-        temp_actual_bitrate = (peripheral_clock >> (i + 1)) / ((temp_sdr + 1));
-        temp_delta_error    = bitrate >=
-                              temp_actual_bitrate ? (bitrate - temp_actual_bitrate) : (temp_actual_bitrate - bitrate);
-        if ((temp_delta_error < delta_error) && (temp_sdr <= INT8_MAX))
+        uint8_t prs = (sps >> prs_shift) & R_SAU0_SPS_PRS0_Msk;
+
+        /* To get the stclk divider calculate the divisor to apply to ICLK. There's a built in div/2. */
+        const uint32_t divisor = bitrate << (prs + 1);
+
+        /* Calculate stclk register value: STCLK = (f_mck / (2*bitrate)) - 1 */
+        const uint32_t stclk = (peripheral_clock + (divisor >> 1)) / divisor - 1;
+
+        /* Get the actual bitrate given the current settings.
+         * peripheral_clock / 2^prs / (2 * (stclk + 1)) */
+        const uint32_t actual_bitrate = (peripheral_clock >> (prs + 1)) / (stclk + 1);
+        uint32_t       delta_error    = bitrate > actual_bitrate ? bitrate - actual_bitrate : actual_bitrate - bitrate;
+
+        /* Keep settings which are valid and provide the lowest error. */
+        if ((stclk <= SAU_SPI_STCLK_MAX) && (delta_error < best_delta_error))
         {
-            sclk_div->stclk = (uint8_t) temp_sdr;
-            delta_error     = temp_delta_error;
-            sclk_div->prs   = i;
+            best_delta_error          = delta_error;
+            sclk_div->stclk           = (uint8_t) stclk;
+            sclk_div->operation_clock = (sau_spi_operation_clock_t) (prs_shift == R_SAU0_SPS_PRS1_Pos);
         }
     }
+
+    /* Return an error if no valid STCLK setting was found with either operation clock */
+    FSP_ERROR_RETURN(best_delta_error != UINT32_MAX, FSP_ERR_INVALID_ARGUMENT);
 
     return FSP_SUCCESS;
 }
@@ -469,119 +585,231 @@ static void r_sau_spi_hw_config (sau_spi_instance_ctrl_t * const p_ctrl)
 {
     spi_cfg_t const        * p_cfg    = p_ctrl->p_cfg;
     sau_spi_extended_cfg_t * p_extend = (sau_spi_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    R_SAU0_Type            * p_reg    = SAU_REG;
+
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
 
     /* Initialize registers to their reset values. */
     uint16_t smr = SAU_SPI_SMR_INIT_VALUE;
     uint16_t scr = SAU_SPI_SCR_INIT_VALUE;
+
+    /* Write settings that are common to master and slave mode. */
+    smr |= ((uint16_t) (p_cfg->operating_mode << R_SAU0_SMR_CCS_Pos) |
+            (uint16_t) (p_extend->transfer_mode << R_SAU0_SMR_MD0_Pos));
+
+    scr |= (uint16_t) (p_extend->data_phase << R_SAU0_SCR_DCP1_Pos) |
+           (uint16_t) (p_extend->clock_phase << R_SAU0_SCR_DCP_Pos) |
+           (uint16_t) (p_cfg->bit_order << R_SAU0_SCR_DIR_Pos);
+
 #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
+
+    /* Enter critical section when modifying registers that are shared between channels (SPS, SS, SO, SOE). */
     FSP_CRITICAL_SECTION_DEFINE;
     FSP_CRITICAL_SECTION_ENTER;
 #endif
-    uint16_t so = SAU_REG->SO;
-#if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
-    FSP_CRITICAL_SECTION_EXIT;
-#endif
-    p_ctrl->transfer_in_progress = false;
 
-    /* Select the baud rate generator clock divider. */
-    if (SPI_MODE_MASTER == p_cfg->operating_mode)
-    {
-        if (SAU_SPI_OPERATION_CLOCK_CK0 == p_extend->operation_clock)
-        {
-            SAU_REG->SPS_b.PRS0 = (uint16_t) (p_extend->clk_div.prs & 0x0F);
-        }
-        else
-        {
-            SAU_REG->SPS_b.PRS1 = (uint16_t) (p_extend->clk_div.prs & 0x0F);
-        }
-
-        smr |= (uint16_t) (p_extend->operation_clock << R_SAU0_SMR_CKS_Pos);
-    }
-
-    smr |=
-        (uint16_t) ((uint16_t) (p_cfg->operating_mode << R_SAU0_SMR_CCS_Pos) |
-                    (uint16_t) (p_extend->transfer_mode << R_SAU0_SMR_MD0_Pos));
-
-    SAU_REG->SMR[p_cfg->channel] = smr;
-#if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION
-    scr |= (uint16_t) (SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION << R_SAU0_SCR_TRXE_Pos) |
-           (uint16_t) (p_extend->data_phase << R_SAU0_SCR_DCP1_Pos) |
-           (uint16_t) (p_extend->clock_phase << R_SAU0_SCR_DCP_Pos) |
-           (uint16_t) (p_cfg->bit_order << R_SAU0_SCR_DIR_Pos);
-#endif
-#if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION
-    scr |= (uint16_t) (SAU_SPI_TRANSFER_MODE_RECEPTION << R_SAU0_SCR_TRXE_Pos) |
-           (uint16_t) (p_extend->data_phase << R_SAU0_SCR_DCP1_Pos) |
-           (uint16_t) (p_extend->clock_phase << R_SAU0_SCR_DCP_Pos) |
-           (uint16_t) (p_cfg->bit_order << R_SAU0_SCR_DIR_Pos);
-#endif
-#if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION
-    scr |= (uint16_t) (SAU_SPI_TRANSFER_MODE_TRANSMISSION << R_SAU0_SCR_TRXE_Pos) |
-           (uint16_t) (p_extend->data_phase << R_SAU0_SCR_DCP1_Pos) |
-           (uint16_t) (p_extend->clock_phase << R_SAU0_SCR_DCP_Pos) |
-           (uint16_t) (p_cfg->bit_order << R_SAU0_SCR_DIR_Pos);
-#endif
-    SAU_REG->SCR[p_cfg->channel] = scr;
+    uint16_t so  = p_reg->SO;
+    uint16_t sdr = 0;
 
     if (SPI_MODE_MASTER == p_cfg->operating_mode)
     {
-        SAU_REG->SDR[p_cfg->channel] = ((uint16_t) (p_extend->clk_div.stclk << R_SAU0_SDR_STCLK_Pos));
+        /* Write settings that are only used in master mode. */
+        p_reg->SPS = SAU_SPS_REG_INIT;
+
+        smr |= (uint16_t) (p_extend->clk_div.operation_clock << R_SAU0_SMR_CKS_Pos);
+        sdr  = (uint16_t) (p_extend->clk_div.stclk << R_SAU0_SDR_STCLK_Pos);
+
         if (SAU_SPI_CLOCK_PHASE_REVERSE == p_extend->clock_phase)
         {
-            so &= (uint16_t) ~(1 << (R_SAU0_SO_CKO_Pos + p_cfg->channel));
+            so &= (uint16_t) ~(1 << (R_SAU0_SO_CKO_Pos + SAU_SPI_PRV_CHANNEL));
         }
         else
         {
-            so |= (uint16_t) (1 << (R_SAU0_SO_CKO_Pos + p_cfg->channel));
+            so |= (uint16_t) (1 << (R_SAU0_SO_CKO_Pos + SAU_SPI_PRV_CHANNEL));
         }
     }
     else
     {
-        SAU_REG->SDR[p_cfg->channel] = 0;
-    }
-
-#if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION
-    if (SPI_MODE_MASTER == p_cfg->operating_mode)
-    {
-        SAU_REG->SO = so;
-    }
-
-#else
-    so &= (uint16_t) ~(1 << (p_cfg->channel));
- #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
-    FSP_CRITICAL_SECTION_ENTER;
- #endif
-    SAU_REG->SO   = so;
-    SAU_REG->SOE |= (uint16_t) (1 << (p_cfg->channel));
- #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
-    FSP_CRITICAL_SECTION_EXIT;
- #endif
-#endif
-    if ((0 == p_extend->sau_unit) && (0 == p_cfg->channel))
-    {
-        if (SPI_MODE_SLAVE == p_cfg->operating_mode)
+        /* Write settings that are only used in slave mode. */
+        if ((0 == SAU_SPI_PRV_UNIT) && (0 == SAU_SPI_PRV_CHANNEL))
         {
+            /* Enable IRQ0 pin as an external interrupt for SAU unit 0 channel 0. */
             R_PORGA->ISC_b.SSIE00 = 1U;
         }
     }
 
-#if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
-    FSP_CRITICAL_SECTION_ENTER;
+#if SAU_SPI_TRANSFER_OPERATION_MODE != SAU_SPI_TRANSFER_MODE_RECEPTION
+
+    /* Set initial serial output data to 0 if transmit is enabled. */
+    so &= (uint16_t) ~(1 << SAU_SPI_PRV_CHANNEL);
+
+    /* Only enable serial output if transmit is enabled. */
+    p_reg->SOE |= (uint16_t) (1 << (SAU_SPI_PRV_CHANNEL));
 #endif
-    SAU_REG->SS |= (uint16_t) (1 << (p_cfg->channel));
+
+    p_reg->SMR[SAU_SPI_PRV_CHANNEL] = smr;
+    p_reg->SCR[SAU_SPI_PRV_CHANNEL] = scr;
+    p_reg->SDR[SAU_SPI_PRV_CHANNEL] = sdr;
+    p_reg->SO = so;
+
+    SAU_REG->SS = (uint16_t) (1 << (SAU_SPI_PRV_CHANNEL));
+
 #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
     FSP_CRITICAL_SECTION_EXIT;
 #endif
 }
 
+#if SAU_SPI_CFG_DTC_SUPPORT_ENABLE == 1
+
 /*******************************************************************************************************************//**
- * Initiates writ or read process. Common routine used by SPI API write or read functions.
+ * Configures SAU SPI related transfer drivers (if enabled).
+ *
+ * @param[in]     p_ctrl                    Pointer to the control structure.
+ *
+ * @retval        FSP_SUCCESS               Operation successfully completed.
+ * @retval        FSP_ERR_ASSERTION         One of the following invalid parameters passed:
+ *                                          - Pointer p_cfg is NULL
+ *                                          - Interrupt is not enabled
+ * @retval        FSP_ERR_INVALID_ARGUMENT  DTC is used for data transmission but not used for data reception or
+ *                                          vice versa.
+ **********************************************************************************************************************/
+static fsp_err_t r_sau_spi_transfer_config (sau_spi_instance_ctrl_t * const p_ctrl)
+{
+    fsp_err_t               err   = FSP_SUCCESS;
+    spi_cfg_t const * const p_cfg = p_ctrl->p_cfg;
+
+    /* Set default transfer info and open receive transfer module, if enabled. */
+ #if SAU_SPI_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_cfg->p_transfer_tx->p_api);
+    FSP_ASSERT(NULL != p_cfg->p_transfer_tx->p_ctrl);
+    FSP_ASSERT(NULL != p_cfg->p_transfer_tx->p_cfg);
+ #endif
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION
+    transfer_info_t * p_info_rx = &(p_cfg->p_transfer_tx->p_cfg->p_info[0]);
+    transfer_info_t * p_info_tx = &(p_cfg->p_transfer_tx->p_cfg->p_info[1]);
+
+    /* Set the initial configuration for the rx transfer instance. */
+    p_info_rx->transfer_settings_word = SAU_SPI_PRV_DTC_RX_FOR_READ_TRANSFER_SETTINGS;
+    p_info_rx->p_src = (void *) (&(SAU_REG->SDR[p_cfg->channel]));
+
+    /* Set the initial configuration for the tx transfer instance. */
+    p_info_tx->transfer_settings_word = SAU_SPI_PRV_DTC_TX_FOR_WRITE_TRANSFER_SETTINGS;
+    p_info_tx->p_dest                 = (void *) (&(SAU_REG->SDR[p_cfg->channel]));
+ #endif
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION
+    transfer_info_t * p_info_tx = &(p_cfg->p_transfer_tx->p_cfg->p_info[1]);
+
+    /* Set the initial configuration for the tx transfer instance. */
+    p_info_tx->transfer_settings_word = SAU_SPI_PRV_DTC_TX_FOR_WRITE_TRANSFER_SETTINGS;
+    p_info_tx->p_dest                 = (void *) (&(SAU_REG->SDR[p_cfg->channel]));
+ #endif
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION
+    transfer_info_t * p_info_rx = &(p_cfg->p_transfer_tx->p_cfg->p_info[0]);
+    transfer_info_t * p_info_tx = &(p_cfg->p_transfer_tx->p_cfg->p_info[1]);
+    if (SPI_MODE_MASTER == p_cfg->operating_mode)
+    {
+        p_info_rx->transfer_settings_word = SAU_SPI_PRV_DTC_RX_FOR_READ_TRANSFER_SETTINGS;
+        p_info_rx->p_src = (void *) (&(SAU_REG->SDR[p_cfg->channel]));
+
+        /* Set the initial configuration for the tx transfer instance. */
+        p_info_tx->transfer_settings_word = SAU_SPI_PRV_DTC_TX_FOR_WRITE_TRANSFER_SETTINGS;
+        p_info_tx->p_dest                 = (void *) (&(SAU_REG->SDR[p_cfg->channel]));
+    }
+    else
+    {
+        /* Set the initial configuration for the tx transfer instance. */
+        p_info_tx->transfer_settings_word = SAU_SPI_PRV_DTC_TX_FOR_READ_TRANSFER_SETTINGS;
+        p_info_tx->p_src = (void *) (&(SAU_REG->SDR[p_cfg->channel]));
+    }
+ #endif
+    err = p_cfg->p_transfer_tx->p_api->open(p_cfg->p_transfer_tx->p_ctrl, p_cfg->p_transfer_tx->p_cfg);
+
+    return err;
+}
+
+/******************************************************************************************************************//**
+ * Reconfigure the address mode for transfer interface
+ *
+ * @param[in]  p_ctrl     Pointer to the control structure.
+ * @param[in]  p_cfg      Pointer to a configuration structure.
+ * @param[in]  length     Number of data already transferred.
+ **********************************************************************************************************************/
+static void r_sau_spi_reconfigure_for_transfer (sau_spi_instance_ctrl_t * const p_ctrl, uint8_t const length)
+{
+    spi_cfg_t const * const p_cfg = p_ctrl->p_cfg;
+
+    transfer_instance_t const * p_transfer = p_cfg->p_transfer_tx;
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION
+    transfer_info_t * p_info_tx = &(p_transfer->p_cfg->p_info[1]);
+    p_info_tx->length                 = (uint16_t) (p_ctrl->count - length);
+    p_info_tx->p_src                  = p_ctrl->p_src + length;
+    p_info_tx->transfer_settings_word = SAU_SPI_PRV_DTC_TX_FOR_WRITE_TRANSFER_SETTINGS;
+    p_transfer->p_api->reconfigure(p_transfer->p_ctrl, p_info_tx);
+ #endif
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
+
+    transfer_info_t * p_info_rx = &(p_transfer->p_cfg->p_info[0]);
+    transfer_info_t * p_info_tx = &(p_transfer->p_cfg->p_info[1]);
+    p_info_tx->length = (uint16_t) (p_ctrl->count - length);
+
+    if (SPI_MODE_MASTER == p_cfg->operating_mode)
+    {
+        p_info_rx->p_dest                 = p_ctrl->p_dest;
+        p_info_tx->p_src                  = (void *) &g_dummy_write_data_for_read_op;
+        p_info_tx->p_dest                 = (void *) &(SAU_REG->SDR[SAU_SPI_PRV_CHANNEL]);
+        p_info_tx->transfer_settings_word = SAU_SPI_PRV_DTC_TX_FOR_WRITE_TRANSFER_SETTINGS;
+        p_transfer->p_api->reconfigure(p_transfer->p_ctrl, p_info_rx);
+    }
+    else
+    {
+        /* Configure the tx transfer instance. */
+        p_info_tx->p_src = (void *) &(SAU_REG->SDR[SAU_SPI_PRV_CHANNEL]);
+        p_info_tx->transfer_settings_word = SAU_SPI_PRV_DTC_TX_FOR_READ_TRANSFER_SETTINGS;
+        p_info_tx->p_dest                 = p_ctrl->p_dest;
+
+        /* Enable the transfer instance. */
+        p_transfer->p_api->reconfigure(p_transfer->p_ctrl, p_info_tx);
+    }
+ #endif
+ #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION_RECEPTION
+    transfer_info_t * p_info_rx = &(p_transfer->p_cfg->p_info[0]);
+    transfer_info_t * p_info_tx = &(p_transfer->p_cfg->p_info[1]);
+    p_info_tx->length = (uint16_t) (p_ctrl->count - length);
+    if (NULL == p_ctrl->p_dest)
+    {
+        p_info_rx->p_dest = &dummy_rx;
+        p_info_rx->transfer_settings_word_b.dest_addr_mode = TRANSFER_ADDR_MODE_FIXED;
+        p_info_tx->p_src = p_ctrl->p_src + length;
+    }
+    else if (NULL == p_ctrl->p_src)
+    {
+        p_info_rx->p_dest                 = p_ctrl->p_dest;
+        p_info_rx->transfer_settings_word = SAU_SPI_PRV_DTC_RX_FOR_READ_TRANSFER_SETTINGS;
+        p_info_tx->p_src = (void *) &g_dummy_write_data_for_read_op;
+    }
+    else
+    {
+        p_info_rx->p_dest                 = p_ctrl->p_dest;
+        p_info_rx->transfer_settings_word = SAU_SPI_PRV_DTC_RX_FOR_READ_TRANSFER_SETTINGS;
+        p_info_tx->p_src = p_ctrl->p_src + length;
+    }
+    p_transfer->p_api->reconfigure(p_transfer->p_ctrl, p_info_rx);
+ #endif
+    p_ctrl->activation_on_tei = true;
+}
+
+#endif
+
+/*******************************************************************************************************************//**
+ * Initiates write or read process. Common routine used by SPI API write or read functions.
  *
  * @param[in]  p_ctrl             Pointer to the control block.
  * @param[in]  p_src              Pointer to data buffer which need to be sent.
  * @param[out] p_dest             Pointer to buffer where received data will be stored.
  * @param[in]  length             Number of data transactions to be performed.
- * @param[in]  bit_width            Invalid for SAU_SPI (Set to SPI_BIT_WIDTH_8_BITS).
+ * @param[in]  bit_width          Data frame length (Set to SPI_BIT_WIDTH_7_BITS or SPI_BIT_WIDTH_8_BITS).
  *
  * @retval     FSP_SUCCESS        Operation successfully completed.
  * @retval     FSP_ERR_NOT_OPEN   The channel has not been opened. Open the channel first.
@@ -604,31 +832,48 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(SAU_SPI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(0 != length);
+    FSP_ERROR_RETURN((SPI_BIT_WIDTH_8_BITS == bit_width) || (SPI_BIT_WIDTH_7_BITS == bit_width), FSP_ERR_UNSUPPORTED);
+
+ #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+
+    /* DTC on RX could actually receive 65535+3 = 65538 bytes as 3 bytes are handled separately.
+     * Forcing to 65535 to keep TX and RX uniform with respect to max transaction length via DTC.
+     */
+    FSP_ASSERT(length <= UINT16_MAX);
+ #endif
 #endif
 
-    spi_cfg_t const        * p_cfg    = p_ctrl->p_cfg;
     sau_spi_extended_cfg_t * p_extend = (sau_spi_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     FSP_ERROR_RETURN(p_ctrl->transfer_in_progress == false, FSP_ERR_IN_USE);
 
-    if (SPI_BIT_WIDTH_8_BITS == bit_width)
-    {
-        SAU_REG->SCR[p_cfg->channel] |= R_SAU0_SCR_DLS_Msk;
-    }
-    else
-    {
-        SAU_REG->SCR[p_cfg->channel] &= (uint16_t) ~1;
-    }
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
 
+    /* Writing to SCR is prohibited while the channel is enabled. If the bit width is changed, disable communication
+     * before writing to SCR. (See Section 21.3.4 in the RA0E1 user manual R01UH1040EJ0100). */
+    SAU_REG->ST = (uint16_t) (1 << SAU_SPI_PRV_CHANNEL);
+
+    /* Bit width is configured in SCR::DLS[1:0]:
+     * - 7bit: 0b10
+     * - 8bit: 0b11
+     */
+    uint16_t tmp = SAU_REG->SCR[SAU_SPI_PRV_CHANNEL];
+    SAU_REG->SCR[SAU_SPI_PRV_CHANNEL] = (uint16_t) (tmp & (uint16_t) ~1) | (SPI_BIT_WIDTH_8_BITS == bit_width);
+
+    SAU_REG->SS = (uint16_t) (1 << SAU_SPI_PRV_CHANNEL);
+
+    tmp = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
     if (SAU_SPI_TRANSFER_MODE_CONTINUOUS == p_extend->transfer_mode)
     {
-        if (1 == length)
+        tmp &= (uint16_t) ~R_SAU0_SMR_MD0_Msk;
+
+        /* Continuous mode can be used only when length > 1. When DTC is enabled, the length needs to be greater than 2. */
+        if (2 < length)
         {
-            SAU_REG->SMR[p_cfg->channel] &= (uint16_t) ~R_SAU0_SMR_MD0_Msk;
+            tmp |= (uint16_t) R_SAU0_SMR_MD0_Msk;
         }
-        else
-        {
-            SAU_REG->SMR[p_cfg->channel] |= (uint16_t) R_SAU0_SMR_MD0_Msk;
-        }
+
+        SAU_REG->SMR[SAU_SPI_PRV_CHANNEL] = tmp;
     }
 
     /* Setup the control block. */
@@ -637,6 +882,13 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
     p_ctrl->rx_count = 0U;
     p_ctrl->p_src    = (uint8_t *) p_src;
     p_ctrl->p_dest   = (uint8_t *) p_dest;
+#if SAU_SPI_CFG_DTC_SUPPORT_ENABLE == 1
+    p_ctrl->activation_on_tei = false;
+    if ((1 < length) && !(tmp & (SAU_SPI_TRANSFER_MODE_CONTINUOUS << R_SAU0_SMR_MD0_Pos)))
+    {
+        r_sau_spi_reconfigure_for_transfer(p_ctrl, 1);
+    }
+#endif
 
     /* Enable transmit and receive interrupts. */
     r_sau_spi_start_transfer(p_ctrl);
@@ -652,13 +904,16 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
 static void r_sau_spi_start_transfer (sau_spi_instance_ctrl_t * const p_ctrl)
 {
     p_ctrl->transfer_in_progress = true;
-
 #if SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION
+
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
+
     spi_cfg_t const * p_cfg = p_ctrl->p_cfg;
     if (SPI_MODE_MASTER == p_cfg->operating_mode)
     {
         /* start receive by dummy write */
-        SAU_REG->SDR_b[p_cfg->channel].DAT = R_SAU_SDR_DUMMY_DATA;
+        SAU_REG->SDR[SAU_SPI_PRV_CHANNEL] = R_SAU_SDR_DUMMY_DATA;
     }
 
 #else
@@ -678,16 +933,11 @@ static void r_sau_spi_start_transfer (sau_spi_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static void r_sau_spi_transmit (sau_spi_instance_ctrl_t * p_ctrl)
 {
-    spi_cfg_t const * p_cfg = p_ctrl->p_cfg;
-    if (p_ctrl->p_src)
-    {
-        SAU_REG->SDR_b[p_cfg->channel].DAT = (p_ctrl->p_src[p_ctrl->tx_count]);
-    }
-    else
-    {
-        /* start receive by dummy write */
-        SAU_REG->SDR_b[p_cfg->channel].DAT = R_SAU_SDR_DUMMY_DATA;
-    }
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
+
+    uint16_t dat = p_ctrl->p_src ? p_ctrl->p_src[p_ctrl->tx_count] : R_SAU_SDR_DUMMY_DATA;
+    SAU_REG->SDR[SAU_SPI_PRV_CHANNEL] = dat;
 
     p_ctrl->tx_count++;
 }
@@ -704,14 +954,10 @@ static void r_sau_spi_transmit (sau_spi_instance_ctrl_t * p_ctrl)
 static void r_sau_spi_receive (sau_spi_instance_ctrl_t * p_ctrl)
 {
     spi_cfg_t const * p_cfg = p_ctrl->p_cfg;
+    uint8_t           dat   = (uint8_t) (SAU_REG->SDR[p_cfg->channel] & R_SAU_SDR_DUMMY_DATA);
     if (p_ctrl->p_dest)
     {
-        p_ctrl->p_dest[p_ctrl->rx_count] = (uint8_t) SAU_REG->SDR_b[p_cfg->channel].DAT;
-    }
-    else
-    {
-        /* Read the received data but do nothing with it. */
-        SAU_REG->SDR_b[p_cfg->channel].DAT;
+        p_ctrl->p_dest[p_ctrl->rx_count] = dat;
     }
 
     p_ctrl->rx_count++;
@@ -744,39 +990,62 @@ static void r_sau_spi_call_callback (sau_spi_instance_ctrl_t * p_ctrl, spi_event
  **********************************************************************************************************************/
 void sau_spi_txrxi_isr (void)
 {
-    uint8_t                   err_type;
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE;
+
     IRQn_Type                 irq    = R_FSP_CurrentIrqGet();
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
-    spi_cfg_t const         * p_cfg  = p_ctrl->p_cfg;
 
-    err_type = (uint8_t) (SAU_REG->SSR[p_cfg->channel] & R_SAU0_SSR_OVF_Msk);
-    SAU_REG->SIR[p_cfg->channel] = (uint16_t) err_type;
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
 
-    if (1U == err_type)
+    uint16_t err_type = SAU_REG->SSR[SAU_SPI_PRV_CHANNEL] & R_SAU0_SSR_OVF_Msk;
+    if (err_type)
     {
+        SAU_REG->SIR[SAU_SPI_PRV_CHANNEL] = err_type;
         r_sau_spi_call_callback(p_ctrl, SPI_EVENT_ERR_READ_OVERFLOW);
     }
     else
     {
 #if (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION)
-        r_sau_spi_do_reception(p_ctrl, p_cfg);
+        r_sau_spi_do_reception(p_ctrl);
 #elif (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION)
-        r_sau_spi_do_transmission(p_ctrl, p_cfg);
+        r_sau_spi_do_transmission(p_ctrl);
 #else
-        r_sau_spi_do_transmission_reception(p_ctrl, p_cfg);
+        r_sau_spi_do_transmission_reception(p_ctrl);
 #endif
     }
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE;
 }
 
 #if (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_RECEPTION)
-void r_sau_spi_do_reception (sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const * p_cfg)
+static void r_sau_spi_do_reception (sau_spi_instance_ctrl_t * p_ctrl)
 {
-    uint16_t smr = SAU_REG->SMR[p_cfg->channel];
-    if (smr & (SAU_SPI_TRANSFER_MODE_CONTINUOUS << R_SAU0_SMR_MD0_Pos))
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
+
+    uint16_t smr                = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
+    uint8_t  continous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+ #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+    if (true == p_ctrl->activation_on_tei)
+    {
+        p_ctrl->activation_on_tei = false;
+        p_ctrl->rx_count          = p_ctrl->count - 1 - continous_transfer;
+        p_ctrl->tx_count          = p_ctrl->count;
+
+        return;
+    }
+ #endif
+    if (continous_transfer)
     {
         if (0 == p_ctrl->tx_count)
         {
-            SAU_REG->SDR_b[p_cfg->channel].DAT = R_SAU_SDR_DUMMY_DATA;
+ #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+            r_sau_spi_reconfigure_for_transfer(p_ctrl, 2);
+ #endif
+            SAU_REG->SDR_b[SAU_SPI_PRV_CHANNEL].DAT = R_SAU_SDR_DUMMY_DATA;
             p_ctrl->tx_count++;
         }
         else
@@ -784,12 +1053,12 @@ void r_sau_spi_do_reception (sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const *
             r_sau_spi_receive(p_ctrl);
             if (p_ctrl->rx_count < (p_ctrl->count - 1U))
             {
-                SAU_REG->SDR_b[p_cfg->channel].DAT = R_SAU_SDR_DUMMY_DATA;
+                SAU_REG->SDR[SAU_SPI_PRV_CHANNEL] = R_SAU_SDR_DUMMY_DATA;
             }
             else if (p_ctrl->rx_count == (p_ctrl->count - 1U))
             {
-                smr &= (uint16_t) ~(SAU_SPI_TRANSFER_MODE_CONTINUOUS);
-                SAU_REG->SMR[p_cfg->channel] = smr;
+                smr &= (uint16_t) ~SAU_SPI_TRANSFER_MODE_CONTINUOUS;
+                SAU_REG->SMR[SAU_SPI_PRV_CHANNEL] = smr;
             }
             else
             {
@@ -808,26 +1077,47 @@ void r_sau_spi_do_reception (sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const *
         }
         else
         {
-            if (SPI_MODE_MASTER == p_cfg->operating_mode)
+            if (SPI_MODE_MASTER == p_ctrl->p_cfg->operating_mode)
             {
-                SAU_REG->SDR_b[p_cfg->channel].DAT = R_SAU_SDR_DUMMY_DATA;
+                SAU_REG->SDR[SAU_SPI_PRV_CHANNEL] = R_SAU_SDR_DUMMY_DATA;
             }
         }
     }
 }
 
 #elif (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION)
-void r_sau_spi_do_transmission (sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const * p_cfg)
+static void r_sau_spi_do_transmission (sau_spi_instance_ctrl_t * p_ctrl)
 {
-    uint16_t smr = SAU_REG->SMR[p_cfg->channel];
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
+
+    uint16_t smr                = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
+    uint8_t  continous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+ #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+    if (true == p_ctrl->activation_on_tei)
+    {
+        p_ctrl->activation_on_tei = false;
+        p_ctrl->tx_count          = p_ctrl->count;
+
+        return;
+    }
+
+    if (continous_transfer)
+    {
+        if (1U == p_ctrl->tx_count)
+        {
+            r_sau_spi_reconfigure_for_transfer(p_ctrl, 2);
+        }
+    }
+ #endif
     if (p_ctrl->tx_count < p_ctrl->count)
     {
         r_sau_spi_transmit(p_ctrl);
     }
-    else if (smr & (SAU_SPI_TRANSFER_MODE_CONTINUOUS << R_SAU0_SMR_MD0_Pos))
+    else if (continous_transfer)
     {
-        smr &= (uint16_t) ~(SAU_SPI_TRANSFER_MODE_CONTINUOUS);
-        SAU_REG->SMR[p_cfg->channel] = smr;
+        smr &= (uint16_t) ~SAU_SPI_TRANSFER_MODE_CONTINUOUS;
+        SAU_REG->SMR[SAU_SPI_PRV_CHANNEL] = smr;
     }
     else
     {
@@ -837,15 +1127,36 @@ void r_sau_spi_do_transmission (sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t cons
 }
 
 #else
-void r_sau_spi_do_transmission_reception (sau_spi_instance_ctrl_t * p_ctrl, spi_cfg_t const * p_cfg)
+static void r_sau_spi_do_transmission_reception (sau_spi_instance_ctrl_t * p_ctrl)
 {
-    uint16_t smr = SAU_REG->SMR[p_cfg->channel];
-    if (smr & (SAU_SPI_TRANSFER_MODE_CONTINUOUS << R_SAU0_SMR_MD0_Pos))
+    /* If single channel is disabled, then save the channel number on the stack. */
+    SAU_SPI_PRV_CHANNEL_DECLARATION;
+
+    uint16_t smr                = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
+    uint8_t  continous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+ #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+    if (true == p_ctrl->activation_on_tei)
+    {
+        p_ctrl->activation_on_tei = false;
+        p_ctrl->rx_count          = p_ctrl->count - 1 - continous_transfer;
+        p_ctrl->tx_count          = p_ctrl->count;
+
+        return;
+    }
+ #endif
+    if (continous_transfer)
     {
         if (1U < p_ctrl->tx_count)
         {
             r_sau_spi_receive(p_ctrl);
         }
+
+ #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+        else
+        {
+            r_sau_spi_reconfigure_for_transfer(p_ctrl, 2);
+        }
+ #endif
     }
     else
     {
@@ -856,11 +1167,11 @@ void r_sau_spi_do_transmission_reception (sau_spi_instance_ctrl_t * p_ctrl, spi_
     {
         r_sau_spi_transmit(p_ctrl);
     }
-    else if (smr & (SAU_SPI_TRANSFER_MODE_CONTINUOUS << R_SAU0_SMR_MD0_Pos))
+    else if (continous_transfer)
     {
         /* 2nd to last byte */
-        smr &= (uint16_t) ~(SAU_SPI_TRANSFER_MODE_CONTINUOUS);
-        SAU_REG->SMR[p_cfg->channel] = smr;
+        smr &= (uint16_t) ~SAU_SPI_TRANSFER_MODE_CONTINUOUS;
+        SAU_REG->SMR[SAU_SPI_PRV_CHANNEL] = smr;
     }
     else
     {

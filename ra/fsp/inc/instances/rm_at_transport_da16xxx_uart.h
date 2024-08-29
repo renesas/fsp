@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup AT_TRANSPORT_DA16XXX_UART
@@ -32,10 +18,11 @@
 #include "r_ioport_api.h"
 #include "r_ioport.h"
 #include "rm_at_transport_da16xxx.h"
-
-#include "FreeRTOS.h"
-#include "semphr.h"
-#include "stream_buffer.h"
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+ #include "FreeRTOS.h"
+ #include "semphr.h"
+ #include "stream_buffer.h"
+#endif
 #include "rm_at_transport_da16xxx_uart_cfg.h"
 
 /** User configuration structure, used in open function */
@@ -54,15 +41,17 @@ typedef struct st_da16xxx_transport_instance_ctrl
     uint32_t curr_cmd_port;                                                                        ///< Current UART instance index for AT commands
     uint32_t open;                                                                                 ///< Flag to indicate if transport instance has been initialized
 
-    uint8_t              cmd_rx_queue_buf[AT_TRANSPORT_DA16XXX_CFG_CMD_RX_BUF_SIZE];               ///< Command port receive buffer used by byte queue // FreeRTOS
+    uint8_t cmd_rx_queue_buf[AT_TRANSPORT_DA16XXX_CFG_CMD_RX_BUF_SIZE];                            ///< Command port receive buffer used by byte queue // FreeRTOS
+#if (BSP_CFG_RTOS == 2)                                                                            /* FreeRTOS */
     StreamBufferHandle_t socket_byteq_hdl;                                                         ///< Socket stream buffer handle
     StaticStreamBuffer_t socket_byteq_struct;                                                      ///< Structure to hold stream buffer info
 
     SemaphoreHandle_t tx_sem;                                                                      ///< Transmit binary semaphore handle
     SemaphoreHandle_t rx_sem;                                                                      ///< Receive binary semaphore handle
 
+    SemaphoreHandle_t uart_tei_sem[AT_TRANSPORT_DA16XXX_CFG_MAX_NUMBER_UART_PORTS];                ///< UART transmission end binary semaphore
+#endif
     uart_instance_t       * uart_instance_objects[AT_TRANSPORT_DA16XXX_CFG_MAX_NUMBER_UART_PORTS]; ///< UART instance object
-    SemaphoreHandle_t       uart_tei_sem[AT_TRANSPORT_DA16XXX_CFG_MAX_NUMBER_UART_PORTS];          ///< UART transmission end binary semaphore
     const bsp_io_port_pin_t reset_pin;                                                             ///< Reset pin used for module
 
     /* Pointer to callback and optional working memory */

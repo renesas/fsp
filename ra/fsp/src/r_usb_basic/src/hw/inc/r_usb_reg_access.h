@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 #ifndef HW_USB_REG_ACCESS_H
  #define HW_USB_REG_ACCESS_H
 
@@ -63,9 +49,9 @@ extern "C" {
  #define USB1_D0FIFO32       (USB_M1->D0FIFO)
  #define USB1_D1FIFO32       (USB_M1->D1FIFO)
 
- #if (defined(BSP_MCU_GROUP_RA2A1) || defined(BSP_MCU_GROUP_RA4M1))
+ #if defined(USB_LDO_REGULATOR_MODULE)
   #define USB_LDO_REGULATOR_MODULE
- #endif                                /* (defined(USB_LDO_REGULATOR_MODULE) && (USB_CFG_LDO_REGULATOR == USB_CFG_ENABLE)) */
+ #endif                                /* USB_LDO_REGULATOR_MODULE */
 
 /****************/
 /*  INITIARIZE  */
@@ -389,19 +375,21 @@ void hw_usb_write_pipetrn(usb_utr_t * ptr, uint16_t pipeno, uint16_t data);
 /************/
 /* BCCTRL   */
 /************/
-void     hw_usb_set_bcctrl(usb_utr_t * ptr, uint16_t data);
-void     hw_usb_clear_bcctrl(usb_utr_t * ptr, uint16_t data);
-uint16_t hw_usb_read_bcctrl(usb_utr_t * ptr);
-void     hw_usb_set_vdmsrce(usb_utr_t * ptr);
-void     hw_usb_clear_vdmsrce(usb_utr_t * ptr);
-void     hw_usb_set_idpsinke(usb_utr_t * ptr);
-void     hw_usb_set_suspendm(uint8_t usb_ip);
-void     hw_usb_clear_suspm(uint8_t usb_ip);
-void     hw_usb_clear_idpsinke(usb_utr_t * ptr);
-void     hw_usb_set_vdcen(void);
-void     hw_usb_clear_vdcen(void);
-void     hw_usb_set_uckselc(void);
-void     hw_usb_clear_uckselc(void);
+void      hw_usb_set_bcctrl(usb_utr_t * ptr, uint16_t data);
+void      hw_usb_clear_bcctrl(usb_utr_t * ptr, uint16_t data);
+uint16_t  hw_usb_read_bcctrl(usb_utr_t * ptr);
+void      hw_usb_set_vdmsrce(usb_utr_t * ptr);
+void      hw_usb_clear_vdmsrce(usb_utr_t * ptr);
+void      hw_usb_set_idpsinke(usb_utr_t * ptr);
+void      hw_usb_set_suspendm(uint8_t usb_ip);
+void      hw_usb_clear_suspm(uint8_t usb_ip);
+void      hw_usb_clear_idpsinke(usb_utr_t * ptr);
+void      hw_usb_set_vdcen(void);
+void      hw_usb_clear_vdcen(void);
+void      hw_usb_set_uckselc(void);
+void      hw_usb_clear_uckselc(void);
+fsp_err_t hw_usb_typec_module_init(void);
+void      hw_usb_typec_module_uninit(void);
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_dcpmode(usb_utr_t * ptr);

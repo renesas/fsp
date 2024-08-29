@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -28,6 +14,7 @@
  * Macro definitions
  **********************************************************************************************************************/
 #define BSP_DELAY_NS_PER_SECOND    (1000000000)
+#define BSP_DELAY_US_PER_SECOND    (1000000)
 #define BSP_DELAY_NS_PER_US        (1000)
 
 /***********************************************************************************************************************
@@ -100,48 +87,75 @@
 BSP_SECTION_FLASH_GAP void R_BSP_SoftwareDelay (uint32_t delay, bsp_delay_units_t units)
 {
     uint32_t iclk_hz;
-    uint32_t cycles_requested;
-    uint32_t ns_per_cycle;
     uint32_t loops_required = 0;
-    uint32_t total_us       = (delay * units);                        /** Convert the requested time to microseconds. */
-    uint64_t ns_64bits;
+    uint32_t total_us       = (delay * units); /** Convert the requested time to microseconds. */
 
-    iclk_hz = SystemCoreClock;                                        /** Get the system clock frequency in Hz. */
+    iclk_hz = SystemCoreClock;                 /** Get the system clock frequency in Hz. */
 
-    /* Running on the Sub-clock (32768 Hz) there are 30517 ns/cycle. This means one cycle takes 31 us. One execution
-     * loop of the delay_loop takes 6 cycles which at 32768 Hz is 180 us. That does not include the overhead below prior to even getting
-     * to the delay loop. Given this, at this frequency anything less then a delay request of 122 us will not even generate a single
-     * pass through the delay loop.  For this reason small delays (<=~200 us) at this slow clock rate will not be possible and such a request
-     * will generate a minimum delay of ~200 us.*/
-    ns_per_cycle = BSP_DELAY_NS_PER_SECOND / iclk_hz;                 /** Get the # of nanoseconds/cycle. */
-
-    /* We want to get the time in total nanoseconds but need to be conscious of overflowing 32 bits. We also do not want to do 64 bit */
-    /* division as that pulls in a division library. */
-    ns_64bits = (uint64_t) total_us * (uint64_t) BSP_DELAY_NS_PER_US; // Convert to ns.
-
-    /* Have we overflowed 32 bits? */
-    if (ns_64bits <= UINT32_MAX)
+#if (BSP_CFG_MCU_PART_SERIES == 8)
+    if (iclk_hz >= BSP_MOCO_HZ)
     {
-        /* No, we will not overflow. */
-        cycles_requested = ((uint32_t) ns_64bits / ns_per_cycle);
-        loops_required   = cycles_requested / BSP_DELAY_LOOP_CYCLES;
+        /* For larger system clock values the below calculation in the else causes inaccurate delays due to rounding errors:
+         *
+         * ns_per_cycle = BSP_DELAY_NS_PER_SECOND / iclk_hz
+         *
+         * For system clock values greater than the MOCO speed the following delay calculation is used instead.
+         */
+        uint32_t cycles_per_us = iclk_hz / (BSP_DELAY_US_PER_SECOND * BSP_DELAY_LOOP_CYCLES);
+
+        uint64_t loops_required_u64 = ((uint64_t) total_us) * cycles_per_us;
+
+        if (loops_required_u64 > UINT32_MAX)
+        {
+            loops_required = UINT32_MAX;
+        }
+        else
+        {
+            loops_required = (uint32_t) loops_required_u64;
+        }
     }
     else
+#endif
     {
-        /* We did overflow. Try dividing down first. */
-        total_us  = (total_us / (ns_per_cycle * BSP_DELAY_LOOP_CYCLES));
+        uint32_t cycles_requested;
+        uint32_t ns_per_cycle;
+        uint64_t ns_64bits;
+
+        /* Running on the Sub-clock (32768 Hz) there are 30517 ns/cycle. This means one cycle takes 31 us. One execution
+         * loop of the delay_loop takes 6 cycles which at 32768 Hz is 180 us. That does not include the overhead below prior to even getting
+         * to the delay loop. Given this, at this frequency anything less then a delay request of 122 us will not even generate a single
+         * pass through the delay loop.  For this reason small delays (<=~200 us) at this slow clock rate will not be possible and such a request
+         * will generate a minimum delay of ~200 us.*/
+        ns_per_cycle = BSP_DELAY_NS_PER_SECOND / iclk_hz;                 /** Get the # of nanoseconds/cycle. */
+
+        /* We want to get the time in total nanoseconds but need to be conscious of overflowing 32 bits. We also do not want to do 64 bit */
+        /* division as that pulls in a division library. */
         ns_64bits = (uint64_t) total_us * (uint64_t) BSP_DELAY_NS_PER_US; // Convert to ns.
 
         /* Have we overflowed 32 bits? */
         if (ns_64bits <= UINT32_MAX)
         {
             /* No, we will not overflow. */
-            loops_required = (uint32_t) ns_64bits;
+            cycles_requested = ((uint32_t) ns_64bits / ns_per_cycle);
+            loops_required   = cycles_requested / BSP_DELAY_LOOP_CYCLES;
         }
         else
         {
-            /* We still overflowed, use the max count for cycles */
-            loops_required = UINT32_MAX;
+            /* We did overflow. Try dividing down first. */
+            total_us  = (total_us / (ns_per_cycle * BSP_DELAY_LOOP_CYCLES));
+            ns_64bits = (uint64_t) total_us * (uint64_t) BSP_DELAY_NS_PER_US; // Convert to ns.
+
+            /* Have we overflowed 32 bits? */
+            if (ns_64bits <= UINT32_MAX)
+            {
+                /* No, we will not overflow. */
+                loops_required = (uint32_t) ns_64bits;
+            }
+            else
+            {
+                /* We still overflowed, use the max count for cycles */
+                loops_required = UINT32_MAX;
+            }
         }
     }
 

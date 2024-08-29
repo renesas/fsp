@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef BSP_CLOCKS_H
 #define BSP_CLOCKS_H
@@ -36,20 +22,21 @@ FSP_HEADER
 
 /* The following definitions are macros instead of enums because the values are used in preprocessor conditionals. */
 /* Must match SCKCR.CKSEL values. */
-#define BSP_CLOCKS_SOURCE_CLOCK_HOCO               (0)  // The high speed on chip oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_MOCO               (1)  // The middle speed on chip oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_LOCO               (2)  // The low speed on chip oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC           (3)  // The main oscillator.
-#define BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK           (4)  // The subclock oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_HOCO               (0) // The high speed on chip oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_MOCO               (1) // The middle speed on chip oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_LOCO               (2) // The low speed on chip oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC           (3) // The main oscillator.
+#define BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK           (4) // The subclock oscillator.
 
 #if !BSP_FEATURE_CGC_REGISTER_SET_B
- #if 0 == BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS && 0 == BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS
-  #define BSP_CLOCKS_SOURCE_CLOCK_PLL              (5)  // The PLL oscillator.
-  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2             (6)  // The PLL2 oscillator.
- #elif (0 != BSP_FEATURE_NUM_PLL1_OUTPUT_CLOCKS && 0 != BSP_FEATURE_NUM_PLL2_OUTPUT_CLOCKS)
-  #define BSP_CLOCKS_SOURCE_CLOCK_PLL              (5)  // The PLL oscillator. Treated as PLL1P.
+ #if 0 < BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL              (5) // The PLL oscillator.
+ #endif
+ #if 0 < BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS
+  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2             (6) // The PLL2 oscillator.
+ #endif
+ #if (1 < BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS && 1 < BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS)
   #define BSP_CLOCKS_SOURCE_CLOCK_PLL1P            (BSP_CLOCKS_SOURCE_CLOCK_PLL)
-  #define BSP_CLOCKS_SOURCE_CLOCK_PLL2             (6)  // The PLL2 oscillator. Treated as PLL2P.
   #define BSP_CLOCKS_SOURCE_CLOCK_PLL2P            (BSP_CLOCKS_SOURCE_CLOCK_PLL2)
   #define BSP_CLOCKS_SOURCE_CLOCK_PLL1Q            (7)  // The PLL1Q oscillator.
   #define BSP_CLOCKS_SOURCE_CLOCK_PLL1R            (8)  // The PLL1R oscillator.
@@ -86,6 +73,7 @@ FSP_HEADER
     !((1U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                    \
     (3U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
     (4U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
+    (5U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
     !BSP_CLOCK_CFG_MAIN_OSC_POPULATED)
  #define BSP_PRV_PLL_SUPPORTED      (1)
  #if BSP_FEATURE_CGC_HAS_PLL2
@@ -101,7 +89,8 @@ FSP_HEADER
 /* The ICLK frequency at startup is used to determine the ideal operating mode to set after startup. The PLL frequency
  * calculated here is also used to initialize the g_clock_freq array. */
 #if BSP_PRV_PLL_SUPPORTED
- #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE) && (BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL_SOURCE)
+ #if ((1U == BSP_FEATURE_CGC_PLLCCR_TYPE) || (5U == BSP_FEATURE_CGC_PLLCCR_TYPE)) && \
+    (BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL_SOURCE)
   #define BSP_PRV_PLL_SOURCE_FREQ_HZ     (BSP_HOCO_HZ)
  #else
   #define BSP_PRV_PLL_SOURCE_FREQ_HZ     (BSP_CFG_XTAL_HZ)
@@ -132,7 +121,7 @@ FSP_HEADER
 #elif BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_CLOCK_SOURCE
  #define BSP_STARTUP_SOURCE_CLOCK_HZ     (BSP_CFG_XTAL_HZ)
 #elif BSP_CLOCKS_SOURCE_CLOCK_PLL == BSP_CFG_CLOCK_SOURCE
- #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+ #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE) || (5U == BSP_FEATURE_CGC_PLLCCR_TYPE)
   #if BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_PLL_SOURCE
    #define BSP_PRV_PLL_SOURCE_FREQ_HZ    (BSP_CFG_XTAL_HZ)
   #elif BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_PLL_SOURCE
@@ -144,161 +133,224 @@ FSP_HEADER
   #define BSP_PRV_PLL_SOURCE_FREQ_HZ     (BSP_CFG_XTAL_HZ)
   #define BSP_STARTUP_SOURCE_CLOCK_HZ    ((BSP_PRV_PLL_SOURCE_FREQ_HZ * ((BSP_CFG_PLL_MUL + 1U) >> 1)) >> \
                                           (BSP_CFG_PLL_DIV))
- #elif (3U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+ #elif (3U == BSP_FEATURE_CGC_PLLCCR_TYPE) || (6U == BSP_FEATURE_CGC_PLLCCR_TYPE)
   #define BSP_STARTUP_SOURCE_CLOCK_HZ    (BSP_CFG_PLL1P_FREQUENCY_HZ)
  #endif
 #endif
 
 /* Convert divisor bitfield settings into divisor values to calculate startup clocks */
 #define BSP_PRV_SCKDIVCR_DIV_VALUE(div)    (((div) & 8U) ? (3U << ((div) & ~8U)) : (1U << (div)))
-#define BSP_PRV_CPUCLK_DIV_VALUE         BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_CPUCLK_DIV)
+#define BSP_PRV_CPUCLK_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_CPUCLK_DIV)
 
 #if !BSP_FEATURE_CGC_REGISTER_SET_B
- #define BSP_PRV_ICLK_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_ICLK_DIV)
+ #define BSP_PRV_ICLK_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_ICLK_DIV)
 #else
- #define BSP_PRV_ICLK_DIV_VALUE          (1U << BSP_CFG_ICLK_DIV)
+ #define BSP_PRV_ICLK_DIV_VALUE           (1U << BSP_CFG_ICLK_DIV)
 #endif
 
-#define BSP_PRV_PCLKA_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKA_DIV)
-#define BSP_PRV_PCLKB_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKB_DIV)
-#define BSP_PRV_PCLKC_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKC_DIV)
-#define BSP_PRV_PCLKD_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKD_DIV)
-#define BSP_PRV_PCLKE_DIV_VALUE          BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKE_DIV)
-#define BSP_PRV_BCLK_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_BCLK_DIV)
-#define BSP_PRV_FCLK_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_FCLK_DIV)
+#define BSP_PRV_PCLKA_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKA_DIV)
+#define BSP_PRV_PCLKB_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKB_DIV)
+#define BSP_PRV_PCLKC_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKC_DIV)
+#define BSP_PRV_PCLKD_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKD_DIV)
+#define BSP_PRV_PCLKE_DIV_VALUE           BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKE_DIV)
+#define BSP_PRV_BCLK_DIV_VALUE            BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_BCLK_DIV)
+#define BSP_PRV_FCLK_DIV_VALUE            BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_FCLK_DIV)
+#define BSP_PRV_EXTRACLK3_DIV_VALUE       BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_EXTRACLK3_DIV)
 
 /* Startup clock frequency of each system clock. These macros are only helpful if the system clock and dividers have
  * not changed since startup. These macros are not used in FSP modules except for the clock startup code. */
-#define BSP_STARTUP_CPUCLK_HZ            (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_CPUCLK_DIV_VALUE)
-#define BSP_STARTUP_ICLK_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_ICLK_DIV_VALUE)
-#define BSP_STARTUP_PCLKA_HZ             (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKA_DIV_VALUE)
-#define BSP_STARTUP_PCLKB_HZ             (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKB_DIV_VALUE)
-#define BSP_STARTUP_PCLKC_HZ             (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKC_DIV_VALUE)
-#define BSP_STARTUP_PCLKD_HZ             (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKD_DIV_VALUE)
-#define BSP_STARTUP_PCLKE_HZ             (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKE_DIV_VALUE)
-#define BSP_STARTUP_BCLK_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_BCLK_DIV_VALUE)
-#define BSP_STARTUP_FCLK_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_FCLK_DIV_VALUE)
+#define BSP_STARTUP_CPUCLK_HZ             (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_CPUCLK_DIV_VALUE)
+#define BSP_STARTUP_ICLK_HZ               (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_ICLK_DIV_VALUE)
+#define BSP_STARTUP_PCLKA_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKA_DIV_VALUE)
+#define BSP_STARTUP_PCLKB_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKB_DIV_VALUE)
+#define BSP_STARTUP_PCLKC_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKC_DIV_VALUE)
+#define BSP_STARTUP_PCLKD_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKD_DIV_VALUE)
+#define BSP_STARTUP_PCLKE_HZ              (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKE_DIV_VALUE)
+#define BSP_STARTUP_BCLK_HZ               (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_BCLK_DIV_VALUE)
+#define BSP_STARTUP_FCLK_HZ               (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_FCLK_DIV_VALUE)
+#define BSP_STARTUP_EXTRACLK3_HZ          (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_EXTRACLK3_DIV_VALUE)
 
 /* System clock divider options. */
-#define BSP_CLOCKS_SYS_CLOCK_DIV_1       (0)  // System clock divided by 1.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_2       (1)  // System clock divided by 2.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_4       (2)  // System clock divided by 4.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_8       (3)  // System clock divided by 8.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_16      (4)  // System clock divided by 16.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_32      (5)  // System clock divided by 32.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_64      (6)  // System clock divided by 64.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_128     (7)  // System clock divided by 128 (available for CLKOUT only).
-#define BSP_CLOCKS_SYS_CLOCK_DIV_3       (8)  // System clock divided by 3.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_6       (9)  // System clock divided by 6.
-#define BSP_CLOCKS_SYS_CLOCK_DIV_12      (10) // System clock divided by 12.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_1        (0)  // System clock divided by 1.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_2        (1)  // System clock divided by 2.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_4        (2)  // System clock divided by 4.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_8        (3)  // System clock divided by 8.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_16       (4)  // System clock divided by 16.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_32       (5)  // System clock divided by 32.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_64       (6)  // System clock divided by 64.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_128      (7)  // System clock divided by 128 (available for CLKOUT only).
+#define BSP_CLOCKS_SYS_CLOCK_DIV_3        (8)  // System clock divided by 3.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_6        (9)  // System clock divided by 6.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_12       (10) // System clock divided by 12.
+#define BSP_CLOCKS_SYS_CLOCK_DIV_24       (11) // System clock divided by 24.
 
 /* USB clock divider options. */
-#define BSP_CLOCKS_USB_CLOCK_DIV_1       (0)  // Divide USB source clock by 1
-#define BSP_CLOCKS_USB_CLOCK_DIV_2       (1)  // Divide USB source clock by 2
-#define BSP_CLOCKS_USB_CLOCK_DIV_3       (2)  // Divide USB source clock by 3
-#define BSP_CLOCKS_USB_CLOCK_DIV_4       (3)  // Divide USB source clock by 4
-#define BSP_CLOCKS_USB_CLOCK_DIV_5       (4)  // Divide USB source clock by 5
-#define BSP_CLOCKS_USB_CLOCK_DIV_6       (5)  // Divide USB source clock by 6
-#define BSP_CLOCKS_USB_CLOCK_DIV_8       (7)  // Divide USB source clock by 8
+#define BSP_CLOCKS_USB_CLOCK_DIV_1        (0)  // Divide USB source clock by 1
+#define BSP_CLOCKS_USB_CLOCK_DIV_2        (1)  // Divide USB source clock by 2
+#define BSP_CLOCKS_USB_CLOCK_DIV_3        (2)  // Divide USB source clock by 3
+#define BSP_CLOCKS_USB_CLOCK_DIV_4        (3)  // Divide USB source clock by 4
+#define BSP_CLOCKS_USB_CLOCK_DIV_5        (4)  // Divide USB source clock by 5
+#define BSP_CLOCKS_USB_CLOCK_DIV_6        (5)  // Divide USB source clock by 6
+#define BSP_CLOCKS_USB_CLOCK_DIV_8        (7)  // Divide USB source clock by 8
+#define BSP_CLOCKS_USB_CLOCK_DIV_10       (9)  // Divide USB source clock by 10
+#define BSP_CLOCKS_USB_CLOCK_DIV_16       (15) // Divide USB source clock by 16
+#define BSP_CLOCKS_USB_CLOCK_DIV_32       (9)  // Divide USB source clock by 32
 
 /* USB60 clock divider options. */
-#define BSP_CLOCKS_USB60_CLOCK_DIV_1     (0)  // Divide USB60 source clock by 1
-#define BSP_CLOCKS_USB60_CLOCK_DIV_2     (1)  // Divide USB60 source clock by 2
-#define BSP_CLOCKS_USB60_CLOCK_DIV_3     (5)  // Divide USB60 source clock by 3
-#define BSP_CLOCKS_USB60_CLOCK_DIV_4     (2)  // Divide USB60 source clock by 4
-#define BSP_CLOCKS_USB60_CLOCK_DIV_5     (6)  // Divide USB60 source clock by 5
-#define BSP_CLOCKS_USB60_CLOCK_DIV_6     (3)  // Divide USB66 source clock by 6
-#define BSP_CLOCKS_USB60_CLOCK_DIV_8     (4)  // Divide USB60 source clock by 8
+#define BSP_CLOCKS_USB60_CLOCK_DIV_1      (0)  // Divide USB60 source clock by 1
+#define BSP_CLOCKS_USB60_CLOCK_DIV_2      (1)  // Divide USB60 source clock by 2
+#define BSP_CLOCKS_USB60_CLOCK_DIV_3      (5)  // Divide USB60 source clock by 3
+#define BSP_CLOCKS_USB60_CLOCK_DIV_4      (2)  // Divide USB60 source clock by 4
+#define BSP_CLOCKS_USB60_CLOCK_DIV_5      (6)  // Divide USB60 source clock by 5
+#define BSP_CLOCKS_USB60_CLOCK_DIV_6      (3)  // Divide USB66 source clock by 6
+#define BSP_CLOCKS_USB60_CLOCK_DIV_8      (4)  // Divide USB60 source clock by 8
+#define BSP_CLOCKS_USB60_CLOCK_DIV_10     (7)  // Divide USB60 source clock by 10
+#define BSP_CLOCKS_USB60_CLOCK_DIV_16     (8)  // Divide USB60 source clock by 16
+#define BSP_CLOCKS_USB60_CLOCK_DIV_32     (9)  // Divide USB60 source clock by 32
 
 /* GLCD clock divider options. */
-#define BSP_CLOCKS_LCD_CLOCK_DIV_1       (0)  // Divide LCD source clock by 1
-#define BSP_CLOCKS_LCD_CLOCK_DIV_2       (1)  // Divide LCD source clock by 2
-#define BSP_CLOCKS_LCD_CLOCK_DIV_3       (5)  // Divide LCD source clock by 3
-#define BSP_CLOCKS_LCD_CLOCK_DIV_4       (2)  // Divide LCD source clock by 4
-#define BSP_CLOCKS_LCD_CLOCK_DIV_5       (6)  // Divide LCD source clock by 5
-#define BSP_CLOCKS_LCD_CLOCK_DIV_6       (3)  // Divide LCD source clock by 6
-#define BSP_CLOCKS_LCD_CLOCK_DIV_8       (4)  // Divide LCD source clock by 8
+#define BSP_CLOCKS_LCD_CLOCK_DIV_1        (0)  // Divide LCD source clock by 1
+#define BSP_CLOCKS_LCD_CLOCK_DIV_2        (1)  // Divide LCD source clock by 2
+#define BSP_CLOCKS_LCD_CLOCK_DIV_3        (5)  // Divide LCD source clock by 3
+#define BSP_CLOCKS_LCD_CLOCK_DIV_4        (2)  // Divide LCD source clock by 4
+#define BSP_CLOCKS_LCD_CLOCK_DIV_5        (6)  // Divide LCD source clock by 5
+#define BSP_CLOCKS_LCD_CLOCK_DIV_6        (3)  // Divide LCD source clock by 6
+#define BSP_CLOCKS_LCD_CLOCK_DIV_8        (4)  // Divide LCD source clock by 8
+#define BSP_CLOCKS_LCD_CLOCK_DIV_10       (7)  // Divide LCD source clock by 10
+#define BSP_CLOCKS_LCD_CLOCK_DIV_16       (8)  // Divide LCD source clock by 16
+#define BSP_CLOCKS_LCD_CLOCK_DIV_32       (9)  // Divide LCD source clock by 32
 
 /* OCTA clock divider options. */
-#define BSP_CLOCKS_OCTA_CLOCK_DIV_1      (0)  // Divide OCTA source clock by 1
-#define BSP_CLOCKS_OCTA_CLOCK_DIV_2      (1)  // Divide OCTA source clock by 2
-#define BSP_CLOCKS_OCTA_CLOCK_DIV_4      (2)  // Divide OCTA source clock by 4
-#define BSP_CLOCKS_OCTA_CLOCK_DIV_6      (3)  // Divide OCTA source clock by 6
-#define BSP_CLOCKS_OCTA_CLOCK_DIV_8      (4)  // Divide OCTA source clock by 8
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_1       (0)  // Divide OCTA source clock by 1
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_2       (1)  // Divide OCTA source clock by 2
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_3       (5)  // Divide OCTA source clock by 3
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_4       (2)  // Divide OCTA source clock by 4
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_5       (6)  // Divide OCTA source clock by 5
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_6       (3)  // Divide OCTA source clock by 6
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_8       (4)  // Divide OCTA source clock by 8
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_10      (7)  // Divide OCTA source clock by 10
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_16      (8)  // Divide OCTA source clock by 16
+#define BSP_CLOCKS_OCTA_CLOCK_DIV_32      (9)  // Divide OCTA source clock by 32
 
 /* CANFD clock divider options. */
-#define BSP_CLOCKS_CANFD_CLOCK_DIV_1     (0)  // Divide CANFD source clock by 1
-#define BSP_CLOCKS_CANFD_CLOCK_DIV_2     (1)  // Divide CANFD source clock by 2
-#define BSP_CLOCKS_CANFD_CLOCK_DIV_3     (5)  // Divide CANFD source clock by 3
-#define BSP_CLOCKS_CANFD_CLOCK_DIV_4     (2)  // Divide CANFD source clock by 4
-#define BSP_CLOCKS_CANFD_CLOCK_DIV_5     (6)  // Divide CANFD source clock by 5
-#define BSP_CLOCKS_CANFD_CLOCK_DIV_6     (3)  // Divide CANFD source clock by 6
-#define BSP_CLOCKS_CANFD_CLOCK_DIV_8     (4)  // Divide CANFD source clock by 8
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_1      (0)  // Divide CANFD source clock by 1
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_2      (1)  // Divide CANFD source clock by 2
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_3      (5)  // Divide CANFD source clock by 3
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_4      (2)  // Divide CANFD source clock by 4
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_5      (6)  // Divide CANFD source clock by 5
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_6      (3)  // Divide CANFD source clock by 6
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_8      (4)  // Divide CANFD source clock by 8
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_10     (7)  // Divide CANFD source clock by 10
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_16     (8)  // Divide CANFD source clock by 16
+#define BSP_CLOCKS_CANFD_CLOCK_DIV_32     (9)  // Divide CANFD source clock by 32
 
 /* SCI clock divider options. */
-#define BSP_CLOCKS_SCI_CLOCK_DIV_1       (0)  // Divide SCI source clock by 1
-#define BSP_CLOCKS_SCI_CLOCK_DIV_2       (1)  // Divide SCI source clock by 2
-#define BSP_CLOCKS_SCI_CLOCK_DIV_3       (5)  // Divide SCI source clock by 3
-#define BSP_CLOCKS_SCI_CLOCK_DIV_4       (2)  // Divide SCI source clock by 4
-#define BSP_CLOCKS_SCI_CLOCK_DIV_5       (6)  // Divide SCI source clock by 5
-#define BSP_CLOCKS_SCI_CLOCK_DIV_6       (3)  // Divide SCI source clock by 6
-#define BSP_CLOCKS_SCI_CLOCK_DIV_8       (4)  // Divide SCI source clock by 8
+#define BSP_CLOCKS_SCI_CLOCK_DIV_1        (0)  // Divide SCI source clock by 1
+#define BSP_CLOCKS_SCI_CLOCK_DIV_2        (1)  // Divide SCI source clock by 2
+#define BSP_CLOCKS_SCI_CLOCK_DIV_3        (5)  // Divide SCI source clock by 3
+#define BSP_CLOCKS_SCI_CLOCK_DIV_4        (2)  // Divide SCI source clock by 4
+#define BSP_CLOCKS_SCI_CLOCK_DIV_5        (6)  // Divide SCI source clock by 5
+#define BSP_CLOCKS_SCI_CLOCK_DIV_6        (3)  // Divide SCI source clock by 6
+#define BSP_CLOCKS_SCI_CLOCK_DIV_8        (4)  // Divide SCI source clock by 8
+#define BSP_CLOCKS_SCI_CLOCK_DIV_10       (7)  // Divide SCI source clock by 10
+#define BSP_CLOCKS_SCI_CLOCK_DIV_16       (8)  // Divide SCI source clock by 16
+#define BSP_CLOCKS_SCI_CLOCK_DIV_32       (9)  // Divide SCI source clock by 32
 
 /* SPI clock divider options. */
-#define BSP_CLOCKS_SPI_CLOCK_DIV_1       (0)  // Divide SPI source clock by 1
-#define BSP_CLOCKS_SPI_CLOCK_DIV_2       (1)  // Divide SPI source clock by 2
-#define BSP_CLOCKS_SPI_CLOCK_DIV_3       (5)  // Divide SPI source clock by 3
-#define BSP_CLOCKS_SPI_CLOCK_DIV_4       (2)  // Divide SPI source clock by 4
-#define BSP_CLOCKS_SPI_CLOCK_DIV_5       (6)  // Divide SPI source clock by 5
-#define BSP_CLOCKS_SPI_CLOCK_DIV_6       (3)  // Divide SPI source clock by 6
-#define BSP_CLOCKS_SPI_CLOCK_DIV_8       (4)  // Divide SPI source clock by 8
+#define BSP_CLOCKS_SPI_CLOCK_DIV_1        (0)  // Divide SPI source clock by 1
+#define BSP_CLOCKS_SPI_CLOCK_DIV_2        (1)  // Divide SPI source clock by 2
+#define BSP_CLOCKS_SPI_CLOCK_DIV_3        (5)  // Divide SPI source clock by 3
+#define BSP_CLOCKS_SPI_CLOCK_DIV_4        (2)  // Divide SPI source clock by 4
+#define BSP_CLOCKS_SPI_CLOCK_DIV_5        (6)  // Divide SPI source clock by 5
+#define BSP_CLOCKS_SPI_CLOCK_DIV_6        (3)  // Divide SPI source clock by 6
+#define BSP_CLOCKS_SPI_CLOCK_DIV_8        (4)  // Divide SPI source clock by 8
+#define BSP_CLOCKS_SPI_CLOCK_DIV_10       (7)  // Divide SPI source clock by 10
+#define BSP_CLOCKS_SPI_CLOCK_DIV_16       (8)  // Divide SPI source clock by 16
+#define BSP_CLOCKS_SPI_CLOCK_DIV_32       (9)  // Divide SPI source clock by 32
 
 /* SCISPI clock divider options. */
-#define BSP_CLOCKS_SCISPI_CLOCK_DIV_1    (0)  // Divide SCISPI source clock by 1
-#define BSP_CLOCKS_SCISPI_CLOCK_DIV_2    (1)  // Divide SCISPI source clock by 2
-#define BSP_CLOCKS_SCISPI_CLOCK_DIV_4    (2)  // Divide SCISPI source clock by 4
-#define BSP_CLOCKS_SCISPI_CLOCK_DIV_6    (3)  // Divide SCISPI source clock by 6
-#define BSP_CLOCKS_SCISPI_CLOCK_DIV_8    (4)  // Divide SCISPI source clock by 8
+#define BSP_CLOCKS_SCISPI_CLOCK_DIV_1     (0)  // Divide SCISPI source clock by 1
+#define BSP_CLOCKS_SCISPI_CLOCK_DIV_2     (1)  // Divide SCISPI source clock by 2
+#define BSP_CLOCKS_SCISPI_CLOCK_DIV_4     (2)  // Divide SCISPI source clock by 4
+#define BSP_CLOCKS_SCISPI_CLOCK_DIV_6     (3)  // Divide SCISPI source clock by 6
+#define BSP_CLOCKS_SCISPI_CLOCK_DIV_8     (4)  // Divide SCISPI source clock by 8
 
 /* GPT clock divider options. */
-#define BSP_CLOCKS_GPT_CLOCK_DIV_1       (0)  // Divide GPT source clock by 1
-#define BSP_CLOCKS_GPT_CLOCK_DIV_2       (1)  // Divide GPT source clock by 2
-#define BSP_CLOCKS_GPT_CLOCK_DIV_3       (5)  // Divide GPT source clock by 3
-#define BSP_CLOCKS_GPT_CLOCK_DIV_4       (2)  // Divide GPT source clock by 4
-#define BSP_CLOCKS_GPT_CLOCK_DIV_5       (6)  // Divide GPT source clock by 5
-#define BSP_CLOCKS_GPT_CLOCK_DIV_6       (3)  // Divide GPT source clock by 6
-#define BSP_CLOCKS_GPT_CLOCK_DIV_8       (4)  // Divide GPT source clock by 8
+#define BSP_CLOCKS_GPT_CLOCK_DIV_1        (0)  // Divide GPT source clock by 1
+#define BSP_CLOCKS_GPT_CLOCK_DIV_2        (1)  // Divide GPT source clock by 2
+#define BSP_CLOCKS_GPT_CLOCK_DIV_3        (5)  // Divide GPT source clock by 3
+#define BSP_CLOCKS_GPT_CLOCK_DIV_4        (2)  // Divide GPT source clock by 4
+#define BSP_CLOCKS_GPT_CLOCK_DIV_5        (6)  // Divide GPT source clock by 5
+#define BSP_CLOCKS_GPT_CLOCK_DIV_6        (3)  // Divide GPT source clock by 6
+#define BSP_CLOCKS_GPT_CLOCK_DIV_8        (4)  // Divide GPT source clock by 8
+#define BSP_CLOCKS_GPT_CLOCK_DIV_10       (7)  // Divide GPT source clock by 10
+#define BSP_CLOCKS_GPT_CLOCK_DIV_16       (8)  // Divide GPT source clock by 16
+#define BSP_CLOCKS_GPT_CLOCK_DIV_32       (9)  // Divide GPT source clock by 32
 
 /* IIC clock divider options. */
-#define BSP_CLOCKS_IIC_CLOCK_DIV_1       (0)  // Divide IIC source clock by 1
-#define BSP_CLOCKS_IIC_CLOCK_DIV_2       (1)  // Divide IIC source clock by 2
-#define BSP_CLOCKS_IIC_CLOCK_DIV_4       (2)  // Divide IIC source clock by 4
-#define BSP_CLOCKS_IIC_CLOCK_DIV_6       (3)  // Divide IIC source clock by 6
-#define BSP_CLOCKS_IIC_CLOCK_DIV_8       (4)  // Divide IIC source clock by 8
+#define BSP_CLOCKS_IIC_CLOCK_DIV_1        (0)  // Divide IIC source clock by 1
+#define BSP_CLOCKS_IIC_CLOCK_DIV_2        (1)  // Divide IIC source clock by 2
+#define BSP_CLOCKS_IIC_CLOCK_DIV_4        (2)  // Divide IIC source clock by 4
+#define BSP_CLOCKS_IIC_CLOCK_DIV_6        (3)  // Divide IIC source clock by 6
+#define BSP_CLOCKS_IIC_CLOCK_DIV_8        (4)  // Divide IIC source clock by 8
 
 /* CEC clock divider options. */
-#define BSP_CLOCKS_CEC_CLOCK_DIV_1       (0)  // Divide CEC source clock by 1
-#define BSP_CLOCKS_CEC_CLOCK_DIV_2       (1)  // Divide CEC source clock by 2
+#define BSP_CLOCKS_CEC_CLOCK_DIV_1        (0)  // Divide CEC source clock by 1
+#define BSP_CLOCKS_CEC_CLOCK_DIV_2        (1)  // Divide CEC source clock by 2
 
 /* I3C clock divider options. */
-#define BSP_CLOCKS_I3C_CLOCK_DIV_1       (0)  // Divide I3C source clock by 1
-#define BSP_CLOCKS_I3C_CLOCK_DIV_2       (1)  // Divide I3C source clock by 2
-#define BSP_CLOCKS_I3C_CLOCK_DIV_3       (5)  // Divide I3C source clock by 3
-#define BSP_CLOCKS_I3C_CLOCK_DIV_4       (2)  // Divide I3C source clock by 4
-#define BSP_CLOCKS_I3C_CLOCK_DIV_5       (6)  // Divide I3C source clock by 5
-#define BSP_CLOCKS_I3C_CLOCK_DIV_6       (3)  // Divide I3C source clock by 6
-#define BSP_CLOCKS_I3C_CLOCK_DIV_8       (4)  // Divide I3C source clock by 8
+#define BSP_CLOCKS_I3C_CLOCK_DIV_1        (0)  // Divide I3C source clock by 1
+#define BSP_CLOCKS_I3C_CLOCK_DIV_2        (1)  // Divide I3C source clock by 2
+#define BSP_CLOCKS_I3C_CLOCK_DIV_3        (5)  // Divide I3C source clock by 3
+#define BSP_CLOCKS_I3C_CLOCK_DIV_4        (2)  // Divide I3C source clock by 4
+#define BSP_CLOCKS_I3C_CLOCK_DIV_5        (6)  // Divide I3C source clock by 5
+#define BSP_CLOCKS_I3C_CLOCK_DIV_6        (3)  // Divide I3C source clock by 6
+#define BSP_CLOCKS_I3C_CLOCK_DIV_8        (4)  // Divide I3C source clock by 8
+#define BSP_CLOCKS_I3C_CLOCK_DIV_10       (7)  // Divide I3C source clock by 10
+#define BSP_CLOCKS_I3C_CLOCK_DIV_16       (8)  // Divide I3C source clock by 16
+#define BSP_CLOCKS_I3C_CLOCK_DIV_32       (9)  // Divide I3C source clock by 32
+
+/* ADC clock divider options. */
+#define BSP_CLOCKS_ADC_CLOCK_DIV_1        (0)  // Divide ADC source clock by 1
+#define BSP_CLOCKS_ADC_CLOCK_DIV_2        (1)  // Divide ADC source clock by 2
+#define BSP_CLOCKS_ADC_CLOCK_DIV_3        (5)  // Divide ADC source clock by 3
+#define BSP_CLOCKS_ADC_CLOCK_DIV_4        (2)  // Divide ADC source clock by 4
+#define BSP_CLOCKS_ADC_CLOCK_DIV_5        (6)  // Divide ADC source clock by 5
+#define BSP_CLOCKS_ADC_CLOCK_DIV_6        (3)  // Divide ADC source clock by 6
+#define BSP_CLOCKS_ADC_CLOCK_DIV_8        (4)  // Divide ADC source clock by 8
+#define BSP_CLOCKS_ADC_CLOCK_DIV_10       (7)  // Divide ADC source clock by 10
+#define BSP_CLOCKS_ADC_CLOCK_DIV_16       (8)  // Divide ADC source clock by 16
+#define BSP_CLOCKS_ADC_CLOCK_DIV_32       (9)  // Divide ADC source clock by 32
+
+/* SAU clock divider options. */
+#define BSP_CLOCKS_SAU_CLOCK_DIV_1        (0)  // Divide SAU source clock by 1
+#define BSP_CLOCKS_SAU_CLOCK_DIV_2        (1)  // Divide SAU source clock by 2
+#define BSP_CLOCKS_SAU_CLOCK_DIV_4        (2)  // Divide SAU source clock by 4
+#define BSP_CLOCKS_SAU_CLOCK_DIV_8        (3)  // Divide SAU source clock by 8
+#define BSP_CLOCKS_SAU_CLOCK_DIV_16       (4)  // Divide SAU source clock by 16
+#define BSP_CLOCKS_SAU_CLOCK_DIV_32       (5)  // Divide SAU source clock by 32
+#define BSP_CLOCKS_SAU_CLOCK_DIV_64       (6)  // Divide SAU source clock by 64
+#define BSP_CLOCKS_SAU_CLOCK_DIV_128      (7)  // Divide SAU source clock by 128
+#define BSP_CLOCKS_SAU_CLOCK_DIV_256      (8)  // Divide SAU source clock by 256
+#define BSP_CLOCKS_SAU_CLOCK_DIV_512      (9)  // Divide SAU source clock by 512
+#define BSP_CLOCKS_SAU_CLOCK_DIV_1024     (10) // Divide SAU source clock by 1024
+#define BSP_CLOCKS_SAU_CLOCK_DIV_2048     (11) // Divide SAU source clock by 2048
+#define BSP_CLOCKS_SAU_CLOCK_DIV_4096     (12) // Divide SAU source clock by 4096
+#define BSP_CLOCKS_SAU_CLOCK_DIV_8192     (13) // Divide SAU source clock by 8192
+#define BSP_CLOCKS_SAU_CLOCK_DIV_16384    (14) // Divide SAU source clock by 16384
+#define BSP_CLOCKS_SAU_CLOCK_DIV_32768    (15) // Divide SAU source clock by 32768
 
 /* PLL divider options. */
-#define BSP_CLOCKS_PLL_DIV_1             (0)
-#define BSP_CLOCKS_PLL_DIV_2             (1)
-#define BSP_CLOCKS_PLL_DIV_3             (2)
-#define BSP_CLOCKS_PLL_DIV_4             (3)
-#define BSP_CLOCKS_PLL_DIV_5             (4)
-#define BSP_CLOCKS_PLL_DIV_6             (5)
-#define BSP_CLOCKS_PLL_DIV_8             (7)
-#define BSP_CLOCKS_PLL_DIV_9             (8)
-#define BSP_CLOCKS_PLL_DIV_16            (15)
+#define BSP_CLOCKS_PLL_DIV_1              (0)
+#define BSP_CLOCKS_PLL_DIV_2              (1)
+#define BSP_CLOCKS_PLL_DIV_3              (2)
+#define BSP_CLOCKS_PLL_DIV_4              (3)
+#define BSP_CLOCKS_PLL_DIV_5              (4)
+#define BSP_CLOCKS_PLL_DIV_6              (5)
+#define BSP_CLOCKS_PLL_DIV_8              (7)
+#define BSP_CLOCKS_PLL_DIV_9              (8)
+#define BSP_CLOCKS_PLL_DIV_1_5            (9)
+#define BSP_CLOCKS_PLL_DIV_16             (15)
 
 /* PLL multiplier options. */
 #if (4U == BSP_FEATURE_CGC_PLLCCR_TYPE)
@@ -312,7 +364,7 @@ FSP_HEADER
  */
  #define BSP_CLOCKS_PLL_MUL(X, Y)    (X - BSP_PRV_CLOCKS_PLL_MUL_INT_OFFSET)
 
-#elif (3U != BSP_FEATURE_CGC_PLLCCR_TYPE)
+#elif (3U != BSP_FEATURE_CGC_PLLCCR_TYPE) && (6U != BSP_FEATURE_CGC_PLLCCR_TYPE)
 
 /**
  * X=Integer portion of the multiplier.
@@ -440,8 +492,18 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_clock_update_callback_t)(bsp
 /** PLL multiplier values */
 typedef enum e_cgc_pll_mul
 {
-    CGC_PLL_MUL_8_0    = BSP_CLOCKS_PLL_MUL(8U, 0U),    ///< PLL multiplier of 8.0
-    CGC_PLL_MUL_9_0    = BSP_CLOCKS_PLL_MUL(9U, 0U),    ///< PLL multiplier of 9.0
+    CGC_PLL_MUL_4_0    = BSP_CLOCKS_PLL_MUL(4U, 0U),    ///< PLL multiplier of 4.00
+    CGC_PLL_MUL_4_5    = BSP_CLOCKS_PLL_MUL(4U, 50U),   ///< PLL multiplier of 4.50
+    CGC_PLL_MUL_5_0    = BSP_CLOCKS_PLL_MUL(5U, 0U),    ///< PLL multiplier of 5.00
+    CGC_PLL_MUL_5_5    = BSP_CLOCKS_PLL_MUL(5U, 50U),   ///< PLL multiplier of 5.50
+    CGC_PLL_MUL_6_0    = BSP_CLOCKS_PLL_MUL(6U, 0U),    ///< PLL multiplier of 6.00
+    CGC_PLL_MUL_6_5    = BSP_CLOCKS_PLL_MUL(6U, 50U),   ///< PLL multiplier of 6.50
+    CGC_PLL_MUL_7_0    = BSP_CLOCKS_PLL_MUL(7U, 0U),    ///< PLL multiplier of 7.00
+    CGC_PLL_MUL_7_5    = BSP_CLOCKS_PLL_MUL(7U, 50U),   ///< PLL multiplier of 7.50
+    CGC_PLL_MUL_8_0    = BSP_CLOCKS_PLL_MUL(8U, 0U),    ///< PLL multiplier of 8.00
+    CGC_PLL_MUL_8_5    = BSP_CLOCKS_PLL_MUL(8U, 50U),   ///< PLL multiplier of 8.50
+    CGC_PLL_MUL_9_0    = BSP_CLOCKS_PLL_MUL(9U, 0U),    ///< PLL multiplier of 9.00
+    CGC_PLL_MUL_9_5    = BSP_CLOCKS_PLL_MUL(9U, 50U),   ///< PLL multiplier of 9.50
     CGC_PLL_MUL_10_0   = BSP_CLOCKS_PLL_MUL(10U, 0U),   ///< PLL multiplier of 10.00
     CGC_PLL_MUL_10_5   = BSP_CLOCKS_PLL_MUL(10U, 50U),  ///< PLL multiplier of 10.50
     CGC_PLL_MUL_11_0   = BSP_CLOCKS_PLL_MUL(11U, 0U),   ///< PLL multiplier of 11.00
@@ -1094,6 +1156,486 @@ typedef enum e_cgc_pll_mul
     CGC_PLL_MUL_180_33 = BSP_CLOCKS_PLL_MUL(180U, 33U), ///< PLL multiplier of 180.33
     CGC_PLL_MUL_180_5  = BSP_CLOCKS_PLL_MUL(180U, 50U), ///< PLL multiplier of 180.50
     CGC_PLL_MUL_180_66 = BSP_CLOCKS_PLL_MUL(180U, 66U), ///< PLL multiplier of 180.66
+    CGC_PLL_MUL_181_0  = BSP_CLOCKS_PLL_MUL(181U, 0U),  ///< PLL multiplier of 181.00
+    CGC_PLL_MUL_181_33 = BSP_CLOCKS_PLL_MUL(181U, 33U), ///< PLL multiplier of 181.33
+    CGC_PLL_MUL_181_5  = BSP_CLOCKS_PLL_MUL(181U, 50U), ///< PLL multiplier of 181.50
+    CGC_PLL_MUL_181_66 = BSP_CLOCKS_PLL_MUL(181U, 66U), ///< PLL multiplier of 181.66
+    CGC_PLL_MUL_182_0  = BSP_CLOCKS_PLL_MUL(182U, 0U),  ///< PLL multiplier of 182.00
+    CGC_PLL_MUL_182_33 = BSP_CLOCKS_PLL_MUL(182U, 33U), ///< PLL multiplier of 182.33
+    CGC_PLL_MUL_182_5  = BSP_CLOCKS_PLL_MUL(182U, 50U), ///< PLL multiplier of 182.50
+    CGC_PLL_MUL_182_66 = BSP_CLOCKS_PLL_MUL(182U, 66U), ///< PLL multiplier of 182.66
+    CGC_PLL_MUL_183_0  = BSP_CLOCKS_PLL_MUL(183U, 0U),  ///< PLL multiplier of 183.00
+    CGC_PLL_MUL_183_33 = BSP_CLOCKS_PLL_MUL(183U, 33U), ///< PLL multiplier of 183.33
+    CGC_PLL_MUL_183_5  = BSP_CLOCKS_PLL_MUL(183U, 50U), ///< PLL multiplier of 183.50
+    CGC_PLL_MUL_183_66 = BSP_CLOCKS_PLL_MUL(183U, 66U), ///< PLL multiplier of 183.66
+    CGC_PLL_MUL_184_0  = BSP_CLOCKS_PLL_MUL(184U, 0U),  ///< PLL multiplier of 184.00
+    CGC_PLL_MUL_184_33 = BSP_CLOCKS_PLL_MUL(184U, 33U), ///< PLL multiplier of 184.33
+    CGC_PLL_MUL_184_5  = BSP_CLOCKS_PLL_MUL(184U, 50U), ///< PLL multiplier of 184.50
+    CGC_PLL_MUL_184_66 = BSP_CLOCKS_PLL_MUL(184U, 66U), ///< PLL multiplier of 184.66
+    CGC_PLL_MUL_185_0  = BSP_CLOCKS_PLL_MUL(185U, 0U),  ///< PLL multiplier of 185.00
+    CGC_PLL_MUL_185_33 = BSP_CLOCKS_PLL_MUL(185U, 33U), ///< PLL multiplier of 185.33
+    CGC_PLL_MUL_185_5  = BSP_CLOCKS_PLL_MUL(185U, 50U), ///< PLL multiplier of 185.50
+    CGC_PLL_MUL_185_66 = BSP_CLOCKS_PLL_MUL(185U, 66U), ///< PLL multiplier of 185.66
+    CGC_PLL_MUL_186_0  = BSP_CLOCKS_PLL_MUL(186U, 0U),  ///< PLL multiplier of 186.00
+    CGC_PLL_MUL_186_33 = BSP_CLOCKS_PLL_MUL(186U, 33U), ///< PLL multiplier of 186.33
+    CGC_PLL_MUL_186_5  = BSP_CLOCKS_PLL_MUL(186U, 50U), ///< PLL multiplier of 186.50
+    CGC_PLL_MUL_186_66 = BSP_CLOCKS_PLL_MUL(186U, 66U), ///< PLL multiplier of 186.66
+    CGC_PLL_MUL_187_0  = BSP_CLOCKS_PLL_MUL(187U, 0U),  ///< PLL multiplier of 187.00
+    CGC_PLL_MUL_187_33 = BSP_CLOCKS_PLL_MUL(187U, 33U), ///< PLL multiplier of 187.33
+    CGC_PLL_MUL_187_5  = BSP_CLOCKS_PLL_MUL(187U, 50U), ///< PLL multiplier of 187.50
+    CGC_PLL_MUL_187_66 = BSP_CLOCKS_PLL_MUL(187U, 66U), ///< PLL multiplier of 187.66
+    CGC_PLL_MUL_188_0  = BSP_CLOCKS_PLL_MUL(188U, 0U),  ///< PLL multiplier of 188.00
+    CGC_PLL_MUL_188_33 = BSP_CLOCKS_PLL_MUL(188U, 33U), ///< PLL multiplier of 188.33
+    CGC_PLL_MUL_188_5  = BSP_CLOCKS_PLL_MUL(188U, 50U), ///< PLL multiplier of 188.50
+    CGC_PLL_MUL_188_66 = BSP_CLOCKS_PLL_MUL(188U, 66U), ///< PLL multiplier of 188.66
+    CGC_PLL_MUL_189_0  = BSP_CLOCKS_PLL_MUL(189U, 0U),  ///< PLL multiplier of 189.00
+    CGC_PLL_MUL_189_33 = BSP_CLOCKS_PLL_MUL(189U, 33U), ///< PLL multiplier of 189.33
+    CGC_PLL_MUL_189_5  = BSP_CLOCKS_PLL_MUL(189U, 50U), ///< PLL multiplier of 189.50
+    CGC_PLL_MUL_189_66 = BSP_CLOCKS_PLL_MUL(189U, 66U), ///< PLL multiplier of 189.66
+    CGC_PLL_MUL_190_0  = BSP_CLOCKS_PLL_MUL(190U, 0U),  ///< PLL multiplier of 190.00
+    CGC_PLL_MUL_190_33 = BSP_CLOCKS_PLL_MUL(190U, 33U), ///< PLL multiplier of 190.33
+    CGC_PLL_MUL_190_5  = BSP_CLOCKS_PLL_MUL(190U, 50U), ///< PLL multiplier of 190.50
+    CGC_PLL_MUL_190_66 = BSP_CLOCKS_PLL_MUL(190U, 66U), ///< PLL multiplier of 190.66
+    CGC_PLL_MUL_191_0  = BSP_CLOCKS_PLL_MUL(191U, 0U),  ///< PLL multiplier of 191.00
+    CGC_PLL_MUL_191_33 = BSP_CLOCKS_PLL_MUL(191U, 33U), ///< PLL multiplier of 191.33
+    CGC_PLL_MUL_191_5  = BSP_CLOCKS_PLL_MUL(191U, 50U), ///< PLL multiplier of 191.50
+    CGC_PLL_MUL_191_66 = BSP_CLOCKS_PLL_MUL(191U, 66U), ///< PLL multiplier of 191.66
+    CGC_PLL_MUL_192_0  = BSP_CLOCKS_PLL_MUL(192U, 0U),  ///< PLL multiplier of 192.00
+    CGC_PLL_MUL_192_33 = BSP_CLOCKS_PLL_MUL(192U, 33U), ///< PLL multiplier of 192.33
+    CGC_PLL_MUL_192_5  = BSP_CLOCKS_PLL_MUL(192U, 50U), ///< PLL multiplier of 192.50
+    CGC_PLL_MUL_192_66 = BSP_CLOCKS_PLL_MUL(192U, 66U), ///< PLL multiplier of 192.66
+    CGC_PLL_MUL_193_0  = BSP_CLOCKS_PLL_MUL(193U, 0U),  ///< PLL multiplier of 193.00
+    CGC_PLL_MUL_193_33 = BSP_CLOCKS_PLL_MUL(193U, 33U), ///< PLL multiplier of 193.33
+    CGC_PLL_MUL_193_5  = BSP_CLOCKS_PLL_MUL(193U, 50U), ///< PLL multiplier of 193.50
+    CGC_PLL_MUL_193_66 = BSP_CLOCKS_PLL_MUL(193U, 66U), ///< PLL multiplier of 193.66
+    CGC_PLL_MUL_194_0  = BSP_CLOCKS_PLL_MUL(194U, 0U),  ///< PLL multiplier of 194.00
+    CGC_PLL_MUL_194_33 = BSP_CLOCKS_PLL_MUL(194U, 33U), ///< PLL multiplier of 194.33
+    CGC_PLL_MUL_194_5  = BSP_CLOCKS_PLL_MUL(194U, 50U), ///< PLL multiplier of 194.50
+    CGC_PLL_MUL_194_66 = BSP_CLOCKS_PLL_MUL(194U, 66U), ///< PLL multiplier of 194.66
+    CGC_PLL_MUL_195_0  = BSP_CLOCKS_PLL_MUL(195U, 0U),  ///< PLL multiplier of 195.00
+    CGC_PLL_MUL_195_33 = BSP_CLOCKS_PLL_MUL(195U, 33U), ///< PLL multiplier of 195.33
+    CGC_PLL_MUL_195_5  = BSP_CLOCKS_PLL_MUL(195U, 50U), ///< PLL multiplier of 195.50
+    CGC_PLL_MUL_195_66 = BSP_CLOCKS_PLL_MUL(195U, 66U), ///< PLL multiplier of 195.66
+    CGC_PLL_MUL_196_0  = BSP_CLOCKS_PLL_MUL(196U, 0U),  ///< PLL multiplier of 196.00
+    CGC_PLL_MUL_196_33 = BSP_CLOCKS_PLL_MUL(196U, 33U), ///< PLL multiplier of 196.33
+    CGC_PLL_MUL_196_5  = BSP_CLOCKS_PLL_MUL(196U, 50U), ///< PLL multiplier of 196.50
+    CGC_PLL_MUL_196_66 = BSP_CLOCKS_PLL_MUL(196U, 66U), ///< PLL multiplier of 196.66
+    CGC_PLL_MUL_197_0  = BSP_CLOCKS_PLL_MUL(197U, 0U),  ///< PLL multiplier of 197.00
+    CGC_PLL_MUL_197_33 = BSP_CLOCKS_PLL_MUL(197U, 33U), ///< PLL multiplier of 197.33
+    CGC_PLL_MUL_197_5  = BSP_CLOCKS_PLL_MUL(197U, 50U), ///< PLL multiplier of 197.50
+    CGC_PLL_MUL_197_66 = BSP_CLOCKS_PLL_MUL(197U, 66U), ///< PLL multiplier of 197.66
+    CGC_PLL_MUL_198_0  = BSP_CLOCKS_PLL_MUL(198U, 0U),  ///< PLL multiplier of 198.00
+    CGC_PLL_MUL_198_33 = BSP_CLOCKS_PLL_MUL(198U, 33U), ///< PLL multiplier of 198.33
+    CGC_PLL_MUL_198_5  = BSP_CLOCKS_PLL_MUL(198U, 50U), ///< PLL multiplier of 198.50
+    CGC_PLL_MUL_198_66 = BSP_CLOCKS_PLL_MUL(198U, 66U), ///< PLL multiplier of 198.66
+    CGC_PLL_MUL_199_0  = BSP_CLOCKS_PLL_MUL(199U, 0U),  ///< PLL multiplier of 199.00
+    CGC_PLL_MUL_199_33 = BSP_CLOCKS_PLL_MUL(199U, 33U), ///< PLL multiplier of 199.33
+    CGC_PLL_MUL_199_5  = BSP_CLOCKS_PLL_MUL(199U, 50U), ///< PLL multiplier of 199.50
+    CGC_PLL_MUL_199_66 = BSP_CLOCKS_PLL_MUL(199U, 66U), ///< PLL multiplier of 199.66
+    CGC_PLL_MUL_200_0  = BSP_CLOCKS_PLL_MUL(200U, 0U),  ///< PLL multiplier of 200.00
+    CGC_PLL_MUL_200_33 = BSP_CLOCKS_PLL_MUL(200U, 33U), ///< PLL multiplier of 200.33
+    CGC_PLL_MUL_200_5  = BSP_CLOCKS_PLL_MUL(200U, 50U), ///< PLL multiplier of 200.50
+    CGC_PLL_MUL_200_66 = BSP_CLOCKS_PLL_MUL(200U, 66U), ///< PLL multiplier of 200.66
+    CGC_PLL_MUL_201_0  = BSP_CLOCKS_PLL_MUL(201U, 0U),  ///< PLL multiplier of 201.00
+    CGC_PLL_MUL_201_33 = BSP_CLOCKS_PLL_MUL(201U, 33U), ///< PLL multiplier of 201.33
+    CGC_PLL_MUL_201_5  = BSP_CLOCKS_PLL_MUL(201U, 50U), ///< PLL multiplier of 201.50
+    CGC_PLL_MUL_201_66 = BSP_CLOCKS_PLL_MUL(201U, 66U), ///< PLL multiplier of 201.66
+    CGC_PLL_MUL_202_0  = BSP_CLOCKS_PLL_MUL(202U, 0U),  ///< PLL multiplier of 202.00
+    CGC_PLL_MUL_202_33 = BSP_CLOCKS_PLL_MUL(202U, 33U), ///< PLL multiplier of 202.33
+    CGC_PLL_MUL_202_5  = BSP_CLOCKS_PLL_MUL(202U, 50U), ///< PLL multiplier of 202.50
+    CGC_PLL_MUL_202_66 = BSP_CLOCKS_PLL_MUL(202U, 66U), ///< PLL multiplier of 202.66
+    CGC_PLL_MUL_203_0  = BSP_CLOCKS_PLL_MUL(203U, 0U),  ///< PLL multiplier of 203.00
+    CGC_PLL_MUL_203_33 = BSP_CLOCKS_PLL_MUL(203U, 33U), ///< PLL multiplier of 203.33
+    CGC_PLL_MUL_203_5  = BSP_CLOCKS_PLL_MUL(203U, 50U), ///< PLL multiplier of 203.50
+    CGC_PLL_MUL_203_66 = BSP_CLOCKS_PLL_MUL(203U, 66U), ///< PLL multiplier of 203.66
+    CGC_PLL_MUL_204_0  = BSP_CLOCKS_PLL_MUL(204U, 0U),  ///< PLL multiplier of 204.00
+    CGC_PLL_MUL_204_33 = BSP_CLOCKS_PLL_MUL(204U, 33U), ///< PLL multiplier of 204.33
+    CGC_PLL_MUL_204_5  = BSP_CLOCKS_PLL_MUL(204U, 50U), ///< PLL multiplier of 204.50
+    CGC_PLL_MUL_204_66 = BSP_CLOCKS_PLL_MUL(204U, 66U), ///< PLL multiplier of 204.66
+    CGC_PLL_MUL_205_0  = BSP_CLOCKS_PLL_MUL(205U, 0U),  ///< PLL multiplier of 205.00
+    CGC_PLL_MUL_205_33 = BSP_CLOCKS_PLL_MUL(205U, 33U), ///< PLL multiplier of 205.33
+    CGC_PLL_MUL_205_5  = BSP_CLOCKS_PLL_MUL(205U, 50U), ///< PLL multiplier of 205.50
+    CGC_PLL_MUL_205_66 = BSP_CLOCKS_PLL_MUL(205U, 66U), ///< PLL multiplier of 205.66
+    CGC_PLL_MUL_206_0  = BSP_CLOCKS_PLL_MUL(206U, 0U),  ///< PLL multiplier of 206.00
+    CGC_PLL_MUL_206_33 = BSP_CLOCKS_PLL_MUL(206U, 33U), ///< PLL multiplier of 206.33
+    CGC_PLL_MUL_206_5  = BSP_CLOCKS_PLL_MUL(206U, 50U), ///< PLL multiplier of 206.50
+    CGC_PLL_MUL_206_66 = BSP_CLOCKS_PLL_MUL(206U, 66U), ///< PLL multiplier of 206.66
+    CGC_PLL_MUL_207_0  = BSP_CLOCKS_PLL_MUL(207U, 0U),  ///< PLL multiplier of 207.00
+    CGC_PLL_MUL_207_33 = BSP_CLOCKS_PLL_MUL(207U, 33U), ///< PLL multiplier of 207.33
+    CGC_PLL_MUL_207_5  = BSP_CLOCKS_PLL_MUL(207U, 50U), ///< PLL multiplier of 207.50
+    CGC_PLL_MUL_207_66 = BSP_CLOCKS_PLL_MUL(207U, 66U), ///< PLL multiplier of 207.66
+    CGC_PLL_MUL_208_0  = BSP_CLOCKS_PLL_MUL(208U, 0U),  ///< PLL multiplier of 208.00
+    CGC_PLL_MUL_208_33 = BSP_CLOCKS_PLL_MUL(208U, 33U), ///< PLL multiplier of 208.33
+    CGC_PLL_MUL_208_5  = BSP_CLOCKS_PLL_MUL(208U, 50U), ///< PLL multiplier of 208.50
+    CGC_PLL_MUL_208_66 = BSP_CLOCKS_PLL_MUL(208U, 66U), ///< PLL multiplier of 208.66
+    CGC_PLL_MUL_209_0  = BSP_CLOCKS_PLL_MUL(209U, 0U),  ///< PLL multiplier of 209.00
+    CGC_PLL_MUL_209_33 = BSP_CLOCKS_PLL_MUL(209U, 33U), ///< PLL multiplier of 209.33
+    CGC_PLL_MUL_209_5  = BSP_CLOCKS_PLL_MUL(209U, 50U), ///< PLL multiplier of 209.50
+    CGC_PLL_MUL_209_66 = BSP_CLOCKS_PLL_MUL(209U, 66U), ///< PLL multiplier of 209.66
+    CGC_PLL_MUL_210_0  = BSP_CLOCKS_PLL_MUL(210U, 0U),  ///< PLL multiplier of 210.00
+    CGC_PLL_MUL_210_33 = BSP_CLOCKS_PLL_MUL(210U, 33U), ///< PLL multiplier of 210.33
+    CGC_PLL_MUL_210_5  = BSP_CLOCKS_PLL_MUL(210U, 50U), ///< PLL multiplier of 210.50
+    CGC_PLL_MUL_210_66 = BSP_CLOCKS_PLL_MUL(210U, 66U), ///< PLL multiplier of 210.66
+    CGC_PLL_MUL_211_0  = BSP_CLOCKS_PLL_MUL(211U, 0U),  ///< PLL multiplier of 211.00
+    CGC_PLL_MUL_211_33 = BSP_CLOCKS_PLL_MUL(211U, 33U), ///< PLL multiplier of 211.33
+    CGC_PLL_MUL_211_5  = BSP_CLOCKS_PLL_MUL(211U, 50U), ///< PLL multiplier of 211.50
+    CGC_PLL_MUL_211_66 = BSP_CLOCKS_PLL_MUL(211U, 66U), ///< PLL multiplier of 211.66
+    CGC_PLL_MUL_212_0  = BSP_CLOCKS_PLL_MUL(212U, 0U),  ///< PLL multiplier of 212.00
+    CGC_PLL_MUL_212_33 = BSP_CLOCKS_PLL_MUL(212U, 33U), ///< PLL multiplier of 212.33
+    CGC_PLL_MUL_212_5  = BSP_CLOCKS_PLL_MUL(212U, 50U), ///< PLL multiplier of 212.50
+    CGC_PLL_MUL_212_66 = BSP_CLOCKS_PLL_MUL(212U, 66U), ///< PLL multiplier of 212.66
+    CGC_PLL_MUL_213_0  = BSP_CLOCKS_PLL_MUL(213U, 0U),  ///< PLL multiplier of 213.00
+    CGC_PLL_MUL_213_33 = BSP_CLOCKS_PLL_MUL(213U, 33U), ///< PLL multiplier of 213.33
+    CGC_PLL_MUL_213_5  = BSP_CLOCKS_PLL_MUL(213U, 50U), ///< PLL multiplier of 213.50
+    CGC_PLL_MUL_213_66 = BSP_CLOCKS_PLL_MUL(213U, 66U), ///< PLL multiplier of 213.66
+    CGC_PLL_MUL_214_0  = BSP_CLOCKS_PLL_MUL(214U, 0U),  ///< PLL multiplier of 214.00
+    CGC_PLL_MUL_214_33 = BSP_CLOCKS_PLL_MUL(214U, 33U), ///< PLL multiplier of 214.33
+    CGC_PLL_MUL_214_5  = BSP_CLOCKS_PLL_MUL(214U, 50U), ///< PLL multiplier of 214.50
+    CGC_PLL_MUL_214_66 = BSP_CLOCKS_PLL_MUL(214U, 66U), ///< PLL multiplier of 214.66
+    CGC_PLL_MUL_215_0  = BSP_CLOCKS_PLL_MUL(215U, 0U),  ///< PLL multiplier of 215.00
+    CGC_PLL_MUL_215_33 = BSP_CLOCKS_PLL_MUL(215U, 33U), ///< PLL multiplier of 215.33
+    CGC_PLL_MUL_215_5  = BSP_CLOCKS_PLL_MUL(215U, 50U), ///< PLL multiplier of 215.50
+    CGC_PLL_MUL_215_66 = BSP_CLOCKS_PLL_MUL(215U, 66U), ///< PLL multiplier of 215.66
+    CGC_PLL_MUL_216_0  = BSP_CLOCKS_PLL_MUL(216U, 0U),  ///< PLL multiplier of 216.00
+    CGC_PLL_MUL_216_33 = BSP_CLOCKS_PLL_MUL(216U, 33U), ///< PLL multiplier of 216.33
+    CGC_PLL_MUL_216_5  = BSP_CLOCKS_PLL_MUL(216U, 50U), ///< PLL multiplier of 216.50
+    CGC_PLL_MUL_216_66 = BSP_CLOCKS_PLL_MUL(216U, 66U), ///< PLL multiplier of 216.66
+    CGC_PLL_MUL_217_0  = BSP_CLOCKS_PLL_MUL(217U, 0U),  ///< PLL multiplier of 217.00
+    CGC_PLL_MUL_217_33 = BSP_CLOCKS_PLL_MUL(217U, 33U), ///< PLL multiplier of 217.33
+    CGC_PLL_MUL_217_5  = BSP_CLOCKS_PLL_MUL(217U, 50U), ///< PLL multiplier of 217.50
+    CGC_PLL_MUL_217_66 = BSP_CLOCKS_PLL_MUL(217U, 66U), ///< PLL multiplier of 217.66
+    CGC_PLL_MUL_218_0  = BSP_CLOCKS_PLL_MUL(218U, 0U),  ///< PLL multiplier of 218.00
+    CGC_PLL_MUL_218_33 = BSP_CLOCKS_PLL_MUL(218U, 33U), ///< PLL multiplier of 218.33
+    CGC_PLL_MUL_218_5  = BSP_CLOCKS_PLL_MUL(218U, 50U), ///< PLL multiplier of 218.50
+    CGC_PLL_MUL_218_66 = BSP_CLOCKS_PLL_MUL(218U, 66U), ///< PLL multiplier of 218.66
+    CGC_PLL_MUL_219_0  = BSP_CLOCKS_PLL_MUL(219U, 0U),  ///< PLL multiplier of 219.00
+    CGC_PLL_MUL_219_33 = BSP_CLOCKS_PLL_MUL(219U, 33U), ///< PLL multiplier of 219.33
+    CGC_PLL_MUL_219_5  = BSP_CLOCKS_PLL_MUL(219U, 50U), ///< PLL multiplier of 219.50
+    CGC_PLL_MUL_219_66 = BSP_CLOCKS_PLL_MUL(219U, 66U), ///< PLL multiplier of 219.66
+    CGC_PLL_MUL_220_0  = BSP_CLOCKS_PLL_MUL(220U, 0U),  ///< PLL multiplier of 220.00
+    CGC_PLL_MUL_220_33 = BSP_CLOCKS_PLL_MUL(220U, 33U), ///< PLL multiplier of 220.33
+    CGC_PLL_MUL_220_5  = BSP_CLOCKS_PLL_MUL(220U, 50U), ///< PLL multiplier of 220.50
+    CGC_PLL_MUL_220_66 = BSP_CLOCKS_PLL_MUL(220U, 66U), ///< PLL multiplier of 220.66
+    CGC_PLL_MUL_221_0  = BSP_CLOCKS_PLL_MUL(221U, 0U),  ///< PLL multiplier of 221.00
+    CGC_PLL_MUL_221_33 = BSP_CLOCKS_PLL_MUL(221U, 33U), ///< PLL multiplier of 221.33
+    CGC_PLL_MUL_221_5  = BSP_CLOCKS_PLL_MUL(221U, 50U), ///< PLL multiplier of 221.50
+    CGC_PLL_MUL_221_66 = BSP_CLOCKS_PLL_MUL(221U, 66U), ///< PLL multiplier of 221.66
+    CGC_PLL_MUL_222_0  = BSP_CLOCKS_PLL_MUL(222U, 0U),  ///< PLL multiplier of 222.00
+    CGC_PLL_MUL_222_33 = BSP_CLOCKS_PLL_MUL(222U, 33U), ///< PLL multiplier of 222.33
+    CGC_PLL_MUL_222_5  = BSP_CLOCKS_PLL_MUL(222U, 50U), ///< PLL multiplier of 222.50
+    CGC_PLL_MUL_222_66 = BSP_CLOCKS_PLL_MUL(222U, 66U), ///< PLL multiplier of 222.66
+    CGC_PLL_MUL_223_0  = BSP_CLOCKS_PLL_MUL(223U, 0U),  ///< PLL multiplier of 223.00
+    CGC_PLL_MUL_223_33 = BSP_CLOCKS_PLL_MUL(223U, 33U), ///< PLL multiplier of 223.33
+    CGC_PLL_MUL_223_5  = BSP_CLOCKS_PLL_MUL(223U, 50U), ///< PLL multiplier of 223.50
+    CGC_PLL_MUL_223_66 = BSP_CLOCKS_PLL_MUL(223U, 66U), ///< PLL multiplier of 223.66
+    CGC_PLL_MUL_224_0  = BSP_CLOCKS_PLL_MUL(224U, 0U),  ///< PLL multiplier of 224.00
+    CGC_PLL_MUL_224_33 = BSP_CLOCKS_PLL_MUL(224U, 33U), ///< PLL multiplier of 224.33
+    CGC_PLL_MUL_224_5  = BSP_CLOCKS_PLL_MUL(224U, 50U), ///< PLL multiplier of 224.50
+    CGC_PLL_MUL_224_66 = BSP_CLOCKS_PLL_MUL(224U, 66U), ///< PLL multiplier of 224.66
+    CGC_PLL_MUL_225_0  = BSP_CLOCKS_PLL_MUL(225U, 0U),  ///< PLL multiplier of 225.00
+    CGC_PLL_MUL_225_33 = BSP_CLOCKS_PLL_MUL(225U, 33U), ///< PLL multiplier of 225.33
+    CGC_PLL_MUL_225_5  = BSP_CLOCKS_PLL_MUL(225U, 50U), ///< PLL multiplier of 225.50
+    CGC_PLL_MUL_225_66 = BSP_CLOCKS_PLL_MUL(225U, 66U), ///< PLL multiplier of 225.66
+    CGC_PLL_MUL_226_0  = BSP_CLOCKS_PLL_MUL(226U, 0U),  ///< PLL multiplier of 226.00
+    CGC_PLL_MUL_226_33 = BSP_CLOCKS_PLL_MUL(226U, 33U), ///< PLL multiplier of 226.33
+    CGC_PLL_MUL_226_5  = BSP_CLOCKS_PLL_MUL(226U, 50U), ///< PLL multiplier of 226.50
+    CGC_PLL_MUL_226_66 = BSP_CLOCKS_PLL_MUL(226U, 66U), ///< PLL multiplier of 226.66
+    CGC_PLL_MUL_227_0  = BSP_CLOCKS_PLL_MUL(227U, 0U),  ///< PLL multiplier of 227.00
+    CGC_PLL_MUL_227_33 = BSP_CLOCKS_PLL_MUL(227U, 33U), ///< PLL multiplier of 227.33
+    CGC_PLL_MUL_227_5  = BSP_CLOCKS_PLL_MUL(227U, 50U), ///< PLL multiplier of 227.50
+    CGC_PLL_MUL_227_66 = BSP_CLOCKS_PLL_MUL(227U, 66U), ///< PLL multiplier of 227.66
+    CGC_PLL_MUL_228_0  = BSP_CLOCKS_PLL_MUL(228U, 0U),  ///< PLL multiplier of 228.00
+    CGC_PLL_MUL_228_33 = BSP_CLOCKS_PLL_MUL(228U, 33U), ///< PLL multiplier of 228.33
+    CGC_PLL_MUL_228_5  = BSP_CLOCKS_PLL_MUL(228U, 50U), ///< PLL multiplier of 228.50
+    CGC_PLL_MUL_228_66 = BSP_CLOCKS_PLL_MUL(228U, 66U), ///< PLL multiplier of 228.66
+    CGC_PLL_MUL_229_0  = BSP_CLOCKS_PLL_MUL(229U, 0U),  ///< PLL multiplier of 229.00
+    CGC_PLL_MUL_229_33 = BSP_CLOCKS_PLL_MUL(229U, 33U), ///< PLL multiplier of 229.33
+    CGC_PLL_MUL_229_5  = BSP_CLOCKS_PLL_MUL(229U, 50U), ///< PLL multiplier of 229.50
+    CGC_PLL_MUL_229_66 = BSP_CLOCKS_PLL_MUL(229U, 66U), ///< PLL multiplier of 229.66
+    CGC_PLL_MUL_230_0  = BSP_CLOCKS_PLL_MUL(230U, 0U),  ///< PLL multiplier of 230.00
+    CGC_PLL_MUL_230_33 = BSP_CLOCKS_PLL_MUL(230U, 33U), ///< PLL multiplier of 230.33
+    CGC_PLL_MUL_230_5  = BSP_CLOCKS_PLL_MUL(230U, 50U), ///< PLL multiplier of 230.50
+    CGC_PLL_MUL_230_66 = BSP_CLOCKS_PLL_MUL(230U, 66U), ///< PLL multiplier of 230.66
+    CGC_PLL_MUL_231_0  = BSP_CLOCKS_PLL_MUL(231U, 0U),  ///< PLL multiplier of 231.00
+    CGC_PLL_MUL_231_33 = BSP_CLOCKS_PLL_MUL(231U, 33U), ///< PLL multiplier of 231.33
+    CGC_PLL_MUL_231_5  = BSP_CLOCKS_PLL_MUL(231U, 50U), ///< PLL multiplier of 231.50
+    CGC_PLL_MUL_231_66 = BSP_CLOCKS_PLL_MUL(231U, 66U), ///< PLL multiplier of 231.66
+    CGC_PLL_MUL_232_0  = BSP_CLOCKS_PLL_MUL(232U, 0U),  ///< PLL multiplier of 232.00
+    CGC_PLL_MUL_232_33 = BSP_CLOCKS_PLL_MUL(232U, 33U), ///< PLL multiplier of 232.33
+    CGC_PLL_MUL_232_5  = BSP_CLOCKS_PLL_MUL(232U, 50U), ///< PLL multiplier of 232.50
+    CGC_PLL_MUL_232_66 = BSP_CLOCKS_PLL_MUL(232U, 66U), ///< PLL multiplier of 232.66
+    CGC_PLL_MUL_233_0  = BSP_CLOCKS_PLL_MUL(233U, 0U),  ///< PLL multiplier of 233.00
+    CGC_PLL_MUL_233_33 = BSP_CLOCKS_PLL_MUL(233U, 33U), ///< PLL multiplier of 233.33
+    CGC_PLL_MUL_233_5  = BSP_CLOCKS_PLL_MUL(233U, 50U), ///< PLL multiplier of 233.50
+    CGC_PLL_MUL_233_66 = BSP_CLOCKS_PLL_MUL(233U, 66U), ///< PLL multiplier of 233.66
+    CGC_PLL_MUL_234_0  = BSP_CLOCKS_PLL_MUL(234U, 0U),  ///< PLL multiplier of 234.00
+    CGC_PLL_MUL_234_33 = BSP_CLOCKS_PLL_MUL(234U, 33U), ///< PLL multiplier of 234.33
+    CGC_PLL_MUL_234_5  = BSP_CLOCKS_PLL_MUL(234U, 50U), ///< PLL multiplier of 234.50
+    CGC_PLL_MUL_234_66 = BSP_CLOCKS_PLL_MUL(234U, 66U), ///< PLL multiplier of 234.66
+    CGC_PLL_MUL_235_0  = BSP_CLOCKS_PLL_MUL(235U, 0U),  ///< PLL multiplier of 235.00
+    CGC_PLL_MUL_235_33 = BSP_CLOCKS_PLL_MUL(235U, 33U), ///< PLL multiplier of 235.33
+    CGC_PLL_MUL_235_5  = BSP_CLOCKS_PLL_MUL(235U, 50U), ///< PLL multiplier of 235.50
+    CGC_PLL_MUL_235_66 = BSP_CLOCKS_PLL_MUL(235U, 66U), ///< PLL multiplier of 235.66
+    CGC_PLL_MUL_236_0  = BSP_CLOCKS_PLL_MUL(236U, 0U),  ///< PLL multiplier of 236.00
+    CGC_PLL_MUL_236_33 = BSP_CLOCKS_PLL_MUL(236U, 33U), ///< PLL multiplier of 236.33
+    CGC_PLL_MUL_236_5  = BSP_CLOCKS_PLL_MUL(236U, 50U), ///< PLL multiplier of 236.50
+    CGC_PLL_MUL_236_66 = BSP_CLOCKS_PLL_MUL(236U, 66U), ///< PLL multiplier of 236.66
+    CGC_PLL_MUL_237_0  = BSP_CLOCKS_PLL_MUL(237U, 0U),  ///< PLL multiplier of 237.00
+    CGC_PLL_MUL_237_33 = BSP_CLOCKS_PLL_MUL(237U, 33U), ///< PLL multiplier of 237.33
+    CGC_PLL_MUL_237_5  = BSP_CLOCKS_PLL_MUL(237U, 50U), ///< PLL multiplier of 237.50
+    CGC_PLL_MUL_237_66 = BSP_CLOCKS_PLL_MUL(237U, 66U), ///< PLL multiplier of 237.66
+    CGC_PLL_MUL_238_0  = BSP_CLOCKS_PLL_MUL(238U, 0U),  ///< PLL multiplier of 238.00
+    CGC_PLL_MUL_238_33 = BSP_CLOCKS_PLL_MUL(238U, 33U), ///< PLL multiplier of 238.33
+    CGC_PLL_MUL_238_5  = BSP_CLOCKS_PLL_MUL(238U, 50U), ///< PLL multiplier of 238.50
+    CGC_PLL_MUL_238_66 = BSP_CLOCKS_PLL_MUL(238U, 66U), ///< PLL multiplier of 238.66
+    CGC_PLL_MUL_239_0  = BSP_CLOCKS_PLL_MUL(239U, 0U),  ///< PLL multiplier of 239.00
+    CGC_PLL_MUL_239_33 = BSP_CLOCKS_PLL_MUL(239U, 33U), ///< PLL multiplier of 239.33
+    CGC_PLL_MUL_239_5  = BSP_CLOCKS_PLL_MUL(239U, 50U), ///< PLL multiplier of 239.50
+    CGC_PLL_MUL_239_66 = BSP_CLOCKS_PLL_MUL(239U, 66U), ///< PLL multiplier of 239.66
+    CGC_PLL_MUL_240_0  = BSP_CLOCKS_PLL_MUL(240U, 0U),  ///< PLL multiplier of 240.00
+    CGC_PLL_MUL_240_33 = BSP_CLOCKS_PLL_MUL(240U, 33U), ///< PLL multiplier of 240.33
+    CGC_PLL_MUL_240_5  = BSP_CLOCKS_PLL_MUL(240U, 50U), ///< PLL multiplier of 240.50
+    CGC_PLL_MUL_240_66 = BSP_CLOCKS_PLL_MUL(240U, 66U), ///< PLL multiplier of 240.66
+    CGC_PLL_MUL_241_0  = BSP_CLOCKS_PLL_MUL(241U, 0U),  ///< PLL multiplier of 241.00
+    CGC_PLL_MUL_241_33 = BSP_CLOCKS_PLL_MUL(241U, 33U), ///< PLL multiplier of 241.33
+    CGC_PLL_MUL_241_5  = BSP_CLOCKS_PLL_MUL(241U, 50U), ///< PLL multiplier of 241.50
+    CGC_PLL_MUL_241_66 = BSP_CLOCKS_PLL_MUL(241U, 66U), ///< PLL multiplier of 241.66
+    CGC_PLL_MUL_242_0  = BSP_CLOCKS_PLL_MUL(242U, 0U),  ///< PLL multiplier of 242.00
+    CGC_PLL_MUL_242_33 = BSP_CLOCKS_PLL_MUL(242U, 33U), ///< PLL multiplier of 242.33
+    CGC_PLL_MUL_242_5  = BSP_CLOCKS_PLL_MUL(242U, 50U), ///< PLL multiplier of 242.50
+    CGC_PLL_MUL_242_66 = BSP_CLOCKS_PLL_MUL(242U, 66U), ///< PLL multiplier of 242.66
+    CGC_PLL_MUL_243_0  = BSP_CLOCKS_PLL_MUL(243U, 0U),  ///< PLL multiplier of 243.00
+    CGC_PLL_MUL_243_33 = BSP_CLOCKS_PLL_MUL(243U, 33U), ///< PLL multiplier of 243.33
+    CGC_PLL_MUL_243_5  = BSP_CLOCKS_PLL_MUL(243U, 50U), ///< PLL multiplier of 243.50
+    CGC_PLL_MUL_243_66 = BSP_CLOCKS_PLL_MUL(243U, 66U), ///< PLL multiplier of 243.66
+    CGC_PLL_MUL_244_0  = BSP_CLOCKS_PLL_MUL(244U, 0U),  ///< PLL multiplier of 244.00
+    CGC_PLL_MUL_244_33 = BSP_CLOCKS_PLL_MUL(244U, 33U), ///< PLL multiplier of 244.33
+    CGC_PLL_MUL_244_5  = BSP_CLOCKS_PLL_MUL(244U, 50U), ///< PLL multiplier of 244.50
+    CGC_PLL_MUL_244_66 = BSP_CLOCKS_PLL_MUL(244U, 66U), ///< PLL multiplier of 244.66
+    CGC_PLL_MUL_245_0  = BSP_CLOCKS_PLL_MUL(245U, 0U),  ///< PLL multiplier of 245.00
+    CGC_PLL_MUL_245_33 = BSP_CLOCKS_PLL_MUL(245U, 33U), ///< PLL multiplier of 245.33
+    CGC_PLL_MUL_245_5  = BSP_CLOCKS_PLL_MUL(245U, 50U), ///< PLL multiplier of 245.50
+    CGC_PLL_MUL_245_66 = BSP_CLOCKS_PLL_MUL(245U, 66U), ///< PLL multiplier of 245.66
+    CGC_PLL_MUL_246_0  = BSP_CLOCKS_PLL_MUL(246U, 0U),  ///< PLL multiplier of 246.00
+    CGC_PLL_MUL_246_33 = BSP_CLOCKS_PLL_MUL(246U, 33U), ///< PLL multiplier of 246.33
+    CGC_PLL_MUL_246_5  = BSP_CLOCKS_PLL_MUL(246U, 50U), ///< PLL multiplier of 246.50
+    CGC_PLL_MUL_246_66 = BSP_CLOCKS_PLL_MUL(246U, 66U), ///< PLL multiplier of 246.66
+    CGC_PLL_MUL_247_0  = BSP_CLOCKS_PLL_MUL(247U, 0U),  ///< PLL multiplier of 247.00
+    CGC_PLL_MUL_247_33 = BSP_CLOCKS_PLL_MUL(247U, 33U), ///< PLL multiplier of 247.33
+    CGC_PLL_MUL_247_5  = BSP_CLOCKS_PLL_MUL(247U, 50U), ///< PLL multiplier of 247.50
+    CGC_PLL_MUL_247_66 = BSP_CLOCKS_PLL_MUL(247U, 66U), ///< PLL multiplier of 247.66
+    CGC_PLL_MUL_248_0  = BSP_CLOCKS_PLL_MUL(248U, 0U),  ///< PLL multiplier of 248.00
+    CGC_PLL_MUL_248_33 = BSP_CLOCKS_PLL_MUL(248U, 33U), ///< PLL multiplier of 248.33
+    CGC_PLL_MUL_248_5  = BSP_CLOCKS_PLL_MUL(248U, 50U), ///< PLL multiplier of 248.50
+    CGC_PLL_MUL_248_66 = BSP_CLOCKS_PLL_MUL(248U, 66U), ///< PLL multiplier of 248.66
+    CGC_PLL_MUL_249_0  = BSP_CLOCKS_PLL_MUL(249U, 0U),  ///< PLL multiplier of 249.00
+    CGC_PLL_MUL_249_33 = BSP_CLOCKS_PLL_MUL(249U, 33U), ///< PLL multiplier of 249.33
+    CGC_PLL_MUL_249_5  = BSP_CLOCKS_PLL_MUL(249U, 50U), ///< PLL multiplier of 249.50
+    CGC_PLL_MUL_249_66 = BSP_CLOCKS_PLL_MUL(249U, 66U), ///< PLL multiplier of 249.66
+    CGC_PLL_MUL_250_0  = BSP_CLOCKS_PLL_MUL(250U, 0U),  ///< PLL multiplier of 250.00
+    CGC_PLL_MUL_250_33 = BSP_CLOCKS_PLL_MUL(250U, 33U), ///< PLL multiplier of 250.33
+    CGC_PLL_MUL_250_5  = BSP_CLOCKS_PLL_MUL(250U, 50U), ///< PLL multiplier of 250.50
+    CGC_PLL_MUL_250_66 = BSP_CLOCKS_PLL_MUL(250U, 66U), ///< PLL multiplier of 250.66
+    CGC_PLL_MUL_251_0  = BSP_CLOCKS_PLL_MUL(251U, 0U),  ///< PLL multiplier of 251.00
+    CGC_PLL_MUL_251_33 = BSP_CLOCKS_PLL_MUL(251U, 33U), ///< PLL multiplier of 251.33
+    CGC_PLL_MUL_251_5  = BSP_CLOCKS_PLL_MUL(251U, 50U), ///< PLL multiplier of 251.50
+    CGC_PLL_MUL_251_66 = BSP_CLOCKS_PLL_MUL(251U, 66U), ///< PLL multiplier of 251.66
+    CGC_PLL_MUL_252_0  = BSP_CLOCKS_PLL_MUL(252U, 0U),  ///< PLL multiplier of 252.00
+    CGC_PLL_MUL_252_33 = BSP_CLOCKS_PLL_MUL(252U, 33U), ///< PLL multiplier of 252.33
+    CGC_PLL_MUL_252_5  = BSP_CLOCKS_PLL_MUL(252U, 50U), ///< PLL multiplier of 252.50
+    CGC_PLL_MUL_252_66 = BSP_CLOCKS_PLL_MUL(252U, 66U), ///< PLL multiplier of 252.66
+    CGC_PLL_MUL_253_0  = BSP_CLOCKS_PLL_MUL(253U, 0U),  ///< PLL multiplier of 253.00
+    CGC_PLL_MUL_253_33 = BSP_CLOCKS_PLL_MUL(253U, 33U), ///< PLL multiplier of 253.33
+    CGC_PLL_MUL_253_5  = BSP_CLOCKS_PLL_MUL(253U, 50U), ///< PLL multiplier of 253.50
+    CGC_PLL_MUL_253_66 = BSP_CLOCKS_PLL_MUL(253U, 66U), ///< PLL multiplier of 253.66
+    CGC_PLL_MUL_254_0  = BSP_CLOCKS_PLL_MUL(254U, 0U),  ///< PLL multiplier of 254.00
+    CGC_PLL_MUL_254_33 = BSP_CLOCKS_PLL_MUL(254U, 33U), ///< PLL multiplier of 254.33
+    CGC_PLL_MUL_254_5  = BSP_CLOCKS_PLL_MUL(254U, 50U), ///< PLL multiplier of 254.50
+    CGC_PLL_MUL_254_66 = BSP_CLOCKS_PLL_MUL(254U, 66U), ///< PLL multiplier of 254.66
+    CGC_PLL_MUL_255_0  = BSP_CLOCKS_PLL_MUL(255U, 0U),  ///< PLL multiplier of 255.00
+    CGC_PLL_MUL_255_33 = BSP_CLOCKS_PLL_MUL(255U, 33U), ///< PLL multiplier of 255.33
+    CGC_PLL_MUL_255_5  = BSP_CLOCKS_PLL_MUL(255U, 50U), ///< PLL multiplier of 255.50
+    CGC_PLL_MUL_255_66 = BSP_CLOCKS_PLL_MUL(255U, 66U), ///< PLL multiplier of 255.66
+    CGC_PLL_MUL_256_0  = BSP_CLOCKS_PLL_MUL(256U, 0U),  ///< PLL multiplier of 256.00
+    CGC_PLL_MUL_256_33 = BSP_CLOCKS_PLL_MUL(256U, 33U), ///< PLL multiplier of 256.33
+    CGC_PLL_MUL_256_5  = BSP_CLOCKS_PLL_MUL(256U, 50U), ///< PLL multiplier of 256.50
+    CGC_PLL_MUL_256_66 = BSP_CLOCKS_PLL_MUL(256U, 66U), ///< PLL multiplier of 256.66
+    CGC_PLL_MUL_257_0  = BSP_CLOCKS_PLL_MUL(257U, 0U),  ///< PLL multiplier of 257.00
+    CGC_PLL_MUL_257_33 = BSP_CLOCKS_PLL_MUL(257U, 33U), ///< PLL multiplier of 257.33
+    CGC_PLL_MUL_257_5  = BSP_CLOCKS_PLL_MUL(257U, 50U), ///< PLL multiplier of 257.50
+    CGC_PLL_MUL_257_66 = BSP_CLOCKS_PLL_MUL(257U, 66U), ///< PLL multiplier of 257.66
+    CGC_PLL_MUL_258_0  = BSP_CLOCKS_PLL_MUL(258U, 0U),  ///< PLL multiplier of 258.00
+    CGC_PLL_MUL_258_33 = BSP_CLOCKS_PLL_MUL(258U, 33U), ///< PLL multiplier of 258.33
+    CGC_PLL_MUL_258_5  = BSP_CLOCKS_PLL_MUL(258U, 50U), ///< PLL multiplier of 258.50
+    CGC_PLL_MUL_258_66 = BSP_CLOCKS_PLL_MUL(258U, 66U), ///< PLL multiplier of 258.66
+    CGC_PLL_MUL_259_0  = BSP_CLOCKS_PLL_MUL(259U, 0U),  ///< PLL multiplier of 259.00
+    CGC_PLL_MUL_259_33 = BSP_CLOCKS_PLL_MUL(259U, 33U), ///< PLL multiplier of 259.33
+    CGC_PLL_MUL_259_5  = BSP_CLOCKS_PLL_MUL(259U, 50U), ///< PLL multiplier of 259.50
+    CGC_PLL_MUL_259_66 = BSP_CLOCKS_PLL_MUL(259U, 66U), ///< PLL multiplier of 259.66
+    CGC_PLL_MUL_260_0  = BSP_CLOCKS_PLL_MUL(260U, 0U),  ///< PLL multiplier of 260.00
+    CGC_PLL_MUL_260_33 = BSP_CLOCKS_PLL_MUL(260U, 33U), ///< PLL multiplier of 260.33
+    CGC_PLL_MUL_260_5  = BSP_CLOCKS_PLL_MUL(260U, 50U), ///< PLL multiplier of 260.50
+    CGC_PLL_MUL_260_66 = BSP_CLOCKS_PLL_MUL(260U, 66U), ///< PLL multiplier of 260.66
+    CGC_PLL_MUL_261_0  = BSP_CLOCKS_PLL_MUL(261U, 0U),  ///< PLL multiplier of 261.00
+    CGC_PLL_MUL_261_33 = BSP_CLOCKS_PLL_MUL(261U, 33U), ///< PLL multiplier of 261.33
+    CGC_PLL_MUL_261_5  = BSP_CLOCKS_PLL_MUL(261U, 50U), ///< PLL multiplier of 261.50
+    CGC_PLL_MUL_261_66 = BSP_CLOCKS_PLL_MUL(261U, 66U), ///< PLL multiplier of 261.66
+    CGC_PLL_MUL_262_0  = BSP_CLOCKS_PLL_MUL(262U, 0U),  ///< PLL multiplier of 262.00
+    CGC_PLL_MUL_262_33 = BSP_CLOCKS_PLL_MUL(262U, 33U), ///< PLL multiplier of 262.33
+    CGC_PLL_MUL_262_5  = BSP_CLOCKS_PLL_MUL(262U, 50U), ///< PLL multiplier of 262.50
+    CGC_PLL_MUL_262_66 = BSP_CLOCKS_PLL_MUL(262U, 66U), ///< PLL multiplier of 262.66
+    CGC_PLL_MUL_263_0  = BSP_CLOCKS_PLL_MUL(263U, 0U),  ///< PLL multiplier of 263.00
+    CGC_PLL_MUL_263_33 = BSP_CLOCKS_PLL_MUL(263U, 33U), ///< PLL multiplier of 263.33
+    CGC_PLL_MUL_263_5  = BSP_CLOCKS_PLL_MUL(263U, 50U), ///< PLL multiplier of 263.50
+    CGC_PLL_MUL_263_66 = BSP_CLOCKS_PLL_MUL(263U, 66U), ///< PLL multiplier of 263.66
+    CGC_PLL_MUL_264_0  = BSP_CLOCKS_PLL_MUL(264U, 0U),  ///< PLL multiplier of 264.00
+    CGC_PLL_MUL_264_33 = BSP_CLOCKS_PLL_MUL(264U, 33U), ///< PLL multiplier of 264.33
+    CGC_PLL_MUL_264_5  = BSP_CLOCKS_PLL_MUL(264U, 50U), ///< PLL multiplier of 264.50
+    CGC_PLL_MUL_264_66 = BSP_CLOCKS_PLL_MUL(264U, 66U), ///< PLL multiplier of 264.66
+    CGC_PLL_MUL_265_0  = BSP_CLOCKS_PLL_MUL(265U, 0U),  ///< PLL multiplier of 265.00
+    CGC_PLL_MUL_265_33 = BSP_CLOCKS_PLL_MUL(265U, 33U), ///< PLL multiplier of 265.33
+    CGC_PLL_MUL_265_5  = BSP_CLOCKS_PLL_MUL(265U, 50U), ///< PLL multiplier of 265.50
+    CGC_PLL_MUL_265_66 = BSP_CLOCKS_PLL_MUL(265U, 66U), ///< PLL multiplier of 265.66
+    CGC_PLL_MUL_266_0  = BSP_CLOCKS_PLL_MUL(266U, 0U),  ///< PLL multiplier of 266.00
+    CGC_PLL_MUL_266_33 = BSP_CLOCKS_PLL_MUL(266U, 33U), ///< PLL multiplier of 266.33
+    CGC_PLL_MUL_266_5  = BSP_CLOCKS_PLL_MUL(266U, 50U), ///< PLL multiplier of 266.50
+    CGC_PLL_MUL_266_66 = BSP_CLOCKS_PLL_MUL(266U, 66U), ///< PLL multiplier of 266.66
+    CGC_PLL_MUL_267_0  = BSP_CLOCKS_PLL_MUL(267U, 0U),  ///< PLL multiplier of 267.00
+    CGC_PLL_MUL_267_33 = BSP_CLOCKS_PLL_MUL(267U, 33U), ///< PLL multiplier of 267.33
+    CGC_PLL_MUL_267_5  = BSP_CLOCKS_PLL_MUL(267U, 50U), ///< PLL multiplier of 267.50
+    CGC_PLL_MUL_267_66 = BSP_CLOCKS_PLL_MUL(267U, 66U), ///< PLL multiplier of 267.66
+    CGC_PLL_MUL_268_0  = BSP_CLOCKS_PLL_MUL(268U, 0U),  ///< PLL multiplier of 268.00
+    CGC_PLL_MUL_268_33 = BSP_CLOCKS_PLL_MUL(268U, 33U), ///< PLL multiplier of 268.33
+    CGC_PLL_MUL_268_5  = BSP_CLOCKS_PLL_MUL(268U, 50U), ///< PLL multiplier of 268.50
+    CGC_PLL_MUL_268_66 = BSP_CLOCKS_PLL_MUL(268U, 66U), ///< PLL multiplier of 268.66
+    CGC_PLL_MUL_269_0  = BSP_CLOCKS_PLL_MUL(269U, 0U),  ///< PLL multiplier of 269.00
+    CGC_PLL_MUL_269_33 = BSP_CLOCKS_PLL_MUL(269U, 33U), ///< PLL multiplier of 269.33
+    CGC_PLL_MUL_269_5  = BSP_CLOCKS_PLL_MUL(269U, 50U), ///< PLL multiplier of 269.50
+    CGC_PLL_MUL_269_66 = BSP_CLOCKS_PLL_MUL(269U, 66U), ///< PLL multiplier of 269.66
+    CGC_PLL_MUL_270_0  = BSP_CLOCKS_PLL_MUL(270U, 0U),  ///< PLL multiplier of 270.00
+    CGC_PLL_MUL_270_33 = BSP_CLOCKS_PLL_MUL(270U, 33U), ///< PLL multiplier of 270.33
+    CGC_PLL_MUL_270_5  = BSP_CLOCKS_PLL_MUL(270U, 50U), ///< PLL multiplier of 270.50
+    CGC_PLL_MUL_270_66 = BSP_CLOCKS_PLL_MUL(270U, 66U), ///< PLL multiplier of 270.66
+    CGC_PLL_MUL_271_0  = BSP_CLOCKS_PLL_MUL(271U, 0U),  ///< PLL multiplier of 271.00
+    CGC_PLL_MUL_271_33 = BSP_CLOCKS_PLL_MUL(271U, 33U), ///< PLL multiplier of 271.33
+    CGC_PLL_MUL_271_5  = BSP_CLOCKS_PLL_MUL(271U, 50U), ///< PLL multiplier of 271.50
+    CGC_PLL_MUL_271_66 = BSP_CLOCKS_PLL_MUL(271U, 66U), ///< PLL multiplier of 271.66
+    CGC_PLL_MUL_272_0  = BSP_CLOCKS_PLL_MUL(272U, 0U),  ///< PLL multiplier of 272.00
+    CGC_PLL_MUL_272_33 = BSP_CLOCKS_PLL_MUL(272U, 33U), ///< PLL multiplier of 272.33
+    CGC_PLL_MUL_272_5  = BSP_CLOCKS_PLL_MUL(272U, 50U), ///< PLL multiplier of 272.50
+    CGC_PLL_MUL_272_66 = BSP_CLOCKS_PLL_MUL(272U, 66U), ///< PLL multiplier of 272.66
+    CGC_PLL_MUL_273_0  = BSP_CLOCKS_PLL_MUL(273U, 0U),  ///< PLL multiplier of 273.00
+    CGC_PLL_MUL_273_33 = BSP_CLOCKS_PLL_MUL(273U, 33U), ///< PLL multiplier of 273.33
+    CGC_PLL_MUL_273_5  = BSP_CLOCKS_PLL_MUL(273U, 50U), ///< PLL multiplier of 273.50
+    CGC_PLL_MUL_273_66 = BSP_CLOCKS_PLL_MUL(273U, 66U), ///< PLL multiplier of 273.66
+    CGC_PLL_MUL_274_0  = BSP_CLOCKS_PLL_MUL(274U, 0U),  ///< PLL multiplier of 274.00
+    CGC_PLL_MUL_274_33 = BSP_CLOCKS_PLL_MUL(274U, 33U), ///< PLL multiplier of 274.33
+    CGC_PLL_MUL_274_5  = BSP_CLOCKS_PLL_MUL(274U, 50U), ///< PLL multiplier of 274.50
+    CGC_PLL_MUL_274_66 = BSP_CLOCKS_PLL_MUL(274U, 66U), ///< PLL multiplier of 274.66
+    CGC_PLL_MUL_275_0  = BSP_CLOCKS_PLL_MUL(275U, 0U),  ///< PLL multiplier of 275.00
+    CGC_PLL_MUL_275_33 = BSP_CLOCKS_PLL_MUL(275U, 33U), ///< PLL multiplier of 275.33
+    CGC_PLL_MUL_275_5  = BSP_CLOCKS_PLL_MUL(275U, 50U), ///< PLL multiplier of 275.50
+    CGC_PLL_MUL_275_66 = BSP_CLOCKS_PLL_MUL(275U, 66U), ///< PLL multiplier of 275.66
+    CGC_PLL_MUL_276_0  = BSP_CLOCKS_PLL_MUL(276U, 0U),  ///< PLL multiplier of 276.00
+    CGC_PLL_MUL_276_33 = BSP_CLOCKS_PLL_MUL(276U, 33U), ///< PLL multiplier of 276.33
+    CGC_PLL_MUL_276_5  = BSP_CLOCKS_PLL_MUL(276U, 50U), ///< PLL multiplier of 276.50
+    CGC_PLL_MUL_276_66 = BSP_CLOCKS_PLL_MUL(276U, 66U), ///< PLL multiplier of 276.66
+    CGC_PLL_MUL_277_0  = BSP_CLOCKS_PLL_MUL(277U, 0U),  ///< PLL multiplier of 277.00
+    CGC_PLL_MUL_277_33 = BSP_CLOCKS_PLL_MUL(277U, 33U), ///< PLL multiplier of 277.33
+    CGC_PLL_MUL_277_5  = BSP_CLOCKS_PLL_MUL(277U, 50U), ///< PLL multiplier of 277.50
+    CGC_PLL_MUL_277_66 = BSP_CLOCKS_PLL_MUL(277U, 66U), ///< PLL multiplier of 277.66
+    CGC_PLL_MUL_278_0  = BSP_CLOCKS_PLL_MUL(278U, 0U),  ///< PLL multiplier of 278.00
+    CGC_PLL_MUL_278_33 = BSP_CLOCKS_PLL_MUL(278U, 33U), ///< PLL multiplier of 278.33
+    CGC_PLL_MUL_278_5  = BSP_CLOCKS_PLL_MUL(278U, 50U), ///< PLL multiplier of 278.50
+    CGC_PLL_MUL_278_66 = BSP_CLOCKS_PLL_MUL(278U, 66U), ///< PLL multiplier of 278.66
+    CGC_PLL_MUL_279_0  = BSP_CLOCKS_PLL_MUL(279U, 0U),  ///< PLL multiplier of 279.00
+    CGC_PLL_MUL_279_33 = BSP_CLOCKS_PLL_MUL(279U, 33U), ///< PLL multiplier of 279.33
+    CGC_PLL_MUL_279_5  = BSP_CLOCKS_PLL_MUL(279U, 50U), ///< PLL multiplier of 279.50
+    CGC_PLL_MUL_279_66 = BSP_CLOCKS_PLL_MUL(279U, 66U), ///< PLL multiplier of 279.66
+    CGC_PLL_MUL_280_0  = BSP_CLOCKS_PLL_MUL(280U, 0U),  ///< PLL multiplier of 280.00
+    CGC_PLL_MUL_280_33 = BSP_CLOCKS_PLL_MUL(280U, 33U), ///< PLL multiplier of 280.33
+    CGC_PLL_MUL_280_5  = BSP_CLOCKS_PLL_MUL(280U, 50U), ///< PLL multiplier of 280.50
+    CGC_PLL_MUL_280_66 = BSP_CLOCKS_PLL_MUL(280U, 66U), ///< PLL multiplier of 280.66
+    CGC_PLL_MUL_281_0  = BSP_CLOCKS_PLL_MUL(281U, 0U),  ///< PLL multiplier of 281.00
+    CGC_PLL_MUL_281_33 = BSP_CLOCKS_PLL_MUL(281U, 33U), ///< PLL multiplier of 281.33
+    CGC_PLL_MUL_281_5  = BSP_CLOCKS_PLL_MUL(281U, 50U), ///< PLL multiplier of 281.50
+    CGC_PLL_MUL_281_66 = BSP_CLOCKS_PLL_MUL(281U, 66U), ///< PLL multiplier of 281.66
+    CGC_PLL_MUL_282_0  = BSP_CLOCKS_PLL_MUL(282U, 0U),  ///< PLL multiplier of 282.00
+    CGC_PLL_MUL_282_33 = BSP_CLOCKS_PLL_MUL(282U, 33U), ///< PLL multiplier of 282.33
+    CGC_PLL_MUL_282_5  = BSP_CLOCKS_PLL_MUL(282U, 50U), ///< PLL multiplier of 282.50
+    CGC_PLL_MUL_282_66 = BSP_CLOCKS_PLL_MUL(282U, 66U), ///< PLL multiplier of 282.66
+    CGC_PLL_MUL_283_0  = BSP_CLOCKS_PLL_MUL(283U, 0U),  ///< PLL multiplier of 283.00
+    CGC_PLL_MUL_283_33 = BSP_CLOCKS_PLL_MUL(283U, 33U), ///< PLL multiplier of 283.33
+    CGC_PLL_MUL_283_5  = BSP_CLOCKS_PLL_MUL(283U, 50U), ///< PLL multiplier of 283.50
+    CGC_PLL_MUL_283_66 = BSP_CLOCKS_PLL_MUL(283U, 66U), ///< PLL multiplier of 283.66
+    CGC_PLL_MUL_284_0  = BSP_CLOCKS_PLL_MUL(284U, 0U),  ///< PLL multiplier of 284.00
+    CGC_PLL_MUL_284_33 = BSP_CLOCKS_PLL_MUL(284U, 33U), ///< PLL multiplier of 284.33
+    CGC_PLL_MUL_284_5  = BSP_CLOCKS_PLL_MUL(284U, 50U), ///< PLL multiplier of 284.50
+    CGC_PLL_MUL_284_66 = BSP_CLOCKS_PLL_MUL(284U, 66U), ///< PLL multiplier of 284.66
+    CGC_PLL_MUL_285_0  = BSP_CLOCKS_PLL_MUL(285U, 0U),  ///< PLL multiplier of 285.00
+    CGC_PLL_MUL_285_33 = BSP_CLOCKS_PLL_MUL(285U, 33U), ///< PLL multiplier of 285.33
+    CGC_PLL_MUL_285_5  = BSP_CLOCKS_PLL_MUL(285U, 50U), ///< PLL multiplier of 285.50
+    CGC_PLL_MUL_285_66 = BSP_CLOCKS_PLL_MUL(285U, 66U), ///< PLL multiplier of 285.66
+    CGC_PLL_MUL_286_0  = BSP_CLOCKS_PLL_MUL(286U, 0U),  ///< PLL multiplier of 286.00
+    CGC_PLL_MUL_286_33 = BSP_CLOCKS_PLL_MUL(286U, 33U), ///< PLL multiplier of 286.33
+    CGC_PLL_MUL_286_5  = BSP_CLOCKS_PLL_MUL(286U, 50U), ///< PLL multiplier of 286.50
+    CGC_PLL_MUL_286_66 = BSP_CLOCKS_PLL_MUL(286U, 66U), ///< PLL multiplier of 286.66
+    CGC_PLL_MUL_287_0  = BSP_CLOCKS_PLL_MUL(287U, 0U),  ///< PLL multiplier of 287.00
+    CGC_PLL_MUL_287_33 = BSP_CLOCKS_PLL_MUL(287U, 33U), ///< PLL multiplier of 287.33
+    CGC_PLL_MUL_287_5  = BSP_CLOCKS_PLL_MUL(287U, 50U), ///< PLL multiplier of 287.50
+    CGC_PLL_MUL_287_66 = BSP_CLOCKS_PLL_MUL(287U, 66U), ///< PLL multiplier of 287.66
+    CGC_PLL_MUL_288_0  = BSP_CLOCKS_PLL_MUL(288U, 0U),  ///< PLL multiplier of 288.00
+    CGC_PLL_MUL_288_33 = BSP_CLOCKS_PLL_MUL(288U, 33U), ///< PLL multiplier of 288.33
+    CGC_PLL_MUL_288_5  = BSP_CLOCKS_PLL_MUL(288U, 50U), ///< PLL multiplier of 288.50
+    CGC_PLL_MUL_288_66 = BSP_CLOCKS_PLL_MUL(288U, 66U), ///< PLL multiplier of 288.66
+    CGC_PLL_MUL_289_0  = BSP_CLOCKS_PLL_MUL(289U, 0U),  ///< PLL multiplier of 289.00
+    CGC_PLL_MUL_289_33 = BSP_CLOCKS_PLL_MUL(289U, 33U), ///< PLL multiplier of 289.33
+    CGC_PLL_MUL_289_5  = BSP_CLOCKS_PLL_MUL(289U, 50U), ///< PLL multiplier of 289.50
+    CGC_PLL_MUL_289_66 = BSP_CLOCKS_PLL_MUL(289U, 66U), ///< PLL multiplier of 289.66
+    CGC_PLL_MUL_290_0  = BSP_CLOCKS_PLL_MUL(290U, 0U),  ///< PLL multiplier of 290.00
+    CGC_PLL_MUL_290_33 = BSP_CLOCKS_PLL_MUL(290U, 33U), ///< PLL multiplier of 290.33
+    CGC_PLL_MUL_290_5  = BSP_CLOCKS_PLL_MUL(290U, 50U), ///< PLL multiplier of 290.50
+    CGC_PLL_MUL_290_66 = BSP_CLOCKS_PLL_MUL(290U, 66U), ///< PLL multiplier of 290.66
+    CGC_PLL_MUL_291_0  = BSP_CLOCKS_PLL_MUL(291U, 0U),  ///< PLL multiplier of 291.00
+    CGC_PLL_MUL_291_33 = BSP_CLOCKS_PLL_MUL(291U, 33U), ///< PLL multiplier of 291.33
+    CGC_PLL_MUL_291_5  = BSP_CLOCKS_PLL_MUL(291U, 50U), ///< PLL multiplier of 291.50
+    CGC_PLL_MUL_291_66 = BSP_CLOCKS_PLL_MUL(291U, 66U), ///< PLL multiplier of 291.66
+    CGC_PLL_MUL_292_0  = BSP_CLOCKS_PLL_MUL(292U, 0U),  ///< PLL multiplier of 292.00
+    CGC_PLL_MUL_292_33 = BSP_CLOCKS_PLL_MUL(292U, 33U), ///< PLL multiplier of 292.33
+    CGC_PLL_MUL_292_5  = BSP_CLOCKS_PLL_MUL(292U, 50U), ///< PLL multiplier of 292.50
+    CGC_PLL_MUL_292_66 = BSP_CLOCKS_PLL_MUL(292U, 66U), ///< PLL multiplier of 292.66
+    CGC_PLL_MUL_293_0  = BSP_CLOCKS_PLL_MUL(293U, 0U),  ///< PLL multiplier of 293.00
+    CGC_PLL_MUL_293_33 = BSP_CLOCKS_PLL_MUL(293U, 33U), ///< PLL multiplier of 293.33
+    CGC_PLL_MUL_293_5  = BSP_CLOCKS_PLL_MUL(293U, 50U), ///< PLL multiplier of 293.50
+    CGC_PLL_MUL_293_66 = BSP_CLOCKS_PLL_MUL(293U, 66U), ///< PLL multiplier of 293.66
+    CGC_PLL_MUL_294_0  = BSP_CLOCKS_PLL_MUL(294U, 0U),  ///< PLL multiplier of 294.00
+    CGC_PLL_MUL_294_33 = BSP_CLOCKS_PLL_MUL(294U, 33U), ///< PLL multiplier of 294.33
+    CGC_PLL_MUL_294_5  = BSP_CLOCKS_PLL_MUL(294U, 50U), ///< PLL multiplier of 294.50
+    CGC_PLL_MUL_294_66 = BSP_CLOCKS_PLL_MUL(294U, 66U), ///< PLL multiplier of 294.66
+    CGC_PLL_MUL_295_0  = BSP_CLOCKS_PLL_MUL(295U, 0U),  ///< PLL multiplier of 295.00
+    CGC_PLL_MUL_295_33 = BSP_CLOCKS_PLL_MUL(295U, 33U), ///< PLL multiplier of 295.33
+    CGC_PLL_MUL_295_5  = BSP_CLOCKS_PLL_MUL(295U, 50U), ///< PLL multiplier of 295.50
+    CGC_PLL_MUL_295_66 = BSP_CLOCKS_PLL_MUL(295U, 66U), ///< PLL multiplier of 295.66
+    CGC_PLL_MUL_296_0  = BSP_CLOCKS_PLL_MUL(296U, 0U),  ///< PLL multiplier of 296.00
+    CGC_PLL_MUL_296_33 = BSP_CLOCKS_PLL_MUL(296U, 33U), ///< PLL multiplier of 296.33
+    CGC_PLL_MUL_296_5  = BSP_CLOCKS_PLL_MUL(296U, 50U), ///< PLL multiplier of 296.50
+    CGC_PLL_MUL_296_66 = BSP_CLOCKS_PLL_MUL(296U, 66U), ///< PLL multiplier of 296.66
+    CGC_PLL_MUL_297_0  = BSP_CLOCKS_PLL_MUL(297U, 0U),  ///< PLL multiplier of 297.00
+    CGC_PLL_MUL_297_33 = BSP_CLOCKS_PLL_MUL(297U, 33U), ///< PLL multiplier of 297.33
+    CGC_PLL_MUL_297_5  = BSP_CLOCKS_PLL_MUL(297U, 50U), ///< PLL multiplier of 297.50
+    CGC_PLL_MUL_297_66 = BSP_CLOCKS_PLL_MUL(297U, 66U), ///< PLL multiplier of 297.66
+    CGC_PLL_MUL_298_0  = BSP_CLOCKS_PLL_MUL(298U, 0U),  ///< PLL multiplier of 298.00
+    CGC_PLL_MUL_298_33 = BSP_CLOCKS_PLL_MUL(298U, 33U), ///< PLL multiplier of 298.33
+    CGC_PLL_MUL_298_5  = BSP_CLOCKS_PLL_MUL(298U, 50U), ///< PLL multiplier of 298.50
+    CGC_PLL_MUL_298_66 = BSP_CLOCKS_PLL_MUL(298U, 66U), ///< PLL multiplier of 298.66
+    CGC_PLL_MUL_299_0  = BSP_CLOCKS_PLL_MUL(299U, 0U),  ///< PLL multiplier of 299.00
+    CGC_PLL_MUL_299_33 = BSP_CLOCKS_PLL_MUL(299U, 33U), ///< PLL multiplier of 299.33
+    CGC_PLL_MUL_299_5  = BSP_CLOCKS_PLL_MUL(299U, 50U), ///< PLL multiplier of 299.50
+    CGC_PLL_MUL_299_66 = BSP_CLOCKS_PLL_MUL(299U, 66U), ///< PLL multiplier of 299.66
+    CGC_PLL_MUL_300_0  = BSP_CLOCKS_PLL_MUL(300U, 0U),  ///< PLL multiplier of 300.00
+    CGC_PLL_MUL_300_33 = BSP_CLOCKS_PLL_MUL(300U, 33U), ///< PLL multiplier of 300.33
+    CGC_PLL_MUL_300_5  = BSP_CLOCKS_PLL_MUL(300U, 50U), ///< PLL multiplier of 300.50
+    CGC_PLL_MUL_300_66 = BSP_CLOCKS_PLL_MUL(300U, 66U), ///< PLL multiplier of 300.66
     CGC_PLL_MUL_732_0  = BSP_CLOCKS_PLL_MUL(732U, 0U),  ///< PLL multiplier of 732.00
     CGC_PLL_MUL_781_0  = BSP_CLOCKS_PLL_MUL(781U, 0U),  ///< PLL multiplier of 781.00
 } cgc_pll_mul_t;
@@ -1109,7 +1651,7 @@ typedef enum e_cgc_pll_mul
 /* Public functions defined in bsp.h */
 void bsp_clock_init(void);             // Used internally by BSP
 
-#if BSP_TZ_NONSECURE_BUILD
+#if BSP_TZ_NONSECURE_BUILD || BSP_ALT_BUILD
 void bsp_clock_freq_var_init(void);    // Used internally by BSP
 
 #endif
@@ -1133,10 +1675,10 @@ void     bsp_prv_power_change_mstp_clear(uint32_t mstp_clear_bitmask);
 
 #endif
 
-void bsp_prv_prepare_pll(uint32_t pll_freq_hz);
+void bsp_prv_prepare_pll(uint32_t clock, uint32_t const * const p_pll_hz);
 
 #if !BSP_FEATURE_CGC_REGISTER_SET_B
-void bsp_prv_clock_set(uint32_t clock, uint32_t sckdivcr, uint8_t sckdivcr2);
+void bsp_prv_clock_set(uint32_t clock, uint32_t sckdivcr, uint16_t sckdivcr2);
 
 #else
 void     bsp_prv_clock_set(uint32_t clock, uint8_t hocodiv, uint8_t mocodiv, uint8_t moscdiv);
@@ -1147,6 +1689,11 @@ uint32_t bsp_prv_clock_source_get(void);
 /* RTC Initialization */
 #if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
 void R_BSP_Init_RTC(void);
+
+#endif
+
+#if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE
+bool bsp_prv_rtc_register_clock_set(bool enable);
 
 #endif
 

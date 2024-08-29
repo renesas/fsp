@@ -37,7 +37,7 @@
 
   #include "mbedtls/oid.h"
   #include "mbedtls/asn1.h"
-  #include "bootutil/crypto/ecdsa_p256.h"
+  #include "bootutil/crypto/ecdsa.h"
   #include "bootutil_priv.h"
   #include "sce9_ecdsa_p256.h"
 
@@ -52,7 +52,7 @@ static uint32_t aligned_sig[BOOTUTIL_CRYPTO_ECDSA_P256_SIGNATURE_SIZE_BYTES/4] =
 static uint32_t aligned_hash[BOOTUTIL_CRYPTO_SHA256_DIGEST_SIZE_BYTES/4] = {0};
 static uint32_t aligned_pk[MCUBOOT_SCE9_ECC_PUBLIC_KEY_IDX_SIZE_BYTES/4] = {0};
 
-static int bootutil_ecdsa_p256_verify (bootutil_ecdsa_p256_context * ctx,
+static int bootutil_ecdsa_verify (bootutil_ecdsa_context * ctx,
                                               const uint8_t               * pk,
                                               const uint8_t               * hash,
                                               const uint8_t               * sig)
@@ -196,7 +196,7 @@ bootutil_verify_sig(uint8_t *hash, uint32_t hlen, uint8_t *sig, size_t slen,
   uint8_t key_id)
 {
     int rc;
-    bootutil_ecdsa_p256_context ctx;
+    bootutil_ecdsa_context ctx;
     uint8_t *pubkey;
     uint8_t *end;
 
@@ -234,9 +234,9 @@ bootutil_verify_sig(uint8_t *hash, uint32_t hlen, uint8_t *sig, size_t slen,
         return -1;
     }
 
-    bootutil_ecdsa_p256_init(&ctx);
-    rc = bootutil_ecdsa_p256_verify(&ctx, (uint8_t*)&public_key_installed.value, hash, signature);
-    bootutil_ecdsa_p256_drop(&ctx);
+    bootutil_ecdsa_init(&ctx);
+    rc = bootutil_ecdsa_verify(&ctx, (uint8_t*)&public_key_installed.value, hash, signature);
+    bootutil_ecdsa_drop(&ctx);
 
     return rc;
 }

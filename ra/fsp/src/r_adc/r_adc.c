@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -83,19 +69,11 @@
 
 #define ADC_PRV_ADBUF_ENABLED                       (1U)
 
+#define ADC_MASK_FIRST_SENSOR_BIT                   (29U)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
-
-/** Defines the registers settings for the ADC synchronous ELC trigger. */
-typedef enum e_adc_elc_trigger
-{
-    ADC_ELC_TRIGGER_EXTERNAL = (0x00U),
-    ADC_ELC_TRIGGER          = (0x09U),
-    ADC_ELC_TRIGGER_GROUP_B  = (0x0AU),
-    ADC_ELC_TRIGGER_BOTH     = (0x0BU),
-    ADC_ELC_TRIGGER_DISABLED = (0x3FU)
-} adc_elc_trigger_t;
 
 #if defined(__ARMCC_VERSION) || defined(__ICCARM__)
 typedef void (BSP_CMSE_NONSECURE_CALL * adc_prv_ns_callback)(adc_callback_args_t * p_args);
@@ -133,23 +111,14 @@ static fsp_err_t r_adc_scan_cfg_check(adc_instance_ctrl_t * const     p_instance
 
 static void r_adc_scan_cfg(adc_instance_ctrl_t * const     p_instance_ctrl,
                            adc_channel_cfg_t const * const p_channel_cfg);
-static void    r_adc_sensor_sample_state_calculation(uint32_t * const p_sample_states);
-void           adc_scan_end_b_isr(void);
-void           adc_scan_end_isr(void);
-void           adc_window_compare_isr(void);
-static void    r_adc_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
-static void    r_adc_irq_disable(IRQn_Type irq);
-static int32_t r_adc_lowest_channel_get(uint32_t adc_mask);
-static void    r_adc_scan_end_common_isr(adc_event_t event);
-
-/** Look-up table for ADSTRGR values */
-static const uint32_t adc_elc_trigger_lut[] =
-{
-    [ADC_DOUBLE_TRIGGER_DISABLED]         = (ADC_ELC_TRIGGER << R_ADC0_ADSTRGR_TRSA_Pos) + ADC_ELC_TRIGGER_GROUP_B,
-    [ADC_DOUBLE_TRIGGER_ENABLED]          = (ADC_ELC_TRIGGER << R_ADC0_ADSTRGR_TRSA_Pos) + ADC_ELC_TRIGGER_GROUP_B,
-    [ADC_DOUBLE_TRIGGER_ENABLED_EXTENDED] = (ADC_ELC_TRIGGER_BOTH << R_ADC0_ADSTRGR_TRSA_Pos) +
-                                            ADC_ELC_TRIGGER_DISABLED,
-};
+static void     r_adc_sensor_sample_state_calculation(uint32_t * const p_sample_states);
+void            adc_scan_end_b_isr(void);
+void            adc_scan_end_isr(void);
+void            adc_window_compare_isr(void);
+static void     r_adc_irq_enable(IRQn_Type irq, uint8_t ipl, void * p_context);
+static void     r_adc_irq_disable(IRQn_Type irq);
+static uint32_t r_adc_lowest_channel_get(uint32_t adc_mask);
+static void     r_adc_scan_end_common_isr(adc_event_t event);
 
 #if ADC_CFG_PARAM_CHECKING_ENABLE
 
@@ -623,12 +592,12 @@ fsp_err_t R_ADC_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
          * 2 bits. */
         uint32_t adc_mask_in_order = adc_mask & ~(uint32_t) ADC_MASK_SENSORS;
         adc_mask_in_order <<= 3U;
-        adc_mask_in_order  |= adc_mask >> 29U;
-        int32_t lowest_channel = r_adc_lowest_channel_get(adc_mask_in_order);
+        adc_mask_in_order  |= adc_mask >> ADC_MASK_FIRST_SENSOR_BIT;
+        uint32_t lowest_channel = r_adc_lowest_channel_get(adc_mask_in_order);
         p_adc_info->p_address = &p_instance_ctrl->p_reg->ADDR[lowest_channel - 3];
 
         /* Determine the highest channel that is configured. */
-        int32_t highest_channel = 31 - __CLZ(adc_mask_in_order);
+        uint32_t highest_channel = 31 - __CLZ(adc_mask_in_order);
 
         /* Determine the size of data that must be read to read all the channels between and including the
          * highest and lowest channels.*/
@@ -899,11 +868,13 @@ static fsp_err_t r_adc_open_cfg_check (adc_cfg_t const * const p_cfg)
      * "A/D Conversion Start Trigger Select Register (ADSTRGR)" in the RA6M3 manual R01UH0886EJ0100.  */
     if ((ADC_MODE_GROUP_SCAN == p_cfg->mode) || (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode))
     {
-        FSP_ASSERT(ADC_TRIGGER_SYNC_ELC == p_cfg->trigger);
+        FSP_ASSERT((ADC_START_SOURCE_DISABLED != p_cfg_extend->trigger) &&
+                   (ADC_START_SOURCE_ASYNC_EXTERNAL != p_cfg_extend->trigger));
 
         if ((ADC_MODE_GROUP_SCAN == p_cfg->mode))
         {
-            FSP_ASSERT(ADC_TRIGGER_SYNC_ELC == p_cfg_extend->trigger_group_b);
+            FSP_ASSERT((ADC_START_SOURCE_DISABLED != p_cfg_extend->trigger_group_b) && \
+                       (ADC_START_SOURCE_ASYNC_EXTERNAL != p_cfg_extend->trigger_group_b));
         }
     }
 
@@ -1116,8 +1087,9 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
      *     R_ADC_ScanStart if software trigger mode is used.
      */
     uint32_t adcsr = (uint32_t) (p_cfg->mode << R_ADC0_ADCSR_ADCS_Pos);
-    adcsr |= (uint32_t) (R_ADC0_ADCSR_GBADIE_Msk);
-    adcsr |= ((uint32_t) p_cfg->trigger << R_ADC0_ADCSR_EXTRG_Pos);
+    adcsr |= (uint32_t) (R_ADC0_ADCSR_GBADIE_Msk | R_ADC0_ADCSR_TRGE_Msk);
+    adcsr |= ((uint32_t) (ADC_START_SOURCE_ASYNC_EXTERNAL == p_cfg_extend->trigger) << R_ADC0_ADCSR_EXTRG_Pos); // Only check GroupA. GroupB is never external.
+    adcsr |= ((uint32_t) (ADC_START_SOURCE_DISABLED != p_cfg_extend->trigger) << R_ADC0_ADCSR_TRGE_Pos);        // Only check GroupA. GroupB is never external.
 
 #if BSP_FEATURE_ADC_HAS_ADHVREFCNT
     if (ADC_PRV_ADHVREFCNT_VREF_INTERNAL_BIT_1 & p_cfg_extend->adc_vref_control)
@@ -1128,9 +1100,9 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
 
     if (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode)
     {
-        adcsr |= R_ADC0_ADCSR_TRGE_Msk | R_ADC0_ADCSR_DBLE_Msk;
+        adcsr |= R_ADC0_ADCSR_DBLE_Msk;
     }
-    else if (ADC_TRIGGER_SOFTWARE == p_cfg->trigger)
+    else if (ADC_START_SOURCE_DISABLED == p_cfg_extend->trigger)
     {
         adcsr |= R_ADC0_ADCSR_ADST_Msk;
     }
@@ -1142,19 +1114,18 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
     p_instance_ctrl->scan_start_adcsr = (uint16_t) adcsr;
 
     /* The default value for ADSTRGR is 0 out of reset. Update it only if the ADC is triggered on ELC events. */
-    uint32_t adstrgr = 0U;
-    if (ADC_TRIGGER_SYNC_ELC == p_cfg->trigger)
-    {
-        /* Set ADSTRGR per the following:
-         *   Extended double-trigger mode:
-         *    - Normal (Group A): ELC_PERIPHERAL_ADCn and ELC_PERIPHERAL_ADCn_B
-         *    - Group B: None
-         *   All other modes:
-         *    - Normal (Group A): ELC_PERIPHERAL_ADCn
-         *    - Group B: ELC_PERIPHERAL_ADCn_B
-         */
-        adstrgr = adc_elc_trigger_lut[p_cfg_extend->double_trigger_mode];
-    }
+
+    /* Set ADSTRGR per the following:
+     *   Extended double-trigger mode:
+     *    - Normal (Group A): ELC_PERIPHERAL_ADCn and ELC_PERIPHERAL_ADCn_B
+     *    - Group B: None
+     *   All other modes:
+     *    - Normal (Group A): ELC_PERIPHERAL_ADCn
+     *    - Group B: ELC_PERIPHERAL_ADCn_B
+     */
+    uint32_t adstrgr =
+        ((R_ADC0_ADSTRGR_TRSA_Msk & ((uint32_t) p_cfg_extend->trigger << R_ADC0_ADSTRGR_TRSA_Pos)) | \
+         (R_ADC0_ADSTRGR_TRSB_Msk & ((uint32_t) p_cfg_extend->trigger_group_b << R_ADC0_ADSTRGR_TRSB_Pos)));
 
     /* Determine the value for ADCER:
      *   * The resolution is set as configured in ADCER.ADPRC (on MCUs that have this bitfield).
@@ -1503,14 +1474,18 @@ static void r_adc_scan_cfg (adc_instance_ctrl_t * const p_instance_ctrl, adc_cha
             p_instance_ctrl->p_reg->ADCMPDR1 = p_window_cfg->compare_ref_high;
 
             /* Set Window A channel mask */
-            p_instance_ctrl->p_reg->ADCMPANSR[0] = p_window_cfg->compare_mask & UINT16_MAX;
-            p_instance_ctrl->p_reg->ADCMPANSR[1] = (uint16_t) ((p_window_cfg->compare_mask << 4) >> 20);
-            p_instance_ctrl->p_reg->ADCMPANSER   = (uint8_t) (p_window_cfg->compare_mask >> 29);
+            uint32_t compare_mask = p_window_cfg->compare_mask;
+            p_instance_ctrl->p_reg->ADCMPANSR[0] = compare_mask & UINT16_MAX;
+            p_instance_ctrl->p_reg->ADCMPANSR[1] = (uint16_t) (((uint32_t) ~ADC_MASK_SENSORS & compare_mask) >> 16);
+            p_instance_ctrl->p_reg->ADCMPANSER   =
+                (uint8_t) ((ADC_MASK_SENSORS & compare_mask) >> ADC_MASK_FIRST_SENSOR_BIT);
 
             /* Set Window A channel inequality mode mask */
-            p_instance_ctrl->p_reg->ADCMPLR[0] = p_window_cfg->compare_mode_mask & UINT16_MAX;
-            p_instance_ctrl->p_reg->ADCMPLR[1] = (uint16_t) ((p_window_cfg->compare_mode_mask << 4) >> 20);
-            p_instance_ctrl->p_reg->ADCMPLER   = (uint8_t) (p_window_cfg->compare_mode_mask >> 29);
+            uint32_t compare_mode_mask = p_window_cfg->compare_mode_mask;
+            p_instance_ctrl->p_reg->ADCMPLR[0] = compare_mode_mask & UINT16_MAX;
+            p_instance_ctrl->p_reg->ADCMPLR[1] = (uint16_t) (((uint32_t) ~ADC_MASK_SENSORS & compare_mode_mask) >> 16);
+            p_instance_ctrl->p_reg->ADCMPLER   =
+                (uint8_t) ((ADC_MASK_SENSORS & compare_mode_mask) >> ADC_MASK_FIRST_SENSOR_BIT);
         }
 
         if (p_window_cfg->compare_cfg & R_ADC0_ADCMPCR_CMPBE_Msk)
@@ -1582,7 +1557,7 @@ static void r_adc_irq_disable (IRQn_Type irq)
  *
  * @retval  adc_mask_count  index value of lowest channel
  **********************************************************************************************************************/
-static int32_t r_adc_lowest_channel_get (uint32_t adc_mask)
+static uint32_t r_adc_lowest_channel_get (uint32_t adc_mask)
 {
     /* Initialize the mask result */
     uint32_t adc_mask_result = 0U;
@@ -1594,7 +1569,7 @@ static int32_t r_adc_lowest_channel_get (uint32_t adc_mask)
         adc_mask_result = (uint32_t) (adc_mask & (1U << adc_mask_count));
     }
 
-    return adc_mask_count;
+    return (uint32_t) adc_mask_count;
 }
 
 /*******************************************************************************************************************//**

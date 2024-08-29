@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -39,6 +25,13 @@
 #define TAU_PWM_PRV_PERIOD_MAX                  (0x10001U)
 #define TAU_PWM_PRV_PERIOD_MIN                  (0x00002U)
 
+/* Shifted mask for TPS0.PRS2 and .PRS3 bitfields */
+#define TAU_PRV_PRS2_PRS3_MASK                  (0x3U)
+
+/* Divisor settings for CK02 and CK03 */
+#define TAU_PRV_TPS0_PRS3_SETTING               ((BSP_CFG_TAU_CK03 >> 1) & TAU_PRV_PRS2_PRS3_MASK)
+#define TAU_PRV_TPS0_PRS2_SETTING               ((BSP_CFG_TAU_CK02 >> 1) & TAU_PRV_PRS2_PRS3_MASK)
+
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
@@ -56,8 +49,6 @@ static fsp_err_t r_tau_pwm_parameter_checking(tau_pwm_instance_ctrl_t * const p_
                                               timer_cfg_t const * const       p_cfg);
 
 #endif
-
-static uint32_t r_tau_pwm_clock_frequency_get(tau_pwm_instance_ctrl_t * const p_instance_ctrl);
 
 static void r_tau_pwm_disable_irq(IRQn_Type irq);
 
@@ -81,18 +72,19 @@ void tau_pwm_slave_tmi_isr(void);
 /* TAU_PWM implementation of timer interface  */
 const timer_api_t g_timer_on_tau_pwm =
 {
-    .open         = R_TAU_PWM_Open,
-    .stop         = R_TAU_PWM_Stop,
-    .start        = R_TAU_PWM_Start,
-    .reset        = R_TAU_PWM_Reset,
-    .enable       = R_TAU_PWM_Enable,
-    .disable      = R_TAU_PWM_Disable,
-    .periodSet    = R_TAU_PWM_PeriodSet,
-    .dutyCycleSet = R_TAU_PWM_DutyCycleSet,
-    .infoGet      = R_TAU_PWM_InfoGet,
-    .statusGet    = R_TAU_PWM_StatusGet,
-    .callbackSet  = R_TAU_PWM_CallbackSet,
-    .close        = R_TAU_PWM_Close,
+    .open            = R_TAU_PWM_Open,
+    .stop            = R_TAU_PWM_Stop,
+    .start           = R_TAU_PWM_Start,
+    .reset           = R_TAU_PWM_Reset,
+    .enable          = R_TAU_PWM_Enable,
+    .disable         = R_TAU_PWM_Stop,
+    .periodSet       = R_TAU_PWM_PeriodSet,
+    .compareMatchSet = R_TAU_PWM_CompareMatchSet,
+    .dutyCycleSet    = R_TAU_PWM_DutyCycleSet,
+    .infoGet         = R_TAU_PWM_InfoGet,
+    .statusGet       = R_TAU_PWM_StatusGet,
+    .callbackSet     = R_TAU_PWM_CallbackSet,
+    .close           = R_TAU_PWM_Close,
 };
 
 /*******************************************************************************************************************//**
@@ -140,7 +132,9 @@ fsp_err_t R_TAU_PWM_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const
 
     r_tau_pwm_hardware_initialize(p_instance_ctrl, p_cfg);
 
+#if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
     p_instance_ctrl->open = TAU_PWM_OPEN;
+#endif
 
     return err;
 }
@@ -154,20 +148,14 @@ fsp_err_t R_TAU_PWM_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const
  * @retval FSP_SUCCESS                 Timer successfully stopped.
  * @retval FSP_ERR_ASSERTION           p_ctrl was NULL.
  * @retval FSP_ERR_NOT_OPEN            The instance is not opened.
- * @retval FSP_ERR_INVALID_MODE        The mode is invalid, only called in TIMER_MODE_PWM mode.
- * @retval FSP_ERR_UNSUPPORTED         Unsupported when pwm mode support is disabled
  **********************************************************************************************************************/
 fsp_err_t R_TAU_PWM_Stop (timer_ctrl_t * const p_ctrl)
 {
-#if TAU_PWM_CFG_PWM_MODE_ENABLE
     tau_pwm_instance_ctrl_t * p_instance_ctrl = (tau_pwm_instance_ctrl_t *) p_ctrl;
- #if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
+#if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TAU_PWM_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-
-    /* Only called in pwm mode */
-    FSP_ERROR_RETURN(TIMER_MODE_PWM == p_instance_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
- #endif
+#endif
 
     /* Stop timer */
     R_TAU->TT0 = p_instance_ctrl->channels_mask;
@@ -176,10 +164,6 @@ fsp_err_t R_TAU_PWM_Stop (timer_ctrl_t * const p_ctrl)
     R_TAU->TOE0 &= (uint16_t) ~(p_instance_ctrl->slave_channels_mask);
 
     return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_RETURN(FSP_ERR_UNSUPPORTED);
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -187,7 +171,7 @@ fsp_err_t R_TAU_PWM_Stop (timer_ctrl_t * const p_ctrl)
  * Implements @ref timer_api_t::start.
  *
  * @note In one-shot mode, this function is supported only after the timer has been placed into the start trigger
- * detection wait state by calling @ref R_TAU_PWM_Enable.
+ * detection wait state by calling @ref timer_api_t::enable
  *
  * Example:
  * @snippet r_tau_pwm_example.c R_TAU_PWM_Start
@@ -203,11 +187,12 @@ fsp_err_t R_TAU_PWM_Start (timer_ctrl_t * const p_ctrl)
 #if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TAU_PWM_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
  #if TAU_PWM_CFG_ONE_SHOT_MODE_ENABLE
     if (TIMER_MODE_ONE_SHOT == p_instance_ctrl->p_cfg->mode)
     {
         /* Get the channel status */
-        bool channel_in_use = (R_TAU->TE0_b.TE >> p_instance_ctrl->p_cfg->channel) & 1U;
+        bool channel_in_use = R_TAU->TE0 & (1U << p_instance_ctrl->p_cfg->channel);
         FSP_ERROR_RETURN(channel_in_use, FSP_ERR_NOT_ENABLED);
     }
  #endif
@@ -260,7 +245,7 @@ fsp_err_t R_TAU_PWM_Reset (timer_ctrl_t * const p_ctrl)
 #endif
 
     /* Get the channel status */
-    bool channel_in_use = (R_TAU->TE0_b.TE >> p_instance_ctrl->p_cfg->channel) & 1U;
+    bool channel_in_use = R_TAU->TE0 & (1U << p_instance_ctrl->p_cfg->channel);
     if (channel_in_use)
     {
         /* Stop timer */
@@ -313,43 +298,6 @@ fsp_err_t R_TAU_PWM_Enable (timer_ctrl_t * const p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Stops timer and disables external event inputs and software trigger. Implements @ref timer_api_t::disable.
- *
- * Example:
- * @snippet r_tau_pwm_example.c R_TAU_PWM_Disable
- *
- * @retval FSP_SUCCESS                 External events successfully disabled.
- * @retval FSP_ERR_ASSERTION           p_ctrl was NULL.
- * @retval FSP_ERR_NOT_OPEN            The instance is not opened.
- * @retval FSP_ERR_INVALID_MODE        The mode is invalid, only called in TIMER_MODE_ONE_SHOT mode.
- * @retval FSP_ERR_UNSUPPORTED         Unsupported when one shot mode support is disabled
- **********************************************************************************************************************/
-fsp_err_t R_TAU_PWM_Disable (timer_ctrl_t * const p_ctrl)
-{
-#if TAU_PWM_CFG_ONE_SHOT_MODE_ENABLE
-    tau_pwm_instance_ctrl_t * p_instance_ctrl = (tau_pwm_instance_ctrl_t *) p_ctrl;
- #if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ERROR_RETURN(TAU_PWM_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-
-    /* Only called in one-shot mode */
-    FSP_ERROR_RETURN(TIMER_MODE_ONE_SHOT == p_instance_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
- #endif
-
-    /* Stop timer */
-    R_TAU->TT0 = p_instance_ctrl->channels_mask;
-
-    /* Disable the output */
-    R_TAU->TOE0 &= (uint16_t) ~(p_instance_ctrl->slave_channels_mask);
-
-    return FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_RETURN(FSP_ERR_UNSUPPORTED);
-#endif
-}
-
-/*******************************************************************************************************************//**
  * Sets period value provided. If the timer is running, the period will be updated after the next counter underflow.
  * If the timer is stopped, this function resets the counter and updates the period.
  * Implements @ref timer_api_t::periodSet.
@@ -383,6 +331,24 @@ fsp_err_t R_TAU_PWM_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const perio
     R_TAU->TDR0[p_instance_ctrl->p_cfg->channel].TDR0n = (uint16_t) tdr0;
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Placeholder for unsupported compareMatch function. Implements @ref timer_api_t::compareMatchSet.
+ *
+ * @retval FSP_ERR_UNSUPPORTED      TAU PWM compare match is not supported.
+ **********************************************************************************************************************/
+fsp_err_t R_TAU_PWM_CompareMatchSet (timer_ctrl_t * const        p_ctrl,
+                                     uint32_t const              compare_match_value,
+                                     timer_compare_match_t const match_channel)
+{
+    /* This function isn't supported. It is defined only to implement a required function of timer_api_t.
+     * Mark the input parameter as unused since this function isn't supported. */
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(compare_match_value);
+    FSP_PARAMETER_NOT_USED(match_channel);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**
@@ -429,7 +395,7 @@ fsp_err_t R_TAU_PWM_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const du
 #endif
 
     /* Sets the TDR register for slave channels */
-    R_TAU->TDR0[(tau_pwm_io_pin_t) pin].TDR0n = (uint16_t) duty_cycle_counts;
+    R_TAU->TDR0[pin].TDR0n = (uint16_t) duty_cycle_counts;
 
     return FSP_SUCCESS;
 }
@@ -447,11 +413,17 @@ fsp_err_t R_TAU_PWM_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const du
 fsp_err_t R_TAU_PWM_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_info)
 {
     tau_pwm_instance_ctrl_t * p_instance_ctrl = (tau_pwm_instance_ctrl_t *) p_ctrl;
+    uint8_t specific_divider;
+
 #if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_info);
     FSP_ERROR_RETURN(TAU_PWM_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
+
+    timer_cfg_t const * p_cfg = p_instance_ctrl->p_cfg;
+
+    tau_pwm_extended_cfg_t * p_extend = (tau_pwm_extended_cfg_t *) p_cfg->p_extend;
 
     /* Get and store period */
     p_info->period_counts = R_TAU->TDR0[p_instance_ctrl->p_cfg->channel].TDR0n + 2U;
@@ -463,7 +435,11 @@ fsp_err_t R_TAU_PWM_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p
 #endif
 
     /* Get and store clock frequency */
-    p_info->clock_frequency = r_tau_pwm_clock_frequency_get(p_instance_ctrl);
+    /* figure out which clock and associated divider is driving this channel */
+    uint32_t bsp_ck0n_div = BSP_CFG_TAU_CK01 << 8 | BSP_CFG_TAU_CK00;
+    specific_divider = (uint8_t) (bsp_ck0n_div >> (p_extend->operation_clock << 2));
+
+    p_info->clock_frequency = SystemCoreClock >> specific_divider;
 
     /* Get and store clock count direction as down. */
     p_info->count_direction = TIMER_DIRECTION_DOWN;
@@ -491,11 +467,13 @@ fsp_err_t R_TAU_PWM_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * con
     FSP_ERROR_RETURN(TAU_PWM_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    uint8_t channel = p_instance_ctrl->p_cfg->channel;
+
     /* Get counter state. */
-    p_status->state = (timer_state_t) ((R_TAU->TE0_b.TE >> p_instance_ctrl->p_cfg->channel) & 1U);
+    p_status->state = (timer_state_t) ((R_TAU->TE0 >> channel) & 1U);
 
     /* Get counter value */
-    p_status->counter = R_TAU->TCR0[p_instance_ctrl->p_cfg->channel];
+    p_status->counter = R_TAU->TCR0[channel];
 
     return FSP_SUCCESS;
 }
@@ -552,19 +530,41 @@ fsp_err_t R_TAU_PWM_Close (timer_ctrl_t * const p_ctrl)
     R_TAU->TOE0 &= (uint16_t) ~(p_instance_ctrl->slave_channels_mask);
 
     /* Disable interrupts. */
-    tau_pwm_extended_cfg_t * p_extend = (tau_pwm_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    const tau_pwm_extended_cfg_t * p_extend = (tau_pwm_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
     r_tau_pwm_disable_irq(p_instance_ctrl->p_cfg->cycle_end_irq);
-
-    for (uint8_t channel = 0; channel < TAU_PWM_PRV_MAX_NUM_CHANNELS; channel++)
-    {
-        if (NULL != p_extend->p_slave_channel_cfgs[channel])
-        {
-            r_tau_pwm_disable_irq(p_extend->p_slave_channel_cfgs[channel]->cycle_end_irq);
-        }
-    }
+#if TAU_PWM_CFG_PARAM_CHECKING_ENABLE
 
     /* Clear open flag. */
     p_instance_ctrl->open = 0U;
+#endif
+
+#if (1 == TAU_PWM_CFG_MULTI_SLAVE_ENABLE)
+
+    /* Save the active slave mask; shift right because channel 0 cant be a slave */
+    uint8_t slave_channels_mask = (p_instance_ctrl->slave_channels_mask >> 1);
+
+    uint8_t index = 0;
+    do
+    {
+        if (slave_channels_mask & 0x01)
+        {
+            r_tau_pwm_disable_irq(p_extend->p_slave_channel_cfgs[index]->cycle_end_irq);
+            index++;
+        }
+
+        slave_channels_mask >>= 1;
+    } while (slave_channels_mask > 0);
+
+    p_instance_ctrl->slave_channels_mask = 0;
+#else
+
+    /* Single slave mode always uses index 0 */
+    if ((0 != p_instance_ctrl->slave_channels_mask) && (NULL != p_extend->p_slave_channel_cfgs[0]))
+    {
+        r_tau_pwm_disable_irq(p_extend->p_slave_channel_cfgs[0]->cycle_end_irq);
+        p_instance_ctrl->slave_channels_mask = 0;
+    }
+#endif
 
     return FSP_SUCCESS;
 }
@@ -625,35 +625,47 @@ static fsp_err_t r_tau_pwm_parameter_checking (tau_pwm_instance_ctrl_t * const p
         FSP_ASSERT(TIMER_SOURCE_DIV_1 == p_cfg->source_div);
     }
 
-    for (uint8_t channel = 0; channel < TAU_PWM_PRV_MAX_NUM_CHANNELS; channel++)
+ #if (0 == TAU_PWM_CFG_MULTI_SLAVE_ENABLE)
+    const uint8_t index = 0;
+ #else
+    for (uint8_t index = 0; index < TAU_PWM_MAX_NUM_SLAVE_CHANNELS; index++)
+ #endif
     {
-        if (NULL != p_extend->p_slave_channel_cfgs[channel])
+        if (NULL != p_extend->p_slave_channel_cfgs[index])
         {
+            uint8_t slaveChannel = p_extend->p_slave_channel_cfgs[index]->channel;
             slave_channels_configured++;
 
             /* Slave channel must be valid in range 1 to 7 and greater than master channel number */
-            FSP_ERROR_RETURN(((1 << p_extend->p_slave_channel_cfgs[channel]->channel) &
-                              BSP_FEATURE_TAU_VALID_CHANNEL_MASK) &&
-                             (p_extend->p_slave_channel_cfgs[channel]->channel > p_cfg->channel),
+
+            FSP_ERROR_RETURN((slaveChannel > TAU_PWM_SLAVE_CHANNEL_UNUSED) &&
+                             (slaveChannel <= TAU_PWM_MAX_CHANNEL_NUM) && /*This is TAU_PWM_MAX_CHANNEL_NUM
+                                                                           * because even with a single slave it could be any slave
+                                                                           * from 1-7 */
+                             (p_extend->p_slave_channel_cfgs[index]->channel > p_cfg->channel),
                              FSP_ERR_INVALID_CHANNEL);
 
             /* Pulse width/duty cycle counts of slave channels must be in valid range */
             if (TIMER_SOURCE_DIV_1 == p_cfg->source_div)
             {
-                FSP_ASSERT(1 <= p_extend->p_slave_channel_cfgs[channel]->duty_cycle_counts);
+                FSP_ASSERT(1 <= p_extend->p_slave_channel_cfgs[index]->duty_cycle_counts);
             }
         }
     }
 
     uint32_t master_counter_max = TAU_PWM_PRV_PERIOD_MAX;
     uint32_t master_counter_min = TAU_PWM_PRV_PERIOD_MIN;
-    master_counter_min = (TIMER_SOURCE_DIV_1 == p_cfg->source_div) ? master_counter_min + 1 : master_counter_min;
- #if TAU_PWM_CFG_PWM_MODE_ENABLE
-    if (TIMER_MODE_PWM == p_cfg->mode)
+
+    if (TIMER_SOURCE_DIV_1 == p_cfg->source_div)
     {
-        master_counter_max = master_counter_max - 1U;
-        master_counter_min = master_counter_min - 1U;
+        master_counter_min++;
     }
+
+ #if TAU_PWM_CFG_PWM_MODE_ENABLE
+
+    /* decrement counters if mode is PWM */
+    master_counter_min = master_counter_min - (TIMER_MODE_PWM == p_cfg->mode);
+    master_counter_max = master_counter_max - (TIMER_MODE_PWM == p_cfg->mode);
  #endif
 
     /* Pulse period/delay time of master channel must be in valid range */
@@ -686,24 +698,10 @@ static fsp_err_t r_tau_pwm_parameter_checking (tau_pwm_instance_ctrl_t * const p
 static void r_tau_pwm_hardware_initialize (tau_pwm_instance_ctrl_t * const p_instance_ctrl,
                                            timer_cfg_t const * const       p_cfg)
 {
-    /* Save pointer to extended configuration structure. */
-    tau_pwm_extended_cfg_t * p_extend = (tau_pwm_extended_cfg_t *) p_cfg->p_extend;
-
-    /* Setting the operation clock divider */
-    uint16_t tps0 = R_TAU->TPS0;
-
-    if (TAU_PWM_OPERATION_CLOCK_CK00 == p_extend->operation_clock)
-    {
-        tps0 &= (uint16_t) ~R_TAU_TPS0_PRS0_Msk;
-        tps0 |= (uint16_t) (p_cfg->source_div << R_TAU_TPS0_PRS0_Pos);
-    }
-    else
-    {
-        tps0 &= (uint16_t) ~R_TAU_TPS0_PRS1_Msk;
-        tps0 |= (uint16_t) (p_cfg->source_div << R_TAU_TPS0_PRS1_Pos);
-    }
-
-    R_TAU->TPS0 = tps0;
+    /* Set TAU divisors based on BSP settings */
+    R_TAU->TPS0 = (uint16_t) ((TAU_PRV_TPS0_PRS3_SETTING << R_TAU_TPS0_PRS3_Pos) |
+                              (TAU_PRV_TPS0_PRS2_SETTING << R_TAU_TPS0_PRS2_Pos) |
+                              (BSP_CFG_TAU_CK01 << R_TAU_TPS0_PRS1_Pos) | BSP_CFG_TAU_CK00);
 
     /* Setting for master channel */
     r_tau_pwm_master_channel_initialize(p_instance_ctrl, p_cfg);
@@ -743,12 +741,14 @@ static void r_tau_pwm_master_channel_initialize (tau_pwm_instance_ctrl_t * p_ins
         }
 
         /* Clear the noise filter */
-        R_PORGA->TNFEN &= (uint8_t) ~(p_instance_ctrl->master_channel_mask);
+        uint8_t tnfen = R_PORGA->TNFEN & (uint8_t) ~(p_instance_ctrl->master_channel_mask);
         if ((TAU_PWM_SOURCE_PIN_INPUT == p_extend->trigger_source))
         {
             /* Enables the noise filter for input pin */
-            R_PORGA->TNFEN |= p_instance_ctrl->master_channel_mask;
+            tnfen |= p_instance_ctrl->master_channel_mask;
         }
+
+        R_PORGA->TNFEN = tnfen;
 
         /* Sets the operation mode to one count */
         tmr0 = TAU_PWM_PRV_TMR0_MD_ONE_COUNT << R_TAU_TMR0_MD_Pos;
@@ -786,10 +786,7 @@ static void r_tau_pwm_master_channel_initialize (tau_pwm_instance_ctrl_t * p_ins
     /* Sets the TDR register to specify the counter data of master channel */
     uint32_t tdr0 = p_cfg->period_counts - 2U;
 #if TAU_PWM_CFG_PWM_MODE_ENABLE
-    if (TIMER_MODE_PWM == p_cfg->mode)
-    {
-        tdr0 = tdr0 + 1U;
-    }
+    tdr0 += (TIMER_MODE_PWM == p_cfg->mode);
 #endif
     R_TAU->TDR0[p_cfg->channel].TDR0n = (uint16_t) tdr0;
 
@@ -822,15 +819,17 @@ static void r_tau_pwm_slave_channels_initialize (tau_pwm_instance_ctrl_t * p_ins
     /* Calculate TMR0 register for slave channels */
     uint16_t tmr0;
 
-    for (uint8_t channel = 0; channel < TAU_PWM_PRV_MAX_NUM_CHANNELS; channel++)
+#if (0 == TAU_PWM_CFG_MULTI_SLAVE_ENABLE)
+    const uint8_t index = 0;
+#else
+    for (uint8_t index = 0; index < TAU_PWM_MAX_NUM_SLAVE_CHANNELS; index++)
+#endif
     {
-        if (NULL != p_extend->p_slave_channel_cfgs[channel])
+        if (NULL != p_extend->p_slave_channel_cfgs[index])
         {
-            uint8_t slave_channel      = p_extend->p_slave_channel_cfgs[channel]->channel;
+            const tau_pwm_channel_cfg_t * slave_channel_cfg = p_extend->p_slave_channel_cfgs[index];
+            uint8_t slave_channel      = slave_channel_cfg->channel;
             uint8_t slave_channel_mask = (uint8_t) (1U << slave_channel);
-
-            /* Power on TAU to start module. */
-            R_BSP_MODULE_START(FSP_IP_TAU, slave_channel);
 
             /* Sets the operation mode */
             tmr0 = TAU_PWM_PRV_TMR0_MD_ONE_COUNT << R_TAU_TMR0_MD_Pos;
@@ -853,26 +852,25 @@ static void r_tau_pwm_slave_channels_initialize (tau_pwm_instance_ctrl_t * p_ins
 
             /* Sets the TDR register to specify the counter data of slave channel */
             R_TAU->TDR0[slave_channel].TDR0n =
-                p_extend->p_slave_channel_cfgs[channel]->duty_cycle_counts;
+                slave_channel_cfg->duty_cycle_counts;
 
             /* Sets output setting for slave channel */
             R_TAU->TOM0 |= (uint16_t) (slave_channel_mask);
 
             uint16_t tol0 = R_TAU->TOL0;
             tol0       &= (uint16_t) ~(slave_channel_mask);
-            tol0       |= (uint16_t) (p_extend->p_slave_channel_cfgs[channel]->output_polarity << slave_channel);
+            tol0       |= (uint16_t) (slave_channel_cfg->output_polarity << slave_channel);
             R_TAU->TOL0 = tol0;
 
             uint16_t to0 = R_TAU->TO0;
             to0       &= (uint16_t) ~(slave_channel_mask);
-            to0       |= (uint16_t) (p_extend->p_slave_channel_cfgs[channel]->output_level << slave_channel);
+            to0       |= (uint16_t) (slave_channel_cfg->output_level << slave_channel);
             R_TAU->TO0 = to0;
 
             p_instance_ctrl->slave_channels_mask |= slave_channel_mask;
 
             /* Enables interrupt */
-            r_tau_pwm_enable_irq(p_extend->p_slave_channel_cfgs[channel]->cycle_end_irq,
-                                 p_extend->p_slave_channel_cfgs[channel]->cycle_end_ipl, p_instance_ctrl);
+            r_tau_pwm_enable_irq(slave_channel_cfg->cycle_end_irq, slave_channel_cfg->cycle_end_ipl, p_instance_ctrl);
         }
     }
 
@@ -907,22 +905,6 @@ static void r_tau_pwm_enable_irq (IRQn_Type const irq, uint32_t priority, void *
     {
         R_BSP_IrqCfgEnable(irq, priority, p_context);
     }
-}
-
-/*******************************************************************************************************************//**
- * Calculates clock frequency of TAU_PWM counter.  Divides TAU_PWM clock by TAU_PWM clock divisor.
- *
- * @param[in]  p_instance_ctrl           Instance control block
- *
- * @return     Clock frequency of the TAU_PWM counter.
- **********************************************************************************************************************/
-static uint32_t r_tau_pwm_clock_frequency_get (tau_pwm_instance_ctrl_t * const p_instance_ctrl)
-{
-    /* Look up PCLK frequency and divide it by TAU_PWM PCLK divider. */
-    uint32_t pclk_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK);
-    uint32_t pclk_divisor = p_instance_ctrl->p_cfg->source_div;
-
-    return pclk_freq_hz >> pclk_divisor;
 }
 
 /*******************************************************************************************************************//**

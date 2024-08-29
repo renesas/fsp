@@ -126,7 +126,7 @@
 #define RM_FREERTOS_PORT_LOCK_LPM_REGISTER_ACCESS      (0xA500U)
 
 /* Determine which stack monitor to use. */
-#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM33, CM85
+#if defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
  #define RM_FREERTOS_PORT_PSPLIM_PRESENT               (1)
  #define RM_FREERTOS_PORT_SPMON_PRESENT                (0)
 #else
@@ -171,7 +171,7 @@
 #endif
 
 /* CM23 does not support the IT instruction. */
-#if defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM4, CM33, or CM85
+#if defined(RENESAS_CORTEX_M4) || defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
  #define RM_FREERTOS_PORT_ISA_IT_SUPPORTED             (1)
 #else
  #define RM_FREERTOS_PORT_ISA_IT_SUPPORTED             (0)
@@ -263,18 +263,6 @@ static uint32_t ulTimerCountsForOneTick = 0;
  */
 #if (configUSE_TICKLESS_IDLE == 1)
 static uint32_t xMaximumPossibleSuppressedTicks = 0;
-#endif
-
-/*
- * Used by the portASSERT_IF_INTERRUPT_PRIORITY_INVALID() macro to ensure
- * FreeRTOS API functions are not called from interrupts that have been assigned
- * a priority above configMAX_SYSCALL_INTERRUPT_PRIORITY.
- */
-#if (configASSERT_DEFINED == 1)
-static uint8_t ucMaxSysCallPriority = 0;
- #ifndef __ARM_ARCH_8M_BASE__
-static uint32_t ulMaxPRIGROUPValue = 0;
- #endif
 #endif
 
 /*-----------------------------------------------------------*/
@@ -1138,78 +1126,6 @@ static void prvTaskExitError (void)
  **********************************************************************************************************************/
 BaseType_t xPortStartScheduler (void)
 {
-#if (configASSERT_DEFINED == 1)
- #ifndef __ARM_ARCH_8M_BASE__               // Exclude CM23
-    {
-  #if defined(__ARM_ARCH_7EM__)             // CM4
-        volatile uint8_t         ulOriginalPriority;
-        volatile uint8_t * const pucFirstUserPriorityRegister = &NVIC->IP[0];
-  #elif defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__)      // CM33 or CM85
-        volatile uint8_t         ulOriginalPriority;
-        volatile uint8_t * const pucFirstUserPriorityRegister = &NVIC->IPR[0];
-  #else
-        volatile uint32_t         ulOriginalPriority;
-        volatile uint32_t * const pucFirstUserPriorityRegister = &NVIC->IPR[0];
-  #endif
-        volatile uint32_t ucMaxPriorityValue;
-
-        /* Determine the maximum priority from which ISR safe FreeRTOS API
-         * functions can be called.  ISR safe functions are those that end in
-         * "FromISR".  FreeRTOS maintains separate thread and ISR API functions to
-         * ensure interrupt entry is as fast and simple as possible.
-         *
-         * Save the interrupt priority value that is about to be clobbered. */
-        ulOriginalPriority = *pucFirstUserPriorityRegister;
-
-        /* Determine the number of priority bits available.  First write to all
-         * possible bits. */
-        *pucFirstUserPriorityRegister = UINT8_MAX;
-
-        /* Read the value back to see how many bits stuck. */
-        ucMaxPriorityValue = *pucFirstUserPriorityRegister;
-
-        /* Use the same mask on the maximum system call priority. */
-        ucMaxSysCallPriority = (configMAX_SYSCALL_INTERRUPT_PRIORITY & ucMaxPriorityValue) >> (8 - __NVIC_PRIO_BITS);
-
-        /* Calculate the maximum acceptable priority group value for the number
-         * of bits read back. */
-        ulMaxPRIGROUPValue = SCB_AIRCR_PRIGROUP_Msk >> SCB_AIRCR_PRIGROUP_Pos;
-        while ((ucMaxPriorityValue & portTOP_BIT_OF_BYTE) == portTOP_BIT_OF_BYTE)
-        {
-            ulMaxPRIGROUPValue--;
-            ucMaxPriorityValue <<= 1U;
-        }
-
-  #ifdef __NVIC_PRIO_BITS
-        {
-            /* Check the CMSIS configuration that defines the number of
-             * priority bits matches the number of priority bits actually queried
-             * from the hardware. */
-            configASSERT((portMAX_PRIGROUP_BITS - ulMaxPRIGROUPValue) == __NVIC_PRIO_BITS);
-        }
-  #endif
-
-  #ifdef configPRIO_BITS
-        {
-            /* Check the FreeRTOS configuration that defines the number of
-             * priority bits matches the number of priority bits actually queried
-             * from the hardware. */
-            configASSERT((portMAX_PRIGROUP_BITS - ulMaxPRIGROUPValue) == configPRIO_BITS);
-        }
-  #endif
-
-        /* Shift the priority group value back to its position within the AIRCR
-         * register. */
-        ulMaxPRIGROUPValue <<= portPRIGROUP_SHIFT;
-        ulMaxPRIGROUPValue  &= portPRIORITY_GROUP_MASK;
-
-        /* Restore the clobbered interrupt priority register to its original
-         * value. */
-        *pucFirstUserPriorityRegister = ulOriginalPriority;
-    }
- #endif
-#endif
-
     /* Make PendSV the lowest priority interrupt. */
     NVIC_SetPriority(PendSV_IRQn, UINT8_MAX);
 
@@ -1632,10 +1548,10 @@ void vPortValidateInterruptPriority (void)
          * The following links provide detailed information:
          * http://www.freertos.org/RTOS-Cortex-M3-M4.html
          * http://www.freertos.org/FAQHelp.html */
-        configASSERT(ulCurrentPriority >= ucMaxSysCallPriority);
+        configASSERT(ulCurrentPriority >= (configMAX_SYSCALL_INTERRUPT_PRIORITY) >> (8 - __NVIC_PRIO_BITS));
     }
 
- #ifndef __ARM_ARCH_8M_BASE__
+ #ifndef RENESAS_CORTEX_M23
 
     /* Priority grouping:  The interrupt controller (NVIC) allows the bits
      * that define each interrupt's priority to be split between bits that
@@ -1650,7 +1566,7 @@ void vPortValidateInterruptPriority (void)
      * scheduler.  Note however that some vendor specific peripheral libraries
      * assume a non-zero priority group setting, in which cases using a value
      * of zero will result in unpredictable behaviour. */
-    configASSERT(NVIC_GetPriorityGrouping() <= (ulMaxPRIGROUPValue >> portPRIGROUP_SHIFT));
+    configASSERT(NVIC_GetPriorityGrouping() <= (8 - __NVIC_PRIO_BITS) - 1);
  #endif
 }
 

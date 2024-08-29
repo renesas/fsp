@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -36,6 +22,22 @@
 #if BSP_FEATURE_ICU_HAS_FILTER
  #define ICU_FCLKSEL_OFFSET    (4)
  #define ICU_FLTEN_OFFSET      (7)
+#endif
+
+/* If the mask is larger than 0xFFFF, then it requires 32-bit values instead of 16-bit */
+#if BSP_FEATURE_ICU_IRQ_CHANNELS_MASK > 0xFFFFU
+
+/* When mask is over 16-bit, there are actually two registers - R_ICU->IRQCRa and R_ICU->IRQCRb. Between them in memory
+ * is R_ICU->NMICR and means there is a 4 byte offset between the end of IRQCRa and beginning of IRQCRb. To save some
+ * instructions, this arithmetic determines if the 4 byte offset should be added to the indexing of IRQCRa to write to
+ * channels 16-31 */
+ #define ICU_IRQCR_CH(c)    ((c) + (uint8_t) (((c) >> 4) << 2))
+ #define ICU_IRQCR_REG             (R_ICU->IRQCRa)
+ #define ICU_IRQCR_REG_BITFIELD    (R_ICU->IRQCRa_b)
+#else
+ #define ICU_IRQCR_CH(c)    (c)
+ #define ICU_IRQCR_REG             (R_ICU->IRQCR)
+ #define ICU_IRQCR_REG_BITFIELD    (R_ICU->IRQCR_b)
 #endif
 
 /***********************************************************************************************************************
@@ -116,7 +118,8 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
                      FSP_ERR_UNSUPPORTED);
  #endif
 
-    FSP_ERROR_RETURN(0 != ((1U << p_cfg->channel) & BSP_FEATURE_ICU_IRQ_CHANNELS_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(0 != ((1ULL << p_cfg->channel) & BSP_FEATURE_ICU_IRQ_CHANNELS_MASK),
+                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     /* Callback must be used with a valid interrupt priority otherwise it will never be called. */
     if (p_cfg->p_callback)
@@ -146,10 +149,12 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
     p_ctrl->p_context  = p_cfg->p_context;
     p_ctrl->channel    = p_cfg->channel;
 
+    uint8_t channel = ICU_IRQCR_CH(p_ctrl->channel);
+
 #if BSP_FEATURE_ICU_HAS_FILTER
 
     /* Disable digital filter */
-    R_ICU->IRQCR[p_ctrl->channel] = 0U;
+    ICU_IRQCR_REG[channel] = 0U;
 
     /* Set the digital filter divider. */
     uint8_t irqcr = (uint8_t) (p_cfg->clock_source_div << ICU_FCLKSEL_OFFSET);
@@ -164,7 +169,7 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 #endif
 
     /* Write IRQCR */
-    R_ICU->IRQCR[p_ctrl->channel] = irqcr;
+    ICU_IRQCR_REG[channel] = irqcr;
 
 #if BSP_FEATURE_ICU_HAS_IELSR
 
@@ -333,7 +338,11 @@ void r_icu_isr (void)
 
 #if BSP_FEATURE_ICU_HAS_IELSR
     bool level_irq = false;
-    if (EXTERNAL_IRQ_TRIG_LEVEL_LOW == R_ICU->IRQCR_b[p_ctrl->channel].IRQMD)
+
+    uint8_t channel = ICU_IRQCR_CH(p_ctrl->channel);
+    uint8_t mode    = ICU_IRQCR_REG_BITFIELD[channel].IRQMD;
+
+    if (EXTERNAL_IRQ_TRIG_LEVEL_LOW == mode)
     {
         level_irq = true;
     }

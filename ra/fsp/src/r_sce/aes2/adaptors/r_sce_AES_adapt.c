@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -33,10 +19,13 @@
  * Refer to Table 1.3 Numbers of Clock Cycles Required for Processing in the CCM Mode
  * Waiting time for 91 Clock Cycles Required for Processing in the CCM Mode with PCLKB 32MHz
  * Note: waiting for 91 clock cycles is still not enough for encryption of AES-CCM 256 bits key length.
- * Must be to 120 clock cycles.
+ * Must be to 146 clock cycles.
  * */
-#define HW_SCE_AES_CCM_WAITING_CYCLES    (120U)
-#define HW_SCE_FREQUENCY_IN_HZ           (1000000U)
+
+#define HW_SCE_AES_CCM_WAITING_CYCLES                  (146U)
+#define HW_SCE_FREQUENCY_IN_HZ                         (1000000U)
+#define HW_SCE_AES2_MAX_WAIT_USECONDS                  (0xFFFFFFFF) // Set the maximum value for uint32_t
+#define HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS    10           // Set a 10 microsecond status check interval
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -79,8 +68,8 @@ extern void hw_aes_ccm_decrypt_init(uint32_t indata_cmd);
  * Private global variables and functions
  ***********************************************************************************************************************/
 
-static uint8_t InputData_DataA[SIZE_AES_GCM_IN_DATA_AAD_LEN_BYTES]     = {0};
-static uint8_t InputData_IV_GCM[SIZE_AES_GCM_IN_DATA_IV_GCM_LEN_BYTES] = {0};
+static uint8_t __attribute__((aligned(32))) InputData_DataA[SIZE_AES_GCM_IN_DATA_AAD_LEN_BYTES]     = {0};
+static uint8_t __attribute__((aligned(32))) InputData_IV_GCM[SIZE_AES_GCM_IN_DATA_IV_GCM_LEN_BYTES] = {0};
 static uint8_t InputData_IV_GCM_LEN_BYTES = 0;
 
 uint32_t change_endian_long (uint32_t a)
@@ -189,11 +178,12 @@ static void hw_aes_get_ciphertext (uint8_t * output)
     *(ptr + 7) = R_AES_B->AESODAT0.AESODATL;
 }
 
-void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
+fsp_err_t hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
 {
     uint8_t * ptr;
     uint8_t * ptr_out;
-    uint32_t  block_ctr = 0;
+    uint32_t  block_ctr           = 0;
+    uint32_t  wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
 
     ptr       = input;
     ptr_out   = output;
@@ -203,9 +193,15 @@ void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
         hw_aes_set_plaintext(ptr);
         R_AES_B->AESDCNTL |= R_AES_AESDCNTL_CALCULATE_START;
 
-        while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+        while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
         {
-            ;
+            R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+            wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+        }
+
+        if (0 == wait_count_useconds)
+        {
+            return FSP_ERR_TIMEOUT;
         }
 
         if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)
@@ -219,6 +215,8 @@ void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
         ptr_out += 16;
         block_ctr++;
     } while (block_ctr < block);
+
+    return FSP_SUCCESS;
 }
 
 /***********************************************************************************************************************
@@ -234,18 +232,23 @@ void hw_aes_start (uint8_t * input, uint8_t * output, uint32_t block)
 void hw_aes_ccm_mode_start (uint8_t * input, uint8_t * output, uint32_t block)
 {
     uint32_t block_ctr;
-    uint32_t system_clock_freq_mhz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB) / HW_SCE_FREQUENCY_IN_HZ;
+    uint32_t pclkb_mhz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB) / HW_SCE_FREQUENCY_IN_HZ;
+    uint32_t iclk_mhz  = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK) / HW_SCE_FREQUENCY_IN_HZ;
+    uint8_t  ratio     = 0U;
 
-    /* Round up the frequency to a whole number */
-    uint32_t delay_us = (HW_SCE_AES_CCM_WAITING_CYCLES + system_clock_freq_mhz - 1) / system_clock_freq_mhz;
+    while (iclk_mhz > pclkb_mhz)
+    {
+        iclk_mhz = iclk_mhz >> 1U;
+        ratio++;
+    }
 
-    for (block_ctr = 0; block_ctr < block; block_ctr++)
+    for (block_ctr = 0U; block_ctr < block; block_ctr++)
     {
         if (NULL != input)
         {
             hw_aes_set_plaintext(input);
             R_AES_B->AESDCNTL |= R_AES_AESDCNTL_CALCULATE_START;
-            R_BSP_SoftwareDelay(delay_us, BSP_DELAY_UNITS_MICROSECONDS);
+            bsp_prv_software_delay_loop(BSP_DELAY_LOOPS_CALCULATE(HW_SCE_AES_CCM_WAITING_CYCLES << ratio));
         }
 
         if (NULL != output)
@@ -343,9 +346,17 @@ void HW_SCE_Aes192EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_
 
 fsp_err_t HW_SCE_Aes192EncryptDecryptFinalSub (void)
 {
-    while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+    uint32_t wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
+
+    while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
     {
-        ;
+        R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+        wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+    }
+
+    if (0 == wait_count_useconds)
+    {
+        return FSP_ERR_TIMEOUT;
     }
 
     if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)
@@ -423,9 +434,17 @@ void HW_SCE_Aes128EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_
 
 fsp_err_t HW_SCE_Aes128EncryptDecryptFinalSub (void)
 {
-    while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+    uint32_t wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
+
+    while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
     {
-        ;
+        R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+        wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+    }
+
+    if (0 == wait_count_useconds)
+    {
+        return FSP_ERR_TIMEOUT;
     }
 
     if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)
@@ -503,9 +522,17 @@ void HW_SCE_Aes256EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_
 
 fsp_err_t HW_SCE_Aes256EncryptDecryptFinalSub (void)
 {
-    while ((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0)
+    uint32_t wait_count_useconds = HW_SCE_AES2_MAX_WAIT_USECONDS;
+
+    while (((R_AES_B->AESSTSL & R_AES_AESSTSL_BIT_5) != 0) && (wait_count_useconds > 0U))
     {
-        ;
+        R_BSP_SoftwareDelay(HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS, BSP_DELAY_UNITS_MICROSECONDS);
+        wait_count_useconds -= HW_SCE_AES2_AESSTSL_CHECK_INTERVAL_USECONDS;
+    }
+
+    if (0 == wait_count_useconds)
+    {
+        return FSP_ERR_TIMEOUT;
     }
 
     if ((R_AES_B->AESSTSL & R_AES_AESSTSL_CALCULATE_COMPLETED) != 0)
@@ -1354,4 +1381,110 @@ fsp_err_t HW_SCE_Aes256CcmDecryptFinalSub (const uint32_t InData_Text[],
     err = HW_SCE_Aes128CcmDecryptFinalSub(InData_Text, InData_TextLen, InData_MAC, InData_MACLength, OutData_Text);
 
     return err;
+}
+
+fsp_err_t HW_SCE_Aes128GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
+                                                 uint32_t * InData_SeqNum)
+{
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
+
+    return HW_SCE_Aes128GcmEncryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes128GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
+                                                 uint32_t * InData_SeqNum)
+{
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
+
+    return HW_SCE_Aes128GcmDecryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes192GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
+                                                 uint32_t * InData_SeqNum)
+{
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
+
+    return HW_SCE_Aes192GcmEncryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes192GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
+                                                 uint32_t * InData_SeqNum)
+{
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
+
+    return HW_SCE_Aes192GcmDecryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
+                                                 uint32_t * InData_SeqNum)
+{
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
+
+    return HW_SCE_Aes256GcmEncryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
+                                                 uint32_t * InData_SeqNum)
+{
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
+
+    return HW_SCE_Aes256GcmDecryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes128EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMode[],
+                                                     const uint32_t InData_Cmd[],
+                                                     const uint32_t InData_KeyIndex[],
+                                                     const uint32_t InData_Key[],
+                                                     const uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Key);
+
+    return HW_SCE_Aes128EncryptDecryptInitSub(InData_KeyMode, InData_Cmd, InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes256EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMode[],
+                                                     const uint32_t InData_Cmd[],
+                                                     const uint32_t InData_KeyIndex[],
+                                                     const uint32_t InData_Key[],
+                                                     const uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Key);
+
+    return HW_SCE_Aes256EncryptDecryptInitSub(InData_KeyMode, InData_Cmd, InData_KeyIndex, InData_IV);
 }

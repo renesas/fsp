@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -39,7 +25,6 @@
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-static lifecycle_t gs_lifecycle;
 
 /***********************************************************************************************************************
  * Global variables
@@ -286,7 +271,7 @@ fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
 
     sce_instance_ctrl_t * p_instance_ctrl = (sce_instance_ctrl_t *) p_ctrl;
     p_instance_ctrl->open = 1;
-    gs_lifecycle          = p_cfg->lifecycle;
+    FSP_PARAMETER_NOT_USED(p_cfg);
 
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
 
@@ -304,7 +289,7 @@ fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
 
     if (FSP_SUCCESS == error_code)
     {
-        error_code = R_SCE_LoadHukPrivate(p_cfg->lifecycle);
+        error_code = R_SCE_LoadHukPrivate();
     }
 
     if (FSP_SUCCESS == error_code)
@@ -498,13 +483,11 @@ fsp_err_t R_SCE_AES128_EncryptedKeyWrap (uint8_t               * initial_vector,
                                          sce_aes_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_AES128;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -543,13 +526,11 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap (uint8_t               * initial_vector,
                                          sce_aes_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_AES256;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -708,13 +689,11 @@ fsp_err_t R_SCE_SHA256HMAC_EncryptedKeyWrap (uint8_t                    * initia
                                              sce_hmac_sha_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_HMAC_SHA256;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -829,13 +808,11 @@ fsp_err_t R_SCE_RSA1024_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_rsa1024_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA1024_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -874,13 +851,11 @@ fsp_err_t R_SCE_RSA1024_EncryptedPrivateKeyWrap (uint8_t                        
                                                  sce_rsa1024_private_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA1024_PRIVATE;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -919,13 +894,11 @@ fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_rsa2048_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA2048_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -964,13 +937,11 @@ fsp_err_t R_SCE_RSA2048_EncryptedPrivateKeyWrap (uint8_t                        
                                                  sce_rsa2048_private_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA2048_PRIVATE;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1009,13 +980,11 @@ fsp_err_t R_SCE_RSA3072_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_rsa3072_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA3072_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1054,13 +1023,11 @@ fsp_err_t R_SCE_RSA4096_EncryptedPublicKeyWrap (uint8_t                         
                                                 sce_rsa4096_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_RSA4096_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1273,13 +1240,11 @@ fsp_err_t R_SCE_ECC_secp192r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P192_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1318,13 +1283,11 @@ fsp_err_t R_SCE_ECC_secp224r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P224_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1363,13 +1326,11 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P256_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1408,13 +1369,11 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap (uint8_t                   
                                                       sce_ecc_public_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P384_PUBLIC;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1453,13 +1412,11 @@ fsp_err_t R_SCE_ECC_secp192r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P192_PRIVATE;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1498,13 +1455,11 @@ fsp_err_t R_SCE_ECC_secp224r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P224_PRIVATE;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1543,13 +1498,11 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P256_PRIVATE;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1588,13 +1541,11 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (uint8_t                  
                                                        sce_ecc_private_wrapped_key_t * wrapped_key)
 {
     fsp_err_t     error_code = FSP_SUCCESS;
-    lifecycle_t   lifecycle  = gs_lifecycle;
     sce_oem_cmd_t key_type   = SCE_OEM_CMD_ECC_P384_PRIVATE;
 
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
-    error_code = R_SCE_UpdateOemKeyIndexPrivate(lifecycle,
-                                                key_type,
+    error_code = R_SCE_UpdateOemKeyIndexPrivate(key_type,
                                                 initial_vector,
                                                 encrypted_key,
                                                 (uint32_t *) &wrapped_key->value);
@@ -1694,10 +1645,10 @@ fsp_err_t R_SCE_TLS_ECC_secp256r1_EphemeralWrappedKeyPairGenerate(sce_tls_p256_e
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              self-test1 fail
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT resource conflict
  **********************************************************************************************************************/
-fsp_err_t R_SCE_LoadHukPrivate (lifecycle_t lifecycle)
+fsp_err_t R_SCE_LoadHukPrivate (void)
 {
     uint32_t LC[1];
-    LC[0] = lifecycle;
+    LC[0] = R_PSCU->DLMMON;
 
     return R_SCE_LoadHukSub(LC);
 }
@@ -1756,8 +1707,7 @@ fsp_err_t R_SCE_FwIntegrityCheckPrivate (void)
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT
  * @retval FSP_ERR_CRYPTO_SCE_FAIL
  **********************************************************************************************************************/
-fsp_err_t R_SCE_UpdateOemKeyIndexPrivate (lifecycle_t   lifecycle,
-                                          sce_oem_cmd_t key_type,
+fsp_err_t R_SCE_UpdateOemKeyIndexPrivate (sce_oem_cmd_t key_type,
                                           uint8_t     * iv,
                                           uint8_t     * encrypted_oem_key,
                                           uint32_t    * key_index)
@@ -1766,7 +1716,7 @@ fsp_err_t R_SCE_UpdateOemKeyIndexPrivate (lifecycle_t   lifecycle,
     uint32_t  CMD[1]     = {0};
     uint32_t  LC[1]      = {0};
     CMD[0] = key_type;
-    LC[0]  = lifecycle;
+    LC[0]  = R_PSCU->DLMMON;
 
     INST_DATA_SIZE = sce_oem_key_size[key_type];
 

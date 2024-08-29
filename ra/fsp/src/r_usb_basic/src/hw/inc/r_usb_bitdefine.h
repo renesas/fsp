@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 #ifndef R_USB_BITDEFINE_H
  #define R_USB_BITDEFINE_H
 
@@ -491,6 +477,66 @@ extern "C" {
  #define BRDYSTS_MASK           (0x03FFU) /* BRDYSTS Reserved bit mask */
  #define NRDYSTS_MASK           (0x03FFU) /* NRDYSTS Reserved bit mask */
  #define BEMPSTS_MASK           (0x03FFU) /* BEMPSTS Reserved bit mask */
+
+/**************************************************************************************************/
+
+/* USB TypeC module bit define */
+
+/* TCC (Type C Control) Register */
+ #define USB_TYPEC_TCC_ENB                      (0x00000001U) /* b0 : Connection State Machine Enable */
+ #define USB_TYPEC_TCC_RESET                    (0x80000000U) /* b31: Type C Software Reset */
+
+/* MEC (Mode Setting and State Control) Register */
+ #define USB_TYPEC_MEC_MODE                     (0x00000001U) /* b0 : Connection State Machine Enable */
+ #define USB_TYPEC_MEC_PMODE_MASK               (0x00000006U) /* b2-b1 : Source Current Detection Mode */
+ #define USB_TYPEC_MEC_PMODE_DEFAULT            (0x00000000U) /* Detect Default USB Source */
+ #define USB_TYPEC_MEC_PMODE_DEFAULT_15A        (0x00000002U) /* Detect Default USB Source and 1.5A Source */
+ #define USB_TYPEC_MEC_PMODE_DEFAULT_15A_30A    (0x00000004U) /* Detect Default USB Source, 15A and 3.0A Source */
+ #define USB_TYPEC_MEC_GD                       (0x00010000U) /* b16 : Direct Connection State to Disable State */
+ #define USB_TYPEC_MEC_GUS                      (0x00020000U) /* b17 : Direct Connection State to Unattached_SNK */
+
+/* CCC (CC-PHY Control) Register */
+ #define USB_TYPEC_CCC_RD                       (0x00000001U) /* b0  : RD Control */
+ #define USB_TYPEC_CCC_ZOPEN                    (0x00000002U) /* b1  : zOpen Control */
+ #define USB_TYPEC_CCC_CCSEL                    (0x00000100U) /* b8  : Selection of CC */
+ #define USB_TYPEC_CCC_VRAEN                    (0x00010000U) /* b16 : vRa Detection Circuit Enable */
+ #define USB_TYPEC_CCC_VRD15EN                  (0x00020000U) /* b17 : vRd-1.5 Detection Circuit Enable */
+ #define USB_TYPEC_CCC_VRD30EN                  (0x00040000U) /* b18 : vRd-3.0 Detection Circuit Enable */
+ #define USB_TYPEC_CCC_PDOWN                    (0x80000000U) /* b31 : CC-PHY Power Down Control */
+
+/* IES (Interrupt Enable Control and Status) Register */
+ #define USB_TYPEC_IES_ISCN                     (0x00000001U) /* b0  : Interrupt Status of Connection */
+ #define USB_TYPEC_IES_ISCC                     (0x00000010U) /* b4  : Interrupt Status of CC */
+ #define USB_TYPEC_IES_ISVBUS                   (0x00000020U) /* b5  : Interrupt Status of VBUS */
+ #define USB_TYPEC_IES_ISVRA                    (0x00008000U) /* b15 : Interrupt Status of VRA */
+ #define USB_TYPEC_IES_CIEN                     (0x00010000U) /* b16 : CC Interrupt Enable */
+ #define USB_TYPEC_IES_CCIEN                    (0x00100000U) /* b20 : CC Interrupt Enable */
+ #define USB_TYPEC_IES_VBUSIEN                  (0x00200000U) /* b21 : VBUS Interrupt Enable */
+ #define USB_TYPEC_IES_VRAIEN                   (0x80000000U) /* b31 : VRA Interrupt Enable */
+
+/* TCS (Type-CC Connection State and Status) Register */
+ #define USB_TYPEC_TCS_SRCD                     (0x00000001U) /* b0   : Interrupt Status of Connection */
+ #define USB_TYPEC_TCS_VRD15D                   (0x00000002U) /* b1   : Interrupt Status of CC (Power1.5 Source is Detected) */
+ #define USB_TYPEC_TCS_VRD30D                   (0x00000004U) /* b2   : Interrupt Status of CC (Power3.0 Source is Detected) */
+ #define USB_TYPEC_TCS_PLUG                     (0x00000008U) /* b3   : Connection of Plug Orientation */
+ #define USB_TYPEC_TCS_CNS_MASK                 (0x000000F0U) /* b7-b4: CC Interrupt Enable */
+ #define USB_TYPEC_TCS_CNS_DEFAULT              (0x00000000U) /* Disabled */
+ #define USB_TYPEC_TCS_CNS_UNATTACHED           (0x00000010U) /* Unattached.SNK */
+ #define USB_TYPEC_TCS_CNS_ATTACHED_WAIT        (0x00000020U) /* AttachedWait.SNK */
+ #define USB_TYPEC_TCS_CNS_ATTACHED_DEFAULT     (0x00000040U) /* Attache.SNK (PowerDefault.SNK) */
+ #define USB_TYPEC_TCS_CNS_ATTACHED_15          (0x00000050U) /* Attache.SNK (Power1.5.SNK) */
+ #define USB_TYPEC_TCS_CNS_ATTACHED_30          (0x00000060U) /* Attache.SNK (Power3.0.SNK) */
+ #define USB_TYPEC_TCS_CC1S_MASK                (0x00000300U) /* b9-b8: Status of CC1 */
+ #define USB_TYPEC_TCS_CC1S_OPEN                (0x00000000U) /* SNK.Open */
+ #define USB_TYPEC_TCS_CC1S_DEFAULT             (0x00000100U) /* SNK.Default */
+ #define USB_TYPEC_TCS_CC1S_15                  (0x00000200U) /* SNK.Power1.5 */
+ #define USB_TYPEC_TCS_CC1S_30                  (0x00000300U) /* SNK.Power3.0 */
+ #define USB_TYPEC_TCS_CC2S_MASK                (0x00000C00U) /* b11-b10: Status of CC2 */
+ #define USB_TYPEC_TCS_CC2S_OPEN                (0x00000000U) /* b11-b10: Status of CC2 */
+ #define USB_TYPEC_TCS_CC2S_DEFAULT             (0x00000400U) /* SNK.Default */
+ #define USB_TYPEC_TCS_CC2S_15                  (0x00000800U) /* SNK.Power1.5 */
+ #define USB_TYPEC_TCS_CC2S_30                  (0x00000C00U) /* SNK.Power3.0 */
+ #define USB_TYPEC_TCS_VBUSS                    (0x00001000U) /* Status of VBUS */
 
  #ifdef __cplusplus
 }

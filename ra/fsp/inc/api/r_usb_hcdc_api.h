@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_CONNECTIVITY_INTERFACES
@@ -31,13 +17,14 @@
  **********************************************************************************************************************/
 
 #ifndef R_USB_HCDC_API_H
- #define R_USB_HCDC_API_H
+#define R_USB_HCDC_API_H
 
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ******************************************************************************/
+
 /* Register definitions, common services and error codes. */
-#include "bsp_api.h" 
+#include "bsp_api.h"
 #include "r_usb_hcdc_cfg.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
@@ -48,19 +35,19 @@ FSP_HEADER
  ******************************************************************************/
 
 /* Serial State message Length */
- #define     USB_HCDC_SERIAL_STATE_MSG_LEN         (10)
+#define     USB_HCDC_SERIAL_STATE_MSG_LEN         (10)
 
 /* CDC Class Requests IDs*/
- #define     USB_CDC_SEND_ENCAPSULATED_COMMAND     (0x0000)
- #define     USB_CDC_GET_ENACAPSULATED_RESPONSE    (0x0100)
- #define     USB_CDC_SET_COMM_FEATURE              (0x0200)
- #define     USB_CDC_GET_COMM_FEATURE              (0x0300)
- #define     USB_CDC_CLR_COMM_FEATURE              (0x0400)
- #define     USB_CDC_SET_LINE_CODING               (0x2000)
- #define     USB_CDC_GET_LINE_CODING               (0x2100)
- #define     USB_CDC_SET_CONTROL_LINE_STATE        (0x2200)
- #define     USB_CDC_SEND_BREAK                    (0x2300)
- #define     USB_CDC_REQUEST_NONE                  (0xffff)
+#define     USB_CDC_SEND_ENCAPSULATED_COMMAND     (0x0000)
+#define     USB_CDC_GET_ENACAPSULATED_RESPONSE    (0x0100)
+#define     USB_CDC_SET_COMM_FEATURE              (0x0200)
+#define     USB_CDC_GET_COMM_FEATURE              (0x0300)
+#define     USB_CDC_CLR_COMM_FEATURE              (0x0400)
+#define     USB_CDC_SET_LINE_CODING               (0x2000)
+#define     USB_CDC_GET_LINE_CODING               (0x2100)
+#define     USB_CDC_SET_CONTROL_LINE_STATE        (0x2200)
+#define     USB_CDC_SEND_BREAK                    (0x2300)
+#define     USB_CDC_REQUEST_NONE                  (0xffff)
 
 /*****************************************************************************
  * Enumerated Types
@@ -92,7 +79,7 @@ typedef enum
 /** Virtual UART bitrate */
 typedef enum
 {
- #if USB_CFG_ENDIAN == USB_CFG_BIG
+#if USB_CFG_ENDIAN == USB_CFG_BIG
     USB_HCDC_SPEED_1200   = 0xb0040000U,
     USB_HCDC_SPEED_2400   = 0x60090000U,
     USB_HCDC_SPEED_4800   = 0xc0120000U,
@@ -102,7 +89,7 @@ typedef enum
     USB_HCDC_SPEED_38400  = 0x00960000U,
     USB_HCDC_SPEED_57600  = 0x00e10000U,
     USB_HCDC_SPEED_115200 = 0x00c20100U
- #else
+#else
     USB_HCDC_SPEED_1200   = 1200U,     ///< 1200bps
     USB_HCDC_SPEED_2400   = 2400U,     ///< 2400bps
     USB_HCDC_SPEED_4800   = 4800U,     ///< 4800bps
@@ -112,7 +99,7 @@ typedef enum
     USB_HCDC_SPEED_38400  = 38400U,    ///< 38400bps
     USB_HCDC_SPEED_57600  = 57600U,    ///< 57600bps
     USB_HCDC_SPEED_115200 = 115200U    ///< 115200bps
- #endif
+#endif
 } usb_hcdc_line_speed_t;
 
 /** Feature Selector */
@@ -213,7 +200,8 @@ typedef struct st_usb_hcdc_api
      * @param[in]  size             Read request size.
      * @param[in]  device_address   Device address.
      */
-    fsp_err_t (* controlDataRead)(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size, uint8_t device_address);
+    fsp_err_t (* controlDataRead)(usb_ctrl_t * const p_api_ctrl, uint8_t * p_buf, uint32_t size,
+                                  uint8_t device_address);
 
     /** Register the specified vendor class device in the device table.
      *

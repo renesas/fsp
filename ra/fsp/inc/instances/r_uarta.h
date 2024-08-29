@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_UARTA_H
 #define R_UARTA_H
@@ -39,6 +25,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
+#define UARTA_UTAnCK_LOCO_SETTING    (0x08U) // for LOCO or FSXP
+#define UARTA_UTAnCK_SOSC_SETTING    (0x09U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -47,10 +35,12 @@ FSP_HEADER
 /** Enumeration for UARTA clock source */
 typedef enum e_uarta_clock_source
 {
-    UARTA_CLOCK_SOURCE_SOSC_LOCO = 0U, ///< SOSC/LOCO
-    UARTA_CLOCK_SOURCE_MOSC      = 1U, ///< MOSC
-    UARTA_CLOCK_SOURCE_HOCO      = 2U, ///< HOCO
-    UARTA_CLOCK_SOURCE_MOCO      = 3U, ///< MOCO
+    UARTA_CLOCK_SOURCE_SOSC_LOCO = 0U,                           ///< SOSC/LOCO
+    UARTA_CLOCK_SOURCE_LOCO      = UARTA_CLOCK_SOURCE_SOSC_LOCO, ///< LOCO
+    UARTA_CLOCK_SOURCE_MOSC      = 1U,                           ///< MOSC
+    UARTA_CLOCK_SOURCE_HOCO      = 2U,                           ///< HOCO
+    UARTA_CLOCK_SOURCE_MOCO      = 3U,                           ///< MOCO
+    UARTA_CLOCK_SOURCE_SOSC      = 4U,                           ///< SOSC
 } uarta_clock_source_t;
 
 /** Enumeration for UARTA clock divider */
@@ -66,12 +56,12 @@ typedef enum e_uarta_clock_div
     UARTA_CLOCK_DIV_COUNT,             ///< Total number of clock divider options.
 } uarta_clock_div_t;
 
-/** Receive interrupt mode select */
-typedef enum e_uarta_rxi_mode
+/** Enabled/Disabled Clock output */
+typedef enum e_uarta_clock_out
 {
-    UARTA_RXI_MODE_ERROR_TRIGGER_ERI = 0U, ///< The receive error interrupt is generated when a reception error occurs.
-    UARTA_RXI_MODE_ERROR_TRIGGER_RXI = 1U, ///< The receive interrupt is generated when a reception error occurs.
-} uarta_rxi_mode_t;
+    UARTA_CLOCK_OUTPUT_DISABLED = 0U,  ///< Disables CLKAn output
+    UARTA_CLOCK_OUTPUT_ENABLED  = 1U,  ///< Enables CLKAn output
+} uarta_clock_out_t;
 
 /** Transmission/reception order configuration. */
 typedef enum e_uarta_dir_bit
@@ -92,24 +82,25 @@ typedef struct st_uarta_baud_setting
 {
     union
     {
-        uint8_t uta0ck_clock;
+        uint8_t utanck_clock;
 
         struct
         {
-            uint8_t uta0ck : 4;        ///< UARTA operation clock select (f_UTA0n)
+            uint8_t utanck : 4;        ///< UARTA operation clock select (f_UTA0n)
             uint8_t utasel : 2;        ///< fSEL clock select
             uint8_t        : 2;
-        } uta0ck_clock_b;
+        } utanck_clock_b;
     };
-    uint8_t brgca;                     ///< Baud rate generator control setting
+    uint8_t  brgca;                    ///< Baud rate generator control setting
+    uint16_t delay_time;               ///< Delay time (us) required to enable TX at open
 } uarta_baud_setting_t;
 
 /** UART on UARTA device Configuration */
 typedef struct st_uarta_extended_cfg
 {
-    uarta_rxi_mode_t       rxi_mode;       ///< Receive interrupt mode select
     uarta_dir_bit_t        transfer_dir;   ///< Transmission/reception order configuration
     uarta_alv_bit_t        transfer_level; ///< Transmission/reception level configuration
+    uarta_clock_out_t      clock_output;   ///< Disable/Enable clock output
     uarta_baud_setting_t * p_baud_setting; ///< Register settings for a desired baud rate.
 } uarta_extended_cfg_t;
 
@@ -131,6 +122,9 @@ typedef struct st_uarta_instance_ctrl
 
     /* Size of destination buffer pointer used for receiving data. */
     uint32_t rx_dest_bytes;
+
+    /* Base register for this channel. */
+    R_UARTA0_Type * p_reg;
 
     /* Pointer to the configuration block. */
     uart_cfg_t const * p_cfg;

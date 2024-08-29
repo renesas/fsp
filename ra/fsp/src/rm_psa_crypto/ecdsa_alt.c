@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*
  * NOTE: This file is not a modification of ecdsa.c; it contains SCE specific implementations for sign and verify only.
@@ -71,8 +57,9 @@ static const hw_sce_ecc_generatesign_t g_ecdsa_generate_sign_lookup[][2] =
         HW_SCE_ECC_256HrkGenerateSign,
    #endif
   #endif
-  #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
-   #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+  #if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
+    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
         HW_SCE_ECC_384GenerateSign,
    #endif
@@ -91,6 +78,25 @@ static const hw_sce_ecc_generatesign_t g_ecdsa_generate_sign_lookup[][2] =
     	HW_SCE_ECC_521HrkGenerateSign,
    #endif
   #endif
+#endif
+};
+
+static const hw_sce_ecc_generatesign_t g_ed_ecdsa_generate_sign_lookup[][2] =
+{
+  #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+   #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_25519_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
+        HW_SCE_ECC_255GenerateSign,
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX((ECC_25519_PRIVATE_KEY_LENGTH_BITS - 1))][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
+        HW_SCE_ECC_255GenerateSign,
+   #endif
+   #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_25519_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
+        HW_SCE_ECC_255HrkGenerateSign,
+    [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX((ECC_25519_PRIVATE_KEY_LENGTH_BITS - 1))][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
+        HW_SCE_ECC_255HrkGenerateSign,
+   #endif
+  #endif
 };
 
 static const hw_sce_ecc_verifysign_t g_ecdsa_verify_sign_lookup[] =
@@ -99,11 +105,13 @@ static const hw_sce_ecc_verifysign_t g_ecdsa_verify_sign_lookup[] =
     defined(MBEDTLS_ECP_DP_BP256R1_ENABLED)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)] = HW_SCE_ECC_256VerifySign,
   #endif
-  #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
+  #if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)] = HW_SCE_ECC_384VerifySign,
   #endif
   #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_521_PRIVATE_KEY_LENGTH_BITS)] = HW_SCE_ECC_521VerifySign,
+  #endif
   #endif
 };
 
@@ -364,6 +372,12 @@ int ecp_can_do_sce (mbedtls_ecp_group_id gid)
           return 1;
       }
   #endif
+  #ifdef MBEDTLS_ECP_DP_CURVE25519_ENABLED
+      case MBEDTLS_ECP_DP_CURVE25519:
+      {
+          return 1;
+      }
+  #endif
   #endif
         default:
 
@@ -390,6 +404,7 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             break;
         }
 
+#if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
         case MBEDTLS_ECP_DP_SECP384R1:
         {
             *p_curve_type    = SCE_ECC_CURVE_TYPE_NIST;
@@ -406,6 +421,15 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             *p_cmd           = 0x0;
             priv_key_command = SCE_OEM_CMD_ECC_P521_PRIVATE;
             *pp_domain_param = (uint32_t *) &DomainParam_NIST_P521[0];
+            break;
+        }
+
+        case MBEDTLS_ECP_DP_CURVE25519:
+        {
+            *p_curve_type    = SCE_ECC_CURVE_TYPE_NIST;
+            *p_cmd           = 0x0;
+            priv_key_command = SCE_OEM_CMD_ED25519_PRIVATE;
+            *pp_domain_param = (uint32_t *) &DomainParam_NIST_Ed25519[0];
             break;
         }
 #endif
@@ -436,7 +460,7 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             *pp_domain_param = (uint32_t *) &DomainParam_Brainpool_384r1[0];
             break;
         }
-
+#endif
         default:
         {
             ret = -1;
@@ -488,8 +512,17 @@ int mbedtls_ecdsa_sign (mbedtls_ecp_group * grp,
         return MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
     }
 
+    if (MBEDTLS_ECP_DP_CURVE25519 == grp->id)
+    {
+    p_hw_sce_ecc_generatesign =
+        g_ed_ecdsa_generate_sign_lookup[RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(grp->pbits)][(bool) grp->vendor_ctx];
+    }
+    else
+    {
     p_hw_sce_ecc_generatesign =
         g_ecdsa_generate_sign_lookup[RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(grp->pbits)][(bool) grp->vendor_ctx];
+    }
+
     if (NULL == p_hw_sce_ecc_generatesign)
     {
         return MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;

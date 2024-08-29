@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_TAU_PWM_H
 #define R_TAU_PWM_H
@@ -40,7 +26,16 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-#define TAU_PWM_PRV_MAX_NUM_CHANNELS    (7U)
+/* Even though there are 8 channels, there always has to be one slave.. (slave > master)
+ * so valid master channels numbers are 0-6, and valid slave numbers are 1-7 */
+#define TAU_PWM_MAX_CHANNEL_NUM            (7U)
+
+#if TAU_PWM_CFG_MULTI_SLAVE_ENABLE
+ #define TAU_PWM_MAX_NUM_SLAVE_CHANNELS    (TAU_PWM_MAX_CHANNEL_NUM)
+#else
+ #define TAU_PWM_MAX_NUM_SLAVE_CHANNELS    (1)
+#endif
+#define TAU_PWM_SLAVE_CHANNEL_UNUSED       (0) /* 0 is an invalid slave channel since master channel < slave channel*/
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -112,13 +107,13 @@ typedef struct st_tau_pwm_channel_cfg
 /** Extended configuration structure for TAU_PWM */
 typedef struct st_tau_pwm_extended_cfg
 {
-    tau_pwm_operation_clock_t operation_clock;                                        ///< Setting of operation clock for master and slave channels
+    tau_pwm_operation_clock_t operation_clock;                                          ///< Setting of operation clock for master and slave channels
 
     /* Input settings. */
-    tau_pwm_source_t      trigger_source;                                             ///< Trigger source for master channel
-    tau_pwm_detect_edge_t detect_edge;                                                ///< Trigger edge to start pulse period measurement
+    tau_pwm_source_t      trigger_source;                                               ///< Trigger source for master channel
+    tau_pwm_detect_edge_t detect_edge;                                                  ///< Trigger edge to start pulse period measurement
 
-    tau_pwm_channel_cfg_t const * p_slave_channel_cfgs[TAU_PWM_PRV_MAX_NUM_CHANNELS]; ///< Configuration for each slave channel, at least 1 slave channel is required
+    tau_pwm_channel_cfg_t const * p_slave_channel_cfgs[TAU_PWM_MAX_NUM_SLAVE_CHANNELS]; ///< Configuration for each slave channel, at least 1 slave channel is required
 } tau_pwm_extended_cfg_t;
 
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
@@ -151,9 +146,13 @@ fsp_err_t R_TAU_PWM_Open(timer_ctrl_t * const p_ctrl, timer_cfg_t const * const 
 fsp_err_t R_TAU_PWM_Stop(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_TAU_PWM_Start(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_TAU_PWM_Reset(timer_ctrl_t * const p_ctrl);
+
 fsp_err_t R_TAU_PWM_Enable(timer_ctrl_t * const p_ctrl);
-fsp_err_t R_TAU_PWM_Disable(timer_ctrl_t * const p_ctrl);
+
 fsp_err_t R_TAU_PWM_PeriodSet(timer_ctrl_t * const p_ctrl, uint32_t const period_counts);
+fsp_err_t R_TAU_PWM_CompareMatchSet(timer_ctrl_t * const        p_ctrl,
+                                    uint32_t const              compare_match_value,
+                                    timer_compare_match_t const match_channel);
 fsp_err_t R_TAU_PWM_DutyCycleSet(timer_ctrl_t * const p_ctrl, uint32_t const duty_cycle_counts, uint32_t const pin);
 fsp_err_t R_TAU_PWM_InfoGet(timer_ctrl_t * const p_ctrl, timer_info_t * const p_info);
 fsp_err_t R_TAU_PWM_StatusGet(timer_ctrl_t * const p_ctrl, timer_status_t * const p_status);

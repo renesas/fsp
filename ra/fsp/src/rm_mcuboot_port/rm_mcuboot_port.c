@@ -6,7 +6,18 @@
 #include "flash_map_backend/flash_map_backend.h"
 #include "sysflash/sysflash.h"
 #if RM_MCUBOOT_DUAL_BANK_ENABLED
- #include "r_flash_hp.h"
+ #if BSP_FEATURE_FLASH_HP_VERSION > 0
+  #include "r_flash_hp.h"
+ #else
+  #include "r_flash_lp.h"
+ #endif
+#endif
+
+/* Definitions for different flash implementation. */
+#if BSP_FEATURE_FLASH_HP_VERSION > 0
+ #define R_FLASH_BankSwap                  R_FLASH_HP_BankSwap
+#else
+ #define R_FLASH_BankSwap                  R_FLASH_LP_BankSwap
 #endif
 
 #if defined(__GNUC__) && !defined(__ARMCC_VERSION) && !defined(__clang_analyzer__)
@@ -46,9 +57,13 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     uint32_t vector_table = rsp->br_image_off + rsp->br_hdr->ih_hdr_size;
 
 #if RM_MCUBOOT_DUAL_BANK_ENABLED
-    if (vector_table & BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START)
+ #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+    if (vector_table & (BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START - BSP_FEATURE_FLASH_CODE_FLASH_START))
+ #else
+    if (vector_table & (BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START | BSP_FEATURE_FLASH_LP_CF_DUAL_BANK_START))
+ #endif
     {
-        R_FLASH_HP_BankSwap(gp_mcuboot_flash_ctrl);
+        R_FLASH_BankSwap(gp_mcuboot_flash_ctrl);
 
         /* Reset the MCU to swap to the other bank */
         __NVIC_SystemReset();
@@ -71,7 +86,7 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     /* Disable MSP monitoring. */
 #if BSP_FEATURE_TZ_HAS_TRUSTZONE
     __set_MSPLIM(0);
-#else
+#elif BSP_FEATURE_BSP_HAS_SP_MON
     R_MPU_SPMON->SP[0].CTL = 0;
 #endif
 

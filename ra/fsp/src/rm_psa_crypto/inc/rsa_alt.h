@@ -115,15 +115,8 @@ typedef struct mbedtls_rsa_context
   #if defined(MBEDTLS_THREADING_C)
     mbedtls_threading_mutex_t mutex;   /*!<  Thread-safety mutex. */
   #endif
-} mbedtls_rsa_context;
-
-/* This declaration is here as well as in constant_time_internal.h but is excluded
- * if MBEDTLS_RSA_ALT is defined. */
-int mbedtls_ct_rsaes_pkcs1_v15_unpadding(unsigned char * input,
-                                         size_t          ilen,
-                                         unsigned char * output,
-                                         size_t          output_max_len,
-                                         size_t        * olen);
+}
+mbedtls_rsa_context;
 
  #endif                                /* MBEDTLS_RSA_ALT */
 

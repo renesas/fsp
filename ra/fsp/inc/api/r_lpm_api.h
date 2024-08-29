@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_POWER_INTERFACES
@@ -226,6 +212,17 @@ typedef enum e_lpm_standby_wake_source
     LPM_STANDBY_WAKE_SOURCE_ULP1B    = 0x400000000000ULL, ///< ULPT1 Compare Match B Interrupt
 } lpm_standby_wake_source_t;
 
+#if BSP_FEATURE_ICU_HAS_WUPEN2
+typedef enum e_lpm_standby_wake_source_2
+{
+    LPM_STANDBY_WAKE_SOURCE_INTUR0   = 0x00000001ULL,    ///< UARTA0 INTUR Interrupt
+    LPM_STANDBY_WAKE_SOURCE_INTURE0  = 0x00000002ULL,    ///< UARTA0 INTURE Interrupt
+    LPM_STANDBY_WAKE_SOURCE_INTUR1   = 0x00000004ULL,    ///< UARTA1 INTUR Interrupt
+    LPM_STANDBY_WAKE_SOURCE_INTURE1  = 0x00000008ULL,    ///< UARTA1 INTURE Interrupt
+    LPM_STANDBY_WAKE_SOURCE_USBCCS   = 0x00000010ULL,    ///< USBCC Status Change Interrupt
+} lpm_standby_wake_source_2_t;
+#endif
+
 typedef uint64_t lpm_standby_wake_source_bits_t;
 #endif
 
@@ -429,6 +426,27 @@ typedef struct s_lpm_ram_retention
 } lpm_ram_retention_t;
 #endif
 
+/** Flash operating mode select. */
+typedef enum e_lpm_flash_mode_select
+{
+    LPM_FLASH_MODE_SELECT_ACTIVE = 0U, ///< Flash active
+    LPM_FLASH_MODE_SELECT_STOP   = 1U, ///< Flash stop
+} lpm_flash_mode_select_t;
+
+/** Starting the high-speed on-chip oscillator at the times of release from SSTBY mode and of transitions to SNOOZE mode. */
+typedef enum e_lpm_hoco_startup_speed
+{
+    LPM_HOCO_STARTUP_SPEED_NORMAL_SPEED = 0U, ///< Starting of the high-speed on-chip oscillator is at normal speed
+    LPM_HOCO_STARTUP_SPEED_HIGH_SPEED   = 1U, ///< Starting of the high-speed on-chip oscillator is at high speed
+} lpm_hoco_startup_speed_t;
+
+/** SOSC setting in SSTBY mode or in SNOOZE mode. */
+typedef enum e_lpm_standby_sosc
+{
+    LPM_STANDBY_SOSC_ENABLE  = 0U,     ///< Enables supply of SOSC clock to peripheral functions
+    LPM_STANDBY_SOSC_DISABLE = 1U,     ///< Stops supply SOSC clock to peripheral functions other than the Realtime clock.
+} lpm_standby_sosc_t;
+
 /** Configure LDO operation in standby mode. */
 typedef struct lpm_ldo_standby_cfg_s
 {
@@ -445,6 +463,10 @@ typedef struct st_lpm_cfg
 
     /** Bitwise list of sources to wake from deep sleep and standby mode */
     lpm_standby_wake_source_bits_t standby_wake_sources;
+
+#if BSP_FEATURE_ICU_HAS_WUPEN2
+    lpm_standby_wake_source_bits_t standby_wake_sources_2;
+#endif
 
 #if BSP_FEATURE_LPM_HAS_SNOOZE
 
@@ -495,6 +517,24 @@ typedef struct st_lpm_cfg
 
     /** Configure LDOs that are disabled in standby mode. */
     lpm_ldo_standby_cfg_t ldo_standby_cfg;
+#endif
+
+#if BSP_FEATURE_LPM_HAS_FLASH_MODE_SELECT
+
+    /** Flash mode in sleep mode or in snooze mode. */
+    lpm_flash_mode_select_t lpm_flash_mode_select;
+#endif
+
+#if BSP_FEATURE_LPM_HAS_HOCO_STARTUP_SPEED_MODE
+
+    /** Startup speed of high-speed on-chip oscillator when exiting software standby mode or entering snooze mode. */
+    lpm_hoco_startup_speed_t lpm_hoco_startup_speed;
+#endif
+
+#if BSP_FEATURE_LPM_HAS_STANDBY_SOSC_SELECT
+
+    /** SOSC setting in SSTBY mode or in SNOOZE mode. */
+    lpm_standby_sosc_t lpm_standby_sosc;
 #endif
 
     /** Placeholder for extension. */

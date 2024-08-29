@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup BSP_MCU
@@ -29,6 +15,11 @@
 #include <string.h>
 #if defined(__GNUC__) && defined(__llvm__) && !defined(__ARMCC_VERSION) && !defined(__CLANG_TIDY__)
  #include <picotls.h>
+#endif
+#if defined(__ARMCC_VERSION)
+ #if defined(__ARMCC_USING_STANDARDLIB)
+  #include <rt_misc.h>
+ #endif
 #endif
 #include "bsp_api.h"
 
@@ -72,8 +63,10 @@ extern uint32_t Image$$BSS$$ZI$$Length;
 extern uint32_t Load$$DATA$$Base;
 extern uint32_t Image$$DATA$$Base;
 extern uint32_t Image$$DATA$$Length;
-extern uint32_t Image$$STACK$$ZI$$Base;
-extern uint32_t Image$$STACK$$ZI$$Length;
+ #if defined(__ARMCC_USING_STANDARDLIB)
+extern uint32_t Image$$ARM_LIB_HEAP$$ZI$$Base;
+extern uint32_t Image$$ARM_LIB_HEAP$$ZI$$Length;
+ #endif
  #if BSP_FEATURE_BSP_HAS_ITCM
 extern uint32_t Load$$ITCM_DATA$$Base;
 extern uint32_t Load$$ITCM_PAD$$Limit;
@@ -148,6 +141,7 @@ extern uint32_t NOCACHE$$Limit;
 extern uint32_t NOCACHE_SDRAM$$Base;
 extern uint32_t NOCACHE_SDRAM$$Limit;
  #endif
+
 #endif
 
 /* Initialize static constructors */
@@ -226,7 +220,7 @@ static void bsp_init_mpu(void);
 /*******************************************************************************************************************//**
  * Initialize the MCU and the runtime environment.
  **********************************************************************************************************************/
-BSP_SECTION_FLASH_GAP void SystemInit (void)
+void SystemInit (void)
 {
 #if defined(RENESAS_CORTEX_M85)
 
@@ -236,6 +230,17 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
     SCB->CCR = (uint32_t) CCR_CACHE_ENABLE;
     __DSB();
     __ISB();
+ #if !BSP_TZ_NONSECURE_BUILD
+
+    /* Apply Arm Cortex-M85 errata workarounds for D-Cache.
+     * See erratum 3175626 and 3190818 in the Cortex-M85 AT640 and Cortex-M85 with FPU AT641 Software Developer Errata Notice (Date of issue: March 07, 2024, Document version: 13.0, Document ID: SDEN-2236668). */
+    MEMSYSCTL->MSCR |= MEMSYSCTL_MSCR_FORCEWT_Msk;
+    __DSB();
+    __ISB();
+    ICB->ACTLR |= (1U << 16U);
+    __DSB();
+    __ISB();
+ #endif
 #endif
 
 #if __FPU_USED
@@ -265,7 +270,7 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
     SCB->VTOR = (uint32_t) &__Vectors;
 #endif
 
-#if !BSP_TZ_CFG_SKIP_INIT
+#if !BSP_TZ_CFG_SKIP_INIT && !BSP_CFG_SKIP_INIT
  #if BSP_FEATURE_BSP_VBATT_HAS_VBTCR1_BPWSWSTP
 
     /* Unlock VBTCR1 register. */
@@ -302,10 +307,19 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
     /* Call pre clock initialization hook. */
     R_BSP_WarmStart(BSP_WARM_START_RESET);
 
-#if BSP_TZ_CFG_SKIP_INIT
+#if BSP_TZ_CFG_SKIP_INIT || BSP_CFG_SKIP_INIT
 
     /* Initialize clock variables to be used with R_BSP_SoftwareDelay. */
     bsp_clock_freq_var_init();
+
+ #if BSP_CFG_SKIP_INIT && (defined(R_CACHE) || BSP_FEATURE_BSP_FLASH_CACHE)
+
+    /* Flush cache before enabling */
+    R_CACHE->CCAFCT_b.FC = 1;
+
+    /* Enable cache */
+    R_BSP_FlashCacheEnable();
+ #endif
 #else
 
     /* Configure system clocks. */
@@ -407,6 +421,10 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
 
     /* Initialize static constructors */
  #if defined(__ARMCC_VERSION)
+  #if defined(__ARMCC_USING_STANDARDLIB)
+    __rt_lib_init((uint32_t) &Image$$ARM_LIB_HEAP$$ZI$$Base,
+                  (uint32_t) &Image$$ARM_LIB_HEAP$$ZI$$Base + (uint32_t) &Image$$ARM_LIB_HEAP$$ZI$$Length);
+  #else
     int32_t count = Image$$INIT_ARRAY$$Limit - Image$$INIT_ARRAY$$Base;
     for (int32_t i = 0; i < count; i++)
     {
@@ -414,7 +432,7 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
             (void (*)(void))((uint32_t) &Image$$INIT_ARRAY$$Base + (uint32_t) Image$$INIT_ARRAY$$Base[i]);
         p_init_func();
     }
-
+  #endif
  #elif defined(__GNUC__)
     int32_t count = __init_array_end - __init_array_start;
     for (int32_t i = 0; i < count; i++)
@@ -435,14 +453,14 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
 #if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
 
     /* For TZ project, it should be called by the secure application, whether RTC module is to be configured as secure or not. */
- #if !BSP_TZ_NONSECURE_BUILD && !BSP_CFG_BOOT_IMAGE
+ #if !BSP_TZ_NONSECURE_BUILD && !BSP_CFG_BOOT_IMAGE && !BSP_CFG_SKIP_INIT
 
     /* Perform RTC reset sequence to avoid unintended operation. */
     R_BSP_Init_RTC();
  #endif
 #endif
 
-#if !BSP_CFG_PFS_PROTECT
+#if !BSP_CFG_PFS_PROTECT && defined(R_PMISC) && !BSP_CFG_SKIP_INIT
  #if BSP_TZ_SECURE_BUILD || (BSP_FEATURE_TZ_VERSION == 2 && FSP_PRIV_TZ_USE_SECURE_REGS)
     R_PMISC->PWPRS = 0;                              ///< Clear BOWI bit - writing to PFSWE bit enabled
     R_PMISC->PWPRS = 1U << BSP_IO_PWPR_PFSWE_OFFSET; ///< Set PFSWE bit - writing to PFS register enabled
@@ -452,7 +470,7 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
  #endif
 #endif
 
-#if FSP_PRIV_TZ_USE_SECURE_REGS
+#if FSP_PRIV_TZ_USE_SECURE_REGS && !BSP_CFG_SKIP_INIT
 
     /* Ensure that the PMSAR registers are set to their default value. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
@@ -491,7 +509,7 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
     SCB_EnableDCache();
 #endif
 
-#if BSP_FEATURE_BSP_HAS_GRAPHICS_DOMAIN
+#if BSP_FEATURE_BSP_HAS_GRAPHICS_DOMAIN && !BSP_CFG_SKIP_INIT
     if ((((0 == R_SYSTEM->PGCSAR) && FSP_PRIV_TZ_USE_SECURE_REGS) ||
          ((1 == R_SYSTEM->PGCSAR) && BSP_TZ_NONSECURE_BUILD)) && (0 != R_SYSTEM->PDCTRGD))
     {
@@ -504,6 +522,10 @@ BSP_SECTION_FLASH_GAP void SystemInit (void)
         FSP_HARDWARE_REGISTER_WAIT((R_SYSTEM->PDCTRGD & (R_SYSTEM_PDCTRGD_PDCSF_Msk | R_SYSTEM_PDCTRGD_PDPGSF_Msk)), 0);
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
     }
+#endif
+
+#if BSP_FEATURE_CGC_HAS_EXTRACLK2 && !BSP_CFG_SKIP_INIT
+    bsp_internal_prv_enable_extra_power_domain();
 #endif
 
     /* Call Post C runtime initialization hook. */
@@ -620,7 +642,6 @@ static void bsp_init_uninitialized_vars (void)
 #endif
 
 #if BSP_CFG_C_RUNTIME_INIT
-
  #if (BSP_FEATURE_BSP_HAS_ITCM || BSP_FEATURE_BSP_HAS_DTCM)
 
 /*******************************************************************************************************************//**
@@ -688,11 +709,9 @@ static void memset_64 (uint64_t * destination, const uint64_t value, size_t coun
 }
 
  #endif
-
 #endif
 
 #if BSP_CFG_C_RUNTIME_INIT
-
  #if BSP_FEATURE_BSP_HAS_ITCM
 
 /*******************************************************************************************************************//**
@@ -762,7 +781,6 @@ static void bsp_init_dtcm (void)
 }
 
  #endif
-
 #endif
 
 #if BSP_CFG_DCACHE_ENABLED

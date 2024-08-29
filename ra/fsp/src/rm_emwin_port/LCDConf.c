@@ -496,6 +496,14 @@ static void _DrawMemdevAlpha (void       * pDst,
                    EMWIN_LCD_XSIZE_PHYS,
                    EMWIN_LCD_YSIZE_PHYS,
                    (d2_s32) Mode);
+
+ #if BSP_CFG_DCACHE_ENABLED
+
+    //
+    // Clean cache to ensure subsequent CPU alpha blending operations are correct
+    //
+    SCB_CleanInvalidateDCache();
+ #endif
 }
 
 /*********************************************************************
@@ -528,6 +536,20 @@ static void _DrawBitmapAlpha (int LayerIndex, int x, int y, const void * p, int 
     //
     d2_executerenderbuffer(*_d2_handle_emwin, renderbuffer, 0);
     d2_flushframe(*_d2_handle_emwin);
+
+ #if BSP_CFG_DCACHE_ENABLED
+
+    //
+    // If the Data Cache is enabled invalidate the drawn area
+    //
+    uint32_t * p_start =
+        (uint32_t *) ((uint16_t *) (pp_buffer_address[_WriteBufferIndex]) +
+                      ((((uint32_t) y * EMWIN_LCD_XSTRIDE_PHYS) + (uint32_t) x)));
+    int32_t size_bytes =
+        (int32_t) ((((uint32_t) (ySize - 1) * EMWIN_LCD_XSTRIDE_PHYS) + (uint32_t) xSize) <<
+                   (EMWIN_LCD_BITS_PER_PIXEL >> 3));
+    SCB_CleanInvalidateDCache_by_Addr(p_start, size_bytes);
+ #endif
 }
 
 /*********************************************************************
@@ -563,6 +585,20 @@ static void _DrawBitmap16bpp (int LayerIndex, int x, int y, const void * p, int 
     //
     d2_executerenderbuffer(*_d2_handle_emwin, renderbuffer, 0);
     d2_flushframe(*_d2_handle_emwin);
+
+ #if BSP_CFG_DCACHE_ENABLED
+
+    //
+    // If the Data Cache is enabled invalidate the drawn area
+    //
+    uint32_t * p_start =
+        (uint32_t *) ((uint16_t *) (pp_buffer_address[_WriteBufferIndex]) +
+                      ((((uint32_t) y * EMWIN_LCD_XSTRIDE_PHYS) + (uint32_t) x)));
+    int32_t size_bytes =
+        (int32_t) ((((uint32_t) (ySize - 1) * EMWIN_LCD_XSTRIDE_PHYS) + (uint32_t) xSize) <<
+                   (EMWIN_LCD_BITS_PER_PIXEL >> 3));
+    SCB_CleanInvalidateDCache_by_Addr(p_start, size_bytes);
+ #endif
 }
 
 /*********************************************************************

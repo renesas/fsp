@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef R_TIMER_API_H
 #define R_TIMER_API_H
@@ -78,9 +64,22 @@ typedef enum e_timer_event
 /** Timer variant types. */
 typedef enum e_timer_variant
 {
-    TIMER_VARIANT_32_BIT,              ///< 32-bit timer
-    TIMER_VARIANT_16_BIT               ///< 16-bit timer
+    TIMER_VARIANT_32_BIT,               ///< 32-bit timer
+    TIMER_VARIANT_16_BIT                ///< 16-bit timer
 } timer_variant_t;
+
+/** Options for storing compare match value */
+typedef enum e_timer_compare_match
+{
+    TIMER_COMPARE_MATCH_A = 0U,        ///< Compare match A value
+    TIMER_COMPARE_MATCH_B = 1U,        ///< Compare match B value
+    TIMER_COMPARE_MATCH_C = 2U,        ///< Compare match C value
+    TIMER_COMPARE_MATCH_D = 3U,        ///< Compare match D value
+    TIMER_COMPARE_MATCH_E = 4U,        ///< Compare match E value
+    TIMER_COMPARE_MATCH_F = 5U,        ///< Compare match F value
+    TIMER_COMPARE_MATCH_G = 6U,        ///< Compare match G value
+    TIMER_COMPARE_MATCH_H = 7U,        ///< Compare match H value
+} timer_compare_match_t;
 
 /** Callback function parameter data */
 typedef struct st_timer_callback_args
@@ -148,6 +147,7 @@ typedef enum e_timer_source_div
     TIMER_SOURCE_DIV_256  = 8,         ///< Timer clock source divided by 256
     TIMER_SOURCE_DIV_512  = 9,         ///< Timer clock source divided by 512
     TIMER_SOURCE_DIV_1024 = 10,        ///< Timer clock source divided by 1024
+    TIMER_SOURCE_DIV_8192 = 13,        ///< Timer clock source divided by 8192
 } timer_source_div_t;
 #endif
 
@@ -254,6 +254,16 @@ typedef struct st_timer_api
      * @param[in]   pin                Which output pin to update.  See implementation for details.
      */
     fsp_err_t (* dutyCycleSet)(timer_ctrl_t * const p_ctrl, uint32_t const duty_cycle_counts, uint32_t const pin);
+
+    /** Set a compare match value in raw counts.
+     *
+     *
+     * @param[in]   p_ctrl               Control block set in @ref timer_api_t::open call for this timer.
+     * @param[in]   compare_match_value  Timer value to trigger a compare match event.
+     * @param[in]   match_channel        Which channel to update.
+     */
+    fsp_err_t (* compareMatchSet)(timer_ctrl_t * const p_ctrl, uint32_t const compare_match_value,
+                                  timer_compare_match_t const match_channel);
 
     /** Stores timer information in p_info.
      *

@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -504,10 +490,10 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
     uint16_t hs_flag = 0;
  #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
- #if defined(BSP_MCU_GROUP_RA2A1)
+ #if defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU)
 
     /* The value of "write_p" is odd */
-    if (USB_ODD == (write_p && USB_ODD))
+    if (USB_ODD == ((uint32_t) write_p & USB_ODD))
     {
         /* 8bit access */
         /* write_p == odd */
@@ -524,7 +510,7 @@ uint8_t * usb_pstd_write_fifo (uint16_t count, uint16_t pipemode, uint8_t * writ
 
         return write_p;
     }
- #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
+ #endif                                /* defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU) */
 
     if ((USB_CFG_IP0 == p_utr->ip) || (0 == hs_flag))
     {
@@ -630,10 +616,10 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
     uint16_t hs_flag = 0;
  #endif /* defined (USB_HIGH_SPEED_MODULE) */
 
- #if defined(BSP_MCU_GROUP_RA2A1)
+ #if defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU)
 
     /* The value of "read_p" is odd */
-    if (USB_ODD == (read_p && USB_ODD))
+    if (USB_ODD == ((uint32_t) read_p & USB_ODD))
     {
         /* 8bit access */
         /* read_p == odd */
@@ -650,7 +636,7 @@ uint8_t * usb_pstd_read_fifo (uint16_t count, uint16_t pipemode, uint8_t * read_
 
         return read_p;
     }
- #endif                                /* defined(BSP_MCU_GROUP_RA2A1) */
+ #endif                                /* defined(USB_UNALIGNED_MEMORY_ACCESS_NG_MCU) */
 
     if ((USB_CFG_IP0 == p_utr->ip) || (0 == hs_flag))
     {

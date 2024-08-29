@@ -93,7 +93,7 @@ typedef uint32_t TickType_t;
  #define portTICK_PERIOD_MS                  ((TickType_t) 1000 / configTICK_RATE_HZ)
  #define portBYTE_ALIGNMENT                  8
 
- #if BSP_FEATURE_BSP_HAS_SP_MON || defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__)
+ #if BSP_FEATURE_BSP_HAS_SP_MON || defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
   #define portHAS_STACK_OVERFLOW_CHECKING    (1)
  #endif
 
@@ -151,7 +151,7 @@ void       vResetPrivilege(void) RM_FREERTOS_PORT_NAKED_FUNCTION;
 
  #endif
 
- #if defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8_1M_MAIN__) // CM4, CM33, or CM85
+ #if defined(RENESAS_CORTEX_M4) || defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
   #define RM_FREERTOS_PORT_HAS_BASEPRI    (1)
  #else
   #define RM_FREERTOS_PORT_HAS_BASEPRI    (0)
@@ -217,7 +217,7 @@ void vApplicationIdleHook(void);
 /* Generic helper function. */
 __attribute__((always_inline)) static inline uint8_t ucPortCountLeadingZeros (uint32_t ulBitmap)
 {
-    return __CLZ(ulBitmap);
+    return (uint8_t) __CLZ(ulBitmap);
 }
 
 /* Check the configuration. */

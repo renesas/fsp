@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup MQTT_ONCHIP_DA16XXX MQTT_ONCHIP_DA16XXX
@@ -104,29 +90,29 @@ typedef struct st_mqtt_onchip_da16xxx_cfg
     const uint16_t tx_timeout;                                                                           ///< MQTT Tx timeout in milliseconds.
 
     void (* p_callback)(mqtt_onchip_da16xxx_callback_args_t * p_args);                                   ///< Location of user callback.
-    void const   * p_context;                                                                            ///< Placeholder for user data. Passed to the user callback in mqtt_onchip_da16xxx_callback_args_t.
-    uint8_t        clean_session;                                                                        ///< Whether to establish a new, clean session or resume a previous session.
-    uint8_t        alpn_count;                                                                           ///< ALPN Protocols count. Max value is 3.
-    const char   * p_alpns[MQTT_ONCHIP_DA16XXX_MAX_ALPN];                                                ///< ALPN Protocols.
-    uint8_t        tls_cipher_count;                                                                     ///< TLS Cipher suites count. Max value is 17.
-    uint16_t       keep_alive_seconds;                                                                   ///< MQTT keep alive period.
-    const char   * p_client_identifier;                                                                  ///< MQTT Client identifier. Must be unique per client.
-    uint16_t       client_identifier_length;                                                             ///< Length of the client identifier.
-    const char   * p_host_name;                                                                          ///< MQTT endpoint host name.
-    const uint16_t mqtt_port;                                                                            ///< MQTT Port number.
-    const char   * p_mqtt_user_name;                                                                     ///< MQTT user name. Set to NULL if not used.
-    uint16_t       user_name_length;                                                                     ///< Length of MQTT user name. Set to 0 if not used.
-    const char   * p_mqtt_password;                                                                      ///< MQTT password. Set to NULL if not used.
-    uint16_t       password_length;                                                                      ///< Length of MQTT password. Set to 0 if not used.
-    const char   * p_root_ca;                                                                            ///< String representing a trusted server root certificate.
-    uint32_t       root_ca_size;                                                                         ///< Size associated with root CA Certificate.
-    const char   * p_client_cert;                                                                        ///< String representing a Client certificate.
-    uint32_t       client_cert_size;                                                                     ///< Size associated with Client certificate.
-    const char   * p_client_private_key;                                                                 ///< String representing Client Private Key.
-    uint32_t       private_key_size;                                                                     ///< Size associated with Client Private Key.
-    const char   * p_will_topic;                                                                         ///< String representing Will Topic.
-    const char   * p_will_msg;                                                                           ///< String representing Will Message.
-    const char   * p_sni_name;                                                                           ///< Server Name Indication.
+    void const * p_context;                                                                              ///< Placeholder for user data. Passed to the user callback in mqtt_onchip_da16xxx_callback_args_t.
+    uint8_t      clean_session;                                                                          ///< Whether to establish a new, clean session or resume a previous session.
+    uint8_t      alpn_count;                                                                             ///< ALPN Protocols count. Max value is 3.
+    const char * p_alpns[MQTT_ONCHIP_DA16XXX_MAX_ALPN];                                                  ///< ALPN Protocols.
+    uint8_t      tls_cipher_count;                                                                       ///< TLS Cipher suites count. Max value is 17.
+    uint16_t     keep_alive_seconds;                                                                     ///< MQTT keep alive period.
+    const char * p_client_identifier;                                                                    ///< MQTT Client identifier. Must be unique per client.
+    uint16_t     client_identifier_length;                                                               ///< Length of the client identifier.
+    const char * p_host_name;                                                                            ///< MQTT endpoint host name.
+    uint16_t     mqtt_port;                                                                              ///< MQTT Port number.
+    const char * p_mqtt_user_name;                                                                       ///< MQTT user name. Set to NULL if not used.
+    uint16_t     user_name_length;                                                                       ///< Length of MQTT user name. Set to 0 if not used.
+    const char * p_mqtt_password;                                                                        ///< MQTT password. Set to NULL if not used.
+    uint16_t     password_length;                                                                        ///< Length of MQTT password. Set to 0 if not used.
+    const char * p_root_ca;                                                                              ///< String representing a trusted server root certificate.
+    uint32_t     root_ca_size;                                                                           ///< Size associated with root CA Certificate.
+    const char * p_client_cert;                                                                          ///< String representing a Client certificate.
+    uint32_t     client_cert_size;                                                                       ///< Size associated with Client certificate.
+    const char * p_client_private_key;                                                                   ///< String representing Client Private Key.
+    uint32_t     private_key_size;                                                                       ///< Size associated with Client Private Key.
+    const char * p_will_topic;                                                                           ///< String representing Will Topic.
+    const char * p_will_msg;                                                                             ///< String representing Will Message.
+    const char * p_sni_name;                                                                             ///< Server Name Indication.
 
     mqtt_onchip_da16xxx_qos_t               will_qos_level;                                              ///< Will Topic QoS level.
     mqtt_onchip_da16xxx_tls_cipher_suites_t p_tls_cipher_suites[MQTT_ONCHIP_DA16XXX_TLS_CIPHER_MAX_CNT]; ///< TLS Cipher suites supported.

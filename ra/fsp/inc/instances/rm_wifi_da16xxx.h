@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /*******************************************************************************************************************//**
  * @addtogroup WIFI_DA16XXX WIFI_DA16XXX
@@ -42,34 +28,14 @@
 
 /* DA16XXX transport includes. */
 #include "rm_at_transport_da16xxx.h"
-
-#include "FreeRTOS.h"
-#include "semphr.h"
-#include "stream_buffer.h"
-#include "rm_wifi_config.h"
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
+ #include "FreeRTOS.h"
+ #include "semphr.h"
+ #include "stream_buffer.h"
+ #include "rm_wifi_config.h"
+#endif
 #include "rm_wifi_api.h"
 #include "rm_wifi_da16xxx_cfg.h"
-
-/**
- * @brief Max SSID length
- */
-#ifndef wificonfigMAX_SSID_LEN
- #define wificonfigMAX_SSID_LEN          32
-#endif
-
-/**
- * @brief Max BSSID length
- */
-#ifndef wificonfigMAX_BSSID_LEN
- #define wificonfigMAX_BSSID_LEN         6
-#endif
-
-/**
- * @brief Max passphrase length
- */
-#ifndef wificonfigMAX_PASSPHRASE_LEN
- #define wificonfigMAX_PASSPHRASE_LEN    32
-#endif
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -95,7 +61,7 @@ typedef enum e_wifi_da16xxx_sntp_enable
     WIFI_DA16XXX_SNTP_DISABLE = 0,
     WIFI_DA16XXX_SNTP_ENABLE  = 1
 } wifi_da16xxx_sntp_enable_t;
-
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
 /** DA16XXX Wifi socket status types */
 typedef enum e_da16xxx_socket_status
 {
@@ -125,6 +91,7 @@ typedef enum e_da16xxx_recv_state
     WIFI_DA16XXX_RECV_PARAM_LEN,       // length parameter
     WIFI_DA16XXX_RECV_DATA
 } da16xxx_recv_state;
+#endif
 
 /** DA16XXX WiFi module enable/disable for SNTP Daylight */
 typedef enum e_wifi_da16xxx_sntp_daylight_savings_enable
@@ -137,14 +104,15 @@ typedef enum e_wifi_da16xxx_sntp_daylight_savings_enable
 typedef struct st_wifi_cfg
 {
     at_transport_da16xxx_instance_t const * p_transport_instance;
-    const uint32_t  num_sockets;              ///< Number of sockets to initialize
-    const uint8_t * country_code;             ///< Country code defined in ISO3166-1 alpha-2 standard
-    const uint8_t * sntp_server_ip;           ///< The SNTP server IP address string
-    const int32_t   sntp_utc_offset_in_hours; ///< Timezone offset in secs (-43200 - 43200)
-    void const    * p_context;                ///< User defined context passed into callback function.
-    void const    * p_extend;                 ///< Pointer to extended configuration by instance of interface.
+    const uint32_t  num_sockets;                                                ///< Number of sockets to initialize
+    const uint8_t * country_code;                                               ///< Country code defined in ISO3166-1 alpha-2 standard
+    const uint8_t * sntp_server_ip;                                             ///< The SNTP server IP address string
+    const int32_t   sntp_utc_offset_in_hours;                                   ///< Timezone offset in secs (-43200 - 43200)
+    void const    * p_context;                                                  ///< User defined context passed into callback function.
+    void const    * p_extend;                                                   ///< Pointer to extended configuration by instance of interface.
 } wifi_da16xxx_cfg_t;
 
+#if (BSP_CFG_RTOS == 2)                                                         /* FreeRTOS */
 /** DA16XXX Wifi internal socket instance structure */
 typedef struct
 {
@@ -162,6 +130,7 @@ typedef struct
     StaticStreamBuffer_t socket_byteq_struct;                                   ///< Structure to hold stream buffer info
     uint8_t              socket_recv_buff[WIFI_DA16XXX_CFG_MAX_SOCKET_RX_SIZE]; ///< Socket receive buffer used by byte queue
 } da16xxx_socket_t;
+#endif
 
 /** WIFI_DA16XXX private control block. DO NOT MODIFY. */
 typedef struct st_wifi_da16xxx_instance_ctrl
@@ -179,8 +148,9 @@ typedef struct st_wifi_da16xxx_instance_ctrl
     uint8_t           curr_ipaddr[4];                                  ///< Current IP address of module
     uint8_t           curr_subnetmask[4];                              ///< Current Subnet Mask of module
     uint8_t           curr_gateway[4];                                 ///< Current GAteway of module
-
+#if (BSP_CFG_RTOS == 2)                                                /* FreeRTOS */
     da16xxx_socket_t sockets[WIFI_DA16XXX_CFG_NUM_CREATEABLE_SOCKETS]; ///< Internal socket instances
+#endif
 } wifi_da16xxx_instance_ctrl_t;
 
 /*******************************************************************************************************************//**
@@ -208,6 +178,7 @@ fsp_err_t rm_wifi_da16xxx_ping(uint8_t * p_ip_addr, int count, uint32_t interval
 fsp_err_t rm_wifi_da16xxx_ipaddr_get(uint32_t * p_ip_addr);
 fsp_err_t rm_wifi_da16xxx_dns_query(const char * p_textstring, uint8_t * p_ip_addr);
 
+#if (BSP_CFG_RTOS == 2)                /* FreeRTOS */
 /* TCP Socket public function prototypes */
 fsp_err_t rm_wifi_da16xxx_avail_socket_get(uint32_t * p_socket_id);
 fsp_err_t rm_wifi_da16xxx_socket_status_get(uint32_t socket_no, uint32_t * p_socket_status);
@@ -216,6 +187,8 @@ fsp_err_t rm_wifi_da16xxx_tcp_connect(uint32_t socket_no, uint32_t ipaddr, uint3
 int32_t   rm_wifi_da16xxx_send(uint32_t socket_no, const uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
 int32_t   rm_wifi_da16xxx_recv(uint32_t socket_no, uint8_t * p_data, uint32_t length, uint32_t timeout_ms);
 fsp_err_t rm_wifi_da16xxx_socket_disconnect(uint32_t socket_no);
+
+#endif
 
 /**********************************************************************************************************************************//**
  * @addtogroup WIFI_DA16XXX WIFI_DA16XXX
@@ -233,6 +206,12 @@ fsp_err_t RM_WIFI_DA16XXX_SntpServerIpAddressSet(uint8_t * p_server_ip_addr);
  *
  *************************************************************************************************************************************/
 fsp_err_t RM_WIFI_DA16XXX_SntpEnableSet(wifi_da16xxx_sntp_enable_t enable);
+
+/**********************************************************************************************************************************//**
+ *  Send a generic AT command to the DA16XXX and optionally receive a response
+ *
+ *************************************************************************************************************************************/
+fsp_err_t RM_WIFI_DA16XXX_GenericAtSendRcv(char const * const at_string, char * const response_buffer, uint32_t length);
 
 /**********************************************************************************************************************************//**
  *  Update the SNTP Timezone

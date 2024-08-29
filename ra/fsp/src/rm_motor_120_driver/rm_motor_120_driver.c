@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -147,7 +133,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
     motor_120_driver_extended_cfg_t * p_extended_cfg = (motor_120_driver_extended_cfg_t *) p_cfg->p_extend;
 
 #if MOTOR_120_DRIVER_CFG_PARAM_CHECKING_ENABLE
-    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
+    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->f_ad_resolution > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_deadtime > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_timer_freq > 0, FSP_ERR_INVALID_ARGUMENT);
@@ -161,7 +147,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
 
     p_instance_ctrl->u4_carrier_base =
         (uint32_t) ((float) p_extended_cfg->u4_pwm_timer_freq * (float) MOTOR_120_DRIVER_KHZ_TRANS /
-                    (float) p_extended_cfg->u4_pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
+                            p_extended_cfg->pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
     p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;
@@ -1397,7 +1383,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_ParameterUpdate (motor_120_driver_ctrl_t * const  
     motor_120_driver_extended_cfg_t * p_extended_cfg = (motor_120_driver_extended_cfg_t *) p_cfg->p_extend;
 
 #if MOTOR_120_DRIVER_CFG_PARAM_CHECKING_ENABLE
-    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
+    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->f_ad_resolution > 0.0F, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_deadtime > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_timer_freq > 0, FSP_ERR_INVALID_ARGUMENT);
@@ -1407,7 +1393,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_ParameterUpdate (motor_120_driver_ctrl_t * const  
 
     p_instance_ctrl->u4_carrier_base =
         (uint32_t) ((float) p_extended_cfg->u4_pwm_timer_freq * (float) MOTOR_120_DRIVER_KHZ_TRANS /
-                    (float) p_extended_cfg->u4_pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
+                            p_extended_cfg->pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
     p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;

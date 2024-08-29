@@ -1,21 +1,9 @@
-/**********************************************************************************************************************
- * DISCLAIMER
- * This software is supplied by Renesas Electronics Corporation and is only intended for use with Renesas products. No
- * other uses are authorized. This software is owned by Renesas Electronics Corporation and is protected under all
- * applicable laws, including copyright laws.
- * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
- * THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED. TO THE MAXIMUM
- * EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES
- * SHALL BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR ANY REASON RELATED TO
- * THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
- * Renesas reserves the right, without notice, to make changes to this software and to discontinue the availability of
- * this software. By using this software, you agree to the additional terms and conditions found by accessing the
- * following link:
- * http://www.renesas.com/disclaimer
- *
- * Copyright (C) 2015-2020 Renesas Electronics Corporation. All rights reserved.
- *********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
+
 
 /**********************************************************************************************************************
  * File Name    : r_sce_if.h
@@ -75,9 +63,9 @@
  #define HW_SCE_MAC_SIZE                                           (16U)
 
 /* For AES operation. */
- #define HW_SCE_AES128_KEY_INDEX_WORD_SIZE     (12U)
- #define HW_SCE_AES192_KEY_INDEX_WORD_SIZE     (16U)
- #define HW_SCE_AES256_KEY_INDEX_WORD_SIZE     (16U)
+ #define HW_SCE_AES128_KEY_INDEX_WORD_SIZE     (9U)
+ #define HW_SCE_AES192_KEY_INDEX_WORD_SIZE     (13U)
+ #define HW_SCE_AES256_KEY_INDEX_WORD_SIZE     (13U)
  #define HW_SCE_AES128_KEY_WORD_SIZE           (4U)
  #define HW_SCE_AES192_KEY_WORD_SIZE           (8U)
  #define HW_SCE_AES256_KEY_WORD_SIZE           (8U)
@@ -218,6 +206,7 @@
  #define HW_SCE_ECDSA_DATA_BYTE_SIZE                         (64U)
  #define HW_SCE_ECDSA_P384_DATA_BYTE_SIZE                    (96U)
  #define HW_SCE_ECC_P521_PUBLIC_KEY_BYTE_SIZE                (160U)
+ #define HW_SCE_ECC_ED25519_PUBLIC_KEY_BYTE_SIZE             (32U)
  #define HW_SCE_ECDSA_P521_DATA_BYTE_SIZE                    (160U)
  #define HW_SCE_SHARED_SECRET_KEY_INDEX_WORD_SIZE            (16U)
  #define HW_SCE_ALGORITHM_ID_ENCODED_DATA_BYTE_SIZE          (7U)
@@ -702,6 +691,22 @@ typedef struct sce_ecc521_public_key_index
         uint8_t key[HW_SCE_ECC_P521_PUBLIC_KEY_BYTE_SIZE];
     } plain_value;
 } sce_ecc521_public_key_index_t;
+
+/* ECC ED-25519 public key index data structure */
+typedef struct sce_ecc25519_public_key_index
+{
+    uint32_t type;
+    struct
+    {
+        uint32_t key_management_info1[HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO1_WORD_SIZE];
+        uint8_t  key_q[HW_SCE_ECC_ED25519_PUBLIC_KEY_BYTE_SIZE];
+        uint32_t key_management_info2[HW_SCE_ECC_PUBLIC_KEY_MANAGEMENT_INFO2_WORD_SIZE];
+    } value;
+    struct
+    {
+        uint8_t key[HW_SCE_ECC_ED25519_PUBLIC_KEY_BYTE_SIZE];
+    } plain_value;
+} sce_ecc25519_public_key_index_t;
 
 /* ECC P-192/224/256 private key index data structure */
 typedef struct sce_ecc_private_key_index

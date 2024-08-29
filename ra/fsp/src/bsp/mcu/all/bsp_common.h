@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef BSP_COMMON_H
 #define BSP_COMMON_H
@@ -38,6 +24,8 @@
 
 /* BSP TFU Includes. */
 #include "../../src/bsp/mcu/all/bsp_tfu.h"
+
+#include "../../src/bsp/mcu/all/bsp_sdram.h"
 
 #include "bsp_cfg.h"
 
@@ -143,12 +131,11 @@ FSP_HEADER
  * The macros __CORE__ , __ARM7EM__ and __ARM_ARCH_8M_BASE__ are undefined for GCC, but defined(__IAR_SYSTEMS_ICC__) is false for GCC, so
  * the left half of the || expression evaluates to false for GCC regardless of the values of these macros. */
 
-#if (defined(__IAR_SYSTEMS_ICC__) && ((__CORE__ == __ARM7EM__) || (__CORE__ == __ARM_ARCH_8M_BASE__))) || \
-    defined(__ARM_ARCH_7EM__)          // CM4
+#if (defined(__IICARM__) && defined(RENESAS_CORTEX_M23)) || defined(RENESAS_CORTEX_M4)
  #ifndef BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION
   #define BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION    (0U)
  #endif
-#else // CM23
+#else
  #ifdef BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION
   #undef BSP_CFG_IRQ_MASK_LEVEL_FOR_CRITICAL_SECTION
  #endif
@@ -319,8 +306,14 @@ typedef enum e_fsp_priv_source_clock
     FSP_PRIV_CLOCK_LOCO     = 2,       ///< The low speed on chip oscillator
     FSP_PRIV_CLOCK_MAIN_OSC = 3,       ///< The main oscillator
     FSP_PRIV_CLOCK_SUBCLOCK = 4,       ///< The subclock oscillator
-    FSP_PRIV_CLOCK_PLL      = 5,       ///< The PLL oscillator
-    FSP_PRIV_CLOCK_PLL2     = 6,       ///< The PLL2 oscillator
+    FSP_PRIV_CLOCK_PLL      = 5,       ///< The PLL output
+    FSP_PRIV_CLOCK_PLL1P    = 5,       ///< The PLL1P output
+    FSP_PRIV_CLOCK_PLL2     = 6,       ///< The PLL2 output
+    FSP_PRIV_CLOCK_PLL2P    = 6,       ///< The PLL2P output
+    FSP_PRIV_CLOCK_PLL1Q    = 7,       ///< The PLL1Q output
+    FSP_PRIV_CLOCK_PLL1R    = 8,       ///< The PLL1R output
+    FSP_PRIV_CLOCK_PLL2Q    = 9,       ///< The PLL2Q output
+    FSP_PRIV_CLOCK_PLL2R    = 10,      ///< The PLL2R output
 } fsp_priv_source_clock_t;
 
 typedef struct st_bsp_unique_id
@@ -440,9 +433,25 @@ __STATIC_INLINE uint32_t R_FSP_ClockDividerGet (uint32_t ckdivcr)
         /* Clock Divided by 3 */
         return 3U;
     }
+    else if (6U == ckdivcr)
+    {
 
-    /* Clock Divided by 5 */
-    return 5U;
+        /* Clock Divided by 5 */
+        return 5;
+    }
+    else if (7U == ckdivcr)
+    {
+
+        /* Clock Divided by 10 */
+        return 10;
+    }
+    else
+    {
+        /* The remaining case is ckdivcr = 8 which divides the clock by 16. */
+    }
+
+    /* Clock Divided by 16 */
+    return 16U;
 }
 
 #if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
@@ -528,10 +537,26 @@ __STATIC_INLINE void R_BSP_FlashCacheDisable (void)
     R_FCACHE->FCACHEE = 0U;
 #endif
 
-#if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+#ifdef R_CACHE
+ #if BSP_FEATURE_BSP_CODE_CACHE_VERSION == 2
+
+    /* Writeback and flush cache when disabling
+     * MREF_INTERNAL_12 */
+    if (R_CACHE->CCAWTA_b.WT)
+    {
+        R_CACHE->CCACTL = R_CACHE_CCACTL_FC_Msk;
+    }
+    else
+    {
+        R_CACHE->CCACTL = R_CACHE_CCACTL_FC_Msk | R_CACHE_CCACTL_WB_Msk;
+    }
+
+    FSP_HARDWARE_REGISTER_WAIT(R_CACHE->CCAFCT, 0U);
+ #else
 
     /* Disable the C-Cache. */
     R_CACHE->CCACTL = 0U;
+ #endif
 #endif
 }
 
@@ -551,10 +576,17 @@ __STATIC_INLINE void R_BSP_FlashCacheEnable (void)
     R_FCACHE->FCACHEE = 1U;
 #endif
 
-#if BSP_FEATURE_BSP_HAS_CODE_SYSTEM_CACHE
+#ifdef R_CACHE
+ #if BSP_FEATURE_BSP_CODE_CACHE_VERSION == 1
 
     /* Configure the C-Cache line size. */
     R_CACHE->CCALCF = BSP_CFG_C_CACHE_LINE_SIZE;
+ #else
+
+    /* Check that no flush or writeback are ongoing before enabling
+     * MREF_INTERNAL_13 */
+    FSP_HARDWARE_REGISTER_WAIT(R_CACHE->CCAFCT, 0U);
+ #endif
 
     /* Enable the C-Cache. */
     R_CACHE->CCACTL = 1U;

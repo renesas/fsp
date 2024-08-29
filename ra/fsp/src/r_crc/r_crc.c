@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /***********************************************************************************************************************
  * Includes
@@ -181,7 +167,7 @@ fsp_err_t R_CRC_Close (crc_ctrl_t * const p_ctrl)
  *
  * @retval FSP_SUCCESS              Calculation successful.
  * @retval FSP_ERR_ASSERTION        Either p_ctrl, inputBuffer, or calculatedValue is NULL.
- * @retval FSP_ERR_INVALID_ARGUMENT length value is NULL.
+ * @retval FSP_ERR_INVALID_ARGUMENT length value is NULL, or not 4-byte aligned when 32-bit CRC polynomial function is configured.
  * @retval FSP_ERR_NOT_OPEN         The driver is not opened.
  **********************************************************************************************************************/
 fsp_err_t R_CRC_Calculate (crc_ctrl_t * const p_ctrl, crc_input_t * const p_crc_input, uint32_t * calculatedValue)
@@ -193,6 +179,11 @@ fsp_err_t R_CRC_Calculate (crc_ctrl_t * const p_ctrl, crc_input_t * const p_crc_
     FSP_ASSERT(calculatedValue);
     FSP_ERROR_RETURN((0UL != p_crc_input->num_bytes), FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(CRC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    if ((p_instance_ctrl->p_cfg->polynomial == CRC_POLYNOMIAL_CRC_32) ||
+        (p_instance_ctrl->p_cfg->polynomial == CRC_POLYNOMIAL_CRC_32C))
+    {
+        FSP_ERROR_RETURN((p_crc_input->num_bytes & 0x03) == 0, FSP_ERR_INVALID_ARGUMENT);
+    }
 #endif
 
     /* Calculate CRC value for the input buffer */
@@ -414,10 +405,10 @@ static void crc_calculate_polynomial (crc_instance_ctrl_t * const p_instance_ctr
                                       crc_input_t * const         p_crc_input,
                                       uint32_t                  * calculatedValue)
 {
-    uint32_t i;
-    void   * inputBuffer = p_crc_input->p_input_buffer;
-    uint32_t length      = p_crc_input->num_bytes;
-    uint32_t crc_seed    = p_crc_input->crc_seed;
+    uint32_t     i;
+    const void * inputBuffer = p_crc_input->p_input_buffer;
+    uint32_t     length      = p_crc_input->num_bytes;
+    uint32_t     crc_seed    = p_crc_input->crc_seed;
     crc_seed_value_update(p_instance_ctrl, crc_seed);
 
     /* Write each element of the inputBuffer to the CRC Data Input Register. Each write to the
@@ -428,7 +419,7 @@ static void crc_calculate_polynomial (crc_instance_ctrl_t * const p_instance_ctr
         case CRC_POLYNOMIAL_CRC_16:
         case CRC_POLYNOMIAL_CRC_CCITT:
         {
-            uint8_t * p_data = (uint8_t *) inputBuffer;
+            const uint8_t * p_data = inputBuffer;
             for (i = (uint32_t) 0; i < length; i++)
             {
                 /* CRCDIR is a 32-bit read/write register to write data to for CRC-32 or CRC-32C calculation.
@@ -444,7 +435,7 @@ static void crc_calculate_polynomial (crc_instance_ctrl_t * const p_instance_ctr
 
         default:
         {
-            uint32_t * p_data = (uint32_t *) inputBuffer;
+            const uint32_t * p_data = inputBuffer;
 
             for (i = (uint32_t) 0; i < (length / 4); i++)
             {

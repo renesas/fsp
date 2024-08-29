@@ -1,22 +1,8 @@
-/***********************************************************************************************************************
- * Copyright [2020-2024] Renesas Electronics Corporation and/or its affiliates.  All Rights Reserved.
- *
- * This software and documentation are supplied by Renesas Electronics America Inc. and may only be used with products
- * of Renesas Electronics Corp. and its affiliates ("Renesas").  No other uses are authorized.  Renesas products are
- * sold pursuant to Renesas terms and conditions of sale.  Purchasers are solely responsible for the selection and use
- * of Renesas products and Renesas assumes no liability.  No license, express or implied, to any intellectual property
- * right is granted by Renesas. This software is protected under all applicable laws, including copyright laws. Renesas
- * reserves the right to change or discontinue this software and/or this documentation. THE SOFTWARE AND DOCUMENTATION
- * IS DELIVERED TO YOU "AS IS," AND RENESAS MAKES NO REPRESENTATIONS OR WARRANTIES, AND TO THE FULLEST EXTENT
- * PERMISSIBLE UNDER APPLICABLE LAW, DISCLAIMS ALL WARRANTIES, WHETHER EXPLICITLY OR IMPLICITLY, INCLUDING WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT, WITH RESPECT TO THE SOFTWARE OR
- * DOCUMENTATION.  RENESAS SHALL HAVE NO LIABILITY ARISING OUT OF ANY SECURITY VULNERABILITY OR BREACH.  TO THE MAXIMUM
- * EXTENT PERMITTED BY LAW, IN NO EVENT WILL RENESAS BE LIABLE TO YOU IN CONNECTION WITH THE SOFTWARE OR DOCUMENTATION
- * (OR ANY PERSON OR ENTITY CLAIMING RIGHTS DERIVED FROM YOU) FOR ANY LOSS, DAMAGES, OR CLAIMS WHATSOEVER, INCLUDING,
- * WITHOUT LIMITATION, ANY DIRECT, CONSEQUENTIAL, SPECIAL, INDIRECT, PUNITIVE, OR INCIDENTAL DAMAGES; ANY LOST PROFITS,
- * OTHER ECONOMIC DAMAGE, PROPERTY DAMAGE, OR PERSONAL INJURY; AND EVEN IF RENESAS HAS BEEN ADVISED OF THE POSSIBILITY
- * OF SUCH LOSS, DAMAGES, CLAIMS OR COSTS.
- **********************************************************************************************************************/
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 /******************************************************************************
  * Includes   <System Includes> , "Project Includes"
@@ -34,6 +20,10 @@
 #if defined(USB_CFG_PMSC_USE)
  #include "r_usb_pmsc_api.h"
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
+
+#if defined(USB_CFG_PCDC_USE)
+ #include "r_usb_pcdc_api.h"
+#endif                                 /* defined(USB_CFG_PCDC_USE) */
 
 #if (BSP_CFG_RTOS == 1)
  #include "../../../../../microsoft/azure-rtos/usbx/common/core/inc/ux_api.h"
@@ -1651,13 +1641,29 @@ static void usb_peri_class_request_usbx (usb_setup_t * p_req)
         class_command.ux_slave_class_command_request = UX_SLAVE_CLASS_COMMAND_REQUEST;
         for (class_index = 0; class_index < UX_MAX_SLAVE_INTERFACES; class_index++)
         {
+  #if defined(USB_CFG_PAUD_USE)
+        	/* Check the received audio class request is for the interface
+        	 * (i.e. recipient is interface) or endpoint(i.e. recipient is endpoint). */
+            if ((USB_INTERFACE == (p_req->request_type & USB_BMREQUESTTYPERECIP)) ||
+                (USB_ENDPOINT == (p_req->request_type & USB_BMREQUESTTYPERECIP)))
+  #else  /* defined(USB_CFG_PAUD_USE) */
             if (USB_INTERFACE == (p_req->request_type & USB_BMREQUESTTYPERECIP))
+  #endif
             {
-                if ((p_req->request_index & VALUE_FFH) != class_index)
+  #if defined(USB_CFG_PAUD_USE)
+              /* Verify the interface value(i.e. request index value),
+               * only when received audio class request is for the interface
+               * (i.e. recipient is interface). */
+             if (USB_INTERFACE == (p_req->request_type & USB_BMREQUESTTYPERECIP))
+             {
+  #endif  /* defined(USB_CFG_PAUD_USE) */
+            	if ((p_req->request_index & VALUE_FFH) != class_index)
                 {
                     continue;
                 }
-
+  #if defined(USB_CFG_PAUD_USE)
+             }
+  #endif  /* defined(USB_CFG_PAUD_USE) */
                 class = _ux_system_slave->ux_system_slave_interface_class_array[class_index];
                 if (UX_NULL == class)
                 {
@@ -1673,6 +1679,7 @@ static void usb_peri_class_request_usbx (usb_setup_t * p_req)
                                FSP_SETUP_VALUE) = p_req->request_value;
                 *(uint16_t *) (transfer_request->ux_slave_transfer_request_setup +
                                FSP_SETUP_LENGTH) = p_req->request_length;
+                transfer_request->ux_slave_transfer_request_actual_length = p_req->request_length - g_usb_pstd_data_cnt[USB_PIPE0];
   #if defined(USB_CFG_PAUD_USE) || defined(USB_CFG_DFU_USE)
                 *(transfer_request->ux_slave_transfer_request_setup +
                   FSP_SETUP_REQUEST_TYPE) = (uint8_t) (p_req->request_type & VALUE_FFH);
@@ -1903,7 +1910,54 @@ void usb_peri_other_request (usb_setup_t * req, usb_utr_t * p_utr)
  ******************************************************************************/
 void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
 {
- #if defined(USB_CFG_PMSC_USE)
+ #if defined(USB_CFG_PCDC_USE) && defined(USB_CFG_PMSC_USE)
+    usb_instance_ctrl_t ctrl;
+
+    /* Is a request receive target Interface? */
+    if (USB_INTERFACE == (req->request_type & USB_BMREQUESTTYPERECIP))
+    {
+  #if (BSP_CFG_RTOS == 1)
+        if ((USB_MASS_STORAGE_RESET == (req->request_type & USB_BREQUEST)) ||
+            (USB_PCDC_SET_CONTROL_LINE_STATE == (req->request_type & USB_BREQUEST)))
+  #else
+        if (USB_MASS_STORAGE_RESET == (req->request_type & USB_BREQUEST))
+  #endif                                /* (BSP_CFG_RTOS == 1) */
+        {
+  #if (BSP_CFG_RTOS == 1)
+            usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
+            usb_pstd_ctrl_end(USB_CTRL_END, p_utr);
+
+            usb_peri_class_request_usbx(req);
+  #else                                /* (BSP_CFG_RTOS == 1) */
+            usb_pmsc_mass_strage_reset(req->request_value, req->request_index, req->request_length, p_utr);
+  #endif /* (BSP_CFG_RTOS == 1) */
+        }
+        else
+        {
+            ctrl.setup         = *req; /* Save setup data. */
+            ctrl.module_number = p_utr->ip;
+            ctrl.data_size     = 0;
+            ctrl.status        = USB_SETUP_STATUS_ACK;
+            ctrl.type          = USB_CLASS_REQUEST;
+            usb_set_event(USB_STATUS_REQUEST, &ctrl);
+        }
+    }
+    else
+    {
+        usb_pstd_set_stall_pipe0(p_utr); /* Req Error */
+    }
+
+  #if (BSP_CFG_RTOS == 1)
+    if ((USB_MASS_STORAGE_RESET != (req->request_type & USB_BREQUEST)) &&
+        (USB_PCDC_SET_CONTROL_LINE_STATE != (req->request_type & USB_BREQUEST)))
+  #else
+    if (USB_MASS_STORAGE_RESET != (req->request_type & USB_BREQUEST))
+  #endif                                /* (BSP_CFG_RTOS == 1) */
+    {
+        usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
+    }
+
+ #elif defined(USB_CFG_PMSC_USE)
     usb_instance_ctrl_t ctrl;
 
     /* Is a request receive target Interface? */
@@ -1940,7 +1994,7 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
         usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
     }
 
- #else /* defined(USB_CFG_PMSC_USE) */
+ #else /* defined(USB_CFG_PCDC_USE) && defined(USB_CFG_PMSC_USE) */
   #if (BSP_CFG_RTOS != 1)
 
     /* Is a request receive target Interface? */
@@ -1960,7 +2014,7 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
   #if (BSP_CFG_RTOS == 1)
     usb_peri_class_request_usbx(req);
   #endif  /* #if (BSP_CFG_RTOS != 1) */
- #endif                                /* defined(USB_CFG_PMSC_USE) */
+ #endif                                /* defined(USB_CFG_PCDC_USE) && defined(USB_CFG_PMSC_USE) */
 } /* End of function usb_peri_class_request_wnss */
 
 /******************************************************************************
