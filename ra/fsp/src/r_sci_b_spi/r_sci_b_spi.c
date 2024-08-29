@@ -565,6 +565,9 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     /* Set FCR. Reset FIFO/data registers. */
     p_ctrl->p_reg->FCR = R_SCI_B0_FCR_TFRST_Msk | R_SCI_B0_FCR_RFRST_Msk;
 
+    /* Write all settings except MOD[2:0] to CCR3 (See Table 26.36 in RA6T2 manual R01UH0951EJ0130). */
+    p_ctrl->p_reg->CCR3 = ccr3 & ~(R_SCI_B0_CCR3_MOD_Msk);
+
     /* Write settings to registers. */
     p_ctrl->p_reg->CCR3  = ccr3;
     p_ctrl->p_reg->CCR2  = ccr2;

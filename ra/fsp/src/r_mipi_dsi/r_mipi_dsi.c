@@ -411,20 +411,28 @@ fsp_err_t R_MIPI_DSI_UlpsExit (mipi_dsi_ctrl_t * const p_api_ctrl, mipi_dsi_lane
  * @retval   FSP_ERR_IN_USE             The physical interface is currently in use or video mode is in operation.
  * @retval   FSP_ERR_INVALID_POINTER    Invalid pointer provided
  * @retval   FSP_ERR_INVALID_ARGUMENT   Invalid message configuration
- * @retval   FSP_ERR_INVALID_CHANNEL    Invalid channel for provided message configuration
  **********************************************************************************************************************/
 fsp_err_t R_MIPI_DSI_Command (mipi_dsi_ctrl_t * const p_api_ctrl, mipi_dsi_cmd_t * p_cmd)
 {
+#define SQCHnSET0R_BIT_23          (0x800000)
+#define SEQUENCE_REGISTERS_SIZE    (offsetof(R_DSILINK_Type, SQCH1DSC0AR) - offsetof(R_DSILINK_Type, SQCH0DSC0AR)) // 0x80
+
 #if MIPI_DSI_CFG_PARAM_CHECKING_ENABLE
     mipi_dsi_instance_ctrl_t * p_ctrl = (mipi_dsi_instance_ctrl_t *) p_api_ctrl;
 
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(p_cmd, FSP_ERR_INVALID_POINTER);
-    FSP_ERROR_RETURN(MIPI_DSI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_cmd->p_tx_buffer || (p_cmd->tx_len == 0), FSP_ERR_INVALID_ARGUMENT);                     // Tx buffer must be supplied for non-zero Tx length
+#endif
 
-    FSP_ERROR_RETURN(!((p_cmd->channel == 0) && (p_cmd->tx_len > MIPI_MAX_CH0_CMD)), FSP_ERR_INVALID_ARGUMENT); // Max Tx size is 128 for channel 0
-    FSP_ERROR_RETURN(!((p_cmd->channel == 1) && (p_cmd->tx_len > MIPI_MAX_CH1_CMD)), FSP_ERR_INVALID_ARGUMENT); // Max Tx size is 1k for channel 1
+    bool    lp               = (0 != (p_cmd->flags & MIPI_DSI_CMD_FLAG_LOW_POWER));
+    uint8_t sequence_channel = (lp ? 0 : 1);                                                                      // Sequence Channel (distinct from Virtual Channel)
+
+#if MIPI_DSI_CFG_PARAM_CHECKING_ENABLE
+    FSP_ERROR_RETURN(MIPI_DSI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(p_cmd->p_tx_buffer || (p_cmd->tx_len == 0), FSP_ERR_INVALID_ARGUMENT);                       // Tx buffer must be supplied for non-zero Tx length
+
+    FSP_ERROR_RETURN(!((sequence_channel == 0) && (p_cmd->tx_len > MIPI_MAX_CH0_CMD)), FSP_ERR_INVALID_ARGUMENT); // Max Tx size is 128 for channel 0 (LP Mode)
+    FSP_ERROR_RETURN(!((sequence_channel == 1) && (p_cmd->tx_len > MIPI_MAX_CH1_CMD)), FSP_ERR_INVALID_ARGUMENT); // Max Tx size is 1k for channel 1 (HS Mode)
 
     /* AUX Operation */
     bool aux = (p_cmd->flags & MIPI_DSI_CMD_FLAG_AUX_OPERATION);
@@ -435,14 +443,11 @@ fsp_err_t R_MIPI_DSI_Command (mipi_dsi_ctrl_t * const p_api_ctrl, mipi_dsi_cmd_t
         bool initial_skew  = (p_cmd->flags & MIPI_DSI_CMD_FLAG_ACT_CODE_INITIAL_SKEW_CAL);
         bool periodic_skew = (p_cmd->flags & MIPI_DSI_CMD_FLAG_ACT_CODE_PERIODIC_SKEW_CAL);
         FSP_ERROR_RETURN(!bta && !p_cmd->tx_len, FSP_ERR_INVALID_ARGUMENT);
-        FSP_ERROR_RETURN(!R_DSILINK->LINKSR_b.VRUN, FSP_ERR_INVALID_ARGUMENT);                                 // Aux operation is prohibited when video mode is running
-        FSP_ERROR_RETURN(!(initial_skew || periodic_skew) || (p_cmd->channel != 0), FSP_ERR_INVALID_ARGUMENT); // Periodic and Initial skew must be HS
+        FSP_ERROR_RETURN(!R_DSILINK->LINKSR_b.VRUN, FSP_ERR_INVALID_ARGUMENT);                                   // Aux operation is prohibited when video mode is running
+        FSP_ERROR_RETURN(!(initial_skew || periodic_skew) || (sequence_channel == 1), FSP_ERR_INVALID_ARGUMENT); // Periodic and Initial skew must be HS
     }
 
-    uint8_t lp = (0 != (p_cmd->flags & MIPI_DSI_CMD_FLAG_LOW_POWER));
-
-    FSP_ERROR_RETURN(!(lp && R_DSILINK->LINKSR_b.VRUN), FSP_ERR_IN_USE);       // LP not allowed during video mode operation. See RA8D1 UM 58.2.61 (R01UH0995EJ0060)
-    FSP_ERROR_RETURN(!(lp && (p_cmd->channel != 0)), FSP_ERR_INVALID_CHANNEL); // LP only allowed on channel 0
+    FSP_ERROR_RETURN(!(lp && R_DSILINK->LINKSR_b.VRUN), FSP_ERR_IN_USE);                                         // LP not allowed during video mode operation. See RA8D1 UM 58.2.61 (R01UH0995EJ0060)
 #else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
 #endif
@@ -451,23 +456,26 @@ fsp_err_t R_MIPI_DSI_Command (mipi_dsi_ctrl_t * const p_api_ctrl, mipi_dsi_cmd_t
     FSP_ERROR_RETURN(!(R_DSILINK->LINKSR_b.SQ0RUN) && !(R_DSILINK->LINKSR_b.SQ1RUN), FSP_ERR_IN_USE);
 
     uint32_t * p_sequence_reg = (uint32_t *) (&R_DSILINK->SQCH0DSC0AR);
-    p_sequence_reg   += (p_cmd->channel * 0x80) / 4; // NOLINT(readability-magic-numbers)
+    p_sequence_reg   += (sequence_channel * SEQUENCE_REGISTERS_SIZE) / sizeof(uint32_t); // Offset into Sequence register 'n'
     *p_sequence_reg++ = dsi_cmd_sequence_register_a(p_cmd);
     *p_sequence_reg++ = dsi_cmd_sequence_register_b(p_cmd);
     *p_sequence_reg++ = dsi_cmd_sequence_register_c(p_cmd);
     *p_sequence_reg++ = dsi_cmd_sequence_register_d(p_cmd);
 
     /* Start sequence operation */
-    R_DSILINK->SQCH0SET0R = (bool) (0 == p_cmd->channel);
-    R_DSILINK->SQCH1SET0R = (bool) (1 == p_cmd->channel);
+    R_DSILINK->SQCH0SET0R = SQCHnSET0R_BIT_23 | (0 == sequence_channel);
+    R_DSILINK->SQCH1SET0R = SQCHnSET0R_BIT_23 | (1 == sequence_channel);
 
     return FSP_SUCCESS;
+#undef SQCHnSET0R_BIT_23
+#undef SEQUENCE_REGISTERS_SIZE
 }
 
 /******************************************************************************************************************//**
  * Provide information about current MIPI DSI status.
  *
- * Note: Acknowledge and Error Status is only cleared when read by calling this function.
+ * Note: Accumulated Acknowledge and Error (AwER) Status is cleared by calling this function. Latest AwER status is
+ *       only set upon reception from peripheral.
  *
  * @retval   FSP_SUCCESS               Information read successfully.
  * @retval   FSP_ERR_ASSERTION         p_api_ctrl is NULL.

@@ -213,7 +213,7 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     /* Verify the frequency comparison value for RFRL when using LOCO */
     if (RTC_CLOCK_SOURCE_LOCO == p_cfg->clock_source)
     {
-        FSP_ERROR_RETURN(FSP_SUCCESS != r_rtc_rfrl_validate(p_cfg->freq_compare_value), FSP_ERR_INVALID_ARGUMENT);
+        FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_rfrl_validate(p_cfg->freq_compare_value), FSP_ERR_INVALID_ARGUMENT);
     }
     /* Validate the error adjustment parameters when using SubClock */
     else
@@ -1240,8 +1240,8 @@ static fsp_err_t r_rtc_rfrl_validate (uint32_t value)
 
     /* A value from 0007h through 01FFh can be specified as the frequency comparison value (see section 26.2.20
      * Frequency Register (RFRH/RFRL)" of the RA6M3 manual R01UH0886EJ0100) */
-    if ((RTC_RFRL_MIN_VALUE_LOCO <= value) &&
-        (RTC_RFRL_MAX_VALUE_LOCO >= value))
+    if ((RTC_RFRL_MIN_VALUE_LOCO >= value) ||
+        (RTC_RFRL_MAX_VALUE_LOCO <= value))
     {
         err = FSP_ERR_INVALID_ARGUMENT;
     }

@@ -55,6 +55,7 @@ typedef enum e_rm_zmod4xxx_lib_type
     RM_ZMOD4410_LIB_TYPE_PBAQ,
     RM_ZMOD4510_LIB_TYPE_OAQ_1ST_GEN,
     RM_ZMOD4510_LIB_TYPE_OAQ_2ND_GEN,
+    RM_ZMOD4510_LIB_TYPE_NO2_O3,
     RM_ZMOD4450_LIB_TYPE_RAQ,
 } rm_zmod4xxx_lib_type_t;
 
@@ -158,6 +159,9 @@ fsp_err_t RM_ZMOD4XXX_RelIaqDataCalculate(rm_zmod4xxx_ctrl_t * const         p_a
 fsp_err_t RM_ZMOD4XXX_PbaqDataCalculate(rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
                                         rm_zmod4xxx_raw_data_t * const  p_raw_data,
                                         rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data);
+fsp_err_t RM_ZMOD4XXX_No2O3DataCalculate(rm_zmod4xxx_ctrl_t * const        p_api_ctrl,
+                                         rm_zmod4xxx_raw_data_t * const    p_raw_data,
+                                         rm_zmod4xxx_no2_o3_data_t * const p_zmod4xxx_data);
 fsp_err_t RM_ZMOD4XXX_Close(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 
 #if defined(__CCRX__) || defined(__ICCRX__) || defined(__RX__)

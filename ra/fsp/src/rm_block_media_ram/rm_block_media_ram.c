@@ -28,7 +28,7 @@
 #define VALUE_20H                  (0x20)
 
 #define STRG_SECTSIZE              (VALUE_512)
-#define STRG_TOTALSECT             (RM_BLOCK_MEIDA_RAM_CFG_MEDIA_SIZE / STRG_SECTSIZE)
+#define STRG_TOTALSECT             (RM_BLOCK_MEDIA_RAM_CFG_MEDIA_SIZE / STRG_SECTSIZE)
 
 #define RAMDISK_MEDIATYPE          (0xF8U)
 #define RAMDISK_SIGNATURE          (0xAA55U)
@@ -421,7 +421,8 @@ static const uint8_t g_block_media_ram_rootdir[STRG_SECTSIZE * 16UL] =
     0x00,      0x00,      0x00,      0x00,      0x00,      0x00, 0x00, 0x00,
 };
 
-static uint8_t g_block_media_ram_area[RM_BLOCK_MEIDA_RAM_CFG_MEDIA_SIZE];
+static uint8_t BSP_PLACE_IN_SECTION(RM_BLOCK_MEDIA_RAM_CFG_SECTION) g_block_media_ram_area[
+    RM_BLOCK_MEDIA_RAM_CFG_MEDIA_SIZE];
 
 /***********************************************************************************************************************
  * Global Variables
@@ -523,11 +524,11 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
 
     adr += (STRG_SECTSIZE * VALUE_16);                                                    /* rootdir are size */
 
-    memset((void *) adr, 0, (RM_BLOCK_MEIDA_RAM_CFG_MEDIA_SIZE - (adr - start_address))); /* user media area zero clear */
+    memset((void *) adr, 0, (RM_BLOCK_MEDIA_RAM_CFG_MEDIA_SIZE - (adr - start_address))); /* user media area zero clear */
 
     if (NULL != p_instance_ctrl->p_callback)
     {
-        block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
         block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
@@ -576,7 +577,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Read (rm_block_media_ctrl_t * const p_ctrl,
 
     if (NULL != p_instance_ctrl->p_callback)
     {
-        block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
         block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
@@ -623,7 +624,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Write (rm_block_media_ctrl_t * const p_ctrl,
 
     if (NULL != p_instance_ctrl->p_callback)
     {
-        block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
         block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
@@ -668,7 +669,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Erase (rm_block_media_ctrl_t * const p_ctrl,
 
     if (NULL != p_instance_ctrl->p_callback)
     {
-        block_media_ram_args.event = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
+        block_media_ram_args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;
         block_media_ram_args.p_context = p_instance_ctrl->p_context;
         p_instance_ctrl->p_callback(&block_media_ram_args);
     }
@@ -725,7 +726,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_InfoGet (rm_block_media_ctrl_t * const p_ctrl, rm_b
 #endif  /* RM_BLOCK_MEDIA_RAM_CFG_PARAM_CHECKING_ENABLE */
 
     p_info->sector_size_bytes = STRG_SECTSIZE;
-    p_info->num_sectors       = (RM_BLOCK_MEIDA_RAM_CFG_MEDIA_SIZE / STRG_SECTSIZE);
+    p_info->num_sectors       = (RM_BLOCK_MEDIA_RAM_CFG_MEDIA_SIZE / STRG_SECTSIZE);
     p_info->reentrant         = false;
     p_info->write_protected   = false;
 
@@ -733,7 +734,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_InfoGet (rm_block_media_ctrl_t * const p_ctrl, rm_b
 }
 
 /*******************************************************************************************************************//**
- * Closes the module.  
+ * Closes the module.
  *
  * Implements @ref rm_block_media_api_t::close().
  *

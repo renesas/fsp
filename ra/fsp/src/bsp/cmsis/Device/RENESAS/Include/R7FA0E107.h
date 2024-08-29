@@ -4462,21 +4462,21 @@ typedef struct                         /*!< (@ 0x400D1000) R_TRNG Structure     
 } R_TRNG_Type;                         /*!< Size = 4 (0x4)                                                            */
 
 /* =========================================================================================================================== */
-/* ================                                          R_UARTA                                          ================ */
+/* ================                                         R_UARTA0                                          ================ */
 /* =========================================================================================================================== */
 
 /**
- * @brief Serial Interface UARTA (R_UARTA)
+ * @brief Serial Interface UARTA (R_UARTA0)
  */
 
-typedef struct                         /*!< (@ 0x400A3400) R_UARTA Structure                                          */
+typedef struct                         /*!< (@ 0x400A3400) R_UARTA0 Structure                                         */
 {
-    __IOM uint8_t TXBA0;               /*!< (@ 0x00000000) Transmit Buffer Register 0                                 */
-    __IM uint8_t  RXBA0;               /*!< (@ 0x00000001) Receive Buffer Register 0                                  */
+    __IOM uint8_t TXBAn;               /*!< (@ 0x00000000) Transmit Buffer Register 0                                 */
+    __IM uint8_t  RXBAn;               /*!< (@ 0x00000001) Receive Buffer Register 0                                  */
 
     union
     {
-        __IOM uint8_t ASIMA00;         /*!< (@ 0x00000002) Operation Mode Setting Register 00                         */
+        __IOM uint8_t ASIMAn0;         /*!< (@ 0x00000002) Operation Mode Setting Register 00                         */
 
         struct
         {
@@ -4486,12 +4486,12 @@ typedef struct                         /*!< (@ 0x400A3400) R_UARTA Structure    
             __IOM uint8_t RXEA  : 1;   /*!< [5..5] Reception Enable                                                   */
             __IOM uint8_t TXEA  : 1;   /*!< [6..6] Transmission Enable                                                */
             __IOM uint8_t EN    : 1;   /*!< [7..7] UART Operation Enable                                              */
-        } ASIMA00_b;
+        } ASIMAn0_b;
     };
 
     union
     {
-        __IOM uint8_t ASIMA01;         /*!< (@ 0x00000003) Operation Mode Setting Register 01                         */
+        __IOM uint8_t ASIMAn1;         /*!< (@ 0x00000003) Operation Mode Setting Register 01                         */
 
         struct
         {
@@ -4501,13 +4501,13 @@ typedef struct                         /*!< (@ 0x400A3400) R_UARTA Structure    
             __IOM uint8_t CL  : 2;     /*!< [4..3] Transmission and Reception Character Length Setting                */
             __IOM uint8_t PS  : 2;     /*!< [6..5] Transmission and Reception Parity Bit Setting                      */
             uint8_t           : 1;
-        } ASIMA01_b;
+        } ASIMAn1_b;
     };
-    __IOM uint8_t BRGCA0;              /*!< (@ 0x00000004) Baud Rate Generator Control Register 0                     */
+    __IOM uint8_t BRGCAn;              /*!< (@ 0x00000004) Baud Rate Generator Control Register 0                     */
 
     union
     {
-        __IM uint8_t ASISA0;           /*!< (@ 0x00000005) Status Register 0                                          */
+        __IM uint8_t ASISAn;           /*!< (@ 0x00000005) Status Register 0                                          */
 
         struct
         {
@@ -4518,12 +4518,12 @@ typedef struct                         /*!< (@ 0x400A3400) R_UARTA Structure    
             __IM uint8_t TXSFA : 1;    /*!< [4..4] Transmit Shift Register Data Flag                                  */
             __IM uint8_t TXBFA : 1;    /*!< [5..5] Transmit Buffer Data Flag                                          */
             uint8_t            : 2;
-        } ASISA0_b;
+        } ASISAn_b;
     };
 
     union
     {
-        __IOM uint8_t ASCTA0;          /*!< (@ 0x00000006) Status Clear Trigger Register 0                            */
+        __IOM uint8_t ASCTAn;          /*!< (@ 0x00000006) Status Clear Trigger Register 0                            */
 
         struct
         {
@@ -4531,22 +4531,33 @@ typedef struct                         /*!< (@ 0x400A3400) R_UARTA Structure    
             __IOM uint8_t FECTA  : 1;  /*!< [1..1] Framing Error Flag Clear Trigger                                   */
             __IOM uint8_t PECTA  : 1;  /*!< [2..2] Parity Error Flag Clear Trigger                                    */
             uint8_t              : 5;
-        } ASCTA0_b;
+        } ASCTAn_b;
     };
-    __IM uint8_t RESERVED[249];
+} R_UARTA0_Type;                       /*!< Size = 7 (0x7)                                                            */
 
+/* =========================================================================================================================== */
+/* ================                                        R_UARTA_CK                                         ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief Serial Interface UARTA Clock (R_UARTA_CK)
+ */
+
+typedef struct                         /*!< (@ 0x400A3500) R_UARTA_CK Structure                                       */
+{
     union
     {
-        __IOM uint8_t UTA0CK;          /*!< (@ 0x00000100) UARTA Clock Select Register 0                              */
+        __IOM uint8_t UTAnCK[2];       /*!< (@ 0x00000000) UARTA Clock Select Register                                */
 
         struct
         {
-            __IOM uint8_t CK  : 4;     /*!< [3..0] UARTA0 Operation Clock Select (fUTA0)                              */
+            __IOM uint8_t CK  : 4;     /*!< [3..0] UARTAn Operation Clock Select (fUTAn)                              */
             __IOM uint8_t SEL : 2;     /*!< [5..4] fSEL Clock Select                                                  */
-            uint8_t           : 2;
-        } UTA0CK_b;
+            uint8_t           : 1;
+            __IOM uint8_t EN  : 1;     /*!< [7..7] UARTAn clock output function enable                                */
+        } UTAnCK_b[2];
     };
-} R_UARTA_Type;                        /*!< Size = 257 (0x101)                                                        */
+} R_UARTA_CK_Type;                     /*!< Size = 2 (0x2)                                                            */
 
 /* =========================================================================================================================== */
 /* ================                                         R_PCLBUZ                                          ================ */
@@ -4763,36 +4774,37 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  * @{
  */
 
- #define R_ADC_D_BASE      0x400A1800UL
- #define R_BUS_BASE        0x40003000UL
- #define R_CRC_BASE        0x40074000UL
- #define R_DEBUG_BASE      0x4001B000UL
- #define R_DTC_BASE        0x40005400UL
- #define R_ELC_BASE        0x40041000UL
- #define R_FACI_LP_BASE    0x407EC000UL
- #define R_ICU_BASE        0x40006000UL
- #define R_IICA_BASE       0x400A3000UL
- #define R_IWDT_BASE       0x40044400UL
- #define R_MSTP_BASE       (0x40047000UL - 4UL) /* MSTPCRA is not located in R_MSTP so the base address must be moved so that MSTPCRB is located at 0x40047000. */
- #define R_PORT0_BASE      0x400A0000UL
- #define R_PORT1_BASE      0x400A0020UL
- #define R_PORT2_BASE      0x400A0040UL
- #define R_PORT3_BASE      0x400A0060UL
- #define R_PORT4_BASE      0x400A0080UL
- #define R_PORT9_BASE      0x400A0120UL
- #define R_PORGA_BASE      0x400A1000UL
- #define R_PFS_BASE        0x400A0200UL
- #define R_PMISC_BASE      0x400A0340UL
- #define R_SAU0_BASE       0x400A2000UL
- #define R_SAU1_BASE       0x400A2200UL
- #define R_SRAM_BASE       0x40002000UL
- #define R_SYSTEM_BASE     0x4001E000UL
- #define R_TAU_BASE        0x400A2600UL
- #define R_TML_BASE        0x400A3800UL
- #define R_TRNG_BASE       0x400D1000UL
- #define R_UARTA_BASE      0x400A3400UL
- #define R_PCLBUZ_BASE     0x400A3B00UL
- #define R_RTC_C_BASE      0x400A2C00UL
+ #define R_ADC_D_BASE       0x400A1800UL
+ #define R_BUS_BASE         0x40003000UL
+ #define R_CRC_BASE         0x40074000UL
+ #define R_DEBUG_BASE       0x4001B000UL
+ #define R_DTC_BASE         0x40005400UL
+ #define R_ELC_BASE         0x40041000UL
+ #define R_FACI_LP_BASE     0x407EC000UL
+ #define R_ICU_BASE         0x40006000UL
+ #define R_IICA_BASE        0x400A3000UL
+ #define R_IWDT_BASE        0x40044400UL
+ #define R_MSTP_BASE        (0x40047000UL - 4UL) /* MSTPCRA is not located in R_MSTP so the base address must be moved so that MSTPCRB is located at 0x40047000. */
+ #define R_PORT0_BASE       0x400A0000UL
+ #define R_PORT1_BASE       0x400A0020UL
+ #define R_PORT2_BASE       0x400A0040UL
+ #define R_PORT3_BASE       0x400A0060UL
+ #define R_PORT4_BASE       0x400A0080UL
+ #define R_PORT9_BASE       0x400A0120UL
+ #define R_PORGA_BASE       0x400A1000UL
+ #define R_PFS_BASE         0x400A0200UL
+ #define R_PMISC_BASE       0x400A0340UL
+ #define R_SAU0_BASE        0x400A2000UL
+ #define R_SAU1_BASE        0x400A2200UL
+ #define R_SRAM_BASE        0x40002000UL
+ #define R_SYSTEM_BASE      0x4001E000UL
+ #define R_TAU_BASE         0x400A2600UL
+ #define R_TML_BASE         0x400A3800UL
+ #define R_TRNG_BASE        0x400D1000UL
+ #define R_UARTA0_BASE      0x400A3400UL
+ #define R_UARTA_CK_BASE    0x400A3500UL
+ #define R_PCLBUZ_BASE      0x400A3B00UL
+ #define R_RTC_C_BASE       0x400A2C00UL
 
 /** @} */ /* End of group Device_Peripheral_peripheralAddr */
 
@@ -4804,36 +4816,37 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  * @{
  */
 
- #define R_ADC_D      ((R_ADC_D_Type *) R_ADC_D_BASE)
- #define R_BUS        ((R_BUS_Type *) R_BUS_BASE)
- #define R_CRC        ((R_CRC_Type *) R_CRC_BASE)
- #define R_DEBUG      ((R_DEBUG_Type *) R_DEBUG_BASE)
- #define R_DTC        ((R_DTC_Type *) R_DTC_BASE)
- #define R_ELC        ((R_ELC_Type *) R_ELC_BASE)
- #define R_FACI_LP    ((R_FACI_LP_Type *) R_FACI_LP_BASE)
- #define R_ICU        ((R_ICU_Type *) R_ICU_BASE)
- #define R_IICA       ((R_IICA_Type *) R_IICA_BASE)
- #define R_IWDT       ((R_IWDT_Type *) R_IWDT_BASE)
- #define R_MSTP       ((R_MSTP_Type *) R_MSTP_BASE)
- #define R_PORT0      ((R_PORT0_Type *) R_PORT0_BASE)
- #define R_PORT1      ((R_PORT0_Type *) R_PORT1_BASE)
- #define R_PORT2      ((R_PORT0_Type *) R_PORT2_BASE)
- #define R_PORT3      ((R_PORT0_Type *) R_PORT3_BASE)
- #define R_PORT4      ((R_PORT0_Type *) R_PORT4_BASE)
- #define R_PORT9      ((R_PORT0_Type *) R_PORT9_BASE)
- #define R_PORGA      ((R_PORGA_Type *) R_PORGA_BASE)
- #define R_PFS        ((R_PFS_Type *) R_PFS_BASE)
- #define R_PMISC      ((R_PMISC_Type *) R_PMISC_BASE)
- #define R_SAU0       ((R_SAU0_Type *) R_SAU0_BASE)
- #define R_SAU1       ((R_SAU0_Type *) R_SAU1_BASE)
- #define R_SRAM       ((R_SRAM_Type *) R_SRAM_BASE)
- #define R_SYSTEM     ((R_SYSTEM_Type *) R_SYSTEM_BASE)
- #define R_TAU        ((R_TAU_Type *) R_TAU_BASE)
- #define R_TML        ((R_TML_Type *) R_TML_BASE)
- #define R_TRNG       ((R_TRNG_Type *) R_TRNG_BASE)
- #define R_UARTA      ((R_UARTA_Type *) R_UARTA_BASE)
- #define R_PCLBUZ     ((R_PCLBUZ_Type *) R_PCLBUZ_BASE)
- #define R_RTC_C      ((R_RTC_C_Type *) R_RTC_C_BASE)
+ #define R_ADC_D       ((R_ADC_D_Type *) R_ADC_D_BASE)
+ #define R_BUS         ((R_BUS_Type *) R_BUS_BASE)
+ #define R_CRC         ((R_CRC_Type *) R_CRC_BASE)
+ #define R_DEBUG       ((R_DEBUG_Type *) R_DEBUG_BASE)
+ #define R_DTC         ((R_DTC_Type *) R_DTC_BASE)
+ #define R_ELC         ((R_ELC_Type *) R_ELC_BASE)
+ #define R_FACI_LP     ((R_FACI_LP_Type *) R_FACI_LP_BASE)
+ #define R_ICU         ((R_ICU_Type *) R_ICU_BASE)
+ #define R_IICA        ((R_IICA_Type *) R_IICA_BASE)
+ #define R_IWDT        ((R_IWDT_Type *) R_IWDT_BASE)
+ #define R_MSTP        ((R_MSTP_Type *) R_MSTP_BASE)
+ #define R_PORT0       ((R_PORT0_Type *) R_PORT0_BASE)
+ #define R_PORT1       ((R_PORT0_Type *) R_PORT1_BASE)
+ #define R_PORT2       ((R_PORT0_Type *) R_PORT2_BASE)
+ #define R_PORT3       ((R_PORT0_Type *) R_PORT3_BASE)
+ #define R_PORT4       ((R_PORT0_Type *) R_PORT4_BASE)
+ #define R_PORT9       ((R_PORT0_Type *) R_PORT9_BASE)
+ #define R_PORGA       ((R_PORGA_Type *) R_PORGA_BASE)
+ #define R_PFS         ((R_PFS_Type *) R_PFS_BASE)
+ #define R_PMISC       ((R_PMISC_Type *) R_PMISC_BASE)
+ #define R_SAU0        ((R_SAU0_Type *) R_SAU0_BASE)
+ #define R_SAU1        ((R_SAU0_Type *) R_SAU1_BASE)
+ #define R_SRAM        ((R_SRAM_Type *) R_SRAM_BASE)
+ #define R_SYSTEM      ((R_SYSTEM_Type *) R_SYSTEM_BASE)
+ #define R_TAU         ((R_TAU_Type *) R_TAU_BASE)
+ #define R_TML         ((R_TML_Type *) R_TML_BASE)
+ #define R_TRNG        ((R_TRNG_Type *) R_TRNG_BASE)
+ #define R_UARTA0      ((R_UARTA0_Type *) R_UARTA0_BASE)
+ #define R_UARTA_CK    ((R_UARTA_CK_Type *) R_UARTA_CK_BASE)
+ #define R_PCLBUZ      ((R_PCLBUZ_Type *) R_PCLBUZ_BASE)
+ #define R_RTC_C       ((R_RTC_C_Type *) R_RTC_C_BASE)
 
 /** @} */ /* End of group Device_Peripheral_declaration */
 
@@ -6445,57 +6458,64 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_TRNG_TRNGSCR1_INTEN_Msk      (0x1UL)  /*!< INTEN (Bitfield-Mask: 0x01)                           */
 
 /* =========================================================================================================================== */
-/* ================                                          R_UARTA                                          ================ */
+/* ================                                         R_UARTA0                                          ================ */
 /* =========================================================================================================================== */
 
-/* =========================================================  TXBA0  ========================================================= */
-/* =========================================================  RXBA0  ========================================================= */
-/* ========================================================  ASIMA00  ======================================================== */
- #define R_UARTA_ASIMA00_ISRMA_Pos    (0UL)    /*!< ISRMA (Bit 0)                                         */
- #define R_UARTA_ASIMA00_ISRMA_Msk    (0x1UL)  /*!< ISRMA (Bitfield-Mask: 0x01)                           */
- #define R_UARTA_ASIMA00_ISSMA_Pos    (1UL)    /*!< ISSMA (Bit 1)                                         */
- #define R_UARTA_ASIMA00_ISSMA_Msk    (0x2UL)  /*!< ISSMA (Bitfield-Mask: 0x01)                           */
- #define R_UARTA_ASIMA00_RXEA_Pos     (5UL)    /*!< RXEA (Bit 5)                                          */
- #define R_UARTA_ASIMA00_RXEA_Msk     (0x20UL) /*!< RXEA (Bitfield-Mask: 0x01)                            */
- #define R_UARTA_ASIMA00_TXEA_Pos     (6UL)    /*!< TXEA (Bit 6)                                          */
- #define R_UARTA_ASIMA00_TXEA_Msk     (0x40UL) /*!< TXEA (Bitfield-Mask: 0x01)                            */
- #define R_UARTA_ASIMA00_EN_Pos       (7UL)    /*!< EN (Bit 7)                                            */
- #define R_UARTA_ASIMA00_EN_Msk       (0x80UL) /*!< EN (Bitfield-Mask: 0x01)                              */
-/* ========================================================  ASIMA01  ======================================================== */
- #define R_UARTA_ASIMA01_ALV_Pos      (0UL)    /*!< ALV (Bit 0)                                           */
- #define R_UARTA_ASIMA01_ALV_Msk      (0x1UL)  /*!< ALV (Bitfield-Mask: 0x01)                             */
- #define R_UARTA_ASIMA01_DIR_Pos      (1UL)    /*!< DIR (Bit 1)                                           */
- #define R_UARTA_ASIMA01_DIR_Msk      (0x2UL)  /*!< DIR (Bitfield-Mask: 0x01)                             */
- #define R_UARTA_ASIMA01_SL_Pos       (2UL)    /*!< SL (Bit 2)                                            */
- #define R_UARTA_ASIMA01_SL_Msk       (0x4UL)  /*!< SL (Bitfield-Mask: 0x01)                              */
- #define R_UARTA_ASIMA01_CL_Pos       (3UL)    /*!< CL (Bit 3)                                            */
- #define R_UARTA_ASIMA01_CL_Msk       (0x18UL) /*!< CL (Bitfield-Mask: 0x03)                              */
- #define R_UARTA_ASIMA01_PS_Pos       (5UL)    /*!< PS (Bit 5)                                            */
- #define R_UARTA_ASIMA01_PS_Msk       (0x60UL) /*!< PS (Bitfield-Mask: 0x03)                              */
-/* ========================================================  BRGCA0  ========================================================= */
-/* ========================================================  ASISA0  ========================================================= */
- #define R_UARTA_ASISA0_OVEA_Pos      (0UL)    /*!< OVEA (Bit 0)                                          */
- #define R_UARTA_ASISA0_OVEA_Msk      (0x1UL)  /*!< OVEA (Bitfield-Mask: 0x01)                            */
- #define R_UARTA_ASISA0_FEA_Pos       (1UL)    /*!< FEA (Bit 1)                                           */
- #define R_UARTA_ASISA0_FEA_Msk       (0x2UL)  /*!< FEA (Bitfield-Mask: 0x01)                             */
- #define R_UARTA_ASISA0_PEA_Pos       (2UL)    /*!< PEA (Bit 2)                                           */
- #define R_UARTA_ASISA0_PEA_Msk       (0x4UL)  /*!< PEA (Bitfield-Mask: 0x01)                             */
- #define R_UARTA_ASISA0_TXSFA_Pos     (4UL)    /*!< TXSFA (Bit 4)                                         */
- #define R_UARTA_ASISA0_TXSFA_Msk     (0x10UL) /*!< TXSFA (Bitfield-Mask: 0x01)                           */
- #define R_UARTA_ASISA0_TXBFA_Pos     (5UL)    /*!< TXBFA (Bit 5)                                         */
- #define R_UARTA_ASISA0_TXBFA_Msk     (0x20UL) /*!< TXBFA (Bitfield-Mask: 0x01)                           */
-/* ========================================================  ASCTA0  ========================================================= */
- #define R_UARTA_ASCTA0_OVECTA_Pos    (0UL)    /*!< OVECTA (Bit 0)                                        */
- #define R_UARTA_ASCTA0_OVECTA_Msk    (0x1UL)  /*!< OVECTA (Bitfield-Mask: 0x01)                          */
- #define R_UARTA_ASCTA0_FECTA_Pos     (1UL)    /*!< FECTA (Bit 1)                                         */
- #define R_UARTA_ASCTA0_FECTA_Msk     (0x2UL)  /*!< FECTA (Bitfield-Mask: 0x01)                           */
- #define R_UARTA_ASCTA0_PECTA_Pos     (2UL)    /*!< PECTA (Bit 2)                                         */
- #define R_UARTA_ASCTA0_PECTA_Msk     (0x4UL)  /*!< PECTA (Bitfield-Mask: 0x01)                           */
-/* ========================================================  UTA0CK  ========================================================= */
- #define R_UARTA_UTA0CK_CK_Pos        (0UL)    /*!< CK (Bit 0)                                            */
- #define R_UARTA_UTA0CK_CK_Msk        (0xfUL)  /*!< CK (Bitfield-Mask: 0x0f)                              */
- #define R_UARTA_UTA0CK_SEL_Pos       (4UL)    /*!< SEL (Bit 4)                                           */
- #define R_UARTA_UTA0CK_SEL_Msk       (0x30UL) /*!< SEL (Bitfield-Mask: 0x03)                             */
+/* =========================================================  TXBAn  ========================================================= */
+/* =========================================================  RXBAn  ========================================================= */
+/* ========================================================  ASIMAn0  ======================================================== */
+ #define R_UARTA0_ASIMAn0_ISRMA_Pos    (0UL)    /*!< ISRMA (Bit 0)                                         */
+ #define R_UARTA0_ASIMAn0_ISRMA_Msk    (0x1UL)  /*!< ISRMA (Bitfield-Mask: 0x01)                           */
+ #define R_UARTA0_ASIMAn0_ISSMA_Pos    (1UL)    /*!< ISSMA (Bit 1)                                         */
+ #define R_UARTA0_ASIMAn0_ISSMA_Msk    (0x2UL)  /*!< ISSMA (Bitfield-Mask: 0x01)                           */
+ #define R_UARTA0_ASIMAn0_RXEA_Pos     (5UL)    /*!< RXEA (Bit 5)                                          */
+ #define R_UARTA0_ASIMAn0_RXEA_Msk     (0x20UL) /*!< RXEA (Bitfield-Mask: 0x01)                            */
+ #define R_UARTA0_ASIMAn0_TXEA_Pos     (6UL)    /*!< TXEA (Bit 6)                                          */
+ #define R_UARTA0_ASIMAn0_TXEA_Msk     (0x40UL) /*!< TXEA (Bitfield-Mask: 0x01)                            */
+ #define R_UARTA0_ASIMAn0_EN_Pos       (7UL)    /*!< EN (Bit 7)                                            */
+ #define R_UARTA0_ASIMAn0_EN_Msk       (0x80UL) /*!< EN (Bitfield-Mask: 0x01)                              */
+/* ========================================================  ASIMAn1  ======================================================== */
+ #define R_UARTA0_ASIMAn1_ALV_Pos      (0UL)    /*!< ALV (Bit 0)                                           */
+ #define R_UARTA0_ASIMAn1_ALV_Msk      (0x1UL)  /*!< ALV (Bitfield-Mask: 0x01)                             */
+ #define R_UARTA0_ASIMAn1_DIR_Pos      (1UL)    /*!< DIR (Bit 1)                                           */
+ #define R_UARTA0_ASIMAn1_DIR_Msk      (0x2UL)  /*!< DIR (Bitfield-Mask: 0x01)                             */
+ #define R_UARTA0_ASIMAn1_SL_Pos       (2UL)    /*!< SL (Bit 2)                                            */
+ #define R_UARTA0_ASIMAn1_SL_Msk       (0x4UL)  /*!< SL (Bitfield-Mask: 0x01)                              */
+ #define R_UARTA0_ASIMAn1_CL_Pos       (3UL)    /*!< CL (Bit 3)                                            */
+ #define R_UARTA0_ASIMAn1_CL_Msk       (0x18UL) /*!< CL (Bitfield-Mask: 0x03)                              */
+ #define R_UARTA0_ASIMAn1_PS_Pos       (5UL)    /*!< PS (Bit 5)                                            */
+ #define R_UARTA0_ASIMAn1_PS_Msk       (0x60UL) /*!< PS (Bitfield-Mask: 0x03)                              */
+/* ========================================================  BRGCAn  ========================================================= */
+/* ========================================================  ASISAn  ========================================================= */
+ #define R_UARTA0_ASISAn_OVEA_Pos      (0UL)    /*!< OVEA (Bit 0)                                          */
+ #define R_UARTA0_ASISAn_OVEA_Msk      (0x1UL)  /*!< OVEA (Bitfield-Mask: 0x01)                            */
+ #define R_UARTA0_ASISAn_FEA_Pos       (1UL)    /*!< FEA (Bit 1)                                           */
+ #define R_UARTA0_ASISAn_FEA_Msk       (0x2UL)  /*!< FEA (Bitfield-Mask: 0x01)                             */
+ #define R_UARTA0_ASISAn_PEA_Pos       (2UL)    /*!< PEA (Bit 2)                                           */
+ #define R_UARTA0_ASISAn_PEA_Msk       (0x4UL)  /*!< PEA (Bitfield-Mask: 0x01)                             */
+ #define R_UARTA0_ASISAn_TXSFA_Pos     (4UL)    /*!< TXSFA (Bit 4)                                         */
+ #define R_UARTA0_ASISAn_TXSFA_Msk     (0x10UL) /*!< TXSFA (Bitfield-Mask: 0x01)                           */
+ #define R_UARTA0_ASISAn_TXBFA_Pos     (5UL)    /*!< TXBFA (Bit 5)                                         */
+ #define R_UARTA0_ASISAn_TXBFA_Msk     (0x20UL) /*!< TXBFA (Bitfield-Mask: 0x01)                           */
+/* ========================================================  ASCTAn  ========================================================= */
+ #define R_UARTA0_ASCTAn_OVECTA_Pos    (0UL)    /*!< OVECTA (Bit 0)                                        */
+ #define R_UARTA0_ASCTAn_OVECTA_Msk    (0x1UL)  /*!< OVECTA (Bitfield-Mask: 0x01)                          */
+ #define R_UARTA0_ASCTAn_FECTA_Pos     (1UL)    /*!< FECTA (Bit 1)                                         */
+ #define R_UARTA0_ASCTAn_FECTA_Msk     (0x2UL)  /*!< FECTA (Bitfield-Mask: 0x01)                           */
+ #define R_UARTA0_ASCTAn_PECTA_Pos     (2UL)    /*!< PECTA (Bit 2)                                         */
+ #define R_UARTA0_ASCTAn_PECTA_Msk     (0x4UL)  /*!< PECTA (Bitfield-Mask: 0x01)                           */
+
+/* =========================================================================================================================== */
+/* ================                                        R_UARTA_CK                                         ================ */
+/* =========================================================================================================================== */
+
+/* ========================================================  UTAnCK  ========================================================= */
+ #define R_UARTA_CK_UTAnCK_CK_Pos     (0UL)    /*!< CK (Bit 0)                                            */
+ #define R_UARTA_CK_UTAnCK_CK_Msk     (0xfUL)  /*!< CK (Bitfield-Mask: 0x0f)                              */
+ #define R_UARTA_CK_UTAnCK_SEL_Pos    (4UL)    /*!< SEL (Bit 4)                                           */
+ #define R_UARTA_CK_UTAnCK_SEL_Msk    (0x30UL) /*!< SEL (Bitfield-Mask: 0x03)                             */
+ #define R_UARTA_CK_UTAnCK_EN_Pos     (7UL)    /*!< EN (Bit 7)                                            */
+ #define R_UARTA_CK_UTAnCK_EN_Msk     (0x80UL) /*!< EN (Bitfield-Mask: 0x01)                              */
 
 /* =========================================================================================================================== */
 /* ================                                         R_PCLBUZ                                          ================ */

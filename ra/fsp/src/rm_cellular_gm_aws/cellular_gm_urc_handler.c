@@ -9,7 +9,7 @@
  **********************************************************************************************************************/
 
 /* Cellular module includes. */
-#include "cellular_ryz.h"
+#include "cellular_gm.h"
 
 #include "cellular_types.h"
 #include "cellular_common.h"
@@ -27,13 +27,13 @@
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
-static void cellular_ryz_urc_process_sqnsring(CellularContext_t * pContext, char * pInputLine);
-static void cellular_ryz_urc_process_sysstart(CellularContext_t * pContext, char * pInputLine);
-static void cellular_ryz_urc_process_shutdown(CellularContext_t * pContext, char * pInputLine);
-static void cellular_ryz_urc_process_socket_shutdown(CellularContext_t * pContext, char * pInputLine);
+static void cellular_gm_urc_process_sqnsring(CellularContext_t * pContext, char * pInputLine);
+static void cellular_gm_urc_process_sysstart(CellularContext_t * pContext, char * pInputLine);
+static void cellular_gm_urc_process_shutdown(CellularContext_t * pContext, char * pInputLine);
+static void cellular_gm_urc_process_socket_shutdown(CellularContext_t * pContext, char * pInputLine);
 
 /* Remapping these common functions because function pointer in CellularAtParseTokenMap_t doesn't match */
-static void cellular_ryz_urc_process_cereg(CellularContext_t * pContext, char * pInputLine);
+static void cellular_gm_urc_process_cereg(CellularContext_t * pContext, char * pInputLine);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -63,11 +63,11 @@ static void cellular_ryz_urc_process_cereg(CellularContext_t * pContext, char * 
  */
 CellularAtParseTokenMap_t cellular_urc_handler_table[] =
 {
-    {"CEREG",    cellular_ryz_urc_process_cereg          },
-    {"SHUTDOWN", cellular_ryz_urc_process_shutdown       }, // Power down completed, safe to turn cut power supply
-    {"SQNSH",    cellular_ryz_urc_process_socket_shutdown}, // Socket closed
-    {"SQNSRING", cellular_ryz_urc_process_sqnsring       }, // Socket notification (receive)
-    {"SYSSTART", cellular_ryz_urc_process_sysstart       }, // System start/restarted notification
+    {"CEREG",    cellular_gm_urc_process_cereg          },
+    {"SHUTDOWN", cellular_gm_urc_process_shutdown       }, // Power down completed, safe to turn cut power supply
+    {"SQNSH",    cellular_gm_urc_process_socket_shutdown}, // Socket closed
+    {"SQNSRING", cellular_gm_urc_process_sqnsring       }, // Socket notification (receive)
+    {"SYSSTART", cellular_gm_urc_process_sysstart       }, // System start/restarted notification
 };
 
 uint32_t cellular_urc_handler_table_size = sizeof(cellular_urc_handler_table) / sizeof(CellularAtParseTokenMap_t);
@@ -76,7 +76,7 @@ uint32_t cellular_urc_handler_table_size = sizeof(cellular_urc_handler_table) / 
  * Functions
  **********************************************************************************************************************/
 
-static void cellular_ryz_urc_process_sqnsring (CellularContext_t * pContext, char * pInputLine)
+static void cellular_gm_urc_process_sqnsring (CellularContext_t * pContext, char * pInputLine)
 {
     CellularATError_t         atCoreStatus    = CELLULAR_AT_SUCCESS;
     char                    * pLocalInputLine = pInputLine;
@@ -101,7 +101,7 @@ static void cellular_ryz_urc_process_sqnsring (CellularContext_t * pContext, cha
 
             if (pSocketData == NULL)
             {
-                LogError(("cellular_ryz_urc_process_socket_shutdown : invalid socket index %d", (int) socketId - 1));
+                LogError(("cellular_gm_urc_process_socket_shutdown : invalid socket index %d", (int) socketId - 1));
             }
             else
             {
@@ -112,14 +112,14 @@ static void cellular_ryz_urc_process_sqnsring (CellularContext_t * pContext, cha
                 }
                 else
                 {
-                    LogDebug(("cellular_ryz_urc_process_socket_shutdown: Data ready callback not set!!"));
+                    LogDebug(("cellular_gm_urc_process_socket_shutdown: Data ready callback not set!!"));
                 }
             }
         }
     }
 }
 
-static void cellular_ryz_urc_process_socket_shutdown (CellularContext_t * pContext, char * pInputLine)
+static void cellular_gm_urc_process_socket_shutdown (CellularContext_t * pContext, char * pInputLine)
 {
     CellularATError_t         atCoreStatus    = CELLULAR_AT_SUCCESS;
     char                    * pLocalInputLine = pInputLine;
@@ -144,7 +144,7 @@ static void cellular_ryz_urc_process_socket_shutdown (CellularContext_t * pConte
 
             if (pSocketData == NULL)
             {
-                LogError(("cellular_ryz_urc_process_socket_shutdown : invalid socket index %d", (int) socketId - 1));
+                LogError(("cellular_gm_urc_process_socket_shutdown : invalid socket index %d", (int) socketId - 1));
             }
             else
             {
@@ -155,46 +155,46 @@ static void cellular_ryz_urc_process_socket_shutdown (CellularContext_t * pConte
                 }
                 else
                 {
-                    LogDebug(("cellular_ryz_urc_process_socket_shutdown: socket close callback not set!!"));
+                    LogDebug(("cellular_gm_urc_process_socket_shutdown: socket close callback not set!!"));
                 }
             }
         }
     }
 }
 
-static void cellular_ryz_urc_process_sysstart (CellularContext_t * pContext, char * pInputLine)
+static void cellular_gm_urc_process_sysstart (CellularContext_t * pContext, char * pInputLine)
 {
     /* The token is the pInputLine. No need to process the pInputLine. */
     FSP_PARAMETER_NOT_USED(pInputLine);
 
     if (pContext == NULL)
     {
-        LogWarn(("cellular_ryz_urc_process_sysstart: Context not set"));
+        LogWarn(("cellular_gm_urc_process_sysstart: Context not set"));
     }
     else
     {
-        LogDebug(("cellular_ryz_urc_process_sysstart: Modem Ready event received"));
+        LogDebug(("cellular_gm_urc_process_sysstart: Modem Ready event received"));
         _Cellular_ModemEventCallback(pContext, CELLULAR_MODEM_EVENT_BOOTUP_OR_REBOOT);
     }
 }
 
-static void cellular_ryz_urc_process_shutdown (CellularContext_t * pContext, char * pInputLine)
+static void cellular_gm_urc_process_shutdown (CellularContext_t * pContext, char * pInputLine)
 {
     /* The token is the pInputLine. No need to process the pInputLine. */
     FSP_PARAMETER_NOT_USED(pInputLine);
 
     if (pContext == NULL)
     {
-        LogWarn(("cellular_ryz_urc_process_sqnsshdn: Context not set"));
+        LogWarn(("cellular_gm_urc_process_sqnsshdn: Context not set"));
     }
     else
     {
-        LogDebug(("cellular_ryz_urc_process_sqnsshdn: Modem Shutdown event received"));
+        LogDebug(("cellular_gm_urc_process_sqnsshdn: Modem Shutdown event received"));
         _Cellular_ModemEventCallback(pContext, CELLULAR_MODEM_EVENT_POWERED_DOWN);
     }
 }
 
-static void cellular_ryz_urc_process_cereg (CellularContext_t * pContext, char * pInputLine)
+static void cellular_gm_urc_process_cereg (CellularContext_t * pContext, char * pInputLine)
 {
     Cellular_CommonUrcProcessCereg(pContext, pInputLine);
 }

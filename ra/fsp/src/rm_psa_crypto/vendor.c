@@ -10,6 +10,7 @@
 #include "asymmetric_vendor.h"
 #include "aes_vendor.h"
 #include "mbedtls/error.h"
+#include "mbedtls/psa_util.h"
 
 uint32_t ecp_load_key_size(bool wrapped_mode_ctx, const mbedtls_ecp_group * grp);
 
@@ -87,16 +88,19 @@ static psa_key_bits_t calculate_key_bits_vendor (const psa_key_slot_t * slot)
  */
 psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
                                       size_t           bits,
-                                      const uint8_t  * domain_parameters,
-                                      size_t           domain_parameters_size)
+									  const psa_key_production_parameters_t *params,
+									  size_t params_data_length)
 {
     (void) slot;
     (void) bits;
-    (void) domain_parameters;
-    (void) domain_parameters_size;
+
+    /* Only used for RSA */
+    (void) params;
+    (void) params_data_length;
+
     psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
 
-    if ((domain_parameters == NULL) && (domain_parameters_size != 0))
+    if ((params == NULL) && (params_data_length != 0))
     {
         return PSA_ERROR_INVALID_ARGUMENT;
     }
@@ -124,7 +128,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     {
         mbedtls_rsa_context * rsa;
         int      ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
-        int      exponent;
+        int exponent = 65537;  // NOLINT(readability-magic-numbers)
         uint32_t export_der_size_bytes = 0;
 
         if (bits == RSA_2048_BITS)
@@ -151,10 +155,12 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
             return PSA_ERROR_NOT_SUPPORTED;
         }
 
-        status = psa_rsa_read_exponent(domain_parameters, domain_parameters_size, &exponent);
-        if (status != PSA_SUCCESS)
-        {
-            return status;
+        if (params_data_length != 0) {
+            status = psa_rsa_read_exponent(params->data, params_data_length,
+                                           &exponent);
+            if (status != PSA_SUCCESS) {
+                return status;
+            }
         }
 
         rsa = mbedtls_calloc(1, sizeof(*rsa));
@@ -176,7 +182,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
             mbedtls_rsa_free(rsa);
             mbedtls_free(rsa);
 
-            return PSA_ERROR_HARDWARE_FAILURE;
+            return ret;
         }
 
         /* The key is stored in an export representation (DER format) in the slot.
@@ -213,13 +219,14 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     {
         psa_ecc_family_t     curve     = PSA_KEY_TYPE_ECC_GET_FAMILY(slot->attr.type);
         uint32_t             ecc_bytes = 0;
+        size_t olen = 0;
         mbedtls_ecp_group_id grp_id    =
-            mbedtls_ecc_group_of_psa(curve, bits, 1);
+            mbedtls_ecc_group_from_psa(curve, bits);
         const mbedtls_ecp_curve_info * curve_info =
             mbedtls_ecp_curve_info_from_grp_id(grp_id);
         mbedtls_ecp_keypair * ecp;
         int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
-        if (domain_parameters_size != 0)
+        if (params_data_length != 0)
         {
             return PSA_ERROR_NOT_SUPPORTED;
         }
@@ -227,11 +234,6 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
         if ((grp_id == MBEDTLS_ECP_DP_NONE) || (curve_info == NULL))
         {
             return PSA_ERROR_NOT_SUPPORTED;
-        }
-
-        if (curve_info->bit_size != bits)
-        {
-            return PSA_ERROR_INVALID_ARGUMENT;
         }
 
         ecp = mbedtls_calloc(1, sizeof(*ecp));
@@ -247,7 +249,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
             mbedtls_ecp_keypair_free(ecp);
             mbedtls_free(ecp);
 
-            return PSA_ERROR_HARDWARE_FAILURE;
+            return ret;
         }
 
         /* The key is stored in an export representation (DER format) in the slot. */
@@ -261,7 +263,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
             return status;
         }
 
-        status = mbedtls_to_psa_error(mbedtls_ecp_write_key(ecp, slot->key.data, ecc_bytes));
+        status = mbedtls_to_psa_error(mbedtls_ecp_write_key_ext(ecp, &olen, slot->key.data, ecc_bytes));
 
         mbedtls_ecp_keypair_free(ecp);
         mbedtls_free(ecp);

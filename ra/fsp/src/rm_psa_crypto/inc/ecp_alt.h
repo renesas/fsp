@@ -39,7 +39,7 @@ extern "C" {
 
 // Alternate implementation
 //
-  #define RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(bits)    ((((bits >> 7) & 1) | (bits & 8) >> 2))
+  #define RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(bits)    (((((bits) >> 7) & 1) | ((bits) & 8) >> 2))
   #define RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT                        (0U)
   #define RM_PSA_CRYPTO_ECC_KEY_WRAPPED                          (1U)
   #define RM_PSA_CRYPTO_LARGEST_WRAPPED_ECC_PRIVATE_KEY_WORDS    (25U) /* Corresponding to ECC P-521 curves on RSIP */

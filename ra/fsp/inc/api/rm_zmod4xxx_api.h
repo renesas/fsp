@@ -135,6 +135,7 @@ typedef struct st_rm_zmod4xxx_oaq_1st_data
 typedef struct st_rm_zmod4xxx_oaq_2nd_data
 {
     float    rmox[8];                  ///< MOx resistance.
+    float    temperature;              ///< Temperature (degC) used for ambient compensation
     float    ozone_concentration;      ///< The ozone concentration in part-per-billion
     uint16_t fast_aqi;                 ///< 1-minute average of the Air Quality Index according to the EPA standard based on ozone
     uint16_t epa_aqi;                  ///< The Air Quality Index according to the EPA standard based on ozone
@@ -166,6 +167,17 @@ typedef struct st_rm_zmod4xxx_pbaq_data
     float etoh;                        ///< EtOH concentration (ppm).
     uint8_t sample_id;                 ///< Sample ID. RRH46410 only.
 } rm_zmod4xxx_pbaq_data_t;
+
+/** ZMOD4XXX NO2 O3 data structure */
+typedef struct st_rm_zmod4xxx_no2_o3_data
+{
+    float    rmox[4];                           ///< MOx resistance.
+    float    temperature;                       ///< Temperature (degC) used for ambient compensation
+    float    ozone_concentration;               ///< O3_conc_ppb stands for the ozone concentration in part-per-billion
+    float    no2_concentration;                 ///< NO2_conc_ppb stands for the NO2 concentration in part-per-billion
+    uint16_t fast_aqi;                          ///< FAST_AQI stands for a 1-minute average of the Air Quality Index according to the EPA standard based on ozone
+    uint16_t epa_aqi;                           ///< EPA_AQI stands for the Air Quality Index according to the EPA standard based on ozone.
+} rm_zmod4xxx_no2_o3_data_t;
 
 /** ZMOD4XXX configuration block */
 typedef struct st_rm_zmod4xxx_cfg
@@ -297,6 +309,15 @@ typedef struct st_rm_zmod4xxx_api
      */
     fsp_err_t (* pbaqDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                     rm_zmod4xxx_pbaq_data_t * const p_zmod4xxx_data);
+
+    /** Calculate NO2 O3 values from ADC data.
+     *
+     * @param[in]  p_ctrl               Pointer to control structure.
+     * @param[in]  p_raw_data           Pointer to raw data.
+     * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
+     */
+    fsp_err_t (* no2O3DataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
+                                         rm_zmod4xxx_no2_o3_data_t * const p_zmod4xxx_data);
 
     /** Set temperature and humidity.
      *

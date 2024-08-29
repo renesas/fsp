@@ -133,7 +133,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
     motor_120_driver_extended_cfg_t * p_extended_cfg = (motor_120_driver_extended_cfg_t *) p_cfg->p_extend;
 
 #if MOTOR_120_DRIVER_CFG_PARAM_CHECKING_ENABLE
-    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
+    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->f_ad_resolution > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_deadtime > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_timer_freq > 0, FSP_ERR_INVALID_ARGUMENT);
@@ -147,7 +147,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_Open (motor_120_driver_ctrl_t * const p_ctrl, moto
 
     p_instance_ctrl->u4_carrier_base =
         (uint32_t) ((float) p_extended_cfg->u4_pwm_timer_freq * (float) MOTOR_120_DRIVER_KHZ_TRANS /
-                    (float) p_extended_cfg->u4_pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
+                            p_extended_cfg->pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
     p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;
@@ -1383,7 +1383,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_ParameterUpdate (motor_120_driver_ctrl_t * const  
     motor_120_driver_extended_cfg_t * p_extended_cfg = (motor_120_driver_extended_cfg_t *) p_cfg->p_extend;
 
 #if MOTOR_120_DRIVER_CFG_PARAM_CHECKING_ENABLE
-    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
+    MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->pwm_carrier_freq > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->f_ad_resolution > 0.0F, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_deadtime > 0, FSP_ERR_INVALID_ARGUMENT);
     MOTOR_120_DRIVER_ERROR_RETURN(p_extended_cfg->u4_pwm_timer_freq > 0, FSP_ERR_INVALID_ARGUMENT);
@@ -1393,7 +1393,7 @@ fsp_err_t RM_MOTOR_120_DRIVER_ParameterUpdate (motor_120_driver_ctrl_t * const  
 
     p_instance_ctrl->u4_carrier_base =
         (uint32_t) ((float) p_extended_cfg->u4_pwm_timer_freq * (float) MOTOR_120_DRIVER_KHZ_TRANS /
-                    (float) p_extended_cfg->u4_pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
+                            p_extended_cfg->pwm_carrier_freq * MOTOR_120_DRIVER_DEV_HALF);
     p_instance_ctrl->u4_deadtime_count = p_extended_cfg->u4_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;

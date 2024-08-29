@@ -156,73 +156,78 @@
 /* Choose the value to write to FLLCR2 (if applicable). */
 #if BSP_PRV_HOCO_USE_FLL
  #if 1U == BSP_CFG_HOCO_FREQUENCY
-  #define BSP_PRV_FLL_FLLCR2                        (0x226U)
+  #define BSP_PRV_FLL_FLLCR2                     (0x226U)
  #elif 2U == BSP_CFG_HOCO_FREQUENCY
-  #define BSP_PRV_FLL_FLLCR2                        (0x263U)
+  #define BSP_PRV_FLL_FLLCR2                     (0x263U)
  #elif 4U == BSP_CFG_HOCO_FREQUENCY
-  #define BSP_PRV_FLL_FLLCR2                        (0x263U)
+  #define BSP_PRV_FLL_FLLCR2                     (0x263U)
  #else
 
 /* When BSP_CFG_HOCO_FREQUENCY is 0, 4, 7 */
-  #define BSP_PRV_FLL_FLLCR2                        (0x1E9U)
+  #define BSP_PRV_FLL_FLLCR2                     (0x1E9U)
  #endif
 #endif
 
 /* Calculate the value to write to SCKDIVCR. */
-#define BSP_PRV_STARTUP_SCKDIVCR_ICLK_BITS          ((BSP_CFG_ICLK_DIV & 0xFU) << 24U)
+#define BSP_PRV_STARTUP_SCKDIVCR_ICLK_BITS       ((BSP_CFG_ICLK_DIV & 0xFU) << 24U)
 #if BSP_FEATURE_CGC_HAS_PCLKE
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKE_BITS        ((BSP_CFG_PCLKE_DIV & 0xFU) << 20U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKE_BITS     ((BSP_CFG_PCLKE_DIV & 0xFU) << 20U)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKE_BITS        (0U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKE_BITS     (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKD
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKD_BITS        (BSP_CFG_PCLKD_DIV & 0xFU)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKD_BITS     (BSP_CFG_PCLKD_DIV & 0xFU)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKD_BITS        (0U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKD_BITS     (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKC
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKC_BITS        ((BSP_CFG_PCLKC_DIV & 0xFU) << 4U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKC_BITS     ((BSP_CFG_PCLKC_DIV & 0xFU) << 4U)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKC_BITS        (0U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKC_BITS     (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKB
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKB_BITS        ((BSP_CFG_PCLKB_DIV & 0xFU) << 8U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKB_BITS     ((BSP_CFG_PCLKB_DIV & 0xFU) << 8U)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKB_BITS        (0U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKB_BITS     (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_PCLKA
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKA_BITS        ((BSP_CFG_PCLKA_DIV & 0xFU) << 12U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKA_BITS     ((BSP_CFG_PCLKA_DIV & 0xFU) << 12U)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR_PCLKA_BITS        (0U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_PCLKA_BITS     (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_BCLK
- #define BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS         ((BSP_CFG_BCLK_DIV & 0xFU) << 16U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS      ((BSP_CFG_BCLK_DIV & 0xFU) << 16U)
 #elif BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
 
 /* Some MCUs have a requirement that bits 18-16 be set to the same value as the bits for configuring the PCLKB divisor. */
- #define BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS         ((BSP_CFG_PCLKB_DIV & 0xFU) << 16U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS      ((BSP_CFG_PCLKB_DIV & 0xFU) << 16U)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS         (0U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS      (0U)
 #endif
 #if BSP_FEATURE_CGC_HAS_FCLK
- #define BSP_PRV_STARTUP_SCKDIVCR_FCLK_BITS         ((BSP_CFG_FCLK_DIV & 0xFU) << 28U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_FCLK_BITS      ((BSP_CFG_FCLK_DIV & 0xFU) << 28U)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR_FCLK_BITS         (0U)
+ #define BSP_PRV_STARTUP_SCKDIVCR_FCLK_BITS      (0U)
 #endif
-#define BSP_PRV_STARTUP_SCKDIVCR                    (BSP_PRV_STARTUP_SCKDIVCR_ICLK_BITS |  \
-                                                     BSP_PRV_STARTUP_SCKDIVCR_PCLKE_BITS | \
-                                                     BSP_PRV_STARTUP_SCKDIVCR_PCLKD_BITS | \
-                                                     BSP_PRV_STARTUP_SCKDIVCR_PCLKC_BITS | \
-                                                     BSP_PRV_STARTUP_SCKDIVCR_PCLKB_BITS | \
-                                                     BSP_PRV_STARTUP_SCKDIVCR_PCLKA_BITS | \
-                                                     BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS |  \
-                                                     BSP_PRV_STARTUP_SCKDIVCR_FCLK_BITS)
+#define BSP_PRV_STARTUP_SCKDIVCR                 (BSP_PRV_STARTUP_SCKDIVCR_ICLK_BITS |  \
+                                                  BSP_PRV_STARTUP_SCKDIVCR_PCLKE_BITS | \
+                                                  BSP_PRV_STARTUP_SCKDIVCR_PCLKD_BITS | \
+                                                  BSP_PRV_STARTUP_SCKDIVCR_PCLKC_BITS | \
+                                                  BSP_PRV_STARTUP_SCKDIVCR_PCLKB_BITS | \
+                                                  BSP_PRV_STARTUP_SCKDIVCR_PCLKA_BITS | \
+                                                  BSP_PRV_STARTUP_SCKDIVCR_BCLK_BITS |  \
+                                                  BSP_PRV_STARTUP_SCKDIVCR_FCLK_BITS)
 #if BSP_FEATURE_CGC_HAS_CPUCLK
- #define BSP_PRV_STARTUP_SCKDIVCR2_CPUCK_BITS       (BSP_CFG_CPUCLK_DIV & 0xFU)
+ #define BSP_PRV_STARTUP_SCKDIVCR2_CPUCK_BITS    (BSP_CFG_CPUCLK_DIV & 0xFU)
 #else
- #define BSP_PRV_STARTUP_SCKDIVCR2_CPUCK_BITS       (0)
+ #define BSP_PRV_STARTUP_SCKDIVCR2_CPUCK_BITS    (0)
 #endif
 #if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS
+
+/* Set extraclk2 to the same value as extraclk3 if the MCU does not support extraclk2. */
+ #if (BSP_FEATURE_CGC_HAS_EXTRACLK2 == 0)
+  #define BSP_CFG_EXTRACLK2_DIV                     (BSP_CFG_EXTRACLK3_DIV)
+ #endif
  #define BSP_PRV_STARTUP_SCKDIVCR2_EXTRACK1_BITS    ((BSP_CFG_EXTRACLK1_DIV & 0xFU) << 4U)
  #define BSP_PRV_STARTUP_SCKDIVCR2_EXTRACK2_BITS    ((BSP_CFG_EXTRACLK2_DIV & 0xFU) << 8U)
  #define BSP_PRV_STARTUP_SCKDIVCR2_EXTRACK3_BITS    ((BSP_CFG_EXTRACLK3_DIV & 0xFU) << 12U)
@@ -437,7 +442,7 @@
  #define BSP_PRV_MAIN_OSC_USED                    (1)
 #elif defined(BSP_CFG_SDADC_CLOCK_SOURCE) && (BSP_CFG_SDADC_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
-#elif defined(BSP_CFG_UARTA_CLOCK_SOURCE) && (BSP_CFG_UARTA_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
+#elif defined(BSP_CFG_UARTA0_CLOCK_SOURCE) && (BSP_CFG_UARTA0_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
 #elif defined(BSP_CFG_UARTA1_CLOCK_SOURCE) && (BSP_CFG_UARTA1_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC)
  #define BSP_PRV_MAIN_OSC_USED                    (1)
@@ -484,7 +489,7 @@
  #define BSP_PRV_HOCO_USED                        (1)
 #elif defined(BSP_CFG_SDADC_CLOCK_SOURCE) && (BSP_CFG_SDADC_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_HOCO)
  #define BSP_PRV_HOCO_USED                        (1)
-#elif defined(BSP_CFG_UARTA_CLOCK_SOURCE) && (BSP_CFG_UARTA_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_HOCO)
+#elif defined(BSP_CFG_UARTA0_CLOCK_SOURCE) && (BSP_CFG_UARTA0_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_HOCO)
  #define BSP_PRV_HOCO_USED                        (1)
 #elif defined(BSP_CFG_UARTA1_CLOCK_SOURCE) && (BSP_CFG_UARTA1_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_HOCO)
  #define BSP_PRV_HOCO_USED                        (1)
@@ -525,7 +530,7 @@
  #define BSP_PRV_MOCO_USED                        (1)
 #elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
  #define BSP_PRV_MOCO_USED                        (1)
-#elif defined(BSP_CFG_UARTA_CLOCK_SOURCE) && (BSP_CFG_UARTA_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
+#elif defined(BSP_CFG_UARTA0_CLOCK_SOURCE) && (BSP_CFG_UARTA0_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
  #define BSP_PRV_MOCO_USED                        (1)
 #elif defined(BSP_CFG_UARTA1_CLOCK_SOURCE) && (BSP_CFG_UARTA1_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_MOCO)
  #define BSP_PRV_MOCO_USED                        (1)
@@ -557,10 +562,10 @@
  #define BSP_PRV_LOCO_USED                        (1)
 #elif defined(BSP_CFG_OCTA_SOURCE) && (BSP_CFG_OCTA_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
  #define BSP_PRV_LOCO_USED                        (1)
-#elif (defined(BSP_CFG_UARTA_CLOCK_SOURCE) && (BSP_CFG_UARTA_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_FSXP)) && \
+#elif (defined(BSP_CFG_UARTA0_CLOCK_SOURCE) && (BSP_CFG_UARTA0_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_FSXP)) && \
     (defined(BSP_CFG_FSXP_SOURCE) && (BSP_CFG_FSXP_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO))
  #define BSP_PRV_LOCO_USED                        (1)
-#elif defined(BSP_CFG_UARTA_CLOCK_SOURCE) && (BSP_CFG_UARTA_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
+#elif defined(BSP_CFG_UARTA0_CLOCK_SOURCE) && (BSP_CFG_UARTA0_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
  #define BSP_PRV_LOCO_USED                        (1)
 #elif defined(BSP_CFG_UARTA1_CLOCK_SOURCE) && (BSP_CFG_UARTA1_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_LOCO)
  #define BSP_PRV_LOCO_USED                        (1)

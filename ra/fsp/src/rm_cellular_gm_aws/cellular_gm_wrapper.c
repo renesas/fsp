@@ -13,7 +13,7 @@
 #include "cellular_common_api.h"
 
 /* Cellular module includes. */
-#include "cellular_ryz.h"
+#include "cellular_gm.h"
 
 /***********************************************************************************************************************
  * Macro definitions

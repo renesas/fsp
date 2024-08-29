@@ -166,6 +166,8 @@ enum tfm_hal_status_t tfm_hal_set_up_static_boundaries(uintptr_t *p_spm_boundary
     }
 #endif /* CONFIG_TFM_ENABLE_MEMORY_PROTECT */
 
+    *p_spm_boundary = (uintptr_t)PROT_BOUNDARY_VAL;
+
     return TFM_HAL_SUCCESS;
 }
 

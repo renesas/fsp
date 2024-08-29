@@ -21,51 +21,58 @@
 #define TML_PRV_ITLCMP0_UPPER_16_BIT_POS        (16)
 #define TML_PRV_ITLCMP0_UPPER_16_BIT_CLEARED    (0x0000FFFFU)
 
-/* ITLCTL0 bit field definitions. */
-#define TML_PRV_ITLCTL0_EN_DISABLED             (0U)
-#define TML_PRV_ITLCTL0_EN_ENABLED              (1U)
-
-/* ITLCC0 bit field definitions. */
-#define TML_PRV_ITLCC0_CAPEN_DISABLED           (0U)
-#define TML_PRV_ITLCC0_CAPEN_ENABLED            (1U)
-
 #define CHANNEL0_MASK                           (1U << 0)
 #define CHANNEL2_MASK                           (1U << 2)
 #define VALID_16_BIT_COUNTER_CHANNEL_MASK       (CHANNEL0_MASK | CHANNEL2_MASK)
 #define VALID_16_BIT_CAPTURE_CHANNEL_MASK       (CHANNEL0_MASK)
 #define VALID_32_BIT_COUNTER_CHANNEL_MASK       (CHANNEL0_MASK)
 
-/* ITLFDIV address. */
-#define R_TML_ITLFDIV_ADDRESS(chan)    (&(R_TML->ITLFDIV00) + chan / 2)
-
-/* ITLFDIV mask. */
-#define R_TML_ITLFDIV_POS(chan)        ((chan & 0x01) * R_TML_ITLFDIV00_FDIV1_Pos)
-#define R_TML_ITLFDIV_MASK(chan)       (uint8_t) (R_TML_ITLFDIV00_FDIV0_Msk << R_TML_ITLFDIV_POS(chan))
-
 /* Counter clock selection (ISEL) */
 #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_TML_FITL0_SOURCE
- #define R_TML_ITLCSEL0_ISEL_VALUE    (TML_CLOCK_HOCO)
+ #define TML_PRV_ITLCSEL0_ISEL_VALUE            (TML_CLOCK_HOCO)
 #elif BSP_CLOCKS_SOURCE_CLOCK_MOCO == BSP_CFG_TML_FITL0_SOURCE
- #define R_TML_ITLCSEL0_ISEL_VALUE    (TML_CLOCK_MOCO)
+ #define TML_PRV_ITLCSEL0_ISEL_VALUE            (TML_CLOCK_MOCO)
 #elif BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_TML_FITL0_SOURCE
- #define R_TML_ITLCSEL0_ISEL_VALUE    (TML_CLOCK_MOSC)
+ #define TML_PRV_ITLCSEL0_ISEL_VALUE            (TML_CLOCK_MOSC)
 #elif BSP_CFG_FSXP_SOURCE == BSP_CFG_TML_FITL0_SOURCE
- #define R_TML_ITLCSEL0_ISEL_VALUE    (TML_CLOCK_LOCO_SOSC)
+ #define TML_PRV_ITLCSEL0_ISEL_VALUE            (TML_CLOCK_LOCO_SOSC)
 #else
- #define R_TML_ITLCSEL0_ISEL_VALUE    (TML_CLOCK_ELC_EVENT)
+ #define TML_PRV_ITLCSEL0_ISEL_VALUE            (TML_CLOCK_ELC_EVENT)
 #endif
 
 /* Capture clock selection (CSEL) */
 #if BSP_CLOCKS_SOURCE_CLOCK_HOCO == BSP_CFG_TML_FITL1_SOURCE
- #define R_TML_ITLCSEL0_CSEL_VALUE    (TML_CLOCK_HOCO)
+ #define TML_PRV_ITLCSEL0_CSEL_VALUE            (TML_CLOCK_HOCO)
 #elif BSP_CLOCKS_SOURCE_CLOCK_MOCO == BSP_CFG_TML_FITL1_SOURCE
- #define R_TML_ITLCSEL0_CSEL_VALUE    (TML_CLOCK_MOCO)
+ #define TML_PRV_ITLCSEL0_CSEL_VALUE            (TML_CLOCK_MOCO)
 #elif BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == BSP_CFG_TML_FITL1_SOURCE
- #define R_TML_ITLCSEL0_CSEL_VALUE    (TML_CLOCK_MOSC)
+ #define TML_PRV_ITLCSEL0_CSEL_VALUE            (TML_CLOCK_MOSC)
 #elif BSP_CFG_FSXP_SOURCE == BSP_CFG_TML_FITL1_SOURCE
- #define R_TML_ITLCSEL0_CSEL_VALUE    (TML_CLOCK_LOCO_SOSC)
+ #define TML_PRV_ITLCSEL0_CSEL_VALUE            (TML_CLOCK_LOCO_SOSC)
 #else
- #define R_TML_ITLCSEL0_CSEL_VALUE    (TML_CLOCK_ELC_EVENT)
+ #define TML_PRV_ITLCSEL0_CSEL_VALUE            (TML_CLOCK_ELC_EVENT)
+#endif
+
+#if TML_CFG_CRITICAL_SECTION_ENABLE
+ #define TML_PRV_CRITICAL_SECTION_ENTER()    {FSP_CRITICAL_SECTION_DEFINE; FSP_CRITICAL_SECTION_ENTER
+ #define TML_PRV_CRITICAL_SECTION_EXIT()     FSP_CRITICAL_SECTION_EXIT;}
+#else
+ #define TML_PRV_CRITICAL_SECTION_ENTER()
+ #define TML_PRV_CRITICAL_SECTION_EXIT()
+#endif
+
+#if TML_CFG_SINGLE_CHANNEL_ENABLE
+ #define TML_PRV_CHANNEL            (0U)
+ #define TML_PRV_CHANNEL_MASK       (0x1U)
+ #define TML_PRV_ITLFDIV_ADDRESS    (&(R_TML->ITLFDIV00))
+ #define TML_PRV_ITLFDIV_POS        (R_TML_ITLFDIV00_FDIV0_Pos)
+ #define TML_PRV_ITLFDIV_MASK       (uint8_t) (R_TML_ITLFDIV00_FDIV0_Msk)
+#else
+ #define TML_PRV_CHANNEL            (p_instance_ctrl->p_cfg->channel)
+ #define TML_PRV_CHANNEL_MASK       (p_instance_ctrl->channel_mask)
+ #define TML_PRV_ITLFDIV_ADDRESS    (&(R_TML->ITLFDIV00) + TML_PRV_CHANNEL / 2)
+ #define TML_PRV_ITLFDIV_POS        ((TML_PRV_CHANNEL & 0x01) * R_TML_ITLFDIV00_FDIV1_Pos)
+ #define TML_PRV_ITLFDIV_MASK       (uint8_t) (R_TML_ITLFDIV00_FDIV0_Msk << TML_PRV_ITLFDIV_POS)
 #endif
 
 /***********************************************************************************************************************
@@ -97,6 +104,11 @@ static fsp_err_t r_tml_open_param_checking(tml_instance_ctrl_t * const p_instanc
 
 #endif
 
+#if TML_CFG_INTERRUPT_SUPPORT_ENABLE
+static fsp_err_t r_tml_enable_helper(timer_ctrl_t * const p_ctrl, bool enable);
+
+#endif
+
 /***********************************************************************************************************************
  * ISR prototypes
  **********************************************************************************************************************/
@@ -108,17 +120,20 @@ void tml_itl_or_isr(void);
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-#if TML_CFG_INTERRUPT_SUPPORT_ENABLE
+#if TML_CFG_INTERRUPT_SUPPORT_ENABLE && (!TML_CFG_SINGLE_CHANNEL_ENABLE)
 
 /** Stored context for isr handler. */
 static tml_instance_ctrl_t * gp_tml_ctrls[BSP_FEATURE_TML_NUM_CHANNELS] = {NULL};
 #endif
 
-/** modeset is to track whether the mode has been set by an active channel... incremented when a channel is opened,
- * decremented when a channel is closed... this is done because the mode ITLCTL0_b.MD register doesn't have an
- * "inactive" selection... and we need to make sure the mode of a channel matches the modes of currently active
+#if !TML_CFG_SINGLE_CHANNEL_ENABLE
+
+/** g_modeset is to track whether the mode has been set by an active channel. Incremented when a channel is opened,
+ * decremented when a channel is closed. This is done because the mode ITLCTL0_b.MD register doesn't have an
+ * "inactive" selection and we need to make sure the mode of a channel matches the modes of currently active
  * channels. We can only set the mode on the first channel open.*/
-static uint8_t modeset = 0;
+static uint8_t g_modeset = 0;
+#endif
 
 /***********************************************************************************************************************
  * Global Variables
@@ -191,13 +206,14 @@ fsp_err_t R_TML_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     p_instance_ctrl->p_context  = p_cfg->p_context;
 
     err = r_tml_hardware_initialize(p_instance_ctrl, p_cfg);
+#if TML_CFG_PARAM_CHECKING_ENABLE
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-#if TML_CFG_PARAM_CHECKING_ENABLE
     p_instance_ctrl->open = TML_OPEN;
 #endif
-#if TML_CFG_INTERRUPT_SUPPORT_ENABLE
-    gp_tml_ctrls[p_cfg->channel] = p_instance_ctrl;
+
+#if TML_CFG_INTERRUPT_SUPPORT_ENABLE && (!TML_CFG_SINGLE_CHANNEL_ENABLE)
+    gp_tml_ctrls[TML_PRV_CHANNEL] = p_instance_ctrl;
 #endif
 
     return err;
@@ -220,16 +236,20 @@ fsp_err_t R_TML_Stop (timer_ctrl_t * const p_ctrl)
 #if TML_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK,
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(TML_PRV_CHANNEL_MASK & BSP_FEATURE_TML_VALID_CHANNEL_MASK, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
+
+#if TML_CFG_SINGLE_CHANNEL_ENABLE
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
+
+    /* Critical section required because ITLCTL0 register is shared with other instances. */
+    TML_PRV_CRITICAL_SECTION_ENTER();
 
     uint8_t itlctl0 = R_TML->ITLCTL0;
 
-    FSP_CRITICAL_SECTION_DEFINE;
-
     /* Stop timer */
-    itlctl0 &= (uint8_t) ~(BSP_FEATURE_TML_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask);
+    itlctl0 &= (uint8_t) ~(TML_PRV_CHANNEL_MASK);
 
 #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
 
@@ -246,13 +266,10 @@ fsp_err_t R_TML_Stop (timer_ctrl_t * const p_ctrl)
     }
 #endif
 
-    /* Critical section required because ITLCTL0 register is shared with other instances. */
-    FSP_CRITICAL_SECTION_ENTER;
-
     /* Write to registers */
     R_TML->ITLCTL0 = itlctl0;
 
-    FSP_CRITICAL_SECTION_EXIT;
+    TML_PRV_CRITICAL_SECTION_EXIT();
 
     return FSP_SUCCESS;
 }
@@ -274,21 +291,25 @@ fsp_err_t R_TML_Start (timer_ctrl_t * const p_ctrl)
 #if TML_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK,
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(TML_PRV_CHANNEL_MASK & BSP_FEATURE_TML_VALID_CHANNEL_MASK, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
+
+#if TML_CFG_SINGLE_CHANNEL_ENABLE
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
+
+    /* Critical section required because ITLCTL0 register is shared with other instances. */
+    TML_PRV_CRITICAL_SECTION_ENTER();
 
     uint8_t itlctl0 = R_TML->ITLCTL0;
     uint8_t itls0   = R_TML->ITLS0;
     uint8_t itlmkf0 = R_TML->ITLMKF0;
 
-    FSP_CRITICAL_SECTION_DEFINE;
-
     /* Clear the ITF0i interrupt status flags for channel used. */
-    itls0 &= BSP_FEATURE_TML_VALID_CHANNEL_MASK & ((uint8_t) ~(p_instance_ctrl->channel_mask));
+    itls0 &= (uint8_t) ~(TML_PRV_CHANNEL_MASK);
 
     /* Start timer */
-    itlctl0 |= BSP_FEATURE_TML_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask;
+    itlctl0 |= TML_PRV_CHANNEL_MASK;
 
 #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
 
@@ -314,15 +335,12 @@ fsp_err_t R_TML_Start (timer_ctrl_t * const p_ctrl)
     }
 #endif
 
-    /* Critical section required because ITLCTL0 register is shared with other instances. */
-    FSP_CRITICAL_SECTION_ENTER;
-
     /* Write to registers */
     R_TML->ITLMKF0 = itlmkf0;
     R_TML->ITLS0   = itls0;
     R_TML->ITLCTL0 = itlctl0;
 
-    FSP_CRITICAL_SECTION_EXIT;
+    TML_PRV_CRITICAL_SECTION_EXIT();
 
     return FSP_SUCCESS;
 }
@@ -341,16 +359,17 @@ fsp_err_t R_TML_Reset (timer_ctrl_t * const p_ctrl)
 #if TML_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK,
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(TML_PRV_CHANNEL_MASK & BSP_FEATURE_TML_VALID_CHANNEL_MASK, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
 
-    uint8_t channel_in_use = BSP_FEATURE_TML_VALID_CHANNEL_MASK & (R_TML->ITLCTL0 & p_instance_ctrl->channel_mask);
-
-    FSP_CRITICAL_SECTION_DEFINE;
+#if TML_CFG_SINGLE_CHANNEL_ENABLE
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
 
     /* Critical section required because ITLCTL0 register is shared with other instances. */
-    FSP_CRITICAL_SECTION_ENTER;
+    TML_PRV_CRITICAL_SECTION_ENTER();
+
+    uint8_t channel_in_use = R_TML->ITLCTL0 & TML_PRV_CHANNEL_MASK;
 
     /* Modifying ITLCTL0:ENi from 1 to 0 clears the counter without synchronization with the count clock */
     R_TML->ITLCTL0 &= ~(channel_in_use);
@@ -358,7 +377,7 @@ fsp_err_t R_TML_Reset (timer_ctrl_t * const p_ctrl)
     /* Restart the timer */
     R_TML->ITLCTL0 |= channel_in_use;
 
-    FSP_CRITICAL_SECTION_EXIT;
+    TML_PRV_CRITICAL_SECTION_EXIT();
 
     return FSP_SUCCESS;
 }
@@ -377,46 +396,8 @@ fsp_err_t R_TML_Reset (timer_ctrl_t * const p_ctrl)
 fsp_err_t R_TML_Enable (timer_ctrl_t * const p_ctrl)
 {
 #if TML_CFG_INTERRUPT_SUPPORT_ENABLE
-    tml_instance_ctrl_t * p_instance_ctrl = (tml_instance_ctrl_t *) p_ctrl;
- #if TML_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK,
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
- #endif
 
-    uint8_t itls0   = R_TML->ITLS0;
-    uint8_t itlmkf0 = R_TML->ITLMKF0;
-
-    FSP_CRITICAL_SECTION_DEFINE;
-
-    /* Clear the ITF0i interrupt status flags for channel used. */
-    itls0 &= BSP_FEATURE_TML_VALID_CHANNEL_MASK & ((uint8_t) ~(p_instance_ctrl->channel_mask));
-
-    /* Enable the interrupt generation from the selected channel by clearing the mask bits . */
-    itlmkf0 &= BSP_FEATURE_TML_VALID_CHANNEL_MASK & ((uint8_t) ~(p_instance_ctrl->channel_mask));
-
- #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
-    if (TIMER_MODE_16_BIT_CAPTURE == p_instance_ctrl->p_cfg->mode)
-    {
-        /* Clear the ITF0C interrupt status flags. */
-        itls0 &= (uint8_t) ~(R_TML_ITLS0_ITF0C_Msk);
-
-        /* Disable the MKF0C masks of the ITF0C status flags. */
-        itlmkf0 &= (uint8_t) ~(R_TML_ITLMKF0_MKF0C_Msk);
-    }
- #endif
-
-    /* Critical section required because ITLMKF0, ITLS0, ITLCTL0 register is shared with other instances. */
-    FSP_CRITICAL_SECTION_ENTER;
-
-    /* Write to registers */
-    R_TML->ITLS0   = itls0;
-    R_TML->ITLMKF0 = itlmkf0;
-
-    FSP_CRITICAL_SECTION_EXIT;
-
-    return FSP_SUCCESS;
+    return r_tml_enable_helper(p_ctrl, true);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
@@ -440,45 +421,8 @@ fsp_err_t R_TML_Enable (timer_ctrl_t * const p_ctrl)
 fsp_err_t R_TML_Disable (timer_ctrl_t * const p_ctrl)
 {
 #if TML_CFG_INTERRUPT_SUPPORT_ENABLE
-    tml_instance_ctrl_t * p_instance_ctrl = (tml_instance_ctrl_t *) p_ctrl;
- #if TML_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK,
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
- #endif
-    uint8_t itls0   = R_TML->ITLS0;
-    uint8_t itlmkf0 = R_TML->ITLMKF0;
 
-    FSP_CRITICAL_SECTION_DEFINE;
-
-    /* Critical section required because ITLMKF0, ITLS0 register is shared with other instances. */
-    FSP_CRITICAL_SECTION_ENTER;
-
-    /* Disable the interrupt generation from the selected channel by setting the mask bits . */
-    itlmkf0 |= BSP_FEATURE_TML_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask;
-
-    /* Clear the ITF0i interrupt status flags for channel used. */
-    itls0 &= BSP_FEATURE_TML_VALID_CHANNEL_MASK & ((uint8_t) ~(p_instance_ctrl->channel_mask));
-
- #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
-    if (TIMER_MODE_16_BIT_CAPTURE == p_instance_ctrl->p_cfg->mode)
-    {
-        /* Enable the MKF0C masks of the ITF0C status flags. */
-        itlmkf0 |= R_TML_ITLMKF0_MKF0C_Msk;
-
-        /* Clear the ITF0C interrupt status flags. */
-        itls0 &= (uint8_t) ~(R_TML_ITLS0_ITF0C_Msk);
-    }
- #endif
-
-    /* Write to registers */
-    R_TML->ITLMKF0 = itlmkf0;
-    R_TML->ITLS0   = itls0;
-
-    FSP_CRITICAL_SECTION_EXIT;
-
-    return FSP_SUCCESS;
+    return r_tml_enable_helper(p_ctrl, false);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
@@ -505,7 +449,7 @@ fsp_err_t R_TML_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
-    uint8_t channel_status = R_TML->ITLCTL0 & p_instance_ctrl->channel_mask;
+    uint8_t channel_status = R_TML->ITLCTL0 & TML_PRV_CHANNEL_MASK;
     FSP_ERROR_RETURN(0U == channel_status, FSP_ERR_IN_USE);
 #endif
 
@@ -572,7 +516,7 @@ fsp_err_t R_TML_InfoGet (timer_ctrl_t * const p_ctrl, timer_info_t * const p_inf
 
     /* Get and store counter clock frequency */
 #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
-    if ((TML_PRV_ITLCC0_CAPEN_ENABLED == R_TML->ITLCC0_b.CAPEN) &&
+    if (R_TML->ITLCC0_b.CAPEN &&
         (TIMER_MODE_16_BIT_COUNTER == p_instance_ctrl->p_cfg->mode) &&
         (BSP_CLOCKS_CLOCK_DISABLED != BSP_CFG_TML_FITL1_SOURCE))
     {
@@ -612,16 +556,18 @@ fsp_err_t R_TML_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * const p
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_status);
     FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK,
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(TML_PRV_CHANNEL_MASK & BSP_FEATURE_TML_VALID_CHANNEL_MASK, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+#endif
+
+#if TML_CFG_SINGLE_CHANNEL_ENABLE
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
 
     /* Store 0 to current counter since cannot read the counter value. */
     p_status->counter = 0;
 
     /* Get counter state. */
-    p_status->state = (timer_state_t) ((R_TML->ITLCTL0 >> p_instance_ctrl->p_cfg->channel) &
-                                       TML_PRV_ITLCTL0_EN_ENABLED);
+    p_status->state = (timer_state_t) ((R_TML->ITLCTL0 & TML_PRV_CHANNEL_MASK) > 0);
 
     return FSP_SUCCESS;
 }
@@ -681,11 +627,16 @@ fsp_err_t R_TML_Close (timer_ctrl_t * const p_ctrl)
 #if TML_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK,
-                     FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(TML_PRV_CHANNEL_MASK & BSP_FEATURE_TML_VALID_CHANNEL_MASK, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
 
-    FSP_CRITICAL_SECTION_DEFINE;
+#if TML_CFG_SINGLE_CHANNEL_ENABLE
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
+
+    /* Critical section required because ITLMKF0, ITLS0, ITLCTL0, ITLFDIV00, ITLFDIV01 registers are shared
+     * with other instances. */
+    TML_PRV_CRITICAL_SECTION_ENTER();
 
 #if TML_CFG_INTERRUPT_SUPPORT_ENABLE
 
@@ -693,7 +644,6 @@ fsp_err_t R_TML_Close (timer_ctrl_t * const p_ctrl)
     if (0 <= p_instance_ctrl->p_cfg->cycle_end_irq)
     {
         R_BSP_IrqDisable(p_instance_ctrl->p_cfg->cycle_end_irq);
-        R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->cycle_end_irq, NULL);
     }
 #endif
 
@@ -702,13 +652,13 @@ fsp_err_t R_TML_Close (timer_ctrl_t * const p_ctrl)
     uint8_t itlctl0 = R_TML->ITLCTL0;
 
     /* Enable the interrupt generation from the selected channel by clearing the mask bits . */
-    itlmkf0 &= BSP_FEATURE_TML_VALID_CHANNEL_MASK & ((uint8_t) ~(p_instance_ctrl->channel_mask));
+    itlmkf0 &= (uint8_t) ~(TML_PRV_CHANNEL_MASK);
 
     /* Clear the ITF0i interrupt status flags. */
-    itls0 &= BSP_FEATURE_TML_VALID_CHANNEL_MASK & ((uint8_t) ~(p_instance_ctrl->channel_mask));
+    itls0 &= (uint8_t) ~(TML_PRV_CHANNEL_MASK);
 
     /* Stop counter channel. */
-    itlctl0 &= (uint8_t) ~(BSP_FEATURE_TML_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask);
+    itlctl0 &= (uint8_t) ~(TML_PRV_CHANNEL_MASK);
 
 #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
     if (TIMER_MODE_16_BIT_CAPTURE == p_instance_ctrl->p_cfg->mode)
@@ -733,20 +683,15 @@ fsp_err_t R_TML_Close (timer_ctrl_t * const p_ctrl)
     }
 #endif
 
-    /* Critical section required because ITLMKF0, ITLS0, ITLCTL0, ITLFDIV00, ITLFDIV01 registers are shared
-     * with other instances. */
-    FSP_CRITICAL_SECTION_ENTER;
-
     /* Write to registers. */
     R_TML->ITLMKF0 = itlmkf0;
     R_TML->ITLS0   = itls0;
     R_TML->ITLCTL0 = itlctl0;
 
     /* Clear the frequency division ratio for the count source. */
-    uint8_t channel = p_instance_ctrl->p_cfg->channel;
-    *(R_TML_ITLFDIV_ADDRESS(channel)) &= (uint8_t) ~(R_TML_ITLFDIV_MASK(channel));
+    *(TML_PRV_ITLFDIV_ADDRESS) &= (uint8_t) ~(TML_PRV_ITLFDIV_MASK);
 
-    FSP_CRITICAL_SECTION_EXIT;
+    TML_PRV_CRITICAL_SECTION_EXIT();
 
 #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
     if (TIMER_MODE_16_BIT_CAPTURE == p_instance_ctrl->p_cfg->mode)
@@ -755,21 +700,23 @@ fsp_err_t R_TML_Close (timer_ctrl_t * const p_ctrl)
         FSP_ERROR_RETURN(0U == (BSP_FEATURE_TML_VALID_CHANNEL_MASK & R_TML->ITLCTL0), FSP_ERR_IN_USE);
 
         /* Disable capturing. */
-        R_TML->ITLCC0_b.CAPEN = TML_PRV_ITLCC0_CAPEN_DISABLED;
+        R_TML->ITLCC0 &= (uint8_t) ~(R_TML_ITLCC0_CAPEN_Msk);
 
         /* Clear the capture clock setting. */
-        R_TML->ITLCSEL0_b.CSEL = TML_PRV_ITLCC0_CAPEN_DISABLED;
+        R_TML->ITLCSEL0 &= (uint8_t) ~(R_TML_ITLCSEL0_CSEL_Msk);
     }
 #endif
-#if TML_CFG_INTERRUPT_SUPPORT_ENABLE
+#if !TML_CFG_SINGLE_CHANNEL_ENABLE
+ #if TML_CFG_INTERRUPT_SUPPORT_ENABLE
 
     /* Clear instance. */
-    gp_tml_ctrls[p_instance_ctrl->p_cfg->channel] = NULL;
-#endif
-    if (0U < modeset)
+    gp_tml_ctrls[TML_PRV_CHANNEL] = NULL;
+ #endif
+    if (0U < g_modeset)
     {
-        modeset--;
+        g_modeset--;
     }
+#endif
 
 #if TML_CFG_PARAM_CHECKING_ENABLE
 
@@ -792,20 +739,23 @@ fsp_err_t R_TML_Close (timer_ctrl_t * const p_ctrl)
  * @param[in]  p_instance_ctrl        Instance control block.
  * @param[in]  p_cfg                  Pointer to timer configuration.
  *
+ * @retval FSP_SUCCESS                Successful initialize.
  * @retval FSP_ERR_IN_USE             Channel is running
  **********************************************************************************************************************/
 fsp_err_t r_tml_hardware_initialize (tml_instance_ctrl_t * const p_instance_ctrl, timer_cfg_t const * const p_cfg)
 {
     uint8_t channel = p_cfg->channel;
     p_instance_ctrl->channel_mask = (uint8_t) (1U << channel);
-    uint8_t timer_status = R_TML->ITLCTL0 & BSP_FEATURE_TML_VALID_CHANNEL_MASK;
     uint8_t itlctl0;
     uint8_t itlcsel0;
 
     /* Enable the TML channel and take module out of stop state. */
     R_BSP_MODULE_START(FSP_IP_TML, channel);
 
-    FSP_CRITICAL_SECTION_DEFINE;
+    /* Critical section required because ITLCTL0, ITLFDIV00, ITLFDIV01, ITLCSEL0  registers is shared with other instances. */
+    TML_PRV_CRITICAL_SECTION_ENTER();
+
+    uint8_t timer_status = R_TML->ITLCTL0 & BSP_FEATURE_TML_VALID_CHANNEL_MASK;
 
 #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
 
@@ -840,34 +790,32 @@ fsp_err_t r_tml_hardware_initialize (tml_instance_ctrl_t * const p_instance_ctrl
     }
 
     /* Select the count clock for the counter timer */
-    itlcsel0 = R_TML_ITLCSEL0_ISEL_Msk & (uint8_t) (R_TML_ITLCSEL0_ISEL_VALUE << R_TML_ITLCSEL0_ISEL_Pos);
+    itlcsel0 = R_TML_ITLCSEL0_ISEL_Msk & (uint8_t) (TML_PRV_ITLCSEL0_ISEL_VALUE << R_TML_ITLCSEL0_ISEL_Pos);
 
 #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
 
     /* Select the count clock for the capture timer */
-    if (TML_PRV_ITLCC0_CAPEN_ENABLED == R_TML->ITLCC0_b.CAPEN)
+    if (R_TML->ITLCC0_b.CAPEN)
     {
-        itlcsel0 |= (R_TML_ITLCSEL0_CSEL_Msk & (uint8_t) (R_TML_ITLCSEL0_CSEL_VALUE << R_TML_ITLCSEL0_CSEL_Pos));
+        itlcsel0 |= (R_TML_ITLCSEL0_CSEL_Msk & (uint8_t) (TML_PRV_ITLCSEL0_CSEL_VALUE << R_TML_ITLCSEL0_CSEL_Pos));
     }
 #endif
 
-    /* Critical section required because ITLCTL0, ITLFDIV00, ITLFDIV01, ITLCSEL0  registers is shared with other instances. */
-    FSP_CRITICAL_SECTION_ENTER;
-
     /* Write to registers to setting mode/clock. */
-    if (0U == modeset)
+#if !TML_CFG_SINGLE_CHANNEL_ENABLE
+    if (0U == g_modeset++)
+#endif
     {
         R_TML->ITLCTL0 = itlctl0 | timer_status;
     }
 
-    modeset++;
     R_TML->ITLCSEL0 = itlcsel0;
 
     /* Select the frequency division ratio for the count source. */
-    *(R_TML_ITLFDIV_ADDRESS(channel)) |= R_TML_ITLFDIV_MASK(channel) &
-                                         ((uint8_t) p_cfg->source_div << (R_TML_ITLFDIV_POS(channel)));
+    *(TML_PRV_ITLFDIV_ADDRESS) |= TML_PRV_ITLFDIV_MASK &
+                                  ((uint8_t) p_cfg->source_div << (TML_PRV_ITLFDIV_POS));
 
-    FSP_CRITICAL_SECTION_EXIT;
+    TML_PRV_CRITICAL_SECTION_EXIT();
 
     /* Specify a period value for timer channel. */
     r_tml_period_counts_set(p_instance_ctrl, (p_cfg->period_counts - 1));
@@ -892,8 +840,6 @@ fsp_err_t r_tml_hardware_initialize (tml_instance_ctrl_t * const p_instance_ctrl
  **********************************************************************************************************************/
 void r_tml_period_counts_set (tml_instance_ctrl_t * const p_instance_ctrl, uint32_t const period_counts)
 {
-    uint8_t channel = p_instance_ctrl->p_cfg->channel;
-
     /* Specify a period value. */
     switch (p_instance_ctrl->p_cfg->mode)
     {
@@ -904,14 +850,14 @@ void r_tml_period_counts_set (tml_instance_ctrl_t * const p_instance_ctrl, uint3
              * The ITLCMP01_L for channel 2
              * The ITLCMP01_H for channel 3
              */
-            *(&(R_TML->ITLCMP00_L) + channel) = (uint8_t) (period_counts);
+            *(&(R_TML->ITLCMP00_L) + TML_PRV_CHANNEL) = (uint8_t) (period_counts);
             break;
         }
 
         case TIMER_MODE_16_BIT_COUNTER:
         {
             /* Set the ITLCMP0n register (n: 0, 1) */
-            *(&(R_TML->ITLCMP00) + channel / 2) = (uint16_t) (period_counts);
+            *(&(R_TML->ITLCMP00) + TML_PRV_CHANNEL / 2) = (uint16_t) (period_counts);
             break;
         }
 
@@ -980,12 +926,14 @@ fsp_err_t r_tml_open_param_checking (tml_instance_ctrl_t * const p_instance_ctrl
     FSP_ERROR_RETURN(TML_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
     /* Selected channel must be disabled (ITLCTL0.ENx is 0U). */
-    FSP_ERROR_RETURN(TML_PRV_ITLCTL0_EN_DISABLED == (R_TML->ITLCTL0 & channel_mask), FSP_ERR_IN_USE);
+    FSP_ERROR_RETURN(0U == (R_TML->ITLCTL0 & channel_mask), FSP_ERR_IN_USE);
+
+ #if !TML_CFG_SINGLE_CHANNEL_ENABLE
 
     /* Selected mode must be the same for all instance. */
-    if (0U != modeset)
+    if (0U != g_modeset)
     {
- #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
+  #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
         tml_extended_cfg_t * p_cfg_ext = (tml_extended_cfg_t *) p_cfg->p_extend;
 
         /* Channels 2 and 3 can only be used in 16-bit counter mode when an interrupt on compare match with
@@ -993,15 +941,16 @@ fsp_err_t r_tml_open_param_checking (tml_instance_ctrl_t * const p_instance_ctrl
         if (!(((TIMER_MODE_16_BIT_COUNTER == R_TML->ITLCTL0_b.MD) &&
                (TIMER_MODE_16_BIT_CAPTURE == mode) &&
                (TML_CAPTURE_TRIGGER_ITLCMP01 != p_cfg_ext->capture_trigger)) ||
-              ((TML_PRV_ITLCC0_CAPEN_ENABLED == R_TML->ITLCC0_b.CAPEN) &&
+              (R_TML->ITLCC0_b.CAPEN &&
                (TML_CAPTURE_TRIGGER_ITLCMP01 != R_TML->ITLCC0_b.CTRS) &&
                (TIMER_MODE_16_BIT_COUNTER == mode))))
- #endif
+  #endif
         {
             /* Selected mode must be the same for all instance. */
             FSP_ERROR_RETURN(mode == R_TML->ITLCTL0_b.MD, FSP_ERR_INVALID_MODE);
         }
     }
+ #endif
 
     /* Channel selected must be in range 0:3. */
     FSP_ERROR_RETURN((channel_mask & BSP_FEATURE_TML_VALID_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
@@ -1011,7 +960,7 @@ fsp_err_t r_tml_open_param_checking (tml_instance_ctrl_t * const p_instance_ctrl
  #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
 
     /* The clock source division must be 0 if 16-bit counter channel use CSEL as clock source. */
-    if ((TML_PRV_ITLCC0_CAPEN_ENABLED == R_TML->ITLCC0_b.CAPEN) && (TIMER_MODE_16_BIT_COUNTER == p_cfg->mode))
+    if (R_TML->ITLCC0_b.CAPEN && (TIMER_MODE_16_BIT_COUNTER == mode))
     {
         FSP_ASSERT(TIMER_SOURCE_DIV_1 == p_cfg->source_div);
     }
@@ -1019,6 +968,12 @@ fsp_err_t r_tml_open_param_checking (tml_instance_ctrl_t * const p_instance_ctrl
 
     /* Validate period must be configured in correct range and channel must be selected according to each mode. */
     FSP_ASSERT(1 < p_cfg->period_counts);
+
+ #if TML_CFG_SINGLE_CHANNEL_ENABLE
+
+    /* Selected channel must match the channel selected by TML_CFG_SINGLE_CHANNEL_ENABLE */
+    FSP_ERROR_RETURN(0U == p_cfg->channel, FSP_ERR_INVALID_CHANNEL);
+ #endif
 
     if (TIMER_MODE_8_BIT_COUNTER == mode)
     {
@@ -1065,7 +1020,6 @@ fsp_err_t r_tml_open_param_checking (tml_instance_ctrl_t * const p_instance_ctrl
 uint32_t r_tml_period_counts_get (tml_instance_ctrl_t * const p_instance_ctrl)
 {
     uint32_t period_counts = 0;
-    uint8_t  channel       = p_instance_ctrl->p_cfg->channel;
 
     /* Get a period value. */
     switch (p_instance_ctrl->p_cfg->mode)
@@ -1077,14 +1031,14 @@ uint32_t r_tml_period_counts_get (tml_instance_ctrl_t * const p_instance_ctrl)
              * The ITLCMP01_L for channel 2
              * The ITLCMP01_H for channel 3
              */
-            period_counts = *(&(R_TML->ITLCMP00_L) + channel);
+            period_counts = *(&(R_TML->ITLCMP00_L) + TML_PRV_CHANNEL);
             break;
         }
 
         case TIMER_MODE_16_BIT_COUNTER:
         {
             /* Set the ITLCMP0n register (n: 0, 1) */
-            period_counts = *(&(R_TML->ITLCMP00) + channel / 2);
+            period_counts = *(&(R_TML->ITLCMP00) + TML_PRV_CHANNEL / 2);
             break;
         }
 
@@ -1125,6 +1079,73 @@ uint32_t r_tml_period_counts_get (tml_instance_ctrl_t * const p_instance_ctrl)
 #if TML_CFG_INTERRUPT_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
+ * Helper for enabling or disabling interrupts
+ *
+ * @param[in]  p_ctrl        Instance control block.
+ * @param[in]  enable        Whether or not to enable disable interrupts.
+ **********************************************************************************************************************/
+static fsp_err_t r_tml_enable_helper (timer_ctrl_t * const p_ctrl, bool enable)
+{
+    tml_instance_ctrl_t * p_instance_ctrl = (tml_instance_ctrl_t *) p_ctrl;
+ #if TML_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(TML_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(TML_PRV_CHANNEL_MASK & BSP_FEATURE_TML_VALID_CHANNEL_MASK, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+ #endif
+
+ #if TML_CFG_SINGLE_CHANNEL_ENABLE
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+ #endif
+
+    /* Critical section required because ITLMKF0, ITLS0, ITLCTL0 register is shared with other instances. */
+    TML_PRV_CRITICAL_SECTION_ENTER();
+
+    uint8_t itls0   = R_TML->ITLS0;
+    uint8_t itlmkf0 = R_TML->ITLMKF0;
+
+    /* Clear the ITF0i interrupt status flags for channel used. */
+    itls0 &= (uint8_t) ~(TML_PRV_CHANNEL_MASK);
+
+    if (enable)
+    {
+        /* Enable the interrupt generation from the selected channel by clearing the mask bits . */
+        itlmkf0 &= (uint8_t) ~(TML_PRV_CHANNEL_MASK);
+    }
+    else
+    {
+        /* Disable the interrupt generation from the selected channel by setting the mask bits . */
+        itlmkf0 |= TML_PRV_CHANNEL_MASK;
+    }
+
+ #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
+    if (TIMER_MODE_16_BIT_CAPTURE == p_instance_ctrl->p_cfg->mode)
+    {
+        /* Clear the ITF0C interrupt status flags. */
+        itls0 &= (uint8_t) ~(R_TML_ITLS0_ITF0C_Msk);
+
+        if (enable)
+        {
+            /* Disable the MKF0C masks of the ITF0C status flags. */
+            itlmkf0 &= (uint8_t) ~(R_TML_ITLMKF0_MKF0C_Msk);
+        }
+        else
+        {
+            /* Enable the MKF0C masks of the ITF0C status flags. */
+            itlmkf0 |= R_TML_ITLMKF0_MKF0C_Msk;
+        }
+    }
+ #endif
+
+    /* Write to registers */
+    R_TML->ITLS0   = itls0;
+    R_TML->ITLMKF0 = itlmkf0;
+
+    TML_PRV_CRITICAL_SECTION_EXIT();
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Interrupt triggered by a compare match or capture.
  *
  * Clears interrupt, disables captures and calls callback if one was provided in the open function.
@@ -1134,11 +1155,17 @@ void tml_itl_or_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
 
+ #if TML_CFG_SINGLE_CHANNEL_ENABLE
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
+    tml_instance_ctrl_t * p_instance_ctrl = (tml_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+ #else
     tml_instance_ctrl_t * p_instance_ctrl = gp_tml_ctrls[TML_CHANNEL_0];
-    uint8_t               itls0           = R_TML->ITLS0;
-    uint32_t              capture         = 0;
-    timer_event_t         event           = TIMER_EVENT_CYCLE_END;
+ #endif
+    uint8_t       itls0   = R_TML->ITLS0;
+    uint32_t      capture = 0;
+    timer_event_t event   = TIMER_EVENT_CYCLE_END;
 
+ #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
     if (itls0 & R_TML_ITLS0_ITF0C_Msk)
     {
         /* Clear the interrupt flag. */
@@ -1150,7 +1177,10 @@ void tml_itl_or_isr (void)
         capture = R_TML->ITLCAP00;
     }
     else
+ #endif
     {
+ #if !TML_CFG_SINGLE_CHANNEL_ENABLE
+
         /* Due to the shared IRQ for all of the TML we need to find the stored context from the channel instance. */
         for (tml_channel_t channel = TML_CHANNEL_0; channel < BSP_FEATURE_TML_NUM_CHANNELS; channel++)
         {
@@ -1160,18 +1190,21 @@ void tml_itl_or_isr (void)
                 break;
             }
         }
+ #endif
 
         /* Clear the interrupt flag. */
-        R_TML->ITLS0 = itls0 & ~(BSP_FEATURE_TML_VALID_CHANNEL_MASK & p_instance_ctrl->channel_mask);
+        R_TML->ITLS0 = itls0 & (uint8_t) ~(TML_PRV_CHANNEL_MASK);
     }
 
     /* If a callback is provided, then call it with the captured counter value. */
     if (NULL != p_instance_ctrl->p_callback)
     {
-        timer_callback_args_t args = {0};
-        args.p_context = p_instance_ctrl->p_context;
-        args.event     = event;
-        args.capture   = capture;
+        timer_callback_args_t args =
+        {
+            .p_context = p_instance_ctrl->p_context,
+            .event     = event,
+            .capture   = capture,
+        };
 
         /* Call the callback. */
         p_instance_ctrl->p_callback(&args);

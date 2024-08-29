@@ -28,7 +28,7 @@
  * IAR Embedded Workbench: "size" (enabled only if default optimization level is "high")
  * Other toolchains: no change
  */
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION) && !defined(__llvm__)
  #define RSIP_PRV_PRIMITIVE_FUNC    __attribute__((optimize("Os")))
 #elif defined(__ICCARM__)
  #define RSIP_PRV_PRIMITIVE_FUNC    _Pragma("optimize = size")

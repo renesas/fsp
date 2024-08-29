@@ -334,7 +334,7 @@ typedef enum e_elc_event_ra8t1
     ELC_EVENT_ADC1_COMPARE_MATCH            = (0x1B8), // Compare match
     ELC_EVENT_ADC1_COMPARE_MISMATCH         = (0x1B9), // Compare mismatch
     ELC_EVENT_DOC_INT                       = (0x1BA), // Data operation circuit interrupt
-    ELC_EVENT_RSIP_TADI                     = (0x1BC)  // RSIP Tampler Detection
+    ELC_EVENT_RSIP_TADI                     = (0x1BC)  // RSIP Tamper Detection
 } elc_event_t;
 
 #define BSP_PRV_VECT_ENUM(event,group)  (ELC_ ## event)

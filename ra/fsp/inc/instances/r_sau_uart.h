@@ -43,13 +43,6 @@ typedef enum e_sau_operation_clock
     SAU_UART_OPERATION_CLOCK_CK1 = 1U, ///< Operating clock use CK1
 } sau_operation_clock_t;
 
-/** UART transfer mode selection definition */
-typedef enum e_sau_uart_transfer_mode
-{
-    SAU_UART_TRANSFER_MODE_SINGLE     = 0U, ///< Single transfer mode
-    SAU_UART_TRANSFER_MODE_CONTINUOUS = 1U, ///< Continuous transfer mode
-} sau_uart_transfer_mode_t;
-
 /** UART data signal level definition */
 typedef enum e_sau_uart_signal_level
 {
@@ -68,10 +61,9 @@ typedef struct
 typedef struct st_sau_uart_extended_cfg
 {
     /* UART generic configuration */
-    sau_uart_transfer_mode_t      transfer_mode; ///< Select single transfer mode or continuous transfer mode
-    sau_uart_data_sequence_t      sequence;      ///< Transfer sequence (LSB or MSB)
-    sau_uart_signal_level_t       signal_level;  ///< Transfer data signal level (standard or inverted)
-    sau_uart_baudrate_setting_t * p_baudrate;    ///< Baud rate setting (SPS and SDR value)
+    sau_uart_data_sequence_t      sequence;     ///< Transfer sequence (LSB or MSB)
+    sau_uart_signal_level_t       signal_level; ///< Transfer data signal level (standard or inverted)
+    sau_uart_baudrate_setting_t * p_baudrate;   ///< Baud rate setting (SPS and SDR value)
 } sau_uart_extended_cfg_t;
 
 /** UART instance control block. DO NOT INITIALIZE. */

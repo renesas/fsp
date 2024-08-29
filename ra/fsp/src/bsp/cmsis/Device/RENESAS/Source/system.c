@@ -524,7 +524,7 @@ void SystemInit (void)
     }
 #endif
 
-#if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS && !BSP_CFG_SKIP_INIT
+#if BSP_FEATURE_CGC_HAS_EXTRACLK2 && !BSP_CFG_SKIP_INIT
     bsp_internal_prv_enable_extra_power_domain();
 #endif
 

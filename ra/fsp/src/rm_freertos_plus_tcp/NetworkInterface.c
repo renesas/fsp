@@ -38,7 +38,7 @@
 #include "NetworkBufferManagement.h"
 
 /* Renesas includes. */
-#include "r_ether.h"
+#include "r_ether_api.h"
 
 /***********************************************************************************************************************
  * Macro definitions

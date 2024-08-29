@@ -227,7 +227,7 @@ fsp_err_t R_IICA_MASTER_Abort (i2c_master_ctrl_t * const p_api_ctrl)
 #endif
 
     /* Abort any transfer happening on the channel */
-    r_iica_master_abort_seq_master(p_ctrl, true);
+    r_iica_master_abort_seq_master(p_ctrl, false);
 
     return FSP_SUCCESS;
 }
@@ -456,14 +456,22 @@ static void r_iica_master_abort_seq_master (iica_master_instance_ctrl_t * const 
     R_IICA->IICCTL00_b.LREL = 1;
 
     /* Reset the peripheral */
-    if (true == iica_reset)
+    if (false == iica_reset)
     {
         /* Disable interrupts */
         R_IICA->IICCTL00_b.SPIE = 0U;
+    }
+    else
+    {
+        /* Disable IICA */
+        R_IICA->IICCTL00_b.IICE = 0U;
+        iica_master_extended_cfg_t * pextend = (iica_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-        /* This helper function would do a full IICA reset
-         * followed by re-initializing the required peripheral registers. */
-        r_iica_master_open_hw_master(p_ctrl, p_ctrl->p_cfg);
+        /* Disable Pin settings */
+        R_BSP_PinAccessEnable();
+        R_BSP_PinCfg(pextend->scl_pin_settings.pin, IOPORT_CFG_PORT_DIRECTION_INPUT);
+        R_BSP_PinCfg(pextend->sda_pin_settings.pin, IOPORT_CFG_PORT_DIRECTION_INPUT);
+        R_BSP_PinAccessDisable();
     }
 
     /* Update the transfer descriptor to show no longer in-progress and an error */
@@ -572,7 +580,7 @@ static void r_iica_master_txrxi_master (iica_master_instance_ctrl_t * p_ctrl)
 {
     /* If the event was an error event, then handle it */
     uint8_t reg_iics0 = R_IICA->IICS0;
-    if (((!(reg_iics0 & R_IICA_IICS0_ACKD_Msk) && (reg_iics0 & R_IICA_IICS0_TRC_Msk)) ||
+    if (((!(reg_iics0 & R_IICA_IICS0_ACKD_Msk) && !(p_ctrl->dummy_read_completed)) ||
          !(reg_iics0 & R_IICA_IICS0_MSTS_Msk) ||
          ((reg_iics0 & R_IICA_IICS0_ALD_Msk))) && !(reg_iics0 & R_IICA_IICS0_SPD_Msk))
     {

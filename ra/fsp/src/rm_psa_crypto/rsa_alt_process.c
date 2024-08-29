@@ -419,12 +419,6 @@ static const hw_sce_rsa_private_decrypt_t g_rsa_private_decrypt_lookup[2] =
   #endif
 };
 
-/* Parameter validation macros */
-  #define RSA_VALIDATE_RET(cond) \
-    MBEDTLS_INTERNAL_VALIDATE_RET(cond, MBEDTLS_ERR_RSA_BAD_INPUT_DATA)
-  #define RSA_VALIDATE(cond) \
-    MBEDTLS_INTERNAL_VALIDATE(cond)
-
   #if defined(MBEDTLS_GENPRIME)
 
 /*
@@ -439,7 +433,6 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
     (void) nbits;
     (void) exponent;
     int ret = 0;
-    RSA_VALIDATE_RET(ctx != NULL);
     (void) f_rng;
     (void) p_rng;
 
@@ -805,10 +798,6 @@ int mbedtls_rsa_private (mbedtls_rsa_context * ctx,
     uint32_t * p_calloc_temp_buff_N = NULL;
     uint32_t * p_calloc_temp_buff_D = NULL;
     uint32_t * p_common_buff_32     = NULL;
-
-    RSA_VALIDATE_RET(ctx != NULL);
-    RSA_VALIDATE_RET(input != NULL);
-    RSA_VALIDATE_RET(output != NULL);
 
     /* If the size of N is not equal to the modulus size, then that is because of the leading 00 (sign field) from the ASN1 import
      * Use openssl asn1parse -in private1.pem to see asn1 format of a .pem key */

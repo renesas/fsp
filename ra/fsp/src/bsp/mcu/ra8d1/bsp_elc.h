@@ -348,7 +348,7 @@ typedef enum e_elc_event_ra8d1
     ELC_EVENT_ADC1_COMPARE_MATCH            = (0x1B8), // Compare match
     ELC_EVENT_ADC1_COMPARE_MISMATCH         = (0x1B9), // Compare mismatch
     ELC_EVENT_DOC_INT                       = (0x1BA), // Data operation circuit interrupt
-    ELC_EVENT_RSIP_TADI                     = (0x1BC), // RSIP Tampler Detection
+    ELC_EVENT_RSIP_TADI                     = (0x1BC), // RSIP Tamper Detection
     ELC_EVENT_GLCDC_LINE_DETECT             = (0x1CD), // Specified line
     ELC_EVENT_GLCDC_UNDERFLOW_1             = (0x1CE), // Graphic 1 underflow
     ELC_EVENT_GLCDC_UNDERFLOW_2             = (0x1CF), // Graphic 2 underflow

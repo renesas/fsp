@@ -10,12 +10,9 @@
 #include "r_i3c.h"
 #include "r_i3c_cfg.h"
 
-/* The address of the MCU Version Register on RA2E2/RA2L2 MCUs. Different error recovery procedures are used depending on the
- * version of the MCU (This is only used on RA2E2/RA2L2 devices). */
-#define I3C_A2E2_VERSION      (*((uint8_t const *) 0x01001C20U))
-
-/* Version of the MCU (This is only used on RA2L2_EK Boards). */
-#define I3C_A2L2_VERSION_1    51U
+/* The address of the MCU Version Register on RA2E2 MCUs. Different error recovery procedures are used depending on the
+ * version of the MCU (This is only used on RA2E2 devices). */
+#define I3C_A2E2_VERSION    (*((uint8_t const *) 0x01001C20U))
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -1757,7 +1754,7 @@ void i3c_resp_isr (void)
  #if I3C_ERROR_RECOVERY_VERSION_1 == I3C_CFG_ERROR_RECOVERY_SUPPORT || \
             I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
   #if I3C_ERROR_RECOVERY_VERSION_BOTH == I3C_CFG_ERROR_RECOVERY_SUPPORT
-            if ((1U == I3C_A2E2_VERSION) || (I3C_A2L2_VERSION_1 == I3C_A2E2_VERSION))
+            if (1U == I3C_A2E2_VERSION)
   #endif
             {
                 /* If the transfer length is less than expected, the driver must perform error recovery defined in
@@ -2321,7 +2318,7 @@ void i3c_master_error_recovery (i3c_instance_ctrl_t * p_ctrl, bool error_recover
 
     /* For A2E2 version that has not been modified by ECO, the following error recovery procedure must be performed.
      * See Figure 25.96 in the hardware user manual R01UH0919EJ0100. */
-    if ((1U == I3C_A2E2_VERSION) || (I3C_A2L2_VERSION_1 == I3C_A2E2_VERSION))
+    if (1U == I3C_A2E2_VERSION)
   #endif
     {
         /* Flush the Command, Rx and Tx Buffers. */
@@ -2512,7 +2509,7 @@ void i3c_slave_error_recovery (i3c_instance_ctrl_t * p_ctrl, i3c_slave_error_rec
 
     /* For A2E2 version that has not been modified by ECO, the following error recovery procedure must be performed.
      * See Figure 25.97 in the hardware user manual R01UH0919EJ0100. */
-    if ((1U == I3C_A2E2_VERSION) || (I3C_A2L2_VERSION_1 == I3C_A2E2_VERSION))
+    if (1U == I3C_A2E2_VERSION)
   #endif
     {
         /* Wait for Bus Available Condition (See Figure 25.97 in the hardware user manual R01UH0919EJ0100). */

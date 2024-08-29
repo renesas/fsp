@@ -7,7 +7,7 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
-#include "cellular_ryz.h"
+#include "cellular_gm.h"
 
 #include "cellular_common.h"
 #include "cellular_common_portable.h"
@@ -15,8 +15,8 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_CELLULAR_RYZ_ENABLE_MODULE_UE_RETRY_COUNT      (3U)
-#define RM_CELLULAR_RYZ_ENABLE_MODULE_UE_RETRY_TIMEOUT    (5000U)
+#define RM_CELLULAR_GM_ENABLE_MODULE_UE_RETRY_COUNT      (3U)
+#define RM_CELLULAR_GM_ENABLE_MODULE_UE_RETRY_TIMEOUT    (5000U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -62,7 +62,7 @@ CellularError_t Cellular_ModuleInit (const CellularContext_t * pContext, void **
     }
     else
     {
-        /* RYZ has no instance-specific module context. */
+        /* GM has no instance-specific module context. */
         *ppModuleContext = NULL;
     }
 
@@ -178,11 +178,11 @@ static CellularError_t sendAtCommandWithRetryTimeout (CellularContext_t * pConte
     }
     else
     {
-        for ( ; tryCount < RM_CELLULAR_RYZ_ENABLE_MODULE_UE_RETRY_COUNT; tryCount++)
+        for ( ; tryCount < RM_CELLULAR_GM_ENABLE_MODULE_UE_RETRY_COUNT; tryCount++)
         {
             pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                                   *pAtReq,
-                                                                  RM_CELLULAR_RYZ_ENABLE_MODULE_UE_RETRY_TIMEOUT);
+                                                                  RM_CELLULAR_GM_ENABLE_MODULE_UE_RETRY_TIMEOUT);
             cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
 
             if (cellularStatus == CELLULAR_SUCCESS)

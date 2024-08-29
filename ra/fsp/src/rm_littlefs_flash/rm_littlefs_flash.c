@@ -92,7 +92,7 @@ fsp_err_t RM_LITTLEFS_FLASH_Open (rm_littlefs_ctrl_t * const p_ctrl, rm_littlefs
     fsp_err_t                err     = p_flash->p_api->open(p_flash->p_ctrl, p_flash->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-#if LFS_THREAD_SAFE
+#ifdef LFS_THREADSAFE
     p_instance_ctrl->xSemaphore = xSemaphoreCreateMutexStatic(&p_instance_ctrl->xMutexBuffer);
 
     if (NULL == p_instance_ctrl->xSemaphore)
@@ -137,7 +137,7 @@ fsp_err_t RM_LITTLEFS_FLASH_Close (rm_littlefs_ctrl_t * const p_ctrl)
 
     p_flash->p_api->close(p_extend->p_flash->p_ctrl);
 
-#if LFS_THREAD_SAFE
+#ifdef LFS_THREADSAFE
     vSemaphoreDelete(p_instance_ctrl->xSemaphore);
 #endif
 
@@ -257,7 +257,7 @@ int rm_littlefs_flash_erase (const struct lfs_config * c, lfs_block_t block)
  **********************************************************************************************************************/
 int rm_littlefs_flash_lock (const struct lfs_config * c)
 {
-#if LFS_THREAD_SAFE
+#ifdef LFS_THREADSAFE
     rm_littlefs_flash_instance_ctrl_t * p_instance_ctrl = (rm_littlefs_flash_instance_ctrl_t *) c->context;
  #if RM_LITTLEFS_FLASH_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
@@ -283,7 +283,7 @@ int rm_littlefs_flash_lock (const struct lfs_config * c)
  **********************************************************************************************************************/
 int rm_littlefs_flash_unlock (const struct lfs_config * c)
 {
-#if LFS_THREAD_SAFE
+#ifdef LFS_THREADSAFE
     rm_littlefs_flash_instance_ctrl_t * p_instance_ctrl = (rm_littlefs_flash_instance_ctrl_t *) c->context;
  #if RM_LITTLEFS_FLASH_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);

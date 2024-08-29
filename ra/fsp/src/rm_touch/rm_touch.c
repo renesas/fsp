@@ -506,19 +506,9 @@ fsp_err_t RM_TOUCH_Open (touch_ctrl_t * const p_ctrl, touch_cfg_t const * const 
                 (uint8_t) (g_touch_button_index + p_instance_ctrl->p_touch_cfg->num_buttons);
         }
 
-        if (0 == p_cfg->on_freq)
-        {
-            err = FSP_ERR_INVALID_ARGUMENT;
-        }
-
-        if (0 == p_cfg->off_freq)
-        {
-            err = FSP_ERR_INVALID_ARGUMENT;
-        }
-
         if (0 != p_cfg->cancel_freq)
         {
-            if (p_cfg->cancel_freq < p_cfg->on_freq)
+            if (p_cfg->cancel_freq <= p_cfg->on_freq)
             {
                 err = FSP_ERR_INVALID_ARGUMENT;
             }

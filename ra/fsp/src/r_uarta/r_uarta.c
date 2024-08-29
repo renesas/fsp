@@ -41,10 +41,6 @@
 #define UARTA_BRGCA_MAX                    (255)
 #define UARTA_BRGCA_MIN                    (2)
 
-/* Delay cycles */
-#define UARTA_DELAY_2_CYCLE_UATCK          (2U)
-#define UARTA_DELAY_1_CYCLE_UATCK          (1U)
-
 /* Mask 2 bit for bit UTA0CK.SEL[1:0] */
 #define UARTA_UTA0SEL_MASK                 (0x03U)
 
@@ -74,10 +70,6 @@
  #define UARTA_MAX_BAUD_RATE               (153600)
 #endif
 
-#define UARTA_ERR_OVERFLOW_SHIFT_VALUE     (5)
-#define UARTA_ERR_FRAMING_SHIFT_VALUE      (4)
-#define UARTA_ERR_PARITY_SHIFT_VALUE       (3)
-
 /***********************************************************************************************************************
  * Private constants
  **********************************************************************************************************************/
@@ -96,15 +88,22 @@ static fsp_err_t r_uarta_read_write_param_check(uarta_instance_ctrl_t const * co
                                                 uint8_t const * const               addr,
                                                 uint32_t const                      bytes);
 
+ #if (BSP_FEATURE_UARTA_PCLK_RESTRICTION)
+static fsp_err_t r_uarta_operation_clock_validation(uarta_baud_setting_t const * const p_baud_setting);
+
+ #endif
+
 #endif
 
 #if UARTA_CFG_DTC_SUPPORT_ENABLE
 static fsp_err_t r_uarta_transfer_configure(uarta_instance_ctrl_t * const p_ctrl);
-static fsp_err_t r_uarta_transfer_configure_helper(transfer_instance_t const * p_transfer, uart_dir_t direction);
+static fsp_err_t r_uarta_transfer_configure_helper(uarta_instance_ctrl_t     * p_ctrl,
+                                                   transfer_instance_t const * p_transfer,
+                                                   uart_dir_t                  direction);
 
 #endif
 
-static void r_uarta_baud_set(uarta_baud_setting_t const * const p_baud_setting);
+static void r_uarta_baud_set(uarta_instance_ctrl_t * p_ctrl, uarta_baud_setting_t const * const p_baud_setting);
 
 static void r_uarta_call_callback(uarta_instance_ctrl_t * p_ctrl, uint32_t data, uart_event_t event);
 
@@ -130,16 +129,17 @@ void uarta_txi_isr(void);
 /** Look-up table for parity values */
 static const uint8_t uarta_parity_lut[] =
 {
-    [UART_PARITY_OFF]  = UARTA_PARITY_OFF_MAPPING << R_UARTA_ASIMA01_PS_Pos,
-    [UART_PARITY_ZERO] = UARTA_PARITY_ZERO_MAPPING << R_UARTA_ASIMA01_PS_Pos,
-    [UART_PARITY_EVEN] = UARTA_PARITY_EVEN_MAPPING << R_UARTA_ASIMA01_PS_Pos,
-    [UART_PARITY_ODD]  = UARTA_PARITY_ODD_MAPPING << R_UARTA_ASIMA01_PS_Pos
+    [UART_PARITY_OFF]  = UARTA_PARITY_OFF_MAPPING << R_UARTA0_ASIMAn1_PS_Pos,
+    [UART_PARITY_ZERO] = UARTA_PARITY_ZERO_MAPPING << R_UARTA0_ASIMAn1_PS_Pos,
+    [UART_PARITY_EVEN] = UARTA_PARITY_EVEN_MAPPING << R_UARTA0_ASIMAn1_PS_Pos,
+    [UART_PARITY_ODD]  = UARTA_PARITY_ODD_MAPPING << R_UARTA0_ASIMAn1_PS_Pos
 };
 
 /** Look-up table for converting UARTA clock source, used to get the clock value from R_BSP_SourceClockHzGet */
 static fsp_priv_source_clock_t uarta_f_uta0_sel_lut[] =
 {
     [UARTA_CLOCK_SOURCE_SOSC_LOCO] = FSP_PRIV_CLOCK_LOCO,
+    [UARTA_CLOCK_SOURCE_SOSC]      = FSP_PRIV_CLOCK_SUBCLOCK,
     [UARTA_CLOCK_SOURCE_MOSC]      = FSP_PRIV_CLOCK_MAIN_OSC,
     [UARTA_CLOCK_SOURCE_HOCO]      = FSP_PRIV_CLOCK_HOCO,
     [UARTA_CLOCK_SOURCE_MOCO]      = FSP_PRIV_CLOCK_MOCO
@@ -160,7 +160,7 @@ static const uint8_t uarta_event_lut[] =
     [7] = UART_EVENT_ERR_OVERFLOW | UART_EVENT_ERR_FRAMING | UART_EVENT_ERR_PARITY
 };
 
- #define UARTA_ASISA_RCVR_ERR_MASK    (R_UARTA_ASISA0_OVEA_Msk | R_UARTA_ASISA0_FEA_Msk | R_UARTA_ASISA0_PEA_Msk)
+ #define UARTA_ASISA_RCVR_ERR_MASK    (R_UARTA0_ASISAn_OVEA_Msk | R_UARTA0_ASISAn_FEA_Msk | R_UARTA0_ASISAn_PEA_Msk)
 
 #endif
 
@@ -217,7 +217,7 @@ fsp_err_t R_UARTA_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * const
     FSP_ERROR_RETURN(UARTA_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
     /* Make sure this channel exists. */
-    FSP_ERROR_RETURN(0U == p_cfg->channel, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(((1 << p_cfg->channel) & BSP_PERIPHERAL_UARTA_CHANNEL_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     FSP_ASSERT(p_cfg->rxi_irq >= 0);
     FSP_ASSERT(p_cfg->txi_irq >= 0);
@@ -227,11 +227,28 @@ fsp_err_t R_UARTA_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * const
     /* UARTA0_ERRI interrupt request should be greater than 0 when Receive Error Interrupt Mode is disabled */
     FSP_ASSERT(p_cfg->eri_irq >= 0);
  #endif
+
+ #if (BSP_FEATURE_UARTA_PCLK_RESTRICTION)
+
+    /* Validate the f_uta before setting the baud rate*/
+    FSP_ERROR_RETURN(FSP_SUCCESS ==
+                     r_uarta_operation_clock_validation(((uarta_extended_cfg_t *) p_cfg->p_extend)->p_baud_setting),
+                     FSP_ERR_INVALID_ARGUMENT);
+ #endif
 #endif
 
     p_ctrl->p_cfg      = p_cfg;
     p_ctrl->p_callback = p_cfg->p_callback;
     p_ctrl->p_context  = p_cfg->p_context;
+
+#if (BSP_PERIPHERAL_UARTA_CHANNEL_MASK > 1)
+
+    /* Calculate the register base address. */
+    uint32_t address_gap = (uint32_t) R_UARTA1 - (uint32_t) R_UARTA0;
+    p_ctrl->p_reg = (R_UARTA0_Type *) ((uint32_t) R_UARTA0 + (address_gap * p_cfg->channel));
+#else
+    p_ctrl->p_reg = R_UARTA0;
+#endif
 
 #if UARTA_CFG_DTC_SUPPORT_ENABLE
 
@@ -248,41 +265,41 @@ fsp_err_t R_UARTA_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * const
     uarta_extended_cfg_t * p_extend = (uarta_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
     /* Set the baud rate settings for the internal baud rate generator. */
-    r_uarta_baud_set(p_extend->p_baud_setting);
+    r_uarta_baud_set(p_ctrl, p_extend->p_baud_setting);
 
     /* Setting parity, length, stop, direction, and level bit */
-    R_UARTA->ASIMA01 = (uint8_t) ((uarta_parity_lut[p_cfg->parity]) |
-                                  ((uint8_t) (p_cfg->data_bits << R_UARTA_ASIMA01_CL_Pos)) |
-                                  ((uint8_t) (p_cfg->stop_bits << R_UARTA_ASIMA01_SL_Pos)) |
-                                  ((uint8_t) (p_extend->transfer_dir << R_UARTA_ASIMA01_DIR_Pos)) |
-                                  ((uint8_t) (p_extend->transfer_level << R_UARTA_ASIMA01_ALV_Pos)));
+    p_ctrl->p_reg->ASIMAn1 = (uint8_t) (uarta_parity_lut[p_cfg->parity] |
+                                        ((uint8_t) (p_cfg->data_bits << R_UARTA0_ASIMAn1_CL_Pos)) |
+                                        ((uint8_t) (p_cfg->stop_bits << R_UARTA0_ASIMAn1_SL_Pos)) |
+                                        ((uint8_t) (p_extend->transfer_dir << R_UARTA0_ASIMAn1_DIR_Pos)) |
+                                        ((uint8_t) (p_extend->transfer_level << R_UARTA0_ASIMAn1_ALV_Pos)));
 
     /* Setting interrupt for continuous transmission and receive interrupt mode select */
-    uint8_t asima0 = (uint8_t) ((R_UARTA_ASIMA00_ISSMA_Msk) |
-                                ((uint8_t) (UARTA_CFG_RECEIVE_ERROR_INTERRUPT_MODE << R_UARTA_ASIMA00_ISRMA_Pos)));
+    uint8_t asima0 = (uint8_t) ((R_UARTA0_ASIMAn0_ISSMA_Msk) |
+                                ((uint8_t) (UARTA_CFG_RECEIVE_ERROR_INTERRUPT_MODE << R_UARTA0_ASIMAn0_ISRMA_Pos)));
 
     /* Configure for register ASIMA0 */
-    R_UARTA->ASIMA00 = asima0;
+    p_ctrl->p_reg->ASIMAn0 = asima0;
 
     /* Enables the UARTA operation clock */
-    asima0          |= R_UARTA_ASIMA00_EN_Msk;
-    R_UARTA->ASIMA00 = asima0;
+    asima0                |= R_UARTA0_ASIMAn0_EN_Msk;
+    p_ctrl->p_reg->ASIMAn0 = asima0;
 
 #if (UARTA_CFG_RX_ENABLE)
     p_ctrl->rx_dest_bytes = 0;
 
     /* If reception is enabled at build time, enable reception. */
-    asima0 |= R_UARTA_ASIMA00_RXEA_Msk;
+    asima0 |= R_UARTA0_ASIMAn0_RXEA_Msk;
 #endif
 
 #if (UARTA_CFG_TX_ENABLE)
     p_ctrl->tx_src_bytes = 0;
 
     /* If transmission is enabled at build time, enable transmission. */
-    asima0 |= R_UARTA_ASIMA00_TXEA_Msk;
+    asima0 |= R_UARTA0_ASIMAn0_TXEA_Msk;
 #endif
 
-    R_UARTA->ASIMA00 = asima0;
+    p_ctrl->p_reg->ASIMAn0 = asima0;
 
 #if (UARTA_CFG_RX_ENABLE)
  #if (UARTA_CFG_RECEIVE_ERROR_INTERRUPT_MODE == 0)
@@ -328,15 +345,15 @@ fsp_err_t R_UARTA_Close (uart_ctrl_t * const p_api_ctrl)
     p_ctrl->open = 0;
 
     /* Disable receiver, and transmitter. */
-    uint8_t current_value = R_UARTA->ASIMA00;
+    uint8_t current_value = p_ctrl->p_reg->ASIMAn0;
 
     /* Do read-modify-write for TXEA/RXEA */
-    current_value &= (uint8_t) ~(R_UARTA_ASIMA00_TXEA_Msk | R_UARTA_ASIMA00_RXEA_Msk);
+    current_value &= (uint8_t) ~(R_UARTA0_ASIMAn0_TXEA_Msk | R_UARTA0_ASIMAn0_RXEA_Msk);
 
-    R_UARTA->ASIMA00 = current_value;
+    p_ctrl->p_reg->ASIMAn0 = current_value;
 
     /* Disable baud clock output. Must be done separately after disabling TX/RX. */
-    R_UARTA->ASIMA00 = (uint8_t) (current_value & ~R_UARTA_ASIMA00_EN_Msk);
+    p_ctrl->p_reg->ASIMAn0 = (uint8_t) (current_value & ~R_UARTA0_ASIMAn0_EN_Msk);
 
 #if (UARTA_CFG_RX_ENABLE)
  #if (UARTA_CFG_RECEIVE_ERROR_INTERRUPT_MODE == 0)
@@ -481,14 +498,14 @@ fsp_err_t R_UARTA_Write (uart_ctrl_t * const p_api_ctrl, uint8_t const * const p
     }
  #endif
 
-    p_ctrl->tx_src_bytes     = num_transfers;
-    R_UARTA->ASIMA00_b.ISSMA = 1;
+    p_ctrl->tx_src_bytes           = num_transfers;
+    p_ctrl->p_reg->ASIMAn0_b.ISSMA = 1;
 
     /* Enable transmit interrupt */
     R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
 
     /* Assign to first byte */
-    R_UARTA->TXBA0 = *(p_src);
+    p_ctrl->p_reg->TXBAn = *(p_src);
 
     return FSP_SUCCESS;
 #else
@@ -548,19 +565,24 @@ fsp_err_t R_UARTA_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const p_
 #if (UARTA_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_ctrl);
     FSP_ERROR_RETURN(UARTA_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+ #if (BSP_FEATURE_UARTA_PCLK_RESTRICTION)
+    FSP_ERROR_RETURN(FSP_SUCCESS ==
+                     r_uarta_operation_clock_validation(p_baud_setting),
+                     FSP_ERR_INVALID_ARGUMENT);
+ #endif
 #endif
 
     /* Disable transmit interrupt.  Resuming transmission after reconfiguring baud settings is
      * not supported. */
     R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
-    uint8_t preserved_asima00 = R_UARTA->ASIMA00;
+    uint8_t preserved_asiman0 = p_ctrl->p_reg->ASIMAn0;
 
     /* Modify the BRGCAn bits while the TXEAn and RXEAn bits are 0 (in the transmission/reception stopped state).*/
-    R_UARTA->ASIMA00 = (preserved_asima00 & (uint8_t) (~(R_UARTA_ASIMA00_RXEA_Msk | R_UARTA_ASIMA00_TXEA_Msk)));
+    p_ctrl->p_reg->ASIMAn0 = (preserved_asiman0 & (uint8_t) (~(R_UARTA0_ASIMAn0_RXEA_Msk | R_UARTA0_ASIMAn0_TXEA_Msk)));
 
     /* Apply new baud rate register settings. */
-    r_uarta_baud_set(p_baud_setting);
+    r_uarta_baud_set(p_ctrl, p_baud_setting);
 
     /* To enable transmission or reception again, set the TXEAn or RXEAn bit to 1 at least two cycles of the UARTAn
      * operation clock after clearing the TXEAn or RXEAn bit to 0 according to "Note" section 22.2.3
@@ -569,11 +591,11 @@ fsp_err_t R_UARTA_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const p_
     R_BSP_SoftwareDelay((uint32_t) delay_time << 1U, BSP_DELAY_UNITS_MICROSECONDS);
 
     /* Restore all settings. */
-    R_UARTA->ASIMA00 = preserved_asima00;
+    p_ctrl->p_reg->ASIMAn0 = preserved_asiman0;
 #if (UARTA_CFG_TX_ENABLE)
 
     /* If transmission is enabled at build time, enable transmission. */
-    if (preserved_asima00 & R_UARTA_ASIMA00_TXEA_Msk)
+    if (preserved_asiman0 & R_UARTA0_ASIMAn0_TXEA_Msk)
     {
         /* Wait for the period of at least one cycle of the UARTA operation clock according to "Note" section 22.2.3
          * "ASIMA00 : Operation Mode Setting Register 00" in the RA0E1 manual r01uh1040ej0060-ra0e1.pdf .*/
@@ -762,8 +784,12 @@ fsp_err_t R_UARTA_BaudCalculate (uint32_t                     baudrate,
 
     uint32_t clock_source_value = R_BSP_SourceClockHzGet(uarta_f_uta0_sel_lut[clock_source]);
 
+#if (BSP_FEATURE_UARTA_PCLK_RESTRICTION)
+    uint32_t pclk_constraint = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB);
+#endif
+
     /* Go ahead and set the clock source here. It stays constant through the baud rate search. */
-    p_baud_setting->uta0ck_clock_b.utasel = (uint8_t) (clock_source & UARTA_UTA0SEL_MASK);
+    p_baud_setting->utanck_clock_b.utasel = (uint8_t) (clock_source & UARTA_UTA0SEL_MASK);
 
     for (uarta_clock_div_t f_uta0_div = UARTA_CLOCK_DIV_1; f_uta0_div < UARTA_CLOCK_DIV_COUNT; f_uta0_div++)
     {
@@ -775,7 +801,11 @@ fsp_err_t R_UARTA_BaudCalculate (uint32_t                     baudrate,
          * Integer round to the nearest divider.
          */
         uint32_t divider = ((f_uta0_value + baudrate) >> 1) / baudrate;
-        if ((divider >= UARTA_BRGCA_MIN) && (divider <= UARTA_BRGCA_MAX))
+        if ((divider >= UARTA_BRGCA_MIN) && (divider <= UARTA_BRGCA_MAX)
+#if (BSP_FEATURE_UARTA_PCLK_RESTRICTION)
+            && (f_uta0_value <= pclk_constraint)
+#endif
+            )
         {
             /* Calculate actual baudrate using the divider. */
             uint32_t actual_baudrate = (f_uta0_value >> 1) / divider;
@@ -785,16 +815,24 @@ fsp_err_t R_UARTA_BaudCalculate (uint32_t                     baudrate,
             {
                 delta_max                             = delta;
                 p_baud_setting->brgca                 = (uint8_t) divider;
-                p_baud_setting->uta0ck_clock_b.uta0ck = (uint8_t) (f_uta0_div & R_UARTA_UTA0CK_CK_Msk);
+                p_baud_setting->utanck_clock_b.utanck = (uint8_t) (f_uta0_div & R_UARTA_CK_UTAnCK_CK_Msk);
                 ret = FSP_SUCCESS;
             }
         }
 
-        if (UARTA_CLOCK_SOURCE_SOSC_LOCO == clock_source)
+        if (UARTA_CLOCK_SOURCE_LOCO == clock_source)
         {
-            p_baud_setting->uta0ck_clock_b.uta0ck = UARTA_UTA0CK_SOSC_LOCO_SETTING;
+            p_baud_setting->utanck_clock_b.utanck = UARTA_UTAnCK_LOCO_SETTING;
             break;
         }
+
+#if (!BSP_FEATURE_BSP_HAS_FSXP_CLOCK)
+        if (UARTA_CLOCK_SOURCE_SOSC == clock_source)
+        {
+            p_baud_setting->utanck_clock_b.utanck = UARTA_UTAnCK_SOSC_SETTING;
+            break;
+        }
+#endif
     }
 
     return ret;
@@ -854,7 +892,7 @@ static fsp_err_t r_uarta_transfer_configure (uarta_instance_ctrl_t * const p_ctr
     transfer_instance_t const * p_transfer_rx = p_ctrl->p_cfg->p_transfer_rx;
 
     /* If a transfer instance is used for reception, apply UART specific settings and open the transfer instance. */
-    err = r_uarta_transfer_configure_helper(p_transfer_rx, UART_DIR_RX);
+    err = r_uarta_transfer_configure_helper(p_ctrl, p_transfer_rx, UART_DIR_RX);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
  #endif
 
@@ -862,7 +900,7 @@ static fsp_err_t r_uarta_transfer_configure (uarta_instance_ctrl_t * const p_ctr
     transfer_instance_t const * p_transfer_tx = p_ctrl->p_cfg->p_transfer_tx;
 
     /* If a transfer instance is used for transmission, apply UART specific settings and open the transfer instance. */
-    err = r_uarta_transfer_configure_helper(p_transfer_tx, UART_DIR_TX);
+    err = r_uarta_transfer_configure_helper(p_ctrl, p_transfer_tx, UART_DIR_TX);
   #if (UARTA_CFG_RX_ENABLE)
     if ((err != FSP_SUCCESS) && (NULL != p_transfer_rx))
     {
@@ -880,7 +918,9 @@ static fsp_err_t r_uarta_transfer_configure (uarta_instance_ctrl_t * const p_ctr
  * @param[in] p_transfer                     Pointer to transfer instance.
  * @param[in] direction                      UART_DIR_TX or UART_DIR_RX.
  **********************************************************************************************************************/
-static fsp_err_t r_uarta_transfer_configure_helper (transfer_instance_t const * p_transfer, uart_dir_t direction)
+static fsp_err_t r_uarta_transfer_configure_helper (uarta_instance_ctrl_t * const p_ctrl,
+                                                    transfer_instance_t const   * p_transfer,
+                                                    uart_dir_t                    direction)
 {
     fsp_err_t err = FSP_SUCCESS;
 
@@ -901,12 +941,12 @@ static fsp_err_t r_uarta_transfer_configure_helper (transfer_instance_t const * 
         if (UART_DIR_RX == direction)
         {
             p_info->transfer_settings_word = UARTA_DTC_RX_TRANSFER_SETTINGS;
-            p_info->p_src = (void *) &(R_UARTA->RXBA0);
+            p_info->p_src = (void *) &(p_ctrl->p_reg->RXBAn);
         }
         else
         {
             p_info->transfer_settings_word = UARTA_DTC_TX_TRANSFER_SETTINGS;
-            p_info->p_dest                 = (void *) &(R_UARTA->TXBA0);
+            p_info->p_dest                 = (void *) &(p_ctrl->p_reg->TXBAn);
         }
 
         err = p_transfer->p_api->open(p_transfer->p_ctrl, p_transfer->p_cfg);
@@ -920,18 +960,65 @@ static fsp_err_t r_uarta_transfer_configure_helper (transfer_instance_t const * 
 /*******************************************************************************************************************//**
  * Changes baud rate based on predetermined register settings.
  *
- * @param[in]  p_baud_setting    Pointer to baud rate settings
+ * @param[in]  p_ctrl            Pointer to instance control block.
+ * @param[in]  p_baud_setting    Pointer to other divisor related settings
  *
  * @note   The transmitter and receiver (TXEA and RXEA bits in ASIMA00) must be disabled prior to calling this function.
  **********************************************************************************************************************/
-static void r_uarta_baud_set (uarta_baud_setting_t const * const p_baud_setting)
+static void r_uarta_baud_set (uarta_instance_ctrl_t * p_ctrl, uarta_baud_setting_t const * const p_baud_setting)
 {
     /* Set BRGCA register value. */
-    R_UARTA->BRGCA0 = p_baud_setting->brgca;
+    p_ctrl->p_reg->BRGCAn = p_baud_setting->brgca;
+    uint8_t utack_value = p_baud_setting->utanck_clock;
 
-    /* Set UTA0CK register value. */
-    R_UARTA->UTA0CK = p_baud_setting->uta0ck_clock;
+#if (BSP_FEATURE_UARTA_HAS_CLOCK_OUTPUT)
+
+    /* Set the UART configuration settings provided in ::uart_cfg_t and :: uarta_extended_cfg_t. */
+    utack_value |= (uint8_t) (((uarta_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->clock_output <<
+                              R_UARTA_CK_UTAnCK_EN_Pos);
+#endif
+
+    /* Set UTA0CK/UTA1CK register value. */
+    R_UARTA_CK->UTAnCK[p_ctrl->p_cfg->channel] = utack_value;
+
+#if (BSP_PERIPHERAL_UARTA_CHANNEL_MASK > 1)
+
+    /* Set fSEL clock select */
+    R_UARTA_CK->UTAnCK_b[0].SEL = p_baud_setting->utanck_clock_b.utasel;
+#endif
 }
+
+#if (UARTA_CFG_PARAM_CHECKING_ENABLE)
+ #if (BSP_FEATURE_UARTA_PCLK_RESTRICTION)
+
+/*******************************************************************************************************************//**
+ * Validates the baud rate divisor for the given UARTA clock frequency against PCLK constraints.
+ *
+ * This function checks if the UARTA operation clock (derived from the frequency settings of the baud rate generator)
+ * is within acceptable limits as defined by the PCLK.
+ *
+ * @param[in]  p_baud_setting       Pointer to the baud rate settings structure which includes the UARTA clock selection.
+ * @retval FSP_SUCCESS              The UARTA operation clock is within acceptable limits.
+ * @retval FSP_ERR_INVALID_ARGUMENT The UARTA operation clock exceeds PCLK constraints.
+ **********************************************************************************************************************/
+static fsp_err_t r_uarta_operation_clock_validation (uarta_baud_setting_t const * const p_baud_setting)
+{
+    /* Retrieve the PCLKB constraint and operation clock uarta value */
+    uint32_t pclk_constraint    = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB);
+    uint32_t clock_source_value = R_BSP_SourceClockHzGet(uarta_f_uta0_sel_lut[p_baud_setting->utanck_clock_b.utasel]);
+    uint32_t f_uta              = clock_source_value >> (p_baud_setting->utanck_clock_b.utanck & UARTA_CLOCK_DIV_MASK);
+
+    /* Check if UARTA operation clock exceeds the PCLK constraint */
+    if (f_uta > pclk_constraint)
+    {
+        return FSP_ERR_INVALID_ARGUMENT;
+    }
+
+    return FSP_SUCCESS;
+}
+
+ #endif
+#endif
 
 /*******************************************************************************************************************//**
  * This function calculates the wait time to enable TX
@@ -940,13 +1027,13 @@ static void r_uarta_baud_set (uarta_baud_setting_t const * const p_baud_setting)
  **********************************************************************************************************************/
 static uint16_t r_uarta_calculate_wait_time (uarta_baud_setting_t const * const p_baud_setting)
 {
-    uint8_t uta0ck = p_baud_setting->uta0ck_clock_b.uta0ck;
-    uint8_t utasel = p_baud_setting->uta0ck_clock_b.utasel;
+    uint8_t utanck = p_baud_setting->utanck_clock_b.utanck;
+    uint8_t utasel = p_baud_setting->utanck_clock_b.utasel;
 
     /* Get UARTA clock divider shift.
      * Anything outside UARTA_CLOCK_DIV_MASK is not a valid divider and is probably LOCO/SOSC selection instead.
      */
-    uint32_t divider_shift = (uint32_t) (uta0ck & UARTA_CLOCK_DIV_MASK);
+    uint32_t divider_shift = (uint32_t) (utanck & UARTA_CLOCK_DIV_MASK);
 
     /* Calculate frequency UARTA0 operation clock */
     uint32_t f_uta0 = (R_BSP_SourceClockHzGet(uarta_f_uta0_sel_lut[utasel]) >> divider_shift);
@@ -994,6 +1081,12 @@ void uarta_txi_isr (void)
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
+ #if (BSP_FEATURE_ICU_HAS_IELSR)
+
+    /* Clear pending IRQ to make sure it doesn't fire again after exiting */
+    R_BSP_IrqStatusClear(irq);
+ #endif
+
     /* Recover ISR context saved in open. */
     uarta_instance_ctrl_t * p_ctrl = (uarta_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
@@ -1004,7 +1097,7 @@ void uarta_txi_isr (void)
  #endif
         {
             /* Write 1byte (uint8_t) data to (uint8_t) data register */
-            R_UARTA->TXBA0 = *(p_ctrl->p_tx_src);
+            p_ctrl->p_reg->TXBAn = *(p_ctrl->p_tx_src);
 
             /* Update pointer to the next data and number of remaining bytes in the control block. */
             p_ctrl->tx_src_bytes -= 1U;
@@ -1018,9 +1111,9 @@ void uarta_txi_isr (void)
         }
  #endif
     }
-    else if (0U != (R_UARTA->ASIMA00 & R_UARTA_ASIMA00_ISSMA_Msk))
+    else if (0U != (p_ctrl->p_reg->ASIMAn0 & R_UARTA0_ASIMAn0_ISSMA_Msk))
     {
-        R_UARTA->ASIMA00_b.ISSMA = 0U;
+        p_ctrl->p_reg->ASIMAn0_b.ISSMA = 0U;
     }
     else if (0 == p_ctrl->tx_src_bytes)
     {
@@ -1055,20 +1148,26 @@ void uarta_rxi_isr (void)
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
+ #if (BSP_FEATURE_ICU_HAS_IELSR)
+
+    /* Clear pending IRQ to make sure it doesn't fire again after exiting */
+    R_BSP_IrqStatusClear(irq);
+ #endif
+
     /* Recover ISR context saved in open. */
     uarta_instance_ctrl_t * p_ctrl = (uarta_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
  #if UARTA_CFG_DTC_SUPPORT_ENABLE
     if ((p_ctrl->p_cfg->p_transfer_rx == NULL) || (0 == p_ctrl->rx_dest_bytes))
  #endif
     {
-        uint8_t data = R_UARTA->RXBA0;
+        uint8_t data = p_ctrl->p_reg->RXBAn;
  #if (UARTA_CFG_RECEIVE_ERROR_INTERRUPT_MODE != 0)
 
         /* Determine cause of error. */
-        uint8_t err_type = R_UARTA->ASISA0;
+        uint8_t err_type = p_ctrl->p_reg->ASISAn;
 
         /* Clear error condition. */
-        R_UARTA->ASCTA0 = UARTA_ASISA_RCVR_ERR_MASK;
+        p_ctrl->p_reg->ASCTAn = UARTA_ASISA_RCVR_ERR_MASK;
 
         err_type &= (uint8_t) UARTA_ASISA_RCVR_ERR_MASK;
         err_type  = uarta_event_lut[err_type];
@@ -1126,16 +1225,22 @@ void uarta_eri_isr (void)
     /* Recover ISR context saved in open. */
     uarta_instance_ctrl_t * p_ctrl = (uarta_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    uint8_t data = R_UARTA->RXBA0;
+    uint8_t data = p_ctrl->p_reg->RXBAn;
 
-    uint8_t err_type = R_UARTA->ASISA0;
+    uint8_t err_type = p_ctrl->p_reg->ASISAn;
 
     /* Clear error condition. */
-    R_UARTA->ASCTA0 = UARTA_ASISA_RCVR_ERR_MASK;
+    p_ctrl->p_reg->ASCTAn = UARTA_ASISA_RCVR_ERR_MASK;
 
     err_type &= (uint8_t) UARTA_ASISA_RCVR_ERR_MASK;
     err_type  = uarta_event_lut[err_type];
     r_uarta_call_callback(p_ctrl, data, (uart_event_t) err_type);
+
+  #if (BSP_FEATURE_ICU_HAS_IELSR)
+
+    /* Clear pending IRQ to make sure it doesn't fire again after exiting */
+    R_BSP_IrqStatusClear(irq);
+  #endif
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE;

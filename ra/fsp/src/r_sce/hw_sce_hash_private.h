@@ -37,6 +37,14 @@ extern fsp_err_t HW_SCE_Sha224256GenerateMessageDigestSub(const uint32_t * InDat
                                                           const uint32_t * InData_PaddedMsg,
                                                           const uint32_t   MAX_CNT,
                                                           uint32_t       * OutData_MsgDigest);
+
+#if BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+extern fsp_err_t HW_SCE_ShaGenerateMessageDigestSub(const uint32_t InData_InitVal[],
+                                                    const uint32_t InData_PaddedMsg[],
+                                                    uint32_t       OutData_MsgDigest[],
+                                                    const uint32_t MAX_CNT);
+
+#else
 extern fsp_err_t HW_SCE_ShaGenerateMessageDigestSub(const uint32_t InData_HashType[],
                                                     const uint32_t InData_Cmd[],
                                                     const uint32_t InData_Msg[],
@@ -46,4 +54,5 @@ extern fsp_err_t HW_SCE_ShaGenerateMessageDigestSub(const uint32_t InData_HashTy
                                                     uint32_t       OutData_State[],
                                                     const uint32_t MAX_CNT);
 
+#endif
 #endif                                 /* HW_SCE_HASH_PRIVATE_H */

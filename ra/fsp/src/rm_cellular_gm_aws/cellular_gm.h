@@ -4,8 +4,8 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-#ifndef CELLULAR_RYZ_H
-#define CELLULAR_RYZ_H
+#ifndef CELLULAR_GM_H
+#define CELLULAR_GM_H
 
 /***********************************************************************************************************************
  * Includes
@@ -23,19 +23,19 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS                    (4U) // MAX valid PDP contexts
-#define RM_CELLULAR_RYZ_DEFAULT_BEARER_CONTEXT_ID           (1U)
-#define RM_CELLULAR_RYZ_PDN_CONTEXT_TYPE_MAX_SIZE           (7U) // The length of IP type e.g. IPV4V6
+#define RM_CELLULAR_GM_MAX_PDP_CONTEXTS                    (4U) // MAX valid PDP contexts
+#define RM_CELLULAR_GM_DEFAULT_BEARER_CONTEXT_ID           (1U)
+#define RM_CELLULAR_GM_PDN_CONTEXT_TYPE_MAX_SIZE           (7U) // The length of IP type e.g. IPV4V6
 
 /* +CGDCONT PDN context definition tokens */
-#define RM_CELLULAR_RYZ_PDN_STATUS_POS_CONTEXT_ID           (0U)
-#define RM_CELLULAR_RYZ_PDN_STATUS_POS_CONTEXT_TYPE         (1U)
-#define RM_CELLULAR_RYZ_PDN_STATUS_POS_APN_NAME             (2U)
-#define RM_CELLULAR_RYZ_PDN_STATUS_POS_IP_ADDRESS           (3U)
+#define RM_CELLULAR_GM_PDN_STATUS_POS_CONTEXT_ID           (0U)
+#define RM_CELLULAR_GM_PDN_STATUS_POS_CONTEXT_TYPE         (1U)
+#define RM_CELLULAR_GM_PDN_STATUS_POS_APN_NAME             (2U)
+#define RM_CELLULAR_GM_PDN_STATUS_POS_IP_ADDRESS           (3U)
 
 /* +CGACT PDN context activation tokens */
-#define RM_CELLULAR_RYZ_PDN_ACT_STATUS_POS_CONTEXT_ID       (0U)
-#define RM_CELLULAR_RYZ_PDN_ACT_STATUS_POS_CONTEXT_STATE    (1U)
+#define RM_CELLULAR_GM_PDN_ACT_STATUS_POS_CONTEXT_ID       (0U)
+#define RM_CELLULAR_GM_PDN_ACT_STATUS_POS_CONTEXT_STATE    (1U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -44,17 +44,17 @@ FSP_HEADER
 /* Context info from +CGDCONT (Context IP type, APN name, IP Address) */
 typedef struct CellularPdnContextInfo
 {
-    bool contextsPresent[RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS];                                   // Context present in +CGDCONT response or not.
-    char ipType[RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS][RM_CELLULAR_RYZ_PDN_CONTEXT_TYPE_MAX_SIZE]; // PDN Context type.
-    char apnName[RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS][CELLULAR_APN_MAX_SIZE];                    // APN name.
-    char ipAddress[RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS][CELLULAR_IP_ADDRESS_MAX_SIZE + 1];       // IP address.
+    bool contextsPresent[RM_CELLULAR_GM_MAX_PDP_CONTEXTS];                                  // Context present in +CGDCONT response or not.
+    char ipType[RM_CELLULAR_GM_MAX_PDP_CONTEXTS][RM_CELLULAR_GM_PDN_CONTEXT_TYPE_MAX_SIZE]; // PDN Context type.
+    char apnName[RM_CELLULAR_GM_MAX_PDP_CONTEXTS][CELLULAR_APN_MAX_SIZE];                   // APN name.
+    char ipAddress[RM_CELLULAR_GM_MAX_PDP_CONTEXTS][CELLULAR_IP_ADDRESS_MAX_SIZE + 1];      // IP address.
 } CellularPdnContextInfo_t;
 
 /* Context Act state from +CGACT */
 typedef struct CellularPdnContextActInfo
 {
-    bool contextsPresent[RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS]; // Context present in +CGACT response or not.
-    bool contextActState[RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS]; // Context active state from +CGACT response.
+    bool contextsPresent[RM_CELLULAR_GM_MAX_PDP_CONTEXTS]; // Context present in +CGACT response or not.
+    bool contextActState[RM_CELLULAR_GM_MAX_PDP_CONTEXTS]; // Context active state from +CGACT response.
 } CellularPdnContextActInfo_t;
 
 /**********************************************************************************************************************

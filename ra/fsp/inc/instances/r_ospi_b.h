@@ -153,10 +153,18 @@ typedef enum e_ospi_b_dotf_aes_key_type
     OSPI_B_DOTF_AES_KEY_TYPE_256 = 2U
 } ospi_b_dotf_aes_key_type_t;
 
+/* OSPI DOTF key Type. */
+typedef enum e_ospi_b_dotf_key_format
+{
+    OSPI_B_DOTF_KEY_FORMAT_PLAINTEXT = 0U,
+    OSPI_B_DOTF_KEY_FORMAT_WRAPPED = 1U,
+} ospi_b_dotf_key_format_t;
+
 /* This structure is used to hold all the DOTF related configuration. */
 typedef struct st_ospi_b_dotf_cfg
 {
     ospi_b_dotf_aes_key_type_t key_type;
+    ospi_b_dotf_key_format_t   format;
     uint32_t                 * p_start_addr;
     uint32_t                 * p_end_addr;
     uint32_t                 * p_key;

@@ -74,8 +74,12 @@ FSP_HEADER
 
 #if 0U == BSP_FEATURE_BSP_MSTP_HAS_MSTPCRE
  #define BSP_MSTP_REG_FSP_IP_GPT(channel)               R_MSTP->MSTPCRD
- #define BSP_MSTP_BIT_FSP_IP_GPT(channel)               ((BSP_FEATURE_BSP_MSTP_GPT_MSTPD5_MAX_CH >= \
+ #if !BSP_FEATURE_BSP_MSTP_GPT_MSTPD5
+  #define BSP_MSTP_BIT_FSP_IP_GPT(channel)              (1U << 6U)
+ #else
+  #define BSP_MSTP_BIT_FSP_IP_GPT(channel)              ((BSP_FEATURE_BSP_MSTP_GPT_MSTPD5_MAX_CH >= \
                                                           channel) ? (1U << 5U) : (1U << 6U));
+ #endif
  #define BSP_MSTP_REG_TYPE_FSP_IP_GPT(channel)          uint32_t
  #define BSP_MSTP_REG_FSP_IP_GPT_PDG(channel)           R_MSTP->MSTPCRD
  #define BSP_MSTP_BIT_FSP_IP_GPT_PDG(channel)           (1U << (31U));
@@ -91,15 +95,16 @@ FSP_HEADER
  * Ch 4-5: MSTPD[ 1: 0] (AGT2, AGT3)
  * Ch 6-9: MSTPD[10: 7] (AGT4, AGT5, AGT6, AGT7)
  */
-  #define BSP_MSTP_BIT_FSP_IP_AGT(channel)              (1U <<                                                          \
-                                                         ((channel < BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT)                \
-                                                          ? (3U - channel)                                              \
-                                                          : ((channel < BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT + 2U)        \
-                                                             ? (19U - channel + BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT)     \
-                                                             : ((channel < BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT + 4U)     \
-                                                                ? (1U - channel + BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT +  \
-                                                                   2U)                                                  \
-                                                                : (10U - channel + BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT + \
+  #define BSP_MSTP_BIT_FSP_IP_AGT(channel)              (1U <<                                                         \
+                                                         ((channel < BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT)               \
+                                                          ? (3U - channel)                                             \
+                                                          : ((channel < BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT + 2U)       \
+                                                             ? (19U - channel + BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT)    \
+                                                             : ((channel < BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT + 4U)    \
+                                                                ? (1U - channel + BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT + \
+                                                                   2U)                                                 \
+                                                                : (10U - channel +                                     \
+                                                                   BSP_FEATURE_AGT_AGTW_CHANNEL_COUNT +                \
                                                                    4U)))));
 
  #else
@@ -108,7 +113,11 @@ FSP_HEADER
  #define BSP_MSTP_REG_TYPE_FSP_IP_AGT(channel)          uint32_t
 
  #define BSP_MSTP_REG_FSP_IP_POEG(channel)              R_MSTP->MSTPCRD
- #define BSP_MSTP_BIT_FSP_IP_POEG(channel)              (1U << (14U));
+ #if BSP_FEATURE_BSP_MSTP_POEG_MSTPD13
+  #define BSP_MSTP_BIT_FSP_IP_POEG(channel)             (1U << (14U - channel));
+ #else
+  #define BSP_MSTP_BIT_FSP_IP_POEG(channel)             (1U << (14U));
+ #endif
  #define BSP_MSTP_REG_TYPE_FSP_IP_POEG(channel)         uint32_t
 #else
  #if (2U == BSP_FEATURE_ELC_VERSION)
@@ -124,7 +133,8 @@ FSP_HEADER
    #define BSP_MSTP_REG_TYPE_FSP_IP_AGT(channel)        uint32_t
   #elif BSP_MCU_GROUP_NEPTUNE
    #define BSP_MSTP_REG_FSP_IP_GPT(channel)             R_MSTP->MSTPCRE
-   #define BSP_MSTP_BIT_FSP_IP_GPT(channel)             (1U << (31 - ((channel >= 4U && channel <= 9U) ? 4U : channel))) // GPT Channels 4-9 share stop bits on this MCU
+   #define BSP_MSTP_BIT_FSP_IP_GPT(channel)             (1U << \
+                                                         (31 - ((channel >= 4U && channel <= 9U) ? 4U : channel))) // GPT Channels 4-9 share stop bits on this MCU
    #define BSP_MSTP_REG_TYPE_FSP_IP_GPT(channel)        uint32_t
    #define BSP_MSTP_REG_FSP_IP_GPT_PDG(channel)         R_MSTP->MSTPCRD
    #define BSP_MSTP_BIT_FSP_IP_GPT_PDG(channel)         (1U << (6U));
@@ -160,9 +170,10 @@ FSP_HEADER
   #define BSP_MSTP_BIT_FSP_IP_GPT_PDG(channel)          (1U << (31U));
   #define BSP_MSTP_REG_TYPE_FSP_IP_GPT_PDG(channel)     uint32_t
   #define BSP_MSTP_REG_FSP_IP_AGT(channel)              *((3U >= channel) ? &R_MSTP->MSTPCRD : &R_MSTP->MSTPCRE)
-  #define BSP_MSTP_BIT_FSP_IP_AGT(channel)              ((3U >=                                      \
-                                                          channel) ? (1U << (3U - channel)) : (1U << \
-                                                                                               (15U - (channel - 4U))));
+  #define BSP_MSTP_BIT_FSP_IP_AGT(channel)              ((3U >=                                       \
+                                                          channel) ? (1U << (3U - channel)) : (1U <<  \
+                                                                                               (15U - \
+                                                                                                (channel - 4U))));
   #define BSP_MSTP_REG_TYPE_FSP_IP_AGT(channel)         uint32_t
   #define BSP_MSTP_REG_FSP_IP_KEY(channel)              R_MSTP->MSTPCRE
   #define BSP_MSTP_BIT_FSP_IP_KEY(channel)              (1U << (4U - channel));
@@ -229,11 +240,7 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_ETHER(channel)              (1U << (15U - channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_ETHER(channel)         uint32_t
 #define BSP_MSTP_REG_FSP_IP_UARTA(channel)              R_MSTP->MSTPCRB
-#if BSP_FEATURE_CGC_REGISTER_SET_B
- #define BSP_MSTP_BIT_FSP_IP_UARTA(channel)             (1U << (15U));
-#else
- #define BSP_MSTP_BIT_FSP_IP_UARTA(channel)             (1U << (0U));
-#endif
+#define BSP_MSTP_BIT_FSP_IP_UARTA(channel)              (1U << BSP_FEATURE_UARTA_MSTP_OFFSET);
 #define BSP_MSTP_REG_TYPE_FSP_IP_UARTA(channel)         uint32_t
 #define BSP_MSTP_REG_FSP_IP_OSPI(channel)               R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_OSPI(channel)               (1U << (16U - channel));

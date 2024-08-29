@@ -207,6 +207,7 @@ typedef enum e_adc_window_b_channel
     ADC_WINDOW_B_CHANNEL_28,
     ADC_WINDOW_B_CHANNEL_TEMPERATURE = 32,
     ADC_WINDOW_B_CHANNEL_VOLT        = 33,
+    ADC_WINDOW_B_CHANNEL_NONE        = 63,
 } adc_window_b_channel_t;
 
 /** ADC Window B comparison mode */

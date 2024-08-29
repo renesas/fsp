@@ -663,6 +663,7 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
         (rm_comms_smbus_instance_ctrl_t *) (p_comms_i2c_ctrl->p_context);
 
     rm_comms_callback_args_t comms_smbus_args;
+    rm_comms_smbus_error_t   smbus_error;
     bool transition_complete_flag = false;
 
     /* Initialize the event */
@@ -670,6 +671,9 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
 
     /* Set context */
     comms_smbus_args.p_context = p_ctrl->p_context;
+
+    /* Initialize the error block */
+    smbus_error.smbus_event = RM_COMMS_SMBUS_NO_ERROR;
 
     /* Set event */
     switch (p_args->event)
@@ -716,7 +720,8 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
                 /* Compare PEC byte and return event */
                 if (ref_pec != data_pec)
                 {
-                    comms_smbus_args.event = RM_COMMS_EVENT_ERROR;
+                    comms_smbus_args.event  = RM_COMMS_EVENT_ERROR;
+                    smbus_error.smbus_event = RM_COMMS_SMBUS_DATA_CORRUPT;
                 }
             }
 
@@ -748,6 +753,7 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
                 {
                     transition_complete_flag = true;
                     comms_smbus_args.event   = RM_COMMS_EVENT_ERROR;
+                    smbus_error.smbus_event  = RM_COMMS_SMBUS_MISC_ERROR;
                 }
                 else
                 {
@@ -764,6 +770,7 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
                     {
                         transition_complete_flag = true;
                         comms_smbus_args.event   = RM_COMMS_EVENT_ERROR;
+                        smbus_error.smbus_event  = RM_COMMS_SMBUS_MISC_ERROR;
                     }
                     else
                     {
@@ -786,6 +793,7 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
             {
                 transition_complete_flag = true;
                 comms_smbus_args.event   = RM_COMMS_EVENT_ERROR;
+                smbus_error.smbus_event  = RM_COMMS_SMBUS_MISC_ERROR;
             }
 
             break;
@@ -799,6 +807,7 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
             {
                 transition_complete_flag = true;
                 comms_smbus_args.event   = RM_COMMS_EVENT_ERROR;
+                smbus_error.smbus_event  = RM_COMMS_SMBUS_MISC_ERROR;
             }
 
             break;
@@ -825,7 +834,8 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
             transition_complete_flag = true;
 
             /* Update the event which returned to user's callback */
-            comms_smbus_args.event = RM_COMMS_EVENT_ERROR;
+            comms_smbus_args.event  = RM_COMMS_EVENT_ERROR;
+            smbus_error.smbus_event = RM_COMMS_SMBUS_MISC_ERROR;
 
             break;
         }
@@ -838,6 +848,9 @@ void rm_comms_smbus_transmission_callback (i2c_master_callback_args_t * p_args)
 
     if (transition_complete_flag)
     {
+        /* Assign error control block of current context to callback args */
+        comms_smbus_args.p_instance_args = &smbus_error;
+
         rm_comms_i2c_process_in_callback(p_comms_i2c_ctrl, &comms_smbus_args);
     }
 }
@@ -852,10 +865,12 @@ void rm_comms_smbus_timeout_callback (timer_callback_args_t * p_args)
     rm_comms_i2c_instance_ctrl_t * p_comms_i2c = p_ctrl->p_comms_i2c_ctrl;
 
     rm_comms_callback_args_t comms_smbus_args;
+    rm_comms_smbus_error_t   smbus_error;
 
     /* Set context and return event */
     comms_smbus_args.p_context = p_comms_i2c->p_context;
     comms_smbus_args.event     = RM_COMMS_EVENT_ERROR;
+    smbus_error.smbus_event    = RM_COMMS_SMBUS_NO_ERROR;
 
     i2c_master_instance_t const * p_iic_instance = p_comms_i2c->p_bus->p_driver_instance;
 
@@ -867,8 +882,22 @@ void rm_comms_smbus_timeout_callback (timer_callback_args_t * p_args)
     {
         timer_instance_t * p_timer_instance = (timer_instance_t *) p_comms_i2c->p_bus->p_timer;
 
+        smbus_error.smbus_event = RM_COMMS_SMBUS_MEXT_TIMEOUT;
         p_timer_instance->p_api->stop(p_timer_instance->p_ctrl);
     }
+    else if (TIMER_EVENT_CYCLE_END == p_args->event)
+    {
+        smbus_error.smbus_event = RM_COMMS_SMBUS_SEXT_TIMEOUT;
+    }
+    else
+    {
+        /* Remain events of timer will be treated as miscellaneous error to SMBus because they're not expected
+         * to be raised. */
+        smbus_error.smbus_event = RM_COMMS_SMBUS_MISC_ERROR;
+    }
+
+    /* Assign error control block of current context to callback args */
+    comms_smbus_args.p_instance_args = &smbus_error;
 
     rm_comms_i2c_process_in_callback(p_comms_i2c, &comms_smbus_args);
 }

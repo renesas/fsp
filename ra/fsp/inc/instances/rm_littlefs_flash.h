@@ -13,7 +13,7 @@
 #include "rm_littlefs_api.h"
 #include "r_flash_api.h"
 #include "lfs.h"
-#if LFS_THREAD_SAFE
+#ifdef LFS_THREADSAFE
  #include "FreeRTOS.h"
  #include "semphr.h"
 
@@ -45,7 +45,7 @@ typedef struct st_rm_littlefs_flash_instance_ctrl
 {
     uint32_t open;
     rm_littlefs_cfg_t const * p_cfg;
-#if LFS_THREAD_SAFE
+#ifdef LFS_THREADSAFE
     SemaphoreHandle_t xSemaphore;
     StaticSemaphore_t xMutexBuffer;
 #endif

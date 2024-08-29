@@ -360,10 +360,12 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
         }
     }
 
-    /* Set the Mask as invalid for mailboxes that do not use the mask. */
-    p_reg->MKIVLR = ~(mask_enabled);
-
 #if CAN_CFG_FIFO_SUPPORT
+
+    /* Set the Mask as invalid for mailboxes that do not use the mask.
+     * Bits 24:31 in MKIVLR must not be set in FIFO mode (see Note 1 in Section 37.2.5 "Mask Invalid Register (MKIVLR)
+     * of the RA6M3 User's Manual (R01UH0886EJ0120)). */
+    p_reg->MKIVLR = ~(mask_enabled) & CAN_MKIVLR_FIFO_MASK;
 
     /* Get pointer to RX FIFO configuration */
     can_rx_fifo_cfg_t * p_rx_fifo_cfg = p_extend->p_rx_fifo_cfg;
@@ -385,6 +387,10 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
 
     p_reg->MKR[6] = mask1;
     p_reg->MKR[7] = mask2;
+#else
+
+    /* Set the Mask as invalid for mailboxes that do not use the mask. */
+    p_reg->MKIVLR = ~(mask_enabled);
 #endif
 
     /* Go to normal operation. */

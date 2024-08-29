@@ -57,8 +57,9 @@ static const hw_sce_ecc_generatesign_t g_ecdsa_generate_sign_lookup[][2] =
         HW_SCE_ECC_256HrkGenerateSign,
    #endif
   #endif
-  #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
-   #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+  #if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
+    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
         HW_SCE_ECC_384GenerateSign,
    #endif
@@ -77,6 +78,7 @@ static const hw_sce_ecc_generatesign_t g_ecdsa_generate_sign_lookup[][2] =
     	HW_SCE_ECC_521HrkGenerateSign,
    #endif
   #endif
+#endif
 };
 
 static const hw_sce_ecc_generatesign_t g_ed_ecdsa_generate_sign_lookup[][2] =
@@ -103,11 +105,13 @@ static const hw_sce_ecc_verifysign_t g_ecdsa_verify_sign_lookup[] =
     defined(MBEDTLS_ECP_DP_BP256R1_ENABLED)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_256_PRIVATE_KEY_LENGTH_BITS)] = HW_SCE_ECC_256VerifySign,
   #endif
-  #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
+  #if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)] = HW_SCE_ECC_384VerifySign,
   #endif
   #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_521_PRIVATE_KEY_LENGTH_BITS)] = HW_SCE_ECC_521VerifySign,
+  #endif
   #endif
 };
 
@@ -400,6 +404,7 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             break;
         }
 
+#if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
         case MBEDTLS_ECP_DP_SECP384R1:
         {
             *p_curve_type    = SCE_ECC_CURVE_TYPE_NIST;
@@ -455,7 +460,7 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             *pp_domain_param = (uint32_t *) &DomainParam_Brainpool_384r1[0];
             break;
         }
-
+#endif
         default:
         {
             ret = -1;

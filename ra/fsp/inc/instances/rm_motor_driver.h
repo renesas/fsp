@@ -84,7 +84,8 @@ typedef struct st_motor_driver_extended_shared_cfg
 typedef struct st_motor_driver_extended_cfg
 {
     uint16_t u2_pwm_timer_freq;                               ///< PWM timer frequency [MHz]
-    uint16_t u2_pwm_carrier_freq;                             ///< PWM carrier frequency [kHz]
+    float u2_pwm_carrier_freq;                                ///< PWM carrier frequency [kHz] [DEPRECATED]
+    float pwm_carrier_freq;                                   ///< PWM carrier frequency [kHz]
     uint16_t u2_deadtime;                                     ///< PWM deadtime [usec]
 
     float f_current_range;                                    ///< A/D current measure range (max current) [A]

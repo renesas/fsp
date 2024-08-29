@@ -223,3 +223,16 @@ __WEAK int boot_platform_post_load (uint32_t image_id)
 {
     return 0;
 }
+
+__WEAK bool boot_platform_should_load_image(uint32_t image_id)
+{
+    return true;
+}
+
+__WEAK int boot_initiate_recovery_mode(uint32_t image_id)
+{
+    (void)image_id;
+
+    /* We haven't done anything, therefore recovery has failed */
+    return 1;
+}

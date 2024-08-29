@@ -71,6 +71,7 @@ typedef struct st_rm_comms_write_read_params
 typedef struct st_rm_comms_callback_args
 {
     void const     * p_context;
+    void           * p_instance_args;
     rm_comms_event_t event;
 } rm_comms_callback_args_t;
 

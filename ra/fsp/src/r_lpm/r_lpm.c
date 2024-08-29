@@ -17,6 +17,7 @@
 
 #define LPM_LPSCR_SYSTEM_ACTIVE                  (0x0U)
 #define LPM_LPSCR_SOFTWARE_STANDBY_MODE          (0x4U)
+#define LPM_LPSCR_SOFTWARE_STANDBY_MODE2         (0x5U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE1    (0x8U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE2    (0x9U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE3    (0xAU)
@@ -678,8 +679,11 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
 #if BSP_FEATURE_ICU_WUPEN_MASK > 0
         R_ICU->WUPEN = (uint32_t) p_cfg->standby_wake_sources & UINT32_MAX;
 #endif
-#if BSP_FEATURE_ICU_HAS_WUPEN1 == 1
+#if BSP_FEATURE_ICU_HAS_WUPEN1
         R_ICU->WUPEN1 = (uint32_t) (p_cfg->standby_wake_sources >> LPM_WUPEN1_OFFSET) & UINT32_MAX;
+#endif
+#if BSP_FEATURE_ICU_HAS_WUPEN2
+        R_ICU->WUPEN2 = (uint32_t) p_cfg->standby_wake_sources_2 & UINT32_MAX;
 #endif
 #if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
         sbyedcr0 |= (uint32_t) p_cfg->standby_wake_sources & UINT32_MAX;

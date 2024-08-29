@@ -63,9 +63,9 @@
  #define HW_SCE_MAC_SIZE                                           (16U)
 
 /* For AES operation. */
- #define HW_SCE_AES128_KEY_INDEX_WORD_SIZE     (12U)
- #define HW_SCE_AES192_KEY_INDEX_WORD_SIZE     (16U)
- #define HW_SCE_AES256_KEY_INDEX_WORD_SIZE     (16U)
+ #define HW_SCE_AES128_KEY_INDEX_WORD_SIZE     (9U)
+ #define HW_SCE_AES192_KEY_INDEX_WORD_SIZE     (13U)
+ #define HW_SCE_AES256_KEY_INDEX_WORD_SIZE     (13U)
  #define HW_SCE_AES128_KEY_WORD_SIZE           (4U)
  #define HW_SCE_AES192_KEY_WORD_SIZE           (8U)
  #define HW_SCE_AES256_KEY_WORD_SIZE           (8U)

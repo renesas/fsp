@@ -17,6 +17,7 @@
 
 #include "tfm_ns_client_ext.h"
 #include "tfm_nspm.h"
+#include "security_defs.h"
 
 #ifdef TFM_NS_MANAGE_NSID
 #define NSID_MGR_THREAD_ID_MAX       0xFF
@@ -37,7 +38,7 @@ static uint8_t nsid_mgr_thread_id = 1;
  * Initialize token-nsid map table in tfm nsid manager
  * Return execution status (1: success, 0: error)
  */
-__tfm_nspm_secure_gateway_attributes__
+__tz_c_veneer
 uint32_t TZ_InitContextSystem_S(void)
 {
 #ifdef TFM_NS_MANAGE_NSID
@@ -63,7 +64,7 @@ uint32_t TZ_InitContextSystem_S(void)
  * Return token if TFM_NS_MANAGE_NSID is enabled
  * Return 0 if no memory available or internal error
  */
-__tfm_nspm_secure_gateway_attributes__
+__tz_c_veneer
 TZ_MemoryId_t TZ_AllocModuleContext_S(TZ_ModuleId_t module)
 {
 #ifdef TFM_NS_MANAGE_NSID
@@ -95,7 +96,7 @@ TZ_MemoryId_t TZ_AllocModuleContext_S(TZ_ModuleId_t module)
  * Param: TZ_MemoryId_t (token if TFM_NS_MANAGE_NSID is enabled)
  * Return execution status (1: success, 0: error)
  */
-__tfm_nspm_secure_gateway_attributes__
+__tz_c_veneer
 uint32_t TZ_FreeModuleContext_S(TZ_MemoryId_t id)
 {
 #ifdef TFM_NS_MANAGE_NSID
@@ -123,7 +124,7 @@ uint32_t TZ_FreeModuleContext_S(TZ_MemoryId_t id)
  * Param: TZ_MemoryId_t (token if TFM_NS_MANAGE_NSID is enabled)
  * Return execution status (1: success, 0: error)
  */
-__tfm_nspm_secure_gateway_attributes__
+__tz_c_veneer
 uint32_t TZ_LoadContext_S(TZ_MemoryId_t id)
 {
 #ifdef TFM_NS_MANAGE_NSID
@@ -154,7 +155,7 @@ uint32_t TZ_LoadContext_S(TZ_MemoryId_t id)
  * Param: TZ_MemoryId_t (token if TFM_NS_MANAGE_NSID is enabled)
  * Return execution status (1: success, 0: error)
  */
-__tfm_nspm_secure_gateway_attributes__
+__tz_c_veneer
 uint32_t TZ_StoreContext_S(TZ_MemoryId_t id)
 {
 #ifdef TFM_NS_MANAGE_NSID

@@ -358,11 +358,6 @@ fsp_err_t HW_SCE_Aes192CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyInde
 
 fsp_err_t HW_SCE_Aes256CtrEncryptDecryptInitSubGeneral(uint32_t * InData_KeyIndex, uint32_t * InData_IV);
 
-fsp_err_t HW_SCE_Aes128EncryptDecryptInitSub(const uint32_t * InData_KeyType,
-                                             const uint32_t * InData_Cmd,
-                                             const uint32_t * InData_KeyIndex,
-                                             const uint32_t * InData_IV);
-
 void HW_SCE_Aes128EncryptDecryptUpdateSub(const uint32_t * InData_Text, uint32_t * OutData_Text,
                                           const uint32_t MAX_CNT);
 

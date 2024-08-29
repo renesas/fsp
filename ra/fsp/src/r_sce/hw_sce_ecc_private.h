@@ -47,14 +47,15 @@
 #define ECC_521_PRIVATE_KEY_LENGTH_WORDS                       (20U)
 
 /* ECC ED-25519 */
-#define ECC_25519_PRIVATE_KEY_LENGTH_BITS                      (256U)
+#define ECC_25519_PRIVATE_KEY_LENGTH_BITS                      (255U)
 #define ECC_25519_PRIVATE_KEY_LENGTH_WORDS                     (8U)
 
 /* SCE based wrapped keys are at most 20/32 bytes larger than corresponding plain private keys */
 #define HW_SCE_ECC_WRAPPED_KEY_ADJUST(x)          ((x) + ((HW_SCE_PRIVATE_KEY_WRAPPING_WORD_SIZE) * 4))
 
 /* Function pointer declarations */
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || \
+    BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
  #define ECC_PUBLIC_KEY_SIZE_BYTES(curve_size)    (curve_size * 2 + 20U)
 typedef fsp_err_t (* hw_sce_ecc_scalarmultiplication_t)(const uint32_t * InData_CurveType, const uint32_t * InData_Cmd,
                                                         const uint32_t * InData_K, const uint32_t * InData_P,
@@ -166,12 +167,6 @@ fsp_err_t HW_SCE_ECC_384HrkScalarMultiplication(const uint32_t * InData_DomainPa
                                                 const uint32_t * InData_KeyIndex,
                                                 const uint32_t * InData_P,
                                                 uint32_t       * OutData_R);
-fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication(const uint32_t * InData_CurveType,
-                                                    const uint32_t * InData_Cmd,
-                                                    const uint32_t * InData_KeyIndex,
-                                                    const uint32_t * InData_P,
-                                                    const uint32_t * Domain_Param,
-                                                    uint32_t       * OutData_R);
 
 #if BSP_FEATURE_CRYPTO_HAS_RSIP7
 fsp_err_t HW_SCE_ECC_521GenerateSign(const uint32_t * InData_CurveType,
@@ -217,6 +212,13 @@ fsp_err_t HW_SCE_ECC_255HrkGenerateSign(const uint32_t * InData_DomainParam,
                                         uint32_t       * OutData_S);
 
 #endif
+
+fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication(const uint32_t * InData_CurveType,
+                                                    const uint32_t * InData_Cmd,
+                                                    const uint32_t * InData_KeyIndex,
+                                                    const uint32_t * InData_P,
+                                                    const uint32_t * Domain_Param,
+                                                    uint32_t       * OutData_R);
 
 fsp_err_t HW_SCE_ECC_ED25519WrappedScalarMultiplication(const uint32_t * InData_CurveType,
                                                         const uint32_t * InData_Cmd,

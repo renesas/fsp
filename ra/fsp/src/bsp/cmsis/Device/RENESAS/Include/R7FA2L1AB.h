@@ -2169,7 +2169,7 @@ typedef struct                         /*!< (@ 0x4005C000) R_ADC0 Structure     
 
             struct
             {
-                __IM uint16_t AD : 14;    /*!< [13..0] A/D-converted value (right-justified)The format for
+                __IM uint16_t AD : 14;    /*!< [13..0] A/D-converted value (right-justified). The format for
                                            *   data determine ADCER.ADRFMT and ADCER.ADPRC.                              */
                 __IM uint16_t DIAGST : 2; /*!< [15..14] Self-Diagnosis Status                                            */
             } ADRD_RIGHT_b;
@@ -2182,7 +2182,7 @@ typedef struct                         /*!< (@ 0x4005C000) R_ADC0 Structure     
             struct
             {
                 __IM uint16_t DIAGST : 2;  /*!< [1..0] Self-Diagnosis Status                                              */
-                __IM uint16_t AD     : 14; /*!< [15..2] A/D-converted value (right-justified)The format for
+                __IM uint16_t AD     : 14; /*!< [15..2] A/D-converted value (left-justified). The format for
                                             *   data determine ADCER.ADRFMT and ADCER.ADPRC.                              */
             } ADRD_LEFT_b;
         };
@@ -6464,7 +6464,8 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
             __IOM uint32_t ASELCF : 1;   /*!< [21..21] ELC_GPT Event Source GTCCRA Input Capture Enable                 */
             __IOM uint32_t ASELCG : 1;   /*!< [22..22] ELC_GPT Event Source GTCCRA Input Capture Enable                 */
             __IOM uint32_t ASELCH : 1;   /*!< [23..23] ELC_GPT Event Source GTCCRA Input Capture Enable                 */
-            uint32_t              : 8;
+            __IOM uint32_t ASOC   : 1;   /*!< [24..24] Other channel Source GTCCRA Input Capture Enable                 */
+            uint32_t              : 7;
         } GTICASR_b;
     };
 
@@ -6511,7 +6512,8 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
             __IOM uint32_t BSELCF : 1;   /*!< [21..21] ELC_GPT Event Source GTCCRB Input Capture Enable                 */
             __IOM uint32_t BSELCG : 1;   /*!< [22..22] ELC_GPT Event Source GTCCRB Input Capture Enable                 */
             __IOM uint32_t BSELCH : 1;   /*!< [23..23] ELC_GPT Event Source GTCCRB Input Capture Enable                 */
-            uint32_t              : 8;
+            __IOM uint32_t BSOC   : 1;   /*!< [24..24] Other channel Source GTCCRB Input Capture Enable                 */
+            uint32_t              : 7;
         } GTICBSR_b;
     };
 
@@ -6522,7 +6524,10 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
         struct
         {
             __IOM uint32_t CST     : 1; /*!< [0..0] Count Start                                                        */
-            uint32_t               : 7;
+            uint32_t               : 3;
+            __IOM uint32_t AINV    : 1; /*!< [4..4] GTIOCnA input/output pin polarity reversal control                 */
+            __IOM uint32_t BINV    : 1; /*!< [5..5] GTIOCnB input/output pin polarity reversal control                 */
+            uint32_t               : 2;
             __IOM uint32_t ICDS    : 1; /*!< [8..8] Input Capture Operation Select During Count Stop                   */
             __IOM uint32_t SCGTIOC : 1; /*!< [9..9] GTIOC input Source Synchronous Clear Enable                        */
             __IOM uint32_t SSCGRP  : 2; /*!< [11..10] Synchronous Set/Clear Group Select                               */
@@ -6539,24 +6544,26 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
 
     union
     {
-        __IOM uint32_t GTUDDTYC;       /*!< (@ 0x00000030) General PWM Timer Count Direction and Duty Setting
-                                        *                  Register                                                   */
+        __IOM uint32_t GTUDDTYC;        /*!< (@ 0x00000030) General PWM Timer Count Direction and Duty Setting
+                                         *                  Register                                                   */
 
         struct
         {
-            __IOM uint32_t UD     : 1; /*!< [0..0] Count Direction Setting                                            */
-            __IOM uint32_t UDF    : 1; /*!< [1..1] Forcible Count Direction Setting                                   */
+            __IOM uint32_t UD     : 1;  /*!< [0..0] Count Direction Setting                                            */
+            __IOM uint32_t UDF    : 1;  /*!< [1..1] Forcible Count Direction Setting                                   */
             uint32_t              : 14;
-            __IOM uint32_t OADTY  : 2; /*!< [17..16] GTIOCA Output Duty Setting                                       */
-            __IOM uint32_t OADTYF : 1; /*!< [18..18] Forcible GTIOCA Output Duty Setting                              */
-            __IOM uint32_t OADTYR : 1; /*!< [19..19] GTIOCA Output Value Selecting after Releasing 0 percent/100
-                                        *   percent Duty Setting                                                      */
+            __IOM uint32_t OADTY  : 2;  /*!< [17..16] GTIOCA Output Duty Setting                                       */
+            __IOM uint32_t OADTYF : 1;  /*!< [18..18] Forcible GTIOCA Output Duty Setting                              */
+            __IOM uint32_t OADTYR : 1;  /*!< [19..19] GTIOCA Output Value Selecting after Releasing 0 percent/100
+                                         *   percent Duty Setting                                                      */
             uint32_t              : 4;
-            __IOM uint32_t OBDTY  : 2; /*!< [25..24] GTIOCB Output Duty Setting                                       */
-            __IOM uint32_t OBDTYF : 1; /*!< [26..26] Forcible GTIOCB Output Duty Setting                              */
-            __IOM uint32_t OBDTYR : 1; /*!< [27..27] GTIOCB Output Value Selecting after Releasing 0 percent/100
-                                        *   percent Duty Setting                                                      */
-            uint32_t : 4;
+            __IOM uint32_t OBDTY  : 2;  /*!< [25..24] GTIOCB Output Duty Setting                                       */
+            __IOM uint32_t OBDTYF : 1;  /*!< [26..26] Forcible GTIOCB Output Duty Setting                              */
+            __IOM uint32_t OBDTYR : 1;  /*!< [27..27] GTIOCB Output Value Selecting after Releasing 0 percent/100
+                                         *   percent Duty Setting                                                      */
+            __IOM uint32_t OABDTYT : 1; /*!< [28..28] GTIOCnA,B pin output 0%/100% duty setting reflection
+                                         *   timing setting                                                            */
+            uint32_t : 3;
         } GTUDDTYC_b;
     };
 
@@ -6600,12 +6607,24 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
 
     union
     {
-        __IOM uint32_t GTINTAD;        /*!< (@ 0x00000038) General PWM Timer Interrupt Output Setting Register        */
+        __IOM uint32_t GTINTAD;          /*!< (@ 0x00000038) General PWM Timer Interrupt Output Setting Register        */
 
         struct
         {
-            uint32_t            : 8;
-            __IOM uint32_t SCFA : 1;     /*!< [8..8] GTCCRn Register Compare Match/Input Capture Source Synchronous
+            __IOM uint32_t GTINTA : 1;   /*!< [0..0] GTCCRA Register Compare Match/Input Capture Interrupt
+                                          *   Enable                                                                    */
+            __IOM uint32_t GTINTB : 1;   /*!< [1..1] GTCCRB Register Compare Match/Input Capture Interrupt
+                                          *   Enable                                                                    */
+            __IOM uint32_t GTINTC : 1;   /*!< [2..2] GTCCRC Register Compare Match/Input Capture Interrupt
+                                          *   Enable                                                                    */
+            __IOM uint32_t GTINTD : 1;   /*!< [3..3] GTCCRD Register Compare Match/Input Capture Interrupt
+                                          *   Enable                                                                    */
+            __IOM uint32_t GTINTE : 1;   /*!< [4..4] GTCCRE Register Compare Match/Input Capture Interrupt
+                                          *   Enable                                                                    */
+            __IOM uint32_t GTINTF : 1;   /*!< [5..5] GTCCRF Register Compare Match/Input Capture Interrupt
+                                          *   Enable                                                                    */
+            __IOM uint32_t GTINTPR : 2;  /*!< [7..6] GTPR Register Compare Match Interrupt Enable                       */
+            __IOM uint32_t SCFA    : 1;  /*!< [8..8] GTCCRn Register Compare Match/Input Capture Source Synchronous
                                           *   Clear Enable                                                              */
             __IOM uint32_t SCFB : 1;     /*!< [9..9] GTCCRn Register Compare Match/Input Capture Source Synchronous
                                           *   Clear Enable                                                              */
@@ -7082,7 +7101,57 @@ typedef struct                         /*!< (@ 0x40078000) R_GPT0 Structure     
             uint32_t            : 4;
         } GTPC_b;
     };
-    __IM uint32_t RESERVED[4];
+
+    union
+    {
+        __IOM uint32_t GTADCMSC;            /*!< (@ 0x000000C0) General PWM Timer A/D Conversion Start Request
+                                             *                  Compare Match Skipping Control Register                    */
+
+        struct
+        {
+            __IOM uint32_t ADCMSC1 : 2;     /*!< [1..0] A/D Conversion Start Request Compare Match Skipping Counter
+                                             *   1 Count Source Select                                                     */
+            uint32_t               : 2;
+            __IOM uint32_t ADCMST1 : 4;     /*!< [7..4] A/D Conversion Start Request Compare Match Skipping 1
+                                             *   Skipping Count Setting                                                    */
+            __IOM uint32_t ADCMSCNT1IV : 4; /*!< [11..8] A/D Conversion Start Request Compare Match Skipping
+                                             *   Counter 1 Initial Value                                                   */
+            __IM uint32_t ADCMSCNT1 : 4;    /*!< [15..12] A/D Conversion Start Request Compare Match Skipping
+                                             *   Counter 1                                                                 */
+            __IOM uint32_t ADCMSC2 : 2;     /*!< [17..16] A/D Conversion Start Request Compare Match Skipping
+                                             *   Counter 2 Count Source Select                                             */
+            uint32_t               : 2;
+            __IOM uint32_t ADCMST2 : 4;     /*!< [23..20] A/D Conversion Start Request Compare Match Skipping
+                                             *   2 Skipping Count Setting                                                  */
+            __IOM uint32_t ADCMSCNT2IV : 4; /*!< [27..24] A/D Conversion Start Request Compare Match Skipping
+                                             *   Counter 2 Initial Value                                                   */
+            __IM uint32_t ADCMSCNT2 : 4;    /*!< [31..28] A/D Conversion Start Request Compare Match Skipping
+                                             *   Counter 2                                                                 */
+        } GTADCMSC_b;
+    };
+
+    union
+    {
+        __IOM uint32_t GTADCMSS;        /*!< (@ 0x000000C4) General PWM Timer A/D Conversion Start Request
+                                         *                  Compare Match Skipping Setting Register                    */
+
+        struct
+        {
+            __IOM uint32_t ADCMSAL : 3; /*!< [2..0] GTADTRA Register A/D Conversion Start Request Compare
+                                         *   Match Skipping Function Select                                            */
+            uint32_t               : 1;
+            __IOM uint32_t ADCMSBL : 3; /*!< [6..4] GTADTRB Register A/D Conversion Start Request Compare
+                                         *   Match Skipping Function Select                                            */
+            uint32_t               : 9;
+            __IOM uint32_t ADCMBSA : 3; /*!< [18..16] GTADTRA Register Buffer Transfer by A/D Conversion
+                                         *   Start Request Compare Match Skipping Function Select                      */
+            uint32_t               : 1;
+            __IOM uint32_t ADCMBSB : 3; /*!< [22..20] GTADTRB Register Buffer Transfer by A/D Conversion
+                                         *   Start Request Compare Match Skipping Function Select                      */
+            uint32_t : 9;
+        } GTADCMSS_b;
+    };
+    __IM uint32_t RESERVED[2];
 
     union
     {
@@ -12738,6 +12807,7 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_AGTX7_BASE        0x40084700UL
  #define R_AGTX8_BASE        0x40084800UL
  #define R_AGTX9_BASE        0x40084900UL
+ #define R_WDT1_BASE         0x40044300UL
 
 /** @} */ /* End of group Device_Peripheral_peripheralAddr */
 
@@ -12840,6 +12910,7 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_AGT7         ((R_AGTX0_Type *) R_AGTX7_BASE)
  #define R_AGT8         ((R_AGTX0_Type *) R_AGTX8_BASE)
  #define R_AGT9         ((R_AGTX0_Type *) R_AGTX9_BASE)
+ #define R_WDT1         ((R_WDT_Type *) R_WDT1_BASE)
 
 /** @} */ /* End of group Device_Peripheral_declaration */
 
@@ -15679,6 +15750,8 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_GPT0_GTDNSR_DSGTRGR_Pos         (0UL)          /*!< DSGTRGR (Bit 0)                                       */
  #define R_GPT0_GTDNSR_DSGTRGR_Msk         (0x1UL)        /*!< DSGTRGR (Bitfield-Mask: 0x01)                         */
 /* ========================================================  GTICASR  ======================================================== */
+ #define R_GPT0_GTICASR_ASOC_Pos           (24UL)         /*!< ASOC (Bit 24)                                         */
+ #define R_GPT0_GTICASR_ASOC_Msk           (0x1000000UL)  /*!< ASOC (Bitfield-Mask: 0x01)                            */
  #define R_GPT0_GTICASR_ASELC_Pos          (16UL)         /*!< ASELC (Bit 16)                                        */
  #define R_GPT0_GTICASR_ASELC_Msk          (0x10000UL)    /*!< ASELC (Bitfield-Mask: 0x01)                           */
  #define R_GPT0_GTICASR_ASCBFAH_Pos        (15UL)         /*!< ASCBFAH (Bit 15)                                      */
@@ -15702,6 +15775,8 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_GPT0_GTICASR_ASGTRGR_Pos        (0UL)          /*!< ASGTRGR (Bit 0)                                       */
  #define R_GPT0_GTICASR_ASGTRGR_Msk        (0x1UL)        /*!< ASGTRGR (Bitfield-Mask: 0x01)                         */
 /* ========================================================  GTICBSR  ======================================================== */
+ #define R_GPT0_GTICBSR_BSOC_Pos           (24UL)         /*!< BSOC (Bit 24)                                         */
+ #define R_GPT0_GTICBSR_BSOC_Msk           (0x1000000UL)  /*!< BSOC (Bitfield-Mask: 0x01)                            */
  #define R_GPT0_GTICBSR_BSELC_Pos          (16UL)         /*!< BSELC (Bit 16)                                        */
  #define R_GPT0_GTICBSR_BSELC_Msk          (0x10000UL)    /*!< BSELC (Bitfield-Mask: 0x01)                           */
  #define R_GPT0_GTICBSR_BSCBFAH_Pos        (15UL)         /*!< BSCBFAH (Bit 15)                                      */
@@ -15741,9 +15816,15 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_GPT0_GTCR_SCGTIOC_Msk           (0x200UL)      /*!< SCGTIOC (Bitfield-Mask: 0x01)                         */
  #define R_GPT0_GTCR_ICDS_Pos              (8UL)          /*!< ICDS (Bit 8)                                          */
  #define R_GPT0_GTCR_ICDS_Msk              (0x100UL)      /*!< ICDS (Bitfield-Mask: 0x01)                            */
+ #define R_GPT0_GTCR_BINV_Pos              (5UL)          /*!< BINV (Bit 5)                                          */
+ #define R_GPT0_GTCR_BINV_Msk              (0x20UL)       /*!< BINV (Bitfield-Mask: 0x01)                            */
+ #define R_GPT0_GTCR_AINV_Pos              (4UL)          /*!< AINV (Bit 4)                                          */
+ #define R_GPT0_GTCR_AINV_Msk              (0x10UL)       /*!< AINV (Bitfield-Mask: 0x01)                            */
  #define R_GPT0_GTCR_CST_Pos               (0UL)          /*!< CST (Bit 0)                                           */
  #define R_GPT0_GTCR_CST_Msk               (0x1UL)        /*!< CST (Bitfield-Mask: 0x01)                             */
 /* =======================================================  GTUDDTYC  ======================================================== */
+ #define R_GPT0_GTUDDTYC_OABDTYT_Pos       (28UL)         /*!< OABDTYT (Bit 28)                                      */
+ #define R_GPT0_GTUDDTYC_OABDTYT_Msk       (0x10000000UL) /*!< OABDTYT (Bitfield-Mask: 0x01)                         */
  #define R_GPT0_GTUDDTYC_OBDTYR_Pos        (27UL)         /*!< OBDTYR (Bit 27)                                       */
  #define R_GPT0_GTUDDTYC_OBDTYR_Msk        (0x8000000UL)  /*!< OBDTYR (Bitfield-Mask: 0x01)                          */
  #define R_GPT0_GTUDDTYC_OBDTYF_Pos        (26UL)         /*!< OBDTYF (Bit 26)                                       */
@@ -15818,7 +15899,13 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_GPT0_GTINTAD_SCFPO_Msk          (0x4000UL)     /*!< SCFPO (Bitfield-Mask: 0x01)                           */
  #define R_GPT0_GTINTAD_SCF_Pos            (8UL)          /*!< SCF (Bit 8)                                           */
  #define R_GPT0_GTINTAD_SCF_Msk            (0x100UL)      /*!< SCF (Bitfield-Mask: 0x01)                             */
+ #define R_GPT0_GTINTAD_GTINTPR_Pos        (6UL)          /*!< GTINTPR (Bit 6)                                       */
+ #define R_GPT0_GTINTAD_GTINTPR_Msk        (0xc0UL)       /*!< GTINTPR (Bitfield-Mask: 0x03)                         */
+ #define R_GPT0_GTINTAD_GTINT_Pos          (0UL)          /*!< GTINT (Bit 0)                                         */
+ #define R_GPT0_GTINTAD_GTINT_Msk          (0x1UL)        /*!< GTINT (Bitfield-Mask: 0x01)                           */
 /* =========================================================  GTST  ========================================================== */
+ #define R_GPT0_GTST_PCF_Pos               (31UL)         /*!< PCF (Bit 31)                                          */
+ #define R_GPT0_GTST_PCF_Msk               (0x80000000UL) /*!< PCF (Bitfield-Mask: 0x01)                             */
  #define R_GPT0_GTST_OABLF_Pos             (30UL)         /*!< OABLF (Bit 30)                                        */
  #define R_GPT0_GTST_OABLF_Msk             (0x40000000UL) /*!< OABLF (Bitfield-Mask: 0x01)                           */
  #define R_GPT0_GTST_OABHF_Pos             (29UL)         /*!< OABHF (Bit 29)                                        */
@@ -15855,8 +15942,6 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_GPT0_GTST_TCFB_Msk              (0x2UL)        /*!< TCFB (Bitfield-Mask: 0x01)                            */
  #define R_GPT0_GTST_TCFA_Pos              (0UL)          /*!< TCFA (Bit 0)                                          */
  #define R_GPT0_GTST_TCFA_Msk              (0x1UL)        /*!< TCFA (Bitfield-Mask: 0x01)                            */
- #define R_GPT0_GTST_PCF_Pos               (31UL)         /*!< PCF (Bit 31)                                          */
- #define R_GPT0_GTST_PCF_Msk               (0x80000000UL) /*!< PCF (Bitfield-Mask: 0x01)                             */
 /* =========================================================  GTBER  ========================================================= */
  #define R_GPT0_GTBER_ADTDB_Pos            (30UL)         /*!< ADTDB (Bit 30)                                        */
  #define R_GPT0_GTBER_ADTDB_Msk            (0x40000000UL) /*!< ADTDB (Bitfield-Mask: 0x01)                           */
@@ -16042,6 +16127,24 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_GPT0_GTPC_ASTP_Msk              (0x100UL)      /*!< ASTP (Bitfield-Mask: 0x01)                            */
  #define R_GPT0_GTPC_PCNT_Pos              (16UL)         /*!< PCNT (Bit 16)                                         */
  #define R_GPT0_GTPC_PCNT_Msk              (0xfff0000UL)  /*!< PCNT (Bitfield-Mask: 0xfff)                           */
+/* =======================================================  GTADCMSC  ======================================================== */
+ #define R_GPT0_GTADCMSC_ADCMSCNT_Pos      (12UL)         /*!< ADCMSCNT (Bit 12)                                     */
+ #define R_GPT0_GTADCMSC_ADCMSCNT_Msk      (0xf000UL)     /*!< ADCMSCNT (Bitfield-Mask: 0x0f)                        */
+ #define R_GPT0_GTADCMSC_ADCMSCNTIV_Pos    (8UL)          /*!< ADCMSCNTIV (Bit 8)                                    */
+ #define R_GPT0_GTADCMSC_ADCMSCNTIV_Msk    (0xf00UL)      /*!< ADCMSCNTIV (Bitfield-Mask: 0x0f)                      */
+ #define R_GPT0_GTADCMSC_ADCMST_Pos        (4UL)          /*!< ADCMST (Bit 4)                                        */
+ #define R_GPT0_GTADCMSC_ADCMST_Msk        (0xf0UL)       /*!< ADCMST (Bitfield-Mask: 0x0f)                          */
+ #define R_GPT0_GTADCMSC_ADCMSC_Pos        (0UL)          /*!< ADCMSC (Bit 0)                                        */
+ #define R_GPT0_GTADCMSC_ADCMSC_Msk        (0x3UL)        /*!< ADCMSC (Bitfield-Mask: 0x03)                          */
+/* =======================================================  GTADCMSS  ======================================================== */
+ #define R_GPT0_GTADCMSS_ADCMSAL_Pos       (0UL)          /*!< ADCMSAL (Bit 0)                                       */
+ #define R_GPT0_GTADCMSS_ADCMSAL_Msk       (0x7UL)        /*!< ADCMSAL (Bitfield-Mask: 0x07)                         */
+ #define R_GPT0_GTADCMSS_ADCMSBL_Pos       (4UL)          /*!< ADCMSBL (Bit 4)                                       */
+ #define R_GPT0_GTADCMSS_ADCMSBL_Msk       (0x70UL)       /*!< ADCMSBL (Bitfield-Mask: 0x07)                         */
+ #define R_GPT0_GTADCMSS_ADCMBSA_Pos       (16UL)         /*!< ADCMBSA (Bit 16)                                      */
+ #define R_GPT0_GTADCMSS_ADCMBSA_Msk       (0x70000UL)    /*!< ADCMBSA (Bitfield-Mask: 0x07)                         */
+ #define R_GPT0_GTADCMSS_ADCMBSB_Pos       (20UL)         /*!< ADCMBSB (Bit 20)                                      */
+ #define R_GPT0_GTADCMSS_ADCMBSB_Msk       (0x700000UL)   /*!< ADCMBSB (Bitfield-Mask: 0x07)                         */
 /* ========================================================  GTSECSR  ======================================================== */
  #define R_GPT0_GTSECSR_SECSEL0_Pos        (0UL)          /*!< SECSEL0 (Bit 0)                                       */
  #define R_GPT0_GTSECSR_SECSEL0_Msk        (0x1UL)        /*!< SECSEL0 (Bitfield-Mask: 0x01)                         */

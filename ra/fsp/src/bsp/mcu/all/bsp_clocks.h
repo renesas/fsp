@@ -74,7 +74,6 @@ FSP_HEADER
     (3U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
     (4U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
     (5U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
-    (6U != BSP_FEATURE_CGC_PLLCCR_TYPE) &&                      \
     !BSP_CLOCK_CFG_MAIN_OSC_POPULATED)
  #define BSP_PRV_PLL_SUPPORTED      (1)
  #if BSP_FEATURE_CGC_HAS_PLL2

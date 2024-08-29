@@ -164,6 +164,38 @@ typedef struct st_sci_uart_rs485_setting
     bsp_io_port_pin_t            de_control_pin; ///< UART Driver Enable pin.
 } sci_uart_rs485_setting_t;
 
+/** IrDA Enable/Disable. */
+typedef enum e_sci_uart_irda_enable
+{
+    SCI_UART_IRDA_DISABLED = 0,        ///< IrDA disabled.
+    SCI_UART_IRDA_ENABLED  = 1,        ///< IrDA enabled.
+} sci_uart_irda_enable_t;
+
+/** IrDA Polarity Switching. */
+typedef enum e_sci_uart_irda_polarity
+{
+    SCI_UART_IRDA_POLARITY_NORMAL   = 0, ///< IrDA Tx/Rx polarity not inverted.
+    SCI_UART_IRDA_POLARITY_INVERTED = 1, ///< IrDA Tx/Rx polarity inverted.
+} sci_uart_irda_polarity_t;
+
+/** Configuration settings for IrDA interface. */
+typedef struct st_sci_uart_irda_setting
+{
+    union
+    {
+        uint8_t ircr_bits;
+
+        struct
+        {
+            uint8_t         : 2;
+            uint8_t irrxinv : 1;       ///< IRRXD Polarity Switching
+            uint8_t irtxinv : 1;       ///< IRTXD Polarity Switching
+            uint8_t         : 3;
+            uint8_t ire     : 1;       ///< Enable IrDA pulse encoding and decoding.
+        } ircr_bits_b;
+    };
+} sci_uart_irda_setting_t;
+
 /** UART on SCI device Configuration */
 typedef struct st_sci_uart_extended_cfg
 {
@@ -175,6 +207,7 @@ typedef struct st_sci_uart_extended_cfg
     bsp_io_port_pin_t             flow_control_pin; ///< UART Driver Enable pin
     sci_uart_flow_control_t       flow_control;     ///< CTS/RTS function of the SSn pin
     sci_uart_rs485_setting_t      rs485_setting;    ///< RS-485 settings.
+    sci_uart_irda_setting_t       irda_setting;     ///< IrDA settings
 } sci_uart_extended_cfg_t;
 
 /**********************************************************************************************************************

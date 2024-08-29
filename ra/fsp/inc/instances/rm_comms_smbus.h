@@ -38,6 +38,22 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** SMBus specific event */
+typedef enum e_rm_comms_smbus_event
+{
+    RM_COMMS_SMBUS_NO_ERROR = 0,       ///< SMBus transmission complete without any error.
+    RM_COMMS_SMBUS_MISC_ERROR,         ///< Dependency modules failed.
+    RM_COMMS_SMBUS_DATA_CORRUPT,       ///< PEC byte is incorrect.
+    RM_COMMS_SMBUS_SEXT_TIMEOUT,       ///< Total transmission time exceeded 25 ms.
+    RM_COMMS_SMBUS_MEXT_TIMEOUT,       ///< Transmission time between each event exceeded 10 ms.
+} rm_comms_smbus_event_t;
+
+/** SMBus error structure */
+typedef struct rm_comms_smbus_error_t
+{
+    rm_comms_smbus_event_t smbus_event;
+} rm_comms_smbus_error_t;
+
 /**********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
@@ -69,6 +85,7 @@ typedef struct st_rm_comms_smbus_instance_ctrl
     uint32_t open;                                              ///< Open flag.
 
     rm_comms_i2c_instance_ctrl_t * p_comms_i2c_ctrl;            ///< Control block of rm_comms_i2c
+    rm_comms_smbus_error_t       * p_smbus_error;               ///< SMBus specific error code
 
     const void * p_context;
 } rm_comms_smbus_instance_ctrl_t;

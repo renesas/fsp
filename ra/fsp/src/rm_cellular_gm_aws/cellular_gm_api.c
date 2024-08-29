@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 /* Cellular module includes. */
-#include "cellular_ryz.h"
+#include "cellular_gm.h"
 
 /* Cellular includes. */
 #include "cellular_types.h"
@@ -23,44 +23,44 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#ifndef RM_CELLULAR_RYZ_PDN_ACT_PACKET_REQ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_PDN_ACT_PACKET_REQ_TIMEOUT_MS              (150000UL)
+#ifndef RM_CELLULAR_GM_PDN_ACT_PACKET_REQ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_PDN_ACT_PACKET_REQ_TIMEOUT_MS              (150000UL)
 #endif
-#ifndef RM_CELLULAR_RYZ_PDN_DEACT_PACKET_REQ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_PDN_DEACT_PACKET_REQ_TIMEOUT_MS            (40000UL)
+#ifndef RM_CELLULAR_GM_PDN_DEACT_PACKET_REQ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_PDN_DEACT_PACKET_REQ_TIMEOUT_MS            (40000UL)
 #endif
-#ifndef RM_CELLULAR_RYZ_GPRS_ATTACH_REQ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_GPRS_ATTACH_REQ_TIMEOUT_MS                 (180000UL)
+#ifndef RM_CELLULAR_GM_GPRS_ATTACH_REQ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_GPRS_ATTACH_REQ_TIMEOUT_MS                 (180000UL)
 #endif
-#ifndef RM_CELLULAR_RYZ_DNS_QUERY_REQ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_DNS_QUERY_REQ_TIMEOUT_MS                   (120000UL)
+#ifndef RM_CELLULAR_GM_DNS_QUERY_REQ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_DNS_QUERY_REQ_TIMEOUT_MS                   (120000UL)
 #endif
-#ifndef RM_CELLULAR_RYZ_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS       (120000U)
+#ifndef RM_CELLULAR_GM_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS       (120000U)
 #endif
-#ifndef RM_CELLULAR_RYZ_PACKET_REQ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_PACKET_REQ_TIMEOUT_MS                      (10000U)
+#ifndef RM_CELLULAR_GM_PACKET_REQ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_PACKET_REQ_TIMEOUT_MS                      (10000U)
 #endif
-#ifndef RM_CELLULAR_RYZ_DATA_SEND_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_DATA_SEND_TIMEOUT_MS                       (10000U)
+#ifndef RM_CELLULAR_GM_DATA_SEND_TIMEOUT_MS
+ #define RM_CELLULAR_GM_DATA_SEND_TIMEOUT_MS                       (10000U)
 #endif
-#ifndef RM_CELLULAR_RYZ_DATA_SEND_INTER_DELAY_MS
- #define RM_CELLULAR_RYZ_DATA_SEND_INTER_DELAY_MS                   (200U)
+#ifndef RM_CELLULAR_GM_DATA_SEND_INTER_DELAY_MS
+ #define RM_CELLULAR_GM_DATA_SEND_INTER_DELAY_MS                   (200U)
 #endif
-#ifndef RM_CELLULAR_RYZ_DATA_READ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_DATA_READ_TIMEOUT_MS                       (50000UL)
+#ifndef RM_CELLULAR_GM_DATA_READ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_DATA_READ_TIMEOUT_MS                       (50000UL)
 #endif
-#ifndef RM_CELLULAR_RYZ_SOCKET_DISCONNECT_PACKET_REQ_TIMEOUT_MS
- #define RM_CELLULAR_RYZ_SOCKET_DISCONNECT_PACKET_REQ_TIMEOUT_MS    (12000UL)
+#ifndef RM_CELLULAR_GM_SOCKET_DISCONNECT_PACKET_REQ_TIMEOUT_MS
+ #define RM_CELLULAR_GM_SOCKET_DISCONNECT_PACKET_REQ_TIMEOUT_MS    (12000UL)
 #endif
 
-#define RM_CELLULAR_RYZ_SOCKET_DATA_PREFIX_TOKEN                    "+SQNSRECV: "
-#define RM_CELLULAR_RYZ_SOCKET_DATA_PREFIX_TOKEN_LEN                (11U)
-#define RM_CELLULAR_RYZ_SOCKET_DATA_PREFIX_STRING_LENGTH            (SOCKET_DATA_PREFIX_TOKEN_LEN + 6U)
-#define RM_CELLULAR_RYZ_MAX_SQNSSRECV_STRING_PREFIX_STRING          (21U)            // The max data prefix string is "+SQNSRECV: 1,1500\r\n"
-#define RM_CELLULAR_RYZ_DATA_PREFIX_STRING_CHANGELINE_LENGTH        (2U)             // The length of the change line "\r\n".
-#define RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socket_id)    ((uint16_t) socket_id + 1) // Socket ID on modem starts at index 1
-#define RM_CELLULAR_RYZ_CRSM_HPLMN_RAT_LENGTH                       (9U)
+#define RM_CELLULAR_GM_SOCKET_DATA_PREFIX_TOKEN                    "+SQNSRECV: "
+#define RM_CELLULAR_GM_SOCKET_DATA_PREFIX_TOKEN_LEN                (11U)
+#define RM_CELLULAR_GM_SOCKET_DATA_PREFIX_STRING_LENGTH            (SOCKET_DATA_PREFIX_TOKEN_LEN + 6U)
+#define RM_CELLULAR_GM_MAX_SQNSSRECV_STRING_PREFIX_STRING          (21U)            // The max data prefix string is "+SQNSRECV: 1,1500\r\n"
+#define RM_CELLULAR_GM_DATA_PREFIX_STRING_CHANGELINE_LENGTH        (2U)             // The length of the change line "\r\n".
+#define RM_CELLULAR_GM_GET_MODEM_SOCKET_ID(socket_id)    ((uint16_t) socket_id + 1) // Socket ID on modem starts at index 1
+#define RM_CELLULAR_GM_CRSM_HPLMN_RAT_LENGTH                       (9U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -333,7 +333,7 @@ CellularError_t Cellular_GetPdnStatus (CellularHandle_t      cellularHandle,
 
             if (cellularStatus == CELLULAR_SUCCESS)
             {
-                for (uint8_t i = 0; i < RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS; i++)
+                for (uint8_t i = 0; i < RM_CELLULAR_GM_MAX_PDP_CONTEXTS; i++)
                 {
                     if (*pNumStatus == numStatusBuffers)
                     {
@@ -430,7 +430,7 @@ CellularError_t Cellular_ActivatePdn (CellularHandle_t cellularHandle, uint8_t c
                 (void) snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "%s=1,%u", "AT+CGACT", contextId);
                 pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                                       atReqActPdn,
-                                                                      RM_CELLULAR_RYZ_PDN_ACT_PACKET_REQ_TIMEOUT_MS);
+                                                                      RM_CELLULAR_GM_PDN_ACT_PACKET_REQ_TIMEOUT_MS);
             }
 
             if (pktStatus != CELLULAR_PKT_STATUS_OK)
@@ -500,7 +500,7 @@ CellularError_t Cellular_DeactivatePdn (CellularHandle_t cellularHandle, uint8_t
             {
                 /* Don't deactivate LTE default bearer context */
                 /* Otherwise sending AT command "+CGACT=0,1" for deactivation will result in ERROR */
-                if ((serviceStatus.rat >= CELLULAR_RAT_LTE) && (contextId == RM_CELLULAR_RYZ_DEFAULT_BEARER_CONTEXT_ID))
+                if ((serviceStatus.rat >= CELLULAR_RAT_LTE) && (contextId == RM_CELLULAR_GM_DEFAULT_BEARER_CONTEXT_ID))
                 {
                     LogInfo(("Cellular_DeactivatePdn: Default Bearer context %d Active. Not allowed to deactivate.",
                              contextId));
@@ -511,7 +511,7 @@ CellularError_t Cellular_DeactivatePdn (CellularHandle_t cellularHandle, uint8_t
                     (void) snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "%s=0,%u", "AT+CGACT", contextId);
                     pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                                           atReqDeactPdn,
-                                                                          RM_CELLULAR_RYZ_PDN_DEACT_PACKET_REQ_TIMEOUT_MS);
+                                                                          RM_CELLULAR_GM_PDN_DEACT_PACKET_REQ_TIMEOUT_MS);
                     cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
                 }
 
@@ -530,7 +530,7 @@ CellularError_t Cellular_DeactivatePdn (CellularHandle_t cellularHandle, uint8_t
                             (void) snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "%s", "AT+CGATT=0");
                             pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                                                   atReqDeactPdn,
-                                                                                  RM_CELLULAR_RYZ_GPRS_ATTACH_REQ_TIMEOUT_MS);
+                                                                                  RM_CELLULAR_GM_GPRS_ATTACH_REQ_TIMEOUT_MS);
                             cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
                         }
                         else if (cellularStatus != CELLULAR_SUCCESS)
@@ -669,7 +669,7 @@ CellularError_t Cellular_GetHostByName (CellularHandle_t cellularHandle,
 
         pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                               atReqQueryDns,
-                                                              RM_CELLULAR_RYZ_DNS_QUERY_REQ_TIMEOUT_MS);
+                                                              RM_CELLULAR_GM_DNS_QUERY_REQ_TIMEOUT_MS);
 
         if (pktStatus != CELLULAR_PKT_STATUS_OK)
         {
@@ -754,20 +754,20 @@ CellularError_t Cellular_SocketConnect (CellularHandle_t                cellular
     if (cellularStatus == CELLULAR_SUCCESS)
     {
         snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "AT+SQNSCFG=%u,%d,0,90,600,50",
-                 RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socketHandle->socketId), socketHandle->contextId);
+                 RM_CELLULAR_GM_GET_MODEM_SOCKET_ID(socketHandle->socketId), socketHandle->contextId);
 
         pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                               atReqSocketConnect,
-                                                              RM_CELLULAR_RYZ_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS);
+                                                              RM_CELLULAR_GM_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS);
 
         if (pktStatus == CELLULAR_PKT_STATUS_OK)
         {
             snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "AT+SQNSCFGEXT=%u,0,0,0",
-                     RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socketHandle->socketId));
+                     RM_CELLULAR_GM_GET_MODEM_SOCKET_ID(socketHandle->socketId));
 
             pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                                   atReqSocketConnect,
-                                                                  RM_CELLULAR_RYZ_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS);
+                                                                  RM_CELLULAR_GM_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS);
 
             if (pktStatus != CELLULAR_PKT_STATUS_OK)
             {
@@ -790,7 +790,7 @@ CellularError_t Cellular_SocketConnect (CellularHandle_t                cellular
         snprintf(cmdBuf,
                  CELLULAR_AT_CMD_MAX_SIZE,
                  "AT+SQNSD=%u,%d,%d,\"%s\",0,%d,1,0",
-                 RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socketHandle->socketId),
+                 RM_CELLULAR_GM_GET_MODEM_SOCKET_ID(socketHandle->socketId),
                  protocol,
                  socketHandle->remoteSocketAddress.port,
                  socketHandle->remoteSocketAddress.ipAddress.ipAddress,
@@ -798,7 +798,7 @@ CellularError_t Cellular_SocketConnect (CellularHandle_t                cellular
 
         pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                               atReqSocketConnect,
-                                                              RM_CELLULAR_RYZ_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS);
+                                                              RM_CELLULAR_GM_SOCKET_CONNECT_PACKET_REQ_TIMEOUT_MS);
 
         if (pktStatus != CELLULAR_PKT_STATUS_OK)
         {
@@ -837,7 +837,7 @@ CellularError_t Cellular_SocketSend (CellularHandle_t       cellularHandle,
     CellularContext_t * pContext       = (CellularContext_t *) cellularHandle;
     CellularError_t     cellularStatus = CELLULAR_SUCCESS;
     CellularPktStatus_t pktStatus      = CELLULAR_PKT_STATUS_OK;
-    uint32_t            sendTimeout    = RM_CELLULAR_RYZ_DATA_SEND_TIMEOUT_MS;
+    uint32_t            sendTimeout    = RM_CELLULAR_GM_DATA_SEND_TIMEOUT_MS;
     char                cmdBuf[CELLULAR_AT_CMD_MAX_SIZE] = {'\0'};
     CellularAtReq_t     atReqSocketSend =
     {
@@ -901,16 +901,16 @@ CellularError_t Cellular_SocketSend (CellularHandle_t       cellularHandle,
         }
 
         snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "AT+SQNSSENDEXT=%u,%u",
-                 RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socketHandle->socketId), (uint16_t) atDataReqSocketSend.dataLen);
+                 RM_CELLULAR_GM_GET_MODEM_SOCKET_ID(socketHandle->socketId), (uint16_t) atDataReqSocketSend.dataLen);
 
         pktStatus = _Cellular_AtcmdDataSend(pContext,
                                             atReqSocketSend,
                                             atDataReqSocketSend,
                                             socketSendDataPrefix,
                                             NULL,
-                                            RM_CELLULAR_RYZ_PACKET_REQ_TIMEOUT_MS,
+                                            RM_CELLULAR_GM_PACKET_REQ_TIMEOUT_MS,
                                             sendTimeout,
-                                            RM_CELLULAR_RYZ_DATA_SEND_INTER_DELAY_MS);
+                                            RM_CELLULAR_GM_DATA_SEND_INTER_DELAY_MS);
 
         if (pktStatus != CELLULAR_PKT_STATUS_OK)
         {
@@ -941,7 +941,7 @@ CellularError_t Cellular_SocketRecv (CellularHandle_t       cellularHandle,
     CellularError_t     cellularStatus = CELLULAR_SUCCESS;
     CellularPktStatus_t pktStatus      = CELLULAR_PKT_STATUS_OK;
     char                cmdBuf[CELLULAR_AT_CMD_MAX_SIZE] = {'\0'};
-    uint32_t            recvTimeout     = RM_CELLULAR_RYZ_DATA_READ_TIMEOUT_MS;
+    uint32_t            recvTimeout     = RM_CELLULAR_GM_DATA_READ_TIMEOUT_MS;
     uint32_t            recvLen         = bufferLength;
     _socketDataRecv_t   dataRecv        = {0};
     CellularAtReq_t     atReqSocketRecv =
@@ -989,7 +989,7 @@ CellularError_t Cellular_SocketRecv (CellularHandle_t       cellularHandle,
             }
 
             snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "AT+SQNSRECV=%u,%u",
-                     RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socketHandle->socketId), (uint16_t) recvLen);
+                     RM_CELLULAR_GM_GET_MODEM_SOCKET_ID(socketHandle->socketId), (uint16_t) recvLen);
             pktStatus = _Cellular_TimeoutAtcmdDataRecvRequestWithCallback(pContext,
                                                                           atReqSocketRecv,
                                                                           recvTimeout,
@@ -1044,10 +1044,10 @@ CellularError_t Cellular_SocketClose (CellularHandle_t cellularHandle, CellularS
         {
             /* Form the AT command. */
             snprintf(cmdBuf, CELLULAR_AT_CMD_MAX_SIZE, "AT+SQNSH=%u",
-                     RM_CELLULAR_RYZ_GET_MODEM_SOCKET_ID(socketHandle->socketId));
+                     RM_CELLULAR_GM_GET_MODEM_SOCKET_ID(socketHandle->socketId));
             pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                                   atReqSockClose,
-                                                                  RM_CELLULAR_RYZ_SOCKET_DISCONNECT_PACKET_REQ_TIMEOUT_MS);
+                                                                  RM_CELLULAR_GM_SOCKET_DISCONNECT_PACKET_REQ_TIMEOUT_MS);
 
             if (pktStatus != CELLULAR_PKT_STATUS_OK)
             {
@@ -1544,7 +1544,7 @@ static CellularPktStatus_t _Cellular_RecvFuncGetPdpContextActState (CellularCont
                     {
                         switch (tokenIndex)
                         {
-                            case (RM_CELLULAR_RYZ_PDN_ACT_STATUS_POS_CONTEXT_ID):
+                            case (RM_CELLULAR_GM_PDN_ACT_STATUS_POS_CONTEXT_ID):
                             {
                                 LogDebug(("_Cellular_RecvFuncGetPdpContextActState: Context Id pToken: %s", pToken));
                                 atCoreStatus = Cellular_ATStrtoi(pToken, 10, &tempValue);
@@ -1552,7 +1552,7 @@ static CellularPktStatus_t _Cellular_RecvFuncGetPdpContextActState (CellularCont
                                 if (atCoreStatus == CELLULAR_AT_SUCCESS)
                                 {
                                     if ((tempValue >= (int32_t) CELLULAR_PDN_CONTEXT_ID_MIN) &&
-                                        (tempValue <= (int32_t) RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS))
+                                        (tempValue <= (int32_t) RM_CELLULAR_GM_MAX_PDP_CONTEXTS))
                                     {
                                         contextId = (uint8_t) tempValue;
                                         pPDPContextsActInfo->contextsPresent[contextId - 1] = true;
@@ -1571,7 +1571,7 @@ static CellularPktStatus_t _Cellular_RecvFuncGetPdpContextActState (CellularCont
                                 break;
                             }
 
-                            case (RM_CELLULAR_RYZ_PDN_ACT_STATUS_POS_CONTEXT_STATE):
+                            case (RM_CELLULAR_GM_PDN_ACT_STATUS_POS_CONTEXT_STATE):
                             {
                                 LogDebug(("_Cellular_RecvFuncGetPdpContextActState: Context <Act> pToken: %s", pToken));
                                 atCoreStatus = Cellular_ATStrtoi(pToken, 10, &tempValue);
@@ -1643,7 +1643,7 @@ static CellularError_t _Cellular_GetPacketSwitchStatus (CellularHandle_t cellula
     /* Internal function. Callee check parameters. */
     pktStatus = _Cellular_TimeoutAtcmdRequestWithCallback(pContext,
                                                           atReqPacketSwitchStatus,
-                                                          RM_CELLULAR_RYZ_PDN_ACT_PACKET_REQ_TIMEOUT_MS);
+                                                          RM_CELLULAR_GM_PDN_ACT_PACKET_REQ_TIMEOUT_MS);
     cellularStatus = _Cellular_TranslatePktStatus(pktStatus);
 
     return cellularStatus;
@@ -1805,7 +1805,7 @@ static CellularPktStatus_t _Cellular_RecvFuncGetPdpContextSettings (CellularCont
                     {
                         switch (tokenIndex)
                         {
-                            case (RM_CELLULAR_RYZ_PDN_STATUS_POS_CONTEXT_ID):
+                            case (RM_CELLULAR_GM_PDN_STATUS_POS_CONTEXT_ID):
                             {
                                 LogDebug(("_Cellular_RecvFuncGetPdpContextSettings: Context Id pToken: %s", pToken));
                                 atCoreStatus = Cellular_ATStrtoi(pToken, 10, &tempValue);
@@ -1813,7 +1813,7 @@ static CellularPktStatus_t _Cellular_RecvFuncGetPdpContextSettings (CellularCont
                                 if (atCoreStatus == CELLULAR_AT_SUCCESS)
                                 {
                                     if ((tempValue >= (int32_t) CELLULAR_PDN_CONTEXT_ID_MIN) &&
-                                        (tempValue <= (int32_t) RM_CELLULAR_RYZ_MAX_PDP_CONTEXTS))
+                                        (tempValue <= (int32_t) RM_CELLULAR_GM_MAX_PDP_CONTEXTS))
                                     {
                                         contextId = (uint8_t) tempValue;
                                         pPDPContextsInfo->contextsPresent[contextId - 1] = true;
@@ -1832,17 +1832,17 @@ static CellularPktStatus_t _Cellular_RecvFuncGetPdpContextSettings (CellularCont
                                 break;
                             }
 
-                            case (RM_CELLULAR_RYZ_PDN_STATUS_POS_CONTEXT_TYPE):
+                            case (RM_CELLULAR_GM_PDN_STATUS_POS_CONTEXT_TYPE):
                             {
                                 LogDebug(("_Cellular_RecvFuncGetPdpContextSettings: Context Type pToken: %s", pToken));
 
                                 (void) memcpy((void *) pPDPContextsInfo->ipType[contextId - 1],
                                               (void *) pToken,
-                                              RM_CELLULAR_RYZ_PDN_CONTEXT_TYPE_MAX_SIZE);
+                                              RM_CELLULAR_GM_PDN_CONTEXT_TYPE_MAX_SIZE);
                                 break;
                             }
 
-                            case (RM_CELLULAR_RYZ_PDN_STATUS_POS_APN_NAME):
+                            case (RM_CELLULAR_GM_PDN_STATUS_POS_APN_NAME):
                             {
                                 LogDebug(("_Cellular_RecvFuncGetPdpContextSettings: Context APN name pToken: %s",
                                           pToken));
@@ -1853,7 +1853,7 @@ static CellularPktStatus_t _Cellular_RecvFuncGetPdpContextSettings (CellularCont
                                 break;
                             }
 
-                            case (RM_CELLULAR_RYZ_PDN_STATUS_POS_IP_ADDRESS):
+                            case (RM_CELLULAR_GM_PDN_STATUS_POS_IP_ADDRESS):
                             {
                                 LogDebug(("_Cellular_RecvFuncGetPdpContextSettings: Context IP address pToken: %s",
                                           pToken));
@@ -2343,8 +2343,8 @@ static CellularPktStatus_t _Cellular_RecvFuncData (CellularContext_t            
         pInputLine = pAtResp->pItm->pLine; /* The first item is the data prefix. */
 
         /* Check the data prefix token "+SQNSRECV: ". */
-        if (strncmp(pInputLine, RM_CELLULAR_RYZ_SOCKET_DATA_PREFIX_TOKEN,
-                    RM_CELLULAR_RYZ_SOCKET_DATA_PREFIX_TOKEN_LEN) != 0)
+        if (strncmp(pInputLine, RM_CELLULAR_GM_SOCKET_DATA_PREFIX_TOKEN,
+                    RM_CELLULAR_GM_SOCKET_DATA_PREFIX_TOKEN_LEN) != 0)
         {
             LogError(("response item error in prefix"));
             atCoreStatus = CELLULAR_AT_ERROR;
@@ -2444,9 +2444,9 @@ static CellularPktStatus_t socketRecvDataPrefix (void     * pCallbackContext,
     CellularATError_t   atResult         = CELLULAR_AT_SUCCESS;
     CellularPktStatus_t pktStatus        = CELLULAR_PKT_STATUS_OK;
     uint32_t            i                = 0;
-    char                pLocalLine[RM_CELLULAR_RYZ_MAX_SQNSSRECV_STRING_PREFIX_STRING + 1] = "\0";
-    uint32_t            localLineLength = RM_CELLULAR_RYZ_MAX_SQNSSRECV_STRING_PREFIX_STRING >
-                                          lineLength ? lineLength : RM_CELLULAR_RYZ_MAX_SQNSSRECV_STRING_PREFIX_STRING;
+    char                pLocalLine[RM_CELLULAR_GM_MAX_SQNSSRECV_STRING_PREFIX_STRING + 1] = "\0";
+    uint32_t            localLineLength = RM_CELLULAR_GM_MAX_SQNSSRECV_STRING_PREFIX_STRING >
+                                          lineLength ? lineLength : RM_CELLULAR_GM_MAX_SQNSSRECV_STRING_PREFIX_STRING;
 
     (void) pCallbackContext;
 
@@ -2457,10 +2457,10 @@ static CellularPktStatus_t socketRecvDataPrefix (void     * pCallbackContext,
     else
     {
         /* Check if the message is a data response. */
-        if (strncmp(pLine, RM_CELLULAR_RYZ_SOCKET_DATA_PREFIX_TOKEN, RM_CELLULAR_RYZ_SOCKET_DATA_PREFIX_TOKEN_LEN) == 0)
+        if (strncmp(pLine, RM_CELLULAR_GM_SOCKET_DATA_PREFIX_TOKEN, RM_CELLULAR_GM_SOCKET_DATA_PREFIX_TOKEN_LEN) == 0)
         {
-            strncpy(pLocalLine, pLine, RM_CELLULAR_RYZ_MAX_SQNSSRECV_STRING_PREFIX_STRING);
-            pLocalLine[RM_CELLULAR_RYZ_MAX_SQNSSRECV_STRING_PREFIX_STRING] = '\0';
+            strncpy(pLocalLine, pLine, RM_CELLULAR_GM_MAX_SQNSSRECV_STRING_PREFIX_STRING);
+            pLocalLine[RM_CELLULAR_GM_MAX_SQNSSRECV_STRING_PREFIX_STRING] = '\0';
             pDataStart = pLocalLine;
 
             /* Add a '\0' char at the end of the line. */
@@ -2488,7 +2488,7 @@ static CellularPktStatus_t socketRecvDataPrefix (void     * pCallbackContext,
             if ((atResult == CELLULAR_AT_SUCCESS) && (tempValue >= 0) &&
                 (tempValue <= (int32_t) CELLULAR_MAX_RECV_DATA_LEN))
             {
-                if ((prefixLineLength + RM_CELLULAR_RYZ_DATA_PREFIX_STRING_CHANGELINE_LENGTH) > lineLength)
+                if ((prefixLineLength + RM_CELLULAR_GM_DATA_PREFIX_STRING_CHANGELINE_LENGTH) > lineLength)
                 {
                     /* More data is required. */
                     *pDataLength = 0;
@@ -2499,7 +2499,7 @@ static CellularPktStatus_t socketRecvDataPrefix (void     * pCallbackContext,
                 {
                     pDataStart    = &pLine[prefixLineLength];
                     pDataStart[0] = '\0';
-                    pDataStart    = &pDataStart[RM_CELLULAR_RYZ_DATA_PREFIX_STRING_CHANGELINE_LENGTH];
+                    pDataStart    = &pDataStart[RM_CELLULAR_GM_DATA_PREFIX_STRING_CHANGELINE_LENGTH];
                     *pDataLength  = (uint32_t) tempValue;
                 }
 
@@ -2583,7 +2583,7 @@ static bool _parseHplmn (char * pToken, void * pData)
         LogError(("_parseHplmn: pToken is NULL or pData is NULL"));
         parseStatus = false;
     }
-    else if (strlen(pToken) < (RM_CELLULAR_RYZ_CRSM_HPLMN_RAT_LENGTH))
+    else if (strlen(pToken) < (RM_CELLULAR_GM_CRSM_HPLMN_RAT_LENGTH))
     {
         LogError(("_parseHplmn: Error in processing HPLMN invalid token %s", pToken));
         parseStatus = false;

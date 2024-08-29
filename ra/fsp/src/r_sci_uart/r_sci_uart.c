@@ -166,6 +166,14 @@ static fsp_err_t r_sci_read_write_param_check(sci_uart_instance_ctrl_t const * c
 
 #endif
 
+#if BSP_PERIPHERAL_IRDA_PRESENT
+ #if SCI_UART_CFG_IRDA_SUPPORT
+static void r_sci_irda_enable(sci_uart_extended_cfg_t const * const p_extended);
+static void r_sci_irda_disable(sci_uart_extended_cfg_t const * const p_extended);
+
+ #endif
+#endif
+
 static void r_sci_uart_config_set(sci_uart_instance_ctrl_t * const p_ctrl, uart_cfg_t const * const p_cfg);
 
 #if SCI_UART_CFG_DTC_SUPPORTED
@@ -290,8 +298,10 @@ const uart_api_t g_uart_on_sci =
  * @retval  FSP_ERR_IP_CHANNEL_NOT_PRESENT The requested channel does not exist on this MCU.
  * @retval  FSP_ERR_INVALID_ARGUMENT       Flow control is enabled but flow control pin is not defined or selected channel
  *                                         does not support "Hardware CTS and Hardware RTS" flow control.
+ *                                         (or) restricted channel is selected.
  * @retval  FSP_ERR_ALREADY_OPEN           Control block has already been opened or channel is being used by another
  *                                         instance. Call close() then open() to reconfigure.
+ * @retval  FSP_ERR_INVALID_CHANNEL        IrDA is requested for a channel that does not support IrDA.
  *
  * @return                       See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                               return codes. This function calls:
@@ -336,11 +346,25 @@ fsp_err_t R_SCI_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * co
     }
  #endif
 
+ #if BSP_PERIPHERAL_IRDA_PRESENT
+  #if SCI_UART_CFG_IRDA_SUPPORT
+    if (((sci_uart_extended_cfg_t *) p_cfg->p_extend)->irda_setting.ircr_bits_b.ire)
+    {
+        FSP_ERROR_RETURN(BSP_PERIPHERAL_IRDA_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
+    }
+  #endif
+ #endif
+
     FSP_ASSERT(p_cfg->rxi_irq >= 0);
     FSP_ASSERT(p_cfg->txi_irq >= 0);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
     FSP_ASSERT(p_cfg->eri_irq >= 0);
 #endif
+
+    /* Verify that the selected channel is not among the restricted channels when ABCSE is 1. Refer "Limitations" section of r_sci_uart module in FSP User Manual */
+    FSP_ERROR_RETURN(!((BSP_FEATURE_SCI_UART_ABCSE_RESTRICTED_CHANNELS & (1 << p_cfg->channel)) &&
+                       ((sci_uart_extended_cfg_t *) p_cfg->p_extend)->p_baud_setting->semr_baudrate_bits_b.abcse),
+                     FSP_ERR_INVALID_ARGUMENT);
 
     p_ctrl->p_reg = ((R_SCI0_Type *) (R_SCI0_BASE + (SCI_REG_SIZE * p_cfg->channel)));
 
@@ -379,6 +403,14 @@ fsp_err_t R_SCI_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * co
 
     /* Negate driver enable if RS-485 mode is enabled. */
     r_sci_negate_de_pin(p_ctrl);
+
+#if BSP_PERIPHERAL_IRDA_PRESENT
+ #if SCI_UART_CFG_IRDA_SUPPORT
+
+    /* Set the IrDA configuration settings provided in ::sci_uart_extended_cfg_t. */
+    r_sci_irda_enable(p_cfg->p_extend);
+ #endif
+#endif
 
     /* Enable the SCI channel */
     R_BSP_MODULE_START(FSP_IP_SCI, p_cfg->channel);
@@ -492,6 +524,14 @@ fsp_err_t R_SCI_UART_Close (uart_ctrl_t * const p_api_ctrl)
 
     /* Negate driver enable if RS-485 mode is enabled. */
     r_sci_negate_de_pin(p_ctrl);
+
+#if BSP_PERIPHERAL_IRDA_PRESENT
+ #if SCI_UART_CFG_IRDA_SUPPORT
+
+    /* To disable IrDA. */
+    r_sci_irda_disable(p_ctrl->p_cfg->p_extend);
+ #endif
+#endif
 
     return FSP_SUCCESS;
 }
@@ -735,7 +775,7 @@ fsp_err_t R_SCI_UART_CallbackSet (uart_ctrl_t * const          p_api_ctrl,
  * @retval  FSP_ERR_ASSERTION            Pointer to UART control block is NULL or the UART is not configured to use the
  *                                       internal clock.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
- * @retval  FSP_ERR_UNSUPPORTED          A restricted channel is selected.
+ * @retval  FSP_ERR_INVALID_ARGUMENT     Restricted channel is selected.
  **********************************************************************************************************************/
 fsp_err_t R_SCI_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const p_baud_setting)
 {
@@ -744,11 +784,15 @@ fsp_err_t R_SCI_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const
 #if (SCI_UART_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_ctrl);
     FSP_ERROR_RETURN(SCI_UART_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-    /* Verify that the selected channel is not among the restricted channels when ABCSE is 1. Refer "Limitations" section of r_sci_uart module in FSP User Manual */
-    FSP_ERROR_RETURN(!((BSP_FEATURE_SCI_UART_ABCSE_RESTRICTED_CHANNELS & (1 << p_ctrl->p_cfg->channel)) && (((baud_setting_t*)p_baud_setting)->semr_baudrate_bits_b.abcse)),FSP_ERR_UNSUPPORTED);
+
     /* Verify that the On-Chip baud rate generator is currently selected. */
     FSP_ASSERT((p_ctrl->p_reg->SCR_b.CKE & 0x2) == 0U);
 #endif
+
+    /* Verify that the selected channel is not among the restricted channels when ABCSE is 1. Refer "Limitations" section of r_sci_uart module in FSP User Manual */
+    FSP_ERROR_RETURN(!((BSP_FEATURE_SCI_UART_ABCSE_RESTRICTED_CHANNELS & (1 << p_ctrl->p_cfg->channel)) &&
+                       (((baud_setting_t *) p_baud_setting)->semr_baudrate_bits_b.abcse)),
+                     FSP_ERR_INVALID_ARGUMENT);
 
     /* Save SCR configurations except transmit interrupts. Resuming transmission after reconfiguring baud settings is
      * not supported. */
@@ -1289,6 +1333,46 @@ static fsp_err_t r_sci_uart_transfer_open (sci_uart_instance_ctrl_t * const p_ct
     return err;
 }
 
+#endif
+
+#if BSP_PERIPHERAL_IRDA_PRESENT
+ #if SCI_UART_CFG_IRDA_SUPPORT
+
+/*******************************************************************************************************************//**
+ * Init IrDA module based on user configurations.
+ *
+ * @param[in]     p_extended   Pointer to extended settings
+ **********************************************************************************************************************/
+static void r_sci_irda_enable (sci_uart_extended_cfg_t const * const p_extended)
+{
+    /* The ire bit should only be set for the channel that is IrDA capable */
+    if (p_extended->irda_setting.ircr_bits_b.ire)
+    {
+        /* Enable the IrDA interface */
+        R_BSP_MODULE_START(FSP_IP_IRDA, 0);
+
+        R_IRDA->IRCR = p_extended->irda_setting.ircr_bits;
+    }
+}
+
+/*******************************************************************************************************************//**
+ * Stop IrDA module.
+ *
+ * @param[in]     p_extended   Pointer to extended settings
+ **********************************************************************************************************************/
+static void r_sci_irda_disable (sci_uart_extended_cfg_t const * const p_extended)
+{
+    /* Only disable IrDA interface on the channel it is enabled. */
+    if (p_extended->irda_setting.ircr_bits_b.ire)
+    {
+        /* Don't need to clear IRCR as interface is to be disabled. */
+
+        /* Disable the IrDA interface */
+        R_BSP_MODULE_STOP(FSP_IP_IRDA, 0);
+    }
+}
+
+ #endif
 #endif
 
 /*******************************************************************************************************************//**

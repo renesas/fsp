@@ -108,7 +108,8 @@ typedef struct st_motor_120_driver_extended_cfg
     bsp_io_port_pin_t port_wn;                                    ///< PWM output port WN
 
     uint32_t u4_pwm_timer_freq;                                   ///< PWM timer frequency (MHz)
-    uint32_t u4_pwm_carrier_freq;                                 ///< PWM carrier frequency (kHz)
+    float u4_pwm_carrier_freq;                                    ///< PWM carrier frequency (kHz) [DEPRECATED]
+    float pwm_carrier_freq;                                       ///< PWM carrier frequency (kHz)
     uint32_t u4_deadtime;                                         ///< PWM deadtime (usec)
 
     float f_current_range;                                        ///< A/D current measure range (max current) (A)

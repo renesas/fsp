@@ -211,7 +211,7 @@ fsp_err_t R_CEU_Close (capture_ctrl_t * const p_ctrl)
 
     ceu_disable_interrupts(p_instance_ctrl);
 
-    R_CEU->CAPSR = R_CEU_CAPSR_CPKIL_Msk; // Setting the CPKIL starts
+    R_CEU->CAPSR = R_CEU_CAPSR_CPKIL_Msk; // Setting the CPKIL stops capture
 
     /* Mark driver as closed
      * [Note] Set interface as closed after disabling interrupts to fascilitate any API calls in the application callback  */
@@ -238,8 +238,9 @@ fsp_err_t R_CEU_Close (capture_ctrl_t * const p_ctrl)
  * @retval FSP_ERR_ASSERTION        One or more parameters is NULL.
  * @retval FSP_ERR_NOT_OPEN         Open has not been successfully called.
  * @retval FSP_ERR_INVALID_ADDRESS  Invalid buffer address alignment.
- * @retval FSP_ERR_IN_USE           CEU is already in use.
- * @retval FSP_ERR_NOT_INITIALIZED  Callback function has not been set
+ * @retval FSP_ERR_IN_USE           Capture is in progress.
+ * @retval FSP_ERR_INVALID_STATE    Capture is pending.
+ * @retval FSP_ERR_NOT_INITIALIZED  Callback function has not been set.
  **************************************************************************************************************************/
 fsp_err_t R_CEU_CaptureStart (capture_ctrl_t * const p_ctrl, uint8_t * const p_buffer)
 {
@@ -257,6 +258,7 @@ fsp_err_t R_CEU_CaptureStart (capture_ctrl_t * const p_ctrl, uint8_t * const p_b
      * Refer to figure 53.6 "Timing of software reset and restart of capturing" in the RA8M1 manual R01UH0994EJ0100. */
     FSP_ERROR_RETURN(R_CEU->CSTSR_b.CPTON == 0x0, FSP_ERR_IN_USE);
     FSP_ERROR_RETURN(R_CEU->CAPSR_b.CPKIL == 0x0, FSP_ERR_IN_USE);
+    FSP_ERROR_RETURN(R_CEU->CAPSR_b.CE == 0x0, FSP_ERR_INVALID_STATE);
 
     ceu_extended_cfg_t * p_extend = (ceu_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 

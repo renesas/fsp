@@ -38,7 +38,6 @@
 #define BSP_OVERRIDE_TIMER_MODE_T
 #define BSP_OVERRIDE_TIMER_SOURCE_DIV_T
 #define BSP_OVERRIDE_UART_DATA_BITS_T
-#define BSP_OVERRIDE_UART_DATA_BITS_T
 
 /***********************************************************************************************************************
  * Typedef definitions

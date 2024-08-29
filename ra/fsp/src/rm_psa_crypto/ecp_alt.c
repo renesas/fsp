@@ -2,19 +2,7 @@
  *  Elliptic curves over GF(p): generic functions
  *
  *  Copyright The Mbed TLS Contributors
- *  SPDX-License-Identifier: Apache-2.0
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
 /*
@@ -24,9 +12,9 @@
  * GECC = Guide to Elliptic Curve Cryptography - Hankerson, Menezes, Vanstone
  * FIPS 186-3 http://csrc.nist.gov/publications/fips/fips186-3/fips_186-3.pdf
  * RFC 4492 for the related TLS structures and constants
-* - https://www.rfc-editor.org/rfc/rfc4492
+ * - https://www.rfc-editor.org/rfc/rfc4492
  * RFC 7748 for the Curve448 and Curve25519 curve definitions
-* - https://www.rfc-editor.org/rfc/rfc7748
+ * - https://www.rfc-editor.org/rfc/rfc7748
  *
  * [Curve25519] https://cr.yp.to/ecdh/curve25519-20060209.pdf
  *
@@ -1094,13 +1082,7 @@ cleanup:
         MBEDTLS_MPI_CHK(mbedtls_mpi_add_mpi((N), (N), &grp->P));      \
     } while (0)
 
-#if (defined(MBEDTLS_ECP_SHORT_WEIERSTRASS_ENABLED) && \
-    !(defined(MBEDTLS_ECP_NO_FALLBACK) && \
-    defined(MBEDTLS_ECP_DOUBLE_JAC_ALT) && \
-    defined(MBEDTLS_ECP_ADD_MIXED_ALT))) || \
-    (defined(MBEDTLS_ECP_MONTGOMERY_ENABLED) && \
-    !(defined(MBEDTLS_ECP_NO_FALLBACK) && \
-    defined(MBEDTLS_ECP_DOUBLE_ADD_MXZ_ALT)))
+MBEDTLS_MAYBE_UNUSED
 static inline int mbedtls_mpi_sub_mod(const mbedtls_ecp_group *grp,
                                       mbedtls_mpi *X,
                                       const mbedtls_mpi *A,
@@ -1112,7 +1094,6 @@ static inline int mbedtls_mpi_sub_mod(const mbedtls_ecp_group *grp,
 cleanup:
     return ret;
 }
-#endif /* All functions referencing mbedtls_mpi_sub_mod() are alt-implemented without fallback */
 
 /*
  * Reduce a mbedtls_mpi mod p in-place, to use after mbedtls_mpi_add_mpi and mbedtls_mpi_mul_int.
@@ -1135,6 +1116,7 @@ cleanup:
     return ret;
 }
 
+MBEDTLS_MAYBE_UNUSED
 static inline int mbedtls_mpi_mul_int_mod(const mbedtls_ecp_group *grp,
                                           mbedtls_mpi *X,
                                           const mbedtls_mpi *A,
@@ -1148,6 +1130,7 @@ cleanup:
     return ret;
 }
 
+MBEDTLS_MAYBE_UNUSED
 static inline int mbedtls_mpi_sub_int_mod(const mbedtls_ecp_group *grp,
                                           mbedtls_mpi *X,
                                           const mbedtls_mpi *A,
@@ -1164,10 +1147,7 @@ cleanup:
 #define MPI_ECP_SUB_INT(X, A, c)             \
     MBEDTLS_MPI_CHK(mbedtls_mpi_sub_int_mod(grp, X, A, c))
 
-#if defined(MBEDTLS_ECP_SHORT_WEIERSTRASS_ENABLED) && \
-    !(defined(MBEDTLS_ECP_NO_FALLBACK) && \
-    defined(MBEDTLS_ECP_DOUBLE_JAC_ALT) && \
-    defined(MBEDTLS_ECP_ADD_MIXED_ALT))
+MBEDTLS_MAYBE_UNUSED
 static inline int mbedtls_mpi_shift_l_mod(const mbedtls_ecp_group *grp,
                                           mbedtls_mpi *X,
                                           size_t count)
@@ -1178,7 +1158,6 @@ static inline int mbedtls_mpi_shift_l_mod(const mbedtls_ecp_group *grp,
 cleanup:
     return ret;
 }
-#endif \
     /* All functions referencing mbedtls_mpi_shift_l_mod() are alt-implemented without fallback */
 
 /*
@@ -3236,6 +3215,25 @@ int mbedtls_ecp_gen_key(mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair *key,
 }
 #endif /* MBEDTLS_ECP_C */
 
+int mbedtls_ecp_set_public_key(mbedtls_ecp_group_id grp_id,
+                               mbedtls_ecp_keypair *key,
+                               const mbedtls_ecp_point *Q)
+{
+    int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
+
+    if (key->grp.id == MBEDTLS_ECP_DP_NONE) {
+        /* Group not set yet */
+        if ((ret = mbedtls_ecp_group_load(&key->grp, grp_id)) != 0) {
+            return ret;
+        }
+    } else if (key->grp.id != grp_id) {
+        /* Group mismatch */
+        return MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
+    }
+    return mbedtls_ecp_copy(&key->Q, Q);
+}
+
+
 #define ECP_CURVE25519_KEY_SIZE 32
 #define ECP_CURVE448_KEY_SIZE   56
 /*
@@ -3304,10 +3302,12 @@ int mbedtls_ecp_read_key(mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair *key,
         MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&key->d, buf, buflen));
 }
 #endif
-    MBEDTLS_MPI_CHK(mbedtls_ecp_check_privkey(&key->grp, &key->d));
+    if (ret == 0) {
+        MBEDTLS_MPI_CHK(mbedtls_ecp_check_privkey(&key->grp, &key->d));
+    }
 #endif
         MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &key->d, buf, buflen ) );
-    
+
 cleanup:
 
     if (ret != 0) {
@@ -3320,10 +3320,11 @@ cleanup:
 /*
  * Write a private key.
  */
+#if !defined MBEDTLS_DEPRECATED_REMOVED
 int mbedtls_ecp_write_key(mbedtls_ecp_keypair *key,
                           unsigned char *buf, size_t buflen)
 {
-    int ret = MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
+    int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
 
 #if defined(MBEDTLS_ECP_MONTGOMERY_ENABLED)
     if (mbedtls_ecp_get_type(&key->grp) == MBEDTLS_ECP_TYPE_MONTGOMERY) {
@@ -3349,6 +3350,46 @@ int mbedtls_ecp_write_key(mbedtls_ecp_keypair *key,
 cleanup:
 
     return ret;
+}
+#endif /* MBEDTLS_DEPRECATED_REMOVED */
+
+int mbedtls_ecp_write_key_ext(const mbedtls_ecp_keypair *key,
+                              size_t *olen, unsigned char *buf, size_t buflen)
+{
+    size_t len = (key->grp.nbits + 7) / 8;
+
+    *olen = len;
+
+    /* Private key not set */
+    if (key->d.n == 0) {
+        return MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
+    }
+
+#if defined(MBEDTLS_ECP_MONTGOMERY_ENABLED)
+    if (mbedtls_ecp_get_type(&key->grp) == MBEDTLS_ECP_TYPE_MONTGOMERY) {
+        return mbedtls_mpi_write_binary_le(&key->d, buf, buflen);
+    }
+#endif
+
+#if defined(MBEDTLS_ECP_SHORT_WEIERSTRASS_ENABLED)
+    if (mbedtls_ecp_get_type(&key->grp) == MBEDTLS_ECP_TYPE_SHORT_WEIERSTRASS) {
+        return mbedtls_mpi_write_binary(&key->d, buf, buflen);
+    }
+#endif
+
+    /* Private key set but no recognized curve type? This shouldn't happen. */
+    return MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
+}
+
+/*
+ * Write a public key.
+ */
+int mbedtls_ecp_write_public_key(const mbedtls_ecp_keypair *key,
+                                 int format, size_t *olen,
+                                 unsigned char *buf, size_t buflen)
+{
+    return mbedtls_ecp_point_write_binary(&key->grp, &key->Q,
+                                          format, olen, buf, buflen);
 }
 
 #if defined(MBEDTLS_ECP_C)
@@ -3392,7 +3433,21 @@ cleanup:
 
     return ret;
 }
+
+int mbedtls_ecp_keypair_calc_public(mbedtls_ecp_keypair *key,
+                                    int (*f_rng)(void *, unsigned char *, size_t),
+                                    void *p_rng)
+{
+    return mbedtls_ecp_mul(&key->grp, &key->Q, &key->d, &key->grp.G,
+                           f_rng, p_rng);
+}
 #endif /* MBEDTLS_ECP_C */
+
+mbedtls_ecp_group_id mbedtls_ecp_keypair_get_group_id(
+    const mbedtls_ecp_keypair *key)
+{
+    return key->grp.id;
+}
 
 /*
  * Export generic key-pair parameters.
@@ -3402,15 +3457,15 @@ int mbedtls_ecp_export(const mbedtls_ecp_keypair *key, mbedtls_ecp_group *grp,
 {
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
 
-    if ((ret = mbedtls_ecp_group_copy(grp, &key->grp)) != 0) {
+    if (grp != NULL && (ret = mbedtls_ecp_group_copy(grp, &key->grp)) != 0) {
         return ret;
     }
 
-    if ((ret = mbedtls_mpi_copy(d, &key->d)) != 0) {
+    if (d != NULL && (ret = mbedtls_mpi_copy(d, &key->d)) != 0) {
         return ret;
     }
 
-    if ((ret = mbedtls_ecp_copy(Q, &key->Q)) != 0) {
+    if (Q != NULL && (ret = mbedtls_ecp_copy(Q, &key->Q)) != 0) {
         return ret;
     }
 

@@ -385,6 +385,8 @@
 #define BSP_PERIPHERAL_TZF_NS_PRESENT                 (1)
 #define BSP_PERIPHERAL_UARTA_CHANNEL_MASK             (0)
 #define BSP_PERIPHERAL_UARTA_PRESENT                  (0)
+#define BSP_PERIPHERAL_UARTA_CK_CHANNEL_MASK          (0)
+#define BSP_PERIPHERAL_UARTA_CK_PRESENT               (0)
 #define BSP_PERIPHERAL_ULPT_CHANNEL_MASK              (0x3)
 #define BSP_PERIPHERAL_ULPT_PRESENT                   (1)
 #define BSP_PERIPHERAL_ULPT_NS_CHANNEL_MASK           (0x3)

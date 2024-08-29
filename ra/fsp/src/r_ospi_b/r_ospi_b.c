@@ -9,6 +9,7 @@
  **********************************************************************************************************************/
 #include "bsp_api.h"
 #include "r_ospi_b.h"
+#include <string.h>
 
 #if OSPI_B_CFG_DMAC_SUPPORT_ENABLE
  #include "r_transfer_api.h"
@@ -16,7 +17,13 @@
 #endif
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
- #include "hw_sce_ra_private.h"
+#if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
+#include "r_rsip_api.h"
+#include "r_rsip_public.h"
+extern rsip_instance_t const * const gp_rsip_instance;
+#else
+#include "hw_sce_ra_private.h"
+#endif
 #endif
 
 /***********************************************************************************************************************
@@ -1211,6 +1218,86 @@ static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get (ospi_b_instan
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
 
+#if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
+/*******************************************************************************************************************//**
+ * Configures the device for DOTF operation.
+ *
+ * @param[in]   p_dotf_cfg    Pointer to the instance ctrl struct.
+ * @retval      FSP_SUCCESS                       DOTF configuration completed successfully.
+ * @retval      FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL   Key initialization failed.
+ * @retval      FSP_ERR_CRYPTO_SCE_FAIL           Key wrapping failed.
+ * @retval      FSP_ERR_INVALID_ARGUMENT          Invalid key type argument.
+ **********************************************************************************************************************/
+static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
+{
+	fsp_err_t   sce_ret = FSP_SUCCESS;
+	uint8_t     seed[8] = {0};
+
+	if (OSPI_B_DOTF_KEY_FORMAT_WRAPPED != p_dotf_cfg->format)
+	{
+		return FSP_ERR_INVALID_ARGUMENT;
+	}
+
+	static uint8_t s_wrapped_key[RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PRIVATE];
+	rsip_wrapped_key_t  * p_wrapped_key             = (rsip_wrapped_key_t *) s_wrapped_key;
+	p_wrapped_key->alg     = (uint8_t) RSIP_ALG_AES;
+
+	if (OSPI_B_DOTF_AES_KEY_TYPE_128 == p_dotf_cfg->key_type)
+	{
+		p_wrapped_key->subtype = RSIP_KEY_AES_128;
+		memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_128);
+	}
+	else if (OSPI_B_DOTF_AES_KEY_TYPE_192 == p_dotf_cfg->key_type)
+	{
+		return FSP_ERR_INVALID_ARGUMENT;
+	}
+	else if (OSPI_B_DOTF_AES_KEY_TYPE_256 == p_dotf_cfg->key_type)
+	{
+		p_wrapped_key->subtype = RSIP_KEY_AES_256;
+		memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_256);
+	}
+	else
+	{
+	}
+
+
+	sce_ret = gp_rsip_instance->p_api->open(gp_rsip_instance->p_ctrl, gp_rsip_instance->p_cfg);
+	if (FSP_SUCCESS != sce_ret)
+	{
+		return sce_ret;
+	}
+
+	sce_ret = gp_rsip_instance->p_api->otfInit(gp_rsip_instance->p_ctrl, RSIP_OTF_CHANNEL_0, p_wrapped_key, &seed[0]);
+	if (FSP_SUCCESS != sce_ret)
+	{
+		return sce_ret;
+	}
+
+	sce_ret = gp_rsip_instance->p_api->close(gp_rsip_instance->p_ctrl);
+	if (FSP_SUCCESS != sce_ret)
+	{
+		return sce_ret;
+	}
+
+	if (sce_ret == FSP_SUCCESS)
+	{
+		/* Disable byte order conversion. */
+		R_DOTF->REG00 = (OSPI_B_PRV_DOTF_REG00_RESET_VALUE | R_DOTF_REG00_B09_Msk);
+
+		/* Load the IV. */
+		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[0]);
+		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[1]);
+		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[2]);
+		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[3]);
+	}
+
+	/* Set the start and end area for DOTF conversion. */
+	R_DOTF->CONVAREAST = (uint32_t) p_dotf_cfg->p_start_addr;
+	R_DOTF->CONVAREAD  = (uint32_t) p_dotf_cfg->p_end_addr;
+
+	return sce_ret;
+}
+#else
 /*******************************************************************************************************************//**
  * Configures the device for DOTF operation.
  *
@@ -1227,9 +1314,9 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
     uint32_t      wrapped_key[HW_SCE_AES256_KEY_INDEX_WORD_SIZE] = {0};
     sce_oem_cmd_t key_cmd = SCE_OEM_CMD_AES128;
 
-    if((((uint32_t) &(p_dotf_cfg->p_key[0])) & 0x03) && (((uint32_t) &(p_dotf_cfg->p_iv[0])) & 0x03))
+    if ((((uint32_t) &(p_dotf_cfg->p_key[0])) & 0x03) && (((uint32_t) &(p_dotf_cfg->p_iv[0])) & 0x03))
     {
-        return FSP_ERR_INVALID_ARGUMENT; 
+        return FSP_ERR_INVALID_ARGUMENT;
     }
 
     if (OSPI_B_DOTF_AES_KEY_TYPE_128 == p_dotf_cfg->key_type)
@@ -1252,17 +1339,38 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
     /* Initialize the crypto engine. */
     HW_SCE_McuSpecificInit();
 
-    /* Copnvert plaintext key to wrapped form. */
-    sce_ret =
-        HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
-                                          key_cmd,
-                                          NULL,
-                                          NULL,
-                                          (uint8_t *) p_dotf_cfg->p_key,
-                                          (uint32_t *) wrapped_key);
-    if (FSP_SUCCESS != sce_ret)
+    if (OSPI_B_DOTF_KEY_FORMAT_PLAINTEXT == p_dotf_cfg->format)
     {
-        return sce_ret;
+        /* Convert plaintext key to wrapped form. */
+        sce_ret =
+            HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                              key_cmd,
+                                              NULL,
+                                              NULL,
+                                              (uint8_t *) p_dotf_cfg->p_key,
+                                              (uint32_t *) wrapped_key);
+        if (FSP_SUCCESS != sce_ret)
+        {
+            return sce_ret;
+        }
+    }
+    else
+    {
+        if (OSPI_B_DOTF_AES_KEY_TYPE_128 == p_dotf_cfg->key_type)
+        {
+            memcpy(wrapped_key, p_dotf_cfg->p_key, HW_SCE_AES128_KEY_INDEX_WORD_SIZE * 4);
+        }
+        else if (OSPI_B_DOTF_AES_KEY_TYPE_192 == p_dotf_cfg->key_type)
+        {
+            memcpy(wrapped_key, p_dotf_cfg->p_key, HW_SCE_AES192_KEY_INDEX_WORD_SIZE * 4);
+        }
+        else if (OSPI_B_DOTF_AES_KEY_TYPE_256 == p_dotf_cfg->key_type)
+        {
+            memcpy(wrapped_key, p_dotf_cfg->p_key, HW_SCE_AES256_KEY_INDEX_WORD_SIZE * 4);
+        }
+        else
+        {
+        }
     }
 
     /* Use wrapped key with DOTF AES Engine. */
@@ -1298,4 +1406,5 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
     return sce_ret;
 }
 
+#endif
 #endif

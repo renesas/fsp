@@ -26,10 +26,6 @@
  #if defined(MBEDTLS_SHA512_PROCESS_ALT)
   #include "hw_sce_hash_private.h"
 
-  #define SHA512_VALIDATE_RET(cond)     \
-    MBEDTLS_INTERNAL_VALIDATE_RET(cond, \
-                                  MBEDTLS_ERR_SHA512_BAD_INPUT_DATA)
-
 /*******************************************************************************************************************//**
  * @addtogroup RM_PSA_CRYPTO
  * @{
@@ -46,8 +42,6 @@ int mbedtls_internal_sha512_process_ext (mbedtls_sha512_context * ctx,
                                          const unsigned char      data[SIZE_MBEDTLS_SHA512_PROCESS_BUFFER_BYTES],
                                          uint32_t                 len)
 {
-    SHA512_VALIDATE_RET(ctx != NULL);
-    SHA512_VALIDATE_RET((const unsigned char *) data != NULL);
     uint32_t   out_data[HW_SCE_SHA512_HASH_STATE_BUFFER_SIZE] = {0};
     uint32_t * outbuff_digest_ptr = out_data;
     uint32_t   sce_hash_type[1];

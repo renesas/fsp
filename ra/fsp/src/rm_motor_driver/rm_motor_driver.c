@@ -160,7 +160,7 @@ fsp_err_t RM_MOTOR_DRIVER_Open (motor_driver_ctrl_t * const p_ctrl, motor_driver
 
     p_instance_ctrl->u2_carrier_base =
         (uint16_t) (p_extended_cfg->u2_pwm_timer_freq * MOTOR_DRIVER_KHZ_TRANS /
-                    p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
+                    p_extended_cfg->pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
     p_instance_ctrl->u2_deadtime_count = p_extended_cfg->u2_deadtime;
 
     rm_motor_driver_reset(p_instance_ctrl);
@@ -522,7 +522,7 @@ fsp_err_t RM_MOTOR_DRIVER_ParameterUpdate (motor_driver_ctrl_t * const p_ctrl, m
 
     p_instance_ctrl->u2_carrier_base =
         (uint16_t) (p_extended_cfg->u2_pwm_timer_freq * MOTOR_DRIVER_KHZ_TRANS /
-                    p_extended_cfg->u2_pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
+                    p_extended_cfg->pwm_carrier_freq / (uint16_t) MOTOR_DRIVER_MULTIPLE_TWO);
     p_instance_ctrl->u2_deadtime_count = p_extended_cfg->u2_deadtime;
 
     p_instance_ctrl->st_modulation = p_extended_cfg->mod_param;
