@@ -8,8 +8,9 @@ Thank you for your interest in contributing to FSP for RA. This document will he
 - [Feature/Enhancement Requests](#featureenhancement-requests)
 - [Contributing Code](#contributing-code)
   - [Signing Contributor License Agreement](#signing-contributor-license-agreement)
+  - [Coding Standards and Guidelines](#coding-standards-and-guidelines)
   - [Contributing through a Pull Request](#contributing-through-a-pull-request)
-- [Technical support](#technical-support)
+- [Technical Support](#technical-support)
 
 ## Bug Reports
 
@@ -43,6 +44,12 @@ If you would like to implement a feature request made by someone else, and work 
 We require community contributors to sign a Contributor License Agreement (CLA). If you or your organization haven't previously signed, a bot comment will prompt you to sign the CLA when you create a pull request.
 
 Ensure a CLA has been signed for your GitHub account by checking the [CLA page](https://cla-assistant.io/renesas/fsp).
+
+### Coding Standards and Guidelines
+
+We ask all code contributions to adhere to the following standards and guidelines:
+
+- [FSP Coding Standard](https://github.com/renesas/fsp-standards/blob/main/fsp-coding-standard.md)
 
 ### Contributing through a Pull Request
 
