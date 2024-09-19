@@ -1,5 +1,7 @@
 # Contributing to FSP for Renesas RA MCU Family
 
+Test
+
 Thank you for your interest in contributing to FSP for RA. This document will help you navigate the contribution process.
 
 ## Table of Contents
