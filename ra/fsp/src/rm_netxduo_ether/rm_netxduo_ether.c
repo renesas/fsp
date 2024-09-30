@@ -493,6 +493,8 @@ void rm_netxduo_ether_receive_packet (rm_netxduo_ether_instance_t * p_netxduo_et
             p_nx_packet->nx_packet_prepend_ptr =
                 (UCHAR *) (((uint32_t) p_nx_packet->nx_packet_prepend_ptr + 31U) & ~(31U));
 
+            p_nx_packet->nx_packet_address.nx_packet_interface_ptr = p_netxduo_ether_instance->p_ctrl->p_interface;
+
             /* Update the buffer pointer in the buffer descriptor. */
             if (FSP_SUCCESS !=
                 p_ether_instance->p_api->rxBufferUpdate(p_ether_instance->p_ctrl, p_nx_packet->nx_packet_prepend_ptr))
