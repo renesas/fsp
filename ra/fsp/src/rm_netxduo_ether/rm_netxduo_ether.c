@@ -76,13 +76,13 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
             /* The nx_interface_ip_mtu_size should be the MTU for the IP payload.
              * For regular Ethernet, the IP MTU is 1500. */
             nx_ip_interface_mtu_set(driver_req_ptr->nx_ip_driver_ptr,
-                                    p_ether_instance->p_cfg->channel,
+                                    interface_ptr->nx_interface_index,
                                     p_netxduo_ether_instance->p_cfg->mtu);
 
             /* Set the physical address (MAC address) of this IP instance.  */
             uint8_t * p_mac_address = p_ether_instance->p_cfg->p_mac_address;
             nx_ip_interface_physical_address_set(driver_req_ptr->nx_ip_driver_ptr,
-                                                 p_ether_instance->p_cfg->channel,
+                                                 interface_ptr->nx_interface_index,
                                                  (ULONG) ((p_mac_address[0] << 8) | (p_mac_address[1] << 0)),
                                                  (ULONG) ((p_mac_address[2] << 24) | (p_mac_address[3] << 16) |
                                                           (p_mac_address[4] << 8) |
@@ -91,7 +91,7 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
 
             /* Indicate to the IP software that IP to physical mapping is required.  */
             nx_ip_interface_address_mapping_configure(driver_req_ptr->nx_ip_driver_ptr,
-                                                      p_ether_instance->p_cfg->channel,
+                                                      interface_ptr->nx_interface_index,
                                                       NX_TRUE);
             break;
         }
@@ -332,7 +332,7 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
         {
             /* Return the link status in the supplied return pointer.  */
             *(driver_req_ptr->nx_ip_driver_return_ptr) =
-                driver_req_ptr->nx_ip_driver_ptr->nx_ip_interface[p_ether_instance->p_cfg->channel].nx_interface_link_up;
+                driver_req_ptr->nx_ip_driver_ptr->nx_ip_interface[interface_ptr->nx_interface_index].nx_interface_link_up;
             break;
         }
 
