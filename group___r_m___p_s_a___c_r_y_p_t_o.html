@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -280,18 +280,24 @@ Overview</h1>
 <h2><a class="anchor" id="rm-psa-crypto-features"></a>
 Features</h2>
 <p>The PSA_Crypto module provides hardware support for the following PSA Crypto operations</p><ul>
+<li>Hash<ul>
 <li>SHA256 calculation <a class="anchor" id="um_sha256_hash_calculation"></a><a class="anchor" id="um_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_sha256_hash_read"></a><a class="anchor" id="um_sha256_hash_clone"></a></li>
 <li>SHA224 calculation <a class="anchor" id="um_sha224_hash_read"></a></li>
-<li>SHA512 calculation (Available only on RSIP7) <a class="anchor" id="um_sha512_hash_multipart_calculation"></a></li>
-<li>SHA384 calculation (Available only on RSIP7) <a class="anchor" id="um_sha384_hash_multipart_calculation"></a></li>
-<li>MAC Operations <a class="anchor" id="um_sha256_hmac"></a><a class="anchor" id="um_sha224_hmac"></a></li>
+<li>SHA512 calculation (Available only on RSIP-E51A) <a class="anchor" id="um_sha512_hash_multipart_calculation"></a></li>
+<li>SHA384 calculation (Available only on RSIP-E51A) <a class="anchor" id="um_sha384_hash_multipart_calculation"></a></li>
+</ul>
+</li>
+<li>MAC<ul>
+<li>HMAC <a class="anchor" id="um_sha256_hmac"></a><a class="anchor" id="um_sha224_hmac"></a></li>
+<li>CMAC <a class="anchor" id="um_AES_cmac"></a></li>
+</ul>
+</li>
 <li>AES<ul>
 <li>Keybits - 128, 192, 256</li>
 <li>Plain-Text Key Generation <a class="anchor" id="um_AES_hardware_acceleration"></a><a class="anchor" id="um_AES256_key_generation_plaintext"></a><a class="anchor" id="um_AES128_key_generation_plaintext"></a><a class="anchor" id="um_AES192_key_generation_plaintext"></a></li>
 <li>Wrapped Key Generation <a class="anchor" id="um_AES256_key_generation_wrapped"></a><a class="anchor" id="um_AES128_key_generation_wrapped"></a><a class="anchor" id="um_AES192_key_generation_wrapped"></a></li>
 <li>Encryption and Decryption with no padding and with PKCS7 padding. <a class="anchor" id="um_AES_pkcs7_padding"></a><a class="anchor" id="um_AES128_encryption_decryption"></a><a class="anchor" id="um_AES192_encryption_decryption"></a><a class="anchor" id="um_AES256_encryption_decryption"></a></li>
 <li>CBC, CTR, CCM , XTS and GCM modes <a class="anchor" id="um_AES_cbc"></a><a class="anchor" id="um_AES_ccm"></a><a class="anchor" id="um_AES_gcm"></a><a class="anchor" id="um_AES_multipart_ctr"></a><a class="anchor" id="um_AES_xts"></a></li>
-<li>MAC operations <a class="anchor" id="um_AES_cmac"></a></li>
 <li>Export and Import of Plaintext and Wrapped keys <a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_plaintext_export"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_export"></a></li>
 </ul>
 </li>
@@ -304,8 +310,8 @@ Features</h2>
 <li>Brainpool384R1 <a class="anchor" id="um_ECC_key_generation_BP384R1"></a></li>
 </ul>
 </li>
-<li>Plain-Text Key Generation (Unavailable on SCE9 and RSIP7)</li>
-<li>Wrapped Key Generation <a class="anchor" id="um_ECC_key_generation_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_521R1Wrapped"></a>(Available only on RSIP7) <a class="anchor" id="um_ECC_key_generation_25519Wrapped"></a>(Available only on RSIP7) <a class="anchor" id="um_ECC_key_export_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_521R1Wrapped"></a></li>
+<li>Plain-Text Key Generation (Unavailable on SCE9 and RSIP-E51A)</li>
+<li>Wrapped Key Generation <a class="anchor" id="um_ECC_key_generation_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_521R1Wrapped"></a>(Available only on RSIP-E51A) <a class="anchor" id="um_ECC_key_generation_25519Wrapped"></a>(Available only on RSIP-E51A) <a class="anchor" id="um_ECC_key_export_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_521R1Wrapped"></a></li>
 <li>Signing and Verification <a class="anchor" id="um_ECC_sign_verify_smaller_hash"></a></li>
 <li>Export and Import of Plaintext keys <a class="anchor" id="um_ECC_key_export_256R1"></a><a class="anchor" id="um_ECC_key_export_256K1"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_export_384R1"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1"></a></li>
 <li>Export and Import of Wrapped keys generated by PSA. <a class="anchor" id="um_ECC_key_import_256R1"></a><a class="anchor" id="um_ECC_key_import_256K1"></a><a class="anchor" id="um_ECC_key_import_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_import_384R1"></a><a class="anchor" id="um_ECC_key_import_521R1"></a><a class="anchor" id="um_ECC_key_import_BrainPool384R1"></a></li>
@@ -313,10 +319,10 @@ Features</h2>
 </ul>
 </li>
 <li>RSA<ul>
-<li>Plain-Text Key Generation for RSA-2048. (Unavailable on SCE9 and RSIP7) <a class="anchor" id="um_RSA_key_generation"></a></li>
-<li>Wrapped Key Generation for RSA-2048. RSA-3072 and 4096 on RSIP7 only. <a class="anchor" id="um_RSA_key_generationWrapped"></a><a class="anchor" id="um_RSA_3072_key_generationWrapped"></a><a class="anchor" id="um_RSA_4096_key_generationWrapped"></a></li>
-<li>Signature Generation for RSA-2048. RSA-3072 and 4096 on RSIP7 only.</li>
-<li>Verification for RSA-2048. RSA-3072 and 4096 on SCE9 and RSIP7 only. <a class="anchor" id="um_RSA_3072_key_import_verify"></a><a class="anchor" id="um_RSA_4096_key_import_verify"></a></li>
+<li>Plain-Text Key Generation for RSA-2048. (Unavailable on SCE9 and RSIP-E51A) <a class="anchor" id="um_RSA_key_generation"></a></li>
+<li>Wrapped Key Generation for RSA-2048. RSA-3072 and 4096 on RSIP-E51A only. <a class="anchor" id="um_RSA_key_generationWrapped"></a><a class="anchor" id="um_RSA_3072_key_generationWrapped"></a><a class="anchor" id="um_RSA_4096_key_generationWrapped"></a></li>
+<li>Signature Generation for RSA-2048. RSA-3072 and 4096 on RSIP-E51A only.</li>
+<li>Verification for RSA-2048. RSA-3072 and 4096 on SCE9 and RSIP-E51A only. <a class="anchor" id="um_RSA_3072_key_import_verify"></a><a class="anchor" id="um_RSA_4096_key_import_verify"></a></li>
 <li>Encryption and Decryption with PKCS1V15 and OAEP padding <a class="anchor" id="um_RSA_PKCS1V15_encrypt_decrypt"></a><a class="anchor" id="um_RSA_OAEP_encrypt_decrypt"></a></li>
 <li>Export and Import of Plaintext keys <a class="anchor" id="um_RSA_key_export_import"></a><a class="anchor" id="um_RSA_key_import"></a><a class="anchor" id="um_RSA_key_import_e3"></a></li>
 <li>Export and Import of Wrapped keys generated by PSA. <a class="anchor" id="um_RSA_key_export_import_wrapped"></a></li>
@@ -2526,7 +2532,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -5,6 +5,8 @@ var group___r_m___c_o_m_m_s___u_s_b___p_c_d_c =
       [ "p_cfg", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#aceb8f8dd86946688eba3b4c403a90027", null ],
       [ "p_extend", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a9f346c7009433a207c9c95a403c9e7fa", null ],
       [ "p_usb_args", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a109756d538b2f8712c797cfc680da856", null ],
+      [ "ctrl_line_state", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a9487bd392e61587199c9b497d4dd655a", null ],
+      [ "line_coding", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a52afbc0da68d67be4c7676d53abf37da", null ],
       [ "p_callback", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a2eae5f84d89185b9e27484525f0b1703", null ],
       [ "p_context", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a5d8eb8291ad41c9fe352be6c6c510676", null ]
     ] ],

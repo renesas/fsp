@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -273,6 +273,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga4070e46f2fadda4ec4cb8b8f023c1a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac3441de6c487a640fae584248007a3a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gac3441de6c487a640fae584248007a3a6">R_OSPI_B_AutoCalibrate</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:gac3441de6c487a640fae584248007a3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga215959cccab9f53a2516920ed0182dfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga215959cccab9f53a2516920ed0182dfc">R_OSPI_B_DOTF_Configure</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, ospi_b_dotf_cfg_t *const p_dotf_cfg)</td></tr>
+<tr class="separator:ga215959cccab9f53a2516920ed0182dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the OSPI_B peripheral on RA MCUs. This module implements the <a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html">SPI Flash Interface</a>. </p>
@@ -1582,13 +1584,59 @@ Dummy cycles to be inserted for status read commands. </td></tr>
 
 </div>
 </div>
+<a id="ga215959cccab9f53a2516920ed0182dfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga215959cccab9f53a2516920ed0182dfc">&#9670;&nbsp;</a></span>R_OSPI_B_DOTF_Configure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_DOTF_Configure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ospi_b_dotf_cfg_t *const&#160;</td>
+          <td class="paramname"><em>p_dotf_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure DOTF</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to OSPI specific control structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dotf_cfg</td><td>Pointer to DOTF configuration structure</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>DOTF enabled successfully </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Key initialization failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Key wrapping failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid key type argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>DOTF support is not enabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

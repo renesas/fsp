@@ -35,6 +35,7 @@ var group___t_o_u_c_h =
       [ "p_drift_count", "group___t_o_u_c_h.html#a79c9744ae120f7b651f087342ad276d4", null ],
       [ "num_drift", "group___t_o_u_c_h.html#acd17408d550a2e1594615e815104e341", null ]
     ] ],
+    [ "touch_mm_info_t", "group___t_o_u_c_h.html#structtouch__mm__info__t", null ],
     [ "touch_instance_ctrl_t", "group___t_o_u_c_h.html#structtouch__instance__ctrl__t", [
       [ "open", "group___t_o_u_c_h.html#ab7bab704c869657f87c020b7febb5a07", null ],
       [ "binfo", "group___t_o_u_c_h.html#a6de5b5906a2eb2bf98ea1446b183318c", null ],
@@ -43,7 +44,8 @@ var group___t_o_u_c_h =
       [ "serial_tuning_enable", "group___t_o_u_c_h.html#ab9f4c382d2955349297dcba204c05940", null ],
       [ "pinfo", "group___t_o_u_c_h.html#a475ddefbfaefb1625070f4989594041e", null ],
       [ "p_touch_cfg", "group___t_o_u_c_h.html#a375f7cc4a3dea84f06a892f95fc1da34", null ],
-      [ "p_ctsu_instance", "group___t_o_u_c_h.html#a0e9be579ea8c2bdfa9deec70b7a4bcbf", null ]
+      [ "p_ctsu_instance", "group___t_o_u_c_h.html#a0e9be579ea8c2bdfa9deec70b7a4bcbf", null ],
+      [ "p_touch_mm_info", "group___t_o_u_c_h.html#af37dc5cc7c595c93887c28d65e035cce", null ]
     ] ],
     [ "RM_TOUCH_Open", "group___t_o_u_c_h.html#gafa9a9e5c3000e3daedd1050fa0d942fd", null ],
     [ "RM_TOUCH_ScanStart", "group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82", null ],

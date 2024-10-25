@@ -13,6 +13,7 @@ var _r_e_f__m_a_t_e_r_i_a_l_s =
       [ "List of Code Change Highlights", "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html#FREERTOS_MIGRATION-code-changes", null ]
     ] ],
     [ "Cortex-M85 Caches", "_c_m85__c_a_c_h_e_s.html", [
+      [ "Changes", "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-changes", null ],
       [ "Overview", "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-overview", null ],
       [ "CM85 Cache Features", "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-cm85-cache-features", null ],
       [ "RA8 Cache Background Information", "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-ra8-cache-background-information", null ],

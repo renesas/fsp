@@ -1,0 +1,843 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: SENSOR Middleware Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.6.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">SENSOR Middleware Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_n_s_o_r___i_n_t_e_r_f_a_c_e_s.html">Sensor</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for AIR SENSOR Middleware functions. </p>
+<h1><a class="anchor" id="RM_AIR_SENSOR_API_Summary"></a>
+Summary</h1>
+<p>The AIR SENSOR interface provides AIR SENSOR functionality. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structrm__air__sensor__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__callback__args__t">rm_air_sensor_callback_args_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__air__sensor__raw__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__raw__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__air__sensor__version__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__version__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__air__sensor__single__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__single__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__air__sensor__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__data__t">rm_air_sensor_data_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__air__sensor__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__cfg__t">rm_air_sensor_cfg_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__air__sensor__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__api__t">rm_air_sensor_api_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__air__sensor__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__instance__t">rm_air_sensor_instance_t</a></td></tr>
+<tr class="separator:structrm__air__sensor__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga2be38d3a427c43dde1033acc572f6798"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a></td></tr>
+<tr class="separator:ga2be38d3a427c43dde1033acc572f6798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga23f745a0dafb0f0a5e96246d90d3ecfd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga23f745a0dafb0f0a5e96246d90d3ecfd">rm_air_sensor_event_t</a> </td></tr>
+<tr class="separator:ga23f745a0dafb0f0a5e96246d90d3ecfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrm__air__sensor__callback__args__t" id="structrm__air__sensor__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__callback__args__t">&#9670;&nbsp;</a></span>rm_air_sensor_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR API callback parameter definition </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="adcf28951245197c5e791c39b67bd29ca"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a40d68bfd867dbe6804a8c4910a363136"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga23f745a0dafb0f0a5e96246d90d3ecfd">rm_air_sensor_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Event that triggered the callback. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__air__sensor__raw__data__t" id="structrm__air__sensor__raw__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__raw__data__t">&#9670;&nbsp;</a></span>rm_air_sensor_raw_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_raw_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR raw data structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4c5c1b8001977f370a47623eeb616f5f"></a>uint8_t</td>
+<td class="fieldname">
+results[37]</td>
+<td class="fielddoc">
+Raw sensor data array. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__air__sensor__version__t" id="structrm__air__sensor__version__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__version__t">&#9670;&nbsp;</a></span>rm_air_sensor_version_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_version_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR version structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a64badf2c572da1cff6c32f4f17f09b2a"></a>uint8_t</td>
+<td class="fieldname">
+major</td>
+<td class="fielddoc">
+Firmware major version. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7500fec4d2de51d206a26d6679b2cf6e"></a>uint8_t</td>
+<td class="fieldname">
+minor</td>
+<td class="fielddoc">
+Firmware minor version. </td></tr>
+<tr><td class="fieldtype">
+<a id="a823fa9eda7a5b3f38ef825f98baf6481"></a>uint8_t</td>
+<td class="fieldname">
+patch</td>
+<td class="fielddoc">
+Firmware patch version. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__air__sensor__single__data__t" id="structrm__air__sensor__single__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__single__data__t">&#9670;&nbsp;</a></span>rm_air_sensor_single_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_single_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR sensor data block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afa82d264b8386dfe0c9904e0d44e3da2"></a>uint32_t</td>
+<td class="fieldname">
+integer_part</td>
+<td class="fielddoc">
+Integer part of sensor data. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0eb11653c1f04a7ba1c2b88bd6384b98"></a>uint32_t</td>
+<td class="fieldname">
+decimal_part</td>
+<td class="fielddoc">
+Decimal part of sensor data. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__air__sensor__data__t" id="structrm__air__sensor__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__data__t">&#9670;&nbsp;</a></span>rm_air_sensor_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR data block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afc5572599ba1138fbff188cc0e7e3dac"></a>uint32_t</td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="addd99b9bbe5187b4b59bdd2d1a3d2406"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+nc_0p3</td>
+<td class="fielddoc">
+Number concentration of particle size 0.3 um - 10 um [1/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a324a3cd4e1887dac80393381c3abc931"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+nc_0p5</td>
+<td class="fielddoc">
+Number concentration of particle size 0.5 um - 10 um [1/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3379f2156a11904d6c9ee6997652b32c"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+nc_1</td>
+<td class="fielddoc">
+Number concentration of particle size 1 um - 10 um [1/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a53a705812e7210f46d3adbf4a72c67f0"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+nc_2p5</td>
+<td class="fielddoc">
+Number concentration of particle size 2.5 um - 10 um [1/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7b20e115c1bb7c66d99f144807541492"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+nc_4</td>
+<td class="fielddoc">
+Number concentration of particle size 4 um - 10 um [1/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a94ffbfa1520b406a4c64caacfc42b68a"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+pm1_1</td>
+<td class="fielddoc">
+Mass concentration of particle size 0.3 um - 1 um with reference to KCl particle [um/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a23396b92136fb9b064dbe3d5efac3fac"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+pm2p5_1</td>
+<td class="fielddoc">
+Mass concentration of particle size 0.3 um - 2.5 um with reference to KCl particle [um/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aba63f0d4dc33b937ff017efc5734d292"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+pm10_1</td>
+<td class="fielddoc">
+Mass concentration of particle size 0.3 um - 10 um with reference to KCl particle [um/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a45ba2457729e8ca18d36566ebefffb55"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+pm1_2</td>
+<td class="fielddoc">
+Mass concentration of particle size 0.3 um - 1 um with reference to cigarette smoke [um/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a49a33712aea24e161975ca5cdd9647f2"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+pm2p5_2</td>
+<td class="fielddoc">
+Mass concentration of particle size 0.3 um - 2.5 um with reference to cigarette smoke [um/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a138d9fd167fb75c304f839953e5d824e"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+pm10_2</td>
+<td class="fielddoc">
+Mass concentration of particle size 0.3 um - 10 um with reference to cigarette smoke [um/cm3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a77c891887f2fb3c25b50e22fbb57b608"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+temperature</td>
+<td class="fielddoc">
+Temperature [Celsius]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a20a136eb127e01c04a9b7b1202fe4e7c"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+humidity</td>
+<td class="fielddoc">
+Humidity [RH]. </td></tr>
+<tr><td class="fieldtype">
+<a id="aace2379eb700f89f5c705cf93cc2c1d1"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+tvoc</td>
+<td class="fielddoc">
+Total volatile organic compounds (TVOC) concentrations [mg/m3]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3ecfa8a0f734d2e74b5d7cae81864b2d"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+eco2</td>
+<td class="fielddoc">
+Estimated carbon dioxide (eCO2) level [ppm]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a52b59889423e476fcb5d04c1aea1f32f"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+iaq</td>
+<td class="fielddoc">
+Indoor Air Quality level according to UBA. </td></tr>
+<tr><td class="fieldtype">
+<a id="a771ee24bd86e5247c940af67e1977b87"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
+<td class="fieldname">
+rel_iaq</td>
+<td class="fielddoc">
+Relative IAQ. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__air__sensor__cfg__t" id="structrm__air__sensor__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__cfg__t">&#9670;&nbsp;</a></span>rm_air_sensor_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR configuration block </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:af31c38dda95ce59d3d57b71dbcc32caa"><td class="memItemLeft" align="right" valign="top"><a id="af31c38dda95ce59d3d57b71dbcc32caa"></a>
+<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t">rm_comms_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#af31c38dda95ce59d3d57b71dbcc32caa">p_comms_instance</a></td></tr>
+<tr class="memdesc:af31c38dda95ce59d3d57b71dbcc32caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Communications Middleware instance. <br /></td></tr>
+<tr class="separator:af31c38dda95ce59d3d57b71dbcc32caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f21dac90cbedec4128592e0f05d91f5"><td class="memItemLeft" align="right" valign="top"><a id="a8f21dac90cbedec4128592e0f05d91f5"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a8f21dac90cbedec4128592e0f05d91f5">p_context</a></td></tr>
+<tr class="memdesc:a8f21dac90cbedec4128592e0f05d91f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
+<tr class="separator:a8f21dac90cbedec4128592e0f05d91f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adddd57b72b9db8b650c09bfe9330ecce"><td class="memItemLeft" align="right" valign="top"><a id="adddd57b72b9db8b650c09bfe9330ecce"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#adddd57b72b9db8b650c09bfe9330ecce">p_extend</a></td></tr>
+<tr class="memdesc:adddd57b72b9db8b650c09bfe9330ecce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to extended configuration by instance of interface. <br /></td></tr>
+<tr class="separator:adddd57b72b9db8b650c09bfe9330ecce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b4ca670fd3e9bfc5bcba847fa7f7a3a"><td class="memItemLeft" align="right" valign="top"><a id="a1b4ca670fd3e9bfc5bcba847fa7f7a3a"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a1b4ca670fd3e9bfc5bcba847fa7f7a3a">p_comms_callback</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__callback__args__t">rm_air_sensor_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a1b4ca670fd3e9bfc5bcba847fa7f7a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Communications callback. <br /></td></tr>
+<tr class="separator:a1b4ca670fd3e9bfc5bcba847fa7f7a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__air__sensor__api__t" id="structrm__air__sensor__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__api__t">&#9670;&nbsp;</a></span>rm_air_sensor_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR APIs </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a7a4605590665007004ae6a4500cc8942"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a7a4605590665007004ae6a4500cc8942">open</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__cfg__t">rm_air_sensor_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a7a4605590665007004ae6a4500cc8942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb4ede589729816df54d16e587cba2db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#aeb4ede589729816df54d16e587cba2db">statusCheck</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:aeb4ede589729816df54d16e587cba2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed9740ca8bc4a9f378d44c62e96ae04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a9ed9740ca8bc4a9f378d44c62e96ae04">read</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const p_raw_data)</td></tr>
+<tr class="separator:a9ed9740ca8bc4a9f378d44c62e96ae04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad848e87f4d6030e944f11b699110bf6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ad848e87f4d6030e944f11b699110bf6d">dataCalculate</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__data__t">rm_air_sensor_data_t</a> *const p_sensor_data)</td></tr>
+<tr class="separator:ad848e87f4d6030e944f11b699110bf6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2001a28349cca6b0e57da4b5d3bfe567"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a2001a28349cca6b0e57da4b5d3bfe567">firmwareVersionGet</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const p_version)</td></tr>
+<tr class="separator:a2001a28349cca6b0e57da4b5d3bfe567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad143847a953dca9115516823db0e04a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ad143847a953dca9115516823db0e04a2">algorithmVersionGet</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const p_version)</td></tr>
+<tr class="separator:ad143847a953dca9115516823db0e04a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0d32afd8243c19a649a46e529c3e6c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ae0d32afd8243c19a649a46e529c3e6c9">close</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ae0d32afd8243c19a649a46e529c3e6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a7a4605590665007004ae6a4500cc8942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a4605590665007004ae6a4500cc8942">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_air_sensor_api_t::open) (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__cfg__t">rm_air_sensor_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open sensor.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb4ede589729816df54d16e587cba2db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb4ede589729816df54d16e587cba2db">&#9670;&nbsp;</a></span>statusCheck</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_air_sensor_api_t::statusCheck) (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read status of the sensor</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9ed9740ca8bc4a9f378d44c62e96ae04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ed9740ca8bc4a9f378d44c62e96ae04">&#9670;&nbsp;</a></span>read</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_air_sensor_api_t::read) (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const p_raw_data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read ADC data.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad848e87f4d6030e944f11b699110bf6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad848e87f4d6030e944f11b699110bf6d">&#9670;&nbsp;</a></span>dataCalculate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_air_sensor_api_t::dataCalculate) (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, const <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__data__t">rm_air_sensor_data_t</a> *const p_sensor_data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculate values from measurement results.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_sensor_data</td><td>Pointer to SENSOR data structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2001a28349cca6b0e57da4b5d3bfe567"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2001a28349cca6b0e57da4b5d3bfe567">&#9670;&nbsp;</a></span>firmwareVersionGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_air_sensor_api_t::firmwareVersionGet) (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const p_version)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read firmware version.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Pointer to firmware version structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad143847a953dca9115516823db0e04a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad143847a953dca9115516823db0e04a2">&#9670;&nbsp;</a></span>algorithmVersionGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_air_sensor_api_t::algorithmVersionGet) (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const p_version)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read algorithm version.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_version</td><td>Pointer to algorithm version structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae0d32afd8243c19a649a46e529c3e6c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d32afd8243c19a649a46e529c3e6c9">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_air_sensor_api_t::close) (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close the sensor</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structrm__air__sensor__instance__t" id="structrm__air__sensor__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__air__sensor__instance__t">&#9670;&nbsp;</a></span>rm_air_sensor_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_air_sensor_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>AIR SENSOR instance </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7868bde614b145882a19b3ff30aa5aee"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="af433faed51e22296babd61103c9106d1"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__cfg__t">rm_air_sensor_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="af29d432ef31e74a1197ab6c1167f04cd"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__api__t">rm_air_sensor_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga2be38d3a427c43dde1033acc572f6798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2be38d3a427c43dde1033acc572f6798">&#9670;&nbsp;</a></span>rm_air_sensor_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>AIR SENSOR Control block. Allocate an instance specific control block to pass into the API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga23f745a0dafb0f0a5e96246d90d3ecfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga23f745a0dafb0f0a5e96246d90d3ecfd">&#9670;&nbsp;</a></span>rm_air_sensor_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga23f745a0dafb0f0a5e96246d90d3ecfd">rm_air_sensor_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event in the callback function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfdae93f70127137ad836541cb92f1eb0a38"></a>RM_AIR_SENSOR_EVENT_SUCCESS&#160;</td><td class="fielddoc"><p>The operation completed successfully. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfda8a5ba8f8785c42f1bb87be397bdd82e9"></a>RM_AIR_SENSOR_EVENT_MEASUREMENT_COMPLETE&#160;</td><td class="fielddoc"><p>Sensor data is ready. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfda5d9af55c83951594f2007d5bad947d04"></a>RM_AIR_SENSOR_EVENT_MEASUREMENT_NOT_COMPLETE&#160;</td><td class="fielddoc"><p>Sensor measurement is in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfdaf4440aab36153e53586f3d59fb0d0f4a"></a>RM_AIR_SENSOR_EVENT_ERROR&#160;</td><td class="fielddoc"><p>A communication error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfda6ac11797f14ff70567ed74cc6fbf3fe5"></a>RM_AIR_SENSOR_EVENT_NOT_MEASURABLE&#160;</td><td class="fielddoc"><p>Dust concentration is extremely high or has accumulated inside the sensor. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfda55116d9ee2098c63ea75aea8cb89a430"></a>RM_AIR_SENSOR_EVENT_FAN_SPEED_OUT_OF_RANGE&#160;</td><td class="fielddoc"><p>Fan speed is out of the set range. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfda1ed57c462b0f41bfe951ef69e1cae013"></a>RM_AIR_SENSOR_EVENT_FAN_BROKEN&#160;</td><td class="fielddoc"><p>Fan malfunctioned or broken down. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

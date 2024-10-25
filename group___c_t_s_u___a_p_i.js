@@ -43,7 +43,8 @@ var group___c_t_s_u___a_p_i =
       [ "p_context", "group___c_t_s_u___a_p_i.html#ab481d8aeac9d6abd4fe4e551cf0d3adb", null ],
       [ "p_extend", "group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35", null ],
       [ "tuning_self_target_value", "group___c_t_s_u___a_p_i.html#a836ea53db692e0e454ee7c5110d97c57", null ],
-      [ "tuning_mutual_target_value", "group___c_t_s_u___a_p_i.html#a10bc37159fc5adae72cae6b34fb69882", null ]
+      [ "tuning_mutual_target_value", "group___c_t_s_u___a_p_i.html#a10bc37159fc5adae72cae6b34fb69882", null ],
+      [ "majority_mode", "group___c_t_s_u___a_p_i.html#a0cf4c3b47515d16195095c6c06d6f649", null ]
     ] ],
     [ "ctsu_api_t", "group___c_t_s_u___a_p_i.html#structctsu__api__t", [
       [ "open", "group___c_t_s_u___a_p_i.html#ae8f2c7b3cc9e33f0f790f76655d3d723", null ],

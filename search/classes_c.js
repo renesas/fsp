@@ -17,6 +17,7 @@ var searchData=
   ['mipi_5fdsi_5firq_5fcfg_5ft',['mipi_dsi_irq_cfg_t',['../group___m_i_p_i___d_s_i.html#structmipi__dsi__irq__cfg__t',1,'']]],
   ['mipi_5fdsi_5fstatus_5ft',['mipi_dsi_status_t',['../group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__status__t',1,'']]],
   ['mipi_5fdsi_5ftiming_5ft',['mipi_dsi_timing_t',['../group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__timing__t',1,'']]],
+  ['mmf_5fstatus_5ft',['mmf_status_t',['../group___b_s_p___m_c_u.html#structmmf__status__t',1,'']]],
   ['motor_5f120_5fcontrol_5fapi_5ft',['motor_120_control_api_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#structmotor__120__control__api__t',1,'']]],
   ['motor_5f120_5fcontrol_5fcallback_5fargs_5ft',['motor_120_control_callback_args_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#structmotor__120__control__callback__args__t',1,'']]],
   ['motor_5f120_5fcontrol_5fcfg_5ft',['motor_120_control_cfg_t',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#structmotor__120__control__cfg__t',1,'']]],

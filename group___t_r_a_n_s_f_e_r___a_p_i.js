@@ -47,7 +47,8 @@ var group___t_r_a_n_s_f_e_r___a_p_i =
     [ "transfer_size_t", "group___t_r_a_n_s_f_e_r___a_p_i.html#ga6c224e5afb174f3f6ea9eddbb9da8b12", [
       [ "TRANSFER_SIZE_1_BYTE", "group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12accfeb24892ec24e42ccf14e4d4896c21", null ],
       [ "TRANSFER_SIZE_2_BYTE", "group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12a8b6b33a085b51ea2eeed1ef119de562f", null ],
-      [ "TRANSFER_SIZE_4_BYTE", "group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12a18482bfa86e737cde78042be4db54412", null ]
+      [ "TRANSFER_SIZE_4_BYTE", "group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12a18482bfa86e737cde78042be4db54412", null ],
+      [ "TRANSFER_SIZE_8_BYTE", "group___t_r_a_n_s_f_e_r___a_p_i.html#gga6c224e5afb174f3f6ea9eddbb9da8b12a5bb02177f10ea6a06f9fdf3d8f353d6f", null ]
     ] ],
     [ "transfer_addr_mode_t", "group___t_r_a_n_s_f_e_r___a_p_i.html#gadce62e6c2407d6ffd5a94636736f7c51", [
       [ "TRANSFER_ADDR_MODE_FIXED", "group___t_r_a_n_s_f_e_r___a_p_i.html#ggadce62e6c2407d6ffd5a94636736f7c51abf18f9b3701e9e91f44055ee47d0ca47", null ],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -283,7 +283,7 @@ Overview</h1>
 <p>The Touch Middleware uses the <a class="el" href="group___c_t_s_u.html">CTSU (r_ctsu)</a> API and provides application-level APIs for scanning touch buttons, sliders, and wheels. This module is configured via the <a href="https://www.renesas.com/qe-capacitive-touch">QE for Capacitive Touch</a>.</p>
 <h2><a class="anchor" id="r-touch-features"></a>
 Features</h2>
-<p><a class="anchor" id="um_touch_slider_5position"></a><a class="anchor" id="um_touch_button_on_off"></a><a class="anchor" id="um_touch_mutual_button_on_off"></a></p><ul>
+<p><a class="anchor" id="um_touch_slider_5position"></a><a class="anchor" id="um_touch_button_on_off"></a><a class="anchor" id="um_touch_button_on_off_jmm"></a><a class="anchor" id="um_touch_mutual_button_on_off"></a></p><ul>
 <li>Supports touch buttons (Self and Mutual), sliders, and wheels</li>
 <li>Can retrieve the status of up to 64 buttons at once</li>
 <li>Software and external triggering</li>
@@ -365,21 +365,47 @@ Usage Notes</h1>
 <h2>Measurements and Data Processing</h2>
 <p>The module determines whether the button has been touched based on the change in capacitance and detects the position of the slider or wheel. This requires continued periodic measurements of capacitance. When developing your application, make sure to periodically call <a class="el" href="group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">RM_TOUCH_ScanStart()</a> and <a class="el" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1" title="Gets the 64-bit mask indicating which buttons are pressed. Also, this function gets the current posit...">RM_TOUCH_DataGet()</a>. For more details, refer to the sample application.</p>
 <h2>Button Touch Determination</h2>
+<h3>Touch judgment type</h3>
+<p>Touch detection has three modes in CTSU2.</p>
+<ol type="1">
+<li>Value Majority Mode (VMM)<br />
+ Touch module obtains one measurement result by combining the two measured value which have less noise out of three measured value for each button from CTSU module and outputs the touch judgment result.<br />
+ As a result, the measurement results has been noise-reduced in <a class="el" href="group___c_t_s_u.html">CTSU (r_ctsu)</a> module.</li>
+<li>Judgment Majority Mode (JMM)<br />
+ This mode supported from FSP V5.6.0 or later.<br />
+ Touch module obtains three measurement results for each button from CTSU module, judges each touch, and outputs the final touch judgment result by majority vote. This mode can be only applied to button. <br />
+</li>
+<li>Mixture Vmm and Jmm Mode (VMM &amp; JMM)<br />
+ This mode is a mixture of VMM and JMM. Judgment type can be selected by each touch interface configuration.</li>
+</ol>
+<div class="image">
+<img src="rm_touch_JMM_vs_VMM.png" alt="rm_touch_JMM_vs_VMM.png"/>
+<div class="caption">
+Data flow comparison of VMM and JMM</div></div>
+<p><br />
+</p>
 <h3>Creating reference value and threshold</h3>
 <p>A touch button is not a mechanical button in which the ON/OF state is switched by hardware. The ON/OFF state is determined via software. <br />
  First, a reference value is created based on measurement results in the non-touch state. The initial reference value is the first measured value. The threshold is then determined with an arbitrary offset. If a measured value exceeds the threshold, the button is determined to be in the ON state, if it does not exceed the threshold, it is in the OFF state. <br />
  Processing for self-capacitance and mutual capacitance are basically the same. However, because the amount of capacitance decreases when a mutual capacitance button is touched, the user needs to set the threshold based on decreasing measured values to determine the ON/OFF state.<br />
- You can set the threshold for each button separately in the configuration settings (threshold in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The following functions are also included to deal with issues such as chattering suppression and changes in the external environment which affect actual touch recognition.</p>
+ You can set the threshold for each button separately in the configuration settings (threshold in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The following functions are also included to deal with issues such as chattering suppression and changes in the external environment which affect actual touch recognition.<br />
+ VMM : Creates one reference value and one threshold value for each button.<br />
+ JMM : Creates three reference values and three threshold values for each button.<br />
+</p>
 <h3>Positive Noise Filter/Negative Noise Filter</h3>
 <p>As a chattering countermeasure, you can confirm the ON/OFF state after a set number of consecutive ON or OFF determinations.<br />
  In the configuration settings (on_freq and off_freq in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a>) set the number of consecutive ON or OFF states. You can do this for all buttons in the touch interface configuration. Be aware that, although this is an effective solution to improving chattering, the greater the number of consecutive states, the slower the response to actual touch.</p>
 <h3>Hysteresis</h3>
 <p>This is another chattering countermeasure. Offset the constant to the threshold after the state goes to ON, and prevent chattering by using hysteresis as the OFF-to-ON and ON-to-OFF threshold. <br />
- You can set the hysteresis value for each button in the configuration settings (hysteresis in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The larger the hysteresis, the more effective the countermeasure is in suppressing chattering. However, keep in mind that this will make it more difficult to return the state from ON-to-OFF of OFF-to-ON.</p>
+ You can set the hysteresis value for each button in the configuration settings (hysteresis in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__button__cfg__t">touch_button_cfg_t</a>). The larger the hysteresis, the more effective the countermeasure is in suppressing chattering. However, keep in mind that this will make it more difficult to return the state from ON-to-OFF of OFF-to-ON.<br />
+ VMM : One hysteresis for each button.<br />
+ JMM : Three hysteresis for each button.</p>
 <h3>Drift Correction Process</h3>
 <p>As a countermeasure for changes in the external environment, the drift correction process refreshes the reference value.<br />
  After averaging the measured value in the OFF state over a set period, if the button is in the touch OFF state after a set period, the reference value is refreshed. The drift correction is only executed in the OFF state and is cleared when touch ON is determined.<br />
- Set the period in the configuration settings (drift_freq in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a>). You can do this for all buttons in the touch interface configuration. This allows you to adjust the ability to determine the touch state despite changes in the external environment.</p>
+ Set the period in the configuration settings (drift_freq in <a class="el" href="group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t">touch_cfg_t</a>). You can do this for all buttons in the touch interface configuration. This allows you to adjust the ability to determine the touch state despite changes in the external environment.<br />
+ VMM : Drift corrects one baseline value per button.<br />
+ JMM : Drift corrects three baseline value per button.</p>
 <div class="image">
 <img src="rm_touch_Button_Touch_Determination.png" alt="rm_touch_Button_Touch_Determination.png"/>
 <div class="caption">
@@ -517,6 +543,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structtouch__wheel__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtouch__pad__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#structtouch__pad__info__t">touch_pad_info_t</a></td></tr>
 <tr class="separator:structtouch__pad__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structtouch__mm__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#structtouch__mm__info__t">touch_mm_info_t</a></td></tr>
+<tr class="separator:structtouch__mm__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structtouch__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#structtouch__instance__ctrl__t">touch_instance_ctrl_t</a></td></tr>
 <tr class="separator:structtouch__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -755,6 +783,21 @@ Copy from config by Open API. </td></tr>
 
 </div>
 </div>
+<a name="structtouch__mm__info__t" id="structtouch__mm__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structtouch__mm__info__t">&#9670;&nbsp;</a></span>touch_mm_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct touch_mm_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Information of touch button judge(CTSU2) </p>
+</div>
+</div>
+</div>
 <a name="structtouch__instance__ctrl__t" id="structtouch__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structtouch__instance__ctrl__t">&#9670;&nbsp;</a></span>touch_instance_ctrl_t</h2>
 
@@ -817,6 +860,12 @@ Pointer to initial configurations. </td></tr>
 p_ctsu_instance</td>
 <td class="fielddoc">
 Pointer to CTSU instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="af37dc5cc7c595c93887c28d65e035cce"></a><a class="el" href="group___t_o_u_c_h.html#structtouch__mm__info__t">touch_mm_info_t</a> *</td>
+<td class="fieldname">
+p_touch_mm_info</td>
+<td class="fielddoc">
+Pointer to information of touch button judge. </td></tr>
 </table>
 
 </div>
@@ -1233,7 +1282,7 @@ Pointer to CTSU instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

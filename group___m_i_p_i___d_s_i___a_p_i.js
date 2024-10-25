@@ -193,6 +193,7 @@ var group___m_i_p_i___d_s_i___a_p_i =
     [ "mipi_dsi_video_data_t", "group___m_i_p_i___d_s_i___a_p_i.html#ga1f08ee0aaead0040917442f9a6896591", [
       [ "MIPI_DSI_VIDEO_DATA_16RGB_PIXEL_STREAM", "group___m_i_p_i___d_s_i___a_p_i.html#gga1f08ee0aaead0040917442f9a6896591a9e879956166a5adc2f29a3096e2ac376", null ],
       [ "MIPI_DSI_VIDEO_DATA_18RGB_PIXEL_STREAM", "group___m_i_p_i___d_s_i___a_p_i.html#gga1f08ee0aaead0040917442f9a6896591aef682b7a0fcbb96edd985d69ae2dd0e7", null ],
+      [ "MIPI_DSI_VIDEO_DATA_18RGB_LOOSELY_PIXEL_STREAM", "group___m_i_p_i___d_s_i___a_p_i.html#gga1f08ee0aaead0040917442f9a6896591a59fe0f8272540b5b8f0f62bb85c14d74", null ],
       [ "MIPI_DSI_VIDEO_DATA_24RGB_PIXEL_STREAM", "group___m_i_p_i___d_s_i___a_p_i.html#gga1f08ee0aaead0040917442f9a6896591aaf88126e528be0cd6108819516686675", null ]
     ] ],
     [ "mipi_dsi_ack_err_t", "group___m_i_p_i___d_s_i___a_p_i.html#ga1f107e89f3b165bc57a5b7a575d4db63", [
@@ -310,8 +311,12 @@ var group___m_i_p_i___d_s_i___a_p_i =
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE0_ULP_RX", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280aad73ac22ea6bb0bc0a55dc1a1f952b32", null ],
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE0_NOT_ULP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280a51c1bfc3540687b3a091f735550696e7", null ],
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE1_NOT_ULP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280aa10d8d1baf8473a3ab65db83170773d7", null ],
+      [ "MIPI_DSI_PHY_STATUS_DATA_LANE2_NOT_ULP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280accab6b309a19bf560ccc49a4e97e112f", null ],
+      [ "MIPI_DSI_PHY_STATUS_DATA_LANE3_NOT_ULP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280af5697010bcfe30b7ab51bc9b4e6f945a", null ],
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE0_STOP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280a3b74cdc6301c93b4cb59ef65c366494f", null ],
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE1_STOP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280a5e70d230eca6ca6492c6958eea91c080", null ],
+      [ "MIPI_DSI_PHY_STATUS_DATA_LANE2_STOP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280aecf40418b01242e466e8865f857ccf06", null ],
+      [ "MIPI_DSI_PHY_STATUS_DATA_LANE3_STOP", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280a62212781c5005f884d3eb75ac86cdecd", null ],
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE0_RX_TO_TX", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280a38f4bf536bc78a7e70d6a32dd4bc152d", null ],
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE0_TX_TO_RX", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280ac79eceefec4647f8e75023b813dc587b", null ],
       [ "MIPI_DSI_PHY_STATUS_DATA_LANE0_RX_STATE", "group___m_i_p_i___d_s_i___a_p_i.html#gga97932a5bc0902ec9468dc8a6971d7280aeb5c286fddbc4ee7399147ffc96dbd8b", null ],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -536,6 +536,8 @@ Usage Notes</h1>
 <dd>
 The <code>xApplicationGetRandomNumber</code> and <code>ulApplicationGetNextSequenceNumber</code> functions should be implemented in systems using FreeRTOS Plus TCP without Secure Sockets. </dd>
 <dd>
+The weak implementations provided of <code>xApplicationGetRandomNumber</code> and <code>ulApplicationGetNextSequenceNumber</code> rely on <code>rand()</code> as implemented by the respective compiler's math library and may require heap allocation to support re-entrant usage. If these implementations are to be used, <code>srand()</code> must be seeded with a truly random value in the application in order to ensure randomness. This should be done using <code>psa_generate_random()</code> from the mbedtls stack. The weak implementations can also be instead overridden with a user-implementation that uses <code>psa_generate_random()</code>. </dd>
+<dd>
 To connect to a server using an IP address the macro ipconfigINCLUDE_FULL_INET_ADDR must be set to 1.</dd></dl>
 <h2><a class="anchor" id="rm-freertos-plus-tcp-limitations"></a>
 Limitations</h2>
@@ -548,7 +550,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

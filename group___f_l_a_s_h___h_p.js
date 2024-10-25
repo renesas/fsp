@@ -19,5 +19,9 @@ var group___f_l_a_s_h___h_p =
     [ "R_FLASH_HP_UpdateFlashClockFreq", "group___f_l_a_s_h___h_p.html#gad766079d801d722527eb6834fc662e8a", null ],
     [ "R_FLASH_HP_InfoGet", "group___f_l_a_s_h___h_p.html#ga3335f3f8b174db9b86b3773993f341c6", null ],
     [ "R_FLASH_HP_Close", "group___f_l_a_s_h___h_p.html#ga979f52ddca85b3fef0c42d1b857893e7", null ],
-    [ "R_FLASH_HP_CallbackSet", "group___f_l_a_s_h___h_p.html#ga2932aac9082f6418d518b9cbc7cdef01", null ]
+    [ "R_FLASH_HP_CallbackSet", "group___f_l_a_s_h___h_p.html#ga2932aac9082f6418d518b9cbc7cdef01", null ],
+    [ "R_FLASH_HP_AntiRollbackCounterIncrement", "group___f_l_a_s_h___h_p.html#gae132f1850e9fa25b77c9f61418d415c5", null ],
+    [ "R_FLASH_HP_AntiRollbackCounterRefresh", "group___f_l_a_s_h___h_p.html#ga36fc3d9dff4fa49aa3eb3f2b5512bba7", null ],
+    [ "R_FLASH_HP_AntiRollbackCounterRead", "group___f_l_a_s_h___h_p.html#ga7c09ac07f12fdc6a16427a6e9413e798", null ],
+    [ "R_FLASH_HP_UserLockableAreaWrite", "group___f_l_a_s_h___h_p.html#ga4221ad70c3c8812487ab247e80277d2c", null ]
 ];

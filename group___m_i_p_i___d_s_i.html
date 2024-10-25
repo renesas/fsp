@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -523,7 +523,7 @@ No LP during the HFP period</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">dsi_ppi Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the PHY-Protocol Interface interrupt priority. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Receive Interrupt Enable</td><td>Refer to the RA Configuration tool for available options.</td><td>module.driver.mipi_dsi.rxie.btarend,module.driver.mipi_dsi.rxie.lrxhto,module.driver.mipi_dsi.rxie.tato,module.driver.mipi_dsi.rxie.rxresp,module.driver.mipi_dsi.rxie.rxeotp_msk,module.driver.mipi_dsi.rxie.rxte,module.driver.mipi_dsi.rxie.rxack,module.driver.mipi_dsi.rxie.extedet,module.driver.mipi_dsi.rxie.mlferr,module.driver.mipi_dsi.rxie.eccerrm,module.driver.mipi_dsi.rxie.unexerr,module.driver.mipi_dsi.rxie.wcerr,module.driver.mipi_dsi.rxie.crcerr,module.driver.mipi_dsi.rxie.iberr,module.driver.mipi_dsi.rxie.rxovferr,module.driver.mipi_dsi.rxie.prtoerr,module.driver.mipi_dsi.rxie.noreserr,module.driver.mipi_dsi.rxie.rsizeerr,module.driver.mipi_dsi.rxie.eccerrs,module.driver.mipi_dsi.rxie.rxake </td><td>Enable receive interrupts. </td></tr>
+<td class="tree_lvl_1_cell">Receive Interrupt Enable</td><td>Refer to the RA Configuration tool for available options.</td><td>Multiple options are selected; refer to the RA Configuration tool for selected options. </td><td>Enable receive interrupts. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Fatal Error Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -543,7 +543,25 @@ LP0 Contention Error</li>
 <li>
 LP1 Contention Error</li>
 </ul>
-</td><td>module.driver.mipi_dsi.ferrie.htxto,module.driver.mipi_dsi.ferrie.lrxhto,module.driver.mipi_dsi.ferrie.tato,module.driver.mipi_dsi.ferrie.escent,module.driver.mipi_dsi.ferrie.syncesc,module.driver.mipi_dsi.ferrie.ctrl,module.driver.mipi_dsi.ferrie.clp0,module.driver.mipi_dsi.ferrie.clp1 </td><td>Enable Fatal Error interrupts. </td></tr>
+</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+HS TX Timeout</li>
+<li>
+LP-RX Host Processor Timeout</li>
+<li>
+Turnaround Acknowledge Timeout</li>
+<li>
+Escape mode Entry Error</li>
+<li>
+LPDT Sync Error</li>
+<li>
+Control Error</li>
+<li>
+LP0 Contention Error</li>
+<li>
+LP1 Contention Error</li>
+</ul>
+</td><td>Enable Fatal Error interrupts. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Physical Lane Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -579,7 +597,13 @@ Video Buffer Underflow Error</li>
 <li>
 Video Buffer Overflow Error</li>
 </ul>
-</td><td>module.driver.mipi_dsi.vmie.vbufudf,module.driver.mipi_dsi.vmie.vbufovf </td><td>Enable Video Mode interrupts. </td></tr>
+</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Video Buffer Underflow Error</li>
+<li>
+Video Buffer Overflow Error</li>
+</ul>
+</td><td>Enable Video Mode interrupts. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Sequence Channel 0 Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -599,7 +623,25 @@ Receive Correctable Error Interrupt</li>
 <li>
 Receive Acknowledge and Error Report Packet</li>
 </ul>
-</td><td>module.driver.mipi_dsi.sqch0ie.aactfin,module.driver.mipi_dsi.sqch0ie.adesfin,module.driver.mipi_dsi.sqch0ie.txiberr,module.driver.mipi_dsi.sqch0ie.rxferr,module.driver.mipi_dsi.sqch0ie.rxfail,module.driver.mipi_dsi.sqch0ie.rxpfail,module.driver.mipi_dsi.sqch0ie.rxcorerr,module.driver.mipi_dsi.sqch0ie.rxake </td><td>Enable Sequence Channel 0 interrupts. </td></tr>
+</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+All Actions Finish</li>
+<li>
+All Descriptors Finish</li>
+<li>
+Tx Internal Bus Error</li>
+<li>
+Receive Fatal Error</li>
+<li>
+Receive Fail</li>
+<li>
+Receive Packet Data Fail</li>
+<li>
+Receive Correctable Error Interrupt</li>
+<li>
+Receive Acknowledge and Error Report Packet</li>
+</ul>
+</td><td>Enable Sequence Channel 0 interrupts. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Sequence Channel 1 Interrupt Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -621,7 +663,27 @@ Receive Correctable Error Interrupt</li>
 <li>
 Receive Acknowledge and Error Report Packet</li>
 </ul>
-</td><td>module.driver.mipi_dsi.sqch1ie.aactfin,module.driver.mipi_dsi.sqch1ie.adesfin,module.driver.mipi_dsi.sqch1ie.sizeerr,module.driver.mipi_dsi.sqch1ie.txiberr,module.driver.mipi_dsi.sqch1ie.rxferr,module.driver.mipi_dsi.sqch1ie.rxfail,module.driver.mipi_dsi.sqch1ie.rxpfail,module.driver.mipi_dsi.sqch1ie.rxcorerr,module.driver.mipi_dsi.sqch1ie.rxake </td><td>Enable Sequence Channel 1 interrupts. </td></tr>
+</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+All Actions Finish</li>
+<li>
+All Descriptors Finish</li>
+<li>
+Packet Size Error</li>
+<li>
+Tx Internal Bus Error</li>
+<li>
+Receive Fatal Error</li>
+<li>
+Receive Fail</li>
+<li>
+Receive Packet Data Fail</li>
+<li>
+Receive Correctable Error Interrupt</li>
+<li>
+Receive Acknowledge and Error Report Packet</li>
+</ul>
+</td><td>Enable Sequence Channel 1 interrupts. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>mipi_dsi0_callback </td><td>A user callback function. If this callback function is provided it is called from the interrupt service routine (ISR) each time any interrupt occurs. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -1159,7 +1221,7 @@ p_data memory must not be updated until sequence operation is complete if byte_c
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

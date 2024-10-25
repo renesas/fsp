@@ -42,6 +42,8 @@ var group___i3_c___a_p_i =
     [ "i3c_cfg_t", "group___i3_c___a_p_i.html#structi3c__cfg__t", [
       [ "channel", "group___i3_c___a_p_i.html#a8065fa3e9d1d82e9ebaa60e1731d7ecc", null ],
       [ "device_type", "group___i3_c___a_p_i.html#a177e6729548170be6b6ddbe444fc6716", null ],
+      [ "p_transfer_tx", "group___i3_c___a_p_i.html#aa28340495f808dc6c0ccdadb8c718f9c", null ],
+      [ "p_transfer_rx", "group___i3_c___a_p_i.html#acb77d3aecf0fadc4b69dfa21f369ae43", null ],
       [ "p_callback", "group___i3_c___a_p_i.html#a476eb1c4e5a0defaa54d3b4a11ce099a", null ],
       [ "p_context", "group___i3_c___a_p_i.html#a8a5c800bff7722549723dea066fe19eb", null ],
       [ "p_extend", "group___i3_c___a_p_i.html#a446d4dde4f518d873b98362d3ab68303", null ]

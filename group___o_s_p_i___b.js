@@ -101,5 +101,6 @@ var group___o_s_p_i___b =
     [ "R_OSPI_B_BankSet", "group___o_s_p_i___b.html#ga353dc5f34b95e0fac9f4f3074e52df70", null ],
     [ "R_OSPI_B_SpiProtocolSet", "group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c", null ],
     [ "R_OSPI_B_Close", "group___o_s_p_i___b.html#ga4070e46f2fadda4ec4cb8b8f023c1a00", null ],
-    [ "R_OSPI_B_AutoCalibrate", "group___o_s_p_i___b.html#gac3441de6c487a640fae584248007a3a6", null ]
+    [ "R_OSPI_B_AutoCalibrate", "group___o_s_p_i___b.html#gac3441de6c487a640fae584248007a3a6", null ],
+    [ "R_OSPI_B_DOTF_Configure", "group___o_s_p_i___b.html#ga215959cccab9f53a2516920ed0182dfc", null ]
 ];

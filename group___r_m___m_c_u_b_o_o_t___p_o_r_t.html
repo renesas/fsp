@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -324,6 +324,8 @@ None</li>
 <li>
 ECDSA P-256</li>
 <li>
+ECDSA P-384</li>
+<li>
 RSA 2048</li>
 <li>
 RSA 3072</li>
@@ -424,7 +426,8 @@ Usage Notes</h1>
 <li>Define the following environment variables one at a time:<ul>
 <li>MCUBOOT_IMAGE_VERSION: Set to the version of the application image.</li>
 <li>MCUBOOT_IMAGE_SIGNING_KEY: Set the path to the key used for signing. If signing is not required, do not set this variable. If example keys are used, set MCUBOOT_IMAGE_SIGNING_KEY as follows (replace &lt;boot_project&gt; with the bootloader project path):<ul>
-<li>ECC: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-ec-p256.pem</li>
+<li>ECC 256: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-ec-p256.pem</li>
+<li>ECC 384: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-ec-p384.pem</li>
 <li>RSA 2K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-rsa-2048.pem</li>
 <li>RSA 3K: &lt;boot_project&gt;/ra/mcu-tools/MCUboot/root-rsa-3072.pem</li>
 </ul>
@@ -485,9 +488,12 @@ MCUboot Dual Bank layout of Flash LP for 512 KB Memory</div></div>
 <h2>External Memory Support</h2>
 <h1>QSPI</h1>
 <p>QSPI support for secondary image storage can be enabled in the configurator. The bootloader expects the QSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has configured the QSPI in Extended-SPI mode and that <a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a> has been called prior to invoking boot_go();. For example, on the EK_RA6M4 which has the MX25L25645G QSPI flash, after adding the QSPI module to the project, calling the following snippet will configure the QSPI for read/write operation:</p>
-<div class="fragment"><div class="line"><span class="comment">/* Status Register (SREG) payload size */</span></div><div class="line"><span class="preprocessor"># define SREG_SIZE                             0x03</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_COMMAND_WRITE_STATUS_REGISTER   0x01</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR1                     0x40</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR2                     0x00</span></div><div class="line"></div><div class="line"><span class="comment">/* Status register payload */</span></div><div class="line">uint8_t   data_sreg[SREG_SIZE]                 = {QSPI_COMMAND_WRITE_STATUS_REGISTER, QSPI_DEFAULT_SR1, QSPI_DEFAULT_SR2};</div><div class="line"></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open</a>(&amp;g_qspi0_ctrl, &amp;g_qspi0_cfg);</div><div class="line"><span class="comment">/* Configure for Extended SPI Read/Write Mode */</span></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;(g_qspi0_cfg.write_enable_command), 1, <span class="keyword">false</span>);</div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, data_sreg, SREG_SIZE, <span class="keyword">false</span>);</div></div><!-- fragment --><p>For a more detailed example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation. </p><h1>OSPI_B</h1>
+<div class="fragment"><div class="line"><span class="comment">/* Status Register (SREG) payload size */</span></div><div class="line"><span class="preprocessor"># define SREG_SIZE                             0x03</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_COMMAND_WRITE_STATUS_REGISTER   0x01</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR1                     0x40</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR2                     0x00</span></div><div class="line"></div><div class="line"><span class="comment">/* Status register payload */</span></div><div class="line">uint8_t   data_sreg[SREG_SIZE]                 = {QSPI_COMMAND_WRITE_STATUS_REGISTER, QSPI_DEFAULT_SR1, QSPI_DEFAULT_SR2};</div><div class="line"></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open</a>(&amp;g_qspi0_ctrl, &amp;g_qspi0_cfg);</div><div class="line"><span class="comment">/* Configure for Extended SPI Read/Write Mode */</span></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;(g_qspi0_cfg.write_enable_command), 1, <span class="keyword">false</span>);</div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, data_sreg, SREG_SIZE, <span class="keyword">false</span>);</div></div><!-- fragment --><p>For a more detailed example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
+<h1>OSPI_B</h1>
 <p>OSPI_B support for secondary image storage can be enabled in the configurator for RA8: The bootloader expects the OSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has initialized the OSPI_B by calling <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a> prior to invoking boot_go();.</p>
-<h2>MCUboot Memory Map</h2>
+<p>The OSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
+<dl class="section note"><dt>Note</dt><dd>: The user can specify the OSPI erase block size for the area that will be erased/written to by MCUBoot. Do not use OSPI regions that span multiple block erase sizes or block erase sizes larger than the code flash erase size of 32K. <h2>MCUboot Memory Map</h2>
+</dd></dl>
 <p>For single image projects with no external memory support, the default memory map looks like:</p>
 <div class="image">
 <object type="image/svg+xml" data="rm_mcuboot_port_map.svg">rm_mcuboot_port_map.svg</object>
@@ -506,7 +512,7 @@ MCUboot Memory Map with QSPI</div></div>
  <h2>MCUboot verification options</h2>
 <p>MCUboot in FSP supports the following secure image verification options</p><ol type="1">
 <li>Hash verification only (SHA256).</li>
-<li>Hash and signature verification (ECDSA-P256, RSA-2048 and RSA-3072).</li>
+<li>Hash and signature verification (ECDSA-P256, ECDSA-P384, RSA-2048 and RSA-3072).</li>
 <li>Hash, signature verification and image encryption (ECIES-P256 and RSA-OAEP-2048 with AES-128).</li>
 <li>Hash and image encryption only.</li>
 </ol>
@@ -554,7 +560,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -280,6 +280,7 @@ Features</h2>
 <li>Legacy Pairing supporting Just works functionality.</li>
 <li>Legacy Pairing supporting Passkey functionality.</li>
 <li>Initiate security request procedure from Peripheral as well.</li>
+<li>Secure connection with Numeric Comparison</li>
 </ul>
 </li>
 </ul>
@@ -315,6 +316,7 @@ Limitations</h2>
 <p>Service and characteristic write callback functions, created when using the QE Tool are not supported</p>
 <p>The boot from host feature currently supports 1-wire and 2-wire UART operation. If using a 1-wire boot from host the UART RX and TX pins on the host RA MCU must be tied together using a 1K ohm resistor in order to boot the DA14531/DA14535 - this resistor can remain in place after the boot operation has been completed. Boot from host using 2-wire UART is not supported when using a DA14531MOD module because not all the required pins are exposed. Boot from host using 2-wire UART is supported when a DA14535PMOD with SmartBoot (UM-B-171) is already flashed in DA14535. In this case the same pins used for GTL communication are also used for 2-wire boot.</p>
 <p>Legacy pairing functionality currently works with the DA14531/DA14535 module acting as a Peripheral. Bonding data supports only one connection. Bonding data is stored in RAM and not in Flash. Data will be lost after a reset.</p>
+<p>The RI feature of attributes is controlled from the flag read_notify = 1. In case of a write request the local data base is automatically updated. The app will be notified by an BLE_GATTS_OP_PEER_XXX_WRITE_REQ. In case of a read request and read_notify==1 (read indication) the local data base is not automatically accessed to get the value. The user is responsible to provide the reply value from gatts_cb by using R_BLE_GTL_GATTS_ReadCfm after a BLE_GATTS_EVENT_DB_ACCESS_IND with BLE_GATTS_OP_PEER_XXX_READ_REQ. The CCC values are always treated as RI values. If the attribute is CCC and it is not marked as read_notify, then r_ble_gtl automatically handles it by using a cached value.</p>
 <p>Currently supported rm_ble_abs_gtl interface functions:</p><ul>
 <li>RM_BLE_ABS_Open</li>
 <li>RM_BLE_ABS_Close</li>
@@ -368,6 +370,7 @@ Limitations</h2>
 <li>R_BLE_GAP_ReplyLtkReq</li>
 <li>R_BLE_GAP_ReplyExKeyInfoReq</li>
 <li>R_BLE_GAP_StartPairing</li>
+<li>R_BLE_GAP_ReplyNumComp</li>
 </ul>
 <p>Currently supported callback events:</p><ul>
 <li>BLE_GAP_EVENT_STACK_ON</li>
@@ -408,7 +411,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

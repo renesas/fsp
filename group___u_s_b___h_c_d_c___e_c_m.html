@@ -1,0 +1,740 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: USB HCDC_ECM (r_usb_hcdc_ecm)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.6.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___u_s_b___h_c_d_c___e_c_m.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle">
+<div class="title">USB HCDC_ECM (r_usb_hcdc_ecm)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5cf84137bcef74f0055febeadc412124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#ga5cf84137bcef74f0055febeadc412124">R_USB_HCDC_ECM_Open</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__cfg__t">ether_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga5cf84137bcef74f0055febeadc412124"><td class="mdescLeft">&#160;</td><td class="mdescRight">After USB, CDC are reset in software.Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa0c703be12efe73efdd0d47168239470">ether_api_t::open</a>.  <a href="#ga5cf84137bcef74f0055febeadc412124">More...</a><br /></td></tr>
+<tr class="separator:ga5cf84137bcef74f0055febeadc412124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab126d2bb6805d72a889721e0e3141c04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#gab126d2bb6805d72a889721e0e3141c04">R_USB_HCDC_ECM_Close</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gab126d2bb6805d72a889721e0e3141c04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables interrupts. Removes power and releases hardware lock. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a84ae3c1816a60c8fc45ccc2084805088">ether_api_t::close</a>.  <a href="#gab126d2bb6805d72a889721e0e3141c04">More...</a><br /></td></tr>
+<tr class="separator:gab126d2bb6805d72a889721e0e3141c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13615b8f9f906940496565bfd4b1636a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#ga13615b8f9f906940496565bfd4b1636a">R_USB_HCDC_ECM_BufferRelease</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga13615b8f9f906940496565bfd4b1636a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move to the next buffer in the circular receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5">ether_api_t::bufferRelease</a>.  <a href="#ga13615b8f9f906940496565bfd4b1636a">More...</a><br /></td></tr>
+<tr class="separator:ga13615b8f9f906940496565bfd4b1636a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2bde940224955f3f2850ae4e5ec18a2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#ga2bde940224955f3f2850ae4e5ec18a2a">R_USB_HCDC_ECM_RxBufferUpdate</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer)</td></tr>
+<tr class="memdesc:ga2bde940224955f3f2850ae4e5ec18a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not support this function in HCDC-ECM. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a6d088fd3b1a5326af7bedad146491d74">ether_api_t::rxBufferUpdate</a>.  <a href="#ga2bde940224955f3f2850ae4e5ec18a2a">More...</a><br /></td></tr>
+<tr class="separator:ga2bde940224955f3f2850ae4e5ec18a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa84f4362ec3fa0f91cb3e7f651a5693"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#gafa84f4362ec3fa0f91cb3e7f651a5693">R_USB_HCDC_ECM_LinkProcess</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:gafa84f4362ec3fa0f91cb3e7f651a5693"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Link up processing, the Link down processing, and the magic packet detection processing are executed. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#ae11e3e3521df4c3efe6e0dafecddee72">ether_api_t::linkProcess</a>.  <a href="#gafa84f4362ec3fa0f91cb3e7f651a5693">More...</a><br /></td></tr>
+<tr class="separator:gafa84f4362ec3fa0f91cb3e7f651a5693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07d62f803c6230002d38ee5ef321ae76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#ga07d62f803c6230002d38ee5ef321ae76">R_USB_HCDC_ECM_WakeOnLANEnable</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga07d62f803c6230002d38ee5ef321ae76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not support this function in HCDC-ECM. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#acde8967c0512722ca73a1596daf654ea">ether_api_t::wakeOnLANEnable</a>.  <a href="#ga07d62f803c6230002d38ee5ef321ae76">More...</a><br /></td></tr>
+<tr class="separator:ga07d62f803c6230002d38ee5ef321ae76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga546771ce4db1a80d07e220cceca13362"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#ga546771ce4db1a80d07e220cceca13362">R_USB_HCDC_ECM_Read</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t *const p_length_bytes)</td></tr>
+<tr class="memdesc:ga546771ce4db1a80d07e220cceca13362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive USB data. Receives data to the location specified by the pointer to the receive buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a58975a11436cc5980698b6e843eea3f3">ether_api_t::read</a>.  <a href="#ga546771ce4db1a80d07e220cceca13362">More...</a><br /></td></tr>
+<tr class="separator:ga546771ce4db1a80d07e220cceca13362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96bd64dddfea6fbc81dc494d062dbfff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#ga96bd64dddfea6fbc81dc494d062dbfff">R_USB_HCDC_ECM_Write</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer, uint32_t const length)</td></tr>
+<tr class="memdesc:ga96bd64dddfea6fbc81dc494d062dbfff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit USB data. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa61e5ba4dd1de3a50864c0b1970c3b51">ether_api_t::write</a>.  <a href="#ga96bd64dddfea6fbc81dc494d062dbfff">More...</a><br /></td></tr>
+<tr class="separator:ga96bd64dddfea6fbc81dc494d062dbfff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga133e70c039d39b16089f5ec08d1c3ec7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#ga133e70c039d39b16089f5ec08d1c3ec7">R_USB_HCDC_ECM_TxStatusGet</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer_address)</td></tr>
+<tr class="memdesc:ga133e70c039d39b16089f5ec08d1c3ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not support this function in HCDC-ECM. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#ad52cabec533efaaef3258caade1e0640">ether_api_t::txStatusGet</a>.  <a href="#ga133e70c039d39b16089f5ec08d1c3ec7">More...</a><br /></td></tr>
+<tr class="separator:ga133e70c039d39b16089f5ec08d1c3ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2709e5b83f9373a7791a32cb7e09b50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#gad2709e5b83f9373a7791a32cb7e09b50">R_USB_HCDC_ECM_CallbackSet</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gad2709e5b83f9373a7791a32cb7e09b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>This module provides a USB Host Communications Device Class (HCDC-ECM) driver. It implements the <a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html">USB HCDC_ECM (r_usb_hcdc_ecm)</a>. </p>
+<p><a class="anchor" id="functionss"></a></p><h2 class="groupheader">Functions</h2>
+<p>Refer to <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> for the common API (r_usb_basic) to be called from the application. <a class="anchor" id="details"></a></p><h2 class="groupheader">Detailed Description</h2>
+<h1><a class="anchor" id="r-usb-hcdc-ecm-overview"></a>
+Overview</h1>
+<p>The r_usb_hcdc_ecm module, when used in combination with the r_usb_basic and r_usb_hcdc modules, operates as a USB Host Communications Device Class (HCDC-ECM) driver. The HCDC-ECM conforms to subclass ethernet control model of the USB Communications Device Class (CDC) specification and enables communication with a CDC peripheral device.</p>
+<h2><a class="anchor" id="r-usb-hcdc-ecm-features"></a>
+Features</h2>
+<p>The r_usb_hcdc_ecm module has the following key features:</p><ul>
+<li>Checks for connected devices</li>
+<li>Data transfer to and from a CDC-ECM peripheral device</li>
+</ul>
+<h1><a class="anchor" id="r-usb-hcdc-ecm-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="r-usb-hcdc-ecm-basic_function"></a>
+Basic Functions</h2>
+<p>The main functions of HCDC are the following:</p><ul>
+<li>Verify connected devices</li>
+<li>Transfer data to and from the CDC-ECM peripheral device</li>
+</ul>
+<h2><a class="anchor" id="r-usb-hcdc-ecm-class_request"></a>
+Class Request</h2>
+<p>This driver uses the following class request.</p><ul>
+<li>SetEthernetPacketFilter</li>
+</ul>
+<h1><a class="anchor" id="r-usb-hcdc-ecm-limitations"></a>
+Limitations</h1>
+<p>This driver has the following limitations:</p>
+<h2>Dependenies</h2>
+<ul>
+<li>This driver works on FreeRTOS and FreeRTOS Plus TCP.</li>
+</ul>
+<h2>Requirements</h2>
+<ul>
+<li>Please use a USB-LAN converter that supports the CDC-ECM class. If the USB-LAN converter does not support CDC-ECM class, this driver does not work properly.</li>
+<li>Please confirm with the manufacturer of using USB-LAN converter to see if it supports the CDC-ECM class.</li>
+</ul>
+<h2>Constraints</h2>
+<p>This driver has the following constrains.</p><ul>
+<li>Use of compound USB devices with CDC class support is not supported.</li>
+<li>This driver does not support Low-speed.</li>
+<li>This driver does not support simultaneous operation with the other device class.</li>
+</ul>
+<h1><a class="anchor" id="r-usb-hcdc-ecm-operation-checking-devices"></a>
+Operation Checking Convertes</h1>
+<p>The following converters have been confirmed to work properly:</p>
+<ul>
+<li>UGREEN USB to Ethernet Adapter RJ45 (Manufacture: Ugreen Group Limited, Item model number: 50922)</li>
+<li>ELECOM USB to Ethernet Adapter EDC-GUA3V2-B (Manufacture: Elecom Co., Ltd, Item modle number: EDC-GUA3V2-B)</li>
+<li>HP USB-C to RJ45 Adapter (Manufacture: Hewlett-Packard Company, Item model number: 7W66AA)</li>
+</ul>
+<h1><a class="anchor" id="r-usb-hcdc-ecm-examples"></a>
+Examples</h1>
+<h2>USB HCDC-ECM Example</h2>
+<p>The following is the porting layere example code for FreeRTOS Plus TCP</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define USR_TEST_DOMAIN_NAME         &quot;www.freertos.org&quot;</span></div><div class="line"><span class="preprocessor">#define USR_TEST_PING_IP             &quot;172.217.160.174&quot;</span></div><div class="line"><span class="preprocessor">#define USR_PING_COUNT               100</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define USR_APP_DELAY_TICKS          100</span></div><div class="line"><span class="preprocessor">#define USR_PING_WAIT_MS             100</span></div><div class="line"><span class="preprocessor">#define USR_PING_DATA_SIZE           8</span></div><div class="line"><span class="preprocessor">#define MAC_ADDRESS_BYTES            6</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define SUCCESS                      0</span></div><div class="line"><span class="preprocessor">#define PRINT_UP_MSG_DISABLE         0x01</span></div><div class="line"><span class="preprocessor">#define PRINT_DOWN_MSG_DISABLE       0x02</span></div><div class="line"><span class="preprocessor">#define PRINT_NWK_USR_MSG_DISABLE    0x04</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define ETHERNET_LINK_DOWN           0x01</span></div><div class="line"><span class="preprocessor">#define ETHERNET_LINK_UP             0x00</span></div><div class="line"><span class="preprocessor">#define IP_LINK_DOWN                 0x02</span></div><div class="line"><span class="preprocessor">#define IP_LINK_UP                   0x00</span></div><div class="line"></div><div class="line"><span class="comment">/* Domain for the DNS Host lookup is used in this Example Project.</span></div><div class="line"><span class="comment"> * The project can be built with different *domain_name to validate the DNS client</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keywordtype">char</span> * domain_name = USR_TEST_DOMAIN_NAME;</div><div class="line"></div><div class="line"><span class="comment">/* IP address of the PC or any Device on the LAN/WAN where the Ping request is sent.</span></div><div class="line"><span class="comment"> * Note: Users needs to change this according to the LAN settings of your Test PC or device</span></div><div class="line"><span class="comment"> * when running this project.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line"><span class="keywordtype">char</span>   ip_address_buffer[16] = {RESET_VALUE};</div><div class="line"><span class="keywordtype">char</span> * remote_ip_address     = ip_address_buffer;</div><div class="line"><span class="preprocessor">#else</span></div><div class="line"><span class="keywordtype">char</span> * remote_ip_address = <span class="stringliteral">&quot;192.168.10.1&quot;</span>;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigSUPPORT_OUTGOING_PINGS == 1)</span></div><div class="line"><span class="preprocessor"> #define PING_INTERVAL_TICKS    200</span></div><div class="line">uint32_t usrPingCount = RESET_VALUE;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>st_ping_data</div><div class="line">{</div><div class="line">    uint32_t sent;                     <span class="comment">// Ping Request</span></div><div class="line">    uint32_t received;                 <span class="comment">// Ping Response</span></div><div class="line">    uint32_t lost;                     <span class="comment">// Ping failure</span></div><div class="line">} ping_data_t;</div><div class="line">ping_data_t ping_data = {RESET_VALUE, RESET_VALUE, RESET_VALUE};</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">BaseType_t xRet;</div><div class="line">BaseType_t xEndPointCount = 0;</div><div class="line"></div><div class="line"><span class="keyword">static</span> NetworkInterface_t xInterfaces[1];</div><div class="line"><span class="keyword">static</span> NetworkEndPoint_t  xEndPoints[4];</div><div class="line"></div><div class="line"><span class="keyword">extern</span> NetworkInterface_t * pxFSP_Eth_FillInterfaceDescriptor(BaseType_t xEMACIndex, NetworkInterface_t * pxInterface);</div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line"></div><div class="line"><span class="comment">/* DHCP populates these IP address, Sub net mask and Gateway Address. So start with this is zeroed out values</span></div><div class="line"><span class="comment"> * The MAC address is Test MAC address.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">static</span> uint8_t ucMACAddress[6]       = {RESET_VALUE};</div><div class="line"><span class="keyword">static</span> uint8_t ucIPAddress[4]        = {RESET_VALUE};</div><div class="line"><span class="keyword">static</span> uint8_t ucNetMask[4]          = {RESET_VALUE};</div><div class="line"><span class="keyword">static</span> uint8_t ucGatewayAddress[4]   = {RESET_VALUE};</div><div class="line"><span class="keyword">static</span> uint8_t ucDNSServerAddress[4] = {RESET_VALUE};</div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line"><span class="comment">/* Static IP configuration, when DHCP mode is not used for the Example Project.</span></div><div class="line"><span class="comment"> * This needs to be populated by the user according to the Network Settings of your LAN.</span></div><div class="line"><span class="comment"> * This sample address taken from the LAN where it is tested. This is different for different LAN.</span></div><div class="line"><span class="comment"> * get the Address using the PC IPconfig details.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">static</span> uint8_t ucMACAddress[6]       = {RESET_VALUE};</div><div class="line"><span class="keyword">static</span> uint8_t ucIPAddress[4]        = {192, 168, 10, 2};</div><div class="line"><span class="keyword">static</span> uint8_t ucNetMask[4]          = {255, 255, 255, 0};</div><div class="line"><span class="keyword">static</span> uint8_t ucGatewayAddress[4]   = {192, 168, 10, 0};</div><div class="line"><span class="keyword">static</span> uint8_t ucDNSServerAddress[4] = {RESET_VALUE};</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line">NetworkAddressingParameters_t xNetworkAddressing = {0, 0, 0, 0, 0};</div><div class="line">NetworkAddressingParameters_t xNd                = {RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE, RESET_VALUE};</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line"><span class="keywordtype">void</span>                  updateDhcpResponseToUsr(<span class="keywordtype">void</span>);</div><div class="line">eDHCPCallbackAnswer_t xApplicationDHCPHook(eDHCPCallbackPhase_t eDHCPPhase, uint32_t ulIPAddress);</div><div class="line">eDHCPCallbackAnswer_t xApplicationDHCPHook_Multi(eDHCPCallbackPhase_t      eDHCPPhase,</div><div class="line">                                                 <span class="keyword">struct</span> xNetworkEndPoint * pxEndPoint,</div><div class="line">                                                 IP_Address_t            * pxIPAddress);</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___u_s_b___h_c_d_c___e_c_m.html#structusb__hcdc__ecm__instance__ctrl__t">usb_hcdc_ecm_instance_ctrl_t</a> g_ether_usb_ctrl;</div><div class="line"><span class="keyword">static</span> uint32_t usr_print_ability = RESET_VALUE;</div><div class="line">uint32_t        dhcp_in_use       = RESET_VALUE;</div><div class="line"></div><div class="line">uint32_t   isNetworkUp(<span class="keywordtype">void</span>);</div><div class="line">BaseType_t vSendPing(<span class="keyword">const</span> <span class="keywordtype">char</span> * pcIPAddress);</div><div class="line"><span class="keywordtype">void</span>       pingSendFunc(<span class="keywordtype">void</span>);</div><div class="line"><span class="keywordtype">void</span>       print_ipconfig(<span class="keywordtype">void</span>);</div><div class="line"><span class="keywordtype">void</span>       print_pingResult(<span class="keywordtype">void</span>);</div><div class="line"><span class="keywordtype">void</span>       dnsQuerryFunc(<span class="keywordtype">char</span> * domain_name);</div><div class="line"><span class="keywordtype">void</span>       vTatgetEventProcess(<a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> * p_args);</div><div class="line"></div><div class="line">BaseType_t vSendPing (<span class="keyword">const</span> <span class="keywordtype">char</span> * pcIPAddress)</div><div class="line">{</div><div class="line">    uint32_t ulIPAddress = RESET_VALUE;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * The pcIPAddress parameter holds the destination IP address as a string in</span></div><div class="line"><span class="comment">     * decimal dot notation (for example, ?192.168.0.200?). Convert the string into</span></div><div class="line"><span class="comment">     * the required 32-bit format.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    ulIPAddress = FreeRTOS_inet_addr(pcIPAddress);</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * Send a ping request containing 8 data bytes.  Wait (in the Blocked state) a</span></div><div class="line"><span class="comment">     * maximum of 100ms for a network buffer into which the generated ping request</span></div><div class="line"><span class="comment">     * can be written and sent.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keywordflow">return</span> FreeRTOS_SendPingRequest(ulIPAddress, USR_PING_DATA_SIZE, USR_PING_WAIT_MS / portTICK_PERIOD_MS);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigSUPPORT_OUTGOING_PINGS == 1)</span></div><div class="line"><span class="keywordtype">void</span> vApplicationPingReplyHook (ePingReplyStatus_t eStatus, uint16_t usIdentifier)</div><div class="line">{</div><div class="line">    (void) usIdentifier;</div><div class="line"></div><div class="line">    <span class="keywordflow">switch</span> (eStatus)</div><div class="line">    {</div><div class="line">        <span class="comment">/* A valid ping reply has been received */</span></div><div class="line">        <span class="keywordflow">case</span> eSuccess:</div><div class="line">            ping_data.received++;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="comment">/* A reply was received but it was not valid. */</span></div><div class="line">        <span class="keywordflow">case</span> eInvalidData:</div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">            ping_data.lost++;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">uint32_t isNetworkUp (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    BaseType_t networkUp = pdFALSE;</div><div class="line">    uint32_t   status;</div><div class="line"></div><div class="line">    networkUp = FreeRTOS_IsNetworkUp();</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (pdTRUE == networkUp)</div><div class="line">    {</div><div class="line">        status = SUCCESS;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        status = IP_LINK_DOWN;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> status;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> new_thread0_entry (<span class="keywordtype">void</span> * pvParameters)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#unionfsp__pack__version__t">fsp_pack_version_t</a> version = {RESET_VALUE};</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(pvParameters);</div><div class="line"></div><div class="line">    <span class="comment">/* version get API for FLEX pack information */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3ee66233fc75acfcc21a97d7a767aa1">R_FSP_VersionGet</a>(&amp;version);</div><div class="line"></div><div class="line">    <a class="code" href="group___u_s_b___h_c_d_c___e_c_m.html#gad2709e5b83f9373a7791a32cb7e09b50">R_USB_HCDC_ECM_CallbackSet</a>((<a class="code" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> * <span class="keyword">const</span>) &amp;g_ether_usb_ctrl, vTatgetEventProcess, NULL, NULL);</div><div class="line"></div><div class="line">    <span class="comment">/* Example Project information printed on the RTT */</span></div><div class="line">    APP_PRINT(BANNER_INFO,</div><div class="line">              EP_VERSION,</div><div class="line">              version.version_id_b.<a class="code" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#a85964fe9ef31d11bde39475763db564c">major</a>,</div><div class="line">              version.version_id_b.<a class="code" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#a00ab09fb1ebf2eb2ca08e364a3289e44">minor</a>,</div><div class="line">              version.version_id_b.<a class="code" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#ab2723e465037db8a30e2cb2e2392a98f">patch</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Prints the Ethernet Configuration prior to the IP Init*/</span></div><div class="line">    APP_PRINT(ETH_PREINIT);</div><div class="line">    print_ipconfig();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the interface descriptor. */</span></div><div class="line">    pxFSP_Eth_FillInterfaceDescriptor(0, &amp;xInterfaces[0]);</div><div class="line"></div><div class="line">    <span class="comment">/* === End-point 0 === */</span></div><div class="line"><span class="preprocessor">#if (ipconfigUSE_IPv4 != 0)</span></div><div class="line">    FreeRTOS_FillEndPoint(&amp;(xInterfaces[0]),</div><div class="line">                          &amp;(xEndPoints[xEndPointCount]),</div><div class="line">                          ucIPAddress,</div><div class="line">                          ucNetMask,</div><div class="line">                          ucGatewayAddress,</div><div class="line">                          ucDNSServerAddress,</div><div class="line">                          ucMACAddress);</div><div class="line"><span class="preprocessor"> #if (ipconfigUSE_DHCP != 0)</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* End-point 0 wants to use DHCPv4. */</span></div><div class="line">        xEndPoints[xEndPointCount].bits.bWantDHCP = pdTRUE;</div><div class="line">    }</div><div class="line"><span class="preprocessor"> #endif                                </span><span class="comment">/* ( ipconfigUSE_DHCP != 0 ) */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">    xEndPointCount += 1;</div><div class="line"><span class="preprocessor">#endif                                 </span><span class="comment">/* ( ipconfigUSE_IPv4 != 0 */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">    FreeRTOS_IPInit_Multi();</div><div class="line"></div><div class="line">    APP_PRINT(ETH_POSTINIT);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Check if Both the Ethernet Link and IP link are UP */</span></div><div class="line">        <span class="keywordflow">if</span> (SUCCESS == isNetworkUp())</div><div class="line">        {</div><div class="line">            <span class="comment">/* usr_print_ability is added to avoid multiple UP messages or Down Messages repeating*/</span></div><div class="line">            <span class="keywordflow">if</span> (!(PRINT_UP_MSG_DISABLE &amp; usr_print_ability))</div><div class="line">            {</div><div class="line">                APP_PRINT(<span class="stringliteral">&quot;\r\nNetwork is Up&quot;</span>);</div><div class="line">                usr_print_ability |= PRINT_UP_MSG_DISABLE;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (!(PRINT_NWK_USR_MSG_DISABLE &amp; usr_print_ability))</div><div class="line">            {</div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line">                <span class="keywordflow">if</span> (dhcp_in_use)</div><div class="line">                {</div><div class="line">                    <span class="comment">/* Display the New IP credentials obtained from the DHCP server */</span></div><div class="line">                    updateDhcpResponseToUsr();</div><div class="line"></div><div class="line">                    FreeRTOS_GetEndPointConfiguration(NULL,</div><div class="line">                                                      &amp;xNd.ulNetMask,</div><div class="line">                                                      &amp;xNd.ulGatewayAddress,</div><div class="line">                                                      &amp;xNd.ulDNSServerAddress,</div><div class="line">                                                      &amp;xEndPoints[0]);</div><div class="line"></div><div class="line">                    <span class="comment">/* Updated IP credentials on to the RTT console */</span></div><div class="line">                    print_ipconfig();</div><div class="line"></div><div class="line">                    <span class="comment">/*DNS lookup for the Domain name requested. This is Synchronous Activity */</span></div><div class="line">                    dnsQuerryFunc(domain_name);</div><div class="line"></div><div class="line">                    pingSendFunc();</div><div class="line"></div><div class="line">                    print_pingResult();</div><div class="line"></div><div class="line">                    usr_print_ability |= PRINT_NWK_USR_MSG_DISABLE;</div><div class="line">                }</div><div class="line"></div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line">                <span class="comment">/* Updated IP credentials on to the RTT console */</span></div><div class="line">                print_ipconfig();</div><div class="line"></div><div class="line">                pingSendFunc();</div><div class="line"></div><div class="line">                print_pingResult();</div><div class="line"></div><div class="line">                usr_print_ability |= PRINT_NWK_USR_MSG_DISABLE;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keywordflow">else</span></div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (!(PRINT_DOWN_MSG_DISABLE &amp; usr_print_ability))</div><div class="line">            {</div><div class="line">                APP_PRINT(<span class="stringliteral">&quot;\r\nNetwork is Down&quot;</span>);</div><div class="line">                usr_print_ability |= PRINT_DOWN_MSG_DISABLE;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span></div><div class="line">            {</div><div class="line">                APP_PRINT(<span class="stringliteral">&quot;.&quot;</span>);</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        vTaskDelay(USR_APP_DELAY_TICKS);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line">eDHCPCallbackAnswer_t xApplicationDHCPHook (eDHCPCallbackPhase_t eDHCPPhase, uint32_t ulIPAddress)</div><div class="line">{</div><div class="line">    eDHCPCallbackAnswer_t eReturn = eDHCPContinue;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * This hook is called in a couple of places during the DHCP process, as identified by the eDHCPPhase parameter.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keywordflow">switch</span> (eDHCPPhase)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> eDHCPPhasePreDiscover:</div><div class="line"></div><div class="line">            <span class="comment">/*</span></div><div class="line"><span class="comment">             *  A DHCP discovery is about to be sent out.  eDHCPContinue is returned to allow the discovery to go out.</span></div><div class="line"><span class="comment">             *  If eDHCPUseDefaults had been returned instead then the DHCP process would be stopped and the statically</span></div><div class="line"><span class="comment">             *  configured IP address would be used.</span></div><div class="line"><span class="comment">             *  If eDHCPStopNoChanges had been returned instead then the DHCP process would be stopped and whatever the</span></div><div class="line"><span class="comment">             *  current network configuration was would continue to be used.</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> eDHCPPhasePreRequest:</div><div class="line"></div><div class="line">            <span class="comment">/* An offer has been received from the DHCP server, and the offered IP address is passed in the ulIPAddress</span></div><div class="line"><span class="comment">             * parameter.</span></div><div class="line"><span class="comment">             */</span></div><div class="line"></div><div class="line">            <span class="comment">/*</span></div><div class="line"><span class="comment">             * The sub-domains don?t match, so continue with the DHCP process so the offered IP address is used.</span></div><div class="line"><span class="comment">             */</span></div><div class="line"></div><div class="line">            <span class="comment">/* Update the Structure, the DHCP state Machine is not updating this */</span></div><div class="line">            xNetworkAddressing.ulDefaultIPAddress = ulIPAddress;</div><div class="line">            dhcp_in_use = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line"></div><div class="line">            <span class="comment">/*</span></div><div class="line"><span class="comment">             * Cannot be reached, but set eReturn to prevent compiler warnings where compilers are disposed to generating one.</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> eReturn;</div><div class="line">}</div><div class="line"></div><div class="line">eDHCPCallbackAnswer_t xApplicationDHCPHook_Multi (eDHCPCallbackPhase_t      eDHCPPhase,</div><div class="line">                                                  <span class="keyword">struct</span> xNetworkEndPoint * pxEndPoint,</div><div class="line">                                                  IP_Address_t            * pxIPAddress)</div><div class="line">{</div><div class="line">    eDHCPCallbackAnswer_t eReturn = eDHCPContinue;</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(pxEndPoint);</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * This hook is called in a couple of places during the DHCP process, as identified by the eDHCPPhase parameter.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keywordflow">switch</span> (eDHCPPhase)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> eDHCPPhasePreDiscover:</div><div class="line"></div><div class="line">            <span class="comment">/*</span></div><div class="line"><span class="comment">             *  A DHCP discovery is about to be sent out.  eDHCPContinue is returned to allow the discovery to go out.</span></div><div class="line"><span class="comment">             *  If eDHCPUseDefaults had been returned instead then the DHCP process would be stopped and the statically</span></div><div class="line"><span class="comment">             *  configured IP address would be used.</span></div><div class="line"><span class="comment">             *  If eDHCPStopNoChanges had been returned instead then the DHCP process would be stopped and whatever the</span></div><div class="line"><span class="comment">             *  current network configuration was would continue to be used.</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> eDHCPPhasePreRequest:</div><div class="line"></div><div class="line">            <span class="comment">/* An offer has been received from the DHCP server, and the offered IP address is passed in the ulIPAddress</span></div><div class="line"><span class="comment">             * parameter.</span></div><div class="line"><span class="comment">             */</span></div><div class="line"></div><div class="line">            <span class="comment">/*</span></div><div class="line"><span class="comment">             * The sub-domains don?t match, so continue with the DHCP process so the offered IP address is used.</span></div><div class="line"><span class="comment">             */</span></div><div class="line"></div><div class="line">            <span class="comment">/* Update the Structure, the DHCP state Machine is not updating this */</span></div><div class="line">            xNetworkAddressing.ulDefaultIPAddress = pxIPAddress-&gt;ulIP_IPv4;</div><div class="line">            dhcp_in_use = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line"></div><div class="line">            <span class="comment">/*</span></div><div class="line"><span class="comment">             * Cannot be reached, but set eReturn to prevent compiler warnings where compilers are disposed to generating one.</span></div><div class="line"><span class="comment">             */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> eReturn;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> pingSendFunc (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#if (ipconfigSUPPORT_OUTGOING_PINGS == 1)</span></div><div class="line">    BaseType_t status = pdFALSE;</div><div class="line"></div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\r\n&quot;</span>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (usrPingCount &lt; USR_PING_COUNT)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Send a ICMP Ping request to the requested IP address</span></div><div class="line"><span class="comment">         * USR_PING_COUNT (100) is used in this Example Project</span></div><div class="line"><span class="comment">         * For Continuous testing the count can be increased to bigger number</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        status = vSendPing((<span class="keywordtype">char</span> *) remote_ip_address);</div><div class="line">        <span class="keywordflow">if</span> (status != pdFALSE)</div><div class="line">        {</div><div class="line">            ping_data.sent++;</div><div class="line">            APP_PRINT(<span class="stringliteral">&quot;!&quot;</span>);</div><div class="line">        }</div><div class="line">        <span class="keywordflow">else</span></div><div class="line">        {</div><div class="line">            ping_data.lost++;</div><div class="line">            APP_PRINT(<span class="stringliteral">&quot;.&quot;</span>);</div><div class="line">        }</div><div class="line"></div><div class="line">        usrPingCount++;</div><div class="line"></div><div class="line">        <span class="comment">/* Add some delay between Pings */</span></div><div class="line">        vTaskDelay(PING_INTERVAL_TICKS);</div><div class="line">    }</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> print_pingResult (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#if (ipconfigSUPPORT_OUTGOING_PINGS == 1)</span></div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\r\n \r\nPing Statistics for %s :\r\n&quot;</span>, (<span class="keywordtype">char</span> *) remote_ip_address);</div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\r\nPackets: Sent  = %02d, Received = %02d, Lost = %02d \r\n&quot;</span>,</div><div class="line">              ping_data.sent,</div><div class="line">              ping_data.received,</div><div class="line">              ping_data.lost);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> print_ipconfig (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line">    <span class="keywordflow">if</span> (dhcp_in_use)</div><div class="line">    {</div><div class="line">        ucNetMask[3] = (uint8_t) ((xNd.ulNetMask &amp; 0xFF000000) &gt;&gt; 24);</div><div class="line">        ucNetMask[2] = (uint8_t) ((xNd.ulNetMask &amp; 0x00FF0000) &gt;&gt; 16);</div><div class="line">        ucNetMask[1] = (uint8_t) ((xNd.ulNetMask &amp; 0x0000FF00) &gt;&gt; 8);</div><div class="line">        ucNetMask[0] = (uint8_t) (xNd.ulNetMask &amp; 0x000000FF);</div><div class="line"></div><div class="line">        ucGatewayAddress[3] = (uint8_t) ((xNd.ulGatewayAddress &amp; 0xFF000000) &gt;&gt; 24);;</div><div class="line">        ucGatewayAddress[2] = (uint8_t) ((xNd.ulGatewayAddress &amp; 0x00FF0000) &gt;&gt; 16);</div><div class="line">        ucGatewayAddress[1] = (uint8_t) ((xNd.ulGatewayAddress &amp; 0x0000FF00) &gt;&gt; 8);</div><div class="line">        ucGatewayAddress[0] = (uint8_t) (xNd.ulGatewayAddress &amp; 0x000000FF);</div><div class="line"></div><div class="line">        ucDNSServerAddress[3] = (uint8_t) ((xNd.ulDNSServerAddress &amp; 0xFF000000) &gt;&gt; 24);</div><div class="line">        ucDNSServerAddress[2] = (uint8_t) ((xNd.ulDNSServerAddress &amp; 0x00FF0000) &gt;&gt; 16);</div><div class="line">        ucDNSServerAddress[1] = (uint8_t) ((xNd.ulDNSServerAddress &amp; 0x0000FF00) &gt;&gt; 8);</div><div class="line">        ucDNSServerAddress[0] = (uint8_t) (xNd.ulDNSServerAddress &amp; 0x000000FF);</div><div class="line"></div><div class="line">        ucIPAddress[3] = (uint8_t) ((xNd.ulDefaultIPAddress &amp; 0xFF000000) &gt;&gt; 24);</div><div class="line">        ucIPAddress[2] = (uint8_t) ((xNd.ulDefaultIPAddress &amp; 0x00FF0000) &gt;&gt; 16);</div><div class="line">        ucIPAddress[1] = (uint8_t) ((xNd.ulDefaultIPAddress &amp; 0x0000FF00) &gt;&gt; 8);</div><div class="line">        ucIPAddress[0] = (uint8_t) (xNd.ulDefaultIPAddress &amp; 0x000000FF);</div><div class="line">    }</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\r\nEthernet adapter for Renesas &quot;</span>KIT_NAME <span class="stringliteral">&quot;:\r\n&quot;</span>)</div><div class="line"></div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\tDescription . . . . . . . . . . . : Renesas &quot;</span>KIT_NAME <span class="stringliteral">&quot; Ethernet\r\n&quot;</span>);</div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\tPhysical Address. . . . . . . . . : %02x-%02x-%02x-%02x-%02x-%02x\r\n&quot;</span>,</div><div class="line">              ucMACAddress[0],</div><div class="line">              ucMACAddress[1],</div><div class="line">              ucMACAddress[2],</div><div class="line">              ucMACAddress[3],</div><div class="line">              ucMACAddress[4],</div><div class="line">              ucMACAddress[5]);</div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\tDHCP Enabled. . . . . . . . . . . : %s\r\n&quot;</span>, dhcp_in_use ? <span class="stringliteral">&quot;Yes&quot;</span> : <span class="stringliteral">&quot;No&quot;</span>)</div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\tIPv4 Address. . . . . . . . . . . : %d.%d.%d.%d\r\n&quot;</span>,</div><div class="line">              ucIPAddress[0],</div><div class="line">              ucIPAddress[1],</div><div class="line">              ucIPAddress[2],</div><div class="line">              ucIPAddress[3]);</div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\tSubnet Mask . . . . . . . . . . . : %d.%d.%d.%d\r\n&quot;</span>,</div><div class="line">              ucNetMask[0],</div><div class="line">              ucNetMask[1],</div><div class="line">              ucNetMask[2],</div><div class="line">              ucNetMask[3]);</div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\tDefault Gateway . . . . . . . . . : %d.%d.%d.%d\r\n&quot;</span>,</div><div class="line">              ucGatewayAddress[0],</div><div class="line">              ucGatewayAddress[1],</div><div class="line">              ucGatewayAddress[2],</div><div class="line">              ucGatewayAddress[3]);</div><div class="line">    APP_PRINT(<span class="stringliteral">&quot;\tDNS Servers . . . . . . . . . . . : %d.%d.%d.%d\r\n&quot;</span>,</div><div class="line">              ucDNSServerAddress[0],</div><div class="line">              ucDNSServerAddress[1],</div><div class="line">              ucDNSServerAddress[2],</div><div class="line">              ucDNSServerAddress[3]);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dnsQuerryFunc (<span class="keywordtype">char</span> * domain)</div><div class="line">{</div><div class="line">    uint32_t ulIPAddress = RESET_VALUE;</div><div class="line">    int8_t   cBuffer[16] = {RESET_VALUE};</div><div class="line"></div><div class="line">    <span class="comment">/* Lookup the IP address of the FreeRTOS.org website. */</span></div><div class="line">    ulIPAddress = FreeRTOS_gethostbyname((<span class="keywordtype">char</span> *) domain);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (ulIPAddress != 0)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Convert the IP address to a string. */</span></div><div class="line">        FreeRTOS_inet_ntoa(ulIPAddress, (<span class="keywordtype">char</span> *) cBuffer);</div><div class="line"></div><div class="line">        <span class="comment">/* Print out the IP address obtained from the DNS lookup. */</span></div><div class="line">        APP_PRINT(<span class="stringliteral">&quot;\r\nDNS Lookup for \&quot;www.freertos.org\&quot; is      : %s  \r\n&quot;</span>, cBuffer);</div><div class="line"></div><div class="line">        <span class="comment">/* Overwrites the user-specified Ping request destination with the IP address obtained from the domain.*/</span></div><div class="line">        memcpy((<span class="keywordtype">void</span> *) remote_ip_address, (<span class="keyword">const</span> <span class="keywordtype">void</span> *) cBuffer, strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *) cBuffer) + 1);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        APP_PRINT(<span class="stringliteral">&quot;\r\nDNS Lookup failed for \&quot;www.freertos.org\&quot; \r\n&quot;</span>);</div><div class="line"></div><div class="line">        remote_ip_address = USR_TEST_PING_IP;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigUSE_DHCP != 0)</span></div><div class="line"><span class="keywordtype">void</span> updateDhcpResponseToUsr (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (dhcp_in_use)</div><div class="line">    {</div><div class="line">        memcpy(&amp;xNd, &amp;xNetworkAddressing, <span class="keyword">sizeof</span>(xNd));</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if (ipconfigDHCP_REGISTER_HOSTNAME == 1)</span></div><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> * pcApplicationHostnameHook (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">return</span> KIT_NAME;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> vTatgetEventProcess (<a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    uint8_t * mac_address;</div><div class="line"></div><div class="line">    mac_address = (uint8_t *) p_args-&gt;<a class="code" href="group___e_t_h_e_r___a_p_i.html#a2bd7c2f49c32654e803bf44001aacfb4">p_context</a>;</div><div class="line"></div><div class="line">    FreeRTOS_UpdateMACAddress(mac_address);</div><div class="line"></div><div class="line">    memcpy(ucMACAddress, mac_address, MAC_ADDRESS_BYTES);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structusb__hcdc__ecm__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#structusb__hcdc__ecm__instance__ctrl__t">usb_hcdc_ecm_instance_ctrl_t</a></td></tr>
+<tr class="separator:structusb__hcdc__ecm__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structusb__hcdc__ecm__instance__ctrl__t" id="structusb__hcdc__ecm__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__hcdc__ecm__instance__ctrl__t">&#9670;&nbsp;</a></span>usb_hcdc_ecm_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_hcdc_ecm_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>USB HCDC ECM control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa0c703be12efe73efdd0d47168239470">ether_api_t::open</a> is called. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Public Member Functions</h3></td></tr>
+<tr class="memitem:a41f0f1b545544cf12650f50344a4a7b8"><td class="memItemLeft" align="right" valign="top"><a id="a41f0f1b545544cf12650f50344a4a7b8"></a>
+uint8_t read_buffer [HCDC_ECM_READ_DATA_LEN]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#a41f0f1b545544cf12650f50344a4a7b8">__attribute__</a> ((__aligned__(4)))</td></tr>
+<tr class="memdesc:a41f0f1b545544cf12650f50344a4a7b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer area for read data. <br /></td></tr>
+<tr class="separator:a41f0f1b545544cf12650f50344a4a7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aa1967546ff4967113d0a16ac1f4dadc5"><td class="memItemLeft" align="right" valign="top"><a id="aa1967546ff4967113d0a16ac1f4dadc5"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#aa1967546ff4967113d0a16ac1f4dadc5">open</a></td></tr>
+<tr class="memdesc:aa1967546ff4967113d0a16ac1f4dadc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:aa1967546ff4967113d0a16ac1f4dadc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a197bad4b1a483dc1f706f0ea15036e"><td class="memItemLeft" align="right" valign="top"><a id="a4a197bad4b1a483dc1f706f0ea15036e"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#a4a197bad4b1a483dc1f706f0ea15036e">receive_size</a></td></tr>
+<tr class="memdesc:a4a197bad4b1a483dc1f706f0ea15036e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Received data size. <br /></td></tr>
+<tr class="separator:a4a197bad4b1a483dc1f706f0ea15036e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7b0370a0dfe825077623683a49f9b97"><td class="memItemLeft" align="right" valign="top"><a id="af7b0370a0dfe825077623683a49f9b97"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_c_d_c___e_c_m.html#af7b0370a0dfe825077623683a49f9b97">receive_status</a></td></tr>
+<tr class="memdesc:af7b0370a0dfe825077623683a49f9b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status of receive result. <br /></td></tr>
+<tr class="separator:af7b0370a0dfe825077623683a49f9b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga5cf84137bcef74f0055febeadc412124"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5cf84137bcef74f0055febeadc412124">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__cfg__t">ether_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>After USB, CDC are reset in software.Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa0c703be12efe73efdd0d47168239470">ether_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_NOT_OPEN</td><td>USB module is not open.. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>RTOS internal error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab126d2bb6805d72a889721e0e3141c04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab126d2bb6805d72a889721e0e3141c04">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables interrupts. Removes power and releases hardware lock. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a84ae3c1816a60c8fc45ccc2084805088">ether_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga13615b8f9f906940496565bfd4b1636a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga13615b8f9f906940496565bfd4b1636a">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_BufferRelease()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_BufferRelease </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Move to the next buffer in the circular receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5">ether_api_t::bufferRelease</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2bde940224955f3f2850ae4e5ec18a2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2bde940224955f3f2850ae4e5ec18a2a">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_RxBufferUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_RxBufferUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Not support this function in HCDC-ECM. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a6d088fd3b1a5326af7bedad146491d74">ether_api_t::rxBufferUpdate</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafa84f4362ec3fa0f91cb3e7f651a5693"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa84f4362ec3fa0f91cb3e7f651a5693">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_LinkProcess()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_LinkProcess </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The Link up processing, the Link down processing, and the magic packet detection processing are executed. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#ae11e3e3521df4c3efe6e0dafecddee72">ether_api_t::linkProcess</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Link is up. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>Link is not up. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga07d62f803c6230002d38ee5ef321ae76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga07d62f803c6230002d38ee5ef321ae76">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_WakeOnLANEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_WakeOnLANEnable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Not support this function in HCDC-ECM. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#acde8967c0512722ca73a1596daf654ea">ether_api_t::wakeOnLANEnable</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga546771ce4db1a80d07e220cceca13362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga546771ce4db1a80d07e220cceca13362">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_length_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Receive USB data. Receives data to the location specified by the pointer to the receive buffer. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a58975a11436cc5980698b6e843eea3f3">ether_api_t::read</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>USB data read failure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga96bd64dddfea6fbc81dc494d062dbfff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga96bd64dddfea6fbc81dc494d062dbfff">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transmit USB data. Transmits data from the location specified by the pointer to the transmit buffer, with the data size equal to the specified frame length. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa61e5ba4dd1de3a50864c0b1970c3b51">ether_api_t::write</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>USB data write failure. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Value of the send frame size is out of range. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga133e70c039d39b16089f5ec08d1c3ec7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga133e70c039d39b16089f5ec08d1c3ec7">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_TxStatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_TxStatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer_address</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Not support this function in HCDC-ECM. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#ad52cabec533efaaef3258caade1e0640">ether_api_t::txStatusGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad2709e5b83f9373a7791a32cb7e09b50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad2709e5b83f9373a7791a32cb7e09b50">&#9670;&nbsp;</a></span>R_USB_HCDC_ECM_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_HCDC_ECM_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#aaeb0eaa99a7a62dfa5b65494db7f1ab4">ether_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -305,30 +305,6 @@ Secure State</li>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether SRAM ECC registers are write accessible for the Non-secure application.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Standby RAM</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Regions 7-0 are all Secure.</li>
-<li>
-Region 7 is Non-secure. Regions 6-0 are Secure.</li>
-<li>
-Regions 7-6 are Non-secure. Regions 5-0 are Secure.</li>
-<li>
-Regions 7-5 are Non-secure. Regions 4-0 are Secure.</li>
-<li>
-Regions 7-4 are Non-secure. Regions 3-0 are Secure.</li>
-<li>
-Regions 7-3 are Non-secure. Regions 2-0 are Secure.</li>
-<li>
-Regions 7-2 are Non-secure. Regions 1-0 are Secure.</li>
-<li>
-Regions 7-1 are Non-secure. Region 0 is Secure.</li>
-<li>
-Regions 7-0 are all Non-secure.</li>
-</ul>
-</td><td>config.bsp.fsp.tz.stbramsar.both </td><td>Defines whether Standby RAM registers are accessible for the Non-secure application.<br />
-<br />
-This setting is only valid when building projects with TrustZone. </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Security &gt; BUS Accessibility  </td></tr>
 <tr class="tree_lvl_2_item">
@@ -379,16 +355,6 @@ Both Secure and Non-Secure State</li>
 Secure State</li>
 </ul>
 </td><td>Both Secure and Non-Secure State </td><td>Defines whether the reset status registers (RSTSRn) can be cleared from the Non-secure application.<br />
-<br />
-This setting is only valid when building projects with TrustZone. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Battery Backup Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Both Secure and Non-Secure State</li>
-<li>
-Secure State</li>
-</ul>
-</td><td>Both Secure and Non-Secure State </td><td>Defines whether the battery backup registers are accessible for the Non-secure application. If Secure State is selected, all battery backup registers are read only except for VBTBKRn registers which are both read and write protected.<br />
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -706,7 +672,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a6_m4.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a6_t3.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -721,7 +687,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a6_m4.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a6_t3.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -735,7 +701,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

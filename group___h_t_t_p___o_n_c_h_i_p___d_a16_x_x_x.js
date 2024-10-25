@@ -26,6 +26,7 @@ var group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x =
     ] ],
     [ "http_onchip_da16xxx_instance_ctrl_t", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#structhttp__onchip__da16xxx__instance__ctrl__t", [
       [ "open", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#a0d89e642bde7d0ee178867f554553285", null ],
+      [ "enable", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#aadc93d9d518a59ad29c6432bddb2fe04", null ],
       [ "p_cfg", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#af1968637ac708ecf6c9444c728e493c6", null ]
     ] ],
     [ "HTTP_ONCHIP_DA16XXX_MAX_ALPN", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga19cab16c4d955409eff4d85a5969c8c6", null ],
@@ -41,7 +42,13 @@ var group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x =
       [ "HTTP_ONCHIP_DA16XXX_TLS_VERIFY_OPTIONAL", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ggab3bb362e9ff58b0f0c63dfc4997be93eaaad38d8dfc8f500ee2f3b9d2a4abd30d", null ],
       [ "HTTP_ONCHIP_DA16XXX_TLS_VERIFY_REQUIRED", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ggab3bb362e9ff58b0f0c63dfc4997be93ea26b545f22227ea8e5220b632e3bfc847", null ]
     ] ],
+    [ "http_onchip_da16xxx_ssl_enable_t", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga612b9a844a4fcdd1b347b46dbe9486d4", [
+      [ "HTTP_ONCHIP_DA16XXX_SSL_DISABLE", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gga612b9a844a4fcdd1b347b46dbe9486d4a4b90d63813648af230dddab04e84f91d", null ],
+      [ "HTTP_ONCHIP_DA16XXX_SSL_ENABLE", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gga612b9a844a4fcdd1b347b46dbe9486d4aa49f80519661e81f62230890a85a1e2e", null ]
+    ] ],
     [ "RM_HTTP_DA16XXX_Open", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gab3adf9b7644d4e7ace31b1fd197ca83c", null ],
     [ "RM_HTTP_DA16XXX_Send", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga8db4b46410efd84c86e44af19217d73d", null ],
+    [ "RM_HTTP_DA16XXX_Start", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#gabe452c3068319d4bd4db73dde2afde5c", null ],
+    [ "RM_HTTP_DA16XXX_Stop", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga8fa145923d010ad8949ef415067742bd", null ],
     [ "RM_HTTP_DA16XXX_Close", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html#ga55318ee06a6c512c9628476e77559283", null ]
 ];

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -241,6 +241,14 @@ $(document).ready(function(){initNavTree('_c_m85__c_a_c_h_e_s.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="section note"><dt>Note</dt><dd><b>This overview should be considered supplementary information only. Consult with the listed references (non-exhaustive) for detailed information on the CM85 caches, Renesas caches, and cache coherency. Cache coherency can be a difficult problem to understand and solve correctly.</b></dd></dl>
+<h1><a class="anchor" id="CM85_CACHES-changes"></a>
+Changes</h1>
+<table class="doxtable">
+<tr>
+<th>FSP Version </th><th>Changes  </th></tr>
+<tr>
+<td>5.6.0 </td><td>Add information about cache incoherency with memory attribute mismatch between TrustZone security states. Add information about CCR.xC TrustZone banked behavior. Add information about cache incoherency with predefined non-cacheable sections when crossing security states. Add new Arm KB reference. </td></tr>
+</table>
 <h1><a class="anchor" id="CM85_CACHES-overview"></a>
 Overview</h1>
 <p>When using any type of caches in a system, coherency must be considered. A cache may contain data that is different from the backing memory (e.g. SRAM, Flash, etc.), or contain data that is different from another cache, which would make the cache incoherent. Coherency can be maintained through hardware and/or software support. For Cortex-M devices like the RA8, coherency can only be achieved through manual software management, and no automatic hardware coherency support exists.</p>
@@ -261,6 +269,13 @@ Overview</h1>
 </li>
 <li>Writing instructions into RAM using the CPU or a bus master<ul>
 <li>D-Cache and I-Cache can become incoherent if code in RAM changes</li>
+</ul>
+</li>
+<li>Memory attributes mismatch between the Secure and Non-secure state when TrustZone is used<ul>
+<li>FCACHE and D-Cache can become incoherent if the cacheability attributes of an address are mismatched between the Secure and Non-secure state</li>
+<li>Shared addresses must be configured with identical cacheability attributes, either by ensuring that the Secure and Non-secure state use the default system address map for the shared address, or by configuring the same region in both the Secure and Non-secure MPU with the same attributes</li>
+<li>I-Cache is usually not affected in this manner, because instruction fetch uses the banked MPU registers which correspond to the address security attribute</li>
+<li>Consider that complex software designs may swap the current Secure or Non-secure MPU configuration at-will</li>
 </ul>
 </li>
 <li>MPU configuration changes<ul>
@@ -303,9 +318,22 @@ CM85 Cache Features</h1>
 </ul>
 </li>
 <li>TrustZone is integrated, which means<ul>
-<li>CCR.xC is banked between Secure and Non-secure modes which means cache allocation can be controlled for each mode separately</li>
-<li>There are eight Secure and Non-Secure MPU regions each which govern memory access in their respective modes</li>
-<li>D-Cache maintenance from the Non-secure state is promoted to clean type maintenance, since both Secure and Non-secure data may be cached</li>
+<li>CCR.xC is banked between Secure and Non-secure modes<ul>
+<li>Cache allocation can be controlled per the security of the address being fetched, read, or written by configuring the associated bit</li>
+<li>This bit is safe from causing cache incoherency since allocation policy (allocation hints) cannot cause incoherency, and are not counted towards memory attribute mismatch</li>
+<li>See the <a href="#CM85_CACHES-other-information">Memory Attributes and TrustZone</a> section</li>
+</ul>
+</li>
+<li>There is a Secure and Non-secure MPU with eight regions available for each<ul>
+<li>Which MPU is used depends on whether an instruction fetch (uses MPU that matches security of address) or data access (uses MPU that matches current security state) is occurring</li>
+<li>See the <a href="#CM85_CACHES-other-information">Memory Attributes and TrustZone</a> section</li>
+</ul>
+</li>
+<li>D-Cache maintenance from the Non-secure state is promoted to clean type maintenance since both Secure and Non-secure data may be cached, which prevents Secure data from being modified by the Non-secure state<ul>
+<li>Secure data may still be destroyed by the Non-secure state if it is not properly structured</li>
+<li>See the <a href="#CM85_CACHES-other-information">Cache Maintenance and TrustZone</a> section</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -647,6 +675,7 @@ Cache Details</h1>
 <li>Code in RAM (I-Cache and D-Cache are not automatically coherent)</li>
 </ul>
 <h3>FSP Predefined No-Cache Sections</h3>
+<dl class="section warning"><dt>Warning</dt><dd><b>The predefined non-cacheable sections are only understood as non-cacheable within their respective security state when TrustZone is used. This is due to the MPU configuration done by FSP and how Armv8-M chooses the MPU which matches the current security state for determining the memory attributes of a data access. Cache incoherency will occur if references to these sections are passed between security states. For example, passing a reference from the Non-secure application non-cacheable section to the Secure application will result in the Secure application treating the location as cacheable.</b></dd></dl>
 <p>The <code>.nocache</code> and <code>.nocache_sdram</code> sections are predefined for GCC, LLVM, and IAR compilers. These same sections exist for AC6 as <code>.bss.nocache</code> and <code>.bss.nocache_sdram</code> because of special naming restrictions with AC6 and uninitialized sections. These sections are <b>uninitialized</b> for all compilers, despite AC6 requiring a prefix of <code>.bss</code>.</p>
 <p>Anything placed within them will be non-cacheable. Instruction fetches and data reads or writes to these sections will never lookup or allocate in their respective caches.</p>
 <p>The FSP startup code configures these sections as non-cacheable using the MPU during startup, if the D-Cache is enabled via the BSP configuration. Otherwise, they are not configured by FSP in the MPU if the D-Cache is disabled. The predefined sections are aligned to 32 bytes and are padded to a minimum of 32 bytes in length. This meets both MPU region alignment and length requirements, and cache line alignment and length requirements. The MPU and cache line alignment and length requirements protect against inadvertent mixing of cacheable and non-cacheable data.</p>
@@ -656,6 +685,8 @@ Other Information</h1>
 <p>If the Secure and/or Non-secure MPU configuration is changed, and the cacheability of an address changes, cache maintenance is required to synchronize the caches with the new memory attributes. If this is not done, a newly non-cacheable address may be left in the cache, and behavior when accessing the address is considered <b>undefined</b>.</p>
 <h2>Cache Maintenance when SAU Configuration Changes</h2>
 <p>If the SAU configuration is changed, and the security attributes of an address changes, cache maintenance is required to synchronize the caches with the new security attributes. If this is not done, cached data will be desynchronized with the new security attributes and may result in <b>undefined</b> behavior.</p>
+<h2>Memory Attributes and TrustZone</h2>
+<dl class="section warning"><dt>Warning</dt><dd><b>If data that is shared between the Secure and Non-secure application does not use the same memory attributes while being accessed because of a memory attribute mismatch, it will cause cache incoherency.</b> See the <a href="#CM85_CACHES-references">Arm knowledgebase article ka001216</a> and the <a href="#CM85_CACHES-references">Armv8-M Architecture Reference Manual</a> for information on MPU selection behavior and memory attribute mismatch.</dd></dl>
 <h2>Cache Maintenance and TrustZone</h2>
 <dl class="section warning"><dt>Warning</dt><dd><b>If cacheable shared data is improperly structured by the Secure application and is not aligned and padded to match D-Cache line requirements, a clean and invalidate by set/way of the D-Cache by the Non-secure application, or an automatic D-Cache eviction by the Non-secure application, will cause data to be destroyed for the Secure application.</b> This consequence is additional to the bugs that the Secure application may trigger itself by improper data layout, D-Cache maintenance, and automatic D-Cache eviction.</dd></dl>
 <h2>The System Address Map and the MPU</h2>
@@ -781,6 +812,7 @@ References</h1>
 <li><a href="https://developer.arm.com/documentation/ddi0553/latest">Armv8-M Architecture Reference Manual</a></li>
 <li><a href="https://developer.arm.com/documentation/107565/latest">Armv8-M Memory Model and Memory Protection User Guide</a></li>
 <li><a href="https://developer.arm.com/documentation/107706/latest">Armv8-M Exception Model User Guide</a></li>
+<li><a href="https://developer.arm.com/documentation/ka001216/latest">Which MPU configuration is used in a Trustzone enabled Armv8-M system (ka001216)</a></li>
 </ol>
 <h3>Cortex-M85</h3>
 <ol type="1">
@@ -803,7 +835,7 @@ References</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

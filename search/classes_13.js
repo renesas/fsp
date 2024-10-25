@@ -20,6 +20,7 @@ var searchData=
   ['usb_5fhcdc_5fcontrollinestate_5ft',['usb_hcdc_controllinestate_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__controllinestate__t',1,'']]],
   ['usb_5fhcdc_5fcountrysetting_5ft',['usb_hcdc_countrysetting_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__countrysetting__t',1,'']]],
   ['usb_5fhcdc_5fdevice_5finfo_5ft',['usb_hcdc_device_info_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__device__info__t',1,'']]],
+  ['usb_5fhcdc_5fecm_5finstance_5fctrl_5ft',['usb_hcdc_ecm_instance_ctrl_t',['../group___u_s_b___h_c_d_c___e_c_m.html#structusb__hcdc__ecm__instance__ctrl__t',1,'']]],
   ['usb_5fhcdc_5fencapsulated_5ft',['usb_hcdc_encapsulated_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__encapsulated__t',1,'']]],
   ['usb_5fhcdc_5finstance_5ft',['usb_hcdc_instance_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__instance__t',1,'']]],
   ['usb_5fhcdc_5flinecoding_5ft',['usb_hcdc_linecoding_t',['../group___u_s_b___h_c_d_c___a_p_i.html#structusb__hcdc__linecoding__t',1,'']]],

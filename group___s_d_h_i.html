@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -344,8 +344,6 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; SD/MM
 <tr class="tree_none">
 <td>Bus Width</td><td>MCU Specific Options</td><td></td><td>Select the bus width. </td></tr>
 <tr class="tree_none">
-<td>Block Size</td><td>Value must be an integer between 1 and 512</td><td>512 </td><td>Select the media block size. Must be 512 for SD cards or eMMC devices. Must be 1-512 for SDIO. </td></tr>
-<tr class="tree_none">
 <td>Card Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Not Used</li>
@@ -462,7 +460,7 @@ Examples</h1>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the SDHI driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_d_h_i.html#ga37b6d1c11d0f6d92ef6ae985a420ffbb">R_SDHI_Open</a>(&amp;g_sdmmc0_ctrl, &amp;g_sdmmc0_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Module is now open. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer or block size is not in the valid range of 1-512. Block size must be 512 bytes for SD cards and eMMC devices. It is configurable for SDIO only. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer or block size is not in the valid range of 1-512. Block size must be 512 bytes for SD cards and eMMC devices. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Driver has already been opened with this instance of the control structure. </td></tr>
     <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>Access interrupt is not enabled. </td></tr>
     <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>Requested channel does not exist on this MCU. </td></tr>
@@ -502,9 +500,9 @@ Examples</h1>
 <p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card.  This should not be done until the card is plugged in for SD devices. */</span></div><div class="line">    err = <a class="code" href="group___s_d_h_i.html#gabacaaf35153339d0931c6c0932eca4e3">R_SDHI_MediaInit</a>(&amp;g_sdmmc0_ctrl, NULL);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Module is now ready for read/write access. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer or block size is not in the valid range of 1-512. Block size must be 512 bytes for SD cards and eMMC devices. It is configurable for SDIO only. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null Pointer or block size is not in the valid range of 1-512. Block size must be 512 bytes for SD cards and eMMC devices. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CARD_INIT_FAILED</td><td>Device was not identified as an SD card, eMMC device, or SDIO card. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CARD_INIT_FAILED</td><td>Device was not identified as an SD card or eMMC device. </td></tr>
     <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device responded with an error. </td></tr>
     <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Device did not respond. </td></tr>
     <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Device is holding DAT0 low (device is busy) or another operation is ongoing. </td></tr>
@@ -658,17 +656,10 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>The Read function reads a one byte register from an SDIO card. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a24e4210d2ec82b9524d91ee080bae26e">sdmmc_api_t::readIo()</a>.</p>
-<p>This function blocks until the command is sent and the response is received. p_data contains the register value read when this function returns.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is not supported.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Data read successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL pointer. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CARD_NOT_INITIALIZED</td><td>Card was unplugged. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE. </td></tr>
-    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device responded with an error. </td></tr>
-    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Device did not respond. </td></tr>
-    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Device is holding DAT0 low (device is busy) or another operation is ongoing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -719,18 +710,10 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Writes a one byte register to an SDIO card. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a99dfa8f5b48ee979c98f638c341a1ebb">sdmmc_api_t::writeIo()</a>.</p>
-<p>This function blocks until the command is sent and the response is received. The register has been written when this function returns. If read_after_write is true, p_data contains the register value read when this function returns.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is not supported.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Card write finished successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Handle or Source address is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CARD_NOT_INITIALIZED</td><td>Card was unplugged. </td></tr>
-    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Write operation failed. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE. </td></tr>
-    <tr><td class="paramname">FSP_ERR_RESPONSE</td><td>Device responded with an error. </td></tr>
-    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Device did not respond. </td></tr>
-    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Device is holding DAT0 low (device is busy) or another operation is ongoing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -793,15 +776,10 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Reads data from an SDIO card function. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a9f70fd005c73c7e65366aacf5e3b249f">sdmmc_api_t::readIoExt()</a>.</p>
-<p>This function blocks until the command is sent and the response is received. A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the read data is available.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is not supported.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Data read successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL pointer, or count is not in the valid range of 1-512 for byte mode or 1-511 for block mode. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CARD_NOT_INITIALIZED</td><td>Card was unplugged. </td></tr>
-    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Driver is busy with a previous operation. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -864,16 +842,10 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Writes data to an SDIO card function. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a085fee74e5231b23d6ecd9120caf3fa9">sdmmc_api_t::writeIoExt()</a>.</p>
-<p>This function blocks until the command is sent and the response is received. A callback with the event SDMMC_EVENT_TRANSFER_COMPLETE is called when the all data has been written.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is not supported.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Card write finished successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL pointer, or count is not in the valid range of 1-512 for byte mode or 1-511 for block mode. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CARD_NOT_INITIALIZED</td><td>Card was unplugged. </td></tr>
-    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Driver is busy with a previous operation. </td></tr>
-    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Write operation failed. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -906,13 +878,10 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 <p>Enables or disables the SDIO Interrupt. Implements <a class="el" href="group___s_d_m_m_c___a_p_i.html#a3a7228d697b714229e37a1bf54352f5a">sdmmc_api_t::ioIntEnable()</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is not supported.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Card enabled or disabled SDIO interrupts successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been initialized. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL pointer. </td></tr>
-    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>Driver is busy with a previous operation. </td></tr>
-    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>SDIO is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1088,7 +1057,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

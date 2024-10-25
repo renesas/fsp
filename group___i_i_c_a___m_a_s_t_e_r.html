@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -330,6 +330,10 @@ Fast-mode plus</li>
 <br />
 If the requested transfer rate cannot be achieved, the settings with the largest possible transfer rate that is less than or equal to the requested transfer rate are used. The theoretical calculated transfer rate is printed in a comment in the generated <a class="el" href="group___i_i_c_a___m_a_s_t_e_r.html#structiica__master__extended__cfg__t">iica_master_extended_cfg_t</a> structure. </td></tr>
 <tr class="tree_none">
+<td>Custom Rate (bps)</td><td>Value must be a non-negative integer</td><td>0 </td><td>Set a custom bitrate (bps). Set to 0 to use the maximum bitrate for the selected mode.<br />
+<br />
+Standard-mode: up to 100000; Fast-mode: up to 400000; Fast-mode plus: up to 1000000 </td></tr>
+<tr class="tree_none">
 <td>Signal Rising Time (us)</td><td>Must be a valid value</td><td>0 </td><td>Set the SDA and SCL signal rising time in micro-seconds. </td></tr>
 <tr class="tree_none">
 <td>Signal Falling Time (us)</td><td>Must be a valid value</td><td>0 </td><td>Set the SDA and SCL signal falling time in micro-seconds. </td></tr>
@@ -406,7 +410,14 @@ Usage Notes</h1>
 <h2><a class="anchor" id="r-iica_master-rate_calculation"></a>
 IICA Master Rate Calculation</h2>
 <ul>
-<li>The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate. The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
+<li><p class="startli">The RA Configuration editor calculates the internal baud-rate setting based on the configured transfer rate.</p>
+<p class="startli">When the Custom Rate setting is set to 0 the bitrate is fixed to the maximum values shown below. Otherwise, the supplied value is used to generate bitrate settings.</p><ul>
+<li>Standard-mode (Sm) : up to 100 kbps</li>
+<li>Fast-mode (Fm) : up to 400 kbps</li>
+<li>Fast-mode Plus (Fm+) : up to 1 Mbps</li>
+</ul>
+</li>
+<li>The closest possible baud-rate that can be achieved (less than or equal to the requested rate) at the current PCLKB settings is calculated and used.</li>
 <li>If a valid clock rate could not be calculated, an error is returned by the tool.</li>
 </ul>
 <h2><a class="anchor" id="r-iica_master-multiple-devices-on-same-bus"></a>
@@ -908,7 +919,7 @@ SCLAA pin setting. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

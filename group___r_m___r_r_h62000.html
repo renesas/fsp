@@ -1,0 +1,780 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: RRH62000 All-in-one Air Quality Module (rm_rrh62000)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.6.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___r_r_h62000.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle">
+<div class="title">RRH62000 All-in-one Air Quality Module (rm_rrh62000)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_n_s_o_r___m_o_d_u_l_e_s.html">Sensor</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gacbda28cb120152138f09964c02da6233"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#gacbda28cb120152138f09964c02da6233">RM_RRH62000_Open</a> (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__cfg__t">rm_air_sensor_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:gacbda28cb120152138f09964c02da6233"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens and configures the RRH62000 sensor module. If ZMOD cleaning is not complete, this function will take at least 1 minute. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a7a4605590665007004ae6a4500cc8942">rm_air_sensor_api_t::open</a>.  <a href="#gacbda28cb120152138f09964c02da6233">More...</a><br /></td></tr>
+<tr class="separator:gacbda28cb120152138f09964c02da6233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68e53833c20c49c682c1e15b595dbcf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#ga68e53833c20c49c682c1e15b595dbcf8">RM_RRH62000_Close</a> (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="memdesc:ga68e53833c20c49c682c1e15b595dbcf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when close the sensor module. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ae0d32afd8243c19a649a46e529c3e6c9">rm_air_sensor_api_t::close</a>.  <a href="#ga68e53833c20c49c682c1e15b595dbcf8">More...</a><br /></td></tr>
+<tr class="separator:ga68e53833c20c49c682c1e15b595dbcf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a">RM_RRH62000_StatusCheck</a> (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="memdesc:gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when polling is used. It reads the status of sensor. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#aeb4ede589729816df54d16e587cba2db">rm_air_sensor_api_t::statusCheck</a>.  <a href="#gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a">More...</a><br /></td></tr>
+<tr class="separator:gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90e78ce429462050c9dc32fe59019e5e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#ga90e78ce429462050c9dc32fe59019e5e">RM_RRH62000_Read</a> (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const p_raw_data)</td></tr>
+<tr class="memdesc:ga90e78ce429462050c9dc32fe59019e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called to get measurement results after measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a9ed9740ca8bc4a9f378d44c62e96ae04">rm_air_sensor_api_t::read</a>.  <a href="#ga90e78ce429462050c9dc32fe59019e5e">More...</a><br /></td></tr>
+<tr class="separator:ga90e78ce429462050c9dc32fe59019e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71f4aab381b348d10565104ff963b9dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#ga71f4aab381b348d10565104ff963b9dd">RM_RRH62000_DataCalculate</a> (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_api_ctrl, const <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__data__t">rm_air_sensor_data_t</a> *const p_rrh62000_data)</td></tr>
+<tr class="memdesc:ga71f4aab381b348d10565104ff963b9dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called when calculating gas data from measurement results. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ad848e87f4d6030e944f11b699110bf6d">rm_air_sensor_api_t::dataCalculate</a>.  <a href="#ga71f4aab381b348d10565104ff963b9dd">More...</a><br /></td></tr>
+<tr class="separator:ga71f4aab381b348d10565104ff963b9dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4fcb818e12a70d01330bd9a544755fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#gab4fcb818e12a70d01330bd9a544755fe">RM_RRH62000_FirmwareVersionGet</a> (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const p_version)</td></tr>
+<tr class="memdesc:gab4fcb818e12a70d01330bd9a544755fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called to get firmware version. Firmware version does not use "patch" of p_version. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a2001a28349cca6b0e57da4b5d3bfe567">rm_air_sensor_api_t::firmwareVersionGet</a>.  <a href="#gab4fcb818e12a70d01330bd9a544755fe">More...</a><br /></td></tr>
+<tr class="separator:gab4fcb818e12a70d01330bd9a544755fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa2b900640fc9544bbf7ea4ee0a4a2a5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#gaa2b900640fc9544bbf7ea4ee0a4a2a5f">RM_RRH62000_AlgorithmVersionGet</a> (<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const p_version)</td></tr>
+<tr class="memdesc:gaa2b900640fc9544bbf7ea4ee0a4a2a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function should be called to get algorithm version. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ad143847a953dca9115516823db0e04a2">rm_air_sensor_api_t::algorithmVersionGet</a>.  <a href="#gaa2b900640fc9544bbf7ea4ee0a4a2a5f">More...</a><br /></td></tr>
+<tr class="separator:gaa2b900640fc9544bbf7ea4ee0a4a2a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Middleware to implement the RRH62000 sensor module interface. This module implements the <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html">SENSOR Middleware Interface</a>. </p>
+<h1><a class="anchor" id="rm-rrh62000-overview"></a>
+Overview</h1>
+<p>This module provides an API for configuring and controlling the RRH62000 sensor module.</p>
+<p>I2C communication with the RRH62000 sensor module is realized by connecting with the rm_comms_i2c module.</p>
+<h2><a class="anchor" id="rm-rrh62000-features"></a>
+Features</h2>
+<p>The RRH62000 sensor interface implementation has the following key features:</p><ul>
+<li>Initialize the sensor for measurement</li>
+<li>Receive status for wait until the measurement is done.</li>
+<li>Get the measruement results from the sensor module<a class="anchor" id="um_rm_rrh62000_read"></a> </li>
+</ul>
+<h1><a class="anchor" id="rm-rrh62000-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_rrh62000</h2>
+The following build time configurations are defined in fsp_cfg/rm_rrh62000_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Sensor &gt; RRH62000 All-in-one Air Quality Module (rm_rrh62000)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Sensor &gt; RRH62000 All-in-one Air Quality Module (rm_rrh62000).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_rrh62000_sensor0 </td><td>Module name. </td></tr>
+<tr>
+<td>Number of moving average [times]</td><td>Value must be 1 or more</td><td>10 </td><td>Set number of moving average. Min = 1 and Max = 60. </td></tr>
+<tr>
+<td>Fan speed control [%]</td><td>Value must be 60 or more</td><td>86 </td><td>Set fan speed control. Min = 60 and Max = 100. </td></tr>
+<tr class="tree_none">
+<td>Comms I2C Callback</td><td>Name must be a valid C symbol</td><td>rrh62000_comms_i2c_callback </td><td>A user COMMS I2C callback function can be provided. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm-rrh62000-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module use SDA and SCL pins of I2C Master, SCI I2C and IICA Master.</p>
+<h1><a class="anchor" id="rm-rrh62000-usage_notes"></a>
+Usage Notes</h1>
+<p><a href="https://www.renesas.com/document/dst/rrh62000-datasheet">RRH62000 datasheet is here. </a> <br />
+ When using the sensor for the first time, allow up to 48 hours for re-hydration of the humidity sensor in ambient air and for TVOC sensor conditioning. This will allow the module to take optimal readings. The RRH62000 is an integrated sensor module for the measurement of critical air quality parameters. Sensors for particulate matter (PM), total volatile organic compounds (TVOC), estimation of carbon dioxide (eCO2) optional nitrogen dioxide (NO2), optional ozone (O3), humidity (RH), and temperature (T), are combined in a single package.<br />
+ If an RTOS is used, blocking and bus lock is available.</p><ul>
+<li>If blocking of an I2C bus is required, it is necessary to create a semaphore for blocking.</li>
+<li>If bus lock is required, it is necessary to create a mutex for bus lock. Bus lock is only available when a semaphore for blocking is used.</li>
+</ul>
+<h2>Notifications</h2>
+<ul>
+<li>After turning on the module for the first time, the sensor will automatically start in ZMOD sensor cleaning mode for 1 minute. Do not cut power to the sensor during this period.</li>
+<li>Interval time needs to be at least 1s after power-on or reset.</li>
+<li>I2C-master access interval for RRH62000 must be longer than 1s.</li>
+<li>This module supports I2C only (not support UART).</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><a class="el" href="group___s_a_u___i2_c.html">I2C Master (r_sau_i2c)</a> is not supported. RRH62000 needs clock stretching, but is not supported by SAU I2C.</li>
+<li>The following commands are currently not supported.<ul>
+<li>SLEEP</li>
+<li>CLEAN</li>
+<li>TINTC_H</li>
+<li>TINTC_L</li>
+<li>TCLEAN</li>
+<li>RMOX</li>
+<li>UID</li>
+</ul>
+</li>
+</ul>
+<h2>Bus Initialization</h2>
+<p>The RRH62000 interface expects a bus instance to be opened before opening any RRH62000 device. The interface will handle switching between devices on the bus but will not open or close the bus instance. The user should open the bus with the appropriate <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html">I2C Master Interface</a> open call.</p>
+<h2>Initialization</h2>
+<p>Initialize with <a class="el" href="group___r_m___r_r_h62000.html#gacbda28cb120152138f09964c02da6233">RM_RRH62000_Open()</a>.</p>
+<h2>From measurement start to data acquisition</h2>
+<p>An endless loop continuously checks the status of the RRH62000 sensor module and reads its data. The measurement results are subsequently processed, and the air quality values are calculated.</p>
+<ol type="1">
+<li>Call <a class="el" href="group___r_m___r_r_h62000.html#gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a">RM_RRH62000_StatusCheck()</a>. This function will execute a status check over I2C.</li>
+<li>If RM_AIR_SENSOR_EVENT_MEASUREMENT_NOT_COMPLETE is received in callback, user should wait some time (min=1s) and then call <a class="el" href="group___r_m___r_r_h62000.html#gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a">RM_RRH62000_StatusCheck()</a> again.</li>
+<li>Wait until RM_AIR_SENSOR_EVENT_MEASUREMENT_COMPLETE is received.</li>
+<li>Call <a class="el" href="group___r_m___r_r_h62000.html#ga90e78ce429462050c9dc32fe59019e5e">RM_RRH62000_Read()</a> and read the measurement data.</li>
+<li>Wait until RM_AIR_SENSOR_EVENT_SUCCESS is received.</li>
+<li>Call <a class="el" href="group___r_m___r_r_h62000.html#ga71f4aab381b348d10565104ff963b9dd">RM_RRH62000_DataCalculate()</a>.</li>
+</ol>
+<h1><a class="anchor" id="rm-rrh62000-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>These are basic examples of minimal use of RRH62000 sensor implementation in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_rrh62000_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> raw_data;</div><div class="line">    <a class="code" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__data__t">rm_air_sensor_data_t</a>     rrh62000_data;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the I2C bus if it is not already open. */</span></div><div class="line">    rm_comms_i2c_bus_extended_cfg_t * p_extend =</div><div class="line">        (rm_comms_i2c_bus_extended_cfg_t *) g_rrh62000_cfg.p_comms_instance-&gt;p_cfg-&gt;p_extend;</div><div class="line">    <a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> * p_driver_instance = (<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> *) p_extend-&gt;p_driver_instance;</div><div class="line">    p_driver_instance-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a3258c94576c0bc4a69095906a314386d">p_api</a>-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a6a35b07fde984333fdce6859dfd56e64">open</a>(p_driver_instance-&gt;p_ctrl, p_driver_instance-&gt;p_cfg);</div><div class="line"></div><div class="line"><span class="preprocessor">#if BSP_CFG_RTOS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Create a semaphore for blocking if a semaphore is not NULL */</span></div><div class="line">    <span class="keywordflow">if</span> (NULL != p_extend-&gt;p_blocking_semaphore)</div><div class="line">    {</div><div class="line"><span class="preprocessor"> #if BSP_CFG_RTOS == 1                 // AzureOS</span></div><div class="line">        tx_semaphore_create(p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_handle,</div><div class="line">                            p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_name,</div><div class="line">                            (ULONG) 0);</div><div class="line"><span class="preprocessor"> #elif BSP_CFG_RTOS == 2               // FreeRTOS</span></div><div class="line">        *(p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_handle) =</div><div class="line">            xSemaphoreCreateCountingStatic((UBaseType_t) 1,</div><div class="line">                                           (UBaseType_t) 0,</div><div class="line">                                           p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_memory);</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Create a recursive mutex for bus lock if a recursive mutex is not NULL */</span></div><div class="line">    <span class="keywordflow">if</span> (NULL != p_extend-&gt;p_bus_recursive_mutex)</div><div class="line">    {</div><div class="line"><span class="preprocessor"> #if BSP_CFG_RTOS == 1                 // AzureOS</span></div><div class="line">        tx_mutex_create(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_handle,</div><div class="line">                        p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_name,</div><div class="line">                        TX_INHERIT);</div><div class="line"><span class="preprocessor"> #elif BSP_CFG_RTOS == 2               // FreeRTOS</span></div><div class="line">        *(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_handle) =</div><div class="line">            xSemaphoreCreateRecursiveMutexStatic(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_memory);</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line">    }</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Delay 1s after power-on */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(RRH62000_WAIT_1000_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___r_r_h62000.html#gacbda28cb120152138f09964c02da6233">RM_RRH62000_Open</a>(&amp;g_rrh62000_ctrl, &amp;g_rrh62000_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    g_rrh62000_i2c_callback_flag = 0;</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line">            err = <a class="code" href="group___r_m___r_r_h62000.html#gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a">RM_RRH62000_StatusCheck</a>(&amp;g_rrh62000_ctrl);</div><div class="line">            handle_error(err);</div><div class="line">            <span class="keywordflow">while</span> (0U == g_rrh62000_i2c_callback_flag)</div><div class="line">            {</div><div class="line">            }</div><div class="line"></div><div class="line">            g_rrh62000_i2c_callback_flag = 0;</div><div class="line"></div><div class="line">            err = <a class="code" href="group___r_m___r_r_h62000.html#ga90e78ce429462050c9dc32fe59019e5e">RM_RRH62000_Read</a>(&amp;g_rrh62000_ctrl, &amp;raw_data);</div><div class="line">            <span class="keywordflow">if</span> (err == <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a445a886afbb0951782907ac56e93d729">FSP_ERR_SENSOR_MEASUREMENT_NOT_FINISHED</a>)</div><div class="line">            {</div><div class="line">                <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(RRH62000_WAIT_1000_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">            }</div><div class="line">        } <span class="keywordflow">while</span> (err == <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a445a886afbb0951782907ac56e93d729">FSP_ERR_SENSOR_MEASUREMENT_NOT_FINISHED</a>);</div><div class="line"></div><div class="line">        handle_error(err);</div><div class="line"></div><div class="line">        <span class="keywordflow">while</span> (0U == g_rrh62000_i2c_callback_flag)</div><div class="line">        {</div><div class="line">        }</div><div class="line"></div><div class="line">        g_rrh62000_i2c_callback_flag = 0;</div><div class="line"></div><div class="line">        err = <a class="code" href="group___r_m___r_r_h62000.html#ga71f4aab381b348d10565104ff963b9dd">RM_RRH62000_DataCalculate</a>(&amp;g_rrh62000_ctrl, &amp;raw_data, &amp;rrh62000_data);</div><div class="line">        handle_error(err);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structrm__rrh62000__init__process__params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#structrm__rrh62000__init__process__params__t">rm_rrh62000_init_process_params_t</a></td></tr>
+<tr class="separator:structrm__rrh62000__init__process__params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__rrh62000__status__params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#structrm__rrh62000__status__params__t">rm_rrh62000_status_params_t</a></td></tr>
+<tr class="separator:structrm__rrh62000__status__params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__rrh62000__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#structrm__rrh62000__instance__ctrl__t">rm_rrh62000_instance_ctrl_t</a></td></tr>
+<tr class="separator:structrm__rrh62000__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrm__rrh62000__init__process__params__t" id="structrm__rrh62000__init__process__params__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__rrh62000__init__process__params__t">&#9670;&nbsp;</a></span>rm_rrh62000_init_process_params_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_rrh62000_init_process_params_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>RRH62000 initialization process block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afac6c437c2790e3dd493f11dcd0f581a"></a>volatile bool</td>
+<td class="fieldname">
+communication_finished</td>
+<td class="fielddoc">
+Communication flag for blocking. </td></tr>
+<tr><td class="fieldtype">
+<a id="a54d605452fa1966eea6abf34e9b0086e"></a>volatile <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga23f745a0dafb0f0a5e96246d90d3ecfd">rm_air_sensor_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Callback event. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__rrh62000__status__params__t" id="structrm__rrh62000__status__params__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__rrh62000__status__params__t">&#9670;&nbsp;</a></span>rm_rrh62000_status_params_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_rrh62000_status_params_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>RRH62000 status parameters block </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ab143496466d9047e8d16898abc4ef171"></a>uint8_t</td>
+<td class="fieldname">
+value</td>
+<td class="fielddoc">
+Value to check measurement complete. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae5a9acb828e6588697ed5afa86794539"></a>volatile bool</td>
+<td class="fieldname">
+flag</td>
+<td class="fielddoc">
+Flag to identify StatusCheck API and other APIs in callback. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__rrh62000__instance__ctrl__t" id="structrm__rrh62000__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__rrh62000__instance__ctrl__t">&#9670;&nbsp;</a></span>rm_rrh62000_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_rrh62000_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>RRH62000 control block </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a46ea6286152bb0f466345b33f087895d"><td class="memItemLeft" align="right" valign="top"><a id="a46ea6286152bb0f466345b33f087895d"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a46ea6286152bb0f466345b33f087895d">open</a></td></tr>
+<tr class="memdesc:a46ea6286152bb0f466345b33f087895d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open flag. <br /></td></tr>
+<tr class="separator:a46ea6286152bb0f466345b33f087895d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15e819c0f63ca8389ddd68cf41a2a866"><td class="memItemLeft" align="right" valign="top"><a id="a15e819c0f63ca8389ddd68cf41a2a866"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a15e819c0f63ca8389ddd68cf41a2a866">write_buf</a> [2]</td></tr>
+<tr class="memdesc:a15e819c0f63ca8389ddd68cf41a2a866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write buffer for I2C communications. <br /></td></tr>
+<tr class="separator:a15e819c0f63ca8389ddd68cf41a2a866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a516080d1dc00fa7766f60c3bda728370"><td class="memItemLeft" align="right" valign="top"><a id="a516080d1dc00fa7766f60c3bda728370"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a516080d1dc00fa7766f60c3bda728370">read_buf</a> [2]</td></tr>
+<tr class="memdesc:a516080d1dc00fa7766f60c3bda728370"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read buffer for I2C communications. <br /></td></tr>
+<tr class="separator:a516080d1dc00fa7766f60c3bda728370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dcc166f814303cff46a250fbec04afd"><td class="memItemLeft" align="right" valign="top"><a id="a1dcc166f814303cff46a250fbec04afd"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a1dcc166f814303cff46a250fbec04afd">p_read_data</a></td></tr>
+<tr class="memdesc:a1dcc166f814303cff46a250fbec04afd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to read data. This is used for checking error code and checksum in callback. <br /></td></tr>
+<tr class="separator:a1dcc166f814303cff46a250fbec04afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c6e12e2e4cb65f0e123ad2cc185bfe4"><td class="memItemLeft" align="right" valign="top"><a id="a6c6e12e2e4cb65f0e123ad2cc185bfe4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a6c6e12e2e4cb65f0e123ad2cc185bfe4">read_bytes</a></td></tr>
+<tr class="memdesc:a6c6e12e2e4cb65f0e123ad2cc185bfe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bytes. This is used for checking error code and checksum in callback. <br /></td></tr>
+<tr class="separator:a6c6e12e2e4cb65f0e123ad2cc185bfe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a735accc95e125bda176eb60a4b2ae375"><td class="memItemLeft" align="right" valign="top"><a id="a735accc95e125bda176eb60a4b2ae375"></a>
+volatile <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga23f745a0dafb0f0a5e96246d90d3ecfd">rm_air_sensor_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a735accc95e125bda176eb60a4b2ae375">event</a></td></tr>
+<tr class="memdesc:a735accc95e125bda176eb60a4b2ae375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback event. <br /></td></tr>
+<tr class="separator:a735accc95e125bda176eb60a4b2ae375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81abe8d6db442877a7a3f4cb87367a04"><td class="memItemLeft" align="right" valign="top"><a id="a81abe8d6db442877a7a3f4cb87367a04"></a>
+<a class="el" href="group___r_m___r_r_h62000.html#structrm__rrh62000__status__params__t">rm_rrh62000_status_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a81abe8d6db442877a7a3f4cb87367a04">status</a></td></tr>
+<tr class="memdesc:a81abe8d6db442877a7a3f4cb87367a04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status parameter for arriving new measurement results. <br /></td></tr>
+<tr class="separator:a81abe8d6db442877a7a3f4cb87367a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ecc78241ae3550b32c46f70ef26abb"><td class="memItemLeft" align="right" valign="top"><a id="ab1ecc78241ae3550b32c46f70ef26abb"></a>
+<a class="el" href="group___r_m___r_r_h62000.html#structrm__rrh62000__status__params__t">rm_rrh62000_status_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#ab1ecc78241ae3550b32c46f70ef26abb">cleaning_status</a></td></tr>
+<tr class="memdesc:ab1ecc78241ae3550b32c46f70ef26abb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status parameter for ZMOD cleaning. <br /></td></tr>
+<tr class="separator:ab1ecc78241ae3550b32c46f70ef26abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cebeb351ab68b023a0776d0f34c60a6"><td class="memItemLeft" align="right" valign="top"><a id="a5cebeb351ab68b023a0776d0f34c60a6"></a>
+<a class="el" href="group___r_m___r_r_h62000.html#structrm__rrh62000__init__process__params__t">rm_rrh62000_init_process_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a5cebeb351ab68b023a0776d0f34c60a6">init_process_params</a></td></tr>
+<tr class="memdesc:a5cebeb351ab68b023a0776d0f34c60a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">For the initialization process. <br /></td></tr>
+<tr class="separator:a5cebeb351ab68b023a0776d0f34c60a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd875bf8a365629ff554f54439384a4"><td class="memItemLeft" align="right" valign="top"><a id="a2fd875bf8a365629ff554f54439384a4"></a>
+<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__cfg__t">rm_air_sensor_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a2fd875bf8a365629ff554f54439384a4">p_cfg</a></td></tr>
+<tr class="memdesc:a2fd875bf8a365629ff554f54439384a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer of configuration block. <br /></td></tr>
+<tr class="separator:a2fd875bf8a365629ff554f54439384a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a815e938f91111f4d7a442461bc7aaaa9"><td class="memItemLeft" align="right" valign="top"><a id="a815e938f91111f4d7a442461bc7aaaa9"></a>
+<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t">rm_comms_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a815e938f91111f4d7a442461bc7aaaa9">p_comms_i2c_instance</a></td></tr>
+<tr class="memdesc:a815e938f91111f4d7a442461bc7aaaa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer of I2C Communications Middleware instance structure. <br /></td></tr>
+<tr class="separator:a815e938f91111f4d7a442461bc7aaaa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d30746d78c221b05094fad643806e8f"><td class="memItemLeft" align="right" valign="top"><a id="a1d30746d78c221b05094fad643806e8f"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a1d30746d78c221b05094fad643806e8f">p_context</a></td></tr>
+<tr class="memdesc:a1d30746d78c221b05094fad643806e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
+<tr class="separator:a1d30746d78c221b05094fad643806e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d4f513d2f3698554598104af56a1c3c"><td class="memItemLeft" align="right" valign="top"><a id="a8d4f513d2f3698554598104af56a1c3c"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___r_r_h62000.html#a8d4f513d2f3698554598104af56a1c3c">p_comms_callback</a> )(<a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__callback__args__t">rm_air_sensor_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a8d4f513d2f3698554598104af56a1c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C Communications callback. <br /></td></tr>
+<tr class="separator:a8d4f513d2f3698554598104af56a1c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gacbda28cb120152138f09964c02da6233"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacbda28cb120152138f09964c02da6233">&#9670;&nbsp;</a></span>RM_RRH62000_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_RRH62000_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__cfg__t">rm_air_sensor_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens and configures the RRH62000 sensor module. If ZMOD cleaning is not complete, this function will take at least 1 minute. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a7a4605590665007004ae6a4500cc8942">rm_air_sensor_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>RRH62000 successfully configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer, or one or more configuration options is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. This module can only be opened once. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>ZMOD cleaning is not complete. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga68e53833c20c49c682c1e15b595dbcf8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga68e53833c20c49c682c1e15b595dbcf8">&#9670;&nbsp;</a></span>RM_RRH62000_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_RRH62000_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function should be called when close the sensor module. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ae0d32afd8243c19a649a46e529c3e6c9">rm_air_sensor_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaecc8cfb7223fb9afbc1f7a4b2ed4cc6a">&#9670;&nbsp;</a></span>RM_RRH62000_StatusCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_RRH62000_StatusCheck </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function should be called when polling is used. It reads the status of sensor. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#aeb4ede589729816df54d16e587cba2db">rm_air_sensor_api_t::statusCheck</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>communication is timeout. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>communication is aborted. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga90e78ce429462050c9dc32fe59019e5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90e78ce429462050c9dc32fe59019e5e">&#9670;&nbsp;</a></span>RM_RRH62000_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_RRH62000_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_raw_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function should be called to get measurement results after measurement finishes. To check measurement status either polling or busy/interrupt pin can be used. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a9ed9740ca8bc4a9f378d44c62e96ae04">rm_air_sensor_api_t::read</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Communication is timeout. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Communication is aborted. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga71f4aab381b348d10565104ff963b9dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga71f4aab381b348d10565104ff963b9dd">&#9670;&nbsp;</a></span>RM_RRH62000_DataCalculate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_RRH62000_DataCalculate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__raw__data__t">rm_air_sensor_raw_data_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_raw_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__data__t">rm_air_sensor_data_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_rrh62000_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function should be called when calculating gas data from measurement results. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ad848e87f4d6030e944f11b699110bf6d">rm_air_sensor_api_t::dataCalculate</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully gas data is calculated. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab4fcb818e12a70d01330bd9a544755fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab4fcb818e12a70d01330bd9a544755fe">&#9670;&nbsp;</a></span>RM_RRH62000_FirmwareVersionGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_RRH62000_FirmwareVersionGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_version</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function should be called to get firmware version. Firmware version does not use "patch" of p_version. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a2001a28349cca6b0e57da4b5d3bfe567">rm_air_sensor_api_t::firmwareVersionGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Communication is timeout. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Communication is aborted. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa2b900640fc9544bbf7ea4ee0a4a2a5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa2b900640fc9544bbf7ea4ee0a4a2a5f">&#9670;&nbsp;</a></span>RM_RRH62000_AlgorithmVersionGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_RRH62000_AlgorithmVersionGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga2be38d3a427c43dde1033acc572f6798">rm_air_sensor_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t">rm_air_sensor_version_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_version</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function should be called to get algorithm version. Implements <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ad143847a953dca9115516823db0e04a2">rm_air_sensor_api_t::algorithmVersionGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully results are read. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened configured. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Communication is timeout. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ABORTED</td><td>Communication is aborted. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

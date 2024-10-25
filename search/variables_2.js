@@ -98,7 +98,7 @@ var searchData=
   ['btx_5fcarrier',['btx_carrier',['../group___u_s_b___h_c_d_c___a_p_i.html#a1d466553fb6366fec3b2e5c9f123b95b',1,'usb_hcdc_serialstate_t']]],
   ['buf',['buf',['../group___r_m___h_s300_x.html#a486df3e0ed2af6c8c038e1357572da53',1,'rm_hs300x_instance_ctrl_t::buf()'],['../group___r_m___o_b1203.html#a8315472488bcdc83146c0e0c873d8037',1,'rm_ob1203_instance_ctrl_t::buf()'],['../group___r_m___z_m_o_d4_x_x_x.html#a0a1702cc41dc3a4c35e5c81f95b55295',1,'rm_zmod4xxx_instance_ctrl_t::buf()']]],
   ['buf_5foffset',['buf_offset',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a0e7e37403fc3287be7805a2673fb2e52',1,'st_ble_gatt_pre_queue_t']]],
-  ['buffer',['buffer',['../structmbedtls__sha512__context.html#ad3d0087f7cbca41b209e1861e1ac0362',1,'mbedtls_sha512_context::buffer()'],['../structmbedtls__sha256__context.html#a00ec71643e336322567131e1ff3cc79f',1,'mbedtls_sha256_context::buffer()']]],
+  ['buffer',['buffer',['../structmbedtls__sha256__context.html#a00ec71643e336322567131e1ff3cc79f',1,'mbedtls_sha256_context::buffer()'],['../structmbedtls__sha512__context.html#ad3d0087f7cbca41b209e1861e1ac0362',1,'mbedtls_sha512_context::buffer()']]],
   ['buffer_5flen',['buffer_len',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a9c6c6bc45bf994841d960256444eaacd',1,'st_ble_gatt_pre_queue_t']]],
   ['buffer_5fmode',['buffer_mode',['../group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a00165cb76b8ec9693745d9f3132cf4e3',1,'three_phase_cfg_t']]],
   ['buffer_5fnum',['buffer_num',['../group___v_s___a_p_i.html#ac3f72a2c13b482df0ad3d0b12c93d045',1,'st_ble_vs_tx_flow_chg_evt_t']]],

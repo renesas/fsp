@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -281,6 +281,7 @@ Features</h2>
 <p>The implementation of the USB_PCDC communications interface<a class="anchor" id="um_rm_comms_read"></a><a class="anchor" id="um_rm_comms_write"></a>has the following key features:</p><ul>
 <li>Non-blocking API for bare metal</li>
 <li>Non-blocking and blocking API for RTOS</li>
+<li>USB connection detection mode</li>
 </ul>
 <h1><a class="anchor" id="rm-comms-usb-pcdc-configuration"></a>
 Configuration</h1>
@@ -386,17 +387,29 @@ Use</li>
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_comms_usb_pcdc0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
+<td>USB Connection Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Baudrate Configuration</li>
+<li>
+Control Line State</li>
+</ul>
+</td><td>Disabled </td><td>Enable it only when application wants to process the error of USB host tool not opened. </td></tr>
+<tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. </td></tr>
 </table>
 </p>
 <h1><a class="anchor" id="rm-comms-usb-pcdc-notes"></a>
 Usage Notes</h1>
+<p>USB connection detection has two modes: Baudrate Configuration mode and Control Line State mode. The former depends on line coding request, and the latter relies on control line state request. When it is enabled, rm_comms_usb_pcdc_write API will return FSP_ERR_NOT_ENABLED when USB host tool is not opened. By default it is disabled.</p>
 <h2><a class="anchor" id="rm-comms-usb-pcdc-limitations"></a>
 Limitations</h2>
 <ul>
 <li>RM_COMMS_API are not reentrant in non blocking mode</li>
 <li>When in blocking mode, <a class="el" href="group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#ga0c967085c304078c11e95bf7700eead3">RM_COMMS_USB_PCDC_Write()</a> and <a class="el" href="group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#gad8bbc0e261e312c8a958ef6a4cae903d">RM_COMMS_USB_PCDC_Read()</a> cannot be called in callback.</li>
-<li>RM_COMMS_USB_PCDC_WriteRead API is not implemented<a class="anchor" id="um_rm_comms_writeread"></a><a class="anchor" id="um_rm_comms_special_case"></a> </li>
+<li>RM_COMMS_USB_PCDC_WriteRead API is not implemented<a class="anchor" id="um_rm_comms_writeread"></a><a class="anchor" id="um_rm_comms_special_case"></a></li>
+<li>USB connection detection could be platform specific when it is enabled. For Windows USB host, Baudrate configuration mode should be used.</li>
 </ul>
 <h1><a class="anchor" id="rm-comms-usb-pcdc-examples"></a>
 Examples</h1>
@@ -442,6 +455,14 @@ rm_comms_usb_pcdc_extended_cfg_t const  *&#160;</td><td class="memItemRight" val
 usb_callback_args_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a109756d538b2f8712c797cfc680da856">p_usb_args</a></td></tr>
 <tr class="memdesc:a109756d538b2f8712c797cfc680da856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to usb callback args. <br /></td></tr>
 <tr class="separator:a109756d538b2f8712c797cfc680da856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9487bd392e61587199c9b497d4dd655a"><td class="memItemLeft" align="right" valign="top"><a id="a9487bd392e61587199c9b497d4dd655a"></a>
+<a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#structusb__pcdc__ctrllinestate__t">usb_pcdc_ctrllinestate_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a9487bd392e61587199c9b497d4dd655a">ctrl_line_state</a></td></tr>
+<tr class="memdesc:a9487bd392e61587199c9b497d4dd655a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Line State Control. <br /></td></tr>
+<tr class="separator:a9487bd392e61587199c9b497d4dd655a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52afbc0da68d67be4c7676d53abf37da"><td class="memItemLeft" align="right" valign="top"><a id="a52afbc0da68d67be4c7676d53abf37da"></a>
+<a class="el" href="group___u_s_b___p_c_d_c___a_p_i.html#structusb__pcdc__linecoding__t">usb_pcdc_linecoding_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a52afbc0da68d67be4c7676d53abf37da">line_coding</a></td></tr>
+<tr class="memdesc:a52afbc0da68d67be4c7676d53abf37da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Line Coding to store COM port settings. <br /></td></tr>
+<tr class="separator:a52afbc0da68d67be4c7676d53abf37da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2eae5f84d89185b9e27484525f0b1703"><td class="memItemLeft" align="right" valign="top"><a id="a2eae5f84d89185b9e27484525f0b1703"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a2eae5f84d89185b9e27484525f0b1703">p_callback</a> )(<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:a2eae5f84d89185b9e27484525f0b1703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called when a usb_status_t occurs. <br /></td></tr>
@@ -604,7 +625,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully data decoded. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>USB device needs connecting from USB host to operate.</td></tr>
   </table>
   </dd>
 </dl>
@@ -649,7 +671,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully writing data . </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open.</td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>USB device needs connecting from USB host to operate.</td></tr>
   </table>
   </dd>
 </dl>
@@ -728,7 +751,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: BSP_SDRAM</title>
+<title>RA Flexible Software Package Documentation: BSP SDRAM support</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,33 +237,95 @@ $(document).ready(function(){initNavTree('group___b_s_p___s_d_r_a_m.html','');})
 </div>
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">BSP_SDRAM</div>  </div>
+<div class="title">BSP SDRAM support<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___c_o_m_m_o_n.html">BSP</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>SDRAM initialization. </p>
-<p>This file contains code that the initializes SDRAMC and SDR SDRAM device memory. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga9ca4381ffdfa7bb640c51666893436d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___s_d_r_a_m.html#ga9ca4381ffdfa7bb640c51666893436d0">BSP_PRV_SDRAM_MR_WB_SINGLE_LOC_ACC</a></td></tr>
-<tr class="separator:ga9ca4381ffdfa7bb640c51666893436d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gad51b72b217a0060860e3affccdb69d62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___s_d_r_a_m.html#gad51b72b217a0060860e3affccdb69d62">R_BSP_SdramInit</a> (bool init_memory)</td></tr>
+<tr class="memdesc:gad51b72b217a0060860e3affccdb69d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes SDRAM.  <a href="#gad51b72b217a0060860e3affccdb69d62">More...</a><br /></td></tr>
+<tr class="separator:gad51b72b217a0060860e3affccdb69d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58298a848222b3b49fda6c26e57e5adb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___s_d_r_a_m.html#ga58298a848222b3b49fda6c26e57e5adb">R_BSP_SdramSelfRefreshEnable</a> (void)</td></tr>
+<tr class="memdesc:ga58298a848222b3b49fda6c26e57e5adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes SDRAM from Auto-refresh to Self-refresh.  <a href="#ga58298a848222b3b49fda6c26e57e5adb">More...</a><br /></td></tr>
+<tr class="separator:ga58298a848222b3b49fda6c26e57e5adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3181a42141ec41a24e8ff0d392840b21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___s_d_r_a_m.html#ga3181a42141ec41a24e8ff0d392840b21">R_BSP_SdramSelfRefreshDisable</a> (void)</td></tr>
+<tr class="memdesc:ga3181a42141ec41a24e8ff0d392840b21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes SDRAM from Self-refresh to Auto-refresh.  <a href="#ga3181a42141ec41a24e8ff0d392840b21">More...</a><br /></td></tr>
+<tr class="separator:ga3181a42141ec41a24e8ff0d392840b21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga9ca4381ffdfa7bb640c51666893436d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9ca4381ffdfa7bb640c51666893436d0">&#9670;&nbsp;</a></span>BSP_PRV_SDRAM_MR_WB_SINGLE_LOC_ACC</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Code that initializes the SDRAMC and SDR SDRAM device memory. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gad51b72b217a0060860e3affccdb69d62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad51b72b217a0060860e3affccdb69d62">&#9670;&nbsp;</a></span>R_BSP_SdramInit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BSP_PRV_SDRAM_MR_WB_SINGLE_LOC_ACC</td>
+          <td class="memname">void R_BSP_SdramInit </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>init_memory</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Due to hardware limitations of the SDRAM peripheral, it is not expected any of these need to be changable by end user. Only sequential, single access at a time is supported. </p>
+
+<p>Initializes SDRAM. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">init_memory</td><td>If true, this function will execute the initialization of the external modules. Otherwise, it will only initialize the SDRAMC and leave the memory in self-refresh mode.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function initializes SDRAMC and SDR SDRAM device.</p>
+<dl class="section note"><dt>Note</dt><dd>This function must only be called once after reset. </dd></dl>
+
+</div>
+</div>
+<a id="ga58298a848222b3b49fda6c26e57e5adb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga58298a848222b3b49fda6c26e57e5adb">&#9670;&nbsp;</a></span>R_BSP_SdramSelfRefreshEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_SdramSelfRefreshEnable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Changes SDRAM from Auto-refresh to Self-refresh. </p>
+<p>This function allows Software Standby and Deep Software Standby modes to be entered without data loss.</p>
+<dl class="section note"><dt>Note</dt><dd>SDRAM cannot be accessed after calling this function. Use <a class="el" href="group___b_s_p___s_d_r_a_m.html#ga3181a42141ec41a24e8ff0d392840b21">R_BSP_SdramSelfRefreshDisable</a> to resume normal SDRAM operation. </dd></dl>
+
+</div>
+</div>
+<a id="ga3181a42141ec41a24e8ff0d392840b21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3181a42141ec41a24e8ff0d392840b21">&#9670;&nbsp;</a></span>R_BSP_SdramSelfRefreshDisable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void R_BSP_SdramSelfRefreshDisable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Changes SDRAM from Self-refresh to Auto-refresh. </p>
+<p>This function changes back to Auto-refresh and allows normal SDRAM operation to resume. </p>
 
 </div>
 </div>
@@ -273,7 +335,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

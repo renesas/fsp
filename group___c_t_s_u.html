@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -284,7 +284,7 @@ Overview</h1>
 <p>The capacitive touch sensing unit HAL driver (r_ctsu) provides an API to control the CTSU peripheral. This module performs capacitance measurement based on various settings defined by the configuration. This module is configured via the <a href="https://www.renesas.com/qe-capacitive-touch">QE for Capacitive Touch</a>.</p>
 <h2><a class="anchor" id="r-ctsu-features"></a>
 Features</h2>
-<p><a class="anchor" id="um_ctsu_mutual"></a><a class="anchor" id="um_ctsu_multi_method"></a></p><ul>
+<p><a class="anchor" id="um_ctsu_mutual"></a><a class="anchor" id="um_ctsu_multi_method"></a><a class="anchor" id="um_ctsu_mutual_jmm"></a><a class="anchor" id="um_ctsu_multi_method_jmm"></a></p><ul>
 <li>Supports multiple scan modes<ul>
 <li>Self-capacitance multi scan mode (CTSU2 support active shield)</li>
 <li>Mutual-capacitance full scan mode</li>
@@ -358,19 +358,45 @@ Usage Notes</h1>
  Without mention, it means the common description for CTSU and CTSU2.</p>
 <h2>Functions</h2>
 <p>The CTSU module supports the following functions.</p>
+<h3>Touch Judgment Type</h3>
+<p>CTSU2 has three judgment type, which differ in processing and output data.<br />
+ It is common to get three raw value for each element and calculate CCO correction, and then performs different processing.<br />
+ <br />
+</p><ol type="1">
+<li>Value Majority Mode(VMM)<br />
+ Calculate three frequency correction value from three CCO correction values. Calculate the sum of the two closest values of the three frequency correction value. Outputs the moving average of this added value.<br />
+</li>
+<li>Judgment Majority Mode (JMM)<br />
+ This mode is supported from FSP V5.6.0 or later.<br />
+ Outputs the moving average of three CCO correction values.<br />
+ <br />
+</li>
+<li>Mixture of VMM and JMM Mode.<br />
+ This mode is supported from FSP V5.6.0 or later.<br />
+ This mode is a mixture of VMM and JMM. Judgment type can be selected by each touch interface configuration. <div class="image">
+<img src="r_ctsu_JMM_vs_VMM.png" alt="r_ctsu_JMM_vs_VMM.png"/>
+<div class="caption">
+Data flow Comparison of JMM and VMM </div></div>
+<br />
+</li>
+</ol>
 <h3>Measurements and Obtaining Data</h3>
 <p>Measurements can be started by a software trigger or by an external event triggered by the Event Link Controller (ELC).<br />
  As the measurement process is carried out by the CTSU2 peripheral, it does not use up main processor processing time.<br />
  The CTSU module processes INTCTSUWR and INTCTSURD if generated during a measurement. The data transfer controller (DTC) can also be used for these processes.<br />
  When the measurement complete interrupt (INTCTSUFN) process is complete, the application is notified in a callback function. Make sure you obtain the measurement results before the next measurement is started as internal processes are also executed when a measurement is completed.<br />
  Start the measurement with API function <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a>.<br />
- Obtain the measurement results with API function <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>.</p>
-<h3>Sensor ICO Correction function</h3>
-<p>The CTSU2 peripheral has a built-in correction circuit to handle the potential microvariations related to the manufacturing process of the sensor ICO MCU.<br />
+ Obtain the measurement results with API function <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>. <br />
+ The number of arrays in the second argument of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> is different between VMM and JMM.<br />
+ VMM returns one measurement result for each element.<br />
+ JMM returns three measurement results for each element.<br />
+</p>
+<h3>Sensor CCO Correction function</h3>
+<p>The CTSU2 peripheral has a built-in correction circuit to handle the potential microvariations related to the manufacturing process of the sensor CCO MCU.<br />
  The module temporarily transitions to the correction process during initialization after power is turned on. In the correction process, the correction circuit is used to generate a correction coefficient (factor) to ensure accurate sensor measurement values.<br />
- When temperature correction is enabled, an external resistor connected to a TS terminal is used to periodically update the correction coefficient. By using an external resistor that is not dependent on temperature, you can even correct the temperature drift of the sensor ICO.</p>
+ When temperature correction is enabled, an external resistor connected to a TS terminal is used to periodically update the correction coefficient. By using an external resistor that is not dependent on temperature, you can even correct the temperature drift of the sensor CCO.</p>
 <h3>Initial Offset Adjustment</h3>
-<p>The CTSU2 peripheral was designed with a built-in offset current circuit in consideration of the amount of change in current due to touch. The offset current circuit cancels enough of the parasitic capacitance for it to fit within the sensor ICO dynamic range.<br />
+<p>The CTSU2 peripheral was designed with a built-in offset current circuit in consideration of the amount of change in current due to touch. The offset current circuit cancels enough of the parasitic capacitance for it to fit within the sensor CCO dynamic range.<br />
  This module automatically adjusts the offset current setting. As the adjustment uses the normal measurement process, the combination of <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a> or the combination of <a class="el" href="group___c_t_s_u.html#ga46cf185922bbca921cb92b4c18f62525" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">R_CTSU_ScanStart()</a> and <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a> must be repeated several times after startup. Because the <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a> member “so” is the starting point for adjustments, you can set the appropriate value for “so” in order to reduce the number of times the two functions must be run to complete the adjustment. Normally, the value used for “so” is a value adjusted by QE for Capacitive Touch.<br />
  <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a> was added in FSP 3.8.0. This API can also be used for initial offset adjustment, and offset adjustment can be performed again at any time. See example code of <a class="el" href="group___c_t_s_u.html#ga04263b8b45802780c9e072e19414ba7e" title="This function tunes the offset register(SO). Call after the measurement is completed. If the return value is FSP_ERR_CTSU_INCOMPLETE_TUNING, tuning is not complete. Execute the measurement and this function call routine until the return value becomes FSP_SUCCESS. It is recommended to run this routine after R_CTSU_Open(). It can be recalled and tuned again. When the automatic judgement is enabled, after the offset tuning is completed,the baseline initialization bit flag is set. Implements ctsu_api_t::offsetTuning. ">R_CTSU_OffsetTuning()</a> for details.<br />
 </p>
@@ -434,9 +460,12 @@ Drive Frequency Settings</div></div>
  CTSUSOFF = 0,CTSUSSMOD = 0,CTSUSSCNT = 3</p>
 <h3>Multi-frequency Measurements (CTSU2)</h3>
 <p>The CTSU2 peripheral can measure in one of four drive frequencies to avoid synchronous noise.<br />
- With the default settings, the module takes measurements at three different frequencies. After standardizing the results obtained at the three frequencies in accordance with the first frequency reference value, the measured value is determined based on majority in a process referred to as “normalization.” <br />
- The three values standardized to the first frequency reference value are called correction data.<br />
- You can get the three correction data with <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>.</p>
+ With the default settings, the module takes measurements at three different frequencies. This data are called raw data. And calculate CCO correction. This data are called CCO correction data.<br />
+ In VMM, After standardizing the results obtained at the three frequencies in accordance with the first frequency reference value, the measured value is determined based on majority in a process referred to as “normalization.” <br />
+ The three values standardized to the first frequency reference value are called frequency correction data.<br />
+ You can get the three correction data with <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>.<br />
+ In VMM, three raw data, CCO correction data, and frequency correction data can be obtained with <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>.<br />
+ In JMM, three raw data and three CCO correction data can be obtained with <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>.</p>
 <div class="image">
 <img src="r_ctsu_Multi-Frequency_Mesurements.png" alt="r_ctsu_Multi-Frequency_Mesurements.png"/>
 <div class="caption">
@@ -490,6 +519,8 @@ Example of Shield Electrode Structure</div></div>
 <h3>Self-capacitance Mode</h3>
 <p>The self-capacitance mode is used to measure the capacitance of each terminal (TS).<br />
  The CTSU2 peripheral measures the terminals in ascending order according to the TS numbers, then stores the data. For example, even if you want to use TS5, TS8, TS2, TS3 and TS6 in your application in that order, they will still be measured and stored in the order of TS2, TS3, TS5, TS6, and TS8. Therefore, you will need to reference buffer indexes [2], [4], [0], [1], and [3].<br />
+ VMM returns one measurement result for each element.<br />
+ JMM returns three measurement results for each element.<br />
 </p>
 <p>[CTSU1]<br />
  In default settings, the measurement period for each TS is wait-time plus approximately 526us.</p>
@@ -509,7 +540,9 @@ Self-capacitance Measurement Period (CTSU2)</div></div>
  The CTSU2 peripheral measures all specified combinations of Rx and Tx. For example, when Rx is TS1 and TS3, and Tx is TS2, TS7 and TS4, the combinations are measured in the following order and the data is stored.<br />
  TS3-TS2, TS3-TS4, TS3-TS7, TS10-TS2, TS10-TS4, TS10-TS7<br />
  To measure the mutual-capacitance generated between electrodes, the CTSU2 peripheral performs the measurement process on the same electrode twice. <br />
- The mutual-capacitance is obtained by inverting the phase relationship of the pulse output and switched capacitor in the primary and secondary measurements, and calculating the difference between the two measurements. This module does not calculate the difference, but outputs the secondary measured result.<br />
+ The mutual-capacitance is obtained by inverting the phase relationship of the pulse output and switched capacitor in the primary and secondary measurements, and calculating the difference between the two measurements. This module does not calculate the difference, but outputs both primary and secondary measured result.<br />
+ VMM returns two measurement results(one primary and one secondary) for each element.<br />
+ JMM returns six measurement results(three primary and three secondary) for each element.<br />
  [CTSU1]<br />
  In default settings, the measurement period for each TS is twice of wait-time plus approximately 526us.<br />
  [CTSU2]<br />
@@ -586,16 +619,28 @@ Temperature Correction Measurement Timing Chart</div></div>
 <li>ICO correction calculation of raw data and stored in RAM as correction data.</li>
 <li>The correction data is calculated by moving average and stored in RAM as measurement results.</li>
 </ol>
-<p>(CTSU2)<br />
+<p>(CTSU2 VMM)<br />
 </p><ol type="1">
 <li>Reads a register and stores raw data measured at three different frequencies in RAM.</li>
-<li>Three raw data is ICO-corrected, standardized to the fitst frequency reference value, and stored in RAM as three correction data.</li>
-<li>Three correction data are calculated by majority decision and moving average, and stored in RAM as measurement results.</li>
+<li>Calculate CCO correction from three raw data and stored three CCO correction values in RAM.</li>
+<li>Calculate three frequency correction values from three CCO correction values.</li>
+<li>Three frequency correction data are calculated by majority decision and moving average, and stored in RAM as measurement results.</li>
+</ol>
+<p>(CTSU2 JMM)<br />
+</p><ol type="1">
+<li>Reads a register and stores raw data measured at three different frequencies in RAM.</li>
+<li>Calculate CCO correction from three raw data and stored three CCO correction values in RAM.</li>
+<li>Three CCO correction data is calculated by moving average and stored three measurement results in RAM.</li>
 </ol>
 <h2>Add user's filter</h2>
 <p>There are two ways to add the user's filter.</p><ol type="1">
-<li>Instead of filter calculation of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>, perform user filter calculation and use <a class="el" href="group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e" title="This function inserts the value of the second argument as the measurement result value. Call this function after calling the R_CTSU_DataInsert() function. Implements ctsu_api_t::dataInsert. ">R_CTSU_DataInsert()</a> to input user filter calculation result.</li>
-<li>Using the correction data obtained by <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>, instead of majority decision calculation and filter calculation of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>, perform user majority decision calculation &amp; filter calculation and use <a class="el" href="group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e" title="This function inserts the value of the second argument as the measurement result value. Call this function after calling the R_CTSU_DataInsert() function. Implements ctsu_api_t::dataInsert. ">R_CTSU_DataInsert()</a> to input user majority decision calculation &amp; filter calculation result.</li>
+<li>Instead of filter calculation of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>, perform user filter calculation and use <a class="el" href="group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e" title="This function inserts the value of the second argument as the measurement result value. Call this function after calling the R_CTSU_DataInsert() function. Implements ctsu_api_t::dataInsert. ">R_CTSU_DataInsert()</a> to input user filter calculation result.<br />
+ <a class="el" href="group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e" title="This function inserts the value of the second argument as the measurement result value. Call this function after calling the R_CTSU_DataInsert() function. Implements ctsu_api_t::dataInsert. ">R_CTSU_DataInsert()</a><br />
+ In VMM, the second argument p_insert_data stores one data for each element.<br />
+ In JMM, the second argument p_insert_data stores three data for each element.<br />
+</li>
+<li>Using the correction data obtained by <a class="el" href="group___c_t_s_u.html#ga32a5f61231501fb64c85fa52791b0e79" title="This function gets the sensor specific data values as scanned by the CTSU. Call this function after c...">R_CTSU_SpecificDataGet()</a>, instead of majority decision calculation and filter calculation of <a class="el" href="group___c_t_s_u.html#ga1cff42feeaa3d73216b73c313fb9a5fe" title="This function gets the sensor values as scanned by the CTSU. If initial offset tuning is enabled...">R_CTSU_DataGet()</a>, perform user majority decision calculation &amp; filter calculation and use <a class="el" href="group___c_t_s_u.html#gac51fca87e02d589bcdeb894b99f7a08e" title="This function inserts the value of the second argument as the measurement result value. Call this function after calling the R_CTSU_DataInsert() function. Implements ctsu_api_t::dataInsert. ">R_CTSU_DataInsert()</a> to input user majority decision calculation &amp; filter calculation result.<br />
+</li>
 </ol>
 <p>Please check example.<br />
  <a href="#Users-filter">User's filter additional Example</a></p>
@@ -1533,7 +1578,7 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

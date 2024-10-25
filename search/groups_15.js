@@ -12,6 +12,7 @@ var searchData=
   ['usb_20composite_20_28r_5fusb_5fcomposite_29',['USB Composite (r_usb_composite)',['../group___u_s_b___c_o_m_p_o_s_i_t_e.html',1,'']]],
   ['usb_20hcdc_20_28r_5fusb_5fhcdc_29',['USB HCDC (r_usb_hcdc)',['../group___u_s_b___h_c_d_c.html',1,'']]],
   ['usb_20hcdc_20interface',['USB HCDC Interface',['../group___u_s_b___h_c_d_c___a_p_i.html',1,'']]],
+  ['usb_20hcdc_5fecm_20_28r_5fusb_5fhcdc_5fecm_29',['USB HCDC_ECM (r_usb_hcdc_ecm)',['../group___u_s_b___h_c_d_c___e_c_m.html',1,'']]],
   ['usb_20hhid_20_28r_5fusb_5fhhid_29',['USB HHID (r_usb_hhid)',['../group___u_s_b___h_h_i_d.html',1,'']]],
   ['usb_20hhid_20interface',['USB HHID Interface',['../group___u_s_b___h_h_i_d___a_p_i.html',1,'']]],
   ['usb_20hmsc_20_28r_5fusb_5fhmsc_29',['USB HMSC (r_usb_hmsc)',['../group___u_s_b___h_m_s_c.html',1,'']]],

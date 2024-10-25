@@ -43,7 +43,11 @@ var group___f_l_a_s_h___a_p_i =
       [ "updateFlashClockFreq", "group___f_l_a_s_h___a_p_i.html#ae357c91afece41b956ece618eb82c1a1", null ],
       [ "startupAreaSelect", "group___f_l_a_s_h___a_p_i.html#af01c458da5ffbd29ee404ccc5e8e6869", null ],
       [ "bankSwap", "group___f_l_a_s_h___a_p_i.html#a27dd022e07eebb8750e1a1be7f80563f", null ],
-      [ "callbackSet", "group___f_l_a_s_h___a_p_i.html#a4331435bca9f94b04d2c5e11ce92e7c7", null ]
+      [ "callbackSet", "group___f_l_a_s_h___a_p_i.html#a4331435bca9f94b04d2c5e11ce92e7c7", null ],
+      [ "antiRollbackCounterIncrement", "group___f_l_a_s_h___a_p_i.html#a04bcaaac166052c618406a22df055ad3", null ],
+      [ "antiRollbackCounterRefresh", "group___f_l_a_s_h___a_p_i.html#aff7182230c963d80fbb4708be92e70d9", null ],
+      [ "antiRollbackCounterRead", "group___f_l_a_s_h___a_p_i.html#ae292bc9f330a52094347c2745705c001", null ],
+      [ "userLockableAreaWrite", "group___f_l_a_s_h___a_p_i.html#a6e935b63452c47faaad9a1979f303e1c", null ]
     ] ],
     [ "flash_instance_t", "group___f_l_a_s_h___a_p_i.html#structflash__instance__t", [
       [ "p_ctrl", "group___f_l_a_s_h___a_p_i.html#a59f329f1271b1a71a0c5de0e01a5d916", null ],
@@ -80,5 +84,13 @@ var group___f_l_a_s_h___a_p_i =
     [ "flash_status_t", "group___f_l_a_s_h___a_p_i.html#gab551389322a209cca1dcc1a7b2440f7a", [
       [ "FLASH_STATUS_IDLE", "group___f_l_a_s_h___a_p_i.html#ggab551389322a209cca1dcc1a7b2440f7aa07ed50a1ddb622497751edb59d7e4460", null ],
       [ "FLASH_STATUS_BUSY", "group___f_l_a_s_h___a_p_i.html#ggab551389322a209cca1dcc1a7b2440f7aa9f0e163a2cd4ec43acbe02344235882a", null ]
+    ] ],
+    [ "flash_arc_t", "group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21", [
+      [ "FLASH_ARC_SEC", "group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ad3e7b0a0fb8f3856e924021bff04cd3e", null ],
+      [ "FLASH_ARC_OEMBL", "group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21a7cc7171bf4d5525892452eb6dc9901fb", null ],
+      [ "FLASH_ARC_NSEC_0", "group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ae3656fc3704a6f0ed1ce99086d2bf15a", null ],
+      [ "FLASH_ARC_NSEC_1", "group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21a034781b29bee3dfb73c84957259c37c8", null ],
+      [ "FLASH_ARC_NSEC_2", "group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21a00d992daf7a6f08dac482f7ffc579f18", null ],
+      [ "FLASH_ARC_NSEC_3", "group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ae81af622dbcb602583ef2f894aa367ce", null ]
     ] ]
 ];

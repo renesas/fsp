@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -284,6 +284,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga5879fbdf1d24018416c1c7ccf448b64f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab551389322a209cca1dcc1a7b2440f7a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gab551389322a209cca1dcc1a7b2440f7a">flash_status_t</a> </td></tr>
 <tr class="separator:gab551389322a209cca1dcc1a7b2440f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga83b0266a3edcc6c865f79a3d04785c21"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> </td></tr>
+<tr class="separator:ga83b0266a3edcc6c865f79a3d04785c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structflash__block__info__t" id="structflash__block__info__t"></a>
@@ -512,6 +514,14 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <tr class="separator:a27dd022e07eebb8750e1a1be7f80563f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4331435bca9f94b04d2c5e11ce92e7c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___a_p_i.html#a4331435bca9f94b04d2c5e11ce92e7c7">callbackSet</a> )(<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:a4331435bca9f94b04d2c5e11ce92e7c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04bcaaac166052c618406a22df055ad3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___a_p_i.html#a04bcaaac166052c618406a22df055ad3">antiRollbackCounterIncrement</a> )(<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter)</td></tr>
+<tr class="separator:a04bcaaac166052c618406a22df055ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff7182230c963d80fbb4708be92e70d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___a_p_i.html#aff7182230c963d80fbb4708be92e70d9">antiRollbackCounterRefresh</a> )(<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter)</td></tr>
+<tr class="separator:aff7182230c963d80fbb4708be92e70d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae292bc9f330a52094347c2745705c001"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___a_p_i.html#ae292bc9f330a52094347c2745705c001">antiRollbackCounterRead</a> )(<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter, uint32_t *const p_count)</td></tr>
+<tr class="separator:ae292bc9f330a52094347c2745705c001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e935b63452c47faaad9a1979f303e1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___f_l_a_s_h___a_p_i.html#a6e935b63452c47faaad9a1979f303e1c">userLockableAreaWrite</a> )(<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, uint32_t const src_address, uint32_t const flash_address, uint32_t const num_bytes)</td></tr>
+<tr class="separator:a6e935b63452c47faaad9a1979f303e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a8166d0d1e4f3a59b8bf7f9e89fef9e44"></a>
@@ -853,10 +863,103 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <p>Specify callback function and optional context pointer and working memory pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___f_l_a_s_h___a_p_i.html#a8166d0d1e4f3a59b8bf7f9e89fef9e44">flash_api_t::open</a> call for this timer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to FLASH device control. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a04bcaaac166052c618406a22df055ad3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04bcaaac166052c618406a22df055ad3">&#9670;&nbsp;</a></span>antiRollbackCounterIncrement</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  flash_api_t::antiRollbackCounterIncrement) (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Increment the selected anti-rollback counter.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Once incremented, the counter can never be decremented or reset, even with a debug probe.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to FLASH device control. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">counter</td><td>The anti-rollback counter to increment </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aff7182230c963d80fbb4708be92e70d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff7182230c963d80fbb4708be92e70d9">&#9670;&nbsp;</a></span>antiRollbackCounterRefresh</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  flash_api_t::antiRollbackCounterRefresh) (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Refresh the selected anti-rollback counter flash area.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to FLASH device control. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">counter</td><td>The anti-rollback counter to refresh </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae292bc9f330a52094347c2745705c001"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae292bc9f330a52094347c2745705c001">&#9670;&nbsp;</a></span>antiRollbackCounterRead</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  flash_api_t::antiRollbackCounterRead) (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter, uint32_t *const p_count)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read current count value of the selected anti-rollback counter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to FLASH device control. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">counter</td><td>The anti-rollback counter to read </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_count</td><td>The current count value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6e935b63452c47faaad9a1979f303e1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e935b63452c47faaad9a1979f303e1c">&#9670;&nbsp;</a></span>userLockableAreaWrite</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  flash_api_t::userLockableAreaWrite) (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_ctrl, uint32_t const src_address, uint32_t const flash_address, uint32_t const num_bytes)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write to the user lockable area for the flash device</p>
+<dl class="section warning"><dt>Warning</dt><dd>Data will not be written if any segment of the specified area is locked.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to FLASH device control. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_address</td><td>Address of the buffer containing the data to write to flash. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">flash_address</td><td>User lockable area flash address to write. The address must be on a programming line boundary. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">num_bytes</td><td>The number of bytes to write. This number must be a multiple of the programming size. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1044,13 +1147,42 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga83b0266a3edcc6c865f79a3d04785c21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga83b0266a3edcc6c865f79a3d04785c21">&#9670;&nbsp;</a></span>flash_arc_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Anti-rollback counter selection. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga83b0266a3edcc6c865f79a3d04785c21ad3e7b0a0fb8f3856e924021bff04cd3e"></a>FLASH_ARC_SEC&#160;</td><td class="fielddoc"><p>Anti-Rollback Counter for the secure application. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83b0266a3edcc6c865f79a3d04785c21a7cc7171bf4d5525892452eb6dc9901fb"></a>FLASH_ARC_OEMBL&#160;</td><td class="fielddoc"><p>Anti-Rollback Counter for the OEM bootloader. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83b0266a3edcc6c865f79a3d04785c21ae3656fc3704a6f0ed1ce99086d2bf15a"></a>FLASH_ARC_NSEC_0&#160;</td><td class="fielddoc"><p>Anti-Rollback Counter for non-secure application 0 (use when a single non-secure counter is available or when multiple non-secure counters are available) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83b0266a3edcc6c865f79a3d04785c21a034781b29bee3dfb73c84957259c37c8"></a>FLASH_ARC_NSEC_1&#160;</td><td class="fielddoc"><p>Anti-Rollback Counter for non-secure application 1 (use when multiple non-secure counters are available) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83b0266a3edcc6c865f79a3d04785c21a00d992daf7a6f08dac482f7ffc579f18"></a>FLASH_ARC_NSEC_2&#160;</td><td class="fielddoc"><p>Anti-Rollback Counter for non-secure application 2 (use when multiple non-secure counters are available) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83b0266a3edcc6c865f79a3d04785c21ae81af622dbcb602583ef2f894aa367ce"></a>FLASH_ARC_NSEC_3&#160;</td><td class="fielddoc"><p>Anti-Rollback Counter for non-secure application 3 (use when multiple non-secure counters are available) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

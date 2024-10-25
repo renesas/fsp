@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.5.0</span>
+   &#160;<span id="projectnumber">Release v5.6.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -435,6 +435,11 @@ Restart</h2>
 <ul>
 <li>IIC master can hold the the bus after an I2C transaction by issuing a repeated start condition.</li>
 </ul>
+<h2><a class="anchor" id="r-iic_b_master-limitations"></a>
+Limitations</h2>
+<ul>
+<li>DTC should be disabled for data transmission on RA2E2 if MCU version is 1. Please refer to 32.3.29 MCUVER in UMH r01uh0919ej0130-ra2e2 for how to find MCU version.</li>
+</ul>
 <h1><a class="anchor" id="r-iic_b_master-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -700,7 +705,7 @@ SMBus operation on I2C bus. </td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Function executed without issue. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl, p_dest or bytes is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl, p_dest or bytes is NULL, or DTC is used for data transmission on RA2E2 Ver 1. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Provided number of bytes more than uint16_t size (65535) while DTC is used for data transfer. </td></tr>
     <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Bus busy condition. Another transfer was in progress. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Handle is not initialized. Call R_IIC_B_MASTER_Open to initialize the control block. </td></tr>
@@ -953,7 +958,7 @@ SMBus operation on I2C bus. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.5.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

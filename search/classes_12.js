@@ -23,6 +23,7 @@ var searchData=
   ['touch_5fcfg_5ft',['touch_cfg_t',['../group___t_o_u_c_h___a_p_i.html#structtouch__cfg__t',1,'']]],
   ['touch_5finstance_5fctrl_5ft',['touch_instance_ctrl_t',['../group___t_o_u_c_h.html#structtouch__instance__ctrl__t',1,'']]],
   ['touch_5finstance_5ft',['touch_instance_t',['../group___t_o_u_c_h___a_p_i.html#structtouch__instance__t',1,'']]],
+  ['touch_5fmm_5finfo_5ft',['touch_mm_info_t',['../group___t_o_u_c_h.html#structtouch__mm__info__t',1,'']]],
   ['touch_5fpad_5fcfg_5ft',['touch_pad_cfg_t',['../group___t_o_u_c_h___a_p_i.html#structtouch__pad__cfg__t',1,'']]],
   ['touch_5fpad_5finfo_5ft',['touch_pad_info_t',['../group___t_o_u_c_h.html#structtouch__pad__info__t',1,'']]],
   ['touch_5fsensitivity_5finfo_5ft',['touch_sensitivity_info_t',['../group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t',1,'']]],
