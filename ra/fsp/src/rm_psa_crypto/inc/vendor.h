@@ -1,3 +1,9 @@
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
+
 /**
  *  vendor.h
  *
@@ -40,12 +46,14 @@ extern "C"
 
 /* Functions used directly from mbedCrypto */
 psa_status_t mbedtls_to_psa_error(int ret);
-psa_status_t psa_finish_key_creation(psa_key_slot_t * slot, psa_se_drv_table_entry_t * driver, mbedtls_svc_key_id_t * key);
-psa_status_t psa_export_key_buffer_internal( const uint8_t *key_buffer,
-                                             size_t key_buffer_size,
-                                             uint8_t *data,
-                                             size_t data_size,
-                                             size_t *data_length );
+psa_status_t psa_finish_key_creation(psa_key_slot_t           * slot,
+                                     psa_se_drv_table_entry_t * driver,
+                                     mbedtls_svc_key_id_t     * key);
+psa_status_t psa_export_key_buffer_internal(const uint8_t * key_buffer,
+                                            size_t          key_buffer_size,
+                                            uint8_t       * data,
+                                            size_t          data_size,
+                                            size_t        * data_length);
 
 /* Functions to support vendor defined format */
 psa_status_t vendor_bitlength_to_raw_bitlength(psa_key_type_t type, size_t vendor_bits, size_t * raw_bits);

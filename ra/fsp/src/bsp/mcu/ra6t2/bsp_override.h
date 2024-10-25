@@ -14,6 +14,8 @@
 #ifndef BSP_OVERRIDE_H
 #define BSP_OVERRIDE_H
 
+#include "bsp_elc.h"
+
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
  **********************************************************************************************************************/
@@ -24,10 +26,21 @@
 
 /* Define overrides required for this MCU. */
 #define BSP_OVERRIDE_ADC_CHANNEL_T
+#define BSP_OVERRIDE_LPM_SNOOZE_CANCEL_T
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+/** Snooze cancel control */
+typedef enum e_lpm_snooze_cancel
+{
+    LPM_SNOOZE_CANCEL_SOURCE_NONE         = ELC_EVENT_NONE,         ///< No snooze cancel source
+    LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM      = ELC_EVENT_SCI0_AM,      ///< SCI0 address match event
+    LPM_SNOOZE_CANCEL_SOURCE_DTC_COMPLETE = ELC_EVENT_DTC_COMPLETE, ///< DTC transfer completion
+    LPM_SNOOZE_CANCEL_SOURCE_DOC_DOPCI    = ELC_EVENT_DOC_INT,      ///< Data operation circuit interrupt
+} lpm_snooze_cancel_t;
+
 /*==============================================
  * ADC Overrides
  *==============================================*/

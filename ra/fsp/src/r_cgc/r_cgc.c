@@ -679,11 +679,13 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
  #endif
     bsp_prv_clock_set(requested_system_clock, clock_cfg.sckdivcr_w, clock_cfg.sckdivcr2);
 #else
+ #if !BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE
     if ((requested_system_clock == CGC_CLOCK_MAIN_OSC) && (options[requested_system_clock] == CGC_CLOCK_CHANGE_START))
     {
         uint8_t mainosc_stable_value = (uint8_t) ~(BSP_PRV_OSTC_OFFSET >> BSP_CLOCK_CFG_MAIN_OSC_WAIT);
         FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OSTC, mainosc_stable_value);
     }
+ #endif
 
     /* Set which clock to use for system clock and dividers. */
     uint8_t hoco_divider = (uint8_t) p_clock_cfg->divider_cfg.hoco_divider;
@@ -989,7 +991,8 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
         uint8_t  cpuclk_div         = p_divider_cfg->sckdivcr2_b.cpuclk_div;
         uint32_t new_cpuclk_freq_hz = R_BSP_SourceClockHzGet(FSP_PRIV_CLOCK_PLL1P) /
                                       ((cpuclk_div & 8U) ? (3U << (cpuclk_div & 7U)) : (1U << cpuclk_div));
-        FSP_ASSERT((0 == R_SYSTEM->PLLCCR_b.PLSRCSEL) || (BSP_FEATURE_CGC_PLL_HOCO_MAX_CPUCLK_HZ > new_cpuclk_freq_hz));
+        FSP_ASSERT((0 == R_SYSTEM->PLLCCR_b.PLSRCSEL) ||
+                   (BSP_FEATURE_CGC_PLL_HOCO_MAX_CPUCLK_HZ >= new_cpuclk_freq_hz));
     }
  #endif
 
@@ -1632,6 +1635,15 @@ static bool r_cgc_low_speed_or_voltage_mode_possible (uint32_t sckdivcr, uint8_t
     }
  #endif
 
+ #if !BSP_FEATURE_CGC_LOW_SPEED_SUPPORT_MAIN_OSC
+
+    /* MOSC must be stopped in low speed mode. */
+    if (1U != R_SYSTEM->MOSCCR)
+    {
+        return false;
+    }
+ #endif
+
     /* When oscillation stop detection is enabled, clock division of 1, 2, 4, or 8 is prohibited for all clocks in
      * low speed mode. The remaining dividers (16, 32, and 64) all have the upper bit of the bitfield set. */
     if (0U != ostdcr)
@@ -1693,7 +1705,11 @@ static void r_cgc_operating_mode_reduce (uint32_t sckdivcr)
         (SystemCoreClock <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ))
  #else
     FSP_PARAMETER_NOT_USED(sckdivcr);
-    if (SystemCoreClock <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ)
+    if ((SystemCoreClock <= BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ)
+  #if !BSP_FEATURE_CGC_LOW_SPEED_SUPPORT_MAIN_OSC
+        && (0U != R_SYSTEM->MOSCCR)
+  #endif
+        )
  #endif
     {
         /* Switch to low speed mode */
@@ -1770,9 +1786,9 @@ static bool r_cgc_stabilization_check (cgc_clock_t clock, cgc_prv_clock_state_t 
 
     if (CGC_CLOCK_MAIN_OSC == clock)
     {
-        uint8_t mainosc_stable_value = (uint8_t) ~(BSP_PRV_OSTC_OFFSET >> BSP_CLOCK_CFG_MAIN_OSC_WAIT);
-
-        return R_SYSTEM->OSTC == mainosc_stable_value;
+        return BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE ? true : (R_SYSTEM->OSTC ==
+                                                             (uint8_t) ~(BSP_PRV_OSTC_OFFSET >>
+                                                                         BSP_CLOCK_CFG_MAIN_OSC_WAIT));
     }
 #endif
 

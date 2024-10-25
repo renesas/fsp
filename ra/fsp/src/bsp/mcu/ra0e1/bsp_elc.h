@@ -52,16 +52,18 @@ typedef enum e_elc_event_ra0e1
     ELC_EVENT_TAU0_TMI02                    = (0x00E), // End of timer channel 02 count or capture
     ELC_EVENT_TAU0_TMI03                    = (0x00F), // End of timer channel 03 count or capture
     ELC_EVENT_SAU0_UART_TXI0                = (0x010), // SAU UART TX 0/I2C 00/SPI 00
+    ELC_EVENT_SAU0_SPI_TXRXI00              = (0x010), // SAU UART TX 0/I2C 00/SPI 00
+    ELC_EVENT_SAU0_IIC_TXRXI00              = (0x010), // SAU UART TX 0/I2C 00/SPI 00
     ELC_EVENT_SAU0_UART_RXI0                = (0x011), // SAU UART RX 0/I2C 01/SPI 01
     ELC_EVENT_DTC_END                       = (0x012), // DTC transfer end
     ELC_EVENT_LVD_LVD1                      = (0x013), // Voltage monitor 1 interrupt
     ELC_EVENT_ELC_SOFTWARE_EVENT_0          = (0x014), // Software event 0
     ELC_EVENT_ELC_SOFTWARE_EVENT_1          = (0x015), // Software event 1
     ELC_EVENT_ADC0_SCAN_END                 = (0x016), // End of A/D scanning operation
-    ELC_EVENT_UARTA0_ERRI                   = (0x017), // Reception error interrupt
-    ELC_EVENT_UARTA0_TXI                    = (0x018), // Transfer completion interrupt
-    ELC_EVENT_UARTA0_RXI                    = (0x019), // Reception transfer end
-    ELC_EVENT_IICA0_TXRXI                   = (0x01A)  // Communication event
+    ELC_EVENT_UARTA0_ERRI                   = (0x017), // UARTA0 reception communication error occurrence
+    ELC_EVENT_UARTA0_TXI                    = (0x018), // UARTA0 transmission transfer end or buffer empty interrupt
+    ELC_EVENT_UARTA0_RXI                    = (0x019), // UARTA0 reception transfer end
+    ELC_EVENT_IICA0_TXRXI                   = (0x01A)  // End of IICA0 communication
 } elc_event_t;
 
 /** Fixed vector enumeration
@@ -80,20 +82,26 @@ typedef enum e_icu_event_ra0e1
     ICU_EVENT_DTC_COMPLETE                  = (10), // DTC transfer complete
     ICU_EVENT_FCU_FRDYI                     = (11), // Flash ready interrupt
     ICU_EVENT_SAU1_UART_TXI2                = (12), // SAU UART TX 2/I2C 20/SPI 20
+    ICU_EVENT_SAU1_SPI_TXRXI20              = (12), // SAU UART TX 2/I2C 20/SPI 20
+    ICU_EVENT_SAU1_IIC_TXRXI20              = (12), // SAU UART TX 2/I2C 20/SPI 20
     ICU_EVENT_SAU1_UART_RXI2                = (13), // SAU UART RX 2/I2C 21/SPI 21
     ICU_EVENT_SAU1_UART_ERRI2               = (14), // SAU UART Error
     ICU_EVENT_ELC_SOFTWARE_EVENT_0          = (15), // Software event 0
     ICU_EVENT_ELC_SOFTWARE_EVENT_1          = (16), // Software event 1
     ICU_EVENT_TRNG_RDREQ                    = (17), // TRNG Read Request
     ICU_EVENT_SAU0_UART_TXI0                = (18), // SAU UART TX 0/I2C 00/SPI 00
+    ICU_EVENT_SAU0_SPI_TXRXI00              = (18), // SAU UART TX 0/I2C 00/SPI 00
+    ICU_EVENT_SAU0_IIC_TXRXI00              = (18), // SAU UART TX 0/I2C 00/SPI 00
     ICU_EVENT_TAU0_TMI00                    = (19), // End of timer channel 00 count or capture
     ICU_EVENT_SAU0_UART_ERRI0               = (20), // SAU UART Error
     ICU_EVENT_TAU0_TMI01H                   = (21), // End of timer channel 01 count or capture (higher operation)
     ICU_EVENT_SAU0_UART_TXI1                = (22), // SAU UART TX 1/I2C 10/SPI 10
     ICU_EVENT_SAU0_UART_RXI1                = (23), // SAU UART RX 1/I2C 11/SPI 11
+    ICU_EVENT_SAU0_SPI_TXRXI11              = (23), // SAU UART RX 1/I2C 11/SPI 11
+    ICU_EVENT_SAU0_IIC_TXRXI11              = (23), // SAU UART RX 1/I2C 11/SPI 11
     ICU_EVENT_SAU0_UART_ERRI1               = (24), // SAU UART Error
     ICU_EVENT_TAU0_TMI03H                   = (25), // End of timer channel 03 count or capture (higher operation)
-    ICU_EVENT_IICA0_TXRXI                   = (26), // Communication event
+    ICU_EVENT_IICA0_TXRXI                   = (26), // End of IICA0 communication
     ICU_EVENT_SAU0_UART_RXI0                = (27), // SAU UART RX 0/I2C 01/SPI 01
     ICU_EVENT_TAU0_TMI01                    = (28), // End of timer channel 01 count or capture
     ICU_EVENT_TAU0_TMI02                    = (29), // End of timer channel 02 count or capture
@@ -106,9 +114,9 @@ typedef enum e_icu_event_ra0e1
     ICU_EVENT_TAU0_TMI05                    = (36), // End of timer channel 05 count or capture
     ICU_EVENT_TAU0_TMI06                    = (37), // End of timer channel 06 count or capture
     ICU_EVENT_TAU0_TMI07                    = (38), // End of timer channel 07 count or capture
-    ICU_EVENT_UARTA0_ERRI                   = (39), // Reception error interrupt
-    ICU_EVENT_UARTA0_TXI                    = (40), // Transfer completion interrupt
-    ICU_EVENT_UARTA0_RXI                    = (41)  // Reception transfer end
+    ICU_EVENT_UARTA0_ERRI                   = (39), // UARTA0 reception communication error occurrence
+    ICU_EVENT_UARTA0_TXI                    = (40), // UARTA0 transmission transfer end or buffer empty interrupt
+    ICU_EVENT_UARTA0_RXI                    = (41)  // UARTA0 reception transfer end
 } icu_event_t;
 
 #define BSP_PRV_VECT_ENUM(event, group)  (ICU_ ## event)

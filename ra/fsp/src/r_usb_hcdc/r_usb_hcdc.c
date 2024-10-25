@@ -210,7 +210,7 @@ fsp_err_t R_USB_HCDC_DeviceInfoGet (usb_ctrl_t * const       p_api_ctrl,
 
         if (NULL != g_p_usb_hcdc_interface_table[p_ctrl->module_number])
         {
-            p_info->subclass = g_p_usb_hcdc_interface_table[p_ctrl->module_number][5];
+            p_info->subclass = g_p_usb_hcdc_interface_table[p_ctrl->module_number][6];
         }
         else
         {

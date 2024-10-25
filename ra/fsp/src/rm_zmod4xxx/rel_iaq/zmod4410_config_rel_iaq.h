@@ -1,3 +1,9 @@
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
+
 /**
  * @file zmod4410_config_rel_iaq.h
  * @brief This is the configuration for zmod4410 module - rel_iaq library

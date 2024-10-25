@@ -23,6 +23,11 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
+/* Version Number of Module. */
+#define FSP_R_SCE9_PROTECTED_VERSION_MAJOR  (1U)
+#define FSP_R_SCE9_PROTECTED_VERSION_MINOR  (1U)
+#define FSP_R_SCE9_PROTECTED_VERSION_PATCH  (0U)
+
 /* Various information. */
 #define HW_SCE_SRAM_WORD_SIZE           (32U)
 #define HW_SCE_SINST_WORD_SIZE          (140U)

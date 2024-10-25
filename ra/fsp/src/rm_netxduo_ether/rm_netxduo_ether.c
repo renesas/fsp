@@ -76,13 +76,13 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
             /* The nx_interface_ip_mtu_size should be the MTU for the IP payload.
              * For regular Ethernet, the IP MTU is 1500. */
             nx_ip_interface_mtu_set(driver_req_ptr->nx_ip_driver_ptr,
-                                    p_ether_instance->p_cfg->channel,
+                                    interface_ptr->nx_interface_index,
                                     p_netxduo_ether_instance->p_cfg->mtu);
 
             /* Set the physical address (MAC address) of this IP instance.  */
             uint8_t * p_mac_address = p_ether_instance->p_cfg->p_mac_address;
             nx_ip_interface_physical_address_set(driver_req_ptr->nx_ip_driver_ptr,
-                                                 p_ether_instance->p_cfg->channel,
+                                                 interface_ptr->nx_interface_index,
                                                  (ULONG) ((p_mac_address[0] << 8) | (p_mac_address[1] << 0)),
                                                  (ULONG) ((p_mac_address[2] << 24) | (p_mac_address[3] << 16) |
                                                           (p_mac_address[4] << 8) |
@@ -91,7 +91,7 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
 
             /* Indicate to the IP software that IP to physical mapping is required.  */
             nx_ip_interface_address_mapping_configure(driver_req_ptr->nx_ip_driver_ptr,
-                                                      p_ether_instance->p_cfg->channel,
+                                                      interface_ptr->nx_interface_index,
                                                       NX_TRUE);
             break;
         }
@@ -331,8 +331,7 @@ void rm_netxduo_ether (NX_IP_DRIVER * driver_req_ptr, rm_netxduo_ether_instance_
         case NX_LINK_GET_STATUS:
         {
             /* Return the link status in the supplied return pointer.  */
-            *(driver_req_ptr->nx_ip_driver_return_ptr) =
-                driver_req_ptr->nx_ip_driver_ptr->nx_ip_interface[p_ether_instance->p_cfg->channel].nx_interface_link_up;
+            *(driver_req_ptr->nx_ip_driver_return_ptr) = interface_ptr->nx_interface_link_up;
             break;
         }
 
@@ -492,6 +491,8 @@ void rm_netxduo_ether_receive_packet (rm_netxduo_ether_instance_t * p_netxduo_et
              */
             p_nx_packet->nx_packet_prepend_ptr =
                 (UCHAR *) (((uint32_t) p_nx_packet->nx_packet_prepend_ptr + 31U) & ~(31U));
+
+            p_nx_packet->nx_packet_address.nx_packet_interface_ptr = p_netxduo_ether_instance->p_ctrl->p_interface;
 
             /* Update the buffer pointer in the buffer descriptor. */
             if (FSP_SUCCESS !=
@@ -783,7 +784,8 @@ void rm_netxduo_ether_callback (ether_callback_args_t * p_args)
 
             /* Notify NetX that the link is up. */
             p_netxduo_ether_instance->p_ctrl->p_interface->nx_interface_link_up = NX_TRUE;
-            _nx_ip_driver_link_status_event(p_netxduo_ether_instance->p_ctrl->p_ip, p_args->channel);
+            _nx_ip_driver_link_status_event(p_netxduo_ether_instance->p_ctrl->p_ip,
+                                            p_netxduo_ether_instance->p_ctrl->p_interface->nx_interface_index);
             break;
         }
 
@@ -828,7 +830,8 @@ void rm_netxduo_ether_callback (ether_callback_args_t * p_args)
 
             /* Notify NetX that the link is down. */
             p_netxduo_ether_instance->p_ctrl->p_interface->nx_interface_link_up = NX_FALSE;
-            _nx_ip_driver_link_status_event(p_netxduo_ether_instance->p_ctrl->p_ip, p_args->channel);
+            _nx_ip_driver_link_status_event(p_netxduo_ether_instance->p_ctrl->p_ip,
+                                            p_netxduo_ether_instance->p_ctrl->p_interface->nx_interface_index);
             break;
         }
 

@@ -167,9 +167,10 @@ typedef enum e_mipi_dsi_dcs_id
 /** MIPI DSI Video Data type */
 typedef enum e_mipi_dsi_video_data
 {
-    MIPI_DSI_VIDEO_DATA_16RGB_PIXEL_STREAM = 0x0E, ///< 16-bit RGB Packed Pixel Stream
-    MIPI_DSI_VIDEO_DATA_18RGB_PIXEL_STREAM = 0x1E, ///< 18-bit RGB Packed Pixel Stream
-    MIPI_DSI_VIDEO_DATA_24RGB_PIXEL_STREAM = 0x3E, ///< 24-bit RGB Packed Pixel Stream
+    MIPI_DSI_VIDEO_DATA_16RGB_PIXEL_STREAM         = 0x0E, ///< 16-bit RGB Packed Pixel Stream
+    MIPI_DSI_VIDEO_DATA_18RGB_PIXEL_STREAM         = 0x1E, ///< 18-bit RGB Packed Pixel Stream
+    MIPI_DSI_VIDEO_DATA_18RGB_LOOSELY_PIXEL_STREAM = 0x2E, ///< 18-bit RGB Loosely Packed Pixel Stream
+    MIPI_DSI_VIDEO_DATA_24RGB_PIXEL_STREAM         = 0x3E, ///< 24-bit RGB Packed Pixel Stream
 } mipi_dsi_video_data_t;
 
 /** MIPI DSI Acknowledge and Error type */
@@ -315,8 +316,12 @@ typedef enum e_mipi_dsi_phy_status
     MIPI_DSI_PHY_STATUS_DATA_LANE0_ULP_RX    = 0x00000008, ///< Data lane ultra low power receive mode
     MIPI_DSI_PHY_STATUS_DATA_LANE0_NOT_ULP   = 0x00000010, ///< Data lane 0 not in ULP mode
     MIPI_DSI_PHY_STATUS_DATA_LANE1_NOT_ULP   = 0x00000020, ///< Data lane 1 not in ULP mode
+    MIPI_DSI_PHY_STATUS_DATA_LANE2_NOT_ULP   = 0x00000040, ///< Data lane 2 not in ULP mode
+    MIPI_DSI_PHY_STATUS_DATA_LANE3_NOT_ULP   = 0x00000080, ///< Data lane 3 not in ULP mode
     MIPI_DSI_PHY_STATUS_DATA_LANE0_STOP      = 0x00000100, ///< Data lane 0 stop state
     MIPI_DSI_PHY_STATUS_DATA_LANE1_STOP      = 0x00000200, ///< Data lane 1 stop state
+    MIPI_DSI_PHY_STATUS_DATA_LANE2_STOP      = 0x00000400, ///< Data lane 2 stop state
+    MIPI_DSI_PHY_STATUS_DATA_LANE3_STOP      = 0x00000800, ///< Data lane 3 stop state
     MIPI_DSI_PHY_STATUS_DATA_LANE0_RX_TO_TX  = 0x00001000, ///< Data lane Rx to Tx transition event
     MIPI_DSI_PHY_STATUS_DATA_LANE0_TX_TO_RX  = 0x00002000, ///< Data lane Tx to Rx transition event
     MIPI_DSI_PHY_STATUS_DATA_LANE0_RX_STATE  = 0x00008000, ///< Data lane Rx active state

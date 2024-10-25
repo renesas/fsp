@@ -587,7 +587,7 @@ void mbedtls_ecp_group_free(mbedtls_ecp_group *grp)
 #endif
     }
 
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     if (grp->id == MBEDTLS_ECP_DP_CURVE25519)
     {
         mbedtls_mpi_free(&grp->P);

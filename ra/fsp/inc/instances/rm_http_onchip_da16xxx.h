@@ -40,6 +40,13 @@ typedef enum e_http_onchip_da16xxx_tls_auth
     HTTP_ONCHIP_DA16XXX_TLS_VERIFY_REQUIRED = 2  ///< TLS verification is required
 } http_onchip_da16xxx_tls_auth_t;
 
+/** HTTP SSL Enable */
+typedef enum e_http_onchip_da16xxx_ssl_enable
+{
+    HTTP_ONCHIP_DA16XXX_SSL_DISABLE = 0, ///< SSL is disabled
+    HTTP_ONCHIP_DA16XXX_SSL_ENABLE  = 1, ///< SSL is enabled
+} http_onchip_da16xxx_ssl_enable_t;
+
 /** HTTP Request Buffer */
 typedef struct st_http_onchip_da16xxx_request
 {
@@ -78,8 +85,9 @@ typedef struct st_http_onchip_da16xxx_cfg
 /** HTTP_ONCHIP_DA16XXX private control block. DO NOT MODIFY. */
 typedef struct st_http_onchip_da16xxx_instance_ctrl
 {
-    uint32_t open;                           ///< Flag to indicate if HTTP has been opened.
-    http_onchip_da16xxx_cfg_t const * p_cfg; ///< Pointer to p_cfg for HTTP.
+    uint32_t open;                            ///< Flag to indicate if HTTP has been opened.
+    http_onchip_da16xxx_ssl_enable_t  enable; ///< Flag to indicate if HTTP server is secure.
+    http_onchip_da16xxx_cfg_t const * p_cfg;  ///< Pointer to p_cfg for HTTP.
 } http_onchip_da16xxx_instance_ctrl_t;
 
 /*******************************************************************************
@@ -94,6 +102,9 @@ fsp_err_t RM_HTTP_DA16XXX_Send(http_onchip_da16xxx_instance_ctrl_t * p_ctrl,
                                http_onchip_da16xxx_buffer_t        * p_buffer);
 
 fsp_err_t RM_HTTP_DA16XXX_Close(http_onchip_da16xxx_instance_ctrl_t * p_ctrl);
+
+fsp_err_t RM_HTTP_DA16XXX_Start(http_onchip_da16xxx_instance_ctrl_t * p_ctrl, http_onchip_da16xxx_ssl_enable_t enable);
+fsp_err_t RM_HTTP_DA16XXX_Stop(http_onchip_da16xxx_instance_ctrl_t * p_ctrl);
 
 #endif                                 /* RM_HTTP_ONCHIP_DA16XXX_H_ */
 

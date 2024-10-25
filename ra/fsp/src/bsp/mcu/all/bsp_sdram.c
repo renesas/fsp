@@ -5,10 +5,10 @@
 */
 
 /*******************************************************************************************************************//**
- * @addtogroup BSP_SDRAM
- * @brief SDRAM initialization
+ * @defgroup BSP_SDRAM BSP SDRAM support
+ * @ingroup RENESAS_COMMON
+ * @brief Code that initializes the SDRAMC and SDR SDRAM device memory.
  *
- * This file contains code that the initializes SDRAMC and SDR SDRAM device memory.
  * @{
  **********************************************************************************************************************/
 
@@ -21,7 +21,7 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-/** Due to hardware limitations of the SDRAM peripheral,
+/* Due to hardware limitations of the SDRAM peripheral,
  * it is not expected any of these need to be changable by end user.
  * Only sequential, single access at a time is supported. */
 #define BSP_PRV_SDRAM_MR_WB_SINGLE_LOC_ACC    (1U) /* MR.M9                : Single Location Access */

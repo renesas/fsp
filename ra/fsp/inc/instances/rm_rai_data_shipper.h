@@ -59,14 +59,13 @@ typedef struct st_rai_data_shipper_data_buffer_type
 typedef struct st_rai_data_shipper_tx_info_type
 {
     /** CRC's address is 4-byte aligned for USB PCDC (HS/FS) could transmit by DMA transfer */
-    uint8_t crc BSP_ALIGN_VARIABLE(4);                                                 // 8-bit CRC value
+    uint16_t crc BSP_ALIGN_VARIABLE(4);                                                // 16-bit CRC value
 
     uint8_t current;                                                                   // Current channel being sent
     uint8_t channels;                                                                  // Total number of channels
-    uint8_t write_requests;                                                            // Skipped write request counter
-
     rai_data_shipper_data_buffer_t   data[RM_RAI_DATA_COLLECTOR_CFG_MAX_CHANNELS + 2]; // Array of sensor buffers + Debug data + CRC
-    rai_data_shipper_header_buffer_t header;                                           // Header buffer
+    rai_data_shipper_header_buffer_t header;
+    uint8_t write_requests;                                                            // Skipped write request counter
 } rai_data_shipper_tx_info_t;
 
 /** RAI_DATA_SHIPPER instance control block. Initialization occurs when RM_RAI_DATA_SHIPPER_Open() is called. */

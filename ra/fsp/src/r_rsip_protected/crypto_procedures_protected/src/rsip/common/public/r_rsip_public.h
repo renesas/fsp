@@ -66,6 +66,19 @@
 /* r_rsip.c */
 fsp_err_t r_rsip_random_number_generate(rsip_ctrl_t * const p_ctrl, uint8_t * const p_random);
 
+/* r_rsip_rsa.c */
+fsp_err_t r_rsip_emsa_pkcs1_v1_5_encode(rsip_hash_type_t const hash_function,
+                                        uint8_t const * const  p_hash,
+                                        uint8_t * const        p_em,
+                                        uint32_t const         em_length);
+fsp_err_t r_rsip_emsa_pss_verify(rsip_ctrl_t * const    p_ctrl,
+                                 rsip_hash_type_t const hash_function,
+                                 rsip_mgf_type_t const  mask_generation_function,
+                                 uint32_t const         salt_length,
+                                 uint8_t const * const  p_mhash,
+                                 uint8_t * const        p_em,
+                                 uint32_t const         em_bit_length);
+
 /* r_rsip_sha.c */
 fsp_err_t r_rsip_sha_init(rsip_ctrl_t * const p_ctrl, rsip_hash_type_t const hash_type);
 fsp_err_t r_rsip_sha_update(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_message, uint32_t const message_length);

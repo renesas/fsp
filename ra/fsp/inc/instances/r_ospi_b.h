@@ -157,7 +157,7 @@ typedef enum e_ospi_b_dotf_aes_key_type
 typedef enum e_ospi_b_dotf_key_format
 {
     OSPI_B_DOTF_KEY_FORMAT_PLAINTEXT = 0U,
-    OSPI_B_DOTF_KEY_FORMAT_WRAPPED = 1U,
+    OSPI_B_DOTF_KEY_FORMAT_WRAPPED   = 1U,
 } ospi_b_dotf_key_format_t;
 
 /* This structure is used to hold all the DOTF related configuration. */
@@ -184,7 +184,7 @@ typedef struct st_ospi_b_extended_cfg
     transfer_instance_t const * p_lower_lvl_transfer;          ///< DMA Transfer instance used for data transmission
 #endif
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
-    ospi_b_dotf_cfg_t const * p_dotf_cfg;                      ///< DOTF Configuration
+    ospi_b_dotf_cfg_t * p_dotf_cfg;                            ///< DOTF Configuration
 #endif
     uint8_t read_dummy_cycles;                                 ///< Dummy cycles to be inserted for read commands.
     uint8_t program_dummy_cycles;                              ///< Dummy cycles to be inserted for page program commands.
@@ -232,6 +232,8 @@ fsp_err_t R_OSPI_B_Erase(spi_flash_ctrl_t * const p_ctrl, uint8_t * const p_devi
 fsp_err_t R_OSPI_B_StatusGet(spi_flash_ctrl_t * const p_ctrl, spi_flash_status_t * const p_status);
 fsp_err_t R_OSPI_B_BankSet(spi_flash_ctrl_t * const _ctrl, uint32_t bank);
 fsp_err_t R_OSPI_B_AutoCalibrate(spi_flash_ctrl_t * const p_ctrl);
+
+fsp_err_t R_OSPI_B_DOTF_Configure(spi_flash_ctrl_t * const p_ctrl, ospi_b_dotf_cfg_t * const p_dotf_cfg);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

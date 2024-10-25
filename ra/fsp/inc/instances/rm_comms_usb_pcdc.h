@@ -51,6 +51,7 @@ typedef struct st_rm_comms_usb_pcdc_extended_cfg
 #if BSP_CFG_RTOS == 0
     timer_instance_t const * p_gpt;    ///< Pointer to GPT instance.
 #endif
+    uint8_t connect_detection_en;
 } rm_comms_usb_pcdc_extended_cfg_t;
 
 /** Communications middleware control structure. */
@@ -59,7 +60,9 @@ typedef struct st_rm_comms_usb_pcdc_instance_ctrl
     uint32_t               open;                            ///< Open flag.
     rm_comms_cfg_t const * p_cfg;                           ///< Middleware configuration.
     rm_comms_usb_pcdc_extended_cfg_t const * p_extend;      ///< Pointer to extended configuration structure
-    usb_callback_args_t * p_usb_args;                       ///< Pointer to usb callback args
+    usb_callback_args_t    * p_usb_args;                    ///< Pointer to usb callback args
+    usb_pcdc_ctrllinestate_t ctrl_line_state;               ///< Line State Control
+    usb_pcdc_linecoding_t    line_coding;                   ///< Line Coding to store COM port settings
 
     void (* p_callback)(rm_comms_callback_args_t * p_args); ///< Pointer to callback that is called when a usb_status_t occurs.
     void const * p_context;                                 ///< Pointer to context passed into callback function
@@ -69,8 +72,7 @@ typedef struct st_rm_comms_usb_pcdc_instance_ctrl
  * Exported global variables
  **********************************************************************************************************************/
 
-extern rm_comms_api_t const  g_comms_on_comms_usb_pcdc;
-extern usb_pcdc_linecoding_t g_comms_usb_pcdc_line_coding[USB_NUM_USBIP];
+extern rm_comms_api_t const g_comms_on_comms_usb_pcdc;
 
 /** @endcond */
 

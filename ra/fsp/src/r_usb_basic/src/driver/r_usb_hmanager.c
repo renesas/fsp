@@ -75,12 +75,16 @@ static uint16_t usb_hstd_chk_remote(usb_utr_t * ptr);
 static void usb_hstd_mgr_rel_mpl(usb_utr_t * ptr, uint16_t n);
 
  #if (BSP_CFG_RTOS == 2)
-  #if defined(USB_CFG_HCDC_USE)
+  #if defined(USB_CFG_HCDC_ECM_USE)
 extern uint16_t * usb_hcdc_get_vendor_table(void);
+extern uint16_t   usb_hcdc_ecm_pre_check_config(uint8_t * table, uint16_t length);
+extern uint16_t   usb_hcdc_ecm_check_config(uint8_t * table, uint16_t length);
 
 extern uint16_t g_usb_hcdc_speed[USB_NUM_USBIP];
 extern uint16_t g_usb_hcdc_devaddr[USB_NUM_USBIP];
-  #endif                               /* defined(USB_CFG_HCDC_USE) */
+static uint8_t  g_idx_configuration[USB_NUM_USBIP];
+static uint8_t  g_num_configuration[USB_NUM_USBIP];
+  #endif                               /* defined(USB_CFG_HCDC_ECM_USE) */
  #endif                                /* #if (BSP_CFG_RTOS == 2) */
 
 /******************************************************************************
@@ -536,8 +540,12 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
     uint16_t product_id;
   #endif                               /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
-    uint16_t       md;
-    uint16_t       flg;
+    uint16_t md;
+  #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
+    volatile uint16_t flg;
+  #else
+    uint16_t flg;
+  #endif                               /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
     usb_hcdreg_t * driver;
     uint16_t       enume_mode;         /* Enumeration mode (device state) */
     uint8_t      * descriptor_table;
@@ -600,6 +608,10 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                                                  (uint8_t *) &g_p_usbx_device[ptr->ip]->ux_device_descriptor);
   #endif                               /* BSP_CFG_RTOS == 1 */
 
+  #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
+                    descriptor_table             = (uint8_t *) g_usb_hstd_device_descriptor[ptr->ip];
+                    g_num_configuration[ptr->ip] = descriptor_table[USB_DEV_B_NUM_CONFIGURATION];
+  #endif                               /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
                     break;
                 }
 
@@ -884,7 +896,34 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
 
             if (USB_COMPLETEPIPESET != enume_mode)
             {
+  #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
+                if (4 == g_usb_hstd_enum_seq[ptr->ip])
+                {
+                    if (1 == flg)
+                    {
+                        g_usb_hstd_enum_seq[ptr->ip]++;
+                    }
+                    else
+                    {
+                        g_idx_configuration[ptr->ip]++;
+                        if (g_idx_configuration[ptr->ip] < g_num_configuration[ptr->ip])
+                        {
+                            g_usb_hstd_enum_seq[ptr->ip]--;
+                        }
+                        else
+                        {
+                            g_usb_hstd_enum_seq[ptr->ip]++;
+                        }
+                    }
+                }
+                else
+                {
+                    g_usb_hstd_enum_seq[ptr->ip]++;
+                }
+
+  #else                                /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
                 g_usb_hstd_enum_seq[ptr->ip]++;
+  #endif                               /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
             }
 
             /* Device Enumeration */
@@ -1084,9 +1123,10 @@ uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
     uint16_t   product_id;
     uint16_t   id_check;
     uint16_t   i;
- #if defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2)
+ #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
     uint16_t * vendor_table;
- #endif                                /* defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2) */
+    uint16_t   result2 = USB_ERROR;
+ #endif                                /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
 
     descriptor_table = (uint8_t *) g_usb_hstd_device_descriptor[ptr->ip];
 
@@ -1135,7 +1175,7 @@ uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
     }
     else
     {
- #if defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2)
+ #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
         if (USB_IFCLS_CDC == driver->ifclass)
         {
             vendor_table = usb_hcdc_get_vendor_table();
@@ -1155,8 +1195,38 @@ uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
             {
                 return result;
             }
+            else
+            {
+                descriptor_table = (uint8_t *) g_usb_hstd_config_descriptor[ptr->ip];
+
+                result2 = usb_hcdc_ecm_pre_check_config(descriptor_table,
+                                                        (uint16_t) (((uint16_t) descriptor_table[3] << 8) +
+                                                                    (uint16_t) descriptor_table[2]));
+
+                if (USB_OK == result2)
+                {
+                    /* Do nothing. (Device has normal CDC Class IF)*/
+                }
+                else
+                {
+                    result = usb_hcdc_ecm_check_config(descriptor_table,
+                                                       (uint16_t) (((uint16_t) descriptor_table[3] << 8) +
+                                                                   (uint16_t) descriptor_table[2]));
+                    if (USB_OK == result)
+                    {
+                        g_usb_hcdc_speed[ptr->ip]   = g_usb_hstd_device_speed[ptr->ip];
+                        g_usb_hcdc_devaddr[ptr->ip] = g_usb_hstd_device_addr[ptr->ip];
+
+                        return result;
+                    }
+                    else
+                    {
+                        return USB_ERROR;
+                    }
+                }
+            }
         }
- #endif                                /* defined(USB_CFG_HCDC_USE) && (BSP_CFG_RTOS == 2) */
+ #endif                                /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
         id_check = USB_ERROR;
 
         /* WAIT_LOOP */
@@ -1402,8 +1472,12 @@ void usb_hstd_enum_get_descriptor (usb_utr_t * ptr, uint16_t addr, uint16_t cnt_
 
         case 3:
         {
-            usb_shstd_std_request[ptr->ip][0]        = USB_GET_DESCRIPTOR | USB_DEV_TO_HOST | USB_STANDARD | USB_DEVICE;
-            usb_shstd_std_request[ptr->ip][1]        = (uint16_t) USB_CONF_DESCRIPTOR;
+            usb_shstd_std_request[ptr->ip][0] = USB_GET_DESCRIPTOR | USB_DEV_TO_HOST | USB_STANDARD | USB_DEVICE;
+ #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
+            usb_shstd_std_request[ptr->ip][1] = (uint16_t) USB_CONF_DESCRIPTOR | g_idx_configuration[ptr->ip];
+ #else                                 /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
+            usb_shstd_std_request[ptr->ip][1] = (uint16_t) USB_CONF_DESCRIPTOR;
+ #endif                                /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
             usb_shstd_std_request[ptr->ip][2]        = (uint16_t) 0x0000;
             usb_shstd_std_request[ptr->ip][3]        = (uint16_t) 0x0009;
             usb_shstd_std_req_msg[ptr->ip].p_tranadr = g_usb_hstd_config_descriptor[ptr->ip];
@@ -1414,7 +1488,11 @@ void usb_hstd_enum_get_descriptor (usb_utr_t * ptr, uint16_t addr, uint16_t cnt_
         {
             data_table = (uint8_t *) g_usb_hstd_config_descriptor[ptr->ip];
             usb_shstd_std_request[ptr->ip][0] = USB_GET_DESCRIPTOR | USB_DEV_TO_HOST | USB_STANDARD | USB_DEVICE;
+ #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
+            usb_shstd_std_request[ptr->ip][1] = (uint16_t) USB_CONF_DESCRIPTOR | g_idx_configuration[ptr->ip];
+ #else                                 /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
             usb_shstd_std_request[ptr->ip][1] = (uint16_t) USB_CONF_DESCRIPTOR;
+ #endif                                /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
             usb_shstd_std_request[ptr->ip][2] = (uint16_t) 0x0000;
             usb_shstd_std_request[ptr->ip][3] = (uint16_t) (((uint16_t) data_table[3] << 8) + (uint16_t) data_table[2]);
             if (usb_shstd_std_request[ptr->ip][3] > USB_CONFIGSIZE)
@@ -2594,7 +2672,10 @@ void usb_hstd_mgr_task (void * stacd)
                         /* Set device speed */
                         usb_hstd_set_dev_addr(ptr, (uint16_t) USB_DEVICE_0, g_usb_hstd_device_speed[ptr->ip]);
                         g_usb_hstd_dcp_register[ptr->ip][0] = (uint16_t) (USB_DEFPACKET + USB_DEVICE_0);
-                        g_usb_hstd_enum_seq[ptr->ip]        = 0;
+ #if defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2)
+                        g_idx_configuration[ptr->ip] = 0;
+ #endif                                         /* defined(USB_CFG_HCDC_ECM_USE) && (BSP_CFG_RTOS == 2) */
+                        g_usb_hstd_enum_seq[ptr->ip] = 0;
                         switch (g_usb_hstd_device_speed[ptr->ip])
                         {
                             case USB_HSCONNECT: /* Hi Speed Device Connect */

@@ -96,6 +96,8 @@ extern "C" {
   #include "R7FA8D1BH.h"
  #elif BSP_MCU_GROUP_RA8T1
   #include "R7FA8T1AH.h"
+ #elif BSP_MCU_GROUP_RA8E1
+  #include "R7FA8E1AF.h"
  #else
   #if __has_include("renesas_internal.h")
    #include "renesas_internal.h"

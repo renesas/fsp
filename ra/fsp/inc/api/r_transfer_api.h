@@ -91,7 +91,8 @@ typedef enum e_transfer_size
 {
     TRANSFER_SIZE_1_BYTE = 0,          ///< Each transfer transfers a 8-bit value
     TRANSFER_SIZE_2_BYTE = 1,          ///< Each transfer transfers a 16-bit value
-    TRANSFER_SIZE_4_BYTE = 2           ///< Each transfer transfers a 32-bit value
+    TRANSFER_SIZE_4_BYTE = 2,          ///< Each transfer transfers a 32-bit value
+    TRANSFER_SIZE_8_BYTE = 3           ///< Each transfer transfers a 64-bit value
 } transfer_size_t;
 
 #endif

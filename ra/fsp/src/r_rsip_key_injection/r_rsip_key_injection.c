@@ -27,6 +27,8 @@ typedef enum e_rsip_word_size_oem_key_inst_data
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES128                          = 8U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES192                          = 12U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES256                          = 12U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES128_XTS                      = 12U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES256_XTS                      = 20U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_RSA2048_PUBLIC_KEY              = 72U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_RSA2048_PRIVATE_KEY             = 132U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_RSA3072_PUBLIC_KEY              = 104U,
@@ -37,12 +39,24 @@ typedef enum e_rsip_word_size_oem_key_inst_data
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP256R1_PRIVATE_KEY       = 12U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP384R1_PUBLIC_KEY        = 28U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP384R1_PRIVATE_KEY       = 16U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP521R1_PUBLIC_KEY        = 44U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP521R1_PRIVATE_KEY       = 24U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP256R1_PUBLIC_KEY  = 20U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP256R1_PRIVATE_KEY = 12U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP384R1_PUBLIC_KEY  = 28U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP384R1_PRIVATE_KEY = 16U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP512R1_PUBLIC_KEY  = 36U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP512R1_PRIVATE_KEY = 20U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP256K1_PUBLIC_KEY        = 20U,
     RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP256K1_PRIVATE_KEY       = 12U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_ED25519_PUBLIC_KEY          = 12U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_ED25519_PRIVATE_KEY         = 12U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA224                     = 12U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA256                     = 12U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA384                     = 16U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512                     = 20U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512_224                 = 20U,
+    RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512_256                 = 20U,
 } e_rsip_word_size_oem_key_inst_data_t;
 
 /* OEM Command */
@@ -52,6 +66,8 @@ typedef enum e_rsip_oem_cmd
     RSIP_OEM_CMD_AES128                      = 5U,
     RSIP_OEM_CMD_AES192                      = 6U,
     RSIP_OEM_CMD_AES256                      = 7U,
+    RSIP_OEM_CMD_AES128_XTS                  = 8U,
+    RSIP_OEM_CMD_AES256_XTS                  = 9U,
     RSIP_OEM_CMD_RSA2048_PUBLIC              = 12U,
     RSIP_OEM_CMD_RSA2048_PRIVATE             = 13U,
     RSIP_OEM_CMD_RSA3072_PUBLIC              = 14U,
@@ -62,12 +78,24 @@ typedef enum e_rsip_oem_cmd
     RSIP_OEM_CMD_ECC_SECP256R1_PRIVATE       = 23U,
     RSIP_OEM_CMD_ECC_SECP384R1_PUBLIC        = 24U,
     RSIP_OEM_CMD_ECC_SECP384R1_PRIVATE       = 25U,
+    RSIP_OEM_CMD_HMAC_SHA224                 = 26U,
+    RSIP_OEM_CMD_HMAC_SHA256                 = 27U,
     RSIP_OEM_CMD_ECC_BRAINPOOLP256R1_PUBLIC  = 28U,
     RSIP_OEM_CMD_ECC_BRAINPOOLP256R1_PRIVATE = 29U,
     RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PUBLIC  = 30U,
     RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PRIVATE = 31U,
+    RSIP_OEM_CMD_ECC_BRAINPOOLP512R1_PUBLIC  = 32U,
+    RSIP_OEM_CMD_ECC_BRAINPOOLP512R1_PRIVATE = 33U,
     RSIP_OEM_CMD_ECC_SECP256K1_PUBLIC        = 34U,
     RSIP_OEM_CMD_ECC_SECP256K1_PRIVATE       = 35U,
+    RSIP_OEM_CMD_ECC_SECP521R1_PUBLIC        = 36U,
+    RSIP_OEM_CMD_ECC_SECP521R1_PRIVATE       = 37U,
+    RSIP_OEM_CMD_ECC_ED25519_PUBLIC          = 38U,
+    RSIP_OEM_CMD_ECC_ED25519_PRIVATE         = 39U,
+    RSIP_OEM_CMD_HMAC_SHA384                 = 40U,
+    RSIP_OEM_CMD_HMAC_SHA512                 = 41U,
+    RSIP_OEM_CMD_HMAC_SHA512_224             = 42U,
+    RSIP_OEM_CMD_HMAC_SHA512_256             = 43U,
 } rsip_oem_cmd_t;
 
 /* Key types */
@@ -77,6 +105,8 @@ typedef enum e_rsip_key_type
     RSIP_KEY_TYPE_AES_128,                      ///< AES-128
     RSIP_KEY_TYPE_AES_192,                      ///< AES-192
     RSIP_KEY_TYPE_AES_256,                      ///< AES-256
+    RSIP_KEY_TYPE_AES_128_XTS,                  ///< AES-128 XTS
+    RSIP_KEY_TYPE_AES_256_XTS,                  ///< AES-256 XTS
     RSIP_KEY_TYPE_RSA_2048_PUBLIC,              ///< RSA-2048 public key
     RSIP_KEY_TYPE_RSA_2048_PRIVATE,             ///< RSA-2048 private key
     RSIP_KEY_TYPE_RSA_3072_PUBLIC,              ///< RSA-2048 public key
@@ -85,14 +115,26 @@ typedef enum e_rsip_key_type
     RSIP_KEY_TYPE_RSA_4096_PRIVATE,             ///< RSA-2048 private key
     RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC,         ///< secp256r1 public key (also known as NIST P-256, prime256v1)
     RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE,        ///< secp256r1 private key (also known as NIST P-256, prime256v1)
-    RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC,         ///< secp384r1 public key (also known as NIST P-256, prime256v1)
-    RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE,        ///< secp384r1 private key (also known as NIST P-256, prime256v1)
+    RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC,         ///< secp384r1 public key (also known as NIST P-384, prime384v1)
+    RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE,        ///< secp384r1 private key (also known as NIST P-384, prime384v1)
+    RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC,         ///< secp521r1 public key (also known as NIST P-521, prime521v1)
+    RSIP_KEY_TYPE_ECC_SECP521R1_PRIVATE,        ///< secp521r1 private key (also known as NIST P-521, prime521v1)
     RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC,   ///< brainpool256r1 public key
     RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PRIVATE,  ///< brainpool256r1 private key
     RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC,   ///< brainpool256r1 public key
     RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE,  ///< brainpool256r1 private key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PUBLIC,   ///< brainpool256r1 public key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PRIVATE,  ///< brainpool256r1 private key
     RSIP_KEY_TYPE_ECC_SECP256K1_PUBLIC,         ///< secp256k1 public key
     RSIP_KEY_TYPE_ECC_SECP256K1_PRIVATE,        ///< secp256k1 private key
+    RSIP_KEY_TYPE_ECC_ED25519_PUBLIC,           ///< Ed25519 public key
+    RSIP_KEY_TYPE_ECC_ED25519_PRIVATE,          ///< Ed25519 private key
+    RSIP_KEY_TYPE_HMAC_SHA224,                  ///< hmac sha 224
+    RSIP_KEY_TYPE_HMAC_SHA256,                  ///< hmac sha 256
+    RSIP_KEY_TYPE_HMAC_SHA384,                  ///< hmac sha 384
+    RSIP_KEY_TYPE_HMAC_SHA512,                  ///< hmac sha 512
+    RSIP_KEY_TYPE_HMAC_SHA512_224,              ///< hmac sha 512/224
+    RSIP_KEY_TYPE_HMAC_SHA512_256,              ///< hmac sha 512/256
     RSIP_KEY_TYPE_MAKE_ENUM_LONG = 0xFFFFFFFFUL // Make this enum 32-bit data
 } rsip_key_type_t;
 
@@ -111,7 +153,10 @@ typedef enum e_rsip_key_type
 const rsip_key_injection_api_t g_rsip_key_injection_on_rsip =
 {
     .AES128_InitialKeyWrap                     = R_RSIP_AES128_InitialKeyWrap,
+    .AES192_InitialKeyWrap                     = R_RSIP_AES192_InitialKeyWrap,
     .AES256_InitialKeyWrap                     = R_RSIP_AES256_InitialKeyWrap,
+    .AES128_XTS_InitialKeyWrap                 = R_RSIP_AES128_XTS_InitialKeyWrap,
+    .AES256_XTS_InitialKeyWrap                 = R_RSIP_AES256_XTS_InitialKeyWrap,
     .RSA2048_InitialPublicKeyWrap              = R_RSIP_RSA2048_InitialPublicKeyWrap,
     .RSA2048_InitialPrivateKeyWrap             = R_RSIP_RSA2048_InitialPrivateKeyWrap,
     .RSA3072_InitialPublicKeyWrap              = R_RSIP_RSA3072_InitialPublicKeyWrap,
@@ -122,12 +167,23 @@ const rsip_key_injection_api_t g_rsip_key_injection_on_rsip =
     .ECC_secp256r1_InitialPrivateKeyWrap       = R_RSIP_ECC_secp256r1_InitialPrivateKeyWrap,
     .ECC_secp384r1_InitialPublicKeyWrap        = R_RSIP_ECC_secp384r1_InitialPublicKeyWrap,
     .ECC_secp384r1_InitialPrivateKeyWrap       = R_RSIP_ECC_secp384r1_InitialPrivateKeyWrap,
+    .ECC_secp521r1_InitialPublicKeyWrap        = R_RSIP_ECC_secp521r1_InitialPublicKeyWrap,
+    .ECC_secp521r1_InitialPrivateKeyWrap       = R_RSIP_ECC_secp521r1_InitialPrivateKeyWrap,
     .ECC_secp256k1_InitialPublicKeyWrap        = R_RSIP_ECC_secp256k1_InitialPublicKeyWrap,
     .ECC_secp256k1_InitialPrivateKeyWrap       = R_RSIP_ECC_secp256k1_InitialPrivateKeyWrap,
     .ECC_brainpoolP256r1_InitialPublicKeyWrap  = R_RSIP_ECC_brainpoolP256r1_InitialPublicKeyWrap,
     .ECC_brainpoolP256r1_InitialPrivateKeyWrap = R_RSIP_ECC_brainpoolP256r1_InitialPrivateKeyWrap,
     .ECC_brainpoolP384r1_InitialPublicKeyWrap  = R_RSIP_ECC_brainpoolP384r1_InitialPublicKeyWrap,
     .ECC_brainpoolP384r1_InitialPrivateKeyWrap = R_RSIP_ECC_brainpoolP384r1_InitialPrivateKeyWrap,
+    .ECC_brainpoolP512r1_InitialPublicKeyWrap  = R_RSIP_ECC_brainpoolP512r1_InitialPublicKeyWrap,
+    .ECC_brainpoolP512r1_InitialPrivateKeyWrap = R_RSIP_ECC_brainpoolP512r1_InitialPrivateKeyWrap,
+    .ECC_Ed25519_InitialPublicKeyWrap          = R_RSIP_ECC_Ed25519_InitialPublicKeyWrap,
+    .ECC_Ed25519_InitialPrivateKeyWrap         = R_RSIP_ECC_Ed25519_InitialPrivateKeyWrap,
+    .HMAC_SHA256_InitialKeyWrap                = R_RSIP_HMAC_SHA256_InitialKeyWrap,
+    .HMAC_SHA384_InitialKeyWrap                = R_RSIP_HMAC_SHA384_InitialKeyWrap,
+    .HMAC_SHA512_InitialKeyWrap                = R_RSIP_HMAC_SHA512_InitialKeyWrap,
+    .HMAC_SHA512_224_InitialKeyWrap            = R_RSIP_HMAC_SHA512_224_InitialKeyWrap,
+    .HMAC_SHA512_256_InitialKeyWrap            = R_RSIP_HMAC_SHA512_256_InitialKeyWrap,
 };
 
 /*******************************************************************************************************************//**
@@ -230,10 +286,11 @@ fsp_err_t R_RSIP_AES192_InitialKeyWrap (rsip_key_injection_type_t const key_inje
                                         uint8_t const * const           p_user_key,
                                         rsip_aes_wrapped_key_t * const  p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_AES192);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_AES192);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -261,6 +318,16 @@ fsp_err_t R_RSIP_AES192_InitialKeyWrap (rsip_key_injection_type_t const key_inje
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -329,6 +396,132 @@ fsp_err_t R_RSIP_AES256_InitialKeyWrap (rsip_key_injection_type_t const key_inje
 }
 
 /*******************************************************************************************************************//**
+ * This API generates 128-bit AES-XTS key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           128-bit AES-XTS wrapped key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_AES128_XTS_InitialKeyWrap (rsip_key_injection_type_t const key_injection_type,
+                                            uint8_t const * const           p_wrapped_user_factory_programming_key,
+                                            uint8_t const * const           p_initial_vector,
+                                            uint8_t const * const           p_user_key,
+                                            rsip_aes_wrapped_key_t * const  p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_AES128_XTS);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES128_XTS;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES128_XTS - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_AES_128_XTS;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 256-bit AES-XTS key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           256-bit AES-XTS wrapped key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_AES256_XTS_InitialKeyWrap (rsip_key_injection_type_t const key_injection_type,
+                                            uint8_t const * const           p_wrapped_user_factory_programming_key,
+                                            uint8_t const * const           p_initial_vector,
+                                            uint8_t const * const           p_user_key,
+                                            rsip_aes_wrapped_key_t * const  p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_AES256_XTS);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES256_XTS;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_AES256_XTS - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_AES_256_XTS;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
  * This API generates 2048-bit RSA public key within the user routine.
  *
  * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
@@ -356,10 +549,12 @@ fsp_err_t R_RSIP_RSA2048_InitialPublicKeyWrap (rsip_key_injection_type_t const  
                                                uint8_t const * const                     p_user_key,
                                                rsip_rsa2048_public_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA2048_PUBLIC);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA2048_PUBLIC);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -387,6 +582,16 @@ fsp_err_t R_RSIP_RSA2048_InitialPublicKeyWrap (rsip_key_injection_type_t const  
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -419,10 +624,12 @@ fsp_err_t R_RSIP_RSA2048_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
                                                 uint8_t const * const                      p_user_key,
                                                 rsip_rsa2048_private_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA2048_PRIVATE);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA2048_PRIVATE);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -450,6 +657,16 @@ fsp_err_t R_RSIP_RSA2048_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -482,10 +699,12 @@ fsp_err_t R_RSIP_RSA3072_InitialPublicKeyWrap (rsip_key_injection_type_t const  
                                                uint8_t const * const                     p_user_key,
                                                rsip_rsa3072_public_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA3072_PUBLIC);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA3072_PUBLIC);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -513,6 +732,16 @@ fsp_err_t R_RSIP_RSA3072_InitialPublicKeyWrap (rsip_key_injection_type_t const  
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -545,10 +774,11 @@ fsp_err_t R_RSIP_RSA3072_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
                                                 uint8_t const * const                      p_user_key,
                                                 rsip_rsa3072_private_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA3072_PRIVATE);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA3072_PRIVATE);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -576,6 +806,16 @@ fsp_err_t R_RSIP_RSA3072_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -608,10 +848,12 @@ fsp_err_t R_RSIP_RSA4096_InitialPublicKeyWrap (rsip_key_injection_type_t const  
                                                uint8_t const * const                     p_user_key,
                                                rsip_rsa4096_public_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA4096_PUBLIC);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA4096_PUBLIC);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -639,6 +881,16 @@ fsp_err_t R_RSIP_RSA4096_InitialPublicKeyWrap (rsip_key_injection_type_t const  
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -671,10 +923,11 @@ fsp_err_t R_RSIP_RSA4096_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
                                                 uint8_t const * const                      p_user_key,
                                                 rsip_rsa4096_private_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA4096_PRIVATE);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA4096_PRIVATE);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -702,6 +955,16 @@ fsp_err_t R_RSIP_RSA4096_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -860,10 +1123,11 @@ fsp_err_t R_RSIP_ECC_secp384r1_InitialPublicKeyWrap (rsip_key_injection_type_t c
                                                      uint8_t const * const                 p_user_key,
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP384R1_PUBLIC);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP384R1_PUBLIC);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -891,6 +1155,16 @@ fsp_err_t R_RSIP_ECC_secp384r1_InitialPublicKeyWrap (rsip_key_injection_type_t c
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -923,10 +1197,11 @@ fsp_err_t R_RSIP_ECC_secp384r1_InitialPrivateKeyWrap (rsip_key_injection_type_t 
                                                       uint8_t const * const                  p_user_key,
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP384R1_PRIVATE);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP384R1_PRIVATE);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -949,6 +1224,142 @@ fsp_err_t R_RSIP_ECC_secp384r1_InitialPrivateKeyWrap (rsip_key_injection_type_t 
     if (FSP_SUCCESS == error_code)
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 521-bit ECC public key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           521-bit ECC wrapped public key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECC_secp521r1_InitialPublicKeyWrap (rsip_key_injection_type_t const       key_injection_type,
+                                                     uint8_t const * const                 p_wrapped_user_factory_programming_key,
+                                                     uint8_t const * const                 p_initial_vector,
+                                                     uint8_t const * const                 p_user_key,
+                                                     rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP521R1_PUBLIC);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP521R1_PUBLIC_KEY;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP521R1_PUBLIC_KEY - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 521-bit ECC private key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           521-bit ECC wrapped private key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECC_secp521r1_InitialPrivateKeyWrap (rsip_key_injection_type_t const        key_injection_type,
+                                                      uint8_t const * const                  p_wrapped_user_factory_programming_key,
+                                                      uint8_t const * const                  p_initial_vector,
+                                                      uint8_t const * const                  p_user_key,
+                                                      rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP521R1_PRIVATE);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP521R1_PRIVATE_KEY;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_SECP521R1_PRIVATE_KEY - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_ECC_SECP521R1_PRIVATE;
     }
     else
     {
@@ -986,10 +1397,11 @@ fsp_err_t R_RSIP_ECC_secp256k1_InitialPublicKeyWrap (rsip_key_injection_type_t c
                                                      uint8_t const * const                 p_user_key,
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP256K1_PUBLIC);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP256K1_PUBLIC);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -1017,6 +1429,16 @@ fsp_err_t R_RSIP_ECC_secp256k1_InitialPublicKeyWrap (rsip_key_injection_type_t c
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -1049,10 +1471,11 @@ fsp_err_t R_RSIP_ECC_secp256k1_InitialPrivateKeyWrap (rsip_key_injection_type_t 
                                                       uint8_t const * const                  p_user_key,
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP256K1_PRIVATE);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP256K1_PRIVATE);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -1080,6 +1503,16 @@ fsp_err_t R_RSIP_ECC_secp256k1_InitialPrivateKeyWrap (rsip_key_injection_type_t 
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -1112,10 +1545,11 @@ fsp_err_t R_RSIP_ECC_brainpoolP256r1_InitialPublicKeyWrap (rsip_key_injection_ty
                                                            uint8_t const * const                 p_user_key,
                                                            rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP256R1_PUBLIC);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP256R1_PUBLIC);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -1143,6 +1577,16 @@ fsp_err_t R_RSIP_ECC_brainpoolP256r1_InitialPublicKeyWrap (rsip_key_injection_ty
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -1175,10 +1619,11 @@ fsp_err_t R_RSIP_ECC_brainpoolP256r1_InitialPrivateKeyWrap (rsip_key_injection_t
                                                             uint8_t const * const                  p_user_key,
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP256R1_PRIVATE);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP256R1_PRIVATE);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -1206,6 +1651,16 @@ fsp_err_t R_RSIP_ECC_brainpoolP256r1_InitialPrivateKeyWrap (rsip_key_injection_t
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -1238,10 +1693,11 @@ fsp_err_t R_RSIP_ECC_brainpoolP384r1_InitialPublicKeyWrap (rsip_key_injection_ty
                                                            uint8_t const * const                 p_user_key,
                                                            rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PUBLIC);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PUBLIC);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -1270,6 +1726,16 @@ fsp_err_t R_RSIP_ECC_brainpoolP384r1_InitialPublicKeyWrap (rsip_key_injection_ty
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
 
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
+
     return error_code;
 }
 
@@ -1282,7 +1748,7 @@ fsp_err_t R_RSIP_ECC_brainpoolP384r1_InitialPublicKeyWrap (rsip_key_injection_ty
  * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
  *                                                     When key injection type is plain, this is not required and any value can be specified.
  * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
- * @param[out] p_wrapped_key                           128-bit AES wrapped key
+ * @param[out] p_wrapped_key                           384-bit ECC wrapped key
  *
  * @retval FSP_SUCCESS                           Normal termination.
  * @return If an error occurs, the return value will be as follows.
@@ -1301,10 +1767,11 @@ fsp_err_t R_RSIP_ECC_brainpoolP384r1_InitialPrivateKeyWrap (rsip_key_injection_t
                                                             uint8_t const * const                  p_user_key,
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PRIVATE);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_CRYPTO_HAS_RSIP7)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PRIVATE);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -1327,6 +1794,583 @@ fsp_err_t R_RSIP_ECC_brainpoolP384r1_InitialPrivateKeyWrap (rsip_key_injection_t
     if (FSP_SUCCESS == error_code)
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+#else
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 512-bit brainpool ECC public key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           512-bit ECC wrapped public key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECC_brainpoolP512r1_InitialPublicKeyWrap (rsip_key_injection_type_t const       key_injection_type,
+                                                           uint8_t const * const                 p_wrapped_user_factory_programming_key,
+                                                           uint8_t const * const                 p_initial_vector,
+                                                           uint8_t const * const                 p_user_key,
+                                                           rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP512R1_PUBLIC);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP512R1_PUBLIC_KEY;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP512R1_PUBLIC_KEY - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PUBLIC;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 512-bit brainpool ECC private key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           512-bit ECC wrapped private key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECC_brainpoolP512r1_InitialPrivateKeyWrap (rsip_key_injection_type_t const        key_injection_type,
+                                                            uint8_t const * const                  p_wrapped_user_factory_programming_key,
+                                                            uint8_t const * const                  p_initial_vector,
+                                                            uint8_t const * const                  p_user_key,
+                                                            rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP512R1_PRIVATE);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP512R1_PRIVATE_KEY;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_BRAINPOOLP512R1_PRIVATE_KEY - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PRIVATE;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 256-bit Edwards curve ECC public key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           256-bit ECC wrapped public key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECC_Ed25519_InitialPublicKeyWrap (rsip_key_injection_type_t const       key_injection_type,
+                                                   uint8_t const * const                 p_wrapped_user_factory_programming_key,
+                                                   uint8_t const * const                 p_initial_vector,
+                                                   uint8_t const * const                 p_user_key,
+                                                   rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_ED25519_PUBLIC);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_ED25519_PUBLIC_KEY;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_ED25519_PUBLIC_KEY - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_ECC_ED25519_PUBLIC;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 256-bit Edwards curve ECC private key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           256-bit ECC wrapped private key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECC_Ed25519_InitialPrivateKeyWrap (rsip_key_injection_type_t const        key_injection_type,
+                                                    uint8_t const * const                  p_wrapped_user_factory_programming_key,
+                                                    uint8_t const * const                  p_initial_vector,
+                                                    uint8_t const * const                  p_user_key,
+                                                    rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_ED25519_PRIVATE);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_ED25519_PRIVATE_KEY;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_ECC_ED25519_PRIVATE_KEY - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_ECC_ED25519_PRIVATE;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 256-bit HMAC-SHA key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           256-bit HMAC-SHA wrapped key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_HMAC_SHA256_InitialKeyWrap (rsip_key_injection_type_t const     key_injection_type,
+                                             uint8_t const * const               p_wrapped_user_factory_programming_key,
+                                             uint8_t const * const               p_initial_vector,
+                                             uint8_t const * const               p_user_key,
+                                             rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA256);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA256;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA256 - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_HMAC_SHA256;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 384-bit HMAC-SHA key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           384-bit HMAC-SHA wrapped key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_HMAC_SHA384_InitialKeyWrap (rsip_key_injection_type_t const     key_injection_type,
+                                             uint8_t const * const               p_wrapped_user_factory_programming_key,
+                                             uint8_t const * const               p_initial_vector,
+                                             uint8_t const * const               p_user_key,
+                                             rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA384);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA384;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA384 - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_HMAC_SHA384;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 512-bit HMAC-SHA key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           512-bit HMAC-SHA wrapped key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_HMAC_SHA512_InitialKeyWrap (rsip_key_injection_type_t const     key_injection_type,
+                                             uint8_t const * const               p_wrapped_user_factory_programming_key,
+                                             uint8_t const * const               p_initial_vector,
+                                             uint8_t const * const               p_user_key,
+                                             rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA512);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512 - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_HMAC_SHA512;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 512/224-bit HMAC-SHA key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           512/224-bit HMAC-SHA wrapped key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_HMAC_SHA512_224_InitialKeyWrap (rsip_key_injection_type_t const     key_injection_type,
+                                                 uint8_t const * const               p_wrapped_user_factory_programming_key,
+                                                 uint8_t const * const               p_initial_vector,
+                                                 uint8_t const * const               p_user_key,
+                                                 rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA512_224);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512_224;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512_224 - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_HMAC_SHA512_224;
+    }
+    else
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+    }
+
+    return error_code;
+}
+
+/*******************************************************************************************************************//**
+ * This API generates 512/256-bit HMAC-SHA key within the user routine.
+ *
+ * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+ * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+ *                                                     When key injection type is plain, this is not required and any value can be specified.
+ * @param[in]  p_user_key                              User key. If key injection type is not plain, it is encrypted and MAC appended
+ * @param[out] p_wrapped_key                           512/256-bit HMAC-SHA wrapped key
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @return If an error occurs, the return value will be as follows.
+ *         * FSP_ERR_ASSERTION                     A required parameter is NULL.
+ *         * FSP_ERR_CRYPTO_SCE_FAIL               MAC anomaly detection.
+ *         * FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT  Resource conflict.
+ *         * FSP_ERR_CRYPTO_UNKNOWN                An unknown error occurred.
+ *         * FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @note The pre-run state is RSIP Enabled State.
+ *       After the function runs the state transitions to RSIP Enabled State.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_HMAC_SHA512_256_InitialKeyWrap (rsip_key_injection_type_t const     key_injection_type,
+                                                 uint8_t const * const               p_wrapped_user_factory_programming_key,
+                                                 uint8_t const * const               p_initial_vector,
+                                                 uint8_t const * const               p_user_key,
+                                                 rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
+{
+    fsp_err_t error_code               = FSP_SUCCESS;
+    uint32_t  in_data_key_type         = key_injection_type;
+    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA512_256);
+    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+
+    if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512_256;
+    }
+    else
+    {
+        INST_DATA_SIZE = RSIP_WORD_SIZE_OEM_KEY_INST_DATA_HMAC_SHA512_256 - 4;
+    }
+
+    error_code =
+        HW_SCE_GenerateOemKeyIndexSub(&in_data_key_type,
+                                      &in_data_cmd,
+                                      &in_data_shared_key_index,
+                                      (uint32_t const *) p_wrapped_user_factory_programming_key,
+                                      (uint32_t const *) p_initial_vector,
+                                      (uint32_t const *) p_user_key,
+                                      (uint32_t *) p_wrapped_key->value);
+
+    if (FSP_SUCCESS == error_code)
+    {
+        p_wrapped_key->type = RSIP_KEY_TYPE_HMAC_SHA512_256;
     }
     else
     {

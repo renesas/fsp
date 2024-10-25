@@ -115,6 +115,7 @@
 #define BSP_FEATURE_BSP_HAS_USB_CLOCK_SEL                    (1U)
 #define BSP_FEATURE_BSP_HAS_USB_CLOCK_SEL_ALT                (0U)
 #define BSP_FEATURE_BSP_MCU_INFO_POINTER_LOCATION            (0U)
+#define BSP_FEATURE_BSP_MMF_SUPPORTED                        (0)  // Feature not available on this MCU
 #define BSP_FEATURE_BSP_MPU_REGION0_MASK                     (0U) // Feature not available on this MCU
 #define BSP_FEATURE_BSP_MSTP_GPT_MSTPD5                      (0)  // If MSTPCRE is present then the setting is not valid.
 #define BSP_FEATURE_BSP_MSTP_GPT_MSTPD5_MAX_CH               (0U) // If MSTPCRE is present then the setting is not valid.
@@ -176,6 +177,7 @@
 #define BSP_FEATURE_CGC_ICLK_DIV_RESET                       (BSP_CLOCKS_SYS_CLOCK_DIV_4)
 #define BSP_FEATURE_CGC_LOCO_STABILIZATION_MAX_US            (61U)
 #define BSP_FEATURE_CGC_LOW_SPEED_MAX_FREQ_HZ                (1000000U) // This MCU does have Low Speed Mode, up to 1MHz
+#define BSP_FEATURE_CGC_LOW_SPEED_SUPPORT_MAIN_OSC           (1)
 #define BSP_FEATURE_CGC_LOW_VOLTAGE_MAX_FREQ_HZ              (0U)       // This MCU does not have Low Voltage Mode
 #define BSP_FEATURE_CGC_MIDDLE_SPEED_MAX_FREQ_HZ             (0U)       // This MCU does not have Middle Speed Mode
 #define BSP_FEATURE_CGC_MOCO_STABILIZATION_MAX_US            (15U)
@@ -225,6 +227,7 @@
 #define BSP_FEATURE_CRYPTO_HAS_RSA_WRAPPED                   (0)
 #define BSP_FEATURE_CRYPTO_HAS_RSIP7                         (0) // Feature not available on this MCU
 #define BSP_FEATURE_CRYPTO_HAS_RSIP_E11A                     (0) // Feature not available on this MCU
+#define BSP_FEATURE_CRYPTO_HAS_RSIP_E50D                     (0) // Feature not available on this MCU
 #define BSP_FEATURE_CRYPTO_HAS_SCE5                          (0)
 #define BSP_FEATURE_CRYPTO_HAS_SCE5B                         (0)
 #define BSP_FEATURE_CRYPTO_HAS_SCE7                          (0)
@@ -265,6 +268,11 @@
 #define BSP_FEATURE_ETHER_MAX_CHANNELS                       (0U) // Feature not available on this MCU
 #define BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE                 (0)  // Feature not available on this MCU
 
+#define BSP_FEATURE_FLASH_ARC_NSEC_MULTIPLE_MAX_COUNT        (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_ARC_NSEC_NUM_COUNTERS              (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_ARC_NSEC_SINGLE_MAX_COUNT          (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_ARC_OEMBL_MAX_COUNT                (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_ARC_SEC_MAX_COUNT                  (0)  // Feature not available on this MCU
 #define BSP_FEATURE_FLASH_CODE_FLASH_START                   (0x0U)
 #define BSP_FEATURE_FLASH_DATA_FLASH_START                   (0x08000000U)
 #define BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START              (0x0U)
@@ -277,18 +285,21 @@
 #define BSP_FEATURE_FLASH_HP_HAS_FMEPROT                     (1)
 #define BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK              (0)
 #define BSP_FEATURE_FLASH_HP_VERSION                         (40U)
-#define BSP_FEATURE_FLASH_LP_AWS_FAW_MASK                    (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_AWS_FAW_SHIFT                   (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE                   (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_CF_DUAL_BANK_START              (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE                   (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE                   (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_DF_WRITE_SIZE                   (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_FLASH_CLOCK_SRC                 (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_SUPPORTS_DUAL_BANK              (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_LP_VERSION                         (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_SUPPORTS_ACCESS_WINDOW             (0) // Feature not available on this MCU
-#define BSP_FEATURE_FLASH_SUPPORTS_ID_CODE                   (1) // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_AWS_FAW_MASK                    (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_AWS_FAW_SHIFT                   (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE                   (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_CF_DUAL_BANK_START              (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE                   (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE                   (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_DF_WRITE_SIZE                   (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_FLASH_CLOCK_SRC                 (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_SUPPORTS_DUAL_BANK              (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_LP_VERSION                         (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_SUPPORTS_ACCESS_WINDOW             (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK             (0)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_SUPPORTS_ID_CODE                   (1)  // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE            (0U) // Feature not available on this MCU
+#define BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_START           (0U) // Feature not available on this MCU
 
 #define BSP_FEATURE_GPT_32BIT_CHANNEL_MASK                   (0x00U)
 #define BSP_FEATURE_GPT_CLOCK_DIVIDER_STEP_SIZE              (2U)
@@ -317,11 +328,11 @@
 #define BSP_FEATURE_ICU_WUPEN_MASK                           (0x8007B0D7FFFULL) // Note there is another WUPEN1 register
 
 #define BSP_FEATURE_IIC_BUS_FREE_TIME_MULTIPLIER             (5U)
+#define BSP_FEATURE_IIC_B_CHECK_SCL_STATUS                   (0U)
 #define BSP_FEATURE_IIC_B_FAST_MODE_PLUS                     (0x01)
 #define BSP_FEATURE_IIC_B_VALID_CHANNEL_MASK                 (0x01)
 #define BSP_FEATURE_IIC_FAST_MODE_PLUS                       (0)
 #define BSP_FEATURE_IIC_VALID_CHANNEL_MASK                   (0)
-#define BSP_FEATURE_IIC_VERSION                              (2)
 
 #define BSP_FEATURE_IOPORT_ELC_PORTS                         (0x001EU)
 #define BSP_FEATURE_IOPORT_VERSION                           (1U)

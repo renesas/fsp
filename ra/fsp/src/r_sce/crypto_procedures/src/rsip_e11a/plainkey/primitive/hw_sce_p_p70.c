@@ -42,7 +42,7 @@ fsp_err_t HW_SCE_OemKeyIndexValidationSub (const uint32_t InData_Cmd[], const ui
         WR1_PROG(REG_14H, 0x000000c7U);
         WR1_PROG(REG_9CH, 0x800100c0U);
         WAIT_STS(REG_14H, 31, 1);
-        WR1_PROG(REG_2CH, change_endian_long(InData_KeyIndex[0]));
+        WR1_PROG(REG_2CH, InData_KeyIndex[0]);
         WR1_PROG(REG_24H, 0x00000000U);
 
         WR1_PROG(REG_14H, 0x000000a7U);

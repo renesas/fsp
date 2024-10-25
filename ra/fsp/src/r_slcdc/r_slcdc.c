@@ -231,7 +231,7 @@ fsp_err_t R_SLCDC_Modify (slcdc_ctrl_t * const p_ctrl,
 /*******************************************************************************************************************//**
  * Starts output of LCD signals. Implements slcdc_api_t::start.
  *
- * @retval  FSP_SUCCESS                      Device was opened successfully.
+ * @retval  FSP_SUCCESS                      SLCDC timing, output, and voltage generation(if configured) activated
  * @retval  FSP_ERR_ASSERTION                Pointer to the control block structure is NULL.
  * @retval  FSP_ERR_NOT_OPEN                 Device is not opened or initialized
  **********************************************************************************************************************/

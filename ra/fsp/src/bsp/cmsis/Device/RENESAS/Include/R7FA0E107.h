@@ -5,7 +5,7 @@
  *
  * @file     ./out/R7FA0E107.h
  * @brief    CMSIS HeaderFile
- * @version  0.60.04
+ * @version  1.00.00
  */
 
 /** @addtogroup Renesas Electronics Corporation
@@ -2490,7 +2490,8 @@ typedef struct                         /*!< (@ 0x40006000) R_ICU Structure      
             __IOM uint32_t IRQ3ED : 1;     /*!< [5..5] IRQ3ED                                                             */
             __IOM uint32_t IRQ4ED : 1;     /*!< [6..6] IRQ4ED                                                             */
             __IOM uint32_t IRQ5ED : 1;     /*!< [7..7] IRQ5ED                                                             */
-            uint32_t              : 2;
+            __IOM uint32_t IRQ6ED : 1;     /*!< [8..8] IRQ6ED                                                             */
+            __IOM uint32_t IRQ7ED : 1;     /*!< [9..9] IRQ7ED                                                             */
             __IOM uint32_t DTCED  : 1;     /*!< [10..10] DTC Transfer Complete Interrupt Snooze Mode Returns
                                             *   Enable                                                                    */
             uint32_t                 : 7;
@@ -2512,25 +2513,33 @@ typedef struct                         /*!< (@ 0x40006000) R_ICU Structure      
 
     union
     {
-        __IOM uint32_t SBYEDCR1;       /*!< (@ 0x00000344) Software Standby/Snooze End Control Register
-                                        *                  1                                                          */
+        __IOM uint32_t SBYEDCR1;        /*!< (@ 0x00000344) Software Standby/Snooze End Control Register
+                                         *                  1                                                          */
 
         struct
         {
-            __IOM uint32_t RTCED : 1;  /*!< [0..0] RTC Interrupt Software Standby/Snooze Mode Returns Enable          */
-            __IOM uint32_t ITLED : 1;  /*!< [1..1] Interval Signal of 32-bit Interval Timer Interrupt Software
-                                        *   Standby/Snooze Mode Returns Enable                                        */
+            __IOM uint32_t RTCED : 1;   /*!< [0..0] RTC Interrupt Software Standby/Snooze Mode Returns Enable          */
+            __IOM uint32_t ITLED : 1;   /*!< [1..1] Interval Signal of 32-bit Interval Timer Interrupt Software
+                                         *   Standby/Snooze Mode Returns Enable                                        */
             uint32_t              : 5;
-            __IOM uint32_t URE0ED : 1; /*!< [7..7] UARTA0 Reception Communication Error Interrupt Software
-                                        *   Standby/Snooze Mode Returns Enable                                        */
-            __IOM uint32_t UT0ED : 1;  /*!< [8..8] UARTA0 Transmission Transfer End or Buffer Empty Interrupt
-                                        *   Software Standby/Snooze Mode Returns Enable                               */
-            __IOM uint32_t UR0ED : 1;  /*!< [9..9] UARTA0 Reception Transfer End Interrupt Software Standby/Snooze
-                                        *   Mode Returns Enable                                                       */
-            uint32_t : 22;
+            __IOM uint32_t URE0ED : 1;  /*!< [7..7] UARTA0 Reception Communication Error Interrupt Software
+                                         *   Standby/Snooze Mode Returns Enable                                        */
+            __IOM uint32_t UT0ED : 1;   /*!< [8..8] UARTA0 Transmission Transfer End or Buffer Empty Interrupt
+                                         *   Software Standby/Snooze Mode Returns Enable                               */
+            __IOM uint32_t UR0ED : 1;   /*!< [9..9] UARTA0 Reception Transfer End Interrupt Software Standby/Snooze
+                                         *   Mode Returns Enable                                                       */
+            __IOM uint32_t IICA1ED : 1; /*!< [10..10] IICA1 Address Match Interrupt Software Standby/Snooze
+                                         *   Mode Returns Enable                                                       */
+            __IOM uint32_t URE1ED : 1;  /*!< [11..11] UARTA1 Reception Communication Error Interrupt Software
+                                         *   Standby/Snooze Mode Returns Enable                                        */
+            __IOM uint32_t UT1ED : 1;   /*!< [12..12] UARTA1 Transmission Transfer End or Buffer Empty Interrupt
+                                         *   Software Standby/Snooze Mode Returns Enable                               */
+            __IOM uint32_t UR1ED : 1;   /*!< [13..13] UARTA1 Reception Transfer End Interrupt Software Standby/Snooze
+                                         *   Mode Returns Enable                                                       */
+            uint32_t : 18;
         } SBYEDCR1_b;
     };
-} R_ICU_Type;                          /*!< Size = 840 (0x348)                                                        */
+} R_ICU_Type;                           /*!< Size = 840 (0x348)                                                        */
 
 /* =========================================================================================================================== */
 /* ================                                          R_IICA                                           ================ */
@@ -3048,6 +3057,32 @@ typedef struct                          /*!< (@ 0x40047000) R_MSTP Structure    
 } R_MSTP_Type;                               /*!< Size = 20 (0x14)                                                          */
 
 /* =========================================================================================================================== */
+/* ================                                         R_PCLBUZ                                          ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief Clock Output/Buzzer Output Controller (R_PCLBUZ)
+ */
+
+typedef struct                         /*!< (@ 0x400A3B00) R_PCLBUZ Structure                                         */
+{
+    __IM uint8_t RESERVED;
+
+    union
+    {
+        __IOM uint8_t CKS[2];          /*!< (@ 0x00000001) Clock Out Control Register [0..1]                          */
+
+        struct
+        {
+            __IOM uint8_t CCS   : 3;   /*!< [2..0] Clock Out Divide Select                                            */
+            __IOM uint8_t CSEL  : 1;   /*!< [3..3] Clock Out Select                                                   */
+            uint8_t             : 3;
+            __IOM uint8_t PCLOE : 1;   /*!< [7..7] Clock Out Enable                                                   */
+        } CKS_b[2];
+    };
+} R_PCLBUZ_Type;                       /*!< Size = 3 (0x3)                                                            */
+
+/* =========================================================================================================================== */
 /* ================                                          R_PORT0                                          ================ */
 /* =========================================================================================================================== */
 
@@ -3333,8 +3368,9 @@ typedef struct                         /*!< (@ 0x400A1000) R_PORGA Structure    
             __IOM uint8_t ULBS1 : 1;   /*!< [1..1] Selection of the UART1 Loopback Function                           */
             __IOM uint8_t ULBS2 : 1;   /*!< [2..2] Selection of the UART2 Loopback Function                           */
             uint8_t             : 1;
-            __IOM uint8_t ULBS4 : 1;   /*!< [4..4] Selection of the UARTA Loopback Function                           */
-            uint8_t             : 3;
+            __IOM uint8_t ULBS4 : 1;   /*!< [4..4] Selection of the UARTA0 Loopback Function                          */
+            __IOM uint8_t ULBS5 : 1;   /*!< [5..5] Selection of the UARTA1 Loopback Function                          */
+            uint8_t             : 2;
         } ULBS_b;
     };
 } R_PORGA_Type;                        /*!< Size = 10 (0xa)                                                           */
@@ -4091,23 +4127,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
             uint16_t               : 9;
         } MSTPCRA_b;
     };
-
-    union
-    {
-        __IOM uint8_t LPOPT;           /*!< (@ 0x00000C04) Lower Power Operation Control Register                     */
-
-        struct
-        {
-            uint8_t                 : 1;
-            __IOM uint8_t DCLKDIS   : 2; /*!< [2..1] Debug Clock Disable Control                                        */
-            __IOM uint8_t BPFCLKDIS : 1; /*!< [3..3] BPF Clock Disable Control                                          */
-            uint8_t                 : 3;
-            __IOM uint8_t LPOPTEN   : 1; /*!< [7..7] Lower Power Operation Enable                                       */
-        } LPOPT_b;
-    };
-    __IM uint8_t  RESERVED16;
-    __IM uint16_t RESERVED17;
-} R_SYSTEM_Type;                       /*!< Size = 3080 (0xc08)                                                       */
+} R_SYSTEM_Type;                        /*!< Size = 3076 (0xc04)                                                       */
 
 /* =========================================================================================================================== */
 /* ================                                           R_TAU                                           ================ */
@@ -4560,32 +4580,6 @@ typedef struct                         /*!< (@ 0x400A3500) R_UARTA_CK Structure 
 } R_UARTA_CK_Type;                     /*!< Size = 2 (0x2)                                                            */
 
 /* =========================================================================================================================== */
-/* ================                                         R_PCLBUZ                                          ================ */
-/* =========================================================================================================================== */
-
-/**
- * @brief Clock Output/Buzzer Output Controller (R_PCLBUZ)
- */
-
-typedef struct                         /*!< (@ 0x400A3B00) R_PCLBUZ Structure                                         */
-{
-    __IM uint8_t RESERVED;
-
-    union
-    {
-        __IOM uint8_t CKS0;            /*!< (@ 0x00000001) Clock Out Control Register 0                               */
-
-        struct
-        {
-            __IOM uint8_t CCS   : 3;   /*!< [2..0] Clock Out Divide Select                                            */
-            __IOM uint8_t CSEL  : 1;   /*!< [3..3] Clock Out Select                                                   */
-            uint8_t             : 3;
-            __IOM uint8_t PCLOE : 1;   /*!< [7..7] Clock Out Enable                                                   */
-        } CKS0_b;
-    };
-} R_PCLBUZ_Type;                       /*!< Size = 2 (0x2)                                                            */
-
-/* =========================================================================================================================== */
 /* ================                                          R_RTC_C                                          ================ */
 /* =========================================================================================================================== */
 
@@ -4785,11 +4779,13 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_IICA_BASE        0x400A3000UL
  #define R_IWDT_BASE        0x40044400UL
  #define R_MSTP_BASE        (0x40047000UL - 4UL) /* MSTPCRA is not located in R_MSTP so the base address must be moved so that MSTPCRB is located at 0x40047000. */
+ #define R_PCLBUZ_BASE      0x400A3B00UL
  #define R_PORT0_BASE       0x400A0000UL
  #define R_PORT1_BASE       0x400A0020UL
  #define R_PORT2_BASE       0x400A0040UL
  #define R_PORT3_BASE       0x400A0060UL
  #define R_PORT4_BASE       0x400A0080UL
+ #define R_PORT5_BASE       0x400A00A0UL
  #define R_PORT9_BASE       0x400A0120UL
  #define R_PORGA_BASE       0x400A1000UL
  #define R_PFS_BASE         0x400A0200UL
@@ -4803,7 +4799,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_TRNG_BASE        0x400D1000UL
  #define R_UARTA0_BASE      0x400A3400UL
  #define R_UARTA_CK_BASE    0x400A3500UL
- #define R_PCLBUZ_BASE      0x400A3B00UL
  #define R_RTC_C_BASE       0x400A2C00UL
 
 /** @} */ /* End of group Device_Peripheral_peripheralAddr */
@@ -4827,11 +4822,13 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_IICA        ((R_IICA_Type *) R_IICA_BASE)
  #define R_IWDT        ((R_IWDT_Type *) R_IWDT_BASE)
  #define R_MSTP        ((R_MSTP_Type *) R_MSTP_BASE)
+ #define R_PCLBUZ      ((R_PCLBUZ_Type *) R_PCLBUZ_BASE)
  #define R_PORT0       ((R_PORT0_Type *) R_PORT0_BASE)
  #define R_PORT1       ((R_PORT0_Type *) R_PORT1_BASE)
  #define R_PORT2       ((R_PORT0_Type *) R_PORT2_BASE)
  #define R_PORT3       ((R_PORT0_Type *) R_PORT3_BASE)
  #define R_PORT4       ((R_PORT0_Type *) R_PORT4_BASE)
+ #define R_PORT5       ((R_PORT0_Type *) R_PORT5_BASE)
  #define R_PORT9       ((R_PORT0_Type *) R_PORT9_BASE)
  #define R_PORGA       ((R_PORGA_Type *) R_PORGA_BASE)
  #define R_PFS         ((R_PFS_Type *) R_PFS_BASE)
@@ -4845,7 +4842,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_TRNG        ((R_TRNG_Type *) R_TRNG_BASE)
  #define R_UARTA0      ((R_UARTA0_Type *) R_UARTA0_BASE)
  #define R_UARTA_CK    ((R_UARTA_CK_Type *) R_UARTA_CK_BASE)
- #define R_PCLBUZ      ((R_PCLBUZ_Type *) R_PCLBUZ_BASE)
  #define R_RTC_C       ((R_RTC_C_Type *) R_RTC_C_BASE)
 
 /** @} */ /* End of group Device_Peripheral_declaration */
@@ -5778,6 +5774,10 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_ICU_SBYEDCR0_IRQ4ED_Msk        (0x40UL)       /*!< IRQ4ED (Bitfield-Mask: 0x01)                          */
  #define R_ICU_SBYEDCR0_IRQ5ED_Pos        (7UL)          /*!< IRQ5ED (Bit 7)                                        */
  #define R_ICU_SBYEDCR0_IRQ5ED_Msk        (0x80UL)       /*!< IRQ5ED (Bitfield-Mask: 0x01)                          */
+ #define R_ICU_SBYEDCR0_IRQ6ED_Pos        (8UL)          /*!< IRQ6ED (Bit 8)                                        */
+ #define R_ICU_SBYEDCR0_IRQ6ED_Msk        (0x100UL)      /*!< IRQ6ED (Bitfield-Mask: 0x01)                          */
+ #define R_ICU_SBYEDCR0_IRQ7ED_Pos        (9UL)          /*!< IRQ7ED (Bit 9)                                        */
+ #define R_ICU_SBYEDCR0_IRQ7ED_Msk        (0x200UL)      /*!< IRQ7ED (Bitfield-Mask: 0x01)                          */
  #define R_ICU_SBYEDCR0_DTCED_Pos         (10UL)         /*!< DTCED (Bit 10)                                        */
  #define R_ICU_SBYEDCR0_DTCED_Msk         (0x400UL)      /*!< DTCED (Bitfield-Mask: 0x01)                           */
  #define R_ICU_SBYEDCR0_SPI00RXED_Pos     (18UL)         /*!< SPI00RXED (Bit 18)                                    */
@@ -5801,6 +5801,14 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_ICU_SBYEDCR1_UT0ED_Msk         (0x100UL)      /*!< UT0ED (Bitfield-Mask: 0x01)                           */
  #define R_ICU_SBYEDCR1_UR0ED_Pos         (9UL)          /*!< UR0ED (Bit 9)                                         */
  #define R_ICU_SBYEDCR1_UR0ED_Msk         (0x200UL)      /*!< UR0ED (Bitfield-Mask: 0x01)                           */
+ #define R_ICU_SBYEDCR1_IICA1ED_Pos       (10UL)         /*!< IICA1ED (Bit 10)                                      */
+ #define R_ICU_SBYEDCR1_IICA1ED_Msk       (0x400UL)      /*!< IICA1ED (Bitfield-Mask: 0x01)                         */
+ #define R_ICU_SBYEDCR1_URE1ED_Pos        (11UL)         /*!< URE1ED (Bit 11)                                       */
+ #define R_ICU_SBYEDCR1_URE1ED_Msk        (0x800UL)      /*!< URE1ED (Bitfield-Mask: 0x01)                          */
+ #define R_ICU_SBYEDCR1_UT1ED_Pos         (12UL)         /*!< UT1ED (Bit 12)                                        */
+ #define R_ICU_SBYEDCR1_UT1ED_Msk         (0x1000UL)     /*!< UT1ED (Bitfield-Mask: 0x01)                           */
+ #define R_ICU_SBYEDCR1_UR1ED_Pos         (13UL)         /*!< UR1ED (Bit 13)                                        */
+ #define R_ICU_SBYEDCR1_UR1ED_Msk         (0x2000UL)     /*!< UR1ED (Bitfield-Mask: 0x01)                           */
 
 /* =========================================================================================================================== */
 /* ================                                          R_IICA                                           ================ */
@@ -5933,6 +5941,18 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_MSTP_LSMRWDIS_PRKEY_Msk       (0xff00UL) /*!< PRKEY (Bitfield-Mask: 0xff)                           */
 
 /* =========================================================================================================================== */
+/* ================                                         R_PCLBUZ                                          ================ */
+/* =========================================================================================================================== */
+
+/* ==========================================================  CKS  ========================================================== */
+ #define R_PCLBUZ_CKS_CCS_Pos      (0UL)    /*!< CCS (Bit 0)                                           */
+ #define R_PCLBUZ_CKS_CCS_Msk      (0x7UL)  /*!< CCS (Bitfield-Mask: 0x07)                             */
+ #define R_PCLBUZ_CKS_CSEL_Pos     (3UL)    /*!< CSEL (Bit 3)                                          */
+ #define R_PCLBUZ_CKS_CSEL_Msk     (0x8UL)  /*!< CSEL (Bitfield-Mask: 0x01)                            */
+ #define R_PCLBUZ_CKS_PCLOE_Pos    (7UL)    /*!< PCLOE (Bit 7)                                         */
+ #define R_PCLBUZ_CKS_PCLOE_Msk    (0x80UL) /*!< PCLOE (Bitfield-Mask: 0x01)                           */
+
+/* =========================================================================================================================== */
 /* ================                                          R_PORT0                                          ================ */
 /* =========================================================================================================================== */
 
@@ -6010,6 +6030,8 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_PORGA_ULBS_ULBS2_Msk       (0x4UL)  /*!< ULBS2 (Bitfield-Mask: 0x01)                           */
  #define R_PORGA_ULBS_ULBS4_Pos       (4UL)    /*!< ULBS4 (Bit 4)                                         */
  #define R_PORGA_ULBS_ULBS4_Msk       (0x10UL) /*!< ULBS4 (Bitfield-Mask: 0x01)                           */
+ #define R_PORGA_ULBS_ULBS5_Pos       (5UL)    /*!< ULBS5 (Bit 5)                                         */
+ #define R_PORGA_ULBS_ULBS5_Msk       (0x20UL) /*!< ULBS5 (Bitfield-Mask: 0x01)                           */
 
 /* =========================================================================================================================== */
 /* ================                                           R_PFS                                           ================ */
@@ -6292,13 +6314,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
 /* ========================================================  MSTPCRA  ======================================================== */
  #define R_SYSTEM_MSTPCRA_MSTPA22_Pos    (6UL)      /*!< MSTPA22 (Bit 6)                                       */
  #define R_SYSTEM_MSTPCRA_MSTPA22_Msk    (0x40UL)   /*!< MSTPA22 (Bitfield-Mask: 0x01)                         */
-/* =========================================================  LPOPT  ========================================================= */
- #define R_SYSTEM_LPOPT_DCLKDIS_Pos      (1UL)      /*!< DCLKDIS (Bit 1)                                       */
- #define R_SYSTEM_LPOPT_DCLKDIS_Msk      (0x6UL)    /*!< DCLKDIS (Bitfield-Mask: 0x03)                         */
- #define R_SYSTEM_LPOPT_BPFCLKDIS_Pos    (3UL)      /*!< BPFCLKDIS (Bit 3)                                     */
- #define R_SYSTEM_LPOPT_BPFCLKDIS_Msk    (0x8UL)    /*!< BPFCLKDIS (Bitfield-Mask: 0x01)                       */
- #define R_SYSTEM_LPOPT_LPOPTEN_Pos      (7UL)      /*!< LPOPTEN (Bit 7)                                       */
- #define R_SYSTEM_LPOPT_LPOPTEN_Msk      (0x80UL)   /*!< LPOPTEN (Bitfield-Mask: 0x01)                         */
 
 /* =========================================================================================================================== */
 /* ================                                           R_TAU                                           ================ */
@@ -6516,18 +6531,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_UARTA_CK_UTAnCK_SEL_Msk    (0x30UL) /*!< SEL (Bitfield-Mask: 0x03)                             */
  #define R_UARTA_CK_UTAnCK_EN_Pos     (7UL)    /*!< EN (Bit 7)                                            */
  #define R_UARTA_CK_UTAnCK_EN_Msk     (0x80UL) /*!< EN (Bitfield-Mask: 0x01)                              */
-
-/* =========================================================================================================================== */
-/* ================                                         R_PCLBUZ                                          ================ */
-/* =========================================================================================================================== */
-
-/* =========================================================  CKS0  ========================================================== */
- #define R_PCLBUZ_CKS0_CCS_Pos      (0UL)    /*!< CCS (Bit 0)                                           */
- #define R_PCLBUZ_CKS0_CCS_Msk      (0x7UL)  /*!< CCS (Bitfield-Mask: 0x07)                             */
- #define R_PCLBUZ_CKS0_CSEL_Pos     (3UL)    /*!< CSEL (Bit 3)                                          */
- #define R_PCLBUZ_CKS0_CSEL_Msk     (0x8UL)  /*!< CSEL (Bitfield-Mask: 0x01)                            */
- #define R_PCLBUZ_CKS0_PCLOE_Pos    (7UL)    /*!< PCLOE (Bit 7)                                         */
- #define R_PCLBUZ_CKS0_PCLOE_Msk    (0x80UL) /*!< PCLOE (Bitfield-Mask: 0x01)                           */
 
 /* =========================================================================================================================== */
 /* ================                                          R_RTC_C                                          ================ */

@@ -97,8 +97,8 @@ fsp_err_t RM_RAI_DATA_SHIPPER_Open (rai_data_shipper_ctrl_t * const      p_api_c
         p_ctrl->tx_info[i].header.rssn[1]    = 'S';
         p_ctrl->tx_info[i].header.rssn[2]    = 'S';
         p_ctrl->tx_info[i].header.rssn[3]    = 'N';
-        p_ctrl->tx_info[i].header.crc_enable = (p_cfg->p_crc != NULL) ? 1 : 0;
-        p_ctrl->tx_info[i].header.version    = RM_RAI_DATA_SHIPPER_HEADER_BUFFER_VERSION;
+        p_ctrl->tx_info[i].header.crc_enable = (p_cfg->p_crc != NULL) ? (uint8_t) p_cfg->p_crc->p_cfg->polynomial : 0;
+        p_ctrl->tx_info[i].header.version = RM_RAI_DATA_SHIPPER_HEADER_BUFFER_VERSION;
     }
 
     p_ctrl->index           = 0;
@@ -233,9 +233,10 @@ fsp_err_t RM_RAI_DATA_SHIPPER_Write (rai_data_shipper_ctrl_t * const         p_a
             p_crc->p_api->calculate(p_crc->p_ctrl, &input, &crc);
         }
 
-        p_tx_info->crc = (uint8_t) crc;
+        p_tx_info->crc = (uint16_t) crc;
+        p_tx_info->data[p_tx_info->channels].len = p_ctrl->p_cfg->p_crc->p_cfg->polynomial ==
+                                                   CRC_POLYNOMIAL_CRC_CCITT ? 2 : 1;
         p_tx_info->data[p_tx_info->channels].p_buf = &p_tx_info->crc;
-        p_tx_info->data[p_tx_info->channels].len   = 1;
         p_tx_info->channels++;
     }
 
@@ -243,8 +244,8 @@ fsp_err_t RM_RAI_DATA_SHIPPER_Write (rai_data_shipper_ctrl_t * const         p_a
     {
         p_ctrl->index = p_sensor_data->instance_id;
         fsp_err_t err = p_ctrl->p_cfg->p_comms->p_api->write(p_ctrl->p_cfg->p_comms->p_ctrl,
-                                             (uint8_t *) &p_tx_info->header,
-                                             header_buffer_len);
+                                                             (uint8_t *) &p_tx_info->header,
+                                                             header_buffer_len);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
 
@@ -329,16 +330,17 @@ static void rai_data_shipper_start_next_transmission (rai_data_shipper_instance_
 
                 rai_data_shipper_tx_info_t * p_tx_info = &(p_ctrl->tx_info[next]);
                 uint32_t header_buffer_len             = RAI_DATA_SHIPPER_PRV_HEADER_BUFFER_BASE_SIZE +
-                                                        (uint32_t) ((p_tx_info->header.channels + 1) >> 1);
+                                                         (uint32_t) ((p_tx_info->header.channels + 1) >> 1);
                 fsp_err_t err = p_ctrl->p_cfg->p_comms->p_api->write(p_ctrl->p_cfg->p_comms->p_ctrl,
-                                                    (uint8_t *) &p_tx_info->header,
-                                                    header_buffer_len);
-                if (FSP_SUCCESS == err) 
+                                                                     (uint8_t *) &p_tx_info->header,
+                                                                     header_buffer_len);
+                if (FSP_SUCCESS == err)
                 {
                     break;
                 }
-                
+
                 p_ctrl->data_ready_mask &= (uint8_t) ~(1 << next);
+
                 /* Notify application that there was an error that the next instance is failed to be sent. */
                 rai_data_shipper_notify_application(p_ctrl, next, RM_COMMS_EVENT_ERROR);
             }

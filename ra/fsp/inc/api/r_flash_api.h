@@ -84,6 +84,17 @@ typedef enum e_flash_status
     FLASH_STATUS_BUSY                  ///< The flash is currently processing a command.
 } flash_status_t;
 
+/** Anti-rollback counter selection.  */
+typedef enum e_flash_arc
+{
+    FLASH_ARC_SEC    = 0,              ///< Anti-Rollback Counter for the secure application
+    FLASH_ARC_OEMBL  = 1,              ///< Anti-Rollback Counter for the OEM bootloader
+    FLASH_ARC_NSEC_0 = 2,              ///< Anti-Rollback Counter for non-secure application 0 (use when a single non-secure counter is available or when multiple non-secure counters are available)
+    FLASH_ARC_NSEC_1 = 3,              ///< Anti-Rollback Counter for non-secure application 1 (use when multiple non-secure counters are available)
+    FLASH_ARC_NSEC_2 = 4,              ///< Anti-Rollback Counter for non-secure application 2 (use when multiple non-secure counters are available)
+    FLASH_ARC_NSEC_3 = 5,              ///< Anti-Rollback Counter for non-secure application 3 (use when multiple non-secure counters are available)
+} flash_arc_t;
+
 /** Flash block details stored in factory flash. */
 typedef struct st_flash_block_info
 {
@@ -276,7 +287,7 @@ typedef struct st_flash_api
 
     /** Specify callback function and optional context pointer and working memory pointer.
      *
-     * @param[in]   p_ctrl                   Control block set in @ref flash_api_t::open call for this timer.
+     * @param[in]   p_ctrl                   Pointer to FLASH device control.
      * @param[in]   p_callback               Callback function to register
      * @param[in]   p_context                Pointer to send to callback function
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated.
@@ -284,6 +295,44 @@ typedef struct st_flash_api
      */
     fsp_err_t (* callbackSet)(flash_ctrl_t * const p_ctrl, void (* p_callback)(flash_callback_args_t *),
                               void const * const p_context, flash_callback_args_t * const p_callback_memory);
+
+    /** Increment the selected anti-rollback counter.
+     *
+     * @warning Once incremented, the counter can never be decremented or reset, even with a debug probe.
+     *
+     * @param[in]  p_ctrl                    Pointer to FLASH device control.
+     * @param[in]  counter                   The anti-rollback counter to increment
+     */
+    fsp_err_t (* antiRollbackCounterIncrement)(flash_ctrl_t * const p_ctrl, flash_arc_t counter);
+
+    /** Refresh the selected anti-rollback counter flash area.
+     *
+     * @param[in]   p_ctrl                   Pointer to FLASH device control.
+     * @param[in]   counter                  The anti-rollback counter to refresh
+     */
+    fsp_err_t (* antiRollbackCounterRefresh)(flash_ctrl_t * const p_ctrl, flash_arc_t counter);
+
+    /** Read current count value of the selected anti-rollback counter.
+     *
+     * @param[in]   p_ctrl                   Pointer to FLASH device control.
+     * @param[in]   counter                  The anti-rollback counter to read
+     * @param[out]  p_count                  The current count value
+     */
+    fsp_err_t (* antiRollbackCounterRead)(flash_ctrl_t * const p_ctrl, flash_arc_t counter, uint32_t * const p_count);
+
+    /** Write to the user lockable area for the flash device
+     *
+     * @warning Data will not be written if any segment of the specified area is locked.
+     *
+     * @param[in]   p_ctrl         Pointer to FLASH device control.
+     * @param[in]   src_address    Address of the buffer containing the data to write to flash.
+     * @param[in]   flash_address  User lockable area flash address to write. The address must be on a
+     *                             programming line boundary.
+     * @param[in]   num_bytes      The number of bytes to write. This number must be a multiple
+     *                             of the programming size.
+     */
+    fsp_err_t (* userLockableAreaWrite)(flash_ctrl_t * const p_ctrl, uint32_t const src_address,
+                                        uint32_t const flash_address, uint32_t const num_bytes);
 } flash_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

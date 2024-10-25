@@ -25,7 +25,6 @@ FSP_HEADER
 #define SDHI_PRV_CMD_SEND_OP_COND                       (1U)
 #define SDHI_PRV_CMD_ALL_SEND_CID                       (2U)
 #define SDHI_PRV_CMD_SEND_RELATIVE_ADDR                 (3U)
-#define SDHI_PRV_CMD_SDIO                               (5U)
 #define SDHI_PRV_CMD_SET_BUS_WIDTH                      (6U)
 #define SDHI_PRV_CMD_SWITCH                             (6U)
 #define SDHI_PRV_CMD_SEL_DES_CARD                       (7U)
@@ -69,10 +68,6 @@ FSP_HEADER
      SDHI_PRV_OCR_VDD_3_1_V |                                                                            \
      SDHI_PRV_OCR_VDD_3_2_V | SDHI_PRV_OCR_VDD_3_3_V | SDHI_PRV_OCR_VDD_3_4_V | SDHI_PRV_OCR_VDD_3_5_V)
 
-/* CMD52 Arguments */
-#define SDHI_PRV_SDIO_CMD52_READ                        (0U)
-#define SDHI_PRV_SDIO_CMD52_WRITE                       (1U)
-
 /* SWITCH command argument's bit postion */
 #define SDHI_PRV_SWITCH_ACCESS_SHIFT                    (24U)
 #define SDHI_PRV_SWITCH_INDEX_SHIFT                     (16U)
@@ -106,7 +101,6 @@ FSP_HEADER
 #define SDHI_PRV_SD_HIGH_SPEED_MODE_SWITCH              (0x80FFFFF1U) /* set SD high speed */
 #define SDHI_PRV_SD_DEFAULT_CLOCK_RATE                  (25000000U)   /* 25 MHz */
 #define SDHI_PRV_SD_HIGH_SPEED_CLOCK_RATE               (50000000U)   /* 50 MHz */
-#define SDHI_PRV_SDIO_HIGH_SPEED_CLOCK_RATE             (50000000U)   /* 50 MHz */
 
 #define SDHI_PRV_EMMC_ERASE_ARGUMENT_TRIM               (1U)
 
@@ -259,32 +253,6 @@ typedef struct st_sdmmc_priv_csd_reg
         } cid;
     };
 } sdmmc_priv_csd_reg_t;
-
-typedef union u_sdmmc_priv_sdio_arg_t
-{
-    uint32_t arg;
-
-    struct
-    {
-        uint32_t data             : 8;  /* read/write data */
-        uint32_t stuff_8          : 1;  /* Stuff bit */
-        uint32_t register_address : 17; /* Register Address */
-        uint32_t stuff_26         : 1;  /* Stuff bit should be set to 1 */
-        uint32_t raw              : 1;  /* 1= Read after write. */
-        uint32_t function_number  : 3;  /* function0~function7 */
-        uint32_t rw_flag          : 1;  /* 0:read, 1:write */
-    } cmd_52_arg;
-
-    struct
-    {
-        uint32_t count            : 9;  /* Byte/Block Count */
-        uint32_t register_address : 17; /* Register Address */
-        uint32_t op_code          : 1;  /* 0:fixed address, 1:incrementing address */
-        uint32_t block_mode       : 1;  /* 0: Byte, 1:Block */
-        uint32_t function_number  : 3;  /* function0~function7 */
-        uint32_t rw_flag          : 1;  /* 0:read, 1:write */
-    } cmd_53_arg;
-} sdmmc_priv_sdio_arg_t;
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

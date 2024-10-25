@@ -34,6 +34,25 @@ FSP_HEADER
  #define CTSU_DIAG_LOW_CURRENT_SOURCE     (10) ///< number of low current source table at Diagnosis
 #endif
 
+#define CTSU_VALUE_MAJORITY_MODE         (0x01)
+#define CTSU_JUDGEMENT_MAJORITY_MODE     (0x02)
+
+#ifndef CTSU_CFG_MAJORITY_MODE
+ #define CTSU_CFG_MAJORITY_MODE           (CTSU_VALUE_MAJORITY_MODE)
+#endif
+#if (BSP_FEATURE_CTSU_VERSION == 2)
+ #if (CTSU_CFG_MAJORITY_MODE & CTSU_JUDGEMENT_MAJORITY_MODE)
+
+  #define CTSU_MAJORITY_MODE_ELEMENTS     (CTSU_CFG_NUM_SUMULTI)
+ #else
+  #define CTSU_MAJORITY_MODE_ELEMENTS     (1)
+ #endif
+#endif
+
+#if (BSP_FEATURE_CTSU_VERSION == 1)
+ #define CTSU_MAJORITY_MODE_ELEMENTS      (1)
+#endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/

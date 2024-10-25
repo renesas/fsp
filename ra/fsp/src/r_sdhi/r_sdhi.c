@@ -118,21 +118,7 @@
 #define SDHI_PRV_INIT_ONE_SECOND_TIMEOUT_ITERATIONS        (SDHI_PRV_INIT_MAX_CLOCK_RATE_HZ / \
                                                             SDHI_PRV_MIN_CYCLES_PER_COMMAND_RESPONSE)
 
-#define SDHI_PRV_SDIO_REG_HIGH_SPEED                       (0x13U)      // SDIO High Speed register address
-#define SDHI_PRV_SDIO_REG_HIGH_SPEED_BIT_EHS               (1U << 1)    // Enable high speed bit of SDIO high speed register
-#define SDHI_PRV_SDIO_REG_HIGH_SPEED_BIT_SHS               (1U << 0)    // Support high speed bit of SDIO high speed register
 #define SDHI_PRV_CSD_REG_CCC_CLASS_10_BIT                  ((1U << 10)) // CCC_CLASS bit is set if the card supports high speed
-
-/* SDIO maximum bytes allows in writeIoExt() and readIoExt(). */
-#define SDHI_PRV_SDIO_EXT_MAX_BYTES                        (512U)
-
-/* SDIO maximum blocks allows in writeIoExt() and readIoExt(). */
-#define SDHI_PRV_SDIO_EXT_MAX_BLOCKS                       (511U)
-
-/* Masks for CMD53 argument. */
-#define SDHI_PRV_SDIO_CMD52_CMD53_COUNT_MASK               (0x1FFU)
-#define SDHI_PRV_SDIO_CMD52_CMD53_FUNCTION_MASK            (0x7U)
-#define SDHI_PRV_SDIO_CMD52_CMD53_ADDRESS_MASK             (0x1FFFFU)
 
 /* Startup delay in milliseconds. */
 
@@ -141,9 +127,6 @@
 
 #define SDHI_PRV_BUS_WIDTH_1_BIT                           (4U)
 
-#define SDHI_PRV_SDIO_INFO1_MASK_IRQ_DISABLE               (0xC006U)
-#define SDHI_PRV_SDIO_INFO1_IRQ_CLEAR                      (0xFFFF3FFEU)
-#define SDHI_PRV_SDIO_INFO1_TRANSFER_COMPLETE_MASK         (0xC000)
 #define SDHI_PRV_SD_INFO2_MASK_BREM_BWEM_MASK              (0x300U)
 #define SDHI_PRV_EMMC_BUS_WIDTH_INDEX                      (183U)
 #define SDHI_PRV_BYTES_PER_KILOBYTE                        (1024)
@@ -186,20 +169,6 @@ static fsp_err_t r_sdhi_open_param_check(sdhi_instance_ctrl_t * p_ctrl, sdmmc_cf
 static fsp_err_t r_sdhi_emmc_check(sdhi_instance_ctrl_t * const p_ctrl);
 
 static fsp_err_t r_sdhi_csd_extended_get(sdhi_instance_ctrl_t * const p_ctrl, uint32_t rca, uint8_t * p_device_type);
-
-#endif
-
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-static fsp_err_t r_sdhi_sdio_check(sdhi_instance_ctrl_t * const p_ctrl);
-
-static fsp_err_t r_sdhi_sdio_clock_optimize(sdhi_instance_ctrl_t * const p_ctrl);
-
-static fsp_err_t r_sdhi_cmd52(sdhi_instance_ctrl_t * const p_ctrl,
-                              uint8_t * const              p_data,
-                              uint32_t const               function,
-                              uint32_t const               address,
-                              sdmmc_io_write_mode_t const  read_after_write,
-                              uint32_t const               command);
 
 #endif
 
@@ -287,8 +256,6 @@ void sdhimmc_card_isr(void);
 
 void sdhimmc_dma_req_isr(void);
 
-void sdhimmc_sdio_isr(void);
-
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
@@ -335,8 +302,7 @@ const sdmmc_api_t g_sdmmc_on_sdhi =
  *
  * @retval     FSP_SUCCESS                     Module is now open.
  * @retval     FSP_ERR_ASSERTION               Null Pointer or block size is not in the valid range of 1-512. Block size
- *                                             must be 512 bytes for SD cards and eMMC devices.  It is configurable for
- *                                             SDIO only.
+ *                                             must be 512 bytes for SD cards and eMMC devices.
  * @retval     FSP_ERR_ALREADY_OPEN            Driver has already been opened with this instance of the control
  *                                             structure.
  * @retval     FSP_ERR_IRQ_BSP_DISABLED        Access interrupt is not enabled.
@@ -397,7 +363,6 @@ fsp_err_t R_SDHI_Open (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_cfg_t const * cons
     /* Configure and enable interrupts. */
     R_BSP_IrqCfgEnable(p_cfg->access_irq, p_cfg->access_ipl, p_ctrl);
     r_sdhi_irq_enable(p_cfg->card_irq, p_cfg->card_ipl, p_ctrl);
-    r_sdhi_irq_enable(p_cfg->sdio_irq, p_cfg->sdio_ipl, p_ctrl);
     r_sdhi_irq_enable(p_cfg->dma_req_irq, p_cfg->dma_req_ipl, p_ctrl);
 
     p_ctrl->initialized = false;
@@ -418,9 +383,9 @@ fsp_err_t R_SDHI_Open (sdmmc_ctrl_t * const p_api_ctrl, sdmmc_cfg_t const * cons
  *
  * @retval     FSP_SUCCESS               Module is now ready for read/write access.
  * @retval     FSP_ERR_ASSERTION         Null Pointer or block size is not in the valid range of 1-512. Block size must
- *                                       be 512 bytes for SD cards and eMMC devices.  It is configurable for SDIO only.
+ *                                       be 512 bytes for SD cards and eMMC devices.
  * @retval     FSP_ERR_NOT_OPEN          Driver has not been initialized.
- * @retval     FSP_ERR_CARD_INIT_FAILED  Device was not identified as an SD card, eMMC device, or SDIO card.
+ * @retval     FSP_ERR_CARD_INIT_FAILED  Device was not identified as an SD card or eMMC device.
  * @retval     FSP_ERR_RESPONSE          Device responded with an error.
  * @retval     FSP_ERR_TIMEOUT           Device did not respond.
  * @retval     FSP_ERR_DEVICE_BUSY       Device is holding DAT0 low (device is busy) or another operation is ongoing.
@@ -591,68 +556,29 @@ fsp_err_t R_SDHI_Write (sdmmc_ctrl_t * const  p_api_ctrl,
 /*******************************************************************************************************************//**
  * The Read function reads a one byte register from an SDIO card.  Implements @ref sdmmc_api_t::readIo().
  *
- * This function blocks until the command is sent and the response is received.  p_data contains the register value read
- * when this function returns.
+ * @note This function is not supported.
  *
- * @retval     FSP_SUCCESS                   Data read successfully.
- * @retval     FSP_ERR_ASSERTION             NULL pointer.
- * @retval     FSP_ERR_NOT_OPEN              Driver has not been initialized.
- * @retval     FSP_ERR_CARD_NOT_INITIALIZED  Card was unplugged.
- * @retval     FSP_ERR_UNSUPPORTED           SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE.
- * @retval     FSP_ERR_RESPONSE              Device responded with an error.
- * @retval     FSP_ERR_TIMEOUT               Device did not respond.
- * @retval     FSP_ERR_DEVICE_BUSY           Device is holding DAT0 low (device is busy) or another operation is
- *                                           ongoing.
+ * @retval     FSP_ERR_UNSUPPORTED           SDIO is not supported.
  **********************************************************************************************************************/
 fsp_err_t R_SDHI_ReadIo (sdmmc_ctrl_t * const p_api_ctrl,
                          uint8_t * const      p_data,
                          uint32_t const       function,
                          uint32_t const       address)
 {
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-    sdhi_instance_ctrl_t * p_ctrl = (sdhi_instance_ctrl_t *) p_api_ctrl;
-
-    fsp_err_t err = FSP_SUCCESS;
-
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_data);
- #endif
-    err = r_sdhi_common_error_check(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Call SDMMC protocol read function */
-    *p_data = 0U;
-    err     = r_sdhi_cmd52(p_ctrl, p_data, function, address, SDMMC_IO_WRITE_MODE_NO_READ, SDHI_PRV_SDIO_CMD52_READ);
-
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    return err;
-#else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_data);
     FSP_PARAMETER_NOT_USED(function);
     FSP_PARAMETER_NOT_USED(address);
 
     FSP_RETURN(FSP_ERR_UNSUPPORTED);
-#endif
 }
 
 /*******************************************************************************************************************//**
  * Writes a one byte register to an SDIO card.  Implements @ref sdmmc_api_t::writeIo().
  *
- * This function blocks until the command is sent and the response is received.  The register has been written when this
- * function returns.  If read_after_write is true, p_data contains the register value read when this function returns.
+ * @note This function is not supported.
  *
- * @retval     FSP_SUCCESS                   Card write finished successfully.
- * @retval     FSP_ERR_ASSERTION             Handle or Source address is NULL.
- * @retval     FSP_ERR_NOT_OPEN              Driver has not been initialized.
- * @retval     FSP_ERR_CARD_NOT_INITIALIZED  Card was unplugged.
- * @retval     FSP_ERR_WRITE_FAILED          Write operation failed.
- * @retval     FSP_ERR_UNSUPPORTED           SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE.
- * @retval     FSP_ERR_RESPONSE              Device responded with an error.
- * @retval     FSP_ERR_TIMEOUT               Device did not respond.
- * @retval     FSP_ERR_DEVICE_BUSY           Device is holding DAT0 low (device is busy) or another operation is
- *                                           ongoing.
+ * @retval     FSP_ERR_UNSUPPORTED           SDIO is not supported.
  **********************************************************************************************************************/
 fsp_err_t R_SDHI_WriteIo (sdmmc_ctrl_t * const        p_api_ctrl,
                           uint8_t * const             p_data,
@@ -660,23 +586,6 @@ fsp_err_t R_SDHI_WriteIo (sdmmc_ctrl_t * const        p_api_ctrl,
                           uint32_t const              address,
                           sdmmc_io_write_mode_t const read_after_write)
 {
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-    sdhi_instance_ctrl_t * p_ctrl = (sdhi_instance_ctrl_t *) p_api_ctrl;
-
-    fsp_err_t err = FSP_SUCCESS;
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_data);
- #endif
-
-    err = r_sdhi_common_error_check(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    err = r_sdhi_cmd52(p_ctrl, p_data, function, address, read_after_write, SDHI_PRV_SDIO_CMD52_WRITE);
-
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WRITE_FAILED);
-
-    return err;
-#else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_data);
     FSP_PARAMETER_NOT_USED(function);
@@ -684,22 +593,14 @@ fsp_err_t R_SDHI_WriteIo (sdmmc_ctrl_t * const        p_api_ctrl,
     FSP_PARAMETER_NOT_USED(read_after_write);
 
     FSP_RETURN(FSP_ERR_UNSUPPORTED);
-#endif
 }
 
 /*******************************************************************************************************************//**
  * Reads data from an SDIO card function.  Implements @ref sdmmc_api_t::readIoExt().
  *
- * This function blocks until the command is sent and the response is received.  A callback with the event
- * SDMMC_EVENT_TRANSFER_COMPLETE is called when the read data is available.
+ * @note This function is not supported.
  *
- * @retval     FSP_SUCCESS                   Data read successfully.
- * @retval     FSP_ERR_ASSERTION             NULL pointer, or count is not in the valid range of 1-512 for byte mode or
- *                                           1-511 for block mode.
- * @retval     FSP_ERR_NOT_OPEN              Driver has not been initialized.
- * @retval     FSP_ERR_CARD_NOT_INITIALIZED  Card was unplugged.
- * @retval     FSP_ERR_DEVICE_BUSY           Driver is busy with a previous operation.
- * @retval     FSP_ERR_UNSUPPORTED           SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE.
+ * @retval     FSP_ERR_UNSUPPORTED           SDIO is not supported.
  **********************************************************************************************************************/
 fsp_err_t R_SDHI_ReadIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
                             uint8_t * const          p_dest,
@@ -709,59 +610,6 @@ fsp_err_t R_SDHI_ReadIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
                             sdmmc_io_transfer_mode_t transfer_mode,
                             sdmmc_io_address_mode_t  address_mode)
 {
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-    sdhi_instance_ctrl_t * p_ctrl = (sdhi_instance_ctrl_t *) p_api_ctrl;
-
-    fsp_err_t err = FSP_SUCCESS;
-
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_dest);
-    FSP_ASSERT(0U != (*count));
- #endif
-    err = r_sdhi_common_error_check(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    uint32_t command     = SDHI_PRV_CMD_IO_READ_EXT_SINGLE_BLOCK;
-    uint32_t byte_count  = 0U;
-    uint32_t block_count = 0U;
-    if (SDMMC_IO_MODE_TRANSFER_BLOCK == transfer_mode)
-    {
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-        FSP_ASSERT((*count) <= SDHI_PRV_SDIO_EXT_MAX_BLOCKS);
- #endif
-        block_count = *count;
-        byte_count  = p_ctrl->p_cfg->block_size;
-        if (block_count > 1U)
-        {
-            command |= SDHI_PRV_CMD_IO_EXT_MULTI_BLOCK;
-        }
-    }
-    else
-    {
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-        FSP_ASSERT((*count) <= SDHI_PRV_SDIO_EXT_MAX_BYTES);
- #endif
-        block_count = 1U;
-        byte_count  = *count;
-    }
-
-    /* Configure the transfer interface for reading. */
-    err = r_sdhi_transfer_read(p_ctrl, block_count, byte_count, p_dest);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    sdmmc_priv_sdio_arg_t argument = {0U};
-
-    /* According to SDIO spec, 512 = 0. */
-    argument.cmd_53_arg.count            = (*count & SDHI_PRV_SDIO_CMD52_CMD53_COUNT_MASK);
-    argument.cmd_53_arg.function_number  = (function & SDHI_PRV_SDIO_CMD52_CMD53_FUNCTION_MASK);
-    argument.cmd_53_arg.block_mode       = transfer_mode;
-    argument.cmd_53_arg.op_code          = address_mode;
-    argument.cmd_53_arg.register_address = (address & SDHI_PRV_SDIO_CMD52_CMD53_ADDRESS_MASK);
-    argument.cmd_53_arg.rw_flag          = 0U;
-    r_sdhi_read_write_common(p_ctrl, block_count, byte_count, command, argument.arg);
-
-    return FSP_SUCCESS;
-#else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_dest);
     FSP_PARAMETER_NOT_USED(function);
@@ -771,23 +619,14 @@ fsp_err_t R_SDHI_ReadIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
     FSP_PARAMETER_NOT_USED(address_mode);
 
     FSP_RETURN(FSP_ERR_UNSUPPORTED);
-#endif
 }
 
 /*******************************************************************************************************************//**
  * Writes data to an SDIO card function.  Implements @ref sdmmc_api_t::writeIoExt().
  *
- * This function blocks until the command is sent and the response is received.  A callback with the event
- * SDMMC_EVENT_TRANSFER_COMPLETE is called when the all data has been written.
+ * @note This function is not supported.
  *
- * @retval     FSP_SUCCESS                   Card write finished successfully.
- * @retval     FSP_ERR_ASSERTION             NULL pointer, or count is not in the valid range of 1-512 for byte mode or
- *                                           1-511 for block mode.
- * @retval     FSP_ERR_NOT_OPEN              Driver has not been initialized.
- * @retval     FSP_ERR_CARD_NOT_INITIALIZED  Card was unplugged.
- * @retval     FSP_ERR_DEVICE_BUSY           Driver is busy with a previous operation.
- * @retval     FSP_ERR_WRITE_FAILED          Write operation failed.
- * @retval     FSP_ERR_UNSUPPORTED           SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE.
+ * @retval     FSP_ERR_UNSUPPORTED           SDIO is not supported.
  **********************************************************************************************************************/
 fsp_err_t R_SDHI_WriteIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
                              uint8_t const * const    p_source,
@@ -797,60 +636,6 @@ fsp_err_t R_SDHI_WriteIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
                              sdmmc_io_transfer_mode_t transfer_mode,
                              sdmmc_io_address_mode_t  address_mode)
 {
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-    sdhi_instance_ctrl_t * p_ctrl = (sdhi_instance_ctrl_t *) p_api_ctrl;
-
-    fsp_err_t err = FSP_SUCCESS;
-
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_source);
-    FSP_ASSERT(0U != count);
- #endif
-
-    err = r_sdhi_common_error_check(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    uint32_t command     = SDHI_PRV_CMD_IO_WRITE_EXT_SINGLE_BLOCK;
-    uint32_t byte_count  = 0U;
-    uint32_t block_count = 0U;
-    if (SDMMC_IO_MODE_TRANSFER_BLOCK == transfer_mode)
-    {
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-        FSP_ASSERT(count <= SDHI_PRV_SDIO_EXT_MAX_BLOCKS);
- #endif
-        block_count = count;
-        byte_count  = p_ctrl->p_cfg->block_size;
-        if (block_count > 1U)
-        {
-            command |= SDHI_PRV_CMD_IO_EXT_MULTI_BLOCK;
-        }
-    }
-    else
-    {
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-        FSP_ASSERT(count <= SDHI_PRV_SDIO_EXT_MAX_BYTES);
- #endif
-        block_count = 1U;
-        byte_count  = count;
-    }
-
-    /* Configure the transfer interface for writing. */
-    err = r_sdhi_transfer_write(p_ctrl, block_count, byte_count, p_source);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WRITE_FAILED);
-
-    sdmmc_priv_sdio_arg_t argument = {0U};
-
-    /* According to SDIO spec, 512 = 0. */
-    argument.cmd_53_arg.count            = (count & SDHI_PRV_SDIO_CMD52_CMD53_COUNT_MASK);
-    argument.cmd_53_arg.function_number  = (function & SDHI_PRV_SDIO_CMD52_CMD53_FUNCTION_MASK);
-    argument.cmd_53_arg.block_mode       = transfer_mode;
-    argument.cmd_53_arg.op_code          = address_mode;
-    argument.cmd_53_arg.register_address = (address & SDHI_PRV_SDIO_CMD52_CMD53_ADDRESS_MASK);
-    argument.cmd_53_arg.rw_flag          = 1U;
-    r_sdhi_read_write_common(p_ctrl, block_count, byte_count, command, argument.arg);
-
-    return FSP_SUCCESS;
-#else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_source);
     FSP_PARAMETER_NOT_USED(function);
@@ -860,53 +645,21 @@ fsp_err_t R_SDHI_WriteIoExt (sdmmc_ctrl_t * const     p_api_ctrl,
     FSP_PARAMETER_NOT_USED(address_mode);
 
     FSP_RETURN(FSP_ERR_UNSUPPORTED);
-#endif
 }
 
 /*******************************************************************************************************************//**
  * Enables or disables the SDIO Interrupt.  Implements @ref sdmmc_api_t::ioIntEnable().
  *
- * @retval     FSP_SUCCESS          Card enabled or disabled SDIO interrupts successfully.
- * @retval     FSP_ERR_NOT_OPEN     Driver has not been initialized.
- * @retval     FSP_ERR_ASSERTION    NULL pointer.
- * @retval     FSP_ERR_DEVICE_BUSY  Driver is busy with a previous operation.
- * @retval     FSP_ERR_UNSUPPORTED  SDIO support disabled in SDHI_CFG_SDIO_SUPPORT_ENABLE.
+ * @note This function is not supported.
+ *
+ * @retval     FSP_ERR_UNSUPPORTED  SDIO is not supported.
  **********************************************************************************************************************/
 fsp_err_t R_SDHI_IoIntEnable (sdmmc_ctrl_t * const p_api_ctrl, bool enable)
 {
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-    sdhi_instance_ctrl_t * p_ctrl = (sdhi_instance_ctrl_t *) p_api_ctrl;
-
- #if SDHI_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_ctrl);
-
-    FSP_ERROR_RETURN(SDHI_PRV_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
- #endif
-
-    /* Make sure the card is not busy. */
-    FSP_ERROR_RETURN(SDHI_PRV_SD_INFO2_CBSY_SDD0MON_IDLE_VAL ==
-                     (p_ctrl->p_reg->SD_INFO2 & SDHI_PRV_SD_INFO2_CBSY_SDD0MON_IDLE_MASK),
-                     FSP_ERR_DEVICE_BUSY);
-
-    /* Enable or disable interrupt. */
-    if (enable)
-    {
-        p_ctrl->p_reg->SDIO_MODE       = 1U;
-        p_ctrl->p_reg->SDIO_INFO1_MASK = 0x6U;
-    }
-    else
-    {
-        p_ctrl->p_reg->SDIO_MODE       = 0U;
-        p_ctrl->p_reg->SDIO_INFO1_MASK = SDHI_PRV_SDIO_INFO1_MASK_IRQ_DISABLE;
-    }
-
-    return FSP_SUCCESS;
-#else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(enable);
 
     FSP_RETURN(FSP_ERR_UNSUPPORTED);
-#endif
 }
 
 /*******************************************************************************************************************//**
@@ -1092,7 +845,6 @@ fsp_err_t R_SDHI_Close (sdmmc_ctrl_t * const p_api_ctrl)
     /* Disable SDHI interrupts. */
     r_sdhi_irq_disable(p_ctrl->p_cfg->access_irq);
     r_sdhi_irq_disable(p_ctrl->p_cfg->card_irq);
-    r_sdhi_irq_disable(p_ctrl->p_cfg->sdio_irq);
 
     /* Put the card in idle state (CMD0). */
     r_sdhi_command_send_no_wait(p_ctrl, SDHI_PRV_CMD_GO_IDLE_STATE, 0);
@@ -1150,17 +902,8 @@ static fsp_err_t r_sdhi_open_param_check (sdhi_instance_ctrl_t * p_ctrl, sdmmc_c
     FSP_ASSERT(SDMMC_BUS_WIDTH_8_BITS != p_cfg->bus_width);
  #endif
 
- #if SDHI_CFG_SDIO_SUPPORT_ENABLE
-
-    /* Check block size, 512 bytes is the maximum block size the peripheral supports */
-    FSP_ASSERT(0U != p_cfg->block_size);
-    FSP_ASSERT(p_cfg->block_size <= SDHI_MAX_BLOCK_SIZE);
- #else
-
     /* SD and eMMC cards only support block size of 512 bytes on the SDHI hardware. */
-    /* This can't be checked until we know it's not an SDIO card if SDIO is enabled. */
     FSP_ASSERT(SDHI_MAX_BLOCK_SIZE == p_cfg->block_size);
- #endif
 
     /* Access interrupt is required. */
     FSP_ERROR_RETURN(p_cfg->access_irq >= 0, FSP_ERR_IRQ_BSP_DISABLED);
@@ -1235,7 +978,7 @@ static fsp_err_t r_sdhi_common_error_check (sdhi_instance_ctrl_t * const p_ctrl)
                      (p_ctrl->p_reg->SD_INFO2 & SDHI_PRV_SD_INFO2_CBSY_SDD0MON_IDLE_MASK),
                      FSP_ERR_DEVICE_BUSY);
 
-#if SDHI_CFG_SD_SUPPORT_ENABLE || SDHI_CFG_SDIO_SUPPORT_ENABLE
+#if SDHI_CFG_SD_SUPPORT_ENABLE
 
     /* Verify the card has not been removed since the last card initialization. */
     FSP_ERROR_RETURN(p_ctrl->initialized, FSP_ERR_CARD_NOT_INITIALIZED);
@@ -1375,7 +1118,7 @@ static void r_sdhi_access_irq_process (sdhi_instance_ctrl_t * p_ctrl, sdmmc_call
 }
 
 /*******************************************************************************************************************//**
- * Send a command to the SD, eMMC, or SDIO device.
+ * Send a command to the SD or eMMC device.
  *
  * @param[in]  p_ctrl          Pointer to the instance control block.
  * @param[in]  command         Command to send.
@@ -1406,7 +1149,7 @@ static void r_sdhi_command_send_no_wait (sdhi_instance_ctrl_t * p_ctrl, uint32_t
 }
 
 /*******************************************************************************************************************//**
- * Send a command to the SD, eMMC, or SDIO device and wait for response
+ * Send a command to the SD or eMMC device and wait for response
  *
  * @param[in]  p_ctrl               Pointer to the instance control block.
  * @param[in]  command              Command to send.
@@ -1506,7 +1249,7 @@ static fsp_err_t r_sdhi_hw_cfg (sdhi_instance_ctrl_t * const p_ctrl)
 
     /* Execute software reset or check SD_INFO2.SD_CLK_CTRLEN prior to calling this function. */
     p_ctrl->p_reg->SD_CLK_CTRL = SDHI_PRV_SD_CLK_CTRL_DEFAULT; // Automatic clock control disabled.
-    p_ctrl->p_reg->SDIO_MODE   = 0x00U;                        // Not in SDIO mode initially.
+    p_ctrl->p_reg->SDIO_MODE   = 0x00U;                        // SDIO not supported.
     p_ctrl->p_reg->SD_DMAEN    = 0x00U;                        // Not in DMA mode initially.
     p_ctrl->p_reg->SDIF_MODE   = 0x00U;                        // CRC check is valid.
     p_ctrl->p_reg->EXT_SWAP    = 0x00U;                        // Don't swap endianness
@@ -1543,18 +1286,6 @@ static fsp_err_t r_sdhi_hw_cfg (sdhi_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static fsp_err_t r_sdhi_card_identify (sdhi_instance_ctrl_t * const p_ctrl)
 {
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-
-    /* For SDIO, follow the procedure in Figure 3-2 "Card Initialization Flow in SD mode (SDIO Aware Host)" in SDIO
-     * Simplified Specification Version 3.00. */
-
-    /* Reset I/O: In order to reset an I/O only card or the I/O portion of a combo card, use CMD52 to set the RES bit
-     * in the CCCR (bit 3 of register 6). Reference Table 6-2 "CCCR bit definitions" in SDIO Simplified Specification
-     * Version 3.00. */
-    uint8_t data = 1U << 3;
-    r_sdhi_cmd52(p_ctrl, &data, 0U, 6U, SDMMC_IO_WRITE_MODE_NO_READ, SDHI_PRV_SDIO_CMD52_WRITE);
-#endif
-
     /* For SD cards, follow the procedure in Figure 4-1 "SD Memory Card State Diagram (card identification mode" in
      * Physical Layer Simplified Specification Version 6.00. */
 
@@ -1564,52 +1295,33 @@ static fsp_err_t r_sdhi_card_identify (sdhi_instance_ctrl_t * const p_ctrl)
     fsp_err_t err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_GO_IDLE_STATE, 0);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-
-    /* See if the device is SDIO, SD, or eMMC.*/
-    /* Order matters - Check if the card has SDIO capabilities first (CMD5). */
-    p_ctrl->device.card_type = (sdmmc_card_type_t) UINT8_MAX;
-    err = r_sdhi_sdio_check(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-    if (SDMMC_CARD_TYPE_SDIO != p_ctrl->device.card_type)
-#endif
-    {
 #if SDHI_CFG_SD_SUPPORT_ENABLE || SDHI_CFG_EMMC_SUPPORT_ENABLE
- #if SDHI_CFG_SDIO_SUPPORT_ENABLE && SDHI_CFG_PARAM_CHECKING_ENABLE
-
-        /* SD and eMMC cards only support block size of 512 bytes on the SDHI hardware. */
-        /* This can't be checked until we know it's not an SDIO card if SDIO is enabled. */
-        FSP_ASSERT(SDHI_MAX_BLOCK_SIZE == p_ctrl->p_cfg->block_size);
- #endif
-
  #if SDHI_CFG_SD_SUPPORT_ENABLE
 
-        /* If the device is not SDIO, check to see if it is an SD memory card (CMD8 + ACMD41).
-         * NOTE: Not supporting memory on SDIO combo cards. */
-        err = r_sdhi_sd_card_check(p_ctrl);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-        if (SDMMC_CARD_TYPE_SD != p_ctrl->device.card_type)
+    /* Check to see if the device is an SD memory card (CMD8 + ACMD41). */
+    err = r_sdhi_sd_card_check(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    if (SDMMC_CARD_TYPE_SD != p_ctrl->device.card_type)
  #endif
-        {
+    {
  #if SDHI_CFG_EMMC_SUPPORT_ENABLE
 
-            /* If the device is not SDIO or SD memory, check to see if it is an eMMC device (CMD1). */
-            err = r_sdhi_emmc_check(p_ctrl);
-            FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
- #endif
-            if ((sdmmc_card_type_t) UINT8_MAX == p_ctrl->device.card_type)
-            {
-
-                /* If the device is not identified as SDIO, SD memory card, or eMMC, return an error. */
-                return FSP_ERR_CARD_INIT_FAILED;
-            }
-        }
-
-        /* Enter identification state (CMD2). */
-        err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_ALL_SEND_CID, 0); /* send SD CMD2 */
+        /* If the device is not SD memory, check to see if it is an eMMC device (CMD1). */
+        err = r_sdhi_emmc_check(p_ctrl);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-#endif
+ #endif
+        if ((sdmmc_card_type_t) UINT8_MAX == p_ctrl->device.card_type)
+        {
+
+            /* If the device is not identified as an SD memory card or eMMC, return an error. */
+            return FSP_ERR_CARD_INIT_FAILED;
+        }
     }
+
+    /* Enter identification state (CMD2). */
+    err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_ALL_SEND_CID, 0); /* send SD CMD2 */
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#endif
 
     return FSP_SUCCESS;
 }
@@ -1632,71 +1344,29 @@ static fsp_err_t r_sdhi_bus_cfg (sdhi_instance_ctrl_t * const p_ctrl)
     fsp_err_t err = r_sdhi_rca_get(p_ctrl, &rca);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-
-    /* Set clock rate to highest supported by both host and device.  Move card to transfer state during this
-     * process. */
-    if (p_ctrl->device.card_type == SDMMC_CARD_TYPE_SDIO)
-    {
-        /* Switch to data transfer mode (CMD7). */
-        err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SEL_DES_CARD, rca << 16);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-        /* Set the clock speed to the highest . */
-        err = r_sdhi_sdio_clock_optimize(p_ctrl);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-        /* Set bus width.
-         * Note: Low speed SDIO not supported, so no need to check if 4-bit mode is supported. */
-        uint8_t bus_width_setting = (uint8_t) p_ctrl->p_cfg->bus_width;
-        bus_width_setting = ((bus_width_setting >> 1) & 0x03U);
-        err               = r_sdhi_cmd52(p_ctrl,
-                                         &bus_width_setting,
-                                         0U,
-                                         0x07U,
-                                         SDMMC_IO_WRITE_READ_AFTER_WRITE,
-                                         SDHI_PRV_SDIO_CMD52_WRITE);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-        uint32_t bus_width_reg = 0U;
-        if (SDMMC_BUS_WIDTH_1_BIT == p_ctrl->p_cfg->bus_width)
-        {
-            bus_width_reg = SDHI_PRV_BUS_WIDTH_1_BIT;
-        }
-
-        p_ctrl->p_reg->SD_OPTION = SDHI_PRV_SD_OPTION_DEFAULT | (bus_width_reg << SDHI_PRV_SD_OPTION_WIDTH8_BIT);
-
-        /* Enable SDIO interrupts. Busy flag must be cleared before enabling interrupts. */
-        p_ctrl->p_reg->SDIO_MODE_b.INTEN = 1U;
-        p_ctrl->p_reg->SDIO_INFO1_MASK   = 0x6U;
-    }
-    else
-#endif
-    {
 #if SDHI_CFG_SD_SUPPORT_ENABLE || SDHI_CFG_EMMC_SUPPORT_ENABLE
 
-        /* Decode CSD register depending on version of card */
-        sdmmc_priv_csd_reg_t csd_reg;
-        err = r_sdhi_csd_save(p_ctrl, rca, &csd_reg);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Decode CSD register depending on version of card */
+    sdmmc_priv_csd_reg_t csd_reg;
+    err = r_sdhi_csd_save(p_ctrl, rca, &csd_reg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-        /* Switch to transfer state (CMD7). */
-        err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SEL_DES_CARD, rca << 16);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Switch to transfer state (CMD7). */
+    err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SEL_DES_CARD, rca << 16);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-        /* Set clock to highest supported frequency. */
-        err = r_sdhi_clock_optimize(p_ctrl, rca, &csd_reg);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Set clock to highest supported frequency. */
+    err = r_sdhi_clock_optimize(p_ctrl, rca, &csd_reg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-        /* Set the block length (CMD16) to 512 bytes. */
-        err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SET_BLOCKLEN, p_ctrl->p_cfg->block_size);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Set the block length (CMD16) to 512 bytes. */
+    err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SET_BLOCKLEN, p_ctrl->p_cfg->block_size);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-        /* Set bus width. */
-        err = r_sdhi_bus_width_set(p_ctrl, rca);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Set bus width. */
+    err = r_sdhi_bus_width_set(p_ctrl, rca);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
-    }
 
     return FSP_SUCCESS;
 }
@@ -1733,110 +1403,6 @@ static void r_sdhi_read_write_common (sdhi_instance_ctrl_t * const p_ctrl,
     /* Send command. */
     r_sdhi_command_send_no_wait(p_ctrl, command, argument);
 }
-
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-
-/*******************************************************************************************************************//**
- * Command 52 Write.
- *
- * @param[in]  p_ctrl               Pointer to the instance control block.
- * @param      p_data               Pointer to the data
- * @param[in]  function             Function
- * @param[in]  address              Address on device
- * @param[in]  read_after_write     Whether to read after write
- * @param[in]  command              Command (read or write)
- *
- * @retval     FSP_SUCCESS          CMD52 sent and response received with no error.
- * @retval     FSP_ERR_RESPONSE     Device responded with an error.
- * @retval     FSP_ERR_TIMEOUT      Device did not respond.
- * @retval     FSP_ERR_DEVICE_BUSY  Device is holding DAT0 low (device is busy) or another operation is ongoing.
- **********************************************************************************************************************/
-static fsp_err_t r_sdhi_cmd52 (sdhi_instance_ctrl_t * const p_ctrl,
-                               uint8_t * const              p_data,
-                               uint32_t const               function,
-                               uint32_t const               address,
-                               sdmmc_io_write_mode_t const  read_after_write,
-                               uint32_t const               command)
-{
-    /* Send Write I/O command. */
-    sdmmc_priv_sdio_arg_t argument = {0U};
-    argument.cmd_52_arg.function_number  = (function & SDHI_PRV_SDIO_CMD52_CMD53_FUNCTION_MASK);
-    argument.cmd_52_arg.rw_flag          = (command & 1U);
-    argument.cmd_52_arg.raw              = read_after_write;
-    argument.cmd_52_arg.register_address = (address & SDHI_PRV_SDIO_CMD52_CMD53_ADDRESS_MASK);
-    argument.cmd_52_arg.data             = *p_data;
-
-    /* Send CMD52. */
-    fsp_err_t err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_IO_RW_DIRECT, argument.arg);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Store data read from the response. */
-    sdmmc_response_t response = {0U};
-    response.status = p_ctrl->p_reg->SD_RSP10;
-    *p_data         = response.r5.read_write_data;
-
-    return FSP_SUCCESS;
-}
-
-#endif
-
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-
-/*******************************************************************************************************************//**
- * Check to see if the device is an SDIO card.
- *
- * @param[in]  p_ctrl               Pointer to the instance control block.
- *
- * @retval     FSP_SUCCESS          Card type is set if the device is an SDIO card.
- * @retval     FSP_ERR_RESPONSE     Device responded with an error.
- * @retval     FSP_ERR_TIMEOUT      Device did not respond.
- * @retval     FSP_ERR_DEVICE_BUSY  Device is holding DAT0 low (device is busy) or another operation is ongoing.
- **********************************************************************************************************************/
-static fsp_err_t r_sdhi_sdio_check (sdhi_instance_ctrl_t * const p_ctrl)
-{
-    sdmmc_response_t response = {0U};
-    uint32_t         ocr      = SDHI_PRV_OCR_VDD_SUPPORTED;
-
-    /* Check for SDIO capabilities (CMD5). */
-    fsp_err_t err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SDIO, 0x00);
-    if (FSP_ERR_RESPONSE == err)
-    {
-
-        /* This is not an SDIO card. */
-        return FSP_SUCCESS;
-    }
-
-    /* Check response of CMD5 (R4). */
-    response.status = p_ctrl->p_reg->SD_RSP10;
-    if (response.r4.io_functions)
-    {
-        /* If the card supports SDIO, check for the card to be ready for at least one second. */
-
-        /* To ensure the 1 second timeout, consider that there are 48 bits in a command, 48 bits
-         * in a response, and 8 clock cycles minimum between commands, so there are 104 clocks minimum,
-         * and the maximum clock rate at this point is 400 kHz, so issue the command 400000 / 104
-         * times to ensure a timeout of at least 1 second. */
-        for (uint32_t i = 0U; i < SDHI_PRV_INIT_ONE_SECOND_TIMEOUT_ITERATIONS; i++)
-        {
-            err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SDIO, ocr);
-            FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-            /* Get response of CMD5 (R4) */
-            response.status = p_ctrl->p_reg->SD_RSP10;
-            if (response.r4.ready)
-            {
-                /* SDIO card is ready. */
-                p_ctrl->device.card_type = SDMMC_CARD_TYPE_SDIO;
-
-                return FSP_SUCCESS;
-            }
-        }
-    }
-
-    return FSP_SUCCESS;
-}
-
-#endif
 
 #if SDHI_CFG_SD_SUPPORT_ENABLE
 
@@ -2069,52 +1635,6 @@ static fsp_err_t r_sdhi_clock_optimize (sdhi_instance_ctrl_t * const p_ctrl,
  #endif
     }
 
-    err = r_sdhi_max_clock_rate_set(p_ctrl, max_clock_rate);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    return FSP_SUCCESS;
-}
-
-#endif
-
-#if SDHI_CFG_SDIO_SUPPORT_ENABLE
-
-/*******************************************************************************************************************//**
- * Checks to see if the SDIO card supports high speed.
- *
- * @param[in]  p_ctrl                    Pointer to the instance control block.
- *
- * @retval     FSP_SUCCESS               Clock settings applied for SDIO.
- * @retval     FSP_ERR_RESPONSE          Device responded with an error.
- * @retval     FSP_ERR_TIMEOUT           Device did not respond.
- * @retval     FSP_ERR_DEVICE_BUSY       Device is holding DAT0 low (device is busy) or another operation is ongoing.
- * @retval     FSP_ERR_CARD_INIT_FAILED  Timeout setting divider or operation is still too fast at maximum divider
- *                                       (unlikely).
- **********************************************************************************************************************/
-static fsp_err_t r_sdhi_sdio_clock_optimize (sdhi_instance_ctrl_t * const p_ctrl)
-{
-    fsp_err_t err;
-    uint8_t   data = 0U;
-
-    /* Issue CMD52 to set the high speed register. */
-    data = SDHI_PRV_SDIO_REG_HIGH_SPEED_BIT_EHS;
-    err  = r_sdhi_cmd52(p_ctrl,
-                        &data,
-                        0U,
-                        SDHI_PRV_SDIO_REG_HIGH_SPEED,
-                        SDMMC_IO_WRITE_READ_AFTER_WRITE,
-                        SDHI_PRV_SDIO_CMD52_WRITE);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Check to see if high speed mode was successfully enabled.  Both EHS and SHS bits must be set. */
-    uint8_t  high_speed_enabled_mask = SDHI_PRV_SDIO_REG_HIGH_SPEED_BIT_EHS | SDHI_PRV_SDIO_REG_HIGH_SPEED_BIT_SHS;
-    uint32_t max_clock_rate          = SDHI_PRV_SD_DEFAULT_CLOCK_RATE;
-    if (high_speed_enabled_mask == (data & high_speed_enabled_mask))
-    {
-        max_clock_rate = SDHI_PRV_SDIO_HIGH_SPEED_CLOCK_RATE;
-    }
-
-    /* Set the clock rate to the maximum supported by both host and device. */
     err = r_sdhi_max_clock_rate_set(p_ctrl, max_clock_rate);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
@@ -2383,7 +1903,7 @@ static fsp_err_t r_sdhi_rca_get (sdhi_instance_ctrl_t * const p_ctrl, uint32_t *
     fsp_err_t err = r_sdhi_command_send(p_ctrl, SDHI_PRV_CMD_SEND_RELATIVE_ADDR, rca << 16);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-#if SDHI_CFG_SD_SUPPORT_ENABLE || SDHI_CFG_SDIO_SUPPORT_ENABLE
+#if SDHI_CFG_SD_SUPPORT_ENABLE
     sdmmc_response_t response = {0U};
     response.status = p_ctrl->p_reg->SD_RSP10;
     if (SDMMC_CARD_TYPE_MMC != p_ctrl->device.card_type)
@@ -2823,49 +2343,6 @@ void sdhimmc_dma_req_isr (void)
 
     /* Clear the IR flag in the ICU.
      * This must be after the callback because the next DTC transfer will begin when this bit is cleared. */
-    R_BSP_IrqStatusClear(irq);
-
-    /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE
-}
-
-/*******************************************************************************************************************//**
- * Calls callback and clears interrupt flags.
- **********************************************************************************************************************/
-void sdhimmc_sdio_isr (void)
-{
-    /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE
-
-    IRQn_Type              irq    = R_FSP_CurrentIrqGet();
-    sdhi_instance_ctrl_t * p_ctrl = (sdhi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
-
-    /* Determine the source of the interrupt. */
-    sdmmc_callback_args_t args;
-    memset(&args, 0U, sizeof(args));
-    uint32_t info1 = p_ctrl->p_reg->SDIO_INFO1;
-    if (info1 & SDHI_PRV_SDIO_INFO1_TRANSFER_COMPLETE_MASK)
-    {
-        /* A multi-block CMD53 transfer is complete. */
-        args.event |= SDMMC_EVENT_TRANSFER_COMPLETE;
-    }
-    else
-    {
-        /* I/O interrupt requested by device. */
-        args.event |= SDMMC_EVENT_SDIO;
-    }
-
-    /* Call user callback */
-    if (p_ctrl->initialized)
-    {
-        r_sdhi_call_callback(p_ctrl, &args);
-    }
-
-    /* Clear interrupt flags */
-    p_ctrl->p_reg->SDIO_INFO1 = SDHI_PRV_SDIO_INFO1_IRQ_CLEAR;
-
-    /* Clear the IR flag in the ICU */
-    /* Clearing the IR bit must be done after clearing the interrupt source in the the peripheral */
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */

@@ -17,13 +17,13 @@
 #endif
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
-#if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
-#include "r_rsip_api.h"
-#include "r_rsip_public.h"
+ #if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
+  #include "r_rsip_api.h"
+  #include "r_rsip_public.h"
 extern rsip_instance_t const * const gp_rsip_instance;
-#else
-#include "hw_sce_ra_private.h"
-#endif
+ #else
+  #include "hw_sce_ra_private.h"
+ #endif
 #endif
 
 /***********************************************************************************************************************
@@ -82,6 +82,8 @@ extern rsip_instance_t const * const gp_rsip_instance;
 #define OSPI_B_SOFTWARE_DELAY                            (50U)
 
 #define OSPI_B_PRV_DOTF_REG00_RESET_VALUE                (0x22000000)
+#define OSPI_B_PRV_CONVAREAST_RESET_VALUE                (0x0)
+#define OSPI_B_PRV_CONVAREAD_RESET_VALUE                 (0x0)
 
 /* These are used as modulus checking, make sure they are powers of 2. */
 #define OSPI_B_PRV_CPU_ACCESS_LENGTH                     (8U)
@@ -178,6 +180,7 @@ const spi_flash_api_t g_ospi_b_on_spi_flash =
 fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const * const p_cfg)
 {
     ospi_b_instance_ctrl_t * p_instance_ctrl = (ospi_b_instance_ctrl_t *) p_ctrl;
+    fsp_err_t                ret             = FSP_SUCCESS;
 
 #if OSPI_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
@@ -201,20 +204,8 @@ fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const 
     p_instance_ctrl->channel      = p_cfg_extend->channel;
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
-    if (NULL != p_cfg_extend->p_dotf_cfg)
-    {
-        fsp_err_t dotf_ret = r_ospi_b_dotf_setup((ospi_b_dotf_cfg_t *) p_cfg_extend->p_dotf_cfg);
-        if (FSP_SUCCESS != dotf_ret)
-        {
-            /* If the DOTF initialization fails, stop the module if no other channels are active. */
-            if (g_ospi_b_channels_open_flags == 0)
-            {
-                R_BSP_MODULE_STOP(FSP_IP_OSPI, 0U);
-            }
-
-            return dotf_ret;
-        }
-    }
+    ret = R_OSPI_B_DOTF_Configure(p_ctrl, p_cfg_extend->p_dotf_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == ret, ret);
 #endif
 
 #if OSPI_B_CFG_DMAC_SUPPORT_ENABLE
@@ -272,7 +263,7 @@ fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const 
     R_XSPI->LIOCFGCS[p_cfg_extend->channel] = liocfg;
 
     /* Set xSPI memory-mapping operation. */
-    fsp_err_t ret = r_ospi_b_protocol_specific_settings(p_instance_ctrl);
+    ret = r_ospi_b_protocol_specific_settings(p_instance_ctrl);
 
     /* Return response after issuing write transaction to xSPI bus, Enable prefetch function and combination if desired. */
     const uint32_t bmcfgch = (0 << R_XSPI_BMCFGCH_WRMD_Pos) |
@@ -719,6 +710,7 @@ fsp_err_t R_OSPI_B_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol
 fsp_err_t R_OSPI_B_Close (spi_flash_ctrl_t * p_ctrl)
 {
     ospi_b_instance_ctrl_t * p_instance_ctrl = (ospi_b_instance_ctrl_t *) p_ctrl;
+    fsp_err_t                err             = FSP_SUCCESS;
 
 #if OSPI_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
@@ -742,7 +734,7 @@ fsp_err_t R_OSPI_B_Close (spi_flash_ctrl_t * p_ctrl)
         R_BSP_MODULE_STOP(FSP_IP_OSPI, 0U);
     }
 
-    return FSP_SUCCESS;
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -775,6 +767,44 @@ fsp_err_t R_OSPI_B_AutoCalibrate (spi_flash_ctrl_t * const p_ctrl)
     return FSP_SUCCESS;
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * Configure DOTF
+ *
+ * @param[in]   p_ctrl                          Pointer to OSPI specific control structure
+ * @param[in]   p_dotf_cfg                      Pointer to DOTF configuration structure
+ *
+ * @retval      FSP_SUCCESS                     DOTF enabled successfully
+ * @retval      FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL Key initialization failed.
+ * @retval      FSP_ERR_CRYPTO_SCE_FAIL         Key wrapping failed.
+ * @retval      FSP_ERR_INVALID_ARGUMENT        Invalid key type argument.
+ * @retval      FSP_ERR_UNSUPPORTED             DOTF support is not enabled
+ **********************************************************************************************************************/
+fsp_err_t R_OSPI_B_DOTF_Configure (spi_flash_ctrl_t * const p_ctrl, ospi_b_dotf_cfg_t * const p_dotf_cfg)
+{
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+#if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
+    fsp_err_t ret = FSP_SUCCESS;
+    if (NULL != p_dotf_cfg)
+    {
+        ret = r_ospi_b_dotf_setup(p_dotf_cfg);
+        if (FSP_SUCCESS != ret)
+        {
+            /* If the DOTF initialization fails, stop the module if no other channels are active. */
+            if (g_ospi_b_channels_open_flags == 0)
+            {
+                R_BSP_MODULE_STOP(FSP_IP_OSPI, 0U);
+            }
+        }
+    }
+
+    return ret;
+#else
+    FSP_PARAMETER_NOT_USED(p_dotf_cfg);
 
     return FSP_ERR_UNSUPPORTED;
 #endif
@@ -1218,11 +1248,12 @@ static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get (ospi_b_instan
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
 
-#if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
+ #if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
+
 /*******************************************************************************************************************//**
  * Configures the device for DOTF operation.
  *
- * @param[in]   p_dotf_cfg    Pointer to the instance ctrl struct.
+ * @param[in]   p_dotf_cfg                        Pointer to the DOTF configuration struct.
  * @retval      FSP_SUCCESS                       DOTF configuration completed successfully.
  * @retval      FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL   Key initialization failed.
  * @retval      FSP_ERR_CRYPTO_SCE_FAIL           Key wrapping failed.
@@ -1230,78 +1261,80 @@ static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get (ospi_b_instan
  **********************************************************************************************************************/
 static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
 {
-	fsp_err_t   sce_ret = FSP_SUCCESS;
-	uint8_t     seed[8] = {0};
+    fsp_err_t sce_ret = FSP_SUCCESS;
+    uint8_t   seed[8] = {0};
 
-	if (OSPI_B_DOTF_KEY_FORMAT_WRAPPED != p_dotf_cfg->format)
-	{
-		return FSP_ERR_INVALID_ARGUMENT;
-	}
+    if (OSPI_B_DOTF_KEY_FORMAT_WRAPPED != p_dotf_cfg->format)
+    {
+        return FSP_ERR_INVALID_ARGUMENT;
+    }
 
-	static uint8_t s_wrapped_key[RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PRIVATE];
-	rsip_wrapped_key_t  * p_wrapped_key             = (rsip_wrapped_key_t *) s_wrapped_key;
-	p_wrapped_key->alg     = (uint8_t) RSIP_ALG_AES;
+    static uint8_t       s_wrapped_key[RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PRIVATE];
+    rsip_wrapped_key_t * p_wrapped_key = (rsip_wrapped_key_t *) s_wrapped_key;
+    p_wrapped_key->alg = (uint8_t) RSIP_ALG_AES;
 
-	if (OSPI_B_DOTF_AES_KEY_TYPE_128 == p_dotf_cfg->key_type)
-	{
-		p_wrapped_key->subtype = RSIP_KEY_AES_128;
-		memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_128);
-	}
-	else if (OSPI_B_DOTF_AES_KEY_TYPE_192 == p_dotf_cfg->key_type)
-	{
-		return FSP_ERR_INVALID_ARGUMENT;
-	}
-	else if (OSPI_B_DOTF_AES_KEY_TYPE_256 == p_dotf_cfg->key_type)
-	{
-		p_wrapped_key->subtype = RSIP_KEY_AES_256;
-		memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_256);
-	}
-	else
-	{
-	}
+    if (OSPI_B_DOTF_AES_KEY_TYPE_128 == p_dotf_cfg->key_type)
+    {
+        p_wrapped_key->subtype = RSIP_KEY_AES_128;
+        memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_128);
+    }
+    else if (OSPI_B_DOTF_AES_KEY_TYPE_192 == p_dotf_cfg->key_type)
+    {
+        return FSP_ERR_INVALID_ARGUMENT;
+    }
+    else if (OSPI_B_DOTF_AES_KEY_TYPE_256 == p_dotf_cfg->key_type)
+    {
+        p_wrapped_key->subtype = RSIP_KEY_AES_256;
+        memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_256);
+    }
+    else
+    {
+    }
 
+    sce_ret = gp_rsip_instance->p_api->open(gp_rsip_instance->p_ctrl, gp_rsip_instance->p_cfg);
+    if (FSP_SUCCESS != sce_ret)
+    {
+        return sce_ret;
+    }
 
-	sce_ret = gp_rsip_instance->p_api->open(gp_rsip_instance->p_ctrl, gp_rsip_instance->p_cfg);
-	if (FSP_SUCCESS != sce_ret)
-	{
-		return sce_ret;
-	}
+    sce_ret = gp_rsip_instance->p_api->otfInit(gp_rsip_instance->p_ctrl, RSIP_OTF_CHANNEL_0, p_wrapped_key, &seed[0]);
+    if (FSP_SUCCESS != sce_ret)
+    {
+        return sce_ret;
+    }
 
-	sce_ret = gp_rsip_instance->p_api->otfInit(gp_rsip_instance->p_ctrl, RSIP_OTF_CHANNEL_0, p_wrapped_key, &seed[0]);
-	if (FSP_SUCCESS != sce_ret)
-	{
-		return sce_ret;
-	}
+    sce_ret = gp_rsip_instance->p_api->close(gp_rsip_instance->p_ctrl);
+    if (FSP_SUCCESS != sce_ret)
+    {
+        return sce_ret;
+    }
 
-	sce_ret = gp_rsip_instance->p_api->close(gp_rsip_instance->p_ctrl);
-	if (FSP_SUCCESS != sce_ret)
-	{
-		return sce_ret;
-	}
+    if (sce_ret == FSP_SUCCESS)
+    {
+        /* Disable byte order conversion. */
+        R_DOTF->REG00 = (OSPI_B_PRV_DOTF_REG00_RESET_VALUE | R_DOTF_REG00_B09_Msk);
 
-	if (sce_ret == FSP_SUCCESS)
-	{
-		/* Disable byte order conversion. */
-		R_DOTF->REG00 = (OSPI_B_PRV_DOTF_REG00_RESET_VALUE | R_DOTF_REG00_B09_Msk);
+        /* Load the IV. */
+        R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[0]);
+        R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[1]);
+        R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[2]);
+        R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[3]);
+    }
 
-		/* Load the IV. */
-		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[0]);
-		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[1]);
-		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[2]);
-		R_DOTF->REG03 = bswap_32big(p_dotf_cfg->p_iv[3]);
-	}
+    /* Set the end and start area for DOTF conversion in that order to
+     * ensure that end address is always higher than start address. */
+    R_DOTF->CONVAREAD  = (uint32_t) p_dotf_cfg->p_end_addr;
+    R_DOTF->CONVAREAST = (uint32_t) p_dotf_cfg->p_start_addr;
 
-	/* Set the start and end area for DOTF conversion. */
-	R_DOTF->CONVAREAST = (uint32_t) p_dotf_cfg->p_start_addr;
-	R_DOTF->CONVAREAD  = (uint32_t) p_dotf_cfg->p_end_addr;
-
-	return sce_ret;
+    return sce_ret;
 }
-#else
+
+ #else
+
 /*******************************************************************************************************************//**
  * Configures the device for DOTF operation.
  *
- * @param[in]   p_dotf_cfg    Pointer to the instance ctrl struct.
+ * @param[in]   p_dotf_cfg          Pointer to the DOTF configuration struct.
  * @retval      FSP_SUCCESS                       DOTF configuration completed successfully.
  * @retval      FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL   Key initialization failed.
  * @retval      FSP_ERR_CRYPTO_SCE_FAIL           Key wrapping failed.
@@ -1399,12 +1432,13 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
         R_DOTF->REG03 = change_endian_long(p_dotf_cfg->p_iv[3]);
     }
 
-    /* Set the start and end area for DOTF conversion. */
-    R_DOTF->CONVAREAST = (uint32_t) p_dotf_cfg->p_start_addr;
+    /* Set the end and start area for DOTF conversion in that order to
+     * ensure that end address is always higher than start address. */
     R_DOTF->CONVAREAD  = (uint32_t) p_dotf_cfg->p_end_addr;
+    R_DOTF->CONVAREAST = (uint32_t) p_dotf_cfg->p_start_addr;
 
     return sce_ret;
 }
 
-#endif
+ #endif
 #endif

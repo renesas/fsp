@@ -68,6 +68,8 @@ typedef struct st_flash_hp_instance_ctrl
     uint32_t              timeout_erase_cf_small_block;
     uint32_t              timeout_erase_cf_large_block;
     uint32_t              timeout_erase_df_block;
+    uint32_t              timeout_arc_increment_refresh;
+    uint32_t              timeout_arc_read;
     uint32_t              source_start_address;
     uint32_t              dest_end_address;
     uint32_t              operations_remaining;
@@ -128,6 +130,15 @@ fsp_err_t R_FLASH_HP_CallbackSet(flash_ctrl_t * const          p_api_ctrl,
                                  flash_callback_args_t * const p_callback_memory);
 fsp_err_t R_FLASH_HP_BankSwap(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_HP_InfoGet(flash_ctrl_t * const p_api_ctrl, flash_info_t * const p_info);
+fsp_err_t R_FLASH_HP_AntiRollbackCounterIncrement(flash_ctrl_t * const p_api_ctrl, flash_arc_t counter);
+fsp_err_t R_FLASH_HP_AntiRollbackCounterRefresh(flash_ctrl_t * const p_api_ctrl, flash_arc_t counter);
+fsp_err_t R_FLASH_HP_AntiRollbackCounterRead(flash_ctrl_t * const p_api_ctrl,
+                                             flash_arc_t          counter,
+                                             uint32_t * const     p_count);
+fsp_err_t R_FLASH_HP_UserLockableAreaWrite(flash_ctrl_t * const p_api_ctrl,
+                                           uint32_t const       src_address,
+                                           uint32_t             flash_address,
+                                           uint32_t const       num_bytes);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup FLASH_HP)

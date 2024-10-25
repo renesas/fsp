@@ -61,18 +61,7 @@ static fsp_err_t r_rsip_rsa_decrypt(rsip_wrapped_key_t const * const p_wrapped_p
                                     uint8_t const * const            p_cipher,
                                     uint8_t * const                  p_plain);
 static fsp_err_t eme_pkcs1_v1_5_ps_generate(rsip_ctrl_t * const p_ctrl, uint8_t * p_ps, uint32_t ps_length);
-static fsp_err_t emsa_pkcs1_v1_5_encode(rsip_hash_type_t const hash_function,
-                                        uint8_t const * const  p_hash,
-                                        uint8_t * const        p_em,
-                                        uint32_t const         em_length);
 static fsp_err_t emsa_pss_encode(rsip_ctrl_t * const    p_ctrl,
-                                 rsip_hash_type_t const hash_function,
-                                 rsip_mgf_type_t const  mask_generation_function,
-                                 uint32_t const         salt_length,
-                                 uint8_t const * const  p_mhash,
-                                 uint8_t * const        p_em,
-                                 uint32_t const         em_bit_length);
-static fsp_err_t emsa_pss_verify(rsip_ctrl_t * const    p_ctrl,
                                  rsip_hash_type_t const hash_function,
                                  rsip_mgf_type_t const  mask_generation_function,
                                  uint32_t const         salt_length,
@@ -958,7 +947,7 @@ fsp_err_t R_RSIP_RSASSA_PKCS1_V1_5_Sign (rsip_ctrl_t * const              p_ctrl
      *
      * signature = EM
      */
-    fsp_err_t err = emsa_pkcs1_v1_5_encode(hash_function, p_hash, p_signature, klen);
+    fsp_err_t err = r_rsip_emsa_pkcs1_v1_5_encode(hash_function, p_hash, p_signature, klen);
 
     /*
      * s = RSASP1 (K, m)
@@ -1054,7 +1043,7 @@ fsp_err_t R_RSIP_RSASSA_PKCS1_V1_5_Verify (rsip_ctrl_t * const              p_ct
          *
          * em_buffer2 = EM'
          */
-        err = emsa_pkcs1_v1_5_encode(hash_function, p_hash, em_buffer2, klen);
+        err = r_rsip_emsa_pkcs1_v1_5_encode(hash_function, p_hash, em_buffer2, klen);
     }
 
     if (FSP_SUCCESS == err)
@@ -1268,13 +1257,13 @@ fsp_err_t R_RSIP_RSASSA_PSS_Verify (rsip_ctrl_t * const              p_ctrl,
          * EMSA-PSS verification
          * Result = EMSA-PSS-VERIFY (M, EM, modBits - 1)
          */
-        err = emsa_pss_verify(p_ctrl,
-                              hash_function,
-                              mask_generation_function,
-                              salt_length,
-                              p_hash,
-                              em_buffer,
-                              klen * 8 - 1);
+        err = r_rsip_emsa_pss_verify(p_ctrl,
+                                     hash_function,
+                                     mask_generation_function,
+                                     salt_length,
+                                     p_hash,
+                                     em_buffer,
+                                     klen * 8 - 1);
     }
 
     return err;
@@ -1283,6 +1272,231 @@ fsp_err_t R_RSIP_RSASSA_PSS_Verify (rsip_ctrl_t * const              p_ctrl,
 /*******************************************************************************************************************//**
  * @} (end addtogroup RSIP_PROTECTED)
  **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Computes EMSA-PKCS1-v1_5-ENCODE.
+ *
+ * @param[in]     hash_function         Hash function in EMSA-PKCS1-v1_5.
+ * @param[in]     p_hash                Pointer to input hash.
+ * @param[out]    p_em                  Pointer to destination of EM (Encoded Message).
+ * @param[in]     em_length             Length of EM.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_INVALID_SIZE                  Key length is too short.
+ **********************************************************************************************************************/
+fsp_err_t r_rsip_emsa_pkcs1_v1_5_encode (rsip_hash_type_t const hash_function,
+                                         uint8_t const * const  p_hash,
+                                         uint8_t * const        p_em,
+                                         uint32_t const         em_length)
+{
+    static const uint8_t digest_info_prefix[][19] =
+    {
+        [RSIP_HASH_TYPE_SHA1] =
+        {
+        0x30, 0x21, 0x30, 0x09, 0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a, 0x05, 0x00, 0x04, 0x14
+        },
+        [RSIP_HASH_TYPE_SHA224] =
+        {
+        0x30, 0x2d, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x04, 0x05,
+        0x00, 0x04, 0x1c
+        },
+        [RSIP_HASH_TYPE_SHA256] =
+        {
+        0x30, 0x31, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01, 0x05,
+        0x00, 0x04, 0x20
+        },
+        [RSIP_HASH_TYPE_SHA384] =
+        {
+        0x30, 0x41, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02, 0x05,
+        0x00, 0x04, 0x30
+        },
+        [RSIP_HASH_TYPE_SHA512] =
+        {
+        0x30, 0x51, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03, 0x05,
+        0x00, 0x04, 0x40
+        },
+        [RSIP_HASH_TYPE_SHA512_224] =
+        {
+        0x30, 0x2d, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x05, 0x05,
+        0x00, 0x04, 0x1c
+        },
+        [RSIP_HASH_TYPE_SHA512_256] =
+        {
+        0x30, 0x31, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x06, 0x05,
+        0x00, 0x04, 0x20
+        },
+    };
+    static const uint32_t digest_info_prefix_len[] =
+    {
+        [RSIP_HASH_TYPE_SHA1]       = 15,
+        [RSIP_HASH_TYPE_SHA224]     = 19,
+        [RSIP_HASH_TYPE_SHA256]     = 19,
+        [RSIP_HASH_TYPE_SHA384]     = 19,
+        [RSIP_HASH_TYPE_SHA512]     = 19,
+        [RSIP_HASH_TYPE_SHA512_224] = 19,
+        [RSIP_HASH_TYPE_SHA512_256] = 19
+    };
+
+    uint8_t const * t_prefix     = digest_info_prefix[hash_function];
+    uint32_t        t_prefix_len = digest_info_prefix_len[hash_function];
+    uint32_t        t_hash_len   = gs_hash_length[hash_function];
+
+    /* Check length */
+    FSP_ERROR_RETURN((t_prefix_len + t_hash_len + 11) <= em_length, FSP_ERR_INVALID_SIZE);
+
+    /* Padding */
+    p_em[0] = 0x00;
+    p_em[1] = 0x01;
+    memset(&p_em[2], RSIP_PRV_EMSA_PKCS1_V1_5_PS, em_length - t_prefix_len - t_hash_len - 3);
+    p_em[em_length - t_prefix_len - t_hash_len - 1] = 0x00;
+
+    /* Copy the prefix of DER encoding T */
+    memcpy(&p_em[em_length - t_prefix_len - t_hash_len], t_prefix, t_prefix_len);
+
+    /* Copy hash */
+    memcpy(&p_em[em_length - t_hash_len], p_hash, t_hash_len);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Computes EMSA-PSS-VERIFY.
+ *
+ * @param[in,out] p_ctrl                   Pointer to control block.
+ * @param[in]     hash_function            Hash function in EMSA-PSS-VERIFY.
+ * @param[in]     mask_generation_function Mask generation function in EMSA-PSS-VERIFY.
+ * @param[in]     salt_length              Salt length.
+ * @param[in]     p_mhash                  Pointer to mHash.
+ * @param[in,out] p_em                     Pointer to EM (Encoded Message). After execution, DB is unmasked.
+ * @param[in]     em_bit_length            Bit length of EM.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ *
+ * @retval FSP_ERR_INVALID_SIZE                  Key length is too short.
+ *
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Verification failed.
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ **********************************************************************************************************************/
+fsp_err_t r_rsip_emsa_pss_verify (rsip_ctrl_t * const    p_ctrl,
+                                  rsip_hash_type_t const hash_function,
+                                  rsip_mgf_type_t const  mask_generation_function,
+                                  uint32_t const         salt_length,
+                                  uint8_t const * const  p_mhash,
+                                  uint8_t * const        p_em,
+                                  uint32_t const         em_bit_length)
+{
+    uint32_t slen                = 0;
+    uint32_t hlen                = gs_hash_length[hash_function];
+    uint32_t emlen               = (em_bit_length + 7) / 8; // round up
+    bool     salt_auto_detection = false;
+
+    /* Set salt length*/
+    uint32_t slen_max = emlen - hlen - 2;
+    switch (salt_length)
+    {
+        case RSIP_RSA_SALT_LENGTH_AUTO:
+        {
+            salt_auto_detection = true;
+            break;
+        }
+
+        case RSIP_RSA_SALT_LENGTH_HASH:
+        {
+            slen = hlen;
+            break;
+        }
+
+        case RSIP_RSA_SALT_LENGTH_MAX:
+        {
+            slen = slen_max;
+            break;
+        }
+
+        default:
+        {
+            slen = salt_length;
+        }
+    }
+
+    uint8_t   hash_buffer[RSIP_PRV_BYTE_SIZE_HASH_BUFFER];
+    uint8_t * p_db   = &p_em[0];
+    uint8_t * p_salt = &p_em[emlen - slen - hlen - 1];
+    uint8_t * p_hash = &p_em[emlen - hlen - 1];
+
+    /* Check length */
+    FSP_ERROR_RETURN(emlen >= hlen + slen + 2, FSP_ERR_INVALID_SIZE);
+
+    /* Error: the rightmost octet of EM does not have hexadecimal value 0xbc */
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+    if (p_em[emlen - 1] != RSIP_PRV_EMSA_PSS_TRAILER_FIELD)
+    {
+        err = FSP_ERR_CRYPTO_RSIP_FAIL;
+    }
+    else
+    {
+        err = FSP_SUCCESS;
+    }
+
+    /* the leftmost 8emLen - emBits bits of the leftmost octet in maskedDB are not all equal to zero */
+    if (FSP_SUCCESS == err)
+    {
+        if (0x00 != (p_em[0] & ~(RSIP_PRV_EMSA_PSS_MASK >> (8 * emlen - em_bit_length))))
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+    }
+
+    /*
+     * dbMask = MGF(H, emLen - hLen - 1)
+     * DB = maskedDB \xor dbMask
+     *
+     * em = DB || H || 0xbc
+     */
+    if (FSP_SUCCESS == err)
+    {
+        rsip_hash_type_t mgf1_hash = (rsip_hash_type_t) mask_generation_function;
+        err = mgf1_mask(p_ctrl, mgf1_hash, p_hash, hlen, p_db, emlen - hlen - 1);
+    }
+
+    if (FSP_SUCCESS == err)
+    {
+        /* Set the leftmost 8emLen - emBits bits of the leftmost octet in DB to zero */
+        p_em[0] &= (uint8_t) (RSIP_PRV_EMSA_PSS_MASK >> (8 * emlen - em_bit_length));
+
+        /*
+         * Error: the emLen - hLen - sLen - 2 leftmost octets of DB are not zero or the octet at position
+         * emLen - hLen - sLen - 1 (the leftmost position is "position 1") does not have hexadecimal value 0x01
+         */
+        err = emsa_pss_ps_check(p_db, emlen - hlen - 1, (uint8_t const **) &p_salt, &slen, salt_auto_detection);
+    }
+
+    /*
+     * mHash = Hash(M)
+     * M' = Padding1 ((0x)00 00 00 00 00 00 00 00) || mHash || salt
+     * H' = Hash(M')
+     *
+     * hash_buffer = H'
+     */
+    if (FSP_SUCCESS == err)
+    {
+        err = emsa_pss_h_generate(p_ctrl, hash_function, p_mhash, hlen, p_salt, slen, hash_buffer);
+    }
+
+    /* Compare H and H' */
+    if (FSP_SUCCESS == err)
+    {
+        if (0 != memcmp(p_hash, hash_buffer, hlen))
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+    }
+
+    return err;
+}
 
 /***********************************************************************************************************************
  * Private Functions
@@ -1459,92 +1673,6 @@ static fsp_err_t eme_pkcs1_v1_5_ps_generate (rsip_ctrl_t * const p_ctrl, uint8_t
 }
 
 /*******************************************************************************************************************//**
- * Computes EMSA-PKCS1-v1_5-ENCODE.
- *
- * @param[in]     hash_function         Hash function in EMSA-PKCS1-v1_5.
- * @param[in]     p_hash                Pointer to input hash.
- * @param[out]    p_em                  Pointer to destination of EM (Encoded Message).
- * @param[in]     em_length             Length of EM.
- *
- * @retval FSP_SUCCESS                           Normal termination.
- * @retval FSP_ERR_INVALID_SIZE                  Key length is too short.
- **********************************************************************************************************************/
-static fsp_err_t emsa_pkcs1_v1_5_encode (rsip_hash_type_t const hash_function,
-                                         uint8_t const * const  p_hash,
-                                         uint8_t * const        p_em,
-                                         uint32_t const         em_length)
-{
-    static const uint8_t digest_info_prefix[][19] =
-    {
-        [RSIP_HASH_TYPE_SHA1] =
-        {
-        0x30, 0x21, 0x30, 0x09, 0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a, 0x05, 0x00, 0x04, 0x14
-        },
-        [RSIP_HASH_TYPE_SHA224] =
-        {
-        0x30, 0x2d, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x04, 0x05,
-        0x00, 0x04, 0x1c
-        },
-        [RSIP_HASH_TYPE_SHA256] =
-        {
-        0x30, 0x31, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01, 0x05,
-        0x00, 0x04, 0x20
-        },
-        [RSIP_HASH_TYPE_SHA384] =
-        {
-        0x30, 0x41, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02, 0x05,
-        0x00, 0x04, 0x30
-        },
-        [RSIP_HASH_TYPE_SHA512] =
-        {
-        0x30, 0x51, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03, 0x05,
-        0x00, 0x04, 0x40
-        },
-        [RSIP_HASH_TYPE_SHA512_224] =
-        {
-        0x30, 0x2d, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x05, 0x05,
-        0x00, 0x04, 0x1c
-        },
-        [RSIP_HASH_TYPE_SHA512_256] =
-        {
-        0x30, 0x31, 0x30, 0x0d, 0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x06, 0x05,
-        0x00, 0x04, 0x20
-        },
-    };
-    static const uint32_t digest_info_prefix_len[] =
-    {
-        [RSIP_HASH_TYPE_SHA1]       = 15,
-        [RSIP_HASH_TYPE_SHA224]     = 19,
-        [RSIP_HASH_TYPE_SHA256]     = 19,
-        [RSIP_HASH_TYPE_SHA384]     = 19,
-        [RSIP_HASH_TYPE_SHA512]     = 19,
-        [RSIP_HASH_TYPE_SHA512_224] = 19,
-        [RSIP_HASH_TYPE_SHA512_256] = 19
-    };
-
-    uint8_t const * t_prefix     = digest_info_prefix[hash_function];
-    uint32_t        t_prefix_len = digest_info_prefix_len[hash_function];
-    uint32_t        t_hash_len   = gs_hash_length[hash_function];
-
-    /* Check length */
-    FSP_ERROR_RETURN((t_prefix_len + t_hash_len + 11) <= em_length, FSP_ERR_INVALID_SIZE);
-
-    /* Padding */
-    p_em[0] = 0x00;
-    p_em[1] = 0x01;
-    memset(&p_em[2], RSIP_PRV_EMSA_PKCS1_V1_5_PS, em_length - t_prefix_len - t_hash_len - 3);
-    p_em[em_length - t_prefix_len - t_hash_len - 1] = 0x00;
-
-    /* Copy the prefix of DER encoding T */
-    memcpy(&p_em[em_length - t_prefix_len - t_hash_len], t_prefix, t_prefix_len);
-
-    /* Copy hash */
-    memcpy(&p_em[em_length - t_hash_len], p_hash, t_hash_len);
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
  * Computes EMSA-PSS-ENCODE.
  *
  * @param[in,out] p_ctrl                   Pointer to control block.
@@ -1650,146 +1778,6 @@ static fsp_err_t emsa_pss_encode (rsip_ctrl_t * const    p_ctrl,
     {
         /* Set the leftmost 8emLen - emBits bits of the leftmost octet in maskedDB to zero */
         p_em[0] &= (uint8_t) (RSIP_PRV_EMSA_PSS_MASK >> (8 * emlen - em_bit_length));
-    }
-
-    return err;
-}
-
-/*******************************************************************************************************************//**
- * Computes EMSA-PSS-VERIFY.
- *
- * @param[in,out] p_ctrl                   Pointer to control block.
- * @param[in]     hash_function            Hash function in EMSA-PSS-VERIFY.
- * @param[in]     mask_generation_function Mask generation function in EMSA-PSS-VERIFY.
- * @param[in]     salt_length              Salt length.
- * @param[in]     p_mhash                  Pointer to mHash.
- * @param[in,out] p_em                     Pointer to EM (Encoded Message). This argument is used as working area.
- *                                         Therefore, the value is destroyed after executing this function.
- * @param[in]     em_bit_length            Bit length of EM.
- *
- * @retval FSP_SUCCESS                           Normal termination.
- * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
- *
- * @retval FSP_ERR_INVALID_SIZE                  Key length is too short.
- *
- * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Verification failed.
- * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
- *                                               by the processing is in use by other processing.
- * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
- **********************************************************************************************************************/
-static fsp_err_t emsa_pss_verify (rsip_ctrl_t * const    p_ctrl,
-                                  rsip_hash_type_t const hash_function,
-                                  rsip_mgf_type_t const  mask_generation_function,
-                                  uint32_t const         salt_length,
-                                  uint8_t const * const  p_mhash,
-                                  uint8_t * const        p_em,
-                                  uint32_t const         em_bit_length)
-{
-    uint32_t slen                = 0;
-    uint32_t hlen                = gs_hash_length[hash_function];
-    uint32_t emlen               = (em_bit_length + 7) / 8; // round up
-    bool     salt_auto_detection = false;
-
-    /* Set salt length*/
-    uint32_t slen_max = emlen - hlen - 2;
-    switch (salt_length)
-    {
-        case RSIP_RSA_SALT_LENGTH_AUTO:
-        {
-            salt_auto_detection = true;
-            break;
-        }
-
-        case RSIP_RSA_SALT_LENGTH_HASH:
-        {
-            slen = hlen;
-            break;
-        }
-
-        case RSIP_RSA_SALT_LENGTH_MAX:
-        {
-            slen = slen_max;
-            break;
-        }
-
-        default:
-        {
-            slen = salt_length;
-        }
-    }
-
-    uint8_t   hash_buffer[RSIP_PRV_BYTE_SIZE_HASH_BUFFER];
-    uint8_t * p_db   = &p_em[0];
-    uint8_t * p_salt = &p_em[emlen - slen - hlen - 1];
-    uint8_t * p_hash = &p_em[emlen - hlen - 1];
-
-    /* Check length */
-    FSP_ERROR_RETURN(emlen >= hlen + slen + 2, FSP_ERR_INVALID_SIZE);
-
-    /* Error: the rightmost octet of EM does not have hexadecimal value 0xbc */
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
-
-    if (p_em[emlen - 1] != RSIP_PRV_EMSA_PSS_TRAILER_FIELD)
-    {
-        err = FSP_ERR_CRYPTO_RSIP_FAIL;
-    }
-    else
-    {
-        err = FSP_SUCCESS;
-    }
-
-    /* the leftmost 8emLen - emBits bits of the leftmost octet in maskedDB are not all equal to zero */
-    if (FSP_SUCCESS == err)
-    {
-        if (0x00 != (p_em[0] & ~(RSIP_PRV_EMSA_PSS_MASK >> (8 * emlen - em_bit_length))))
-        {
-            err = FSP_ERR_CRYPTO_RSIP_FAIL;
-        }
-    }
-
-    /*
-     * dbMask = MGF(H, emLen - hLen - 1)
-     * DB = maskedDB \xor dbMask
-     *
-     * em = DB || H || 0xbc
-     */
-    if (FSP_SUCCESS == err)
-    {
-        rsip_hash_type_t mgf1_hash = (rsip_hash_type_t) mask_generation_function;
-        err = mgf1_mask(p_ctrl, mgf1_hash, p_hash, hlen, p_db, emlen - hlen - 1);
-    }
-
-    if (FSP_SUCCESS == err)
-    {
-        /* Set the leftmost 8emLen - emBits bits of the leftmost octet in DB to zero */
-        p_em[0] &= (uint8_t) (RSIP_PRV_EMSA_PSS_MASK >> (8 * emlen - em_bit_length));
-
-        /*
-         * Error: the emLen - hLen - sLen - 2 leftmost octets of DB are not zero or the octet at position
-         * emLen - hLen - sLen - 1 (the leftmost position is "position 1") does not have hexadecimal value 0x01
-         */
-        err = emsa_pss_ps_check(p_db, emlen - hlen - 1, (uint8_t const **) &p_salt, &slen, salt_auto_detection);
-    }
-
-    /*
-     * mHash = Hash(M)
-     * M' = Padding1 ((0x)00 00 00 00 00 00 00 00) || mHash || salt
-     * H' = Hash(M')
-     *
-     * hash_buffer = H'
-     */
-    if (FSP_SUCCESS == err)
-    {
-        err = emsa_pss_h_generate(p_ctrl, hash_function, p_mhash, hlen, p_salt, slen, hash_buffer);
-    }
-
-    /* Compare H and H' */
-    if (FSP_SUCCESS == err)
-    {
-        if (0 != memcmp(p_hash, hash_buffer, hlen))
-        {
-            err = FSP_ERR_CRYPTO_RSIP_FAIL;
-        }
     }
 
     return err;

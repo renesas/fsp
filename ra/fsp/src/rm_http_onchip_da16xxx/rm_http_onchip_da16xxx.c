@@ -305,6 +305,121 @@ fsp_err_t RM_HTTP_DA16XXX_Send (http_onchip_da16xxx_instance_ctrl_t * p_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ *  Start the HTTP server.
+ *
+ * @param[in]  p_ctrl               Pointer to HTTP Client instance control structure.
+ * @param[in]  enable               Enum value to enable or disable SSL.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_ASSERTION        Parameter checking was unsuccessful.
+ * @retval FSP_ERR_INVALID_ARGUMENT SSl enable is either null or incorrect.
+ * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t RM_HTTP_DA16XXX_Start (http_onchip_da16xxx_instance_ctrl_t * p_ctrl, http_onchip_da16xxx_ssl_enable_t enable)
+{
+    /* Do parameter checking */
+#if (1 == HTTP_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(HTTP_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN((enable == HTTP_ONCHIP_DA16XXX_SSL_ENABLE) || (enable == HTTP_ONCHIP_DA16XXX_SSL_DISABLE),
+                     FSP_ERR_INVALID_ARGUMENT);
+#endif
+
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+
+    at_transport_da16xxx_data_t atcmd;
+
+    p_ctrl->enable = HTTP_ONCHIP_DA16XXX_SSL_DISABLE;
+
+    atcmd.p_at_cmd_string      = g_cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = g_cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(g_cmd_rx_buff);
+    atcmd.timeout_ms           = HTTP_ONCHIP_DA16XXX_TIMEOUT_400MS;
+    atcmd.p_expect_code        = HTTP_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
+
+    fsp_err_t (* p_send_cmd)(at_transport_da16xxx_ctrl_t *,
+                             at_transport_da16xxx_data_t *) = p_transport_instance->p_api->atCommandSendThreadSafe;
+
+    char * httpcmd;
+
+    p_ctrl->enable = enable;
+
+    if (enable == HTTP_ONCHIP_DA16XXX_SSL_ENABLE)
+    {
+        httpcmd = "AT+NWHTSS=1\r";
+    }
+    else
+    {
+        httpcmd = "AT+NWHTS=1\r";
+    }
+
+    snprintf((char *) g_cmd_tx_buff, sizeof(g_cmd_tx_buff), "%s", httpcmd);
+    FSP_ERROR_RETURN(FSP_SUCCESS ==
+                     p_send_cmd(p_transport_instance->p_ctrl, &atcmd),
+                     FSP_ERR_WIFI_FAILED);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ *  Start the HTTP server.
+ *
+ * @param[in]  p_ctrl               Pointer to HTTP Client instance control structure.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_WIFI_FAILED      Error occurred with command to Wifi module.
+ * @retval FSP_ERR_ASSERTION        Parameter checking was unsuccessful.
+ * @retval FSP_ERR_INVALID_ARGUMENT SSl enable is either null or incorrect.
+ * @retval FSP_ERR_NOT_OPEN         The instance has not been opened.
+ **********************************************************************************************************************/
+fsp_err_t RM_HTTP_DA16XXX_Stop (http_onchip_da16xxx_instance_ctrl_t * p_ctrl)
+{
+    /* Do parameter checking */
+#if (1 == HTTP_ONCHIP_DA16XXX_CFG_PARAM_CHECKING_ENABLED)
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(HTTP_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    at_transport_da16xxx_instance_t const * p_transport_instance =
+        p_ctrl->p_cfg->p_transport_instance;
+
+    at_transport_da16xxx_data_t atcmd;
+
+    atcmd.p_at_cmd_string      = g_cmd_tx_buff;
+    atcmd.at_cmd_string_length = 0;
+    atcmd.p_response_buffer    = g_cmd_rx_buff;
+    atcmd.response_buffer_size = sizeof(g_cmd_rx_buff);
+    atcmd.timeout_ms           = HTTP_ONCHIP_DA16XXX_TIMEOUT_100MS;
+    atcmd.p_expect_code        = HTTP_ONCHIP_DA16XXX_RETURN_TEXT_OK;
+    atcmd.comm_ch_id           = 0;
+
+    fsp_err_t (* p_send_cmd)(at_transport_da16xxx_ctrl_t *,
+                             at_transport_da16xxx_data_t *) = p_transport_instance->p_api->atCommandSendThreadSafe;
+
+    char * httpcmd;
+
+    if (p_ctrl->enable == HTTP_ONCHIP_DA16XXX_SSL_ENABLE)
+    {
+        httpcmd = "AT+NWHTSS=0\r";
+    }
+    else
+    {
+        httpcmd = "AT+NWHTS=0\r";
+    }
+
+    snprintf((char *) g_cmd_tx_buff, sizeof(g_cmd_tx_buff), "%s", httpcmd);
+    FSP_ERROR_RETURN(FSP_SUCCESS ==
+                     p_send_cmd(p_transport_instance->p_ctrl, &atcmd),
+                     FSP_ERR_WIFI_FAILED);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  *  Close the DA16XXX HTTP Client service.
  *
  * @param[in]  p_ctrl               Pointer to HTTP Client instance control structure.

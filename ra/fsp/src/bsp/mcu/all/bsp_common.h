@@ -27,6 +27,9 @@
 
 #include "../../src/bsp/mcu/all/bsp_sdram.h"
 
+/* BSP MMF Includes. */
+#include "../../src/bsp/mcu/all/bsp_mmf.h"
+
 #include "bsp_cfg.h"
 
 /** Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */

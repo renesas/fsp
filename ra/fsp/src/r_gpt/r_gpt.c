@@ -17,6 +17,17 @@
 /* "GPT" in ASCII, used to determine if channel is open. */
 #define GPT_OPEN                                         (0x00475054ULL)
 
+/* define in case unsupported */
+#ifndef BSP_FEATURE_GPT_GPTEH_CHANNEL_MASK
+ #define BSP_FEATURE_GPT_GPTEH_CHANNEL_MASK              (0)
+#endif
+#ifndef BSP_FEATURE_GPT_GPTE_CHANNEL_MASK
+ #define BSP_FEATURE_GPT_GPTE_CHANNEL_MASK               (0)
+#endif
+#ifndef BSP_FEATURE_GPT_AD_DIRECT_START_CHANNEL_MASK
+ #define BSP_FEATURE_GPT_AD_DIRECT_START_CHANNEL_MASK    (0)
+#endif
+
 #define GPT_PRV_GPTE_OR_GPTEH_SUPPORTED                  (BSP_FEATURE_GPT_GPTEH_SUPPORTED | \
                                                           BSP_FEATURE_GPT_GPTE_SUPPORTED)
 #define GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK               (BSP_FEATURE_GPT_GPTEH_CHANNEL_MASK | \

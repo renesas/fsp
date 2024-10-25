@@ -198,6 +198,8 @@ fsp_err_t R_RSIP_AES_Cipher_Init (rsip_ctrl_t * const              p_ctrl,
         case RSIP_AES_CIPHER_MODE_ECB_DEC:
         case RSIP_AES_CIPHER_MODE_CBC_ENC:
         case RSIP_AES_CIPHER_MODE_CBC_DEC:
+        case RSIP_AES_CIPHER_MODE_CBC_ENC_WRAPPED_IV:
+        case RSIP_AES_CIPHER_MODE_CBC_DEC_WRAPPED_IV:
         case RSIP_AES_CIPHER_MODE_CTR:
         {
             err = aes_init(p_ctrl, mode, p_wrapped_key, p_initial_vector);
@@ -429,6 +431,8 @@ fsp_err_t R_RSIP_AES_AEAD_Init (rsip_ctrl_t * const              p_ctrl,
         /* AES-GCM */
         case RSIP_AES_AEAD_MODE_GCM_ENC:
         case RSIP_AES_AEAD_MODE_GCM_DEC:
+        case RSIP_AES_AEAD_MODE_GCM_ENC_WRAPPED_IV:
+        case RSIP_AES_AEAD_MODE_GCM_DEC_WRAPPED_IV:
         {
             err = gcm_init(p_ctrl, mode, p_wrapped_key, p_nonce, nonce_length);
             break;
@@ -1282,6 +1286,18 @@ static fsp_err_t aes_init (rsip_ctrl_t              * p_ctrl,
             break;
         }
 
+        case RSIP_AES_CIPHER_MODE_CBC_ENC_WRAPPED_IV:
+        {
+            p_func_init = p_func->p_init_cbc_enc_wrapped_iv;
+            break;
+        }
+
+        case RSIP_AES_CIPHER_MODE_CBC_DEC_WRAPPED_IV:
+        {
+            p_func_init = p_func->p_init_cbc_dec_wrapped_iv;
+            break;
+        }
+
         default:                       // RSIP_AES_CIPHER_MODE_CTR
         {
             p_func_init = p_func->p_init_ctr;
@@ -1626,9 +1642,9 @@ static fsp_err_t gcm_init (rsip_ctrl_t              * p_ctrl,
 {
     rsip_instance_ctrl_t             * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
     rsip_aes_gcm_handle_t            * p_handle        = &p_instance_ctrl->handle.aes_gcm;
-    const rsip_func_subset_aes_gcm_t * p_func          = (RSIP_AES_AEAD_MODE_GCM_ENC == mode) ?
-                                                         &gp_func_aes_gcm_enc[p_wrapped_key->subtype] :
-                                                         &gp_func_aes_gcm_dec[p_wrapped_key->subtype];
+    const rsip_func_subset_aes_gcm_t * p_func          =
+        ((RSIP_AES_AEAD_MODE_GCM_ENC == mode) || (RSIP_AES_AEAD_MODE_GCM_ENC_WRAPPED_IV == mode)) ?
+        &gp_func_aes_gcm_enc[p_wrapped_key->subtype] : &gp_func_aes_gcm_dec[p_wrapped_key->subtype];
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
 
@@ -1642,23 +1658,56 @@ static fsp_err_t gcm_init (rsip_ctrl_t              * p_ctrl,
     /* Initialize handle */
     r_rsip_handle_reset(&p_instance_ctrl->handle);
 
-    /* Set primitive */
+    /* Set function */
     p_handle->p_func = p_func;
 
-    /* Generate IV */
-    uint32_t hashed_ivec[4] =
+    /* Call function (cast to match the argument type with the primitive function) */
+    fsp_err_t  err      = FSP_ERR_CRYPTO_RSIP_FATAL;
+    rsip_ret_t rsip_ret = RSIP_RET_UNKNOWN;
+    switch (mode)
     {
-        0
-    };
+        /* Plain IV */
+        case RSIP_AES_AEAD_MODE_GCM_ENC:
+        case RSIP_AES_AEAD_MODE_GCM_DEC:
+        {
+            /* Generate IV */
+            uint32_t hashed_ivec[4] =
+            {
+                0
+            };
 
-    fsp_err_t err =
-        gcm_iv_prepare(&gp_func_aes_cipher[p_wrapped_key->subtype], p_nonce, nonce_length, p_wrapped_key, hashed_ivec);
+            err = gcm_iv_prepare(&gp_func_aes_cipher[p_wrapped_key->subtype],
+                                 p_nonce,
+                                 nonce_length,
+                                 p_wrapped_key,
+                                 hashed_ivec);
+
+            if (FSP_SUCCESS == err)
+            {
+                rsip_ret = p_func->p_init((const uint32_t *) p_wrapped_key->value, hashed_ivec);
+            }
+
+            break;
+        }
+
+        /* Wrapped IV */
+        case RSIP_AES_AEAD_MODE_GCM_ENC_WRAPPED_IV:
+        case RSIP_AES_AEAD_MODE_GCM_DEC_WRAPPED_IV:
+        {
+            err      = FSP_SUCCESS;
+            rsip_ret = p_func->p_init_wrapped_iv((const uint32_t *) p_wrapped_key->value, (const uint32_t *) p_nonce);
+
+            break;
+        }
+
+        default:
+        {
+            /* Invalid mode */
+        }
+    }
 
     if (FSP_SUCCESS == err)
     {
-        /* Call primitive (cast to match the argument type with the primitive function) */
-        rsip_ret_t rsip_ret = p_func->p_init((const uint32_t *) p_wrapped_key->value, hashed_ivec);
-
         /* Check error */
         switch (rsip_ret)
         {
@@ -1669,8 +1718,9 @@ static fsp_err_t gcm_init (rsip_ctrl_t              * p_ctrl,
                  * RSIP_AES_AEAD_MODE_GCM_ENC -> RSIP_STATE_AES_GCM_ENC_UPDATE_AAD
                  * RSIP_AES_AEAD_MODE_GCM_DEC -> RSIP_STATE_AES_GCM_DEC_UPDATE_AAD
                  */
-                p_instance_ctrl->state = (RSIP_AES_AEAD_MODE_GCM_ENC == mode) ?
-                                         RSIP_STATE_AES_GCM_ENC_UPDATE_AAD : RSIP_STATE_AES_GCM_DEC_UPDATE_AAD;
+                p_instance_ctrl->state =
+                    ((RSIP_AES_AEAD_MODE_GCM_ENC == mode) || (RSIP_AES_AEAD_MODE_GCM_ENC_WRAPPED_IV == mode)) ?
+                    RSIP_STATE_AES_GCM_ENC_UPDATE_AAD : RSIP_STATE_AES_GCM_DEC_UPDATE_AAD;
 
                 err = FSP_SUCCESS;
                 break;

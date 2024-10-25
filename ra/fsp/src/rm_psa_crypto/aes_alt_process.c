@@ -136,7 +136,8 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
     unsigned int          local_keybits  = 0;
     const unsigned char * p_internal_key = key;
    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-    BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+        BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
+        BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
 
     /* Create storage to hold the generated OEM key index. Size = Largest key size possible. */
     uint8_t encrypted_aes_key[SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED] = {0};
@@ -146,7 +147,8 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
         case SIZE_AES_128BIT_KEYLEN_BITS:
         {
    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-            BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+            BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
+            BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
             local_keybits = SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 10;
             if (false == (bool) ctx->vendor_ctx)
@@ -178,8 +180,8 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
    #if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
         case SIZE_AES_192BIT_KEYLEN_BITS:
         {
-    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-            BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7
+   #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
+            BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
             local_keybits = SIZE_AES_192BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 12;
             if (false == (bool) ctx->vendor_ctx)
@@ -211,7 +213,8 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
         case SIZE_AES_256BIT_KEYLEN_BITS:
         {
     #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-            BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+            BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
+            BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
 
             local_keybits = SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 14;
@@ -444,8 +447,9 @@ int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char
         err = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
 
-   #if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
-    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
+   #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || \
+            BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     else if (ctx->nr == 12)
     {
         err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, dummy_iv);
@@ -712,8 +716,9 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
         err = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
 
-   #if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
-    #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if !defined(MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH)
+   #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || \
+            BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     else if (ctx->nr == 12)
     {
         err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, dummy_iv);

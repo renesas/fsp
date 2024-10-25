@@ -5741,7 +5741,40 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
         } FMEPROT_b;
     };
     __IM uint16_t RESERVED9;
-    __IM uint32_t RESERVED10[12];
+
+    union
+    {
+        __IOM uint8_t FCNTSELR;        /*!< (@ 0x00000048) Flash Counter Select Register                              */
+
+        struct
+        {
+            __IOM uint8_t CNTSEL : 3;  /*!< [2..0] Counter Select                                                     */
+            uint8_t              : 5;
+        } FCNTSELR_b;
+    };
+    __IM uint8_t  RESERVED10;
+    __IM uint16_t RESERVED11;
+
+    union
+    {
+        __IM uint32_t FCNTDATAR0;       /*!< (@ 0x0000004C) Flash Counter Data Register 0                              */
+
+        struct
+        {
+            __IM uint32_t CNTRDAT : 32; /*!< [31..0] Counter Read Data                                                 */
+        } FCNTDATAR0_b;
+    };
+
+    union
+    {
+        __IM uint32_t FCNTDATAR1;       /*!< (@ 0x00000050) Flash Counter Data Register 1                              */
+
+        struct
+        {
+            __IM uint32_t CNTRDAT : 32; /*!< [31..0] Counter Read Data                                                 */
+        } FCNTDATAR1_b;
+    };
+    __IM uint32_t RESERVED12[9];
 
     union
     {
@@ -5759,7 +5792,7 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             __OM uint16_t KEY : 8;     /*!< [15..8] KEY Code                                                          */
         } FBPROT0_b;
     };
-    __IM uint16_t RESERVED11;
+    __IM uint16_t RESERVED13;
 
     union
     {
@@ -5777,7 +5810,7 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             __OM uint16_t KEY : 8;     /*!< [15..8] KEY Code                                                          */
         } FBPROT1_b;
     };
-    __IM uint16_t RESERVED12;
+    __IM uint16_t RESERVED14;
 
     union
     {
@@ -5825,8 +5858,8 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             __OM uint16_t KEY : 8;      /*!< [15..8] KEY Code                                                          */
         } FENTRYR_b;
     };
-    __IM uint16_t RESERVED13;
-    __IM uint32_t RESERVED14;
+    __IM uint16_t RESERVED15;
+    __IM uint32_t RESERVED16;
 
     union
     {
@@ -5843,8 +5876,8 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             __OM uint16_t KEY : 8;     /*!< [15..8] KEY Code                                                          */
         } FSUINITR_b;
     };
-    __IM uint16_t RESERVED15;
-    __IM uint32_t RESERVED16[4];
+    __IM uint16_t RESERVED17;
+    __IM uint32_t RESERVED18[4];
 
     union
     {
@@ -5856,8 +5889,8 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             __IM uint16_t CMDR  : 8;   /*!< [15..8] Command Register                                                  */
         } FCMDR_b;
     };
-    __IM uint16_t RESERVED17;
-    __IM uint32_t RESERVED18[11];
+    __IM uint16_t RESERVED19;
+    __IM uint32_t RESERVED20[11];
 
     union
     {
@@ -5869,8 +5902,8 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             uint8_t             : 7;
         } FBCCNT_b;
     };
-    __IM uint8_t  RESERVED19;
-    __IM uint16_t RESERVED20;
+    __IM uint8_t  RESERVED21;
+    __IM uint16_t RESERVED22;
 
     union
     {
@@ -5882,8 +5915,8 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             uint8_t           : 7;
         } FBCSTAT_b;
     };
-    __IM uint8_t  RESERVED21;
-    __IM uint16_t RESERVED22;
+    __IM uint8_t  RESERVED23;
+    __IM uint16_t RESERVED24;
 
     union
     {
@@ -5929,7 +5962,7 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             uint16_t               : 15;
         } FCPSR_b;
     };
-    __IM uint16_t RESERVED23;
+    __IM uint16_t RESERVED25;
 
     union
     {
@@ -5945,7 +5978,7 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             __OM uint16_t KEY : 8;     /*!< [15..8] KEY Code                                                          */
         } FPCKAR_b;
     };
-    __IM uint16_t RESERVED24;
+    __IM uint16_t RESERVED26;
 
     union
     {
@@ -5962,7 +5995,7 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
             __OM uint16_t KEY : 8;     /*!< [15..8] KEY Code                                                          */
         } FSUACR_b;
     };
-    __IM uint16_t RESERVED25;
+    __IM uint16_t RESERVED27;
 } R_FACI_HP_Type;                      /*!< Size = 236 (0xec)                                                         */
 
 /* =========================================================================================================================== */
@@ -19472,118 +19505,127 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
 /* =========================================================================================================================== */
 
 /* ========================================================  FASTAT  ========================================================= */
- #define R_FACI_HP_FASTAT_CFAE_Pos         (7UL)          /*!< CFAE (Bit 7)                                          */
- #define R_FACI_HP_FASTAT_CFAE_Msk         (0x80UL)       /*!< CFAE (Bitfield-Mask: 0x01)                            */
- #define R_FACI_HP_FASTAT_CMDLK_Pos        (4UL)          /*!< CMDLK (Bit 4)                                         */
- #define R_FACI_HP_FASTAT_CMDLK_Msk        (0x10UL)       /*!< CMDLK (Bitfield-Mask: 0x01)                           */
- #define R_FACI_HP_FASTAT_DFAE_Pos         (3UL)          /*!< DFAE (Bit 3)                                          */
- #define R_FACI_HP_FASTAT_DFAE_Msk         (0x8UL)        /*!< DFAE (Bitfield-Mask: 0x01)                            */
+ #define R_FACI_HP_FASTAT_CFAE_Pos           (7UL)          /*!< CFAE (Bit 7)                                          */
+ #define R_FACI_HP_FASTAT_CFAE_Msk           (0x80UL)       /*!< CFAE (Bitfield-Mask: 0x01)                            */
+ #define R_FACI_HP_FASTAT_CMDLK_Pos          (4UL)          /*!< CMDLK (Bit 4)                                         */
+ #define R_FACI_HP_FASTAT_CMDLK_Msk          (0x10UL)       /*!< CMDLK (Bitfield-Mask: 0x01)                           */
+ #define R_FACI_HP_FASTAT_DFAE_Pos           (3UL)          /*!< DFAE (Bit 3)                                          */
+ #define R_FACI_HP_FASTAT_DFAE_Msk           (0x8UL)        /*!< DFAE (Bitfield-Mask: 0x01)                            */
 /* ========================================================  FAEINT  ========================================================= */
- #define R_FACI_HP_FAEINT_CFAEIE_Pos       (7UL)          /*!< CFAEIE (Bit 7)                                        */
- #define R_FACI_HP_FAEINT_CFAEIE_Msk       (0x80UL)       /*!< CFAEIE (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FAEINT_CMDLKIE_Pos      (4UL)          /*!< CMDLKIE (Bit 4)                                       */
- #define R_FACI_HP_FAEINT_CMDLKIE_Msk      (0x10UL)       /*!< CMDLKIE (Bitfield-Mask: 0x01)                         */
- #define R_FACI_HP_FAEINT_DFAEIE_Pos       (3UL)          /*!< DFAEIE (Bit 3)                                        */
- #define R_FACI_HP_FAEINT_DFAEIE_Msk       (0x8UL)        /*!< DFAEIE (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FAEINT_CFAEIE_Pos         (7UL)          /*!< CFAEIE (Bit 7)                                        */
+ #define R_FACI_HP_FAEINT_CFAEIE_Msk         (0x80UL)       /*!< CFAEIE (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FAEINT_CMDLKIE_Pos        (4UL)          /*!< CMDLKIE (Bit 4)                                       */
+ #define R_FACI_HP_FAEINT_CMDLKIE_Msk        (0x10UL)       /*!< CMDLKIE (Bitfield-Mask: 0x01)                         */
+ #define R_FACI_HP_FAEINT_DFAEIE_Pos         (3UL)          /*!< DFAEIE (Bit 3)                                        */
+ #define R_FACI_HP_FAEINT_DFAEIE_Msk         (0x8UL)        /*!< DFAEIE (Bitfield-Mask: 0x01)                          */
 /* ========================================================  FRDYIE  ========================================================= */
- #define R_FACI_HP_FRDYIE_FRDYIE_Pos       (0UL)          /*!< FRDYIE (Bit 0)                                        */
- #define R_FACI_HP_FRDYIE_FRDYIE_Msk       (0x1UL)        /*!< FRDYIE (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FRDYIE_FRDYIE_Pos         (0UL)          /*!< FRDYIE (Bit 0)                                        */
+ #define R_FACI_HP_FRDYIE_FRDYIE_Msk         (0x1UL)        /*!< FRDYIE (Bitfield-Mask: 0x01)                          */
 /* ========================================================  FSADDR  ========================================================= */
- #define R_FACI_HP_FSADDR_FSA_Pos          (0UL)          /*!< FSA (Bit 0)                                           */
- #define R_FACI_HP_FSADDR_FSA_Msk          (0xffffffffUL) /*!< FSA (Bitfield-Mask: 0xffffffff)                       */
+ #define R_FACI_HP_FSADDR_FSA_Pos            (0UL)          /*!< FSA (Bit 0)                                           */
+ #define R_FACI_HP_FSADDR_FSA_Msk            (0xffffffffUL) /*!< FSA (Bitfield-Mask: 0xffffffff)                       */
 /* ========================================================  FEADDR  ========================================================= */
- #define R_FACI_HP_FEADDR_FEA_Pos          (0UL)          /*!< FEA (Bit 0)                                           */
- #define R_FACI_HP_FEADDR_FEA_Msk          (0xffffffffUL) /*!< FEA (Bitfield-Mask: 0xffffffff)                       */
+ #define R_FACI_HP_FEADDR_FEA_Pos            (0UL)          /*!< FEA (Bit 0)                                           */
+ #define R_FACI_HP_FEADDR_FEA_Msk            (0xffffffffUL) /*!< FEA (Bitfield-Mask: 0xffffffff)                       */
 /* ========================================================  FMEPROT  ======================================================== */
- #define R_FACI_HP_FMEPROT_KEY_Pos         (8UL)          /*!< KEY (Bit 8)                                           */
- #define R_FACI_HP_FMEPROT_KEY_Msk         (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
- #define R_FACI_HP_FMEPROT_CEPROT_Pos      (0UL)          /*!< CEPROT (Bit 0)                                        */
- #define R_FACI_HP_FMEPROT_CEPROT_Msk      (0x1UL)        /*!< CEPROT (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FMEPROT_KEY_Pos           (8UL)          /*!< KEY (Bit 8)                                           */
+ #define R_FACI_HP_FMEPROT_KEY_Msk           (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
+ #define R_FACI_HP_FMEPROT_CEPROT_Pos        (0UL)          /*!< CEPROT (Bit 0)                                        */
+ #define R_FACI_HP_FMEPROT_CEPROT_Msk        (0x1UL)        /*!< CEPROT (Bitfield-Mask: 0x01)                          */
 /* ========================================================  FBPROT0  ======================================================== */
- #define R_FACI_HP_FBPROT0_KEY_Pos         (8UL)          /*!< KEY (Bit 8)                                           */
- #define R_FACI_HP_FBPROT0_KEY_Msk         (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
- #define R_FACI_HP_FBPROT0_BPCN0_Pos       (0UL)          /*!< BPCN0 (Bit 0)                                         */
- #define R_FACI_HP_FBPROT0_BPCN0_Msk       (0x1UL)        /*!< BPCN0 (Bitfield-Mask: 0x01)                           */
+ #define R_FACI_HP_FBPROT0_KEY_Pos           (8UL)          /*!< KEY (Bit 8)                                           */
+ #define R_FACI_HP_FBPROT0_KEY_Msk           (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
+ #define R_FACI_HP_FBPROT0_BPCN0_Pos         (0UL)          /*!< BPCN0 (Bit 0)                                         */
+ #define R_FACI_HP_FBPROT0_BPCN0_Msk         (0x1UL)        /*!< BPCN0 (Bitfield-Mask: 0x01)                           */
 /* ========================================================  FBPROT1  ======================================================== */
- #define R_FACI_HP_FBPROT1_KEY_Pos         (8UL)          /*!< KEY (Bit 8)                                           */
- #define R_FACI_HP_FBPROT1_KEY_Msk         (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
- #define R_FACI_HP_FBPROT1_BPCN1_Pos       (0UL)          /*!< BPCN1 (Bit 0)                                         */
- #define R_FACI_HP_FBPROT1_BPCN1_Msk       (0x1UL)        /*!< BPCN1 (Bitfield-Mask: 0x01)                           */
+ #define R_FACI_HP_FBPROT1_KEY_Pos           (8UL)          /*!< KEY (Bit 8)                                           */
+ #define R_FACI_HP_FBPROT1_KEY_Msk           (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
+ #define R_FACI_HP_FBPROT1_BPCN1_Pos         (0UL)          /*!< BPCN1 (Bit 0)                                         */
+ #define R_FACI_HP_FBPROT1_BPCN1_Msk         (0x1UL)        /*!< BPCN1 (Bitfield-Mask: 0x01)                           */
 /* ========================================================  FSTATR  ========================================================= */
- #define R_FACI_HP_FSTATR_ILGCOMERR_Pos    (23UL)         /*!< ILGCOMERR (Bit 23)                                    */
- #define R_FACI_HP_FSTATR_ILGCOMERR_Msk    (0x800000UL)   /*!< ILGCOMERR (Bitfield-Mask: 0x01)                       */
- #define R_FACI_HP_FSTATR_FESETERR_Pos     (22UL)         /*!< FESETERR (Bit 22)                                     */
- #define R_FACI_HP_FSTATR_FESETERR_Msk     (0x400000UL)   /*!< FESETERR (Bitfield-Mask: 0x01)                        */
- #define R_FACI_HP_FSTATR_SECERR_Pos       (21UL)         /*!< SECERR (Bit 21)                                       */
- #define R_FACI_HP_FSTATR_SECERR_Msk       (0x200000UL)   /*!< SECERR (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FSTATR_OTERR_Pos        (20UL)         /*!< OTERR (Bit 20)                                        */
- #define R_FACI_HP_FSTATR_OTERR_Msk        (0x100000UL)   /*!< OTERR (Bitfield-Mask: 0x01)                           */
- #define R_FACI_HP_FSTATR_FRDY_Pos         (15UL)         /*!< FRDY (Bit 15)                                         */
- #define R_FACI_HP_FSTATR_FRDY_Msk         (0x8000UL)     /*!< FRDY (Bitfield-Mask: 0x01)                            */
- #define R_FACI_HP_FSTATR_ILGLERR_Pos      (14UL)         /*!< ILGLERR (Bit 14)                                      */
- #define R_FACI_HP_FSTATR_ILGLERR_Msk      (0x4000UL)     /*!< ILGLERR (Bitfield-Mask: 0x01)                         */
- #define R_FACI_HP_FSTATR_ERSERR_Pos       (13UL)         /*!< ERSERR (Bit 13)                                       */
- #define R_FACI_HP_FSTATR_ERSERR_Msk       (0x2000UL)     /*!< ERSERR (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FSTATR_PRGERR_Pos       (12UL)         /*!< PRGERR (Bit 12)                                       */
- #define R_FACI_HP_FSTATR_PRGERR_Msk       (0x1000UL)     /*!< PRGERR (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FSTATR_SUSRDY_Pos       (11UL)         /*!< SUSRDY (Bit 11)                                       */
- #define R_FACI_HP_FSTATR_SUSRDY_Msk       (0x800UL)      /*!< SUSRDY (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FSTATR_DBFULL_Pos       (10UL)         /*!< DBFULL (Bit 10)                                       */
- #define R_FACI_HP_FSTATR_DBFULL_Msk       (0x400UL)      /*!< DBFULL (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FSTATR_ERSSPD_Pos       (9UL)          /*!< ERSSPD (Bit 9)                                        */
- #define R_FACI_HP_FSTATR_ERSSPD_Msk       (0x200UL)      /*!< ERSSPD (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FSTATR_PRGSPD_Pos       (8UL)          /*!< PRGSPD (Bit 8)                                        */
- #define R_FACI_HP_FSTATR_PRGSPD_Msk       (0x100UL)      /*!< PRGSPD (Bitfield-Mask: 0x01)                          */
- #define R_FACI_HP_FSTATR_FLWEERR_Pos      (6UL)          /*!< FLWEERR (Bit 6)                                       */
- #define R_FACI_HP_FSTATR_FLWEERR_Msk      (0x40UL)       /*!< FLWEERR (Bitfield-Mask: 0x01)                         */
+ #define R_FACI_HP_FSTATR_ILGCOMERR_Pos      (23UL)         /*!< ILGCOMERR (Bit 23)                                    */
+ #define R_FACI_HP_FSTATR_ILGCOMERR_Msk      (0x800000UL)   /*!< ILGCOMERR (Bitfield-Mask: 0x01)                       */
+ #define R_FACI_HP_FSTATR_FESETERR_Pos       (22UL)         /*!< FESETERR (Bit 22)                                     */
+ #define R_FACI_HP_FSTATR_FESETERR_Msk       (0x400000UL)   /*!< FESETERR (Bitfield-Mask: 0x01)                        */
+ #define R_FACI_HP_FSTATR_SECERR_Pos         (21UL)         /*!< SECERR (Bit 21)                                       */
+ #define R_FACI_HP_FSTATR_SECERR_Msk         (0x200000UL)   /*!< SECERR (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSTATR_OTERR_Pos          (20UL)         /*!< OTERR (Bit 20)                                        */
+ #define R_FACI_HP_FSTATR_OTERR_Msk          (0x100000UL)   /*!< OTERR (Bitfield-Mask: 0x01)                           */
+ #define R_FACI_HP_FSTATR_FRDY_Pos           (15UL)         /*!< FRDY (Bit 15)                                         */
+ #define R_FACI_HP_FSTATR_FRDY_Msk           (0x8000UL)     /*!< FRDY (Bitfield-Mask: 0x01)                            */
+ #define R_FACI_HP_FSTATR_ILGLERR_Pos        (14UL)         /*!< ILGLERR (Bit 14)                                      */
+ #define R_FACI_HP_FSTATR_ILGLERR_Msk        (0x4000UL)     /*!< ILGLERR (Bitfield-Mask: 0x01)                         */
+ #define R_FACI_HP_FSTATR_ERSERR_Pos         (13UL)         /*!< ERSERR (Bit 13)                                       */
+ #define R_FACI_HP_FSTATR_ERSERR_Msk         (0x2000UL)     /*!< ERSERR (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSTATR_PRGERR_Pos         (12UL)         /*!< PRGERR (Bit 12)                                       */
+ #define R_FACI_HP_FSTATR_PRGERR_Msk         (0x1000UL)     /*!< PRGERR (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSTATR_SUSRDY_Pos         (11UL)         /*!< SUSRDY (Bit 11)                                       */
+ #define R_FACI_HP_FSTATR_SUSRDY_Msk         (0x800UL)      /*!< SUSRDY (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSTATR_DBFULL_Pos         (10UL)         /*!< DBFULL (Bit 10)                                       */
+ #define R_FACI_HP_FSTATR_DBFULL_Msk         (0x400UL)      /*!< DBFULL (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSTATR_ERSSPD_Pos         (9UL)          /*!< ERSSPD (Bit 9)                                        */
+ #define R_FACI_HP_FSTATR_ERSSPD_Msk         (0x200UL)      /*!< ERSSPD (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSTATR_PRGSPD_Pos         (8UL)          /*!< PRGSPD (Bit 8)                                        */
+ #define R_FACI_HP_FSTATR_PRGSPD_Msk         (0x100UL)      /*!< PRGSPD (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSTATR_FLWEERR_Pos        (6UL)          /*!< FLWEERR (Bit 6)                                       */
+ #define R_FACI_HP_FSTATR_FLWEERR_Msk        (0x40UL)       /*!< FLWEERR (Bitfield-Mask: 0x01)                         */
 /* ========================================================  FENTRYR  ======================================================== */
- #define R_FACI_HP_FENTRYR_KEY_Pos         (8UL)          /*!< KEY (Bit 8)                                           */
- #define R_FACI_HP_FENTRYR_KEY_Msk         (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
- #define R_FACI_HP_FENTRYR_FENTRYD_Pos     (7UL)          /*!< FENTRYD (Bit 7)                                       */
- #define R_FACI_HP_FENTRYR_FENTRYD_Msk     (0x80UL)       /*!< FENTRYD (Bitfield-Mask: 0x01)                         */
- #define R_FACI_HP_FENTRYR_FENTRYC_Pos     (0UL)          /*!< FENTRYC (Bit 0)                                       */
- #define R_FACI_HP_FENTRYR_FENTRYC_Msk     (0x1UL)        /*!< FENTRYC (Bitfield-Mask: 0x01)                         */
+ #define R_FACI_HP_FENTRYR_KEY_Pos           (8UL)          /*!< KEY (Bit 8)                                           */
+ #define R_FACI_HP_FENTRYR_KEY_Msk           (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
+ #define R_FACI_HP_FENTRYR_FENTRYD_Pos       (7UL)          /*!< FENTRYD (Bit 7)                                       */
+ #define R_FACI_HP_FENTRYR_FENTRYD_Msk       (0x80UL)       /*!< FENTRYD (Bitfield-Mask: 0x01)                         */
+ #define R_FACI_HP_FENTRYR_FENTRYC_Pos       (0UL)          /*!< FENTRYC (Bit 0)                                       */
+ #define R_FACI_HP_FENTRYR_FENTRYC_Msk       (0x1UL)        /*!< FENTRYC (Bitfield-Mask: 0x01)                         */
 /* =======================================================  FSUINITR  ======================================================== */
- #define R_FACI_HP_FSUINITR_KEY_Pos        (8UL)          /*!< KEY (Bit 8)                                           */
- #define R_FACI_HP_FSUINITR_KEY_Msk        (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
- #define R_FACI_HP_FSUINITR_SUINIT_Pos     (0UL)          /*!< SUINIT (Bit 0)                                        */
- #define R_FACI_HP_FSUINITR_SUINIT_Msk     (0x1UL)        /*!< SUINIT (Bitfield-Mask: 0x01)                          */
+ #define R_FACI_HP_FSUINITR_KEY_Pos          (8UL)          /*!< KEY (Bit 8)                                           */
+ #define R_FACI_HP_FSUINITR_KEY_Msk          (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
+ #define R_FACI_HP_FSUINITR_SUINIT_Pos       (0UL)          /*!< SUINIT (Bit 0)                                        */
+ #define R_FACI_HP_FSUINITR_SUINIT_Msk       (0x1UL)        /*!< SUINIT (Bitfield-Mask: 0x01)                          */
 /* =========================================================  FCMDR  ========================================================= */
- #define R_FACI_HP_FCMDR_CMDR_Pos          (8UL)          /*!< CMDR (Bit 8)                                          */
- #define R_FACI_HP_FCMDR_CMDR_Msk          (0xff00UL)     /*!< CMDR (Bitfield-Mask: 0xff)                            */
- #define R_FACI_HP_FCMDR_PCMDR_Pos         (0UL)          /*!< PCMDR (Bit 0)                                         */
- #define R_FACI_HP_FCMDR_PCMDR_Msk         (0xffUL)       /*!< PCMDR (Bitfield-Mask: 0xff)                           */
+ #define R_FACI_HP_FCMDR_CMDR_Pos            (8UL)          /*!< CMDR (Bit 8)                                          */
+ #define R_FACI_HP_FCMDR_CMDR_Msk            (0xff00UL)     /*!< CMDR (Bitfield-Mask: 0xff)                            */
+ #define R_FACI_HP_FCMDR_PCMDR_Pos           (0UL)          /*!< PCMDR (Bit 0)                                         */
+ #define R_FACI_HP_FCMDR_PCMDR_Msk           (0xffUL)       /*!< PCMDR (Bitfield-Mask: 0xff)                           */
 /* ========================================================  FBCCNT  ========================================================= */
- #define R_FACI_HP_FBCCNT_BCDIR_Pos        (0UL)          /*!< BCDIR (Bit 0)                                         */
- #define R_FACI_HP_FBCCNT_BCDIR_Msk        (0x1UL)        /*!< BCDIR (Bitfield-Mask: 0x01)                           */
+ #define R_FACI_HP_FBCCNT_BCDIR_Pos          (0UL)          /*!< BCDIR (Bit 0)                                         */
+ #define R_FACI_HP_FBCCNT_BCDIR_Msk          (0x1UL)        /*!< BCDIR (Bitfield-Mask: 0x01)                           */
 /* ========================================================  FBCSTAT  ======================================================== */
- #define R_FACI_HP_FBCSTAT_BCST_Pos        (0UL)          /*!< BCST (Bit 0)                                          */
- #define R_FACI_HP_FBCSTAT_BCST_Msk        (0x1UL)        /*!< BCST (Bitfield-Mask: 0x01)                            */
+ #define R_FACI_HP_FBCSTAT_BCST_Pos          (0UL)          /*!< BCST (Bit 0)                                          */
+ #define R_FACI_HP_FBCSTAT_BCST_Msk          (0x1UL)        /*!< BCST (Bitfield-Mask: 0x01)                            */
 /* ========================================================  FPSADDR  ======================================================== */
- #define R_FACI_HP_FPSADDR_PSADR_Pos       (0UL)          /*!< PSADR (Bit 0)                                         */
- #define R_FACI_HP_FPSADDR_PSADR_Msk       (0x7ffffUL)    /*!< PSADR (Bitfield-Mask: 0x7ffff)                        */
+ #define R_FACI_HP_FPSADDR_PSADR_Pos         (0UL)          /*!< PSADR (Bit 0)                                         */
+ #define R_FACI_HP_FPSADDR_PSADR_Msk         (0x7ffffUL)    /*!< PSADR (Bitfield-Mask: 0x7ffff)                        */
 /* ========================================================  FAWMON  ========================================================= */
- #define R_FACI_HP_FAWMON_BTFLG_Pos        (31UL)         /*!< BTFLG (Bit 31)                                        */
- #define R_FACI_HP_FAWMON_BTFLG_Msk        (0x80000000UL) /*!< BTFLG (Bitfield-Mask: 0x01)                           */
- #define R_FACI_HP_FAWMON_FAWE_Pos         (16UL)         /*!< FAWE (Bit 16)                                         */
- #define R_FACI_HP_FAWMON_FAWE_Msk         (0x7ff0000UL)  /*!< FAWE (Bitfield-Mask: 0x7ff)                           */
- #define R_FACI_HP_FAWMON_FSPR_Pos         (15UL)         /*!< FSPR (Bit 15)                                         */
- #define R_FACI_HP_FAWMON_FSPR_Msk         (0x8000UL)     /*!< FSPR (Bitfield-Mask: 0x01)                            */
- #define R_FACI_HP_FAWMON_FAWS_Pos         (0UL)          /*!< FAWS (Bit 0)                                          */
- #define R_FACI_HP_FAWMON_FAWS_Msk         (0x7ffUL)      /*!< FAWS (Bitfield-Mask: 0x7ff)                           */
+ #define R_FACI_HP_FAWMON_BTFLG_Pos          (31UL)         /*!< BTFLG (Bit 31)                                        */
+ #define R_FACI_HP_FAWMON_BTFLG_Msk          (0x80000000UL) /*!< BTFLG (Bitfield-Mask: 0x01)                           */
+ #define R_FACI_HP_FAWMON_FAWE_Pos           (16UL)         /*!< FAWE (Bit 16)                                         */
+ #define R_FACI_HP_FAWMON_FAWE_Msk           (0x7ff0000UL)  /*!< FAWE (Bitfield-Mask: 0x7ff)                           */
+ #define R_FACI_HP_FAWMON_FSPR_Pos           (15UL)         /*!< FSPR (Bit 15)                                         */
+ #define R_FACI_HP_FAWMON_FSPR_Msk           (0x8000UL)     /*!< FSPR (Bitfield-Mask: 0x01)                            */
+ #define R_FACI_HP_FAWMON_FAWS_Pos           (0UL)          /*!< FAWS (Bit 0)                                          */
+ #define R_FACI_HP_FAWMON_FAWS_Msk           (0x7ffUL)      /*!< FAWS (Bitfield-Mask: 0x7ff)                           */
 /* =========================================================  FCPSR  ========================================================= */
- #define R_FACI_HP_FCPSR_ESUSPMD_Pos       (0UL)          /*!< ESUSPMD (Bit 0)                                       */
- #define R_FACI_HP_FCPSR_ESUSPMD_Msk       (0x1UL)        /*!< ESUSPMD (Bitfield-Mask: 0x01)                         */
+ #define R_FACI_HP_FCPSR_ESUSPMD_Pos         (0UL)          /*!< ESUSPMD (Bit 0)                                       */
+ #define R_FACI_HP_FCPSR_ESUSPMD_Msk         (0x1UL)        /*!< ESUSPMD (Bitfield-Mask: 0x01)                         */
 /* ========================================================  FPCKAR  ========================================================= */
- #define R_FACI_HP_FPCKAR_KEY_Pos          (8UL)          /*!< KEY (Bit 8)                                           */
- #define R_FACI_HP_FPCKAR_KEY_Msk          (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
- #define R_FACI_HP_FPCKAR_PCKA_Pos         (0UL)          /*!< PCKA (Bit 0)                                          */
- #define R_FACI_HP_FPCKAR_PCKA_Msk         (0xffUL)       /*!< PCKA (Bitfield-Mask: 0xff)                            */
+ #define R_FACI_HP_FPCKAR_KEY_Pos            (8UL)          /*!< KEY (Bit 8)                                           */
+ #define R_FACI_HP_FPCKAR_KEY_Msk            (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
+ #define R_FACI_HP_FPCKAR_PCKA_Pos           (0UL)          /*!< PCKA (Bit 0)                                          */
+ #define R_FACI_HP_FPCKAR_PCKA_Msk           (0xffUL)       /*!< PCKA (Bitfield-Mask: 0xff)                            */
 /* ========================================================  FSUACR  ========================================================= */
- #define R_FACI_HP_FSUACR_KEY_Pos          (8UL)          /*!< KEY (Bit 8)                                           */
- #define R_FACI_HP_FSUACR_KEY_Msk          (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
- #define R_FACI_HP_FSUACR_SAS_Pos          (0UL)          /*!< SAS (Bit 0)                                           */
- #define R_FACI_HP_FSUACR_SAS_Msk          (0x3UL)        /*!< SAS (Bitfield-Mask: 0x03)                             */
+ #define R_FACI_HP_FSUACR_KEY_Pos            (8UL)          /*!< KEY (Bit 8)                                           */
+ #define R_FACI_HP_FSUACR_KEY_Msk            (0xff00UL)     /*!< KEY (Bitfield-Mask: 0xff)                             */
+ #define R_FACI_HP_FSUACR_SAS_Pos            (0UL)          /*!< SAS (Bit 0)                                           */
+ #define R_FACI_HP_FSUACR_SAS_Msk            (0x3UL)        /*!< SAS (Bitfield-Mask: 0x03)                             */
+/* =======================================================  FCNTSELR  ======================================================== */
+ #define R_FACI_HP_FCNTSELR_CNTSEL_Pos       (0UL)          /*!< CNTSEL (Bit 0)                                        */
+ #define R_FACI_HP_FCNTSELR_CNTSEL_Msk       (0x7UL)        /*!< CNTSEL (Bitfield-Mask: 0x07)                          */
+/* ======================================================  FCNTDATAR0  ======================================================= */
+ #define R_FACI_HP_FCNTDATAR0_CNTRDAT_Pos    (0UL)          /*!< CNTRDAT (Bit 0)                                       */
+ #define R_FACI_HP_FCNTDATAR0_CNTRDAT_Msk    (0xffffffffUL) /*!< CNTRDAT (Bitfield-Mask: 0xffffffff)                   */
+/* ======================================================  FCNTDATAR1  ======================================================= */
+ #define R_FACI_HP_FCNTDATAR1_CNTRDAT_Pos    (0UL)          /*!< CNTRDAT (Bit 0)                                       */
+ #define R_FACI_HP_FCNTDATAR1_CNTRDAT_Msk    (0xffffffffUL) /*!< CNTRDAT (Bitfield-Mask: 0xffffffff)                   */
 
 /* =========================================================================================================================== */
 /* ================                                         R_FCACHE                                          ================ */

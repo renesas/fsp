@@ -88,6 +88,8 @@ typedef enum e_can_test_mode
     CAN_TEST_MODE_INTERNAL_BUS      = 0x80 ///< CANFD Internal CAN Bus Communication Test Mode.
 } can_test_mode_t;
 
+#ifndef BSP_OVERRIDE_CAN_INFO_T
+
 /** CAN status info */
 typedef struct st_can_info
 {
@@ -98,6 +100,8 @@ typedef struct st_can_info
     uint8_t  error_count_receive;      ///< Receive error count.
     uint32_t error_code;               ///< Error code, cleared after reading.
 } can_info_t;
+
+#endif
 
 /** CAN ID modes */
 typedef enum e_can_id_mode
@@ -133,6 +137,8 @@ typedef struct st_can_frame
     uint8_t          data[CAN_DATA_BUFFER_LENGTH]; ///< CAN data.
 } can_frame_t;
 
+#ifndef BSP_OVERRIDE_CAN_CALLBACK_ARGS_T
+
 /** CAN callback parameter definition */
 typedef struct st_can_callback_args
 {
@@ -147,6 +153,8 @@ typedef struct st_can_callback_args
     void const * p_context;            ///< Context provided to user during callback.
     can_frame_t  frame;                ///< Received frame data.
 } can_callback_args_t;
+
+#endif
 
 /** CAN Configuration */
 typedef struct st_can_cfg

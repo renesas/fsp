@@ -80,9 +80,13 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 #define FLASH_HP_FACI_CMD_FORCED_STOP                 (0xB3U)
 #define FLASH_HP_FACI_CMD_BLANK_CHECK                 (0x71U)
 #define FLASH_HP_FACI_CMD_CONFIG_SET_1                (0x40U)
-#define FLASH_HP_FACI_CMD_CONFIG_SET_2                (0x08U)
+#define FLASH_HP_FACI_CMD_CONFIG_SET_2_CF             (0x08U)
+#define FLASH_HP_FACI_CMD_CONFIG_SET_2_DF             (0x02U)
 #define FLASH_HP_FACI_CMD_LOCK_BIT_PGM                (0x77U)
 #define FLASH_HP_FACI_CMD_LOCK_BIT_READ               (0x71U)
+#define FLASH_HP_FACI_CMD_INCREMENT_COUNTER           (0x35U)
+#define FLASH_HP_FACI_CMD_REFRESH_COUNTER             (0x37U)
+#define FLASH_HP_FACI_CMD_READ_COUNTER                (0x39U)
 #define FLASH_HP_FACI_CMD_FINAL                       (0xD0U)
 
 #if (BSP_CFG_MCU_PART_SERIES == 8)
@@ -115,8 +119,11 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 #define FLASH_HP_FCU_CONFIG_FAWE_BTFLG_UNUSED_BITS    (0x7800U)
 #define FLASH_HP_FCU_CONFIG_FAWS_UNUSED_BITS          (0xF800U)
 
-/* 8 words need to be written */
-#define FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT           (8U)
+/* 8 words need to be written for code flash */
+#define FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT_CF        (8U)
+
+/* 2 words need to be written for data flash */
+#define FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT_DF        (2U)
 
 #define FLASH_HP_FSUACR_KEY                           (0x6600U)
 
@@ -149,10 +156,12 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 #define FLASH_HP_MAX_WRITE_DF_US                      (3800)
 #define FLASH_HP_MAX_DBFULL_US                        (2)
 #define FLASH_HP_MAX_BLANK_CHECK_US                   (84)
-#define FLASH_HP_MAX_WRITE_CONFIG_US                  (307000)
+#define FLASH_HP_MAX_WRITE_CONFIG_US                  (512000)
 #define FLASH_HP_MAX_ERASE_DF_BLOCK_US                (18000)
 #define FLASH_HP_MAX_ERASE_CF_LARGE_BLOCK_US          (1040000)
 #define FLASH_HP_MAX_ERASE_CF_SMALL_BLOCK_US          (260000)
+#define FLASH_HP_MAX_INCREMENT_REFRESH_COUNTER_US     (81000)
+#define FLASH_HP_MAX_READ_COUNTER_US                  (25)
 
 #define FLASH_HP_FASTAT_DFAE                          (0x08)
 #define FLASH_HP_FASTAT_CFAE                          (0x80)
@@ -164,6 +173,20 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
  #define FLASH_HP_PRV_BANK1_MASK                      (~BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START)
 #else
  #define FLASH_HP_PRV_BANK1_MASK                      (UINT32_MAX)
+#endif
+
+#define FLASH_HP_PRV_ARCNS_SINGLE                     (1) // ARCNS setting for single ARC_NSEC counter
+#define FLASH_HP_PRV_ARCNS_MULTIPLE                   (0) // ARCNS setting for multiple ARC_NSEC counters
+#define FLASH_HP_PRV_ARC_OEMBL_FCNTSELR               (2)
+#define FLASH_HP_PRV_ARC_SEC_FCNTSELR                 (1)
+#define FLASH_HP_PRV_ARC_NSEC_0_FCNTSELR              (4)
+#define FLASH_HP_PRV_64_BITS                          (64U)
+
+/* flash_hp_configuration_area_write needs to be in RAM only when code flash programming is enabled */
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
+ #define FLASH_HP_CONFIG_AREA_WRITE_SECTION           PLACE_IN_RAM_SECTION
+#else
+ #define FLASH_HP_CONFIG_AREA_WRITE_SECTION
 #endif
 
 /* The number of CPU cycles per each timeout loop. */
@@ -188,12 +211,12 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
-static uint16_t g_configuration_area_data[FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT] = {UINT16_MAX};
+static uint16_t g_configuration_area_data[FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT_CF] = {UINT16_MAX};
 #endif
 
 #define FLASH_HP_DF_START_ADDRESS    (BSP_FEATURE_FLASH_DATA_FLASH_START)
+#define FLASH_HP_DF_NUM_REGIONS      ((BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0) ? 2 : 1)
 
 static const flash_block_info_t g_code_flash_macro_info[] =
 {
@@ -217,18 +240,29 @@ static const flash_regions_t g_flash_code_region =
     .p_block_array = g_code_flash_macro_info
 };
 
-const flash_block_info_t g_data_flash_macro_info =
+const flash_block_info_t g_data_flash_macro_info[] =
 {
-    .block_section_st_addr  = FLASH_HP_DF_START_ADDRESS,
-    .block_section_end_addr = FLASH_HP_DF_START_ADDRESS + BSP_DATA_FLASH_SIZE_BYTES - 1,
-    .block_size             = FLASH_HP_DATA_BLOCK_SIZE,
-    .block_size_write       = BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE
+    {
+        .block_section_st_addr  = FLASH_HP_DF_START_ADDRESS,
+        .block_section_end_addr = FLASH_HP_DF_START_ADDRESS + BSP_DATA_FLASH_SIZE_BYTES - 1,
+        .block_size             = FLASH_HP_DATA_BLOCK_SIZE,
+        .block_size_write       = BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE
+    },
+#if FLASH_HP_DF_NUM_REGIONS > 1
+    {
+        .block_section_st_addr  = BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_START,
+        .block_section_end_addr = BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_START +
+                                  BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE - 1,
+        .block_size       = 1,
+        .block_size_write = BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE
+    },
+#endif
 };
 
 static flash_regions_t g_flash_data_region =
 {
-    .num_regions   = 1,
-    .p_block_array = &g_data_flash_macro_info
+    .num_regions   = FLASH_HP_DF_NUM_REGIONS,
+    .p_block_array = g_data_flash_macro_info
 };
 
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK == 1) && \
@@ -280,11 +314,16 @@ static fsp_err_t flash_hp_df_erase(flash_hp_instance_ctrl_t * p_ctrl, uint32_t b
 
 #endif
 
-#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
-
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) || (((FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && \
+    (BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0)) == 1)
 static fsp_err_t flash_hp_configuration_area_write(flash_hp_instance_ctrl_t * p_ctrl,
-                                                   uint32_t                   fsaddr) PLACE_IN_RAM_SECTION;
+                                                   uint32_t                   fsaddr,
+                                                   uint16_t                 * src_address)
+FLASH_HP_CONFIG_AREA_WRITE_SECTION;
 
+#endif
+
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
 static void flash_hp_configuration_area_data_setup(uint32_t btflg_swap, uint32_t start_addr,
                                                    uint32_t end_addr) PLACE_IN_RAM_SECTION;
 
@@ -329,27 +368,55 @@ static fsp_err_t r_flash_hp_write_bc_parameter_checking(flash_hp_instance_ctrl_t
 
 #endif
 
+#if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0)
+static fsp_err_t flash_hp_user_lockable_area_write(flash_hp_instance_ctrl_t * p_ctrl,
+                                                   uint32_t const             src_address,
+                                                   uint32_t                   flash_address,
+                                                   uint32_t const             num_bytes);
+
+#endif
+
+#if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
+static uint8_t   flash_hp_counter_to_fcntselr_convert(flash_arc_t counter);
+static fsp_err_t flash_hp_arc_read(flash_hp_instance_ctrl_t * const p_ctrl, uint8_t fcntselr, uint32_t * const p_count);
+static fsp_err_t flash_hp_arc_cmd_execute(flash_hp_instance_ctrl_t * const p_ctrl,
+                                          uint8_t                          fcntselr,
+                                          uint8_t                          cmd,
+                                          volatile uint32_t                wait_count);
+
+ #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
+static fsp_err_t r_flash_hp_arc_common_parameter_checking(flash_hp_instance_ctrl_t * const p_ctrl,
+                                                          flash_arc_t                      counter,
+                                                          uint8_t                          fcntselr);
+
+ #endif
+#endif
+
 /***********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
 
 const flash_api_t g_flash_on_flash_hp =
 {
-    .open                 = R_FLASH_HP_Open,
-    .close                = R_FLASH_HP_Close,
-    .write                = R_FLASH_HP_Write,
-    .erase                = R_FLASH_HP_Erase,
-    .blankCheck           = R_FLASH_HP_BlankCheck,
-    .statusGet            = R_FLASH_HP_StatusGet,
-    .infoGet              = R_FLASH_HP_InfoGet,
-    .accessWindowSet      = R_FLASH_HP_AccessWindowSet,
-    .accessWindowClear    = R_FLASH_HP_AccessWindowClear,
-    .idCodeSet            = R_FLASH_HP_IdCodeSet,
-    .reset                = R_FLASH_HP_Reset,
-    .startupAreaSelect    = R_FLASH_HP_StartUpAreaSelect,
-    .updateFlashClockFreq = R_FLASH_HP_UpdateFlashClockFreq,
-    .bankSwap             = R_FLASH_HP_BankSwap,
-    .callbackSet          = R_FLASH_HP_CallbackSet,
+    .open                         = R_FLASH_HP_Open,
+    .close                        = R_FLASH_HP_Close,
+    .write                        = R_FLASH_HP_Write,
+    .erase                        = R_FLASH_HP_Erase,
+    .blankCheck                   = R_FLASH_HP_BlankCheck,
+    .statusGet                    = R_FLASH_HP_StatusGet,
+    .infoGet                      = R_FLASH_HP_InfoGet,
+    .accessWindowSet              = R_FLASH_HP_AccessWindowSet,
+    .accessWindowClear            = R_FLASH_HP_AccessWindowClear,
+    .idCodeSet                    = R_FLASH_HP_IdCodeSet,
+    .reset                        = R_FLASH_HP_Reset,
+    .startupAreaSelect            = R_FLASH_HP_StartUpAreaSelect,
+    .updateFlashClockFreq         = R_FLASH_HP_UpdateFlashClockFreq,
+    .bankSwap                     = R_FLASH_HP_BankSwap,
+    .callbackSet                  = R_FLASH_HP_CallbackSet,
+    .antiRollbackCounterIncrement = R_FLASH_HP_AntiRollbackCounterIncrement,
+    .antiRollbackCounterRefresh   = R_FLASH_HP_AntiRollbackCounterRefresh,
+    .antiRollbackCounterRead      = R_FLASH_HP_AntiRollbackCounterRead,
+    .userLockableAreaWrite        = R_FLASH_HP_UserLockableAreaWrite,
 };
 
 /*******************************************************************************************************************//**
@@ -1195,6 +1262,220 @@ fsp_err_t R_FLASH_HP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
 }
 
 /*******************************************************************************************************************//**
+ * Increments the selected anti-rollback counter.
+ *
+ * @warning If this function returns an error code other than FSP_SUCCESS, or power loss occurs during a call to this function,
+ * call @ref R_FLASH_HP_AntiRollbackCounterRefresh to ensure the counter flash is in a valid state following the error.
+ *
+ * @note The counter is read internally before increment.
+ *
+ * Implements @ref flash_api_t::antiRollbackCounterIncrement
+ *
+ * @retval     FSP_SUCCESS          Counter incremented successfully
+ * @retval     FSP_ERR_NOT_OPEN     The control block is not open.
+ * @retval     FSP_ERR_ASSERTION    NULL provided for p_api_ctrl
+ * @retval     FSP_ERR_NOT_ENABLED  The specified counter has not been configured (configuration is only required for ARC_NSEC)
+ * @retval     FSP_ERR_OVERFLOW     The counter cannot be incremented because it is already at its max value
+ * @retval     FSP_ERR_PE_FAILURE   Failed to enter or exit Data Flash P/E mode.
+ * @retval     FSP_ERR_TIMEOUT      Timed out waiting for the FCU to become ready.
+ * @retval     FSP_ERR_CMD_LOCKED   FCU is in locked state, typically as a result of having received an illegal command
+ * @retval     FSP_ERR_UNSUPPORTED  Data flash programming is not enabled or selected anti-rollback counter is not supported on this MCU
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_HP_AntiRollbackCounterIncrement (flash_ctrl_t * const p_api_ctrl, flash_arc_t counter)
+{
+    fsp_err_t err;
+
+#if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
+    flash_hp_instance_ctrl_t * p_ctrl = (flash_hp_instance_ctrl_t *) p_api_ctrl;
+    uint8_t fcntselr = flash_hp_counter_to_fcntselr_convert(counter);
+
+ #if FLASH_HP_CFG_PARAM_CHECKING_ENABLE
+    err = r_flash_hp_arc_common_parameter_checking(p_ctrl, counter, fcntselr);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
+
+    /* Read the current counter value*/
+    uint32_t count;
+    err = flash_hp_arc_read(p_ctrl, fcntselr, &count);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Check for overflow. */
+    uint32_t max_count;
+    if (counter >= FLASH_ARC_NSEC_0)
+    {
+        uint8_t arcns = R_OFS_DATAFLASH->ARCCS_b.CNF_ARCNS;
+        max_count = (arcns == FLASH_HP_PRV_ARCNS_MULTIPLE) ?
+                    BSP_FEATURE_FLASH_ARC_NSEC_MULTIPLE_MAX_COUNT : BSP_FEATURE_FLASH_ARC_NSEC_SINGLE_MAX_COUNT;
+    }
+    else if (counter == FLASH_ARC_OEMBL)
+    {
+        max_count = BSP_FEATURE_FLASH_ARC_OEMBL_MAX_COUNT;
+    }
+    else
+    {
+        max_count = BSP_FEATURE_FLASH_ARC_SEC_MAX_COUNT;
+    }
+
+    FSP_ERROR_RETURN((count + 1) <= max_count, FSP_ERR_OVERFLOW);
+
+    /* Increment the counter */
+    err = flash_hp_arc_cmd_execute(p_ctrl,
+                                   fcntselr,
+                                   FLASH_HP_FACI_CMD_INCREMENT_COUNTER,
+                                   p_ctrl->timeout_arc_increment_refresh);
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(counter);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Refreshes the selected anti-rollback counter flash area to ensure the flash is in a valid state even if an error
+ * occured during counter increment processing.
+ *
+ * This function must be called if errors or power failure occured during counter increment.
+ *
+ * Power failure can be detected by the application code by management of user-defined non-voltile flags during
+ * counter increment.
+ *
+ * Until a refresh completes successfully, the value of the anti-rollback counter cannot be guaranteed and should not
+ * be read.
+ *
+ * Implements @ref flash_api_t::antiRollbackCounterRefresh
+ *
+ * @retval     FSP_SUCCESS          Counter refreshed successfully
+ * @retval     FSP_ERR_NOT_OPEN     The control block is not open.
+ * @retval     FSP_ERR_ASSERTION    NULL provided for p_ctrl
+ * @retval     FSP_ERR_NOT_ENABLED  The specified counter has not been configured (configuration is only required for ARC_NSEC)
+ * @retval     FSP_ERR_PE_FAILURE   Failed to enter or exit Data Flash P/E mode.
+ * @retval     FSP_ERR_TIMEOUT      Timed out waiting for the FCU to become ready.
+ * @retval     FSP_ERR_CMD_LOCKED   FCU is in locked state, typically as a result of having received an illegal command
+ * @retval     FSP_ERR_UNSUPPORTED  Data flash programming is not enabled or Anti-Rollback counter is not supported on this MCU
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_HP_AntiRollbackCounterRefresh (flash_ctrl_t * const p_api_ctrl, flash_arc_t counter)
+{
+    fsp_err_t err;
+
+#if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
+    flash_hp_instance_ctrl_t * p_ctrl = (flash_hp_instance_ctrl_t *) p_api_ctrl;
+    uint8_t fcntselr = flash_hp_counter_to_fcntselr_convert(counter);
+
+ #if FLASH_HP_CFG_PARAM_CHECKING_ENABLE
+    err = r_flash_hp_arc_common_parameter_checking(p_ctrl, counter, fcntselr);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
+
+    /* Refresh the counter */
+    err = flash_hp_arc_cmd_execute(p_ctrl,
+                                   fcntselr,
+                                   FLASH_HP_FACI_CMD_REFRESH_COUNTER,
+                                   p_ctrl->timeout_arc_increment_refresh);
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(counter);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Reads the selected anti-rollback counter and returns the number of counter bits set.
+ *
+ * Implements @ref flash_api_t::antiRollbackCounterRead
+ *
+ * @retval     FSP_SUCCESS          Counter read successfully into p_count
+ * @retval     FSP_ERR_NOT_OPEN     The control block is not open.
+ * @retval     FSP_ERR_ASSERTION    NULL provided for p_api_ctrl or p_count
+ * @retval     FSP_ERR_NOT_ENABLED  The specified counter has not been configured (configuration is only required for ARC_NSEC)
+ * @retval     FSP_ERR_PE_FAILURE   Failed to enter or exit Data Flash P/E mode.
+ * @retval     FSP_ERR_TIMEOUT      Timed out waiting for the FCU to become ready.
+ * @retval     FSP_ERR_CMD_LOCKED   FCU is in locked state, typically as a result of having received an illegal command
+ * @retval     FSP_ERR_UNSUPPORTED  Data flash programming is not enabled or Anti-Rollback counter is not supported on this MCU
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_HP_AntiRollbackCounterRead (flash_ctrl_t * const p_api_ctrl,
+                                              flash_arc_t          counter,
+                                              uint32_t * const     p_count)
+{
+    fsp_err_t err;
+
+#if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
+    flash_hp_instance_ctrl_t * p_ctrl = (flash_hp_instance_ctrl_t *) p_api_ctrl;
+    uint8_t fcntselr = flash_hp_counter_to_fcntselr_convert(counter);
+
+ #if FLASH_HP_CFG_PARAM_CHECKING_ENABLE
+    err = r_flash_hp_arc_common_parameter_checking(p_ctrl, counter, fcntselr);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    FSP_ASSERT(p_count);
+ #endif
+
+    /* Read the counter */
+    err = flash_hp_arc_read(p_ctrl, fcntselr, p_count);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(counter);
+    FSP_PARAMETER_NOT_USED(p_count);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Write to the user lockable area in flash
+ *
+ * Implements @ref flash_api_t::userLockableAreaWrite
+ *
+ * @note    BGO is not supported for user lockable area flash operations.
+ *
+ * @retval     FSP_SUCCESS              Operation successful.
+ * @retval     FSP_ERR_IN_USE           The Flash peripheral is busy with a prior on-going transaction.
+ * @retval     FSP_ERR_NOT_OPEN         The Flash API is not Open.
+ * @retval     FSP_ERR_CMD_LOCKED       FCU is in locked state, typically as a result of attempting to Write an area
+ *                                      that is protected by an Access Window.
+ * @retval     FSP_ERR_WRITE_FAILED     Status is indicating a Programming error for the requested operation.
+ * @retval     FSP_ERR_TIMEOUT          Timed out waiting for FCU operation to complete.
+ * @retval     FSP_ERR_INVALID_SIZE     Number of bytes provided was not a multiple of the programming size or exceeded
+ *                                      the maximum range.
+ * @retval     FSP_ERR_INVALID_ADDRESS  Invalid address was input or address not on programming boundary.
+ * @retval     FSP_ERR_ASSERTION        NULL provided for p_ctrl.
+ * @retval     FSP_ERR_PE_FAILURE       Failed to enter or exit P/E mode.
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_HP_UserLockableAreaWrite (flash_ctrl_t * const p_api_ctrl,
+                                            uint32_t const       src_address,
+                                            uint32_t             flash_address,
+                                            uint32_t const       num_bytes)
+{
+    fsp_err_t err;
+
+#if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0)
+    flash_hp_instance_ctrl_t * p_ctrl = (flash_hp_instance_ctrl_t *) p_api_ctrl;
+
+ #if (FLASH_HP_CFG_PARAM_CHECKING_ENABLE == 1)
+    err = r_flash_hp_write_bc_parameter_checking(p_ctrl, flash_address, num_bytes, true);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
+    err = flash_hp_user_lockable_area_write(p_ctrl, src_address, flash_address, num_bytes);
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(src_address);
+    FSP_PARAMETER_NOT_USED(flash_address);
+    FSP_PARAMETER_NOT_USED(num_bytes);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup FLASH_HP)
  **********************************************************************************************************************/
 
@@ -1416,7 +1697,7 @@ static fsp_err_t flash_hp_bank_swap (flash_hp_instance_ctrl_t * const p_ctrl)
     flash_hp_enter_pe_cf_mode(p_ctrl);
 
     /* Write the configuration area to the access/startup region. */
-    err = flash_hp_configuration_area_write(p_ctrl, flash_hp_banksel);
+    err = flash_hp_configuration_area_write(p_ctrl, flash_hp_banksel, g_configuration_area_data);
 
     err = flash_hp_check_errors(err, 0, FSP_ERR_WRITE_FAILED);
 
@@ -1556,12 +1837,26 @@ static fsp_err_t r_flash_hp_write_bc_parameter_checking (flash_hp_instance_ctrl_
  #endif
     {
  #if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
-        FSP_ERROR_RETURN((flash_address >= (FLASH_HP_DF_START_ADDRESS)) &&
-                         (flash_address < (FLASH_HP_DF_START_ADDRESS + BSP_DATA_FLASH_SIZE_BYTES)),
-                         FSP_ERR_INVALID_ADDRESS);
-        FSP_ERROR_RETURN((flash_address + num_bytes <= (FLASH_HP_DF_START_ADDRESS + BSP_DATA_FLASH_SIZE_BYTES)),
-                         FSP_ERR_INVALID_SIZE);
+        uint32_t start;
+        uint32_t end;
+
+  #if (BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0)
+        if (flash_address >= BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_START)
+        {
+            start = BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_START;
+            end   = BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_START + BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE;
+        }
+        else
+  #endif
+        {
+            start = FLASH_HP_DF_START_ADDRESS;
+            end   = FLASH_HP_DF_START_ADDRESS + BSP_DATA_FLASH_SIZE_BYTES;
+        }
+
         write_size = BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE;
+
+        FSP_ERROR_RETURN((flash_address >= start) && (flash_address < end), FSP_ERR_INVALID_ADDRESS);
+        FSP_ERROR_RETURN(((flash_address + num_bytes) <= end), FSP_ERR_INVALID_SIZE);
  #else
 
         return FSP_ERR_INVALID_ADDRESS;
@@ -1608,6 +1903,40 @@ static fsp_err_t r_flash_hp_common_parameter_checking (flash_hp_instance_ctrl_t 
 
     return FSP_SUCCESS;
 }
+
+ #if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
+static fsp_err_t r_flash_hp_arc_common_parameter_checking (flash_hp_instance_ctrl_t * const p_ctrl,
+                                                           flash_arc_t                      counter,
+                                                           uint8_t                          fcntselr)
+{
+    fsp_err_t err = r_flash_hp_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(err == FSP_SUCCESS, err);
+
+    uint8_t arcns = R_OFS_DATAFLASH->ARCCS_b.CNF_ARCNS;
+    uint8_t target_counter_is_arc_ns  = fcntselr & 0x4;
+    uint8_t target_counter_is_enabled = (FLASH_HP_PRV_ARCNS_MULTIPLE == arcns) ||
+                                        ((FLASH_HP_PRV_ARCNS_SINGLE == arcns) && (counter == FLASH_ARC_NSEC_0));
+
+    /* Ensure that requested counter is supported by hardware. Some MCUs may not support all counter types. */
+  #if (0 == BSP_FEATURE_FLASH_ARC_OEMBL_MAX_COUNT)
+    FSP_ERROR_RETURN(counter != FLASH_ARC_OEMBL, FSP_ERR_UNSUPPORTED);
+  #endif
+
+  #if (0 == BSP_FEATURE_FLASH_ARC_SEC_MAX_COUNT)
+    FSP_ERROR_RETURN(counter != FLASH_ARC_SEC, FSP_ERR_UNSUPPORTED);
+  #endif
+
+  #if (0 == BSP_FEATURE_FLASH_ARC_NSEC_NUM_COUNTERS)
+    FSP_ERROR_RETURN(0 == target_counter_is_arc_ns, FSP_ERR_UNSUPPORTED);
+  #endif
+
+    /* Ensure that requested NSEC counter has been configured when NSEC is the target counter */
+    FSP_ERROR_RETURN(!target_counter_is_arc_ns || target_counter_is_enabled, FSP_ERR_NOT_ENABLED);
+
+    return FSP_SUCCESS;
+}
+
+ #endif
 
 #endif
 
@@ -1713,6 +2042,154 @@ static fsp_err_t flash_hp_df_blank_check (flash_hp_instance_ctrl_t * const p_ctr
 
 #endif
 
+#if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
+
+/*******************************************************************************************************************//**
+ * This function converts the flash API counter enumeration to the register value for FCNTSELR
+ *
+ * @param counter The API counter value
+ *
+ * @returns FCNTSELR value
+ **********************************************************************************************************************/
+static uint8_t flash_hp_counter_to_fcntselr_convert (flash_arc_t counter)
+{
+    return (uint8_t) ((counter < FLASH_ARC_NSEC_0 ? counter + 1 : counter + 2) & R_FACI_HP_FCNTSELR_CNTSEL_Msk);
+}
+
+/*******************************************************************************************************************//**
+ * This function reads the anti-rollback counter value
+ *
+ * ARC_OEMBL is read by FACI command because it is required to be read before increment to support RSIP-E51A comparison
+ * by the FACI controller. The other counters are read by memory-mapped read.
+ *
+ * @param p_ctrl     Flash control block
+ * @param fcntselr   FCNTSELR register value
+ * @param p_count    The counter value
+ *
+ * @returns FCNTSELR value
+ **********************************************************************************************************************/
+static fsp_err_t flash_hp_arc_read (flash_hp_instance_ctrl_t * const p_ctrl, uint8_t fcntselr, uint32_t * const p_count)
+{
+    fsp_err_t           err;
+    volatile uint32_t * p_src;
+    uint32_t            counter_num_words;
+    uint32_t            arc_oembl[2];
+
+    switch (fcntselr)
+    {
+        case FLASH_HP_PRV_ARC_OEMBL_FCNTSELR:
+        {
+            err = flash_hp_arc_cmd_execute(p_ctrl, fcntselr, FLASH_HP_FACI_CMD_READ_COUNTER, p_ctrl->timeout_arc_read);
+            FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+            /* Read the counter values after successful FACI read command */
+            arc_oembl[0] = R_FACI_HP->FCNTDATAR0;
+            arc_oembl[1] = R_FACI_HP->FCNTDATAR1;
+
+            p_src             = arc_oembl;
+            counter_num_words = 2;
+            break;
+        }
+
+        case FLASH_HP_PRV_ARC_SEC_FCNTSELR:
+        {
+            p_src             = R_OFS_DATAFLASH->ARC_SEC;
+            counter_num_words = sizeof(R_OFS_DATAFLASH->ARC_SEC) / sizeof(R_OFS_DATAFLASH->ARC_SEC[0]);
+            break;
+        }
+
+        default:                       // ARC_NSEC
+        {
+            uint8_t arcns = R_OFS_DATAFLASH->ARCCS_b.CNF_ARCNS;
+            p_src = R_OFS_DATAFLASH->ARC_NSEC;
+
+            if (FLASH_HP_PRV_ARCNS_MULTIPLE == arcns)
+            {
+                counter_num_words = BSP_FEATURE_FLASH_ARC_NSEC_MULTIPLE_MAX_COUNT >> 5; // bits to words
+                uint32_t counter_index = ((uint32_t) fcntselr - FLASH_HP_PRV_ARC_NSEC_0_FCNTSELR) * counter_num_words;
+                p_src = &R_OFS_DATAFLASH->ARC_NSEC[counter_index];
+            }
+            else if (FLASH_HP_PRV_ARCNS_SINGLE == arcns)
+            {
+                counter_num_words = sizeof(R_OFS_DATAFLASH->ARC_NSEC) / sizeof(R_OFS_DATAFLASH->ARC_NSEC[0]);
+            }
+            else
+            {
+                return FSP_ERR_NOT_ENABLED;
+            }
+
+            break;
+        }
+    }
+
+    /* Determine the number of bits set in the counter data. This is the actual count value. */
+    uint32_t count = 0;
+    for (uint8_t word = 0; word < counter_num_words; word += 2)
+    {
+        uint32_t lo = p_src[word];
+        uint32_t hi = p_src[1 + word];
+        count += FLASH_HP_PRV_64_BITS - (__CLZ(hi) + __CLZ(lo));
+    }
+
+    *p_count = count;
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * This function executes an anti-rollback counter FACI operation (read, refresh, or increment)
+ *
+ * @param[in]  p_ctrl                      Flash control block
+ * @param[in]  fcntselr                    Register value to write to FCNTSELR to select the target counter
+ * @param[in]  cmd                         The FACI command to use
+ * @param[in] wait_count                   The command timeout
+ *
+ * @returns FCNTSELR value
+ **********************************************************************************************************************/
+static fsp_err_t flash_hp_arc_cmd_execute (flash_hp_instance_ctrl_t * const p_ctrl,
+                                           uint8_t                          fcntselr,
+                                           uint8_t                          cmd,
+                                           volatile uint32_t                wait_count)
+{
+    /* Enter Data Flash P/E mode. If failure, return error */
+    fsp_err_t err = flash_hp_enter_pe_df_mode(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Select target counter */
+    R_FACI_HP->FCNTSELR = fcntselr;
+
+    /* Issue 2-part command to the FACI command-issuing area */
+    R_FACI_HP_CMD->FACI_CMD8 = cmd;
+    R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_FINAL;
+
+    /* Wait for FRDY flag or timeout */
+    while (1U != R_FACI_HP->FSTATR_b.FRDY)
+    {
+        if (wait_count == 0U)
+        {
+            err = FSP_ERR_TIMEOUT;
+            break;
+        }
+
+        wait_count--;
+    }
+
+    /* Check for errors and issue forced stop if error occurred */
+    err = flash_hp_check_errors(err, 0, err);
+
+    /* Return to read mode*/
+    fsp_err_t pe_exit_err = flash_hp_pe_mode_exit();
+
+    if (FSP_SUCCESS == err)
+    {
+        err = pe_exit_err;
+    }
+
+    return err;
+}
+
+#endif
+
 /*******************************************************************************************************************//**
  * This function will initialize the FCU and set the FCU Clock based on the current FCLK frequency.
  * @param      p_ctrl        Pointer to the instance control block
@@ -1770,10 +2247,10 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
     p_ctrl->timeout_blank_check = (uint32_t) (FLASH_HP_MAX_BLANK_CHECK_US * system_clock_freq_mhz) /
                                   R_FLASH_HP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
 
-    /*  According to HW Manual the max timeout value when using the configuration set
-     *  command is 307 ms. This is with a FCLK of 4MHz. The
-     *  calculation below calculates the number of ICLK ticks needed for the
-     *  timeout delay.
+    /*  According to RA8M1 manual R01UH0994EJ0110 the max timeout value when
+     *  using the configuration set command is 515 ms (DF max timeout). This
+     *  is with a FCLK of 4MHz. The calculation below calculates the number
+     *  of ICLK ticks needed for the timeout delay.
      */
     p_ctrl->timeout_write_config = (uint32_t) (FLASH_HP_MAX_WRITE_CONFIG_US * system_clock_freq_mhz) /
                                    R_FLASH_HP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
@@ -1800,6 +2277,27 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
     p_ctrl->timeout_erase_cf_small_block =
         (uint32_t) (FLASH_HP_MAX_ERASE_CF_SMALL_BLOCK_US * system_clock_freq_mhz) /
         R_FLASH_HP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
+
+#if (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
+
+    /*  According to RA8M1 manual R01UH0994EJ0110 the max timeout value for
+     *  refreshing or incrementing the anti-rollback counter is around 81 ms.
+     *  This is with a FCLK of 4MHz. The calculation below  calculates the
+     *  number of ICLK ticks needed for the timeout delay.
+     */
+    p_ctrl->timeout_arc_increment_refresh =
+        (uint32_t) (FLASH_HP_MAX_INCREMENT_REFRESH_COUNTER_US * system_clock_freq_mhz) /
+        R_FLASH_HP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
+
+    /*  According to RA8M1 manual R01UH0994EJ0110 the max timeout value for
+     *  reading the anti-rollback counter is around 25 ms. This is with
+     *  a FCLK of 4MHz. The calculation below  calculates the number of ICLK
+     *  ticks needed for the timeout delay.
+     */
+    p_ctrl->timeout_arc_read =
+        (uint32_t) (FLASH_HP_MAX_READ_COUNTER_US * system_clock_freq_mhz) /
+        R_FLASH_HP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
+#endif
 
     return FSP_SUCCESS;
 }
@@ -2244,7 +2742,7 @@ static fsp_err_t flash_hp_access_window_set (flash_hp_instance_ctrl_t * p_ctrl,
     flash_hp_configuration_area_data_setup(btflg, start_addr >> 13U, end_addr >> 13U);
 
     /* Write the configuration area to the access/startup region. */
-    err = flash_hp_configuration_area_write(p_ctrl, FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP);
+    err = flash_hp_configuration_area_write(p_ctrl, FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP, g_configuration_area_data);
 
     err = flash_hp_check_errors(err, 0, FSP_ERR_WRITE_FAILED);
 
@@ -2308,7 +2806,9 @@ static fsp_err_t flash_hp_set_startup_area_boot (flash_hp_instance_ctrl_t * p_ct
  #endif
 
         /* Write the configuration area to the access/startup region. */
-        err = flash_hp_configuration_area_write(p_ctrl, FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP);
+        err = flash_hp_configuration_area_write(p_ctrl,
+                                                FLASH_HP_FCU_CONFIG_SET_ACCESS_STARTUP,
+                                                g_configuration_area_data);
 
         err = flash_hp_check_errors(err, 0, FSP_ERR_WRITE_FAILED);
     }
@@ -2369,11 +2869,11 @@ static fsp_err_t flash_hp_set_id_code (flash_hp_instance_ctrl_t * p_ctrl,
     /* If the mode is not unlocked set bits 126 and 127 accordingly. */
     if (FLASH_ID_CODE_MODE_UNLOCKED != mode)
     {
-        g_configuration_area_data[FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT - 1U] |= (uint16_t) mode;
+        g_configuration_area_data[FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT_CF - 1U] |= (uint16_t) mode;
     }
 
     /* Write the configuration area to the access/startup region. */
-    err = flash_hp_configuration_area_write(p_ctrl, FLASH_HP_FCU_CONFIG_SET_ID_BYTE);
+    err = flash_hp_configuration_area_write(p_ctrl, FLASH_HP_FCU_CONFIG_SET_ID_BYTE, g_configuration_area_data);
 
     err = flash_hp_check_errors(err, 0, FSP_ERR_WRITE_FAILED);
 
@@ -2390,31 +2890,45 @@ static fsp_err_t flash_hp_set_id_code (flash_hp_instance_ctrl_t * p_ctrl,
 
 #endif
 
-#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) || ((FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && \
+    (BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0))
 
 /*******************************************************************************************************************//**
- * Execute the Set Configuration sequence using the g_configuration_area_data structure set up the caller.
+ * Execute the Configuration Set Command: sequence
  *
  * @param      p_ctrl           Pointer to the control block
  * @param[in]  fsaddr           Flash address to be written to.
+ * @param[in]  src_address      Pointer to the data to write to the configuration area.
  *
- * @retval     FSP_SUCCESS      Set Configuration successful
+ * @retval     FSP_SUCCESS      Configuration Set successful
  * @retval     FSP_ERR_TIMEOUT  Timed out waiting for the FCU to become ready.
  **********************************************************************************************************************/
-static fsp_err_t flash_hp_configuration_area_write (flash_hp_instance_ctrl_t * p_ctrl, uint32_t fsaddr)
+static fsp_err_t flash_hp_configuration_area_write (flash_hp_instance_ctrl_t * p_ctrl,
+                                                    uint32_t                   fsaddr,
+                                                    uint16_t                 * src_address)
 {
-    volatile uint32_t timeout = p_ctrl->timeout_write_config;
+    volatile uint32_t timeout           = p_ctrl->timeout_write_config;
+    uint8_t           faci_config_set_2 = FLASH_HP_FACI_CMD_CONFIG_SET_2_CF;
+    uint32_t          access_word_count = FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT_CF;
+
+ #if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0)
+    if (fsaddr >= BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_START)
+    {
+        faci_config_set_2 = FLASH_HP_FACI_CMD_CONFIG_SET_2_DF;
+        access_word_count = FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT_DF;
+    }
+ #endif
 
     /* See "Configuration Set Command": Section 47.9.3.15 of the RA6M4 manual R01UH0890EJ0100. */
     R_FACI_HP->FSADDR        = fsaddr;
     R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_CONFIG_SET_1;
-    R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_CONFIG_SET_2;
+    R_FACI_HP_CMD->FACI_CMD8 = faci_config_set_2;
 
     /* Write the configuration data. */
-    for (uint32_t index = 0U; index < FLASH_HP_CONFIG_SET_ACCESS_WORD_CNT; index++)
+    for (uint32_t index = 0U; index < access_word_count; index++)
     {
-        /* There are 8 16 bit words that must be written to accomplish a configuration set */
-        R_FACI_HP_CMD->FACI_CMD16 = g_configuration_area_data[index];
+        /* There are 8 16 bit halfwords that must be written to accomplish a configuration set */
+        R_FACI_HP_CMD->FACI_CMD16 = src_address[index];
     }
 
     R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_FINAL;
@@ -2430,6 +2944,58 @@ static fsp_err_t flash_hp_configuration_area_write (flash_hp_instance_ctrl_t * p
     }
 
     return FSP_SUCCESS;
+}
+
+#endif
+
+#if (((FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_USER_LOCKABLE_AREA_SIZE > 0)) == 1)
+
+/*******************************************************************************************************************//**
+ * Write user data to the user lockable area
+ *
+ * @param     p_ctrl           Pointer to the control block
+ * @param     src_address      Pointer to the data to write to the configuration area. Data length must a multiple of the
+ *                             write size.
+ * @param     flash_address    Flash address to be written to.
+ * @param     num_bytes        Number of bytes to write. Must be a multiple of the write size.
+ *
+ * @retval     FSP_SUCCESS      Configuration Set successful
+ * @retval     FSP_ERR_TIMEOUT  Timed out waiting for the FCU to become ready.
+ **********************************************************************************************************************/
+static fsp_err_t flash_hp_user_lockable_area_write (flash_hp_instance_ctrl_t * p_ctrl,
+                                                    uint32_t const             src_address,
+                                                    uint32_t                   flash_address,
+                                                    uint32_t const             num_bytes)
+{
+    fsp_err_t err;
+    err = flash_hp_enter_pe_df_mode(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    uint32_t   operations_remaining = num_bytes / BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE;
+    uint16_t * p_src                = (uint16_t *) src_address;
+
+    do
+    {
+        /* Write the minimum write size to the lockable area */
+        err = flash_hp_configuration_area_write(p_ctrl, flash_address, p_src);
+
+        /* Check for errors that may have occurred during the write */
+        err = flash_hp_check_errors(err, 0, FSP_ERR_WRITE_FAILED);
+
+        flash_address += BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE;
+        p_src         += BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE / sizeof(p_src[0]);
+        operations_remaining--;
+    } while ((operations_remaining) && (err == FSP_SUCCESS));
+
+    /* Return to read mode*/
+    fsp_err_t pe_exit_err = flash_hp_pe_mode_exit();
+
+    if (FSP_SUCCESS == err)
+    {
+        err = pe_exit_err;
+    }
+
+    return err;
 }
 
 #endif

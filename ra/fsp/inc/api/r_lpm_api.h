@@ -212,16 +212,16 @@ typedef enum e_lpm_standby_wake_source
     LPM_STANDBY_WAKE_SOURCE_ULP1B    = 0x400000000000ULL, ///< ULPT1 Compare Match B Interrupt
 } lpm_standby_wake_source_t;
 
-#if BSP_FEATURE_ICU_HAS_WUPEN2
+ #if BSP_FEATURE_ICU_HAS_WUPEN2
 typedef enum e_lpm_standby_wake_source_2
 {
-    LPM_STANDBY_WAKE_SOURCE_INTUR0   = 0x00000001ULL,    ///< UARTA0 INTUR Interrupt
-    LPM_STANDBY_WAKE_SOURCE_INTURE0  = 0x00000002ULL,    ///< UARTA0 INTURE Interrupt
-    LPM_STANDBY_WAKE_SOURCE_INTUR1   = 0x00000004ULL,    ///< UARTA1 INTUR Interrupt
-    LPM_STANDBY_WAKE_SOURCE_INTURE1  = 0x00000008ULL,    ///< UARTA1 INTURE Interrupt
-    LPM_STANDBY_WAKE_SOURCE_USBCCS   = 0x00000010ULL,    ///< USBCC Status Change Interrupt
+    LPM_STANDBY_WAKE_SOURCE_INTUR0  = 0x00000001ULL, ///< UARTA0 INTUR Interrupt
+    LPM_STANDBY_WAKE_SOURCE_INTURE0 = 0x00000002ULL, ///< UARTA0 INTURE Interrupt
+    LPM_STANDBY_WAKE_SOURCE_INTUR1  = 0x00000004ULL, ///< UARTA1 INTUR Interrupt
+    LPM_STANDBY_WAKE_SOURCE_INTURE1 = 0x00000008ULL, ///< UARTA1 INTURE Interrupt
+    LPM_STANDBY_WAKE_SOURCE_USBCCS  = 0x00000010ULL, ///< USBCC Status Change Interrupt
 } lpm_standby_wake_source_2_t;
-#endif
+ #endif
 
 typedef uint64_t lpm_standby_wake_source_bits_t;
 #endif
@@ -476,7 +476,7 @@ typedef struct st_lpm_cfg
     /** Bitwise list of snooze end sources */
     lpm_snooze_end_bits_t snooze_end_sources;
 
- #ifndef BSP_OVERRIDE_LPM_SNOOZE_CANCEL_T
+ #ifndef BSP_OVERRIDE_LPM_SNOOZE_CANCEL_SOURCES_T
 
     /** List of snooze cancel sources */
     lpm_snooze_cancel_t snooze_cancel_sources;

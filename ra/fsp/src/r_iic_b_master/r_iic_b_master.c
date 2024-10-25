@@ -61,11 +61,20 @@
 #define IIC_B_MASTER_BILLION                          (1000000000U)
 #define IIC_B_MASTER_ROUNDING_OFF_COMP                (1U)
 
+#if IIC_B_MASTER_CFG_PARAM_CHECKING_ENABLE
+ #if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS && IIC_B_MASTER_CFG_DTC_ENABLE
+
+/* The address of the MCU Version Register on RA2E2 MCUs. Different transmission procedures are used depending on the
+ * version of the MCU (This is only used on RA2E2 devices). */
+  #define I2C_A2E2_VERSION                      (*((uint8_t const *) 0x01001C20U))
+ #endif
+#endif
+
 /* Worst case ratio of ICLK/PCLKB (RA2E2) or ICLK/PCLKA (RA6T2) = 64 approximately.
  * 3 PCLKB cycles is the number of cycles to wait for IICn.
  * Refer "Table 3.2 Access cycles for non-GPT modules (1 of 2)" of the RA2E2 manual R01UH0919EJ0050)
  */
-#define IIC_B_MASTER_PERIPHERAL_REG_MAX_WAIT          (0x40U * 0x03U)
+#define IIC_B_MASTER_PERIPHERAL_REG_MAX_WAIT    (0x40U * 0x03U)
 
 #define IIC_B_MASTER_HARDWARE_REGISTER_WAIT(reg, required_value, timeout) \
     while ((timeout))                                                     \
@@ -255,7 +264,7 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
  * I2C_MASTER_EVENT_RX_COMPLETE in the callback.
  *
  * @retval  FSP_SUCCESS             Function executed without issue.
- * @retval  FSP_ERR_ASSERTION       p_api_ctrl, p_dest or bytes is NULL.
+ * @retval  FSP_ERR_ASSERTION       p_api_ctrl, p_dest or bytes is NULL, or DTC is used for data transmission on RA2E2 Ver 1.
  * @retval  FSP_ERR_INVALID_SIZE    Provided number of bytes more than uint16_t size (65535) while DTC is used
  *                                  for data transfer.
  * @retval  FSP_ERR_IN_USE          Bus busy condition. Another transfer was in progress.
@@ -269,6 +278,12 @@ fsp_err_t R_IIC_B_MASTER_Read (i2c_master_ctrl_t * const p_api_ctrl,
 #if IIC_B_MASTER_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl != NULL);
     FSP_ASSERT(bytes != 0U);
+ #if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS && IIC_B_MASTER_CFG_DTC_ENABLE
+    if (1 == I2C_A2E2_VERSION)
+    {
+        FSP_ASSERT(NULL == ((iic_b_master_instance_ctrl_t *) p_api_ctrl)->p_cfg->p_transfer_tx);
+    }
+ #endif
 #endif
     fsp_err_t err = FSP_SUCCESS;
 
@@ -301,6 +316,12 @@ fsp_err_t R_IIC_B_MASTER_Write (i2c_master_ctrl_t * const p_api_ctrl,
 {
 #if IIC_B_MASTER_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl != NULL);
+ #if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS && IIC_B_MASTER_CFG_DTC_ENABLE
+    if (1 == I2C_A2E2_VERSION)
+    {
+        FSP_ASSERT(NULL == ((iic_b_master_instance_ctrl_t *) p_api_ctrl)->p_cfg->p_transfer_tx);
+    }
+ #endif
 #endif
     fsp_err_t err = FSP_SUCCESS;
 
@@ -1058,6 +1079,14 @@ static void iic_b_master_txi_master (iic_b_master_instance_ctrl_t * p_ctrl)
         if (p_ctrl->remain > 0U)
 #endif
         {
+#if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS
+
+            /* Confirm that PRSTDBG.SCILV = 0 (check the status of SCL) before writing the transmission data.
+             * Please refer to UMH r01uh0919ej0130-ra2e2 25.3.3.3.1 I2C Master Transmission Flow (Single Buffer Transfer) for details.
+             */
+            FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->PRSTDBG_b.SCILV, 0);
+#endif
+
             /* Write the data to NTDTBP0 register */
             p_ctrl->p_reg->NTDTBP0 = p_ctrl->p_buff[p_ctrl->loaded];
 
@@ -1467,6 +1496,14 @@ static void iic_b_master_txi_send_address (iic_b_master_instance_ctrl_t * const 
                 p_ctrl->activation_on_txi = true;
             }
         }
+#endif
+
+#if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS
+
+        /* Confirm that PRSTDBG.SCILV = 0 (check the status of SCL) before writing the transmission data.
+         * Please refer to UMH r01uh0919ej0130-ra2e2 25.3.3.3.1 I2C Master Transmission Flow (Single Buffer Transfer) for details.
+         */
+        FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->PRSTDBG_b.SCILV, 0);
 #endif
 
         /* Write the address byte */

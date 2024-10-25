@@ -561,7 +561,9 @@ fsp_err_t R_RSIP_HMAC_Verify (rsip_ctrl_t * const        p_ctrl,
  *
  * @par Conditions
  * Key type of p_wrapped_key must be one of the following:
- * - @ref RSIP_KEY_TYPE_HMAC_SHA256, @ref RSIP_KEY_TYPE_HMAC_SHA384, @ref RSIP_KEY_TYPE_HMAC_SHA512
+ * - @ref RSIP_KEY_TYPE_HMAC_SHA256
+ * - @ref RSIP_KEY_TYPE_HMAC_SHA384
+ * - @ref RSIP_KEY_TYPE_HMAC_SHA512
  *
  * @par State transition
  * @parblock
@@ -650,7 +652,7 @@ fsp_err_t R_RSIP_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const
  * Implements @ref rsip_api_t::hmacUpdate.
  *
  * @par State transition
- * This API can only be executed in **STATE_SHA**, and does not cause any state transitions.
+ * This API can only be executed in **STATE_HMAC**, and does not cause any state transitions.
  *
  * @retval FSP_SUCCESS                           Normal termination.
  * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.

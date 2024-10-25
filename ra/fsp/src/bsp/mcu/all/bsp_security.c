@@ -530,6 +530,9 @@ void R_BSP_SecurityInit (void)
   #ifdef BSP_TZ_CFG_BBFSAR
     R_SYSTEM->BBFSAR = BSP_TZ_CFG_BBFSAR;                                 /* Battery Backup Security Attribution. */
   #endif
+  #ifdef BSP_TZ_CFG_VBRSABAR
+    R_SYSTEM->VBRSABAR = BSP_TZ_CFG_VBRSABAR;                             /* Battery Backup Security Attribution (VBTBKRn). */
+  #endif
     R_CPSCU->ICUSARA = BSP_TZ_CFG_ICUSARA;                                /* External IRQ Security Attribution. */
     R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;                                /* NMI Security Attribution. */
   #ifdef BSP_TZ_CFG_ICUSARC

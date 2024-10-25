@@ -55,7 +55,7 @@
 
 /* Function pointer declarations */
 #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || \
-    BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+        BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
  #define ECC_PUBLIC_KEY_SIZE_BYTES(curve_size)    (curve_size * 2 + 20U)
 typedef fsp_err_t (* hw_sce_ecc_scalarmultiplication_t)(const uint32_t * InData_CurveType, const uint32_t * InData_Cmd,
                                                         const uint32_t * InData_K, const uint32_t * InData_P,
@@ -168,7 +168,7 @@ fsp_err_t HW_SCE_ECC_384HrkScalarMultiplication(const uint32_t * InData_DomainPa
                                                 const uint32_t * InData_P,
                                                 uint32_t       * OutData_R);
 
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
 fsp_err_t HW_SCE_ECC_521GenerateSign(const uint32_t * InData_CurveType,
                                      const uint32_t * InData_G,
                                      const uint32_t * InData_PrivKey,

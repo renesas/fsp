@@ -57,7 +57,7 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
         sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA256);
     }
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     if (SCE_OEM_CMD_HASH_INIT_TO_SUSPEND == ctx->sce_operation_state)
     {
         ctx->sce_operation_state     = SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND;

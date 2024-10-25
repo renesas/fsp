@@ -49,6 +49,10 @@
  * - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE
  * - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE
  * - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PRIVATE
+ * - @ref RSIP_KEY_TYPE_ECC_SECP256K1_PRIVATE
+ * - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PRIVATE
+ * - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE
+ * - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PRIVATE
  *
  * Message hash p_hash should be computed in advance.
  * In the case of hash length is less than the key length, padding is required to make it the same as the key length.
@@ -166,6 +170,10 @@ fsp_err_t R_RSIP_ECDSA_Sign (rsip_ctrl_t * const              p_ctrl,
  * - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC
  * - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC
  * - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC
+ * - @ref RSIP_KEY_TYPE_ECC_SECP256K1_PUBLIC
+ * - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC
+ * - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC
+ * - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PUBLIC
  *
  * Message hash p_hash should be computed in advance.
  * In the case of hash length is less than the key length, padding is required to make it the same as the key length.
@@ -241,6 +249,209 @@ fsp_err_t R_RSIP_ECDSA_Verify (rsip_ctrl_t * const              p_ctrl,
     {
         case RSIP_RET_PASS:
         {
+            err = FSP_SUCCESS;
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_KEY_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Computes ECDH secret with wrapped private key and wrapped public key.
+ *
+ * Implements @ref rsip_api_t::ecdhKeyAgree.
+ *
+ * @par Conditions
+ * @parblock
+ * Key type of p_wrapped_private_key and p_wrapped_public_key must be one of the following:
+ *  - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC (*)
+ *  - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC (*)
+ *
+ * (*) These features are not supported in this version.
+ * @endparblock
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_MAIN**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL      Input key is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is illegal.
+ *
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECDH_KeyAgree (rsip_ctrl_t * const              p_ctrl,
+                                rsip_wrapped_key_t const * const p_wrapped_private_key,
+                                rsip_wrapped_key_t const * const p_wrapped_public_key,
+                                rsip_wrapped_secret_t * const    p_wrapped_secret)
+{
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+#if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_wrapped_private_key);
+    FSP_ASSERT(p_wrapped_public_key);
+    FSP_ASSERT(p_wrapped_secret);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check key type */
+    FSP_ERROR_RETURN(RSIP_ALG_ECC_PUBLIC == p_wrapped_public_key->alg, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+    FSP_ERROR_RETURN(RSIP_ALG_ECC_PRIVATE == p_wrapped_private_key->alg, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+    FSP_ERROR_RETURN(p_wrapped_public_key->subtype == p_wrapped_private_key->subtype, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(gp_func_ecdh_wrapped[p_wrapped_private_key->subtype], FSP_ERR_NOT_ENABLED);
+#endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret =
+        gp_func_ecdh_wrapped[p_wrapped_private_key->subtype]((const uint32_t *) p_wrapped_public_key->value,
+                                                             (const uint32_t *) p_wrapped_private_key->value,
+                                                             (uint32_t *) p_wrapped_secret->value);
+
+    /* Check error */
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
+            p_wrapped_secret->type = p_wrapped_private_key->subtype;
+
+            err = FSP_SUCCESS;
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_KEY_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Computes ECDH secret with wrapped private key and plain public key.
+ *
+ * Implements @ref rsip_api_t::ecdhPlainKeyAgree.
+ *
+ * @par Conditions
+ * @parblock
+ * Key type of p_wrapped_private_key must be one of the following:
+ *  - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC (*)
+ *  - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC (*)
+ *
+ * (*) These features are not supported in this version.
+ * @endparblock
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_MAIN**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL      Input key is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is illegal.
+ *
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ *
+ * @attention Unauthenticated public key of Diffie–Hellman key exchange generally carry the risk of man-in-the-middle
+ *            (MITM) attack. Please use R_RSIP_ECDH_KeyAgree() or implement signature verification whenever possible.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_ECDH_PlainKeyAgree (rsip_ctrl_t * const              p_ctrl,
+                                     rsip_wrapped_key_t const * const p_wrapped_private_key,
+                                     uint8_t const * const            p_plain_public_key,
+                                     rsip_wrapped_secret_t * const    p_wrapped_secret)
+{
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+#if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_wrapped_private_key);
+    FSP_ASSERT(p_plain_public_key);
+    FSP_ASSERT(p_wrapped_secret);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check key type */
+    FSP_ERROR_RETURN(RSIP_ALG_ECC_PRIVATE == p_wrapped_private_key->alg, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(gp_func_ecdh_plain[p_wrapped_private_key->subtype], FSP_ERR_NOT_ENABLED);
+#endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret =
+        gp_func_ecdh_plain[p_wrapped_private_key->subtype]((const uint32_t *) p_plain_public_key,
+                                                           (const uint32_t *) p_wrapped_private_key->value,
+                                                           (uint32_t *) p_wrapped_secret->value);
+
+    /* Check error */
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
+            p_wrapped_secret->type = p_wrapped_private_key->subtype;
+
             err = FSP_SUCCESS;
             break;
         }

@@ -477,11 +477,11 @@ ble_status_t R_BLE_GAP_ReplyPasskeyEntry (uint16_t conn_hdl, uint32_t passkey, u
 
 ble_status_t R_BLE_GAP_ReplyNumComp (uint16_t conn_hdl, uint8_t response)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
-    FSP_PARAMETER_NOT_USED(response);
+    ble_status_t status = BLE_ERR_UNSPECIFIED;
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    status = r_ble_gtl_send_gapc_bond_cfm(conn_hdl, R_BLE_GTL_GAPC_TK_EXCH, response, NULL_TK_VAL);
+
+    return status;
 }
 
 ble_status_t R_BLE_GAP_NotifyKeyPress (uint16_t conn_hdl, uint8_t key_press)
@@ -563,24 +563,43 @@ void R_BLE_GAP_DeleteBondInfo (int32_t               local,
 
 ble_status_t R_BLE_GAP_ReplyLtkReq (uint16_t conn_hdl, uint16_t ediv, uint8_t * p_peer_rand, uint8_t response)
 {
-	FSP_PARAMETER_NOT_USED(response);
+    ble_status_t status = BLE_ERR_UNSUPPORTED;
 
-    bool comp_resp = r_ble_gtl_sec_encryption_req_resp(ediv, p_peer_rand);
+    FSP_PARAMETER_NOT_USED(response);
 
-    if(comp_resp)
+    if (get_security_requirements() != GAP_SEC1_SEC_PAIR_ENC)
     {
-        /* Values found in db */
-        r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_ACCEPT);
+        /* Handle LEGACY PAIRING */
+        bool comp_resp = r_ble_gtl_sec_encryption_req_resp(ediv, p_peer_rand);
+
+        if (comp_resp)
+        {
+            /* Values found in db */
+            status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_ACCEPT);
+        }
+        else
+        {
+            /* Values NOT found in db */
+            status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_DENY);
+        }
+        /* Notify the application */
+        if (status == BLE_SUCCESS)
+        {
+            status = r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, comp_resp);
+        }
     }
     else
     {
-        /* Values NOT found in db */
-        r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_DENY); 
-    }         
-   
-    r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, comp_resp);
+        /* Handle SECURE CONNECTIONS */
+        status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_ACCEPT);
+        if (status == BLE_SUCCESS)
+        {
+            status = r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, true);
+        }
+    }
 
-    return BLE_SUCCESS;
+
+    return status;
 }
 
 ble_status_t R_BLE_GATT_GetMtu (uint16_t conn_hdl, uint16_t * p_mtu)

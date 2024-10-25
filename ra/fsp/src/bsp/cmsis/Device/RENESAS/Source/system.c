@@ -792,24 +792,32 @@ static void bsp_init_mpu (void)
 {
     uint32_t nocache_start;
     uint32_t nocache_end;
+ #if BSP_FEATURE_SDRAM_START_ADDRESS
     uint32_t nocache_sdram_start;
     uint32_t nocache_sdram_end;
+ #endif
 
  #if defined(__ARMCC_VERSION)
     nocache_start       = (uint32_t) &Image$$NOCACHE$$ZI$$Base;
     nocache_end         = (uint32_t) &Image$$NOCACHE_PAD$$ZI$$Limit;
+ #if BSP_FEATURE_SDRAM_START_ADDRESS
     nocache_sdram_start = (uint32_t) &Image$$NOCACHE_SDRAM$$ZI$$Base;
     nocache_sdram_end   = (uint32_t) &Image$$NOCACHE_SDRAM_PAD$$ZI$$Limit;
+ #endif
  #elif defined(__GNUC__)
     nocache_start       = (uint32_t) &__nocache_start;
     nocache_end         = (uint32_t) &__nocache_end;
+ #if BSP_FEATURE_SDRAM_START_ADDRESS
     nocache_sdram_start = (uint32_t) &__nocache_sdram_start;
     nocache_sdram_end   = (uint32_t) &__nocache_sdram_end;
+ #endif
  #elif defined(__ICCARM__)
     nocache_start       = (uint32_t) &NOCACHE$$Base;
     nocache_end         = (uint32_t) &NOCACHE$$Limit;
+ #if BSP_FEATURE_SDRAM_START_ADDRESS
     nocache_sdram_start = (uint32_t) &NOCACHE_SDRAM$$Base;
     nocache_sdram_end   = (uint32_t) &NOCACHE_SDRAM$$Limit;
+ #endif
  #endif
 
     /* Maximum of eight attributes. */
@@ -830,11 +838,13 @@ static void bsp_init_mpu (void)
             .RLAR = ARM_MPU_RLAR((nocache_end - ARMV8_MPU_REGION_MIN_SIZE), 0U)
         },
 
+ #if BSP_FEATURE_SDRAM_START_ADDRESS
         /* SDRAM No-Cache Section */
         {
             .RBAR = ARM_MPU_RBAR(nocache_sdram_start, ARM_MPU_SH_NON, 0U, 0U, 1U),
             .RLAR = ARM_MPU_RLAR((nocache_sdram_end - ARMV8_MPU_REGION_MIN_SIZE), 0U)
         }
+ #endif
     };
 
     /* Initialize MPU_MAIR0 and MPU_MAIR1 from attributes table. */

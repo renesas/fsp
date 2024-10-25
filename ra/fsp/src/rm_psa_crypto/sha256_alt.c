@@ -712,7 +712,7 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
     ctx->total[0] += (uint32_t) ilen;
     ctx->total[0] &= 0xFFFFFFFF;
 
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     uint32_t sha256_block_aligned_size_mod;
 
     if (ctx->total[0] < (uint32_t) ilen) {
@@ -854,7 +854,7 @@ int mbedtls_sha256_finish(mbedtls_sha256_context *ctx,
      */
     used = ctx->total[0] & 0x3F;
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     /* If there is no unaligned data in the context buffer. */
     if (0 == used)
     {

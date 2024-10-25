@@ -317,21 +317,25 @@ void fcu_frdyi_isr(void);
  **********************************************************************************************************************/
 const flash_api_t g_flash_on_flash_lp =
 {
-    .open                 = R_FLASH_LP_Open,
-    .close                = R_FLASH_LP_Close,
-    .write                = R_FLASH_LP_Write,
-    .erase                = R_FLASH_LP_Erase,
-    .blankCheck           = R_FLASH_LP_BlankCheck,
-    .statusGet            = R_FLASH_LP_StatusGet,
-    .infoGet              = R_FLASH_LP_InfoGet,
-    .accessWindowSet      = R_FLASH_LP_AccessWindowSet,
-    .accessWindowClear    = R_FLASH_LP_AccessWindowClear,
-    .idCodeSet            = R_FLASH_LP_IdCodeSet,
-    .reset                = R_FLASH_LP_Reset,
-    .startupAreaSelect    = R_FLASH_LP_StartUpAreaSelect,
-    .bankSwap             = R_FLASH_LP_BankSwap,
-    .updateFlashClockFreq = R_FLASH_LP_UpdateFlashClockFreq,
-    .callbackSet          = R_FLASH_LP_CallbackSet,
+    .open                         = R_FLASH_LP_Open,
+    .close                        = R_FLASH_LP_Close,
+    .write                        = R_FLASH_LP_Write,
+    .erase                        = R_FLASH_LP_Erase,
+    .blankCheck                   = R_FLASH_LP_BlankCheck,
+    .statusGet                    = R_FLASH_LP_StatusGet,
+    .infoGet                      = R_FLASH_LP_InfoGet,
+    .accessWindowSet              = R_FLASH_LP_AccessWindowSet,
+    .accessWindowClear            = R_FLASH_LP_AccessWindowClear,
+    .idCodeSet                    = R_FLASH_LP_IdCodeSet,
+    .reset                        = R_FLASH_LP_Reset,
+    .startupAreaSelect            = R_FLASH_LP_StartUpAreaSelect,
+    .bankSwap                     = R_FLASH_LP_BankSwap,
+    .updateFlashClockFreq         = R_FLASH_LP_UpdateFlashClockFreq,
+    .callbackSet                  = R_FLASH_LP_CallbackSet,
+    .antiRollbackCounterIncrement = R_FLASH_LP_AntiRollbackCounterIncrement,
+    .antiRollbackCounterRefresh   = R_FLASH_LP_AntiRollbackCounterRefresh,
+    .antiRollbackCounterRead      = R_FLASH_LP_AntiRollbackCounterRead,
+    .userLockableAreaWrite        = R_FLASH_LP_UserLockableAreaWrite,
 };
 
 /** Name of module used by error logger macro */
@@ -1117,6 +1121,70 @@ fsp_err_t R_FLASH_LP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
     FSP_PARAMETER_NOT_USED(p_callback);
     FSP_PARAMETER_NOT_USED(p_callback_memory);
     FSP_PARAMETER_NOT_USED(p_context);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Stub function
+ * Implements @ref flash_api_t::antiRollbackCounterIncrement.
+ *
+ * @retval  FSP_ERR_UNSUPPORTED          Function has not been implemented.
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_LP_AntiRollbackCounterIncrement (flash_ctrl_t * const p_api_ctrl, flash_arc_t counter)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(counter);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Stub function
+ * Implements @ref flash_api_t::antiRollbackCounterRefresh.
+ *
+ * @retval  FSP_ERR_UNSUPPORTED          Function has not been implemented.
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_LP_AntiRollbackCounterRefresh (flash_ctrl_t * const p_api_ctrl, flash_arc_t counter)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(counter);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Stub function
+ * Implements @ref flash_api_t::antiRollbackCounterRead.
+ *
+ * @retval  FSP_ERR_UNSUPPORTED          Function has not been implemented.
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_LP_AntiRollbackCounterRead (flash_ctrl_t * const p_api_ctrl,
+                                              flash_arc_t          counter,
+                                              uint32_t * const     p_count)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(counter);
+    FSP_PARAMETER_NOT_USED(p_count);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Stub function
+ * Implements @ref flash_api_t::userLockableAreaWrite.
+ *
+ * @retval  FSP_ERR_UNSUPPORTED          Function has not been implemented.
+ **********************************************************************************************************************/
+fsp_err_t R_FLASH_LP_UserLockableAreaWrite (flash_ctrl_t * const p_api_ctrl,
+                                            uint32_t const       src_address,
+                                            uint32_t             flash_address,
+                                            uint32_t const       num_bytes)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(src_address);
+    FSP_PARAMETER_NOT_USED(flash_address);
+    FSP_PARAMETER_NOT_USED(num_bytes);
 
     return FSP_ERR_UNSUPPORTED;
 }

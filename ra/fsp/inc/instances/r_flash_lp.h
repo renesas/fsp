@@ -113,6 +113,15 @@ fsp_err_t R_FLASH_LP_CallbackSet(flash_ctrl_t * const          p_api_ctrl,
 fsp_err_t R_FLASH_LP_BankSwap(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_LP_UpdateFlashClockFreq(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_LP_InfoGet(flash_ctrl_t * const p_api_ctrl, flash_info_t * const p_info);
+fsp_err_t R_FLASH_LP_AntiRollbackCounterIncrement(flash_ctrl_t * const p_api_ctrl, flash_arc_t counter);
+fsp_err_t R_FLASH_LP_AntiRollbackCounterRefresh(flash_ctrl_t * const p_api_ctrl, flash_arc_t counter);
+fsp_err_t R_FLASH_LP_AntiRollbackCounterRead(flash_ctrl_t * const p_api_ctrl,
+                                             flash_arc_t          counter,
+                                             uint32_t * const     p_count);
+fsp_err_t R_FLASH_LP_UserLockableAreaWrite(flash_ctrl_t * const p_api_ctrl,
+                                           uint32_t const       src_address,
+                                           uint32_t             flash_address,
+                                           uint32_t const       num_bytes);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup FLASH_LP)

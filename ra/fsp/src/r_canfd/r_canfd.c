@@ -197,6 +197,28 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
     FSP_ASSERT(p_extend->p_global_cfg);
 
  #if BSP_CFG_CANFDCLK_SOURCE != BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC
+  #if (BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS > 1U) || (BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS > 1U)
+   #if (BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS == 3U) /* PLL1 has 3 possible outputs that can be used for DLL */
+    uint8_t canFdClockSelect = FSP_STYPE3_REG8_READ(R_SYSTEM->CANFDCKCR, !R_SYSTEM->CGFSAR_b.NONSEC18);
+
+    /* Check that PLL is running when it is selected as the DLL source clock */
+    FSP_ERROR_RETURN(0U ==
+                     (((canFdClockSelect == BSP_CLOCKS_SOURCE_CLOCK_PLL1P) ||
+                       (canFdClockSelect == BSP_CLOCKS_SOURCE_CLOCK_PLL1Q) ||
+                       (canFdClockSelect == BSP_CLOCKS_SOURCE_CLOCK_PLL1R)) ?
+                      FSP_STYPE3_REG8_READ(R_SYSTEM->PLLCR, !R_SYSTEM->CGFSAR_b.NONSEC08) : 0),
+                     FSP_ERR_CLOCK_INACTIVE);
+   #endif
+   #if (BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS == 3U) /* PLL2 has 3 possible outputs that can be used for DLL */
+    /* Check that PLL2 is running when it is selected as the DLL source clock */
+    FSP_ERROR_RETURN(0U ==
+                     (((canFdClockSelect == BSP_CLOCKS_SOURCE_CLOCK_PLL2P) ||
+                       (canFdClockSelect == BSP_CLOCKS_SOURCE_CLOCK_PLL2Q) ||
+                       (canFdClockSelect == BSP_CLOCKS_SOURCE_CLOCK_PLL2R)) ?
+                      FSP_STYPE3_REG8_READ(R_SYSTEM->PLLCR, !R_SYSTEM->CGFSAR_b.NONSEC09) : 0),
+                     FSP_ERR_CLOCK_INACTIVE);
+   #endif
+  #else
 
     /* Check that PLL/PLL2 is running when it is selected as the DLL source clock */
     FSP_ERROR_RETURN(0U ==
@@ -205,6 +227,7 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
                       FSP_STYPE3_REG8_READ(R_SYSTEM->PLLCR, !R_SYSTEM->CGFSAR_b.NONSEC08) :
                       FSP_STYPE3_REG8_READ(R_SYSTEM->PLL2CR, !R_SYSTEM->CGFSAR_b.NONSEC09)),
                      FSP_ERR_CLOCK_INACTIVE);
+  #endif
  #endif
 
     /* Check nominal bit timing parameters for correctness */

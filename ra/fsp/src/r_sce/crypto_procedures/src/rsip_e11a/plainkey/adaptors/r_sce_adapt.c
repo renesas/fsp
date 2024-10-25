@@ -186,9 +186,7 @@ fsp_err_t HW_SCE_Aes256EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMo
 
 fsp_err_t HW_SCE_Aes128CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
 {
-    FSP_PARAMETER_NOT_USED (InData_KeyType);
-    FSP_PARAMETER_NOT_USED (InData_KeyIndex);
-    return FSP_ERR_UNSUPPORTED;
+    return HW_SCE_Aes128CmacInitSub(InData_KeyType, InData_KeyIndex, NULL);
 }
 
 fsp_err_t HW_SCE_Aes192CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
@@ -200,15 +198,12 @@ fsp_err_t HW_SCE_Aes192CmacInit(const uint32_t InData_KeyType[], const uint32_t 
 
 fsp_err_t HW_SCE_Aes256CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
 {
-    FSP_PARAMETER_NOT_USED (InData_KeyType);
-    FSP_PARAMETER_NOT_USED (InData_KeyIndex);
-    return FSP_ERR_UNSUPPORTED;
+    return HW_SCE_Aes256CmacInitSub(InData_KeyType, InData_KeyIndex, NULL);
 }
 
 void HW_SCE_Aes128CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
 {
-    FSP_PARAMETER_NOT_USED (InData_Text);
-    FSP_PARAMETER_NOT_USED (MAX_CNT);
+    HW_SCE_Aes128CmacUpdateSub(InData_Text, MAX_CNT);
 }
 
 void HW_SCE_Aes192CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
@@ -243,8 +238,7 @@ fsp_err_t HW_SCE_Aes192EncryptDecryptFinalSub (void)
 
 void HW_SCE_Aes256CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
 {
-    FSP_PARAMETER_NOT_USED (InData_Text);
-    FSP_PARAMETER_NOT_USED (MAX_CNT);
+    HW_SCE_Aes256CmacUpdateSub(InData_Text, MAX_CNT);
 }
 
 fsp_err_t HW_SCE_Aes128CmacFinal(const uint32_t InData_Cmd[],
@@ -253,12 +247,7 @@ fsp_err_t HW_SCE_Aes128CmacFinal(const uint32_t InData_Cmd[],
                                  const uint32_t InData_DataTLen[],
                                  uint32_t       OutData_DataT[])
 {
-    FSP_PARAMETER_NOT_USED (InData_Cmd);
-    FSP_PARAMETER_NOT_USED (InData_Text);
-    FSP_PARAMETER_NOT_USED (InData_DataT);
-    FSP_PARAMETER_NOT_USED (InData_DataTLen);
-    FSP_PARAMETER_NOT_USED (OutData_DataT);
-    return FSP_ERR_UNSUPPORTED;
+    return HW_SCE_Aes128CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
 
 fsp_err_t HW_SCE_Aes192CmacFinal(const uint32_t InData_Cmd[],
@@ -281,12 +270,7 @@ fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
                                  const uint32_t InData_DataTLen[],
                                  uint32_t       OutData_DataT[])
 {
-    FSP_PARAMETER_NOT_USED (InData_Cmd);
-    FSP_PARAMETER_NOT_USED (InData_Text);
-    FSP_PARAMETER_NOT_USED (InData_DataT);
-    FSP_PARAMETER_NOT_USED (InData_DataTLen);
-    FSP_PARAMETER_NOT_USED (OutData_DataT);
-    return FSP_ERR_UNSUPPORTED;
+    return HW_SCE_Aes256CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
 
 fsp_err_t HW_SCE_Aes128GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
@@ -419,16 +403,11 @@ fsp_err_t HW_SCE_Aes128CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_SeqNum[],
                                                  uint32_t Header_Len)
 {
-    FSP_PARAMETER_NOT_USED(InData_KeyType);
     FSP_PARAMETER_NOT_USED(InData_DataType);
     FSP_PARAMETER_NOT_USED(InData_Cmd);
-    FSP_PARAMETER_NOT_USED(InData_TextLen);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_IV);
-    FSP_PARAMETER_NOT_USED(InData_Header);
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
-    FSP_PARAMETER_NOT_USED(Header_Len);
-    return FSP_ERR_UNSUPPORTED;
+
+    return (HW_SCE_Aes128CcmEncryptInitSub(InData_KeyType, InData_TextLen, InData_KeyIndex, NULL, InData_IV, InData_Header, Header_Len));
 }
 fsp_err_t HW_SCE_Aes192GcmDecryptInitSub(uint32_t *InData_KeyIndex, uint32_t *InData_IV)
 {
@@ -459,6 +438,39 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub(uint32_t *InData_KeyIndex, uint32_t *In
     return FSP_ERR_UNSUPPORTED;
  }
 
+ void HW_SCE_Aes192CcmEncryptUpdateSub(const uint32_t *InData_Text, uint32_t *OutData_Text, const uint32_t MAX_CNT)
+ {
+     FSP_PARAMETER_NOT_USED(InData_Text);
+     FSP_PARAMETER_NOT_USED(OutData_Text);
+     FSP_PARAMETER_NOT_USED(MAX_CNT);
+ }
+
+ void HW_SCE_Aes192CcmDecryptUpdateSub(const uint32_t *InData_Text, uint32_t *OutData_Text, const uint32_t MAX_CNT)
+ {
+     FSP_PARAMETER_NOT_USED(InData_Text);
+     FSP_PARAMETER_NOT_USED(OutData_Text);
+     FSP_PARAMETER_NOT_USED(MAX_CNT);
+ }
+
+ fsp_err_t HW_SCE_Aes192CcmEncryptFinalSub(const uint32_t *InData_Text, const uint32_t *InData_TextLen, uint32_t *OutData_Text, uint32_t *OutData_MAC)
+ {
+     FSP_PARAMETER_NOT_USED(InData_TextLen);
+     FSP_PARAMETER_NOT_USED(InData_Text);
+     FSP_PARAMETER_NOT_USED(OutData_Text);
+     FSP_PARAMETER_NOT_USED(OutData_MAC);
+     return FSP_ERR_UNSUPPORTED;
+ }
+
+ fsp_err_t HW_SCE_Aes192CcmDecryptFinalSub(const uint32_t *InData_Text, const uint32_t *InData_TextLen, const uint32_t *InData_MAC, const uint32_t *InData_MACLength, uint32_t *OutData_Text)
+ {
+     FSP_PARAMETER_NOT_USED(InData_Text);
+     FSP_PARAMETER_NOT_USED(InData_TextLen);
+     FSP_PARAMETER_NOT_USED(InData_MAC);
+     FSP_PARAMETER_NOT_USED(InData_MACLength);
+     FSP_PARAMETER_NOT_USED(OutData_Text);
+     return FSP_ERR_UNSUPPORTED;
+ }
+
 fsp_err_t HW_SCE_Aes256CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_DataType[],
                                                  uint32_t InData_Cmd[],
@@ -473,12 +485,9 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
     FSP_PARAMETER_NOT_USED(InData_DataType);
     FSP_PARAMETER_NOT_USED(InData_Cmd);
     FSP_PARAMETER_NOT_USED(InData_TextLen);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_IV);
-    FSP_PARAMETER_NOT_USED(InData_Header);
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
-    FSP_PARAMETER_NOT_USED(Header_Len);
-    return FSP_ERR_UNSUPPORTED;
+
+    return (HW_SCE_Aes256CcmEncryptInitSub(InData_KeyType, InData_KeyIndex, NULL, InData_IV, InData_Header, Header_Len));
 }
 
 fsp_err_t HW_SCE_Aes128CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
@@ -492,17 +501,11 @@ fsp_err_t HW_SCE_Aes128CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_SeqNum[],
                                                  uint32_t Header_Len)
 {
-    FSP_PARAMETER_NOT_USED(InData_KeyType);
     FSP_PARAMETER_NOT_USED(InData_DataType);
     FSP_PARAMETER_NOT_USED(InData_Cmd);
-    FSP_PARAMETER_NOT_USED(InData_TextLen);
-    FSP_PARAMETER_NOT_USED(InData_MACLength);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_IV);
-    FSP_PARAMETER_NOT_USED(InData_Header);
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
-    FSP_PARAMETER_NOT_USED(Header_Len);
-    return FSP_ERR_UNSUPPORTED;
+
+    return (HW_SCE_Aes128CcmDecryptInitSub(InData_KeyType, InData_TextLen, InData_MACLength, InData_KeyIndex, NULL, InData_IV, InData_Header, Header_Len));
 }
 
  fsp_err_t HW_SCE_Aes192CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
@@ -540,26 +543,18 @@ fsp_err_t HW_SCE_Aes256CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_SeqNum[],
                                                  uint32_t Header_Len)
 {
-    FSP_PARAMETER_NOT_USED(InData_KeyType);
     FSP_PARAMETER_NOT_USED(InData_DataType);
     FSP_PARAMETER_NOT_USED(InData_Cmd);
     FSP_PARAMETER_NOT_USED(InData_TextLen);
     FSP_PARAMETER_NOT_USED(InData_MACLength);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_IV);
-    FSP_PARAMETER_NOT_USED(InData_Header);
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
-    FSP_PARAMETER_NOT_USED(Header_Len);
-    return FSP_ERR_UNSUPPORTED;
+    return (HW_SCE_Aes256CcmDecryptInitSub(InData_KeyType, InData_KeyIndex, NULL, InData_IV, InData_Header, Header_Len));
 }
 
 fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (const uint32_t *InData_Text, const uint32_t *InData_TextLen, uint32_t *OutData_Text, uint32_t *OutData_MAC)
 {
-    FSP_PARAMETER_NOT_USED(InData_Text);
     FSP_PARAMETER_NOT_USED(InData_TextLen);
-    FSP_PARAMETER_NOT_USED(OutData_Text);
-    FSP_PARAMETER_NOT_USED(OutData_MAC);
-    return FSP_ERR_UNSUPPORTED;
+    return (HW_SCE_Aes128CcmEncryptFinalSub(InData_Text, OutData_Text, OutData_MAC));
 }
 
 fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(const uint32_t *InData_Text, 
@@ -568,12 +563,9 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(const uint32_t *InData_Text,
                                                  const uint32_t *InData_MACLength, 
                                                  uint32_t *OutData_Text)
 {
-    FSP_PARAMETER_NOT_USED(InData_Text);
-    FSP_PARAMETER_NOT_USED(InData_TextLen);
-    FSP_PARAMETER_NOT_USED(InData_MAC);
     FSP_PARAMETER_NOT_USED(InData_MACLength);
-    FSP_PARAMETER_NOT_USED(OutData_Text);
-    return FSP_ERR_UNSUPPORTED;
+    FSP_PARAMETER_NOT_USED(InData_TextLen);
+    return (HW_SCE_Aes128CcmDecryptFinalSub(InData_Text, InData_MAC, OutData_Text));
 }
 
 fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],

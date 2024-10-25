@@ -220,9 +220,13 @@ typedef enum e_elc_event_ra6e1
     ELC_EVENT_SCI9_ERI                      = (0x1B9), // Receive error
     ELC_EVENT_SCI9_AM                       = (0x1BA), // Address match event
     ELC_EVENT_SCIX1_SCIX0                   = (0x1C0), // SCI1 extended serial mode event 0
+    ELC_EVENT_SCI2_SCIX0                    = (0x1C0), // SCI1 extended serial mode event 0
     ELC_EVENT_SCIX1_SCIX1                   = (0x1C1), // SCI1 extended serial mode event 1
+    ELC_EVENT_SCI2_SCIX1                    = (0x1C1), // SCI1 extended serial mode event 1
     ELC_EVENT_SCIX1_SCIX2                   = (0x1C2), // SCI1 extended serial mode event 2
+    ELC_EVENT_SCI2_SCIX2                    = (0x1C2), // SCI1 extended serial mode event 2
     ELC_EVENT_SCIX1_SCIX3                   = (0x1C3), // SCI1 extended serial mode event 3
+    ELC_EVENT_SCI2_SCIX3                    = (0x1C3), // SCI1 extended serial mode event 3
     ELC_EVENT_SPI0_RXI                      = (0x1C4), // Receive buffer full
     ELC_EVENT_SPI0_TXI                      = (0x1C5), // Transmit buffer empty
     ELC_EVENT_SPI0_IDLE                     = (0x1C6), // Idle

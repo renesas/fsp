@@ -101,50 +101,21 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
     }
     SCE->REG_64H = 0x00002008U;
     SCE->REG_ECH = 0x00000863U;
-    SCE->REG_ECH = 0x00000884U;
-    SCE->REG_ECH = 0x000008a5U;
+    SCE->REG_ECH = 0x00000842U;
+    SCE->REG_ECH = 0x0000b540U;
+    SCE->REG_ECH = 0x00000040U;
     SCE->REG_ECH = 0x0000b4c0U;
     SCE->REG_ECH = 0x00000013U;
-    SCE->REG_ECH = 0x0000b4e0U;
-    SCE->REG_ECH = 0x00000348U;
-    SCE->REG_ECH = 0x0000b500U;
-    SCE->REG_ECH = 0x000000b7U;
-    for(jLoop = 0; jLoop < 32; jLoop = jLoop + 1)
+    SCE->REG_ECH = 0x0000b620U;
+    SCE->REG_ECH = 0x00000355U;
+    for(jLoop = 0; jLoop < 2; jLoop = jLoop + 1)
     {
-        R_SCE_func100(0x30f4287bU, 0x6a0f3dcaU, 0x23595010U, 0x4af4c581U);
-        SCE->REG_ECH = 0x00007c01U;
-        SCE->REG_1CH = 0x00600000U;
-        SCE->REG_1D0H = 0x00000000U;
-        if (0x00000000U == (SCE->REG_1CH & 0xff000000U))
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_64H_b.B11)
         {
-            /* WAIT_LOOP */
-            while (0U != SCE->REG_64H_b.B11)
-            {
-                /* waiting */
-            }
-            SCE->REG_64H = 0x0020901cU;
-            R_SCE_func101(0x83540a7eU, 0x4f945d5dU, 0x1dd1e980U, 0x2cbd188dU);
+            /* waiting */
         }
-        else if (0x01000000U == (SCE->REG_1CH & 0xff000000U))
-        {
-            /* WAIT_LOOP */
-            while (0U != SCE->REG_64H_b.B11)
-            {
-                /* waiting */
-            }
-            SCE->REG_64H = 0x0020901eU;
-            R_SCE_func101(0x3c5aa63dU, 0x08768e7aU, 0x64e90a69U, 0x25b7b4e9U);
-        }
-        else if (0x02000000U == (SCE->REG_1CH & 0xff000000U))
-        {
-            /* WAIT_LOOP */
-            while (0U != SCE->REG_64H_b.B11)
-            {
-                /* waiting */
-            }
-            SCE->REG_64H = 0x0020901dU;
-            R_SCE_func101(0xb4726ee7U, 0xb6378fabU, 0x32c6234dU, 0xc09df9ebU);
-        }
+        SCE->REG_64H = 0x0020905cU;
         SCE->REG_C4H = 0x41001e5eU;
         SCE->REG_00H = 0x80002401U;
         /* WAIT_LOOP */
@@ -176,61 +147,86 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
         }
         SCE->REG_1CH = 0x00001800U;
         SCE->REG_ECH = 0x000038a0U;
-        SCE->REG_ECH = 0x00003405U;
-        SCE->REG_ECH = 0x00002804U;
-        SCE->REG_ECH = 0x342028e0U;
+        SCE->REG_ECH = 0x34202a25U;
         SCE->REG_ECH = 0x10005066U;
-        SCE->REG_ECH = 0x34202808U;
+        SCE->REG_ECH = 0x0000b500U;
+        SCE->REG_ECH = 0x00000400U;
+        SCE->REG_ECH = 0x04202905U;
+        SCE->REG_ECH = 0x34202a28U;
         SCE->REG_ECH = 0x10005066U;
-        SCE->REG_ECH = 0x00003485U;
-        R_SCE_func101(0xdc33d654U, 0x83322b22U, 0xc84d4f9dU, 0xa97db61aU);
-    }
-    SCE->REG_ECH = 0x0000b4e0U;
-    SCE->REG_ECH = 0x00000B50U;
-    SCE->REG_ECH = 0x00000842U;
-    SCE->REG_ECH = 0x000008c6U;
-    SCE->REG_ECH = 0x0000b480U;
-    SCE->REG_ECH = 0x00000004U;
-    SCE->REG_ECH = 0x0000b4a0U;
-    SCE->REG_ECH = 0x00000002U;
-    for(iLoop = 0; iLoop < 16; iLoop = iLoop + 1)
-    {
+        SCE->REG_ECH = 0x0000b4e0U;
+        SCE->REG_ECH = 0x0000005AU;
+        SCE->REG_ECH = 0x000008c6U;
+        SCE->REG_ECH = 0x0000b480U;
+        SCE->REG_ECH = 0x00000004U;
+        SCE->REG_ECH = 0x0000b4a0U;
+        SCE->REG_ECH = 0x00000002U;
+        for(iLoop = 0; iLoop < 16; iLoop = iLoop + 1)
+        {
+            SCE->REG_ECH = 0x01003804U;
+            SCE->REG_ECH = 0x342028e0U;
+            SCE->REG_ECH = 0x10005066U;
+            SCE->REG_ECH = 0x00002440U;
+            SCE->REG_ECH = 0x00002cc0U;
+            SCE->REG_ECH = 0x00002485U;
+        }
+        SCE->REG_ECH = 0x0000b4e0U;
+        SCE->REG_ECH = 0x00000037U;
+        SCE->REG_ECH = 0x0000b480U;
+        SCE->REG_ECH = 0x0000003cU;
         SCE->REG_ECH = 0x01003804U;
         SCE->REG_ECH = 0x342028e0U;
         SCE->REG_ECH = 0x10005066U;
-        SCE->REG_ECH = 0x00002440U;
         SCE->REG_ECH = 0x00002cc0U;
-        SCE->REG_ECH = 0x00002485U;
+        SCE->REG_ECH = 0x0000b480U;
+        SCE->REG_ECH = 0x0000003eU;
+        SCE->REG_ECH = 0x01003804U;
+        SCE->REG_ECH = 0x342028e0U;
+        SCE->REG_ECH = 0x10005066U;
+        SCE->REG_104H = 0x00000052U;
+        SCE->REG_C4H = 0x01000cc4U;
+        /* WAIT_LOOP */
+        while (1U != SCE->REG_104H_b.B31)
+        {
+            /* waiting */
+        }
+        SCE->REG_100H = change_endian_long(0x00000000U);
+        SCE->REG_E0H = 0x8084000aU;
+        SCE->REG_00H = 0x00008213U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_00H_b.B25)
+        {
+            /* waiting */
+        }
+        SCE->REG_1CH = 0x00001800U;
+        SCE->REG_ECH = 0x0000a540U;
+        SCE->REG_ECH = 0x00000010U;
+        SCE->REG_ECH = 0x0000a4c0U;
+        SCE->REG_ECH = 0x00000002U;
+        /* WAIT_LOOP */
+        while (0U != SCE->REG_64H_b.B11)
+        {
+            /* waiting */
+        }
+        SCE->REG_64H = 0x00002008U;
+        R_SCE_func101(0x2f9974edU, 0x5b81fb15U, 0x12b2aaacU, 0xa489d594U);
     }
     SCE->REG_ECH = 0x00002c20U;
     SCE->REG_ECH = 0x38008840U;
-    SCE->REG_ECH = 0x00002000U;
+    SCE->REG_ECH = 0x00000200U;
     SCE->REG_E0H = 0x00000080U;
     SCE->REG_1CH = 0x00260000U;
     SCE->REG_1CH = 0x00402000U;
-    SCE->REG_ECH = 0x0000b4e0U;
-    SCE->REG_ECH = 0x00000033U;
-    SCE->REG_ECH = 0x0000b480U;
-    SCE->REG_ECH = 0x0000003cU;
-    SCE->REG_ECH = 0x01003804U;
-    SCE->REG_ECH = 0x342028e0U;
-    SCE->REG_ECH = 0x10005066U;
-    SCE->REG_ECH = 0x00002cc0U;
-    SCE->REG_ECH = 0x0000b480U;
-    SCE->REG_ECH = 0x0000003eU;
-    SCE->REG_ECH = 0x01003804U;
-    SCE->REG_ECH = 0x342028e0U;
-    SCE->REG_ECH = 0x10005066U;
     SCE->REG_ECH = 0x38008860U;
     SCE->REG_ECH = 0x00000000U;
     SCE->REG_E0H = 0x00000080U;
     SCE->REG_1CH = 0x00A60000U;
-    R_SCE_func100(0x75664c61U, 0x1a32743dU, 0x519f6b57U, 0x8016334bU);
+    R_SCE_func100(0x8752b825U, 0x94164081U, 0x0f3acfb3U, 0x0aac3e7aU);
     SCE->REG_1CH = 0x00400000U;
     SCE->REG_1D0H = 0x00000000U;
     if (1U == (SCE->REG_1CH_b.B22))
     {
-        R_SCE_func102(0x05591a87U, 0x886a591cU, 0xe702fbdeU, 0x28cd8508U);
+        R_SCE_func102(0x6334ebb3U, 0x3709c96eU, 0x91cd611cU, 0x7a3c897eU);
         SCE->REG_1BCH = 0x00000040U;
         /* WAIT_LOOP */
         while (0U != SCE->REG_18H_b.B12)
@@ -246,51 +242,7 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
         SCE->REG_ECH = 0x0000b7e0U;
         SCE->REG_ECH = 0x8a681df7U;
         SCE->REG_ECH = 0x00003ffeU;
-        /* WAIT_LOOP */
-        while (0U != SCE->REG_64H_b.B11)
-        {
-            /* waiting */
-        }
-        SCE->REG_64H = 0x0000001cU;
-        SCE->REG_104H = 0x00000052U;
-        SCE->REG_C4H = 0x01000cc4U;
-        /* WAIT_LOOP */
-        while (1U != SCE->REG_104H_b.B31)
-        {
-            /* waiting */
-        }
-        SCE->REG_100H = change_endian_long(0x00000000U);
-        SCE->REG_E0H = 0x80040000U;
-        SCE->REG_00H = 0x00008213U;
-        /* WAIT_LOOP */
-        while (0U != SCE->REG_00H_b.B25)
-        {
-            /* waiting */
-        }
-        SCE->REG_1CH = 0x00001800U;
-        SCE->REG_C4H = 0x41001eddU;
-        SCE->REG_00H = 0x00002413U;
-        /* WAIT_LOOP */
-        while (0U != SCE->REG_00H_b.B25)
-        {
-            /* waiting */
-        }
-        SCE->REG_1CH = 0x00001800U;
-        /* WAIT_LOOP */
-        while (0U != SCE->REG_64H_b.B11)
-        {
-            /* waiting */
-        }
-        SCE->REG_64H = 0x00000000U;
-        SCE->REG_E0H = 0x80040080U;
-        SCE->REG_00H = 0x00008213U;
-        /* WAIT_LOOP */
-        while (0U != SCE->REG_00H_b.B25)
-        {
-            /* waiting */
-        }
-        SCE->REG_1CH = 0x00001800U;
-        R_SCE_func100(0xf290d2eeU, 0x90800d79U, 0x767f5521U, 0xf871147bU);
+        R_SCE_func100(0xf61cad5fU, 0xbf13df5cU, 0x354511c2U, 0x7f6841b7U);
         SCE->REG_104H = 0x00000052U;
         SCE->REG_C4H = 0x000b0804U;
         /* WAIT_LOOP */
@@ -310,10 +262,12 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
         SCE->REG_100H = change_endian_long(0x00000000U);
         SCE->REG_100H = change_endian_long(0x00000000U);
         SCE->REG_100H = change_endian_long(0x00000001U);
-        R_SCE_func100(0xfc19b5f3U, 0x720b2777U, 0x76698183U, 0x04ded8b5U);
+        R_SCE_func100(0xcac08e72U, 0xb14b6522U, 0xd325a3aeU, 0x4dda977fU);
         SCE->REG_D0H = 0x00000100U;
         SCE->REG_C4H = 0x0100b7f7U;
-        SCE->REG_E0H = 0x81080000U;
+        SCE->REG_ECH = 0x0000b540U;
+        SCE->REG_ECH = 0x00000040U;
+        SCE->REG_E0H = 0x8188000aU;
         SCE->REG_00H = 0x00002823U;
         /* WAIT_LOOP */
         while (0U != SCE->REG_00H_b.B25)
@@ -337,9 +291,9 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
             /* waiting */
         }
         SCE->REG_1CH = 0x00001800U;
-        R_SCE_func100(0xe99eac14U, 0xd1f84514U, 0x7c7e1326U, 0xac9b9e71U);
+        R_SCE_func100(0x2b6949adU, 0xcaad5bf9U, 0xf3e6089aU, 0x88cf1187U);
         R_SCE_func103();
-        R_SCE_func100(0xeaabed66U, 0x975a86c3U, 0x3cea08bcU, 0xc34fc0cdU);
+        R_SCE_func100(0x9f426479U, 0x73398377U, 0x91e1526aU, 0x8925be3eU);
         SCE->REG_104H = 0x00000052U;
         SCE->REG_C4H = 0x010d0c04U;
         /* WAIT_LOOP */
@@ -348,9 +302,9 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
             /* waiting */
         }
         SCE->REG_100H = change_endian_long(0x00000000U);
-        R_SCE_func100(0x59c42f53U, 0xad840ca3U, 0xd7d5d308U, 0x9cffb078U);
+        R_SCE_func100(0x0a5890c4U, 0x96324e42U, 0x76850e62U, 0x2e8870a3U);
         R_SCE_func103();
-        R_SCE_func100(0x890040dfU, 0x700530b2U, 0xbec0468dU, 0x452a5a50U);
+        R_SCE_func100(0x3fa01441U, 0xbb928ba2U, 0xd264e2e4U, 0x83034508U);
         SCE->REG_104H = 0x00000052U;
         SCE->REG_C4H = 0x01000c84U;
         /* WAIT_LOOP */
@@ -370,7 +324,7 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
         S_RAM[22] = SCE->REG_100H;
         S_RAM[23] = SCE->REG_100H;
         SCE->REG_13CH = 0x00000202U;
-        R_SCE_func102(0x1d57682dU, 0xfd419ecbU, 0xe66c4158U, 0x102b1470U);
+        R_SCE_func102(0x55dd773aU, 0xaf263f67U, 0xa18300fdU, 0xb7af8e2aU);
         SCE->REG_1BCH = 0x00000040U;
         /* WAIT_LOOP */
         while (0U != SCE->REG_18H_b.B12)
@@ -382,5 +336,5 @@ fsp_err_t R_SCE_SelfCheck2Sub(void)
 }
 
 /***********************************************************************************************************************
-End of function ./input_dir/S6C1/Cryptographic/R_SCE_p82_r2.prc
+End of function ./input_dir/S6C1/Cryptographic/R_SCE_p82_r4.prc
 ***********************************************************************************************************************/

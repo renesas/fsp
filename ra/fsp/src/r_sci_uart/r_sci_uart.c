@@ -350,7 +350,7 @@ fsp_err_t R_SCI_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * co
   #if SCI_UART_CFG_IRDA_SUPPORT
     if (((sci_uart_extended_cfg_t *) p_cfg->p_extend)->irda_setting.ircr_bits_b.ire)
     {
-        FSP_ERROR_RETURN(BSP_PERIPHERAL_IRDA_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
+        FSP_ERROR_RETURN(BSP_FEATURE_SCI_IRDA_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
     }
   #endif
  #endif

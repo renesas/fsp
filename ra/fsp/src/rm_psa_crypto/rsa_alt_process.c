@@ -73,7 +73,7 @@ fsp_err_t HW_SCE_Rsa4096ModularExponentEncryptSub (const uint32_t * InData_KeyIn
 
   #endif
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
 fsp_err_t HW_SCE_HRK_RSA_3072KeyGenerate(uint32_t   num_tries,
                                          uint32_t * OutData_KeyIndex,
                                          uint32_t * OutData_N,
@@ -474,7 +474,7 @@ int mbedtls_rsa_gen_key (mbedtls_rsa_context * ctx,
         public_key_size_bytes = RSA_MODULUS_SIZE_BYTES(2048);
     }
 
-   #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+   #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     #if RM_PSA_CRYPTO_CFG_RSA3K_KEYGEN_ENABLED
     else if (nbits == RSA_3072_BITS)
     {
@@ -713,7 +713,7 @@ int mbedtls_rsa_public (mbedtls_rsa_context * ctx, const unsigned char * input, 
         p_hw_sce_rsa_public_encrypt = HW_SCE_RSA_2048PublicKeyEncrypt;
     }
 
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_RSIP7
+  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
    #if RM_PSA_CRYPTO_CFG_RSA3K_VERIFICATION_ENABLED
     else if (ctx->len == RSA_MODULUS_SIZE_BYTES(RSA_3072_BITS))
     {
@@ -823,7 +823,7 @@ int mbedtls_rsa_private (mbedtls_rsa_context * ctx,
         }
     }
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
    #if RM_PSA_CRYPTO_CFG_RSA3K_SIGNING_ENABLED
     else if (ctx->len == RSA_3072_BITS / 8)
     {

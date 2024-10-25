@@ -168,9 +168,9 @@ static int32_t ARM_Flashx_Initialize (ARM_FLASHx_Resources  * ARM_FLASHx_DEV,
     if (flash_type == DATA_FLASH)
     {
         flash_size =
-            (info.data_flash.p_block_array[info.data_flash.num_regions - 1U].block_section_end_addr -
+            (info.data_flash.p_block_array[0].block_section_end_addr -
              info.data_flash.p_block_array[0].block_section_st_addr + 1U);
-        page_size = info.data_flash.p_block_array[info.data_flash.num_regions - 1U].block_size;
+        page_size = info.data_flash.p_block_array[0].block_size;
     }
     else
     {

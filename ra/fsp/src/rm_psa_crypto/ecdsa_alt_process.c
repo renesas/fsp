@@ -201,7 +201,7 @@ fsp_err_t HW_SCE_ECC_384HrkGenerateSign (const uint32_t * InData_CurveType,
 }
 
  #endif
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
 fsp_err_t HW_SCE_ECC_521GenerateSign (const uint32_t * InData_CurveType,
                                       const uint32_t * InData_G,
                                       const uint32_t * InData_PrivKey,
@@ -409,7 +409,7 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_CurveType,
 
 #endif
 
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
 fsp_err_t HW_SCE_ECC_255GenerateSign (const uint32_t * InData_CurveType,
                                       const uint32_t * InData_G,
                                       const uint32_t * InData_PrivKey,

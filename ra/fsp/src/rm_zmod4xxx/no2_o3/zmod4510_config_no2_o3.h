@@ -1,3 +1,9 @@
+/*
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
+
 /**
  * @file    zmod4510_config_no2_o3.h
  * @brief   This is the configuration for ZMOD4510 module - no2_o3 library

@@ -195,6 +195,7 @@ typedef struct st_ctsu_cfg
     void const * p_extend;                              ///< Pointer to extended configuration by instance of interface.
     uint16_t     tuning_self_target_value;              ///< Target self value for initial offset tuning
     uint16_t     tuning_mutual_target_value;            ///< Target mutual value for initial offset tuning
+    uint8_t      majority_mode;                         ///< Software majority mode selection
 } ctsu_cfg_t;
 
 /** Functions implemented at the HAL layer will follow this API. */

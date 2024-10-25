@@ -92,6 +92,7 @@ typedef uint32_t TickType_t;
  #define portSTACK_GROWTH                    (-1)
  #define portTICK_PERIOD_MS                  ((TickType_t) 1000 / configTICK_RATE_HZ)
  #define portBYTE_ALIGNMENT                  8
+ #define portDONT_DISCARD                    BSP_DONT_REMOVE
 
  #if BSP_FEATURE_BSP_HAS_SP_MON || defined(RENESAS_CORTEX_M33) || defined(RENESAS_CORTEX_M85)
   #define portHAS_STACK_OVERFLOW_CHECKING    (1)

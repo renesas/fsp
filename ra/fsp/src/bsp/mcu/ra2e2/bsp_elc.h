@@ -130,10 +130,14 @@ typedef enum e_elc_event_ra2e2
     ELC_EVENT_I3C0_COMMAND                  = (0x0AB), // Command buffer empty
     ELC_EVENT_I3C0_IBI                      = (0x0AC), // IBI status buffer full
     ELC_EVENT_I3C0_RX                       = (0x0AD), // Receive
+    ELC_EVENT_IICB0_RXI                     = (0x0AD), // Receive
     ELC_EVENT_I3C0_TX                       = (0x0AE), // Transmit
+    ELC_EVENT_IICB0_TXI                     = (0x0AE), // Transmit
     ELC_EVENT_I3C0_RCV_STATUS               = (0x0AF), // Receive status buffer full
     ELC_EVENT_I3C0_TEND                     = (0x0B4), // Transmit end
-    ELC_EVENT_I3C0_EEI                      = (0x0B5)  // Error
+    ELC_EVENT_IICB0_TEI                     = (0x0B4), // Transmit end
+    ELC_EVENT_I3C0_EEI                      = (0x0B5), // Error
+    ELC_EVENT_IICB0_ERI                     = (0x0B5)  // Error
 } elc_event_t;
 
 /** Events to be used with the IELSR register to link interrupt events to the NVIC
@@ -223,7 +227,9 @@ typedef enum e_icu_event_ra2e2
     ICU_EVENT_I3C0_COMMAND_GROUP3           = (0x1C), // group3 (IELSR[3, 11, 19, 27])
     ICU_EVENT_I3C0_COMMAND_GROUP7           = (0x1C), // group7 (IELSR[7, 15, 23, 31])
     ICU_EVENT_I3C0_EEI_GROUP3               = (0x06), // group3 (IELSR[3, 11, 19, 27])
+    ICU_EVENT_IICB0_ERI_GROUP3              = (0x06), // group3 (IELSR[3, 11, 19, 27])
     ICU_EVENT_I3C0_EEI_GROUP7               = (0x06), // group7 (IELSR[7, 15, 23, 31])
+    ICU_EVENT_IICB0_ERI_GROUP7              = (0x06), // group7 (IELSR[7, 15, 23, 31])
     ICU_EVENT_I3C0_IBI_GROUP2               = (0x1E), // group2 (IELSR[2, 10, 18, 26])
     ICU_EVENT_I3C0_IBI_GROUP3               = (0x1E), // group3 (IELSR[3, 11, 19, 27])
     ICU_EVENT_I3C0_RCV_STATUS_GROUP3        = (0x1F), // group3 (IELSR[3, 11, 19, 27])
@@ -231,11 +237,17 @@ typedef enum e_icu_event_ra2e2
     ICU_EVENT_I3C0_RESPONSE_GROUP1          = (0x1E), // group1 (IELSR[1, 9, 17, 25])
     ICU_EVENT_I3C0_RESPONSE_GROUP5          = (0x1E), // group5 (IELSR[5, 13, 21, 29])
     ICU_EVENT_I3C0_RX_GROUP0                = (0x0A), // group0 (IELSR[0, 8, 16, 24])
+    ICU_EVENT_IICB0_RXI_GROUP0              = (0x0A), // group0 (IELSR[0, 8, 16, 24])
     ICU_EVENT_I3C0_RX_GROUP4                = (0x0A), // group4 (IELSR[4, 12, 20, 28])
+    ICU_EVENT_IICB0_RXI_GROUP4              = (0x0A), // group4 (IELSR[4, 12, 20, 28])
     ICU_EVENT_I3C0_TEND_GROUP2              = (0x06), // group2 (IELSR[2, 10, 18, 26])
+    ICU_EVENT_IICB0_TEI_GROUP2              = (0x06), // group2 (IELSR[2, 10, 18, 26])
     ICU_EVENT_I3C0_TEND_GROUP6              = (0x06), // group6 (IELSR[6, 14, 22, 30])
+    ICU_EVENT_IICB0_TEI_GROUP6              = (0x06), // group6 (IELSR[6, 14, 22, 30])
     ICU_EVENT_I3C0_TX_GROUP1                = (0x08), // group1 (IELSR[1, 9, 17, 25])
+    ICU_EVENT_IICB0_TXI_GROUP1              = (0x08), // group1 (IELSR[1, 9, 17, 25])
     ICU_EVENT_I3C0_TX_GROUP5                = (0x08), // group5 (IELSR[5, 13, 21, 29])
+    ICU_EVENT_IICB0_TXI_GROUP5              = (0x08), // group5 (IELSR[5, 13, 21, 29])
     ICU_EVENT_ICU_IRQ0_GROUP0               = (0x01), // group0 (IELSR[0, 8, 16, 24])
     ICU_EVENT_ICU_IRQ0_GROUP4               = (0x01), // group4 (IELSR[4, 12, 20, 28])
     ICU_EVENT_ICU_IRQ1_GROUP1               = (0x01), // group1 (IELSR[1, 9, 17, 25])
@@ -345,12 +357,16 @@ typedef enum e_icu_event_ra2e2
     ICU_EVENT_GPT_UVWEDGE                   = (0x11), // DEPRECATED, do not use
     ICU_EVENT_I3C0_COMMAND                  = (0x1C), // DEPRECATED, do not use
     ICU_EVENT_I3C0_EEI                      = (0x06), // DEPRECATED, do not use
+    ICU_EVENT_IICB0_ERI                     = (0x06), // DEPRECATED, do not use
     ICU_EVENT_I3C0_IBI                      = (0x1E), // DEPRECATED, do not use
     ICU_EVENT_I3C0_RCV_STATUS               = (0x1F), // DEPRECATED, do not use
     ICU_EVENT_I3C0_RESPONSE                 = (0x1E), // DEPRECATED, do not use
     ICU_EVENT_I3C0_RX                       = (0x0A), // DEPRECATED, do not use
+    ICU_EVENT_IICB0_RXI                     = (0x0A), // DEPRECATED, do not use
     ICU_EVENT_I3C0_TEND                     = (0x06), // DEPRECATED, do not use
+    ICU_EVENT_IICB0_TEI                     = (0x06), // DEPRECATED, do not use
     ICU_EVENT_I3C0_TX                       = (0x08), // DEPRECATED, do not use
+    ICU_EVENT_IICB0_TXI                     = (0x08), // DEPRECATED, do not use
     ICU_EVENT_ICU_IRQ0                      = (0x01), // DEPRECATED, do not use
     ICU_EVENT_ICU_IRQ1                      = (0x01), // DEPRECATED, do not use
     ICU_EVENT_ICU_IRQ2                      = (0x01), // DEPRECATED, do not use

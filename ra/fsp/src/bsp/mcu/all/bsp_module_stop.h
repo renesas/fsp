@@ -222,7 +222,7 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_IIC(channel)                (1U << (9U - channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_IIC(channel)           uint32_t
 #define BSP_MSTP_REG_FSP_IP_IICA(channel)               R_MSTP->MSTPCRB
-#define BSP_MSTP_BIT_FSP_IP_IICA(channel)               (1U << (10U));
+#define BSP_MSTP_BIT_FSP_IP_IICA(channel)               (1U << (10U + channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_IICA(channel)          uint32_t
 #define BSP_MSTP_REG_FSP_IP_USBFS(channel)              R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_USBFS(channel)              (1U << (11U - channel));

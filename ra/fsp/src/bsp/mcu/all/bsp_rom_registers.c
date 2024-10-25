@@ -219,23 +219,41 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_
   #endif
 
   #if 85U == __CORTEX_M && !BSP_TZ_NONSECURE_BUILD
+   #ifdef BSP_CFG_ROM_REG_FSBLCTRL0
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl0") g_bsp_rom_fsblctrl0 =
     BSP_CFG_ROM_REG_FSBLCTRL0;
 
+   #endif
+
+   #ifdef BSP_CFG_ROM_REG_FSBLCTRL1
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl1") g_bsp_rom_fsblctrl1 =
     BSP_CFG_ROM_REG_FSBLCTRL1;
 
+   #endif
+
+   #ifdef BSP_CFG_ROM_REG_FSBLCTRL2
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl2") g_bsp_rom_fsblctrl2 =
     BSP_CFG_ROM_REG_FSBLCTRL2;
 
+   #endif
+
+   #ifdef BSP_CFG_ROM_REG_SACC0
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_sacc0") g_bsp_rom_sacc0 =
     BSP_CFG_ROM_REG_SACC0;
 
+   #endif
+
+   #ifdef BSP_CFG_ROM_REG_SACC1
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_sacc1") g_bsp_rom_sacc1 =
     BSP_CFG_ROM_REG_SACC1;
 
+   #endif
+
+   #ifdef BSP_CFG_ROM_REG_SAMR
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_samr") g_bsp_rom_samr =
     BSP_CFG_ROM_REG_SAMR;
+
+   #endif
 
   #endif
 

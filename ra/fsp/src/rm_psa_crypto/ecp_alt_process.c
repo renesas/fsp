@@ -91,7 +91,7 @@ fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication (const uint32_t * InData_Cur
                                                        OutData_R);
 }
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
 fsp_err_t HW_SCE_ECC_521WrappedScalarMultiplication (const uint32_t * InData_CurveType,
                                                      const uint32_t * InData_Cmd,
                                                      const uint32_t * InData_KeyIndex,
@@ -332,7 +332,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     }
 
   #if defined(MBEDTLS_CHECK_PARAMS)
-   #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits) &&
         (ECC_521_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_25519_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
    #elif BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
@@ -423,8 +423,8 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
         }
    #endif
 
-   #if BSP_FEATURE_CRYPTO_HAS_RSIP7
-    #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
+  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+  #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
         else if (ECC_521_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         {
             sce_ecc521_public_key_index_t public_key = {0};

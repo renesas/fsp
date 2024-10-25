@@ -753,9 +753,8 @@ static fsp_err_t r_adc_d_scan_cfg_check (adc_d_instance_ctrl_t * const     p_ctr
         /* The internal reference voltage cannot be used for the positive side reference voltage. */
         FSP_ERROR_RETURN(ADC_D_POSITIVE_VREF_IVREF > p_extend->positive_vref, FSP_ERR_INVALID_HW_CONDITION);
 
-        /* The hardware trigger wait mode and one-shot conversion mode cannot be used at the same time.*/
+        /* The hardware/software trigger wait mode and one-shot conversion mode cannot be used at the same time. */
         FSP_ERROR_RETURN((ADC_D_CONVERSION_MODE_SEQUENTIAL == p_extend->conversion_operation) ||
-                         (ADC_D_TRIGGER_SOURCE_SOFTWARE == p_extend->trigger_source) ||
                          (ADC_D_TRIGGER_MODE_NO_WAIT == p_extend->operation_trigger),
                          FSP_ERR_INVALID_HW_CONDITION);
     }

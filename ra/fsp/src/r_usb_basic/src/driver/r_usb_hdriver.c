@@ -1208,7 +1208,7 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
                                                0);
                 }
                 type = USB_CLASS_INTERNAL_HMSC;
-   #endif                              /* defined(USB_CFG_HCDC_USE) */
+   #endif                              /* defined(USB_CFG_HMSC_USE) */
    #if defined(USB_CFG_HHID_USE)
                 ux_host_stack_class_register(_ux_system_host_class_hid_name, ux_host_class_hid_entry);
 

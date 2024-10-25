@@ -24,6 +24,7 @@
 
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
+#include "r_transfer_api.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -323,6 +324,10 @@ typedef struct st_i3c_cfg
 
     /** The type of device. */
     i3c_device_type_t device_type;
+
+    /** Transfer API support. */
+    transfer_instance_t const * p_transfer_tx;                ///< Transfer instance for I3C transmit. Set to NULL if unused.
+    transfer_instance_t const * p_transfer_rx;                ///< Transfer instance for I3C receive. Set to NULL if unused.
 
     /** Pointer to the user callback. */
     void (* p_callback)(i3c_callback_args_t const * const p_args);

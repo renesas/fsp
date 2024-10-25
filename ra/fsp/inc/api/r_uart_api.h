@@ -199,8 +199,8 @@ typedef struct st_uart_api
 
     /** Get the driver specific information.
      *
-     * @param[in]   p_ctrl     Pointer to the UART control block.
-     * @param[in]   baudrate   Baud rate in bps.
+     * @param[in]    p_ctrl     Pointer to the UART control block.
+     * @param[out]   p_info     Pointer to UART information structure.
      */
     fsp_err_t (* infoGet)(uart_ctrl_t * const p_ctrl, uart_info_t * const p_info);
 

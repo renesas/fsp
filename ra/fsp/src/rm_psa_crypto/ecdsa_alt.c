@@ -365,7 +365,7 @@ int ecp_can_do_sce (mbedtls_ecp_group_id gid)
             return 1;
         }
   #endif
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
   #ifdef MBEDTLS_ECP_DP_SECP521R1_ENABLED
       case MBEDTLS_ECP_DP_SECP521R1:
       {
@@ -414,7 +414,7 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             break;
         }
 
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7
+#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
         case MBEDTLS_ECP_DP_SECP521R1:
         {
             *p_curve_type    = SCE_ECC_CURVE_TYPE_NIST;

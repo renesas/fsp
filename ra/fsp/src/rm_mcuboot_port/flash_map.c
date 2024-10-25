@@ -48,6 +48,13 @@ extern flash_cfg_t const * const gp_mcuboot_flash_cfg;
 
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
 extern spi_flash_instance_t const * const gp_mcuboot_xspi_instance;
+
+/* If the XSPI block size is undefined by the user (this is the case when QSPI is used and only 32K erase is supported with QSPI)
+ * then define the erase sector size to 32K. */
+ #ifndef RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE
+  #define RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE    32768
+ #endif
+
 #endif
 
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
@@ -113,14 +120,14 @@ static const struct flash_area flash_map[] =
         .fa_size      = FLASH_AREA_1_SIZE,
     },
     {
-        .fa_id        = FLASH_AREA_3_ID,
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+        .fa_id = FLASH_AREA_3_ID,
+ #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
         .fa_device_id = FLASH_DEVICE_EXTERNAL_FLASH,
-#else
+ #else
         .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
-#endif
-        .fa_off       = FLASH_AREA_3_OFFSET,
-        .fa_size      = FLASH_AREA_3_SIZE,
+ #endif
+        .fa_off  = FLASH_AREA_3_OFFSET,
+        .fa_size = FLASH_AREA_3_SIZE,
     },
 #endif
 
@@ -281,9 +288,9 @@ int flash_on_chip_flush (const struct flash_area * area)
             {
                 err =
                     (int) gp_mcuboot_xspi_instance->p_api->write(gp_mcuboot_xspi_instance->p_ctrl,
-                                       (uint8_t *) p_area_flush_buffer->p_flush_buffer,
-                                       (uint8_t *) p_area_flush_buffer->g_current_block,
-                                       (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes);
+                                                                 (uint8_t *) p_area_flush_buffer->p_flush_buffer,
+                                                                 (uint8_t *) p_area_flush_buffer->g_current_block,
+                                                                 (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes);
             }
  #endif
         }
@@ -373,7 +380,7 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
         else
         {
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
-            uint32_t page_size      = (uint32_t)  gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
+            uint32_t page_size      = (uint32_t) gp_mcuboot_xspi_instance->p_cfg->page_size_bytes;
             uint32_t pages_to_write = len / page_size;
             uint32_t pages_written  = 0;
             while (pages_to_write != 0)
@@ -383,8 +390,11 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
                 {
                     err =
                         (int) gp_mcuboot_xspi_instance->p_api->write(gp_mcuboot_xspi_instance->p_ctrl,
-                                           (uint8_t *) ((uint32_t) src + (pages_written * page_size)),
-                                           (uint8_t *) (write_addr + (pages_written * page_size)), page_size);
+                                                                     (uint8_t *) ((uint32_t) src +
+                                                                                  (pages_written * page_size)),
+                                                                     (uint8_t *) (write_addr +
+                                                                                  (pages_written * page_size)),
+                                                                     page_size);
                     pages_to_write--;
                     pages_written++;
                 }
@@ -449,12 +459,27 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
     {
         err = FSP_ERR_UNSUPPORTED;
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
-        if (!(len % BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE))
+        sector_size = RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE;
+        if (!(len % RM_MCUBOOT_PORT_CFG_XSPI_BLOCK_ERASE_SIZE))
         {
-            err = get_flash_status();
-            if (FSP_SUCCESS == err)
+            uint32_t deleted_len = 0;
+            while (deleted_len < len)
             {
-                err = gp_mcuboot_xspi_instance->p_api->erase(gp_mcuboot_xspi_instance->p_ctrl, (uint8_t *) erase_address, len);
+                err = get_flash_status();
+                if (FSP_SUCCESS == err)
+                {
+                    err =
+                        gp_mcuboot_xspi_instance->p_api->erase(gp_mcuboot_xspi_instance->p_ctrl,
+                                                               (uint8_t *) (erase_address + deleted_len), sector_size);
+                    if (FSP_SUCCESS == err)
+                    {
+                        deleted_len += sector_size;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
         }
 #endif
@@ -528,7 +553,7 @@ int flash_area_get_sectors (int fa_id, uint32_t * count, struct flash_sector * s
     }
     else if (fa->fa_device_id == FLASH_DEVICE_EXTERNAL_FLASH)
     {
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
+ #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
         uint32_t total_count = 0;
         for (size_t off = 0; off < fa->fa_size; off += sector_size)
         {
@@ -616,7 +641,7 @@ int rm_mcuboot_cleanup (void)
     {
         return -1;
     }
-    
+
     return 0U;
 }
 
@@ -660,7 +685,7 @@ int flash_on_chip_cleanup (void)
         fsp_err_t err = get_flash_status();
         if (FSP_SUCCESS == err)
         {
-            err = gp_mcuboot_xspi_instance->p_api->close(gp_mcuboot_flash_ctrl);
+            err = gp_mcuboot_xspi_instance->p_api->close(gp_mcuboot_xspi_instance->p_ctrl);
             if (FSP_SUCCESS != err)
             {
                 return -1;
