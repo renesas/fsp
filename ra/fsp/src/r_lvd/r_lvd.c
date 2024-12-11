@@ -23,81 +23,25 @@
 
 #define LVD_PRV_FIRST_MONITOR_NUMBER          (1U)
 
-#if (1U == BSP_FEATURE_LVD_VERSION)
- #define LVD_PRV_NUMBER_OF_MONITORS           (5U)
+#if    (1U == BSP_FEATURE_LVD_VERSION)
  #define LVD_PRV_NUMBER_OF_NMI                (2U)
  #define LVD_PRV_NUMBER_OF_VCC_MONITOR        (2U)
-#else
- #define LVD_PRV_NUMBER_OF_MONITORS           (4U)
+#elif  (2U == BSP_FEATURE_LVD_VERSION)
  #define LVD_PRV_NUMBER_OF_NMI                (1U)
  #define LVD_PRV_NUMBER_OF_VCC_MONITOR        (1U)
+#elif  (3U == BSP_FEATURE_LVD_VERSION)
+ #define LVD_PRV_NUMBER_OF_NMI                (2U)
+ #define LVD_PRV_NUMBER_OF_VCC_MONITOR        (5U)
 #endif
 
-/* LVDNCR1 Bit Field Definitions */
-#define LVD_PRV_LVDNCR1_IDTSEL_OFFSET         (0U)
-#define LVD_PRV_LVDNCR1_IDTSEL_MASK           (3U << LVD_PRV_LVDNCR1_IDTSEL_OFFSET)
-#define LVD_PRV_LVDNCR1_IRQSEL_OFFSET         (2U)
-#define LVD_PRV_LVDNCR1_IRQSEL_MASK           (1U << LVD_PRV_LVDNCR1_IRQSEL_OFFSET)
+#define LVD_PRV_EXT_LVDICR_IE_ENABLE          (1U << R_SYSTEM_VBTLVDICR_IE_Pos)
 
-/* LVDNSR Bit Field Definitions */
-#define LVD_PRV_LVDNSR_DET_OFFSET             (0U)
-#define LVD_PRV_LVDNSR_DET_MASK               (1U << LVD_PRV_LVDNSR_DET_OFFSET)
-#define LVD_PRV_LVDNSR_MON_OFFSET             (1U)
-#define LVD_PRV_LVDNSR_MON_MASK               (1U << LVD_PRV_LVDNSR_MON_OFFSET)
+#define LVD_PRV_EXT_LVDCR_LVDE_ENABLE         (1 << R_SYSTEM_VBTLVDCR_LVDE_Pos)
 
-/* LVCMPCR Bit Field Definitions */
-#define LVD_PRV_LVCMPCR_LVD1E_OFFSET          (5U)
-#define LVD_PRV_LVCMPCR_LVD1E_MASK            (1U << LVD_PRV_LVCMPCR_LVD1E_OFFSET)
-#define LVD_PRV_LVCMPCR_LVD2E_OFFSET          (6U)
-#define LVD_PRV_LVCMPCR_LVD2E_MASK            (1U << LVD_PRV_LVCMPCR_LVD2E_OFFSET)
-
-/* LVDLVLR Bit Field Definitions */
-#define LVD_PRV_LVDLVLR_LVD1LVL_OFFSET        (0U)
-#define LVD_PRV_LVDLVLR_LVD1LVL_MASK          (0x1FU << LVD_PRV_LVDLVLR_LVD1LVL_OFFSET)
-#define LVD_PRV_LVDLVLR_LVD2LVL_OFFSET        (5U)
-#define LVD_PRV_LVDLVLR_LVD2LVL_MASK          (0x07U << LVD_PRV_LVDLVLR_LVD2LVL_OFFSET)
-
-/* LVDNCR0 Bit Field Definitions */
-#define LVD_PRV_LVDNCR0_RIE_OFFSET            (0U)
-#define LVD_PRV_LVDNCR0_RIE_MASK              (1U << LVD_PRV_LVDNCR0_RIE_OFFSET)
-#define LVD_PRV_LVDNCR0_DFDIS_OFFSET          (1U)
-#define LVD_PRV_LVDNCR0_DFDIS_MASK            (1U << LVD_PRV_LVDNCR0_DFDIS_OFFSET)
-#define LVD_PRV_LVDNCR0_CMPE_OFFSET           (2U)
-#define LVD_PRV_LVDNCR0_CMPE_MASK             (1U << LVD_PRV_LVDNCR0_CMPE_OFFSET)
-#define LVD_PRV_LVDNCR0_FSAMP_OFFSET          (4U)
-#define LVD_PRV_LVDNCR0_FSAMP_MASK            (3U << LVD_PRV_LVDNCR0_FSAMP_OFFSET)
-#define LVD_PRV_LVDNCR0_RI_OFFSET             (6U)
-#define LVD_PRV_LVDNCR0_RI_MASK               (1U << LVD_PRV_LVDNCR0_RI_OFFSET)
-#define LVD_PRV_LVDNCR0_RN_OFFSET             (7U)
-#define LVD_PRV_LVDNCR0_RN_MASK               (1U << LVD_PRV_LVDNCR0_RN_OFFSET)
-
-/* nLVDICR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_LVDICR_IDTSEL_OFFSET      (4U)
-#define LVD_PRV_EXT_LVDICR_IE_OFFSET          (0U)
-#define LVD_PRV_EXT_LVDICR_IE_ENABLE          (1U << LVD_PRV_EXT_LVDICR_IE_OFFSET)
-
-/* nLVDCR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_LVDCR_LVDE_OFFSET         (4U)
-#define LVD_PRV_EXT_LVDCR_LVDE_ENABLE         (1U << LVD_PRV_EXT_LVDCR_LVDE_OFFSET)
-#define LVD_PRV_EXT_VBTLVDCR_LVL_OFFSET       (5U)
-#define LVD_PRV_EXT_VRTLVDCR_LVL_OFFSET       (6U)
-
-/* nLVDSR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_LVDSR_DET_OFFSET          (1U)
-#define LVD_PRV_EXT_LVDSR_DET_MASK            (1U << LVD_PRV_EXT_LVDSR_DET_OFFSET)
-#define LVD_PRV_EXT_LVDSR_MON_OFFSET          (5U)
-#define LVD_PRV_EXT_LVDSR_MON_MASK            (1U << LVD_PRV_EXT_LVDSR_MON_OFFSET)
-
-/* nCMPCR Bit Field Definitions for VBAT, RTC, EX */
-#define LVD_PRV_EXT_CMPCR_CMPE_OFFSET         (0U)
-#define LVD_PRV_EXT_CMPCR_CMPE_MASK           (1U << LVD_PRV_EXT_CMPCR_CMPE_OFFSET)
-
-/* LVD1MKR Bit Field Definitions */
 #define LVD_PRV_LVD1MKR_MK_ENABLE             (1U)
 #define LVD_PRV_LVD1MKR_MK_DISABLE            (0U)
+#define LVD_PRV_LVDCR0_BIT3_MASK              (0x8U)
 
-/* LVD1CR Bit Field Definitions */
-#define LVD_PRV_LVD1CR_LVD1V_MASK             (0x1FU << R_SYSTEM_LVD1CR_LVD1V_Pos)
 #define LVD_PRV_LVD1CR_IRQSEL_NON_MASKABLE    (0U)
 #define LVD_PRV_LVD1CR_IRQSEL_MASKABLE        (1U)
 #define LVD_PRV_LVD1CR_LVD1SEL_INTERRUPT      (0U)
@@ -152,8 +96,8 @@ void        lvd_ext_isr(void);
  * Private global variables
  **********************************************************************************************************************/
 
-/** Stored context for NMI handler. */
-static lvd_instance_ctrl_t * gp_ctrls[LVD_PRV_NUMBER_OF_NMI] = {NULL};
+/* Stored context for NMI handler. */
+static lvd_instance_ctrl_t * gp_ctrls[LVD_PRV_NUMBER_OF_VCC_MONITOR] = {NULL};
 
 #if (1U == BSP_FEATURE_LVD_VERSION)
 
@@ -161,17 +105,39 @@ static lvd_instance_ctrl_t * gp_ctrls[LVD_PRV_NUMBER_OF_NMI] = {NULL};
 static uint8_t volatile * const g_lvdncr0_lut[] = {&(R_SYSTEM->LVD1CR0), &(R_SYSTEM->LVD2CR0)};
 static uint8_t volatile * const g_lvdncr1_lut[] = {&(R_SYSTEM->LVD1CR1), &(R_SYSTEM->LVD2CR1)};
 static uint8_t volatile * const g_lvdnsr_lut[]  = {&(R_SYSTEM->LVD1SR), &(R_SYSTEM->LVD2SR)};
-#else
+
+#elif (2U == BSP_FEATURE_LVD_VERSION)
 static uint8_t volatile * const g_lvdnsr_lut[] = {&(R_SYSTEM->LVD1SR)};
+
+#elif (3U == BSP_FEATURE_LVD_VERSION)
+
+/* Look-up tables for writing to monitor 1, monitor 2, monitor 4, monitor 5, registers. monitor 3 registers are dummy variables. */
+static uint8_t volatile * const g_lvdncr0_lut[] =
+{
+    &(R_SYSTEM->LVD1CR0), &(R_SYSTEM->LVD2CR0), &(R_SYSTEM->LVD3CR0), &(R_SYSTEM->LVD4CR0), &(R_SYSTEM->LVD5CR0)
+};
+static uint8_t volatile * const g_lvdncr1_lut[] =
+{
+    &(R_SYSTEM->LVD1CR1), &(R_SYSTEM->LVD2CR1), &(R_SYSTEM->LVD3CR1), &(R_SYSTEM->LVD4CR1), &(R_SYSTEM->LVD5CR1)
+};
+static uint8_t volatile * const g_lvdnsr_lut[] = {&(R_SYSTEM->LVD1SR), &(R_SYSTEM->LVD2SR)};
 #endif
+
 #if BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE
+ #if (3U == BSP_FEATURE_LVD_VERSION)
+static uint8_t volatile * const g_lvdnfcr_lut[] =
+{
+    &(R_SYSTEM->LVD1FCR), &(R_SYSTEM->LVD2FCR), &(R_SYSTEM->LVD3FCR), &(R_SYSTEM->LVD4FCR), &(R_SYSTEM->LVD5FCR)
+};
+ #else
 static uint8_t volatile * const g_lvdnfcr_lut[] = {&(R_SYSTEM->LVD1FCR), &(R_SYSTEM->LVD2FCR)};
+ #endif
 #endif
 
 #if BSP_FEATURE_LVD_HAS_EXT_MONITOR == 1
 
-/* Look-up table for writing to VBAT, RTC, EX register */
-/* Index: VBAT - 0, RTC - 1, EX - 2 */
+/* Look-up table for writing to VBAT, RTC, EX register. */
+/* Index: VBAT - 0, RTC - 1, EX - 2. */
 static uint8_t volatile * const g_ext_lvdcr_lut[] =
 {&(R_SYSTEM->VBTLVDCR), &(R_SYSTEM->VRTLVDCR), &(R_SYSTEM->EXLVDCR)};
 
@@ -188,19 +154,30 @@ static uint8_t volatile * const g_ext_lvdcmpcr_lut[] =
 #if (BSP_FEATURE_LVD_HAS_LVDLVLR == 1)
 static uint32_t const g_lvdlvlr_offset_lut[] =
 {
-    LVD_PRV_LVDLVLR_LVD1LVL_OFFSET, LVD_PRV_LVDLVLR_LVD2LVL_OFFSET
+    R_SYSTEM_LVDLVLR_LVD1LVL_Pos, R_SYSTEM_LVDLVLR_LVD2LVL_Pos
 };
-static uint32_t const g_lvdlvlr_mask_lut[] = {LVD_PRV_LVDLVLR_LVD1LVL_MASK, LVD_PRV_LVDLVLR_LVD2LVL_MASK};
+static uint32_t const g_lvdlvlr_mask_lut[] = {R_SYSTEM_LVDLVLR_LVD1LVL_Msk, R_SYSTEM_LVDLVLR_LVD2LVL_Msk};
 #elif (1U == BSP_FEATURE_LVD_VERSION)
 static uint8_t volatile * const g_lvdncmpcr_lut[]    = {&(R_SYSTEM->LVD1CMPCR), &(R_SYSTEM->LVD2CMPCR)};
-static uint32_t const           g_lvdnlvl_mask_lut[] = {R_SYSTEM_LVD1CMPCR_LVD1LVL_Msk, R_SYSTEM_LVD2CMPCR_LVD2LVL_Msk};
+static uint32_t const           g_lvdnlvl_mask_lut[] = {R_SYSTEM_LVD1CMPCR_LVDLVL_Msk, R_SYSTEM_LVD2CMPCR_LVDLVL_Msk};
+#elif (3U == BSP_FEATURE_LVD_VERSION)
+static uint8_t volatile * const g_lvdncmpcr_lut[] =
+{
+    &(R_SYSTEM->LVD1CMPCR), &(R_SYSTEM->LVD2CMPCR), &(R_SYSTEM->LVD3CMPCR), &(R_SYSTEM->LVD4CMPCR),
+    &(R_SYSTEM->LVD5CMPCR)
+};
+static uint32_t const g_lvdnlvl_mask_lut[] =
+{
+    R_SYSTEM_LVD1CMPCR_LVDLVL_Msk, R_SYSTEM_LVD2CMPCR_LVDLVL_Msk, R_SYSTEM_LVD3CMPCR_LVDLVL_Msk,
+    R_SYSTEM_LVD4CMPCR_LVDLVL_Msk, R_SYSTEM_LVD5CMPCR_LVDLVL_Msk
+};
 #endif
 
 /***********************************************************************************************************************
  * Global Variables
  **********************************************************************************************************************/
 
-/** Instance of low voltage detection peripheral driver interface */
+/* Instance of low voltage detection peripheral driver interface. */
 const lvd_api_t g_lvd_on_lvd =
 {
     .open        = R_LVD_Open,
@@ -284,6 +261,7 @@ fsp_err_t R_LVD_Open (lvd_ctrl_t * const p_api_ctrl, lvd_cfg_t const * const p_c
  * @retval          FSP_SUCCESS         Successful
  * @retval          FSP_ERR_ASSERTION   An argument was NULL
  * @retval          FSP_ERR_NOT_OPEN    Driver is not open
+ * @retval          FSP_ERR_UNSUPPORTED This monitor does not support status feature
  *
  **********************************************************************************************************************/
 fsp_err_t R_LVD_StatusGet (lvd_ctrl_t * const p_api_ctrl, lvd_status_t * p_lvd_status)
@@ -293,24 +271,28 @@ fsp_err_t R_LVD_StatusGet (lvd_ctrl_t * const p_api_ctrl, lvd_status_t * p_lvd_s
 #if (0 != LVD_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_lvd_status);
+ #if (3U == BSP_FEATURE_LVD_VERSION)
+    FSP_ERROR_RETURN(!((4 == p_ctrl->p_cfg->monitor_number) || (5 == p_ctrl->p_cfg->monitor_number)),
+                     FSP_ERR_UNSUPPORTED);
+ #endif
     FSP_ERROR_RETURN((LVD_OPENED == p_ctrl->open), FSP_ERR_NOT_OPEN);
 #endif
 
     uint8_t lvdnsr = 0;
 
-    if (p_ctrl->p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_VCC_MONITOR)
+    if (p_ctrl->p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_NMI)
     {
         lvdnsr = *(g_lvdnsr_lut[p_ctrl->p_cfg->monitor_number - 1]);
-        p_lvd_status->crossing_detected = (lvd_threshold_crossing_t) ((lvdnsr & LVD_PRV_LVDNSR_DET_MASK) != 0);
-        p_lvd_status->current_state     = (lvd_current_state_t) ((lvdnsr & LVD_PRV_LVDNSR_MON_MASK) != 0);
+        p_lvd_status->crossing_detected = (lvd_threshold_crossing_t) ((lvdnsr & R_SYSTEM_LVD1SR_DET_Msk) != 0);
+        p_lvd_status->current_state     = (lvd_current_state_t) ((lvdnsr & R_SYSTEM_LVD1SR_MON_Msk) != 0);
     }
 
 #if BSP_FEATURE_LVD_HAS_EXT_MONITOR == 1
     else
     {
         lvdnsr = *(g_ext_lvdsr_lut[p_ctrl->p_cfg->monitor_number - 3]);
-        p_lvd_status->crossing_detected = (lvd_threshold_crossing_t) ((lvdnsr & LVD_PRV_EXT_LVDSR_DET_MASK) != 0);
-        p_lvd_status->current_state     = (lvd_current_state_t) ((lvdnsr & LVD_PRV_EXT_LVDSR_MON_MASK) != 0);
+        p_lvd_status->crossing_detected = (lvd_threshold_crossing_t) ((lvdnsr & R_SYSTEM_VBTLVDSR_DET_Msk) != 0);
+        p_lvd_status->current_state     = (lvd_current_state_t) ((lvdnsr & R_SYSTEM_VBTLVDSR_MON_Msk) != 0);
     }
 #endif
 
@@ -325,6 +307,7 @@ fsp_err_t R_LVD_StatusGet (lvd_ctrl_t * const p_api_ctrl, lvd_status_t * p_lvd_s
  * @retval      FSP_SUCCESS         Successful
  * @retval      FSP_ERR_ASSERTION   An argument was NULL
  * @retval      FSP_ERR_NOT_OPEN    Driver is not open
+ * @retval      FSP_ERR_UNSUPPORTED This monitor does not support status feature
  *
  **********************************************************************************************************************/
 fsp_err_t R_LVD_StatusClear (lvd_ctrl_t * const p_api_ctrl)
@@ -333,13 +316,17 @@ fsp_err_t R_LVD_StatusClear (lvd_ctrl_t * const p_api_ctrl)
 
 #if (0 != LVD_CFG_PARAM_CHECKING_ENABLE)
     FSP_ERROR_RETURN((NULL != p_ctrl), FSP_ERR_ASSERTION);
+ #if (3U == BSP_FEATURE_LVD_VERSION)
+    FSP_ERROR_RETURN(!((4 == p_ctrl->p_cfg->monitor_number) || (5 == p_ctrl->p_cfg->monitor_number)),
+                     FSP_ERR_UNSUPPORTED);
+ #endif
     FSP_ERROR_RETURN((LVD_OPENED == p_ctrl->open), FSP_ERR_NOT_OPEN);
 #endif
 
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
     /* Clear the status register. */
-    if (p_ctrl->p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_VCC_MONITOR)
+    if (p_ctrl->p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_NMI)
     {
         *(g_lvdnsr_lut[p_ctrl->p_cfg->monitor_number - 1]) = 0;
     }
@@ -380,20 +367,20 @@ fsp_err_t R_LVD_CallbackSet (lvd_ctrl_t * const          p_api_ctrl,
 
 #if BSP_TZ_SECURE_BUILD
 
-    /* Get security state of p_callback */
+    /* Get security state of p_callback. */
     bool callback_is_secure =
         (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
 
  #if LVD_CFG_PARAM_CHECKING_ENABLE
 
-    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure. */
     lvd_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
                                                                                       CMSE_AU_NONSECURE);
     FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
  #endif
 #endif
 
-    /* Store callback and context */
+    /* Store callback and context. */
 #if BSP_TZ_SECURE_BUILD
     p_ctrl->p_callback = callback_is_secure ? p_callback :
                          (void (*)(lvd_callback_args_t *))cmse_nsfptr_create(p_callback);
@@ -438,8 +425,11 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
     {
         uint32_t monitor_index = p_ctrl->p_cfg->monitor_number - 1;
 
-        /* Setting for NMI */
-        R_BSP_GroupIrqWrite((bsp_grp_irq_t) (BSP_GRP_IRQ_LVD1 + monitor_index), NULL);
+        if (p_ctrl->p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_NMI)
+        {
+            /* Setting for NMI. */
+            R_BSP_GroupIrqWrite((bsp_grp_irq_t) (BSP_GRP_IRQ_LVD1 + monitor_index), NULL);
+        }
 
         /* Shutdown procedure from Table 8.5 in the RA6M3 Hardware Manual R01UH0886EJ0100. */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
@@ -449,15 +439,16 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
         /* Enable writing to the LVD1CR register. */
         R_SYSTEM->LVD1MKR_b.MK = LVD_PRV_LVD1MKR_MK_ENABLE;
 
-        /* Disable LVD1 operation */
+        /* Disable LVD1 operation. */
         R_SYSTEM->LVD1CR_b.LVD1EN = LVD_PRV_LVD1CR_LVD1EN_DISABLE;
 
         /* Disable writing to the LVD1CR register. */
         R_SYSTEM->LVD1MKR_b.MK = LVD_PRV_LVD1MKR_MK_DISABLE;
 #else
 
-        /* Disable output of comparison results by voltage monitor. */
-        *(g_lvdncr0_lut[monitor_index]) &= (uint8_t) ~(LVD_PRV_LVDNCR0_CMPE_MASK);
+        /* Disable output of comparison results by voltage monitor. Write value to lvdncr0.bit3 should be 1. */
+        *(g_lvdncr0_lut[monitor_index]) = (*(g_lvdncr0_lut[monitor_index]) | (uint8_t) LVD_PRV_LVDCR0_BIT3_MASK) &
+                                          ((uint8_t) ~(R_SYSTEM_LVD1CR0_CMPE_Msk));
 
  #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
         if (LVD_SAMPLE_CLOCK_DISABLED != p_ctrl->p_cfg->sample_clock_divisor)
@@ -469,26 +460,27 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
         uint8_t lvdncr0 = *(g_lvdncr0_lut[monitor_index]);
 
         /* Disable voltage monitor interrupt or reset. */
-        lvdncr0 &= (uint8_t) ~LVD_PRV_LVDNCR0_RIE_MASK;
+        lvdncr0 &= (uint8_t) ~R_SYSTEM_LVD1CR0_RIE_Msk;
 
  #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 1
 
         /* Disable digital filter. */
-        lvdncr0 |= (uint8_t) LVD_PRV_LVDNCR0_DFDIS_MASK;
+        lvdncr0 |= (uint8_t) R_SYSTEM_LVD1CR0_DFDIS_Msk;
  #endif
 
-        *(g_lvdncr0_lut[monitor_index]) = lvdncr0;
+        /* Write value to lvdncr0.bit3 should be 1. */
+        *(g_lvdncr0_lut[monitor_index]) = (lvdncr0 | (uint8_t) LVD_PRV_LVDCR0_BIT3_MASK);
  #if BSP_FEATURE_LVD_HAS_LVDLVLR == 1
 
         /* Critical section required because LVCMPCR register is shared with other instances. */
         FSP_CRITICAL_SECTION_ENTER;
 
         /* Disable voltage detection circuit. */
-        R_SYSTEM->LVCMPCR &= (uint8_t) ~(p_ctrl->p_cfg->monitor_number << LVD_PRV_LVCMPCR_LVD1E_OFFSET);
+        R_SYSTEM->LVCMPCR &= (uint8_t) ~(p_ctrl->p_cfg->monitor_number << R_SYSTEM_LVCMPCR_LVD1E_Pos);
 
         FSP_CRITICAL_SECTION_EXIT;
  #else
-        *(g_lvdncmpcr_lut[monitor_index]) &= (uint8_t) ~R_SYSTEM_LVD1CMPCR_LVD1E_Msk;
+        *(g_lvdncmpcr_lut[monitor_index]) &= (uint8_t) ~R_SYSTEM_LVD1CMPCR_LVDE_Msk;
  #endif
 #endif
 
@@ -504,13 +496,13 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
         /* Enable access to LVD registers. */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
-        /* Disable voltage monitor interrupt */
+        /* Disable voltage monitor interrupt. */
         *g_ext_lvdicr_lut[monitor_index] &= (uint8_t) ~(LVD_PRV_EXT_LVDICR_IE_ENABLE);
 
         /* Disable voltage detection circuit. */
-        *g_ext_lvdcmpcr_lut[monitor_index] &= (uint8_t) ~(LVD_PRV_EXT_CMPCR_CMPE_MASK);
+        *g_ext_lvdcmpcr_lut[monitor_index] &= (uint8_t) ~(R_SYSTEM_VBTCMPCR_CMPE_Msk);
 
-        /* Disable pin LVD output */
+        /* Disable pin LVD output. */
         *g_ext_lvdcr_lut[monitor_index] &= (uint8_t) ~(LVD_PRV_EXT_LVDCR_LVDE_ENABLE);
 
         /* Disable access to LVD registers. */
@@ -543,7 +535,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     uint32_t lvd1cr = 0;
 
     /* Configure the voltage threshold setting. */
-    lvd1cr &= (uint8_t) ~(LVD_PRV_LVD1CR_LVD1V_MASK);
+    lvd1cr &= (uint8_t) ~(R_SYSTEM_LVD1CR_LVD1V_Msk);
     lvd1cr |= (uint32_t) (p_ctrl->p_cfg->voltage_threshold << R_SYSTEM_LVD1CR_LVD1V_Pos);
 
     if (LVD_RESPONSE_NONE != p_ctrl->p_cfg->detection_response)
@@ -556,7 +548,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
             /* Configure the voltage monitor interrupt type as maskable. */
             lvd1cr |= LVD_PRV_LVD1CR_IRQSEL_MASKABLE << R_SYSTEM_LVD1CR_IRQSEL_Pos;
 
-            /* Enable interrupt in NVIC */
+            /* Enable interrupt in NVIC. */
             R_BSP_IrqCfgEnable(p_ctrl->p_cfg->irq, p_ctrl->p_cfg->monitor_ipl, p_ctrl);
         }
         else if (LVD_RESPONSE_NMI == p_ctrl->p_cfg->detection_response)
@@ -589,7 +581,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     /* Enable writing to the LVD1CR register. */
     R_SYSTEM->LVD1MKR_b.MK = LVD_PRV_LVD1MKR_MK_ENABLE;
 
-    /* Writing to the LVD1CR register */
+    /* Writing to the LVD1CR register. */
     R_SYSTEM->LVD1CR = (uint8_t) lvd1cr;
 
     /* Disable writing to the LVD1CR register. */
@@ -606,36 +598,39 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     /* Calculate index used to get monitor registers from look-up tables and perform other calculations. */
     uint32_t monitor_index = p_ctrl->p_cfg->monitor_number - 1;
 
-    /* Configure the voltage monitor interrupt condition. */
-    lvdncr1 |= (uint32_t) (p_ctrl->p_cfg->voltage_slope << LVD_PRV_LVDNCR1_IDTSEL_OFFSET);
-
-    if (LVD_RESPONSE_NONE != p_ctrl->p_cfg->detection_response)
+    if (p_ctrl->p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_NMI)
     {
-        if (LVD_RESPONSE_INTERRUPT == p_ctrl->p_cfg->detection_response)
+        /* Configure the voltage monitor interrupt condition. */
+        lvdncr1 |= (uint32_t) (p_ctrl->p_cfg->voltage_slope << R_SYSTEM_LVD1CR1_IDTSEL_Pos);
+
+        if (LVD_RESPONSE_NONE != p_ctrl->p_cfg->detection_response)
         {
-            /* Configure the voltage monitor interrupt type as maskable. */
-            lvdncr1 |= LVD_PRV_LVDNCR1_IRQSEL_MASK;
+            if (LVD_RESPONSE_INTERRUPT == p_ctrl->p_cfg->detection_response)
+            {
+                /* Configure the voltage monitor interrupt type as maskable. */
+                lvdncr1 |= R_SYSTEM_LVD1CR1_IRQSEL_Msk;
 
-            /* Enable interrupt in NVIC */
-            R_BSP_IrqCfgEnable(p_ctrl->p_cfg->irq, p_ctrl->p_cfg->monitor_ipl, p_ctrl);
-        }
-        else if (LVD_RESPONSE_NMI == p_ctrl->p_cfg->detection_response)
-        {
-            /* Enable the NMI handler. */
-            R_BSP_GroupIrqWrite((bsp_grp_irq_t) (BSP_GRP_IRQ_LVD1 + monitor_index), lvd_nmi_handler);
+                /* Enable interrupt in NVIC. */
+                R_BSP_IrqCfgEnable(p_ctrl->p_cfg->irq, p_ctrl->p_cfg->monitor_ipl, p_ctrl);
+            }
+            else if (LVD_RESPONSE_NMI == p_ctrl->p_cfg->detection_response)
+            {
+                /* Enable the NMI handler. */
+                R_BSP_GroupIrqWrite((bsp_grp_irq_t) (BSP_GRP_IRQ_LVD1 + monitor_index), lvd_nmi_handler);
 
-            /* Enable NMI for this LVD monitor. NMIER bits can only be set. They cannot be cleared. */
-            R_ICU->NMIER = (uint16_t) (1U << (2U + monitor_index));
-        }
-        else
-        {
-            /* LVD_RESPONSE_RESET or LVD_RESPONSE_RESET_ON_RISING */
+                /* Enable NMI for this LVD monitor. NMIER bits can only be set. They cannot be cleared. */
+                R_ICU->NMIER = (uint16_t) (1U << (2U + monitor_index));
+            }
+            else
+            {
+                /* LVD_RESPONSE_RESET or LVD_RESPONSE_RESET_ON_RISING. */
 
-            /* Voltage monitor reset enabled. */
-            lvdncr0 |= LVD_PRV_LVDNCR0_RI_MASK;
+                /* Voltage monitor reset enabled. */
+                lvdncr0 |= R_SYSTEM_LVD1CR0_RI_Msk;
 
-            /* Configure the voltage monitor reset negation mode. */
-            lvdncr0 |= (uint32_t) (p_ctrl->p_cfg->negation_delay << LVD_PRV_LVDNCR0_RN_OFFSET);
+                /* Configure the voltage monitor reset negation mode. */
+                lvdncr0 |= (uint32_t) (p_ctrl->p_cfg->negation_delay << R_SYSTEM_LVD1CR0_RN_Pos);
+            }
         }
     }
 
@@ -643,12 +638,12 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     uint32_t delay;
     if (LVD_MONITOR_LVD1 == p_ctrl->p_cfg->monitor_number)
     {
-        /** LVD monitor is LVD1 */
+        /* LVD monitor is LVD1. */
         delay = BSP_FEATURE_LVD_MONITOR_1_STABILIZATION_TIME_US;
     }
     else
     {
-        /** LVD monitor is LVD2 */
+        /* LVD monitor is LVD2. */
         delay = BSP_FEATURE_LVD_MONITOR_2_STABILIZATION_TIME_US;
     }
 
@@ -656,7 +651,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     if (LVD_SAMPLE_CLOCK_DISABLED != p_ctrl->p_cfg->sample_clock_divisor)
     {
         /* Configure the digital filter clock divider. */
-        lvdncr0 |= (uint32_t) (p_ctrl->p_cfg->sample_clock_divisor << LVD_PRV_LVDNCR0_FSAMP_OFFSET);
+        lvdncr0 |= (uint32_t) (p_ctrl->p_cfg->sample_clock_divisor << R_SYSTEM_LVD1CR0_FSAMP_Pos);
 
         /* Wait for at least 2n + 3 LOCO cycles, where n = [2,4,8,16]. */
         uint32_t filter_delay = r_lvd_filter_delay(p_ctrl->p_cfg->sample_clock_divisor);
@@ -670,7 +665,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     else
     {
         /* Disable the digital filter. */
-        lvdncr0 |= LVD_PRV_LVDNCR0_DFDIS_MASK;
+        lvdncr0 |= R_SYSTEM_LVD1CR0_DFDIS_Msk;
     }
  #endif
 
@@ -680,7 +675,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
  #if (BSP_FEATURE_LVD_HAS_LVDLVLR == 1)
-    uint32_t lvdne_mask    = p_ctrl->p_cfg->monitor_number << LVD_PRV_LVCMPCR_LVD1E_OFFSET;
+    uint32_t lvdne_mask    = p_ctrl->p_cfg->monitor_number << R_SYSTEM_LVCMPCR_LVD1E_Pos;
     uint32_t lvdlvr_offset = g_lvdlvlr_offset_lut[monitor_index];
 
     /* Critical section required because LVCMPCR and LVDLVLR registers are shared with other instances. */
@@ -694,7 +689,7 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     lvdlvlr &= ~(g_lvdlvlr_mask_lut[monitor_index]);
     lvdlvlr |= (uint32_t) (p_ctrl->p_cfg->voltage_threshold << lvdlvr_offset);
 
-    /*Write the voltage level setting. */
+    /* Write the voltage level setting. */
     R_SYSTEM->LVDLVLR = (uint8_t) lvdlvlr;
 
     /* Enable the voltage detection circuit. */
@@ -702,7 +697,24 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
 
     FSP_CRITICAL_SECTION_EXIT;
  #else
-    uint8_t lvdne[LVD_PRV_NUMBER_OF_NMI];
+
+    /* Unlock control registers write for PVD4 and PVD5 this bit only need to write 0 once.
+     * Any subsequence write will set this register back to fixed lock state. */
+  #if (3U == BSP_FEATURE_LVD_VERSION)
+    static uint8_t open_state = 0;
+    if (open_state == (uint8_t) 0)
+    {
+        R_SYSTEM->PVDLR = 0;
+        open_state      = 1;
+    }
+
+    /* Write value to lvd4,5cr0.bit6 should be 1. */
+    if ((p_ctrl->p_cfg->monitor_number == 4) || (p_ctrl->p_cfg->monitor_number == 5))
+    {
+        lvdncr0 |= (uint8_t) (1 << R_SYSTEM_LVD4CR0_RI_Pos);
+    }
+  #endif
+    uint8_t lvdne[LVD_PRV_NUMBER_OF_VCC_MONITOR];
     uint8_t i;
 
     /* Critical section required because LVCMPCR and LVDLVLR registers are shared with other instances. */
@@ -710,11 +722,18 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
 
     /* To change a LVDNLVL register both voltage detection circuits must be disabled.
      * Disable the voltage detection circuit for all monitors before writing the LVDLVLR register.
-     * See section 7.2.2 "LVD1CMPCR : Voltage Monitoring 1 Comparator Control Register" in the RA6M4 manual R01HUM0890EJ0050.*/
-    for (i = 0; i < LVD_PRV_NUMBER_OF_NMI; i++)
+     * See section 7.2.2 "LVD1CMPCR : Voltage Monitoring 1 Comparator Control Register" in the RA6M4 manual R01HUM0890EJ0050. */
+
+    for (i = 0; i < LVD_PRV_NUMBER_OF_VCC_MONITOR; i++)
     {
-        lvdne[i]               = *(g_lvdncmpcr_lut[i]) & R_SYSTEM_LVD1CMPCR_LVD1E_Msk; // Preserve enable values for other monitors
-        *(g_lvdncmpcr_lut[i]) &= (uint8_t) ~R_SYSTEM_LVD1CMPCR_LVD1E_Msk;
+        if (0 != ((1 << i) & BSP_FEATURE_LVD_MONITOR_MASK))
+        {
+            /* Preserve enable values for other monitors. */
+            lvdne[i] = *(g_lvdncmpcr_lut[i]) & R_SYSTEM_LVD1CMPCR_LVDE_Msk;
+
+            /* Disable the monitor. */
+            *(g_lvdncmpcr_lut[i]) &= (uint8_t) ~R_SYSTEM_LVD1CMPCR_LVDE_Msk;
+        }
     }
 
     /* Configure the voltage threshold setting. */
@@ -738,38 +757,44 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
   #endif
 
     /* Enable the voltage detection circuits. */
-    for (i = 0; i < LVD_PRV_NUMBER_OF_NMI; i++)
+    for (i = 0; i < LVD_PRV_NUMBER_OF_VCC_MONITOR; i++)
     {
-        if (monitor_index == i)
+        if (0 != ((1 << i) & BSP_FEATURE_LVD_MONITOR_MASK))
         {
-            *(g_lvdncmpcr_lut[monitor_index]) |= R_SYSTEM_LVD1CMPCR_LVD1E_Msk;
-        }
-        else
-        {
-            *(g_lvdncmpcr_lut[i]) |= lvdne[i];
+            if (monitor_index == i)
+            {
+                *(g_lvdncmpcr_lut[monitor_index]) |= R_SYSTEM_LVD1CMPCR_LVDE_Msk;
+            }
+            else
+            {
+                *(g_lvdncmpcr_lut[i]) |= lvdne[i];
+            }
         }
     }
     FSP_CRITICAL_SECTION_EXIT;
  #endif
 
-    /* Write settings to control registers. */
-    *(g_lvdncr0_lut[monitor_index]) = (uint8_t) lvdncr0;
+    /* Write settings to control registers. Write value to lvdncr0.bit3 should be 1. */
+    *(g_lvdncr0_lut[monitor_index]) = (uint8_t) (lvdncr0 | LVD_PRV_LVDCR0_BIT3_MASK);
     *(g_lvdncr1_lut[monitor_index]) = (uint8_t) lvdncr1;
 
-    /* Clear DET before setting RIE. */
-    *(g_lvdnsr_lut[monitor_index]) = 0;
+    if (p_ctrl->p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_NMI)
+    {
+        /* Clear DET before setting RIE. */
+        *(g_lvdnsr_lut[monitor_index]) = 0;
+    }
 
     if (LVD_RESPONSE_NONE != p_ctrl->p_cfg->detection_response)
     {
-        /* Reset/Interrupt enable bit set after clearing DET bit. */
-        *(g_lvdncr0_lut[monitor_index]) |= LVD_PRV_LVDNCR0_RIE_MASK;
+        /* Reset/Interrupt enable bit set after clearing DET bit. Write value to lvdncr0.bit3 should be 1. */
+        *(g_lvdncr0_lut[monitor_index]) |= (R_SYSTEM_LVD1CR0_RIE_Msk | LVD_PRV_LVDCR0_BIT3_MASK);
     }
 
     /* Wait for LVD and filter stabilization. */
     R_BSP_SoftwareDelay(delay, BSP_DELAY_UNITS_MICROSECONDS);
 
-    /* Enable output of comparison results by voltage monitor 2. */
-    *(g_lvdncr0_lut[monitor_index]) |= (LVD_PRV_LVDNCR0_CMPE_MASK);
+    /* Enable output of comparison results by voltage monitor. Write value to lvdncr0.bit3 should be 1. */
+    *(g_lvdncr0_lut[monitor_index]) |= (R_SYSTEM_LVD1CR0_CMPE_Msk | LVD_PRV_LVDCR0_BIT3_MASK);
 #endif
 
     /* Disable access to LVD registers. */
@@ -815,15 +840,21 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
     FSP_ASSERT(NULL != p_cfg);
  #if (BSP_FEATURE_LVD_HAS_EXT_MONITOR == 1)
     FSP_ASSERT(1U <= p_cfg->monitor_number && 5U >= p_cfg->monitor_number);
- #elif (1U == BSP_FEATURE_LVD_VERSION)
-    FSP_ASSERT(1U == p_cfg->monitor_number || 2U == p_cfg->monitor_number);
  #else
-    FSP_ASSERT(1U == p_cfg->monitor_number);
+    FSP_ASSERT(0 != ((1 << (p_cfg->monitor_number - 1)) & BSP_FEATURE_LVD_MONITOR_MASK));
  #endif
+ #if (3U == BSP_FEATURE_LVD_VERSION)
+    if (p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_VCC_MONITOR)
+    {
+        FSP_ERROR_RETURN(NULL == gp_ctrls[p_cfg->monitor_number - 1], FSP_ERR_IN_USE);
+    }
+
+ #else
     if (p_cfg->monitor_number <= LVD_PRV_NUMBER_OF_NMI)
     {
         FSP_ERROR_RETURN(NULL == gp_ctrls[p_cfg->monitor_number - 1], FSP_ERR_IN_USE);
     }
+ #endif
 
     int32_t threshold = (int32_t) p_cfg->voltage_threshold;
 
@@ -839,12 +870,16 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
         }
 
         case 2:
-        {
-            /* High voltage thresholds correspond to low register settings. */
-            FSP_ASSERT(threshold >= (int32_t) BSP_FEATURE_LVD_MONITOR_2_HI_THRESHOLD &&
-                       threshold <= (int32_t) BSP_FEATURE_LVD_MONITOR_2_LOW_THRESHOLD);
-            break;
-        }
+ #if (3U == BSP_FEATURE_LVD_VERSION)
+        case 4:
+        case 5:
+ #endif
+            {
+                /* High voltage thresholds correspond to low register settings. */
+                FSP_ASSERT(threshold >= (int32_t) BSP_FEATURE_LVD_MONITOR_2_HI_THRESHOLD &&
+                           threshold <= (int32_t) BSP_FEATURE_LVD_MONITOR_2_LOW_THRESHOLD);
+                break;
+            }
 
             /* If the device does not support an external monitor, the check below will be skipped. */
  #if (BSP_FEATURE_LVD_HAS_EXT_MONITOR == 1)
@@ -866,7 +901,7 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
 
         case 5:
         {
-            /* Checking for EXLVD will be skipped because it don't have threshold configuration */
+            /* Checking for EXLVD will be skipped because it don't have threshold configuration. */
             break;
         }
  #endif
@@ -888,13 +923,21 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
         FSP_ASSERT(NULL != p_cfg->p_callback);
     }
 
- #if BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE
+ #if 3U == BSP_FEATURE_LVD_VERSION
+    if ((p_cfg->monitor_number == 4) || (p_cfg->monitor_number == 5))
+    {
+        if (LVD_RESPONSE_RESET == p_cfg->detection_response)
+        {
+            /* Negation shall only follow a stabilization time (tPVDm) after VCC > Vdetm is detected on VCC-falling reset and VCC-rising reset. */
+            FSP_ASSERT(LVD_NEGATION_DELAY_FROM_VOLTAGE == p_cfg->negation_delay);
+        }
+    }
+ #endif
     if (LVD_RESPONSE_RESET_ON_RISING == p_cfg->detection_response)
     {
         /* Negation shall only follow a stabilization time (tPVDm) after VCC < Vdetm is detected on VCC-rising reset. */
         FSP_ASSERT(LVD_NEGATION_DELAY_FROM_VOLTAGE == p_cfg->negation_delay);
     }
- #endif
 
  #if BSP_FEATURE_LVD_HAS_DIGITAL_FILTER == 0
     FSP_ERROR_RETURN(LVD_SAMPLE_CLOCK_DISABLED == p_cfg->sample_clock_divisor, FSP_ERR_UNSUPPORTED);
@@ -927,7 +970,7 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
         {
             /* Configure voltage threshold for LVD of VBAT */
             *g_ext_lvdcr_lut[monitor_index] =
-                (uint8_t) (p_ctrl->p_cfg->voltage_threshold << LVD_PRV_EXT_VBTLVDCR_LVL_OFFSET);
+                (uint8_t) (p_ctrl->p_cfg->voltage_threshold << R_SYSTEM_VBTLVDCR_LVL_Pos);
             break;
         }
 
@@ -935,7 +978,7 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
         {
             /* Configure voltage threshold for LVD of VRTC */
             *g_ext_lvdcr_lut[monitor_index] =
-                (uint8_t) (p_ctrl->p_cfg->voltage_threshold << LVD_PRV_EXT_VRTLVDCR_LVL_OFFSET);
+                (uint8_t) (p_ctrl->p_cfg->voltage_threshold << R_SYSTEM_VRTLVDCR_LVL_Pos);
             break;
         }
 
@@ -952,7 +995,7 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     }
 
     /* Select the interrupt request timing in the nLVDICR.IDTSEL bits */
-    *g_ext_lvdicr_lut[monitor_index] = (uint8_t) (p_ctrl->p_cfg->voltage_slope << LVD_PRV_EXT_LVDICR_IDTSEL_OFFSET);
+    *g_ext_lvdicr_lut[monitor_index] = (uint8_t) (p_ctrl->p_cfg->voltage_slope << R_SYSTEM_VBTLVDICR_IDTSEL_Pos);
 
     /* Set the nLVDCR.LVDE bit to 1 to enable pin low voltage detection */
     *g_ext_lvdcr_lut[monitor_index] |= (uint8_t) LVD_PRV_EXT_LVDCR_LVDE_ENABLE;
@@ -960,37 +1003,37 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     /* Waiting for the comparator operation stabilization time */
     if (LVD_MONITOR_LVD_VBAT == p_ctrl->p_cfg->monitor_number)
     {
-        /** LVD monitor is LVD VBAT */
+        /* LVD monitor is LVD VBAT. */
         R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_VBAT_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
     }
     else if (LVD_MONITOR_LVD_VRTC == p_ctrl->p_cfg->monitor_number)
     {
-        /** LVD monitor is LVD VRTC */
+        /* LVD monitor is LVD VRTC. */
         R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_VRTC_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
     }
     else
     {
-        /** LVD monitor is EXLVD */
+        /* LVD monitor is EXLVD. */
         R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_EXLVD_STABILIZATION_TIME_US, BSP_DELAY_UNITS_MICROSECONDS);
     }
 
-    /* Set the nCMPCR.CMPE bit to 1 to enable pin voltage detect circuit */
-    *g_ext_lvdcmpcr_lut[monitor_index] = (uint8_t) LVD_PRV_EXT_CMPCR_CMPE_MASK;
+    /* Set the nCMPCR.CMPE bit to 1 to enable pin voltage detect circuit. */
+    *g_ext_lvdcmpcr_lut[monitor_index] = (uint8_t) R_SYSTEM_VBTCMPCR_CMPE_Msk;
 
     if (LVD_RESPONSE_NONE != p_ctrl->p_cfg->detection_response)
     {
-        /* Make sure that the nSR.DET flag is 0 */
-        *g_ext_lvdsr_lut[monitor_index] &= (uint8_t) (~LVD_PRV_EXT_LVDSR_DET_MASK);
+        /* Make sure that the nSR.DET flag is 0. */
+        *g_ext_lvdsr_lut[monitor_index] &= (uint8_t) (~R_SYSTEM_VBTLVDSR_DET_Msk);
 
         /* Set the nLVDICR.IE bit to 1 to enable pin low voltage detection interrupt output. */
         *g_ext_lvdicr_lut[monitor_index] |= (uint8_t) (LVD_PRV_EXT_LVDICR_IE_ENABLE);
 
-        /* Enable interrupt in NVIC */
+        /* Enable interrupt in NVIC. */
         R_BSP_IrqCfgEnable(p_ctrl->p_cfg->irq, p_ctrl->p_cfg->monitor_ipl, p_ctrl);
     }
     else
     {
-        /* Disable interrupt */
+        /* Disable interrupt. */
         *g_ext_lvdicr_lut[monitor_index] &= (uint8_t) (~LVD_PRV_EXT_LVDICR_IE_ENABLE);
     }
 
@@ -1017,7 +1060,7 @@ static void lvd_common_isr_handler (lvd_instance_ctrl_t * p_ctrl)
     lvd_callback_args_t * p_args = p_ctrl->p_callback_memory;
     if (NULL == p_args)
     {
-        /* Store on stack */
+        /* Store on stack. */
         p_args = &callback_args;
     }
     else
@@ -1027,7 +1070,7 @@ static void lvd_common_isr_handler (lvd_instance_ctrl_t * p_ctrl)
     }
 
     p_args->current_state =
-        (lvd_current_state_t) ((*(g_lvdnsr_lut[monitor_index]) & LVD_PRV_LVDNSR_MON_MASK) > 0);
+        (lvd_current_state_t) ((*(g_lvdnsr_lut[monitor_index]) & R_SYSTEM_LVD1SR_MON_Msk) > 0);
     p_args->monitor_number = p_ctrl->p_cfg->monitor_number;
     p_args->p_context      = p_ctrl->p_context;
 
@@ -1072,21 +1115,21 @@ static void lvd_common_isr_handler (lvd_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 void lvd_lvd_isr (void)
 {
-    /* Save context if RTOS is used */
+    /* Save context if RTOS is used. */
     FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
 #if BSP_FEATURE_ICU_HAS_IELSR
 
-    /* Clear the Interrupt Request */
+    /* Clear the Interrupt Request. */
     R_BSP_IrqStatusClear(irq);
 #endif
 
     /* Call common isr handler. */
     lvd_common_isr_handler((lvd_instance_ctrl_t *) R_FSP_IsrContextGet(irq));
 
-    /* Restore context if RTOS is used */
+    /* Restore context if RTOS is used. */
     FSP_CONTEXT_RESTORE
 }
 
@@ -1098,12 +1141,12 @@ void lvd_lvd_isr (void)
  **********************************************************************************************************************/
 static void lvd_nmi_handler (bsp_grp_irq_t irq)
 {
-    /* Save context if RTOS is used */
+    /* Save context if RTOS is used. */
     FSP_CONTEXT_SAVE
     /* Call common isr handler. */
     lvd_common_isr_handler(gp_ctrls[irq - BSP_GRP_IRQ_LVD1]);
 
-    /* Restore context if RTOS is used  */
+    /* Restore context if RTOS is used. */
     FSP_CONTEXT_RESTORE
 }
 
@@ -1114,18 +1157,18 @@ static void lvd_nmi_handler (bsp_grp_irq_t irq)
 #if BSP_FEATURE_LVD_HAS_EXT_MONITOR == 1
 void lvd_ext_isr (void)
 {
-    /* Save context if RTOS is used */
+    /* Save context if RTOS is used. */
     FSP_CONTEXT_SAVE
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
-    /* Clear the Interrupt Request */
+    /* Clear the Interrupt Request. */
     R_BSP_IrqStatusClear(irq);
 
     /* Call common isr handler. */
     lvd_ext_common_isr_handler((lvd_instance_ctrl_t *) R_FSP_IsrContextGet(irq));
 
-    /* Restore context if RTOS is used */
+    /* Restore context if RTOS is used. */
     FSP_CONTEXT_RESTORE
 }
 
@@ -1150,7 +1193,7 @@ static void lvd_ext_common_isr_handler (lvd_instance_ctrl_t * p_ctrl)
     lvd_callback_args_t * p_args = p_ctrl->p_callback_memory;
     if (NULL == p_args)
     {
-        /* Store on stack */
+        /* Store on stack. */
         p_args = &callback_args;
     }
     else
@@ -1160,11 +1203,11 @@ static void lvd_ext_common_isr_handler (lvd_instance_ctrl_t * p_ctrl)
     }
 
     p_args->current_state =
-        (lvd_current_state_t) ((*(g_ext_lvdsr_lut[monitor_index]) & LVD_PRV_EXT_LVDSR_MON_MASK) > 0);
+        (lvd_current_state_t) ((*(g_ext_lvdsr_lut[monitor_index]) & R_SYSTEM_VBTLVDSR_MON_Msk) > 0);
     p_args->monitor_number = p_ctrl->p_cfg->monitor_number;
     p_args->p_context      = p_ctrl->p_context;
 
-    uint8_t det_flag = *g_ext_lvdsr_lut[monitor_index] & (uint8_t) (LVD_PRV_EXT_LVDSR_DET_MASK);
+    uint8_t det_flag = *g_ext_lvdsr_lut[monitor_index] & (uint8_t) (R_SYSTEM_VBTLVDSR_DET_Msk);
 
  #if BSP_TZ_SECURE_BUILD
 

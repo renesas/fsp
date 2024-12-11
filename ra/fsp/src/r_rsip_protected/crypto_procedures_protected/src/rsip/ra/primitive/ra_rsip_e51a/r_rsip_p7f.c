@@ -26,10 +26,6 @@ rsip_ret_t r_rsip_p7f (const uint32_t InData_DomainParam[],
     {
         return RSIP_RET_RESOURCE_CONFLICT;
     }
-    else
-    {
-        ;
-    }
 
     WR1_PROG(REG_1B00H, 0x007f0001U);
     WR1_PROG(REG_144CH, 0x00000000U);
@@ -537,7 +533,7 @@ rsip_ret_t r_rsip_p7f (const uint32_t InData_DomainParam[],
         WR1_PROG(REG_143CH, 0x00001800U);
 
         WR1_PROG(REG_1408H, 0x00002032U);
-        for (iLoop = 12U; iLoop < 24U; )
+        for (iLoop = 12; iLoop < 24U; )
         {
             WAIT_STS(REG_1408H, 30, 1);
             RD4_ADDR(REG_1420H, &OutData_PubKeyIndex[iLoop + 1]);
@@ -554,7 +550,7 @@ rsip_ret_t r_rsip_p7f (const uint32_t InData_DomainParam[],
         WR1_PROG(REG_143CH, 0x00001800U);
 
         WR1_PROG(REG_1408H, 0x00002022U);
-        for (iLoop = 24U; iLoop < 32U; )
+        for (iLoop = 24; iLoop < 32U; )
         {
             WAIT_STS(REG_1408H, 30, 1);
             RD4_ADDR(REG_1420H, &OutData_PubKeyIndex[iLoop + 1]);

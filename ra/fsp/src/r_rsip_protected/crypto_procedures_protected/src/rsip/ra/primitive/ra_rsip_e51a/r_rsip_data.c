@@ -186,7 +186,7 @@ uint32_t const DomainParam_NIST_Ed25519[] =
     BSWAP_32BIG_C(0x83b9b954U), BSWAP_32BIG_C(0x471059e9U), BSWAP_32BIG_C(0x98c34a13U), BSWAP_32BIG_C(0x8a117171U),
 };
 
-uint32_t const DomainParam_Brainpool_256r1[] = 
+uint32_t const DomainParam_Brainpool_256r1[] =
 {
     BSWAP_32BIG_C(0xedfe3eaaU), BSWAP_32BIG_C(0x60cca332U), BSWAP_32BIG_C(0xc40ba65cU), BSWAP_32BIG_C(0x5b15ca42U),
     BSWAP_32BIG_C(0x08394b93U), BSWAP_32BIG_C(0x8779b3ecU), BSWAP_32BIG_C(0xfc081496U), BSWAP_32BIG_C(0x60434e99U),
@@ -208,7 +208,7 @@ uint32_t const DomainParam_Brainpool_256r1[] =
     BSWAP_32BIG_C(0xadd1269fU), BSWAP_32BIG_C(0x253e68a0U), BSWAP_32BIG_C(0xf34017cfU), BSWAP_32BIG_C(0x31111c43U),
 };
 
-uint32_t const DomainParam_Brainpool_384r1[] = 
+uint32_t const DomainParam_Brainpool_384r1[] =
 {
     BSWAP_32BIG_C(0x5af47deaU), BSWAP_32BIG_C(0x63f28e9dU), BSWAP_32BIG_C(0x2d8fe31fU), BSWAP_32BIG_C(0x0bce7626U),
     BSWAP_32BIG_C(0x4f351c2eU), BSWAP_32BIG_C(0x8082d50bU), BSWAP_32BIG_C(0xb4783637U), BSWAP_32BIG_C(0xb9d1d672U),
@@ -238,7 +238,7 @@ uint32_t const DomainParam_Brainpool_384r1[] =
     BSWAP_32BIG_C(0x6e6bb314U), BSWAP_32BIG_C(0x68582a5dU), BSWAP_32BIG_C(0xf1653edeU), BSWAP_32BIG_C(0xc62e358fU),
 };
 
-uint32_t const DomainParam_Brainpool_512r1[] = 
+uint32_t const DomainParam_Brainpool_512r1[] =
 {
     BSWAP_32BIG_C(0xf1cb294dU), BSWAP_32BIG_C(0x1cf2464eU), BSWAP_32BIG_C(0x528afd58U), BSWAP_32BIG_C(0x14d85df8U),
     BSWAP_32BIG_C(0x615d0538U), BSWAP_32BIG_C(0x6db75452U), BSWAP_32BIG_C(0xdfe9cbb8U), BSWAP_32BIG_C(0x64b7bb7aU),

@@ -133,8 +133,8 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
                 break;
             }
 
-  #if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || \
-            BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+  #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+                BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
             case SIZE_AES_192BIT_KEYLEN_BITS:
             {
                 if (output_size != SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED)

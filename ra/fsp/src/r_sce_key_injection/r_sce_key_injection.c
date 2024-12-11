@@ -34,31 +34,31 @@
 const sce_key_injection_api_t g_sce_key_injection_on_sce =
 {
     .AES128_InitialKeyWrap                       = R_SCE_AES128_InitialKeyWrap,
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
+#if ((BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (BSP_FEATURE_RSIP_SCE9_SUPPORTED))
     .AES192_InitialKeyWrap                       = R_SCE_AES192_InitialKeyWrap,
 #endif
     .AES256_InitialKeyWrap                       = R_SCE_AES256_InitialKeyWrap,
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE5) || (BSP_FEATURE_CRYPTO_HAS_SCE7))
+#if ((BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (BSP_FEATURE_RSIP_SCE7_SUPPORTED))
     .KeyUpdateKeyWrap        = R_SCE_KeyUpdateKeyWrap,
     .AES128_EncryptedKeyWrap = R_SCE_AES128_EncryptedKeyWrap,
- #if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+ #if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     .AES192_EncryptedKeyWrap                     = R_SCE_AES192_EncryptedKeyWrap,
  #endif
     .AES256_EncryptedKeyWrap                     = R_SCE_AES256_EncryptedKeyWrap,
 #endif
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
+#if ((BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (BSP_FEATURE_RSIP_SCE9_SUPPORTED))
     .RSA2048_InitialPublicKeyWrap  = R_SCE_RSA2048_InitialPublicKeyWrap,
     .RSA2048_InitialPrivateKeyWrap = R_SCE_RSA2048_InitialPrivateKeyWrap,
 #endif
-#if (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#if (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     .RSA3072_InitialPublicKeyWrap = R_SCE_RSA3072_InitialPublicKeyWrap,
     .RSA4096_InitialPublicKeyWrap = R_SCE_RSA4096_InitialPublicKeyWrap,
 #endif
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     .RSA2048_EncryptedPublicKeyWrap  = R_SCE_RSA2048_EncryptedPublicKeyWrap,
     .RSA2048_EncryptedPrivateKeyWrap = R_SCE_RSA2048_EncryptedPrivateKeyWrap,
 #endif
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
+#if ((BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (BSP_FEATURE_RSIP_SCE9_SUPPORTED))
     .ECC_secp256r1_InitialPublicKeyWrap  = R_SCE_ECC_secp256r1_InitialPublicKeyWrap,
     .ECC_secp256r1_InitialPrivateKeyWrap = R_SCE_ECC_secp256r1_InitialPrivateKeyWrap,
     .ECC_secp384r1_InitialPublicKeyWrap  = R_SCE_ECC_secp384r1_InitialPublicKeyWrap,
@@ -66,7 +66,7 @@ const sce_key_injection_api_t g_sce_key_injection_on_sce =
     .ECC_secp256k1_InitialPublicKeyWrap  = R_SCE_ECC_secp256k1_InitialPublicKeyWrap,
     .ECC_secp256k1_InitialPrivateKeyWrap = R_SCE_ECC_secp256k1_InitialPrivateKeyWrap,
 #endif
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     .ECC_secp256r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap,
     .ECC_secp256r1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap,
     .ECC_secp384r1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap,
@@ -74,13 +74,13 @@ const sce_key_injection_api_t g_sce_key_injection_on_sce =
     .ECC_secp256k1_EncryptedPublicKeyWrap  = R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap,
     .ECC_secp256k1_EncryptedPrivateKeyWrap = R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap,
 #endif
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE7) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
+#if ((BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (BSP_FEATURE_RSIP_SCE9_SUPPORTED))
     .ECC_brainpoolP256r1_InitialPublicKeyWrap  = R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap,
     .ECC_brainpoolP256r1_InitialPrivateKeyWrap = R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap,
     .ECC_brainpoolP384r1_InitialPublicKeyWrap  = R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap,
     .ECC_brainpoolP384r1_InitialPrivateKeyWrap = R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap,
 #endif
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     .ECC_brainpoolP256r1_EncryptedPublicKeyWrap  = R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap,
     .ECC_brainpoolP256r1_EncryptedPrivateKeyWrap = R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap,
     .ECC_brainpoolP384r1_EncryptedPublicKeyWrap  = R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap,
@@ -128,7 +128,7 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE5)
+#if (BSP_FEATURE_RSIP_SCE5_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -150,7 +150,7 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif ((BSP_FEATURE_CRYPTO_HAS_SCE5B) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
+#elif ((BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || (BSP_FEATURE_RSIP_SCE9_SUPPORTED))
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -183,7 +183,7 @@ fsp_err_t R_SCE_AES128_InitialKeyWrap (const uint8_t * const         key_type,
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#elif (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -248,7 +248,7 @@ fsp_err_t R_SCE_AES192_InitialKeyWrap (const uint8_t * const         key_type,
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -269,7 +269,7 @@ fsp_err_t R_SCE_AES192_InitialKeyWrap (const uint8_t * const         key_type,
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -346,7 +346,7 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE5)
+#if (BSP_FEATURE_RSIP_SCE5_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -368,7 +368,7 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif ((BSP_FEATURE_CRYPTO_HAS_SCE5B) || (BSP_FEATURE_CRYPTO_HAS_SCE9))
+#elif ((BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || (BSP_FEATURE_RSIP_SCE9_SUPPORTED))
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -401,7 +401,7 @@ fsp_err_t R_SCE_AES256_InitialKeyWrap (const uint8_t * const         key_type,
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#elif (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -463,7 +463,7 @@ fsp_err_t R_SCE_KeyUpdateKeyWrap (const uint8_t * const        wrapped_user_fact
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE5)
+#if (BSP_FEATURE_RSIP_SCE5_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -483,7 +483,7 @@ fsp_err_t R_SCE_KeyUpdateKeyWrap (const uint8_t * const        wrapped_user_fact
         key_update_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#elif (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -539,7 +539,7 @@ fsp_err_t R_SCE_AES128_EncryptedKeyWrap (const uint8_t * const              init
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE5) || (BSP_FEATURE_CRYPTO_HAS_SCE7))
+#if ((BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (BSP_FEATURE_RSIP_SCE7_SUPPORTED))
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code = HW_SCE_UpdateAes128KeyIndexSub((uint32_t *) initial_vector,
@@ -591,7 +591,7 @@ fsp_err_t R_SCE_AES192_EncryptedKeyWrap (const uint8_t * const              init
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code = HW_SCE_UpdateAes192KeyIndexSub((uint32_t *) initial_vector,
@@ -643,7 +643,7 @@ fsp_err_t R_SCE_AES256_EncryptedKeyWrap (const uint8_t * const              init
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if ((BSP_FEATURE_CRYPTO_HAS_SCE5) || (BSP_FEATURE_CRYPTO_HAS_SCE7))
+#if ((BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (BSP_FEATURE_RSIP_SCE7_SUPPORTED))
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code = HW_SCE_UpdateAes256KeyIndexSub((uint32_t *) initial_vector,
@@ -702,7 +702,7 @@ fsp_err_t R_SCE_RSA2048_InitialPublicKeyWrap (const uint8_t * const             
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -724,7 +724,7 @@ fsp_err_t R_SCE_RSA2048_InitialPublicKeyWrap (const uint8_t * const             
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -802,7 +802,7 @@ fsp_err_t R_SCE_RSA3072_InitialPublicKeyWrap (const uint8_t * const             
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#if (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -880,7 +880,7 @@ fsp_err_t R_SCE_RSA4096_InitialPublicKeyWrap (const uint8_t * const             
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#if (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -958,7 +958,7 @@ fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap (const uint8_t * const            
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
 
@@ -980,7 +980,7 @@ fsp_err_t R_SCE_RSA2048_InitialPrivateKeyWrap (const uint8_t * const            
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1051,7 +1051,7 @@ fsp_err_t R_SCE_RSA2048_EncryptedPublicKeyWrap (const uint8_t * const           
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code =
@@ -1104,7 +1104,7 @@ fsp_err_t R_SCE_RSA2048_EncryptedPrivateKeyWrap (const uint8_t * const          
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     memcpy(S_INST2, key_update_key->value, sizeof(S_INST2));
 
     error_code =
@@ -1164,7 +1164,7 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPublicKeyWrap (const uint8_t * const       
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1192,7 +1192,7 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPublicKeyWrap (const uint8_t * const       
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1271,7 +1271,7 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPublicKeyWrap (const uint8_t * const       
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1299,7 +1299,7 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPublicKeyWrap (const uint8_t * const       
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1378,7 +1378,7 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPublicKeyWrap (const uint8_t * const       
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = 0;
     uint32_t indata_curve_type      = 0;
@@ -1404,7 +1404,7 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPublicKeyWrap (const uint8_t * const       
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1483,7 +1483,7 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPrivateKeyWrap (const uint8_t * const      
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1511,7 +1511,7 @@ fsp_err_t R_SCE_ECC_secp256r1_InitialPrivateKeyWrap (const uint8_t * const      
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1589,7 +1589,7 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPrivateKeyWrap (const uint8_t * const      
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -1617,7 +1617,7 @@ fsp_err_t R_SCE_ECC_secp256k1_InitialPrivateKeyWrap (const uint8_t * const      
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1695,7 +1695,7 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPrivateKeyWrap (const uint8_t * const      
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_curve_type      = 0;
@@ -1720,7 +1720,7 @@ fsp_err_t R_SCE_ECC_secp384r1_InitialPrivateKeyWrap (const uint8_t * const      
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -1791,7 +1791,7 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPublicKeyWrap (const uint8_t * const     
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_cmd       = 0;
     uint32_t inData_curveType = 0;
 
@@ -1852,7 +1852,7 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPublicKeyWrap (const uint8_t * const     
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_cmd        = 0x0;                       /* P-256 */
     uint32_t indata_curve_type = 0;
 
@@ -1911,7 +1911,7 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPublicKeyWrap (const uint8_t * const     
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t inData_curveType = 0;
     inData_curveType = change_endian_long(0); /* NIST */
 
@@ -1967,7 +1967,7 @@ fsp_err_t R_SCE_ECC_secp256r1_EncryptedPrivateKeyWrap (const uint8_t * const    
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_cmd       = 0;
     uint32_t inData_curveType = 0;
 
@@ -2028,7 +2028,7 @@ fsp_err_t R_SCE_ECC_secp256k1_EncryptedPrivateKeyWrap (const uint8_t * const    
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_cmd        = 0x0;                       /* P-256 */
     uint32_t indata_curve_type = 0;
 
@@ -2088,7 +2088,7 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (const uint8_t * const    
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t inData_curveType = 0;
     inData_curveType = change_endian_long(0); /* NIST */
 
@@ -2151,7 +2151,7 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap (const uint8_t * const 
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -2179,7 +2179,7 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPublicKeyWrap (const uint8_t * const 
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -2258,7 +2258,7 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap (const uint8_t * const
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_cmd             = 0;
@@ -2286,7 +2286,7 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_InitialPrivateKeyWrap (const uint8_t * const
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -2364,7 +2364,7 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap (const uint8_t * const 
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = 0;
     uint32_t indata_curve_type      = 0;
@@ -2390,7 +2390,7 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPublicKeyWrap (const uint8_t * const 
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -2469,7 +2469,7 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap (const uint8_t * const
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
     uint32_t indata_curve_type      = 0;
@@ -2494,7 +2494,7 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_InitialPrivateKeyWrap (const uint8_t * const
         wrapped_key->type = SCE_KEY_INDEX_TYPE_INVALID;
     }
 
-#elif (BSP_FEATURE_CRYPTO_HAS_SCE9)
+#elif (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     uint32_t indata_keytype         = 0;
     uint32_t indata_cmd             = 0;
     uint32_t install_key_ring_index = R_SCE_INSTALL_KEY_RING_INDEX;
@@ -2565,7 +2565,7 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_EncryptedPublicKeyWrap (const uint8_t * cons
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_cmd       = 0;
     uint32_t inData_curveType = 0;
 
@@ -2626,7 +2626,7 @@ fsp_err_t R_SCE_ECC_brainpoolP256r1_EncryptedPrivateKeyWrap (const uint8_t * con
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t indata_cmd       = 0;
     uint32_t inData_curveType = 0;
 
@@ -2687,7 +2687,7 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_EncryptedPublicKeyWrap (const uint8_t * cons
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t inData_curveType = 0;
     inData_curveType = change_endian_long(0x1); /* Brainpool */
 
@@ -2743,7 +2743,7 @@ fsp_err_t R_SCE_ECC_brainpoolP384r1_EncryptedPrivateKeyWrap (const uint8_t * con
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE7)
+#if (BSP_FEATURE_RSIP_SCE7_SUPPORTED)
     uint32_t inData_curveType = 0;
     inData_curveType = change_endian_long(0x01); /* Brainpool */
 

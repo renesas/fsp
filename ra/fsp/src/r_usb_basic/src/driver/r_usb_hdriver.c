@@ -318,6 +318,8 @@ usb_er_t usb_hstd_transfer_start_req (usb_utr_t * ptr)
 
     if (USB_MAX_PIPE_NO < pipenum)
     {
+        USB_PRINTF1("### usb_hstd_transfer_start_req PipeNo ERROR pipenum:%d\n", pipenum);
+
         return USB_ERROR;
     }
 
@@ -363,6 +365,8 @@ usb_er_t usb_hstd_transfer_start_req (usb_utr_t * ptr)
     err = USB_PGET_BLK(1, &p_tran_data);
     if (TX_SUCCESS != err)
     {
+        USB_PRINTF0("### usb_hstd_transfer_start_req USB_PGET_BLK ERROR %x\n");
+
         return USB_ERROR;
     }
 
@@ -370,6 +374,8 @@ usb_er_t usb_hstd_transfer_start_req (usb_utr_t * ptr)
     p_tran_data = (usb_utr_t *) pvPortMalloc(sizeof(usb_utr_t));
     if (NULL == p_tran_data)
     {
+        USB_PRINTF0("### usb_hstd_transfer_start_req pvPortMalloc ERROR\n");
+
         return USB_ERROR;
     }
  #endif                                /* (BSP_CFG_RTOS == 0) */
@@ -1470,6 +1476,8 @@ usb_er_t usb_hstd_clr_stall (usb_utr_t * ptr, uint16_t pipe, usb_cb_t complete)
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("### usb_hstd_clr_stall PipeNo ERROR pipenum:%d\n", pipe);
+
         return USB_ERROR;              /* Error */
     }
 
@@ -2082,6 +2090,8 @@ void usb_hstd_fifo_to_buf (usb_utr_t * ptr, uint16_t pipe, uint16_t useport)
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("### usb_hstd_fifo_to_buf PipeNo ERROR pipenum:%d\n", pipe);
+
         return;                        /* Error */
     }
 
@@ -2119,7 +2129,7 @@ void usb_hstd_fifo_to_buf (usb_utr_t * ptr, uint16_t pipe, uint16_t useport)
         case USB_READOVER:
         {
             /* Buffer over */
-            USB_PRINTF1("### Receive data over PIPE%d\n", pipe);
+            USB_PRINTF1("###usb_hstd_fifo_to_buf Receive data over PIPE%d\n", pipe);
             usb_hstd_forced_termination(ptr, pipe, (uint16_t) USB_DATA_OVR);
 
             break;
@@ -2128,7 +2138,7 @@ void usb_hstd_fifo_to_buf (usb_utr_t * ptr, uint16_t pipe, uint16_t useport)
         case USB_FIFOERROR:
         {
             /* FIFO access error */
-            USB_PRINTF0("### FIFO access error \n");
+            USB_PRINTF0("###usb_hstd_fifo_to_buf FIFO access error \n");
             usb_hstd_forced_termination(ptr, pipe, (uint16_t) USB_DATA_ERR);
 
             break;
@@ -2207,7 +2217,7 @@ void usb_hstd_buf_to_fifo (usb_utr_t * ptr, uint16_t pipe, uint16_t useport)
         case USB_FIFOERROR:
         {
             /* FIFO access error */
-            USB_PRINTF0("### FIFO access error \n");
+            USB_PRINTF0("###usb_hstd_buf_to_fifo FIFO access error \n");
             usb_hstd_forced_termination(ptr, pipe, (uint16_t) USB_DATA_ERR);
 
             break;
@@ -3392,7 +3402,7 @@ static uint8_t usb_hvnd_get_pipe_no (usb_utr_t * p_utr, uint8_t type, uint8_t di
         /* WAIT_LOOP */
         for (pipe = USB_BULK_PIPE_START; pipe < (USB_BULK_PIPE_END + 1); pipe++)
         {
-  #if (USB_CFG_DMA == USB_CFG_ENABLE)
+  #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
             if ((USB_PIPE1 == pipe) || (USB_PIPE2 == pipe))
             {
                 if ((USB_PIPE_DIR_IN == dir) && (0 != p_utr->p_transfer_rx))

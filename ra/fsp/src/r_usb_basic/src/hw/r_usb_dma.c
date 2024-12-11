@@ -15,10 +15,19 @@
 #include "inc/r_usb_bitdefine.h"
 #include "inc/r_usb_reg_access.h"
 
-#define ACTIVE_CNT_NUMBER    (100)
+#define ACTIVE_CNT_NUMBER             (100)
+#define DTC_PRV_OFFSET_IN_PROGRESS    (15U)
+#define USB_DMA_DIR_RD                (0U)
+#define USB_DMA_DIR_WR                (1U)
 
-#if (USB_CFG_DMA == USB_CFG_ENABLE)
- #include "r_dmac.h"
+#if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
+
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
+  #include "r_dmac.h"
+ #elif (USB_CFG_DTC == USB_CFG_ENABLE)
+  #include "r_dtc.h"
+ #endif
+
  #include "inc/r_usb_dmac.h"
 
 /******************************************************************************
@@ -338,7 +347,6 @@ void usb_cstd_dfifo_end (usb_utr_t * ptr, uint16_t useport)
         {
             g_usb_pstd_data_cnt[pipe] -= g_usb_cstd_dma_size[ip][channel];
         }
-
   #else                                /* BSP_CFG_RTOS == 1 */
         /* received data size */
         g_usb_pstd_data_cnt[pipe] -= g_usb_cstd_dma_size[ip][channel];
@@ -357,7 +365,6 @@ void usb_cstd_dfifo_end (usb_utr_t * ptr, uint16_t useport)
         {
             g_usb_hstd_data_cnt[ptr->ip][pipe] -= g_usb_cstd_dma_size[ip][channel];
         }
-
   #else                                /* BSP_CFG_RTOS == 1 */
         /* received data size */
         g_usb_hstd_data_cnt[ptr->ip][pipe] -= g_usb_cstd_dma_size[ip][channel];
@@ -513,7 +520,11 @@ void usb_cstd_dma_send_continue (usb_utr_t * ptr, uint16_t useport)
 
     /*  trans data smaller than Buffer size */
     /*  equal all data transfer end  */
+ #if (USB_CFG_DTC == USB_CFG_ENABLE)
+    if (p_data_cnt && (*p_data_cnt != 0))
+ #else
     if (p_data_cnt)
+ #endif
     {
         if ((*p_data_cnt) < g_usb_cstd_dma_fifo[ip][channel])
         {
@@ -523,6 +534,10 @@ void usb_cstd_dma_send_continue (usb_utr_t * ptr, uint16_t useport)
             }
             else
             {
+ #if (USB_CFG_DTC == USB_CFG_ENABLE)
+                (*p_data_cnt) -= g_usb_cstd_dma_size[ip][channel];
+ #endif
+
                 /* FIFO buffer empty flag clear */
                 hw_usb_clear_status_bemp(ptr, pipe);
 
@@ -799,7 +814,9 @@ void usb_cstd_dma_clear_ir (usb_utr_t * ptr, uint16_t use_port)
  ******************************************************************************/
 uint8_t usb_cstd_dma_ref_ch_no (usb_utr_t * p_utr, uint16_t use_port)
 {
-    uint8_t               result = 10;
+    uint8_t result = 10;
+
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
     dmac_extended_cfg_t * channel_info;
 
     if (p_utr)
@@ -815,6 +832,19 @@ uint8_t usb_cstd_dma_ref_ch_no (usb_utr_t * p_utr, uint16_t use_port)
 
         result = channel_info->channel;
     }
+ #elif (USB_CFG_DTC == USB_CFG_ENABLE)
+    if (p_utr)
+    {
+        if (USB_D0USE == use_port)
+        {
+            result = USB_DMA_DIR_RD;
+        }
+        else
+        {
+            result = USB_DMA_DIR_WR;
+        }
+    }
+ #endif
 
     return result;                     /* DMA ch no. table */
 }
@@ -905,7 +935,6 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
         USB_ISND_MSG(USB_PCD_MBX, (usb_msg_t *) p_peri);
   #endif                               /* ( (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI ) */
     }
-
  #else  /* (BSP_CFG_RTOS != 0) */
     gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].ip        = ip_no;
     gs_usb_cstd_dma_int.buf[gs_usb_cstd_dma_int.wp].fifo_type = use_port;
@@ -937,6 +966,8 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
 /******************************************************************************
  * End of function usb_cstd_dma_send_complete
  ******************************************************************************/
+
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
 
 /*******************************************************************************
  * Function Name: usb_ip0_d0fifo_callback
@@ -1001,6 +1032,7 @@ void usb_ip1_d1fifo_callback (dmac_callback_args_t * cb_data)
 /******************************************************************************
  * End of function usb_ip1_d1fifo_callback
  ******************************************************************************/
+ #endif
 
 /******************************************************************************
  * Function Name   : hw_usb_get_dxfifo_adr
@@ -1034,6 +1066,69 @@ uint32_t hw_usb_get_dxfifo_adr (usb_utr_t * ptr, uint16_t use_port, uint16_t bit
  ******************************************************************************/
 
 /******************************************************************************
+ * Function Name   : usb_cstd_transfer_wait
+ * Description     : wait for DMA/DTC transfer to complete
+ * Arguments       : usb_utr_t *ptr         : Pointer to usb_utr_t structure
+ *                 : uint8_t_t dir          : USB setting direction
+ * Return value    : void
+ ******************************************************************************/
+void usb_cstd_transfer_wait (usb_utr_t * ptr, uint8_t dir)
+{
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
+    uint16_t               active_cnt = 0;
+    dmac_extended_cfg_t  * channel_info;
+    dmac_instance_ctrl_t * p_dmac_ctrl;
+
+    // Receive dir
+    if (dir == USB_DMA_DIR_RD)
+    {
+        channel_info       = (dmac_extended_cfg_t *) ptr->p_transfer_rx->p_cfg->p_extend;
+        p_dmac_ctrl        = (dmac_instance_ctrl_t *) ptr->p_transfer_rx->p_ctrl;
+        p_dmac_ctrl->p_reg = USB_DMAC_PRV_REG(channel_info->channel);
+    }
+    else
+    {
+        channel_info       = (dmac_extended_cfg_t *) ptr->p_transfer_tx->p_cfg->p_extend;
+        p_dmac_ctrl        = (dmac_instance_ctrl_t *) ptr->p_transfer_tx->p_ctrl;
+        p_dmac_ctrl->p_reg = USB_DMAC_PRV_REG(channel_info->channel);
+    }
+
+    do
+    {
+        if (1 == p_dmac_ctrl->p_reg->DMSTS_b.ACT)
+        {
+            active_cnt = 0;
+        }
+        else
+        {
+            active_cnt++;
+        }
+    } while (active_cnt < ACTIVE_CNT_NUMBER);
+ #elif (USB_CFG_DTC == USB_CFG_ENABLE)
+    dtc_instance_ctrl_t * p_dtc_ctrl = (dir == 0) ? ptr->p_transfer_rx->p_ctrl :
+                                       ptr->p_transfer_tx->p_ctrl;
+
+    uint32_t in_progress = (1U << DTC_PRV_OFFSET_IN_PROGRESS) | (uint32_t) p_dtc_ctrl->irq;
+
+    uint16_t active_cnt = 0;
+
+    /* Wait for Complete of DTC transfer. */
+    /* WAIT_LOOP */
+    do
+    {
+        if (R_DTC->DTCSTS == in_progress)
+        {
+            active_cnt = 0;
+        }
+        else
+        {
+            active_cnt++;
+        }
+    } while (active_cnt < ACTIVE_CNT_NUMBER);
+ #endif
+}
+
+/******************************************************************************
  * Function Name   : usb_cstd_dma_rcv_setting
  * Description     : FIFO to Buffer data read DMA start
  * Arguments       : usb_utr_t *ptr         : Pointer to usb_utr_t structure
@@ -1044,12 +1139,9 @@ uint32_t hw_usb_get_dxfifo_adr (usb_utr_t * ptr, uint16_t use_port, uint16_t bit
  ******************************************************************************/
 void usb_cstd_dma_rcv_setting (usb_utr_t * ptr, uint32_t des_addr, uint16_t useport, uint32_t transfer_size)
 {
-    uint8_t                dma_ch;
-    uint16_t               ip;
-    uint16_t               active_cnt;
-    uint16_t               block_size;
-    dmac_extended_cfg_t  * channel_info;
-    dmac_instance_ctrl_t * p_dmac_ctrl;
+    uint8_t  dma_ch;
+    uint16_t ip;
+    uint16_t block_size;
 
     if (USB_NULL != ptr)
     {
@@ -1057,24 +1149,9 @@ void usb_cstd_dma_rcv_setting (usb_utr_t * ptr, uint32_t des_addr, uint16_t usep
 
         dma_ch = usb_cstd_dma_ref_ch_no(ptr, useport);
 
-        active_cnt = 0;
-
         /* Wait for Complete of DMA transfer. */
         /* WAIT_LOOP */
-        do
-        {
-            channel_info       = (dmac_extended_cfg_t *) ptr->p_transfer_rx->p_cfg->p_extend;
-            p_dmac_ctrl        = (dmac_instance_ctrl_t *) ptr->p_transfer_rx->p_ctrl;
-            p_dmac_ctrl->p_reg = USB_DMAC_PRV_REG(channel_info->channel);
-            if (1 == p_dmac_ctrl->p_reg->DMSTS_b.ACT)
-            {
-                active_cnt = 0;
-            }
-            else
-            {
-                active_cnt++;
-            }
-        } while (active_cnt < ACTIVE_CNT_NUMBER);
+        usb_cstd_transfer_wait(ptr, USB_DMA_DIR_RD);
 
 /* DMA test code start */
         /* Operation - No Extended Repeat Area Function and No Offset Subtraction */
@@ -1085,36 +1162,31 @@ void usb_cstd_dma_rcv_setting (usb_utr_t * ptr, uint32_t des_addr, uint16_t usep
          * At the beginning of transfer, clear the interrupt flag of the activation source
          * to 0.
          * Transfer Request source is software. *//* Set Transfer data configuration. */
+        const transfer_instance_t * p_transfer_rx   = ptr->p_transfer_rx;
+        transfer_info_t           * p_transfer_info = p_transfer_rx->p_cfg->p_info;
  #if defined(USB_HIGH_SPEED_MODULE)
         if (USB_IP1 == ip)
         {
-            ptr->p_transfer_rx->p_cfg->p_info->p_src = (void *) hw_usb_get_dxfifo_adr(ptr,
-                                                                                      useport,
-                                                                                      USB_FIFO_ACCESS_TYPE_32BIT);
-            block_size = (uint16_t) (((g_usb_cstd_dma_fifo[ip][dma_ch] - 1) / 4) + 1);
+            p_transfer_info->p_src = (void *) hw_usb_get_dxfifo_adr(ptr, useport, USB_FIFO_ACCESS_TYPE_32BIT);
+            block_size             = (uint16_t) (((g_usb_cstd_dma_fifo[ip][dma_ch] - 1) / 4) + 1);
         }
         else
         {
-            ptr->p_transfer_rx->p_cfg->p_info->p_src = (void *) hw_usb_get_dxfifo_adr(ptr,
-                                                                                      useport,
-                                                                                      USB_FIFO_ACCESS_TYPE_16BIT);
-            block_size = (uint16_t) (((g_usb_cstd_dma_fifo[ip][dma_ch] - 1) / 2) + 1);
+            p_transfer_info->p_src = (void *) hw_usb_get_dxfifo_adr(ptr, useport, USB_FIFO_ACCESS_TYPE_16BIT);
+            block_size             = (uint16_t) (((g_usb_cstd_dma_fifo[ip][dma_ch] - 1) / 2) + 1);
         }
-
  #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
-        ptr->p_transfer_rx->p_cfg->p_info->p_src = (void *) hw_usb_get_dxfifo_adr(ptr,
-                                                                                  useport,
-                                                                                  USB_FIFO_ACCESS_TYPE_16BIT);
-        block_size = (uint16_t) (((g_usb_cstd_dma_fifo[ip][dma_ch] - 1) / 2) + 1);
+        p_transfer_info->p_src = (void *) hw_usb_get_dxfifo_adr(ptr, useport, USB_FIFO_ACCESS_TYPE_16BIT);
+        block_size             = (uint16_t) (((g_usb_cstd_dma_fifo[ip][dma_ch] - 1) / 2) + 1);
  #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
 
-        ptr->p_transfer_rx->p_cfg->p_info->p_dest     = (void *) des_addr;
-        ptr->p_transfer_rx->p_cfg->p_info->length     = block_size;
-        ptr->p_transfer_rx->p_cfg->p_info->num_blocks =
+        p_transfer_info->p_dest     = (void *) des_addr;
+        p_transfer_info->length     = block_size;
+        p_transfer_info->num_blocks =
             (uint16_t) (((transfer_size - 1) / g_usb_cstd_dma_fifo[ip][dma_ch]) + 1);
 
         /* Call R_DMAC_Reconfigure(). */
-        R_DMAC_Reconfigure(ptr->p_transfer_rx->p_ctrl, ptr->p_transfer_rx->p_cfg->p_info);
+        p_transfer_rx->p_api->reconfigure(p_transfer_rx->p_ctrl, p_transfer_info);
     }                                  /* if (USB_NULL != ptr) */
 }
 
@@ -1133,12 +1205,9 @@ void usb_cstd_dma_rcv_setting (usb_utr_t * ptr, uint32_t des_addr, uint16_t usep
  ******************************************************************************/
 void usb_cstd_dma_send_setting (usb_utr_t * ptr, uint32_t src_adr, uint16_t useport, uint32_t transfer_size)
 {
-    uint8_t                dma_ch;
-    uint16_t               ip;
-    uint32_t               block_size;
-    uint16_t               active_cnt;
-    dmac_extended_cfg_t  * channel_info;
-    dmac_instance_ctrl_t * p_dmac_ctrl;
+    uint8_t  dma_ch;
+    uint16_t ip;
+    uint32_t block_size;
 
     if (USB_NULL != ptr)
     {
@@ -1155,47 +1224,27 @@ void usb_cstd_dma_send_setting (usb_utr_t * ptr, uint32_t src_adr, uint16_t usep
             block_size = g_usb_cstd_dma_fifo[ip][dma_ch];
         }
 
+        const transfer_instance_t * p_transfer_tx   = ptr->p_transfer_tx;
+        transfer_info_t           * p_transfer_info = p_transfer_tx->p_cfg->p_info;
  #if defined(USB_HIGH_SPEED_MODULE)
         if ((0 == (transfer_size & 0x03)) && (USB_IP1 == ip))
         {
-            ptr->p_transfer_tx->p_cfg->p_info->p_dest = (void *) hw_usb_get_dxfifo_adr(ptr,
-                                                                                       useport,
-                                                                                       USB_FIFO_ACCESS_TYPE_32BIT);
-            block_size = (block_size / USB_BIT_32_WIDTH);
+            p_transfer_info->p_dest = (void *) hw_usb_get_dxfifo_adr(ptr, useport, USB_FIFO_ACCESS_TYPE_32BIT);
+            block_size              = (block_size / USB_BIT_32_WIDTH);
         }
         else
         {
-            ptr->p_transfer_tx->p_cfg->p_info->p_dest = (void *) hw_usb_get_dxfifo_adr(ptr,
-                                                                                       useport,
-                                                                                       USB_FIFO_ACCESS_TYPE_16BIT);
-            block_size = (block_size / USB_BIT_16_WIDTH);
+            p_transfer_info->p_dest = (void *) hw_usb_get_dxfifo_adr(ptr, useport, USB_FIFO_ACCESS_TYPE_16BIT);
+            block_size              = (block_size / USB_BIT_16_WIDTH);
         }
-
  #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
-        ptr->p_transfer_tx->p_cfg->p_info->p_dest = (void *) hw_usb_get_dxfifo_adr(ptr,
-                                                                                   useport,
-                                                                                   USB_FIFO_ACCESS_TYPE_16BIT);
-        block_size = (block_size / USB_BIT_16_WIDTH);
+        p_transfer_info->p_dest = (void *) hw_usb_get_dxfifo_adr(ptr, useport, USB_FIFO_ACCESS_TYPE_16BIT);
+        block_size              = (block_size / USB_BIT_16_WIDTH);
  #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
-
-        active_cnt = 0;
 
         /* Wait for Complete of DMA transfer. */
         /* WAIT_LOOP */
-        do
-        {
-            channel_info       = (dmac_extended_cfg_t *) ptr->p_transfer_tx->p_cfg->p_extend;
-            p_dmac_ctrl        = (dmac_instance_ctrl_t *) ptr->p_transfer_tx->p_ctrl;
-            p_dmac_ctrl->p_reg = USB_DMAC_PRV_REG(channel_info->channel);
-            if (1 == p_dmac_ctrl->p_reg->DMSTS_b.ACT)
-            {
-                active_cnt = 0;
-            }
-            else
-            {
-                active_cnt++;
-            }
-        } while (active_cnt < ACTIVE_CNT_NUMBER);
+        usb_cstd_transfer_wait(ptr, USB_DMA_DIR_WR);
 
 /* DMA test code start */
         /* Operation - No Extended Repeat Area Function and No Offset Subtraction */
@@ -1206,13 +1255,13 @@ void usb_cstd_dma_send_setting (usb_utr_t * ptr, uint32_t src_adr, uint16_t usep
          * At the beginning of transfer, clear the interrupt flag of the activation source
          * to 0.
          * Transfer Request source is software. *//* Set Transfer data configuration. */
-        ptr->p_transfer_tx->p_cfg->p_info->p_src      = (void *) src_adr;
-        ptr->p_transfer_tx->p_cfg->p_info->length     = (uint16_t) block_size;
-        ptr->p_transfer_tx->p_cfg->p_info->num_blocks =
+        p_transfer_info->p_src      = (void *) src_adr;
+        p_transfer_info->length     = (uint16_t) block_size;
+        p_transfer_info->num_blocks =
             (uint16_t) ((transfer_size - 1) / (g_usb_cstd_dma_fifo[ip][dma_ch]) + 1);
 
         /* Call R_DMACA_Create(). */
-        R_DMAC_Reconfigure(ptr->p_transfer_tx->p_ctrl, ptr->p_transfer_tx->p_cfg->p_info);
+        p_transfer_tx->p_api->reconfigure(p_transfer_tx->p_ctrl, p_transfer_info);
     }                                  /* if (USB_NULL != ptr) */
 }
 
@@ -1229,51 +1278,16 @@ void usb_cstd_dma_send_setting (usb_utr_t * ptr, uint32_t src_adr, uint16_t usep
  ******************************************************************************/
 void usb_cstd_dma_stop (usb_utr_t * p_utr, uint16_t use_port)
 {
-    uint16_t               active_cnt;
-    dmac_extended_cfg_t  * channel_info;
-    dmac_instance_ctrl_t * p_dmac_ctrl;
-
-    active_cnt = 0;
-
     /* Wait for Complete of DMA transfer. */
     /* WAIT_LOOP */
-    do
+    if (USB_D0USE == use_port)
     {
-        if (USB_D0USE == use_port)
-        {
-            if (p_utr)
-            {
-                channel_info       = (dmac_extended_cfg_t *) p_utr->p_transfer_rx->p_cfg->p_extend;
-                p_dmac_ctrl        = (dmac_instance_ctrl_t *) p_utr->p_transfer_rx->p_ctrl;
-                p_dmac_ctrl->p_reg = USB_DMAC_PRV_REG(channel_info->channel);
-                if (1 == p_dmac_ctrl->p_reg->DMSTS_b.ACT)
-                {
-                    active_cnt = 0;
-                }
-                else
-                {
-                    active_cnt++;
-                }
-            }
-        }
-        else
-        {
-            if (p_utr)
-            {
-                channel_info       = (dmac_extended_cfg_t *) p_utr->p_transfer_tx->p_cfg->p_extend;
-                p_dmac_ctrl        = (dmac_instance_ctrl_t *) p_utr->p_transfer_tx->p_ctrl;
-                p_dmac_ctrl->p_reg = USB_DMAC_PRV_REG(channel_info->channel);
-                if (1 == p_dmac_ctrl->p_reg->DMSTS_b.ACT)
-                {
-                    active_cnt = 0;
-                }
-                else
-                {
-                    active_cnt++;
-                }
-            }
-        }
-    } while (active_cnt < ACTIVE_CNT_NUMBER);
+        usb_cstd_transfer_wait(p_utr, USB_DMA_DIR_RD);
+    }
+    else
+    {
+        usb_cstd_transfer_wait(p_utr, USB_DMA_DIR_WR);
+    }
 }
 
 /******************************************************************************
@@ -1290,7 +1304,7 @@ uint16_t usb_cstd_dma_get_crtb (usb_utr_t * p_utr)
 {
     transfer_properties_t result;
 
-    R_DMAC_InfoGet(p_utr->p_transfer_rx->p_ctrl, &result);
+    p_utr->p_transfer_rx->p_api->infoGet(p_utr->p_transfer_rx->p_ctrl, &result);
 
     return (uint16_t) result.block_count_remaining;
 }

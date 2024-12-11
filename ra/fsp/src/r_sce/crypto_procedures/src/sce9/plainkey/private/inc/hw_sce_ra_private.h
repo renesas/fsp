@@ -84,6 +84,7 @@
  #define RSA_PARAMETERS_SIZE_BYTES(RSA_SIZE_BITS)             (5U)
 
 /** DER encoded size for wrapped RSA key */
+ #define RSA_WRAPPED_1024_EXPORTED_DER_SIZE_BYTES    (1600U)
  #define RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES    (1600U)
  #define RSA_WRAPPED_3072_EXPORTED_DER_SIZE_BYTES    (1500U)
  #define RSA_WRAPPED_4096_EXPORTED_DER_SIZE_BYTES    (1700U)
@@ -436,8 +437,8 @@ fsp_err_t HW_SCE_GenerateRsa4096PublicKeyIndexSub(uint32_t *InData_SharedKeyInde
         uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
 fsp_err_t HW_SCE_GenerateRsa4096PrivateKeyIndexSub(uint32_t *InData_SharedKeyIndex, uint32_t *InData_SessionKey,
         uint32_t *InData_IV, uint32_t *InData_InstData, uint32_t *OutData_KeyIndex);
-fsp_err_t HW_SCE_GenerateRsa1024RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *OutData_PubKeyIndex,
-        uint32_t *OutData_PrivKeyIndex);
+fsp_err_t HW_SCE_GenerateRsa1024RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *InData_KeyType, uint32_t *OutData_PubKeyIndex,
+        uint32_t *OutData_PubKey, uint32_t *OutData_PrivKeyIndex, uint32_t *OutData_PrivKey);
 fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *InData_KeyType, uint32_t *OutData_PubKeyIndex,
         uint32_t *OutData_PubKey, uint32_t *OutData_PrivKeyIndex, uint32_t *OutData_PrivKey);
 fsp_err_t HW_SCE_GenerateRsa3072RandomKeyIndexSub(uint32_t MAX_CNT, uint32_t *OutData_PubKeyIndex,

@@ -14,12 +14,13 @@
  **********************************************************************************************************************/
 
 /* "DAC8" in ASCII, used to determine if channel is open. */
-#define DAC8_OPEN         (0x44414338)
-#define DAC8_DACS_MASK    (0xFFU)
+#define DAC8_OPEN             (0x44414338)
+#define DAC8_DACS_MASK        (0xFFU)
 
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+#define DAC8_CHANNEL_COUNT    (BSP_FEATURE_DAC8_CHANNELS_PER_UNIT * BSP_FEATURE_DAC8_UNIT_COUNT)
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -75,7 +76,7 @@ fsp_err_t R_DAC8_Open (dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg)
 #if DAC8_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_instance_ctrl);
-    FSP_ERROR_RETURN(p_cfg->channel < (uint8_t) BSP_FEATURE_DAC8_MAX_CHANNELS, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(p_cfg->channel < (uint8_t) DAC8_CHANNEL_COUNT, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     FSP_ERROR_RETURN(false == p_instance_ctrl->channel_opened, FSP_ERR_ALREADY_OPEN);
     if ((1U == BSP_FEATURE_DAC8_HAS_DA_AD_SYNCHRONIZE) && (p_cfg->ad_da_synchronized))
     {

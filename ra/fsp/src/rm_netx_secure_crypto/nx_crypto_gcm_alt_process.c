@@ -15,8 +15,9 @@
 
 #include "rm_netx_secure_crypto_cfg.h"
 #include "rm_netx_secure_crypto.h"
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7) == 1) || \
-    ((BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (((BSP_FEATURE_RSIP_SCE9_SUPPORTED ||        \
+                                                               BSP_FEATURE_RSIP_SCE7_SUPPORTED) == 1) || \
+    ((BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1))
  #include "nx_crypto_aes.h"
  #include "hw_sce_private.h"
  #include "hw_sce_ra_private.h"
@@ -107,13 +108,18 @@ UINT sce_nx_crypto_gcm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
     input_length    -= length_remaining;
     uint32_t dummy_val[1] = {0};
 
-    NX_CRYPTO_MEMSET(&(aes_ctx->nx_crypto_aes_mode_context.gcm.nx_crypto_gcm_counter), 0U,  NX_CRYPTO_GCM_BLOCK_SIZE_INT);
+    NX_CRYPTO_MEMSET(&(aes_ctx->nx_crypto_aes_mode_context.gcm.nx_crypto_gcm_counter), 0U,
+                     NX_CRYPTO_GCM_BLOCK_SIZE_INT);
 
     if (SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
-        err = HW_SCE_Aes128GcmEncryptInitSubGeneral(key_type, dummy_val, dummy_val,
-                                             (uint32_t *) (aes_ctx->nx_crypto_aes_key_schedule),
-                                             (uint32_t *) hashed_ivec, dummy_val);
+        err =
+            HW_SCE_Aes128GcmEncryptInitSubGeneral(key_type,
+                                                  dummy_val,
+                                                  dummy_val,
+                                                  (uint32_t *) (aes_ctx->nx_crypto_aes_key_schedule),
+                                                  (uint32_t *) hashed_ivec,
+                                                  dummy_val);
         if (FSP_SUCCESS == err)
         {
             HW_SCE_Aes128GcmEncryptUpdateAADSub(aad, RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
@@ -130,7 +136,7 @@ UINT sce_nx_crypto_gcm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
         }
     }
 
- #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
         err = HW_SCE_Aes192GcmEncryptInitSub((uint32_t *) (aes_ctx->nx_crypto_aes_key_schedule),
@@ -204,7 +210,7 @@ UINT sce_nx_crypto_gcm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, U
                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
 
- #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
         else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
         {
             HW_SCE_Aes192GcmEncryptUpdateSub((uint32_t *) input,
@@ -324,7 +330,7 @@ static UINT sce_nx_crypto_gcm_encrypt_final (NX_CRYPTO_AES * aes_ctx,
         err = HW_SCE_Aes128GcmEncryptFinalSub(input, data_bit_size, aad_bit_size, output, tag);
     }
 
- #if ((BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
         err = HW_SCE_Aes192GcmEncryptFinalSub(input, data_bit_size, aad_bit_size, output, tag);

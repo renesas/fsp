@@ -68,6 +68,13 @@ typedef struct st_sau_spi_div_setting
     uint8_t stclk;
 } sau_spi_div_setting_t;
 
+/** Configuration settings for SAU_SPI pins */
+typedef struct sau_spi_pin_settings
+{
+    bsp_io_port_pin_t pin;             ///< The pin
+    uint32_t          cfg;             ///< Configuration for the pin
+} sau_spi_pin_settings_t;
+
 /** SAU SPI extended configuration */
 typedef struct st_sau_spi_extended_cfg
 {
@@ -76,6 +83,8 @@ typedef struct st_sau_spi_extended_cfg
     sau_spi_data_phase_t    data_phase;
     sau_spi_clock_phase_t   clock_phase;
     uint8_t                 sau_unit;
+    sau_spi_pin_settings_t  sck_pin_settings;
+    sau_spi_pin_settings_t  so_pin_settings;
 } sau_spi_extended_cfg_t;
 
 /** SPI instance control block. DO NOT INITIALIZE. */

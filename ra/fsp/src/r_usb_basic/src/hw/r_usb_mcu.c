@@ -1005,21 +1005,6 @@ static void usb_cpu_usb_int_hand_isr (uint8_t usb_ip)
 #if USB_CFG_DTC == USB_CFG_ENABLE
 
 /******************************************************************************
- * Function Name   : usb_cpu_d0fifo_int_hand
- * Description     : D0FIFO interrupt Handler
- * Arguments       : none
- * Return value    : none
- ******************************************************************************/
-static void usb_cpu_d0fifo_int_hand (void)
-{
-    usb_cstd_dma_send_complete(USB_IP0, USB_D0USE);
-}
-
-/******************************************************************************
- * End of function usb_cpu_d0fifo_int_hand
- ******************************************************************************/
-
-/******************************************************************************
  * Function Name   : usb_cpu_d1fifo_int_hand
  * Description     : D0FIFO interrupt Handler
  * Arguments       : none
@@ -1035,21 +1020,6 @@ static void usb_cpu_d1fifo_int_hand (void)
  ******************************************************************************/
 
  #if defined(USB_HIGH_SPEED_MODULE)
-
-/******************************************************************************
- * Function Name   : usb2_cpu_d0fifo_int_hand
- * Description     : D0FIFO interrupt Handler
- * Arguments       : none
- * Return value    : none
- ******************************************************************************/
-static void usb2_cpu_d0fifo_int_hand (void)
-{
-    usb_cstd_dma_send_complete(USB_IP1, USB_D0USE);
-}
-
-/******************************************************************************
- * End of function usb2_cpu_d0fifo_int_hand
- ******************************************************************************/
 
 /******************************************************************************
  * Function Name   : usb2_cpu_d1fifo_int_hand
@@ -1138,10 +1108,6 @@ void usbfs_d0fifo_handler (void)
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
 
-#if USB_CFG_DTC == USB_CFG_ENABLE
-    usb_cpu_d0fifo_int_hand();
-#endif                                 /* USB_CFG_DTC == USB_CFG_ENABLE */
-
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
 }
@@ -1185,12 +1151,6 @@ void usbhs_d0fifo_handler (void)
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     R_BSP_IrqStatusClear(irq);
-
-#if USB_CFG_DTC == USB_CFG_ENABLE
- #if defined(USB_HIGH_SPEED_MODULE)
-    usb2_cpu_d0fifo_int_hand();
- #endif                                /* defined (USB_HIGH_SPEED_MODULE) */
-#endif                                 /* USB_CFG_DTC == USB_CFG_ENABLE */
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE

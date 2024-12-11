@@ -2307,9 +2307,9 @@ UINT    status;
                 status = NX_CRYPTO_INVALID_BUFFER_SIZE;
                 break;
             }
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
             status = sce_nx_crypto_ccm_decrypt_init(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
                                                     ctx -> nx_crypto_aes_mode_context.ccm.nx_crypto_ccm_additional_data,
                                                     ctx -> nx_crypto_aes_mode_context.ccm.nx_crypto_ccm_additional_data_len,
@@ -2440,9 +2440,9 @@ UINT    status;
                 status = NX_CRYPTO_PTR_ERROR;
                 break;
             }
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
             status = sce_nx_crypto_ccm_decrypt_init(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
                                                     input, /* pointers to AAD */
                                                     input_length_in_byte, /* length of AAD */
@@ -2464,9 +2464,9 @@ UINT    status;
 
         case NX_CRYPTO_DECRYPT_UPDATE:
         {
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
             status = sce_nx_crypto_ccm_decrypt_update(ctx, input, output, input_length_in_byte,
                                                       NX_CRYPTO_AES_BLOCK_SIZE);
 #else
@@ -2480,9 +2480,9 @@ UINT    status;
 
         case NX_CRYPTO_DECRYPT_CALCULATE:
         {
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
             status = sce_nx_crypto_ccm_decrypt_final(ctx, &(ctx -> nx_crypto_aes_mode_context.ccm),
                                                      input, NX_CRYPTO_AES_BLOCK_SIZE);
 #else
@@ -2664,8 +2664,8 @@ UINT    status;
             }
 
             message_len = input_length_in_byte - icv_len;
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-            (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+            (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
             /* SCE9 APIs are different for Encryption and Decryption.
              * Since _nx_crypto_gcm_decrypt_init is mapped to _nx_crypto_gcm_encrypt_init this 
              * new function is created for supporting decryption specific HW acceleration: GHASH and block cipher.
@@ -2757,8 +2757,8 @@ UINT    status;
                 break;
             }
 
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-            (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+            (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
             /* SCE9 APIs are different for Encryption and Decryption.
              * Since _nx_crypto_gcm_decrypt_init is mapped to _nx_crypto_gcm_encrypt_init this 
              * new function is created for supporting decryption specific HW acceleration: GHASH and block cipher.

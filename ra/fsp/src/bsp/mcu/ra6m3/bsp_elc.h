@@ -98,8 +98,8 @@ typedef enum e_elc_event_ra6m3
     ELC_EVENT_ACMPHS3_INT                   = (0x05A), // High Speed Comparator channel 3 interrupt
     ELC_EVENT_ACMPHS4_INT                   = (0x05B), // High Speed Comparator channel 4 interrupt
     ELC_EVENT_ACMPHS5_INT                   = (0x05C), // High Speed Comparator channel 5 interrupt
-    ELC_EVENT_USBFS_FIFO_0                  = (0x05F), // DMA transfer request 0
-    ELC_EVENT_USBFS_FIFO_1                  = (0x060), // DMA transfer request 1
+    ELC_EVENT_USBFS_FIFO_0                  = (0x05F), // DMA/DTC transfer request 0
+    ELC_EVENT_USBFS_FIFO_1                  = (0x060), // DMA/DTC transfer request 1
     ELC_EVENT_USBFS_INT                     = (0x061), // USBFS interrupt
     ELC_EVENT_USBFS_RESUME                  = (0x062), // USBFS resume interrupt
     ELC_EVENT_IIC0_RXI                      = (0x063), // Receive data full

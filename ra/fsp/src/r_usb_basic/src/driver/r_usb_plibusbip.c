@@ -132,6 +132,8 @@ uint16_t usb_pstd_epadr2pipe (uint16_t dir_ep, usb_utr_t * p_utr)
         }
     }
 
+    USB_PRINTF1("###usb_pstd_epadr2pipe dir_ep:%02x\n", dir_ep);
+
     return USB_ERROR;
 }
 
@@ -230,9 +232,8 @@ void usb_pstd_send_start (uint16_t pipe)
     uint32_t    length;
     uint16_t    useport;
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-    uint16_t              ip;
-    uint16_t              ch;
-    dmac_extended_cfg_t * channel_info;
+    uint16_t ip;
+    uint16_t ch;
  #endif                                /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 
     if (USB_MAX_PIPE_NO < pipe)
@@ -287,16 +288,14 @@ void usb_pstd_send_start (uint16_t pipe)
         {
             if (USB_CFG_IP0 == pp->ip)
             {
-                ip           = USB_IP0;
-                channel_info = (dmac_extended_cfg_t *) pp->p_transfer_tx->p_cfg->p_extend;
-                ch           = channel_info->channel;
+                ip = USB_IP0;
             }
             else                       /* if (USB_CFG_IP0 == pp->ip) */
             {
-                ip           = USB_IP1;
-                channel_info = (dmac_extended_cfg_t *) pp->p_transfer_tx->p_cfg->p_extend;
-                ch           = channel_info->channel;
+                ip = USB_IP1;
             }
+
+            ch = usb_cstd_dma_ref_ch_no(pp, useport);
 
             /* Setting for use PIPE number */
             g_usb_cstd_dma_pipe[ip][ch] = pipe;
@@ -360,6 +359,8 @@ uint16_t usb_pstd_write_data (uint16_t pipe, uint16_t pipemode, usb_utr_t * p_ut
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("*** usb_pstd_write_data PipeNo ERROR %d\n", pipe);
+
         return USB_ERROR;              /* Error */
     }
 
@@ -479,9 +480,8 @@ void usb_pstd_receive_start (uint16_t pipe)
     uint16_t    mxps;
     uint16_t    useport;
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
-    uint16_t              ip;
-    uint16_t              ch;
-    dmac_extended_cfg_t * channel_info;
+    uint16_t ip;
+    uint16_t ch;
  #endif                                /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 
     if (USB_MAX_PIPE_NO < pipe)
@@ -552,16 +552,14 @@ void usb_pstd_receive_start (uint16_t pipe)
         {
             if (USB_CFG_IP0 == pp->ip)
             {
-                ip           = USB_IP0;
-                channel_info = (dmac_extended_cfg_t *) pp->p_transfer_rx->p_cfg->p_extend;
-                ch           = channel_info->channel;
+                ip = USB_IP0;
             }
             else                       /* if (USB_CFG_IP0 == pp->ip) */
             {
-                ip           = USB_IP1;
-                channel_info = (dmac_extended_cfg_t *) pp->p_transfer_rx->p_cfg->p_extend;
-                ch           = channel_info->channel;
+                ip = USB_IP1;
             }
+
+            ch = usb_cstd_dma_ref_ch_no(pp, useport);
 
             /* Setting for use PIPE number */
             g_usb_cstd_dma_pipe[ip][ch] = pipe;
@@ -608,6 +606,8 @@ uint16_t usb_pstd_read_data (uint16_t pipe, uint16_t pipemode, usb_utr_t * p_utr
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("*** usb_pstd_read_data PipeNo ERROR %d\n", pipe);
+
         return USB_ERROR;              /* Error */
     }
 

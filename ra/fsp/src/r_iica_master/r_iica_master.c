@@ -14,19 +14,24 @@
  **********************************************************************************************************************/
 
 /* "IICA" in ASCII, used to determine if channel is open. */
-#define IICA_MASTER_OPEN                            (0x52494943U)
+#define IICA_MASTER_OPEN                       (0x52494943U)
 
-#define I2C_CODE_READ                               (0x01U)
-#define I2C_CODE_10BIT                              (0xF0U)
-#define IICA_MASTER_SLAVE_10_BIT_ADDR_LEN_ADJUST    (2U)
+#define I2C_CODE_READ                          (0x01U)
+#define I2C_CODE_10BIT                         (0xF0U)
 
-#define IICA_MASTER_IICS0_STATUS_REGISTER_MASK      ((1 << R_IICA_IICS0_SPD_Pos) | (1 << R_IICA_IICS0_STD_Pos) | \
-                                                     (1 << R_IICA_IICS0_TRC_Pos))
-
-#define IICA_MASTER_IICCTL00_INIT                   (R_IICA_IICCTL00_ACKE_Msk | R_IICA_IICCTL00_WTIM_Msk | \
-                                                     R_IICA_IICCTL00_SPIE_Msk)
-#define IICA_MASTER_IICCTL00_WREL_ACKE_MASK         ((1 << R_IICA_IICCTL00_WREL_Pos) | (1 << R_IICA_IICCTL00_ACKE_Pos))
-#define IICA_MASTER_IICCTL00_WREL_WTIM_MASK         ((1 << R_IICA_IICCTL00_WREL_Pos) | (1 << R_IICA_IICCTL00_WTIM_Pos))
+#define IICA_MASTER_IICCTL00_INIT              (R_IICA0_IICCTL00_ACKE_Msk | R_IICA0_IICCTL00_WTIM_Msk | \
+                                                R_IICA0_IICCTL00_SPIE_Msk)
+#define IICA_MASTER_IICCTL00_WREL_ACKE_MASK    ((1 << R_IICA0_IICCTL00_WREL_Pos) | \
+                                                (1 << R_IICA0_IICCTL00_ACKE_Pos))
+#define IICA_MASTER_IICCTL00_WREL_WTIM_MASK    ((1 << R_IICA0_IICCTL00_WREL_Pos) | \
+                                                (1 << R_IICA0_IICCTL00_WTIM_Pos))
+#if (IICA_MASTER_CFG_SINGLE_CHANNEL == 1)
+ #define IICA_REG                              R_IICA1
+#elif (IICA_MASTER_CFG_SINGLE_CHANNEL == 0)
+ #define IICA_REG                              R_IICA0
+#else
+ #define IICA_REG                              p_ctrl->p_reg
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -115,6 +120,7 @@ fsp_err_t R_IICA_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_c
     FSP_ASSERT(p_cfg->tei_irq >= (IRQn_Type) 0);
 
     FSP_ERROR_RETURN(IICA_MASTER_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
+    FSP_ERROR_RETURN(BSP_FEATURE_IIC_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
 
     /* Record the pointer to the configuration structure for later use */
@@ -126,15 +132,18 @@ fsp_err_t R_IICA_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_c
 
     R_BSP_MODULE_START(FSP_IP_IICA, p_cfg->channel);
 
+#if (IICA_MASTER_CFG_SINGLE_CHANNEL == -1)
+    p_ctrl->p_reg =
+        (R_IICA0_Type *) ((uint32_t) R_IICA0 + (p_cfg->channel * ((uint32_t) R_IICA1 - (uint32_t) R_IICA0)));
+#endif
+
     /* Open the hardware in master mode. Performs IICA initialization as described in hardware manual (see Section 22.4.16
      * Initial Settings for master mode of the manual). */
     r_iica_master_open_hw_master(p_ctrl, p_cfg);
-
     p_ctrl->p_buff    = NULL;
     p_ctrl->total     = 0U;
     p_ctrl->loaded    = 0U;
     p_ctrl->read      = false;
-    p_ctrl->restart   = false;
     p_ctrl->err       = false;
     p_ctrl->restarted = false;
     p_ctrl->open      = IICA_MASTER_OPEN;
@@ -150,7 +159,6 @@ fsp_err_t R_IICA_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_c
  * @retval  FSP_SUCCESS             Function executed without issue.
  * @retval  FSP_ERR_ASSERTION       p_api_ctrl, p_dest or bytes is NULL.
  * @retval  FSP_ERR_INVALID_SIZE    Provided number of bytes more than uint16_t size (65535) for data transfer.
- * @retval  FSP_ERR_IN_USE          Bus busy condition. Another transfer was in progress.
  * @retval  FSP_ERR_NOT_OPEN        Handle is not initialized.  Call R_IICA_MASTER_Open to initialize the control block.
  **********************************************************************************************************************/
 fsp_err_t R_IICA_MASTER_Read (i2c_master_ctrl_t * const p_api_ctrl,
@@ -183,7 +191,6 @@ fsp_err_t R_IICA_MASTER_Read (i2c_master_ctrl_t * const p_api_ctrl,
  * @retval  FSP_SUCCESS           Function executed without issue.
  * @retval  FSP_ERR_ASSERTION     p_api_ctrl or p_src is NULL.
  * @retval  FSP_ERR_INVALID_SIZE  Provided number of bytes more than uint16_t size (65535) for data transfer.
- * @retval  FSP_ERR_IN_USE        Bus busy condition. Another transfer was in progress.
  * @retval  FSP_ERR_NOT_OPEN      Handle is not initialized.  Call R_IICA_MASTER_Open to initialize the control block.
  **********************************************************************************************************************/
 fsp_err_t R_IICA_MASTER_Write (i2c_master_ctrl_t * const p_api_ctrl,
@@ -253,7 +260,7 @@ fsp_err_t R_IICA_MASTER_SlaveAddressSet (i2c_master_ctrl_t * const    p_api_ctrl
     FSP_ERROR_RETURN(IICA_MASTER_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Fail if there is already a transfer in progress */
-    FSP_ERROR_RETURN(((p_ctrl->loaded == p_ctrl->total) && (false == p_ctrl->restart)), FSP_ERR_IN_USE);
+    FSP_ERROR_RETURN(!IICA_REG->IICS0_b.MSTS, FSP_ERR_IN_USE);
  #if !IICA_MASTER_CFG_ADDR_MODE_10_BIT_ENABLE
     FSP_ERROR_RETURN(p_ctrl->addr_mode != I2C_MASTER_ADDR_MODE_10BIT, FSP_ERR_INVALID_MODE);
  #endif
@@ -385,6 +392,7 @@ static fsp_err_t r_iica_master_read_write (i2c_master_ctrl_t * const  p_api_ctrl
 
     p_ctrl->p_buff = p_buffer;
     p_ctrl->total  = bytes;
+    p_ctrl->loaded = 0U;
 
     /* Handle the (different) addressing mode(s) */
     if (p_ctrl->addr_mode == I2C_MASTER_ADDR_MODE_7BIT)
@@ -398,12 +406,11 @@ static fsp_err_t r_iica_master_read_write (i2c_master_ctrl_t * const  p_api_ctrl
     else
     {
         /* Set the address bytes according to a 10-bit slave read command */
-        p_ctrl->addr_high = (uint8_t) ((p_ctrl->slave >> 7U) | I2C_CODE_10BIT);
+        p_ctrl->addr_high = (uint8_t) (((p_ctrl->slave >> 8U) << 1U) | I2C_CODE_10BIT);
         p_ctrl->addr_low  = (uint8_t) p_ctrl->slave;
 
-        /* Addr total = 3 for Read and 2 for Write.
-         */
-        p_ctrl->addr_total = (uint8_t) ((uint8_t) direction + IICA_MASTER_SLAVE_10_BIT_ADDR_LEN_ADJUST);
+        /* Addr total = 3 for Read and 2 for Write. */
+        p_ctrl->addr_total = (uint8_t) ((uint8_t) direction + I2C_MASTER_ADDR_MODE_10BIT);
     }
 #endif
 
@@ -452,21 +459,28 @@ static void r_iica_master_notify (iica_master_instance_ctrl_t * const p_ctrl, bo
  **********************************************************************************************************************/
 static void r_iica_master_abort_seq_master (iica_master_instance_ctrl_t * const p_ctrl, bool iica_reset)
 {
-    /* Safely stop the hardware from operating. */
-    R_IICA->IICCTL00_b.LREL = 1;
+    iica_master_extended_cfg_t * pextend = (iica_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    /* Abort communication */
+    IICA_REG->IICCTL00_b.IICE = 0U;
 
     /* Reset the peripheral */
     if (false == iica_reset)
     {
-        /* Disable interrupts */
-        R_IICA->IICCTL00_b.SPIE = 0U;
+        /* Enable generation of a start condition without detecting a stop condition */
+        /* Setting for IICRSV bit will be deprecated */
+        IICA_REG->IICF0 = (uint8_t) (pextend->clock_settings.comm_rez | R_IICA0_IICF0_STCEN_Msk);
+
+        /* IICCTL00 Register Settings:
+         * 1. ACKE = 1：Enable acknowledgment. During the 9th clock period, the SDAA0 line is set to low level.
+         * 2. WTIM = 1：An interrupt request is generated on the falling edge of the 9th clock cycle.
+         * 3. SPIE = 1：Enable and disable generation of interrupt request when stop condition is detected
+         * 4. IICE = 1：Enable IICA operation.
+         */
+        IICA_REG->IICCTL00 |= R_IICA0_IICCTL00_IICE_Msk | IICA_MASTER_IICCTL00_INIT;
     }
     else
     {
-        /* Disable IICA */
-        R_IICA->IICCTL00_b.IICE = 0U;
-        iica_master_extended_cfg_t * pextend = (iica_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-
         /* Disable Pin settings */
         R_BSP_PinAccessEnable();
         R_BSP_PinCfg(pextend->scl_pin_settings.pin, IOPORT_CFG_PORT_DIRECTION_INPUT);
@@ -475,10 +489,8 @@ static void r_iica_master_abort_seq_master (iica_master_instance_ctrl_t * const 
     }
 
     /* Update the transfer descriptor to show no longer in-progress and an error */
-    p_ctrl->addr_loaded = p_ctrl->addr_total;
-    p_ctrl->loaded      = p_ctrl->total;
-    p_ctrl->restarted   = false;
-    p_ctrl->restart     = false;
+    p_ctrl->restarted = false;
+    p_ctrl->total     = 0;
 }
 
 /*******************************************************************************************************************//**
@@ -495,8 +507,8 @@ static void r_iica_master_open_hw_master (iica_master_instance_ctrl_t * const p_
     uint8_t iicctl01 = 0;
 
     /* Set a transfer clock */
-    R_IICA->IICWL0 = pextend->clock_settings.iicwl_value;
-    R_IICA->IICWH0 = pextend->clock_settings.iicwh_value;
+    IICA_REG->IICWL0 = pextend->clock_settings.iicwl_value;
+    IICA_REG->IICWH0 = pextend->clock_settings.iicwh_value;
 
     /* IICCTL01 Register Settings */
     /* Set IICA operation clock and digital filter */
@@ -505,25 +517,26 @@ static void r_iica_master_open_hw_master (iica_master_instance_ctrl_t * const p_
     {
         iicctl01 =
             (uint8_t) ((pextend->clock_settings.cks_value) |
-                       (pextend->clock_settings.digital_filter << R_IICA_IICCTL01_DFC_Pos));
+                       (pextend->clock_settings.digital_filter << R_IICA0_IICCTL01_DFC_Pos));
     }
     else
     {
         iicctl01 =
             (uint8_t) ((pextend->clock_settings.cks_value) |
-                       (pextend->clock_settings.digital_filter << R_IICA_IICCTL01_DFC_Pos) |
-                       (uint8_t) R_IICA_IICCTL01_SMC_Msk);
+                       (pextend->clock_settings.digital_filter << R_IICA0_IICCTL01_DFC_Pos) |
+                       (uint8_t) R_IICA0_IICCTL01_SMC_Msk);
     }
 
-    R_IICA->IICCTL01 = iicctl01;
+    IICA_REG->IICCTL01 = iicctl01;
 
     R_BSP_IrqCfgEnable(p_cfg->tei_irq, p_cfg->ipl, p_ctrl);
 
-    R_IICA->IICCTL00_b.IICE = 0U;
+    IICA_REG->IICCTL00_b.IICE = 0U;
 
     /* Set communication reservation */
     /* Make sure write to the IICRSV bit only when the operation is stopped (IICCTL00.IICE = 0) */
-    R_IICA->IICF0 = (uint8_t) (pextend->clock_settings.comm_rez | R_IICA_IICF0_STCEN_Msk);
+    /* Setting for IICRSV bit will be deprecated */
+    IICA_REG->IICF0 = (uint8_t) (pextend->clock_settings.comm_rez | R_IICA0_IICF0_STCEN_Msk);
 
     /* IICCTL00 Register Settings:
      * 1. ACKE = 1：Enable acknowledgment. During the 9th clock period, the SDAA0 line is set to low level.
@@ -531,7 +544,7 @@ static void r_iica_master_open_hw_master (iica_master_instance_ctrl_t * const p_
      * 3. SPIE = 1：Enable and disable generation of interrupt request when stop condition is detected
      * 4. IICE = 1：Enable IICA operation.
      */
-    R_IICA->IICCTL00 |= R_IICA_IICCTL00_IICE_Msk | IICA_MASTER_IICCTL00_INIT;
+    IICA_REG->IICCTL00 |= R_IICA0_IICCTL00_IICE_Msk | IICA_MASTER_IICCTL00_INIT;
 
     /* Configure Pin settings */
     R_BSP_PinAccessEnable();
@@ -553,13 +566,12 @@ static fsp_err_t r_iica_master_run_hw_master (iica_master_instance_ctrl_t * cons
 {
     /* Initialize fields used during transfer */
     p_ctrl->addr_loaded          = 0U;
-    p_ctrl->loaded               = 0U;
     p_ctrl->err                  = false;
     p_ctrl->dummy_read_completed = false;
 
     if (!p_ctrl->restarted)
     {
-        R_IICA->IICCTL00 |= R_IICA_IICCTL00_STT_Msk;
+        IICA_REG->IICCTL00 |= R_IICA0_IICCTL00_STT_Msk;
         r_iica_master_send_address(p_ctrl);
     }
     else
@@ -579,13 +591,15 @@ static fsp_err_t r_iica_master_run_hw_master (iica_master_instance_ctrl_t * cons
 static void r_iica_master_txrxi_master (iica_master_instance_ctrl_t * p_ctrl)
 {
     /* If the event was an error event, then handle it */
-    uint8_t reg_iics0 = R_IICA->IICS0;
-    if (((!(reg_iics0 & R_IICA_IICS0_ACKD_Msk) && !(p_ctrl->dummy_read_completed)) ||
-         !(reg_iics0 & R_IICA_IICS0_MSTS_Msk) ||
-         ((reg_iics0 & R_IICA_IICS0_ALD_Msk))) && !(reg_iics0 & R_IICA_IICS0_SPD_Msk))
+    uint8_t reg_iics0 = IICA_REG->IICS0;
+    if (reg_iics0 & R_IICA0_IICS0_SPD_Msk)
     {
-        p_ctrl->err   = true;
-        p_ctrl->total = 0U;
+        r_iica_master_notify(p_ctrl, p_ctrl->err);
+    }
+    else if (((!(reg_iics0 & R_IICA0_IICS0_ACKD_Msk) && !(p_ctrl->dummy_read_completed)) ||
+              !(reg_iics0 & R_IICA0_IICS0_MSTS_Msk) || ((reg_iics0 & R_IICA0_IICS0_ALD_Msk))))
+    {
+        p_ctrl->err = true;
 
         /* Conditions to get here:
          * 1. This is arbitration loss error during an ongoing transaction
@@ -593,7 +607,7 @@ static void r_iica_master_txrxi_master (iica_master_instance_ctrl_t * p_ctrl)
          *    The MSTS bit here can get cleared:
          *     a. In case of an arbitration loss error.also occurs.
          *//* Request IICA to issue the stop condition */
-        R_IICA->IICCTL00 |= (uint8_t) R_IICA_IICCTL00_SPT_Msk; /* It is safe to write 0's to other bits. */
+        IICA_REG->IICCTL00 |= (uint8_t) R_IICA0_IICCTL00_SPT_Msk; /* It is safe to write 0's to other bits. */
     }
 
 #if IICA_MASTER_CFG_ADDR_MODE_10_BIT_ENABLE
@@ -608,18 +622,14 @@ static void r_iica_master_txrxi_master (iica_master_instance_ctrl_t * p_ctrl)
     }
     else
     {
-        if (reg_iics0 & R_IICA_IICS0_SPD_Msk)
+        if (!p_ctrl->restart)
         {
-            r_iica_master_notify(p_ctrl, p_ctrl->err);
-        }
-        else if (!p_ctrl->restart)
-        {
-            R_IICA->IICCTL00_b.SPT = 1U;
+            IICA_REG->IICCTL00_b.SPT = 1U;
         }
         else
         {
-            R_IICA->IICCTL00_b.STT = 1U;
-            p_ctrl->restarted      = true;
+            IICA_REG->IICCTL00_b.STT = 1U;
+            p_ctrl->restarted        = true;
 
             r_iica_master_notify(p_ctrl, p_ctrl->err);
         }
@@ -635,7 +645,7 @@ static void r_iica_master_do_tx_rx (iica_master_instance_ctrl_t * p_ctrl)
     if (!p_ctrl->read)
     {
         /* Write the data to IICA0 register */
-        R_IICA->IICA0 = p_ctrl->p_buff[p_ctrl->loaded];
+        IICA_REG->IICA0 = p_ctrl->p_buff[p_ctrl->loaded];
 
         /* Update the number of bytes remaining for next pass */
         p_ctrl->loaded++;
@@ -643,28 +653,28 @@ static void r_iica_master_do_tx_rx (iica_master_instance_ctrl_t * p_ctrl)
     else if (false == p_ctrl->dummy_read_completed)
     {
         /* Do a dummy read to clock the data into the IICA0 */
-        R_IICA->IICA0;
+        IICA_REG->IICA0;
 
         /* Update the counter */
         p_ctrl->dummy_read_completed = true;
-        R_IICA->IICCTL00             = (R_IICA->IICCTL00 & ((uint8_t) ~(1U << R_IICA_IICCTL00_WTIM_Pos))) |
+        IICA_REG->IICCTL00           = (IICA_REG->IICCTL00 & ((uint8_t) ~(1U << R_IICA0_IICCTL00_WTIM_Pos))) |
                                        IICA_MASTER_IICCTL00_WREL_ACKE_MASK;
     }
     else
     {
-        p_ctrl->p_buff[p_ctrl->loaded] = R_IICA->IICA0;
+        p_ctrl->p_buff[p_ctrl->loaded] = IICA_REG->IICA0;
 
         /* Update the counter values */
         p_ctrl->loaded++;
 
         if (p_ctrl->loaded == p_ctrl->total)
         {
-            R_IICA->IICCTL00 = (R_IICA->IICCTL00 & ((uint8_t) ~(1U << R_IICA_IICCTL00_ACKE_Pos))) |
-                               IICA_MASTER_IICCTL00_WREL_WTIM_MASK;
+            IICA_REG->IICCTL00 = (IICA_REG->IICCTL00 & ((uint8_t) ~(1U << R_IICA0_IICCTL00_ACKE_Pos))) |
+                                 IICA_MASTER_IICCTL00_WREL_WTIM_MASK;
         }
         else
         {
-            R_IICA->IICCTL00 |= R_IICA_IICCTL00_WREL_Msk;
+            IICA_REG->IICCTL00 |= R_IICA0_IICCTL00_WREL_Msk;
         }
     }
 }
@@ -685,8 +695,8 @@ static void r_iica_master_send_address (iica_master_instance_ctrl_t * const p_ct
     }
     else if (p_ctrl->addr_loaded == 2)
     {
-        R_IICA->IICCTL00_b.STT = 1U;
-        address_byte           = p_ctrl->addr_high | I2C_CODE_READ;
+        IICA_REG->IICCTL00_b.STT = 1U;
+        address_byte             = p_ctrl->addr_high | I2C_CODE_READ;
     }
     else
     {
@@ -698,7 +708,7 @@ static void r_iica_master_send_address (iica_master_instance_ctrl_t * const p_ct
     p_ctrl->addr_loaded++;
 
     /* Write the address byte */
-    R_IICA->IICA0 = address_byte;
+    IICA_REG->IICA0 = address_byte;
 }
 
 /*******************************************************************************************************************//**

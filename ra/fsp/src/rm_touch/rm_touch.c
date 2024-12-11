@@ -4471,7 +4471,7 @@ void touch_tuning_ts_setup (touch_instance_ctrl_t * const p_instance_ctrl)
             /* Get the number of measurable elements */
             touch_tuning_count_element(g_touch_tuning_ts_chac_mask.mska, &p_ctsu_instance_ctrl->num_elements);
             touch_tuning_count_element(g_touch_tuning_ts_chac_mask.mskb, &p_ctsu_instance_ctrl->num_elements);
-
+ #if (BSP_FEATURE_CTSU_VERSION == 1)
             if (0 == p_ctsu_instance_ctrl->num_elements % 2)
             {
                 p_ctsu_instance_ctrl->num_elements = p_ctsu_instance_ctrl->num_elements / 2;
@@ -4480,7 +4480,7 @@ void touch_tuning_ts_setup (touch_instance_ctrl_t * const p_instance_ctrl)
             {
                 p_ctsu_instance_ctrl->num_elements = (uint16_t) (p_ctsu_instance_ctrl->num_elements / 2 + 1);
             }
-
+ #endif
             g_touch_tuning_ts_chtrc_mask.mska = 0;
             g_touch_tuning_ts_chtrc_mask.mskb = 0;
         }

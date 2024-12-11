@@ -96,7 +96,7 @@ uint32_t        g_ecdh256_private_id;
  * wrapped_key.
  *
  * @param[in]     message_hash Message or hash value to which to attach signature
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -104,8 +104,8 @@ uint32_t        g_ecdh256_private_id;
  *                                                              (Message: 0 Hash value: 1)
  * @param[in,out] signature    Signature text storage destination information
  *                             @arg signature->pdata       : Specifies pointer to array storing signature text
- *                                                           The signature format is "0 padding (64 bits) || 
- *                                                           signature r (192 bits) || 0 padding (64 bits) || 
+ *                                                           The signature format is "0 padding (64 bits) ||
+ *                                                           signature r (192 bits) || 0 padding (64 bits) ||
  *                                                           signature s (192 bits)".
  *                             @arg signature->data_length : Data length (byte units)
  * @param[in]     wrapped_key  Input wrapped key of secp192r1 private key.
@@ -165,7 +165,7 @@ fsp_err_t R_SCE_ECDSA_secp192r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  * wrapped_key.
  *
  * @param[in]     message_hash Message or hash value to which to attach signature
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -173,8 +173,8 @@ fsp_err_t R_SCE_ECDSA_secp192r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  *                                                              (Message: 0 Hash value: 1)
  * @param[in,out] signature    Signature text storage destination information
  *                             @arg signature->pdata       : Specifies pointer to array storing signature text
- *                                                           The signature format is "0 padding (32 bits) || 
- *                                                           signature r (224 bits) || 0 padding (32 bits) || 
+ *                                                           The signature format is "0 padding (32 bits) ||
+ *                                                           signature r (224 bits) || 0 padding (32 bits) ||
  *                                                           signature s (224 bits)".
  *                             @arg signature->data_length : Data length (byte units)
  * @param[in]     wrapped_key  Input wrapped key of secp224r1 private key.
@@ -234,7 +234,7 @@ fsp_err_t R_SCE_ECDSA_secp224r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  * wrapped_key.
  *
  * @param[in]     message_hash Message or hash value to which to attach signature
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -304,7 +304,7 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  * wrapped_key.
  *
  * @param[in]     message_hash Message or hash value to which to attach signature
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -370,12 +370,12 @@ fsp_err_t R_SCE_ECDSA_secp384r1_SignatureGenerate (sce_ecdsa_byte_data_t        
  *
  * @param[in]     signature    Signature text information to be verified
  *                             @arg signature->pdata       : Specifies pointer to array storing signature text
- *                                                           The signature format is "0 padding (64 bits) || 
- *                                                           signature r (192 bits) || 0 padding (64 bits) || 
+ *                                                           The signature format is "0 padding (64 bits) ||
+ *                                                           signature r (192 bits) || 0 padding (64 bits) ||
  *                                                           signature s (192 bits)".
  *                             @arg signature->data_length : Specifies the data length (byte units) (nonuse)
  * @param[in,out] message_hash Message or hash value to be verified
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -438,12 +438,12 @@ fsp_err_t R_SCE_ECDSA_secp192r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  *
  * @param[in]     signature    Signature text information to be verified
  *                             @arg signature->pdata       : Specifies pointer to array storing signature text
- *                                                           The signature format is "0 padding (32 bits) || 
- *                                                           signature r (224 bits) || 0 padding (32 bits) || 
+ *                                                           The signature format is "0 padding (32 bits) ||
+ *                                                           signature r (224 bits) || 0 padding (32 bits) ||
  *                                                           signature s (224 bits)".
  *                             @arg signature->data_length : Specifies the data length (byte units) (nonuse)
  * @param[in,out] message_hash Message or hash value to be verified
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -510,7 +510,7 @@ fsp_err_t R_SCE_ECDSA_secp224r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  *                                                           signature s (256 bits)".
  *                             @arg signature->data_length : Specifies the data length (byte units) (nonuse)
  * @param[in,out] message_hash Message or hash value to be verified
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -573,7 +573,7 @@ fsp_err_t R_SCE_ECDSA_secp256r1_SignatureVerify (sce_ecdsa_byte_data_t        * 
  *                                                           signature s (384 bits)".
  *                             @arg signature->data_length : Specifies the data length (byte units) (nonuse)
  * @param[in,out] message_hash Message or hash value to be verified
- *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or 
+ *                             @arg message_hash->pdata       : Specifies pointer to array storing the message or
  *                                                              hash value
  *                             @arg message_hash->data_length : Specifies effective data length of the array
  *                                                              (Specify only when Message is selected)
@@ -693,7 +693,7 @@ fsp_err_t R_SCE_ECDH_secp256r1_Init (sce_ecdh_handle_t * handle, uint32_t key_ty
  *                                        @arg signature->data_length : Data length (in byte units)
  * @param[in,out] wrapped_key             For ECDHE, a private wrapped key generated from a random number.
  *                                        Not output for ECDH.
- * 
+ *
  * @retval FSP_SUCCESS                          Normal end
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                              by the processing is in use by other processing.

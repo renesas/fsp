@@ -58,7 +58,7 @@ void usb_pstd_brdy_pipe (usb_utr_t * p_utr, uint16_t bitsts)
             /* FIFO access error */
             case USB_READOVER:
             {
-                USB_PRINTF0("### Receive data over PIPE0 \n");
+                USB_PRINTF0("###usb_pstd_brdy_pipe Receive data over PIPE0 \n");
 
                 /* Clear BVAL */
                 hw_usb_set_bclr(p_utr, USB_CUSE);
@@ -71,7 +71,7 @@ void usb_pstd_brdy_pipe (usb_utr_t * p_utr, uint16_t bitsts)
             /* FIFO access error */
             case USB_FIFOERROR:
             {
-                USB_PRINTF0("### FIFO access error \n");
+                USB_PRINTF0("###usb_pstd_brdy_pipe FIFO access error \n");
 
                 /* Control transfer stop(end) */
                 usb_pstd_ctrl_end((uint16_t) USB_DATA_ERR, p_utr);
@@ -158,7 +158,7 @@ void usb_pstd_bemp_pipe (usb_utr_t * p_utr, uint16_t bitsts)
             /* FIFO access error */
             case USB_FIFOERROR:
             {
-                USB_PRINTF0("### FIFO access error \n");
+                USB_PRINTF0("###usb_pstd_brdy_pipe FIFO access error \n");
 
                 /* Control transfer stop(end) */
                 usb_pstd_ctrl_end((uint16_t) USB_DATA_ERR, p_utr);

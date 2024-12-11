@@ -734,8 +734,8 @@ uint16_t usb_cstd_remote_wakeup (usb_utr_t * p_utr)
     }
     else
     {
+        USB_PRINTF0("###usb_cstd_remote_wakeup g_usb_pstd_remote_wakeup:FALSE \n");
 
-        // ret_code = FSP_ERR_USB_FAILED;
         return USB_ERROR;
     }
 
@@ -743,8 +743,10 @@ uint16_t usb_cstd_remote_wakeup (usb_utr_t * p_utr)
 #else                                  /* (USB_CFG_MODE == USB_CFG_PERI) */
     FSP_PARAMETER_NOT_USED(p_utr);
 
+    USB_PRINTF0("###usb_cstd_remote_wakeup MODE PERI ONLY!!! \n");
+
     return USB_ERROR;
-#endif /* (USB_CFG_MODE == USB_CFG_PERI) */
+#endif                                 /* (USB_CFG_MODE == USB_CFG_PERI) */
 }                                      /* End of function usb_cstd_remote_wakeup */
 
 #if (BSP_CFG_RTOS == 1)

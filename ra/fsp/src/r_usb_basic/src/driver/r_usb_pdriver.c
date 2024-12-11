@@ -138,7 +138,7 @@ static void usb_pstd_interrupt (uint16_t type, uint16_t status, usb_cfg_t * p_cf
     usb_utr_t utr;
 
     utr.ip = p_cfg->module_number;
-  #if (USB_CFG_DMA == USB_CFG_ENABLE)
+  #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
     utr.p_transfer_rx = p_cfg->p_transfer_rx;
     utr.p_transfer_tx = p_cfg->p_transfer_tx;
   #endif
@@ -376,7 +376,7 @@ static void usb_pstd_interrupt (uint16_t type, uint16_t status, usb_cfg_t * p_cf
         /* Error */
         case USB_INT_UNKNOWN:
         {
-            USB_PRINTF0("pINT_UNKNOWN\n");
+            /* USB_PRINTF0("pINT_UNKNOWN\n"); */
             break;
         }
 
@@ -730,7 +730,7 @@ static void usb_pstd_interrupt (usb_utr_t * p_mess)
         /* Error */
         case USB_INT_UNKNOWN:
         {
-            USB_PRINTF0("pINT_UNKNOWN\n");
+            /* USB_PRINTF0("pINT_UNKNOWN\n"); */
             break;
         }
 
@@ -1529,7 +1529,7 @@ void usb_pstd_fifo_to_buf (uint16_t pipe, uint16_t useport, usb_utr_t * p_utr)
         case USB_FIFOERROR:
         {
             /* FIFO access error */
-            USB_PRINTF0("### FIFO access error \n");
+            USB_PRINTF0("###usb_pstd_fifo_to_buf FIFO access error \n");
             usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_FIFO_ERR, p_utr);
             break;
         }
@@ -1600,7 +1600,7 @@ void usb_pstd_buf_to_fifo (uint16_t pipe, uint16_t useport, usb_utr_t * p_utr)
         case USB_FIFOERROR:
         {
             /* FIFO access error */
-            USB_PRINTF0("### FIFO access error \n");
+            USB_PRINTF0("###usb_pstd_buf_to_fifo FIFO access error \n");
             usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_FIFO_ERR, p_utr);
             break;
         }
@@ -1683,6 +1683,8 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
     err = USB_PGET_BLK(1, &p_tran_data);
     if (TX_SUCCESS != err)
     {
+        USB_PRINTF0("### usb_pstd_transfer_start USB_PGET_BLK ERROR\n");
+
         return USB_ERROR;
     }
 
@@ -1693,6 +1695,8 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
     p_tran_data = (usb_utr_t *) pvPortMalloc(sizeof(usb_utr_t));
     if (NULL == p_tran_data)
     {
+        USB_PRINTF0("### usb_pstd_transfer_start pvPortMalloc ERROR\n");
+
         return USB_ERROR;
     }
    #endif                              /* (BSP_CFG_RTOS == 0) */
@@ -1883,6 +1887,8 @@ usb_er_t usb_pstd_transfer_end (usb_utr_t * p_utr, uint16_t pipe)
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("### usb_pstd_transfer_end PipeNo ERROR:%d\n", pipe);
+
         return USB_ERROR;              /* Error */
     }
 
@@ -1957,6 +1963,7 @@ void usb_pstd_change_device_state (uint16_t state, uint16_t keyword, usb_cb_t co
             err = (uint16_t) USB_SND_MSG(USB_PCD_MBX, (usb_msg_t *) &utr);
             if (USB_OK != err)
             {
+                USB_PRINTF1("###usb_pstd_change_device_state USB_SND_MSG error:%04X\n", err);
                 g_usb_pstd_remote_wakeup_state = USB_ERROR;
             }
   #endif                               /* BSP_CFG_RTOS == 0 */
@@ -2123,6 +2130,8 @@ usb_er_t usb_pstd_set_stall_clr_feature (usb_utr_t * ptr, usb_cb_t complete, uin
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("*** usb_pstd_set_stall_clr_feature PipeNo ERROR %d\n", pipe);
+
         return USB_ERROR;              /* Error */
     }
 
@@ -2191,7 +2200,7 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
 
  #if (defined(USB_CFG_PCDC_USE) | defined(USB_CFG_PHID_USE) | defined(USB_CFG_PPRN_USE))
     usb_instance_ctrl_t ctrl;
-  #if (USB_CFG_DMA == USB_CFG_ENABLE)
+  #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
     ctrl.p_transfer_rx = ptr->p_transfer_rx;
     ctrl.p_transfer_tx = ptr->p_transfer_tx;
   #endif
@@ -2303,6 +2312,13 @@ uint16_t usb_peri_pipe_info (uint8_t * table, uint16_t speed, uint16_t length, u
                 g_usb_paud_iso_pipe[interface_num] = pipe_no;
  #endif                                // USB_CFG_PAUD_USE
             }
+            else
+            {
+                USB_PRINTF3("###usb_peri_pipe_info ERROR Type:%02X ADDR:%02X ATR:%02X \n",
+                            table[USB_EP_B_DESCRIPTORTYPE],
+                            table[USB_EP_B_ENDPOINTADDRESS],
+                            table[USB_EP_B_ATTRIBUTES]);
+            }
         }
 
         ofdsc = (uint16_t) (ofdsc + table[ofdsc]);
@@ -2330,7 +2346,7 @@ void usb_peri_configured (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
     g_usb_peri_connected = USB_TRUE;
 
     ctrl.module_number = ptr->ip;
- #if (USB_CFG_DMA == USB_CFG_ENABLE)
+ #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
     ctrl.p_transfer_rx = ptr->p_transfer_rx;
     ctrl.p_transfer_tx = ptr->p_transfer_tx;
  #endif
@@ -2443,7 +2459,7 @@ void usb_peri_resume (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
     FSP_PARAMETER_NOT_USED(data2);
 
     ctrl.module_number = ptr->ip;
- #if (USB_CFG_DMA == USB_CFG_ENABLE)
+ #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
     ctrl.p_transfer_rx = ptr->p_transfer_rx;
     ctrl.p_transfer_tx = ptr->p_transfer_tx;
  #endif

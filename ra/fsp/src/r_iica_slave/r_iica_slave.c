@@ -16,20 +16,23 @@
 /* "I2CS" in ASCII, used to determine if channel is open. */
 #define IICA_SLAVE_OPEN                       (0x49324353ULL)
 
-/* IICA Status Register 0 Mask */
-#define IICA_SLAVE_IICS0_ERR_MASK             ((1 << R_IICA_IICS0_SPD_Pos) | (1 << R_IICA_IICS0_STD_Pos) | \
-                                               (1 << R_IICA_IICS0_TRC_Pos))
+#define IICA_SLAVE_IICS0_EXC_ACKD_MASK        ((1 << R_IICA0_IICS0_EXC_Pos) | (1 << R_IICA0_IICS0_ACKD_Pos))
 
-#define IICA_SLAVE_IICA0_HIGH_BIT_MASK        (0xF0)
+#define IICA_SLAVE_IICA0_HIGH_BITS_MASK       (0xFE)
 #define I2C_CODE_10BIT                        (0xF0U)
 
-#define IICA_SLAVE_IICF0_STCEN_IICRSV_MASK    ((1 << R_IICA_IICF0_IICRSV_Pos) | (1 << R_IICA_IICF0_STCEN_Pos))
+#define IICA_SLAVE_IICF0_STCEN_IICRSV_MASK    ((1 << R_IICA0_IICF0_IICRSV_Pos) | (1 << R_IICA0_IICF0_STCEN_Pos))
 
-#define IICA_SLAVE_IICCTL00_INIT              ((1 << R_IICA_IICCTL00_IICE_Pos) | (1 << R_IICA_IICCTL00_LREL_Pos) | \
-                                               (1 << R_IICA_IICCTL00_WTIM_Pos) | (1 << R_IICA_IICCTL00_ACKE_Pos))
-#define IICA_SLAVE_IICCTL00_SPIE_WTIM_MASK    ((1 << R_IICA_IICCTL00_WREL_Pos) | (1 << R_IICA_IICCTL00_SPIE_Pos) | \
-                                               (1 << R_IICA_IICCTL00_WTIM_Pos) | (1 << R_IICA_IICCTL00_SPIE_Pos))
-#define IICA_SLAVE_IICCTL00_SPIE_WREL_MASK    ((1 << R_IICA_IICCTL00_WREL_Pos) | (1 << R_IICA_IICCTL00_SPIE_Pos))
+#define IICA_SLAVE_IICCTL00_INIT              ((1 << R_IICA0_IICCTL00_IICE_Pos) | (1 << R_IICA0_IICCTL00_LREL_Pos) | \
+                                               (1 << R_IICA0_IICCTL00_WTIM_Pos) | (1 << R_IICA0_IICCTL00_ACKE_Pos))
+#define IICA_SLAVE_IICCTL00_SPIE_WREL_MASK    ((1 << R_IICA0_IICCTL00_WREL_Pos) | (1 << R_IICA0_IICCTL00_SPIE_Pos))
+#if (IICA_SLAVE_CFG_SINGLE_CHANNEL == 1)
+ #define IICA_REG                             R_IICA1
+#elif (IICA_SLAVE_CFG_SINGLE_CHANNEL == 0)
+ #define IICA_REG                             R_IICA0
+#else
+ #define IICA_REG                             p_ctrl->p_reg
+#endif
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -102,12 +105,18 @@ fsp_err_t R_IICA_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_
     FSP_ASSERT(p_cfg->tei_irq >= (IRQn_Type) 0);
 
     FSP_ERROR_RETURN(IICA_SLAVE_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
+    FSP_ERROR_RETURN(BSP_FEATURE_IIC_VALID_CHANNEL_MASK & (1 << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+#endif
+#if IICA_SLAVE_CFG_SINGLE_CHANNEL == -1
+    p_ctrl->p_reg =
+        (R_IICA0_Type *) ((uint32_t) R_IICA0 + (p_cfg->channel * ((uint32_t) R_IICA1 - (uint32_t) R_IICA0)));
 #endif
 
     /* Record the configuration on the device for use later */
     p_ctrl->p_cfg      = p_cfg;
     p_ctrl->p_callback = p_cfg->p_callback;
     p_ctrl->p_context  = p_cfg->p_context;
+    p_ctrl->addr_mode  = p_cfg->addr_mode;
 
     p_ctrl->p_buff = NULL;
     p_ctrl->total  = 0U;
@@ -283,9 +292,6 @@ static fsp_err_t r_iica_slave_read_write (i2c_slave_ctrl_t * const p_api_ctrl,
     p_ctrl->p_buff = p_buffer;
     p_ctrl->total  = bytes;
     p_ctrl->loaded = 0U;
-#if IICA_SLAVE_CFG_ADDR_MODE_10_BIT_ENABLE
-    p_ctrl->tenbitaddr_matched = false;
-#endif
 
     return FSP_SUCCESS;
 }
@@ -302,21 +308,26 @@ static void r_iica_open_hw_slave (iica_slave_instance_ctrl_t * const p_ctrl)
     uint8_t iicctl01 = 0;
 
     /* Select a transfer clock */
-    R_IICA->IICWL0 = pextend->clock_settings.iicwl_value;
-    R_IICA->IICWH0 = pextend->clock_settings.iicwh_value;
+    IICA_REG->IICWL0 = pextend->clock_settings.iicwl_value;
+    IICA_REG->IICWH0 = pextend->clock_settings.iicwh_value;
+
+    if (p_ctrl->addr_mode == I2C_SLAVE_ADDR_MODE_7BIT)
+    {
+        IICA_REG->SVA0 = (uint8_t) (p_ctrl->p_cfg->slave << 1U);
+    }
 
 #if IICA_SLAVE_CFG_ADDR_MODE_10_BIT_ENABLE
-
-    /* 10 bit mode selected */
-    p_ctrl->tenbitaddr_matched = false;
-    R_IICA->SVA0               =
-        (uint8_t) ((((uint32_t) ((p_ctrl->p_cfg->slave >> 8U)) << 1U)) | I2C_CODE_10BIT);
-#else
-    R_IICA->SVA0 = (uint8_t) (p_ctrl->p_cfg->slave << 1U);
+    else
+    {
+        /* 10 bit mode selected */
+        p_ctrl->tenbitaddr_matched = false;
+        IICA_REG->SVA0             =
+            (uint8_t) ((((uint32_t) ((p_ctrl->p_cfg->slave >> 8U)) << 1U)) | I2C_CODE_10BIT);
+    }
 #endif
 
     /* Enable communication reservation */
-    R_IICA->IICF0 = IICA_SLAVE_IICF0_STCEN_IICRSV_MASK;
+    IICA_REG->IICF0 = IICA_SLAVE_IICF0_STCEN_IICRSV_MASK;
 
     /* IICCTL01 Register Settings */
     /* Set IICA operation clock and digital filter */
@@ -330,14 +341,10 @@ static void r_iica_open_hw_slave (iica_slave_instance_ctrl_t * const p_ctrl)
     {
         iicctl01 =
             (uint8_t) ((pextend->clock_settings.operation_clock) | (pextend->clock_settings.digital_filter << 2) |
-                       (uint8_t) R_IICA_IICCTL01_SMC_Msk);
+                       (uint8_t) R_IICA0_IICCTL01_SMC_Msk);
     }
 
-#if IICA_SLAVE_CFG_ADDR_MODE_GENERAL_CALL_ENABLE
-    iicctl01 |= R_IICA_IICCTL01_SVADIS_Msk;
-#endif
-
-    R_IICA->IICCTL01 = iicctl01;
+    IICA_REG->IICCTL01 = iicctl01;
 
     /* IICCTL00 Register Settings:
      * 1. ACKE = 1：Enable acknowledgment. During the 9th clock period, the SDAA0 line is set to low level.
@@ -346,7 +353,7 @@ static void r_iica_open_hw_slave (iica_slave_instance_ctrl_t * const p_ctrl)
      * 4. IICE = 1：Enable IICA operation.
      * 5. LREL = 1：Exit from Communications.
      */
-    R_IICA->IICCTL00 = IICA_SLAVE_IICCTL00_INIT;
+    IICA_REG->IICCTL00 = IICA_SLAVE_IICCTL00_INIT;
 
     /* Configure Pin settings */
     R_BSP_PinAccessEnable();
@@ -382,52 +389,81 @@ static void r_iica_slave_call_callback (iica_slave_instance_ctrl_t * p_ctrl, i2c
  *********************************************************************************************************************/
 static void r_iica_txrxi_slave (iica_slave_instance_ctrl_t * p_ctrl)
 {
-    uint8_t iics0_val = R_IICA->IICS0;
+    uint8_t iics0_val = IICA_REG->IICS0;
 
     /* Stop condition detected */
-    if (iics0_val & R_IICA_IICS0_SPD_Msk)
+    if (iics0_val & R_IICA0_IICS0_SPD_Msk)
     {
-        p_ctrl->communication_mode = 0U;
-#if IICA_SLAVE_CFG_ADDR_MODE_10_BIT_ENABLE
-        p_ctrl->tenbitaddr_matched = false;
-#endif
-        R_IICA->IICCTL00_b.SPIE = 0U;
+        if (p_ctrl->communication_mode)
+        {
+            p_ctrl->communication_mode = 0U;
+            IICA_REG->IICCTL00_b.SPIE  = 0U;
 
-        i2c_slave_event_t i2c_event = p_ctrl->communication_dir ==
-                                      0 ? I2C_SLAVE_EVENT_RX_COMPLETE : I2C_SLAVE_EVENT_TX_COMPLETE;
+            i2c_slave_event_t i2c_event = p_ctrl->communication_dir ==
+                                          0 ? I2C_SLAVE_EVENT_RX_COMPLETE : I2C_SLAVE_EVENT_TX_COMPLETE;
 
-        r_iica_slave_call_callback(p_ctrl, i2c_event);
+            r_iica_slave_call_callback(p_ctrl, i2c_event);
+        }
 
         return;
     }
 
-    if (iics0_val & R_IICA_IICS0_STD_Msk)
+    if (iics0_val & R_IICA0_IICS0_STD_Msk)
     {
-        if (iics0_val & R_IICA_IICS0_COI_Msk)
+#if IICA_SLAVE_CFG_ADDR_MODE_GENERAL_CALL_ENABLE
+        if ((iics0_val & R_IICA0_IICS0_EXC_Msk) && (IICA_REG->IICA0 == 0))
         {
-            p_ctrl->total_loaded       = 0;
+            r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_GENERAL_CALL);
             p_ctrl->communication_mode = 1U;
-            p_ctrl->communication_dir  = iics0_val & R_IICA_IICS0_TRC_Msk;
+            IICA_REG->IICCTL00        |= IICA_SLAVE_IICCTL00_SPIE_WREL_MASK;
 
+            return;
+        }
+#endif
+
+        if (iics0_val & R_IICA0_IICS0_COI_Msk)
+        {
+            p_ctrl->total_loaded      = 0;
+            p_ctrl->communication_dir = iics0_val & R_IICA0_IICS0_TRC_Msk;
             if (0U == p_ctrl->communication_dir)
             {
-#if IICA_SLAVE_CFG_ADDR_MODE_GENERAL_CALL_ENABLE
-                i2c_slave_event_t i2c_event = R_IICA->IICA0 ? I2C_SLAVE_EVENT_RX_REQUEST : I2C_SLAVE_EVENT_GENERAL_CALL;
-                r_iica_slave_call_callback(p_ctrl, i2c_event);
-#else
-                r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_RX_REQUEST);
+                /* Avoid enter callback again after detection of extension code */
+#if IICA_SLAVE_CFG_ADDR_MODE_10_BIT_ENABLE
+                if (p_ctrl->addr_mode == I2C_SLAVE_ADDR_MODE_10BIT)
+                {
+                    p_ctrl->tenbitaddr_matched = false;
+                }
+                else
 #endif
-                R_IICA->IICCTL00 |= R_IICA_IICCTL00_WREL_Msk | R_IICA_IICCTL00_SPIE_Msk;
+                {
+                    r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_RX_REQUEST);
+                }
+
+                p_ctrl->communication_mode = 1U;
+                IICA_REG->IICCTL00        |= IICA_SLAVE_IICCTL00_SPIE_WREL_MASK;
 
                 return;
             }
 
-            r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_TX_REQUEST);
+#if IICA_SLAVE_CFG_ADDR_MODE_10_BIT_ENABLE
+            if ((p_ctrl->addr_mode == I2C_SLAVE_ADDR_MODE_10BIT) && !p_ctrl->tenbitaddr_matched)
+            {
+                IICA_REG->IICCTL00_b.LREL = 1;
+
+                return;
+            }
+#endif
+
+            /* Avoid enter callback again after detection of extension code */
+            if (!((iics0_val & IICA_SLAVE_IICS0_EXC_ACKD_MASK) == IICA_SLAVE_IICS0_EXC_ACKD_MASK))
+            {
+                r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_TX_REQUEST);
+                p_ctrl->communication_mode = 1U;
+            }
         }
         else
         {
-            R_IICA->IICCTL00_b.LREL    = 1;
-            p_ctrl->communication_mode = 0U;
+            IICA_REG->IICCTL00_b.LREL = 1;
 
             return;
         }
@@ -435,65 +471,65 @@ static void r_iica_txrxi_slave (iica_slave_instance_ctrl_t * p_ctrl)
 
     if (p_ctrl->communication_mode)
     {
-        if (p_ctrl->communication_dir && !(iics0_val & R_IICA_IICS0_ACKD_Msk))
+        if (p_ctrl->communication_dir && !(iics0_val & R_IICA0_IICS0_ACKD_Msk))
         {
-            p_ctrl->communication_mode = 0;
-
-            // Release clock strecth and enable interrupt when generate a stop condition
-            R_IICA->IICCTL00 |= IICA_SLAVE_IICCTL00_SPIE_WREL_MASK;
+            // Release clock stretch and enable interrupt when generate a stop condition
+            IICA_REG->IICCTL00 |= IICA_SLAVE_IICCTL00_SPIE_WREL_MASK;
 
             return;
         }
 
+#if IICA_SLAVE_CFG_ADDR_MODE_10_BIT_ENABLE
+        if (p_ctrl->addr_mode == I2C_SLAVE_ADDR_MODE_10BIT)
+        {
+            if (!p_ctrl->tenbitaddr_matched)
+            {
+                if (IICA_REG->IICA0 == (uint8_t) (p_ctrl->p_cfg->slave))
+                {
+                    p_ctrl->tenbitaddr_matched = true;
+                    IICA_REG->IICCTL00_b.WREL  = 1;
+                }
+                else
+                {
+                    p_ctrl->communication_mode = 0U;
+                    IICA_REG->IICCTL00_b.LREL  = 1;
+                }
+
+                return;
+            }
+
+            if (!p_ctrl->communication_dir && (0 == p_ctrl->total_loaded))
+            {
+                r_iica_slave_call_callback(p_ctrl, I2C_SLAVE_EVENT_RX_REQUEST);
+            }
+        }
+#endif
+
         /* Notify application when buffer is full/no more data to send */
         if (p_ctrl->loaded == p_ctrl->total)
         {
-#if IICA_SLAVE_CFG_ADDR_MODE_GENERAL_CALL_ENABLE
-            i2c_slave_event_t i2c_event =
-                (0 == p_ctrl->communication_dir) ? I2C_SLAVE_EVENT_GENERAL_CALL : I2C_SLAVE_EVENT_TX_MORE_REQUEST;
-#else
             i2c_slave_event_t i2c_event =
                 (0 == p_ctrl->communication_dir) ? I2C_SLAVE_EVENT_RX_MORE_REQUEST : I2C_SLAVE_EVENT_TX_MORE_REQUEST;
-#endif
             r_iica_slave_call_callback(p_ctrl, i2c_event);
         }
 
-        /* User wants to abort by setting total to 0. There will be no more callback as user knows the communicaion is aborted. */
+        /* User wants to abort by setting total to 0. There will be no more callback as user knows the communication is aborted. */
         if (0U == p_ctrl->total)
         {
-            p_ctrl->communication_mode = 0;
-            R_IICA->IICCTL00           = IICA_SLAVE_IICCTL00_INIT;
+            IICA_REG->IICCTL00 = IICA_SLAVE_IICCTL00_INIT;
 
             return;
         }
 
         if (p_ctrl->communication_dir)
         {
-            R_IICA->IICA0 = p_ctrl->p_buff[p_ctrl->loaded];
+            IICA_REG->IICA0 = p_ctrl->p_buff[p_ctrl->loaded];
         }
         else
         {
-#if IICA_SLAVE_CFG_ADDR_MODE_10_BIT_ENABLE
-            if (!p_ctrl->tenbitaddr_matched)
-            {
-                if (R_IICA->IICA0 == (uint8_t) (p_ctrl->p_cfg->slave))
-                {
-                    p_ctrl->tenbitaddr_matched = true;
-                    R_IICA->IICCTL00_b.WREL    = 1;
-                }
-                else
-                {
-                    R_IICA->IICCTL00_b.LREL    = 1;
-                    p_ctrl->communication_mode = 0U;
-                }
-
-                return;
-            }
-#endif
-
             /* Read data */
-            p_ctrl->p_buff[p_ctrl->loaded] = R_IICA->IICA0;
-            R_IICA->IICCTL00_b.WREL        = 1;
+            p_ctrl->p_buff[p_ctrl->loaded] = IICA_REG->IICA0;
+            IICA_REG->IICCTL00_b.WREL      = 1;
         }
 
         p_ctrl->loaded++;

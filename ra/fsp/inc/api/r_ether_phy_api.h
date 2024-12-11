@@ -53,6 +53,7 @@ typedef enum e_ether_phy_lsi_type
     ETHER_PHY_LSI_TYPE_KSZ8041    = 2,     ///< Select configuration for KSZ8041.
     ETHER_PHY_LSI_TYPE_DP83620    = 3,     ///< Select configuration for DP83620.
     ETHER_PHY_LSI_TYPE_ICS1894    = 4,     ///< Select configuration for ICS1894.
+    ETHER_PHY_LSI_TYPE_GPY111     = 5,     ///< Select configuration for GPY111.
     ETHER_PHY_LSI_TYPE_CUSTOM     = 0xFFU, ///< Select configuration for User custom.
 } ether_phy_lsi_type_t;
 #endif

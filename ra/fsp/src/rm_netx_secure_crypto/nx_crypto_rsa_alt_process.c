@@ -14,7 +14,8 @@
  **********************************************************************************************************************/
 
 #include "rm_netx_secure_crypto_cfg.h"
-#if ((1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT) || \
+#if ((1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_1024_ALT) || \
+    (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT) ||  \
     (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT) ||  \
     (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT))
  #include "nx_crypto_rsa.h"
@@ -67,9 +68,12 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
  #elif (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT)
         uint32_t aligned_modulus[HW_SCE_RSA_3072_KEY_D_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
         modulus_size_max = (UINT) HW_SCE_RSA_3072_KEY_D_LENGTH_BYTE_SIZE;
- #else
+ #elif (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT)
         uint32_t aligned_modulus[HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
         modulus_size_max = (UINT) HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE;
+ #else
+        uint32_t aligned_modulus[HW_SCE_RSA_1024_KEY_D_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+        modulus_size_max = (UINT) HW_SCE_RSA_1024_KEY_D_LENGTH_BYTE_SIZE;
  #endif
         FSP_ERROR_RETURN((modulus_size_max >= modulus_length), NX_CRYPTO_SIZE_ERROR);
         NX_CRYPTO_MEMCPY(aligned_modulus, modulus, modulus_length);
@@ -191,6 +195,42 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                 break;
             }
 
+            case HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE:
+            {
+ #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_1024_ALT)
+                uint32_t aligned_work_buffer[HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+                NX_CRYPTO_MEMCPY(aligned_work_buffer, input, sizeof(aligned_work_buffer));
+
+                /* Create storage to hold the generated OEM key index */
+                sce_rsa1024_public_key_index_t formatted_rsa_public_key_output;
+                uint8_t formatted_rsa_public_key_input[HW_SCE_RSA1024_NE_KEY_BYTE_SIZE] = {0};
+                NX_CRYPTO_MEMCPY(&formatted_rsa_public_key_input[0],
+                                 aligned_modulus,
+                                 HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE);
+                NX_CRYPTO_MEMCPY(&formatted_rsa_public_key_input[HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE],
+                                 (uint32_t *) padded_exponent,
+                                 HW_SCE_RSA_1024_KEY_E_LENGTH_BYTE_SIZE);
+
+                err =
+                    HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                                      SCE_OEM_CMD_RSA1024_PUBLIC,
+                                                      NULL,
+                                                      NULL,
+                                                      (const uint8_t *) &formatted_rsa_public_key_input,
+                                                      (uint32_t *) &formatted_rsa_public_key_output.value);
+
+                if (FSP_SUCCESS == err)
+                {
+                    err =
+                        HW_SCE_Rsa1024ModularExponentEncryptSub((uint32_t *) &formatted_rsa_public_key_output.value,
+                                                                (uint32_t *) aligned_work_buffer,
+                                                                (uint32_t *) aligned_work_buffer);
+                }
+                NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
+ #endif
+                break;
+            }
+
             default:
             {
                 return NX_CRYPTO_UNSUPPORTED_KEY_SIZE;
@@ -198,6 +238,39 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
         }
     }
 
+ #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_1024_ALT)
+    else if (HW_SCE_RSA_1024_KEY_D_LENGTH_BYTE_SIZE == exponent_length)
+    {
+        uint32_t key[HW_SCE_RSA1024_ND_KEY_BYTE_SIZE >> 2U] = {0};
+        uint32_t aligned_work_buffer[HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE / sizeof(uint32_t)] = {0};
+        NX_CRYPTO_MEMCPY(aligned_work_buffer, input, sizeof(aligned_work_buffer));
+        NX_CRYPTO_MEMCPY(key, modulus, modulus_length);
+        NX_CRYPTO_MEMCPY(&key[modulus_length >> 2U], exponent, exponent_length);
+
+        /* Plain private key: This is a decryption operation */
+        /* Create storage to hold the generated OEM key index */
+        sce_rsa1024_private_key_index_t encrypted_rsa_key;
+
+        /*This function requires the plaintext RSA key is provided in a single buffer in the order:
+         * Public Key (N) of size RSA_MODULUS_SIZE_BYTES(x)
+         * Private Key (D) of size private_key_size_bytes
+         * The buffer in mbedtls_rsa_private() already contains the data in that format, so InData_N
+         * is directly provided to this function.
+         */
+        err =
+            HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN, SCE_OEM_CMD_RSA1024_PRIVATE, NULL, NULL,
+                                              (const uint8_t *) key, (uint32_t *) &encrypted_rsa_key.value);
+
+        if (FSP_SUCCESS == err)
+        {
+            err = HW_SCE_Rsa1024ModularExponentDecryptSub((uint32_t *) &encrypted_rsa_key.value,
+                                                          (uint32_t *) aligned_work_buffer,
+                                                          (uint32_t *) aligned_work_buffer);
+        }
+
+        NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
+    }
+ #endif
  #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT)
     else if (HW_SCE_RSA_2048_KEY_D_LENGTH_BYTE_SIZE == exponent_length)
     {

@@ -98,7 +98,8 @@ NX_CRYPTO_KEEP UINT  _nx_crypto_rsa_operation(const UCHAR *exponent, UINT expone
                                               const UCHAR *input, UINT input_length, UCHAR *output,
                                               USHORT *scratch_buf_ptr, UINT scratch_buf_length)
 {
-#if ((1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT) || \
+#if ((1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_1024_ALT) || \
+     (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT) || \
      (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT) || \
      (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT))
     NX_CRYPTO_PARAMETER_NOT_USED(p);
@@ -443,7 +444,8 @@ UINT           return_value = NX_CRYPTO_SUCCESS;
         {
             return(NX_CRYPTO_PTR_ERROR);
         }
-#if ((1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT) || \
+#if ((1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_1024_ALT) || \
+     (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT) || \
      (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT) || \
      (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_4096_ALT))
         if(output_length_in_byte < ctx -> nx_crypto_rsa_modulus_length)

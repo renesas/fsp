@@ -79,8 +79,8 @@ typedef enum e_elc_event_ra4w1
     ELC_EVENT_ADC0_COMPARE_MISMATCH         = (0x02E), // Compare mismatch
     ELC_EVENT_ACMPLP0_INT                   = (0x02F), // Low Power Comparator channel 0 interrupt
     ELC_EVENT_ACMPLP1_INT                   = (0x030), // Low Power Comparator channel 1 interrupt
-    ELC_EVENT_USBFS_FIFO_0                  = (0x031), // DMA transfer request 0
-    ELC_EVENT_USBFS_FIFO_1                  = (0x032), // DMA transfer request 1
+    ELC_EVENT_USBFS_FIFO_0                  = (0x031), // DMA/DTC transfer request 0
+    ELC_EVENT_USBFS_FIFO_1                  = (0x032), // DMA/DTC transfer request 1
     ELC_EVENT_USBFS_INT                     = (0x033), // USBFS interrupt
     ELC_EVENT_USBFS_RESUME                  = (0x034), // USBFS resume interrupt
     ELC_EVENT_IIC0_RXI                      = (0x035), // Receive data full

@@ -49,6 +49,7 @@ typedef struct st_iica_slave_instance_ctrl
 {
     i2c_slave_cfg_t const * p_cfg;     // Information describing IICA device
     uint32_t                open;      // Flag to determine if the device is open
+    R_IICA0_Type          * p_reg;     // Base register for this channel
 
     /* Current transfer information. */
     uint8_t * p_buff;                  // Holds the data associated with the transfer
@@ -62,9 +63,10 @@ typedef struct st_iica_slave_instance_ctrl
     /* Pointer to context to be passed into callback function */
     void const * p_context;
 
-    uint8_t communication_dir;         // Communication direction: 0 for read, R_IICA_IICS0_TRC_Msk for write
-    uint8_t communication_mode;        // Communication mode: 0 for clear, 1 for data communication is performed
-    bool    tenbitaddr_matched;        // Saves 10 bit address match status
+    uint8_t               communication_dir;  // Communication direction: 0 for read, R_IICA_IICS0_TRC_Msk for write
+    uint8_t               communication_mode; // Communication mode: 0 for clear, 1 for data communication is performed
+    bool                  tenbitaddr_matched; // Saves 10 bit address match status
+    i2c_slave_addr_mode_t addr_mode;          // Indicates how slave fields should be interpreted
 } iica_slave_instance_ctrl_t;
 
 /** R_IICA_SLAVE extended configuration */

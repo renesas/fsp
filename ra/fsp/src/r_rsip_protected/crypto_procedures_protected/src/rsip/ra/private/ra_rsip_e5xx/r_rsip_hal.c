@@ -39,7 +39,7 @@ typedef enum e_rsip_hmac_cmd
  **********************************************************************************************************************/
 
 static uint32_t get_cmd_kdf_hmac_alg(uint8_t alg);
-static uint32_t get_cmd_kdf_hmac_subtype(uint8_t subtype);
+static uint32_t get_cmd_kdf_hmac_subtype(uint8_t alg, uint8_t subtype);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -72,6 +72,13 @@ static const uint32_t gs_hmac_cmd[] =
 static const uint32_t gs_sha_msg_len_multi[2] =
 {
     RSIP_PRV_SHA_INIT_VAL1, RSIP_PRV_SHA_INIT_VAL2
+};
+
+static const uint8_t gs_convert_to_kdf_hmac_subtype[] =
+{
+    [RSIP_KEY_HMAC_SHA256] = RSIP_KEY_KDF_HMAC_SHA256,
+    [RSIP_KEY_HMAC_SHA384] = RSIP_KEY_KDF_HMAC_SHA384,
+    [RSIP_KEY_HMAC_SHA512] = RSIP_KEY_KDF_HMAC_SHA512,
 };
 
 /***********************************************************************************************************************
@@ -214,7 +221,7 @@ rsip_ret_t r_rsip_sha1sha2_init_final (rsip_hash_type_t hash_type,
 }
 
 rsip_ret_t r_rsip_sha1sha2_resume_final (rsip_hash_type_t hash_type,
-                                         const uint8_t  * p_message,
+                                         uint8_t        * p_message,
                                          uint64_t         message_length,
                                          uint64_t         total_message_length,
                                          uint8_t        * p_digest,
@@ -239,7 +246,7 @@ rsip_ret_t r_rsip_sha1sha2_resume_final (rsip_hash_type_t hash_type,
 }
 
 rsip_ret_t r_rsip_sha1sha2_final (rsip_hash_type_t hash_type,
-                                  const uint8_t  * p_message,
+                                  uint8_t        * p_message,
                                   uint64_t         message_length,
                                   uint64_t         total_message_length,
                                   uint8_t        * p_digest,
@@ -376,7 +383,7 @@ rsip_ret_t r_rsip_hmac_resume_final (const rsip_wrapped_key_t * p_wrapped_key,
 }
 
 rsip_ret_t r_rsip_hmac_final (const rsip_wrapped_key_t * p_wrapped_key,
-                              const uint8_t            * p_message,
+                              uint8_t                  * p_message,
                               uint64_t                   message_length,
                               uint64_t                   total_message_length,
                               uint8_t                  * p_mac,
@@ -479,7 +486,7 @@ rsip_ret_t r_rsip_hmac_resume_verify (const rsip_wrapped_key_t * p_wrapped_key,
 }
 
 rsip_ret_t r_rsip_hmac_verify (const rsip_wrapped_key_t * p_wrapped_key,
-                               const uint8_t            * p_message,
+                               uint8_t                  * p_message,
                                uint64_t                   message_length,
                                uint64_t                   total_message_length,
                                const uint8_t            * p_mac,
@@ -512,7 +519,7 @@ rsip_ret_t r_rsip_kdf_hmac_init_update (const rsip_wrapped_key_t * p_wrapped_key
     FSP_PARAMETER_NOT_USED(internal_state);
 
     uint32_t cmd_key_type  = get_cmd_kdf_hmac_alg(p_wrapped_key->alg);
-    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->subtype);
+    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->alg, p_wrapped_key->subtype);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
     rsip_ret_t rsip_ret = r_rsip_pe5i(&cmd_key_type,
@@ -537,17 +544,25 @@ rsip_ret_t r_rsip_kdf_hmac_init_update (const rsip_wrapped_key_t * p_wrapped_key
 rsip_ret_t r_rsip_kdf_hmac_resume_update (const rsip_wrapped_key_t * p_wrapped_key,
                                           const uint8_t            * p_message,
                                           uint64_t                   message_length,
+                                          const uint8_t            * p_wrapped_msg,
+                                          uint64_t                   wrapped_msg_length,
                                           uint32_t                 * internal_state)
 {
     uint32_t cmd_key_type  = get_cmd_kdf_hmac_alg(p_wrapped_key->alg);
-    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->subtype);
+    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->alg, p_wrapped_key->subtype);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
     rsip_ret_t rsip_ret = r_rsip_pe5r(&cmd_key_type, (uint32_t *) p_wrapped_key->value, &cmd_hash_type, internal_state);
 
     if (RSIP_RET_PASS == rsip_ret)
     {
-        rsip_ret = r_rsip_pe5u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+        rsip_ret =
+            r_rsip_pe5e((const uint32_t *) p_wrapped_msg, r_rsip_byte_to_word_convert((uint32_t) wrapped_msg_length));
+        if (RSIP_RET_PASS == rsip_ret)
+        {
+            rsip_ret =
+                r_rsip_pe5u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+        }
     }
 
     return rsip_ret;
@@ -593,7 +608,7 @@ rsip_ret_t r_rsip_kdf_hmac_init_final (const rsip_wrapped_key_t * p_wrapped_key,
     };
 
     uint32_t cmd_key_type  = get_cmd_kdf_hmac_alg(p_wrapped_key->alg);
-    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->subtype);
+    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->alg, p_wrapped_key->subtype);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
     rsip_ret_t rsip_ret = r_rsip_pe5i(&cmd_key_type, (const uint32_t *) p_wrapped_key->value, &cmd_hash_type, msg_len);
@@ -623,7 +638,7 @@ rsip_ret_t r_rsip_kdf_hmac_resume_final (const rsip_wrapped_key_t * p_wrapped_ke
     internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
 
     uint32_t cmd_key_type  = get_cmd_kdf_hmac_alg(p_wrapped_key->alg);
-    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->subtype);
+    uint32_t cmd_hash_type = get_cmd_kdf_hmac_subtype(p_wrapped_key->alg, p_wrapped_key->subtype);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
     rsip_ret_t rsip_ret = r_rsip_pe5r(&cmd_key_type, (uint32_t *) p_wrapped_key->value, &cmd_hash_type, internal_state);
@@ -675,9 +690,38 @@ static uint32_t get_cmd_kdf_hmac_alg (uint8_t alg)
     return ret;
 }
 
-static uint32_t get_cmd_kdf_hmac_subtype (uint8_t subtype)
+static uint32_t get_cmd_kdf_hmac_subtype (uint8_t alg, uint8_t subtype)
 {
-    FSP_PARAMETER_NOT_USED(subtype);
+    uint32_t ret;
 
-    return bswap_32big(0);
+    if (RSIP_ALG_HMAC == alg)
+    {
+        subtype = gs_convert_to_kdf_hmac_subtype[subtype];
+    }
+
+    switch(subtype)
+    {
+        /* SHA-256 */
+        case RSIP_KEY_KDF_HMAC_SHA256:
+        {
+            ret = bswap_32big(0);
+            break;
+        }
+
+        /* SHA-384 */
+        case RSIP_KEY_KDF_HMAC_SHA384:
+        {
+            ret = bswap_32big(1);
+            break;
+        }
+
+        /* SHA-512 */
+        default:
+        {
+            ret = bswap_32big(2);
+            break;
+        }
+    }
+
+    return ret;
 }

@@ -197,7 +197,7 @@ fsp_err_t R_SCE_TLS_MasterSecretGenerate (uint32_t select_cipher_suite, uint32_t
 
     cipher_suite_sub = change_endian_long(select_cipher_suite);
 
-    return R_SCE_TlsGenerateMasterSecretSub(&cipher_suite_sub, sce_pre_master_secret, 
+    return R_SCE_TlsGenerateMasterSecretSub(&cipher_suite_sub, sce_pre_master_secret,
             /* Casting uint32_t pointer is used for address. */
             (uint32_t *) (client_random), (uint32_t *) (server_random), sce_master_secret);
 

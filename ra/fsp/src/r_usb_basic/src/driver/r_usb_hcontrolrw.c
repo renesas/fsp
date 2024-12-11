@@ -115,6 +115,7 @@ uint16_t usb_hstd_ctrl_write_start (usb_utr_t * ptr, uint32_t Bsize, uint8_t * T
         /* FIFO access error */
         case USB_FIFOERROR:
         {
+            USB_PRINTF0("### usb_hstd_ctrl_write_start USB_FIFOERROR\n");
             break;
         }
 

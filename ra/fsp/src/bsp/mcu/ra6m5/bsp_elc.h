@@ -111,8 +111,8 @@ typedef enum e_elc_event_ra6m5
     ELC_EVENT_CAN1_CHERR                    = (0x068), // Channel  error
     ELC_EVENT_CAN1_COMFRX                   = (0x069), // Common FIFO receive interrupt
     ELC_EVENT_CAN1_CF_DMAREQ                = (0x06A), // Channel  DMA request
-    ELC_EVENT_USBFS_FIFO_0                  = (0x06B), // DMA transfer request 0
-    ELC_EVENT_USBFS_FIFO_1                  = (0x06C), // DMA transfer request 1
+    ELC_EVENT_USBFS_FIFO_0                  = (0x06B), // DMA/DTC transfer request 0
+    ELC_EVENT_USBFS_FIFO_1                  = (0x06C), // DMA/DTC transfer request 1
     ELC_EVENT_USBFS_INT                     = (0x06D), // USBFS interrupt
     ELC_EVENT_USBFS_RESUME                  = (0x06E), // USBFS resume interrupt
     ELC_EVENT_IIC0_RXI                      = (0x073), // Receive data full

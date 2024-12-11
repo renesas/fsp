@@ -841,8 +841,27 @@ WIFIReturnCode_t WIFI_StartDisconnectStation(uint8_t * pucMac);
  * @return eWiFiSuccess if MAC address was set successfully, failure code otherwise.
  *
  * @note On some platforms the change of MAC address can only take effect after reboot.
+ *
+ * @deprecated This function is deprecated, please use WIFI_SetSpoofingMAC() instead.
  */
 WIFIReturnCode_t WIFI_SetMAC(uint8_t * pucMac);
+
+/**
+ * @brief Set Wi-Fi MAC addresses.
+ *
+ * The given MAC address is for MAC SPOOFING. The original MAC address is not changed.
+ * This MAC address can be set only for Station. The AP MAC address (i.e. BSSID) will not be changed.
+ * If the original MAC address needs to be used, then MAC spoofing needs to be disabled.
+ *
+ * @param[in] pucMac - Station MAC address.
+ *
+ * @return eWiFiSuccess if MAC address was set successfully, failure code otherwise.
+ *
+ * @note This function performs MAC SPOOFING, it does not change the “manufacturer” WIFI MAC address.
+ *
+ * @note On some platforms the change of MAC address can only take effect after reboot.
+ */
+WIFIReturnCode_t WIFI_SetSpoofingMAC(uint8_t * pucMac);
 
 /**
  * @brief Set country based configuration (including channel list, power table)

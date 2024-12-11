@@ -24,6 +24,11 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
+/* Version Number of Module. */
+#define FSP_R_RSIP_PROTECTED_VERSION_MAJOR  (1U)
+#define FSP_R_RSIP_PROTECTED_VERSION_MINOR  (5U)
+#define FSP_R_RSIP_PROTECTED_VERSION_PATCH  (0U)
+
 #define RSIP_PRV_BYTE_SIZE_AES_BLOCK               (16U)
 #define RSIP_PRV_BYTE_SIZE_CCM_NONCE_MAX           (13U)
 #define RSIP_PRV_BYTE_SIZE_CCM_AAD_MAX             (110U)
@@ -113,12 +118,12 @@ typedef enum e_rsip_state
 /** RSIP private control block. DO NOT MODIFY. Initialization occurs when R_RSIP_Open() is called. */
 typedef struct st_rsip_instance_ctrl
 {
-    uint32_t           open;                                         // Indicates whether the open() API has been successfully
-    rsip_cfg_t const * p_cfg;                                        // Pointer to the configuration block
-    rsip_handle_t      handle;                                       // Handle of algorithms that cannot be suspended
-    rsip_state_t       state;                                        // Flags to limit the next API to call
+    uint32_t           open;                          // Indicates whether the open() API has been successfully
+    rsip_cfg_t const * p_cfg;                         // Pointer to the configuration block
+    rsip_handle_t      handle;                        // Handle of algorithms that cannot be suspended
+    rsip_state_t       state;                         // Flags to limit the next API to call
 
-    uint8_t pki_enc_cert_info[RSIP_CFG_BYTE_SIZE_PKI_ENC_CERT_INFO]; // Encrypted certificate info
+    rsip_verified_cert_info_t pki_verified_cert_info; // Verified certificate info
 } rsip_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -330,6 +335,10 @@ fsp_err_t R_RSIP_PKI_ECDSA_CertVerify(rsip_ctrl_t * const              p_ctrl,
                                       rsip_wrapped_key_t const * const p_wrapped_public_key,
                                       uint8_t const * const            p_hash,
                                       uint8_t const * const            p_signature);
+fsp_err_t R_RSIP_PKI_VerifiedCertInfoExport(rsip_ctrl_t * const               p_ctrl,
+                                            rsip_verified_cert_info_t * const p_verified_cert_info);
+fsp_err_t R_RSIP_PKI_VerifiedCertInfoImport(rsip_ctrl_t * const                     p_ctrl,
+                                            rsip_verified_cert_info_t const * const p_verified_cert_info);
 fsp_err_t R_RSIP_PKI_CertKeyImport(rsip_ctrl_t * const        p_ctrl,
                                    uint8_t const * const      p_cert,
                                    uint32_t const             cert_length,
@@ -345,7 +354,7 @@ fsp_err_t R_RSIP_PKI_CertKeyImport(rsip_ctrl_t * const        p_ctrl,
 fsp_err_t R_RSIP_KDF_MACKeyImport(rsip_ctrl_t * const              p_ctrl,
                                   rsip_key_type_t const            key_type,
                                   rsip_wrapped_mac_t const * const p_wrapped_mac,
-                                  uint32_t const                   kdf_data_length,
+                                  uint32_t const                   key_length,
                                   rsip_wrapped_key_t * const       p_wrapped_key);
 fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport(rsip_ctrl_t * const                 p_ctrl,
                                          rsip_key_type_t const               key_type,

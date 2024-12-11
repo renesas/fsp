@@ -57,7 +57,7 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
         sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA256);
     }
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     if (SCE_OEM_CMD_HASH_INIT_TO_SUSPEND == ctx->sce_operation_state)
     {
         ctx->sce_operation_state     = SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND;
@@ -117,7 +117,7 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
         memcpy(&ctx->state[0], out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
     }
 
-  #elif BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+  #elif BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
     InData_MsgLen[0] = BYTES_TO_WORDS(len);
     FSP_PARAMETER_NOT_USED(sce_hash_cmd);
     FSP_PARAMETER_NOT_USED(sce_hash_type);

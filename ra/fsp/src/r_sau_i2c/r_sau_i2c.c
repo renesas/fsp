@@ -70,16 +70,31 @@
  #define SAU_I2C_PRV_UNIT                                 (0)
  #define SAU_REG                                          (R_SAU0)
  #define SAU_I2C_PRV_SPS_REG_INIT                         (SAU_I2C_PRV_SAU0_SPS_REG_INIT)
-#elif 20 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE /* Only IIC20 used (Unit 1 Channel 0) */
- #define SAU_I2C_PRV_CHANNEL                              (0)
- #define SAU_I2C_PRV_UNIT                                 (1)
- #define SAU_REG                                          (R_SAU1)
- #define SAU_I2C_PRV_SPS_REG_INIT                         (SAU_I2C_PRV_SAU1_SPS_REG_INIT)
+#elif 1 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE /* Only IIC01 used (Unit 0 Channel 1) */
+ #define SAU_I2C_PRV_CHANNEL                              (1)
+ #define SAU_I2C_PRV_UNIT                                 (0)
+ #define SAU_REG                                          (R_SAU0)
+ #define SAU_I2C_PRV_SPS_REG_INIT                         (SAU_I2C_PRV_SAU0_SPS_REG_INIT)
+#elif 10 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE /* Only IIC10 used (Unit 0 Channel 2) */
+ #define SAU_I2C_PRV_CHANNEL                              (2)
+ #define SAU_I2C_PRV_UNIT                                 (0)
+ #define SAU_REG                                          (R_SAU0)
+ #define SAU_I2C_PRV_SPS_REG_INIT                         (SAU_I2C_PRV_SAU0_SPS_REG_INIT)
 #elif 11 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE /* Only IIC11 used (Unit 0 Channel 3) */
  #define SAU_I2C_PRV_CHANNEL                              (3)
  #define SAU_I2C_PRV_UNIT                                 (0)
  #define SAU_REG                                          (R_SAU0)
  #define SAU_I2C_PRV_SPS_REG_INIT                         (SAU_I2C_PRV_SAU0_SPS_REG_INIT)
+#elif 20 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE /* Only IIC20 used (Unit 1 Channel 0) */
+ #define SAU_I2C_PRV_CHANNEL                              (0)
+ #define SAU_I2C_PRV_UNIT                                 (1)
+ #define SAU_REG                                          (R_SAU1)
+ #define SAU_I2C_PRV_SPS_REG_INIT                         (SAU_I2C_PRV_SAU1_SPS_REG_INIT)
+#elif 21 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE /* Only IIC21 used (Unit 1 Channel 1) */
+ #define SAU_I2C_PRV_CHANNEL                              (1)
+ #define SAU_I2C_PRV_UNIT                                 (1)
+ #define SAU_REG                                          (R_SAU1)
+ #define SAU_I2C_PRV_SPS_REG_INIT                         (SAU_I2C_PRV_SAU1_SPS_REG_INIT)
 #endif
 
 #if -1 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE /* Multiple IICxx instances used */

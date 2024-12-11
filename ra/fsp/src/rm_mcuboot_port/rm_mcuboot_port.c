@@ -59,11 +59,20 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     BOOT_LOG_DBG("Starting Application Image\n");
     BOOT_LOG_DBG("Image Offset: 0x%x\n", (int) rsp->br_image_off);
 
+#if !defined(MCUBOOT_DIRECT_XIP_MMF)
+
     /* The vector table is located after the header. Only running from internal flash is supported now. */
     uint32_t vector_table = rsp->br_image_off + rsp->br_hdr->ih_hdr_size;
+#else
+
+    /* The vector table is located at start address of MMF region when support MMF on Direct-XIP mode. */
+    uint32_t vector_table = MCUBOOT_MMF_START_ADDR;
+
+    R_BSP_MemoryMirrorAddrSet(rsp->br_image_off + rsp->br_hdr->ih_hdr_size);
+#endif
 
 #if RM_MCUBOOT_DUAL_BANK_ENABLED
- #if BSP_FEATURE_CRYPTO_HAS_RSIP7
+ #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
     if (vector_table & (BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START - BSP_FEATURE_FLASH_CODE_FLASH_START))
  #else
     if (vector_table & (BSP_FEATURE_FLASH_HP_CF_DUAL_BANK_START | BSP_FEATURE_FLASH_LP_CF_DUAL_BANK_START))

@@ -51,14 +51,6 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 /* Minimum FCLK for Flash Operations in Hz */
 #define FLASH_HP_MINIMUM_SUPPORTED_FCLK_FREQ          (4000000U)
 
-/* Smallest Code Flash block size */
-#define FLASH_HP_CODE_SMALL_BLOCK_SZ                  (8192U)
-
-/* Largest Code Flash block size */
-#define FLASH_HP_CODE_LARGE_BLOCK_SZ                  (32768U)
-
-#define FLASH_HP_DATA_BLOCK_SIZE                      (64U)
-
 /** The maximum timeout for commands is 100usec when FCLK is 16 MHz i.e. 1600 FCLK cycles.
  * Assuming worst case of ICLK at 240 MHz and FCLK at 4 MHz, and optimization set to max such that
  * each count decrement loop takes only 5 cycles, then ((240/4)*1600)/5 = 19200 */
@@ -167,6 +159,10 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile flash_hp_prv_ns_callback)(flash_
 #define FLASH_HP_FASTAT_CFAE                          (0x80)
 #define FLASH_HP_FASTAT_CMDLK                         (0x10)
 
+#define FLASH_HP_WAIT_TDSTOP                          (250U)
+#define FLASH_HP_DELAY_LOOP_CYCLES                    (4U)
+#define FLASH_HP_DELAY_NS_PER_US                      (1000U)
+
 #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
  #define FLASH_HP_PRV_DUALSEL_BANKMD_MASK             (0x7U)
  #define FLASH_HP_PRV_BANKSEL_BANKSWP_MASK            (0x7U)
@@ -223,13 +219,13 @@ static const flash_block_info_t g_code_flash_macro_info[] =
     {
         .block_section_st_addr  = 0,
         .block_section_end_addr = UINT16_MAX,
-        .block_size             = FLASH_HP_CODE_SMALL_BLOCK_SZ,
+        .block_size             = BSP_FEATURE_FLASH_HP_CF_REGION0_BLOCK_SIZE,
         .block_size_write       = BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE
     },
     {
         .block_section_st_addr  = BSP_FEATURE_FLASH_HP_CF_REGION0_SIZE,
         .block_section_end_addr = BSP_ROM_SIZE_BYTES - 1,
-        .block_size             = FLASH_HP_CODE_LARGE_BLOCK_SZ,
+        .block_size             = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE,
         .block_size_write       = BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE
     }
 };
@@ -245,7 +241,7 @@ const flash_block_info_t g_data_flash_macro_info[] =
     {
         .block_section_st_addr  = FLASH_HP_DF_START_ADDRESS,
         .block_section_end_addr = FLASH_HP_DF_START_ADDRESS + BSP_DATA_FLASH_SIZE_BYTES - 1,
-        .block_size             = FLASH_HP_DATA_BLOCK_SIZE,
+        .block_size             = BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE,
         .block_size_write       = BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE
     },
 #if FLASH_HP_DF_NUM_REGIONS > 1
@@ -280,6 +276,10 @@ void fcu_frdyi_isr(void);
 /* Internal functions. */
 static fsp_err_t flash_hp_init(flash_hp_instance_ctrl_t * p_ctrl);
 
+#if BSP_FEATURE_FLASH_HP_VERSION == 4
+static void r_flash_hp_delay_ns(uint32_t ns, uint32_t mhz) PLACE_IN_RAM_SECTION __attribute__((noinline));
+
+#endif
 static fsp_err_t flash_hp_enter_pe_df_mode(flash_hp_instance_ctrl_t * const p_ctrl);
 
 static fsp_err_t flash_hp_pe_mode_exit() PLACE_IN_RAM_SECTION;
@@ -462,6 +462,16 @@ fsp_err_t R_FLASH_HP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
         FSP_ERROR_RETURN(p_cfg->irq >= (IRQn_Type) 0, FSP_ERR_IRQ_BSP_DISABLED);
         FSP_ERROR_RETURN(p_cfg->err_irq >= (IRQn_Type) 0, FSP_ERR_IRQ_BSP_DISABLED);
     }
+
+    /* MF4 devices must have HOCO running and stable in order to program and erase flash. */
+ #if BSP_FEATURE_FLASH_HP_VERSION == 4
+
+    /* If HOCO is not operating, return error */
+    FSP_ERROR_RETURN(0U == R_SYSTEM->HOCOCR_b.HCSTP, FSP_ERR_INVALID_STATE);
+
+    /* If HOCO is not stable, return error */
+    FSP_ERROR_RETURN(1U == R_SYSTEM->OSCSF_b.HOCOSF, FSP_ERR_INVALID_STATE);
+ #endif
 #endif
 
     /* Set the parameters struct based on the user supplied settings */
@@ -557,6 +567,9 @@ fsp_err_t R_FLASH_HP_Write (flash_ctrl_t * const p_api_ctrl,
 #endif
     {
 #if (FLASH_HP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
+ #if (BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE == 1)
+        p_ctrl->operations_remaining = num_bytes; // Since one byte will be written at a time
+ #endif
 
         /* Initiate the write operation, may return FSP_ERR_IN_USE via setup_for_pe_mode() */
         err = flash_hp_df_write(p_ctrl);
@@ -915,7 +928,7 @@ fsp_err_t R_FLASH_HP_AccessWindowSet (flash_ctrl_t * const p_api_ctrl,
     FSP_PARAMETER_NOT_USED(start_addr);
     FSP_PARAMETER_NOT_USED(end_addr);
 
-    err = FSP_ERR_UNSUPPORTED;         ///< For consistency with _LP API we return error if Code Flash not enabled
+    err = FSP_ERR_UNSUPPORTED;         // For consistency with _LP API we return error if Code Flash not enabled
 #endif
 
     /* Return status. */
@@ -959,7 +972,7 @@ fsp_err_t R_FLASH_HP_AccessWindowClear (flash_ctrl_t * const p_api_ctrl)
     /* Eliminate warning if code flash programming is disabled. */
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
-    err = FSP_ERR_UNSUPPORTED;         ///< For consistency with _LP API we return error if Code Flash not enabled
+    err = FSP_ERR_UNSUPPORTED;         // For consistency with _LP API we return error if Code Flash not enabled
 #endif
 
     return err;
@@ -1047,7 +1060,7 @@ fsp_err_t R_FLASH_HP_StartUpAreaSelect (flash_ctrl_t * const      p_api_ctrl,
     FSP_PARAMETER_NOT_USED(swap_type);
     FSP_PARAMETER_NOT_USED(is_temporary);
 
-    err = FSP_ERR_UNSUPPORTED;         ///< For consistency with _LP API we return error if Code Flash not enabled
+    err = FSP_ERR_UNSUPPORTED;         // For consistency with _LP API we return error if Code Flash not enabled
 #endif
 
     return err;
@@ -1096,7 +1109,7 @@ fsp_err_t R_FLASH_HP_BankSwap (flash_ctrl_t * const p_api_ctrl)
     /* Eliminate warning if code flash programming is disabled. */
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
-    err = FSP_ERR_UNSUPPORTED;         ///< For consistency with _LP API we return error if Code Flash not enabled
+    err = FSP_ERR_UNSUPPORTED;         // For consistency with _LP API we return error if Code Flash not enabled
 #endif
 
     return err;
@@ -1491,7 +1504,9 @@ fsp_err_t R_FLASH_HP_UserLockableAreaWrite (flash_ctrl_t * const p_api_ctrl,
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, uint32_t write_size, uint32_t timeout)
 {
+#if !(BSP_FEATURE_FLASH_HP_VERSION == 4)
     volatile uint32_t wait_count;
+#endif
 
     if (0 == timeout)
     {
@@ -1504,15 +1519,31 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
 
     /* Issue two part Write commands */
     R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_PROGRAM;
-    R_FACI_HP_CMD->FACI_CMD8 = (uint8_t) (write_size / 2U);
+
+    /* Write 2 bytes at a time */
+    uint32_t line_size = write_size / 2U;
+    uint32_t increment = 2U;
+
+#if (BSP_FEATURE_FLASH_HP_DF_WRITE_SIZE == 1) || (BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE == 1)
+
+    /* Special case for line size of 1, where only 1 byte is written at a time */
+    if (1U == write_size)
+    {
+        line_size = 1;
+        increment = 1;
+    }
+#endif
+
+    R_FACI_HP_CMD->FACI_CMD8 = (uint8_t) line_size;
 
     /* Write one line. If timeout stop the flash and return error. */
-    for (uint32_t i = 0U; i < (write_size / 2U); i++)
+    for (uint32_t i = 0U; i < line_size; i++)
     {
-        wait_count = p_ctrl->timeout_dbfull;
-
         /* Copy data from source address to destination area */
         R_FACI_HP_CMD->FACI_CMD16 = *(uint16_t *) p_ctrl->source_start_address;
+
+#if !(BSP_FEATURE_FLASH_HP_VERSION == 4)
+        wait_count = p_ctrl->timeout_dbfull;
 
         while (R_FACI_HP->FSTATR_b.DBFULL == 1U)
         {
@@ -1524,10 +1555,10 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
                 return FSP_ERR_TIMEOUT;
             }
         }
+#endif
 
-        /* Each write handles 2 bytes of data. */
-        p_ctrl->source_start_address += 2U;
-        p_ctrl->dest_end_address     += 2U;
+        p_ctrl->source_start_address += increment;
+        p_ctrl->dest_end_address     += increment;
         p_ctrl->operations_remaining--;
     }
 
@@ -2200,11 +2231,14 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
 {
     p_ctrl->current_operation = FLASH_OPERATION_NON_BGO;
 
-    /* Allow Access to the Flash registers*/
-    R_SYSTEM->FWEPROR = 0x01U;
-
     uint32_t flash_clock_freq_hz  = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_FCLK);
     uint32_t system_clock_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_ICLK);
+
+#if !(BSP_FEATURE_FLASH_HP_VERSION == 4)
+
+    /* Allow Access to the Flash registers*/
+    R_SYSTEM->FWEPROR = 0x01U;
+#endif
 
     FSP_ERROR_RETURN(flash_clock_freq_hz >= FLASH_HP_MINIMUM_SUPPORTED_FCLK_FREQ, FSP_ERR_FCLK);
 
@@ -2215,6 +2249,18 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
     /* Round up the frequency to a whole number */
     uint32_t system_clock_freq_mhz = (system_clock_freq_hz + (FLASH_HP_FREQUENCY_IN_HZ - 1)) /
                                      FLASH_HP_FREQUENCY_IN_HZ;
+
+#if BSP_FEATURE_FLASH_HP_VERSION == 4
+
+    /* Enable the DataFlash if not already enabled */
+    if (1U != R_FACI_LP->DFLCTL)
+    {
+        R_FACI_LP->DFLCTL = 1U;
+
+        /* Wait for (tDSTOP) before reading from data flash. MREF_INTERNAL_014 */
+        r_flash_hp_delay_ns(FLASH_HP_WAIT_TDSTOP, system_clock_freq_mhz);
+    }
+#endif
 
     /* Set the Clock */
     R_FACI_HP->FPCKAR = (uint16_t) (FLASH_HP_FPCKAR_KEY + flash_clock_freq_mhz);
@@ -2302,6 +2348,45 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
     return FSP_SUCCESS;
 }
 
+#if BSP_FEATURE_FLASH_HP_VERSION == 4
+
+/*******************************************************************************************************************//**
+ * Delay for the given number of nano seconds at the given frequency
+ *
+ * @note This is used instead of R_BSP_SoftwareDelay because that may be linked in code flash.
+ *
+ * @param[in]  ns              Number of nanoseconds to delay
+ * @param[in]  mhz             The frequency of the system clock
+ **********************************************************************************************************************/
+static void r_flash_hp_delay_ns (uint32_t ns, uint32_t mhz)
+{
+    uint32_t loop_cnt;
+
+    /* @80 MHz, one loop is 12.5 ns. A delay of 250 ns would require 20 loops. 20 * 12.5 = 250 ns */
+
+    /* Calculation of a loop count */
+    loop_cnt = ((ns * mhz) / (FLASH_HP_DELAY_LOOP_CYCLES * FLASH_HP_DELAY_NS_PER_US));
+
+    if (loop_cnt > 0U)
+    {
+        __asm volatile ("delay_loop:\n"
+ #if defined(__ICCARM__) || defined(__ARMCC_VERSION) || (defined(__llvm__) && !defined(__CLANG_TIDY__))
+                        "   subs %[loops_remaining], #1         \n"                 // 1 cycle
+ #elif defined(__GNUC__)
+                        "   sub %[loops_remaining], %[loops_remaining], #1      \n" // 1 cycle
+ #endif
+                        "cmp %[loops_remaining], #0\n"                              // 1 cycle
+
+                        "   bne.n delay_loop \n"                                    // 2 cycles
+                        :                                                           // No outputs
+                        :[loops_remaining] "r" (loop_cnt)
+                        :                                                           // No clobbers
+                        );
+    }
+}
+
+#endif
+
 /*******************************************************************************************************************//**
  * Erase the block at the start address in the control block.
  *
@@ -2375,8 +2460,11 @@ static fsp_err_t flash_hp_cf_erase (flash_hp_instance_ctrl_t * p_ctrl, uint32_t 
     err = flash_hp_enter_pe_cf_mode(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
+ #if !(BSP_FEATURE_FLASH_HP_VERSION == 4)
+
     /* Set Erasure Priority Mode*/
     R_FACI_HP->FCPSR = 1U;
+ #endif
 
     while (p_ctrl->operations_remaining && (FSP_SUCCESS == err))
     {
@@ -2449,8 +2537,11 @@ static fsp_err_t flash_hp_df_erase (flash_hp_instance_ctrl_t * p_ctrl, uint32_t 
         wait_count = p_ctrl->timeout_erase_df_block;
     }
 
+ #if !(BSP_FEATURE_FLASH_HP_VERSION == 4)
+
     /* Set Erasure Priority Mode*/
     R_FACI_HP->FCPSR = 1U;
+ #endif
 
     do
     {
@@ -2519,6 +2610,10 @@ static fsp_err_t flash_hp_pe_mode_exit (void)
 #endif
 
         R_BSP_FlashCacheEnable();
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER == 1)
+        R_FACI_LP->PFBER = 1U;
+#endif
+
 #if defined(RENESAS_CORTEX_M85)
 
         /* Invalidate I-Cache after programming code flash. */
@@ -3274,6 +3369,9 @@ static fsp_err_t flash_hp_enter_pe_cf_mode (flash_hp_instance_ctrl_t * const p_c
 
     /* Disable the C-Cache. */
     R_CACHE->CCACTL = 0U;
+ #endif
+ #if BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER
+    R_FACI_LP->PFBER = 0U;
  #endif
 
     /* If interrupts are being used then disable interrupts. */

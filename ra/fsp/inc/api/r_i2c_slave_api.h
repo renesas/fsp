@@ -43,9 +43,10 @@ FSP_HEADER
 /** Communication speed options */
 typedef enum e_i2c_slave_rate
 {
-    I2C_SLAVE_RATE_STANDARD = 100000,  ///< 100 kHz
-    I2C_SLAVE_RATE_FAST     = 400000,  ///< 400 kHz
-    I2C_SLAVE_RATE_FASTPLUS = 1000000  ///< 1 MHz
+    I2C_SLAVE_RATE_STANDARD  = 100000,  ///< 100 kHz
+    I2C_SLAVE_RATE_FAST      = 400000,  ///< 400 kHz
+    I2C_SLAVE_RATE_FASTPLUS  = 1000000, ///< 1 MHz
+    I2C_SLAVE_RATE_HIGHSPEED = 3400000  ///< 3.4 MHz
 } i2c_slave_rate_t;
 
 /** Addressing mode options */

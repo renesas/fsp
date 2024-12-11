@@ -5307,15 +5307,31 @@ typedef struct                         /*!< (@ 0x407FE000) R_FACI_HP Structure  
 
     union
     {
-        __IM uint32_t FPSADDR;         /*!< (@ 0x000000D8) Programmed Area Start Address                              */
-
-        struct
+        union
         {
-            __IM uint32_t PSADR : 19;  /*!< [18..0] Programmed Area Start Address NOTE: Indicates address
-                                        *   of the first programmed data which is found in 'Blank Check'
-                                        *   command execution.                                                        */
-            uint32_t : 13;
-        } FPSADDR_b;
+            __IM uint32_t FPSADDR;        /*!< (@ 0x000000D8) Programmed Area Start Address                              */
+
+            struct
+            {
+                __IM uint32_t PSADR : 19; /*!< [18..0] Programmed Area Start Address NOTE: Indicates address
+                                           *   of the first programmed data which is found in 'Blank Check'
+                                           *   command execution.                                                        */
+                uint32_t : 13;
+            } FPSADDR_b;
+        };
+
+        union
+        {
+            __IOM uint32_t FBCADDR;       /*!< (@ 0x000000D8) Flash Blank Check Address Register                         */
+
+            struct
+            {
+                __IM uint32_t BCADR : 24; /*!< [23..0] Blank Check Address NOTE: Indicates the first fail address
+                                           *   or the last blank checked address which is found in 'Blank
+                                           *   Check' command execution.                                                 */
+                uint32_t : 8;
+            } FBCADDR_b;
+        };
     };
 
     union
@@ -11634,14 +11650,14 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
 
         union
         {
-            __IOM uint8_t LVD1CMPCR;       /*!< (@ 0x00000417) Voltage Monitoring 1 Comparator Control Register           */
+            __IOM uint8_t LVD1CMPCR;      /*!< (@ 0x00000417) Voltage Monitoring 1 Comparator Control Register           */
 
             struct
             {
-                __IOM uint8_t LVD1LVL : 5; /*!< [4..0] Voltage Detection 1 Level Select (Standard voltage during
-                                            *   drop in voltage)                                                          */
-                uint8_t             : 2;
-                __IOM uint8_t LVD1E : 1;   /*!< [7..7] Voltage Detection 1 Enable                                         */
+                __IOM uint8_t LVDLVL : 5; /*!< [4..0] Voltage Detection 1 Level Select (Standard voltage during
+                                           *   drop in voltage)                                                          */
+                uint8_t            : 2;
+                __IOM uint8_t LVDE : 1;   /*!< [7..7] Voltage Detection 1 Enable                                         */
             } LVD1CMPCR_b;
         };
     };
@@ -11663,14 +11679,14 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
 
         union
         {
-            __IOM uint8_t LVD2CMPCR;       /*!< (@ 0x00000418) Voltage Monitoring 2 Comparator Control Register           */
+            __IOM uint8_t LVD2CMPCR;      /*!< (@ 0x00000418) Voltage Monitoring 2 Comparator Control Register           */
 
             struct
             {
-                __IOM uint8_t LVD2LVL : 3; /*!< [2..0] Voltage Detection 2 Level Select (Standard voltage during
-                                            *   drop in voltage)                                                          */
-                uint8_t             : 4;
-                __IOM uint8_t LVD2E : 1;   /*!< [7..7] Voltage Detection 2 Enable                                         */
+                __IOM uint8_t LVDLVL : 3; /*!< [2..0] Voltage Detection 2 Level Select (Standard voltage during
+                                           *   drop in voltage)                                                          */
+                uint8_t            : 4;
+                __IOM uint8_t LVDE : 1;   /*!< [7..7] Voltage Detection 2 Enable                                         */
             } LVD2CMPCR_b;
         };
     };
@@ -16284,6 +16300,9 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
 /* ========================================================  FPSADDR  ======================================================== */
  #define R_FACI_HP_FPSADDR_PSADR_Pos         (0UL)          /*!< PSADR (Bit 0)                                         */
  #define R_FACI_HP_FPSADDR_PSADR_Msk         (0x7ffffUL)    /*!< PSADR (Bitfield-Mask: 0x7ffff)                        */
+/* ========================================================  FBCADDR  ======================================================== */
+ #define R_FACI_HP_FBCADDR_BCADR_Pos         (0UL)          /*!< BCADR (Bit 0)                                         */
+ #define R_FACI_HP_FBCADDR_BCADR_Msk         (0xffffffUL)   /*!< BCADR (Bitfield-Mask: 0xffffff)                       */
 /* ========================================================  FAWMON  ========================================================= */
  #define R_FACI_HP_FAWMON_BTFLG_Pos          (31UL)         /*!< BTFLG (Bit 31)                                        */
  #define R_FACI_HP_FAWMON_BTFLG_Msk          (0x80000000UL) /*!< BTFLG (Bitfield-Mask: 0x01)                           */
@@ -18846,20 +18865,20 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_SYSTEM_LVCMPCR_LVD1E_Pos                (5UL)          /*!< LVD1E (Bit 5)                                         */
  #define R_SYSTEM_LVCMPCR_LVD1E_Msk                (0x20UL)       /*!< LVD1E (Bitfield-Mask: 0x01)                           */
 /* =======================================================  LVD1CMPCR  ======================================================= */
- #define R_SYSTEM_LVD1CMPCR_LVD1LVL_Pos            (0UL)          /*!< LVD1LVL (Bit 0)                                       */
- #define R_SYSTEM_LVD1CMPCR_LVD1LVL_Msk            (0x1fUL)       /*!< LVD1LVL (Bitfield-Mask: 0x1f)                         */
- #define R_SYSTEM_LVD1CMPCR_LVD1E_Pos              (7UL)          /*!< LVD1E (Bit 7)                                         */
- #define R_SYSTEM_LVD1CMPCR_LVD1E_Msk              (0x80UL)       /*!< LVD1E (Bitfield-Mask: 0x01)                           */
+ #define R_SYSTEM_LVD1CMPCR_LVDLVL_Pos             (0UL)          /*!< LVDLVL (Bit 0)                                        */
+ #define R_SYSTEM_LVD1CMPCR_LVDLVL_Msk             (0x1fUL)       /*!< LVDLVL (Bitfield-Mask: 0x1f)                          */
+ #define R_SYSTEM_LVD1CMPCR_LVDE_Pos               (7UL)          /*!< LVDE (Bit 7)                                          */
+ #define R_SYSTEM_LVD1CMPCR_LVDE_Msk               (0x80UL)       /*!< LVDE (Bitfield-Mask: 0x01)                            */
 /* ========================================================  LVDLVLR  ======================================================== */
  #define R_SYSTEM_LVDLVLR_LVD2LVL_Pos              (5UL)          /*!< LVD2LVL (Bit 5)                                       */
  #define R_SYSTEM_LVDLVLR_LVD2LVL_Msk              (0xe0UL)       /*!< LVD2LVL (Bitfield-Mask: 0x07)                         */
  #define R_SYSTEM_LVDLVLR_LVD1LVL_Pos              (0UL)          /*!< LVD1LVL (Bit 0)                                       */
  #define R_SYSTEM_LVDLVLR_LVD1LVL_Msk              (0x1fUL)       /*!< LVD1LVL (Bitfield-Mask: 0x1f)                         */
 /* =======================================================  LVD2CMPCR  ======================================================= */
- #define R_SYSTEM_LVD2CMPCR_LVD2LVL_Pos            (0UL)          /*!< LVD2LVL (Bit 0)                                       */
- #define R_SYSTEM_LVD2CMPCR_LVD2LVL_Msk            (0x7UL)        /*!< LVD2LVL (Bitfield-Mask: 0x07)                         */
- #define R_SYSTEM_LVD2CMPCR_LVD2E_Pos              (7UL)          /*!< LVD2E (Bit 7)                                         */
- #define R_SYSTEM_LVD2CMPCR_LVD2E_Msk              (0x80UL)       /*!< LVD2E (Bitfield-Mask: 0x01)                           */
+ #define R_SYSTEM_LVD2CMPCR_LVDLVL_Pos             (0UL)          /*!< LVDLVL (Bit 0)                                        */
+ #define R_SYSTEM_LVD2CMPCR_LVDLVL_Msk             (0x7UL)        /*!< LVDLVL (Bitfield-Mask: 0x07)                          */
+ #define R_SYSTEM_LVD2CMPCR_LVDE_Pos               (7UL)          /*!< LVDE (Bit 7)                                          */
+ #define R_SYSTEM_LVD2CMPCR_LVDE_Msk               (0x80UL)       /*!< LVDE (Bitfield-Mask: 0x01)                            */
 /* ========================================================  LVD1CR0  ======================================================== */
  #define R_SYSTEM_LVD1CR0_RN_Pos                   (7UL)          /*!< RN (Bit 7)                                            */
  #define R_SYSTEM_LVD1CR0_RN_Msk                   (0x80UL)       /*!< RN (Bitfield-Mask: 0x01)                              */

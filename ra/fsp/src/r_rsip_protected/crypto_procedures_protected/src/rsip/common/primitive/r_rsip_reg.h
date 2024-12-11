@@ -71,12 +71,28 @@
         WR1_ADDR((reg), (&(addr)[15])); \
     }
 #define WR1_PROG(reg, value)    (reg) = (value)
+#define WR2_PROG(reg, value0, value1) \
+    {                                 \
+        WR1_PROG((reg), (value0));    \
+        WR1_PROG((reg), (value1));    \
+    }
 #define WR4_PROG(reg, value0, value1, value2, value3) \
     {                                                 \
         WR1_PROG((reg), (value0));                    \
         WR1_PROG((reg), (value1));                    \
         WR1_PROG((reg), (value2));                    \
         WR1_PROG((reg), (value3));                    \
+    }
+#define WR8_PROG(reg, value0, value1, value2, value3, value4, value5, value6, value7) \
+    {                                                                                 \
+        WR1_PROG((reg), (value0));                                                    \
+        WR1_PROG((reg), (value1));                                                    \
+        WR1_PROG((reg), (value2));                                                    \
+        WR1_PROG((reg), (value3));                                                    \
+        WR1_PROG((reg), (value4));                                                    \
+        WR1_PROG((reg), (value5));                                                    \
+        WR1_PROG((reg), (value6));                                                    \
+        WR1_PROG((reg), (value7));                                                    \
     }
 #define RD1_ADDR(reg, addr)     *(addr) = (reg)
 #define RD4_ADDR(reg, addr)            \
@@ -2598,6 +2614,8 @@
 #endif                                 /* defined(__GNUC__) */
 
 /* Register value */
+#define RSIP_PRV_CMD_REG_0018H    (0x00CB00CBU)
+#define RSIP_PRV_CMD_REG_001CH    (0x00CB00CBU)
 #define RSIP_PRV_CMD_REG_1424H    (0x00CF00CFU)
 #define RSIP_PRV_CMD_REG_1428H    (0x00CF00CFU)
 

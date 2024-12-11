@@ -272,10 +272,10 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
 
     /* Check for required IRQs */
-    FSP_ASSERT(p_cfg->rxi_irq >= 0);
-    FSP_ASSERT(p_cfg->txi_irq >= 0);
-    FSP_ASSERT(p_cfg->tei_irq >= 0);
-    FSP_ASSERT(p_cfg->eri_irq >= 0);
+    FSP_ASSERT(p_extend->rxi_irq >= 0);
+    FSP_ASSERT(p_extend->txi_irq >= 0);
+    FSP_ASSERT(p_extend->tei_irq >= 0);
+    FSP_ASSERT(p_extend->eri_irq >= 0);
     FSP_ASSERT(p_extend->bfd_irq >= 0 || (LIN_MODE_MASTER == p_cfg->mode));
  #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
@@ -1340,10 +1340,10 @@ static void r_sci_b_lin_irqs_cfg (sci_b_lin_instance_ctrl_t * const p_ctrl)
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
 
     /* Required */
-    r_sci_b_lin_irq_cfg(p_cfg->rxi_irq);
-    r_sci_b_lin_irq_cfg(p_cfg->txi_irq);
-    r_sci_b_lin_irq_cfg(p_cfg->tei_irq);
-    r_sci_b_lin_irq_cfg(p_cfg->eri_irq);
+    r_sci_b_lin_irq_cfg(p_extend->rxi_irq);
+    r_sci_b_lin_irq_cfg(p_extend->txi_irq);
+    r_sci_b_lin_irq_cfg(p_extend->tei_irq);
+    r_sci_b_lin_irq_cfg(p_extend->eri_irq);
 
     /* Slave mode only */
     r_sci_b_lin_irq_cfg(p_extend->bfd_irq);
@@ -1365,10 +1365,10 @@ static void r_sci_b_lin_irqs_enable_disable (sci_b_lin_instance_ctrl_t * const p
     lin_cfg_t const * p_cfg = p_ctrl->p_cfg;
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
 
-    irqEnableDisableFunc(p_cfg->rxi_irq, p_cfg->rxi_ipl, p_ctrl);
-    irqEnableDisableFunc(p_cfg->txi_irq, p_cfg->txi_ipl, p_ctrl);
-    irqEnableDisableFunc(p_cfg->tei_irq, p_cfg->tei_ipl, p_ctrl);
-    irqEnableDisableFunc(p_cfg->eri_irq, p_cfg->eri_ipl, p_ctrl);
+    irqEnableDisableFunc(p_extend->rxi_irq, p_extend->rxi_ipl, p_ctrl);
+    irqEnableDisableFunc(p_extend->txi_irq, p_extend->txi_ipl, p_ctrl);
+    irqEnableDisableFunc(p_extend->tei_irq, p_extend->tei_ipl, p_ctrl);
+    irqEnableDisableFunc(p_extend->eri_irq, p_extend->eri_ipl, p_ctrl);
     irqEnableDisableFunc(p_extend->bfd_irq, p_extend->bfd_ipl, p_ctrl);
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
     irqEnableDisableFunc(p_extend->aed_irq, p_extend->aed_ipl, p_ctrl);

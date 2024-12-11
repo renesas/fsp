@@ -64,6 +64,9 @@ extern "C" {
 /** RSA Public Exponent (E) in big endian form  */
   #define RSA_PUBLIC_EXPONENT_BE     (0x00010001)
 
+/** RSA1024 bits */
+  #define RSA_1024_BITS              (1024)
+
 /** RSA2048 bits */
   #define RSA_2048_BITS              (2048)
 
@@ -115,8 +118,7 @@ typedef struct mbedtls_rsa_context
   #if defined(MBEDTLS_THREADING_C)
     mbedtls_threading_mutex_t mutex;   /*!<  Thread-safety mutex. */
   #endif
-}
-mbedtls_rsa_context;
+} mbedtls_rsa_context;
 
  #endif                                /* MBEDTLS_RSA_ALT */
 

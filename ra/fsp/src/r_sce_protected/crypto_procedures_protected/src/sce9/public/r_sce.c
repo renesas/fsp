@@ -302,7 +302,7 @@ fsp_err_t R_SCE_Open (sce_ctrl_t * const p_ctrl, sce_cfg_t const * const p_cfg)
     {
         error_code = R_SCE_SelfCheck2Private();
     }
-#endif 
+#endif
 
     if (FSP_SUCCESS == error_code)
     {
@@ -1569,12 +1569,12 @@ fsp_err_t R_SCE_ECC_secp384r1_EncryptedPrivateKeyWrap (uint8_t                  
  * @param[in]     initial_vector             the initial_vector for user key CBC encrypt
  * @param[in]     encrypted_key              the user key encrypted with AES128-ECB mode
  * @param[out]    wrapped_key                the user Key Generation Information (141 words) of RSA2048 bit
- * 
+ *
  * @retval FSP_SUCCESS                          Normal termination
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
- * 
+ *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/

@@ -15,13 +15,18 @@
  **********************************************************************************************************************/
 
 /* "POEG" in ASCII, used to determine if channel is open. */
-#define POEG_OPEN                (0x00475054ULL)
+#define POEG_OPEN                 (0x00475054ULL)
 
-#define POEG_PRV_STATUS_FLAGS    (R_GPT_POEG0_POEGG_ST_Msk | R_GPT_POEG0_POEGG_SSF_Msk | R_GPT_POEG0_POEGG_OSTPF_Msk | \
-                                  R_GPT_POEG0_POEGG_IOCF_Msk | R_GPT_POEG0_POEGG_PIDF_Msk)
-
-#define POEG_PRV_FLAG_CLEAR      (R_GPT_POEG0_POEGG_SSF_Msk | R_GPT_POEG0_POEGG_OSTPF_Msk | R_GPT_POEG0_POEGG_IOCF_Msk | \
-                                  R_GPT_POEG0_POEGG_PIDF_Msk)
+#if BSP_FEATURE_POEG_HAS_POEGG_DERRST
+ #define POEG_PRV_STATUS_FLAGS    (R_GPT_POEG0_POEGG_ST_Msk | R_GPT_POEG0_POEGG_SSF_Msk |       \
+                                   R_GPT_POEG0_POEGG_OSTPF_Msk | R_GPT_POEG0_POEGG_IOCF_Msk |   \
+                                   R_GPT_POEG0_POEGG_PIDF_Msk | R_GPT_POEG0_POEGG_DERR0ST_Msk | \
+                                   R_GPT_POEG0_POEGG_DERR1ST_Msk)
+#else
+ #define POEG_PRV_STATUS_FLAGS    (R_GPT_POEG0_POEGG_ST_Msk | R_GPT_POEG0_POEGG_SSF_Msk |     \
+                                   R_GPT_POEG0_POEGG_OSTPF_Msk | R_GPT_POEG0_POEGG_IOCF_Msk | \
+                                   R_GPT_POEG0_POEGG_PIDF_Msk)
+#endif
 
 /***********************************************************************************************************************
  * Typedef definitions

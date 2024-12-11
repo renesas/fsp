@@ -85,8 +85,8 @@ typedef enum e_elc_event_ra8t1
     ELC_EVENT_AGT1_COMPARE_B                = (0x04B), // Compare match B
     ELC_EVENT_IWDT_UNDERFLOW                = (0x052), // IWDT underflow
     ELC_EVENT_WDT0_UNDERFLOW                = (0x053), // WDT0 underflow
-    ELC_EVENT_USBFS_FIFO_0                  = (0x058), // DMA transfer request 0
-    ELC_EVENT_USBFS_FIFO_1                  = (0x059), // DMA transfer request 1
+    ELC_EVENT_USBFS_FIFO_0                  = (0x058), // DMA/DTC transfer request 0
+    ELC_EVENT_USBFS_FIFO_1                  = (0x059), // DMA/DTC transfer request 1
     ELC_EVENT_USBFS_INT                     = (0x05A), // USBFS interrupt
     ELC_EVENT_USBFS_RESUME                  = (0x05B), // USBFS resume interrupt
     ELC_EVENT_IIC0_RXI                      = (0x05C), // Receive data full

@@ -30,6 +30,7 @@
 
  #include "mbedtls/rsa.h"
  #include "bignum_core.h"
+ #include "bignum_internal.h"
  #include "rsa_alt_helpers.h"
  #include "rsa_internal.h"
  #include "mbedtls/oid.h"
@@ -1280,7 +1281,7 @@ int mbedtls_rsa_public(mbedtls_rsa_context *ctx,
     }
 
     olen = ctx->len;
-    MBEDTLS_MPI_CHK(mbedtls_mpi_exp_mod(&T, &T, &ctx->E, &ctx->N, &ctx->RN));
+    MBEDTLS_MPI_CHK(mbedtls_mpi_exp_mod_unsafe(&T, &T, &ctx->E, &ctx->N, &ctx->RN));
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(&T, output, olen));
 
 cleanup:
@@ -1449,11 +1450,9 @@ int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
     /* Temporaries holding the blinded exponents for
      * the mod p resp. mod q computation (if used). */
     mbedtls_mpi DP_blind, DQ_blind;
-
 #else
     /* Temporary holding the blinded exponent (if used). */
     mbedtls_mpi D_blind;
-
 #endif /* MBEDTLS_RSA_NO_CRT */
 
     /* Temporaries holding the initial input and the double
@@ -1504,7 +1503,6 @@ int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
         goto cleanup;
     }
 
-
     /*
      * Blinding
      * T = T * Vi mod N
@@ -1514,6 +1512,7 @@ int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
     MBEDTLS_MPI_CHK(mbedtls_mpi_mod_mpi(&T, &T, &ctx->N));
 
     MBEDTLS_MPI_CHK(mbedtls_mpi_copy(&input_blinded, &T));
+
     /*
      * Exponent blinding
      */
@@ -1529,7 +1528,6 @@ int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
     MBEDTLS_MPI_CHK(mbedtls_mpi_mul_mpi(&D_blind, &P1, &Q1));
     MBEDTLS_MPI_CHK(mbedtls_mpi_mul_mpi(&D_blind, &D_blind, &R));
     MBEDTLS_MPI_CHK(mbedtls_mpi_add_mpi(&D_blind, &D_blind, &ctx->D));
-
 #else
     /*
      * DP_blind = ( P - 1 ) * R + DP
@@ -1540,7 +1538,6 @@ int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
     MBEDTLS_MPI_CHK(mbedtls_mpi_add_mpi(&DP_blind, &DP_blind,
                                         &ctx->DP));
 
-
     /*
      * DQ_blind = ( Q - 1 ) * R + DQ
      */
@@ -1549,7 +1546,6 @@ int mbedtls_rsa_private(mbedtls_rsa_context *ctx,
     MBEDTLS_MPI_CHK(mbedtls_mpi_mul_mpi(&DQ_blind, &Q1, &R));
     MBEDTLS_MPI_CHK(mbedtls_mpi_add_mpi(&DQ_blind, &DQ_blind,
                                         &ctx->DQ));
-
 #endif /* MBEDTLS_RSA_NO_CRT */
 
 #if defined(MBEDTLS_RSA_NO_CRT)
@@ -2292,7 +2288,6 @@ int mbedtls_rsa_rsassa_pss_sign_ext(mbedtls_rsa_context *ctx,
     return rsa_rsassa_pss_sign(ctx, f_rng, p_rng, md_alg,
                                hashlen, hash, saltlen, sig);
 }
-
 
 /*
  * Implementation of the PKCS#1 v2.1 RSASSA-PSS-SIGN function

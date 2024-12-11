@@ -372,7 +372,7 @@ rsip_ret_t r_rsip_sha1sha2_init_final(rsip_hash_type_t hash_type,
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
 rsip_ret_t r_rsip_sha1sha2_resume_final(rsip_hash_type_t hash_type,
-                                        const uint8_t  * p_message,
+                                        uint8_t        * p_message,
                                         uint64_t         message_length,
                                         uint64_t         total_message_length,
                                         uint8_t        * p_digest,
@@ -393,7 +393,7 @@ rsip_ret_t r_rsip_sha1sha2_resume_final(rsip_hash_type_t hash_type,
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
 rsip_ret_t r_rsip_sha1sha2_final(rsip_hash_type_t hash_type,
-                                 const uint8_t  * p_message,
+                                 uint8_t        * p_message,
                                  uint64_t         message_length,
                                  uint64_t         total_message_length,
                                  uint8_t        * p_digest,
@@ -519,7 +519,7 @@ rsip_ret_t r_rsip_hmac_resume_final(const rsip_wrapped_key_t * p_wrapped_key,
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
 rsip_ret_t r_rsip_hmac_final(const rsip_wrapped_key_t * p_wrapped_key,
-                             const uint8_t            * p_message,
+                             uint8_t                  * p_message,
                              uint64_t                   message_length,
                              uint64_t                   total_message_length,
                              uint8_t                  * p_mac,
@@ -588,7 +588,7 @@ rsip_ret_t r_rsip_hmac_resume_verify(const rsip_wrapped_key_t * p_wrapped_key,
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
 rsip_ret_t r_rsip_hmac_verify(const rsip_wrapped_key_t * p_wrapped_key,
-                              const uint8_t            * p_message,
+                              uint8_t                  * p_message,
                               uint64_t                   message_length,
                               uint64_t                   total_message_length,
                               const uint8_t            * p_mac,
@@ -623,16 +623,20 @@ rsip_ret_t r_rsip_kdf_hmac_init_update(const rsip_wrapped_key_t * p_wrapped_key,
  *
  * @note Message length must be at least 1 block.
  *
- * @param[in]     p_wrapped_key  Pointer to wrapped key of HMAC key.
- * @param[in]     p_message      Pointer to message. The length is message_length.
- * @param[in]     message_length Byte length of message.
- * @param[in,out] internal_state Buffer of internal state.
+ * @param[in]     p_wrapped_key      Pointer to wrapped key of HMAC key.
+ * @param[in]     p_message          Pointer to message. The length is message_length.
+ * @param[in]     message_length     Byte length of message.
+ * @param[in]     p_wrapped_msg      Pointer to wrapped message. The length is message_length.
+ * @param[in]     wrapped_msg_length Byte length of wrapped message.
+ * @param[in,out] internal_state     Buffer of internal state.
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
 rsip_ret_t r_rsip_kdf_hmac_resume_update(const rsip_wrapped_key_t * p_wrapped_key,
                                          const uint8_t            * p_message,
                                          uint64_t                   message_length,
+                                         const uint8_t            * p_wrapped_msg,
+                                         uint64_t                   wrapped_msg_length,
                                          uint32_t                 * internal_state);
 
 /*******************************************************************************************************************//**

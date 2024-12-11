@@ -15,7 +15,7 @@
  **********************************************************************************************************************/
 
 /* D/A Control Register Mask */
-/** Driver ID (DTC in ASCII), used to identify Digital to Analog Converter (DAC) configuration  */
+/** Driver ID (DAC in ASCII), used to identify Digital to Analog Converter (DAC) configuration  */
 #define DAC_OPEN                                     (0x44414300)
 #define DAC_DAADSCR_REG_DAADST_BIT_POS               (0x07U)
 #define DAC_DAADUSR_REG_MASK                         BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
@@ -29,7 +29,6 @@
 #elif 0x02U == BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
  #define DAC_ADC_UNIT                                (1)
 #endif
-#define DAC_MAX_CHANNELS_PER_UNIT                    (2U)
 
 /* Conversion time with Output Amplifier. See hardware manual (see Table 60.44
  *'D/A conversion characteristics' of the RA6M3 manual R01UH0886EJ0100). */
@@ -37,6 +36,8 @@
 
 #define DAC_VREF_DISCHARGING_DELAY_US                (10)
 #define DAC_INTERNAL_VREF_WAIT_TIME_US               (5)
+#define DAC12_CHANNEL_COUNT                          (BSP_FEATURE_DAC12_CHANNELS_PER_UNIT * \
+                                                      BSP_FEATURE_DAC12_UNIT_COUNT)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -97,24 +98,25 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
 #if DAC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_ctrl);
-    FSP_ERROR_RETURN(p_cfg->channel < (uint8_t) BSP_FEATURE_DAC_MAX_CHANNELS, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(p_cfg->channel < (uint8_t) DAC12_CHANNEL_COUNT, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     FSP_ERROR_RETURN(false == p_ctrl->channel_opened, FSP_ERR_ALREADY_OPEN);
- #if (BSP_FEATURE_DAC_HAS_CHARGEPUMP || BSP_FEATURE_DAC_HAS_DAVREFCRP)
+ #if (BSP_FEATURE_DAC_HAS_CHARGEPUMP || BSP_FEATURE_DAC_HAS_DAVREFCR)
     FSP_ASSERT(NULL != p_cfg->p_extend)
  #endif
 #endif
 
-#if (BSP_FEATURE_DAC_MAX_CHANNELS > 2U)
-    uint8_t unit = p_cfg->channel / DAC_MAX_CHANNELS_PER_UNIT;
+#if (DAC12_CHANNEL_COUNT > 2U)
+    uint8_t unit = p_cfg->channel / BSP_FEATURE_DAC12_CHANNELS_PER_UNIT;
     p_ctrl->p_reg = (R_DAC_Type *) ((uint32_t) R_DAC0 + (unit * ((uint32_t) R_DAC1 - (uint32_t) R_DAC0)));
 #else
     p_ctrl->p_reg = R_DAC;
 #endif
 
-    p_ctrl->channel_index = p_cfg->channel % DAC_MAX_CHANNELS_PER_UNIT;
+    p_ctrl->channel_index = p_cfg->channel % BSP_FEATURE_DAC12_CHANNELS_PER_UNIT;
 
     /* Power on the DAC device. */
-    R_BSP_MODULE_START(FSP_IP_DAC, p_cfg->channel / DAC_MAX_CHANNELS_PER_UNIT);
+    uint8_t dac_unit = p_cfg->channel / BSP_FEATURE_DAC12_CHANNELS_PER_UNIT;
+    R_BSP_MODULE_START(FSP_IP_DAC, dac_unit);
 
     /* Added this to a separate block to avoid redeclaration of
      * critical section variable under module start macro. */

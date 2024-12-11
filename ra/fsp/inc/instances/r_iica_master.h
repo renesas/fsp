@@ -41,7 +41,7 @@ typedef struct iica_master_clock_settings
     uint8_t                iicwh_value;    // High-level period of SCL clock
     uint8_t                iicwl_value;    // Low-level period of SCL clock
     uint8_t                digital_filter; // Digital filter operation select
-    iica_master_comm_rez_t comm_rez;       // Communication reservation select
+    iica_master_comm_rez_t comm_rez;       // Setting for communication reservation select will be deprecated
 } iica_master_clock_settings_t;
 
 /** Configuration settings for IICA pins */
@@ -58,8 +58,8 @@ typedef struct st_iica_master_instance_ctrl
     uint32_t                 slave;     // The address of the slave device
     i2c_master_addr_mode_t   addr_mode; // Indicates how slave fields should be interpreted
 
-    uint32_t      open;                 // Flag to determine if the device is open
-    R_IICA_Type * p_reg;                // Base register for this channel
+    uint32_t       open;                // Flag to determine if the device is open
+    R_IICA0_Type * p_reg;               // Base register for this channel
 
     /* Current transfer information. */
     uint8_t * p_buff;                   // Holds the data associated with the transfer

@@ -15,6 +15,10 @@
 
 #define RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA256_MIN    (32U)
 #define RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA256_MAX    (64U)
+#define RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA384_MIN    (48U)
+#define RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA384_MAX    (64U)
+#define RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA512_MIN    (64U)
+#define RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA512_MAX    (64U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -34,6 +38,34 @@ static rsip_ret_t kdf_hmac_update(rsip_ctrl_t * const p_ctrl,
                                   const uint8_t     * p_message,
                                   uint32_t            message_length);
 static rsip_ret_t kdf_hmac_sign_finish(rsip_ctrl_t * const p_ctrl, uint8_t * p_mac);
+
+static const uint8_t gs_convert_to_hmac_subtype[] =
+{
+    [RSIP_KEY_KDF_HMAC_SHA256] = RSIP_KEY_HMAC_SHA256,
+    [RSIP_KEY_KDF_HMAC_SHA384] = RSIP_KEY_HMAC_SHA384,
+    [RSIP_KEY_KDF_HMAC_SHA512] = RSIP_KEY_HMAC_SHA512,
+};
+
+static const uint8_t gs_convert_to_kdf_hmac_subtype[] =
+{
+    [RSIP_KEY_HMAC_SHA256] = RSIP_KEY_KDF_HMAC_SHA256,
+    [RSIP_KEY_HMAC_SHA384] = RSIP_KEY_KDF_HMAC_SHA384,
+    [RSIP_KEY_HMAC_SHA512] = RSIP_KEY_KDF_HMAC_SHA512,
+};
+
+static const uint8_t gs_kdf_hmac_byte_length_min[] =
+{
+    [RSIP_KEY_KDF_HMAC_SHA256] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA256_MIN,
+    [RSIP_KEY_KDF_HMAC_SHA384] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA384_MIN,
+    [RSIP_KEY_KDF_HMAC_SHA512] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA512_MIN,
+};
+
+static const uint8_t gs_kdf_hmac_byte_length_max[] =
+{
+    [RSIP_KEY_KDF_HMAC_SHA256] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA256_MAX,
+    [RSIP_KEY_KDF_HMAC_SHA384] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA384_MAX,
+    [RSIP_KEY_KDF_HMAC_SHA512] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA512_MAX,
+};
 
 /***********************************************************************************************************************
  * Global variables
@@ -57,13 +89,16 @@ static rsip_ret_t kdf_hmac_sign_finish(rsip_ctrl_t * const p_ctrl, uint8_t * p_m
  * @parblock
  * Argument key_type must be one of the following:
  *  - @ref RSIP_KEY_TYPE_HMAC_SHA256
- *  - @ref RSIP_KEY_TYPE_HMAC_SHA384 (*)
- *  - @ref RSIP_KEY_TYPE_HMAC_SHA512 (*)
- *
- * (*) These features are not supported in this version.
+ *  - @ref RSIP_KEY_TYPE_HMAC_SHA384
+ *  - @ref RSIP_KEY_TYPE_HMAC_SHA512
  *
  * The argument p_wrapped_mac must be input the result of R_RSIP_KDF_HMAC_SignFinish().
  * @endparblock
+ *
+ * Argument kdf_data_length depends on key type.
+ * - 32 to 64 ( @ref RSIP_KEY_TYPE_HMAC_SHA256)
+ * - 48 to 64 ( @ref RSIP_KEY_TYPE_HMAC_SHA384)
+ * - 64       ( @ref RSIP_KEY_TYPE_HMAC_SHA512)
  *
  * @par State transition
  * This API can only be executed in **STATE_MAIN**, and does not cause any state transitions.
@@ -84,12 +119,13 @@ static rsip_ret_t kdf_hmac_sign_finish(rsip_ctrl_t * const p_ctrl, uint8_t * p_m
 fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
                                    rsip_key_type_t const            key_type,
                                    rsip_wrapped_mac_t const * const p_wrapped_mac,
-                                   uint32_t const                   kdf_data_length,
+                                   uint32_t const                   key_length,
                                    rsip_wrapped_key_t * const       p_wrapped_key)
 {
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
-    uint8_t subtype = RSIP_KEY_KDF_HMAC_SHA256;
+    uint8_t subtype = gs_convert_to_kdf_hmac_subtype[r_rsip_key_type_to_subtype(key_type)];
+    FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FAIL);
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
@@ -98,23 +134,22 @@ fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Check key type */
-    FSP_ERROR_RETURN(RSIP_KEY_TYPE_HMAC_SHA256 == key_type, FSP_ERR_CRYPTO_RSIP_FAIL);
+    uint8_t alg = r_rsip_key_type_to_alg(key_type);
+    FSP_ERROR_RETURN(RSIP_ALG_HMAC == alg, FSP_ERR_CRYPTO_RSIP_FAIL);
 
     /* Check configuration */
     FSP_ERROR_RETURN(gp_func_kdf_mac_key_import[subtype], FSP_ERR_NOT_ENABLED);
-#else
-    FSP_PARAMETER_NOT_USED(key_type);
 #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
 
     /* Check length */
-    FSP_ERROR_RETURN(RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA256_MIN <= kdf_data_length, FSP_ERR_INVALID_SIZE);
-    FSP_ERROR_RETURN(RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA256_MAX >= kdf_data_length, FSP_ERR_INVALID_SIZE);
+    FSP_ERROR_RETURN(gs_kdf_hmac_byte_length_min[subtype] <= key_length, FSP_ERR_INVALID_SIZE);
+    FSP_ERROR_RETURN(gs_kdf_hmac_byte_length_max[subtype] >= key_length, FSP_ERR_INVALID_SIZE);
 
-    uint32_t blocks[1] = {bswap_32big((RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA256_MIN == kdf_data_length) ? 1 : 2)};
-    uint32_t len[1]    = {bswap_32big(kdf_data_length)};
+    uint32_t blocks[1] = {bswap_32big((gs_kdf_hmac_byte_length_min[subtype] == key_length) ? 1 : 2)};
+    uint32_t len[1]    = {bswap_32big(key_length)};
 
     /* Call function */
     rsip_ret_t rsip_ret = gp_func_kdf_mac_key_import[subtype]((const uint32_t *) p_wrapped_mac->value,
@@ -165,10 +200,8 @@ fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
  * @parblock
  * Argument key_type must be one of the following:
  *  - @ref RSIP_KEY_TYPE_HMAC_SHA256
- *  - @ref RSIP_KEY_TYPE_HMAC_SHA384 (*)
- *  - @ref RSIP_KEY_TYPE_HMAC_SHA512 (*)
- *
- * (*) These features are not supported in this version.
+ *  - @ref RSIP_KEY_TYPE_HMAC_SHA384
+ *  - @ref RSIP_KEY_TYPE_HMAC_SHA512
  * @endparblock
  *
  * @par State transition
@@ -192,7 +225,8 @@ fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_
 {
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
-    uint8_t subtype = RSIP_KEY_KDF_HMAC_SHA256;
+    uint8_t subtype = gs_convert_to_kdf_hmac_subtype[r_rsip_key_type_to_subtype(key_type)];
+    FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FAIL);
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
@@ -201,12 +235,11 @@ fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Check key type */
-    FSP_ERROR_RETURN(RSIP_KEY_TYPE_HMAC_SHA256 == key_type, FSP_ERR_CRYPTO_RSIP_FAIL);
+    uint8_t alg = r_rsip_key_type_to_alg(key_type);
+    FSP_ERROR_RETURN(RSIP_ALG_HMAC == alg, FSP_ERR_CRYPTO_RSIP_FAIL);
 
     /* Check configuration */
     FSP_ERROR_RETURN(gp_func_kdf_ecdh_secret_key_import[subtype], FSP_ERR_NOT_ENABLED);
-#else
-    FSP_PARAMETER_NOT_USED(key_type);
 #endif
 
     /* Check state */
@@ -276,6 +309,7 @@ fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_
  * @retval FSP_ERR_NOT_OPEN                      Module is not open.
  * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
  * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
  * @retval FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL      Input key value is illegal.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_key)
@@ -283,8 +317,6 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
-    uint8_t subtype = RSIP_KEY_HMAC_SHA256; // for g_hmac_enabled
-
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_key);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -292,6 +324,17 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
     /* Check key type */
     FSP_ERROR_RETURN((RSIP_ALG_KDF_HMAC == p_wrapped_key->alg) || (RSIP_ALG_HMAC == p_wrapped_key->alg),
                      FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+#endif
+
+    /* Get subtype in RSIP_KEY_HMAC_SHAxxx format */
+    uint8_t subtype = p_wrapped_key->subtype;
+    if(RSIP_ALG_KDF_HMAC == p_wrapped_key->alg)
+    {
+        subtype = gs_convert_to_hmac_subtype[subtype];
+        FSP_ERROR_RETURN(subtype < RSIP_KEY_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FAIL);
+    }
+
+#if RSIP_CFG_PARAM_CHECKING_ENABLE
 
     /* Check configuration */
     FSP_ERROR_RETURN(g_hmac_enabled[subtype], FSP_ERR_NOT_ENABLED);
@@ -312,7 +355,22 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
     memcpy(p_handle->wrapped_key, p_wrapped_key, RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_MAX);
 
     /* Set block size */
-    p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA1_SHA224_SHA256;
+    switch(subtype)
+    {
+        /* SHA-256 */
+        case RSIP_KEY_HMAC_SHA256:
+        {
+            p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA1_SHA224_SHA256;
+            break;
+        }
+
+        /* SHA-384, SHA-512 */
+        default:
+        {
+            p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA384_SHA512;
+            break;
+        }
+    }
 
     /* State transition */
     p_instance_ctrl->state = RSIP_STATE_KDF_HMAC;
@@ -358,8 +416,32 @@ fsp_err_t R_RSIP_KDF_HMAC_MACUpdate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_ma
     memcpy(p_handle->wrapped_msg, p_wrapped_mac->value, RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MSG_MAX);
 
     /* Set length */
-    p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA256;
-    p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_DIGEST_SHA256;
+    switch(p_wrapped_mac->subtype)
+    {
+        /* SHA-256 */
+        case RSIP_KEY_KDF_HMAC_SHA256:
+        {
+            p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA256;
+            p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_DIGEST_SHA256;
+            break;
+        }
+
+        /* SHA-384 */
+        case RSIP_KEY_KDF_HMAC_SHA384:
+        {
+            p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA384;
+            p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_DIGEST_SHA384;
+            break;
+        }
+
+        /* SHA-512 */
+        default:
+        {
+            p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA512;
+            p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_DIGEST_SHA512;
+            break;
+        }
+    }
 
     return FSP_SUCCESS;
 }
@@ -391,7 +473,6 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
 {
     rsip_instance_ctrl_t   * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
     rsip_kdf_hmac_handle_t * p_handle        = &p_instance_ctrl->handle.kdf_hmac;
-    uint8_t subtype = RSIP_KEY_KDF_HMAC_SHA256;
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
@@ -399,10 +480,20 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    /* Get subtype in RSIP_KEY_KDF_HMAC_SHAxxx format */
+    rsip_wrapped_key_t * p_wrapped_key = (rsip_wrapped_key_t *) p_handle->wrapped_key;
+    uint8_t              subtype       = p_wrapped_key->subtype;
+    if(RSIP_ALG_HMAC == p_wrapped_key->alg)
+    {
+        subtype = gs_convert_to_kdf_hmac_subtype[subtype];
+        FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FATAL);
+    }
+
     /* Set function */
     rsip_func_kdf_ecdh_secret_key_import_t p_func = gp_func_kdf_ecdh_secret_msg_wrap[subtype];
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
+
     /* Check configuration */
     FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
 #endif
@@ -423,8 +514,32 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
         case RSIP_RET_PASS:
         {
             /* Set length */
-            p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_ECDH_WRAPPED_SECRET_256;
-            p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_256_PARAM;
+            switch(p_wrapped_secret->type)
+            {
+                /* ECC secp256r1 */
+                case RSIP_KEY_ECC_SECP256R1:
+                {
+                    p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_ECDH_WRAPPED_SECRET_256;
+                    p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_256_PARAM;
+                    break;
+                }
+
+                /* ECC secp384r1 */
+                case RSIP_KEY_ECC_SECP384R1:
+                {
+                    p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_ECDH_WRAPPED_SECRET_384;
+                    p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_384_PARAM;
+                    break;
+                }
+
+                /* ECC secp521r1 */
+                default:
+                {
+                    p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_ECDH_WRAPPED_SECRET_521;
+                    p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_521_PARAM;
+                    break;
+                }
+            }
 
             err = FSP_SUCCESS;
             break;
@@ -619,14 +734,24 @@ fsp_err_t R_RSIP_KDF_HMAC_Update (rsip_ctrl_t * const   p_ctrl,
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_SignFinish (rsip_ctrl_t * const p_ctrl, rsip_wrapped_mac_t * const p_wrapped_mac)
 {
-    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
-    fsp_err_t              err             = FSP_ERR_CRYPTO_RSIP_FATAL;
+    rsip_instance_ctrl_t   * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+    rsip_kdf_hmac_handle_t * p_handle        = &p_instance_ctrl->handle.kdf_hmac;
+    fsp_err_t                err             = FSP_ERR_CRYPTO_RSIP_FATAL;
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_mac);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
+
+    /* Get subtype in RSIP_KEY_KDF_HMAC_SHAxxx format */
+    rsip_wrapped_key_t * p_wrapped_key = (rsip_wrapped_key_t *) p_handle->wrapped_key;
+    uint8_t              subtype       = p_wrapped_key->subtype;
+    if(RSIP_ALG_HMAC == p_wrapped_key->alg)
+    {
+        subtype = gs_convert_to_kdf_hmac_subtype[subtype];
+        FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FATAL);
+    }
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_KDF_HMAC == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -643,9 +768,33 @@ fsp_err_t R_RSIP_KDF_HMAC_SignFinish (rsip_ctrl_t * const p_ctrl, rsip_wrapped_m
             p_instance_ctrl->state = RSIP_STATE_MAIN;
 
             p_wrapped_mac->alg          = RSIP_ALG_KDF_HMAC;
-            p_wrapped_mac->subtype      = RSIP_KEY_KDF_HMAC_SHA256;
-            p_wrapped_mac->block_length = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA256;
             p_wrapped_mac->blocks       = 1;
+            switch(subtype)
+            {
+                /* SHA-256 */
+                case RSIP_KEY_KDF_HMAC_SHA256:
+                {
+                    p_wrapped_mac->subtype      = RSIP_KEY_KDF_HMAC_SHA256;
+                    p_wrapped_mac->block_length = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA256;
+                    break;
+                }
+
+                /* SHA-384 */
+                case RSIP_KEY_KDF_HMAC_SHA384:
+                {
+                    p_wrapped_mac->subtype      = RSIP_KEY_KDF_HMAC_SHA384;
+                    p_wrapped_mac->block_length = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA384;
+                    break;
+                }
+
+                /* SHA-512 */
+                default:
+                {
+                    p_wrapped_mac->subtype      = RSIP_KEY_KDF_HMAC_SHA512;
+                    p_wrapped_mac->block_length = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA512;
+                    break;
+                }
+            }
 
             err = FSP_SUCCESS;
             break;
@@ -856,10 +1005,8 @@ fsp_err_t R_RSIP_KDF_MACConcatenate (rsip_wrapped_mac_t * const       p_wrapped_
  *  - @ref RSIP_KEY_TYPE_AES_128
  *  - @ref RSIP_KEY_TYPE_AES_256
  *  - @ref RSIP_KEY_TYPE_HMAC_SHA256
- *  - @ref RSIP_KEY_TYPE_HMAC_SHA384 (*)
- *  - @ref RSIP_KEY_TYPE_HMAC_SHA512 (*)
- *
- * (*) These features are not supported in this version.
+ *  - @ref RSIP_KEY_TYPE_HMAC_SHA384
+ *  - @ref RSIP_KEY_TYPE_HMAC_SHA512
  * @endparblock
  *
  * @par State transition
@@ -895,6 +1042,7 @@ fsp_err_t R_RSIP_KDF_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
     rsip_func_kdf_derived_key_import_t p_func = select_func_derived_key_import(p_wrapped_mac->subtype, key_type);
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
+
     /* Check configuration */
     FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
 #endif
@@ -987,13 +1135,14 @@ fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
     /* Check mac type */
-    FSP_ERROR_RETURN(RSIP_KEY_KDF_HMAC_SHA256 == p_wrapped_mac->subtype, FSP_ERR_CRYPTO_RSIP_FAIL);
+    FSP_ERROR_RETURN(RSIP_ALG_KDF_HMAC == p_wrapped_mac->alg, FSP_ERR_CRYPTO_RSIP_FAIL);
 #endif
 
     /* Set function */
     rsip_func_kdf_derived_iv_wrap_t p_func = gp_func_kdf_derived_iv_wrap[p_wrapped_mac->subtype][initial_vector_type];
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
+
     /* Check configuration */
     FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
 #endif
@@ -1122,6 +1271,8 @@ static rsip_ret_t kdf_hmac_update (rsip_ctrl_t * const p_ctrl, const uint8_t * p
             ret = r_rsip_kdf_hmac_resume_update((rsip_wrapped_key_t *) p_handle->wrapped_key,
                                                 p_message,
                                                 message_length,
+                                                p_handle->wrapped_msg,
+                                                p_handle->wrapped_msg_length,
                                                 p_handle->internal_state);
             break;
         }

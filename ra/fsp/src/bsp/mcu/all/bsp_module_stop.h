@@ -329,17 +329,13 @@ FSP_HEADER
 #define BSP_MSTP_REG_FSP_IP_SDADC(channel)              R_MSTP->MSTPCRD
 #define BSP_MSTP_BIT_FSP_IP_SDADC(channel)              (1U << (17U - channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_SDADC(channel)         uint32_t
-#if (BSP_FEATURE_DAC_MAX_CHANNELS > 2U)
- #define BSP_MSTP_REG_FSP_IP_DAC(channel)               R_MSTP->MSTPCRD
- #define BSP_MSTP_BIT_FSP_IP_DAC(channel)               (1U << (20U - channel));
- #define BSP_MSTP_REG_TYPE_FSP_IP_DAC(channel)          uint32_t
-#else
+#define BSP_MSTP_REG_FSP_IP_DAC(channel)                R_MSTP->MSTPCRD
+#define BSP_MSTP_BIT_FSP_IP_DAC(channel)                (1U << (20U - channel));
+#define BSP_MSTP_REG_TYPE_FSP_IP_DAC(channel)           uint32_t
+#if (BSP_PERIPHERAL_DAC8_PRESENT)
  #define BSP_MSTP_REG_FSP_IP_DAC8(channel)              R_MSTP->MSTPCRD
  #define BSP_MSTP_BIT_FSP_IP_DAC8(channel)              (1U << (19U));
  #define BSP_MSTP_REG_TYPE_FSP_IP_DAC8(channel)         uint32_t
- #define BSP_MSTP_REG_FSP_IP_DAC(channel)               R_MSTP->MSTPCRD
- #define BSP_MSTP_BIT_FSP_IP_DAC(channel)               (1U << (20U));
- #define BSP_MSTP_REG_TYPE_FSP_IP_DAC(channel)          uint32_t
 #endif
 #define BSP_MSTP_REG_FSP_IP_TSN(channel)                R_MSTP->MSTPCRD
 #define BSP_MSTP_BIT_FSP_IP_TSN(channel)                (1U << (22U - channel));

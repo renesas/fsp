@@ -52,6 +52,7 @@ static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
 /* Text full versions of AT command returns */
 #define AT_TRANSPORT_DA16XXX_RETURN_TEXT_OK                               "OK"
 #define AT_TRANSPORT_DA16XXX_RETURN_CONN_TEXT                             "+WFJAP:1"
+#define AT_TRANSPORT_DA16XXX_RETURN_TEXT_ERROR                            "ERROR"
 
 /* DA16XXX UART port defines */
 #define AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT                            (0)
@@ -1089,6 +1090,15 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSend (at_transport_da16xxx_ctrl_
             ret = strstr((char *) p_at_cmd->p_response_buffer, p_at_cmd->p_expect_code);
             if (ret != NULL)
             {
+                break;
+            }
+
+            if (NULL != strstr((char *) p_at_cmd->p_response_buffer, AT_TRANSPORT_DA16XXX_RETURN_TEXT_ERROR))
+            {
+                /*
+                Break from the for loop since ERROR string is found in response buffer.
+                Error code gets parsed in error lookup function called below.
+                */
                 break;
             }
         }

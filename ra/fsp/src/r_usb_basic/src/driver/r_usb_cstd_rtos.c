@@ -342,6 +342,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;
@@ -373,6 +374,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;
@@ -404,6 +406,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;
@@ -435,6 +438,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;
@@ -468,6 +472,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;
@@ -499,6 +504,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;
@@ -533,6 +539,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;
@@ -567,6 +574,7 @@ usb_rtos_err_t usb_rtos_configuration (usb_mode_t usb_mode)
                 tmptr = pvPortMalloc(sizeof(usb_utr_t));
                 if (NULL == tmptr)
                 {
+                    USB_PRINTF0("### usb_rtos_configuration pvPortMalloc ERROR\n");
                     err = UsbRtos_Err_Init_Mpl;
 
                     return err;

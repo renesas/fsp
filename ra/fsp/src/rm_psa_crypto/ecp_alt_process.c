@@ -91,7 +91,7 @@ fsp_err_t HW_SCE_ECC_384WrappedScalarMultiplication (const uint32_t * InData_Cur
                                                        OutData_R);
 }
 
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
 fsp_err_t HW_SCE_ECC_521WrappedScalarMultiplication (const uint32_t * InData_CurveType,
                                                      const uint32_t * InData_Cmd,
                                                      const uint32_t * InData_KeyIndex,
@@ -137,7 +137,7 @@ static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_looku
         HW_SCE_ECC_256WrappedScalarMultiplication,
    #endif
   #endif
-  #if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+  #if !BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
    #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
     #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
@@ -316,7 +316,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     uint32_t   indata_key_type = 0;
     uint8_t    padding         = 0U;
 
-  #if !BSP_FEATURE_CRYPTO_HAS_SCE7
+  #if !BSP_FEATURE_RSIP_SCE7_SUPPORTED
     if ((bool) (grp->vendor_ctx) == false)
     {
 
@@ -332,10 +332,10 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     }
 
   #if defined(MBEDTLS_CHECK_PARAMS)
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits) &&
         (ECC_521_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_25519_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
-   #elif BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+   #elif BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
    #else
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
@@ -402,7 +402,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
             }
         }
 
-  #if !BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+  #if !BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
    #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
         else if (ECC_384_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         {
@@ -423,8 +423,8 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
         }
    #endif
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
-  #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+    #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
         else if (ECC_521_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         {
             sce_ecc521_public_key_index_t public_key = {0};
@@ -511,7 +511,7 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     uint32_t * p_point_result_buff_R_32;
     uint32_t * p_common_buff_32;
     uint8_t    padding = 0U;
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
     uint32_t indata_key_type = 0;
   #endif
 
@@ -621,7 +621,7 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
         ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
     }
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP_E11A
+  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
     else if (FSP_SUCCESS !=
              p_hw_sce_ecc_scalarmultiplication(&curve_type, &indata_key_type, p_integer_buff_m_wrapped_32,
                                                p_point_buff_P_32, p_domain_param, p_point_result_buff_R_32))

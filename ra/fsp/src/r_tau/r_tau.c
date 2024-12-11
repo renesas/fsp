@@ -512,9 +512,17 @@ fsp_err_t R_TAU_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
                         (((tdr >> TAU_BIT_MODE_HIGHER_8BIT_SHIFT) & TAU_8BIT_MODE_MASK) + 1);
     }
 
+ #if TAU_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(FSP_SUCCESS == r_tau_cnt_set(p_instance_ctrl->p_cfg, period, period_higher));
+ #else
     r_tau_cnt_set(p_instance_ctrl->p_cfg, period, period_higher);
+ #endif
 #else
+ #if TAU_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(FSP_SUCCESS == r_tau_cnt_set(p_instance_ctrl->p_cfg, period, 0));
+ #else
     r_tau_cnt_set(p_instance_ctrl->p_cfg, period, 0);
+ #endif
 #endif
 
     return FSP_SUCCESS;

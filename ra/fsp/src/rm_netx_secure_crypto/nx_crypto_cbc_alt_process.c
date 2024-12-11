@@ -44,10 +44,10 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
                                 UCHAR         * output,
                                 UINT            length)
 {
-    NX_CRYPTO_AES * aes_ptr          = (NX_CRYPTO_AES *) crypto_metadata;
-    UINT            num_rounds       = aes_ptr->nx_crypto_aes_rounds;
-    UINT          * w                = aes_ptr->nx_crypto_aes_key_schedule;
-    fsp_err_t       ret              = FSP_ERR_ASSERTION;
+    NX_CRYPTO_AES * aes_ptr         = (NX_CRYPTO_AES *) crypto_metadata;
+    UINT            num_rounds      = aes_ptr->nx_crypto_aes_rounds;
+    UINT          * w               = aes_ptr->nx_crypto_aes_key_schedule;
+    fsp_err_t       ret             = FSP_ERR_ASSERTION;
     uint32_t        total_length    = RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(length);
     uint32_t        process_length  = total_length;
     uint32_t        indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_CBC_ENCRYPTION);
@@ -56,68 +56,62 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
     /* total_length is a multiple of block size, ensured by caller */
     switch (num_rounds)
     {
-    case 10:
-    {
-    	ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
-    			&indata_cmd,
-				(uint32_t *) w,
-				(uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-    	if (ret == FSP_SUCCESS)
-    	{
-    		HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) input,
-    				(uint32_t *) output,
-					process_length);
-    	}
+        case 10:
+        {
+            ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
+                                                     &indata_cmd,
+                                                     (uint32_t *) w,
+                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) input, (uint32_t *) output, process_length);
+            }
 
-    	ret = HW_SCE_Aes128EncryptDecryptFinalSub();
-    	break;
-    }
+            ret = HW_SCE_Aes128EncryptDecryptFinalSub();
+            break;
+        }
 
-#if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7)
-    case 12:
-    {
-    	ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
-    			(uint32_t *) w,
-				(uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-    	if (ret == FSP_SUCCESS)
-    	{
-    		HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) input,
-    				(uint32_t *) output,
-					process_length);
-    	}
+ #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+        case 12:
+        {
+            ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
+                                                     (uint32_t *) w,
+                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) input, (uint32_t *) output, process_length);
+            }
 
-    	ret = HW_SCE_Aes192EncryptDecryptFinalSub();
-    	break;
-    }
-#endif
-    case 14:
-    {
-    	ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
-    			&indata_cmd,
-				(uint32_t *) w,
-				(uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-    	if (ret == FSP_SUCCESS)
-    	{
-    		HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) input,
-    				(uint32_t *) output,
-					process_length);
-    	}
+            ret = HW_SCE_Aes192EncryptDecryptFinalSub();
+            break;
+        }
+ #endif
+        case 14:
+        {
+            ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
+                                                     &indata_cmd,
+                                                     (uint32_t *) w,
+                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) input, (uint32_t *) output, process_length);
+            }
 
-    	ret = HW_SCE_Aes256EncryptDecryptFinalSub();
-    	break;
-    }
+            ret = HW_SCE_Aes256EncryptDecryptFinalSub();
+            break;
+        }
 
-    default:
-    {
-    	break;                 /* Will never get here due to the num_rounds check above. */
-    }
+        default:
+        {
+            break;                     /* Will never get here due to the num_rounds check above. */
+        }
     }
 
     /* Return immediately in case of error */
     FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
 
     NX_CRYPTO_MEMCPY((uint8_t *) cbc_metadata->nx_crypto_cbc_last_block,
-    		(uint8_t *) &output[(length - AES_BLOCK_SIZE_BYTES)], AES_BLOCK_SIZE_BYTES);
+                     (uint8_t *) &output[(length - AES_BLOCK_SIZE_BYTES)], AES_BLOCK_SIZE_BYTES);
 
     return NX_CRYPTO_SUCCESS;
 }
@@ -133,10 +127,10 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
                                 UCHAR         * output,
                                 UINT            length)
 {
-    NX_CRYPTO_AES * aes_ptr          = (NX_CRYPTO_AES *) crypto_metadata;
-    UINT            num_rounds       = aes_ptr->nx_crypto_aes_rounds;
-    UINT          * w                = aes_ptr->nx_crypto_aes_key_schedule;
-    fsp_err_t       ret              = FSP_ERR_ASSERTION;
+    NX_CRYPTO_AES * aes_ptr         = (NX_CRYPTO_AES *) crypto_metadata;
+    UINT            num_rounds      = aes_ptr->nx_crypto_aes_rounds;
+    UINT          * w               = aes_ptr->nx_crypto_aes_key_schedule;
+    fsp_err_t       ret             = FSP_ERR_ASSERTION;
     uint32_t        total_length    = RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(length);
     uint32_t        process_length  = total_length;
     uint32_t        indata_cmd      = change_endian_long(SCE_AES_IN_DATA_CMD_CBC_DECRYPTION);
@@ -144,68 +138,62 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
 
     switch (num_rounds)
     {
-    case 10:
-    {
-    	ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
-    			&indata_cmd,
-				(uint32_t *) w,
-				(uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-    	if (ret == FSP_SUCCESS)
-    	{
-    		HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) input,
-    				(uint32_t *) output,
-					process_length);
-    	}
+        case 10:
+        {
+            ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
+                                                     &indata_cmd,
+                                                     (uint32_t *) w,
+                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) input, (uint32_t *) output, process_length);
+            }
 
-    	ret = HW_SCE_Aes128EncryptDecryptFinalSub();
-    	break;
-    }
+            ret = HW_SCE_Aes128EncryptDecryptFinalSub();
+            break;
+        }
 
-#if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7)
-    case 12:
-    {
-    	ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
-    			(uint32_t *) w,
-				(uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-    	if (ret == FSP_SUCCESS)
-    	{
-    		HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) input,
-    				(uint32_t *) output,
-					process_length);
-    	}
+ #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+        case 12:
+        {
+            ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
+                                                     (uint32_t *) w,
+                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) input, (uint32_t *) output, process_length);
+            }
 
-    	ret = HW_SCE_Aes192EncryptDecryptFinalSub();
-    	break;
-    }
-#endif
-    case 14:
-    {
-    	ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
-    			&indata_cmd,
-				(uint32_t *) w,
-				(uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
-    	if (ret == FSP_SUCCESS)
-    	{
-    		HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) input,
-    				(uint32_t *) output,
-					process_length);
-    	}
+            ret = HW_SCE_Aes192EncryptDecryptFinalSub();
+            break;
+        }
+ #endif
+        case 14:
+        {
+            ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
+                                                     &indata_cmd,
+                                                     (uint32_t *) w,
+                                                     (uint32_t *) cbc_metadata->nx_crypto_cbc_last_block);
+            if (ret == FSP_SUCCESS)
+            {
+                HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) input, (uint32_t *) output, process_length);
+            }
 
-    	ret = HW_SCE_Aes256EncryptDecryptFinalSub();
-    	break;
-    }
+            ret = HW_SCE_Aes256EncryptDecryptFinalSub();
+            break;
+        }
 
-    default:
-    {
-    	break;                 /* Will never get here due to the num_rounds check above. */
-    }
+        default:
+        {
+            break;                     /* Will never get here due to the num_rounds check above. */
+        }
     }
 
     /* Return immediately in case of error */
     FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
 
     NX_CRYPTO_MEMCPY((uint8_t *) cbc_metadata->nx_crypto_cbc_last_block,
-    		(uint8_t *) &input[(length - AES_BLOCK_SIZE_BYTES)], AES_BLOCK_SIZE_BYTES);
+                     (uint8_t *) &input[(length - AES_BLOCK_SIZE_BYTES)], AES_BLOCK_SIZE_BYTES);
 
     return NX_CRYPTO_SUCCESS;
 }

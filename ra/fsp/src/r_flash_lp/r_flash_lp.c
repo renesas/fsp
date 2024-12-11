@@ -22,7 +22,7 @@
 /** "OPEN" in ASCII, used to avoid multiple open. */
 #define FLASH_HP_OPEN                                 (0x4f50454eULL)
 
-#define FLASH_HP_MINIMUM_SUPPORTED_FCLK_FREQ          4000000U /// Minimum FCLK for Flash Operations in Hz
+#define FLASH_HP_MINIMUM_SUPPORTED_FCLK_FREQ          (4000000U) /// Minimum FCLK for Flash Operations in Hz
 
 /* The number of CPU cycles per each timeout loop. */
 #ifndef FLASH_LP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP
@@ -128,7 +128,14 @@
 
 #define FLASH_LP_DF_START_ADDRESS                     (0x40100000)
 
-#define FLASH_LP_FPR_UNLOCK                           0xA5U
+#define FLASH_LP_FPR_UNLOCK                           (0xA5U)
+
+#define FLASH_LP_BANK_PROGRAMMING_EXIT                (0x6D00)
+#define FLASH_LP_BANK_PROGRAMMING_ENTER               (0x6D01)
+
+#define FLASH_LP_BANK_SWAP_UPDATE_ENABLE              (0xC301)
+#define FLASH_LP_BANK_SWAP_UPDATE_DISABLE             (0xC300)
+#define FLASH_LP_EXTRA_AREA_FCTLF_ADDRESS             (0x01010008)
 
 /** The maximum timeout for commands is 100usec when FCLK is 16 MHz i.e. 1600 FCLK cycles.
  * Assuming worst case of ICLK at 240 MHz and FCLK at 4 MHz, and optimization set to max such that
@@ -144,6 +151,13 @@
         }                                                      \
         timeout--;                                             \
     }
+
+/** Flash P/E related functions are not required to be in RAM when using Bank Programming. */
+#if (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 0)
+ #define FLASH_PE_PLACE_IN_RAM_SECTION    PLACE_IN_RAM_SECTION
+#else
+ #define FLASH_PE_PLACE_IN_RAM_SECTION
+#endif
 
 /******************************************************************************
  * Typedef definitions
@@ -191,44 +205,7 @@ static void r_flash_lp_df_enter_pe_mode(flash_lp_instance_ctrl_t * const p_ctrl)
 
 #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
 
- #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
-
-static bool r_flash_lp_frdyi_df_bgo_blankcheck(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
-
-static bool r_flash_lp_frdyi_df_bgo_erase(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
-
-static bool r_flash_lp_frdyi_df_bgo_write(flash_lp_instance_ctrl_t * p_ctrl, flash_callback_args_t * p_cb_data);
-
- #endif
-static fsp_err_t r_flash_lp_df_write_monitor(flash_lp_instance_ctrl_t * const p_ctrl);
-
-static void r_flash_lp_df_write_operation(const uint32_t psrc_addr, uint32_t dest_addr);
-
-#endif
-
-static fsp_err_t r_flash_lp_set_fisr(flash_lp_instance_ctrl_t * const p_ctrl);
-
-static fsp_err_t r_flash_lp_pe_mode_exit(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
-
-static fsp_err_t r_flash_lp_setup(flash_lp_instance_ctrl_t * p_ctrl);
-
-static void r_flash_lp_process_command(const uint32_t start_addr, uint32_t num_bytes,
-                                       uint32_t command) PLACE_IN_RAM_SECTION;
-
-static fsp_err_t r_flash_lp_command_finish(uint32_t timeout) PLACE_IN_RAM_SECTION;
-
-static void r_flash_lp_delay_us(uint32_t us, uint32_t mhz) PLACE_IN_RAM_SECTION __attribute__((noinline));
-
-static void r_flash_lp_reset(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
-
-static void r_flash_lp_write_fpmcr(uint8_t value) PLACE_IN_RAM_SECTION;
-
-static fsp_err_t r_flash_lp_wait_for_ready(flash_lp_instance_ctrl_t * const p_ctrl,
-                                           uint32_t                         timeout,
-                                           uint32_t                         error_bits,
-                                           fsp_err_t                        return_code) PLACE_IN_RAM_SECTION;
-
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
+static void r_flash_lp_df_write_operation(flash_lp_instance_ctrl_t * const p_ctrl);
 
 static fsp_err_t r_flash_lp_df_blankcheck(flash_lp_instance_ctrl_t * const p_ctrl,
                                           uint32_t                         start_address,
@@ -237,43 +214,60 @@ static fsp_err_t r_flash_lp_df_blankcheck(flash_lp_instance_ctrl_t * const p_ctr
 
 static fsp_err_t r_flash_lp_df_erase(flash_lp_instance_ctrl_t * const p_ctrl,
                                      uint32_t                         block_address,
-                                     uint32_t                         num_blocks,
-                                     uint32_t                         block_size);
-
-static fsp_err_t r_flash_lp_df_write(flash_lp_instance_ctrl_t * const p_ctrl,
-                                     uint32_t const                   src_start_address,
-                                     uint32_t                         dest_start_address,
-                                     uint32_t                         num_bytes);
+                                     uint32_t                         num_blocks);
 
 #endif
 
+static fsp_err_t r_flash_lp_set_fisr(flash_lp_instance_ctrl_t * const p_ctrl);
+
+static fsp_err_t r_flash_lp_setup(flash_lp_instance_ctrl_t * p_ctrl);
+
+static void r_flash_lp_process_command(const uint32_t start_addr, uint32_t num_bytes,
+                                       uint32_t command) FLASH_PE_PLACE_IN_RAM_SECTION;
+
+static fsp_err_t r_flash_lp_command_finish(uint32_t timeout) FLASH_PE_PLACE_IN_RAM_SECTION;
+
+static void r_flash_lp_reset(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
+
+static fsp_err_t r_flash_lp_wait_for_ready(flash_lp_instance_ctrl_t * const p_ctrl,
+                                           uint32_t                         timeout,
+                                           uint32_t                         error_bits,
+                                           fsp_err_t                        return_code) FLASH_PE_PLACE_IN_RAM_SECTION;
+
+static fsp_err_t r_flash_lp_write(flash_lp_instance_ctrl_t * const p_ctrl) FLASH_PE_PLACE_IN_RAM_SECTION;
+
+static fsp_err_t r_flash_lp_pe_mode_exit(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
+
+static void r_flash_lp_delay_us(uint32_t us, uint32_t mhz) PLACE_IN_RAM_SECTION __attribute__((noinline));
+
+static void r_flash_lp_write_fpmcr(uint8_t value) PLACE_IN_RAM_SECTION;
+
 #if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
-static void r_flash_lp_memcpy(uint8_t * const dest, uint8_t * const src, uint32_t len) PLACE_IN_RAM_SECTION;
-
-static void r_flash_lp_cf_enter_pe_mode(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
-
-static fsp_err_t r_flash_lp_extra_check(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
+static void r_flash_lp_memcpy(uint8_t * const dest, uint8_t * const src, uint32_t len) FLASH_PE_PLACE_IN_RAM_SECTION;
 
 static fsp_err_t r_flash_lp_extra_command_finish(uint32_t timeout) PLACE_IN_RAM_SECTION;
-
-static fsp_err_t r_flash_lp_set_startup_area_boot(flash_lp_instance_ctrl_t * const p_ctrl,
-                                                  flash_startup_area_swap_t        swap_type,
-                                                  bool                             temporary) PLACE_IN_RAM_SECTION;
 
 static fsp_err_t r_flash_lp_cf_blankcheck(flash_lp_instance_ctrl_t * const p_ctrl,
                                           uint32_t                         start_address,
                                           uint32_t                         num_bytes,
-                                          flash_result_t                 * result) PLACE_IN_RAM_SECTION;
+                                          flash_result_t                 * result) FLASH_PE_PLACE_IN_RAM_SECTION;
 
 static fsp_err_t r_flash_lp_cf_erase(flash_lp_instance_ctrl_t * const p_ctrl,
                                      uint32_t                         block_address,
                                      uint32_t                         num_blocks,
-                                     uint32_t                         block_size) PLACE_IN_RAM_SECTION;
+                                     uint32_t                         block_size) FLASH_PE_PLACE_IN_RAM_SECTION;
 
-static fsp_err_t r_flash_lp_cf_write(flash_lp_instance_ctrl_t * const p_ctrl,
-                                     uint32_t const                   src_start_address,
-                                     uint32_t                         dest_start_address,
-                                     uint32_t                         num_bytes) PLACE_IN_RAM_SECTION;
+static void r_flash_lp_cf_write_operation(flash_lp_instance_ctrl_t * const p_ctrl) FLASH_PE_PLACE_IN_RAM_SECTION;
+
+static void r_flash_lp_cf_enter_pe_mode(flash_lp_instance_ctrl_t * const p_ctrl, bool bank_programming)
+PLACE_IN_RAM_SECTION;
+
+static fsp_err_t r_flash_lp_extra_check(flash_lp_instance_ctrl_t * const p_ctrl) PLACE_IN_RAM_SECTION;
+
+static fsp_err_t r_flash_lp_set_startup_area_boot(flash_lp_instance_ctrl_t * const p_ctrl,
+                                                  flash_startup_area_swap_t        swap_type,
+                                                  bool                             temporary)
+PLACE_IN_RAM_SECTION;
 
 static fsp_err_t r_flash_lp_access_window_set(flash_lp_instance_ctrl_t * const p_ctrl,
                                               uint32_t const                   start_addr,
@@ -282,8 +276,6 @@ static fsp_err_t r_flash_lp_access_window_set(flash_lp_instance_ctrl_t * const p
 static fsp_err_t r_flash_lp_set_id_code(flash_lp_instance_ctrl_t * const p_ctrl,
                                         uint8_t const * const            p_id_code,
                                         flash_id_code_mode_t             mode) PLACE_IN_RAM_SECTION;
-
-static void r_flash_lp_cf_write_operation(const uint32_t psrc_addr, const uint32_t dest_addr) PLACE_IN_RAM_SECTION;
 
 static void r_flash_lp_extra_operation(const uint32_t    start_addr_startup_value,
                                        const uint32_t    end_addr,
@@ -307,8 +299,8 @@ static fsp_err_t r_flash_lp_write_read_bc_parameter_checking(flash_lp_instance_c
 
 #endif
 
-/** FRDY ISR is only used for DataFlash operations. For Code flash operations are blocking. Therefore ISR does
- * not need to be located in RAM.
+/** FRDY ISR is only used for DataFlash operations and Code flash operations when Bank Programming is supported.
+ *  Other Code flash operations are blocking. Therefore ISR does not need to be located in RAM.
  */
 void fcu_frdyi_isr(void);
 
@@ -337,11 +329,6 @@ const flash_api_t g_flash_on_flash_lp =
     .antiRollbackCounterRead      = R_FLASH_LP_AntiRollbackCounterRead,
     .userLockableAreaWrite        = R_FLASH_LP_UserLockableAreaWrite,
 };
-
-/** Name of module used by error logger macro */
-#if BSP_CFG_ERROR_LOG != 0
-static const char g_module_name[] = "r_flash_lp";
-#endif
 
 const flash_block_info_t g_code_flash_macro_info =
 {
@@ -401,7 +388,7 @@ static flash_regions_t g_flash_data_region =
  * @retval     FSP_ERR_FCLK              FCLK must be a minimum of 4 MHz for Flash operations.
  * @retval     FSP_ERR_ALREADY_OPEN      Flash Open() has already been called.
  * @retval     FSP_ERR_TIMEOUT           Failed to exit P/E mode after configuring flash.
- * @retval     FSP_ERR_INVALID_STATE     The system is not running from the required clock.
+ * @retval     FSP_ERR_INVALID_STATE     The system is not running from the required clock or the required clock is not running and stable.
  **********************************************************************************************************************/
 fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * const p_cfg)
 {
@@ -418,7 +405,7 @@ fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
     FSP_ERROR_RETURN((FLASH_HP_OPEN != p_ctrl->opened), FSP_ERR_ALREADY_OPEN);
  #if BSP_FEATURE_FLASH_LP_VERSION == 4
 
-    /* MF4 devices must be running from HOCO in order to program and erase flash. */
+    /* MF4 devices must have HOCO running and stable in order to program and erase flash. */
   #if BSP_FEATURE_CGC_REGISTER_SET_B
 
     /* HOCO is selected when ICLK source is FMAIN, FMAIN source is FOCO, and FOCO source is HOCO. */
@@ -427,27 +414,31 @@ fsp_err_t R_FLASH_LP_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * 
                      (0U == R_SYSTEM->FOCOSCR_b.CKST),
                      FSP_ERR_INVALID_STATE);
   #else
-    FSP_ERROR_RETURN(BSP_CLOCKS_SOURCE_CLOCK_HOCO == R_SYSTEM->SCKSCR_b.CKSEL, FSP_ERR_INVALID_STATE);
+
+    /* If HOCO is not operating, return error */
+    FSP_ERROR_RETURN(0U == R_SYSTEM->HOCOCR_b.HCSTP, FSP_ERR_INVALID_STATE);
+
+    /* If HOCO is not stable, return error */
+    FSP_ERROR_RETURN(1U == R_SYSTEM->OSCSF_b.HOCOSF, FSP_ERR_INVALID_STATE);
   #endif
  #endif
 
- #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
+ #if FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1 || FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1
 
-    /* Background operations for data flash are enabled but the flash interrupt is disabled. */
-    if (p_cfg->data_flash_bgo)
+    /* Background operations are enabled but the flash interrupt is disabled. */
+    if (p_cfg->data_flash_bgo || (1U == FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE))
     {
         FSP_ERROR_RETURN(p_cfg->irq >= (IRQn_Type) 0, FSP_ERR_IRQ_BSP_DISABLED);
         FSP_ASSERT(NULL != p_cfg->p_callback);
     }
  #endif
 #endif
-
     p_ctrl->p_cfg = p_cfg;
 
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
-    if (p_cfg->data_flash_bgo)
+#if FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1 || FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1
+    if (p_cfg->data_flash_bgo || (1U == FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE))
     {
-        R_BSP_IrqCfgEnable(p_cfg->irq, p_cfg->ipl, p_ctrl);
+        R_BSP_IrqCfg(p_cfg->irq, p_cfg->ipl, p_ctrl);
     }
 #endif
 
@@ -501,29 +492,31 @@ fsp_err_t R_FLASH_LP_Write (flash_ctrl_t * const p_api_ctrl,
 
     p_ctrl->current_operation = FLASH_OPERATION_NON_BGO;
 
-#if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
-
-    /* Configure the current parameters for code flash or data flash depending on address. */
+#if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_PARAM_CHECKING_ENABLE == 1)
     if (flash_address < BSP_ROM_SIZE_BYTES)
     {
- #if (FLASH_LP_CFG_PARAM_CHECKING_ENABLE == 1)
+ #if FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1
+
+        /* Verify the source address is not in BANK1 of code flash. It will not be available in P/E mode. */
+        FSP_ERROR_RETURN((src_address > BSP_ROM_SIZE_BYTES) || ((src_address + num_bytes) < (BSP_ROM_SIZE_BYTES / 2)),
+                         FSP_ERR_INVALID_ADDRESS);
+
+        /* The target flash area must be in Bank1 when using Bank Programming. */
+        FSP_ERROR_RETURN(flash_address >= (BSP_FEATURE_FLASH_CODE_FLASH_START + (BSP_ROM_SIZE_BYTES / 2)),
+                         FSP_ERR_INVALID_ADDRESS);
+ #else
 
         /* Verify the source address is not in code flash. It will not be available in P/E mode. */
         FSP_ASSERT(src_address > BSP_ROM_SIZE_BYTES);
  #endif
-
-        /* Write the data */
-        err = r_flash_lp_cf_write(p_ctrl, src_address, flash_address, num_bytes);
     }
-    else
 #endif
-    {
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
 
-        /* Write the data */
-        err = r_flash_lp_df_write(p_ctrl, src_address, flash_address, num_bytes);
-#endif
-    }
+    p_ctrl->dest_end_address     = flash_address;
+    p_ctrl->source_start_address = src_address;
+    p_ctrl->operations_remaining = num_bytes;
+
+    err = r_flash_lp_write(p_ctrl);
 
     /* Return status. */
     return err;
@@ -572,7 +565,16 @@ fsp_err_t R_FLASH_LP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
  #if (FLASH_LP_CFG_PARAM_CHECKING_ENABLE == 1)
         uint32_t num_bytes = num_blocks * BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE;
 
-        FSP_ERROR_RETURN(start_address + num_bytes <= BSP_ROM_SIZE_BYTES, FSP_ERR_INVALID_BLOCKS);
+  #if FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1
+
+        /* Verify start address is in BANK1 */
+        FSP_ERROR_RETURN(start_address >= (BSP_FEATURE_FLASH_CODE_FLASH_START + (BSP_ROM_SIZE_BYTES / 2)),
+                         FSP_ERR_INVALID_ADDRESS);
+  #endif
+
+        /* Verify erase will not write past end of code flash */
+        FSP_ERROR_RETURN((start_address + num_bytes) <= (BSP_FEATURE_FLASH_CODE_FLASH_START + BSP_ROM_SIZE_BYTES),
+                         FSP_ERR_INVALID_BLOCKS);
  #endif
 
         err = r_flash_lp_cf_erase(p_ctrl, start_address, num_blocks, BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE);
@@ -594,17 +596,8 @@ fsp_err_t R_FLASH_LP_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const addr
                          FSP_ERR_INVALID_BLOCKS);
  #endif
 
- #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
-
-        /* If this is a request to erase Data Flash configure BGO mode if it is enabled. */
-        if (p_ctrl->p_cfg->data_flash_bgo)
-        {
-            p_ctrl->current_operation = FLASH_OPERATION_DF_BGO_ERASE;
-        }
- #endif
-
         /* Initiate the flash erase. */
-        err = r_flash_lp_df_erase(p_ctrl, start_address, num_blocks, BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE);
+        err = r_flash_lp_df_erase(p_ctrl, start_address, num_blocks);
 #else
 
         return FSP_ERR_INVALID_ADDRESS;
@@ -662,20 +655,12 @@ fsp_err_t R_FLASH_LP_BlankCheck (flash_ctrl_t * const p_api_ctrl,
 #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
 
         /* This is a request to Blank check Data Flash */
-        /* No errors in parameters. Enter Data Flash PE mode*/
- #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
-        if (p_ctrl->p_cfg->data_flash_bgo)
-        {
-            p_ctrl->current_operation = FLASH_OPERATION_DF_BGO_BLANKCHECK;
-        }
- #endif
         err = r_flash_lp_df_blankcheck(p_ctrl, address, num_bytes, p_blank_check_result);
 #endif
     }
 
     /* If failure reset the flash. */
-    /* FSP_ERR_IN_USE would indicate that a BGO operation is underway, so don't reset in that case */
-    if ((FSP_SUCCESS != err) && (FSP_ERR_IN_USE != err))
+    if (FSP_SUCCESS != err)
     {
         /* This will clear error flags and exit the P/E mode*/
         r_flash_lp_reset(p_ctrl);
@@ -963,7 +948,7 @@ fsp_err_t R_FLASH_LP_StartUpAreaSelect (flash_ctrl_t * const      p_api_ctrl,
  * Swap the Code Flash bank to update new program. Implement @ref flash_api_t::bankSwap.
  *
  * Swap the flash bank located at address 0x00000000 and address 0x00040000. After a bank swap is done the MCU will
- * need to be reset for the changes to take place.
+ * need to be reset for the changes to take place unless instant swap is enabled.
  *
  * To use this API, Code Flash Programming in the FSP Configuration Tool under Stack Properties must be enabled.
  *
@@ -1093,7 +1078,7 @@ fsp_err_t R_FLASH_LP_Close (flash_ctrl_t * const p_api_ctrl)
     /* Mark the control block as closed. */
     p_ctrl->opened = 0;
 
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
+#if FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1
 
     /* Disable the flash interrupt. */
     if (FSP_INVALID_VECTOR != p_ctrl->p_cfg->irq)
@@ -1408,7 +1393,6 @@ void r_flash_lp_init (flash_lp_instance_ctrl_t * p_ctrl)
  * @param[in]  p_ctrl                Pointer to the Flash control block
  * @param[in]  block_address         The starting address of the first block to erase.
  * @param[in]  num_blocks            The number of blocks to erase.
- * @param[in]  block_size            The Flash block size.
  *
  * @retval     FSP_SUCCESS           Successfully erased (non-BGO) mode or operation successfully started (BGO).
  * @retval     FSP_ERR_ERASE_FAILED  Erase failed. Flash could be locked or address could be under access window
@@ -1417,8 +1401,7 @@ void r_flash_lp_init (flash_lp_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static fsp_err_t r_flash_lp_df_erase (flash_lp_instance_ctrl_t * const p_ctrl,
                                       uint32_t                         block_address,
-                                      uint32_t                         num_blocks,
-                                      uint32_t                         block_size)
+                                      uint32_t                         num_blocks)
 {
     fsp_err_t err = FSP_SUCCESS;
 
@@ -1430,10 +1413,14 @@ static fsp_err_t r_flash_lp_df_erase (flash_lp_instance_ctrl_t * const p_ctrl,
     p_ctrl->operations_remaining = num_blocks;
 
     /* Start the code flash erase operation. */
-    r_flash_lp_process_command(p_ctrl->source_start_address, num_blocks * block_size, FLASH_LP_FCR_ERASE);
+    r_flash_lp_process_command(p_ctrl->source_start_address,
+                               num_blocks * BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE,
+                               FLASH_LP_FCR_ERASE);
 
     /* If configured for Blocking mode then don't return until the entire operation is complete */
+ #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
     if (!p_ctrl->p_cfg->data_flash_bgo)
+ #endif
     {
         /* Waits for the erase commands to be completed and verifies the result of the command execution. */
         err = r_flash_lp_wait_for_ready(p_ctrl,
@@ -1445,6 +1432,15 @@ static fsp_err_t r_flash_lp_df_erase (flash_lp_instance_ctrl_t * const p_ctrl,
         /* Disable P/E mode for data flash. */
         r_flash_lp_pe_mode_exit(p_ctrl);
     }
+
+ #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
+    else
+    {
+        p_ctrl->current_operation = FLASH_OPERATION_BGO_ERASE;
+        p_ctrl->flash_status_mask = FLASH_LP_FSTATR2_ERASE_ERROR_BITS;
+        p_ctrl->timeout           = p_ctrl->timeout_erase_df_block;
+    }
+ #endif
 
     return err;
 }
@@ -1472,10 +1468,18 @@ static fsp_err_t r_flash_lp_cf_erase (flash_lp_instance_ctrl_t * const p_ctrl,
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    r_flash_lp_cf_enter_pe_mode(p_ctrl);
+    r_flash_lp_cf_enter_pe_mode(p_ctrl, (bool) FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE);
 
     /* Start the code flash erase operation. */
     r_flash_lp_process_command(block_address, num_blocks * block_size, FLASH_LP_FCR_ERASE);
+
+ #if (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+    p_ctrl->current_operation = FLASH_OPERATION_BGO_ERASE;
+    p_ctrl->flash_status_mask = FLASH_LP_FSTATR2_ERASE_ERROR_BITS;
+    p_ctrl->timeout           = p_ctrl->timeout_erase_cf_block;
+
+    return err;
+ #else
 
     /* Wait for the operation to complete. */
     err = r_flash_lp_wait_for_ready(p_ctrl,
@@ -1485,19 +1489,15 @@ static fsp_err_t r_flash_lp_cf_erase (flash_lp_instance_ctrl_t * const p_ctrl,
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return r_flash_lp_pe_mode_exit(p_ctrl);
+ #endif
 }
 
 #endif
-
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
 
 /*******************************************************************************************************************//**
  * This function writes a specified number of bytes to Code or Data Flash.
  *
  * @param[in]  p_ctrl                Pointer to the Flash control block
- * @param[in]  src_start_address     The starting address of the first byte (from source) to write.
- * @param[in]  dest_start_address    The starting address of the Flash (to destination) to write.
- * @param[in]  num_bytes             The number of bytes to write.
  *
  * @retval     FSP_SUCCESS           Data successfully written (non-BGO) mode or operation successfully started (BGO).
  * @retval     FSP_ERR_IN_USE        Command still executing.
@@ -1505,106 +1505,75 @@ static fsp_err_t r_flash_lp_cf_erase (flash_lp_instance_ctrl_t * const p_ctrl,
  *                                   returned if the requested Flash area is not blank.
  * @retval     FSP_ERR_TIMEOUT       Timed out waiting for the Flash sequencer to become ready.
  **********************************************************************************************************************/
-static fsp_err_t r_flash_lp_df_write (flash_lp_instance_ctrl_t * const p_ctrl,
-                                      uint32_t const                   src_start_address,
-                                      uint32_t                         dest_start_address,
-                                      uint32_t                         num_bytes)
+static fsp_err_t r_flash_lp_write (flash_lp_instance_ctrl_t * const p_ctrl)
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    p_ctrl->dest_end_address     = dest_start_address;
-    p_ctrl->source_start_address = src_start_address;
-    p_ctrl->operations_remaining = num_bytes;
+#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) || (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+    bool bgo = false;
+#endif
 
- #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
-    if (p_ctrl->p_cfg->data_flash_bgo)
+#if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
+    if (p_ctrl->dest_end_address < BSP_ROM_SIZE_BYTES)
     {
-        p_ctrl->current_operation = FLASH_OPERATION_DF_BGO_WRITE;
-    }
+ #if (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+        p_ctrl->current_operation = FLASH_OPERATION_CF_BGO_WRITE;
+        bgo = true;
  #endif
 
-    /* Enter data flash P/E mode. */
-    r_flash_lp_df_enter_pe_mode(p_ctrl);
+        p_ctrl->timeout              = p_ctrl->timeout_write_cf;
+        p_ctrl->operations_remaining = p_ctrl->operations_remaining / BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE;
+        r_flash_lp_cf_enter_pe_mode(p_ctrl, (bool) FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE);
+    }
+    else
+#endif
+    {
+#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
+        if (p_ctrl->p_cfg->data_flash_bgo)
+        {
+            p_ctrl->current_operation = FLASH_OPERATION_DF_BGO_WRITE;
+            bgo = true;
+        }
+
+        p_ctrl->timeout = p_ctrl->timeout_write_df;
+
+        /* Enter data flash P/E mode. */
+        r_flash_lp_df_enter_pe_mode(p_ctrl);
+#endif
+    }
 
     /* Select user area. */
     R_FACI_LP->FASR = 0U;
 
-    /* Initiate the data flash write operation. */
-    r_flash_lp_df_write_operation(p_ctrl->source_start_address, p_ctrl->dest_end_address);
-
- #if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
-
-    /* If configured for Blocking mode then don't return until the entire operation is complete */
-    if (!p_ctrl->p_cfg->data_flash_bgo)
- #endif
-    {
-        do
-        {
-            /* Wait for the write commands to be completed and verifies the result of the command execution. */
-            err = r_flash_lp_df_write_monitor(p_ctrl);
-        } while (FSP_ERR_IN_USE == err);
-
-        /* Disable P/E mode for data flash. */
-        if (FSP_SUCCESS == err)
-        {
-            r_flash_lp_pe_mode_exit(p_ctrl);
-        }
-    }
-
-    return err;
-}
-
-#endif
-
-#if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
-
-/*******************************************************************************************************************//**
- * This function writes a specified number of bytes to Code Flash.
- *
- * @param[in]  p_ctrl                Pointer to the Flash control block
- * @param[in]  src_start_address     The starting address of the first byte (from source) to write.
- * @param[in]  dest_start_address    The starting address of the Flash (to destination) to write.
- * @param[in]  num_bytes             The number of bytes to write.
- *
- * @retval     FSP_SUCCESS           Data successfully written (non-BGO) mode or operation successfully started (BGO).
- * @retval     FSP_ERR_WRITE_FAILED  Status is indicating a Programming error for the requested operation. This may be
- *                                   returned if the requested Flash area is not blank.
- * @retval     FSP_ERR_TIMEOUT       Timed out waiting for the Flash sequencer to become ready.
- **********************************************************************************************************************/
-static fsp_err_t r_flash_lp_cf_write (flash_lp_instance_ctrl_t * const p_ctrl,
-                                      uint32_t const                   src_start_address,
-                                      uint32_t                         dest_start_address,
-                                      uint32_t                         num_bytes)
-{
-    fsp_err_t err = FSP_SUCCESS;
-
-    r_flash_lp_cf_enter_pe_mode(p_ctrl);
-
-    p_ctrl->dest_end_address     = dest_start_address;
-    p_ctrl->source_start_address = src_start_address;
-
-    /* Calculate the number of writes needed. */
-
-    /* This is done with right shift instead of division to avoid using the division library, which would be in flash
-     * and cause a jump from RAM to flash. */
-    p_ctrl->operations_remaining = num_bytes / BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE;
-
-    /* Select User Area */
-    R_FACI_LP->FASR = 0U;
-
     while (p_ctrl->operations_remaining && (FSP_SUCCESS == err))
     {
-        /* Initiate the code flash write operation. */
-        r_flash_lp_cf_write_operation(p_ctrl->source_start_address, p_ctrl->dest_end_address);
+#if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
+        if (p_ctrl->dest_end_address < BSP_ROM_SIZE_BYTES)
+        {
+            /* Initiate the code flash write operation. */
+            r_flash_lp_cf_write_operation(p_ctrl);
+        }
+        else
+#endif
+        {
+#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
 
-        /* If there is more data to write then write the next data. */
-        p_ctrl->source_start_address += BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE;
-        p_ctrl->dest_end_address     += BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE;
-        p_ctrl->operations_remaining--;
-        err = r_flash_lp_wait_for_ready(p_ctrl,
-                                        p_ctrl->timeout_write_cf,
-                                        FLASH_LP_FSTATR2_WRITE_ERROR_BITS,
-                                        FSP_ERR_WRITE_FAILED);
+            /* Initiate the data flash write operation. */
+            r_flash_lp_df_write_operation(p_ctrl);
+#endif
+        }
+
+#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) || (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+        if (bgo)
+        {
+            p_ctrl->flash_status_mask = FLASH_LP_FSTATR2_WRITE_ERROR_BITS;
+
+            return err;
+        }
+#endif
+
+        err =
+            r_flash_lp_wait_for_ready(p_ctrl, p_ctrl->timeout, FLASH_LP_FSTATR2_WRITE_ERROR_BITS, FSP_ERR_WRITE_FAILED);
     }
 
     /* If successful exit P/E mode. */
@@ -1616,24 +1585,25 @@ static fsp_err_t r_flash_lp_cf_write (flash_lp_instance_ctrl_t * const p_ctrl,
     return err;
 }
 
-#endif
-
 #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
 
 /*******************************************************************************************************************//**
  * Execute a single Write operation on the Low Power Data Flash data.
  * See Figure 37.21 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
- * @param[in]  psrc_addr       Source address for data to be written.
- * @param[in]  dest_addr       End address (read form) for writing.
+ * @param[in]  p_ctrl                      Pointer to the Flash control block
  **********************************************************************************************************************/
-static void r_flash_lp_df_write_operation (const uint32_t psrc_addr, uint32_t dest_addr)
+static void r_flash_lp_df_write_operation (flash_lp_instance_ctrl_t * const p_ctrl)
 {
-    uint32_t  dest_addr_idx;
-    uint8_t * data8_ptr;
-    data8_ptr = (uint8_t *) psrc_addr;
+    uint32_t dest_addr_idx = p_ctrl->dest_end_address + FLASH_LP_DATAFLASH_ADDR_OFFSET;
 
-    dest_addr_idx = dest_addr + FLASH_LP_DATAFLASH_ADDR_OFFSET; /* Conversion to the P/E address from the read address */
+    /* Conversion to the P/E address from the read address */
+    uint8_t * data8_ptr = (uint8_t *) p_ctrl->source_start_address;
+
+    /* Increment the start/end addresses of the next write before the current write is executed. */
+    p_ctrl->source_start_address += BSP_FEATURE_FLASH_LP_DF_WRITE_SIZE;
+    p_ctrl->dest_end_address     += BSP_FEATURE_FLASH_LP_DF_WRITE_SIZE;
+    p_ctrl->operations_remaining--;
 
     /* Write flash address setting */
     R_FACI_LP->FSARH = (uint16_t) ((dest_addr_idx >> 16));
@@ -1654,20 +1624,25 @@ static void r_flash_lp_df_write_operation (const uint32_t psrc_addr, uint32_t de
  * Execute a single Write operation on the Low Power Code Flash data.
  * See Figure 37.19 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
  *
- * @param[in]  psrc_addr         Source address for data to be written.
- * @param[in]  dest_addr         End address (read form) for writing.
+ * @param[in]  p_ctrl                      Pointer to the Flash control block
  **********************************************************************************************************************/
-static void r_flash_lp_cf_write_operation (const uint32_t psrc_addr, const uint32_t dest_addr)
+static void r_flash_lp_cf_write_operation (flash_lp_instance_ctrl_t * const p_ctrl)
 {
     uint16_t data[BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE / 2];
 
     /* Write flash address setting */
-    R_FACI_LP->FSARH = (uint16_t) ((dest_addr >> 16));
-    R_FACI_LP->FSARL = (uint16_t) (dest_addr);
+    R_FACI_LP->FSARH = (uint16_t) ((p_ctrl->dest_end_address >> 16));
+    R_FACI_LP->FSARL = (uint16_t) (p_ctrl->dest_end_address);
 
     /* Copy the data and write them to the flash write buffers. CM23 parts to not support unaligned access so this
      * must be done using byte access. */
-    r_flash_lp_memcpy((uint8_t *) data, (uint8_t *) psrc_addr, BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE);
+    r_flash_lp_memcpy((uint8_t *) data, (uint8_t *) p_ctrl->source_start_address, BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE);
+
+    /* If there is more data to write then write the next data. */
+    p_ctrl->source_start_address += BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE;
+    p_ctrl->dest_end_address     += BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE;
+    p_ctrl->operations_remaining--;
+
     R_FACI_LP->FWBL0 = data[0];
     R_FACI_LP->FWBH0 = data[1];
  #if BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE == 8
@@ -1677,53 +1652,6 @@ static void r_flash_lp_cf_write_operation (const uint32_t psrc_addr, const uint3
 
     /* Execute Write command */
     R_FACI_LP->FCR = FLASH_LP_FCR_WRITE;
-}
-
-#endif
-
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
-
-/*******************************************************************************************************************//**
- * Waits for the write command to be completed and verifies the result of the command execution.
- *
- * @param[in]  p_ctrl                Pointer to the Flash control block
- *
- * @retval     FSP_SUCCESS           Write command successfully completed.
- * @retval     FSP_ERR_IN_USE        Write command still in progress.
- * @retval     FSP_ERR_TIMEOUT       Timed out waiting for write command completion.
- * @retval     FSP_ERR_WRITE_FAILED  Write failed. Flash could be locked, area has not been erased, or address could be
- *                                   under access window control.
- **********************************************************************************************************************/
-static fsp_err_t r_flash_lp_df_write_monitor (flash_lp_instance_ctrl_t * const p_ctrl)
-{
-    fsp_err_t status;
-
-    /* Wait for the data to be written. */
-    status =
-        r_flash_lp_wait_for_ready(p_ctrl,
-                                  p_ctrl->timeout_write_df,
-                                  FLASH_LP_FSTATR2_WRITE_ERROR_BITS,
-                                  FSP_ERR_WRITE_FAILED);
-    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
-
-    /* If there are more blocks to write initiate another write operation. If failure return error. */
-    p_ctrl->source_start_address += BSP_FEATURE_FLASH_LP_DF_WRITE_SIZE;
-    p_ctrl->dest_end_address     += BSP_FEATURE_FLASH_LP_DF_WRITE_SIZE;
-    p_ctrl->operations_remaining--;
-
-    /* If there is more data to write start the write otherwise return success. */
-    if (p_ctrl->operations_remaining)
-    {
-        r_flash_lp_df_write_operation(p_ctrl->source_start_address, p_ctrl->dest_end_address);
-        status = FSP_ERR_IN_USE;
-    }
-    else
-    {
-        status = FSP_SUCCESS;
-    }
-
-    /* Return status */
-    return status;
 }
 
 #endif
@@ -1765,7 +1693,9 @@ static fsp_err_t r_flash_lp_df_blankcheck (flash_lp_instance_ctrl_t * const p_ct
     /* If in DF BGO mode, exit here; remaining processing if any will be done in ISR */
     if (p_ctrl->p_cfg->data_flash_bgo)
     {
-        *result = FLASH_RESULT_BGO_ACTIVE;
+        p_ctrl->current_operation = FLASH_OPERATION_DF_BGO_BLANKCHECK;
+        *result         = FLASH_RESULT_BGO_ACTIVE;
+        p_ctrl->timeout = p_ctrl->timeout_blank_check;
 
         return err;
     }
@@ -1825,10 +1755,21 @@ static fsp_err_t r_flash_lp_cf_blankcheck (flash_lp_instance_ctrl_t * const p_ct
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    r_flash_lp_cf_enter_pe_mode(p_ctrl);
+    r_flash_lp_cf_enter_pe_mode(p_ctrl, (bool) FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE);
 
     /* Give the blank check command to the FACI. */
     r_flash_lp_process_command(start_address, num_bytes, FLASH_LP_FCR_BLANKCHECK);
+
+ #if (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+    *result = FLASH_RESULT_BGO_ACTIVE;
+
+    p_ctrl->flash_status_mask = FLASH_LP_FSTATR2_ILLEGAL_ERROR_BITS;
+    p_ctrl->timeout           = p_ctrl->timeout_blank_check;
+
+    p_ctrl->current_operation = FLASH_OPERATION_DF_BGO_BLANKCHECK;
+
+    return err;
+ #else
 
     /* p_ctrl->timeout_blank_check specifies the wait time for a 4 code flash byte blank check.
      * num_bytes is divided by 4 and then multiplied to calculate the wait time for the entire operation */
@@ -1854,6 +1795,7 @@ static fsp_err_t r_flash_lp_cf_blankcheck (flash_lp_instance_ctrl_t * const p_ct
 
     /* Return status. Blank status is in result. */
     return err;
+ #endif
 }
 
 #endif
@@ -1913,10 +1855,18 @@ static fsp_err_t r_flash_lp_pe_mode_exit (flash_lp_instance_ctrl_t * const p_ctr
         r_flash_lp_write_fpmcr(FLASH_LP_DISCHARGE_1);
     }
 #endif
+
     r_flash_lp_write_fpmcr(FLASH_LP_READ_MODE);
 
     /* Wait for flash mode transition complete. The value of tMS will depend on flash version */
     r_flash_lp_delay_us(FLASH_LP_WAIT_TMS_HIGH, p_ctrl->system_clock_frequency);
+
+#if FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE && (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+    if ((flash_pe_mode == FLASH_LP_FENTRYR_CF_PE_MODE) && (0U != R_FACI_LP->FBKPGCR))
+    {
+        R_FACI_LP->FBKPGCR = FLASH_LP_BANK_PROGRAMMING_EXIT;
+    }
+#endif
 
     /* Clear the P/E mode register */
     FLASH_LP_PRV_FENTRYR = FLASH_LP_FENTRYR_READ_MODE;
@@ -1966,122 +1916,6 @@ static void r_flash_lp_reset (flash_lp_instance_ctrl_t * const p_ctrl)
     r_flash_lp_pe_mode_exit(p_ctrl);
 }
 
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
-
-/*******************************************************************************************************************//**
- * Handle the FACI frdyi interrupt when the operation is Data Flash BGO write.
- *
- * @param[in]  p_ctrl     Pointer to the Flash control block
- * @param[in]  p_cb_data  Pointer to the Flash callback event structure.
- *
- * @retval     true       When operation is completed or error has occurred.
- **********************************************************************************************************************/
-__STATIC_INLINE bool r_flash_lp_frdyi_df_bgo_write (flash_lp_instance_ctrl_t * p_ctrl,
-                                                    flash_callback_args_t    * p_cb_data)
-{
-    bool      operation_complete = false;
-    fsp_err_t result             = FSP_SUCCESS;
-
-    /* We are handling the interrupt indicating the last write operation has completed. */
-    /* Whether we are done or not we want to check the status */
-
-    result = r_flash_lp_df_write_monitor(p_ctrl);
-    if ((result != FSP_SUCCESS) && (result != FSP_ERR_IN_USE))
-    {
-        r_flash_lp_reset(p_ctrl);
-        p_cb_data->event   = FLASH_EVENT_ERR_FAILURE; ///< Pass result back to callback
-        operation_complete = true;
-    }
-    else
-    {
-        /* If the operation has completed return write complete. */
-        if (p_ctrl->operations_remaining == (uint32_t) 0)
-        {
-            p_cb_data->event   = FLASH_EVENT_WRITE_COMPLETE;
-            operation_complete = true;
-        }
-    }
-
-    return operation_complete;
-}
-
-/*******************************************************************************************************************//**
- * Handle the FACI frdyi interrupt when the operation is Data Flash BGO erase.
- *
- * @param[in]  p_ctrl     Pointer to the Flash control block
- * @param[in]  p_cb_data  Pointer to the Flash callback event structure.
- *
- * @retval     true       When operation is completed or error has occurred.
- **********************************************************************************************************************/
-__STATIC_INLINE bool r_flash_lp_frdyi_df_bgo_erase (flash_lp_instance_ctrl_t * p_ctrl,
-                                                    flash_callback_args_t    * p_cb_data)
-{
-    fsp_err_t result = FSP_SUCCESS;
-
-    /* We are handling the interrupt indicating the last erase operation has completed. Check the status. */
-    result = r_flash_lp_wait_for_ready(p_ctrl,
-                                       p_ctrl->timeout_erase_df_block,
-                                       FLASH_LP_FSTATR2_ERASE_ERROR_BITS,
-                                       FSP_ERR_ERASE_FAILED);
-    if (result != FSP_SUCCESS)
-    {
-        r_flash_lp_reset(p_ctrl);
-
-        /* Pass result back to callback. */
-        p_cb_data->event = FLASH_EVENT_ERR_FAILURE;
-    }
-    else
-    {
-        p_cb_data->event = FLASH_EVENT_ERASE_COMPLETE;
-    }
-
-    return true;
-}
-
-/*******************************************************************************************************************//**
- * Handle the FACI frdyi interrupt when the operation is Data Flash BGO blankcheck.
- *
- * @param[in]  p_ctrl     Pointer to the Flash control block
- * @param[in]  p_cb_data  Pointer to the Flash callback event structure.
- *
- * @retval     true       When operation is completed or error has occurred.
- **********************************************************************************************************************/
-__STATIC_INLINE bool r_flash_lp_frdyi_df_bgo_blankcheck (flash_lp_instance_ctrl_t * p_ctrl,
-                                                         flash_callback_args_t    * p_cb_data)
-{
-    fsp_err_t result = FSP_SUCCESS;
-
-    /* We are handling the interrupt indicating the last blank check operation has completed. */
-    /* Whether we are done or not we want to check the status */
-    result = r_flash_lp_wait_for_ready(p_ctrl,
-                                       p_ctrl->timeout_blank_check,
-                                       FLASH_LP_FSTATR2_ILLEGAL_ERROR_BITS,
-                                       FSP_ERR_BLANK_CHECK_FAILED);
-
-    /* If failure reset the flash and return failure */
-    if (result != FSP_SUCCESS)
-    {
-        r_flash_lp_reset(p_ctrl);
-        p_cb_data->event = FLASH_EVENT_ERR_FAILURE;
-    }
-    else
-    {
-        /* Check the result and return it */
-        if (R_FACI_LP->FSTATR00_b.BCERR0 == 1U)
-        {
-            p_cb_data->event = FLASH_EVENT_NOT_BLANK;
-        }
-        else
-        {
-            p_cb_data->event = FLASH_EVENT_BLANK;
-        }
-    }
-
-    return true;
-}
-
-#endif
-
 /*******************************************************************************************************************//**
  * FLASH ready interrupt routine.
  *
@@ -2091,10 +1925,10 @@ __STATIC_INLINE bool r_flash_lp_frdyi_df_bgo_blankcheck (flash_lp_instance_ctrl_
  **********************************************************************************************************************/
 void fcu_frdyi_isr (void)
 {
-#if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
+#if (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1) || (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
     FSP_CONTEXT_SAVE
     flash_callback_args_t cb_data;
-    bool operation_completed = false;
+    bool operation_completed = true;
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
 
@@ -2107,18 +1941,62 @@ void fcu_frdyi_isr (void)
     /* Recover ISR context saved in open. */
     flash_lp_instance_ctrl_t * p_ctrl = (flash_lp_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Continue the current operation. If unknown operation set callback event to failure. */
-    if (FLASH_OPERATION_DF_BGO_WRITE == p_ctrl->current_operation)
+    /* If an error occurs reset and return error. */
+    if ((FSP_ERR_TIMEOUT == r_flash_lp_command_finish(p_ctrl->timeout)) ||
+        (0U != (R_FACI_LP->FSTATR2 & p_ctrl->flash_status_mask)))
     {
-        operation_completed = r_flash_lp_frdyi_df_bgo_write(p_ctrl, &cb_data);
-    }
-    else if ((FLASH_OPERATION_DF_BGO_ERASE == p_ctrl->current_operation))
-    {
-        operation_completed = r_flash_lp_frdyi_df_bgo_erase(p_ctrl, &cb_data);
+        r_flash_lp_reset(p_ctrl);
+
+        cb_data.event = FLASH_EVENT_ERR_FAILURE;
     }
     else
     {
-        operation_completed = r_flash_lp_frdyi_df_bgo_blankcheck(p_ctrl, &cb_data);
+        /* Continue the current operation. If unknown operation set callback event to failure. */
+        if (FLASH_OPERATION_BGO_ERASE == p_ctrl->current_operation)
+        {
+            cb_data.event = FLASH_EVENT_ERASE_COMPLETE;
+        }
+
+ #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)
+        else if (FLASH_OPERATION_DF_BGO_WRITE == p_ctrl->current_operation)
+        {
+            if (p_ctrl->operations_remaining)
+            {
+                operation_completed = false;
+                r_flash_lp_df_write_operation(p_ctrl);
+            }
+            else
+            {
+                cb_data.event = FLASH_EVENT_WRITE_COMPLETE;
+            }
+        }
+ #endif
+ #if (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+        else if (FLASH_OPERATION_CF_BGO_WRITE == p_ctrl->current_operation)
+        {
+            if (p_ctrl->operations_remaining)
+            {
+                operation_completed = false;
+                r_flash_lp_cf_write_operation(p_ctrl);
+            }
+            else
+            {
+                cb_data.event = FLASH_EVENT_WRITE_COMPLETE;
+            }
+        }
+ #endif
+        else
+        {
+            /* Check the result and return it */
+            if (R_FACI_LP->FSTATR00_b.BCERR0 == 1U)
+            {
+                cb_data.event = FLASH_EVENT_NOT_BLANK;
+            }
+            else
+            {
+                cb_data.event = FLASH_EVENT_BLANK;
+            }
+        }
     }
 
     /* If the operation completed exit read mode, release the flash, and call the callback if available. */
@@ -2263,7 +2141,7 @@ static fsp_err_t r_flash_lp_access_window_set (flash_lp_instance_ctrl_t * const 
     fsp_err_t err = FSP_SUCCESS;
 
     /* Enter Code Flash P/E mode */
-    r_flash_lp_cf_enter_pe_mode(p_ctrl);
+    r_flash_lp_cf_enter_pe_mode(p_ctrl, false);
 
     /* Select The Extra Area */
     R_FACI_LP->FASR = 1U;
@@ -2316,7 +2194,7 @@ static fsp_err_t r_flash_lp_set_id_code (flash_lp_instance_ctrl_t * const p_ctrl
     uint16_t mode_mask = (uint16_t) mode;
 
     /* Update Flash state and enter Code Flash P/E mode */
-    r_flash_lp_cf_enter_pe_mode(p_ctrl);
+    r_flash_lp_cf_enter_pe_mode(p_ctrl, false);
 
     /* For each ID byte register */
     for (uint32_t i = 0U; i < 16U; i += 4U)
@@ -2398,7 +2276,7 @@ static fsp_err_t r_flash_lp_set_startup_area_boot (flash_lp_instance_ctrl_t * co
     fsp_err_t err = FSP_SUCCESS;
 
     /* Update Flash state and enter Code Flash P/E mode */
-    r_flash_lp_cf_enter_pe_mode(p_ctrl);
+    r_flash_lp_cf_enter_pe_mode(p_ctrl, false);
 
     if (temporary)
     {
@@ -2601,9 +2479,10 @@ static fsp_err_t r_flash_lp_extra_check (flash_lp_instance_ctrl_t * const p_ctrl
 
 /*******************************************************************************************************************//**
  * Transition to Code Flash P/E mode.
- * @param[in]  p_ctrl  Pointer to the Flash control block
+ * @param[in]  p_ctrl            Pointer to the Flash control block
+ * @param[in]  bank_programming  Put the flash into bank programming mode
  **********************************************************************************************************************/
-void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
+void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl, bool bank_programming)
 {
     /* While the Flash API is in use we will disable the Flash Cache. */
  #if BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER
@@ -2613,11 +2492,27 @@ void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
     R_BSP_FlashCacheDisable();
  #endif
 
- #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
+ #if (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+    if (bank_programming)
+    {
+        R_BSP_IrqEnable(p_ctrl->p_cfg->irq);
+    }
+    else
+    {
+        if (FSP_INVALID_VECTOR != p_ctrl->p_cfg->irq)
+        {
+            R_BSP_IrqDisable(p_ctrl->p_cfg->irq); // We are not supporting Flash Rdy interrupts for Code Flash operations
+        }
+    }
+
+ #else
+    FSP_PARAMETER_NOT_USED(bank_programming);
+  #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1) && (FLASH_LP_CFG_DATA_FLASH_BGO_SUPPORT_ENABLE == 1)
     if (p_ctrl->p_cfg->data_flash_bgo)
     {
-        R_BSP_IrqDisable(p_ctrl->p_cfg->irq); // We are not supporting Flash Rdy interrupts for Code Flash operations
+        R_BSP_IrqDisable(p_ctrl->p_cfg->irq);
     }
+  #endif
  #endif
 
     FLASH_LP_PRV_FENTRYR = FLASH_LP_FENTRYR_CODEFLASH_PE_MODE;
@@ -2654,6 +2549,12 @@ void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
     /* Wait for 5us or 3us depending on current operating mode. (tMS) */
     r_flash_lp_delay_us(fpmcr_mode_setup_time, p_ctrl->system_clock_frequency);
  #elif BSP_FEATURE_FLASH_LP_VERSION == 4
+  #if (FLASH_LP_CFG_CODE_FLASH_BANK_PROGRAMMING_ENABLE == 1)
+    if (bank_programming)
+    {
+        R_FACI_LP->FBKPGCR = FLASH_LP_BANK_PROGRAMMING_ENTER;
+    }
+  #endif
     r_flash_lp_write_fpmcr(0x02);
 
     /* Wait for 2us over (tDIS) */
@@ -2804,7 +2705,7 @@ static fsp_err_t r_flash_lp_bank_swap (flash_lp_instance_ctrl_t * const p_ctrl)
     /* MREF_INTERNAL_011 */
     cur_bank = R_FACI_LP->FCTLFR_b.BANKSWP;
 
-    r_flash_lp_cf_enter_pe_mode(p_ctrl);
+    r_flash_lp_cf_enter_pe_mode(p_ctrl, false);
 
     /* Select The Extra Area. Needed when using FEXCR register. */
     R_FACI_LP->FASR = 1U;
@@ -2822,6 +2723,25 @@ static fsp_err_t r_flash_lp_bank_swap (flash_lp_instance_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     err = r_flash_lp_pe_mode_exit(p_ctrl);
+
+  #if FLASH_LP_CFG_DUAL_BANK_INSTANT_SWAP
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* See "Example of startup bank selection flow (2/4) (change the startup bank without reset)": Figure 35.14 in
+     * Section 35.6.4 of the RA2A2 manual r01uh1005ej0110-ra2a2 */
+
+    /* Enable writing to FCTLFR. */
+    R_FACI_LP->FBKSWCR = FLASH_LP_BANK_SWAP_UPDATE_ENABLE;
+
+    /* Read BANKSWP[2:0] from the extra area */
+    (void) *(uint32_t *) FLASH_LP_EXTRA_AREA_FCTLF_ADDRESS;
+
+    /* Update FCTLFR with the new bank value. */
+    R_FACI_LP->FCTLFR = ~cur_bank & FLASH_LP_3BIT_MASK;
+
+    /* Disable writing to FCTLFR. */
+    R_FACI_LP->FBKSWCR = FLASH_LP_BANK_SWAP_UPDATE_DISABLE;
+  #endif
 
     return err;
 }

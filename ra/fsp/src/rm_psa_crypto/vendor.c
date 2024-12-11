@@ -86,10 +86,10 @@ static psa_key_bits_t calculate_key_bits_vendor (const psa_key_slot_t * slot)
 /*
  * This function is based off of psa_generate_key_internal() in mbedCrypto.
  */
-psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
-                                      size_t           bits,
-									  const psa_key_production_parameters_t *params,
-									  size_t params_data_length)
+psa_status_t psa_generate_key_vendor (psa_key_slot_t                        * slot,
+                                      size_t                                  bits,
+                                      const psa_key_production_parameters_t * params,
+                                      size_t                                  params_data_length)
 {
     (void) slot;
     (void) bits;
@@ -127,11 +127,15 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     if (PSA_KEY_TYPE_IS_RSA_KEY_PAIR_WRAPPED(slot->attr.type))
     {
         mbedtls_rsa_context * rsa;
-        int      ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
-        int exponent = 65537;  // NOLINT(readability-magic-numbers)
+        int      ret                   = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
+        int      exponent              = 65537; // NOLINT(readability-magic-numbers)
         uint32_t export_der_size_bytes = 0;
 
-        if (bits == RSA_2048_BITS)
+        if (bits == RSA_1024_BITS)
+        {
+            export_der_size_bytes = RSA_WRAPPED_1024_EXPORTED_DER_SIZE_BYTES;
+        }
+        else if (bits == RSA_2048_BITS)
         {
             export_der_size_bytes = RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES;
         }
@@ -155,10 +159,11 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
             return PSA_ERROR_NOT_SUPPORTED;
         }
 
-        if (params_data_length != 0) {
-            status = psa_rsa_read_exponent(params->data, params_data_length,
-                                           &exponent);
-            if (status != PSA_SUCCESS) {
+        if (params_data_length != 0)
+        {
+            status = psa_rsa_read_exponent(params->data, params_data_length, &exponent);
+            if (status != PSA_SUCCESS)
+            {
                 return status;
             }
         }
@@ -219,7 +224,7 @@ psa_status_t psa_generate_key_vendor (psa_key_slot_t * slot,
     {
         psa_ecc_family_t     curve     = PSA_KEY_TYPE_ECC_GET_FAMILY(slot->attr.type);
         uint32_t             ecc_bytes = 0;
-        size_t olen = 0;
+        size_t               olen      = 0;
         mbedtls_ecp_group_id grp_id    =
             mbedtls_ecc_group_from_psa(curve, bits);
         const mbedtls_ecp_curve_info * curve_info =

@@ -107,6 +107,8 @@ typedef enum e_adc_event
     ADC_EVENT_WINDOW_COMPARE_A,        ///< Window A comparison condition met
     ADC_EVENT_WINDOW_COMPARE_B,        ///< Window B comparison condition met
     ADC_EVENT_ZERO_CROSS_DETECTION,    ///< Zero-cross detection interrupt
+    ADC_EVENT_CAPTURE_A,               ///< Capture A conversion complete
+    ADC_EVENT_CAPTURE_B,               ///< Capture B conversion complete
 } adc_event_t;
 
 #endif
@@ -220,7 +222,6 @@ typedef struct st_adc_info
     elc_event_t      elc_event;           ///< Name of the ELC event for the peripheral
     uint32_t         calibration_data;    ///< Temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
     int16_t          slope_microvolts;    ///< Temperature sensor slope in microvolts/degrees C
-    bool             calibration_ongoing; ///< Calibration is in progress.
 } adc_info_t;
 
 #endif

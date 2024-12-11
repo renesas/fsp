@@ -189,9 +189,18 @@ typedef struct st_sci_b_lin_extended_cfg
     /* Interrupt settings */
     IRQn_Type bfd_irq;                            ///< Break field detect IRQ number
     IRQn_Type aed_irq;                            ///< Active edge detect IRQ number
+    IRQn_Type rxi_irq;                            ///< Receive interrupt IRQ number
+    IRQn_Type txi_irq;                            ///< Transmit interrupt IRQ number
+    IRQn_Type tei_irq;                            ///< Transmit end interrupt IRQ number
+    IRQn_Type eri_irq;                            ///< Error interrupt IRQ number
     uint8_t   bfd_ipl;                            ///< Break field detect interrupt priority
     uint8_t   aed_ipl;                            ///< Active edge detect interrupt priority
-    uint16_t  break_bits;                         ///< Master mode: Number of break field bits to transmit. Slave mode: Number of break field threshold bits.
+    uint8_t   rxi_ipl;                            ///< Receive interrupt priority
+    uint8_t   txi_ipl;                            ///< Transmit interrupt priority
+    uint8_t   tei_ipl;                            ///< Transmit end interrupt priority
+    uint8_t   eri_ipl;                            ///< Error interrupt priority
+
+    uint16_t break_bits;                          ///< Master mode: Number of break field bits to transmit. Slave mode: Number of break field threshold bits.
 } sci_b_lin_extended_cfg_t;
 
 /* LIN Instance Control Block. DO NOT INITIALIZE.  */

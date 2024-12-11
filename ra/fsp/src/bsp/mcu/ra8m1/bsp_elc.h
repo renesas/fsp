@@ -89,8 +89,8 @@ typedef enum e_elc_event_ra8m1
     ELC_EVENT_RTC_ALARM                     = (0x055), // Alarm interrupt
     ELC_EVENT_RTC_PERIOD                    = (0x056), // Periodic interrupt
     ELC_EVENT_RTC_CARRY                     = (0x057), // Carry interrupt
-    ELC_EVENT_USBFS_FIFO_0                  = (0x058), // DMA transfer request 0
-    ELC_EVENT_USBFS_FIFO_1                  = (0x059), // DMA transfer request 1
+    ELC_EVENT_USBFS_FIFO_0                  = (0x058), // DMA/DTC transfer request 0
+    ELC_EVENT_USBFS_FIFO_1                  = (0x059), // DMA/DTC transfer request 1
     ELC_EVENT_USBFS_INT                     = (0x05A), // USBFS interrupt
     ELC_EVENT_USBFS_RESUME                  = (0x05B), // USBFS resume interrupt
     ELC_EVENT_IIC0_RXI                      = (0x05C), // Receive data full

@@ -79,16 +79,31 @@
  #define SAU_SPI_PRV_UNIT                                 (0)
  #define SAU_REG                                          (R_SAU0)
  #define SAU_SPS_REG_INIT                                 (SAU0_SPS_REG_INIT)
-#elif 20 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI20 used (Unit 1 Channel 0) */
- #define SAU_SPI_PRV_CHANNEL                              (0)
- #define SAU_SPI_PRV_UNIT                                 (1)
- #define SAU_REG                                          (R_SAU1)
- #define SAU_SPS_REG_INIT                                 (SAU1_SPS_REG_INIT)
+#elif 1 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI01 used (Unit 0 Channel 1) */
+ #define SAU_SPI_PRV_CHANNEL                              (1)
+ #define SAU_SPI_PRV_UNIT                                 (0)
+ #define SAU_REG                                          (R_SAU0)
+ #define SAU_SPS_REG_INIT                                 (SAU0_SPS_REG_INIT)
+#elif 10 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI10 used (Unit 0 Channel 2) */
+ #define SAU_SPI_PRV_CHANNEL                              (2)
+ #define SAU_SPI_PRV_UNIT                                 (0)
+ #define SAU_REG                                          (R_SAU0)
+ #define SAU_SPS_REG_INIT                                 (SAU0_SPS_REG_INIT)
 #elif 11 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI11 used (Unit 0 Channel 3) */
  #define SAU_SPI_PRV_CHANNEL                              (3)
  #define SAU_SPI_PRV_UNIT                                 (0)
  #define SAU_REG                                          (R_SAU0)
  #define SAU_SPS_REG_INIT                                 (SAU0_SPS_REG_INIT)
+#elif 20 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI20 used (Unit 1 Channel 0) */
+ #define SAU_SPI_PRV_CHANNEL                              (0)
+ #define SAU_SPI_PRV_UNIT                                 (1)
+ #define SAU_REG                                          (R_SAU1)
+ #define SAU_SPS_REG_INIT                                 (SAU1_SPS_REG_INIT)
+#elif 21 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Only SPI21 used (Unit 1 Channel 1) */
+ #define SAU_SPI_PRV_CHANNEL                              (1)
+ #define SAU_SPI_PRV_UNIT                                 (1)
+ #define SAU_REG                                          (R_SAU1)
+ #define SAU_SPS_REG_INIT                                 (SAU1_SPS_REG_INIT)
 #endif
 
 #if -1 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE /* Single channel configuration disabled. */
@@ -171,7 +186,10 @@ static void r_sau_spi_do_reception(sau_spi_instance_ctrl_t * p_ctrl);
 static void r_sau_spi_do_transmission_reception(sau_spi_instance_ctrl_t * p_ctrl);
 
 #endif
+#if SAU_SPI_CFG_MULTIPLE_SLAVE_COMPATIBILITY_MODE_ENABLE
+static void r_sau_spi_reset_pin(sau_spi_instance_ctrl_t * p_ctrl, bool reset);
 
+#endif
 void sau_spi_txrxi_isr(void);
 
 /***********************************************************************************************************************
@@ -215,8 +233,8 @@ fsp_err_t R_SAU_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
     FSP_ASSERT(NULL != p_cfg->p_callback);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
 #endif
-#if -1 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE
     sau_spi_extended_cfg_t const * const p_extend = (sau_spi_extended_cfg_t *) p_cfg->p_extend;
+#if -1 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE
     p_ctrl->p_reg = ((R_SAU0_Type *) (R_SAU0_BASE + (SAU_REG_SIZE * SAU_SPI_PRV_UNIT)));
 #endif
     p_ctrl->p_cfg = p_cfg;
@@ -242,6 +260,19 @@ fsp_err_t R_SAU_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
     R_BSP_IrqCfgEnable(p_cfg->tei_irq, p_cfg->tei_ipl, p_ctrl);
 
     p_ctrl->open = SAU_SPI_OPEN;
+
+    /* Set SCK pin to input in slave mode by clearing PDR. */
+    if (SPI_MODE_SLAVE == p_cfg->operating_mode)
+    {
+        R_BSP_PinAccessEnable();
+        R_BSP_PinCfg(p_extend->sck_pin_settings.pin,
+                     (uint32_t) (p_extend->sck_pin_settings.cfg & ~R_PFS_PORT_PIN_PmnPFS_PDR_Msk));
+        R_BSP_PinAccessDisable();
+    }
+
+#if SAU_SPI_CFG_MULTIPLE_SLAVE_COMPATIBILITY_MODE_ENABLE
+    r_sau_spi_reset_pin(p_ctrl, true);
+#endif
 
     return err;
 }
@@ -347,6 +378,9 @@ fsp_err_t R_SAU_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
     FSP_ASSERT(NULL != p_src);
  #endif
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) p_api_ctrl;
+ #if SAU_SPI_CFG_MULTIPLE_SLAVE_COMPATIBILITY_MODE_ENABLE
+    r_sau_spi_reset_pin(p_ctrl, false);
+ #endif
 
     return r_sau_spi_write_read_common(p_ctrl, p_src, NULL, length, bit_width);
 #else
@@ -409,6 +443,10 @@ fsp_err_t R_SAU_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
     FSP_ASSERT(NULL != p_dest);
  #endif
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) p_api_ctrl;
+
+ #if SAU_SPI_CFG_MULTIPLE_SLAVE_COMPATIBILITY_MODE_ENABLE
+    r_sau_spi_reset_pin(p_ctrl, false);
+ #endif
 
     return r_sau_spi_write_read_common(p_ctrl, p_src, p_dest, length, bit_width);
 #else
@@ -980,6 +1018,9 @@ static void r_sau_spi_call_callback (sau_spi_instance_ctrl_t * p_ctrl, spi_event
     args.p_context = p_ctrl->p_context;
 
     p_ctrl->p_callback(&args);
+#if SAU_SPI_CFG_MULTIPLE_SLAVE_COMPATIBILITY_MODE_ENABLE
+    r_sau_spi_reset_pin(p_ctrl, true);
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -1178,6 +1219,49 @@ static void r_sau_spi_do_transmission_reception (sau_spi_instance_ctrl_t * p_ctr
         /* last byte */
         r_sau_spi_call_callback(p_ctrl, SPI_EVENT_TRANSFER_COMPLETE);
         p_ctrl->transfer_in_progress = false;
+    }
+}
+
+#endif
+
+#if SAU_SPI_CFG_MULTIPLE_SLAVE_COMPATIBILITY_MODE_ENABLE
+
+/*******************************************************************************************************************//**
+ * Reset SO pin setting.
+ *
+ * @param[in]     p_ctrl    Pointer to the control structure.
+ * @param[in]     reset     Reset SO pin.
+ **********************************************************************************************************************/
+static void r_sau_spi_reset_pin (sau_spi_instance_ctrl_t * p_ctrl, bool reset)
+{
+    spi_cfg_t const * p_cfg = p_ctrl->p_cfg;
+    if (SPI_MODE_SLAVE == p_cfg->operating_mode)
+    {
+        sau_spi_extended_cfg_t * p_extend = (sau_spi_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+        /* If single channel is disabled, then save the channel number on the stack. */
+        SAU_SPI_PRV_CHANNEL_DECLARATION;
+
+ #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
+        FSP_CRITICAL_SECTION_DEFINE;
+        FSP_CRITICAL_SECTION_ENTER;
+ #endif
+        if (true == reset)
+        {
+            SAU_REG->SOE &= (uint16_t) ~(1 << SAU_SPI_PRV_CHANNEL);
+        }
+        else
+        {
+            SAU_REG->SOE |= (uint16_t) (1 << SAU_SPI_PRV_CHANNEL);
+        }
+
+ #if SAU_SPI_CFG_CRITICAL_SECTION_ENABLE
+        FSP_CRITICAL_SECTION_EXIT;
+ #endif
+        R_BSP_PinAccessEnable();
+        R_BSP_PinCfg(p_extend->so_pin_settings.pin,
+                     reset ? ((uint32_t) IOPORT_CFG_PORT_DIRECTION_INPUT) : p_extend->so_pin_settings.cfg);
+        R_BSP_PinAccessDisable();
     }
 }
 

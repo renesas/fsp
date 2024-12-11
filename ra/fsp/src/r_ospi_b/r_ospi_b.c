@@ -22,6 +22,7 @@
   #include "r_rsip_public.h"
 extern rsip_instance_t const * const gp_rsip_instance;
  #else
+  #include "hw_sce_trng_private.h"
   #include "hw_sce_ra_private.h"
  #endif
 #endif
@@ -84,6 +85,8 @@ extern rsip_instance_t const * const gp_rsip_instance;
 #define OSPI_B_PRV_DOTF_REG00_RESET_VALUE                (0x22000000)
 #define OSPI_B_PRV_CONVAREAST_RESET_VALUE                (0x0)
 #define OSPI_B_PRV_CONVAREAD_RESET_VALUE                 (0x0)
+#define OSPI_B_PRV_DOTF_SEED_1_SEED_MASK                 (0x3)
+#define OSPI_B_PRV_DOTF_SEED_1_ENABLE_MASK               (0xC)
 
 /* These are used as modulus checking, make sure they are powers of 2. */
 #define OSPI_B_PRV_CPU_ACCESS_LENGTH                     (8U)
@@ -1248,6 +1251,32 @@ static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get (ospi_b_instan
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
 
+/*******************************************************************************************************************//**
+ * Configures DOTF side channel seed information
+ *
+ * @param[out]  p_seed                            Pointer to seed array.
+ * @retval      FSP_SUCCESS                       DOTF seed initialization completed successfully.
+ * @retval      FSP_ERR_CRYPTO_SCE_FAIL           TRNG generation failed.
+ **********************************************************************************************************************/
+static fsp_err_t r_ospi_b_dotf_side_channal_seed_init (uint32_t p_seed[])
+{
+    uint32_t random_number[4U] = {0};
+ #if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
+    fsp_err_t err = gp_rsip_instance->p_api->randomNumberGenerate(gp_rsip_instance->p_ctrl,
+                                                                  (uint8_t *) &random_number[0]);
+ #else
+    fsp_err_t err = HW_SCE_RNG_Read(random_number);
+ #endif
+
+    if (FSP_SUCCESS == err)
+    {
+        p_seed[0] = random_number[0];
+        p_seed[1] = (random_number[1] & OSPI_B_PRV_DOTF_SEED_1_SEED_MASK) | OSPI_B_PRV_DOTF_SEED_1_ENABLE_MASK;
+    }
+
+    return err;
+}
+
  #if defined OSPI_B_CFG_DOTF_PROTECTED_MODE_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
@@ -1262,7 +1291,7 @@ static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get (ospi_b_instan
 static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
 {
     fsp_err_t sce_ret = FSP_SUCCESS;
-    uint8_t   seed[8] = {0};
+    uint32_t  seed[2] = {0};
 
     if (OSPI_B_DOTF_KEY_FORMAT_WRAPPED != p_dotf_cfg->format)
     {
@@ -1297,7 +1326,16 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
         return sce_ret;
     }
 
-    sce_ret = gp_rsip_instance->p_api->otfInit(gp_rsip_instance->p_ctrl, RSIP_OTF_CHANNEL_0, p_wrapped_key, &seed[0]);
+    sce_ret = r_ospi_b_dotf_side_channal_seed_init(seed);
+    if (FSP_SUCCESS != sce_ret)
+    {
+        return sce_ret;
+    }
+
+    sce_ret =
+        gp_rsip_instance->p_api->otfInit(gp_rsip_instance->p_ctrl, RSIP_OTF_CHANNEL_0, p_wrapped_key,
+                                         (uint8_t *) &seed[0]);
+
     if (FSP_SUCCESS != sce_ret)
     {
         return sce_ret;
@@ -1404,6 +1442,12 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
         else
         {
         }
+    }
+
+    sce_ret = r_ospi_b_dotf_side_channal_seed_init(seed);
+    if (FSP_SUCCESS != sce_ret)
+    {
+        return sce_ret;
     }
 
     /* Use wrapped key with DOTF AES Engine. */

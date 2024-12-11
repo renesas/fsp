@@ -57,9 +57,9 @@
 
 #include "hw_sce_ra_private.h"
 
-#if (BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-        BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
-        BSP_FEATURE_CRYPTO_HAS_RSIP_E50D) && defined(MBEDTLS_AES_C) && defined(MBEDTLS_AES_ALT)
+#if (BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
+        BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) && defined(MBEDTLS_AES_C) && defined(MBEDTLS_AES_ALT)
 static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
 {
     fsp_err_t ret = FSP_SUCCESS;
@@ -92,7 +92,7 @@ static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
     return( 0 );
 
 }
-#endif /* (BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A ) && MBEDTLS_AES_C && MBEDTLS_AES_ALT */
+#endif /* (BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED ) && MBEDTLS_AES_C && MBEDTLS_AES_ALT */
 
 static int supported_init = 0;
 
@@ -947,6 +947,9 @@ static int get_pkcs_padding(unsigned char *input, size_t input_len,
     }
 
     padding_len = input[input_len - 1];
+    if (padding_len == 0 || padding_len > input_len) {
+        return MBEDTLS_ERR_CIPHER_INVALID_PADDING;
+    }
     *data_len = input_len - padding_len;
 
     mbedtls_ct_condition_t bad = mbedtls_ct_uint_gt(padding_len, input_len);
@@ -1166,9 +1169,9 @@ int mbedtls_cipher_finish(mbedtls_cipher_context_t *ctx,
                 if (0 != ctx->unprocessed_len) {
                     return MBEDTLS_ERR_CIPHER_FULL_BLOCK_EXPECTED;
                 }
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-        BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
-        BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+#if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
+        BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
                 return sce_aes_cipher_final( ctx );
 #else
                 return 0;
@@ -1184,9 +1187,9 @@ int mbedtls_cipher_finish(mbedtls_cipher_context_t *ctx,
              */
             if (NULL == ctx->add_padding && 0 == ctx->unprocessed_len) {
 
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-        BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
-        BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+#if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
+        BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
                 return sce_aes_cipher_final( ctx );
 #else
                 return 0;
@@ -1209,9 +1212,9 @@ int mbedtls_cipher_finish(mbedtls_cipher_context_t *ctx,
 
         /* Set output size for decryption */
         if (MBEDTLS_DECRYPT == ctx->operation) {
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-        BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
-        BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+#if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
+        BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
             if( 0 != ( ret = sce_aes_cipher_final( ctx )))
             {
                 return( ret );
@@ -1224,9 +1227,9 @@ int mbedtls_cipher_finish(mbedtls_cipher_context_t *ctx,
         /* Set output size for encryption */
         *olen = mbedtls_cipher_get_block_size(ctx);
 
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-        BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
-        BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+#if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
+        BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
         return sce_aes_cipher_final( ctx );
 #else
         return 0;
@@ -1259,9 +1262,9 @@ int mbedtls_cipher_finish(mbedtls_cipher_context_t *ctx,
             *olen = ctx->unprocessed_len;
         }
 
-#if BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE5B || BSP_FEATURE_CRYPTO_HAS_SCE5 || \
-        BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E11A || \
-        BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+#if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
+        BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
         return sce_aes_cipher_final( ctx );
 #else
         return 0;

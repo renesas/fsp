@@ -48,7 +48,15 @@ typedef enum e_rm_air_sensor_event
     RM_AIR_SENSOR_EVENT_NOT_MEASURABLE,           ///< Dust concentration is extremely high or has accumulated inside the sensor.
     RM_AIR_SENSOR_EVENT_FAN_SPEED_OUT_OF_RANGE,   ///< Fan speed is out of the set range.
     RM_AIR_SENSOR_EVENT_FAN_BROKEN,               ///< Fan malfunctioned or broken down.
+    RM_AIR_SENSOR_EVENT_CHECKSUM_ERROR,           ///< Checksum error occurs.
 } rm_air_sensor_event_t;
+
+/** Sign of sensor data */
+typedef enum e_rm_air_sensor_sign
+{
+    RM_AIR_SENSOR_SIGN_MINUS = -1,                ///< Minus sign
+    RM_AIR_SENSOR_SIGN_PLUS  = 1,                 ///< Plus sign
+} rm_air_sensor_sign_t;
 
 /** AIR SENSOR API callback parameter definition */
 typedef struct st_rm_air_sensor_callback_args
@@ -69,13 +77,15 @@ typedef struct st_rm_air_sensor_version
     uint8_t major;                     ///< Firmware major version
     uint8_t minor;                     ///< Firmware minor version
     uint8_t patch;                     ///< Firmware patch version
+    uint8_t ascii_code[11];            ///< ASCII code of firmware version
 } rm_air_sensor_version_t;
 
 /** AIR SENSOR sensor data block */
 typedef struct st_rm_air_sensor_single_data
 {
-    uint32_t integer_part;             ///< Integer part of sensor data.
-    uint32_t decimal_part;             ///< Decimal part of sensor data.
+    rm_air_sensor_sign_t sign;         ///< Sign of sensor data.
+    uint32_t             integer_part; ///< Integer part of sensor data.
+    uint32_t             decimal_part; ///< Decimal part of sensor data.
 } rm_air_sensor_single_data_t;
 
 /** AIR SENSOR data block */
@@ -96,7 +106,7 @@ typedef struct st_rm_air_sensor_data
     rm_air_sensor_single_data_t temperature; ///< Temperature [Celsius]
     rm_air_sensor_single_data_t humidity;    ///< Humidity [%RH]
     rm_air_sensor_single_data_t tvoc;        ///< Total volatile organic compounds (TVOC) concentrations [mg/m3]
-    rm_air_sensor_single_data_t eco2;        ///< Estimated carbon dioxide (eCO2) level [ppm]
+    rm_air_sensor_single_data_t eco2;        ///< Carbon dioxide (CO2) level [ppm]. Value is estimated/actual value depends on sensor module.
     rm_air_sensor_single_data_t iaq;         ///< Indoor Air Quality level according to UBA
     rm_air_sensor_single_data_t rel_iaq;     ///< Relative IAQ
 } rm_air_sensor_data_t;

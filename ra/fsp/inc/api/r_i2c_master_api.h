@@ -43,9 +43,10 @@ FSP_HEADER
 /** Communication speed options */
 typedef enum e_i2c_master_rate
 {
-    I2C_MASTER_RATE_STANDARD = 100000, ///< 100 kHz
-    I2C_MASTER_RATE_FAST     = 400000, ///< 400 kHz
-    I2C_MASTER_RATE_FASTPLUS = 1000000 ///< 1 MHz
+    I2C_MASTER_RATE_STANDARD  = 100000,  ///< 100 kHz
+    I2C_MASTER_RATE_FAST      = 400000,  ///< 400 kHz
+    I2C_MASTER_RATE_FASTPLUS  = 1000000, ///< 1 MHz
+    I2C_MASTER_RATE_HIGHSPEED = 3400000  ///< 3.4 MHz
 } i2c_master_rate_t;
 
 /** Addressing mode options */

@@ -65,12 +65,14 @@
 #define RM_RRH62000_CALC_CRC_DATA_LENGTH          (36)
 #define RM_RRH62000_CALC_DATA_STEP                (2)
 #define RM_RRH62000_CALC_CRC_8BITS_LENGTH         (8)
-#define RM_RRH62000_CACL_CRC_0X80                 (0x80)
-#define RM_RRH62000_CACL_CRC_MASK_MSB             (0x80)
+#define RM_RRH62000_CALC_CRC_0X80                 (0x80)
+#define RM_RRH62000_CALC_CRC_MASK_MSB             (0x80)
 #define RM_RRH62000_CALC_CRC_POLYNOMIAL           (0x31)
 #define RM_RRH62000_CALC_CRC_FINAL_XOR            (0x00)
 #define RM_RRH62000_CALC_DECIMAL_VALUE_100        (100)
 #define RM_RRH62000_CALC_DECIMAL_VALUE_10         (10)
+#define RM_RRH62000_CALC_MASK_MINUS_VALUE         (0x8000)
+#define RM_RRH62000_CALC_MINUS_VALUE              (0x8000)
 
 /* Definitions of Shift */
 #define RM_RRH62000_SHIFT_24                      (24)
@@ -322,7 +324,8 @@ fsp_err_t RM_RRH62000_DataCalculate (rm_air_sensor_ctrl_t * const           p_ap
 {
     fsp_err_t err = FSP_SUCCESS;
     rm_rrh62000_instance_ctrl_t * p_ctrl = (rm_rrh62000_instance_ctrl_t *) p_api_ctrl;
-    uint32_t tmp_u32;
+    uint16_t tmp_u16;
+    int16_t  tmp_16;
     rm_air_sensor_single_data_t * p_sensor_data;
     uint32_t position;
 
@@ -346,28 +349,45 @@ fsp_err_t RM_RRH62000_DataCalculate (rm_air_sensor_ctrl_t * const           p_ap
     /* Set measurement results */
     p_sensor_data = &p_rrh62000_data->nc_0p3;
     for (position = RM_RRH62000_POSITION_NC_0P3;
-         position < RM_RRH62000_LEN_MEASUREMENT_DATA;
+         position < (RM_RRH62000_LEN_MEASUREMENT_DATA - 1);
          position += RM_RRH62000_CALC_DATA_STEP)
     {
         /* Calculate sensor data from measurement results (big-endian). */
-        tmp_u32 = (uint32_t) (((uint32_t) p_raw_data->results[position] << RM_RRH62000_SHIFT_8) |
-                              (uint32_t) p_raw_data->results[position + 1]);
+        tmp_u16 = (uint16_t) (((uint16_t) p_raw_data->results[position] << RM_RRH62000_SHIFT_8) |
+                              (uint16_t) p_raw_data->results[position + 1]);
+        p_sensor_data->sign = RM_AIR_SENSOR_SIGN_PLUS;
         if (RM_RRH62000_POSITION_TEMPERATURE > position)
         {
             /* NC_x and PMx_x data. One decimal place. */
-            p_sensor_data->integer_part = tmp_u32 / RM_RRH62000_CALC_DECIMAL_VALUE_10;
-            p_sensor_data->decimal_part = tmp_u32 % RM_RRH62000_CALC_DECIMAL_VALUE_10;
+            p_sensor_data->integer_part = (uint32_t) (tmp_u16 / RM_RRH62000_CALC_DECIMAL_VALUE_10);
+            p_sensor_data->decimal_part = (uint32_t) (tmp_u16 % RM_RRH62000_CALC_DECIMAL_VALUE_10);
+        }
+        else if (RM_RRH62000_POSITION_TEMPERATURE == position)
+        {
+            /* Temperature. This data is signed integer type. Two decimal places. */
+            if (RM_RRH62000_CALC_MINUS_VALUE == (tmp_u16 & RM_RRH62000_CALC_MASK_MINUS_VALUE))
+            {
+                p_sensor_data->sign = RM_AIR_SENSOR_SIGN_MINUS;
+                tmp_16              = (*((int16_t *) &tmp_u16)) * RM_AIR_SENSOR_SIGN_MINUS;
+            }
+            else
+            {
+                tmp_16 = (int16_t) tmp_u16;
+            }
+
+            p_sensor_data->integer_part = (uint32_t) (tmp_16 / RM_RRH62000_CALC_DECIMAL_VALUE_100);
+            p_sensor_data->decimal_part = (uint32_t) (tmp_16 % RM_RRH62000_CALC_DECIMAL_VALUE_100);
         }
         else if ((RM_RRH62000_POSITION_ECO2 > position) || (RM_RRH62000_POSITION_IAQ == position))
         {
-            /* Temperature, humidity, TVOC and IAQ data. Two decimal places. */
-            p_sensor_data->integer_part = tmp_u32 / RM_RRH62000_CALC_DECIMAL_VALUE_100;
-            p_sensor_data->decimal_part = tmp_u32 % RM_RRH62000_CALC_DECIMAL_VALUE_100;
+            /* Humidity, TVOC and IAQ data. Two decimal places. */
+            p_sensor_data->integer_part = (uint32_t) (tmp_u16 / RM_RRH62000_CALC_DECIMAL_VALUE_100);
+            p_sensor_data->decimal_part = (uint32_t) (tmp_u16 % RM_RRH62000_CALC_DECIMAL_VALUE_100);
         }
         else
         {
             /* eCO2 and Relative IAQ data. These data does not have a decimal part. */
-            p_sensor_data->integer_part = tmp_u32;
+            p_sensor_data->integer_part = (uint32_t) tmp_u16;
             p_sensor_data->decimal_part = 0;
         }
 
@@ -900,7 +920,7 @@ static fsp_err_t rm_rrh62000_crc_execute (const uint8_t * const p_raw_data)
 
         for (j = 0; j < RM_RRH62000_CALC_CRC_8BITS_LENGTH; j++)
         {
-            if (RM_RRH62000_CACL_CRC_0X80 == (crc & RM_RRH62000_CACL_CRC_MASK_MSB))
+            if (RM_RRH62000_CALC_CRC_0X80 == (crc & RM_RRH62000_CALC_CRC_MASK_MSB))
             {
                 /* If MSB is 1, calculate XOR with the polynomial. */
                 crc = (uint8_t) (crc << 1) ^ RM_RRH62000_CALC_CRC_POLYNOMIAL;

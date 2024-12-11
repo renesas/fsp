@@ -71,6 +71,7 @@
  #define RSA_PARAMETERS_SIZE_BYTES(RSA_SIZE_BITS)             (24)
 
 /** DER encoded size for wrapped RSA key */
+ #define RSA_WRAPPED_1024_EXPORTED_DER_SIZE_BYTES    (1600U)
  #define RSA_WRAPPED_2048_EXPORTED_DER_SIZE_BYTES    (1600U)
  #define RSA_WRAPPED_3072_EXPORTED_DER_SIZE_BYTES    (1500U)
  #define RSA_WRAPPED_4096_EXPORTED_DER_SIZE_BYTES    (1700U)
@@ -372,9 +373,9 @@ fsp_err_t HW_SCE_Sha256HmacMessageDigest(const uint32_t InData_KeyIndex[], const
 fsp_err_t HW_SCE_EddsaSignatureGenerateSub(const uint32_t InData_PrivKeyIndex[], const uint32_t InData_PubKeyIndex[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_DomainParam[], uint32_t OutData_Signature[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_EddsaSignatureVerificationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_Signature[], const uint32_t InData_DomainParam[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_Ed25519ScalarMultiplicationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_XYZ[], const uint32_t InData_DomainParam[], uint32_t OutData_XYZ[]);
-fsp_err_t HW_SCE_Aes128OutputKeyForDotfSub(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
-fsp_err_t HW_SCE_Aes192OutputKeyForDotfSub(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
-fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
+fsp_err_t HW_SCE_Aes128OutputKeyForDotfSub(const uint32_t InData_KeyMode[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_DOTFSEED[]);
+fsp_err_t HW_SCE_Aes192OutputKeyForDotfSub(const uint32_t InData_KeyMode[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_DOTFSEED[]);
+fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub(const uint32_t InData_KeyMode[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_DOTFSEED[]);
 fsp_err_t HW_SCE_RSA2048_KeyPairGenerateSub(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 fsp_err_t HW_SCE_RSA3072_KeyPairGenerateSub(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 fsp_err_t HW_SCE_RSA4096_KeyPairGenerateSub(const uint32_t InData_KeyMode[], const uint32_t MAX_CNT, uint32_t OutData_PubKey[], uint32_t OutData_PrivKeyIndex[], uint32_t OutData_PrivKey[]);

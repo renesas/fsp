@@ -582,6 +582,7 @@ uint16_t hw_usb_hread_devadd (usb_utr_t * ptr, uint16_t devsel)
 
     if (devadr > USB_MAXDEVADDR)
     {
+        USB_PRINTF1("### hw_usb_hread_devadd USB_MAXDEVADDR (%d)\n", devadr);
         result = USB_ERROR;
     }
     else

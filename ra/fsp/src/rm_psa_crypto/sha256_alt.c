@@ -7,6 +7,7 @@
  *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
+
 /*
  *  The SHA-256 Secure Hash Standard was published by NIST in 2002.
  *
@@ -49,7 +50,9 @@
 #endif /* defined(__clang__) &&  (__clang_major__ >= 4) */
 
 /* Ensure that SIG_SETMASK is defined when -std=c99 is used. */
+#if !defined(_GNU_SOURCE)
 #define _GNU_SOURCE
+#endif
 
 #include "common.h"
 
@@ -155,7 +158,9 @@ static int mbedtls_a64_crypto_sha256_determine_support(void)
     return 1;
 }
 #elif defined(MBEDTLS_PLATFORM_IS_WINDOWS_ON_ARM64)
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif
 #include <Windows.h>
 #include <processthreadsapi.h>
 
@@ -712,7 +717,7 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
     ctx->total[0] += (uint32_t) ilen;
     ctx->total[0] &= 0xFFFFFFFF;
 
-#if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     uint32_t sha256_block_aligned_size_mod;
 
     if (ctx->total[0] < (uint32_t) ilen) {
@@ -854,7 +859,7 @@ int mbedtls_sha256_finish(mbedtls_sha256_context *ctx,
      */
     used = ctx->total[0] & 0x3F;
 
-  #if BSP_FEATURE_CRYPTO_HAS_RSIP7 || BSP_FEATURE_CRYPTO_HAS_RSIP_E50D
+  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     /* If there is no unaligned data in the context buffer. */
     if (0 == used)
     {

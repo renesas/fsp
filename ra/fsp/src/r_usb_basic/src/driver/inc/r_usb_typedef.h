@@ -57,7 +57,7 @@ typedef struct usb_utr
     usb_cb_t     complete;             /* Call Back Function Info */
     void const * p_tranadr;            /* Transfer data Start address */
 #if (BSP_CFG_RTOS == 1)                /* Azure RTOS */
- #if (USB_CFG_DMA == USB_CFG_ENABLE)
+ #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
     void const * p_tranadr_hold;
  #endif /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
 #endif /* (BSP_CFG_RTOS == 1) */

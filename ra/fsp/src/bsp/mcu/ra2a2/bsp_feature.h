@@ -85,6 +85,7 @@
 #define BSP_FEATURE_BSP_HAS_CLOCK_SUPPLY_TYPEB               (1U)
 #define BSP_FEATURE_BSP_HAS_DCDC_REGULATOR                   (0U)
 #define BSP_FEATURE_BSP_HAS_DTCM                             (0) // Feature not available on this MCU
+#define BSP_FEATURE_BSP_HAS_EXTRA_PERIPHERAL0_CLOCK          (0U)
 #define BSP_FEATURE_BSP_HAS_FSXP_CLOCK                       (0)
 #define BSP_FEATURE_BSP_HAS_GRAPHICS_DOMAIN                  (0)
 #define BSP_FEATURE_BSP_HAS_I3C_CLOCK                        (0)
@@ -212,7 +213,6 @@
 #define BSP_FEATURE_CRC_POLYNOMIAL_MASK                      (0x3EU)
 #define BSP_FEATURE_CRC_SNOOP_ADDRESS_TYPE_TDR               (0x3U)
 
-#define BSP_FEATURE_CRYPTO_AES_IP_VERSION                    (2)
 #define BSP_FEATURE_CRYPTO_HAS_AES                           (1)
 #define BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED                   (0)
 #define BSP_FEATURE_CRYPTO_HAS_CTR_DRBG                      (0)
@@ -221,31 +221,29 @@
 #define BSP_FEATURE_CRYPTO_HAS_HASH                          (0)
 #define BSP_FEATURE_CRYPTO_HAS_RSA                           (0)
 #define BSP_FEATURE_CRYPTO_HAS_RSA_WRAPPED                   (0)
-#define BSP_FEATURE_CRYPTO_HAS_RSIP7                         (0) // Feature not available on this MCU
-#define BSP_FEATURE_CRYPTO_HAS_RSIP_E11A                     (0) // Feature not available on this MCU
-#define BSP_FEATURE_CRYPTO_HAS_RSIP_E50D                     (0) // Feature not available on this MCU
-#define BSP_FEATURE_CRYPTO_HAS_SCE5                          (0)
-#define BSP_FEATURE_CRYPTO_HAS_SCE5B                         (0)
-#define BSP_FEATURE_CRYPTO_HAS_SCE7                          (0)
-#define BSP_FEATURE_CRYPTO_HAS_SCE9                          (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_CTSU_CTSUCHAC_REGISTER_COUNT             (0U)
 #define BSP_FEATURE_CTSU_CTSUCHTRC_REGISTER_COUNT            (0U)
 #define BSP_FEATURE_CTSU_HAS_TXVSEL                          (1)
 #define BSP_FEATURE_CTSU_VERSION                             (0) // Feature not available on this MCU
 
+#define BSP_FEATURE_DAC12_CHANNELS_PER_UNIT                  (0)
+#define BSP_FEATURE_DAC12_UNIT_COUNT                         (0)
+
+#define BSP_FEATURE_DAC8_CHANNELS_PER_UNIT                   (0)
 #define BSP_FEATURE_DAC8_HAS_CHARGEPUMP                      (0) // Feature not available on this MCU
 #define BSP_FEATURE_DAC8_HAS_DA_AD_SYNCHRONIZE               (0) // Feature not available on this MCU
 #define BSP_FEATURE_DAC8_HAS_REALTIME_MODE                   (0) // Feature not available on this MCU
-#define BSP_FEATURE_DAC8_MAX_CHANNELS                        (0) // Feature not available on this MCU
+#define BSP_FEATURE_DAC8_UNIT_COUNT                          (0)
 
-#define BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK                    (0) // Feature not available on this MCU
+#define BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK                    (0)
+#define BSP_FEATURE_DAC_B_CHANNELS_PER_UNIT                  (0)
+#define BSP_FEATURE_DAC_B_UNIT_COUNT                         (0)
 #define BSP_FEATURE_DAC_HAS_CHARGEPUMP                       (0U)
 #define BSP_FEATURE_DAC_HAS_DAVREFCR                         (0U)
 #define BSP_FEATURE_DAC_HAS_DA_AD_SYNCHRONIZE                (0U)
 #define BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT                  (0U)
 #define BSP_FEATURE_DAC_HAS_OUTPUT_AMPLIFIER                 (0U)
-#define BSP_FEATURE_DAC_MAX_CHANNELS                         (0U) // Feature not available on this MCU
 
 #define BSP_FEATURE_DMAC_HAS_DELSR                           (0U)
 #define BSP_FEATURE_DMAC_HAS_DMCTL                           (0U) // Feature not available on this MCU
@@ -260,8 +258,11 @@
 
 #define BSP_FEATURE_ELC_VERSION                              (1U)
 
+#define BSP_FEATURE_ESC_MAX_PORTS                            (0) // Feature not available on this MCU
+
 #define BSP_FEATURE_ETHER_FIFO_DEPTH                         (0) // Feature not available on this MCU
 #define BSP_FEATURE_ETHER_MAX_CHANNELS                       (0) // Feature not available on this MCU
+#define BSP_FEATURE_ETHER_MAX_QUEUE_NUM                      (0) // Feature not available on this MCU
 #define BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE                 (0) // Feature not available on this MCU
 
 #define BSP_FEATURE_FLASH_ARC_NSEC_MULTIPLE_MAX_COUNT        (0) // Feature not available on this MCU
@@ -376,6 +377,7 @@
 #define BSP_FEATURE_LVD_MONITOR_2_HI_THRESHOLD               (LVD_THRESHOLD_MONITOR_2_LEVEL_4_29V) // 4.29V
 #define BSP_FEATURE_LVD_MONITOR_2_LOW_THRESHOLD              (LVD_THRESHOLD_MONITOR_2_LEVEL_3_84V) // 3.84V
 #define BSP_FEATURE_LVD_MONITOR_2_STABILIZATION_TIME_US      (1200U)                               // LVD2 operation stabilization time after LVD2 is enabled
+#define BSP_FEATURE_LVD_MONITOR_MASK                         (0x03U)                               // LVD mask monitor 1,2
 #define BSP_FEATURE_LVD_SUPPORT_RESET_ON_RISING_EDGE         (0U)
 #define BSP_FEATURE_LVD_VBAT_STABILIZATION_TIME_US           (500U)                                // Time in microseconds required for LVD VBAT to stabilize
 #define BSP_FEATURE_LVD_VERSION                              (1U)
@@ -398,6 +400,7 @@
 #define BSP_FEATURE_OSPI_DEVICE_1_START_ADDRESS              (0x0U)
 
 #define BSP_FEATURE_POEG_CHANNEL_MASK                        (0x3U)
+#define BSP_FEATURE_POEG_HAS_POEGG_DERRST                    (0U)
 
 #define BSP_FEATURE_QSPI_DEVICE_START_ADDRESS                (0x0U)
 

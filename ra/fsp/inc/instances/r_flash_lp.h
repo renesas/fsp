@@ -50,8 +50,10 @@ FSP_HEADER
 typedef enum e_flash_bgo_operation
 {
     FLASH_OPERATION_NON_BGO,
+    FLASH_OPERATION_BGO_ERASE,
+    FLASH_OPERATION_CF_BGO_WRITE,
+    FLASH_OPERATION_CF_BGO_BLANKCHECK,
     FLASH_OPERATION_DF_BGO_WRITE,
-    FLASH_OPERATION_DF_BGO_ERASE,
     FLASH_OPERATION_DF_BGO_BLANKCHECK,
 } flash_bgo_operation_t;
 
@@ -71,6 +73,8 @@ typedef struct st_flash_lp_instance_ctrl
     uint32_t              source_start_address;     // Source/Start address of in progress operation
     uint32_t              dest_end_address;         // Destination/End address of in progress operation
     uint32_t              operations_remaining;     // Number of operations remaining
+    uint32_t              flash_status_mask;        // Mask used for checking flash status
+    uint32_t              timeout;                  // Timeout of current operation
     flash_bgo_operation_t current_operation;        // Type of BGO operation in progress.
 } flash_lp_instance_ctrl_t;
 
@@ -110,7 +114,14 @@ fsp_err_t R_FLASH_LP_CallbackSet(flash_ctrl_t * const          p_api_ctrl,
                                  void (                      * p_callback)(flash_callback_args_t *),
                                  void const * const            p_context,
                                  flash_callback_args_t * const p_callback_memory);
+
+#if FLASH_LP_CFG_DUAL_BANK_INSTANT_SWAP
+fsp_err_t R_FLASH_LP_BankSwap(flash_ctrl_t * const p_api_ctrl) PLACE_IN_RAM_SECTION;
+
+#else
 fsp_err_t R_FLASH_LP_BankSwap(flash_ctrl_t * const p_api_ctrl);
+
+#endif
 fsp_err_t R_FLASH_LP_UpdateFlashClockFreq(flash_ctrl_t * const p_api_ctrl);
 fsp_err_t R_FLASH_LP_InfoGet(flash_ctrl_t * const p_api_ctrl, flash_info_t * const p_info);
 fsp_err_t R_FLASH_LP_AntiRollbackCounterIncrement(flash_ctrl_t * const p_api_ctrl, flash_arc_t counter);

@@ -71,7 +71,7 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
         p_aligned_output = aligned_output_buffer;
         process_length   = RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(NX_CRYPTO_AES_BLOCK_SIZE);
 
-        if(total_length != 0U)
+        if (total_length != 0U)
         {
             /* Setup the first block */
             NX_CRYPTO_MEMCPY((uint8_t *) p_aligned_input, p_local_input, NX_CRYPTO_AES_BLOCK_SIZE);
@@ -81,9 +81,9 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
         {
             /* Setup the first block */
             NX_CRYPTO_MEMCPY((uint8_t *) p_aligned_input, p_local_input, length);
-            total_length = process_length;
+            total_length    = process_length;
             bytes_remaining = 0U;
-            misaligned = true;
+            misaligned      = true;
         }
     }
     else
@@ -95,61 +95,60 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
     /* total_length is a multiple of block size */
     while ((total_length != 0U) || (0U != bytes_remaining))
     {
-        if(process_length != 0U)
+        if (process_length != 0U)
         {
-        /* Select the correct method based on the key type and size. */
-        switch (aes_ptr->nx_crypto_aes_rounds)
-        {
-            case AES_CTR_KEY_SIZE_128_ROUNDS:
+            /* Select the correct method based on the key type and size. */
+            switch (aes_ptr->nx_crypto_aes_rounds)
             {
-                status = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
-                                                            &indata_cmd,
-                                                            (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                                            (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
-                FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
-                HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
-                                                     (uint32_t *) p_aligned_output,
-                                                     process_length);
-                status = HW_SCE_Aes128EncryptDecryptFinalSub();
-                break;
-            }
+                case AES_CTR_KEY_SIZE_128_ROUNDS:
+                {
+                    status = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
+                                                                &indata_cmd,
+                                                                (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                    FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+                    HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
+                                                         (uint32_t *) p_aligned_output,
+                                                         process_length);
+                    status = HW_SCE_Aes128EncryptDecryptFinalSub();
+                    break;
+                }
 
- #if (1U == BSP_FEATURE_CRYPTO_HAS_SCE9 || BSP_FEATURE_CRYPTO_HAS_SCE7 || BSP_FEATURE_CRYPTO_HAS_RSIP7)
-            case AES_CTR_KEY_SIZE_192_ROUNDS:
-            {
-                status = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
-                                                            (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                                            (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
-                FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
-                HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
-                                                     (uint32_t *) p_aligned_output,
-                                                     process_length);
-                status = HW_SCE_Aes192EncryptDecryptFinalSub();
-                break;
-            }
+ #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+                case AES_CTR_KEY_SIZE_192_ROUNDS:
+                {
+                    status = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
+                                                                (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                    FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+                    HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
+                                                         (uint32_t *) p_aligned_output,
+                                                         process_length);
+                    status = HW_SCE_Aes192EncryptDecryptFinalSub();
+                    break;
+                }
  #endif
-            case AES_CTR_KEY_SIZE_256_ROUNDS:
-            {
-                status = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
-                                                            &indata_cmd,
-                                                            (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                                            (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
-                FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
-                HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
-                                                     (uint32_t *) p_aligned_output,
-                                                     process_length);
-                status = HW_SCE_Aes256EncryptDecryptFinalSub();
-                break;
+                case AES_CTR_KEY_SIZE_256_ROUNDS:
+                {
+                    status = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
+                                                                &indata_cmd,
+                                                                (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                    FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
+                    HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
+                                                         (uint32_t *) p_aligned_output,
+                                                         process_length);
+                    status = HW_SCE_Aes256EncryptDecryptFinalSub();
+                    break;
+                }
+
+                default:
+                {
+                    return NX_CRYPTO_INVALID_PARAMETER;
+                }
             }
 
-            default:
-            {
-                return NX_CRYPTO_INVALID_PARAMETER;
-            }
-        }
-
-        FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
-
+            FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
         }
 
         uint8_t * out_iv = (uint8_t *) ctr_metadata->nx_crypto_ctr_counter_block;

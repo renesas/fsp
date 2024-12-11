@@ -38,6 +38,7 @@ void usb_hstd_set_hub_port (usb_utr_t * ptr, uint16_t addr, uint16_t upphub, uin
     {
         hw_usb_hrmw_devadd(ptr, addr, (upphub | hubport), (uint16_t) (USB_UPPHUB | USB_HUBPORT));
     }
+
  #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     FSP_PARAMETER_NOT_USED(*ptr);
     FSP_PARAMETER_NOT_USED(addr);
@@ -122,7 +123,6 @@ void usb_hstd_interrupt_handler (usb_utr_t * ptr)
         ptr->ipp->INTENB1 &= (uint16_t) ~((USB_SIGNE) | USB_SACKE);
         ptr->keyword       = USB_INT_SIGN;
     }
-
     /***** Processing PIPE0-MAX_PIPE_NO data *****/
     else if (USB_BRDY == (ists0 & USB_BRDY)) /***** EP0-7 BRDY *****/
     {
@@ -142,7 +142,6 @@ void usb_hstd_interrupt_handler (usb_utr_t * ptr)
         ptr->keyword      = USB_INT_NRDY;
         ptr->status       = nsts;
     }
-
     /***** Processing rootport0 *****/
     else if (USB_OVRCR == (ists1 & USB_OVRCR)) /***** OVER CURRENT *****/
     {
@@ -748,6 +747,7 @@ uint8_t * usb_hstd_write_fifo (usb_utr_t * ptr, uint16_t count, uint16_t pipemod
     {
         /* Non */
     }
+
  #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     /* WAIT_LOOP */
     for (even = (uint16_t) (count >> 1); (0 != even); --even)
@@ -871,6 +871,7 @@ uint8_t * usb_hstd_read_fifo (usb_utr_t * ptr, uint16_t count, uint16_t pipemode
                 read_p += sizeof(uint8_t);
                 odd--;
             } while (odd != 0);
+
   #else                                /* USB_CFG_ENDIAN == USB_CFG_LITTLE */
             /* WAIT_LOOP */
             for (i = 0; i < odd; i++)
@@ -887,6 +888,7 @@ uint8_t * usb_hstd_read_fifo (usb_utr_t * ptr, uint16_t count, uint16_t pipemode
     {
         /* None */
     }
+
  #else                                 /* defined (USB_HIGH_SPEED_MODULE) */
     /* WAIT_LOOP */
     for (even = (uint16_t) (count >> 1); (0 != even); --even)
@@ -1096,6 +1098,10 @@ void usb_hstd_nrdy_endprocess (usb_utr_t * ptr, uint16_t pipe)
         /*USB_PRINTF2("### IGNORE Pipe %d is %d times \n", pipe, g_usb_hstd_ignore_cnt[ptr->ip][pipe]);*/
         if (USB_PIPEERROR == g_usb_hstd_ignore_cnt[ptr->ip][pipe])
         {
+            USB_PRINTF2("###usb_hstd_nrdy_endprocess ignore_cnt:%d pipe:%d\n",
+                        g_usb_hstd_ignore_cnt[ptr->ip][pipe],
+                        pipe);
+
             /* Data Device Ignore X 3 call back */
             /* End of data transfer */
             usb_hstd_forced_termination(ptr, pipe, USB_DATA_ERR);

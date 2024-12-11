@@ -191,6 +191,13 @@ extern TX_TIMER         g_usb_otg_hnp_timer;
 /* USB Type-C */
 extern uint32_t g_usb_typec_reg_tcs;
 
+#if (USB_DEBUG_ON == 2) || (USB_DEBUG_ON == 3)
+
+/* Debug Print Buffer */
+extern uint8_t g_usb_print_buffer[];
+extern uint8_t g_usb_qe_error_string_length;
+#endif                                 /* USB_DEBUG_ON == 2 */
+
 /*****************************************************************************
  * Public Functions
  ******************************************************************************/

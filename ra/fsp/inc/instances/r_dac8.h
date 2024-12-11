@@ -74,7 +74,7 @@ fsp_err_t R_DAC8_Start(dac_ctrl_t * const p_ctrl);
 fsp_err_t R_DAC8_Stop(dac_ctrl_t * const p_ctrl);
 
 /*******************************************************************************************************************//**
- * @} (end defgroup DAC)
+ * @} (end defgroup DAC8)
  **********************************************************************************************************************/
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

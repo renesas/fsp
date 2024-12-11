@@ -79,7 +79,9 @@ FSP_HEADER
 #define RSIP_KEY_HMAC_SHA512            (0x04)
 #define RSIP_KEY_HMAC_NUM               (0x05)
 #define RSIP_KEY_KDF_HMAC_SHA256        (0x00)
-#define RSIP_KEY_KDF_HMAC_NUM           (0x01)
+#define RSIP_KEY_KDF_HMAC_SHA384        (0x01)
+#define RSIP_KEY_KDF_HMAC_SHA512        (0x02)
+#define RSIP_KEY_KDF_HMAC_NUM           (0x03)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -231,6 +233,10 @@ typedef enum e_rsip_byte_size_wrapped_key
         RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA512),                 ///< HMAC-SHA512
     RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA256 =
         RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_KDF_HMAC_SHA256),             ///< KDF HMAC-SHA256
+    RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA384 =
+        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_KDF_HMAC_SHA384),             ///< KDF HMAC-SHA384
+    RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA512 =
+        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_KDF_HMAC_SHA512),             ///< KDF HMAC-SHA512
 } rsip_byte_size_wrapped_key_t;
 
 /** Byte size of wrapped key */
@@ -238,6 +244,8 @@ typedef enum e_rsip_byte_size_wrapped_mac
 {
     RSIP_BYTE_SIZE_WRAPPED_MAC_HEADER      = 12U,                                       ///< Header
     RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA256 = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA256, ///< A block of HMAC-SHA256
+    RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA384 = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA384, ///< A block of HMAC-SHA384
+    RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA512 = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA512, ///< A block of HMAC-SHA512
 } rsip_byte_size_wrapped_mac_t;
 
 /** Block cipher modes of operation for AES */
@@ -391,7 +399,7 @@ typedef struct st_rsip_hmac_handle
     rsip_user_handle_state_t handle_state;                                               // Handle state
 } rsip_hmac_handle_t;
 
-/* Working area for KDF HMAC functions. DO NOT MODIFY. */
+/** Working area for KDF HMAC functions. DO NOT MODIFY. */
 typedef struct st_rsip_kdf_hmac_handle
 {
     const void             * p_func;                                                     // Pointer to primitive functions
@@ -407,6 +415,12 @@ typedef struct st_rsip_kdf_hmac_handle
     uint32_t wrapped_msg_length;                                                         // Wrapped message length
     uint32_t actual_wrapped_msg_length;                                                  // Actual wrapped message length
 } rsip_kdf_hmac_handle_t;
+
+/** Verified certificate information */
+typedef struct st_rsip_verified_cert_info
+{
+    uint8_t value[RSIP_CFG_BYTE_SIZE_PKI_ENC_CERT_INFO];
+} rsip_verified_cert_info_t;
 
 /** RSIP Control block. Allocate an instance specific control block to pass into the API calls.
  * @par Implemented as
@@ -1042,6 +1056,24 @@ typedef struct st_rsip_api
                                      uint8_t const * const            p_signature);
 
     /**
+     * Exports verified certificate information stored in this driver.
+     *
+     * @param[in,out] p_ctrl               Pointer to control block.
+     * @param[out]    p_verified_cert_info Pointer to certificate to be signed
+     */
+    fsp_err_t (* pkiVerifiedCertInfoExport)(rsip_ctrl_t * const               p_ctrl,
+                                            rsip_verified_cert_info_t * const p_verified_cert_info);
+
+    /**
+     * Imports verified certificate information.
+     *
+     * @param[in,out] p_ctrl               Pointer to control block.
+     * @param[in]     p_verified_cert_info Pointer to certificate to be signed
+     */
+    fsp_err_t (* pkiVerifiedCertInfoImport)(rsip_ctrl_t * const                     p_ctrl,
+                                            rsip_verified_cert_info_t const * const p_verified_cert_info);
+
+    /**
      * Wraps the public key in the verified public key certificate.
      *
      * @param[in,out] p_ctrl               Pointer to control block.
@@ -1073,8 +1105,8 @@ typedef struct st_rsip_api
      *
      * @param[in,out] p_ctrl          Pointer to control block.
      * @param[in]     key_type        Output HMAC key type for KDF.
-     * @param[in]     p_wrapped_mac   Pointer to wrapped data of ECDH or MAC.
-     * @param[in]     kdf_data_length HMAC key length. 32 to 64 bytes.
+     * @param[in]     p_wrapped_mac   Pointer to wrapped MAC.
+     * @param[in]     kdf_data_length Length of HMAC key to be extracted from MAC.
      * @param[out]    p_wrapped_key   Pointer to destination wrapped HMAC key for KDF.
      */
     fsp_err_t (* kdfMacKeyImport)(rsip_ctrl_t * const              p_ctrl,
@@ -1200,7 +1232,7 @@ typedef struct st_rsip_api
                                    uint8_t const * const            p_tls_sequence_num,
                                    uint8_t * const                  p_wrapped_initial_vector);
 
-   /** 
+   /**
     * Initialize on-the-fly decryption on RSIP.
     * @param[in,out] p_ctrl        Pointer to control block.
     * @param[in]     channel       Channel number.

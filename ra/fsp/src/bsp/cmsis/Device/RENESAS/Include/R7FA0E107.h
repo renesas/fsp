@@ -2542,14 +2542,14 @@ typedef struct                         /*!< (@ 0x40006000) R_ICU Structure      
 } R_ICU_Type;                           /*!< Size = 840 (0x348)                                                        */
 
 /* =========================================================================================================================== */
-/* ================                                          R_IICA                                           ================ */
+/* ================                                          R_IICA0                                          ================ */
 /* =========================================================================================================================== */
 
 /**
- * @brief Serial Interface IICA (R_IICA)
+ * @brief Serial Interface IICA0 (R_IICA0)
  */
 
-typedef struct                         /*!< (@ 0x400A3000) R_IICA Structure                                           */
+typedef struct                         /*!< (@ 0x400A3000) R_IICA0 Structure                                          */
 {
     __IOM uint8_t IICA0;               /*!< (@ 0x00000000) IICA Shift Register 0                                      */
 
@@ -2634,7 +2634,7 @@ typedef struct                         /*!< (@ 0x400A3000) R_IICA Structure     
             __IOM uint8_t A : 7;       /*!< [7..1] 7-bit local address when in slave mode of unit 0                   */
         } SVA0_b;
     };
-} R_IICA_Type;                         /*!< Size = 261 (0x105)                                                        */
+} R_IICA0_Type;                        /*!< Size = 261 (0x105)                                                        */
 
 /* =========================================================================================================================== */
 /* ================                                          R_IWDT                                           ================ */
@@ -4776,7 +4776,8 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_ELC_BASE         0x40041000UL
  #define R_FACI_LP_BASE     0x407EC000UL
  #define R_ICU_BASE         0x40006000UL
- #define R_IICA_BASE        0x400A3000UL
+ #define R_IICA0_BASE       0x400A3000UL
+ #define R_IICA1_BASE       0x400A3008UL
  #define R_IWDT_BASE        0x40044400UL
  #define R_MSTP_BASE        (0x40047000UL - 4UL) /* MSTPCRA is not located in R_MSTP so the base address must be moved so that MSTPCRB is located at 0x40047000. */
  #define R_PCLBUZ_BASE      0x400A3B00UL
@@ -4819,7 +4820,8 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_ELC         ((R_ELC_Type *) R_ELC_BASE)
  #define R_FACI_LP     ((R_FACI_LP_Type *) R_FACI_LP_BASE)
  #define R_ICU         ((R_ICU_Type *) R_ICU_BASE)
- #define R_IICA        ((R_IICA_Type *) R_IICA_BASE)
+ #define R_IICA0       ((R_IICA0_Type *) R_IICA0_BASE)
+ #define R_IICA1       ((R_IICA0_Type *) R_IICA1_BASE)
  #define R_IWDT        ((R_IWDT_Type *) R_IWDT_BASE)
  #define R_MSTP        ((R_MSTP_Type *) R_MSTP_BASE)
  #define R_PCLBUZ      ((R_PCLBUZ_Type *) R_PCLBUZ_BASE)
@@ -5811,73 +5813,73 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_ICU_SBYEDCR1_UR1ED_Msk         (0x2000UL)     /*!< UR1ED (Bitfield-Mask: 0x01)                           */
 
 /* =========================================================================================================================== */
-/* ================                                          R_IICA                                           ================ */
+/* ================                                          R_IICA0                                          ================ */
 /* =========================================================================================================================== */
 
 /* =========================================================  IICA0  ========================================================= */
 /* =========================================================  IICS0  ========================================================= */
- #define R_IICA_IICS0_SPD_Pos          (0UL)    /*!< SPD (Bit 0)                                           */
- #define R_IICA_IICS0_SPD_Msk          (0x1UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICS0_STD_Pos          (1UL)    /*!< STD (Bit 1)                                           */
- #define R_IICA_IICS0_STD_Msk          (0x2UL)  /*!< STD (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICS0_ACKD_Pos         (2UL)    /*!< ACKD (Bit 2)                                          */
- #define R_IICA_IICS0_ACKD_Msk         (0x4UL)  /*!< ACKD (Bitfield-Mask: 0x01)                            */
- #define R_IICA_IICS0_TRC_Pos          (3UL)    /*!< TRC (Bit 3)                                           */
- #define R_IICA_IICS0_TRC_Msk          (0x8UL)  /*!< TRC (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICS0_COI_Pos          (4UL)    /*!< COI (Bit 4)                                           */
- #define R_IICA_IICS0_COI_Msk          (0x10UL) /*!< COI (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICS0_EXC_Pos          (5UL)    /*!< EXC (Bit 5)                                           */
- #define R_IICA_IICS0_EXC_Msk          (0x20UL) /*!< EXC (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICS0_ALD_Pos          (6UL)    /*!< ALD (Bit 6)                                           */
- #define R_IICA_IICS0_ALD_Msk          (0x40UL) /*!< ALD (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICS0_MSTS_Pos         (7UL)    /*!< MSTS (Bit 7)                                          */
- #define R_IICA_IICS0_MSTS_Msk         (0x80UL) /*!< MSTS (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICS0_SPD_Pos          (0UL)    /*!< SPD (Bit 0)                                           */
+ #define R_IICA0_IICS0_SPD_Msk          (0x1UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICS0_STD_Pos          (1UL)    /*!< STD (Bit 1)                                           */
+ #define R_IICA0_IICS0_STD_Msk          (0x2UL)  /*!< STD (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICS0_ACKD_Pos         (2UL)    /*!< ACKD (Bit 2)                                          */
+ #define R_IICA0_IICS0_ACKD_Msk         (0x4UL)  /*!< ACKD (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICS0_TRC_Pos          (3UL)    /*!< TRC (Bit 3)                                           */
+ #define R_IICA0_IICS0_TRC_Msk          (0x8UL)  /*!< TRC (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICS0_COI_Pos          (4UL)    /*!< COI (Bit 4)                                           */
+ #define R_IICA0_IICS0_COI_Msk          (0x10UL) /*!< COI (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICS0_EXC_Pos          (5UL)    /*!< EXC (Bit 5)                                           */
+ #define R_IICA0_IICS0_EXC_Msk          (0x20UL) /*!< EXC (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICS0_ALD_Pos          (6UL)    /*!< ALD (Bit 6)                                           */
+ #define R_IICA0_IICS0_ALD_Msk          (0x40UL) /*!< ALD (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICS0_MSTS_Pos         (7UL)    /*!< MSTS (Bit 7)                                          */
+ #define R_IICA0_IICS0_MSTS_Msk         (0x80UL) /*!< MSTS (Bitfield-Mask: 0x01)                            */
 /* =========================================================  IICF0  ========================================================= */
- #define R_IICA_IICF0_IICRSV_Pos       (0UL)    /*!< IICRSV (Bit 0)                                        */
- #define R_IICA_IICF0_IICRSV_Msk       (0x1UL)  /*!< IICRSV (Bitfield-Mask: 0x01)                          */
- #define R_IICA_IICF0_STCEN_Pos        (1UL)    /*!< STCEN (Bit 1)                                         */
- #define R_IICA_IICF0_STCEN_Msk        (0x2UL)  /*!< STCEN (Bitfield-Mask: 0x01)                           */
- #define R_IICA_IICF0_IICBSY_Pos       (6UL)    /*!< IICBSY (Bit 6)                                        */
- #define R_IICA_IICF0_IICBSY_Msk       (0x40UL) /*!< IICBSY (Bitfield-Mask: 0x01)                          */
- #define R_IICA_IICF0_STCF_Pos         (7UL)    /*!< STCF (Bit 7)                                          */
- #define R_IICA_IICF0_STCF_Msk         (0x80UL) /*!< STCF (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICF0_IICRSV_Pos       (0UL)    /*!< IICRSV (Bit 0)                                        */
+ #define R_IICA0_IICF0_IICRSV_Msk       (0x1UL)  /*!< IICRSV (Bitfield-Mask: 0x01)                          */
+ #define R_IICA0_IICF0_STCEN_Pos        (1UL)    /*!< STCEN (Bit 1)                                         */
+ #define R_IICA0_IICF0_STCEN_Msk        (0x2UL)  /*!< STCEN (Bitfield-Mask: 0x01)                           */
+ #define R_IICA0_IICF0_IICBSY_Pos       (6UL)    /*!< IICBSY (Bit 6)                                        */
+ #define R_IICA0_IICF0_IICBSY_Msk       (0x40UL) /*!< IICBSY (Bitfield-Mask: 0x01)                          */
+ #define R_IICA0_IICF0_STCF_Pos         (7UL)    /*!< STCF (Bit 7)                                          */
+ #define R_IICA0_IICF0_STCF_Msk         (0x80UL) /*!< STCF (Bitfield-Mask: 0x01)                            */
 /* =======================================================  IICCTL00  ======================================================== */
- #define R_IICA_IICCTL00_SPT_Pos       (0UL)    /*!< SPT (Bit 0)                                           */
- #define R_IICA_IICCTL00_SPT_Msk       (0x1UL)  /*!< SPT (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICCTL00_STT_Pos       (1UL)    /*!< STT (Bit 1)                                           */
- #define R_IICA_IICCTL00_STT_Msk       (0x2UL)  /*!< STT (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICCTL00_ACKE_Pos      (2UL)    /*!< ACKE (Bit 2)                                          */
- #define R_IICA_IICCTL00_ACKE_Msk      (0x4UL)  /*!< ACKE (Bitfield-Mask: 0x01)                            */
- #define R_IICA_IICCTL00_WTIM_Pos      (3UL)    /*!< WTIM (Bit 3)                                          */
- #define R_IICA_IICCTL00_WTIM_Msk      (0x8UL)  /*!< WTIM (Bitfield-Mask: 0x01)                            */
- #define R_IICA_IICCTL00_SPIE_Pos      (4UL)    /*!< SPIE (Bit 4)                                          */
- #define R_IICA_IICCTL00_SPIE_Msk      (0x10UL) /*!< SPIE (Bitfield-Mask: 0x01)                            */
- #define R_IICA_IICCTL00_WREL_Pos      (5UL)    /*!< WREL (Bit 5)                                          */
- #define R_IICA_IICCTL00_WREL_Msk      (0x20UL) /*!< WREL (Bitfield-Mask: 0x01)                            */
- #define R_IICA_IICCTL00_LREL_Pos      (6UL)    /*!< LREL (Bit 6)                                          */
- #define R_IICA_IICCTL00_LREL_Msk      (0x40UL) /*!< LREL (Bitfield-Mask: 0x01)                            */
- #define R_IICA_IICCTL00_IICE_Pos      (7UL)    /*!< IICE (Bit 7)                                          */
- #define R_IICA_IICCTL00_IICE_Msk      (0x80UL) /*!< IICE (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICCTL00_SPT_Pos       (0UL)    /*!< SPT (Bit 0)                                           */
+ #define R_IICA0_IICCTL00_SPT_Msk       (0x1UL)  /*!< SPT (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL00_STT_Pos       (1UL)    /*!< STT (Bit 1)                                           */
+ #define R_IICA0_IICCTL00_STT_Msk       (0x2UL)  /*!< STT (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL00_ACKE_Pos      (2UL)    /*!< ACKE (Bit 2)                                          */
+ #define R_IICA0_IICCTL00_ACKE_Msk      (0x4UL)  /*!< ACKE (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICCTL00_WTIM_Pos      (3UL)    /*!< WTIM (Bit 3)                                          */
+ #define R_IICA0_IICCTL00_WTIM_Msk      (0x8UL)  /*!< WTIM (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICCTL00_SPIE_Pos      (4UL)    /*!< SPIE (Bit 4)                                          */
+ #define R_IICA0_IICCTL00_SPIE_Msk      (0x10UL) /*!< SPIE (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICCTL00_WREL_Pos      (5UL)    /*!< WREL (Bit 5)                                          */
+ #define R_IICA0_IICCTL00_WREL_Msk      (0x20UL) /*!< WREL (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICCTL00_LREL_Pos      (6UL)    /*!< LREL (Bit 6)                                          */
+ #define R_IICA0_IICCTL00_LREL_Msk      (0x40UL) /*!< LREL (Bitfield-Mask: 0x01)                            */
+ #define R_IICA0_IICCTL00_IICE_Pos      (7UL)    /*!< IICE (Bit 7)                                          */
+ #define R_IICA0_IICCTL00_IICE_Msk      (0x80UL) /*!< IICE (Bitfield-Mask: 0x01)                            */
 /* =======================================================  IICCTL01  ======================================================== */
- #define R_IICA_IICCTL01_PRS_Pos       (0UL)    /*!< PRS (Bit 0)                                           */
- #define R_IICA_IICCTL01_PRS_Msk       (0x1UL)  /*!< PRS (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICCTL01_DFC_Pos       (2UL)    /*!< DFC (Bit 2)                                           */
- #define R_IICA_IICCTL01_DFC_Msk       (0x4UL)  /*!< DFC (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICCTL01_SMC_Pos       (3UL)    /*!< SMC (Bit 3)                                           */
- #define R_IICA_IICCTL01_SMC_Msk       (0x8UL)  /*!< SMC (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICCTL01_DAD_Pos       (4UL)    /*!< DAD (Bit 4)                                           */
- #define R_IICA_IICCTL01_DAD_Msk       (0x10UL) /*!< DAD (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICCTL01_CLD_Pos       (5UL)    /*!< CLD (Bit 5)                                           */
- #define R_IICA_IICCTL01_CLD_Msk       (0x20UL) /*!< CLD (Bitfield-Mask: 0x01)                             */
- #define R_IICA_IICCTL01_SVADIS_Pos    (6UL)    /*!< SVADIS (Bit 6)                                        */
- #define R_IICA_IICCTL01_SVADIS_Msk    (0x40UL) /*!< SVADIS (Bitfield-Mask: 0x01)                          */
- #define R_IICA_IICCTL01_WUP_Pos       (7UL)    /*!< WUP (Bit 7)                                           */
- #define R_IICA_IICCTL01_WUP_Msk       (0x80UL) /*!< WUP (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL01_PRS_Pos       (0UL)    /*!< PRS (Bit 0)                                           */
+ #define R_IICA0_IICCTL01_PRS_Msk       (0x1UL)  /*!< PRS (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL01_DFC_Pos       (2UL)    /*!< DFC (Bit 2)                                           */
+ #define R_IICA0_IICCTL01_DFC_Msk       (0x4UL)  /*!< DFC (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL01_SMC_Pos       (3UL)    /*!< SMC (Bit 3)                                           */
+ #define R_IICA0_IICCTL01_SMC_Msk       (0x8UL)  /*!< SMC (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL01_DAD_Pos       (4UL)    /*!< DAD (Bit 4)                                           */
+ #define R_IICA0_IICCTL01_DAD_Msk       (0x10UL) /*!< DAD (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL01_CLD_Pos       (5UL)    /*!< CLD (Bit 5)                                           */
+ #define R_IICA0_IICCTL01_CLD_Msk       (0x20UL) /*!< CLD (Bitfield-Mask: 0x01)                             */
+ #define R_IICA0_IICCTL01_SVADIS_Pos    (6UL)    /*!< SVADIS (Bit 6)                                        */
+ #define R_IICA0_IICCTL01_SVADIS_Msk    (0x40UL) /*!< SVADIS (Bitfield-Mask: 0x01)                          */
+ #define R_IICA0_IICCTL01_WUP_Pos       (7UL)    /*!< WUP (Bit 7)                                           */
+ #define R_IICA0_IICCTL01_WUP_Msk       (0x80UL) /*!< WUP (Bitfield-Mask: 0x01)                             */
 /* ========================================================  IICWL0  ========================================================= */
 /* ========================================================  IICWH0  ========================================================= */
 /* =========================================================  SVA0  ========================================================== */
- #define R_IICA_SVA0_A_Pos             (1UL)    /*!< A (Bit 1)                                             */
- #define R_IICA_SVA0_A_Msk             (0xfeUL) /*!< A (Bitfield-Mask: 0x7f)                               */
+ #define R_IICA0_SVA0_A_Pos             (1UL)    /*!< A (Bit 1)                                             */
+ #define R_IICA0_SVA0_A_Msk             (0xfeUL) /*!< A (Bitfield-Mask: 0x7f)                               */
 
 /* =========================================================================================================================== */
 /* ================                                          R_IWDT                                           ================ */

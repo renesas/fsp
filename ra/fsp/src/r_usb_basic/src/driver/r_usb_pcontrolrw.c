@@ -84,6 +84,7 @@ uint16_t usb_pstd_ctrl_read (uint32_t bsize, uint8_t * table, usb_utr_t * p_utr)
         /* FIFO access error */
         case USB_FIFOERROR:
         {
+            USB_PRINTF0("###usb_pstd_ctrl_read USB_FIFOERROR\n");
             break;
         }
 

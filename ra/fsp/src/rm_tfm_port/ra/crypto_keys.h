@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
+* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef CRYPTO_KEYS_H_
  #define CRYPTO_KEYS_H_

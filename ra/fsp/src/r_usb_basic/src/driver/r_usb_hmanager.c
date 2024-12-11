@@ -792,6 +792,7 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
 
                         case USB_ERROR:
                         {
+                            USB_PRINTF0("*** usb_hstd_enumeration USB_NOTTPL !\n");
                             enume_mode = USB_NOTTPL;
                             break;
                         }
@@ -1338,6 +1339,8 @@ uint16_t usb_hstd_chk_device_class (usb_utr_t * ptr, usb_hcdreg_t * driver)
             break;
         }
     }
+
+    USB_PRINTF0("### usb_hstd_chk_device_class Not Find Interface Descriptor\n");
 
     return USB_ERROR;
 }

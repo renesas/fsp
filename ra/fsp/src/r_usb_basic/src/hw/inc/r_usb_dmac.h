@@ -8,7 +8,11 @@
 
 #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
 
- #include "r_dmac.h"
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
+  #include "r_dmac.h"
+ #elif (USB_CFG_DTC == USB_CFG_ENABLE)
+  #include "r_dtc.h"
+ #endif
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -49,6 +53,7 @@ uint16_t usb_cstd_dma_get_ir_vect(usb_utr_t * ptr, uint16_t use_port);
 void     usb_cstd_dma_clear_ir(usb_utr_t * ptr, uint16_t use_port);
 void     usb_cstd_dma_rcv_setting(usb_utr_t * ptr, uint32_t des_addr, uint16_t useport, uint32_t transfer_size);
 void     usb_cstd_dma_send_setting(usb_utr_t * ptr, uint32_t src_adr, uint16_t useport, uint32_t transfer_size);
+void     usb_cstd_transfer_wait(usb_utr_t * ptr, uint8_t dir);
 void     usb_cstd_dma_stop(usb_utr_t * p_utr, uint16_t use_port);
 void     usb_cstd_dfifo_end(usb_utr_t * ptr, uint16_t useport);
 uint32_t hw_usb_get_dxfifo_adr(usb_utr_t * ptr, uint16_t use_port, uint16_t bit_width);
@@ -61,10 +66,13 @@ void usb_cstd_dma_send_start(usb_utr_t * ptr, uint16_t pipe, uint16_t useport);
 void usb_cstd_dma_send_restart(usb_utr_t * ptr, uint32_t src, uint32_t data_size, uint8_t pipe);
 void usb_cstd_dma_send_complete(uint8_t ip_no, uint16_t use_port);
 
+ #if (USB_CFG_DMA == USB_CFG_ENABLE)
 void usb_ip0_d0fifo_callback(dmac_callback_args_t * cb_data);
 void usb_ip0_d1fifo_callback(dmac_callback_args_t * cb_data);
 void usb_ip1_d0fifo_callback(dmac_callback_args_t * cb_data);
 void usb_ip1_d1fifo_callback(dmac_callback_args_t * cb_data);
+
+ #endif                                /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
 
 #endif                                 /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
 

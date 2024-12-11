@@ -23,9 +23,9 @@
 #include "rm_netx_secure_crypto.h"
 #include "nx_crypto_ccm.h"
 
-#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((0U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (0U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (0U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (0U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (0U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (0U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((0U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (0U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (0U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (0U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (0U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
 /**************************************************************************/
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
@@ -306,9 +306,9 @@ NX_CRYPTO_KEEP UINT _nx_crypto_ccm_encrypt_init(VOID *crypto_metadata, NX_CRYPTO
                                                 VOID *additional_data, UINT additional_len,
                                                 UINT length, UCHAR *iv, USHORT icv_len, USHORT block_size)
 {
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
     NX_CRYPTO_PARAMETER_NOT_USED(ccm_metadata);
     NX_CRYPTO_PARAMETER_NOT_USED(crypto_function);
 
@@ -409,9 +409,9 @@ NX_CRYPTO_KEEP UINT _nx_crypto_ccm_encrypt_update(UINT op, VOID *crypto_metadata
                                                   UINT (*crypto_function)(VOID *, UCHAR *, UCHAR *, UINT),
                                                   UCHAR *input, UCHAR *output, UINT length, UINT block_size)
 {
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
     NX_CRYPTO_PARAMETER_NOT_USED(op);
     NX_CRYPTO_PARAMETER_NOT_USED(ccm_metadata);
     NX_CRYPTO_PARAMETER_NOT_USED(crypto_function);
@@ -541,9 +541,9 @@ NX_CRYPTO_KEEP UINT _nx_crypto_ccm_encrypt_calculate(VOID *crypto_metadata, NX_C
 UCHAR *A = ccm_metadata -> nx_crypto_ccm_A;
 UINT i;
 
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_CRYPTO_HAS_SCE9) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE5) || (1U == BSP_FEATURE_CRYPTO_HAS_SCE5B) || \
-    (1U == BSP_FEATURE_CRYPTO_HAS_SCE7) || (1U == BSP_FEATURE_CRYPTO_HAS_RSIP7))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE5_SUPPORTED) || (1U == BSP_FEATURE_RSIP_SCE5B_SUPPORTED) || \
+    (1U == BSP_FEATURE_RSIP_SCE7_SUPPORTED) || (1U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED))
     NX_CRYPTO_PARAMETER_NOT_USED(A);
     NX_CRYPTO_PARAMETER_NOT_USED(i);
     NX_CRYPTO_PARAMETER_NOT_USED(crypto_function);

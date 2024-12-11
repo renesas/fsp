@@ -52,7 +52,7 @@
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
- #if (USB_CFG_DMA == USB_CFG_ENABLE)
+ #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
 extern transfer_instance_t * g_p_usbx_transfer_tx;
 extern transfer_instance_t * g_p_usbx_transfer_rx;
  #endif                                /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */
@@ -550,7 +550,9 @@ uint16_t usb_hstd_get_device_address (usb_utr_t * ptr, uint16_t pipe)
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("*** usb_hstd_get_device_address PipeNo ERROR %d\n", pipe);
         result = USB_ERROR;            /* Error */
+        return result;
     }
 
     /* Host */
@@ -596,6 +598,8 @@ uint16_t usb_hstd_write_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("### usb_hstd_write_data PipeNo ERROR pipenum:%d\n", pipe);
+
         return USB_WRITESHRT;          /* Error */
     }
 
@@ -847,6 +851,8 @@ uint16_t usb_hstd_read_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
 
     if (USB_MAX_PIPE_NO < pipe)
     {
+        USB_PRINTF1("*** usb_hstd_read_data PipeNo ERROR %d\n", pipe);
+
         return USB_ERROR;              /* Error */
     }
 

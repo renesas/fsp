@@ -113,14 +113,6 @@ typedef struct st_lin_cfg
     /* LIN generic configuration */
     uint8_t    channel;                                ///< Select a channel corresponding to the channel number of the hardware.
     lin_mode_t mode;                                   ///< Driver mode (master or slave)
-    uint8_t    rxi_ipl;                                ///< Receive interrupt priority
-    IRQn_Type  rxi_irq;                                ///< Receive interrupt IRQ number
-    uint8_t    txi_ipl;                                ///< Transmit interrupt priority
-    IRQn_Type  txi_irq;                                ///< Transmit interrupt IRQ number
-    uint8_t    tei_ipl;                                ///< Transmit end interrupt priority
-    IRQn_Type  tei_irq;                                ///< Transmit end interrupt IRQ number
-    uint8_t    eri_ipl;                                ///< Error interrupt priority
-    IRQn_Type  eri_irq;                                ///< Error interrupt IRQ number
 
     /* Configuration for LIN Event processing */
     void (* p_callback)(lin_callback_args_t * p_args); ///< Pointer to callback function
