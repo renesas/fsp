@@ -770,7 +770,7 @@ var searchData=
   ['freertos_2bfat_20port_20for_20ra_20_28rm_5ffreertos_5fplus_5ffat_29',['FreeRTOS+FAT Port for RA (rm_freertos_plus_fat)',['../group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t.html',1,'']]],
   ['freertos_2bfat_20port_20interface',['FreeRTOS+FAT Port Interface',['../group___r_m___f_r_e_e_r_t_o_s___p_l_u_s___f_a_t___a_p_i.html',1,'']]],
   ['freertos_20port_20_28rm_5ffreertos_5fport_29',['FreeRTOS Port (rm_freertos_port)',['../group___r_m___f_r_e_e_r_t_o_s___p_o_r_t.html',1,'']]],
-  ['fs1015_20flow_20sensor_20_28rm_5ffs1015_29',['FS1015 Flow Sensor (rm_fs1015)',['../group___r_m___f_s1015.html',1,'']]],
+  ['fs1015_20flow_20sensor_20_28rm_5ffs1015_29_20_5bdeprecated_5d',['FS1015 Flow Sensor (rm_fs1015) [Deprecated]',['../group___r_m___f_s1015.html',1,'']]],
   ['fs2012_20flow_20sensor_20_28rm_5ffs2012_29_20_5bdeprecated_5d',['FS2012 Flow Sensor (rm_fs2012) [Deprecated]',['../group___r_m___f_s2012.html',1,'']]],
   ['fs3000_20flow_20sensor_20_28rm_5ffs3000_29',['FS3000 Flow Sensor (rm_fs3000)',['../group___r_m___f_s3000.html',1,'']]],
   ['fsxxxx_20middleware_20interface',['FSXXXX Middleware Interface',['../group___r_m___f_s_x_x_x_x___a_p_i.html',1,'']]]

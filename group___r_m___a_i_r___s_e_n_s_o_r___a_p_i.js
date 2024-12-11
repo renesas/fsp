@@ -9,9 +9,11 @@ var group___r_m___a_i_r___s_e_n_s_o_r___a_p_i =
     [ "rm_air_sensor_version_t", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__version__t", [
       [ "major", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a64badf2c572da1cff6c32f4f17f09b2a", null ],
       [ "minor", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a7500fec4d2de51d206a26d6679b2cf6e", null ],
-      [ "patch", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a823fa9eda7a5b3f38ef825f98baf6481", null ]
+      [ "patch", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a823fa9eda7a5b3f38ef825f98baf6481", null ],
+      [ "ascii_code", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a6a8e2160f08f5cce22289b09808340c7", null ]
     ] ],
     [ "rm_air_sensor_single_data_t", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t", [
+      [ "sign", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#acdf11d9ba07eaf98c57a1773b57b629f", null ],
       [ "integer_part", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#afa82d264b8386dfe0c9904e0d44e3da2", null ],
       [ "decimal_part", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a0eb11653c1f04a7ba1c2b88bd6384b98", null ]
     ] ],
@@ -62,6 +64,11 @@ var group___r_m___a_i_r___s_e_n_s_o_r___a_p_i =
       [ "RM_AIR_SENSOR_EVENT_ERROR", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga23f745a0dafb0f0a5e96246d90d3ecfdaf4440aab36153e53586f3d59fb0d0f4a", null ],
       [ "RM_AIR_SENSOR_EVENT_NOT_MEASURABLE", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga23f745a0dafb0f0a5e96246d90d3ecfda6ac11797f14ff70567ed74cc6fbf3fe5", null ],
       [ "RM_AIR_SENSOR_EVENT_FAN_SPEED_OUT_OF_RANGE", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga23f745a0dafb0f0a5e96246d90d3ecfda55116d9ee2098c63ea75aea8cb89a430", null ],
-      [ "RM_AIR_SENSOR_EVENT_FAN_BROKEN", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga23f745a0dafb0f0a5e96246d90d3ecfda1ed57c462b0f41bfe951ef69e1cae013", null ]
+      [ "RM_AIR_SENSOR_EVENT_FAN_BROKEN", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga23f745a0dafb0f0a5e96246d90d3ecfda1ed57c462b0f41bfe951ef69e1cae013", null ],
+      [ "RM_AIR_SENSOR_EVENT_CHECKSUM_ERROR", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga23f745a0dafb0f0a5e96246d90d3ecfda26893735ca6c0ff8b6f33e89020154be", null ]
+    ] ],
+    [ "rm_air_sensor_sign_t", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga322d171420c4e2dff1572e4799352f6e", [
+      [ "RM_AIR_SENSOR_SIGN_MINUS", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga322d171420c4e2dff1572e4799352f6ea4cb4b7508b633046c25fcd3730ee19d2", null ],
+      [ "RM_AIR_SENSOR_SIGN_PLUS", "group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#gga322d171420c4e2dff1572e4799352f6eae5a83841a81aeec94fe44228e41f97be", null ]
     ] ]
 ];

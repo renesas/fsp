@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -308,6 +308,21 @@ Limitations</h2>
 <ul>
 <li>The DRW module supports two additional interrupt types - bus error and render complete. These interrupts are not needed for D2 layer operation and thus are not supported.</li>
 <li>If the DRW module is stopped during rendering the render will continue once the module is started again. If this behavior is undesirable in your application it is recommended to call <code>d2_flushframe</code> before stopping the peripheral.</li>
+<li>The resolution and size limits for D/AVE 2D are as follows: <table class="doxtable">
+<tr>
+<th>Item </th><th>Limit (pixels)  </th></tr>
+<tr>
+<td>Coordinate range </td><td>-2048 to 2047 (1:11:4 fixedpoint) </td></tr>
+<tr>
+<td>Object/primitive size </td><td>1024 x 1024 (10:4 fixedpoint) </td></tr>
+<tr>
+<td>Framebuffer size </td><td>2048 x 2048 </td></tr>
+<tr>
+<td>Texture size </td><td>1024 x 1024 </td></tr>
+<tr>
+<td>Blit size </td><td>2047 x 1024 </td></tr>
+</table>
+</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -315,7 +330,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

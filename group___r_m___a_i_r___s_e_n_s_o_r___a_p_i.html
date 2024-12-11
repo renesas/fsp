@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -278,6 +278,8 @@ Typedefs</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga23f745a0dafb0f0a5e96246d90d3ecfd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga23f745a0dafb0f0a5e96246d90d3ecfd">rm_air_sensor_event_t</a> </td></tr>
 <tr class="separator:ga23f745a0dafb0f0a5e96246d90d3ecfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga322d171420c4e2dff1572e4799352f6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga322d171420c4e2dff1572e4799352f6e">rm_air_sensor_sign_t</a> </td></tr>
+<tr class="separator:ga322d171420c4e2dff1572e4799352f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structrm__air__sensor__callback__args__t" id="structrm__air__sensor__callback__args__t"></a>
@@ -366,6 +368,12 @@ Firmware minor version. </td></tr>
 patch</td>
 <td class="fielddoc">
 Firmware patch version. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6a8e2160f08f5cce22289b09808340c7"></a>uint8_t</td>
+<td class="fieldname">
+ascii_code[11]</td>
+<td class="fielddoc">
+ASCII code of firmware version. </td></tr>
 </table>
 
 </div>
@@ -384,6 +392,12 @@ Firmware patch version. </td></tr>
 <div class="textblock"><p>AIR SENSOR sensor data block </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acdf11d9ba07eaf98c57a1773b57b629f"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga322d171420c4e2dff1572e4799352f6e">rm_air_sensor_sign_t</a></td>
+<td class="fieldname">
+sign</td>
+<td class="fielddoc">
+Sign of sensor data. </td></tr>
 <tr><td class="fieldtype">
 <a id="afa82d264b8386dfe0c9904e0d44e3da2"></a>uint32_t</td>
 <td class="fieldname">
@@ -509,7 +523,7 @@ Total volatile organic compounds (TVOC) concentrations [mg/m3]. </td></tr>
 <td class="fieldname">
 eco2</td>
 <td class="fielddoc">
-Estimated carbon dioxide (eCO2) level [ppm]. </td></tr>
+Carbon dioxide (CO2) level [ppm]. Value is estimated/actual value depends on sensor module. </td></tr>
 <tr><td class="fieldtype">
 <a id="a52b59889423e476fcb5d04c1aea1f32f"></a><a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#structrm__air__sensor__single__data__t">rm_air_sensor_single_data_t</a></td>
 <td class="fieldname">
@@ -826,6 +840,29 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfda1ed57c462b0f41bfe951ef69e1cae013"></a>RM_AIR_SENSOR_EVENT_FAN_BROKEN&#160;</td><td class="fielddoc"><p>Fan malfunctioned or broken down. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga23f745a0dafb0f0a5e96246d90d3ecfda26893735ca6c0ff8b6f33e89020154be"></a>RM_AIR_SENSOR_EVENT_CHECKSUM_ERROR&#160;</td><td class="fielddoc"><p>Checksum error occurs. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga322d171420c4e2dff1572e4799352f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga322d171420c4e2dff1572e4799352f6e">&#9670;&nbsp;</a></span>rm_air_sensor_sign_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#ga322d171420c4e2dff1572e4799352f6e">rm_air_sensor_sign_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sign of sensor data </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga322d171420c4e2dff1572e4799352f6ea4cb4b7508b633046c25fcd3730ee19d2"></a>RM_AIR_SENSOR_SIGN_MINUS&#160;</td><td class="fielddoc"><p>Minus sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga322d171420c4e2dff1572e4799352f6eae5a83841a81aeec94fe44228e41f97be"></a>RM_AIR_SENSOR_SIGN_PLUS&#160;</td><td class="fielddoc"><p>Plus sign. </p>
+</td></tr>
 </table>
 
 </div>
@@ -836,7 +873,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

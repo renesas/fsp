@@ -26,8 +26,16 @@ var group___s_c_i___b___l_i_n =
       [ "filter_setting", "group___s_c_i___b___l_i_n.html#af5d05646d6d4f54af2c84eb56a0edca7", null ],
       [ "bfd_irq", "group___s_c_i___b___l_i_n.html#a212b0c46ff0e872c0b7fca4ae375a210", null ],
       [ "aed_irq", "group___s_c_i___b___l_i_n.html#aebbdfcf1bec3a3be6438d1b9e1ef360a", null ],
+      [ "rxi_irq", "group___s_c_i___b___l_i_n.html#a0d474d4f8380fc51d03f100847a383cb", null ],
+      [ "txi_irq", "group___s_c_i___b___l_i_n.html#a912aa37bbead9c70dc9c1f77ef277ada", null ],
+      [ "tei_irq", "group___s_c_i___b___l_i_n.html#a87a68e606c23022a117ccf983b907209", null ],
+      [ "eri_irq", "group___s_c_i___b___l_i_n.html#a40a50db04afbc3123d50de803aaaac12", null ],
       [ "bfd_ipl", "group___s_c_i___b___l_i_n.html#a1aa00e4634173923fbfbe63b51fbea83", null ],
       [ "aed_ipl", "group___s_c_i___b___l_i_n.html#a7fd0fa9d054675a7ff0367e15e0f95ca", null ],
+      [ "rxi_ipl", "group___s_c_i___b___l_i_n.html#aa87be39a00d7fbe0fc4c38bb3cc29af1", null ],
+      [ "txi_ipl", "group___s_c_i___b___l_i_n.html#af5d0bbd49ce1661c4d4454065db0115d", null ],
+      [ "tei_ipl", "group___s_c_i___b___l_i_n.html#a43dbc88d095b92251b4420e185793902", null ],
+      [ "eri_ipl", "group___s_c_i___b___l_i_n.html#a07f978abafe94781d1de02ed83aec778", null ],
       [ "break_bits", "group___s_c_i___b___l_i_n.html#a2a15493f93fc7f3fd9e05ae2d16b1142", null ]
     ] ],
     [ "sci_b_lin_priority_interrupt_bit_t", "group___s_c_i___b___l_i_n.html#gab8a9755cf910edbab7d20a94a2d28111", [

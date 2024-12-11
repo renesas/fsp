@@ -6,6 +6,7 @@ var searchData=
   ['sau_5fspi_5fdiv_5fsetting_5ft',['sau_spi_div_setting_t',['../structsau__spi__div__setting__t.html',1,'']]],
   ['sau_5fspi_5fextended_5fcfg_5ft',['sau_spi_extended_cfg_t',['../structsau__spi__extended__cfg__t.html',1,'']]],
   ['sau_5fspi_5finstance_5fctrl_5ft',['sau_spi_instance_ctrl_t',['../structsau__spi__instance__ctrl__t.html',1,'']]],
+  ['sau_5fspi_5fpin_5fsettings_5ft',['sau_spi_pin_settings_t',['../structsau__spi__pin__settings__t.html',1,'']]],
   ['sau_5fuart_5fextended_5fcfg_5ft',['sau_uart_extended_cfg_t',['../group___s_a_u___u_a_r_t.html#structsau__uart__extended__cfg__t',1,'']]],
   ['sau_5fuart_5finstance_5fctrl_5ft',['sau_uart_instance_ctrl_t',['../group___s_a_u___u_a_r_t.html#structsau__uart__instance__ctrl__t',1,'']]],
   ['sce_5faes_5fhandle_5ft',['sce_aes_handle_t',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#structsce__aes__handle__t',1,'']]],

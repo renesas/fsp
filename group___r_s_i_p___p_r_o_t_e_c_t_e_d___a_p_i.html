@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -264,6 +264,10 @@ Data Structures</h2></td></tr>
 <tr class="separator:structrsip__sha__handle__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__hmac__handle__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a></td></tr>
 <tr class="separator:structrsip__hmac__handle__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__kdf__hmac__handle__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__hmac__handle__t">rsip_kdf_hmac_handle_t</a></td></tr>
+<tr class="separator:structrsip__kdf__hmac__handle__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__verified__cert__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__verified__cert__info__t">rsip_verified_cert_info_t</a></td></tr>
+<tr class="separator:structrsip__verified__cert__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__cfg__t">rsip_cfg_t</a></td></tr>
 <tr class="separator:structrsip__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__api__t">rsip_api_t</a></td></tr>
@@ -391,6 +395,36 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>Working area for HMAC functions. DO NOT MODIFY. </p>
+</div>
+</div>
+</div>
+<a name="structrsip__kdf__hmac__handle__t" id="structrsip__kdf__hmac__handle__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__kdf__hmac__handle__t">&#9670;&nbsp;</a></span>rsip_kdf_hmac_handle_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_kdf_hmac_handle_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Working area for KDF HMAC functions. DO NOT MODIFY. </p>
+</div>
+</div>
+</div>
+<a name="structrsip__verified__cert__info__t" id="structrsip__verified__cert__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__verified__cert__info__t">&#9670;&nbsp;</a></span>rsip_verified_cert_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rsip_verified_cert_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Verified certificate information </p>
 </div>
 </div>
 </div>
@@ -536,6 +570,10 @@ Hardware-dependent configuration. </td></tr>
 <tr class="separator:a206b031964651bc1a9805ba1a9e67c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a8afcd776a7d4ca2ee6350c02f534d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a0a8afcd776a7d4ca2ee6350c02f534d1">pkiEcdsaCertVerify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_hash, uint8_t const *const p_signature)</td></tr>
 <tr class="separator:a0a8afcd776a7d4ca2ee6350c02f534d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a301c0b633a1376a70c8db757d62d401e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a301c0b633a1376a70c8db757d62d401e">pkiVerifiedCertInfoExport</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__verified__cert__info__t">rsip_verified_cert_info_t</a> *const p_verified_cert_info)</td></tr>
+<tr class="separator:a301c0b633a1376a70c8db757d62d401e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7de3274824e6af08fdcfc3101030e7cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a7de3274824e6af08fdcfc3101030e7cb">pkiVerifiedCertInfoImport</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__verified__cert__info__t">rsip_verified_cert_info_t</a> const *const p_verified_cert_info)</td></tr>
+<tr class="separator:a7de3274824e6af08fdcfc3101030e7cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae59cfdad6e134cd5c74e259a80629ddb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ae59cfdad6e134cd5c74e259a80629ddb">pkiCertKeyImport</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_cert, uint32_t const cert_length, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint8_t const *const p_key_param1, uint32_t const key_param1_length, uint8_t const *const p_key_param2, uint32_t const key_param2_length, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_function, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_public_key)</td></tr>
 <tr class="separator:ae59cfdad6e134cd5c74e259a80629ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a565131ace3c34d51ebe423a49ac94213"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a565131ace3c34d51ebe423a49ac94213">kdfMacKeyImport</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__mac__t">rsip_wrapped_mac_t</a> const *const p_wrapped_mac, uint32_t const kdf_data_length, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
@@ -552,9 +590,9 @@ Hardware-dependent configuration. </td></tr>
 <tr class="separator:a35b1bfdf496fe3011ef3618687d8bd18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae51b484aacbd3c60d9c34c971b2a8dbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ae51b484aacbd3c60d9c34c971b2a8dbd">kdfhmacSignFinish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__mac__t">rsip_wrapped_mac_t</a> *const p_wrapped_mac)</td></tr>
 <tr class="separator:ae51b484aacbd3c60d9c34c971b2a8dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31aa8af0ae615c5540c335109cd13608"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a31aa8af0ae615c5540c335109cd13608">kdfhmacSuspend</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, rsip_kdf_hmac_handle_t *const p_handle)</td></tr>
+<tr class="memitem:a31aa8af0ae615c5540c335109cd13608"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a31aa8af0ae615c5540c335109cd13608">kdfhmacSuspend</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__hmac__handle__t">rsip_kdf_hmac_handle_t</a> *const p_handle)</td></tr>
 <tr class="separator:a31aa8af0ae615c5540c335109cd13608"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69fc28fc75771e9bfa20e880e9191e6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a69fc28fc75771e9bfa20e880e9191e6b">kdfhmacResume</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, rsip_kdf_hmac_handle_t const *const p_handle)</td></tr>
+<tr class="memitem:a69fc28fc75771e9bfa20e880e9191e6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a69fc28fc75771e9bfa20e880e9191e6b">kdfhmacResume</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__hmac__handle__t">rsip_kdf_hmac_handle_t</a> const *const p_handle)</td></tr>
 <tr class="separator:a69fc28fc75771e9bfa20e880e9191e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99c1fd487090bef1e2f88173779f8f43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a99c1fd487090bef1e2f88173779f8f43">kdfMacConcatenate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__mac__t">rsip_wrapped_mac_t</a> *const p_wrapped_mac1, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__mac__t">rsip_wrapped_mac_t</a> const *const p_wrapped_mac2, uint32_t const wrapped_mac1_buffer_length)</td></tr>
 <tr class="separator:a99c1fd487090bef1e2f88173779f8f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1819,6 +1857,50 @@ Hardware-dependent configuration. </td></tr>
 
 </div>
 </div>
+<a id="a301c0b633a1376a70c8db757d62d401e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a301c0b633a1376a70c8db757d62d401e">&#9670;&nbsp;</a></span>pkiVerifiedCertInfoExport</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::pkiVerifiedCertInfoExport) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__verified__cert__info__t">rsip_verified_cert_info_t</a> *const p_verified_cert_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exports verified certificate information stored in this driver.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_verified_cert_info</td><td>Pointer to certificate to be signed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7de3274824e6af08fdcfc3101030e7cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7de3274824e6af08fdcfc3101030e7cb">&#9670;&nbsp;</a></span>pkiVerifiedCertInfoImport</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::pkiVerifiedCertInfoImport) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__verified__cert__info__t">rsip_verified_cert_info_t</a> const *const p_verified_cert_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Imports verified certificate information.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_verified_cert_info</td><td>Pointer to certificate to be signed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ae59cfdad6e134cd5c74e259a80629ddb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae59cfdad6e134cd5c74e259a80629ddb">&#9670;&nbsp;</a></span>pkiCertKeyImport</h2>
 
@@ -1871,8 +1953,8 @@ Hardware-dependent configuration. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Output HMAC key type for KDF. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_mac</td><td>Pointer to wrapped data of ECDH or MAC. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">kdf_data_length</td><td>HMAC key length. 32 to 64 bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_mac</td><td>Pointer to wrapped MAC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kdf_data_length</td><td>Length of HMAC key to be extracted from MAC. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>Pointer to destination wrapped HMAC key for KDF. </td></tr>
   </table>
   </dd>
@@ -2022,7 +2104,7 @@ Hardware-dependent configuration. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::kdfhmacSuspend) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, rsip_kdf_hmac_handle_t *const p_handle)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::kdfhmacSuspend) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__hmac__handle__t">rsip_kdf_hmac_handle_t</a> *const p_handle)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2044,7 +2126,7 @@ Hardware-dependent configuration. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::kdfhmacResume) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, rsip_kdf_hmac_handle_t const *const p_handle)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::kdfhmacResume) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__hmac__handle__t">rsip_kdf_hmac_handle_t</a> const *const p_handle)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2498,6 +2580,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235af3d23f6d810fac2ea403720c9dd794e7"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA256&#160;</td><td class="fielddoc"><p>KDF HMAC-SHA256. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235ac307cd90e74d6e1e85657ee59023afb1"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA384&#160;</td><td class="fielddoc"><p>KDF HMAC-SHA384. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga385f2388cc3e87db6a1f385351b47235a98b776e2c93ae7037fc2372e2348c839"></a>RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA512&#160;</td><td class="fielddoc"><p>KDF HMAC-SHA512. </p>
+</td></tr>
 </table>
 
 </div>
@@ -2518,6 +2604,10 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga25b09351fdbeab9767819ac6b6fce31bab721a916a1483c9d0e63186f8f27ee48"></a>RSIP_BYTE_SIZE_WRAPPED_MAC_HEADER&#160;</td><td class="fielddoc"><p>Header. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga25b09351fdbeab9767819ac6b6fce31ba587517426501036ad0659aea0fc454ee"></a>RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA256&#160;</td><td class="fielddoc"><p>A block of HMAC-SHA256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga25b09351fdbeab9767819ac6b6fce31bacfc0724752efeaf7d1ddd7e148ffda5b"></a>RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA384&#160;</td><td class="fielddoc"><p>A block of HMAC-SHA384. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga25b09351fdbeab9767819ac6b6fce31bacbfbc72e5bb17cf714dde6fa6fc5b248"></a>RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA512&#160;</td><td class="fielddoc"><p>A block of HMAC-SHA512. </p>
 </td></tr>
 </table>
 
@@ -2740,7 +2830,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

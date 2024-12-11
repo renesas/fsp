@@ -33,6 +33,7 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "ETHER_PHY_LSI_TYPE_KSZ8041", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a29cbe6685ab800c244b58a82fcdfc89e", null ],
       [ "ETHER_PHY_LSI_TYPE_DP83620", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af3ca93247dd58484b187bba066282686", null ],
       [ "ETHER_PHY_LSI_TYPE_ICS1894", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a64f1f8634b4c7b356c34780b587b4303", null ],
+      [ "ETHER_PHY_LSI_TYPE_GPY111", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af7929b2e75e0519dd5529309192b5bb8", null ],
       [ "ETHER_PHY_LSI_TYPE_CUSTOM", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5ac19ab1507a515d6174f27f7af0e6de0e", null ]
     ] ],
     [ "ether_phy_flow_control_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#ga113895595732b38ac87e4efecacb87de", [

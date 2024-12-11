@@ -1,0 +1,267 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: lwIP MQTT</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.7.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_w_i_p___m_q_t_t.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">lwIP MQTT<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>This module provides the lwIP MQTT integration documentation. </p>
+<h1><a class="anchor" id="rm-lwip_mqtt-overview"></a>
+Overview</h1>
+<p>The lwIP MQTT library can connect to a third party MQTT broker such as <a href="https://mosquitto.org/">Mosquitto</a>. The documentation for the library can be found at the following link: <a href="https://www.nongnu.org/lwip/2_1_x/group__mqtt.html">lwIPMQTT</a>.</p>
+<h2><a class="anchor" id="rm-lwip_mqtt-features"></a>
+Features</h2>
+<ul>
+<li>MQTT connections to MQTT broker</li>
+<li>The version of MQTT protocol supported in lwIP is 3.1.1. Details of the MQTT protocol can be found at: <a href="http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html">mqtt-v3.1.1</a></li>
+</ul>
+<h1><a class="anchor" id="rm-lwip_mqtt-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the lwIP MQTT APIs in an application.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;lwip/tcp.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/timeouts.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/ip4.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/mqtt.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define LWIP_MQTT_EXAMPLE_PORT_NUMBER     8883</span></div><div class="line"><span class="preprocessor">#define LWIP_MQTT_EXAMPLE_TOPIC           &quot;/lwip/example&quot;</span></div><div class="line"><span class="preprocessor">#define LWIP_MQTT_EXAMPLE_TOPIC_LENGTH    13</span></div><div class="line"><span class="preprocessor">#define LWIP_MQTT_EXAMPLE_BUF_SIZE        50</span></div><div class="line"></div><div class="line"><span class="comment">/* LwIP MQTT callback functions. */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_mqtt_example_connection_callback(mqtt_client_t * client, <span class="keywordtype">void</span> * arg, mqtt_connection_status_t status);</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_mqtt_example_pub_sub_request_callback(<span class="keywordtype">void</span> * arg, err_t result);</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_mqtt_example_incoming_publish_callback(<span class="keywordtype">void</span> * arg, <span class="keyword">const</span> <span class="keywordtype">char</span> * topic, u32_t tot_len);</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_mqtt_example_incoming_data_callback(<span class="keywordtype">void</span> * arg, <span class="keyword">const</span> u8_t * data, u16_t len, u8_t flags);</div><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint8_t g_lwip_mqtt_example_connected_flag;</div><div class="line"><span class="keyword">volatile</span> uint8_t g_lwip_mqtt_example_receive_incomming_msg_flag;</div><div class="line"><span class="keyword">volatile</span> uint8_t g_lwip_mqtt_example_pub_sub_flag;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> g_mqtt_lwip_example_incoming_msg[LWIP_MQTT_EXAMPLE_BUF_SIZE];</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">char</span>          g_mqtt_lwip_example_incoming_topic[LWIP_MQTT_EXAMPLE_BUF_SIZE];</div><div class="line"></div><div class="line"><span class="comment">/* LwIP MQTT connection information */</span></div><div class="line"><span class="keyword">const</span> <span class="keyword">struct </span>mqtt_connect_client_info_t lwip_mqtt_example_client_info =</div><div class="line">{</div><div class="line">    <span class="stringliteral">&quot;lwip_mqtt_example&quot;</span>,</div><div class="line">    NULL,                              <span class="comment">/* user */</span></div><div class="line">    NULL,                              <span class="comment">/* pass */</span></div><div class="line">    100,                               <span class="comment">/* keep alive */</span></div><div class="line">    NULL,                              <span class="comment">/* will_topic */</span></div><div class="line">    NULL,                              <span class="comment">/* will_msg */</span></div><div class="line">    0,                                 <span class="comment">/* will_qos */</span></div><div class="line">    0                                  <span class="comment">/* will_retain */</span></div><div class="line"><span class="preprocessor">#if LWIP_ALTCP &amp;&amp; LWIP_ALTCP_TLS</span></div><div class="line">    , NULL</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_mqtt_example () {</div><div class="line">    <span class="keyword">struct </span>netif    netif;</div><div class="line">    mqtt_client_t * g_lwip_mqtt_example_client;</div><div class="line"></div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    ip_addr_t server_ip_address;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span> data[] = <span class="stringliteral">&quot;lwIP MQTT Hello world.&quot;</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line">    IP4_ADDR(&amp;server_ip_address, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize lwIP MQTT Client */</span></div><div class="line">    g_lwip_mqtt_example_client = mqtt_client_new();</div><div class="line"></div><div class="line">    <span class="comment">/* Establish MQTT connection to server */</span></div><div class="line">    g_lwip_mqtt_example_connected_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    assert(ERR_OK ==</div><div class="line">           mqtt_client_connect(g_lwip_mqtt_example_client, &amp;server_ip_address, LWIP_MQTT_EXAMPLE_PORT_NUMBER,</div><div class="line">                               lwip_mqtt_example_connection_callback, NULL, &amp;lwip_mqtt_example_client_info));</div><div class="line"></div><div class="line">    <span class="comment">/* Waiting for connection to be established. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_lwip_mqtt_example_connected_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Set callback for receiving incomming messsage from subscribed MQTT topic */</span></div><div class="line">    g_lwip_mqtt_example_receive_incomming_msg_flag = <span class="keyword">false</span>;</div><div class="line">    mqtt_set_inpub_callback(g_lwip_mqtt_example_client,</div><div class="line">                            lwip_mqtt_example_incoming_publish_callback,</div><div class="line">                            lwip_mqtt_example_incoming_data_callback,</div><div class="line">                            NULL);</div><div class="line"></div><div class="line">    <span class="comment">/* Subcribe to MQTT topic with Qos 0 */</span></div><div class="line">    g_lwip_mqtt_example_pub_sub_flag = <span class="keyword">false</span>;</div><div class="line">    assert(ERR_OK ==</div><div class="line">           mqtt_subscribe(g_lwip_mqtt_example_client, LWIP_MQTT_EXAMPLE_TOPIC, 0,</div><div class="line">                          lwip_mqtt_example_pub_sub_request_callback, NULL));</div><div class="line"></div><div class="line">    <span class="comment">/* Waiting for subcribe process completed. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_lwip_mqtt_example_pub_sub_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Publish message to MQTT topic with Qos 0 and retain flag disabled */</span></div><div class="line">    g_lwip_mqtt_example_pub_sub_flag = <span class="keyword">false</span>;</div><div class="line">    assert(ERR_OK ==</div><div class="line">           mqtt_publish(g_lwip_mqtt_example_client, LWIP_MQTT_EXAMPLE_TOPIC, data, strlen(data), 0, 0,</div><div class="line">                        lwip_mqtt_example_pub_sub_request_callback, NULL));</div><div class="line"></div><div class="line">    <span class="comment">/* Waiting for publish process completed. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_lwip_mqtt_example_pub_sub_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Waiting for receive incomming process completed. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_lwip_mqtt_example_receive_incomming_msg_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Make sure receiving correct topic and message */</span></div><div class="line">    assert(0 == memcmp(g_mqtt_lwip_example_incoming_topic, LWIP_MQTT_EXAMPLE_TOPIC, <span class="keyword">sizeof</span>(LWIP_MQTT_EXAMPLE_TOPIC)));</div><div class="line">    assert(0 == memcmp(g_mqtt_lwip_example_incoming_msg, data, <span class="keyword">sizeof</span>(data)));</div><div class="line"></div><div class="line">    <span class="comment">/* Unsubcribe to MQTT topic */</span></div><div class="line">    assert(ERR_OK ==</div><div class="line">           mqtt_unsubscribe(g_lwip_mqtt_example_client, LWIP_MQTT_EXAMPLE_TOPIC,</div><div class="line">                            lwip_mqtt_example_pub_sub_request_callback, NULL));</div><div class="line"></div><div class="line">    <span class="comment">/* Close MQTT connection and netif. */</span></div><div class="line">    mqtt_disconnect(g_lwip_mqtt_example_client);</div><div class="line">    netif_remove(&amp;netif);</div><div class="line">    mqtt_client_free(g_lwip_mqtt_example_client);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* LwIP MQTT callback functions */</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_mqtt_example_incoming_publish_callback (<span class="keywordtype">void</span> * arg, <span class="keyword">const</span> <span class="keywordtype">char</span> * topic, u32_t tot_len)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(arg);</div><div class="line">    memcpy(g_mqtt_lwip_example_incoming_topic, topic, tot_len);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_mqtt_example_incoming_data_callback (<span class="keywordtype">void</span> * arg, <span class="keyword">const</span> u8_t * data, u16_t len, u8_t flags)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(arg);</div><div class="line">    <span class="keywordflow">if</span> (flags &amp; MQTT_DATA_FLAG_LAST)</div><div class="line">    {</div><div class="line">        memcpy(g_mqtt_lwip_example_incoming_msg, data, len);</div><div class="line">        g_lwip_mqtt_example_receive_incomming_msg_flag = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_mqtt_example_connection_callback (mqtt_client_t * client, <span class="keywordtype">void</span> * arg, mqtt_connection_status_t status)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(client);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(arg);</div><div class="line">    <span class="keywordflow">if</span> (MQTT_CONNECT_ACCEPTED == status)</div><div class="line">    {</div><div class="line">        g_lwip_mqtt_example_connected_flag = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_mqtt_example_pub_sub_request_callback (<span class="keywordtype">void</span> * arg, err_t result)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(arg);</div><div class="line">    <span class="keywordflow">if</span> (ERR_OK == result)</div><div class="line">    {</div><div class="line">        g_lwip_mqtt_example_pub_sub_flag = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

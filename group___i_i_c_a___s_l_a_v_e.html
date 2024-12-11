@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -309,6 +309,8 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>If enabled, the driver will support general call slave addressing mode along with the non-general call slave addressing mode. </td></tr>
+<tr class="tree_none">
+<td>Enable Single Channel</td><td>MCU Specific Options</td><td></td><td>Enable single channel to reduce code size if only one channel is to be configured for IICA. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; IICA Slave (r_iica_slave)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; IICA Slave (r_iica_slave).<br />
@@ -317,6 +319,8 @@ This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; 
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_iica_slave0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Specify the IICA channel. </td></tr>
 <tr class="tree_none">
 <td>Rate</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -352,39 +356,19 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Configure digital filter. </td></tr>
 <tr class="tree_none">
+<td>Address Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+7-Bit</li>
+<li>
+10-Bit</li>
+</ul>
+</td><td>7-Bit </td><td>Select the slave address mode. Ensure 10-bit slave addressing is enabled in the configuration to use 10-Bit setting here. </td></tr>
+<tr class="tree_none">
 <td>Slave Address</td><td>Value must be non-negative</td><td>0x08 </td><td>Specify the slave address. </td></tr>
 <tr class="tree_none">
 <td>Callback</td><td>Name must be a valid C symbol</td><td>iica_slave_callback </td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) to report IICA Slave transaction events and status. </td></tr>
 <tr class="tree_none">
-<td>IICA0 communication interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select end of IICA0 communication interrupt priority. </td></tr>
-<tr class="tree_none">
-<td>SCLA Pin</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-P100</li>
-<li>
-P110</li>
-<li>
-P212</li>
-<li>
-P914</li>
-</ul>
-</td><td>Disabled </td><td>Specify SCLA pin setting for the MCU. </td></tr>
-<tr class="tree_none">
-<td>SDAA Pin</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-P101</li>
-<li>
-P109</li>
-<li>
-P213</li>
-<li>
-P913</li>
-</ul>
-</td><td>Disabled </td><td>Specify SDAA pin setting for the MCU. </td></tr>
+<td>Interrupt Priority Level</td><td>MCU Specific Options</td><td></td><td>Select end of IICA communication interrupt priority. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-iica_slave-clock-configuration"></a>
@@ -445,7 +429,6 @@ Limitations</h2>
 <ul>
 <li>DTC doesn't support IICA</li>
 <li>Extension code is not supported</li>
-<li>Please configure SDAA and SCLA pins in the IICA module. IICA pins must be set after IICA is enabled.</li>
 </ul>
 <h1><a class="anchor" id="r-iica_slave-examples"></a>
 Examples</h1>
@@ -760,7 +743,7 @@ SCLAA pin setting. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

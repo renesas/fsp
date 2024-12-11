@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -481,11 +481,11 @@ Enabled</li>
 <tr class="tree_none">
 <td>Type-C</td><td>MCU Specific Options</td><td></td><td>Enable or disable Type-C. </td></tr>
 <tr class="tree_none">
-<td>DMA Support</td><td>MCU Specific Options</td><td></td><td>Enable or disable DMA support for the USB module. </td></tr>
+<td>DMA/DTC Support</td><td>MCU Specific Options</td><td></td><td>Enable or disable DMA/DTC support for the USB module. </td></tr>
 <tr class="tree_none">
-<td>DMA Source Address</td><td>MCU Specific Options</td><td></td><td>Set this to match the speed mode when DMA is enabled. Otherwise, set to 'DMA Disabled'. </td></tr>
+<td>DMA/DTC Source Address</td><td>MCU Specific Options</td><td></td><td>Set this to match the speed mode when DMA/DTC is enabled. Otherwise, set to 'DMA Disabled'/'DTC Disabled'. </td></tr>
 <tr class="tree_none">
-<td>DMA Destination Address</td><td>MCU Specific Options</td><td></td><td>Set this to match the speed mode when DMA is enabled. Otherwise, set to 'DMA Disabled'. </td></tr>
+<td>DMA/DTC Destination Address</td><td>MCU Specific Options</td><td></td><td>Set this to match the speed mode when DMA/DTC is enabled. Otherwise, set to 'DMA Disabled'/'DTC Disabled'. </td></tr>
 <tr class="tree_none">
 <td>USB Compliance Test mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -611,8 +611,6 @@ Limitations</h2>
 <li>In USB host mode, the module does not support suspend during data transfers. Execute suspend only after confirming that all transfers are complete.</li>
 <li>Multiconfigurations are not supported.</li>
 <li>This driver does not support CPU transfers using the D0FIFO/D1FIFO register.</li>
-<li>Only one device-class driver may be used at a time.</li>
-<li>The USB Hi-Speed module only supports Hi-Speed operation.</li>
 <li>In USB host mode, this USB driver does not support the composite device other than "HMSC + HCDC (for FreeRTOS)".</li>
 <li>The user can not specify DMA transfer to USB IP0 and IP1 modules at the same time when using USB multi-port feature. USB multi-port function: Simultaneous operation feature of USB Host and Peripheral.</li>
 </ul>
@@ -2268,7 +2266,7 @@ In the FreeRTOS, please specify one of the following to the 1st argument of this
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

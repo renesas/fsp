@@ -189,6 +189,7 @@ var searchData=
   ['shaupdate',['shaUpdate',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aecf5ea697a2d11d7c79f1a1e27a4efc6',1,'rsip_api_t']]],
   ['shunt',['shunt',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a52fa6889c19ec5ff6b914a5245eb7d92',1,'motor_driver_cfg_t']]],
   ['sid',['sid',['../group___i_s_o___a_p_i.html#aac7d7366677161e3762474682fbbdc48',1,'st_ble_iso_biginfo_rept_evt_t']]],
+  ['sign',['sign',['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#acdf11d9ba07eaf98c57a1773b57b629f',1,'rm_air_sensor_single_data_t']]],
   ['sign_5finfo',['sign_info',['../group___g_a_p___a_p_i.html#affeb28b9d80f5e328d4d805c0e7a9caf',1,'st_ble_gap_key_dist_t']]],
   ['signal_5flevel',['signal_level',['../group___s_a_u___u_a_r_t.html#aaab7fc6d2539a49fae9e661b25d3436f',1,'sau_uart_extended_cfg_t']]],
   ['sin_5fad',['sin_ad',['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ae30fd62e6d05fab48094b5db8894e753',1,'motor_driver_current_get_t']]],

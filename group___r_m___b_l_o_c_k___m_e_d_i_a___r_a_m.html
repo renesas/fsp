@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -295,7 +295,7 @@ Disabled</li>
 <tr class="tree_none">
 <td>RAM Media Size</td><td>Please enter the RAM media size.</td><td>65536 </td><td>Enter a RAM media size of 20K bytes or more. </td></tr>
 <tr class="tree_none">
-<td>Memory Storage Section</td><td>Manual Entry</td><td>.bss </td><td>This is the section of memory that will be used for the backing storage. Must be a valid Linker section. ('.bss', '.sdram', '.OSPI_DEVICE_0_RAM', etc) </td></tr>
+<td>Memory Storage Section</td><td>Manual Entry</td><td>.bss </td><td>This is the section of memory that will be used for the backing storage. Must be a valid Linker section. ('.bss', '.sdram', '.OSPI_DEVICE_0_RAM', etc). For AC6 preface any section with '.bss' e.g. '.bss.sdram' </td></tr>
 </table>
  <h2>Configurations for Storage &gt; Block Media RAM Implementation (rm_block_media_ram)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Block Media RAM Implementation (rm_block_media_ram).<br />
@@ -308,7 +308,9 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Block
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called when a card is inserted or removed. </td></tr>
 </table>
 </p>
-<dl class="section note"><dt>Note</dt><dd>Specify RAM media size of 20 Kbytes or more. This module cannot be used with an MCU that cannot allocate at least 20 Kbytes of RAM as media area.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Specify RAM media size of 20 Kbytes or more. This module cannot be used with an MCU that cannot allocate at least 20 Kbytes of RAM as media area.</dd>
+<dd>
+When using AC6 it is recommended to start section names with ".bss" (ex. ".bss.sdram") to prevent unnecessarily large binaries. This tells AC6 to create ZI sections rather than initialized sections.</dd></dl>
 <h2><a class="anchor" id="rm-block-media-ram-clock-configuration"></a>
 Clock Configuration</h2>
 <p>This module has no required clock configurations.</p>
@@ -647,7 +649,7 @@ Pin Configuration</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -301,7 +301,7 @@ Features</h2>
 </li>
 <li>RSA<ul>
 <li>Signature Generation - RSA 2048 (Plain or Wrapped private) key. (This can be used for decryption) <a class="anchor" id="um_crypto_RSA_2048_wrapped_key"></a></li>
-<li>Signature Verification - RSA 2048, RSA 3072 and RSA 4096 keys. (This can be used for encryption) <a class="anchor" id="um_crypto_RSA_2048"></a><a class="anchor" id="um_crypto_RSA_3072"></a><a class="anchor" id="um_crypto_RSA_4096"></a></li>
+<li>Signature Verification - RSA 2048, RSA 3072 and RSA 4096 keys. (This can be used for encryption) <a class="anchor" id="um_crypto_RSA_1024"></a><a class="anchor" id="um_crypto_RSA_2048"></a><a class="anchor" id="um_crypto_RSA_3072"></a><a class="anchor" id="um_crypto_RSA_4096"></a></li>
 <li>Supported encoding scheme: PKCS1V15 <a class="anchor" id="um_crypto_RSA_PKCS1V15_sign_verify"></a>&#160;</li>
 </ul>
 </li>
@@ -396,6 +396,8 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_net
 <tr class="tree_lvl_3_item">
 <td class="tree_lvl_3_cell">RSA</td><td>MCU Specific Options</td><td></td><td>Enables/Disables RSA HW support </td></tr>
 <tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">RSA 1024 (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_1024_ALT to allow HW support </td></tr>
+<tr class="tree_lvl_3_item">
 <td class="tree_lvl_3_cell">RSA 2048 (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT to allow HW support </td></tr>
 <tr class="tree_lvl_3_item">
 <td class="tree_lvl_3_cell">RSA 3072 Verify/Encryption (HW)</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_3072_ALT to allow HW support </td></tr>
@@ -440,6 +442,8 @@ RSA Configuration</h2>
 <p>To enable hardware acceleration for the RSA Encrypt/Decrypt (or Sign/Verify) operation(s), the macro(s) below must be must be defined in the configuration file: </p><table class="doxtable">
 <tr>
 <th>Configuration Macro </th><th>Feature / Operation  </th></tr>
+<tr>
+<td>NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_1024_ALT </td><td>Signature Generation / Signature Verification (Encryption / Decryption) </td></tr>
 <tr>
 <td>NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_RSA_2048_ALT </td><td>Signature Generation / Signature Verification (Encryption / Decryption) </td></tr>
 <tr>
@@ -536,7 +540,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

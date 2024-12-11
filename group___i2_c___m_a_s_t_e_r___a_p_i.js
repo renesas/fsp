@@ -42,7 +42,8 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
     [ "i2c_master_rate_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gaa30dd03665bdc1134233e8e2b1631f0a", [
       [ "I2C_MASTER_RATE_STANDARD", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ggaa30dd03665bdc1134233e8e2b1631f0aa929a32b2615c7c54efa382f06e901cc0", null ],
       [ "I2C_MASTER_RATE_FAST", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ggaa30dd03665bdc1134233e8e2b1631f0aae2e38e76a2477e68f2685b403bdeb9a9", null ],
-      [ "I2C_MASTER_RATE_FASTPLUS", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ggaa30dd03665bdc1134233e8e2b1631f0aaee266782cacb431c8623f7276063228b", null ]
+      [ "I2C_MASTER_RATE_FASTPLUS", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ggaa30dd03665bdc1134233e8e2b1631f0aaee266782cacb431c8623f7276063228b", null ],
+      [ "I2C_MASTER_RATE_HIGHSPEED", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ggaa30dd03665bdc1134233e8e2b1631f0aa1d7bb973d7fad886e5a979777d5bc395", null ]
     ] ],
     [ "i2c_master_addr_mode_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ga6203bcd8d8127b8fd442a2d33d112940", [
       [ "I2C_MASTER_ADDR_MODE_7BIT", "group___i2_c___m_a_s_t_e_r___a_p_i.html#gga6203bcd8d8127b8fd442a2d33d112940ab42fbd73d951db4694494c5acfa19dd8", null ],

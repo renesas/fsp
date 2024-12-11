@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -373,6 +373,8 @@ Encryption Disabled</li>
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Flash Configuration  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Dual Bank Mode</td><td>MCU Specific Options</td><td></td><td>Enable dual bank mode for Direct XIP. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Memory Mirror Function (MMF) support</td><td>MCU Specific Options</td><td></td><td>Use MMF for MCUBoot dxip mode </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Data Sharing  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -460,7 +462,20 @@ Usage Notes</h1>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot Image Utilities &gt; Quick Setup &gt; Confirm Primary Image. Add a call to boot_set_confirmed() in the application and confirm the image in the primary slot.</p>
 <h2>XIP Mode operation</h2>
 <p>XIP mode is enabled selecting "Direct XIP" as the Upgrade Mode option in the configurator or by defining "MCUBOOT_DIRECT_XIP" in the mcuboot config file. The linker script defines the symbol "XIP_SECONDARY_SLOT_IMAGE" by default to 0. To link an application to the secondar slot in XIP mode, set XIP_SECONDARY_SLOT_IMAGE to 1 in the application linker script. Direct XIP mode does not support TrustZone projects.</p>
-<h2>Dual Bank operation</h2>
+<h3>XIP Mode with Memory Mirror Function (MMF)</h3>
+<dl class="section note"><dt>Note</dt><dd>Memory Mirror Functions is available on some MCUs, please check the hardware user manual for the availability.</dd>
+<dd>
+This mode only available in linear memory mode.</dd></dl>
+<p>When "Memory Mirror Funtion (MMF) support" under Common &gt; Flash Layout is enabled, MCUBoot decides which image will be "mirrored". After the image is reflected on MMF region, the MCUBoot will start booting the application from start address of MMF.</p>
+<div class="image">
+<img src="mcuboot_with_mmf_primary_app.png" alt="mcuboot_with_mmf_primary_app.png"/>
+<div class="caption">
+Booting Primary Application with MMF</div></div>
+ <div class="image">
+<img src="mcuboot_with_mmf_secondary_app.png" alt="mcuboot_with_mmf_secondary_app.png"/>
+<div class="caption">
+Booting Secondary Application with MMF</div></div>
+ <h2>Dual Bank operation</h2>
 <p>MCUboot can be used with Dual bank mode (with Flash HP or Flash LP) to leverage the advantages of dual bank flash operation. When Dual Bank mode is enabled, only the XIP upgrade mode can be used.</p>
 <dl class="section note"><dt>Note</dt><dd>Unlike in normal XIP Mode operation, the linker script symbol "XIP_SECONDARY_SLOT_IMAGE" must be undefined in Dual Bank mode. An example flash layout in this configuration for a 1 MB is shown below. Note that there are 2 copies of the bootloader, one in Bank 0 and another in Bank 1.</dd></dl>
 <div class="image">
@@ -560,7 +575,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

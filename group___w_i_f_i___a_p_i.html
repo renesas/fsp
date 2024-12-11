@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -342,6 +342,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf0883f2b15f71a1723c599baa06eb954"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#gaf0883f2b15f71a1723c599baa06eb954">WIFI_SetMAC</a> (uint8_t *pucMac)</td></tr>
 <tr class="memdesc:gaf0883f2b15f71a1723c599baa06eb954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Wi-Fi MAC addresses.  <a href="#gaf0883f2b15f71a1723c599baa06eb954">More...</a><br /></td></tr>
 <tr class="separator:gaf0883f2b15f71a1723c599baa06eb954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11d78c85d0621f36cf99c70fb915b2df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df">WIFI_SetSpoofingMAC</a> (uint8_t *pucMac)</td></tr>
+<tr class="memdesc:ga11d78c85d0621f36cf99c70fb915b2df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Wi-Fi MAC addresses.  <a href="#ga11d78c85d0621f36cf99c70fb915b2df">More...</a><br /></td></tr>
+<tr class="separator:ga11d78c85d0621f36cf99c70fb915b2df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4831b6c97863f20e5fd26220d2579f32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#ga4831b6c97863f20e5fd26220d2579f32">WIFI_SetCountryCode</a> (const char *pcCountryCode)</td></tr>
 <tr class="memdesc:ga4831b6c97863f20e5fd26220d2579f32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set country based configuration (including channel list, power table)  <a href="#ga4831b6c97863f20e5fd26220d2579f32">More...</a><br /></td></tr>
 <tr class="separator:ga4831b6c97863f20e5fd26220d2579f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -539,7 +542,7 @@ xSecurity</td>
 <td class="fielddoc">
 Wi-Fi Security. </td></tr>
 <tr><td class="fieldtype">
-<a id="aa906cc6afd11c4843169cf69677e087c"></a>union <a class="el" href="group___w_i_f_i___a_p_i.html#union_w_i_f_i_network_params__t_8x_password">WIFINetworkParams_t</a></td>
+<a id="aa7b946820360cd1f437a4b83bcea352e"></a>union <a class="el" href="group___w_i_f_i___a_p_i.html#union_w_i_f_i_network_params__t_8x_password">WIFINetworkParams_t</a></td>
 <td class="fieldname">
 xPassword</td>
 <td class="fielddoc">
@@ -2623,7 +2626,39 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>eWiFiSuccess if MAC address was set successfully, failure code otherwise.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>On some platforms the change of MAC address can only take effect after reboot. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>On some platforms the change of MAC address can only take effect after reboot.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>This function is deprecated, please use <a class="el" href="group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df" title="Set Wi-Fi MAC addresses. ">WIFI_SetSpoofingMAC()</a> instead. </dd></dl>
+
+</div>
+</div>
+<a id="ga11d78c85d0621f36cf99c70fb915b2df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga11d78c85d0621f36cf99c70fb915b2df">&#9670;&nbsp;</a></span>WIFI_SetSpoofingMAC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a> WIFI_SetSpoofingMAC </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pucMac</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set Wi-Fi MAC addresses. </p>
+<p>The given MAC address is for MAC SPOOFING. The original MAC address is not changed. This MAC address can be set only for Station. The AP MAC address (i.e. BSSID) will not be changed. If the original MAC address needs to be used, then MAC spoofing needs to be disabled.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pucMac</td><td>- Station MAC address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>eWiFiSuccess if MAC address was set successfully, failure code otherwise.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function performs MAC SPOOFING, it does not change the “manufacturer” WIFI MAC address.</dd>
+<dd>
+On some platforms the change of MAC address can only take effect after reboot. </dd></dl>
 
 </div>
 </div>
@@ -2741,7 +2776,7 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

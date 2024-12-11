@@ -17,14 +17,6 @@ var group___l_i_n___a_p_i =
     [ "lin_cfg_t", "group___l_i_n___a_p_i.html#structlin__cfg__t", [
       [ "channel", "group___l_i_n___a_p_i.html#a238f2f12d37279529b9a99d7278fd8b8", null ],
       [ "mode", "group___l_i_n___a_p_i.html#a61bb86c03d458a8b1173bb1c55603398", null ],
-      [ "rxi_ipl", "group___l_i_n___a_p_i.html#a2e984b5b54a1e9db5b203c81ab9dd4e4", null ],
-      [ "rxi_irq", "group___l_i_n___a_p_i.html#ae69962d6319937c2cce331bceb0d8c78", null ],
-      [ "txi_ipl", "group___l_i_n___a_p_i.html#a819fe31b3509756ee3e7b87e52d7b8e3", null ],
-      [ "txi_irq", "group___l_i_n___a_p_i.html#a5ac3ad727ed12f03c77781fef795157f", null ],
-      [ "tei_ipl", "group___l_i_n___a_p_i.html#ab53693e6f3cc8ebda4ad035e19ceb6e4", null ],
-      [ "tei_irq", "group___l_i_n___a_p_i.html#a12db630e5d20bbb0700b67bd1f1c22ae", null ],
-      [ "eri_ipl", "group___l_i_n___a_p_i.html#a7eb5faed06280a0b3a53b0e979c9a940", null ],
-      [ "eri_irq", "group___l_i_n___a_p_i.html#a3f2d401e447e3a1d1ef3b5bc240d2864", null ],
       [ "p_callback", "group___l_i_n___a_p_i.html#a464087017b51b356e0a520f4c92b1535", null ],
       [ "p_context", "group___l_i_n___a_p_i.html#aa4c9123bbd44e7257125830fad51eb49", null ],
       [ "p_extend", "group___l_i_n___a_p_i.html#af5988db9d76c7a9357da2e1bb6d57812", null ]

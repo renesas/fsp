@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -644,6 +644,7 @@ When the internal reference voltage is selected as the high-potential reference 
 <h2>Limitations</h2>
 <p>Developers should be aware of the following limitations when using the ADC:</p>
 <ul>
+<li>If the ratio between the core clock and the ADC source clock is higher than 32:1, call R_ADC_ScanStop before calling R_ADC_Close if ADC is still running.</li>
 <li>When using the Window Compare function:<ul>
 <li>Only Single Scan mode may be configured when match or mismatch ELC events are used.</li>
 <li>When one compare window is configured to check the temperature sensor or voltage reference the other window cannot be used.</li>
@@ -1887,7 +1888,7 @@ as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. T
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

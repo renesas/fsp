@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -316,17 +316,7 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable critical section guarding around peripheral configuration updates. This should be enabled if the R_SAU_I2C or R_SAU_UART module is being used simultaneously with this module. </td></tr>
 <tr class="tree_none">
-<td>Enable Single Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-00</li>
-<li>
-20</li>
-<li>
-11</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Enable single channel to reduce code size if only one channel (00, 11, or 20) is to be configured for SAU SPI. </td></tr>
+<td>Enable Single Channel</td><td>MCU Specific Options</td><td></td><td>Enable single channel to reduce code size if only one channel is to be configured for SAU SPI. </td></tr>
 <tr class="tree_none">
 <td>Transfer Operating Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -340,11 +330,19 @@ Transmission/Reception</li>
 <tr class="tree_none">
 <td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Enable</li>
+Enabled</li>
 <li>
-Disable</li>
+Disabled</li>
 </ul>
-</td><td>Disable </td><td>Enable DTC support for the SAU SPI module. </td></tr>
+</td><td>Disabled </td><td>Enable DTC support for the SAU SPI module. </td></tr>
+<tr class="tree_none">
+<td>Multiple Slave Compatibility Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable multiple slave compatibility mode when SAU SPI is configured to slave mode for multiple-slave applications. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; SPI (r_sau_spi)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_sau_spi).<br />
@@ -1025,7 +1023,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

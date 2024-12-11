@@ -64,6 +64,7 @@ var searchData=
   ['ether_5fphy_5flsi_5ftype_5fcustom',['ETHER_PHY_LSI_TYPE_CUSTOM',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5ac19ab1507a515d6174f27f7af0e6de0e',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5flsi_5ftype_5fdefault',['ETHER_PHY_LSI_TYPE_DEFAULT',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af54eff8466eb8c190b1f5ed76a89154b',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5flsi_5ftype_5fdp83620',['ETHER_PHY_LSI_TYPE_DP83620',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af3ca93247dd58484b187bba066282686',1,'r_ether_phy_api.h']]],
+  ['ether_5fphy_5flsi_5ftype_5fgpy111',['ETHER_PHY_LSI_TYPE_GPY111',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5af7929b2e75e0519dd5529309192b5bb8',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5flsi_5ftype_5fics1894',['ETHER_PHY_LSI_TYPE_ICS1894',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a64f1f8634b4c7b356c34780b587b4303',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5flsi_5ftype_5fksz8041',['ETHER_PHY_LSI_TYPE_KSZ8041',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a29cbe6685ab800c244b58a82fcdfc89e',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5flsi_5ftype_5fksz8091rnb',['ETHER_PHY_LSI_TYPE_KSZ8091RNB',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga52ba7820524fdf3472ec06b109d4e9a5a0b6ce5fcecaa476b673310ed1369c3a3',1,'r_ether_phy_api.h']]],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -384,19 +384,19 @@ SPWM</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">A/D conversion channel for cos signal</td><td>Value must be a supported channel number</td><td>28 </td><td>Specify the A/D channel for cos signal of induction sensor (channel availability varies by MCU) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Using ADC Scan Group</td><td>Manual Entry</td><td>0 </td><td>For MCUs with ADC_B, select the scan group used. </td></tr>
+<td class="tree_lvl_1_cell">Using ADC Scan Group</td><td>Value should be between 0 to 8 (valid only with ADC_B module)</td><td>0 </td><td>For MCUs with ADC_B, select the scan group used. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for U Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for U phase current (only valid with adc module) </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for U Phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for U phase current (only valid with adc module) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for W Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for W phase current (only valid with adc module) </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for W Phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for W phase current (only valid with adc module) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for main line voltage</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for main line voltage (only valid with adc module) </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for main line voltage</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for main line voltage (only valid with adc module) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for V Phase current</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for V Phase current</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for V phase current (only valid with adc module) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for sin signal</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for sin signal of induction sensor (only valid with adc module) </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for sin signal</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for sin signal of induction sensor (only valid with adc module) </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">A/D conversion unit for cos signal</td><td>Manual Entry</td><td>0 </td><td>Select the A/D conversion module for cos signal of induction sensor (only valid with adc module) </td></tr>
+<td class="tree_lvl_1_cell">A/D conversion unit for cos signal</td><td>Must be a valid non-negative value.</td><td>0 </td><td>Select the A/D conversion module for cos signal of induction sensor (only valid with adc module) </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">ADC interrupt module</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -901,7 +901,7 @@ p_shared_instance_ctrl</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -652,7 +652,7 @@ Break field length setting (break field length is (bflw + 1) * clock of the time
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a7ed113626c04110d160d2f7a59af77e8"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
+<a id="adc9bd3cb9efed1984894352a504f5ba1"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -790,7 +790,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="acd5297cc1f4676d00ea0441323628ffb"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
+<a id="a098cf35a9d89acea0233352966bd037e"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -820,6 +820,30 @@ aed_irq</td>
 <td class="fielddoc">
 Active edge detect IRQ number. </td></tr>
 <tr><td class="fieldtype">
+<a id="a0d474d4f8380fc51d03f100847a383cb"></a>IRQn_Type</td>
+<td class="fieldname">
+rxi_irq</td>
+<td class="fielddoc">
+Receive interrupt IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a912aa37bbead9c70dc9c1f77ef277ada"></a>IRQn_Type</td>
+<td class="fieldname">
+txi_irq</td>
+<td class="fielddoc">
+Transmit interrupt IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a87a68e606c23022a117ccf983b907209"></a>IRQn_Type</td>
+<td class="fieldname">
+tei_irq</td>
+<td class="fielddoc">
+Transmit end interrupt IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a40a50db04afbc3123d50de803aaaac12"></a>IRQn_Type</td>
+<td class="fieldname">
+eri_irq</td>
+<td class="fielddoc">
+Error interrupt IRQ number. </td></tr>
+<tr><td class="fieldtype">
 <a id="a1aa00e4634173923fbfbe63b51fbea83"></a>uint8_t</td>
 <td class="fieldname">
 bfd_ipl</td>
@@ -831,6 +855,30 @@ Break field detect interrupt priority. </td></tr>
 aed_ipl</td>
 <td class="fielddoc">
 Active edge detect interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa87be39a00d7fbe0fc4c38bb3cc29af1"></a>uint8_t</td>
+<td class="fieldname">
+rxi_ipl</td>
+<td class="fielddoc">
+Receive interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="af5d0bbd49ce1661c4d4454065db0115d"></a>uint8_t</td>
+<td class="fieldname">
+txi_ipl</td>
+<td class="fielddoc">
+Transmit interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a43dbc88d095b92251b4420e185793902"></a>uint8_t</td>
+<td class="fieldname">
+tei_ipl</td>
+<td class="fielddoc">
+Transmit end interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a07f978abafe94781d1de02ed83aec778"></a>uint8_t</td>
+<td class="fieldname">
+eri_ipl</td>
+<td class="fielddoc">
+Error interrupt priority. </td></tr>
 <tr><td class="fieldtype">
 <a id="a2a15493f93fc7f3fd9e05ae2d16b1142"></a>uint16_t</td>
 <td class="fieldname">
@@ -1463,7 +1511,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

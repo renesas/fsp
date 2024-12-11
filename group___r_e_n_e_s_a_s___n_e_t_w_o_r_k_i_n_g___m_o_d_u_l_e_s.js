@@ -27,5 +27,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "WiFi Onchip Silex Driver using r_sci_uart (rm_wifi_onchip_silex)", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html", "group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x" ],
     [ "lwIP Baremetal Porting Layer (rm_lwip_sys_baremetal)", "group___r_m___l_w_i_p___s_y_s___b_a_r_e_m_e_t_a_l.html", null ],
     [ "lwIP Ethernet Driver (rm_lwip_ether)", "group___r_m___l_w_i_p___e_t_h_e_r.html", "group___r_m___l_w_i_p___e_t_h_e_r" ],
-    [ "lwIP FreeRTOS Porting Layer (rm_lwip_sys_freertos)", "group___r_m___l_w_i_p___s_y_s___f_r_e_e_r_t_o_s.html", null ]
+    [ "lwIP FreeRTOS Porting Layer (rm_lwip_sys_freertos)", "group___r_m___l_w_i_p___s_y_s___f_r_e_e_r_t_o_s.html", null ],
+    [ "lwIP HTTP Server", "group___l_w_i_p___h_t_t_p___s_e_r_v_e_r.html", null ],
+    [ "lwIP MQTT", "group___l_w_i_p___m_q_t_t.html", null ]
 ];

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.6.0</span>
+   &#160;<span id="projectnumber">Release v5.7.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -669,16 +669,16 @@ Disabled</li>
 The FLL function requires the subclock oscillator to be running and stabilized. When enabled and running the PLL or system clock from HOCO, the BSP will wait for both the Subclock Stabilization Time as well as the FLL Stabilization Time when setting up clocks at startup.<br />
 <br />
 When FLL is enabled Software Standby and Deep Software Standby modes are not available. </td></tr>
-<tr class="tree_none">
-<td>Enable inline BSP IRQ functions</td><td><ul style="margin-top:0;margin-bottom:0;">
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">MOSC Drive Capability Auto Switching</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>Using static inline functions will slightly increase code size, but will slightly decrease cycles taken in ISRs in return. </td></tr>
-<tr class="tree_none">
-<td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
+</td><td>Disabled </td><td>When enabled, the drive capability auto switching function lowers the MOSC drive capability automatically after the MOSC starts and suppresses the EMI associated with the MOSC. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 35 cycles</li>
 <li>
@@ -698,7 +698,15 @@ Disabled</li>
 <li>
 8163 cycles</li>
 </ul>
-</td><td>8163 cycles </td><td>Number of cycles to wait for the main oscillator clock to stabilize. Drive capability automatic switching function is by default disabled. </td></tr>
+</td><td>8163 cycles </td><td>Number of cycles to wait for the main oscillator clock to stabilize. </td></tr>
+<tr class="tree_none">
+<td>Enable inline BSP IRQ functions</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Using static inline functions will slightly increase code size, but will slightly decrease cycles taken in ISRs in return. </td></tr>
 <tr class="tree_none">
 <td>ID Code Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -750,7 +758,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a6_t3.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_a2.html#gaebe723200f2a7f181f08324128b9d7b5">elc_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -765,7 +773,7 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a6_t3.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_s_p___m_c_u___r_a2_a2.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -779,7 +787,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.6.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
