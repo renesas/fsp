@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -251,6 +251,309 @@ Features</h2>
 <li>Supports Server-Side Includes (SSI) and Common Gateway Interface (CGI).</li>
 <li>Can set up TLS connection handling (HTTPS).</li>
 </ul>
+<h1><a class="anchor" id="rm-lwip_http_server-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for Source</h2>
+The following build time configurations are defined in lwip/lwip/apps/httpd_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD CGI (old style)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable CGI support (old style). Use this CGI type e.g. to execute specific actions and return a page that does not depend on the CGI parameters. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD CGI SSI (new style)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable CGI support with SSI feature (new style). Use this CGI handler if you want CGI information passed on to SSI. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD SSI</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable SSI support (Server-Side-Includes). </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD SSI Raw</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable to implement an SSI tag handler callback that gets a const char* to the tag (instead of an index into a pre-registered array of known tags). </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD SSI By File Extension</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Overriden</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>enable/disable or override the file SSI tag scan function. You need to provide an external function to perform the check: u8_t http_uri_is_ssi(struct fs_file *file, const char *uri) </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD SSI Extension</td><td>Manual Entry</td><td>".shtml", ".shtm", ".ssi", ".xml", ".json" </td><td>List of file extensions handled as SSI files. Only used if LWIP_HTTPD_SSI_BY_FILE_EXTENSION != 0. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Support POST</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to support HTTP POST. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Maximum CGI Parameters</td><td>Must be a non zero positive interger.</td><td>16 </td><td>The maximum number of parameters that the CGI handler can be sent. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD SSI Multipart</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>SSI handler function is called with 2 more arguments to handle string too long to be inserted at once </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Maximum Tag Name Length</td><td>Must be a non zero positive interger.</td><td>8 </td><td>The maximum length of the string comprising the SSI tag name. The longer tags are ignored. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Maximum Tag Insert Length</td><td>Must be a non zero positive interger.</td><td>192 </td><td>The maximum length of string that can be returned to replace any given tag. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD POST Manual WND</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable configurating POST window response for HTTP server </td></tr>
+<tr class="tree_none">
+<td>HTTPD Server Agent</td><td>Manual Entry</td><td>lwIP/" LWIP_VERSION_STRING " (<a href="http://savannah.nongnu.org/projects/lwip">http://savannah.nongnu.org/projects/lwip</a>) </td><td>This string is passed in the HTTP header as 'Server: HTTPD_SERVER_AGENT'. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Dynamic Headers</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 if you want to include code that creates HTTP headers at runtime. Else use static header created by the makefsdata tool. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Debug</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Configure debug for HTTPD file send timing </td></tr>
+<tr class="tree_none">
+<td>HTTPD Use Mem Pool</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to allocate http_state instead of using heap.If enabled, define MEMP_NUM_PARALLEL_HTTPD_CONNS (and MEMP_NUM_PARALLEL_HTTPD_SSI_CONNS for SSI) to set the size of the pool(s).  </td></tr>
+<tr class="tree_none">
+<td>HTTPD Server Port</td><td>Must be an interger in range 0-65535.</td><td>80 </td><td>The http server port for HTTPD to use </td></tr>
+<tr class="tree_none">
+<td>HTTPD Server Port HTTPS</td><td>Must be an interger in range 0-65535.</td><td>443 </td><td>The https server port for HTTPD to use </td></tr>
+<tr class="tree_none">
+<td>HTTPD Enable HTTPS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable https support. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Maximum Retries</td><td>Must be a positive integer.</td><td>4 </td><td>Maximum retries before the connection is aborted/closed. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Poll Interval</td><td>Must be a non zero positive interger.</td><td>4 </td><td>How long the Server will keep the connection. The poll delay is X*500ms. </td></tr>
+<tr class="tree_none">
+<td>HTTPD TCP Priority</td><td>Must be an interger in range 1-127.</td><td>1 </td><td>Priority for tcp pcbs created by HTTPD 1 by default range from 1-127. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to enable timing each file sent. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Debug Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to enable timing each file sent. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Support Extstatus</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to one to show error pages when parsing request fail. Else simply close the connection </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Support V09</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Set this to 0 to drop support for HTTP/0.9 clients (to save some bytes). </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Support 11 Keepalive</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to enable HTTP/1.1 persistent connections. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Support Requestlist</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Set this to 1 to support HTTP request coming in in multiple packets/pbufs. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Request Queuelen</td><td>Must be a non zero positive interger.</td><td>5 </td><td>Number of rx pbufs to enqueue to parse an incoming request. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Request Bufsize</td><td>Must be a non zero positive interger.</td><td>LWIP_HTTPD_MAX_REQ_LENGTH </td><td>Number of (TCP payload-) bytes (in pbufs) to enqueue to parse and incoming request. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Maximum Request Length</td><td>Must be a non zero positive interger.</td><td>LWIP_MIN(1023, (LWIP_HTTPD_REQ_QUEUELEN * PBUF_POOL_BUFSIZE)) </td><td>Defines the maximum length of a HTTP request line. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Maximum Request URI Length</td><td>Must be a positive interger.</td><td>63 </td><td>This is the size of a static buffer used when URIs end with '/'. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD POST Maximum Response URI Length</td><td>Must be a non zero positive interger.</td><td>63 </td><td>Maximum length of the filename to send as response to a POST request. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD SSI Include Tag</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Set this to 0 to not send the SSI tag. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Abort On Close Memory Error</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to call tcp_abort when tcp_close fails with memory error. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Kill Old On Connections Exceeded</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to kill the oldest connection. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Omit Header For Extensionless URI</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to send URIs without extension without headers. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Limit Sending To 2mss</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>By default, the httpd is limited to send 2*pcb-&gt;mss. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Maximum Write Length</td><td>The name function must be a valid C symbol</td><td>altcp_mss </td><td>Define this to a function that returns the maximum amount of data to enqueue. The function have this signature: u16_t fn(struct altcp_pcb* pcb);. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Custom Files</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 and provide the functions: <br />
+- int fs_open_custom(struct fs_file *file, const char *name) <br />
+Called first for every opened file to allow opening files <br />
+that are not included in fsdata(_custom).c <br />
+- void fs_close_custom(struct fs_file *file) <br />
+Called to free resources allocated by fs_open_custom(). </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Dynamic File Read</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to support fs_read(). Else only one-block files are supported, and the contents must be ready after fs_open().  </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD File State</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to include an application stateargument per file that is opened. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD File Extension</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to add the pextension field to the fs_file structure.New code should use LWIP_HTTPD_FILE_STATE instead. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Precalculated Checksum</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Support asynchronous read operations. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD FS Async Read</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Set this to 1 to add the pextension field. </td></tr>
+<tr class="tree_none">
+<td>HTTPD Fsdata File</td><td>Manual Entry</td><td>fsdata_sample.c </td><td>Provide source name file of FS custom data. This data file will be included by fs.c file </td></tr>
+<tr class="tree_none">
+<td>HTTP Is Data Volatile</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Allow Copy and More</li>
+<li>
+Allow Copy</li>
+<li>
+Undefined</li>
+</ul>
+</td><td>Allow Copy </td><td>Determines if HTTP data should be copied into the TCP buffer before transmission. <br />
+ Allow Copy: data will be copied into memory belonging to the stack. <br />
+ Allow Copy and More: Notify to TCP that data will be copied into memory belonging to the stack <br />
+ and additional data will follow in subsequent TCP transmissions. </td></tr>
+<tr class="tree_none">
+<td>LwIP HTTPD Use Default Template</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled FSdata Generator</li>
+<li>
+Disabled FSdata Generator</li>
+</ul>
+</td><td>Enabled FSdata Generator </td><td>Set this to 1 to when intent to use the default template from the generator </td></tr>
+</table>
+</p>
 <h1><a class="anchor" id="rm-lwip_http_server-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="rm-lwip_http_server-limitations"></a>
@@ -300,7 +603,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

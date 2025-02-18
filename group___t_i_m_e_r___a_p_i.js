@@ -82,7 +82,8 @@ var group___t_i_m_e_r___a_p_i =
     ] ],
     [ "timer_state_t", "group___t_i_m_e_r___a_p_i.html#ga1360292eee5d5a5288646fd1eb37c83e", [
       [ "TIMER_STATE_STOPPED", "group___t_i_m_e_r___a_p_i.html#gga1360292eee5d5a5288646fd1eb37c83ea92e859c83369128798902fd7a86a3320", null ],
-      [ "TIMER_STATE_COUNTING", "group___t_i_m_e_r___a_p_i.html#gga1360292eee5d5a5288646fd1eb37c83eaba4825c92c8291b64e827943330007b7", null ]
+      [ "TIMER_STATE_COUNTING", "group___t_i_m_e_r___a_p_i.html#gga1360292eee5d5a5288646fd1eb37c83eaba4825c92c8291b64e827943330007b7", null ],
+      [ "TIMER_STATE_UNKNOWN", "group___t_i_m_e_r___a_p_i.html#gga1360292eee5d5a5288646fd1eb37c83eae82995b4262422f87ad9b026ffce72b2", null ]
     ] ],
     [ "timer_mode_t", "group___t_i_m_e_r___a_p_i.html#ga6d4cd64aed5c0009ac26803efc9c13b2", [
       [ "TIMER_MODE_8_BIT_COUNTER", "group___t_i_m_e_r___a_p_i.html#gga6d4cd64aed5c0009ac26803efc9c13b2a6a17023ce2effac2b9556368d4d31c81", null ],

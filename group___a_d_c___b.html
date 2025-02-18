@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -524,8 +524,6 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga82447f8298334e5abad26eca41ad3925"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga82447f8298334e5abad26eca41ad3925">adc_b_clock_source_t</a> </td></tr>
-<tr class="separator:ga82447f8298334e5abad26eca41ad3925"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga05a9bf3c320798b118419298caf3517e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga05a9bf3c320798b118419298caf3517e">adc_b_clock_divider_t</a> </td></tr>
 <tr class="separator:ga05a9bf3c320798b118419298caf3517e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga99cbbb12770fa8ffdc806fefc8254904"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga99cbbb12770fa8ffdc806fefc8254904">adc_b_converter_mode_t</a> </td></tr>
@@ -534,10 +532,6 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga266a796bc37d8e7309480b9376173c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8dd96422908febbaf014114c99161afc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8dd96422908febbaf014114c99161afc">adc_b_data_format_t</a> </td></tr>
 <tr class="separator:ga8dd96422908febbaf014114c99161afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bfbcbbef0724dc1832e18c4341a2f9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga7bfbcbbef0724dc1832e18c4341a2f9b">adc_b_virtual_channel_t</a> </td></tr>
-<tr class="separator:ga7bfbcbbef0724dc1832e18c4341a2f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc17dabbd4689beed8d0c86ee27e6a82"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gabc17dabbd4689beed8d0c86ee27e6a82">adc_b_channel_mask_t</a> </td></tr>
-<tr class="separator:gabc17dabbd4689beed8d0c86ee27e6a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8d18c2c63ac4b34ebd6e9ee0fb1f63f2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#ga8d18c2c63ac4b34ebd6e9ee0fb1f63f2">adc_b_limit_clip_table_id_t</a> </td></tr>
 <tr class="separator:ga8d18c2c63ac4b34ebd6e9ee0fb1f63f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd2f96480db8e2a539953216b17a678c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___b.html#gafd2f96480db8e2a539953216b17a678c">adc_b_unit_id_t</a> </td></tr>
@@ -691,7 +685,7 @@ external_trigger_enable_mask</td>
 <td class="fielddoc">
 External Trigger mask. </td></tr>
 <tr><td class="fieldtype">
-<a id="aae6b77233d93dc136f380266bb55207c"></a><a class="el" href="group___b_s_p___m_c_u___r_a2_a2.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
+<a id="aae6b77233d93dc136f380266bb55207c"></a><a class="el" href="group___b_s_p___m_c_u___r_a0_e1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a></td>
 <td class="fieldname">
 elc_trigger_enable_mask</td>
 <td class="fielddoc">
@@ -835,11 +829,35 @@ fifo_read_ipl_group_4</td>
 <td class="fielddoc">
 FIFO Read threshold request IPL for Group 4. </td></tr>
 <tr><td class="fieldtype">
+<a id="a773e901c9010cd2a304a6e5bf2df6c7f"></a>uint8_t</td>
+<td class="fieldname">
+fifo_read_ipl_group_5</td>
+<td class="fielddoc">
+FIFO Read threshold request IPL for Group 5 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
+<a id="af005f05dcdc125f68170821dc0fbea34"></a>uint8_t</td>
+<td class="fieldname">
+fifo_read_ipl_group_6</td>
+<td class="fielddoc">
+FIFO Read threshold request IPL for Group 6 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
+<a id="afbd6315cbb7b48344fe67bdd4d8edbab"></a>uint8_t</td>
+<td class="fieldname">
+fifo_read_ipl_group_7</td>
+<td class="fielddoc">
+FIFO Read threshold request IPL for Group 7 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
+<a id="a4defe5867d825a0ea4ce9d370d8be8d0"></a>uint8_t</td>
+<td class="fieldname">
+fifo_read_ipl_group_8</td>
+<td class="fielddoc">
+FIFO Read threshold request IPL for Group 8 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
 <a id="ad7e67d30920698a3fe2344a55cdbce99"></a>uint8_t</td>
 <td class="fieldname">
 fifo_read_ipl_group_5678</td>
 <td class="fielddoc">
-FIFO Read threshold request IPL for Groups 5, 6, 7, and 8. </td></tr>
+FIFO Read threshold request IPL for Groups 5, 6, 7, and 8 (available on some MCUs) </td></tr>
 <tr><td class="fieldtype">
 <a id="a6651de0f7cdefd5ca44208bdadb5069e"></a>uint8_t</td>
 <td class="fieldname">
@@ -889,11 +907,35 @@ scan_end_ipl_group_4</td>
 <td class="fielddoc">
 Scan End IPL for A/D Group 4. </td></tr>
 <tr><td class="fieldtype">
+<a id="aa24aea52b805a4105125f4db6d8880ce"></a>uint8_t</td>
+<td class="fieldname">
+scan_end_ipl_group_5</td>
+<td class="fielddoc">
+Scan End IPL for A/D Group 5 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
+<a id="a6c9f2f1866ccb5ee2a2164eb3c5e5f35"></a>uint8_t</td>
+<td class="fieldname">
+scan_end_ipl_group_6</td>
+<td class="fielddoc">
+Scan End IPL for A/D Group 6 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
+<a id="a65b1d8772b378164d027846a591a508f"></a>uint8_t</td>
+<td class="fieldname">
+scan_end_ipl_group_7</td>
+<td class="fielddoc">
+Scan End IPL for A/D Group 7 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
+<a id="a7af7cd2bb9730e818c85bad2a1b7308f"></a>uint8_t</td>
+<td class="fieldname">
+scan_end_ipl_group_8</td>
+<td class="fielddoc">
+Scan End IPL for A/D Group 8 (available on some MCUs) </td></tr>
+<tr><td class="fieldtype">
 <a id="a957a76c6e5f556d9545e3bb2e4d98463"></a>uint8_t</td>
 <td class="fieldname">
 scan_end_ipl_group_5678</td>
 <td class="fielddoc">
-Scan End IRQ for A/D Groups 5, 6, 7, and 8. </td></tr>
+Scan End IRQ for A/D Groups 5, 6, 7, and 8 (available on some MCUs) </td></tr>
 <tr><td class="fieldtype">
 <a id="ad2b54feea89c420d098f196c2df4c225"></a>IRQn_Type</td>
 <td class="fieldname">
@@ -955,6 +997,30 @@ fifo_read_irq_group_4</td>
 <td class="fielddoc">
 FIFO Read threshold request IRQ for Group 4. </td></tr>
 <tr><td class="fieldtype">
+<a id="a376d25ffc7279dc8f65e058e523ee931"></a>IRQn_Type</td>
+<td class="fieldname">
+fifo_read_irq_group_5</td>
+<td class="fielddoc">
+FIFO Read threshold request IRQ for Group 5. </td></tr>
+<tr><td class="fieldtype">
+<a id="a440ef1e954d68a67ba26e5335fa2d43a"></a>IRQn_Type</td>
+<td class="fieldname">
+fifo_read_irq_group_6</td>
+<td class="fielddoc">
+FIFO Read threshold request IRQ for Group 6. </td></tr>
+<tr><td class="fieldtype">
+<a id="af1a9338b49c0702021c961437fd29d20"></a>IRQn_Type</td>
+<td class="fieldname">
+fifo_read_irq_group_7</td>
+<td class="fielddoc">
+FIFO Read threshold request IRQ for Group 7. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad8b241add5aa1315fc51d7284fe87f18"></a>IRQn_Type</td>
+<td class="fieldname">
+fifo_read_irq_group_8</td>
+<td class="fielddoc">
+FIFO Read threshold request IRQ for Group 8. </td></tr>
+<tr><td class="fieldtype">
 <a id="aa7262c70d2fa06d56ee56ccdf2e48dfe"></a>IRQn_Type</td>
 <td class="fieldname">
 fifo_read_irq_group_5678</td>
@@ -1008,6 +1074,30 @@ Scan End IRQ for A/D Group 3. </td></tr>
 scan_end_irq_group_4</td>
 <td class="fielddoc">
 Scan End IRQ for A/D Group 4. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5394b408b56ff6571f85977f4202d55b"></a>IRQn_Type</td>
+<td class="fieldname">
+scan_end_irq_group_5</td>
+<td class="fielddoc">
+Scan End IRQ for A/D Group 5. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac88a5000fe32ef13e14279e584eeeb8e"></a>IRQn_Type</td>
+<td class="fieldname">
+scan_end_irq_group_6</td>
+<td class="fielddoc">
+Scan End IRQ for A/D Group 6. </td></tr>
+<tr><td class="fieldtype">
+<a id="a311d33673863a3ce359e63bbacbe4abf"></a>IRQn_Type</td>
+<td class="fieldname">
+scan_end_irq_group_7</td>
+<td class="fielddoc">
+Scan End IRQ for A/D Group 7. </td></tr>
+<tr><td class="fieldtype">
+<a id="adf4c9758d55c860fef3abec8b1ca5901"></a>IRQn_Type</td>
+<td class="fieldname">
+scan_end_irq_group_8</td>
+<td class="fielddoc">
+Scan End IRQ for A/D Group 8. </td></tr>
 <tr><td class="fieldtype">
 <a id="a0f62f517d854874bf1253047a7293278"></a>IRQn_Type</td>
 <td class="fieldname">
@@ -1239,29 +1329,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="ga82447f8298334e5abad26eca41ad3925"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga82447f8298334e5abad26eca41ad3925">&#9670;&nbsp;</a></span>adc_b_clock_source_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___a_d_c___b.html#ga82447f8298334e5abad26eca41ad3925">adc_b_clock_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>ADC Clock source selection </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga82447f8298334e5abad26eca41ad3925a6e4de51c6bb86d36ce10840ad3d381d6"></a>ADC_B_CLOCK_SOURCE_PCLKC&#160;</td><td class="fielddoc"><p>ADC Clock Source PCLKC. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga82447f8298334e5abad26eca41ad3925af1f1f0b7898717ddaf293fb6a3113cb7"></a>ADC_B_CLOCK_SOURCE_GPT&#160;</td><td class="fielddoc"><p>ADC Clock Source GPT. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga82447f8298334e5abad26eca41ad3925ab8916cf2932eafe6c03b2e4e730e4a8c"></a>ADC_B_CLOCK_SOURCE_PCLKA&#160;</td><td class="fielddoc"><p>ADC Clock Source PCLKA. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a id="ga05a9bf3c320798b118419298caf3517e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga05a9bf3c320798b118419298caf3517e">&#9670;&nbsp;</a></span>adc_b_clock_divider_t</h2>
 
@@ -1361,186 +1428,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr><td class="fieldname"><a id="gga8dd96422908febbaf014114c99161afcaa2b943585fead18f7847613870959b13"></a>ADC_B_DATA_FORMAT_12_BIT&#160;</td><td class="fielddoc"><p>12 bit adc_b data format </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8dd96422908febbaf014114c99161afca242ae30052799901726584a2b27806c2"></a>ADC_B_DATA_FORMAT_10_BIT&#160;</td><td class="fielddoc"><p>10 bit adc_b data format </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga7bfbcbbef0724dc1832e18c4341a2f9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7bfbcbbef0724dc1832e18c4341a2f9b">&#9670;&nbsp;</a></span>adc_b_virtual_channel_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___a_d_c___b.html#ga7bfbcbbef0724dc1832e18c4341a2f9b">adc_b_virtual_channel_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>ADC channels </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba669722dbd722d764f1fe80f54728c7ee"></a>ADC_B_VIRTUAL_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC B virtual channel 0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bae91d35f02d8a73ad4269a65c503c23b4"></a>ADC_B_VIRTUAL_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC B virtual channel 1. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba12eb36d7de30bcaec415354d3a47a4dc"></a>ADC_B_VIRTUAL_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC B virtual channel 2. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba4b2eaf530e7952646ccfbd09b2131590"></a>ADC_B_VIRTUAL_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC B virtual channel 3. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba737d7b65c0be84b7bd140b61712bb003"></a>ADC_B_VIRTUAL_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC B virtual channel 4. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bacfbbb02e5ddba8ca001a4abc8ec956bb"></a>ADC_B_VIRTUAL_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC B virtual channel 5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bacd53b061b7e20fe18950add0696dcf0c"></a>ADC_B_VIRTUAL_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC B virtual channel 6. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bac4852ef4610a7d8139fa04760bfe4c2f"></a>ADC_B_VIRTUAL_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC B virtual channel 7. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba00e88d1e2d35c8d8558fdc8310969c0f"></a>ADC_B_VIRTUAL_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC B virtual channel 8. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba9e86a6b4b325bb410cbd50d2208a45a7"></a>ADC_B_VIRTUAL_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC B virtual channel 9. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba01421d2399b7e2d504923870d91aae66"></a>ADC_B_VIRTUAL_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC B virtual channel 10. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba8a68424698496587d5b064fe00a54337"></a>ADC_B_VIRTUAL_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC B virtual channel 11. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba5be4536c1c7624883ddafb2bdff7d4a1"></a>ADC_B_VIRTUAL_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC B virtual channel 12. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba6abf634f771908cca225ad73e3e721d9"></a>ADC_B_VIRTUAL_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC B virtual channel 13. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bacbbaf109c203d736f9a64fc0679deb0f"></a>ADC_B_VIRTUAL_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC B virtual channel 14. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba8e879bccad11eefc929a826dbc88edba"></a>ADC_B_VIRTUAL_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC B virtual channel 15. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba0b1315e7e36b6f691db298056f452451"></a>ADC_B_VIRTUAL_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC B virtual channel 16. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba2a455acc53a560fffad1ce7839197cf1"></a>ADC_B_VIRTUAL_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC B virtual channel 17. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba79e4c0be1f8f2024987aa885aebc4499"></a>ADC_B_VIRTUAL_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC B virtual channel 18. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba5c0f338216e70102eb9e3f38837d8be1"></a>ADC_B_VIRTUAL_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC B virtual channel 19. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba90fed4a55ed76cb4db9a88f11749f1cd"></a>ADC_B_VIRTUAL_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC B virtual channel 20. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9babef24fae31449f77eaf09fb812581efd"></a>ADC_B_VIRTUAL_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC B virtual channel 21. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba77ad35d05fabc6efa313cf242974704a"></a>ADC_B_VIRTUAL_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC B virtual channel 22. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba24c4678c74b1392a650fa181d7040dc3"></a>ADC_B_VIRTUAL_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC B virtual channel 23. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba27c1e3c8711a4bb5161efa70641453e6"></a>ADC_B_VIRTUAL_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC B virtual channel 24. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba607da97302a4f34684aadbf30c00d018"></a>ADC_B_VIRTUAL_CHANNEL_25&#160;</td><td class="fielddoc"><p>ADC B virtual channel 25. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba41ef7be2407780e5f294143a515f0459"></a>ADC_B_VIRTUAL_CHANNEL_26&#160;</td><td class="fielddoc"><p>ADC B virtual channel 26. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba882e5497448d8bb639bb992f4fc62f8a"></a>ADC_B_VIRTUAL_CHANNEL_27&#160;</td><td class="fielddoc"><p>ADC B virtual channel 27. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bafc26c838023b2a51c891ba9ea086f33c"></a>ADC_B_VIRTUAL_CHANNEL_28&#160;</td><td class="fielddoc"><p>ADC B virtual channel 28. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba943436b4a89a79b8a6cc07c45890bcaa"></a>ADC_B_VIRTUAL_CHANNEL_29&#160;</td><td class="fielddoc"><p>ADC B virtual channel 29. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba5648e319838ef2c4bebd1d67d3580e4b"></a>ADC_B_VIRTUAL_CHANNEL_30&#160;</td><td class="fielddoc"><p>ADC B virtual channel 30. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bac44894acf6948f98a5a4cc93857d14ae"></a>ADC_B_VIRTUAL_CHANNEL_31&#160;</td><td class="fielddoc"><p>ADC B virtual channel 31. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9bac9adad0491796b7f54de9ac09a5b036c"></a>ADC_B_VIRTUAL_CHANNEL_32&#160;</td><td class="fielddoc"><p>ADC B virtual channel 32. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba4e28bf49ccd3080b3b34e90714b38f56"></a>ADC_B_VIRTUAL_CHANNEL_33&#160;</td><td class="fielddoc"><p>ADC B virtual channel 33. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba6cb5523e6e02cf5abc73fb8f54bd5994"></a>ADC_B_VIRTUAL_CHANNEL_34&#160;</td><td class="fielddoc"><p>ADC B virtual channel 34. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba9282aad5a7f407b8acc0a5e6e3d5b5fb"></a>ADC_B_VIRTUAL_CHANNEL_35&#160;</td><td class="fielddoc"><p>ADC B virtual channel 35. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga7bfbcbbef0724dc1832e18c4341a2f9ba3b9549e77b48c81794b74eaf336317c1"></a>ADC_B_VIRTUAL_CHANNEL_36&#160;</td><td class="fielddoc"><p>ADC B virtual channel 36. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="gabc17dabbd4689beed8d0c86ee27e6a82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabc17dabbd4689beed8d0c86ee27e6a82">&#9670;&nbsp;</a></span>adc_b_channel_mask_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___a_d_c___b.html#gabc17dabbd4689beed8d0c86ee27e6a82">adc_b_channel_mask_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>ADC channel mask </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a56dafe40f8dae5417824b30db8021433"></a>ADC_B_CHANNEL_MASK_0&#160;</td><td class="fielddoc"><p>Channel 0. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a96a0636aff0b0ec05595cbbb84092108"></a>ADC_B_CHANNEL_MASK_1&#160;</td><td class="fielddoc"><p>Channel 1. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82ac79bd28e0fccae220a60e49169c0e709"></a>ADC_B_CHANNEL_MASK_2&#160;</td><td class="fielddoc"><p>Channel 2. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a5bab3438c5facca311fefe6ae73cd0c5"></a>ADC_B_CHANNEL_MASK_3&#160;</td><td class="fielddoc"><p>Channel 3. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82ade1428c3c80f0066bad9057628333ece"></a>ADC_B_CHANNEL_MASK_4&#160;</td><td class="fielddoc"><p>Channel 4. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a413fda0e1208d72312763e7755dca261"></a>ADC_B_CHANNEL_MASK_5&#160;</td><td class="fielddoc"><p>Channel 5. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a493ed32c20e231214fc42e8324eb67ea"></a>ADC_B_CHANNEL_MASK_6&#160;</td><td class="fielddoc"><p>Channel 6. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82afc9176ffe251354fcd59c691f434b117"></a>ADC_B_CHANNEL_MASK_7&#160;</td><td class="fielddoc"><p>Channel 7. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a7e5ed33d1f8736bd5a0fc11de865c833"></a>ADC_B_CHANNEL_MASK_8&#160;</td><td class="fielddoc"><p>Channel 8. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82aead250f6cc1cde4e2a92ccd09e30ccd2"></a>ADC_B_CHANNEL_MASK_9&#160;</td><td class="fielddoc"><p>Channel 9. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a25ca699f9696345e77d84c3fe904beaf"></a>ADC_B_CHANNEL_MASK_10&#160;</td><td class="fielddoc"><p>Channel 10. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a99ad5bcb677954d413fe6f1b8bc1bf57"></a>ADC_B_CHANNEL_MASK_11&#160;</td><td class="fielddoc"><p>Channel 11. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a8b72e9994ff86efb43bf885f97540bec"></a>ADC_B_CHANNEL_MASK_12&#160;</td><td class="fielddoc"><p>Channel 12. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a243e7bf89735590afb528daf177dbac3"></a>ADC_B_CHANNEL_MASK_13&#160;</td><td class="fielddoc"><p>Channel 13. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a26f0b018686d055de8b51bf1fa7e08b3"></a>ADC_B_CHANNEL_MASK_14&#160;</td><td class="fielddoc"><p>Channel 14. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a2fb4bcf2d5a65cc5cc716a2ca6247577"></a>ADC_B_CHANNEL_MASK_15&#160;</td><td class="fielddoc"><p>Channel 15. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a9f4c51d5ad211640f54cf701e365f56b"></a>ADC_B_CHANNEL_MASK_16&#160;</td><td class="fielddoc"><p>Channel 16. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82aa83b2d64a80db4b4ee23839225b3c607"></a>ADC_B_CHANNEL_MASK_17&#160;</td><td class="fielddoc"><p>Channel 17. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82aa7d5160836fd932da5690e78510a2c70"></a>ADC_B_CHANNEL_MASK_18&#160;</td><td class="fielddoc"><p>Channel 18. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a1e17b41b4f50e7e4e8ec3093177d2e4c"></a>ADC_B_CHANNEL_MASK_19&#160;</td><td class="fielddoc"><p>Channel 19. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a36197d7e3b8f1c42caa4d108a951b747"></a>ADC_B_CHANNEL_MASK_20&#160;</td><td class="fielddoc"><p>Channel 20. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82aa65e6bce2843e898d0850e803f331cc5"></a>ADC_B_CHANNEL_MASK_21&#160;</td><td class="fielddoc"><p>Channel 21. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82abcb70f46aed58f1ce53eb79eb738eeaf"></a>ADC_B_CHANNEL_MASK_22&#160;</td><td class="fielddoc"><p>Channel 22. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82ac084e519fe7e988670dfa5f7d6c3d6ac"></a>ADC_B_CHANNEL_MASK_23&#160;</td><td class="fielddoc"><p>Channel 23. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a7e36b9aa4031b8fc555294267de2de6c"></a>ADC_B_CHANNEL_MASK_24&#160;</td><td class="fielddoc"><p>Channel 24. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a2034b8d4184ecff6b5f41bae4dc77cf0"></a>ADC_B_CHANNEL_MASK_25&#160;</td><td class="fielddoc"><p>Channel 25. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a54248853bc4f60badd8058968887c04f"></a>ADC_B_CHANNEL_MASK_26&#160;</td><td class="fielddoc"><p>Channel 26. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82ab1cf41912f72ca24e4a2ba58aef39b18"></a>ADC_B_CHANNEL_MASK_27&#160;</td><td class="fielddoc"><p>Channel 27. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a4ff5a620097054b9faaed662aa8b7977"></a>ADC_B_CHANNEL_MASK_28&#160;</td><td class="fielddoc"><p>Channel 28. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a2debaded5f962985827b87f03fc6aed1"></a>ADC_B_CHANNEL_MASK_DIAGNOSIS&#160;</td><td class="fielddoc"><p>Self-Diagnosis Channel. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82aff585942ad2b4d77aad88da06205a3f3"></a>ADC_B_CHANNEL_MASK_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor channel. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82ac62b06692551cfcb044290fbff77359e"></a>ADC_B_CHANNEL_MASK_VOLT&#160;</td><td class="fielddoc"><p>Voltage Reference channel. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a89cf3478e855b5c0751b62363683062f"></a>ADC_B_CHANNEL_MASK_DAC0&#160;</td><td class="fielddoc"><p>DAC 0 Channel. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82ac018ba2da2917af79c29ba730099dfd2"></a>ADC_B_CHANNEL_MASK_DAC1&#160;</td><td class="fielddoc"><p>DAC 1 Channel. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82acf471c6ee524f9b663902db39332153d"></a>ADC_B_CHANNEL_MASK_DAC2&#160;</td><td class="fielddoc"><p>DAC 2 Channel. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggabc17dabbd4689beed8d0c86ee27e6a82a378fd1d9b49626c8703bb3f3032bb6b1"></a>ADC_B_CHANNEL_MASK_DAC3&#160;</td><td class="fielddoc"><p>DAC 3 Channel. </p>
 </td></tr>
 </table>
 
@@ -1722,6 +1609,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431ac515b5ad42015fc204d175e7e533ce24"></a>ADC_B_GPT_TRIGGER_A9&#160;</td><td class="fielddoc"><p>GPT Trigger A9. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431acc6930a009c296261afb2ce247e08239"></a>ADC_B_GPT_TRIGGER_A10&#160;</td><td class="fielddoc"><p>GPT Trigger A10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431ad1faf485ad41737306fd68551799ef9f"></a>ADC_B_GPT_TRIGGER_A11&#160;</td><td class="fielddoc"><p>GPT Trigger A11. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431ab13d0da501fd86a3b3f41302be49e250"></a>ADC_B_GPT_TRIGGER_A12&#160;</td><td class="fielddoc"><p>GPT Trigger A12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431a5248e29879de45e2e680c32447a46942"></a>ADC_B_GPT_TRIGGER_A13&#160;</td><td class="fielddoc"><p>GPT Trigger A13. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431ae31184654b004f5d196fcad3ac621077"></a>ADC_B_GPT_TRIGGER_B0&#160;</td><td class="fielddoc"><p>GPT Trigger B0. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431a55c65f60d324ce95b48619070fd8cccf"></a>ADC_B_GPT_TRIGGER_B1&#160;</td><td class="fielddoc"><p>GPT Trigger B1. </p>
@@ -1741,6 +1636,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431aae2a1fea564e9e0cc9f5307f2e142b9c"></a>ADC_B_GPT_TRIGGER_B8&#160;</td><td class="fielddoc"><p>GPT Trigger B8. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431a64ef801cda66d77aab82802bd0a7f861"></a>ADC_B_GPT_TRIGGER_B9&#160;</td><td class="fielddoc"><p>GPT Trigger B9. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431a3ed6e8bbf4f688126d98dfc54ecbe8ba"></a>ADC_B_GPT_TRIGGER_B10&#160;</td><td class="fielddoc"><p>GPT Trigger B10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431a50e7f074fb5dac792325e139c39350bd"></a>ADC_B_GPT_TRIGGER_B11&#160;</td><td class="fielddoc"><p>GPT Trigger B11. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431a26d160753483e47d10318cce56b379dc"></a>ADC_B_GPT_TRIGGER_B12&#160;</td><td class="fielddoc"><p>GPT Trigger B12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa96aa050e8965b7052bc0d51eaa09431ab1cb8bed0fd8c1fc2e788470bf3ef0ee"></a>ADC_B_GPT_TRIGGER_B13&#160;</td><td class="fielddoc"><p>GPT Trigger B13. </p>
 </td></tr>
 </table>
 
@@ -2524,7 +2427,7 @@ Call R_ADC_B_Calibrate and wait for calibration to complete before starting a sc
       </table>
 </div><div class="memdoc">
 <p>Initiates calibration of the ADC_B. This function must be called before starting a scan and again whenever ADC_B configuration or state is changed.</p>
-<dl class="section note"><dt>Note</dt><dd>Self-calibration is a non-blocking operation. The application should wait for an ADC_EVENT_CALIBRATION_COMPLETE callback before using other ADC_B functionality.</dd>
+<dl class="section note"><dt>Note</dt><dd>Self-calibration is a non-blocking operation. The application must wait for calibration to complete before using other ADC_B functionality.</dd>
 <dd>
 The self-calibration process will disable hardware triggers that were previously enabled.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -2592,7 +2495,7 @@ The self-calibration process will disable hardware triggers that were previously
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

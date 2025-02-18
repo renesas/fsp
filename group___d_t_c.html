@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -329,7 +329,10 @@ Repeat</li>
 <li>
 Block</li>
 </ul>
-</td><td>Normal </td><td>Select the transfer mode. Select the transfer mode. Normal: One transfer per activation, transfer ends after Number of Transfers; Repeat: One transfer per activation, Repeat Area address reset after Number of Transfers, transfer repeats until stopped; Block: Number of Blocks per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks. </td></tr>
+</td><td>Normal </td><td>Select the transfer mode.<br />
+Normal: One transfer per activation, transfer ends after Number of Transfers.<br />
+Repeat: One transfer per activation, Repeat Area address reset after Number of Transfers, transfer repeats until stopped.<br />
+Block: Number of Blocks per activation, Repeat Area address reset after Number of Transfers, transfer ends after Number of Blocks. </td></tr>
 <tr class="tree_none">
 <td>Transfer Size</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -403,11 +406,7 @@ Usage Notes</h1>
 <li><b>Repeat Mode</b> - Repeat mode works the same way as normal mode, however the length is limited to an integer in the range[1,256]. When the tranfer counter reaches 0, the counter is reset to its configured value and the repeat area (source or destination address) resets to its starting address and transfers will still be triggered by the interrupt.</li>
 <li><b>Block Mode</b> - In block mode, the amount of data units transfered by each interrupt can be set to an integer in the range [1,256]. The number of blocks to transfer can also be configured to a 16-bit number. After each block transfer the repeat area (source or destination address) will reset to the original address and the other address will be incremented or decremented to the next block.</li>
 </ul>
-<p><a class="anchor" id="um_transfer_max_length"></a></p><dl class="section note"><dt>Note</dt><dd>1. The source and destination address of the transfer must be aligned to the configured data unit. </dd>
-<dd>
-2. In normal mode the length can be set to [0,65535]. When the length is set to 0, than the transaction will execute 65536 transfers not 0. </dd>
-<dd>
-3. In block mode, num_blocks can be set to [0,65535]. When the length is set to 0, than the transaction will execute 65536 transfers not 0.</dd></dl>
+<p><a class="anchor" id="um_transfer_max_length"></a></p><dl class="section note"><dt>Note</dt><dd>The source and destination address of the transfer must be aligned to the configured data unit.</dd></dl>
 <h2>Chaining Transfers</h2>
 <p>Multiple transfers can be configured for the same interrupt source by specifying an array of <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a> structs instead of just passing a pointer to one. In this configuration, every <a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__info__t">transfer_info_t</a> struct must be configured for a chain mode except for the last one. There are two types of chain mode; CHAIN_MODE_EACH and CHAIN_MODE_END. If a transfer is configured in CHAIN_MODE_EACH then it triggers the next transfer in the chain after it completes each transfer. If a transfer is configured in CHAIN_MODE_END then it triggers the next transfer in the chain after it completes its last transfer.</p>
 <div class="image">
@@ -1109,7 +1108,7 @@ activation_source</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

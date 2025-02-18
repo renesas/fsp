@@ -65,5 +65,6 @@ var group___t_a_u =
     [ "R_TAU_InfoGet", "group___t_a_u.html#ga0ad87af7e02d049c83279e356bc958f9", null ],
     [ "R_TAU_StatusGet", "group___t_a_u.html#gafb5cd82ccaed5ebc7e74bbdeb1e71d78", null ],
     [ "R_TAU_CallbackSet", "group___t_a_u.html#ga9326c9d701274f4a6b3cd64cf3a0e7ea", null ],
-    [ "R_TAU_Close", "group___t_a_u.html#ga00bd9f206e4226cc150680204431ef63", null ]
+    [ "R_TAU_Close", "group___t_a_u.html#ga00bd9f206e4226cc150680204431ef63", null ],
+    [ "R_TAU_LinMeasurementFuncSwitch", "group___t_a_u.html#gad145c921cb3ec07c52347ebc8bca06ef", null ]
 ];

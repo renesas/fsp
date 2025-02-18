@@ -4,6 +4,7 @@ var searchData=
   ['waitstopflagget',['waitStopFlagGet',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___a_p_i.html#aebe9f69231ebdb70200a82bee3e352ee',1,'motor_120_control_api_t::waitStopFlagGet()'],['../group___m_o_t_o_r___a_p_i.html#a429db729202458c2b375023fb5822c39',1,'motor_api_t::waitStopFlagGet()']]],
   ['wakeonlanenable',['wakeOnLANEnable',['../group___e_t_h_e_r___a_p_i.html#acde8967c0512722ca73a1596daf654ea',1,'ether_api_t']]],
   ['wakeup',['wakeup',['../group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a21dae7999c7e9109688e74fb22a8733a',1,'rm_ble_mesh_bearer_api_t']]],
+  ['wakeupsend',['wakeupSend',['../group___l_i_n___a_p_i.html#ab98fb75bc7215ada0754ae527fc2b1f1',1,'lin_api_t']]],
   ['warmup_5fcounts',['warmup_counts',['../group___r_m___r_r_h46410.html#af66dd45528abc8e139d5a952c46ad281',1,'rm_rrh46410_instance_ctrl_t']]],
   ['waveform',['waveform',['../group___s_l_c_d_c___a_p_i.html#adda9ae477524da8bab1a09185795d709',1,'slcdc_cfg_t']]],
   ['wdt_5fopen',['wdt_open',['../group___i_w_d_t.html#ae07ff8e66ee64e231841e8a578b76eff',1,'iwdt_instance_ctrl_t']]],

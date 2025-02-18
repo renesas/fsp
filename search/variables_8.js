@@ -17,6 +17,7 @@ var searchData=
   ['higher_5f8bit_5fcycle_5fend_5fipl',['higher_8bit_cycle_end_ipl',['../group___t_a_u.html#a15e819f17374b324c8dee28f19e26a01',1,'tau_extended_cfg_t']]],
   ['higher_5f8bit_5fcycle_5fend_5firq',['higher_8bit_cycle_end_irq',['../group___t_a_u.html#aee5e803a5e54b7714ed06485b22030e3',1,'tau_extended_cfg_t']]],
   ['hmac_5fbuffer',['hmac_buffer',['../group___s_c_e___p_r_o_t_e_c_t_e_d___a_p_i.html#a0d38d4b13601ce7919cce7e30248520b',1,'sce_hmac_sha_handle_t']]],
+  ['hmac_5fsha224_5finitialkeywrap',['HMAC_SHA224_InitialKeyWrap',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a5ba6176bf91a4414e54b8129225dd44c',1,'rsip_key_injection_api_t']]],
   ['hmac_5fsha256_5finitialkeywrap',['HMAC_SHA256_InitialKeyWrap',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#aa4bf56bde31b9aa695813ff18bb55472',1,'rsip_key_injection_api_t']]],
   ['hmac_5fsha384_5finitialkeywrap',['HMAC_SHA384_InitialKeyWrap',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a8e12386216f3b831c473eb57f9864d97',1,'rsip_key_injection_api_t']]],
   ['hmac_5fsha512_5f224_5finitialkeywrap',['HMAC_SHA512_224_InitialKeyWrap',['../group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#aa7dc98f22fb35f591219d4101620e547',1,'rsip_key_injection_api_t']]],
@@ -75,5 +76,5 @@ var searchData=
   ['humidity',['humidity',['../group___r_m___h_s300_x___a_p_i.html#ad8d48666aaa654a2cf4b1067abb9fa63',1,'rm_hs300x_raw_data_t::humidity()'],['../group___r_m___h_s400_x___a_p_i.html#aa1d22106aaa7182a9cea0652eff5bf69',1,'rm_hs400x_raw_data_t::humidity()'],['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a20a136eb127e01c04a9b7b1202fe4e7c',1,'rm_air_sensor_data_t::humidity()']]],
   ['humidity_5fresolution',['humidity_resolution',['../group___r_m___h_s400_x___a_p_i.html#ad726639457424c9f13522ab301833898',1,'rm_hs400x_cfg_t']]],
   ['hw_5fcode',['hw_code',['../group___g_a_p___a_p_i.html#a748664edc8dab5959fcdfb7a41ec8dad',1,'st_ble_gap_hw_err_evt_t']]],
-  ['hysteresis',['hysteresis',['../group___t_o_u_c_h___a_p_i.html#a4752c9106a2936804192b0f02398d6f5',1,'touch_button_cfg_t']]]
+  ['hysteresis',['hysteresis',['../group___c_t_s_u___a_p_i.html#a377ef3d481736ed0ceee3e8f49a2fb1e',1,'ctsu_auto_button_cfg_t::hysteresis()'],['../group___t_o_u_c_h___a_p_i.html#a4752c9106a2936804192b0f02398d6f5',1,'touch_button_cfg_t::hysteresis()']]]
 ];

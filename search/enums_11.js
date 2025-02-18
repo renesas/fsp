@@ -1,6 +1,8 @@
 var searchData=
 [
   ['sau_5fi2c_5foperation_5fclock_5ft',['sau_i2c_operation_clock_t',['../group___s_a_u___i2_c.html#ga29a1a4e8b8106bd75d50f79e82cc3cc0',1,'r_sau_i2c.h']]],
+  ['sau_5flin_5fstate_5ft',['sau_lin_state_t',['../group___s_a_u___l_i_n.html#gaa09e839126b7d5c2ae1ab269790311d0',1,'r_sau_lin.h']]],
+  ['sau_5flin_5fsynchronization_5ft',['sau_lin_synchronization_t',['../group___s_a_u___l_i_n.html#ga4f490953100146e66f21885f551f178a',1,'r_sau_lin.h']]],
   ['sau_5foperation_5fclock_5ft',['sau_operation_clock_t',['../group___s_a_u___u_a_r_t.html#ga744591125c42fee7abe363e198945c5e',1,'r_sau_uart.h']]],
   ['sau_5fspi_5fclock_5fphase_5ft',['sau_spi_clock_phase_t',['../group___s_a_u___s_p_i.html#gab303b3ca56c5ea687999572ff52b3835',1,'r_sau_spi.h']]],
   ['sau_5fspi_5fdata_5fphase_5ft',['sau_spi_data_phase_t',['../group___s_a_u___s_p_i.html#ga843ec5a20db278b500a80ce6e02a3a07',1,'r_sau_spi.h']]],

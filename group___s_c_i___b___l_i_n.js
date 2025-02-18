@@ -87,5 +87,8 @@ var group___s_c_i___b___l_i_n =
     [ "R_SCI_B_LIN_BaudCalculate", "group___s_c_i___b___l_i_n.html#ga870b00cee0bf5c018d5e4384e25d793f", null ],
     [ "R_SCI_B_LIN_IdFilterSet", "group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d", null ],
     [ "R_SCI_B_LIN_IdFilterGet", "group___s_c_i___b___l_i_n.html#ga0e89579495524bd1f953345bac148b4f", null ],
+    [ "R_SCI_B_LIN_WakeupSend", "group___s_c_i___b___l_i_n.html#gaff00cde4d8a70b9ccdde84cffdfe0d03", null ],
+    [ "R_SCI_B_LIN_SleepEnter", "group___s_c_i___b___l_i_n.html#gadbb41543b7164dc434208698d4a01514", null ],
+    [ "R_SCI_B_LIN_SleepExit", "group___s_c_i___b___l_i_n.html#gaefad753e01a2e1261f1eb4876d616f37", null ],
     [ "R_SCI_B_LIN_Close", "group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58", null ]
 ];

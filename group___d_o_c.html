@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -298,7 +298,43 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
+<h2>Build Time Configurations for r_doc</h2>
+The following build time configurations are defined in fsp_cfg/r_doc_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
  <h2>Configurations for Monitoring &gt; Data Operation Circuit (r_doc)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; Data Operation Circuit (r_doc). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_doc0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Event</td><td>MCU Specific Options</td><td></td><td>Select the event that will trigger the DOC interrupt. </td></tr>
+<tr class="tree_none">
+<td>Bit Width</td><td>MCU Specific Options</td><td></td><td>The bit width for DOC operations. </td></tr>
+<tr class="tree_none">
+<td>Reference/Initial Data</td><td>Value must be an integer greater than or equal to 0.</td><td>0 </td><td>Enter Initial Value for Addition/Subtraction or enter reference value for comparison. </td></tr>
+<tr class="tree_none">
+<td>Additional Reference Data</td><td>Value must be an integer greater than or equal to 0.</td><td>0 </td><td>Additional reference data used for Window Compare modes. </td></tr>
+<tr class="tree_none">
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function must be provided. This will be called from the interrupt service routine (ISR) when the configured DOC event occurs. </td></tr>
+<tr class="tree_none">
+<td>DOC Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the DOC interrupt priority. </td></tr>
+</table>
+<h2>Configurations for Monitoring &gt; Data Operation Circuit (r_doc)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Monitoring &gt; Data Operation Circuit (r_doc). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
@@ -529,7 +565,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

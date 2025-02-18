@@ -1,5 +1,9 @@
 var group___o_s_p_i___b =
 [
+    [ "ospi_b_table_t", "group___o_s_p_i___b.html#structospi__b__table__t", [
+      [ "p_table", "group___o_s_p_i___b.html#a1002da50d4a396df19f505f370ea85b3", null ],
+      [ "length", "group___o_s_p_i___b.html#a2d15a55ed1278e918f7e4bb5542f8873", null ]
+    ] ],
     [ "ospi_b_timing_setting_t", "group___o_s_p_i___b.html#structospi__b__timing__setting__t", [
       [ "command_to_command_interval", "group___o_s_p_i___b.html#af0e0540243e26295aabcca09b184cd50", null ],
       [ "cs_pullup_lag", "group___o_s_p_i___b.html#a603a91ae60d9fa42498306e0275c6f55", null ],
@@ -15,14 +19,14 @@ var group___o_s_p_i___b =
       [ "read_dummy_cycles", "group___o_s_p_i___b.html#aefcc9d11688943faff97d79d0a7580b8", null ],
       [ "program_dummy_cycles", "group___o_s_p_i___b.html#a6322dc0be297d305d55ec25632687a55", null ],
       [ "status_dummy_cycles", "group___o_s_p_i___b.html#ae881924edab459fec5c1f0a4519ad77a", null ],
-      [ "erase_command_list_length", "group___o_s_p_i___b.html#aae9c7600948325fee2a608401bc9cb64", null ],
-      [ "p_erase_command_list", "group___o_s_p_i___b.html#a217341c7053972988f074c9808bbd6a7", null ]
+      [ "p_erase_commands", "group___o_s_p_i___b.html#adcbff92ffccf92dc8bf1272dab7e294a", null ]
     ] ],
+    [ "ospi_b_dotf_cfg_t", "group___o_s_p_i___b.html#structospi__b__dotf__cfg__t", null ],
     [ "ospi_b_extended_cfg_t", "group___o_s_p_i___b.html#structospi__b__extended__cfg__t", [
+      [ "ospi_b_unit", "group___o_s_p_i___b.html#a1090b1cb176b529d4386e38e8040b472", null ],
       [ "channel", "group___o_s_p_i___b.html#a7e2e7c493d3ca31a1dde6b4307e4d725", null ],
       [ "p_timing_settings", "group___o_s_p_i___b.html#a6cf36a43b286b455e32b5d3557662966", null ],
-      [ "p_xspi_command_set_list", "group___o_s_p_i___b.html#ab4ba701e001b8c55acd29a756d504573", null ],
-      [ "xspi_command_set_list_length", "group___o_s_p_i___b.html#a11d239f0bf324daf621f8125442a1351", null ],
+      [ "p_xspi_command_set", "group___o_s_p_i___b.html#a508364a048f6aeec3f7ba9aa56053da0", null ],
       [ "p_autocalibration_preamble_pattern_addr", "group___o_s_p_i___b.html#a8562f207c43dc832c1f78ac06f9b522a", null ],
       [ "data_latch_delay_clocks", "group___o_s_p_i___b.html#af914eb67d0d2dda9e70770c54ef6d283", null ],
       [ "p_lower_lvl_transfer", "group___o_s_p_i___b.html#a61141668e0ed6019ecabfaba780f2cf0", null ],
@@ -30,7 +34,14 @@ var group___o_s_p_i___b =
       [ "program_dummy_cycles", "group___o_s_p_i___b.html#a2e0c01bff80f18b8f0535dde912693c0", null ],
       [ "status_dummy_cycles", "group___o_s_p_i___b.html#aa3bd97568f04755e775e5f49746cc79d", null ]
     ] ],
-    [ "ospi_b_instance_ctrl_t", "group___o_s_p_i___b.html#structospi__b__instance__ctrl__t", null ],
+    [ "ospi_b_instance_ctrl_t", "group___o_s_p_i___b.html#structospi__b__instance__ctrl__t", [
+      [ "p_cfg", "group___o_s_p_i___b.html#a4fa5199637964dc5a2890aa94dd29cb8", null ],
+      [ "open", "group___o_s_p_i___b.html#ab3666fb8e1312a2c7c8b16b8f95d94bb", null ],
+      [ "spi_protocol", "group___o_s_p_i___b.html#afd8dc5866bca51974a80b793bff2fa81", null ],
+      [ "channel", "group___o_s_p_i___b.html#af12618bf3fa4bf86967dca5eeb918ca3", null ],
+      [ "p_cmd_set", "group___o_s_p_i___b.html#a1bf3034bfe77a6165e54d1ab593bfcdb", null ],
+      [ "p_reg", "group___o_s_p_i___b.html#a220f063a15c4b9a60e75ee7c50dfbbfe", null ]
+    ] ],
     [ "ospi_b_device_number_t", "group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f", [
       [ "OSPI_B_DEVICE_NUMBER_0", "group___o_s_p_i___b.html#gga76971feb991ff5a55ffdc3e1c6834c1fa92f8ffbf2e66985d3809b4e4b538be6b", null ],
       [ "OSPI_B_DEVICE_NUMBER_1", "group___o_s_p_i___b.html#gga76971feb991ff5a55ffdc3e1c6834c1fa0f6cd25fb2ea2323c39f116ea0f60643", null ]
@@ -89,6 +100,9 @@ var group___o_s_p_i___b =
       [ "OSPI_B_COMBINATION_FUNCTION_64BYTE", "group___o_s_p_i___b.html#gga7d821ba8f342427fa60390abdf6cdf87a2cac3d12b16db8e64d1065eceeb31ab2", null ],
       [ "OSPI_B_COMBINATION_FUNCTION_2BYTE", "group___o_s_p_i___b.html#gga7d821ba8f342427fa60390abdf6cdf87a65f73049ac27e6a8fe5b1c27f1bce385", null ]
     ] ],
+    [ "ospi_b_dotf_aes_key_length_words_t", "group___o_s_p_i___b.html#ga69496e54ec435e56d55603fe640e8ee9", null ],
+    [ "ospi_b_dotf_aes_key_type_t", "group___o_s_p_i___b.html#ga0b36b2f02fae01eb700990fbaa76ef8e", null ],
+    [ "ospi_b_dotf_key_format_t", "group___o_s_p_i___b.html#ga6c462523a81690b9897c68f30ddd7464", null ],
     [ "R_OSPI_B_Open", "group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a", null ],
     [ "R_OSPI_B_DirectWrite", "group___o_s_p_i___b.html#gae419ec1af4afc888da2d59403ca8225a", null ],
     [ "R_OSPI_B_DirectRead", "group___o_s_p_i___b.html#gad0f52f7bbbbf2f94305f6334ad06b2d8", null ],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -316,7 +316,7 @@ Disabled: The UARTA0_ERRI interrupt is generated when a reception error occurs.<
 Enabled: The UARTA0_RXI interrupt is generated when a reception error occurs. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; UART (r_uarta)</h2>
-This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_uarta).<br />
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; UART (r_uarta). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -408,6 +408,7 @@ Limitations</h2>
 <ul>
 <li>Reception is still enabled after <a class="el" href="group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11">uart_api_t::communicationAbort</a> API is called. Any characters received after abort and before the next call to read will arrive via the callback function with event UART_EVENT_RX_CHAR.</li>
 <li>The UARTA module does not have CTS or RTS signals.</li>
+<li>UARTA 0ch and 1ch cannot be configured for secure and non-secure usage simultaneously.</li>
 </ul>
 <h2><a class="anchor" id="r-uarta-dtc"></a>
 DTC Limitations</h2>
@@ -874,6 +875,7 @@ Register settings for a desired baud rate. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1099,7 +1101,7 @@ Register settings for a desired baud rate. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

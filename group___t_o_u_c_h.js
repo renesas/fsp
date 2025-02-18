@@ -56,5 +56,6 @@ var group___t_o_u_c_h =
     [ "RM_TOUCH_Close", "group___t_o_u_c_h.html#ga0dd11aec558632e59df46765cfb546c5", null ],
     [ "RM_TOUCH_SensitivityRatioGet", "group___t_o_u_c_h.html#ga6fd2d2e83cdb935ae921b3a9191f8dbe", null ],
     [ "RM_TOUCH_ThresholdAdjust", "group___t_o_u_c_h.html#ga0671201fe00bee74d2801c13ba9c5b68", null ],
-    [ "RM_TOUCH_DriftControl", "group___t_o_u_c_h.html#ga38994c1e8d1e874cdd34f79c0fa0b87b", null ]
+    [ "RM_TOUCH_DriftControl", "group___t_o_u_c_h.html#ga38994c1e8d1e874cdd34f79c0fa0b87b", null ],
+    [ "RM_TOUCH_MonitorAddressGet", "group___t_o_u_c_h.html#gadfe2663bc4ab9535fdbac82c8c4b2dad", null ]
 ];

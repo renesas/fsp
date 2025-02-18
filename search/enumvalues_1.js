@@ -494,6 +494,7 @@ var searchData=
   ['bsp_5fio_5fport_5f14_5fpin_5f13',['BSP_IO_PORT_14_PIN_13',['../group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa477a7134f9337e7ed7566defe1bbc9f9',1,'bsp_io.h']]],
   ['bsp_5fio_5fport_5f14_5fpin_5f14',['BSP_IO_PORT_14_PIN_14',['../group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa6a8aaca2bd0c0766c44764143ebff1bb',1,'bsp_io.h']]],
   ['bsp_5fio_5fport_5f14_5fpin_5f15',['BSP_IO_PORT_14_PIN_15',['../group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa36e2154fc88734cd50cd8f212f6dd711',1,'bsp_io.h']]],
+  ['bsp_5fio_5fport_5fff_5fpin_5fff',['BSP_IO_PORT_FF_PIN_FF',['../group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aad9e4f801b4e75aa24a1a379000478a83',1,'bsp_io.h']]],
   ['bsp_5fpower_5fmode_5fdcdc_5f2v4_5fto_5f2v7',['BSP_POWER_MODE_DCDC_2V4_TO_2V7',['../group___b_s_p___m_c_u___r_a2_l1.html#gga6b22d3faa4af6921cfca889b9f261b13aabe2598a4259cebdc775fb51e3d6da6e',1,'bsp_power.h']]],
   ['bsp_5fpower_5fmode_5fdcdc_5f2v7_5fto_5f3v6',['BSP_POWER_MODE_DCDC_2V7_TO_3V6',['../group___b_s_p___m_c_u___r_a2_l1.html#gga6b22d3faa4af6921cfca889b9f261b13ab73b32bec8793c7e4836734da569509d',1,'bsp_power.h']]],
   ['bsp_5fpower_5fmode_5fdcdc_5f3v6_5fto_5f4v5',['BSP_POWER_MODE_DCDC_3V6_TO_4V5',['../group___b_s_p___m_c_u___r_a2_l1.html#gga6b22d3faa4af6921cfca889b9f261b13aeeeb873e490d9685774857c1e7cf7cab',1,'bsp_power.h']]],

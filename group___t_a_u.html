@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -273,6 +273,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga9326c9d701274f4a6b3cd64cf3a0e7ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00bd9f206e4226cc150680204431ef63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#ga00bd9f206e4226cc150680204431ef63">R_TAU_Close</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga00bd9f206e4226cc150680204431ef63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad145c921cb3ec07c52347ebc8bca06ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_a_u.html#gad145c921cb3ec07c52347ebc8bca06ef">R_TAU_LinMeasurementFuncSwitch</a> (<a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const p_ctrl, <a class="el" href="group___t_a_u.html#ga05073acfc2aa394f61bebc9de45982e9">tau_function_t</a> func)</td></tr>
+<tr class="separator:gad145c921cb3ec07c52347ebc8bca06ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the TAU peripheral on RA MCUs. This module implements the <a class="el" href="group___t_i_m_e_r___a_p_i.html">Timer Interface</a>. </p>
@@ -605,7 +607,7 @@ Usage Notes</h1>
 <p><a class="anchor" id="um_tau_event_count_elc"></a>The TAU timer can trigger the start of other peripherals. The <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a> guide provides a list of all available peripherals.</p>
 <h2>Limitations</h2>
 <ul>
-<li>When using pin input a delay of 2 TAU input clocks (ICLK/CK0*) is required between <a class="el" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open()</a> and <a class="el" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start()</a>. When using the noise filter, a delay of 4 clocks is required instead. (See section 17.6.3 "Cautions on Channel Input Operation" in the RA0E1 Users Manual (R01UH1040EL0100) for details.)</li>
+<li>When using pin input a delay of 2 TAU input clocks (ICLK/CK0*) is required between <a class="el" href="group___t_a_u.html#gaae22c65a593824641232724043864c54">R_TAU_Open()</a> and <a class="el" href="group___t_a_u.html#ga577308fcc5c6a9e2068152e92536166d">R_TAU_Start()</a>. When using the noise filter, a delay of 4 clocks is required instead. See in hardware manual: TAU &gt; Timer Input (TI0n) Control &gt; Cautions on Channel Input Operation.</li>
 <li>When using High-Low Level Pulse Width Measurement function, the counter can not be reset by invoking <a class="el" href="group___t_a_u.html#ga34950d8d6218348eaee3532ab02cfd18">R_TAU_Reset()</a>.</li>
 </ul>
 <h1><a class="anchor" id="r-tau-examples"></a>
@@ -1392,13 +1394,58 @@ Cycle higher 8-bit end interrupt. </td></tr>
 
 </div>
 </div>
+<a id="gad145c921cb3ec07c52347ebc8bca06ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad145c921cb3ec07c52347ebc8bca06ef">&#9670;&nbsp;</a></span>R_TAU_LinMeasurementFuncSwitch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_TAU_LinMeasurementFuncSwitch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_i_m_e_r___a_p_i.html#ga2da99b474151cb687d5882ad21b09c2a">timer_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___t_a_u.html#ga05073acfc2aa394f61bebc9de45982e9">tau_function_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is provided for the SAU LIN driver to support switching between low level measurement and input pulse measurement functions during LIN reception. It is not intended to be called directly by application code.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to TAU control structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">func</td><td>Measurement functions (TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT, TAU_FUNCTION_INPUT_PULSE_INTERVAL_MEASUREMENT)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Switching was successful and measurement has started. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid input function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

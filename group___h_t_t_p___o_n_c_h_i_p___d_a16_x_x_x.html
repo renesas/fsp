@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -263,7 +263,7 @@ Functions</h2></td></tr>
 <p>HTTP client implementation using the DA16XXX WiFi module on RA MCUs. </p>
 <h1><a class="anchor" id="r-http-onchip-da16xxx-overview"></a>
 Overview</h1>
-<p>This Middleware module supplies an implementation for the HTTP Client on the DA16XXX module. The network stack is run on the DA16XXX and this module inherits and extends the core functionality from the DA16XXX WiFi driver. The DA16XXX HTTP module only supports FreeRTOS currently (Microsoft Azure support expected in future release).</p>
+<p>This Middleware module supplies an implementation for the HTTP Client on the DA16XXX module, as well as the ability to start an HTTP server on the module. The network stack is run on the DA16XXX and this module inherits and extends the core functionality from the DA16XXX WiFi driver. The DA16XXX HTTP module only supports FreeRTOS currently (Microsoft Azure support expected in future release).</p>
 <p>The DA16XXX module supports the following modules:</p>
 <ul>
 <li>DA16200</li>
@@ -278,6 +278,7 @@ Features</h2>
 <li>Supports unsecure and secure connection via TLS encryption</li>
 <li>Supports parsing of the response header and returning to the user</li>
 <li>Supports other optional configurations such as Server Name Indication (SNI) and ALPNs</li>
+<li>Supports starting a secure or unsecure HTTP server on the DA16XXX module</li>
 </ul>
 <h1><a class="anchor" id="r-http-onchip-da16xxx-configuration"></a>
 Configuration</h1>
@@ -315,6 +316,7 @@ Usage Notes</h1>
 <li>When the user intends to use secure TLS in their application, they need to provide certificates (root certificate authority, client certificate, and private key) in a header file</li>
 <li>The user must provide certificate macro names in the FSP Configurator properties, as well as the name of the header file (to link the module, certificates, and header together)</li>
 <li>If the user provides these credentials in the Configurator, they must create a new header file in their /src/ folder with the same name as they provided in the Configurator properties. When the code is generated, a build error will occur if the header file is not created</li>
+<li>When starting an HTTP server, the DA16XXX module will use the default HTTP test server included in the SDK. The user will need to customize the SDK to provide their own desired server. Refer to guides on the DA16XXX module page for importing/modifying the SDK</li>
 </ul>
 <h2>Limitations</h2>
 <p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
@@ -857,7 +859,7 @@ Pointer to p_cfg for HTTP. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

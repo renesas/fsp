@@ -10,6 +10,11 @@ var group___c_t_s_u___a_p_i =
       [ "snum", "group___c_t_s_u___a_p_i.html#a35353f287c0fb1266b7e1f0b8abbeca8", null ],
       [ "sdpa", "group___c_t_s_u___a_p_i.html#ae27c18106bd2a8499e71cc9ceab3918e", null ]
     ] ],
+    [ "ctsu_auto_button_cfg_t", "group___c_t_s_u___a_p_i.html#structctsu__auto__button__cfg__t", [
+      [ "elem_index", "group___c_t_s_u___a_p_i.html#aa5507a30a7d226de4b1c3cb318d7c455", null ],
+      [ "threshold", "group___c_t_s_u___a_p_i.html#a2ee2dee015f04786d466cc65a119d20d", null ],
+      [ "hysteresis", "group___c_t_s_u___a_p_i.html#a377ef3d481736ed0ceee3e8f49a2fb1e", null ]
+    ] ],
     [ "ctsu_cfg_t", "group___c_t_s_u___a_p_i.html#structctsu__cfg__t", [
       [ "cap", "group___c_t_s_u___a_p_i.html#a03f932c507090616c84f76e17248a9b3", null ],
       [ "txvsel", "group___c_t_s_u___a_p_i.html#ae84a8915368af6932e37de7d8b9d7df9", null ],
@@ -18,6 +23,18 @@ var group___c_t_s_u___a_p_i =
       [ "atune12", "group___c_t_s_u___a_p_i.html#a14d15bb567fedf5a9e2d2bcd8910c2fd", null ],
       [ "md", "group___c_t_s_u___a_p_i.html#a2b263d4feffa655339e202474b7ec3a3", null ],
       [ "posel", "group___c_t_s_u___a_p_i.html#af49c8d4839a54d3b2d999f66743254f0", null ],
+      [ "tsod", "group___c_t_s_u___a_p_i.html#a01b92176899d47dc42954948e3d6fd31", null ],
+      [ "mec_ts", "group___c_t_s_u___a_p_i.html#a1a65e6f26f3d30102cc8eac8491357d6", null ],
+      [ "mec_shield_ts", "group___c_t_s_u___a_p_i.html#ab4c8dec09c1b1ab1634d9c82d0544701", null ],
+      [ "tlot", "group___c_t_s_u___a_p_i.html#aed202612a3024e80fa6ba39eb715ef24", null ],
+      [ "thot", "group___c_t_s_u___a_p_i.html#ad611113ab3d0344a29cff27fb7e8df1e", null ],
+      [ "jc", "group___c_t_s_u___a_p_i.html#ae0a0f84c9a5601f4325b47a3a4b372d7", null ],
+      [ "ajmmat", "group___c_t_s_u___a_p_i.html#a6a05a73ec90970d471bfd9ccf4137d97", null ],
+      [ "ajbmat", "group___c_t_s_u___a_p_i.html#a25dc2e07197074c01e712fe9579c1274", null ],
+      [ "mtucfen", "group___c_t_s_u___a_p_i.html#ad450e2f9ed6e5f0ee3555c68695be092", null ],
+      [ "ajfen", "group___c_t_s_u___a_p_i.html#a3ed5ae261e9230f7088f556640df7fe8", null ],
+      [ "autojudge_monitor_num", "group___c_t_s_u___a_p_i.html#abad563a4b7681f108dada15d316c339d", null ],
+      [ "majirimd", "group___c_t_s_u___a_p_i.html#ab684852b99f754e33b8fd61da422b19a", null ],
       [ "ctsuchac0", "group___c_t_s_u___a_p_i.html#a0b82368bc7d53937996ad21ec99f2d62", null ],
       [ "ctsuchac1", "group___c_t_s_u___a_p_i.html#a792a93cb3a2745bc0d28142be24ba724", null ],
       [ "ctsuchac2", "group___c_t_s_u___a_p_i.html#aa1480a7eaeb1c89b049f1845b8d7f98a", null ],
@@ -44,6 +61,7 @@ var group___c_t_s_u___a_p_i =
       [ "p_extend", "group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35", null ],
       [ "tuning_self_target_value", "group___c_t_s_u___a_p_i.html#a836ea53db692e0e454ee7c5110d97c57", null ],
       [ "tuning_mutual_target_value", "group___c_t_s_u___a_p_i.html#a10bc37159fc5adae72cae6b34fb69882", null ],
+      [ "p_ctsu_auto_buttons", "group___c_t_s_u___a_p_i.html#a94715d5f23745b8315a0bae11a201655", null ],
       [ "majority_mode", "group___c_t_s_u___a_p_i.html#a0cf4c3b47515d16195095c6c06d6f649", null ]
     ] ],
     [ "ctsu_api_t", "group___c_t_s_u___a_p_i.html#structctsu__api__t", [
@@ -56,6 +74,7 @@ var group___c_t_s_u___a_p_i =
       [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ],
       [ "specificDataGet", "group___c_t_s_u___a_p_i.html#adf2f74b741c739e9e21b1ce544292872", null ],
       [ "dataInsert", "group___c_t_s_u___a_p_i.html#a84dfd5dd2ab6b16465cc5c06953c6a9f", null ],
+      [ "autoJudgementDataGet", "group___c_t_s_u___a_p_i.html#a39b1857983379004b97041a9462c07f0", null ],
       [ "offsetTuning", "group___c_t_s_u___a_p_i.html#a5c1e1ab640eec8358e7ef92de31fcdc8", null ]
     ] ],
     [ "ctsu_instance_t", "group___c_t_s_u___a_p_i.html#structctsu__instance__t", [

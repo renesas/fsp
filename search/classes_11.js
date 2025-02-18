@@ -3,6 +3,8 @@ var searchData=
   ['sau_5fi2c_5fclock_5fsettings_5ft',['sau_i2c_clock_settings_t',['../group___s_a_u___i2_c.html#structsau__i2c__clock__settings__t',1,'']]],
   ['sau_5fi2c_5fextended_5fcfg_5ft',['sau_i2c_extended_cfg_t',['../group___s_a_u___i2_c.html#structsau__i2c__extended__cfg__t',1,'']]],
   ['sau_5fi2c_5finstance_5fctrl_5ft',['sau_i2c_instance_ctrl_t',['../group___s_a_u___i2_c.html#structsau__i2c__instance__ctrl__t',1,'']]],
+  ['sau_5flin_5fextended_5fcfg_5ft',['sau_lin_extended_cfg_t',['../group___s_a_u___l_i_n.html#structsau__lin__extended__cfg__t',1,'']]],
+  ['sau_5flin_5finstance_5fctrl_5ft',['sau_lin_instance_ctrl_t',['../group___s_a_u___l_i_n.html#structsau__lin__instance__ctrl__t',1,'']]],
   ['sau_5fspi_5fdiv_5fsetting_5ft',['sau_spi_div_setting_t',['../structsau__spi__div__setting__t.html',1,'']]],
   ['sau_5fspi_5fextended_5fcfg_5ft',['sau_spi_extended_cfg_t',['../structsau__spi__extended__cfg__t.html',1,'']]],
   ['sau_5fspi_5finstance_5fctrl_5ft',['sau_spi_instance_ctrl_t',['../structsau__spi__instance__ctrl__t.html',1,'']]],

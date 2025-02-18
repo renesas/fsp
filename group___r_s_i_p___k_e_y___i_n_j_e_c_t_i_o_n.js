@@ -27,6 +27,7 @@ var group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n =
     [ "R_RSIP_ECC_brainpoolP512r1_InitialPrivateKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#ga83d70e7117810a29110de2e27eb8880a", null ],
     [ "R_RSIP_ECC_Ed25519_InitialPublicKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#ga5ac67690231afe25a789e6d90be63a0d", null ],
     [ "R_RSIP_ECC_Ed25519_InitialPrivateKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#ga7936720d873868cfc747a13c16b2885c", null ],
+    [ "R_RSIP_HMAC_SHA224_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gade586cdf6c1e174a9a1372ec0987b160", null ],
     [ "R_RSIP_HMAC_SHA256_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#gaf7a750d7b4f50ece590ea0f0bc4ba6e0", null ],
     [ "R_RSIP_HMAC_SHA384_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#ga1b6eb6044cb3fdfc72cc10e58f380600", null ],
     [ "R_RSIP_HMAC_SHA512_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n.html#ga0307213405177b837c33c2af6d8a66b8", null ],

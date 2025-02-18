@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -275,6 +275,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga38994c1e8d1e874cdd34f79c0fa0b87b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#ga38994c1e8d1e874cdd34f79c0fa0b87b">RM_TOUCH_DriftControl</a> (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint16_t input_drift_freq)</td></tr>
 <tr class="memdesc:ga38994c1e8d1e874cdd34f79c0fa0b87b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control drift correction. Implements <a class="el" href="group___t_o_u_c_h___a_p_i.html#a704e6a7fc1d35f09c7d95503ae404f57">touch_api_t::driftControl</a>.  <a href="#ga38994c1e8d1e874cdd34f79c0fa0b87b">More...</a><br /></td></tr>
 <tr class="separator:ga38994c1e8d1e874cdd34f79c0fa0b87b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfe2663bc4ab9535fdbac82c8c4b2dad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_o_u_c_h.html#gadfe2663bc4ab9535fdbac82c8c4b2dad">RM_TOUCH_MonitorAddressGet</a> (<a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const p_ctrl, uint8_t **pp_monitor_buf, uint8_t **pp_monitor_id, uint16_t **pp_monitor_size)</td></tr>
+<tr class="memdesc:gadfe2663bc4ab9535fdbac82c8c4b2dad"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get the variable address of QE Monitor. This function is used for QE Monitor when both automatic judgement and software judgement are operated.  <a href="#gadfe2663bc4ab9535fdbac82c8c4b2dad">More...</a><br /></td></tr>
+<tr class="separator:gadfe2663bc4ab9535fdbac82c8c4b2dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>This module supports the Capacitive Touch Sensing Unit (CTSU). It implements the <a class="el" href="group___t_o_u_c_h___a_p_i.html">Touch Middleware Interface</a>. </p>
@@ -366,17 +369,17 @@ Usage Notes</h1>
 <p>The module determines whether the button has been touched based on the change in capacitance and detects the position of the slider or wheel. This requires continued periodic measurements of capacitance. When developing your application, make sure to periodically call <a class="el" href="group___t_o_u_c_h.html#gad399083eda1add2a5f1e133df1089b82" title="This function should be called each time a periodic timer expires. If initial offset tuning is enable...">RM_TOUCH_ScanStart()</a> and <a class="el" href="group___t_o_u_c_h.html#ga17fbc878cd5f90062565187686358ad1" title="Gets the 64-bit mask indicating which buttons are pressed. Also, this function gets the current posit...">RM_TOUCH_DataGet()</a>. For more details, refer to the sample application.</p>
 <h2>Button Touch Determination</h2>
 <h3>Touch judgment type</h3>
-<p>Touch detection has three modes in CTSU2.</p>
+<p>Touch detection of each method can be set to Value Majority Mode(VMM) or Judgment Majority Mode(JMM).<br />
+ Multiple methods can be configured in touch interface configurations and each method can be independently configured in VMM or JMM.<br />
+</p>
 <ol type="1">
 <li>Value Majority Mode (VMM)<br />
  Touch module obtains one measurement result by combining the two measured value which have less noise out of three measured value for each button from CTSU module and outputs the touch judgment result.<br />
  As a result, the measurement results has been noise-reduced in <a class="el" href="group___c_t_s_u.html">CTSU (r_ctsu)</a> module.</li>
 <li>Judgment Majority Mode (JMM)<br />
  This mode supported from FSP V5.6.0 or later.<br />
- Touch module obtains three measurement results for each button from CTSU module, judges each touch, and outputs the final touch judgment result by majority vote. This mode can be only applied to button. <br />
+ Touch module obtains three measurement results for each button from CTSU module, judges each touch, and outputs the final touch judgment result by majority vote. This mode can be only applied to a method which contains button only. <br />
 </li>
-<li>Mixture Vmm and Jmm Mode (VMM &amp; JMM)<br />
- This mode is a mixture of VMM and JMM. Judgment type can be selected by each touch interface configuration.</li>
 </ol>
 <div class="image">
 <img src="rm_touch_JMM_vs_VMM.png" alt="rm_touch_JMM_vs_VMM.png"/>
@@ -1276,13 +1279,64 @@ Pointer to information of touch button judge. </td></tr>
 
 </div>
 </div>
+<a id="gadfe2663bc4ab9535fdbac82c8c4b2dad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadfe2663bc4ab9535fdbac82c8c4b2dad">&#9670;&nbsp;</a></span>RM_TOUCH_MonitorAddressGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_TOUCH_MonitorAddressGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___t_o_u_c_h___a_p_i.html#ga2c561c31be5889b86a8a984a1384920d">touch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t **&#160;</td>
+          <td class="paramname"><em>pp_monitor_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t **&#160;</td>
+          <td class="paramname"><em>pp_monitor_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t **&#160;</td>
+          <td class="paramname"><em>pp_monitor_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function get the variable address of QE Monitor. This function is used for QE Monitor when both automatic judgement and software judgement are operated. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully QE monitor variable address was got. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Null pointer passed as a parameter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Requested operation is not enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

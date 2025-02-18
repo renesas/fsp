@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -256,6 +256,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structctsu__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structctsu__element__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t">ctsu_element_cfg_t</a></td></tr>
 <tr class="separator:structctsu__element__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structctsu__auto__button__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__auto__button__cfg__t">ctsu_auto_button_cfg_t</a></td></tr>
+<tr class="separator:structctsu__auto__button__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structctsu__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__cfg__t">ctsu_cfg_t</a></td></tr>
 <tr class="separator:structctsu__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structctsu__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__api__t">ctsu_api_t</a></td></tr>
@@ -364,6 +366,42 @@ CTSU Base Clock Setting. </td></tr>
 
 </div>
 </div>
+<a name="structctsu__auto__button__cfg__t" id="structctsu__auto__button__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structctsu__auto__button__cfg__t">&#9670;&nbsp;</a></span>ctsu_auto_button_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ctsu_auto_button_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of each automatic judgement button </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aa5507a30a7d226de4b1c3cb318d7c455"></a>uint8_t</td>
+<td class="fieldname">
+elem_index</td>
+<td class="fielddoc">
+Element number used by this button for automatic judgement. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2ee2dee015f04786d466cc65a119d20d"></a>uint16_t</td>
+<td class="fieldname">
+threshold</td>
+<td class="fielddoc">
+Touch/non-touch judgement threshold for automatic judgement. </td></tr>
+<tr><td class="fieldtype">
+<a id="a377ef3d481736ed0ceee3e8f49a2fb1e"></a>uint16_t</td>
+<td class="fieldname">
+hysteresis</td>
+<td class="fielddoc">
+Threshold hysteresis for chattering prevention for automatic judgement. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structctsu__cfg__t" id="structctsu__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structctsu__cfg__t">&#9670;&nbsp;</a></span>ctsu_cfg_t</h2>
 
@@ -406,6 +444,54 @@ CTSU Base Clock Setting. </td></tr>
 <a class="el" href="group___c_t_s_u___a_p_i.html#ga6246d9e85e33b347a40542a07b42395a">ctsu_posel_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#af49c8d4839a54d3b2d999f66743254f0">posel</a></td></tr>
 <tr class="memdesc:af49c8d4839a54d3b2d999f66743254f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU Non-Measured Channel Output Select (CTSU2 Only) <br /></td></tr>
 <tr class="separator:af49c8d4839a54d3b2d999f66743254f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01b92176899d47dc42954948e3d6fd31"><td class="memItemLeft" align="right" valign="top"><a id="a01b92176899d47dc42954948e3d6fd31"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a01b92176899d47dc42954948e3d6fd31">tsod</a></td></tr>
+<tr class="memdesc:a01b92176899d47dc42954948e3d6fd31"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS all terminal output control for multi electrode scan. <br /></td></tr>
+<tr class="separator:a01b92176899d47dc42954948e3d6fd31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a65e6f26f3d30102cc8eac8491357d6"><td class="memItemLeft" align="right" valign="top"><a id="a1a65e6f26f3d30102cc8eac8491357d6"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a1a65e6f26f3d30102cc8eac8491357d6">mec_ts</a></td></tr>
+<tr class="memdesc:a1a65e6f26f3d30102cc8eac8491357d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS number used when using the MEC function. <br /></td></tr>
+<tr class="separator:a1a65e6f26f3d30102cc8eac8491357d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4c8dec09c1b1ab1634d9c82d0544701"><td class="memItemLeft" align="right" valign="top"><a id="ab4c8dec09c1b1ab1634d9c82d0544701"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ab4c8dec09c1b1ab1634d9c82d0544701">mec_shield_ts</a></td></tr>
+<tr class="memdesc:ab4c8dec09c1b1ab1634d9c82d0544701"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS number of active shield used when using MEC function. <br /></td></tr>
+<tr class="separator:ab4c8dec09c1b1ab1634d9c82d0544701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed202612a3024e80fa6ba39eb715ef24"><td class="memItemLeft" align="right" valign="top"><a id="aed202612a3024e80fa6ba39eb715ef24"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#aed202612a3024e80fa6ba39eb715ef24">tlot</a></td></tr>
+<tr class="memdesc:aed202612a3024e80fa6ba39eb715ef24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of consecutive judgements exceeding the threshold L for automatic judgement. <br /></td></tr>
+<tr class="separator:aed202612a3024e80fa6ba39eb715ef24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad611113ab3d0344a29cff27fb7e8df1e"><td class="memItemLeft" align="right" valign="top"><a id="ad611113ab3d0344a29cff27fb7e8df1e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ad611113ab3d0344a29cff27fb7e8df1e">thot</a></td></tr>
+<tr class="memdesc:ad611113ab3d0344a29cff27fb7e8df1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of consecutive judgements exceeding the threshold H for automatic judgement. <br /></td></tr>
+<tr class="separator:ad611113ab3d0344a29cff27fb7e8df1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0a0f84c9a5601f4325b47a3a4b372d7"><td class="memItemLeft" align="right" valign="top"><a id="ae0a0f84c9a5601f4325b47a3a4b372d7"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ae0a0f84c9a5601f4325b47a3a4b372d7">jc</a></td></tr>
+<tr class="memdesc:ae0a0f84c9a5601f4325b47a3a4b372d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Judgement condition for automatic judgement. <br /></td></tr>
+<tr class="separator:ae0a0f84c9a5601f4325b47a3a4b372d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a05a73ec90970d471bfd9ccf4137d97"><td class="memItemLeft" align="right" valign="top"><a id="a6a05a73ec90970d471bfd9ccf4137d97"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a6a05a73ec90970d471bfd9ccf4137d97">ajmmat</a></td></tr>
+<tr class="memdesc:a6a05a73ec90970d471bfd9ccf4137d97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measured value moving average number of times for automatic judgement. <br /></td></tr>
+<tr class="separator:a6a05a73ec90970d471bfd9ccf4137d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25dc2e07197074c01e712fe9579c1274"><td class="memItemLeft" align="right" valign="top"><a id="a25dc2e07197074c01e712fe9579c1274"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a25dc2e07197074c01e712fe9579c1274">ajbmat</a></td></tr>
+<tr class="memdesc:a25dc2e07197074c01e712fe9579c1274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Average number of baselines for automatic judgement. <br /></td></tr>
+<tr class="separator:a25dc2e07197074c01e712fe9579c1274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad450e2f9ed6e5f0ee3555c68695be092"><td class="memItemLeft" align="right" valign="top"><a id="ad450e2f9ed6e5f0ee3555c68695be092"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ad450e2f9ed6e5f0ee3555c68695be092">mtucfen</a></td></tr>
+<tr class="memdesc:ad450e2f9ed6e5f0ee3555c68695be092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutual capacity operation for automatic judgement. <br /></td></tr>
+<tr class="separator:ad450e2f9ed6e5f0ee3555c68695be092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ed5ae261e9230f7088f556640df7fe8"><td class="memItemLeft" align="right" valign="top"><a id="a3ed5ae261e9230f7088f556640df7fe8"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a3ed5ae261e9230f7088f556640df7fe8">ajfen</a></td></tr>
+<tr class="memdesc:a3ed5ae261e9230f7088f556640df7fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatic judgement function enabled for automatic judgement. <br /></td></tr>
+<tr class="separator:a3ed5ae261e9230f7088f556640df7fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abad563a4b7681f108dada15d316c339d"><td class="memItemLeft" align="right" valign="top"><a id="abad563a4b7681f108dada15d316c339d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#abad563a4b7681f108dada15d316c339d">autojudge_monitor_num</a></td></tr>
+<tr class="memdesc:abad563a4b7681f108dada15d316c339d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method number for QE monitor for automatic judgement. <br /></td></tr>
+<tr class="separator:abad563a4b7681f108dada15d316c339d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab684852b99f754e33b8fd61da422b19a"><td class="memItemLeft" align="right" valign="top"><a id="ab684852b99f754e33b8fd61da422b19a"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ab684852b99f754e33b8fd61da422b19a">majirimd</a></td></tr>
+<tr class="memdesc:ab684852b99f754e33b8fd61da422b19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">JMM or VMM for automatic judgement. <br /></td></tr>
+<tr class="separator:ab684852b99f754e33b8fd61da422b19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b82368bc7d53937996ad21ec99f2d62"><td class="memItemLeft" align="right" valign="top"><a id="a0b82368bc7d53937996ad21ec99f2d62"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a0b82368bc7d53937996ad21ec99f2d62">ctsuchac0</a></td></tr>
 <tr class="memdesc:a0b82368bc7d53937996ad21ec99f2d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">TS00-TS07 enable mask. <br /></td></tr>
@@ -510,6 +596,10 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a10bc37159fc5adae72cae6b34fb69882">tuning_mutual_target_value</a></td></tr>
 <tr class="memdesc:a10bc37159fc5adae72cae6b34fb69882"><td class="mdescLeft">&#160;</td><td class="mdescRight">Target mutual value for initial offset tuning. <br /></td></tr>
 <tr class="separator:a10bc37159fc5adae72cae6b34fb69882"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94715d5f23745b8315a0bae11a201655"><td class="memItemLeft" align="right" valign="top"><a id="a94715d5f23745b8315a0bae11a201655"></a>
+<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__auto__button__cfg__t">ctsu_auto_button_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a94715d5f23745b8315a0bae11a201655">p_ctsu_auto_buttons</a></td></tr>
+<tr class="memdesc:a94715d5f23745b8315a0bae11a201655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to array of automatic judgement button configuration. <br /></td></tr>
+<tr class="separator:a94715d5f23745b8315a0bae11a201655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cf4c3b47515d16195095c6c06d6f649"><td class="memItemLeft" align="right" valign="top"><a id="a0cf4c3b47515d16195095c6c06d6f649"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a0cf4c3b47515d16195095c6c06d6f649">majority_mode</a></td></tr>
 <tr class="memdesc:a0cf4c3b47515d16195095c6c06d6f649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software majority mode selection. <br /></td></tr>
@@ -550,6 +640,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:adf2f74b741c739e9e21b1ce544292872"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84dfd5dd2ab6b16465cc5c06953c6a9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a84dfd5dd2ab6b16465cc5c06953c6a9f">dataInsert</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_insert_data)</td></tr>
 <tr class="separator:a84dfd5dd2ab6b16465cc5c06953c6a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39b1857983379004b97041a9462c07f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a39b1857983379004b97041a9462c07f0">autoJudgementDataGet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint64_t *p_button_status)</td></tr>
+<tr class="separator:a39b1857983379004b97041a9462c07f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c1e1ab640eec8358e7ef92de31fcdc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a5c1e1ab640eec8358e7ef92de31fcdc8">offsetTuning</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a5c1e1ab640eec8358e7ef92de31fcdc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -745,6 +837,28 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_insert_data</td><td>Pointer to insert data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a39b1857983379004b97041a9462c07f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b1857983379004b97041a9462c07f0">&#9670;&nbsp;</a></span>autoJudgementDataGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ctsu_api_t::autoJudgementDataGet) (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint64_t *p_button_status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize automatic judgement and get button status.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_button_status</td><td>Pointer to get button status array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1086,7 +1200,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -170,6 +170,9 @@ var searchData=
   ['agto',['agto',['../group___a_g_t.html#a5e6fc342837c54c82e8ec84fee2c705a',1,'agt_extended_cfg_t']]],
   ['aid',['aid',['../group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#aa7375a3e3dbd07c55cd7138de4679e04',1,'rm_ble_mesh_lower_trans_transmit_setting_t']]],
   ['aiq',['aiq',['../group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abcdbe1de7b8f7c882f5f7bdbb60a2274',1,'rm_zmod4xxx_oaq_1st_data_t']]],
+  ['ajbmat',['ajbmat',['../group___c_t_s_u___a_p_i.html#a25dc2e07197074c01e712fe9579c1274',1,'ctsu_cfg_t']]],
+  ['ajfen',['ajfen',['../group___c_t_s_u___a_p_i.html#a3ed5ae261e9230f7088f556640df7fe8',1,'ctsu_cfg_t']]],
+  ['ajmmat',['ajmmat',['../group___c_t_s_u___a_p_i.html#a6a05a73ec90970d471bfd9ccf4137d97',1,'ctsu_cfg_t']]],
   ['akf',['akf',['../group___r_m___b_l_e___m_e_s_h___l_o_w_e_r___t_r_a_n_s___a_p_i.html#a01619f63974be1ae48658efbebda97a3',1,'rm_ble_mesh_lower_trans_transmit_setting_t']]],
   ['alarm1_5fipl',['alarm1_ipl',['../group___r_t_c.html#ac36b179a4311fe95bde1820384dd35cc',1,'rtc_extended_cfg_t']]],
   ['alarm1_5firq',['alarm1_irq',['../group___r_t_c.html#ae7f72a6fbe27e9a3ef60c99022798c9b',1,'rtc_extended_cfg_t']]],
@@ -211,6 +214,8 @@ var searchData=
   ['auth',['auth',['../group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a328d435ca1f62552566a86ebd879977a',1,'rm_ble_mesh_provision_method_t']]],
   ['auth_5finfo',['auth_info',['../group___g_a_p___a_p_i.html#a88035cb5f918947b7e70da39383564c1',1,'st_ble_gap_pairing_req_evt_t::auth_info()'],['../group___g_a_p___a_p_i.html#aeb091e9736c7216357fc89047878074a',1,'st_ble_gap_pairing_info_evt_t::auth_info()']]],
   ['autocalibrate',['autoCalibrate',['../group___s_p_i___f_l_a_s_h___a_p_i.html#ac78c55ffe2b7d99681612ce796a384c5',1,'spi_flash_api_t']]],
+  ['autojudge_5fmonitor_5fnum',['autojudge_monitor_num',['../group___c_t_s_u___a_p_i.html#abad563a4b7681f108dada15d316c339d',1,'ctsu_cfg_t']]],
+  ['autojudgementdataget',['autoJudgementDataGet',['../group___c_t_s_u___a_p_i.html#a39b1857983379004b97041a9462c07f0',1,'ctsu_api_t']]],
   ['aux_5fprop',['aux_prop',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#ae43f5abb71f03c1dd3441cc6c230a8db',1,'st_ble_gatts_db_attr_cfg_t']]],
   ['ave_5frssi',['ave_rssi',['../group___v_s___a_p_i.html#a36d626c5ba9203f16ddf3b414875a62f',1,'st_ble_vs_test_end_evt_t']]],
   ['average',['average',['../group___c_t_s_u.html#aadfb1f17208413aec59916e5c0d030c2',1,'ctsu_instance_ctrl_t']]]

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -500,7 +500,18 @@ MCUboot Dual Bank layout of Flash LP for 512 KB Memory</div></div>
 <h3>Programming in Dual Bank Mode with Flash LP</h3>
 <p>To use Dual Bank Mode with Flash LP, enable Dual Bank Mode (Flash LP) in the MCUboot stack under Property &gt; Common &gt; General.</p>
 <p>Similar to Dual Bank Mode with Flash HP, the bootloader must also be duplicated in Dual Bank mode. But the MCUBoot project does not need to be programmed last, because Flash LP does not use the OFS region to enable/disable the dual bank mode.</p>
-<h2>External Memory Support</h2>
+<h3>Dual bank booting without reset</h3>
+<dl class="section note"><dt>Note</dt><dd>This feature only available on MCUs which support flash_lp and Instant Bank Swap.</dd></dl>
+<div class="image">
+<img src="rm_mcuboot_dualbank_wo_reset.png" alt="rm_mcuboot_dualbank_wo_reset.png"/>
+<div class="caption">
+Instant Bank Swap option under Flash stack</div></div>
+<p> The picture below shows the execution sequence with Reset and Without Reset (Instant Bank Swap).</p>
+<div class="image">
+<img src="rm_mcuboot_dualbank_w_n_wo_reset_differences.png" alt="rm_mcuboot_dualbank_w_n_wo_reset_differences.png"/>
+<div class="caption">
+Software flow differences between booting with and without reset</div></div>
+ <h2>External Memory Support</h2>
 <h1>QSPI</h1>
 <p>QSPI support for secondary image storage can be enabled in the configurator. The bootloader expects the QSPI memory to be pre-configured by user code in the bootloader for read/write operation. The bootloader code operates under the assumption that the user has configured the QSPI in Extended-SPI mode and that <a class="el" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open()</a> has been called prior to invoking boot_go();. For example, on the EK_RA6M4 which has the MX25L25645G QSPI flash, after adding the QSPI module to the project, calling the following snippet will configure the QSPI for read/write operation:</p>
 <div class="fragment"><div class="line"><span class="comment">/* Status Register (SREG) payload size */</span></div><div class="line"><span class="preprocessor"># define SREG_SIZE                             0x03</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_COMMAND_WRITE_STATUS_REGISTER   0x01</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR1                     0x40</span></div><div class="line"></div><div class="line"><span class="preprocessor"># define  QSPI_DEFAULT_SR2                     0x00</span></div><div class="line"></div><div class="line"><span class="comment">/* Status register payload */</span></div><div class="line">uint8_t   data_sreg[SREG_SIZE]                 = {QSPI_COMMAND_WRITE_STATUS_REGISTER, QSPI_DEFAULT_SR1, QSPI_DEFAULT_SR2};</div><div class="line"></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open</a>(&amp;g_qspi0_ctrl, &amp;g_qspi0_cfg);</div><div class="line"><span class="comment">/* Configure for Extended SPI Read/Write Mode */</span></div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;(g_qspi0_cfg.write_enable_command), 1, <span class="keyword">false</span>);</div><div class="line"><a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, data_sreg, SREG_SIZE, <span class="keyword">false</span>);</div></div><!-- fragment --><p>For a more detailed example on how to initialize the QSPI device, refer to the QSPI module. The QSPI sector size must be the same as that of the MCU internal flash (BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE) for swap mode operation.</p>
@@ -575,7 +586,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

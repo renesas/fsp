@@ -68,6 +68,7 @@ var group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i =
       [ "ECC_brainpoolP512r1_InitialPrivateKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ade18be4f20c9fa2550158c8658412e27", null ],
       [ "ECC_Ed25519_InitialPublicKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ad4ea2eb7d9f02f74c087dd5312caac2a", null ],
       [ "ECC_Ed25519_InitialPrivateKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a5d71c8d359b1aea89a7519a8b1eb54e1", null ],
+      [ "HMAC_SHA224_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a5ba6176bf91a4414e54b8129225dd44c", null ],
       [ "HMAC_SHA256_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#aa4bf56bde31b9aa695813ff18bb55472", null ],
       [ "HMAC_SHA384_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a8e12386216f3b831c473eb57f9864d97", null ],
       [ "HMAC_SHA512_InitialKeyWrap", "group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a5cf5eed9c2827b86b9ce03aba1039577", null ],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -252,7 +252,8 @@ Summary</h1>
 <li>Half-duplex master or slave LIN communication</li>
 <li>Interrupt driven transmit/receive processing</li>
 <li>Callback function with returned event code and data</li>
-<li>Checksum generation and validation (standard or enhanced) </li>
+<li>Checksum generation and validation (standard or enhanced)</li>
+<li>Bus Sleep and Wakeup </li>
 </ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -454,6 +455,12 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a5595034306ba0b95e664ef4fc4a2ffce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3c026803e304b6a626fde3d069d7140"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#af3c026803e304b6a626fde3d069d7140">callbackSet</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:af3c026803e304b6a626fde3d069d7140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab98fb75bc7215ada0754ae527fc2b1f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#ab98fb75bc7215ada0754ae527fc2b1f1">wakeupSend</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ab98fb75bc7215ada0754ae527fc2b1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84ed4cf6f80344d86973bf89668225bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a84ed4cf6f80344d86973bf89668225bf">sleepEnter</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a84ed4cf6f80344d86973bf89668225bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd38030572a3bca23b797a360196e4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#aadd38030572a3bca23b797a360196e4d">sleepExit</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:aadd38030572a3bca23b797a360196e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a362c949cfdf9ce62f5bd90788464b49d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#a362c949cfdf9ce62f5bd90788464b49d">close</a> )(<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a362c949cfdf9ce62f5bd90788464b49d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -588,6 +595,69 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
     <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab98fb75bc7215ada0754ae527fc2b1f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab98fb75bc7215ada0754ae527fc2b1f1">&#9670;&nbsp;</a></span>wakeupSend</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::wakeupSend) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Send wakeup signal for LIN device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a84ed4cf6f80344d86973bf89668225bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84ed4cf6f80344d86973bf89668225bf">&#9670;&nbsp;</a></span>sleepEnter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::sleepEnter) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Place the LIN node in bus sleep mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aadd38030572a3bca23b797a360196e4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadd38030572a3bca23b797a360196e4d">&#9670;&nbsp;</a></span>sleepExit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lin_api_t::sleepExit) (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Exit the bus sleep mode for LIN device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the LIN control block. </td></tr>
   </table>
   </dd>
 </dl>
@@ -740,15 +810,19 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48"></a>LIN_EVENT_ERR_INVALID_CHECKSUM&#160;</td><td class="fielddoc"><p>Information frame received successfully, but checksum was invalid. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96"></a>LIN_EVENT_ERR_BUS_COLLISION_DETECTED&#160;</td><td class="fielddoc"><p>Bus collision detection event. </p>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ae61c7a9be7adadae38b3564e7238d759"></a>LIN_EVENT_TX_WAKEUP_COMPLETE&#160;</td><td class="fielddoc"><p>Transmit wake up complete event. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ac8f3050424e7ac3c528d8616ef86cfdc"></a>LIN_EVENT_ERR_FRAMING&#160;</td><td class="fielddoc"><p>Framing error event. </p>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a2f0a3f2cd095b347aebce928d11b6bc3"></a>LIN_EVENT_RX_WAKEUP_COMPLETE&#160;</td><td class="fielddoc"><p>Receive wake up complete event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96"></a>LIN_EVENT_ERR_BUS_COLLISION_DETECTED&#160;</td><td class="fielddoc"><p>Bus collision detection event. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a1b5e897b9f7b6c31df9e99b119d71551"></a>LIN_EVENT_ERR_COUNTER_OVERFLOW&#160;</td><td class="fielddoc"><p>Counter overflow event. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ae3376187275c3f4b572e77b89ec80348"></a>LIN_EVENT_ERR_OVERRUN&#160;</td><td class="fielddoc"><p>Overrun error event. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ab651808839cddeec7ee56e86a12c76d9"></a>LIN_EVENT_ERR_PARITY&#160;</td><td class="fielddoc"><p>Parity error event (start frame only, LIN information is sent without parity) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ac8f3050424e7ac3c528d8616ef86cfdc"></a>LIN_EVENT_ERR_FRAMING&#160;</td><td class="fielddoc"><p>Framing error event. </p>
 </td></tr>
 </table>
 
@@ -760,7 +834,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

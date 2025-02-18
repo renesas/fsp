@@ -28,6 +28,9 @@ var group___l_i_n___a_p_i =
       [ "informationFrameRead", "group___l_i_n___a_p_i.html#af38bdf9c3929d5c9010066ec35c32b4e", null ],
       [ "communicationAbort", "group___l_i_n___a_p_i.html#a5595034306ba0b95e664ef4fc4a2ffce", null ],
       [ "callbackSet", "group___l_i_n___a_p_i.html#af3c026803e304b6a626fde3d069d7140", null ],
+      [ "wakeupSend", "group___l_i_n___a_p_i.html#ab98fb75bc7215ada0754ae527fc2b1f1", null ],
+      [ "sleepEnter", "group___l_i_n___a_p_i.html#a84ed4cf6f80344d86973bf89668225bf", null ],
+      [ "sleepExit", "group___l_i_n___a_p_i.html#aadd38030572a3bca23b797a360196e4d", null ],
       [ "close", "group___l_i_n___a_p_i.html#a362c949cfdf9ce62f5bd90788464b49d", null ]
     ] ],
     [ "lin_instance_t", "group___l_i_n___a_p_i.html#structlin__instance__t", [
@@ -52,10 +55,12 @@ var group___l_i_n___a_p_i =
       [ "LIN_EVENT_TX_START_FRAME_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a849c350c804a580611d9608cbf08d377", null ],
       [ "LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6", null ],
       [ "LIN_EVENT_ERR_INVALID_CHECKSUM", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48", null ],
+      [ "LIN_EVENT_TX_WAKEUP_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ae61c7a9be7adadae38b3564e7238d759", null ],
+      [ "LIN_EVENT_RX_WAKEUP_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a2f0a3f2cd095b347aebce928d11b6bc3", null ],
       [ "LIN_EVENT_ERR_BUS_COLLISION_DETECTED", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96", null ],
-      [ "LIN_EVENT_ERR_FRAMING", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ac8f3050424e7ac3c528d8616ef86cfdc", null ],
       [ "LIN_EVENT_ERR_COUNTER_OVERFLOW", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1b5e897b9f7b6c31df9e99b119d71551", null ],
       [ "LIN_EVENT_ERR_OVERRUN", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ae3376187275c3f4b572e77b89ec80348", null ],
-      [ "LIN_EVENT_ERR_PARITY", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ab651808839cddeec7ee56e86a12c76d9", null ]
+      [ "LIN_EVENT_ERR_PARITY", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ab651808839cddeec7ee56e86a12c76d9", null ],
+      [ "LIN_EVENT_ERR_FRAMING", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ac8f3050424e7ac3c528d8616ef86cfdc", null ]
     ] ]
 ];

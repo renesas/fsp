@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.7.0</span>
+   &#160;<span id="projectnumber">Release v5.8.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -265,6 +265,12 @@ Functions</h2></td></tr>
 <tr class="separator:gaf970991953cfe55dad17aaaa98b4e90d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0e89579495524bd1f953345bac148b4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga0e89579495524bd1f953345bac148b4f">R_SCI_B_LIN_IdFilterGet</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__id__filter__setting__t">sci_b_lin_id_filter_setting_t</a> *const p_config)</td></tr>
 <tr class="separator:ga0e89579495524bd1f953345bac148b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff00cde4d8a70b9ccdde84cffdfe0d03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gaff00cde4d8a70b9ccdde84cffdfe0d03">R_SCI_B_LIN_WakeupSend</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gaff00cde4d8a70b9ccdde84cffdfe0d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbb41543b7164dc434208698d4a01514"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gadbb41543b7164dc434208698d4a01514">R_SCI_B_LIN_SleepEnter</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gadbb41543b7164dc434208698d4a01514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefad753e01a2e1261f1eb4876d616f37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gaefad753e01a2e1261f1eb4876d616f37">R_SCI_B_LIN_SleepExit</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gaefad753e01a2e1261f1eb4876d616f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga570356c73be7b0898520fa52cd127c58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga570356c73be7b0898520fa52cd127c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -552,6 +558,7 @@ Limitations</h2>
 <li>DTC/DMAC is not supported</li>
 <li>Automatic baud rate detection is not supported</li>
 <li>The SCI_B provides an interface to the LIN Physical layer and does not implement the LIN Transport Layer or LIN Application Layer. The application is responsible for handling the frame scheduling table and monitoring for Transport Layer timeouts.</li>
+<li>LIN wake-up via external IRQ is not supported by the SCI_B (<a class="el" href="group___s_c_i___b___l_i_n.html#gadbb41543b7164dc434208698d4a01514">R_SCI_B_LIN_SleepEnter</a>, <a class="el" href="group___s_c_i___b___l_i_n.html#gaefad753e01a2e1261f1eb4876d616f37">R_SCI_B_LIN_SleepExit</a> and <a class="el" href="group___s_c_i___b___l_i_n.html#gaff00cde4d8a70b9ccdde84cffdfe0d03">R_SCI_B_LIN_WakeupSend</a> are not supported)</li>
 </ul>
 <h1><a class="anchor" id="r-sci-b-lin-examples"></a>
 Examples</h1>
@@ -1476,6 +1483,84 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 
 </div>
 </div>
+<a id="gaff00cde4d8a70b9ccdde84cffdfe0d03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff00cde4d8a70b9ccdde84cffdfe0d03">&#9670;&nbsp;</a></span>R_SCI_B_LIN_WakeupSend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_WakeupSend </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Send wakeup is not supported on the SCI_B LIN driver.</p>
+<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#ab98fb75bc7215ada0754ae527fc2b1f1">lin_api_t::wakeupSend</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gadbb41543b7164dc434208698d4a01514"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadbb41543b7164dc434208698d4a01514">&#9670;&nbsp;</a></span>R_SCI_B_LIN_SleepEnter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_SleepEnter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sleep is not supported on the SCI_B LIN driver.</p>
+<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#a84ed4cf6f80344d86973bf89668225bf">lin_api_t::sleepEnter</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaefad753e01a2e1261f1eb4876d616f37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaefad753e01a2e1261f1eb4876d616f37">&#9670;&nbsp;</a></span>R_SCI_B_LIN_SleepExit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_SleepExit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sleep is not supported on the SCI_B LIN driver.</p>
+<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#aadd38030572a3bca23b797a360196e4d">lin_api_t::sleepExit</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Function not supported in this implementation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga570356c73be7b0898520fa52cd127c58"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga570356c73be7b0898520fa52cd127c58">&#9670;&nbsp;</a></span>R_SCI_B_LIN_Close()</h2>
 
@@ -1511,7 +1596,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.7.0 User's Manual Copyright © (2024) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
