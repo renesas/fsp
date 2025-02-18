@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2022, Arm Limited. All rights reserved.
+ * Copyright (C) 2025 Modified by Renesas Electronics Corporation and/or its affiliates
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ */
 #ifndef __FWU_CONFIG_H__
 #define __FWU_CONFIG_H__
 
@@ -9,23 +16,22 @@
  * the bootloader specific image types can be defined here.
  */
 #if MCUBOOT_IMAGE_NUMBER > 1
-#define FWU_COMPONENT_ID_SECURE           0x00U
-#define FWU_COMPONENT_ID_NONSECURE        0x01U
+ #define FWU_COMPONENT_ID_SECURE            0x00U
+ #define FWU_COMPONENT_ID_NONSECURE         0x01U
 #else
-#define FWU_COMPONENT_ID_FULL             0x00U
+ #define FWU_COMPONENT_ID_FULL              0x00U
 #endif
-#define FWU_COMPONENT_NUMBER              MCUBOOT_IMAGE_NUMBER
+#define FWU_COMPONENT_NUMBER                MCUBOOT_IMAGE_NUMBER
 
 /* The maximum size of an image digest in bytes. This is dependent
  * on the hash algorithm used.
  */
-#define TFM_FWU_MAX_DIGEST_SIZE              32
+#define TFM_FWU_MAX_DIGEST_SIZE             32
 
 /* The maximum permitted size for block in psa_fwu_write(), in bytes. */
-#define TFM_CONFIG_FWU_MAX_WRITE_SIZE        1024
+#define TFM_CONFIG_FWU_MAX_WRITE_SIZE       1024
 
 /* The maximum permitted size for manifest in psa_fwu_start(), in bytes. */
-#define TFM_CONFIG_FWU_MAX_MANIFEST_SIZE     0
+#define TFM_CONFIG_FWU_MAX_MANIFEST_SIZE    0
 
-
-#endif /* __FWU_CONFIG_H__ */
+#endif                                 /* __FWU_CONFIG_H__ */

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -935,11 +935,11 @@ extern "C" {
 
 /* Descriptor size */
  #define USB_DEVICESIZE        (20U)      /* Device Descriptor size */
- #ifdef USB_CFG_HUVC_USE
+ #if defined(USB_CFG_HUVC_USE) || defined(USB_CFG_HAUD_USE)
   #define USB_CONFIGSIZE       (3 * 1024) /* Configuration Descriptor size */
  #else
   #define USB_CONFIGSIZE       (1 * 1024) /* Configuration Descriptor size */
- #endif /* USB_CFG_HUVC_USE */
+ #endif /* defined(USB_CFG_HUVC_USE) || defined(USB_CFG_HAUD_USE) */
 
 /* Number of software retries when a no-response condition occurs during a transfer */
  #define USB_PIPEERROR         (1U)

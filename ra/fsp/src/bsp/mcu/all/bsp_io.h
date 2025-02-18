@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -325,6 +325,7 @@ typedef enum e_bsp_io_port_pin_t
     BSP_IO_PORT_14_PIN_13 = 0x0E0D,    ///< IO port 14 pin 13
     BSP_IO_PORT_14_PIN_14 = 0x0E0E,    ///< IO port 14 pin 14
     BSP_IO_PORT_14_PIN_15 = 0x0E0F,    ///< IO port 14 pin 15
+    BSP_IO_PORT_FF_PIN_FF = 0xFFFF,    ///< Invalid IO port
 } bsp_io_port_pin_t;
 
 /***********************************************************************************************************************

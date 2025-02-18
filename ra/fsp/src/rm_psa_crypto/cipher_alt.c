@@ -69,6 +69,7 @@ static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
     {
         ret = HW_SCE_Aes128EncryptDecryptFinalSub();
     }
+#ifndef MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH
     else if (192U == key_bitlen)
     {
         ret = HW_SCE_Aes192EncryptDecryptFinalSub();
@@ -77,6 +78,7 @@ static int sce_aes_cipher_final( mbedtls_cipher_context_t *ctx )
     {
         ret = HW_SCE_Aes256EncryptDecryptFinalSub();
     }
+ #endif 
     else
     {
         return MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE;

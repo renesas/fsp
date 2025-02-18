@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -30,7 +30,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define ADC_B_CHANNEL_MASK_EXT_OFFSET           (32U)
 #define ADC_B_CHANNEL_VALID_FOR_UNIT(channel_mask, unit_id)    ((ADC_B_UNIT_ID_0 == unit_id) ?                       \
                                                                 (channel_mask & BSP_FEATURE_ADC_B_UNIT_0_CHANNELS) : \
                                                                 (channel_mask & BSP_FEATURE_ADC_B_UNIT_1_CHANNELS))
@@ -43,14 +42,6 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Type definitions
  **********************************************************************************************************************/
-
-/** ADC Clock source selection */
-typedef enum e_adc_b_clock_source
-{
-    ADC_B_CLOCK_SOURCE_PCLKC = 0,      ///< ADC Clock Source PCLKC
-    ADC_B_CLOCK_SOURCE_GPT   = 1,      ///< ADC Clock Source GPT
-    ADC_B_CLOCK_SOURCE_PCLKA = 2       ///< ADC Clock Source PCLKA
-} adc_b_clock_source_t;
 
 /** ADC clock divider selection */
 typedef enum e_adc_b_clock_divider
@@ -89,91 +80,6 @@ typedef enum e_adc_b_data_format
     ADC_B_DATA_FORMAT_12_BIT = 2,      ///< 12 bit adc_b data format
     ADC_B_DATA_FORMAT_10_BIT = 3,      ///< 10 bit adc_b data format
 } adc_b_data_format_t;
-
-/** ADC channels */
-typedef enum e_adc_b_virtual_channel
-{
-    ADC_B_VIRTUAL_CHANNEL_0  = 0,      ///< ADC B virtual channel 0
-    ADC_B_VIRTUAL_CHANNEL_1  = 1,      ///< ADC B virtual channel 1
-    ADC_B_VIRTUAL_CHANNEL_2  = 2,      ///< ADC B virtual channel 2
-    ADC_B_VIRTUAL_CHANNEL_3  = 3,      ///< ADC B virtual channel 3
-    ADC_B_VIRTUAL_CHANNEL_4  = 4,      ///< ADC B virtual channel 4
-    ADC_B_VIRTUAL_CHANNEL_5  = 5,      ///< ADC B virtual channel 5
-    ADC_B_VIRTUAL_CHANNEL_6  = 6,      ///< ADC B virtual channel 6
-    ADC_B_VIRTUAL_CHANNEL_7  = 7,      ///< ADC B virtual channel 7
-    ADC_B_VIRTUAL_CHANNEL_8  = 8,      ///< ADC B virtual channel 8
-    ADC_B_VIRTUAL_CHANNEL_9  = 9,      ///< ADC B virtual channel 9
-    ADC_B_VIRTUAL_CHANNEL_10 = 10,     ///< ADC B virtual channel 10
-    ADC_B_VIRTUAL_CHANNEL_11 = 11,     ///< ADC B virtual channel 11
-    ADC_B_VIRTUAL_CHANNEL_12 = 12,     ///< ADC B virtual channel 12
-    ADC_B_VIRTUAL_CHANNEL_13 = 13,     ///< ADC B virtual channel 13
-    ADC_B_VIRTUAL_CHANNEL_14 = 14,     ///< ADC B virtual channel 14
-    ADC_B_VIRTUAL_CHANNEL_15 = 15,     ///< ADC B virtual channel 15
-    ADC_B_VIRTUAL_CHANNEL_16 = 16,     ///< ADC B virtual channel 16
-    ADC_B_VIRTUAL_CHANNEL_17 = 17,     ///< ADC B virtual channel 17
-    ADC_B_VIRTUAL_CHANNEL_18 = 18,     ///< ADC B virtual channel 18
-    ADC_B_VIRTUAL_CHANNEL_19 = 19,     ///< ADC B virtual channel 19
-    ADC_B_VIRTUAL_CHANNEL_20 = 20,     ///< ADC B virtual channel 20
-    ADC_B_VIRTUAL_CHANNEL_21 = 21,     ///< ADC B virtual channel 21
-    ADC_B_VIRTUAL_CHANNEL_22 = 22,     ///< ADC B virtual channel 22
-    ADC_B_VIRTUAL_CHANNEL_23 = 23,     ///< ADC B virtual channel 23
-    ADC_B_VIRTUAL_CHANNEL_24 = 24,     ///< ADC B virtual channel 24
-    ADC_B_VIRTUAL_CHANNEL_25 = 25,     ///< ADC B virtual channel 25
-    ADC_B_VIRTUAL_CHANNEL_26 = 26,     ///< ADC B virtual channel 26
-    ADC_B_VIRTUAL_CHANNEL_27 = 27,     ///< ADC B virtual channel 27
-    ADC_B_VIRTUAL_CHANNEL_28 = 28,     ///< ADC B virtual channel 28
-    ADC_B_VIRTUAL_CHANNEL_29 = 29,     ///< ADC B virtual channel 29
-    ADC_B_VIRTUAL_CHANNEL_30 = 30,     ///< ADC B virtual channel 30
-    ADC_B_VIRTUAL_CHANNEL_31 = 31,     ///< ADC B virtual channel 31
-    ADC_B_VIRTUAL_CHANNEL_32 = 32,     ///< ADC B virtual channel 32
-    ADC_B_VIRTUAL_CHANNEL_33 = 33,     ///< ADC B virtual channel 33
-    ADC_B_VIRTUAL_CHANNEL_34 = 34,     ///< ADC B virtual channel 34
-    ADC_B_VIRTUAL_CHANNEL_35 = 35,     ///< ADC B virtual channel 35
-    ADC_B_VIRTUAL_CHANNEL_36 = 36,     ///< ADC B virtual channel 36
-} adc_b_virtual_channel_t;
-
-/** ADC channel mask */
-typedef enum e_adc_b_channel_mask
-{
-    ADC_B_CHANNEL_MASK_NONE = 0,
-    ADC_B_CHANNEL_MASK_0    = (1ULL << 0),                                          ///< Channel 0
-    ADC_B_CHANNEL_MASK_1    = (1ULL << 1),                                          ///< Channel 1
-    ADC_B_CHANNEL_MASK_2    = (1ULL << 2),                                          ///< Channel 2
-    ADC_B_CHANNEL_MASK_3    = (1ULL << 3),                                          ///< Channel 3
-    ADC_B_CHANNEL_MASK_4    = (1ULL << 4),                                          ///< Channel 4
-    ADC_B_CHANNEL_MASK_5    = (1ULL << 5),                                          ///< Channel 5
-    ADC_B_CHANNEL_MASK_6    = (1ULL << 6),                                          ///< Channel 6
-    ADC_B_CHANNEL_MASK_7    = (1ULL << 7),                                          ///< Channel 7
-    ADC_B_CHANNEL_MASK_8    = (1ULL << 8),                                          ///< Channel 8
-    ADC_B_CHANNEL_MASK_9    = (1ULL << 9),                                          ///< Channel 9
-    ADC_B_CHANNEL_MASK_10   = (1ULL << 10),                                         ///< Channel 10
-    ADC_B_CHANNEL_MASK_11   = (1ULL << 11),                                         ///< Channel 11
-    ADC_B_CHANNEL_MASK_12   = (1ULL << 12),                                         ///< Channel 12
-    ADC_B_CHANNEL_MASK_13   = (1ULL << 13),                                         ///< Channel 13
-    ADC_B_CHANNEL_MASK_14   = (1ULL << 14),                                         ///< Channel 14
-    ADC_B_CHANNEL_MASK_15   = (1ULL << 15),                                         ///< Channel 15
-    ADC_B_CHANNEL_MASK_16   = (1ULL << 16),                                         ///< Channel 16
-    ADC_B_CHANNEL_MASK_17   = (1ULL << 17),                                         ///< Channel 17
-    ADC_B_CHANNEL_MASK_18   = (1ULL << 18),                                         ///< Channel 18
-    ADC_B_CHANNEL_MASK_19   = (1ULL << 19),                                         ///< Channel 19
-    ADC_B_CHANNEL_MASK_20   = (1ULL << 20),                                         ///< Channel 20
-    ADC_B_CHANNEL_MASK_21   = (1ULL << 21),                                         ///< Channel 21
-    ADC_B_CHANNEL_MASK_22   = (1ULL << 22),                                         ///< Channel 22
-    ADC_B_CHANNEL_MASK_23   = (1ULL << 23),                                         ///< Channel 23
-    ADC_B_CHANNEL_MASK_24   = (1ULL << 24),                                         ///< Channel 24
-    ADC_B_CHANNEL_MASK_25   = (1ULL << 25),                                         ///< Channel 25
-    ADC_B_CHANNEL_MASK_26   = (1ULL << 26),                                         ///< Channel 26
-    ADC_B_CHANNEL_MASK_27   = (1ULL << 27),                                         ///< Channel 27
-    ADC_B_CHANNEL_MASK_28   = (1ULL << 28),                                         ///< Channel 28
-
-    ADC_B_CHANNEL_MASK_DIAGNOSIS   = (1ULL << (ADC_B_CHANNEL_MASK_EXT_OFFSET + 0)), ///< Self-Diagnosis Channel
-    ADC_B_CHANNEL_MASK_TEMPERATURE = (1ULL << (ADC_B_CHANNEL_MASK_EXT_OFFSET + 1)), ///< Temperature sensor channel
-    ADC_B_CHANNEL_MASK_VOLT        = (1ULL << (ADC_B_CHANNEL_MASK_EXT_OFFSET + 2)), ///< Voltage Reference channel
-    ADC_B_CHANNEL_MASK_DAC0        = (1ULL << (ADC_B_CHANNEL_MASK_EXT_OFFSET + 3)), ///< DAC 0 Channel
-    ADC_B_CHANNEL_MASK_DAC1        = (1ULL << (ADC_B_CHANNEL_MASK_EXT_OFFSET + 4)), ///< DAC 1 Channel
-    ADC_B_CHANNEL_MASK_DAC2        = (1ULL << (ADC_B_CHANNEL_MASK_EXT_OFFSET + 5)), ///< DAC 2 Channel
-    ADC_B_CHANNEL_MASK_DAC3        = (1ULL << (ADC_B_CHANNEL_MASK_EXT_OFFSET + 6)), ///< DAC 3 Channel
-} adc_b_channel_mask_t;
 
 /** ADC limiter clipping table id selection options */
 typedef enum e_adc_b_limit_clip_table_id
@@ -242,6 +148,10 @@ typedef enum e_adc_b_gpt_trigger
     ADC_B_GPT_TRIGGER_A7   = 0x00000080, ///< GPT Trigger A7
     ADC_B_GPT_TRIGGER_A8   = 0x00000100, ///< GPT Trigger A8
     ADC_B_GPT_TRIGGER_A9   = 0x00000200, ///< GPT Trigger A9
+    ADC_B_GPT_TRIGGER_A10  = 0x00000400, ///< GPT Trigger A10
+    ADC_B_GPT_TRIGGER_A11  = 0x00000800, ///< GPT Trigger A11
+    ADC_B_GPT_TRIGGER_A12  = 0x00001000, ///< GPT Trigger A12
+    ADC_B_GPT_TRIGGER_A13  = 0x00002000, ///< GPT Trigger A13
     ADC_B_GPT_TRIGGER_B0   = 0x00010000, ///< GPT Trigger B0
     ADC_B_GPT_TRIGGER_B1   = 0X00020000, ///< GPT Trigger B1
     ADC_B_GPT_TRIGGER_B2   = 0X00040000, ///< GPT Trigger B2
@@ -252,6 +162,10 @@ typedef enum e_adc_b_gpt_trigger
     ADC_B_GPT_TRIGGER_B7   = 0X00800000, ///< GPT Trigger B7
     ADC_B_GPT_TRIGGER_B8   = 0X01000000, ///< GPT Trigger B8
     ADC_B_GPT_TRIGGER_B9   = 0X02000000, ///< GPT Trigger B9
+    ADC_B_GPT_TRIGGER_B10  = 0X04000000, ///< GPT Trigger B10
+    ADC_B_GPT_TRIGGER_B11  = 0X08000000, ///< GPT Trigger B11
+    ADC_B_GPT_TRIGGER_B12  = 0X10000000, ///< GPT Trigger B12
+    ADC_B_GPT_TRIGGER_B13  = 0X20000000, ///< GPT Trigger B13
 } adc_b_gpt_trigger_t;
 
 /** ADC External Trigger options */
@@ -366,13 +280,13 @@ typedef enum e_adc_b_user_offset_table_selection_id
 /* ADC_B Calibration Status */
 typedef enum e_adc_b_converter_state
 {
-    ADC_B_CONVERTER_STATE_NONE               = 0,
-    ADC_B_CONVERTER_STATE_ADC_0_CALIBRATING  = 1,
-    ADC_B_CONVERTER_STATE_ADC_1_CALIBRATING  = 2,
-    ADC_B_CONVERTER_STATE_SH_0_2_CALIBRATING = 3,
-    ADC_B_CONVERTER_STATE_SH_4_6_CALIBRATING = 4,
-    ADC_B_CONVERTER_STATE_READY              = 5,
-    ADC_B_CONVERTER_STATE_CALIBRATION_FAIL   = 6,
+    ADC_B_CONVERTER_STATE_NONE               = 0, // Converter state uninitialized
+    ADC_B_CONVERTER_STATE_ADC_0_CALIBRATING  = 1, // ADC 0 Internal Circuit and Gain/Offset Calibration
+    ADC_B_CONVERTER_STATE_ADC_1_CALIBRATING  = 2, // ADC 1 Internal Circuit and Gain/Offset Calibration
+    ADC_B_CONVERTER_STATE_SH_0_2_CALIBRATING = 3, // ADC 0 Sample-and-Hold Calibration
+    ADC_B_CONVERTER_STATE_SH_4_6_CALIBRATING = 4, // ADC 1 Sample-and-Hold Calibration
+    ADC_B_CONVERTER_STATE_READY              = 5, // Calibration is complete / ADC 0,1 are ready
+    ADC_B_CONVERTER_STATE_CALIBRATION_FAIL   = 6, // Calibration has failed
 } adc_b_converter_state_t;
 
 /** ADC FIFO data type */
@@ -400,16 +314,16 @@ typedef struct st_adc_b_virtual_channel_cfg
     /* Register data */
     union
     {
-        uint32_t channel_cfg;               ///< Channel configuration register data
+        uint32_t channel_cfg;             ///< Channel configuration register data
         struct
         {
-            uint32_t group             : 5; ///< Scan group mask selection
-            uint32_t                   : 3;
-            uint32_t channel           : 7; ///< A/D conversion channel selection
-            uint32_t self_diag_enabled : 1; ///< Analog input mode selection (set to 1 if self-diagnosis is enabled)
-            uint32_t sample_table_id   : 4; ///< Sampling state table selection
-            uint32_t                   : 12;
-        } channel_cfg_bits;                 ///< Channel configuration register bits
+            uint32_t group           : 5; ///< Scan group mask selection
+            uint32_t                 : 3;
+            uint32_t channel         : 7; ///< A/D conversion channel selection
+            uint32_t differential    : 1; ///< Analog input mode selection (set to 1 if self-diagnosis is enabled)
+            uint32_t sample_table_id : 4; ///< Sampling state table selection
+            uint32_t                 : 12;
+        } channel_cfg_bits;               ///< Channel configuration register bits
     };
 
     union
@@ -449,7 +363,7 @@ typedef struct st_adc_b_virtual_channel_cfg
             uint32_t                       : 12;
             uint32_t channel_data_format   : 2; ///< A/D conversion data format selection
             uint32_t                       : 2;
-            uint32_t data_sign_selection   : 1; ///< A/D conversion data sign selection (set to zero when self-diagnosis channel is selected)
+            uint32_t data_is_unsigned      : 1; ///< A/D conversion data sign selection (set to zero when self-diagnosis channel is selected)
             uint32_t                       : 11;
         } channel_control_c_bits;               ///< A/D conversion data operation control c bits
     };
@@ -497,7 +411,11 @@ typedef struct st_adc_b_isr_cfg
     uint8_t   fifo_read_ipl_group_2;      ///< FIFO Read threshold request IPL for Group 2
     uint8_t   fifo_read_ipl_group_3;      ///< FIFO Read threshold request IPL for Group 3
     uint8_t   fifo_read_ipl_group_4;      ///< FIFO Read threshold request IPL for Group 4
-    uint8_t   fifo_read_ipl_group_5678;   ///< FIFO Read threshold request IPL for Groups 5, 6, 7, and 8
+    uint8_t   fifo_read_ipl_group_5;      ///< FIFO Read threshold request IPL for Group 5 (available on some MCUs)
+    uint8_t   fifo_read_ipl_group_6;      ///< FIFO Read threshold request IPL for Group 6 (available on some MCUs)
+    uint8_t   fifo_read_ipl_group_7;      ///< FIFO Read threshold request IPL for Group 7 (available on some MCUs)
+    uint8_t   fifo_read_ipl_group_8;      ///< FIFO Read threshold request IPL for Group 8 (available on some MCUs)
+    uint8_t   fifo_read_ipl_group_5678;   ///< FIFO Read threshold request IPL for Groups 5, 6, 7, and 8 (available on some MCUs)
     uint8_t   limit_clip_ipl;             ///< Limiter Clip IPL
     uint8_t   overflow_error_ipl_adc_0;   ///< Overflow error IPL for A/D converter unit 0
     uint8_t   overflow_error_ipl_adc_1;   ///< Overflow error IPL for A/D converter unit 1
@@ -506,7 +424,11 @@ typedef struct st_adc_b_isr_cfg
     uint8_t   scan_end_ipl_group_2;       ///< Scan End IPL for A/D Group 2
     uint8_t   scan_end_ipl_group_3;       ///< Scan End IPL for A/D Group 3
     uint8_t   scan_end_ipl_group_4;       ///< Scan End IPL for A/D Group 4
-    uint8_t   scan_end_ipl_group_5678;    ///< Scan End IRQ for A/D Groups 5, 6, 7, and 8
+    uint8_t   scan_end_ipl_group_5;       ///< Scan End IPL for A/D Group 5 (available on some MCUs)
+    uint8_t   scan_end_ipl_group_6;       ///< Scan End IPL for A/D Group 6 (available on some MCUs)
+    uint8_t   scan_end_ipl_group_7;       ///< Scan End IPL for A/D Group 7 (available on some MCUs)
+    uint8_t   scan_end_ipl_group_8;       ///< Scan End IPL for A/D Group 8 (available on some MCUs)
+    uint8_t   scan_end_ipl_group_5678;    ///< Scan End IRQ for A/D Groups 5, 6, 7, and 8 (available on some MCUs)
     IRQn_Type calibration_end_irq_adc_0;  ///< Calibration end IRQ for A/D converter unit 0
     IRQn_Type calibration_end_irq_adc_1;  ///< Calibration end IRQ for A/D converter unit 1
     IRQn_Type conversion_error_irq_adc_0; ///< Conversion error IRQ for A/D converter unit 0
@@ -517,6 +439,10 @@ typedef struct st_adc_b_isr_cfg
     IRQn_Type fifo_read_irq_group_2;      ///< FIFO Read threshold request IRQ for Group 2
     IRQn_Type fifo_read_irq_group_3;      ///< FIFO Read threshold request IRQ for Group 3
     IRQn_Type fifo_read_irq_group_4;      ///< FIFO Read threshold request IRQ for Group 4
+    IRQn_Type fifo_read_irq_group_5;      ///< FIFO Read threshold request IRQ for Group 5
+    IRQn_Type fifo_read_irq_group_6;      ///< FIFO Read threshold request IRQ for Group 6
+    IRQn_Type fifo_read_irq_group_7;      ///< FIFO Read threshold request IRQ for Group 7
+    IRQn_Type fifo_read_irq_group_8;      ///< FIFO Read threshold request IRQ for Group 8
     IRQn_Type fifo_read_irq_group_5678;   ///< FIFO Read threshold request IRQ for Groups 5, 6, 7, and 8
     IRQn_Type limit_clip_irq;             ///< Limiter Clip IRQ
     IRQn_Type overflow_error_irq_adc_0;   ///< Overflow error IRQ for A/D converter unit 0
@@ -526,6 +452,10 @@ typedef struct st_adc_b_isr_cfg
     IRQn_Type scan_end_irq_group_2;       ///< Scan End IRQ for A/D Group 2
     IRQn_Type scan_end_irq_group_3;       ///< Scan End IRQ for A/D Group 3
     IRQn_Type scan_end_irq_group_4;       ///< Scan End IRQ for A/D Group 4
+    IRQn_Type scan_end_irq_group_5;       ///< Scan End IRQ for A/D Group 5
+    IRQn_Type scan_end_irq_group_6;       ///< Scan End IRQ for A/D Group 6
+    IRQn_Type scan_end_irq_group_7;       ///< Scan End IRQ for A/D Group 7
+    IRQn_Type scan_end_irq_group_8;       ///< Scan End IRQ for A/D Group 8
     IRQn_Type scan_end_irq_group_5678;    ///< Scan End IRQ for A/D Groups 5, 6, 7, and 8
 } adc_b_isr_cfg_t;
 

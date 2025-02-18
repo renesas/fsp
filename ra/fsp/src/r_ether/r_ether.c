@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -211,11 +211,6 @@ static void      ether_call_callback(ether_instance_ctrl_t * p_instance_ctrl, et
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
-/** Name of module used by error logger macro */
-#if BSP_CFG_ERROR_LOG != 0
-static const char g_module_name[] = "ether";
-#endif
 
 #if defined(__GNUC__)
 

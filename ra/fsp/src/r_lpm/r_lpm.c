@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -530,9 +530,23 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
             R_SYSTEM->DPSIER2 = (uint8_t) (p_cfg->deep_standby_cancel_source >> 16U);
             R_SYSTEM->DPSIER3 = (uint8_t) (p_cfg->deep_standby_cancel_source >> 24U);
 
+ #if BSP_FEATURE_LPM_HAS_DPSIER4
+            R_SYSTEM->DPSIER4 = (uint8_t) (p_cfg->deep_standby_cancel_source >> 32U); // NOLINT(readability-magic-numbers)
+ #endif
+ #if BSP_FEATURE_LPM_HAS_DPSIER5
+            R_SYSTEM->DPSIER5 = (uint8_t) (p_cfg->deep_standby_cancel_source >> 40U); // NOLINT(readability-magic-numbers)
+ #endif
+
             R_SYSTEM->DPSIEGR0 = (uint8_t) (p_cfg->deep_standby_cancel_edge);
             R_SYSTEM->DPSIEGR1 = (uint8_t) (p_cfg->deep_standby_cancel_edge >> 8U);
             R_SYSTEM->DPSIEGR2 = (uint8_t) (p_cfg->deep_standby_cancel_edge >> 16U);
+
+ #if BSP_FEATURE_LPM_HAS_DPSIEGR3
+            R_SYSTEM->DPSIEGR3 = (uint8_t) (p_cfg->deep_standby_cancel_edge >> 24U);
+ #endif
+ #if BSP_FEATURE_LPM_HAS_DPSIEGR4
+            R_SYSTEM->DPSIEGR4 = (uint8_t) (p_cfg->deep_standby_cancel_edge >> 32U); // NOLINT(readability-magic-numbers)
+ #endif
 
  #if BSP_FEATURE_LPM_HAS_DPSBYCR_DPSBY
             dpsbycr |= R_SYSTEM_DPSBYCR_DPSBY_Msk;
@@ -946,6 +960,16 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 
             R_SYSTEM->DPSIFR3;
             R_SYSTEM->DPSIFR3 = 0U;
+
+ #if BSP_FEATURE_LPM_HAS_DPSIER4
+            R_SYSTEM->DPSIFR4;
+            R_SYSTEM->DPSIFR4 = 0U;
+ #endif
+
+ #if BSP_FEATURE_LPM_HAS_DPSIER5
+            R_SYSTEM->DPSIFR5;
+            R_SYSTEM->DPSIFR5 = 0U;
+ #endif
         }
 
         /* Save oscillator stop detect state. */

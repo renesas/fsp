@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -134,6 +134,9 @@ const lin_api_t g_lin_on_sci_b =
     .communicationAbort    = R_SCI_B_LIN_CommunicationAbort,
     .callbackSet           = R_SCI_B_LIN_CallbackSet,
     .close                 = R_SCI_B_LIN_Close,
+    .sleepEnter            = R_SCI_B_LIN_SleepEnter,
+    .sleepExit             = R_SCI_B_LIN_SleepExit,
+    .wakeupSend            = R_SCI_B_LIN_WakeupSend,
 };
 
 /***********************************************************************************************************************
@@ -776,6 +779,48 @@ fsp_err_t R_SCI_B_LIN_IdFilterGet (lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_f
     p_config->compare_data_select           = (uint8_t) ((xcr0 & R_SCI_B0_XCR0_CF1DS_Msk) >> R_SCI_B0_XCR0_CF1DS_Pos);
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Send wakeup is not supported on the SCI_B LIN driver.
+ *
+ * Implements @ref lin_api_t::wakeupSend.
+ *
+ * @retval FSP_ERR_UNSUPPORTED       Function not supported in this implementation.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_B_LIN_WakeupSend (lin_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Sleep is not supported on the SCI_B LIN driver.
+ *
+ * Implements @ref lin_api_t::sleepEnter.
+ *
+ * @retval FSP_ERR_UNSUPPORTED       Function not supported in this implementation.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_B_LIN_SleepEnter (lin_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Sleep is not supported on the SCI_B LIN driver.
+ *
+ * Implements @ref lin_api_t::sleepExit.
+ *
+ * @retval FSP_ERR_UNSUPPORTED       Function not supported in this implementation.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_B_LIN_SleepExit (lin_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**

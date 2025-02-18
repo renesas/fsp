@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -196,11 +196,6 @@ void sci_b_uart_tei_isr(void);
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
-
-/* Name of module used by error logger macro */
-#if BSP_CFG_ERROR_LOG != 0
-static const char g_module_name[] = "sci_b_uart";
-#endif
 
 /* Baud rate divisor information (UART mode) */
 static const baud_setting_const_t g_async_baud[SCI_B_UART_NUM_DIVISORS_ASYNC] =

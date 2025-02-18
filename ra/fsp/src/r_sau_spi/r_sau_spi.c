@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -888,7 +888,7 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
     SAU_SPI_PRV_CHANNEL_DECLARATION;
 
     /* Writing to SCR is prohibited while the channel is enabled. If the bit width is changed, disable communication
-     * before writing to SCR. (See Section 21.3.4 in the RA0E1 user manual R01UH1040EJ0100). */
+     * before writing to SCR. See in hardware manual: SAU > Register Descriptions > SCRm0 */
     SAU_REG->ST = (uint16_t) (1 << SAU_SPI_PRV_CHANNEL);
 
     /* Bit width is configured in SCR::DLS[1:0]:

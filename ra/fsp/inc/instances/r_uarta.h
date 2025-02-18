@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -131,6 +131,9 @@ typedef struct st_uarta_instance_ctrl
 
     /* Pointer to callback that is called when a uart_event_t occurs. */
     void (* p_callback)(uart_callback_args_t *);
+
+    /* Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory. */
+    uart_callback_args_t * p_callback_memory;
 
     /* Pointer to context to be passed into callback function */
     void const * p_context;

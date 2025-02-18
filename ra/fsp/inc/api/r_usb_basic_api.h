@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -228,6 +228,7 @@ typedef enum e_usb_class
     USB_CLASS_PMSC,                    ///< PMSC Class
     USB_CLASS_HPRN,                    ///< HPRN Class
     USB_CLASS_HUVC,                    ///< HUVC Class
+    USB_CLASS_HAUD,                    ///< HAUD Class
     USB_CLASS_REQUEST,                 ///< USB Class Request
     USB_CLASS_HUB,                     ///< HUB Class
     USB_CLASS_END,                     ///< USB Class End Code

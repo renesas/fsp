@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -39,6 +39,9 @@
  #if defined(USB_CFG_HUVC_USE)
   #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h"
  #endif                                /* defined(USB_CFG_HUVC_USE) */
+ #if defined(USB_CFG_HAUD_USE)
+  #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_audio.h"
+ #endif                                /* defined(USB_CFG_HAUD_USE) */
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
   #include "../../../microsoft/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hub.h"
  #endif /* ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST) */
@@ -779,6 +782,26 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
                 }
             }
   #endif                               /* defined(USB_CFG_HUVC_USE) */
+  #if defined(USB_CFG_HAUD_USE)
+            ux_host_stack_class_register(_ux_system_host_class_audio_name, ux_host_class_audio_entry);
+            if (USB_SPEED_HS == p_cfg->usb_speed)
+            {
+                ux_host_stack_hcd_register((UCHAR *) "fsp_usbx_haud_hs", usb_host_usbx_initialize, R_USB_HS0_BASE, 0);
+            }
+            else
+            {
+                if (USB_IP0 == p_cfg->module_number)
+                {
+                    ux_host_stack_hcd_register((UCHAR *) "fsp_usbx_haud_fs", usb_host_usbx_initialize, R_USB_FS0_BASE,
+                                               0);
+                }
+                else
+                {
+                    ux_host_stack_hcd_register((UCHAR *) "fsp_usbx_haud_hs", usb_host_usbx_initialize, R_USB_HS0_BASE,
+                                               0);
+                }
+            }
+  #endif                               /* defined(USB_CFG_HAUD_USE) */
  #endif                                /* #if (BSP_CFG_RTOS == 0) */
         }
         else
@@ -860,7 +883,8 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         if (USB_MODE_HOST == p_cfg->usb_mode)
         {
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << p_ctrl->type); /* Set USB Open device class */
+            g_usb_open_class[p_ctrl->module_number] |= (1 << p_ctrl->type); /* Set USB Open device class */
+
             /* Check if both HCDC class and HMSC class are enabled */
  #if (defined(USB_CFG_HCDC_USE) && defined(USB_CFG_HMSC_USE))
 
@@ -885,39 +909,39 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
         else
         {
 #if defined(USB_CFG_PCDC_USE)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDC);
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDCC);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDC);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDCC);
  #if ((USB_CFG_PCDC_BULK_IN2 != USB_NULL) || (USB_CFG_PCDC_BULK_OUT2 != USB_NULL))
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDC2);
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PCDCC2);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDC2);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDCC2);
  #endif                                /* ((USB_CFG_PCDC_BULK_IN2 != USB_NULL) || (USB_CFG_PCDC_BULK_OUT2 != USB_NULL)) */
 #endif                                 /* defined(USB_CFG_PCDC_USE) */
 
 #if defined(USB_CFG_PHID_USE)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PHID);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PHID);
  #if ((USB_CFG_PHID_INT_IN2 != USB_NULL) || (USB_CFG_PHID_INT_OUT2 != USB_NULL))
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PHID2);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PHID2);
  #endif                                /* ((USB_CFG_PHID_INT_IN2 != USB_NULL) || (USB_CFG_PHID_INT_OUT2 != USB_NULL)) */
 #endif                                 /* defined(USB_CFG_PHID_USE) */
 
 #if defined(USB_CFG_PMSC_USE)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PMSC);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PMSC);
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
 
 #if defined(USB_CFG_PAUD_USE)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PAUD);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PAUD);
 #endif                                 /* defined(USB_CFG_PAUD_USE) */
 
 #if defined(USB_CFG_PVND_USE)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PVND);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PVND);
 #endif                                 /* defined(USB_CFG_PVND_USE) */
 
 #if defined(USB_CFG_PPRN_USE)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_PPRN);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PPRN);
 #endif                                 /* defined(USB_CFG_PPRN_USE) */
 
 #if defined(USB_CFG_DFU_USE)
-            g_usb_open_class[p_ctrl->module_number] |= (uint16_t) (1 << USB_CLASS_INTERNAL_DFU);
+            g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_DFU);
 #endif                                 /* defined(USB_CFG_PPRN_USE) */
 
 #if defined(USB_CFG_OTG_USE)
@@ -1314,6 +1338,9 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
    #if defined(USB_CFG_HUVC_USE)
                 ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_huvc_hs", R_USB_HS0_BASE, 0);
    #endif                              /* #if defined(USB_CFG_HUVC_USE) */
+   #if defined(USB_CFG_HAUD_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_haud_hs", R_USB_HS0_BASE, 0);
+   #endif                              /* #if defined(USB_CFG_HAUD_USE) */
                 usb_host_usbx_uninitialize(R_USB_HS0_BASE);
             }
             else
@@ -1330,6 +1357,9 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
    #if defined(USB_CFG_HUVC_USE)
                 ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_huvc_fs", R_USB_FS0_BASE, 0);
    #endif                              /* #if defined(USB_CFG_HUVC_USE) */
+   #if defined(USB_CFG_HAUD_USE)
+                ux_host_stack_hcd_unregister((UCHAR *) "fsp_usbx_haud_fs", R_USB_FS0_BASE, 0);
+   #endif                              /* #if defined(USB_CFG_HAUD_USE) */
                 usb_host_usbx_uninitialize(R_USB_FS0_BASE);
             }
 
@@ -1345,6 +1375,9 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
    #if defined(USB_CFG_HUVC_USE)
             ux_host_stack_class_unregister(ux_host_class_video_entry);
    #endif                              /* #if defined(USB_CFG_HHID_USE) */
+   #if defined(USB_CFG_HAUD_USE)
+            ux_host_stack_class_unregister(ux_host_class_audio_entry);
+   #endif                              /* #if defined(USB_CFG_HAUD_USE) */
 
    #if !defined(USB_CFG_OTG_USE)
             ux_host_stack_class_unregister(ux_host_class_hub_entry);

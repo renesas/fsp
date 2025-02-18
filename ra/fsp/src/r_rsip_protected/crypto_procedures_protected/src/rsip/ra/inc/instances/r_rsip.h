@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -26,7 +26,7 @@ FSP_HEADER
 
 /* Version Number of Module. */
 #define FSP_R_RSIP_PROTECTED_VERSION_MAJOR  (1U)
-#define FSP_R_RSIP_PROTECTED_VERSION_MINOR  (5U)
+#define FSP_R_RSIP_PROTECTED_VERSION_MINOR  (6U)
 #define FSP_R_RSIP_PROTECTED_VERSION_PATCH  (0U)
 
 #define RSIP_PRV_BYTE_SIZE_AES_BLOCK               (16U)

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -150,12 +150,12 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
                                              const uint8_t          * encrypted_oem_key,
                                              uint32_t               * key_index)
 {
-    uint32_t   indata_key_type[1]                     = {0};
-    uint32_t   indata_cmd[1]                          = {0};
-    uint32_t   install_key_ring_index[1]              = {0};
+    uint32_t indata_key_type[1]        = {0};
+    uint32_t indata_cmd[1]             = {0};
+    uint32_t install_key_ring_index[1] = {0};
 
-    indata_key_type[0]        = change_endian_long((uint32_t)key_type); /* Plaintext OEM. */
-    indata_cmd[0]             = change_endian_long((uint32_t)cmd);
+    indata_key_type[0] = change_endian_long((uint32_t) key_type); /* Plaintext OEM. */
+    indata_cmd[0]      = change_endian_long((uint32_t) cmd);
 
     INST_DATA_SIZE = sce_oem_key_size[cmd] - 4U;
     KEY_INDEX_SIZE = sce_oem_key_size[cmd] + 1U;
@@ -166,106 +166,119 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexPrivate (const sce_oem_key_type_t key_type,
                                          install_key_ring_index,
                                          (uint32_t *) encrypted_provisioning_key,
                                          (uint32_t *) iv,
-										 (uint32_t *) encrypted_oem_key,
+                                         (uint32_t *) encrypted_oem_key,
                                          key_index);
 }
 
 fsp_err_t HW_SCE_Aes128EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMode[],
-                                              const uint32_t InData_Cmd[],
-                                              const uint32_t InData_KeyIndex[],
-                                              const uint32_t InData_Key[],
-                                              const uint32_t InData_IV[])
+                                                     const uint32_t InData_Cmd[],
+                                                     const uint32_t InData_KeyIndex[],
+                                                     const uint32_t InData_Key[],
+                                                     const uint32_t InData_IV[])
 {
     FSP_PARAMETER_NOT_USED(InData_Key);
+
     return HW_SCE_Aes128EncryptDecryptInitSub(InData_KeyMode, InData_Cmd, InData_KeyIndex, InData_IV);
 }
 
 fsp_err_t HW_SCE_Aes256EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMode[],
-                                              const uint32_t InData_Cmd[],
-                                              const uint32_t InData_KeyIndex[],
-                                              const uint32_t InData_Key[],
-                                              const uint32_t InData_IV[])
+                                                     const uint32_t InData_Cmd[],
+                                                     const uint32_t InData_KeyIndex[],
+                                                     const uint32_t InData_Key[],
+                                                     const uint32_t InData_IV[])
 {
     FSP_PARAMETER_NOT_USED(InData_Key);
+
     return HW_SCE_Aes256EncryptDecryptInitSub(InData_KeyMode, InData_Cmd, InData_KeyIndex, InData_IV);
 }
 
-fsp_err_t HW_SCE_Aes128CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+fsp_err_t HW_SCE_Aes128CmacInit (const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
 {
     return HW_SCE_Aes128CmacInitSub(InData_KeyType, InData_KeyIndex);
 }
 
-fsp_err_t HW_SCE_Aes192CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+fsp_err_t HW_SCE_Aes192CmacInit (const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
 {
     FSP_PARAMETER_NOT_USED(InData_KeyType);
+
     return HW_SCE_Aes192CmacInitSub(InData_KeyIndex);
 }
 
-fsp_err_t HW_SCE_Aes256CmacInit(const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
+fsp_err_t HW_SCE_Aes256CmacInit (const uint32_t InData_KeyType[], const uint32_t InData_KeyIndex[])
 {
     return HW_SCE_Aes256CmacInitSub(InData_KeyType, InData_KeyIndex);
 }
 
-void HW_SCE_Aes128CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+void HW_SCE_Aes128CmacUpdate (const uint32_t InData_Text[], const uint32_t MAX_CNT)
 {
     HW_SCE_Aes128CmacUpdateSub(InData_Text, MAX_CNT);
 }
 
-void HW_SCE_Aes192CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+void HW_SCE_Aes192CmacUpdate (const uint32_t InData_Text[], const uint32_t MAX_CNT)
 {
     HW_SCE_Aes192CmacUpdateSub(InData_Text, MAX_CNT);
 }
 
-void HW_SCE_Aes256CmacUpdate(const uint32_t InData_Text[], const uint32_t MAX_CNT)
+void HW_SCE_Aes256CmacUpdate (const uint32_t InData_Text[], const uint32_t MAX_CNT)
 {
     HW_SCE_Aes256CmacUpdateSub(InData_Text, MAX_CNT);
 }
 
-fsp_err_t HW_SCE_Aes128CmacFinal(const uint32_t InData_Cmd[],
-                                 const uint32_t InData_Text[],
-                                 const uint32_t InData_DataT[],
-                                 const uint32_t InData_DataTLen[],
-                                 uint32_t       OutData_DataT[])
+fsp_err_t HW_SCE_Aes128CmacFinal (const uint32_t InData_Cmd[],
+                                  const uint32_t InData_Text[],
+                                  const uint32_t InData_DataT[],
+                                  const uint32_t InData_DataTLen[],
+                                  uint32_t       OutData_DataT[])
 {
     return HW_SCE_Aes128CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
 
-fsp_err_t HW_SCE_Aes192CmacFinal(const uint32_t InData_Cmd[],
-                                 const uint32_t InData_Text[],
-                                 const uint32_t InData_DataT[],
-                                 const uint32_t InData_DataTLen[],
-                                 uint32_t       OutData_DataT[])
+fsp_err_t HW_SCE_Aes192CmacFinal (const uint32_t InData_Cmd[],
+                                  const uint32_t InData_Text[],
+                                  const uint32_t InData_DataT[],
+                                  const uint32_t InData_DataTLen[],
+                                  uint32_t       OutData_DataT[])
 {
     return HW_SCE_Aes192CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
 
-fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
-                                 const uint32_t InData_Text[],
-                                 const uint32_t InData_DataT[],
-                                 const uint32_t InData_DataTLen[],
-                                 uint32_t       OutData_DataT[])
+fsp_err_t HW_SCE_Aes256CmacFinal (const uint32_t InData_Cmd[],
+                                  const uint32_t InData_Text[],
+                                  const uint32_t InData_DataT[],
+                                  const uint32_t InData_DataTLen[],
+                                  uint32_t       OutData_DataT[])
 {
     return HW_SCE_Aes256CmacFinalSub(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
 
 fsp_err_t HW_SCE_Aes128GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
-                                                 uint32_t * InData_DataType, 
-                                                 uint32_t * InData_Cmd, 
-                                                 uint32_t * InData_KeyIndex, 
-                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_DataType,
+                                                 uint32_t * InData_Cmd,
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
                                                  uint32_t * InData_SeqNum)
 {
-    return (HW_SCE_Aes128GcmEncryptInitSub (InData_KeyType, InData_DataType, InData_Cmd, InData_KeyIndex, InData_IV, InData_SeqNum));
+    return HW_SCE_Aes128GcmEncryptInitSub(InData_KeyType,
+                                          InData_DataType,
+                                          InData_Cmd,
+                                          InData_KeyIndex,
+                                          InData_IV,
+                                          InData_SeqNum);
 }
 
-fsp_err_t HW_SCE_Aes128GcmDecryptInitSubGeneral (uint32_t * InData_KeyType, 
-                                                 uint32_t * InData_DataType, 
+fsp_err_t HW_SCE_Aes128GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
+                                                 uint32_t * InData_DataType,
                                                  uint32_t * InData_Cmd,
-                                                 uint32_t * InData_KeyIndex, 
-                                                 uint32_t * InData_IV, 
+                                                 uint32_t * InData_KeyIndex,
+                                                 uint32_t * InData_IV,
                                                  uint32_t * InData_SeqNum)
 {
-    return (HW_SCE_Aes128GcmDecryptInitSub (InData_KeyType, InData_DataType, InData_Cmd, InData_KeyIndex, InData_IV, InData_SeqNum));
+    return HW_SCE_Aes128GcmDecryptInitSub(InData_KeyType,
+                                          InData_DataType,
+                                          InData_Cmd,
+                                          InData_KeyIndex,
+                                          InData_IV,
+                                          InData_SeqNum);
 }
 
 fsp_err_t HW_SCE_Aes192GcmEncryptInitSubGeneral (uint32_t * InData_KeyType,
@@ -336,27 +349,35 @@ fsp_err_t HW_SCE_Aes128CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_SeqNum[],
                                                  uint32_t Header_Len)
 {
-    return (HW_SCE_Aes128CcmEncryptInitSub(InData_KeyType, InData_DataType, InData_Cmd, InData_TextLen, InData_KeyIndex, InData_IV, InData_Header, InData_SeqNum, Header_Len));
+    return HW_SCE_Aes128CcmEncryptInitSub(InData_KeyType,
+                                          InData_DataType,
+                                          InData_Cmd,
+                                          InData_TextLen,
+                                          InData_KeyIndex,
+                                          InData_IV,
+                                          InData_Header,
+                                          InData_SeqNum,
+                                          Header_Len);
 }
 
- fsp_err_t HW_SCE_Aes192CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
-                                                  uint32_t InData_DataType[],
-                                                  uint32_t InData_Cmd[],
-                                                  uint32_t InData_TextLen[],
-                                                  uint32_t InData_KeyIndex[],
-                                                  uint32_t InData_IV[],
-                                                  uint32_t InData_Header[],
-                                                  uint32_t InData_SeqNum[],
-                                                  uint32_t Header_Len)
- {
-     FSP_PARAMETER_NOT_USED(InData_KeyType);
-     FSP_PARAMETER_NOT_USED(InData_DataType);
-     FSP_PARAMETER_NOT_USED(InData_Cmd);
-     FSP_PARAMETER_NOT_USED(InData_TextLen);
-     FSP_PARAMETER_NOT_USED(InData_SeqNum);
+fsp_err_t HW_SCE_Aes192CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
+                                                 uint32_t InData_DataType[],
+                                                 uint32_t InData_Cmd[],
+                                                 uint32_t InData_TextLen[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_IV[],
+                                                 uint32_t InData_Header[],
+                                                 uint32_t InData_SeqNum[],
+                                                 uint32_t Header_Len)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_TextLen);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
 
-     return (HW_SCE_Aes192CcmEncryptInitSub(InData_KeyIndex, InData_IV, InData_Header, Header_Len));
- }
+    return HW_SCE_Aes192CcmEncryptInitSub(InData_KeyIndex, InData_IV, InData_Header, Header_Len);
+}
 
 fsp_err_t HW_SCE_Aes256CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_DataType[],
@@ -374,7 +395,7 @@ fsp_err_t HW_SCE_Aes256CcmEncryptInitSubGeneral (uint32_t InData_KeyType[],
     FSP_PARAMETER_NOT_USED(InData_TextLen);
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
 
-    return (HW_SCE_Aes256CcmEncryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV, InData_Header, Header_Len));
+    return HW_SCE_Aes256CcmEncryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV, InData_Header, Header_Len);
 }
 
 fsp_err_t HW_SCE_Aes128CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
@@ -388,30 +409,38 @@ fsp_err_t HW_SCE_Aes128CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_SeqNum[],
                                                  uint32_t Header_Len)
 {
-
-    return (HW_SCE_Aes128CcmDecryptInitSub(InData_KeyType, InData_DataType, InData_Cmd, InData_TextLen, InData_MACLength, InData_KeyIndex, InData_IV, InData_Header, InData_SeqNum, Header_Len));
+    return HW_SCE_Aes128CcmDecryptInitSub(InData_KeyType,
+                                          InData_DataType,
+                                          InData_Cmd,
+                                          InData_TextLen,
+                                          InData_MACLength,
+                                          InData_KeyIndex,
+                                          InData_IV,
+                                          InData_Header,
+                                          InData_SeqNum,
+                                          Header_Len);
 }
 
- fsp_err_t HW_SCE_Aes192CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
-                                                  uint32_t InData_DataType[],
-                                                  uint32_t InData_Cmd[],
-                                                  uint32_t InData_TextLen[],
-                                                  uint32_t InData_MACLength[],
-                                                  uint32_t InData_KeyIndex[],
-                                                  uint32_t InData_IV[],
-                                                  uint32_t InData_Header[],
-                                                  uint32_t InData_SeqNum[],
-                                                  uint32_t Header_Len)
- {
-     FSP_PARAMETER_NOT_USED(InData_KeyType);
-     FSP_PARAMETER_NOT_USED(InData_DataType);
-     FSP_PARAMETER_NOT_USED(InData_Cmd);
-     FSP_PARAMETER_NOT_USED(InData_TextLen);
-     FSP_PARAMETER_NOT_USED(InData_MACLength);
-     FSP_PARAMETER_NOT_USED(InData_SeqNum);
+fsp_err_t HW_SCE_Aes192CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
+                                                 uint32_t InData_DataType[],
+                                                 uint32_t InData_Cmd[],
+                                                 uint32_t InData_TextLen[],
+                                                 uint32_t InData_MACLength[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_IV[],
+                                                 uint32_t InData_Header[],
+                                                 uint32_t InData_SeqNum[],
+                                                 uint32_t Header_Len)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    FSP_PARAMETER_NOT_USED(InData_DataType);
+    FSP_PARAMETER_NOT_USED(InData_Cmd);
+    FSP_PARAMETER_NOT_USED(InData_TextLen);
+    FSP_PARAMETER_NOT_USED(InData_MACLength);
+    FSP_PARAMETER_NOT_USED(InData_SeqNum);
 
-     return (HW_SCE_Aes192CcmDecryptInitSub(InData_KeyIndex, InData_IV, InData_Header, Header_Len));
- }
+    return HW_SCE_Aes192CcmDecryptInitSub(InData_KeyIndex, InData_IV, InData_Header, Header_Len);
+}
 
 fsp_err_t HW_SCE_Aes256CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
                                                  uint32_t InData_DataType[],
@@ -430,170 +459,233 @@ fsp_err_t HW_SCE_Aes256CcmDecryptInitSubGeneral (uint32_t InData_KeyType[],
     FSP_PARAMETER_NOT_USED(InData_TextLen);
     FSP_PARAMETER_NOT_USED(InData_MACLength);
     FSP_PARAMETER_NOT_USED(InData_SeqNum);
-    return (HW_SCE_Aes256CcmDecryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV, InData_Header, Header_Len));
+
+    return HW_SCE_Aes256CcmDecryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV, InData_Header, Header_Len);
 }
 
-fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (const uint32_t *InData_Text, const uint32_t *InData_TextLen, uint32_t *OutData_Text, uint32_t *OutData_MAC)
+fsp_err_t HW_SCE_Aes128CcmEncryptFinalSubGeneral (const uint32_t * InData_Text,
+                                                  const uint32_t * InData_TextLen,
+                                                  uint32_t       * OutData_Text,
+                                                  uint32_t       * OutData_MAC)
 {
     FSP_PARAMETER_NOT_USED(InData_TextLen);
-    return (HW_SCE_Aes128CcmEncryptFinalSub(InData_Text, OutData_Text, OutData_MAC));
+
+    return HW_SCE_Aes128CcmEncryptFinalSub(InData_Text, OutData_Text, OutData_MAC);
 }
 
-fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral(const uint32_t *InData_Text, 
-                                                 const uint32_t *InData_TextLen, 
-                                                 const uint32_t *InData_MAC, 
-                                                 const uint32_t *InData_MACLength, 
-                                                 uint32_t *OutData_Text)
+fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral (const uint32_t * InData_Text,
+                                                  const uint32_t * InData_TextLen,
+                                                  const uint32_t * InData_MAC,
+                                                  const uint32_t * InData_MACLength,
+                                                  uint32_t       * OutData_Text)
 {
     FSP_PARAMETER_NOT_USED(InData_MACLength);
     FSP_PARAMETER_NOT_USED(InData_TextLen);
-    return (HW_SCE_Aes128CcmDecryptFinalSub(InData_Text, InData_MAC, OutData_Text));
+
+    return HW_SCE_Aes128CcmDecryptFinalSub(InData_Text, InData_MAC, OutData_Text);
 }
 
-fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
-                                                      const uint32_t InData_Cmd[],
-                                                      const uint32_t InData_KeyIndex[],
-                                                      const uint32_t InData_PubKey[],
-                                                      const uint32_t InData_DomainParam[],
-                                                      uint32_t OutData_R[])
+fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSubAdaptor (const uint32_t InData_CurveType[],
+                                                       const uint32_t InData_Cmd[],
+                                                       const uint32_t InData_KeyIndex[],
+                                                       const uint32_t InData_PubKey[],
+                                                       const uint32_t InData_DomainParam[],
+                                                       uint32_t       OutData_R[])
 {
-    return (HW_SCE_Ecc256ScalarMultiplicationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R));
+    return HW_SCE_Ecc256ScalarMultiplicationSub(InData_CurveType,
+                                                InData_Cmd,
+                                                InData_KeyIndex,
+                                                InData_PubKey,
+                                                InData_DomainParam,
+                                                OutData_R);
 }
 
-fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
-                                                      const uint32_t InData_Cmd[],
-                                                      const uint32_t InData_KeyIndex[],
-                                                      const uint32_t InData_PubKey[],
-                                                      const uint32_t InData_DomainParam[],
-                                                      uint32_t OutData_R[])
+fsp_err_t HW_SCE_Ecc384ScalarMultiplicationSubAdaptor (const uint32_t InData_CurveType[],
+                                                       const uint32_t InData_Cmd[],
+                                                       const uint32_t InData_KeyIndex[],
+                                                       const uint32_t InData_PubKey[],
+                                                       const uint32_t InData_DomainParam[],
+                                                       uint32_t       OutData_R[])
 {
     FSP_PARAMETER_NOT_USED(InData_Cmd);
-    return (HW_SCE_Ecc384ScalarMultiplicationSub(InData_CurveType, InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R));
+
+    return HW_SCE_Ecc384ScalarMultiplicationSub(InData_CurveType,
+                                                InData_KeyIndex,
+                                                InData_PubKey,
+                                                InData_DomainParam,
+                                                OutData_R);
 }
 
-fsp_err_t HW_SCE_Ecc521ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
-                                                      const uint32_t InData_Cmd[],
-                                                      const uint32_t InData_KeyIndex[],
-                                                      const uint32_t InData_PubKey[],
-                                                      const uint32_t InData_DomainParam[],
-                                                      uint32_t OutData_R[])
+fsp_err_t HW_SCE_Ecc521ScalarMultiplicationSubAdaptor (const uint32_t InData_CurveType[],
+                                                       const uint32_t InData_Cmd[],
+                                                       const uint32_t InData_KeyIndex[],
+                                                       const uint32_t InData_PubKey[],
+                                                       const uint32_t InData_DomainParam[],
+                                                       uint32_t       OutData_R[])
 {
     FSP_PARAMETER_NOT_USED(InData_CurveType);
     FSP_PARAMETER_NOT_USED(InData_Cmd);
-    return (HW_SCE_Ecc521ScalarMultiplicationSub(InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R));
+
+    return HW_SCE_Ecc521ScalarMultiplicationSub(InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R);
 }
 
-fsp_err_t HW_SCE_EccEd25519ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
-                                                      const uint32_t InData_Cmd[],
-                                                      const uint32_t InData_KeyIndex[],
-                                                      const uint32_t InData_PubKey[],
-                                                      const uint32_t InData_DomainParam[],
-                                                      uint32_t OutData_R[])
+fsp_err_t HW_SCE_EccEd25519ScalarMultiplicationSubAdaptor (const uint32_t InData_CurveType[],
+                                                           const uint32_t InData_Cmd[],
+                                                           const uint32_t InData_KeyIndex[],
+                                                           const uint32_t InData_PubKey[],
+                                                           const uint32_t InData_DomainParam[],
+                                                           uint32_t       OutData_R[])
 {
     FSP_PARAMETER_NOT_USED(InData_CurveType);
     FSP_PARAMETER_NOT_USED(InData_Cmd);
-    return (HW_SCE_Ed25519ScalarMultiplicationSub(InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R));
+
+    return HW_SCE_Ed25519ScalarMultiplicationSub(InData_KeyIndex, InData_PubKey, InData_DomainParam, OutData_R);
 }
 
-fsp_err_t HW_SCE_EcdsaSignatureGenerateSubAdaptor(const uint32_t InData_CurveType[],
-                                                  const uint32_t InData_Cmd[],
-                                                  const uint32_t InData_KeyIndex[],
-                                                  const uint32_t InData_MsgDgst[],
-                                                  const uint32_t InData_DomainParam[],
-                                                  uint32_t OutData_Signature[])
+fsp_err_t HW_SCE_EcdsaSignatureGenerateSubAdaptor (const uint32_t InData_CurveType[],
+                                                   const uint32_t InData_Cmd[],
+                                                   const uint32_t InData_KeyIndex[],
+                                                   const uint32_t InData_MsgDgst[],
+                                                   const uint32_t InData_DomainParam[],
+                                                   uint32_t       OutData_Signature[])
 {
-    return (HW_SCE_EcdsaSignatureGenerateSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature));
+    return HW_SCE_EcdsaSignatureGenerateSub(InData_CurveType,
+                                            InData_Cmd,
+                                            InData_KeyIndex,
+                                            InData_MsgDgst,
+                                            InData_DomainParam,
+                                            OutData_Signature);
 }
 
-fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSubAdaptor(const uint32_t InData_CurveType[],
-                                                      const uint32_t InData_KeyIndex[],
-                                                      const uint32_t InData_MsgDgst[],
-                                                      const uint32_t InData_DomainParam[],
-                                                      uint32_t OutData_Signature[])
+fsp_err_t HW_SCE_EcdsaP384SignatureGenerateSubAdaptor (const uint32_t InData_CurveType[],
+                                                       const uint32_t InData_KeyIndex[],
+                                                       const uint32_t InData_MsgDgst[],
+                                                       const uint32_t InData_DomainParam[],
+                                                       uint32_t       OutData_Signature[])
 {
-    return (HW_SCE_EcdsaP384SignatureGenerateSub(InData_CurveType, InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature));
+    return HW_SCE_EcdsaP384SignatureGenerateSub(InData_CurveType,
+                                                InData_KeyIndex,
+                                                InData_MsgDgst,
+                                                InData_DomainParam,
+                                                OutData_Signature);
 }
 
-fsp_err_t HW_SCE_EcdsaP521SignatureGenerateSubAdaptor(const uint32_t InData_CurveType[],
-                                                      const uint32_t InData_KeyIndex[],
-                                                      const uint32_t InData_MsgDgst[],
-                                                      const uint32_t InData_DomainParam[],
-                                                      uint32_t OutData_Signature[])
-{
-    FSP_PARAMETER_NOT_USED(InData_CurveType);
-    return (HW_SCE_EcdsaP521SignatureGenerateSub(InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature));
-}
-
-fsp_err_t HW_SCE_EcdsaSignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
-                                                  const uint32_t InData_Cmd[],
-                                                  const uint32_t InData_KeyIndex[],
-                                                  const uint32_t InData_MsgDgst[],
-                                                  const uint32_t InData_Signature[],
-                                                  const uint32_t InData_DomainParam[])
-{
-    return (HW_SCE_EcdsaSignatureVerificationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
-}
-
-fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
-                                                          const uint32_t InData_KeyIndex[],
-                                                          const uint32_t InData_MsgDgst[],
-                                                          const uint32_t InData_Signature[],
-                                                          const uint32_t InData_DomainParam[])
-{
-    return (HW_SCE_EcdsaP384SignatureVerificationSub(InData_CurveType, InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
-}
-
-fsp_err_t HW_SCE_EcdsaP521SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
-                                                          const uint32_t InData_KeyIndex[],
-                                                          const uint32_t InData_MsgDgst[],
-                                                          const uint32_t InData_Signature[],
-                                                          const uint32_t InData_DomainParam[])
+fsp_err_t HW_SCE_EcdsaP521SignatureGenerateSubAdaptor (const uint32_t InData_CurveType[],
+                                                       const uint32_t InData_KeyIndex[],
+                                                       const uint32_t InData_MsgDgst[],
+                                                       const uint32_t InData_DomainParam[],
+                                                       uint32_t       OutData_Signature[])
 {
     FSP_PARAMETER_NOT_USED(InData_CurveType);
-    return (HW_SCE_EcdsaP521SignatureVerificationSub(InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
+
+    return HW_SCE_EcdsaP521SignatureGenerateSub(InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature);
 }
 
-fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(const uint32_t *InData_CurveType,
-                                                     const uint32_t *InData_Cmd,
-                                                     const uint32_t *InData_KeyType,
-                                                     const uint32_t InData_DomainParam[],
-                                                     uint32_t *OutData_PubKeyIndex,
-                                                     uint32_t *OutData_PubKey,
-                                                     uint32_t *OutData_PrivKeyIndex,
-                                                     uint32_t *OutData_PrivKey)
+fsp_err_t HW_SCE_EcdsaSignatureVerificationSubAdaptor (const uint32_t InData_CurveType[],
+                                                       const uint32_t InData_Cmd[],
+                                                       const uint32_t InData_KeyIndex[],
+                                                       const uint32_t InData_MsgDgst[],
+                                                       const uint32_t InData_Signature[],
+                                                       const uint32_t InData_DomainParam[])
 {
-    FSP_PARAMETER_NOT_USED (InData_KeyType);
-    FSP_PARAMETER_NOT_USED (OutData_PubKey);
-    FSP_PARAMETER_NOT_USED (OutData_PrivKey);
-
-    return (HW_SCE_GenerateEccRandomKeyIndexSub(InData_CurveType, InData_Cmd, InData_DomainParam, OutData_PubKeyIndex, OutData_PrivKeyIndex));
+    return HW_SCE_EcdsaSignatureVerificationSub(InData_CurveType,
+                                                InData_Cmd,
+                                                InData_KeyIndex,
+                                                InData_MsgDgst,
+                                                InData_Signature,
+                                                InData_DomainParam);
 }
 
-fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSubAdaptor(const uint32_t *InData_CurveType,
-                                                         const uint32_t *InData_KeyType,
-                                                         const uint32_t InData_DomainParam[],
-                                                         uint32_t *OutData_PubKeyIndex,
-                                                         uint32_t *OutData_PubKey,
-                                                         uint32_t *OutData_PrivKeyIndex,
-                                                         uint32_t *OutData_PrivKey)
+fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSubAdaptor (const uint32_t InData_CurveType[],
+                                                           const uint32_t InData_KeyIndex[],
+                                                           const uint32_t InData_MsgDgst[],
+                                                           const uint32_t InData_Signature[],
+                                                           const uint32_t InData_DomainParam[])
 {
-    FSP_PARAMETER_NOT_USED (InData_KeyType);
-    FSP_PARAMETER_NOT_USED (OutData_PubKey);
-    FSP_PARAMETER_NOT_USED (OutData_PrivKey);
-    
-    return (HW_SCE_GenerateEccP384RandomKeyIndexSub(InData_CurveType, InData_DomainParam, OutData_PubKeyIndex, OutData_PrivKeyIndex));
+    return HW_SCE_EcdsaP384SignatureVerificationSub(InData_CurveType,
+                                                    InData_KeyIndex,
+                                                    InData_MsgDgst,
+                                                    InData_Signature,
+                                                    InData_DomainParam);
 }
 
-fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT, 
-                                                  uint32_t *InData_KeyType,
-                                                  uint32_t *OutData_PubKeyIndex,
-                                                  uint32_t *OutData_PubKey,
-                                                  uint32_t *OutData_PrivKeyIndex,
-                                                  uint32_t *OutData_PrivKey)
+fsp_err_t HW_SCE_EcdsaP521SignatureVerificationSubAdaptor (const uint32_t InData_CurveType[],
+                                                           const uint32_t InData_KeyIndex[],
+                                                           const uint32_t InData_MsgDgst[],
+                                                           const uint32_t InData_Signature[],
+                                                           const uint32_t InData_DomainParam[])
 {
-    FSP_PARAMETER_NOT_USED (InData_KeyType);
-    FSP_PARAMETER_NOT_USED (OutData_PubKey);
-    FSP_PARAMETER_NOT_USED (OutData_PrivKey);
+    FSP_PARAMETER_NOT_USED(InData_CurveType);
 
-    return (HW_SCE_RSA2048_KeyPairGenerateSub(MAX_CNT, OutData_PubKeyIndex, OutData_PrivKeyIndex));
+    return HW_SCE_EcdsaP521SignatureVerificationSub(InData_KeyIndex,
+                                                    InData_MsgDgst,
+                                                    InData_Signature,
+                                                    InData_DomainParam);
+}
+
+fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSubAdaptor (const uint32_t * InData_CurveType,
+                                                      const uint32_t * InData_Cmd,
+                                                      const uint32_t * InData_KeyType,
+                                                      const uint32_t   InData_DomainParam[],
+                                                      uint32_t       * OutData_PubKeyIndex,
+                                                      uint32_t       * OutData_PubKey,
+                                                      uint32_t       * OutData_PrivKeyIndex,
+                                                      uint32_t       * OutData_PrivKey)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    FSP_PARAMETER_NOT_USED(OutData_PubKey);
+    FSP_PARAMETER_NOT_USED(OutData_PrivKey);
+
+    return HW_SCE_GenerateEccRandomKeyIndexSub(InData_CurveType,
+                                               InData_Cmd,
+                                               InData_DomainParam,
+                                               OutData_PubKeyIndex,
+                                               OutData_PrivKeyIndex);
+}
+
+fsp_err_t HW_SCE_GenerateEccP384RandomKeyIndexSubAdaptor (const uint32_t * InData_CurveType,
+                                                          const uint32_t * InData_KeyType,
+                                                          const uint32_t   InData_DomainParam[],
+                                                          uint32_t       * OutData_PubKeyIndex,
+                                                          uint32_t       * OutData_PubKey,
+                                                          uint32_t       * OutData_PrivKeyIndex,
+                                                          uint32_t       * OutData_PrivKey)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    FSP_PARAMETER_NOT_USED(OutData_PubKey);
+    FSP_PARAMETER_NOT_USED(OutData_PrivKey);
+
+    return HW_SCE_GenerateEccP384RandomKeyIndexSub(InData_CurveType,
+                                                   InData_DomainParam,
+                                                   OutData_PubKeyIndex,
+                                                   OutData_PrivKeyIndex);
+}
+
+fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub (uint32_t   MAX_CNT,
+                                                   uint32_t * InData_KeyType,
+                                                   uint32_t * OutData_PubKeyIndex,
+                                                   uint32_t * OutData_PubKey,
+                                                   uint32_t * OutData_PrivKeyIndex,
+                                                   uint32_t * OutData_PrivKey)
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyType);
+    FSP_PARAMETER_NOT_USED(OutData_PubKey);
+    FSP_PARAMETER_NOT_USED(OutData_PrivKey);
+
+    return HW_SCE_RSA2048_KeyPairGenerateSub(MAX_CNT, OutData_PubKeyIndex, OutData_PrivKeyIndex);
+}
+
+fsp_err_t HW_SCE_Aes128OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+{
+    return HW_SCE_Aes128OutputKeyForDotfSub(InData_KeyIndex, InData_DOTFSEED);
+}
+
+fsp_err_t HW_SCE_Aes192OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+{
+    return HW_SCE_Aes192OutputKeyForDotfSub(InData_KeyIndex, InData_DOTFSEED);
+}
+
+fsp_err_t HW_SCE_Aes256OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+{
+    return HW_SCE_Aes256OutputKeyForDotfSub(InData_KeyIndex, InData_DOTFSEED);
 }

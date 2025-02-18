@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -131,18 +131,18 @@ fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub (const uint32_t InData_KeyMode[],
 
         if (CHCK_STS(REG_143CH, 22, 1))
         {
-            HW_SCE_p_func100(0xa8ea2b6eU, 0x3ae22637U, 0x1d511917U, 0xa20fd4f5U);
+            HW_SCE_p_func100(0x44d5db94U, 0x15408e09U, 0x6e73e4efU, 0x4dd31740U);
             WR1_PROG(REG_1438H, 0x40000100U);
 
             WR1_PROG(REG_1600H, 0x0000b400U);
-            WR1_PROG(REG_1600H, 0x00000010U);
+            WR1_PROG(REG_1600H, 0x00000002U);
 
             WR1_PROG(REG_1608H, 0x81010000U);
             WR1_PROG(REG_1400H, 0x02090005U);
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
 
-            HW_SCE_p_func100(0x129e0b59U, 0xe5a1d054U, 0x9efe86e4U, 0xc6d3894bU);
+            HW_SCE_p_func100(0xd46f2573U, 0xd44e9322U, 0x3db78e82U, 0x14573da1U);
             WR1_PROG(REG_1438H, 0x40000110U);
 
             WR1_PROG(REG_1600H, 0x00000821U);
@@ -159,7 +159,7 @@ fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub (const uint32_t InData_KeyMode[],
             WR1_PROG(REG_1420H, InData_DOTFSEED[1]);
             WR1_PROG(REG_1458H, 0x00000000U);
 
-            HW_SCE_p_func100(0xccc1532aU, 0xb3a17348U, 0x93a4dda3U, 0x7f9bd8a5U);
+            HW_SCE_p_func100(0xfdd6b652U, 0x1b5e63e5U, 0xc50ceca0U, 0x3e754242U);
             WR1_PROG(REG_1438H, 0x40000140U);
 
             WR1_PROG(REG_1608H, 0x81020000U);
@@ -167,7 +167,7 @@ fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub (const uint32_t InData_KeyMode[],
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
 
-            HW_SCE_p_func102(0x82fadddeU, 0x8a49ffd7U, 0xf6673b0cU, 0xc457ca49U);
+            HW_SCE_p_func102(0x4f833978U, 0x6b9207ecU, 0x9f7d7603U, 0xd80beecbU);
             WR1_PROG(REG_14BCH, 0x00000040U);
             WAIT_STS(REG_142CH, 12, 0);
 
@@ -175,18 +175,18 @@ fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub (const uint32_t InData_KeyMode[],
         }
         else
         {
-            HW_SCE_p_func100(0x1f56ad92U, 0x37cf929fU, 0x8d5597a1U, 0x3779e7c4U);
+            HW_SCE_p_func100(0x4c48b7bbU, 0x5798f68fU, 0xed8cc279U, 0xffe24d58U);
             WR1_PROG(REG_1438H, 0x40000180U);
 
             WR1_PROG(REG_1600H, 0x0000b400U);
-            WR1_PROG(REG_1600H, 0x00000010U);
+            WR1_PROG(REG_1600H, 0x00000002U);
 
             WR1_PROG(REG_1608H, 0x81010000U);
             WR1_PROG(REG_1400H, 0x02090005U);
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
 
-            HW_SCE_p_func100(0xc6034ecdU, 0xb59f37adU, 0x66ecdb3eU, 0x242120d4U);
+            HW_SCE_p_func100(0xe0919d3dU, 0x63deeff9U, 0x0fa495ffU, 0xe1888d86U);
             WR1_PROG(REG_1438H, 0x40000190U);
 
             WR1_PROG(REG_1600H, 0x00000821U);
@@ -203,7 +203,7 @@ fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub (const uint32_t InData_KeyMode[],
             WR1_PROG(REG_1420H, InData_DOTFSEED[1]);
             WR1_PROG(REG_1458H, 0x00000000U);
 
-            HW_SCE_p_func100(0xf637fdbfU, 0xdfcaa179U, 0x1c0a7836U, 0xab2737a7U);
+            HW_SCE_p_func100(0x4625fae0U, 0x4312e429U, 0x7f54e28cU, 0x20cbfb5eU);
             WR1_PROG(REG_1438H, 0x400001C0U);
 
             WR1_PROG(REG_1608H, 0x81020000U);
@@ -211,7 +211,7 @@ fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub (const uint32_t InData_KeyMode[],
             WAIT_STS(REG_1404H, 30, 0);
             WR1_PROG(REG_143CH, 0x00001800U);
 
-            HW_SCE_p_func102(0x0530402fU, 0x450d9327U, 0xf90fa093U, 0x79811762U);
+            HW_SCE_p_func102(0x81601282U, 0x7fbdbe54U, 0xa5742d83U, 0x0b6b2891U);
             WR1_PROG(REG_14BCH, 0x00000040U);
             WAIT_STS(REG_142CH, 12, 0);
 

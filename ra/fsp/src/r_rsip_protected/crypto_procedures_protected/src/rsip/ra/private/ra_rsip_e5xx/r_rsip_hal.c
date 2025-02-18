@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -58,6 +58,7 @@ static const uint32_t gs_sha_hash_type[] =
 
 static const uint32_t gs_hmac_hash_type[] =
 {
+    [RSIP_KEY_HMAC_SHA224] = BSWAP_32BIG_C(1U),
     [RSIP_KEY_HMAC_SHA256] = BSWAP_32BIG_C(2U),
     [RSIP_KEY_HMAC_SHA384] = BSWAP_32BIG_C(5U),
     [RSIP_KEY_HMAC_SHA512] = BSWAP_32BIG_C(6U),

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -113,6 +113,13 @@ typedef enum e_ospi_b_combination_function
     OSPI_B_COMBINATION_FUNCTION_2BYTE   = 0x1FF, ///< Combine up to 2 bytes
 } ospi_b_combination_function_t;
 
+/** Simple array length table structure. */
+typedef struct st_ospi_b_table
+{
+    void  * p_table;                   ///< Pointer to the table array.
+    uint8_t length;                    ///< Number of entries in the table.
+} ospi_b_table_t;
+
 /** Memory mapped timing */
 typedef struct st_ospi_b_timing_setting
 {
@@ -124,20 +131,19 @@ typedef struct st_ospi_b_timing_setting
 /** Command set used for a protocol mode other than normal (1S-1S-1S) SPI. */
 typedef struct st_ospi_b_xspi_command_set
 {
-    spi_flash_protocol_t              protocol;                  ///< Protocol mode associated with this command set.
-    ospi_b_command_bytes_t            command_bytes;             ///< Number of command bytes for each command code.
-    uint16_t                          read_command;              ///< Read command.
-    uint16_t                          page_program_command;      ///< Page program/write command.
-    uint16_t                          write_enable_command;      ///< Command to enable write or erase, set to 0x00 to ignore.
-    uint16_t                          status_command;            ///< Command to read the write status, set to 0x00 to ignore.
-    uint8_t                           read_dummy_cycles;         ///< Dummy cycles to be inserted for read commands.
-    uint8_t                           program_dummy_cycles;      ///< Dummy cycles to be inserted for page program commands.
-    uint8_t                           status_dummy_cycles;       ///< Dummy cycles to be inserted for status read commands.
-    uint8_t                           erase_command_list_length; ///< Length of erase command list
-    spi_flash_erase_command_t const * p_erase_command_list;      ///< List of all erase commands and associated sizes
+    spi_flash_protocol_t   protocol;             ///< Protocol mode associated with this command set.
+    ospi_b_command_bytes_t command_bytes;        ///< Number of command bytes for each command code.
+    uint16_t               read_command;         ///< Read command.
+    uint16_t               page_program_command; ///< Page program/write command.
+    uint16_t               write_enable_command; ///< Command to enable write or erase, set to 0x00 to ignore.
+    uint16_t               status_command;       ///< Command to read the write status, set to 0x00 to ignore.
+    uint8_t                read_dummy_cycles;    ///< Dummy cycles to be inserted for read commands.
+    uint8_t                program_dummy_cycles; ///< Dummy cycles to be inserted for page program commands.
+    uint8_t                status_dummy_cycles;  ///< Dummy cycles to be inserted for status read commands.
+    ospi_b_table_t const * p_erase_commands;     ///< List of all erase commands and associated sizes
 } ospi_b_xspi_command_set_t;
 
-/* OSPI DOTF AES Key Lengths. */
+/** OSPI DOTF AES Key Lengths. */
 typedef enum e_ospi_b_dotf_aes_key_length_words
 {
     OSPI_B_DOTF_AES_KEY_LENGTH_WORDS_128 = 16U,
@@ -145,7 +151,7 @@ typedef enum e_ospi_b_dotf_aes_key_length_words
     OSPI_B_DOTF_AES_KEY_LENGTH_WORDS_256 = 32U
 } ospi_b_dotf_aes_key_length_words_t;
 
-/* OSPI DOTF AES Type. */
+/** PSPI DOTF AES Type. */
 typedef enum e_ospi_b_dotf_aes_key_type
 {
     OSPI_B_DOTF_AES_KEY_TYPE_128 = 0U,
@@ -153,14 +159,14 @@ typedef enum e_ospi_b_dotf_aes_key_type
     OSPI_B_DOTF_AES_KEY_TYPE_256 = 2U
 } ospi_b_dotf_aes_key_type_t;
 
-/* OSPI DOTF key Type. */
+/** OSPI DOTF key Type. */
 typedef enum e_ospi_b_dotf_key_format
 {
     OSPI_B_DOTF_KEY_FORMAT_PLAINTEXT = 0U,
     OSPI_B_DOTF_KEY_FORMAT_WRAPPED   = 1U,
 } ospi_b_dotf_key_format_t;
 
-/* This structure is used to hold all the DOTF related configuration. */
+/** This structure is used to hold all the DOTF related configuration. */
 typedef struct st_ospi_b_dotf_cfg
 {
     ospi_b_dotf_aes_key_type_t key_type;
@@ -174,31 +180,32 @@ typedef struct st_ospi_b_dotf_cfg
 /** OSPI_B Extended configuration. */
 typedef struct st_ospi_b_extended_cfg
 {
-    ospi_b_device_number_t            channel;                 ///< Device number to be used for memory device
-    ospi_b_timing_setting_t const   * p_timing_settings;       ///< Memory-mapped timing settings.
-    ospi_b_xspi_command_set_t const * p_xspi_command_set_list; ///< Additional protocol command sets; if additional protocol commands set are not used set this to NULL.
-    uint8_t   xspi_command_set_list_length;                    ///< Number of additional protocol command set defined.
-    uint8_t * p_autocalibration_preamble_pattern_addr;         ///< OctaFlash memory address holding the preamble pattern
-    uint8_t   data_latch_delay_clocks;                         ///< Specify delay between OM_DQS and OM_DQS Strobe. Set to 0 to auto-calibrate. Typical value is 0x80.
+    uint8_t                         ospi_b_unit;                             ///< The OSPI_B unit corresponding to the selected channel.
+    ospi_b_device_number_t          channel;                                 ///< Device number to be used for memory device
+    ospi_b_timing_setting_t const * p_timing_settings;                       ///< Memory-mapped timing settings.
+    ospi_b_table_t const          * p_xspi_command_set;                      ///< Additional protocol command sets; if additional protocol commands set are not used set this to NULL.
+    uint8_t                       * p_autocalibration_preamble_pattern_addr; ///< OctaFlash memory address holding the preamble pattern
+    uint8_t                         data_latch_delay_clocks;                 ///< Specify delay between OM_DQS and OM_DQS Strobe. Set to 0 to auto-calibrate. Typical value is 0x80.
 #if OSPI_B_CFG_DMAC_SUPPORT_ENABLE
-    transfer_instance_t const * p_lower_lvl_transfer;          ///< DMA Transfer instance used for data transmission
+    transfer_instance_t const * p_lower_lvl_transfer;                        ///< DMA Transfer instance used for data transmission
 #endif
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
-    ospi_b_dotf_cfg_t * p_dotf_cfg;                            ///< DOTF Configuration
+    ospi_b_dotf_cfg_t * p_dotf_cfg;                                          ///< DOTF Configuration
 #endif
-    uint8_t read_dummy_cycles;                                 ///< Dummy cycles to be inserted for read commands.
-    uint8_t program_dummy_cycles;                              ///< Dummy cycles to be inserted for page program commands.
-    uint8_t status_dummy_cycles;                               ///< Dummy cycles to be inserted for status read commands.
+    uint8_t read_dummy_cycles;                                               ///< Dummy cycles to be inserted for read commands.
+    uint8_t program_dummy_cycles;                                            ///< Dummy cycles to be inserted for page program commands.
+    uint8_t status_dummy_cycles;                                             ///< Dummy cycles to be inserted for status read commands.
 } ospi_b_extended_cfg_t;
 
 /** Instance control block. DO NOT INITIALIZE.  Initialization occurs when @ref spi_flash_api_t::open is called */
 typedef struct st_ospi_b_instance_ctrl
 {
-    spi_flash_cfg_t const           * p_cfg;        // Pointer to initial configuration
-    uint32_t                          open;         // Whether or not driver is open
-    spi_flash_protocol_t              spi_protocol; // Current OSPI protocol selected
-    ospi_b_device_number_t            channel;      // Device number to be used for memory device
-    ospi_b_xspi_command_set_t const * p_cmd_set;    // Command set for the active protocol mode.
+    spi_flash_cfg_t const           * p_cfg;        ///< Pointer to initial configuration.
+    uint32_t                          open;         ///< Whether or not driver is open.
+    spi_flash_protocol_t              spi_protocol; ///< Current OSPI protocol selected.
+    ospi_b_device_number_t            channel;      ///< Device number to be used for memory device.
+    ospi_b_xspi_command_set_t const * p_cmd_set;    ///< Command set for the active protocol mode.
+    R_XSPI0_Type                    * p_reg;        ///< Address for the OSPI peripheral associated with this channel.
 } ospi_b_instance_ctrl_t;
 
 /**********************************************************************************************************************

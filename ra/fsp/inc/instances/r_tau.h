@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -182,6 +182,7 @@ fsp_err_t R_TAU_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                             void const * const            p_context,
                             timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_TAU_Close(timer_ctrl_t * const p_ctrl);
+fsp_err_t R_TAU_LinMeasurementFuncSwitch(timer_ctrl_t * const p_ctrl, tau_function_t func);
 
 /*******************************************************************************************************************//**
  * @} (end defgroup TAU)

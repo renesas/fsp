@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -34,6 +34,10 @@ typedef sau_uart_extended_cfg_t     at_transport_da16xxx_uart_extended_cfg_t;
 typedef sau_uart_baudrate_setting_t rm_at_transport_da16xxx_baud_setting_t;
 static fsp_err_t (* p_sau_uart_baud_calculate)(sau_uart_instance_ctrl_t * const, uint32_t,
                                                sau_uart_baudrate_setting_t * const) = &R_SAU_UART_BaudCalculate;
+ #if (0 == SAU_UART_CFG_FIXED_BAUDRATE_ENABLE)
+static fsp_err_t (* p_sau_uart_baud_set)(uart_ctrl_t * const p_api_ctrl,
+                                         void const * const p_baud_setting) = &R_SAU_UART_BaudSet;
+ #endif
 #else
  #include "r_sci_uart.h"
 typedef sci_uart_instance_ctrl_t rm_at_transport_da16xxx_uart_instance_ctrl_t;
@@ -60,8 +64,9 @@ static fsp_err_t (* p_sci_uart_baud_calculate)(uint32_t, bool, uint32_t,
 
 /* Initial DA16XXX Wifi module UART settings */
 #define AT_TRANSPORT_DA16XXX_DEFAULT_BAUDRATE                             (115200)
-#define AT_TRANSPORT_DA16XXX_DEFAULT_MODULATION                           false
-#define AT_TRANSPORT_DA16XXX_DEFAULT_ERROR                                (9000)
+#define AT_TRANSPORT_DA16XXX_MODULATION_ENABLE                            true
+#define AT_TRANSPORT_DA16XXX_MODULATION_DISABLE                           false
+#define AT_TRANSPORT_DA16XXX_DEFAULT_ERROR                                (5000)
 
 /* Pin or port invalid definition */
 #define AT_TRANSPORT_DA16XXX_BSP_PIN_PORT_INVALID                         (UINT16_MAX)
@@ -468,46 +473,25 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
 
     p_instance_ctrl->open = AT_TRANSPORT_DA16XXX_UART_OPEN;
 
-    uart0_cfg.p_extend   = (void *) &uart0_cfg_extended;
-    uart0_cfg.p_callback = rm_at_transport_da16xxx_uart_callback;
-    uart0_cfg.p_context  = p_instance_ctrl;
-
-    /* Open UART */
-    p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
-    err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg);
-
     for (index = 0; index < UART_BAUD_MAX_CNT; index++)
     {
         curr_uart_baud = uart_baud_rates[index];
 #ifndef R_SAU0_BASE
-        (* p_sci_uart_baud_calculate)(curr_uart_baud, AT_TRANSPORT_DA16XXX_DEFAULT_MODULATION,
+        (* p_sci_uart_baud_calculate)(curr_uart_baud, AT_TRANSPORT_DA16XXX_MODULATION_ENABLE,
                                       AT_TRANSPORT_DA16XXX_DEFAULT_ERROR, &g_baud_setting);
 
         uart0_cfg_extended.p_baud_setting   = &g_baud_setting;
         uart0_cfg_extended.flow_control     = RM_AT_TRANSPORT_DA16XXX_SCI_UART_FLOW_CONTROL_RTS;
         uart0_cfg_extended.flow_control_pin = (bsp_io_port_pin_t) AT_TRANSPORT_DA16XXX_BSP_PIN_PORT_INVALID;
-#else
- #if (0 == SAU_UART_CFG_FIXED_BAUDRATE_ENABLE)
-        (*p_sau_uart_baud_calculate)((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl, curr_uart_baud,
-                                     &g_baud_setting);
-
-        uart0_cfg_extended.p_baudrate = &g_baud_setting;
- #else
-        FSP_PARAMETER_NOT_USED(g_baud_setting);
-        FSP_PARAMETER_NOT_USED(p_sau_uart_baud_calculate);
- #endif
 #endif
-        uart0_cfg.p_extend = (void *) &uart0_cfg_extended;
 
-        if (index > 0)
-        {
-            uart0_cfg.p_callback = rm_at_transport_da16xxx_uart_callback;
-            uart0_cfg.p_context  = p_instance_ctrl;
+        uart0_cfg.p_extend   = (void *) &uart0_cfg_extended;
+        uart0_cfg.p_callback = rm_at_transport_da16xxx_uart_callback;
+        uart0_cfg.p_context  = p_instance_ctrl;
 
-            /* Open UART */
-            p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
-            err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg);
-        }
+        /* Open UART */
+        p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
+        err    = p_uart->p_api->open(p_uart->p_ctrl, &uart0_cfg);
 
         if (FSP_SUCCESS != err)
         {
@@ -515,6 +499,18 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
         }
 
         FSP_ERROR_RETURN(FSP_SUCCESS == err, FSP_ERR_WIFI_INIT_FAILED);
+
+#ifdef R_SAU0_BASE
+ #if (0 == SAU_UART_CFG_FIXED_BAUDRATE_ENABLE)
+        (*p_sau_uart_baud_calculate)((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl, curr_uart_baud,
+                                     &g_baud_setting);
+
+        (*p_sau_uart_baud_set)((rm_at_transport_da16xxx_uart_instance_ctrl_t *) p_uart->p_ctrl, &g_baud_setting);
+ #else
+        FSP_PARAMETER_NOT_USED(g_baud_setting);
+        FSP_PARAMETER_NOT_USED(p_sau_uart_baud_calculate);
+ #endif
+#endif
 
         /* Delay after open */
 #if (BSP_CFG_RTOS == 0)                /* Baremetal */
@@ -637,7 +633,8 @@ fsp_err_t rm_at_transport_da16xxx_uartOpen (at_transport_da16xxx_ctrl_t * const 
 
     /* Open uart port with config values from the configurator */
     p_uart = p_instance_ctrl->uart_instance_objects[AT_TRANSPORT_DA16XXX_UART_INITIAL_PORT];
-    err    = p_uart->p_api->open(p_uart->p_ctrl, p_uart->p_cfg);
+
+    err = p_uart->p_api->open(p_uart->p_ctrl, p_uart->p_cfg);
     if (FSP_SUCCESS != err)
     {
         rm_at_transport_da16xxx_uartClose(p_instance_ctrl);
@@ -1096,9 +1093,9 @@ fsp_err_t rm_at_transport_da16xxx_uart_atCommandSend (at_transport_da16xxx_ctrl_
             if (NULL != strstr((char *) p_at_cmd->p_response_buffer, AT_TRANSPORT_DA16XXX_RETURN_TEXT_ERROR))
             {
                 /*
-                Break from the for loop since ERROR string is found in response buffer.
-                Error code gets parsed in error lookup function called below.
-                */
+                 * Break from the for loop since ERROR string is found in response buffer.
+                 * Error code gets parsed in error lookup function called below.
+                 */
                 break;
             }
         }
@@ -1324,7 +1321,7 @@ static void rm_at_transport_da16xxx_cleanup_open (at_transport_da16xxx_ctrl_t * 
  **********************************************************************************************************************/
 static fsp_err_t rm_at_transport_da16xxx_error_lookup (char * p_resp)
 {
-    int8_t    err_code;
+    int16_t   err_code;
     int32_t   scanf_ret;
     fsp_err_t err = FSP_ERR_INTERNAL;
 

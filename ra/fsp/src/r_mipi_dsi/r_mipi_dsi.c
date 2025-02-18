@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -64,12 +64,12 @@ const mipi_dsi_api_t g_mipi_dsi =
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
-void mipi_dsi_seq0(void);
-void mipi_dsi_seq1(void);
-void mipi_dsi_vin1(void);
-void mipi_dsi_rcv(void);
-void mipi_dsi_ferr(void);
-void mipi_dsi_ppi(void);
+void mipi_dsi_seq0_isr(void);
+void mipi_dsi_seq1_isr(void);
+void mipi_dsi_vin1_isr(void);
+void mipi_dsi_rcv_isr(void);
+void mipi_dsi_ferr_isr(void);
+void mipi_dsi_ppi_isr(void);
 
 static void dsi_isr_enable(mipi_dsi_irq_cfg_t const * irq_cfg, mipi_dsi_instance_ctrl_t * p_ctrl);
 static void dsi_isr_disable(mipi_dsi_irq_cfg_t const * irq_cfg);
@@ -895,7 +895,7 @@ static void dsi_isr_disable (mipi_dsi_irq_cfg_t const * irq_cfg)
  * Sequence 0 ISR
  *  - Process LP sequence command events and forward them to the user callback
  **********************************************************************************************************************/
-void mipi_dsi_seq0 (void) {
+void mipi_dsi_seq0_isr (void) {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 
@@ -921,7 +921,7 @@ void mipi_dsi_seq0 (void) {
  * Sequence 1 ISR
  *  - Process HS sequence command events and forward them to the user callback
  **********************************************************************************************************************/
-void mipi_dsi_seq1 (void) {
+void mipi_dsi_seq1_isr (void) {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 
@@ -947,7 +947,7 @@ void mipi_dsi_seq1 (void) {
  * Video Input ISR
  *  - Process DSI Video Input Events and forward them to the user callback
  **********************************************************************************************************************/
-void mipi_dsi_vin1 (void) {
+void mipi_dsi_vin1_isr (void) {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 
@@ -995,7 +995,7 @@ void mipi_dsi_vin1 (void) {
  * Receive ISR
  *  - Process Receive Events and forward them to the user callback
  **********************************************************************************************************************/
-void mipi_dsi_rcv (void) {
+void mipi_dsi_rcv_isr (void) {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 
@@ -1024,7 +1024,7 @@ void mipi_dsi_rcv (void) {
  * Fatal Error ISR
  *  - Process Fatal Error Events and forward them to the user callback
  **********************************************************************************************************************/
-void mipi_dsi_ferr (void) {
+void mipi_dsi_ferr_isr (void) {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 
@@ -1050,7 +1050,7 @@ void mipi_dsi_ferr (void) {
  * PHY-Protocol Interface ISR
  *  - Process Phy-Protocol Events and forward them to the user callback
  **********************************************************************************************************************/
-void mipi_dsi_ppi (void) {
+void mipi_dsi_ppi_isr (void) {
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE;
 

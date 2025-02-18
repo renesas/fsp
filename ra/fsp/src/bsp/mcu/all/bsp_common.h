@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -78,7 +78,7 @@ FSP_HEADER
 
 /** This function is called before returning an error code. To stop on a runtime error, define fsp_error_log in
  * user code and do required debugging (breakpoints, stack dump, etc) in this function.*/
-#if (1 == BSP_CFG_ERROR_LOG)
+#if (1 == BSP_CFG_ASSERT)
 
  #ifndef FSP_ERROR_LOG
   #define FSP_ERROR_LOG(err) \
@@ -599,7 +599,7 @@ __STATIC_INLINE void R_BSP_FlashCacheEnable (void)
 /***********************************************************************************************************************
  * Exported global functions (to be accessed by other files)
  **********************************************************************************************************************/
-#if ((1 == BSP_CFG_ERROR_LOG) || (1 == BSP_CFG_ASSERT))
+#if  (1 == BSP_CFG_ASSERT)
 
 /** Prototype of default function called before errors are returned in FSP code if BSP_CFG_LOG_ERRORS is set to 1. */
 void fsp_error_log(fsp_err_t err, const char * file, int32_t line);

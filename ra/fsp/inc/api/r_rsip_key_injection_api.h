@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -34,6 +34,7 @@ FSP_HEADER
 #define R_RSIP_AES256_XTS_KEY_INDEX_WORD_SIZE         (21U)
 
 /* For HMAC operation. */
+#define R_RSIP_HMAC_SHA224_KEY_INDEX_WORD_SIZE        (13U)
 #define R_RSIP_HMAC_SHA256_KEY_INDEX_WORD_SIZE        (13U)
 #define R_RSIP_HMAC_SHA384_KEY_INDEX_WORD_SIZE        (17U)
 #define R_RSIP_HMAC_SHA512_KEY_INDEX_WORD_SIZE        (21U)
@@ -586,6 +587,21 @@ typedef struct st_rsip_key_injection_api
                                                     uint8_t const * const                  p_initial_vector,
                                                     uint8_t const * const                  p_user_key,
                                                     rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
+
+    /** This API outputs 224-bit HMAC-SHA wrapped key.
+     *
+     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
+     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
+     *                                                     When key injection type is plain, this is not required and any value can be specified.
+     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
+     *                                                     When key injection type is plain, this is not required and any value can be specified.
+     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
+     * @param[out] p_wrapped_key                           224-bit HMAC-SHA wrapped key
+     */
+    fsp_err_t (* HMAC_SHA224_InitialKeyWrap)(rsip_key_injection_type_t const key_injection_type,
+                                        uint8_t const * const p_wrapped_user_factory_programming_key,
+                                        uint8_t const * const p_initial_vector,
+                                        uint8_t const * const p_user_key, rsip_hmac_sha_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit HMAC-SHA wrapped key.
      *

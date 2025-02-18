@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -200,6 +200,12 @@ fsp_err_t R_RSIP_ECC_Ed25519_InitialPrivateKeyWrap(rsip_key_injection_type_t con
                                                    uint8_t const * const                  p_initial_vector,
                                                    uint8_t const * const                  p_user_key,
                                                    rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
+
+fsp_err_t R_RSIP_HMAC_SHA224_InitialKeyWrap(rsip_key_injection_type_t const     key_injection_type,
+                                            uint8_t const * const               p_wrapped_user_factory_programming_key,
+                                            uint8_t const * const               p_initial_vector,
+                                            uint8_t const * const               p_user_key,
+                                            rsip_hmac_sha_wrapped_key_t * const p_wrapped_key);
 
 fsp_err_t R_RSIP_HMAC_SHA256_InitialKeyWrap(rsip_key_injection_type_t const     key_injection_type,
                                             uint8_t const * const               p_wrapped_user_factory_programming_key,

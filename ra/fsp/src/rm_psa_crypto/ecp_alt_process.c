@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -316,7 +316,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     uint32_t   indata_key_type = 0;
     uint8_t    padding         = 0U;
 
-  #if !BSP_FEATURE_RSIP_SCE7_SUPPORTED
+  #if !(BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_SCE9_SUPPORTED)
     if ((bool) (grp->vendor_ctx) == false)
     {
 
@@ -441,8 +441,6 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
         }
     #endif
     #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
-
-// else if (ECC_25519_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         else if (MBEDTLS_ECP_DP_CURVE25519 == grp->id)
         {
             sce_ecc25519_public_key_index_t public_key = {0};

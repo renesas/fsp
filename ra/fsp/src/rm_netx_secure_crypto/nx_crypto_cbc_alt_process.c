@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -71,7 +71,8 @@ UINT sce_nx_crypto_cbc_encrypt (VOID          * crypto_metadata,
             break;
         }
 
- #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+ #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
         case 12:
         {
             ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,
@@ -153,7 +154,8 @@ UINT sce_nx_crypto_cbc_decrypt (VOID          * crypto_metadata,
             break;
         }
 
- #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+ #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
         case 12:
         {
             ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd,

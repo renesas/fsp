@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -461,7 +461,6 @@ typedef enum
      SCE_OEM_CMD_HMAC_SHA512,
      SCE_OEM_CMD_HMAC_SHA512_224,
      SCE_OEM_CMD_HMAC_SHA512_256,
-     SCE_OEM_CMD_RSA2048_PUBLIC_FOR_TLS = 254,
      SCE_OEM_CMD_NUM
  } sce_oem_cmd_t;
 

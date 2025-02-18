@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -105,6 +105,7 @@ static const uint32_t gs_rsa_e_pos[RSIP_KEY_RSA_NUM] =
 static const uint32_t gs_wrapped_key_value_len_aes[RSIP_KEY_AES_NUM] =
 {
     [RSIP_KEY_AES_128] = RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_128,
+    [RSIP_KEY_AES_192] = RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_192,
     [RSIP_KEY_AES_256] = RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_256,
 };
 

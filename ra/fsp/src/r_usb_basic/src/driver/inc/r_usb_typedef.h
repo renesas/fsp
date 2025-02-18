@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -246,8 +246,9 @@ typedef enum e_usb_class_internal
     USB_CLASS_INTERNAL_PMSC,           ///< PMSC Class      15
     USB_CLASS_INTERNAL_HPRN,           ///< HPRN Class      16
     USB_CLASS_INTERNAL_HUVC,           ///< HUVC Class      17
-    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      18
-    USB_CLASS_INTERNAL_END,            ///< USB Class       19
+    USB_CLASS_INTERNAL_HAUD,           ///< HAUD Class      18
+    USB_CLASS_INTERNAL_REQUEST,        ///< USB Class Request      19
+    USB_CLASS_INTERNAL_END,            ///< USB Class       20
 } usb_class_internal_t;
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

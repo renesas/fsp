@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -73,7 +73,7 @@ UINT sce_nx_crypto_aes_encrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
     {
         case 10:
         {
-            ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            ret = HW_SCE_Aes128EncryptDecryptInitSubAdaptor(&indata_key_type, &indata_cmd, (uint32_t *) w, NULL, dummy_iv);
             if (ret == FSP_SUCCESS)
             {
                 HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
@@ -85,7 +85,8 @@ UINT sce_nx_crypto_aes_encrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
             break;
         }
 
- #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+ #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
         case 12:
         {
             ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) w, dummy_iv);
@@ -103,7 +104,7 @@ UINT sce_nx_crypto_aes_encrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
  #endif
         case 14:
         {
-            ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            ret = HW_SCE_Aes256EncryptDecryptInitSubAdaptor(&indata_key_type, &indata_cmd, (uint32_t *) w, NULL, dummy_iv);
             if (ret == FSP_SUCCESS)
             {
                 HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
@@ -180,7 +181,7 @@ UINT sce_nx_crypto_aes_decrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
     {
         case 10:
         {
-            ret = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            ret = HW_SCE_Aes128EncryptDecryptInitSubAdaptor(&indata_key_type, &indata_cmd, (uint32_t *) w, NULL, dummy_iv);
             if (ret == FSP_SUCCESS)
             {
                 HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,
@@ -192,7 +193,8 @@ UINT sce_nx_crypto_aes_decrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
             break;
         }
 
- #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+ #if (1U == BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
         case 12:
         {
             ret = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, (uint32_t *) w, dummy_iv);
@@ -210,7 +212,7 @@ UINT sce_nx_crypto_aes_decrypt (NX_CRYPTO_AES * aes_ptr, UCHAR * input, UCHAR * 
  #endif
         case 14:
         {
-            ret = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type, &indata_cmd, (uint32_t *) w, dummy_iv);
+            ret = HW_SCE_Aes256EncryptDecryptInitSubAdaptor(&indata_key_type, &indata_cmd, (uint32_t *) w, NULL, dummy_iv);
             if (ret == FSP_SUCCESS)
             {
                 HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t *) p_aligned_input,

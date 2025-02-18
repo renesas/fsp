@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -69,6 +69,9 @@
  #if defined(USB_CFG_HUVC_USE)
   #include "r_usb_huvc_cfg.h"
  #endif                                /* defined(USB_CFG_HUVC_USE) */
+ #if defined(USB_CFG_HAUD_USE)
+  #include "r_usb_haud_cfg.h"
+ #endif                                /* defined(USB_CFG_HAUD_USE) */
 
 #endif /* #if (BSP_CFG_RTOS != 1) */
 
@@ -144,7 +147,19 @@ static const uint8_t g_usb_pipe_host[] =
     USB_NULL,              USB_NULL,
     USB_NULL,              USB_NULL,
     USB_NULL,              USB_NULL,
- #endif                                /* defined(USB_CFG_HPRN_USE) */
+ #endif                                          /* defined(USB_CFG_HPRN_USE) */
+
+ #if defined(USB_CFG_HAUD_USE)
+    USB_CFG_HAUD_ISO_IN,   USB_CFG_HAUD_ISO_OUT, /* HAUD: Address 1 */
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+ #else                                           /* defined(USB_CFG_HAUD_USE) */
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+    USB_NULL,              USB_NULL,
+ #endif                                /* defined(USB_CFG_HAUD_USE) */
 };
 #endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 

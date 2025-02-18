@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -648,7 +648,7 @@ fsp_err_t R_ADC_D_SnoozeModePrepare (adc_ctrl_t * const p_ctrl)
  #endif
 
     /* Set AWC prior to entering software standby mode.
-     * See section 25.7.2 A/D "Conversion by Inputting a Hardware Trigger" in the RA0E1 user manual R01UH1040EJ0100. */
+     * See in hardware manual: ADC12 > Snooze Mode Function > A/D Conversion by Inputting a Hardware Trigger */
     R_ADC_D->ADM2_b.AWC = 1;
 
     return FSP_SUCCESS;
@@ -682,7 +682,7 @@ fsp_err_t R_ADC_D_SnoozeModeExit (adc_ctrl_t * const p_ctrl)
  #endif
 
     /* Clear AWC after exiting software standby mode.
-     * See section 25.7.2 A/D "Conversion by Inputting a Hardware Trigger" in the RA0E1 user manual R01UH1040EJ0100. */
+     * See in hardware manual: ADC12 > Snooze Mode Function > A/D Conversion by Inputting a Hardware Trigger */
     R_ADC_D->ADM2_b.AWC = 0;
 
     return FSP_SUCCESS;
@@ -881,8 +881,8 @@ static void r_adc_d_open_sub (adc_d_instance_ctrl_t * const p_ctrl)
 #if ADC_D_CFG_INTERNAL_REF_VOLT_ENABLE
     R_ADC_D->ADM2 = adcadm2;
 
-    /* Setting reference voltage source
-     * See Table 25.11 "Register settings for ADREFP[1:0] rewrite" in RA0E1 User's Manual (R01UH1040EJ0100) */
+    /* Setting reference voltage source. See in hardware manual: ADC12 > Registers to Control the A/D Converter >
+     * Table "Register settings for ADREFP[1:0] rewrite" */
     if (ADC_D_POSITIVE_VREF_IVREF == p_extend->positive_vref)
     {
         /* Discharge */

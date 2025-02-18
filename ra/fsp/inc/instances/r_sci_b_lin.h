@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -250,11 +250,14 @@ fsp_err_t R_SCI_B_LIN_CallbackSet(lin_ctrl_t * const          p_api_ctrl,
                                   void (                    * p_callback)(lin_callback_args_t *),
                                   void const * const          p_context,
                                   lin_callback_args_t * const p_callback_memory);
-fsp_err_t R_SCI_B_LIN_IdFilterSet(lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_filter_setting_t const * const p_config);
-fsp_err_t R_SCI_B_LIN_IdFilterGet(lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_filter_setting_t * const p_config);
-fsp_err_t R_SCI_B_LIN_Close(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_B_LIN_BaudCalculate(sci_b_lin_baud_params_t const * const p_baud_params,
                                     sci_b_lin_baud_setting_t * const      p_baud_setting);
+fsp_err_t R_SCI_B_LIN_IdFilterSet(lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_filter_setting_t const * const p_config);
+fsp_err_t R_SCI_B_LIN_IdFilterGet(lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_filter_setting_t * const p_config);
+fsp_err_t R_SCI_B_LIN_WakeupSend(lin_ctrl_t * const p_api_ctrl);
+fsp_err_t R_SCI_B_LIN_SleepEnter(lin_ctrl_t * const p_api_ctrl);
+fsp_err_t R_SCI_B_LIN_SleepExit(lin_ctrl_t * const p_api_ctrl);
+fsp_err_t R_SCI_B_LIN_Close(lin_ctrl_t * const p_api_ctrl);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup SCI_B_LIN)

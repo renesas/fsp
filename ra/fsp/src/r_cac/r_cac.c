@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -80,11 +80,6 @@ void cac_ovfi_isr(void);
 
 static void r_cac_hw_configure(cac_instance_ctrl_t * const p_instance_ctrl);
 static void r_cac_isr_handler(cac_event_t event, uint32_t clear_mask);
-
-/** Name of module used by error logger macro */
-#if BSP_CFG_ERROR_LOG != 0
-static const char g_module_name[] = "cac";
-#endif
 
 /***********************************************************************************************************************
  * Global Variables

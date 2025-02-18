@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -133,7 +133,8 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
                 break;
             }
 
-  #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+  #ifndef MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH
+   #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
                 BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
             case SIZE_AES_192BIT_KEYLEN_BITS:
             {
@@ -149,7 +150,7 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 
                 break;
             }
-  #endif
+   #endif
             case SIZE_AES_256BIT_KEYLEN_BITS:
             {
                 if (output_size != SIZE_AES_256BIT_KEYLEN_BYTES_WRAPPED)
@@ -164,7 +165,7 @@ psa_status_t psa_generate_symmetric_vendor (psa_key_type_t type, size_t bits, ui
 
                 break;
             }
-
+  #endif
             default:
             {
                 ret = PSA_ERROR_NOT_SUPPORTED;

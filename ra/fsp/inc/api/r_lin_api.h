@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -18,7 +18,7 @@
  *  - Interrupt driven transmit/receive processing
  *  - Callback function with returned event code and data
  *  - Checksum generation and validation (standard or enhanced)
- *
+ *  - Bus Sleep and Wakeup
  *
  * @{
  **********************************************************************************************************************/
@@ -55,17 +55,19 @@ typedef enum e_lin_checksum_type
 /** LIN Event codes */
 typedef enum e_lin_event
 {
-    LIN_EVENT_NONE = (0),                                 ///< No event present
-    LIN_EVENT_RX_START_FRAME_COMPLETE       = (1UL << 1), ///< Start frame received event.
-    LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE = (1UL << 2), ///< Information frame received event.
-    LIN_EVENT_TX_START_FRAME_COMPLETE       = (1UL << 3), ///< Start frame transmission complete event
-    LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE = (1UL << 4), ///< Information transmission complete event
-    LIN_EVENT_ERR_INVALID_CHECKSUM          = (1UL << 5), ///< Information frame received successfully, but checksum was invalid
-    LIN_EVENT_ERR_BUS_COLLISION_DETECTED    = (1UL << 9), ///< Bus collision detection event
-    LIN_EVENT_ERR_FRAMING          = (1UL << 28),         ///< Framing error event
-    LIN_EVENT_ERR_COUNTER_OVERFLOW = (1UL << 14),         ///< Counter overflow event
-    LIN_EVENT_ERR_OVERRUN          = (1UL << 24),         ///< Overrun error event
-    LIN_EVENT_ERR_PARITY           = (1UL << 27),         ///< Parity error event (start frame only, LIN information is sent without parity)
+    LIN_EVENT_NONE = (0),                                  ///< No event present
+    LIN_EVENT_RX_START_FRAME_COMPLETE       = (1UL << 1),  ///< Start frame received event.
+    LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE = (1UL << 2),  ///< Information frame received event.
+    LIN_EVENT_TX_START_FRAME_COMPLETE       = (1UL << 3),  ///< Start frame transmission complete event
+    LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE = (1UL << 4),  ///< Information transmission complete event
+    LIN_EVENT_ERR_INVALID_CHECKSUM          = (1UL << 5),  ///< Information frame received successfully, but checksum was invalid
+    LIN_EVENT_TX_WAKEUP_COMPLETE            = (1UL << 6),  ///< Transmit wake up complete event
+    LIN_EVENT_RX_WAKEUP_COMPLETE            = (1UL << 7),  ///< Receive wake up complete event
+    LIN_EVENT_ERR_BUS_COLLISION_DETECTED    = (1UL << 9),  ///< Bus collision detection event
+    LIN_EVENT_ERR_COUNTER_OVERFLOW          = (1UL << 14), ///< Counter overflow event
+    LIN_EVENT_ERR_OVERRUN = (1UL << 24),                   ///< Overrun error event
+    LIN_EVENT_ERR_PARITY  = (1UL << 27),                   ///< Parity error event (start frame only, LIN information is sent without parity)
+    LIN_EVENT_ERR_FRAMING = (1UL << 28),                   ///< Framing error event
 } lin_event_t;
 
 /** LIN Transfer Parameters */
@@ -185,6 +187,24 @@ typedef struct st_lin_api
      */
     fsp_err_t (* callbackSet)(lin_ctrl_t * const p_ctrl, void (* p_callback)(lin_callback_args_t *),
                               void const * const p_context, lin_callback_args_t * const p_callback_memory);
+
+    /** Send wakeup signal for LIN device.
+     *
+     * @param[in]   p_ctrl                  Pointer to the LIN control block.
+     */
+    fsp_err_t (* wakeupSend)(lin_ctrl_t * const p_ctrl);
+
+    /** Place the LIN node in bus sleep mode.
+     *
+     * @param[in]   p_ctrl                  Pointer to the LIN control block.
+     */
+    fsp_err_t (* sleepEnter)(lin_ctrl_t * const p_ctrl);
+
+    /** Exit the bus sleep mode for LIN device.
+     *
+     * @param[in]   p_ctrl                  Pointer to the LIN control block.
+     */
+    fsp_err_t (* sleepExit)(lin_ctrl_t * const p_ctrl);
 
     /** Close LIN device.
      *

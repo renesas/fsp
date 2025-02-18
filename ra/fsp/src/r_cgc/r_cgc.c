@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -595,9 +595,9 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     if (CGC_CLOCK_CHANGE_START == p_clock_cfg->pll2_state)
     {
         /* Configure PLL and store PLL frequency in BSP. */
-        r_cgc_pll_cfg(&p_clock_cfg->pll2_cfg, CGC_CLOCK_PLL2, pll2_hz, pllccr);
+        r_cgc_pll_cfg(&p_clock_cfg->pll2_cfg, CGC_CLOCK_PLL2, pll2_hz, pll2ccr);
 
-        if (CGC_CLOCK_CHANGE_START == options[p_clock_cfg->pll_cfg.source_clock])
+        if (CGC_CLOCK_CHANGE_START == options[p_clock_cfg->pll2_cfg.source_clock])
         {
             /* Need to start PLL source clock and let it stabilize before starting PLL. */
             r_cgc_clock_change(p_clock_cfg->pll2_cfg.source_clock, CGC_CLOCK_CHANGE_START);

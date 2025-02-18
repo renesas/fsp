@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -242,25 +242,28 @@ fsp_err_t RM_COMMS_UART_Read (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * cons
 
     /* Use UART driver to read data */
     err = p_uart_api->read(p_extend->p_uart->p_ctrl, p_dest, bytes);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS
-    if (NULL != p_extend->p_rx_semaphore)
+    fsp_err_t sem_err   = FSP_SUCCESS;
+    fsp_err_t mutex_err = FSP_SUCCESS;
+
+    if ((FSP_SUCCESS == err) && (NULL != p_extend->p_rx_semaphore))
     {
         /* Wait for read to complete */
-        err = rm_comms_semaphore_acquire(p_extend->p_rx_semaphore, p_ctrl->p_cfg->semaphore_timeout);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        sem_err = rm_comms_semaphore_acquire(p_extend->p_rx_semaphore, p_ctrl->p_cfg->semaphore_timeout);
     }
 
     if (NULL != p_extend->p_rx_mutex)
     {
         /* Release read mutex */
-        err = rm_comms_recursive_mutex_release(p_extend->p_rx_mutex);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        mutex_err = rm_comms_recursive_mutex_release(p_extend->p_rx_mutex);
     }
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == sem_err, sem_err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == mutex_err, mutex_err);
 #endif
 
-    return FSP_SUCCESS;
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -297,25 +300,28 @@ fsp_err_t RM_COMMS_UART_Write (rm_comms_ctrl_t * const p_api_ctrl, uint8_t * con
 
     /* Use UART driver to write data */
     err = p_uart_api->write(p_extend->p_uart->p_ctrl, p_src, bytes);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
 #if BSP_CFG_RTOS
-    if (NULL != p_extend->p_tx_semaphore)
+    fsp_err_t sem_err   = FSP_SUCCESS;
+    fsp_err_t mutex_err = FSP_SUCCESS;
+
+    if ((FSP_SUCCESS == err) && (NULL != p_extend->p_tx_semaphore))
     {
         /* Wait for write to complete */
-        err = rm_comms_semaphore_acquire(p_extend->p_tx_semaphore, p_ctrl->p_cfg->semaphore_timeout);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        sem_err = rm_comms_semaphore_acquire(p_extend->p_tx_semaphore, p_ctrl->p_cfg->semaphore_timeout);
     }
 
     if (NULL != p_extend->p_tx_mutex)
     {
         /* Release write mutex */
-        err = rm_comms_recursive_mutex_release(p_extend->p_tx_mutex);
-        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        mutex_err = rm_comms_recursive_mutex_release(p_extend->p_tx_mutex);
     }
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == sem_err, sem_err);
+    FSP_ERROR_RETURN(FSP_SUCCESS == mutex_err, mutex_err);
 #endif
 
-    return FSP_SUCCESS;
+    return err;
 }
 
 /*******************************************************************************************************************//**

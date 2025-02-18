@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -1380,9 +1380,6 @@ void r_flash_lp_init (flash_lp_instance_ctrl_t * p_ctrl)
     p_ctrl->timeout_write_extra_area =
         (uint32_t) (FLASH_LP_MAX_WRITE_EXTRA_AREA_TIME_US * p_ctrl->system_clock_frequency) /
         FLASH_LP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
-
-    /* FLWAITR should be set to 0 when the FCLK/ICLK is within the acceptable range. */
-    R_FACI_LP->FLWAITR = 0U;
 }
 
 #if (FLASH_LP_CFG_DATA_FLASH_PROGRAMMING_ENABLE == 1)

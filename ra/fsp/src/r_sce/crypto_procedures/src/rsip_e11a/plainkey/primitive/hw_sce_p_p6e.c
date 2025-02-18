@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -45,7 +45,14 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
         WR1_PROG(REG_24H, 0x00000000U);
 
         WR1_PROG(REG_94H, 0x0000b440U);
-        WR1_PROG(REG_94H, 0x0C8003A0U);
+        WR1_PROG(REG_94H, 0x2C8003A0U);
+
+        WR1_PROG(REG_94H, 0x000034a4U);
+
+        WR1_PROG(REG_94H, 0x38008880U);
+        WR1_PROG(REG_94H, 0x00000023U);
+        WR1_PROG(REG_94H, 0x1000b480U);
+        WR1_PROG(REG_94H, 0x00000005U);
 
         HW_SCE_p_func056();
 
@@ -54,13 +61,13 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
         WR1_PROG(REG_9CH, 0x00000080U);
         WR1_PROG(REG_40H, 0x00A60000U);
 
-        HW_SCE_p_func100(0xbd376714U, 0x19a0b46fU, 0xa00b8e68U, 0x8d81a3d3U);
+        HW_SCE_p_func100(0xdbbcc96cU, 0xccc799e7U, 0xb4b56b77U, 0x9262c90bU);
         WR1_PROG(REG_40H, 0x00400000U);
         WR1_PROG(REG_24H, 0x00000000U);
 
         if (CHCK_STS(REG_40H, 22, 1))
         {
-            HW_SCE_p_func102(0xf518f0baU, 0xb934a424U, 0x6d8c55a1U, 0xd1f64305U);
+            HW_SCE_p_func102(0x80fe7b21U, 0x2bee9cebU, 0xace9157dU, 0x68513f9cU);
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 
@@ -68,6 +75,8 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
         }
         else
         {
+            WR1_PROG(REG_94H, 0x00003485U);
+
             WR1_PROG(REG_14H, 0x000001a1U);
             WR1_PROG(REG_D0H, 0x07330c04U);
             WAIT_STS(REG_14H, 31, 1);
@@ -107,7 +116,7 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
             WR1_PROG(REG_2CH, change_endian_long(0x0000006eU));
             WR1_PROG(REG_24H, 0x00000000U);
 
-            HW_SCE_p_func101(0xf4ecbae2U, 0xd356ec96U, 0x039dd3e2U, 0xf553cbf0U);
+            HW_SCE_p_func101(0xa21db742U, 0x5875ae65U, 0x0ae7dfa3U, 0xcf7cf4b8U);
             HW_SCE_p_func058(InData_SessionKey, OFS_ADR);
 
             WR1_PROG(REG_14H, 0x000000a7U);
@@ -165,17 +174,24 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
         HW_SCE_p_func049(InData_Cmd);
 
         WR1_PROG(REG_94H, 0x0000b440U);
-        WR1_PROG(REG_94H, 0x0C8003A0U);
+        WR1_PROG(REG_94H, 0x2C8003A0U);
+
+        WR1_PROG(REG_94H, 0x000034a4U);
+
+        WR1_PROG(REG_94H, 0x38008880U);
+        WR1_PROG(REG_94H, 0x00000023U);
+        WR1_PROG(REG_94H, 0x1000b480U);
+        WR1_PROG(REG_94H, 0x00000005U);
 
         HW_SCE_p_func056();
 
-        HW_SCE_p_func100(0x2f320995U, 0xf01bd8deU, 0x134332cbU, 0xb8e171dfU);
+        HW_SCE_p_func100(0xa024ddb8U, 0x88d8cbeeU, 0x36743452U, 0xca97514fU);
         WR1_PROG(REG_40H, 0x00400000U);
         WR1_PROG(REG_24H, 0x00000000U);
 
         if (CHCK_STS(REG_40H, 22, 1))
         {
-            HW_SCE_p_func102(0xda71f61dU, 0xaa8f6948U, 0xf6566a76U, 0xe4231745U);
+            HW_SCE_p_func102(0xaa1baea0U, 0xf8bb4916U, 0x8852d953U, 0xc6263102U);
             WR1_PROG(REG_6CH, 0x00000040U);
             WAIT_STS(REG_20H, 12, 0);
 
@@ -183,13 +199,15 @@ fsp_err_t HW_SCE_GenerateOemKeyIndexSub (const uint32_t InData_KeyType[],
         }
         else
         {
+            WR1_PROG(REG_94H, 0x00003485U);
+
             WR1_PROG(REG_14H, 0x000000a7U);
             WR1_PROG(REG_9CH, 0x800100e0U);
             WAIT_STS(REG_14H, 31, 1);
             WR1_PROG(REG_2CH, change_endian_long(0x0000006eU));
             WR1_PROG(REG_24H, 0x00000000U);
 
-            HW_SCE_p_func101(0x36e893b5U, 0x062c17e1U, 0xa6f6085aU, 0xe4ceb753U);
+            HW_SCE_p_func101(0x50a1d64dU, 0x2196fc79U, 0x8e8c96d3U, 0xfb016606U);
             HW_SCE_p_func093(InData_InstData, OutData_KeyIndex);
 
             HW_SCE_p_func100(0x9f5926edU, 0xe3766cd5U, 0xbbaca6dfU, 0x0bc5888aU);

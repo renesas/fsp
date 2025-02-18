@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -159,6 +159,14 @@ typedef struct st_ctsu_element
     uint8_t      sdpa;                 ///< CTSU Base Clock Setting
 } ctsu_element_cfg_t;
 
+/** Configuration of each automatic judgement button */
+typedef struct st_ctsu_auto_button_cfg
+{
+    uint8_t  elem_index;               ///< Element number used by this button for automatic judgement.
+    uint16_t threshold;                ///< Touch/non-touch judgement threshold for automatic judgement.
+    uint16_t hysteresis;               ///< Threshold hysteresis for chattering prevention for automatic judgement.
+} ctsu_auto_button_cfg_t;
+
 /** User configuration structure, used in open function */
 typedef struct st_ctsu_cfg
 {
@@ -169,6 +177,18 @@ typedef struct st_ctsu_cfg
     ctsu_atune12_t             atune12;                 ///< CTSU Power Supply Capacity Adjustment (CTSU2 Only)
     ctsu_md_t                  md;                      ///< CTSU Measurement Mode Select
     ctsu_posel_t               posel;                   ///< CTSU Non-Measured Channel Output Select (CTSU2 Only)
+    uint8_t                    tsod;                    ///< TS all terminal output control for multi electrode scan
+    uint8_t                    mec_ts;                  ///< TS number used when using the MEC function
+    uint8_t                    mec_shield_ts;           ///< TS number of active shield used when using MEC function
+    uint8_t                    tlot;                    ///< Number of consecutive judgements exceeding the threshold L for automatic judgement
+    uint8_t                    thot;                    ///< Number of consecutive judgements exceeding the threshold H for automatic judgement
+    uint8_t                    jc;                      ///< Judgement condition for automatic judgement
+    uint8_t                    ajmmat;                  ///< Measured value moving average number of times for automatic judgement
+    uint8_t                    ajbmat;                  ///< Average number of baselines for automatic judgement
+    uint8_t                    mtucfen;                 ///< Mutual capacity operation for automatic judgement
+    uint8_t                    ajfen;                   ///< Automatic judgement function enabled for automatic judgement
+    uint8_t                    autojudge_monitor_num;   ///< Method number for QE monitor for automatic judgement
+    uint8_t                    majirimd;                ///< JMM or VMM for automatic judgement
     uint8_t                    ctsuchac0;               ///< TS00-TS07 enable mask
     uint8_t                    ctsuchac1;               ///< TS08-TS15 enable mask
     uint8_t                    ctsuchac2;               ///< TS16-TS23 enable mask
@@ -195,6 +215,7 @@ typedef struct st_ctsu_cfg
     void const * p_extend;                              ///< Pointer to extended configuration by instance of interface.
     uint16_t     tuning_self_target_value;              ///< Target self value for initial offset tuning
     uint16_t     tuning_mutual_target_value;            ///< Target mutual value for initial offset tuning
+    ctsu_auto_button_cfg_t const * p_ctsu_auto_buttons; ///< Pointer to array of automatic judgement button configuration.
     uint8_t      majority_mode;                         ///< Software majority mode selection
 } ctsu_cfg_t;
 
@@ -265,6 +286,13 @@ typedef struct st_ctsu_api
      * @param[in]  p_insert_data       Pointer to insert data.
      */
     fsp_err_t (* dataInsert)(ctsu_ctrl_t * const p_ctrl, uint16_t * p_insert_data);
+
+    /** Initialize automatic judgement and get button status.
+     *
+     * @param[in]  p_ctrl          Pointer to control structure.
+     * @param[out] p_button_status Pointer to get button status array.
+     */
+    fsp_err_t (* autoJudgementDataGet)(ctsu_ctrl_t * const p_ctrl, uint64_t * p_button_status);
 
     /** Adjust the offset value to tune the sensor.
      *

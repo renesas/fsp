@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -252,7 +252,7 @@ fsp_err_t R_RTC_C_CalendarTimeSet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const
 
     /* The count of years, months, weeks, days, hours, minutes, and seconds can only proceed when the sub-clock
      * oscillator (SOSC = 32.768 kHz) is selected as the operating clock of the realtime clock (RTCCLK).
-     * (reference section 19.1 "Overview" in the RA0E1 manual R01UH1040EJ0100.)*/
+     * See in hardware manual: RTC > Overview */
     FSP_ERROR_RETURN((0U == (R_SYSTEM_OSMC_WUTMMCK0_Msk & R_SYSTEM->OSMC)), FSP_ERR_INVALID_MODE);
 
     /* Verify the seconds, minutes, hours, year ,day of the week, day of the month, month and year are valid values */
@@ -264,8 +264,8 @@ fsp_err_t R_RTC_C_CalendarTimeSet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const
     /* Set the START bit to 1 */
     R_RTC_C->RTCC0_b.RTCE = 1U;
 
-    /* Procedure for Writing to the RTC (reference section 19.3.3 "Reading from and Writing to the Counters of the
-     * Realtime Clock" in the RA0E1 manual R01UH1040EJ0100.) */
+    /* Procedure for Writing to the RTC
+     * See in hardware manual: RTC > Operation > Reading from and Writing to the Counters of the Realtime Clock */
     R_RTC_C->RTCC1_b.RWAIT = 1;
     FSP_HARDWARE_REGISTER_WAIT(R_RTC_C->RTCC1_b.RWST, 1);
 
@@ -308,8 +308,8 @@ fsp_err_t R_RTC_C_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    /* Procedure for reading from the RTC (reference section 19.3.3 "Reading from and Writing to the Counters of the
-     * Realtime Clock" in the RA0E1 manual R01UH1040EJ0100. */
+    /* Procedure for reading from the RTC
+     * See in hardware manual: RTC > Operation > Reading from and Writing to the Counters of the Realtime Clock */
     R_RTC_C->RTCC1_b.RWAIT = 1;
     FSP_HARDWARE_REGISTER_WAIT(R_RTC_C->RTCC1_b.RWST, 1);
 
@@ -369,8 +369,8 @@ fsp_err_t R_RTC_C_CalendarAlarmSet (rtc_ctrl_t * const p_ctrl, rtc_alarm_time_t 
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    /* Alarm Processing Procedure (reference section 19.3.4 "Setting Alarm by the Realtime Clock"
-     * in the RA0E1 manual R01UH1040EJ0100. */
+    /* Alarm Processing Procedure
+     * See in hardware manual: RTC > Operation > Setting Alarm by the Realtime Clock */
     R_RTC_C->RTCC1 &= (uint8_t) ~(R_RTC_C_RTCC1_WAFG_Msk | R_RTC_C_RTCC1_WALE_Msk);
 
     R_RTC_C->RTCC1_b.WALIE = 1;
@@ -515,8 +515,8 @@ fsp_err_t R_RTC_C_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjus
     /* Verify source clock is SUBOSC */
     FSP_ERROR_RETURN((0U == (R_SYSTEM_OSMC_WUTMMCK0_Msk & R_SYSTEM->OSMC)), FSP_ERR_INVALID_MODE);
 
-    /* Time error correction cannot be used when the setting of this bit is 1. (reference section 19.2.2 "RTC128EN Bit"
-     * in the RA0E1 manual R01UH1040EJ0100.)*/
+    /* Time error correction cannot be used when the setting of this bit is 1
+     * See in hardware manual: RTC > Register Descriptions > RTCC0 > RTC128EN bit */
     FSP_ERROR_RETURN(RTC_CLOCK_SOURCE_SUBCLOCK_DIV_BY_1 == p_extend_cfg->clock_source_div, FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
@@ -695,7 +695,7 @@ static fsp_err_t r_rtc_c_time_validate (rtc_time_t const * const p_time)
  * This difference will be taken care in the Set and Get functions.
  *
  * As per HW manual, value of Year is between 0 to 99, the RTC has a 100 year calendar from 2000 to 2099.
- * (see section 19.1 "Overview" of the RA0E1 manual R01UH1040EJ0100)
+ * See in hardware manual: RTC > Overview
  * But as per C standards, tm_year is years since 1900.
  * A sample year set in an application would be like time.tm_year = 2019-1900; (to set year 2019)
  * Since RTC API follows the Date and time structure defined in C standard library <time.h>, the valid value of year is

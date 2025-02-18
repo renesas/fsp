@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -113,6 +113,100 @@
  #define RSIP_PRV_FUNC_AES_CMAC_UPDATE_128                       NULL
  #define RSIP_PRV_FUNC_AES_CMAC_GENERATE_FINAL_128               NULL
  #define RSIP_PRV_FUNC_AES_CMAC_VERIFY_FINAL_128                 NULL
+#endif
+
+#if RSIP_CFG_AES_192_ENABLE
+ #define RSIP_PRV_FUNC_KEY_GENERATE_AES_192                      RSIP_PRV_FUNC_NAME_KEY_GENERATE_AES_192
+ #define RSIP_PRV_FUNC_ENC_KEY_WRAP_AES_192                      RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_AES_192
+ #define RSIP_PRV_FUNC_RFC3394_AES_192_KEY_WRAP                  RSIP_PRV_FUNC_NAME_RFC3394_AES_192_KEY_WRAP
+ #define RSIP_PRV_FUNC_RFC3394_AES_192_KEY_UNWRAP                RSIP_PRV_FUNC_NAME_RFC3394_AES_192_KEY_UNWRAP
+ #define RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_192                     RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_192
+#else
+ #define RSIP_PRV_FUNC_KEY_GENERATE_AES_192                      NULL
+ #define RSIP_PRV_FUNC_ENC_KEY_WRAP_AES_192                      NULL
+ #define RSIP_PRV_FUNC_RFC3394_AES_192_KEY_WRAP                  NULL
+ #define RSIP_PRV_FUNC_RFC3394_AES_192_KEY_UNWRAP                NULL
+ #define RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_192                     NULL
+#endif
+
+#if RSIP_CFG_AES_192_ENABLE && RSIP_CFG_AES_ECB_CBC_CTR_ENABLE
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_192               RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_ECB_ENC_192
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_192               RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_ECB_DEC_192
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_192               RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_ENC_192
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_DEC_192               RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_DEC_192
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_192_WRAPPED_IV \
+    RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_ENC_192_WRAPPED_IV
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_DEC_192_WRAPPED_IV \
+    RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_DEC_192_WRAPPED_IV
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CTR_192                   RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CTR_192
+ #define RSIP_PRV_FUNC_AES_CIPHER_UPDATE_192                     RSIP_PRV_FUNC_NAME_AES_CIPHER_UPDATE_192
+ #define RSIP_PRV_FUNC_AES_CIPHER_FINAL_192                      RSIP_PRV_FUNC_NAME_AES_CIPHER_FINAL_192
+#else
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_192               NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_192               NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_192               NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_DEC_192               NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_192_WRAPPED_IV    NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_DEC_192_WRAPPED_IV    NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_INIT_CTR_192                   NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_UPDATE_192                     NULL
+ #define RSIP_PRV_FUNC_AES_CIPHER_FINAL_192                      NULL
+#endif
+
+#if RSIP_CFG_AES_192_ENABLE && RSIP_CFG_AES_GCM_ENABLE
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_INIT_192                      RSIP_PRV_FUNC_NAME_AES_GCM_ENC_INIT_192
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_INIT_192_WRAPPED_IV           RSIP_PRV_FUNC_NAME_AES_GCM_ENC_INIT_192_WRAPPED_IV
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_AAD_192                RSIP_PRV_FUNC_NAME_AES_GCM_ENC_UPDATE_AAD_192
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_TRANSITION_192         RSIP_PRV_FUNC_NAME_AES_GCM_ENC_UPDATE_TRANSITION_192
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_192                    RSIP_PRV_FUNC_NAME_AES_GCM_ENC_UPDATE_192
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_FINAL_192                     RSIP_PRV_FUNC_NAME_AES_GCM_ENC_FINAL_192
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_INIT_192                      RSIP_PRV_FUNC_NAME_AES_GCM_DEC_INIT_192
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_INIT_192_WRAPPED_IV           RSIP_PRV_FUNC_NAME_AES_GCM_DEC_INIT_192_WRAPPED_IV
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_AAD_192                RSIP_PRV_FUNC_NAME_AES_GCM_DEC_UPDATE_AAD_192
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_TRANSITION_192         RSIP_PRV_FUNC_NAME_AES_GCM_DEC_UPDATE_TRANSITION_192
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_192                    RSIP_PRV_FUNC_NAME_AES_GCM_DEC_UPDATE_192
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_FINAL_192                     RSIP_PRV_FUNC_NAME_AES_GCM_DEC_FINAL_192
+#else
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_INIT_192                      NULL
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_INIT_192_WRAPPED_IV           NULL
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_AAD_192                NULL
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_TRANSITION_192         NULL
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_192                    NULL
+ #define RSIP_PRV_FUNC_AES_GCM_ENC_FINAL_192                     NULL
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_INIT_192                      NULL
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_INIT_192_WRAPPED_IV           NULL
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_AAD_192                NULL
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_TRANSITION_192         NULL
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_192                    NULL
+ #define RSIP_PRV_FUNC_AES_GCM_DEC_FINAL_192                     NULL
+#endif
+
+#if RSIP_CFG_AES_192_ENABLE && RSIP_CFG_AES_CCM_ENABLE
+ #define RSIP_PRV_FUNC_AES_CCM_ENC_INIT_192                      RSIP_PRV_FUNC_NAME_AES_CCM_ENC_INIT_192
+ #define RSIP_PRV_FUNC_AES_CCM_ENC_UPDATE_192                    RSIP_PRV_FUNC_NAME_AES_CCM_ENC_UPDATE_192
+ #define RSIP_PRV_FUNC_AES_CCM_ENC_FINAL_192                     RSIP_PRV_FUNC_NAME_AES_CCM_ENC_FINAL_192
+ #define RSIP_PRV_FUNC_AES_CCM_DEC_INIT_192                      RSIP_PRV_FUNC_NAME_AES_CCM_DEC_INIT_192
+ #define RSIP_PRV_FUNC_AES_CCM_DEC_UPDATE_192                    RSIP_PRV_FUNC_NAME_AES_CCM_DEC_UPDATE_192
+ #define RSIP_PRV_FUNC_AES_CCM_DEC_FINAL_192                     RSIP_PRV_FUNC_NAME_AES_CCM_DEC_FINAL_192
+#else
+ #define RSIP_PRV_FUNC_AES_CCM_ENC_INIT_192                      NULL
+ #define RSIP_PRV_FUNC_AES_CCM_ENC_UPDATE_192                    NULL
+ #define RSIP_PRV_FUNC_AES_CCM_ENC_FINAL_192                     NULL
+ #define RSIP_PRV_FUNC_AES_CCM_DEC_INIT_192                      NULL
+ #define RSIP_PRV_FUNC_AES_CCM_DEC_UPDATE_192                    NULL
+ #define RSIP_PRV_FUNC_AES_CCM_DEC_FINAL_192                     NULL
+#endif
+
+#if RSIP_CFG_AES_192_ENABLE && RSIP_CFG_AES_CMAC_ENABLE
+ #define RSIP_PRV_FUNC_AES_CMAC_INIT_192                         RSIP_PRV_FUNC_NAME_AES_CMAC_INIT_192
+ #define RSIP_PRV_FUNC_AES_CMAC_UPDATE_192                       RSIP_PRV_FUNC_NAME_AES_CMAC_UPDATE_192
+ #define RSIP_PRV_FUNC_AES_CMAC_GENERATE_FINAL_192               RSIP_PRV_FUNC_NAME_AES_CMAC_GENERATE_FINAL_192
+ #define RSIP_PRV_FUNC_AES_CMAC_VERIFY_FINAL_192                 RSIP_PRV_FUNC_NAME_AES_CMAC_VERIFY_FINAL_192
+#else
+ #define RSIP_PRV_FUNC_AES_CMAC_INIT_192                         NULL
+ #define RSIP_PRV_FUNC_AES_CMAC_UPDATE_192                       NULL
+ #define RSIP_PRV_FUNC_AES_CMAC_GENERATE_FINAL_192               NULL
+ #define RSIP_PRV_FUNC_AES_CMAC_VERIFY_FINAL_192                 NULL
 #endif
 
 #if RSIP_CFG_AES_256_ENABLE
@@ -633,6 +727,8 @@ const bool g_sha_enabled[RSIP_HASH_TYPE_NUM] =
     [RSIP_HASH_TYPE_SHA256]     = RSIP_CFG_SHA256_ENABLE,
     [RSIP_HASH_TYPE_SHA384]     = RSIP_CFG_SHA384_ENABLE,
     [RSIP_HASH_TYPE_SHA512]     = RSIP_CFG_SHA512_ENABLE,
+    [RSIP_HASH_TYPE_SHA512_224] = RSIP_CFG_SHA512_224_ENABLE,
+    [RSIP_HASH_TYPE_SHA512_256] = RSIP_CFG_SHA512_256_ENABLE,
 };
 
 const bool g_hmac_enabled[RSIP_KEY_HMAC_NUM] =
@@ -642,7 +738,6 @@ const bool g_hmac_enabled[RSIP_KEY_HMAC_NUM] =
     [RSIP_KEY_HMAC_SHA384] = RSIP_CFG_HMAC_SHA384_ENABLE,
     [RSIP_KEY_HMAC_SHA512] = RSIP_CFG_HMAC_SHA512_ENABLE,
 };
-
 const uint32_t g_pki_hash_type[RSIP_HASH_TYPE_NUM] =
 {
     [RSIP_HASH_TYPE_SHA1]       = RSIP_PRV_PKI_HASH_TYPE_SHA1,
@@ -660,6 +755,7 @@ const rsip_func_ghash_t gp_func_ghash_compute = RSIP_PRV_FUNC_GHASH_COMPUTE;
 const rsip_func_key_generate_t gp_func_key_generate_aes[RSIP_KEY_AES_NUM] =
 {
     [RSIP_KEY_AES_128] = RSIP_PRV_FUNC_KEY_GENERATE_AES_128,
+    [RSIP_KEY_AES_192] = RSIP_PRV_FUNC_KEY_GENERATE_AES_192,
     [RSIP_KEY_AES_256] = RSIP_PRV_FUNC_KEY_GENERATE_AES_256
 };
 
@@ -705,6 +801,7 @@ const rsip_func_key_pair_generate_t gp_func_key_pair_generate_rsa[RSIP_KEY_RSA_N
 const rsip_func_encrypted_key_wrap_t gp_func_encrypted_key_wrap_aes[RSIP_KEY_AES_NUM] =
 {
     [RSIP_KEY_AES_128] = RSIP_PRV_FUNC_ENC_KEY_WRAP_AES_128,
+    [RSIP_KEY_AES_192] = RSIP_PRV_FUNC_ENC_KEY_WRAP_AES_192,
     [RSIP_KEY_AES_256] = RSIP_PRV_FUNC_ENC_KEY_WRAP_AES_256
 };
 
@@ -777,7 +874,19 @@ const rsip_func_subset_aes_cipher_t gp_func_aes_cipher[RSIP_KEY_AES_NUM] =
     .p_update = RSIP_PRV_FUNC_AES_CIPHER_UPDATE_128,
     .p_final  = RSIP_PRV_FUNC_AES_CIPHER_FINAL_128,
     },
-    [RSIP_KEY_AES_256] =
+    [RSIP_KEY_AES_192] =
+    {
+    .p_init_ecb_enc            = RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_192,
+    .p_init_ecb_dec            = RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_192,
+    .p_init_cbc_enc            = RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_192,
+    .p_init_cbc_dec            = RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_DEC_192,
+    .p_init_cbc_enc_wrapped_iv = RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_ENC_192_WRAPPED_IV,
+    .p_init_cbc_dec_wrapped_iv = RSIP_PRV_FUNC_AES_CIPHER_INIT_CBC_DEC_192_WRAPPED_IV,
+    .p_init_ctr                = RSIP_PRV_FUNC_AES_CIPHER_INIT_CTR_192,
+    .p_update = RSIP_PRV_FUNC_AES_CIPHER_UPDATE_192,
+    .p_final  = RSIP_PRV_FUNC_AES_CIPHER_FINAL_192,
+    },
+	[RSIP_KEY_AES_256] =
     {
     .p_init_ecb_enc            = RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_ENC_256,
     .p_init_ecb_dec            = RSIP_PRV_FUNC_AES_CIPHER_INIT_ECB_DEC_256,
@@ -834,7 +943,16 @@ const rsip_func_subset_aes_gcm_t gp_func_aes_gcm_enc[RSIP_KEY_AES_NUM] =
     .p_update           = RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_128,
     .p_encryptFinal     = RSIP_PRV_FUNC_AES_GCM_ENC_FINAL_128
     },
-    [RSIP_KEY_AES_256] =
+    [RSIP_KEY_AES_192] =
+    {
+    .p_init             = RSIP_PRV_FUNC_AES_GCM_ENC_INIT_192,
+    .p_init_wrapped_iv  = RSIP_PRV_FUNC_AES_GCM_ENC_INIT_192_WRAPPED_IV,
+    .p_updateAad        = RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_AAD_192,
+    .p_updateTransition = RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_TRANSITION_192,
+    .p_update           = RSIP_PRV_FUNC_AES_GCM_ENC_UPDATE_192,
+    .p_encryptFinal     = RSIP_PRV_FUNC_AES_GCM_ENC_FINAL_192
+    },
+	[RSIP_KEY_AES_256] =
     {
     .p_init             = RSIP_PRV_FUNC_AES_GCM_ENC_INIT_256,
     .p_init_wrapped_iv  = RSIP_PRV_FUNC_AES_GCM_ENC_INIT_256_WRAPPED_IV,
@@ -856,6 +974,15 @@ const rsip_func_subset_aes_gcm_t gp_func_aes_gcm_dec[RSIP_KEY_AES_NUM] =
     .p_update           = RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_128,
     .p_decryptFinal     = RSIP_PRV_FUNC_AES_GCM_DEC_FINAL_128
     },
+    [RSIP_KEY_AES_192] =
+    {
+    .p_init             = RSIP_PRV_FUNC_AES_GCM_DEC_INIT_192,
+    .p_init_wrapped_iv  = RSIP_PRV_FUNC_AES_GCM_DEC_INIT_192_WRAPPED_IV,
+    .p_updateAad        = RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_AAD_192,
+    .p_updateTransition = RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_TRANSITION_192,
+    .p_update           = RSIP_PRV_FUNC_AES_GCM_DEC_UPDATE_192,
+    .p_decryptFinal     = RSIP_PRV_FUNC_AES_GCM_DEC_FINAL_192
+    },
     [RSIP_KEY_AES_256] =
     {
     .p_init             = RSIP_PRV_FUNC_AES_GCM_DEC_INIT_256,
@@ -875,6 +1002,12 @@ const rsip_func_subset_aes_ccm_t gp_func_aes_ccm_enc[RSIP_KEY_AES_NUM] =
     .p_update       = RSIP_PRV_FUNC_AES_CCM_ENC_UPDATE_128,
     .p_encryptFinal = RSIP_PRV_FUNC_AES_CCM_ENC_FINAL_128
     },
+    [RSIP_KEY_AES_192] =
+    {
+    .p_encryptInit  = RSIP_PRV_FUNC_AES_CCM_ENC_INIT_192,
+    .p_update       = RSIP_PRV_FUNC_AES_CCM_ENC_UPDATE_192,
+    .p_encryptFinal = RSIP_PRV_FUNC_AES_CCM_ENC_FINAL_192
+    },
     [RSIP_KEY_AES_256] =
     {
     .p_encryptInit  = RSIP_PRV_FUNC_AES_CCM_ENC_INIT_256,
@@ -890,6 +1023,12 @@ const rsip_func_subset_aes_ccm_t gp_func_aes_ccm_dec[RSIP_KEY_AES_NUM] =
     .p_decryptInit  = RSIP_PRV_FUNC_AES_CCM_DEC_INIT_128,
     .p_update       = RSIP_PRV_FUNC_AES_CCM_DEC_UPDATE_128,
     .p_decryptFinal = RSIP_PRV_FUNC_AES_CCM_DEC_FINAL_128
+    },
+    [RSIP_KEY_AES_192] =
+    {
+    .p_decryptInit  = RSIP_PRV_FUNC_AES_CCM_DEC_INIT_192,
+    .p_update       = RSIP_PRV_FUNC_AES_CCM_DEC_UPDATE_192,
+    .p_decryptFinal = RSIP_PRV_FUNC_AES_CCM_DEC_FINAL_192
     },
     [RSIP_KEY_AES_256] =
     {
@@ -907,6 +1046,13 @@ const rsip_func_subset_aes_cmac_t gp_func_aes_cmac[RSIP_KEY_AES_NUM] =
     .p_update        = RSIP_PRV_FUNC_AES_CMAC_UPDATE_128,
     .p_generateFinal = RSIP_PRV_FUNC_AES_CMAC_GENERATE_FINAL_128,
     .p_verifyFinal   = RSIP_PRV_FUNC_AES_CMAC_VERIFY_FINAL_128
+    },
+    [RSIP_KEY_AES_192] =
+    {
+    .p_init          = RSIP_PRV_FUNC_AES_CMAC_INIT_192,
+    .p_update        = RSIP_PRV_FUNC_AES_CMAC_UPDATE_192,
+    .p_generateFinal = RSIP_PRV_FUNC_AES_CMAC_GENERATE_FINAL_192,
+    .p_verifyFinal   = RSIP_PRV_FUNC_AES_CMAC_VERIFY_FINAL_192
     },
     [RSIP_KEY_AES_256] =
     {
@@ -1078,7 +1224,7 @@ const rsip_func_otf_t gp_func_otf[RSIP_OTF_CHANNEL_NUM][RSIP_KEY_AES_NUM] =
     [RSIP_OTF_CHANNEL_0] =
     {
         [RSIP_KEY_AES_128] = RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_128,
-        [RSIP_KEY_AES_192] = NULL,
+        [RSIP_KEY_AES_192] = RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_192,
         [RSIP_KEY_AES_256] = RSIP_PRV_FUNC_OTF_CHANNEL_0_AES_256
     },
     [RSIP_OTF_CHANNEL_1] =

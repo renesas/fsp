@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -202,7 +202,7 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_ofs3
     BSP_CFG_ROM_REG_OFS3_SEL;
 
    #endif
-   #if BSP_FEATURE_FLASH_HP_SUPPORTS_DUAL_BANK
+   #if BSP_FEATURE_FLASH_HP_HAS_BANKSEL
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_banksel_sel") g_bsp_rom_banksel_sel =
     BSP_CFG_ROM_REG_BANKSEL_SEL;
 

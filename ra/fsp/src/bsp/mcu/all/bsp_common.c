@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -43,9 +43,9 @@ void bsp_init(void * p_args) WEAK_INIT_ATTRIBUTE;
 
 void bsp_init_internal(void * p_args); /// Default initialization function
 
-#if ((1 == BSP_CFG_ERROR_LOG) || (1 == BSP_CFG_ASSERT))
+#if (1 == BSP_CFG_ASSERT)
 
-/** Prototype of function called before errors are returned in FSP code if BSP_CFG_ERROR_LOG is set to 1.  This
+/** Prototype of function called before errors are returned in FSP code if BSP_CFG_ASSERT is set to 1.  This
  * prototype sets the weak association of this function to an internal example implementation. */
 
 void fsp_error_log(fsp_err_t err, const char * file, int32_t line) WEAK_ERROR_ATTRIBUTE;
@@ -114,7 +114,7 @@ fsp_err_t R_FSP_VersionGet (fsp_pack_version_t * const p_version)
     return FSP_SUCCESS;
 }
 
-#if ((1 == BSP_CFG_ERROR_LOG) || (1 == BSP_CFG_ASSERT))
+#if (1 == BSP_CFG_ASSERT)
 
 /*******************************************************************************************************************//**
  * Default error logger function, used only if fsp_error_log is not defined in the user application.

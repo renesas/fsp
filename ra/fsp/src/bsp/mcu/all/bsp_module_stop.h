@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -243,7 +243,7 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_UARTA(channel)              (1U << BSP_FEATURE_UARTA_MSTP_OFFSET);
 #define BSP_MSTP_REG_TYPE_FSP_IP_UARTA(channel)         uint32_t
 #define BSP_MSTP_REG_FSP_IP_OSPI(channel)               R_MSTP->MSTPCRB
-#define BSP_MSTP_BIT_FSP_IP_OSPI(channel)               (1U << (16U - channel));
+#define BSP_MSTP_BIT_FSP_IP_OSPI(channel)               (1U << (16U + channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_OSPI(channel)          uint32_t
 #define BSP_MSTP_REG_FSP_IP_SPI(channel)                R_MSTP->MSTPCRB
 #define BSP_MSTP_BIT_FSP_IP_SPI(channel)                (1U << (19U - channel));
@@ -324,7 +324,11 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_TML(channel)                (1U << (4U));
 #define BSP_MSTP_REG_TYPE_FSP_IP_TML(channel)           uint32_t
 #define BSP_MSTP_REG_FSP_IP_ADC(channel)                R_MSTP->MSTPCRD
-#define BSP_MSTP_BIT_FSP_IP_ADC(channel)                (1U << (16U - channel));
+#if BSP_MCU_GROUP_NEPTUNE
+ #define BSP_MSTP_BIT_FSP_IP_ADC(channel)               (1U << (21U - channel));
+#else
+ #define BSP_MSTP_BIT_FSP_IP_ADC(channel)               (1U << (16U - channel));
+#endif
 #define BSP_MSTP_REG_TYPE_FSP_IP_ADC(channel)           uint32_t
 #define BSP_MSTP_REG_FSP_IP_SDADC(channel)              R_MSTP->MSTPCRD
 #define BSP_MSTP_BIT_FSP_IP_SDADC(channel)              (1U << (17U - channel));

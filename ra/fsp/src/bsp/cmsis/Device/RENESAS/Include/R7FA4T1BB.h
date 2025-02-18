@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+ * Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -3612,8 +3612,8 @@ typedef struct                         /*!< (@ 0x400E0000) R_PSCU Structure     
             uint32_t               : 2;
             __IM uint32_t PSARB15  : 1; /*!< [15..15] ETHER0/EDMAC0, the MSTPCRB.MSTPB15 bit and the PFENET.PHYMODE0
                                          *   bit security attribution                                                  */
-            __IM uint32_t PSARB16  : 1; /*!< [16..16] OSPI and the MSTPCRB.MSTPB16 bit security attribution            */
-            uint32_t               : 1;
+            __IM uint32_t  PSARB16 : 1; /*!< [16..16] OSPI and the MSTPCRB.MSTPB16 bit security attribution            */
+            __IOM uint32_t PSARB17 : 1; /*!< [17..17] SPI1 and the MSTPCRB.MSTPB17 Bit Security Attribution            */
             __IOM uint32_t PSARB18 : 1; /*!< [18..18] RSPI1 and the MSTPCRB.MSTPB18 bit security attribution           */
             __IOM uint32_t PSARB19 : 1; /*!< [19..19] RSPI0 and the MSTPCRB.MSTPB19 bit security attribution           */
             uint32_t               : 2;
@@ -10699,6 +10699,24 @@ typedef struct                         /*!< (@ 0x40118000) R_SCI0 Structure     
 
         union
         {
+            __IOM uint8_t SSR_MANC;     /*!< (@ 0x00000004) Serial Status Register for Manchester Mode (SCMR.SMIF
+                                         *                  = 0, and MMR.MANEN = 1)                                    */
+
+            struct
+            {
+                __IOM uint8_t MER  : 1; /*!< [0..0] Manchester Error Flag Valid for Manchester mode only               */
+                __IM uint8_t  MPB  : 1; /*!< [1..1] Multi-Processor                                                    */
+                __IM uint8_t  TEND : 1; /*!< [2..2] Transmit End Flag                                                  */
+                __IOM uint8_t PER  : 1; /*!< [3..3] Parity Error Flag                                                  */
+                __IOM uint8_t FER  : 1; /*!< [4..4] Framing Error Flag                                                 */
+                __IOM uint8_t ORER : 1; /*!< [5..5] Overrun Error Flag                                                 */
+                __IOM uint8_t RDRF : 1; /*!< [6..6] Receive Data Full Flag                                             */
+                __IOM uint8_t TDRE : 1; /*!< [7..7] Transmit Data Empty Flag                                           */
+            } SSR_MANC_b;
+        };
+
+        union
+        {
             __IOM uint8_t SSR_SMCI;     /*!< (@ 0x00000004) Serial Status Register(SCMR.SMIF = 1)                      */
 
             struct
@@ -10882,6 +10900,21 @@ typedef struct                         /*!< (@ 0x40118000) R_SCI0 Structure     
             } FTDRHL_b;
         };
 
+        union
+        {
+            __IOM uint16_t TDRHL_MAN;     /*!< (@ 0x0000000E) Transmit Data Register for Manchester Mode (MMR.MANEN
+                                           *                  = 1)                                                       */
+
+            struct
+            {
+                __IOM uint16_t TDAT  : 9; /*!< [8..0] Serial transmit data                                               */
+                __IOM uint16_t MPBT  : 1; /*!< [9..9] Multi-processor Transfer Bit Flag                                  */
+                uint16_t             : 2;
+                __IOM uint16_t TSYNC : 1; /*!< [12..12] Transmit SYNC data bit                                           */
+                uint16_t             : 3;
+            } TDRHL_MAN_b;
+        };
+
         struct
         {
             union
@@ -10943,6 +10976,21 @@ typedef struct                         /*!< (@ 0x40118000) R_SCI0 Structure     
                 __IM uint16_t RDF  : 1; /*!< [14..14] Receive FIFO data full flag(It is same as SSR.RDF)               */
                 uint16_t           : 1;
             } FRDRHL_b;
+        };
+
+        union
+        {
+            __IM uint16_t RDRHL_MAN;     /*!< (@ 0x00000010) Receive Data Register for Manchester Mode (MMR.MANEN
+                                          *                  = 1)                                                       */
+
+            struct
+            {
+                __IM uint16_t RDAT  : 9; /*!< [8..0] Serial Receive Data                                                */
+                __IM uint16_t MPB   : 1; /*!< [9..9] Multi-processor Bit                                                */
+                uint16_t            : 2;
+                __IM uint16_t RSYNC : 1; /*!< [12..12] Receive SYNC data bit                                            */
+                uint16_t            : 3;
+            } RDRHL_MAN_b;
         };
 
         struct
@@ -11120,13 +11168,33 @@ typedef struct                         /*!< (@ 0x40118000) R_SCI0 Structure     
 
     union
     {
-        __IOM uint8_t ESMER;           /*!< (@ 0x00000020) Extended Serial Module Enable Register                     */
-
-        struct
+        union
         {
-            __IOM uint8_t ESME : 1;    /*!< [0..0] Extended Serial Mode Enable                                        */
-            uint8_t            : 7;
-        } ESMER_b;
+            __IOM uint8_t ESMER;        /*!< (@ 0x00000020) Extended Serial Module Enable Register                     */
+
+            struct
+            {
+                __IOM uint8_t ESME : 1; /*!< [0..0] Extended Serial Mode Enable                                        */
+                uint8_t            : 7;
+            } ESMER_b;
+        };
+
+        union
+        {
+            __IOM uint8_t MMR;            /*!< (@ 0x00000020) Manchester Mode Register                                   */
+
+            struct
+            {
+                __IOM uint8_t RMPOL  : 1; /*!< [0..0] Polarity of Received Manchester Code                               */
+                __IOM uint8_t TMPOL  : 1; /*!< [1..1] Polarity of Transmit Manchester Code                               */
+                __IOM uint8_t ERTEN  : 1; /*!< [2..2] Manchester Edge Retiming Enable                                    */
+                uint8_t              : 1;
+                __IOM uint8_t SYNVAL : 1; /*!< [4..4] SYNC Value Setting                                                 */
+                __IOM uint8_t SYNSEL : 1; /*!< [5..5] SYNC Select                                                        */
+                __IOM uint8_t SBSEL  : 1; /*!< [6..6] Start Bit Select                                                   */
+                __IOM uint8_t MANEN  : 1; /*!< [7..7] Manchester Mode Enable                                             */
+            } MMR_b;
+        };
     };
 
     union
@@ -11145,54 +11213,116 @@ typedef struct                         /*!< (@ 0x40118000) R_SCI0 Structure     
 
     union
     {
-        __IOM uint8_t CR1;             /*!< (@ 0x00000022) Control Register 1                                         */
-
-        struct
+        union
         {
-            __IOM uint8_t BFE   : 1;   /*!< [0..0] Break Field Enable                                                 */
-            __IOM uint8_t CF0RE : 1;   /*!< [1..1] Control Field 0 Reception Enable                                   */
-            __IOM uint8_t CF1DS : 2;   /*!< [3..2] Control Field 1 Data Register Select                               */
-            __IOM uint8_t PIBE  : 1;   /*!< [4..4] Priority Interrupt Bit Enable                                      */
-            __IOM uint8_t PIBS  : 3;   /*!< [7..5] Priority Interrupt Bit Select                                      */
-        } CR1_b;
+            __IOM uint8_t CR1;           /*!< (@ 0x00000022) Control Register 1                                         */
+
+            struct
+            {
+                __IOM uint8_t BFE   : 1; /*!< [0..0] Break Field Enable                                                 */
+                __IOM uint8_t CF0RE : 1; /*!< [1..1] Control Field 0 Reception Enable                                   */
+                __IOM uint8_t CF1DS : 2; /*!< [3..2] Control Field 1 Data Register Select                               */
+                __IOM uint8_t PIBE  : 1; /*!< [4..4] Priority Interrupt Bit Enable                                      */
+                __IOM uint8_t PIBS  : 3; /*!< [7..5] Priority Interrupt Bit Select                                      */
+            } CR1_b;
+        };
+
+        union
+        {
+            __IOM uint8_t TMPR;          /*!< (@ 0x00000022) Transmit Manchester Preface Setting Register               */
+
+            struct
+            {
+                __IOM uint8_t TPLEN : 4; /*!< [3..0] Transmit Preface Length                                            */
+                __IOM uint8_t TPPAT : 2; /*!< [5..4] Transmit Preface Pattern                                           */
+                uint8_t             : 2;
+            } TMPR_b;
+        };
     };
 
     union
     {
-        __IOM uint8_t CR2;             /*!< (@ 0x00000023) Control Register 2                                         */
-
-        struct
+        union
         {
-            __IOM uint8_t DFCS : 3;    /*!< [2..0] RXDXn Signal Digital Filter Clock Select                           */
-            uint8_t            : 1;
-            __IOM uint8_t BCCS : 2;    /*!< [5..4] Bus Collision Detection Clock Select                               */
-            __IOM uint8_t RTS  : 2;    /*!< [7..6] RXDXn Reception Sampling Timing Select                             */
-        } CR2_b;
+            __IOM uint8_t CR2;          /*!< (@ 0x00000023) Control Register 2                                         */
+
+            struct
+            {
+                __IOM uint8_t DFCS : 3; /*!< [2..0] RXDXn Signal Digital Filter Clock Select                           */
+                uint8_t            : 1;
+                __IOM uint8_t BCCS : 2; /*!< [5..4] Bus Collision Detection Clock Select                               */
+                __IOM uint8_t RTS  : 2; /*!< [7..6] RXDXn Reception Sampling Timing Select                             */
+            } CR2_b;
+        };
+
+        union
+        {
+            __IOM uint8_t RMPR;          /*!< (@ 0x00000023) Receive Manchester Preface Setting Register                */
+
+            struct
+            {
+                __IOM uint8_t RPLEN : 4; /*!< [3..0] Receive Preface Length                                             */
+                __IOM uint8_t RPPAT : 2; /*!< [5..4] Receive Preface Pattern                                            */
+                uint8_t             : 2;
+            } RMPR_b;
+        };
     };
 
     union
     {
-        __IOM uint8_t CR3;             /*!< (@ 0x00000024) Control Register 3                                         */
-
-        struct
+        union
         {
-            __IOM uint8_t SDST : 1;    /*!< [0..0] Start Frame Detection Start                                        */
-            uint8_t            : 7;
-        } CR3_b;
+            __IOM uint8_t CR3;          /*!< (@ 0x00000024) Control Register 3                                         */
+
+            struct
+            {
+                __IOM uint8_t SDST : 1; /*!< [0..0] Start Frame Detection Start                                        */
+                uint8_t            : 7;
+            } CR3_b;
+        };
+
+        union
+        {
+            __IOM uint8_t MESR;         /*!< (@ 0x00000024) Manchester Extended Error Status Register                  */
+
+            struct
+            {
+                __IOM uint8_t PFER : 1; /*!< [0..0] Preface Error Flag                                                 */
+                __IOM uint8_t SYER : 1; /*!< [1..1] SYNC Error Flag                                                    */
+                __IOM uint8_t SBER : 1; /*!< [2..2] Start Bit Error Flag                                               */
+                uint8_t            : 5;
+            } MESR_b;
+        };
     };
 
     union
     {
-        __IOM uint8_t PCR;             /*!< (@ 0x00000025) Port Control Register                                      */
-
-        struct
+        union
         {
-            __IOM uint8_t TXDXPS : 1;  /*!< [0..0] TXDXn Signal Polarity Select                                       */
-            __IOM uint8_t RXDXPS : 1;  /*!< [1..1] RXDXn Signal Polarity Select                                       */
-            uint8_t              : 2;
-            __IOM uint8_t SHARPS : 1;  /*!< [4..4] TXDXn/RXDXn Pin Multiplexing Select                                */
-            uint8_t              : 3;
-        } PCR_b;
+            __IOM uint8_t PCR;            /*!< (@ 0x00000025) Port Control Register                                      */
+
+            struct
+            {
+                __IOM uint8_t TXDXPS : 1; /*!< [0..0] TXDXn Signal Polarity Select                                       */
+                __IOM uint8_t RXDXPS : 1; /*!< [1..1] RXDXn Signal Polarity Select                                       */
+                uint8_t              : 2;
+                __IOM uint8_t SHARPS : 1; /*!< [4..4] TXDXn/RXDXn Pin Multiplexing Select                                */
+                uint8_t              : 3;
+            } PCR_b;
+        };
+
+        union
+        {
+            __IOM uint8_t MECR;           /*!< (@ 0x00000025) Manchester Extended Error Control Register                 */
+
+            struct
+            {
+                __IOM uint8_t PFEREN : 1; /*!< [0..0] Preface Error Flag                                                 */
+                __IOM uint8_t SYEREN : 1; /*!< [1..1] Receive SYNC Error Enable                                          */
+                __IOM uint8_t SBEREN : 1; /*!< [2..2] Start Bit Error Enable                                             */
+                uint8_t              : 5;
+            } MECR_b;
+        };
     };
 
     union
@@ -11308,7 +11438,21 @@ typedef struct                         /*!< (@ 0x40118000) R_SCI0 Structure     
     };
     __IOM uint8_t TPRE;                /*!< (@ 0x00000032) Timer Prescaler Register                                   */
     __IOM uint8_t TCNT;                /*!< (@ 0x00000033) Timer Count Register                                       */
-} R_SCI0_Type;                         /*!< Size = 52 (0x34)                                                          */
+    __IM uint16_t RESERVED1[4];
+
+    union
+    {
+        __IOM uint8_t SCIMSKEN;        /*!< (@ 0x0000003C) SCI5 TXD Output Mask Enable Register                       */
+
+        struct
+        {
+            __IOM uint8_t MSKEN : 1;   /*!< [0..0] SCI5 TXD Output Mask Enable                                        */
+            uint8_t             : 7;
+        } SCIMSKEN_b;
+    };
+    __IM uint8_t  RESERVED2;
+    __IM uint16_t RESERVED3;
+} R_SCI0_Type;                         /*!< Size = 64 (0x40)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_SPI0                                           ================ */
@@ -14115,15 +14259,18 @@ typedef struct                           /*!< (@ 0x40008000) R_CPSCU Structure  
 
     union
     {
-        __IOM uint32_t ICUSARM;              /*!< (@ 0x00000058) ICU Security Attribution Register M                        */
+        __IOM uint32_t ICUSARM;                /*!< (@ 0x00000058) ICU Security Attribution Register M                        */
 
         struct
         {
-            __IOM uint32_t SAINTUR0WUP  : 1; /*!< [0..0] Security attributes of registers for WUPEN2.b 0                    */
-            __IOM uint32_t SAINTURE0WUP : 1; /*!< [1..1] Security attributes of registers for WUPEN2.b 1                    */
-            __IOM uint32_t SAINTUR1WUP  : 1; /*!< [2..2] Security attributes of registers for WUPEN2.b 2                    */
-            __IOM uint32_t SAINTURE1WUP : 1; /*!< [3..3] Security attributes of registers for WUPEN2.b 3                    */
-            uint32_t                    : 28;
+            __IOM uint32_t SAINTUR0WUP    : 1; /*!< [0..0] Security attributes of registers for WUPEN2.b 0                    */
+            __IOM uint32_t SAINTURE0WUP   : 1; /*!< [1..1] Security attributes of registers for WUPEN2.b 1                    */
+            __IOM uint32_t SAINTUR1WUP    : 1; /*!< [2..2] Security attributes of registers for WUPEN2.b 2                    */
+            __IOM uint32_t SAINTURE1WUP   : 1; /*!< [3..3] Security attributes of registers for WUPEN2.b 3                    */
+            __IOM uint32_t SAEXLVDVBATWUP : 1; /*!< [4..4] Security attributes of registers for WUPEN2.b 4                    */
+            __IOM uint32_t SALVDVRTCWUP   : 1; /*!< [5..5] Security attributes of registers for WUPEN2.b 5                    */
+            __IOM uint32_t SAEXLVDWUP     : 1; /*!< [6..6] Security attributes of registers for WUPEN2.b 6                    */
+            uint32_t                      : 25;
         } ICUSARM_b;
     };
     __IM uint32_t RESERVED3[5];
@@ -14606,6 +14753,7 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_SCI9_BASE           0x40118900UL
  #define R_SPI0_BASE           0x4011A000UL
  #define R_SPI1_BASE           0x4011A100UL
+ #define R_SPI2_BASE           0x40072200UL
  #define R_SRAM_BASE           0x40002000UL
  #define R_SYSTEM_BASE         0x4001E000UL
  #define R_TRNG_BASE           0x40162000UL
@@ -14732,6 +14880,7 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_SCI9           ((R_SCI0_Type *) R_SCI9_BASE)
  #define R_SPI0           ((R_SPI0_Type *) R_SPI0_BASE)
  #define R_SPI1           ((R_SPI0_Type *) R_SPI1_BASE)
+ #define R_SPI2           ((R_SPI0_Type *) R_SPI2_BASE)
  #define R_SRAM           ((R_SRAM_Type *) R_SRAM_BASE)
  #define R_SYSTEM         ((R_SYSTEM_Type *) R_SYSTEM_BASE)
  #define R_TRNG           ((R_TRNG_Type *) R_TRNG_BASE)
@@ -16331,6 +16480,8 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_PSCU_PSARB_PSARB15_Msk    (0x8000UL)     /*!< PSARB15 (Bitfield-Mask: 0x01)                         */
  #define R_PSCU_PSARB_PSARB16_Pos    (16UL)         /*!< PSARB16 (Bit 16)                                      */
  #define R_PSCU_PSARB_PSARB16_Msk    (0x10000UL)    /*!< PSARB16 (Bitfield-Mask: 0x01)                         */
+ #define R_PSCU_PSARB_PSARB17_Pos    (17UL)         /*!< PSARB17 (Bit 17)                                      */
+ #define R_PSCU_PSARB_PSARB17_Msk    (0x20000UL)    /*!< PSARB17 (Bitfield-Mask: 0x01)                         */
  #define R_PSCU_PSARB_PSARB18_Pos    (18UL)         /*!< PSARB18 (Bit 18)                                      */
  #define R_PSCU_PSARB_PSARB18_Msk    (0x40000UL)    /*!< PSARB18 (Bitfield-Mask: 0x01)                         */
  #define R_PSCU_PSARB_PSARB19_Pos    (19UL)         /*!< PSARB19 (Bit 19)                                      */
@@ -19696,6 +19847,23 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_SCI0_SSR_FIFO_TEND_Msk       (0x4UL)    /*!< TEND (Bitfield-Mask: 0x01)                            */
  #define R_SCI0_SSR_FIFO_DR_Pos         (0UL)      /*!< DR (Bit 0)                                            */
  #define R_SCI0_SSR_FIFO_DR_Msk         (0x1UL)    /*!< DR (Bitfield-Mask: 0x01)                              */
+/* =======================================================  SSR_MANC  ======================================================== */
+ #define R_SCI0_SSR_MANC_TDRE_Pos       (7UL)      /*!< TDRE (Bit 7)                                          */
+ #define R_SCI0_SSR_MANC_TDRE_Msk       (0x80UL)   /*!< TDRE (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_RDRF_Pos       (6UL)      /*!< RDRF (Bit 6)                                          */
+ #define R_SCI0_SSR_MANC_RDRF_Msk       (0x40UL)   /*!< RDRF (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_ORER_Pos       (5UL)      /*!< ORER (Bit 5)                                          */
+ #define R_SCI0_SSR_MANC_ORER_Msk       (0x20UL)   /*!< ORER (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_FER_Pos        (4UL)      /*!< FER (Bit 4)                                           */
+ #define R_SCI0_SSR_MANC_FER_Msk        (0x10UL)   /*!< FER (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_SSR_MANC_PER_Pos        (3UL)      /*!< PER (Bit 3)                                           */
+ #define R_SCI0_SSR_MANC_PER_Msk        (0x8UL)    /*!< PER (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_SSR_MANC_TEND_Pos       (2UL)      /*!< TEND (Bit 2)                                          */
+ #define R_SCI0_SSR_MANC_TEND_Msk       (0x4UL)    /*!< TEND (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_MPB_Pos        (1UL)      /*!< MPB (Bit 1)                                           */
+ #define R_SCI0_SSR_MANC_MPB_Msk        (0x2UL)    /*!< MPB (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_SSR_MANC_MER_Pos        (0UL)      /*!< MER (Bit 0)                                           */
+ #define R_SCI0_SSR_MANC_MER_Msk        (0x1UL)    /*!< MER (Bitfield-Mask: 0x01)                             */
 /* =======================================================  SSR_SMCI  ======================================================== */
  #define R_SCI0_SSR_SMCI_TDRE_Pos       (7UL)      /*!< TDRE (Bit 7)                                          */
  #define R_SCI0_SSR_SMCI_TDRE_Msk       (0x80UL)   /*!< TDRE (Bitfield-Mask: 0x01)                            */
@@ -19824,6 +19992,20 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_SCI0_FRDRHL_MPB_Msk          (0x200UL)  /*!< MPB (Bitfield-Mask: 0x01)                             */
  #define R_SCI0_FRDRHL_RDAT_Pos         (0UL)      /*!< RDAT (Bit 0)                                          */
  #define R_SCI0_FRDRHL_RDAT_Msk         (0x1ffUL)  /*!< RDAT (Bitfield-Mask: 0x1ff)                           */
+/* =======================================================  TDRHL_MAN  ======================================================= */
+ #define R_SCI0_TDRHL_MAN_TDAT_Pos      (0UL)      /*!< TDAT (Bit 0)                                          */
+ #define R_SCI0_TDRHL_MAN_TDAT_Msk      (0x1ffUL)  /*!< TDAT (Bitfield-Mask: 0x1ff)                           */
+ #define R_SCI0_TDRHL_MAN_MPBT_Pos      (9UL)      /*!< MPBT (Bit 9)                                          */
+ #define R_SCI0_TDRHL_MAN_MPBT_Msk      (0x200UL)  /*!< MPBT (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_TDRHL_MAN_TSYNC_Pos     (12UL)     /*!< TSYNC (Bit 12)                                        */
+ #define R_SCI0_TDRHL_MAN_TSYNC_Msk     (0x1000UL) /*!< TSYNC (Bitfield-Mask: 0x01)                           */
+/* =======================================================  RDRHL_MAN  ======================================================= */
+ #define R_SCI0_RDRHL_MAN_RDAT_Pos      (0UL)      /*!< RDAT (Bit 0)                                          */
+ #define R_SCI0_RDRHL_MAN_RDAT_Msk      (0x1ffUL)  /*!< RDAT (Bitfield-Mask: 0x1ff)                           */
+ #define R_SCI0_RDRHL_MAN_MPB_Pos       (9UL)      /*!< MPB (Bit 9)                                           */
+ #define R_SCI0_RDRHL_MAN_MPB_Msk       (0x200UL)  /*!< MPB (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_RDRHL_MAN_RSYNC_Pos     (12UL)     /*!< RSYNC (Bit 12)                                        */
+ #define R_SCI0_RDRHL_MAN_RSYNC_Msk     (0x1000UL) /*!< RSYNC (Bitfield-Mask: 0x01)                           */
 /* =========================================================  FRDRH  ========================================================= */
  #define R_SCI0_FRDRH_RDF_Pos           (6UL)      /*!< RDF (Bit 6)                                           */
  #define R_SCI0_FRDRH_RDF_Msk           (0x40UL)   /*!< RDF (Bitfield-Mask: 0x01)                             */
@@ -20038,6 +20220,48 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
  #define R_SCI0_TMR_TCSS_Msk            (0x70UL) /*!< TCSS (Bitfield-Mask: 0x07)                            */
 /* =========================================================  TPRE  ========================================================== */
 /* =========================================================  TCNT  ========================================================== */
+/* =======================================================  SCIMSKEN  ======================================================== */
+ #define R_SCI0_SCIMSKEN_MSKEN_Pos      (0UL)    /*!< MSKEN (Bit 0)                                         */
+ #define R_SCI0_SCIMSKEN_MSKEN_Msk      (0x1UL)  /*!< MSKEN (Bitfield-Mask: 0x01)                           */
+/* ==========================================================  MMR  ========================================================== */
+ #define R_SCI0_MMR_MANEN_Pos           (7UL)    /*!< MANEN (Bit 7)                                         */
+ #define R_SCI0_MMR_MANEN_Msk           (0x80UL) /*!< MANEN (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_SBSEL_Pos           (6UL)    /*!< SBSEL (Bit 6)                                         */
+ #define R_SCI0_MMR_SBSEL_Msk           (0x40UL) /*!< SBSEL (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_SYNSEL_Pos          (5UL)    /*!< SYNSEL (Bit 5)                                        */
+ #define R_SCI0_MMR_SYNSEL_Msk          (0x20UL) /*!< SYNSEL (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MMR_SYNVAL_Pos          (4UL)    /*!< SYNVAL (Bit 4)                                        */
+ #define R_SCI0_MMR_SYNVAL_Msk          (0x10UL) /*!< SYNVAL (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MMR_ERTEN_Pos           (2UL)    /*!< ERTEN (Bit 2)                                         */
+ #define R_SCI0_MMR_ERTEN_Msk           (0x4UL)  /*!< ERTEN (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_TMPOL_Pos           (1UL)    /*!< TMPOL (Bit 1)                                         */
+ #define R_SCI0_MMR_TMPOL_Msk           (0x2UL)  /*!< TMPOL (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_RMPOL_Pos           (0UL)    /*!< RMPOL (Bit 0)                                         */
+ #define R_SCI0_MMR_RMPOL_Msk           (0x1UL)  /*!< RMPOL (Bitfield-Mask: 0x01)                           */
+/* =========================================================  TMPR  ========================================================== */
+ #define R_SCI0_TMPR_TPLEN_Pos          (0UL)    /*!< TPLEN (Bit 0)                                         */
+ #define R_SCI0_TMPR_TPLEN_Msk          (0xfUL)  /*!< TPLEN (Bitfield-Mask: 0x0f)                           */
+ #define R_SCI0_TMPR_TPPAT_Pos          (4UL)    /*!< TPPAT (Bit 4)                                         */
+ #define R_SCI0_TMPR_TPPAT_Msk          (0x30UL) /*!< TPPAT (Bitfield-Mask: 0x03)                           */
+/* =========================================================  RMPR  ========================================================== */
+ #define R_SCI0_RMPR_RPLEN_Pos          (0UL)    /*!< RPLEN (Bit 0)                                         */
+ #define R_SCI0_RMPR_RPLEN_Msk          (0xfUL)  /*!< RPLEN (Bitfield-Mask: 0x0f)                           */
+ #define R_SCI0_RMPR_RPPAT_Pos          (4UL)    /*!< RPPAT (Bit 4)                                         */
+ #define R_SCI0_RMPR_RPPAT_Msk          (0x30UL) /*!< RPPAT (Bitfield-Mask: 0x03)                           */
+/* =========================================================  MESR  ========================================================== */
+ #define R_SCI0_MESR_PFER_Pos           (0UL)    /*!< PFER (Bit 0)                                          */
+ #define R_SCI0_MESR_PFER_Msk           (0x1UL)  /*!< PFER (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_MESR_SYER_Pos           (1UL)    /*!< SYER (Bit 1)                                          */
+ #define R_SCI0_MESR_SYER_Msk           (0x2UL)  /*!< SYER (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_MESR_SBER_Pos           (2UL)    /*!< SBER (Bit 2)                                          */
+ #define R_SCI0_MESR_SBER_Msk           (0x4UL)  /*!< SBER (Bitfield-Mask: 0x01)                            */
+/* =========================================================  MECR  ========================================================== */
+ #define R_SCI0_MECR_PFEREN_Pos         (0UL)    /*!< PFEREN (Bit 0)                                        */
+ #define R_SCI0_MECR_PFEREN_Msk         (0x1UL)  /*!< PFEREN (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MECR_SYEREN_Pos         (1UL)    /*!< SYEREN (Bit 1)                                        */
+ #define R_SCI0_MECR_SYEREN_Msk         (0x2UL)  /*!< SYEREN (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MECR_SBEREN_Pos         (2UL)    /*!< SBEREN (Bit 2)                                        */
+ #define R_SCI0_MECR_SBEREN_Msk         (0x4UL)  /*!< SBEREN (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_SPI0                                           ================ */
@@ -21140,147 +21364,153 @@ typedef struct                         /*!< (@ 0x407FC000) R_FLAD Structure     
 /* =========================================================================================================================== */
 
 /* =========================================================  CSAR  ========================================================== */
- #define R_CPSCU_CSAR_CACHESA_Pos            (0UL)          /*!< CACHESA (Bit 0)                                       */
- #define R_CPSCU_CSAR_CACHESA_Msk            (0x1UL)        /*!< CACHESA (Bitfield-Mask: 0x01)                         */
- #define R_CPSCU_CSAR_CACHELSA_Pos           (1UL)          /*!< CACHELSA (Bit 1)                                      */
- #define R_CPSCU_CSAR_CACHELSA_Msk           (0x2UL)        /*!< CACHELSA (Bitfield-Mask: 0x01)                        */
- #define R_CPSCU_CSAR_CACHEESA_Pos           (2UL)          /*!< CACHEESA (Bit 2)                                      */
- #define R_CPSCU_CSAR_CACHEESA_Msk           (0x4UL)        /*!< CACHEESA (Bitfield-Mask: 0x01)                        */
+ #define R_CPSCU_CSAR_CACHESA_Pos              (0UL)          /*!< CACHESA (Bit 0)                                       */
+ #define R_CPSCU_CSAR_CACHESA_Msk              (0x1UL)        /*!< CACHESA (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_CSAR_CACHELSA_Pos             (1UL)          /*!< CACHELSA (Bit 1)                                      */
+ #define R_CPSCU_CSAR_CACHELSA_Msk             (0x2UL)        /*!< CACHELSA (Bitfield-Mask: 0x01)                        */
+ #define R_CPSCU_CSAR_CACHEESA_Pos             (2UL)          /*!< CACHEESA (Bit 2)                                      */
+ #define R_CPSCU_CSAR_CACHEESA_Msk             (0x4UL)        /*!< CACHEESA (Bitfield-Mask: 0x01)                        */
 /* ========================================================  SRAMSAR  ======================================================== */
- #define R_CPSCU_SRAMSAR_SRAMSA0_Pos         (0UL)          /*!< SRAMSA0 (Bit 0)                                       */
- #define R_CPSCU_SRAMSAR_SRAMSA0_Msk         (0x1UL)        /*!< SRAMSA0 (Bitfield-Mask: 0x01)                         */
- #define R_CPSCU_SRAMSAR_SRAMSA1_Pos         (1UL)          /*!< SRAMSA1 (Bit 1)                                       */
- #define R_CPSCU_SRAMSAR_SRAMSA1_Msk         (0x2UL)        /*!< SRAMSA1 (Bitfield-Mask: 0x01)                         */
- #define R_CPSCU_SRAMSAR_SRAMSA2_Pos         (2UL)          /*!< SRAMSA2 (Bit 2)                                       */
- #define R_CPSCU_SRAMSAR_SRAMSA2_Msk         (0x4UL)        /*!< SRAMSA2 (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_SRAMSAR_SRAMSA0_Pos           (0UL)          /*!< SRAMSA0 (Bit 0)                                       */
+ #define R_CPSCU_SRAMSAR_SRAMSA0_Msk           (0x1UL)        /*!< SRAMSA0 (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_SRAMSAR_SRAMSA1_Pos           (1UL)          /*!< SRAMSA1 (Bit 1)                                       */
+ #define R_CPSCU_SRAMSAR_SRAMSA1_Msk           (0x2UL)        /*!< SRAMSA1 (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_SRAMSAR_SRAMSA2_Pos           (2UL)          /*!< SRAMSA2 (Bit 2)                                       */
+ #define R_CPSCU_SRAMSAR_SRAMSA2_Msk           (0x4UL)        /*!< SRAMSA2 (Bitfield-Mask: 0x01)                         */
 /* =======================================================  STBRAMSAR  ======================================================= */
- #define R_CPSCU_STBRAMSAR_NSBSTBR_Pos       (0UL)          /*!< NSBSTBR (Bit 0)                                       */
- #define R_CPSCU_STBRAMSAR_NSBSTBR_Msk       (0xfUL)        /*!< NSBSTBR (Bitfield-Mask: 0x0f)                         */
+ #define R_CPSCU_STBRAMSAR_NSBSTBR_Pos         (0UL)          /*!< NSBSTBR (Bit 0)                                       */
+ #define R_CPSCU_STBRAMSAR_NSBSTBR_Msk         (0xfUL)        /*!< NSBSTBR (Bitfield-Mask: 0x0f)                         */
 /* ========================================================  DTCSAR  ========================================================= */
- #define R_CPSCU_DTCSAR_DTCSTSA_Pos          (0UL)          /*!< DTCSTSA (Bit 0)                                       */
- #define R_CPSCU_DTCSAR_DTCSTSA_Msk          (0x1UL)        /*!< DTCSTSA (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_DTCSAR_DTCSTSA_Pos            (0UL)          /*!< DTCSTSA (Bit 0)                                       */
+ #define R_CPSCU_DTCSAR_DTCSTSA_Msk            (0x1UL)        /*!< DTCSTSA (Bitfield-Mask: 0x01)                         */
 /* ========================================================  DMACSAR  ======================================================== */
- #define R_CPSCU_DMACSAR_DMASTSA_Pos         (0UL)          /*!< DMASTSA (Bit 0)                                       */
- #define R_CPSCU_DMACSAR_DMASTSA_Msk         (0x1UL)        /*!< DMASTSA (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_DMACSAR_DMASTSA_Pos           (0UL)          /*!< DMASTSA (Bit 0)                                       */
+ #define R_CPSCU_DMACSAR_DMASTSA_Msk           (0x1UL)        /*!< DMASTSA (Bitfield-Mask: 0x01)                         */
 /* ========================================================  ICUSARA  ======================================================== */
- #define R_CPSCU_ICUSARA_SAIRQCRn_Pos        (0UL)          /*!< SAIRQCRn (Bit 0)                                      */
- #define R_CPSCU_ICUSARA_SAIRQCRn_Msk        (0xffffUL)     /*!< SAIRQCRn (Bitfield-Mask: 0xffff)                      */
+ #define R_CPSCU_ICUSARA_SAIRQCRn_Pos          (0UL)          /*!< SAIRQCRn (Bit 0)                                      */
+ #define R_CPSCU_ICUSARA_SAIRQCRn_Msk          (0xffffUL)     /*!< SAIRQCRn (Bitfield-Mask: 0xffff)                      */
 /* ========================================================  ICUSARB  ======================================================== */
- #define R_CPSCU_ICUSARB_SANMI_Pos           (0UL)          /*!< SANMI (Bit 0)                                         */
- #define R_CPSCU_ICUSARB_SANMI_Msk           (0x1UL)        /*!< SANMI (Bitfield-Mask: 0x01)                           */
+ #define R_CPSCU_ICUSARB_SANMI_Pos             (0UL)          /*!< SANMI (Bit 0)                                         */
+ #define R_CPSCU_ICUSARB_SANMI_Msk             (0x1UL)        /*!< SANMI (Bitfield-Mask: 0x01)                           */
 /* ========================================================  ICUSARC  ======================================================== */
- #define R_CPSCU_ICUSARC_SADMACn_Pos         (0UL)          /*!< SADMACn (Bit 0)                                       */
- #define R_CPSCU_ICUSARC_SADMACn_Msk         (0xffUL)       /*!< SADMACn (Bitfield-Mask: 0xff)                         */
+ #define R_CPSCU_ICUSARC_SADMACn_Pos           (0UL)          /*!< SADMACn (Bit 0)                                       */
+ #define R_CPSCU_ICUSARC_SADMACn_Msk           (0xffUL)       /*!< SADMACn (Bitfield-Mask: 0xff)                         */
 /* ========================================================  ICUSARD  ======================================================== */
- #define R_CPSCU_ICUSARD_SASELSR0_Pos        (0UL)          /*!< SASELSR0 (Bit 0)                                      */
- #define R_CPSCU_ICUSARD_SASELSR0_Msk        (0x1UL)        /*!< SASELSR0 (Bitfield-Mask: 0x01)                        */
+ #define R_CPSCU_ICUSARD_SASELSR0_Pos          (0UL)          /*!< SASELSR0 (Bit 0)                                      */
+ #define R_CPSCU_ICUSARD_SASELSR0_Msk          (0x1UL)        /*!< SASELSR0 (Bitfield-Mask: 0x01)                        */
 /* ========================================================  ICUSARE  ======================================================== */
- #define R_CPSCU_ICUSARE_SAIWDTWUP_Pos       (16UL)         /*!< SAIWDTWUP (Bit 16)                                    */
- #define R_CPSCU_ICUSARE_SAIWDTWUP_Msk       (0x10000UL)    /*!< SAIWDTWUP (Bitfield-Mask: 0x01)                       */
- #define R_CPSCU_ICUSARE_SALVD1WUP_Pos       (18UL)         /*!< SALVD1WUP (Bit 18)                                    */
- #define R_CPSCU_ICUSARE_SALVD1WUP_Msk       (0x40000UL)    /*!< SALVD1WUP (Bitfield-Mask: 0x01)                       */
- #define R_CPSCU_ICUSARE_SALVD2WUP_Pos       (19UL)         /*!< SALVD2WUP (Bit 19)                                    */
- #define R_CPSCU_ICUSARE_SALVD2WUP_Msk       (0x80000UL)    /*!< SALVD2WUP (Bitfield-Mask: 0x01)                       */
- #define R_CPSCU_ICUSARE_SAVBATTWUP_Pos      (20UL)         /*!< SAVBATTWUP (Bit 20)                                   */
- #define R_CPSCU_ICUSARE_SAVBATTWUP_Msk      (0x100000UL)   /*!< SAVBATTWUP (Bitfield-Mask: 0x01)                      */
- #define R_CPSCU_ICUSARE_SAACMPLP0WUP_Pos    (23UL)         /*!< SAACMPLP0WUP (Bit 23)                                 */
- #define R_CPSCU_ICUSARE_SAACMPLP0WUP_Msk    (0x800000UL)   /*!< SAACMPLP0WUP (Bitfield-Mask: 0x01)                    */
- #define R_CPSCU_ICUSARE_SARTCALMWUP_Pos     (24UL)         /*!< SARTCALMWUP (Bit 24)                                  */
- #define R_CPSCU_ICUSARE_SARTCALMWUP_Msk     (0x1000000UL)  /*!< SARTCALMWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARE_SARTCPRDWUP_Pos     (25UL)         /*!< SARTCPRDWUP (Bit 25)                                  */
- #define R_CPSCU_ICUSARE_SARTCPRDWUP_Msk     (0x2000000UL)  /*!< SARTCPRDWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARE_SAUSBFS0WUP_Pos     (27UL)         /*!< SAUSBFS0WUP (Bit 27)                                  */
- #define R_CPSCU_ICUSARE_SAUSBFS0WUP_Msk     (0x8000000UL)  /*!< SAUSBFS0WUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARE_SAAGT1UDWUP_Pos     (28UL)         /*!< SAAGT1UDWUP (Bit 28)                                  */
- #define R_CPSCU_ICUSARE_SAAGT1UDWUP_Msk     (0x10000000UL) /*!< SAAGT1UDWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARE_SAAGT1CAWUP_Pos     (29UL)         /*!< SAAGT1CAWUP (Bit 29)                                  */
- #define R_CPSCU_ICUSARE_SAAGT1CAWUP_Msk     (0x20000000UL) /*!< SAAGT1CAWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARE_SAAGT1CBWUP_Pos     (30UL)         /*!< SAAGT1CBWUP (Bit 30)                                  */
- #define R_CPSCU_ICUSARE_SAAGT1CBWUP_Msk     (0x40000000UL) /*!< SAAGT1CBWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARE_SAIIC0WUP_Pos       (31UL)         /*!< SAIIC0WUP (Bit 31)                                    */
- #define R_CPSCU_ICUSARE_SAIIC0WUP_Msk       (0x80000000UL) /*!< SAIIC0WUP (Bitfield-Mask: 0x01)                       */
+ #define R_CPSCU_ICUSARE_SAIWDTWUP_Pos         (16UL)         /*!< SAIWDTWUP (Bit 16)                                    */
+ #define R_CPSCU_ICUSARE_SAIWDTWUP_Msk         (0x10000UL)    /*!< SAIWDTWUP (Bitfield-Mask: 0x01)                       */
+ #define R_CPSCU_ICUSARE_SALVD1WUP_Pos         (18UL)         /*!< SALVD1WUP (Bit 18)                                    */
+ #define R_CPSCU_ICUSARE_SALVD1WUP_Msk         (0x40000UL)    /*!< SALVD1WUP (Bitfield-Mask: 0x01)                       */
+ #define R_CPSCU_ICUSARE_SALVD2WUP_Pos         (19UL)         /*!< SALVD2WUP (Bit 19)                                    */
+ #define R_CPSCU_ICUSARE_SALVD2WUP_Msk         (0x80000UL)    /*!< SALVD2WUP (Bitfield-Mask: 0x01)                       */
+ #define R_CPSCU_ICUSARE_SAVBATTWUP_Pos        (20UL)         /*!< SAVBATTWUP (Bit 20)                                   */
+ #define R_CPSCU_ICUSARE_SAVBATTWUP_Msk        (0x100000UL)   /*!< SAVBATTWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARE_SAACMPLP0WUP_Pos      (23UL)         /*!< SAACMPLP0WUP (Bit 23)                                 */
+ #define R_CPSCU_ICUSARE_SAACMPLP0WUP_Msk      (0x800000UL)   /*!< SAACMPLP0WUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARE_SARTCALMWUP_Pos       (24UL)         /*!< SARTCALMWUP (Bit 24)                                  */
+ #define R_CPSCU_ICUSARE_SARTCALMWUP_Msk       (0x1000000UL)  /*!< SARTCALMWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARE_SARTCPRDWUP_Pos       (25UL)         /*!< SARTCPRDWUP (Bit 25)                                  */
+ #define R_CPSCU_ICUSARE_SARTCPRDWUP_Msk       (0x2000000UL)  /*!< SARTCPRDWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARE_SAUSBFS0WUP_Pos       (27UL)         /*!< SAUSBFS0WUP (Bit 27)                                  */
+ #define R_CPSCU_ICUSARE_SAUSBFS0WUP_Msk       (0x8000000UL)  /*!< SAUSBFS0WUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARE_SAAGT1UDWUP_Pos       (28UL)         /*!< SAAGT1UDWUP (Bit 28)                                  */
+ #define R_CPSCU_ICUSARE_SAAGT1UDWUP_Msk       (0x10000000UL) /*!< SAAGT1UDWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARE_SAAGT1CAWUP_Pos       (29UL)         /*!< SAAGT1CAWUP (Bit 29)                                  */
+ #define R_CPSCU_ICUSARE_SAAGT1CAWUP_Msk       (0x20000000UL) /*!< SAAGT1CAWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARE_SAAGT1CBWUP_Pos       (30UL)         /*!< SAAGT1CBWUP (Bit 30)                                  */
+ #define R_CPSCU_ICUSARE_SAAGT1CBWUP_Msk       (0x40000000UL) /*!< SAAGT1CBWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARE_SAIIC0WUP_Pos         (31UL)         /*!< SAIIC0WUP (Bit 31)                                    */
+ #define R_CPSCU_ICUSARE_SAIIC0WUP_Msk         (0x80000000UL) /*!< SAIIC0WUP (Bitfield-Mask: 0x01)                       */
 /* ========================================================  ICUSARF  ======================================================== */
- #define R_CPSCU_ICUSARF_SAAGT3UDWUP_Pos     (0UL)          /*!< SAAGT3UDWUP (Bit 0)                                   */
- #define R_CPSCU_ICUSARF_SAAGT3UDWUP_Msk     (0x1UL)        /*!< SAAGT3UDWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARF_SAAGT3CAWUP_Pos     (1UL)          /*!< SAAGT3CAWUP (Bit 1)                                   */
- #define R_CPSCU_ICUSARF_SAAGT3CAWUP_Msk     (0x2UL)        /*!< SAAGT3CAWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARF_SAAGT3CBWUP_Pos     (2UL)          /*!< SAAGT3CBWUP (Bit 2)                                   */
- #define R_CPSCU_ICUSARF_SAAGT3CBWUP_Msk     (0x4UL)        /*!< SAAGT3CBWUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARF_SACOMPHS0WUP_Pos    (3UL)          /*!< SACOMPHS0WUP (Bit 3)                                  */
- #define R_CPSCU_ICUSARF_SACOMPHS0WUP_Msk    (0x8UL)        /*!< SACOMPHS0WUP (Bitfield-Mask: 0x01)                    */
- #define R_CPSCU_ICUSARF_SASOSCWUP_Pos       (7UL)          /*!< SASOSCWUP (Bit 7)                                     */
- #define R_CPSCU_ICUSARF_SASOSCWUP_Msk       (0x80UL)       /*!< SASOSCWUP (Bitfield-Mask: 0x01)                       */
- #define R_CPSCU_ICUSARF_SAULP0UWUP_Pos      (8UL)          /*!< SAULP0UWUP (Bit 8)                                    */
- #define R_CPSCU_ICUSARF_SAULP0UWUP_Msk      (0x100UL)      /*!< SAULP0UWUP (Bitfield-Mask: 0x01)                      */
- #define R_CPSCU_ICUSARF_SAULP0AWUP_Pos      (9UL)          /*!< SAULP0AWUP (Bit 9)                                    */
- #define R_CPSCU_ICUSARF_SAULP0AWUP_Msk      (0x200UL)      /*!< SAULP0AWUP (Bitfield-Mask: 0x01)                      */
- #define R_CPSCU_ICUSARF_SAULP0BWUP_Pos      (10UL)         /*!< SAULP0BWUP (Bit 10)                                   */
- #define R_CPSCU_ICUSARF_SAULP0BWUP_Msk      (0x400UL)      /*!< SAULP0BWUP (Bitfield-Mask: 0x01)                      */
- #define R_CPSCU_ICUSARF_SAI3CWUP_Pos        (11UL)         /*!< SAI3CWUP (Bit 11)                                     */
- #define R_CPSCU_ICUSARF_SAI3CWUP_Msk        (0x800UL)      /*!< SAI3CWUP (Bitfield-Mask: 0x01)                        */
- #define R_CPSCU_ICUSARF_SAULP1UWUP_Pos      (12UL)         /*!< SAULP1UWUP (Bit 12)                                   */
- #define R_CPSCU_ICUSARF_SAULP1UWUP_Msk      (0x1000UL)     /*!< SAULP1UWUP (Bitfield-Mask: 0x01)                      */
- #define R_CPSCU_ICUSARF_SAULP1AWUP_Pos      (13UL)         /*!< SAULP1AWUP (Bit 13)                                   */
- #define R_CPSCU_ICUSARF_SAULP1AWUP_Msk      (0x2000UL)     /*!< SAULP1AWUP (Bitfield-Mask: 0x01)                      */
- #define R_CPSCU_ICUSARF_SAULP1BWUP_Pos      (14UL)         /*!< SAULP1BWUP (Bit 14)                                   */
- #define R_CPSCU_ICUSARF_SAULP1BWUP_Msk      (0x4000UL)     /*!< SAULP1BWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARF_SAAGT3UDWUP_Pos       (0UL)          /*!< SAAGT3UDWUP (Bit 0)                                   */
+ #define R_CPSCU_ICUSARF_SAAGT3UDWUP_Msk       (0x1UL)        /*!< SAAGT3UDWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARF_SAAGT3CAWUP_Pos       (1UL)          /*!< SAAGT3CAWUP (Bit 1)                                   */
+ #define R_CPSCU_ICUSARF_SAAGT3CAWUP_Msk       (0x2UL)        /*!< SAAGT3CAWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARF_SAAGT3CBWUP_Pos       (2UL)          /*!< SAAGT3CBWUP (Bit 2)                                   */
+ #define R_CPSCU_ICUSARF_SAAGT3CBWUP_Msk       (0x4UL)        /*!< SAAGT3CBWUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARF_SACOMPHS0WUP_Pos      (3UL)          /*!< SACOMPHS0WUP (Bit 3)                                  */
+ #define R_CPSCU_ICUSARF_SACOMPHS0WUP_Msk      (0x8UL)        /*!< SACOMPHS0WUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARF_SASOSCWUP_Pos         (7UL)          /*!< SASOSCWUP (Bit 7)                                     */
+ #define R_CPSCU_ICUSARF_SASOSCWUP_Msk         (0x80UL)       /*!< SASOSCWUP (Bitfield-Mask: 0x01)                       */
+ #define R_CPSCU_ICUSARF_SAULP0UWUP_Pos        (8UL)          /*!< SAULP0UWUP (Bit 8)                                    */
+ #define R_CPSCU_ICUSARF_SAULP0UWUP_Msk        (0x100UL)      /*!< SAULP0UWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARF_SAULP0AWUP_Pos        (9UL)          /*!< SAULP0AWUP (Bit 9)                                    */
+ #define R_CPSCU_ICUSARF_SAULP0AWUP_Msk        (0x200UL)      /*!< SAULP0AWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARF_SAULP0BWUP_Pos        (10UL)         /*!< SAULP0BWUP (Bit 10)                                   */
+ #define R_CPSCU_ICUSARF_SAULP0BWUP_Msk        (0x400UL)      /*!< SAULP0BWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARF_SAI3CWUP_Pos          (11UL)         /*!< SAI3CWUP (Bit 11)                                     */
+ #define R_CPSCU_ICUSARF_SAI3CWUP_Msk          (0x800UL)      /*!< SAI3CWUP (Bitfield-Mask: 0x01)                        */
+ #define R_CPSCU_ICUSARF_SAULP1UWUP_Pos        (12UL)         /*!< SAULP1UWUP (Bit 12)                                   */
+ #define R_CPSCU_ICUSARF_SAULP1UWUP_Msk        (0x1000UL)     /*!< SAULP1UWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARF_SAULP1AWUP_Pos        (13UL)         /*!< SAULP1AWUP (Bit 13)                                   */
+ #define R_CPSCU_ICUSARF_SAULP1AWUP_Msk        (0x2000UL)     /*!< SAULP1AWUP (Bitfield-Mask: 0x01)                      */
+ #define R_CPSCU_ICUSARF_SAULP1BWUP_Pos        (14UL)         /*!< SAULP1BWUP (Bit 14)                                   */
+ #define R_CPSCU_ICUSARF_SAULP1BWUP_Msk        (0x4000UL)     /*!< SAULP1BWUP (Bitfield-Mask: 0x01)                      */
 /* ========================================================  ICUSARG  ======================================================== */
- #define R_CPSCU_ICUSARG_SAIELSRn_Pos        (0UL)          /*!< SAIELSRn (Bit 0)                                      */
- #define R_CPSCU_ICUSARG_SAIELSRn_Msk        (0xffffffffUL) /*!< SAIELSRn (Bitfield-Mask: 0xffffffff)                  */
+ #define R_CPSCU_ICUSARG_SAIELSRn_Pos          (0UL)          /*!< SAIELSRn (Bit 0)                                      */
+ #define R_CPSCU_ICUSARG_SAIELSRn_Msk          (0xffffffffUL) /*!< SAIELSRn (Bitfield-Mask: 0xffffffff)                  */
 /* ========================================================  ICUSARH  ======================================================== */
- #define R_CPSCU_ICUSARH_SAIELSRn_Pos        (0UL)          /*!< SAIELSRn (Bit 0)                                      */
- #define R_CPSCU_ICUSARH_SAIELSRn_Msk        (0xffffffffUL) /*!< SAIELSRn (Bitfield-Mask: 0xffffffff)                  */
+ #define R_CPSCU_ICUSARH_SAIELSRn_Pos          (0UL)          /*!< SAIELSRn (Bit 0)                                      */
+ #define R_CPSCU_ICUSARH_SAIELSRn_Msk          (0xffffffffUL) /*!< SAIELSRn (Bitfield-Mask: 0xffffffff)                  */
 /* ========================================================  ICUSARI  ======================================================== */
- #define R_CPSCU_ICUSARI_SAIELSRn_Pos        (0UL)          /*!< SAIELSRn (Bit 0)                                      */
- #define R_CPSCU_ICUSARI_SAIELSRn_Msk        (0xffffffffUL) /*!< SAIELSRn (Bitfield-Mask: 0xffffffff)                  */
+ #define R_CPSCU_ICUSARI_SAIELSRn_Pos          (0UL)          /*!< SAIELSRn (Bit 0)                                      */
+ #define R_CPSCU_ICUSARI_SAIELSRn_Msk          (0xffffffffUL) /*!< SAIELSRn (Bitfield-Mask: 0xffffffff)                  */
 /* ========================================================  ICUSARM  ======================================================== */
- #define R_CPSCU_ICUSARM_SAINTUR0WUP_Pos     (0UL)          /*!< SAINTUR0WUP (Bit 0)                                   */
- #define R_CPSCU_ICUSARM_SAINTUR0WUP_Msk     (0x1UL)        /*!< SAINTUR0WUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARM_SAINTURE0WUP_Pos    (1UL)          /*!< SAINTURE0WUP (Bit 1)                                  */
- #define R_CPSCU_ICUSARM_SAINTURE0WUP_Msk    (0x2UL)        /*!< SAINTURE0WUP (Bitfield-Mask: 0x01)                    */
- #define R_CPSCU_ICUSARM_SAINTUR1WUP_Pos     (2UL)          /*!< SAINTUR1WUP (Bit 2)                                   */
- #define R_CPSCU_ICUSARM_SAINTUR1WUP_Msk     (0x4UL)        /*!< SAINTUR1WUP (Bitfield-Mask: 0x01)                     */
- #define R_CPSCU_ICUSARM_SAINTURE1WUP_Pos    (3UL)          /*!< SAINTURE1WUP (Bit 3)                                  */
- #define R_CPSCU_ICUSARM_SAINTURE1WUP_Msk    (0x8UL)        /*!< SAINTURE1WUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARM_SAINTUR0WUP_Pos       (0UL)          /*!< SAINTUR0WUP (Bit 0)                                   */
+ #define R_CPSCU_ICUSARM_SAINTUR0WUP_Msk       (0x1UL)        /*!< SAINTUR0WUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARM_SAINTURE0WUP_Pos      (1UL)          /*!< SAINTURE0WUP (Bit 1)                                  */
+ #define R_CPSCU_ICUSARM_SAINTURE0WUP_Msk      (0x2UL)        /*!< SAINTURE0WUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARM_SAINTUR1WUP_Pos       (2UL)          /*!< SAINTUR1WUP (Bit 2)                                   */
+ #define R_CPSCU_ICUSARM_SAINTUR1WUP_Msk       (0x4UL)        /*!< SAINTUR1WUP (Bitfield-Mask: 0x01)                     */
+ #define R_CPSCU_ICUSARM_SAINTURE1WUP_Pos      (3UL)          /*!< SAINTURE1WUP (Bit 3)                                  */
+ #define R_CPSCU_ICUSARM_SAINTURE1WUP_Msk      (0x8UL)        /*!< SAINTURE1WUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARM_SAEXLVDVBATWUP_Pos    (4UL)          /*!< SAEXLVDVBATWUP (Bit 4)                                */
+ #define R_CPSCU_ICUSARM_SAEXLVDVBATWUP_Msk    (0x10UL)       /*!< SAEXLVDVBATWUP (Bitfield-Mask: 0x01)                  */
+ #define R_CPSCU_ICUSARM_SALVDVRTCWUP_Pos      (5UL)          /*!< SALVDVRTCWUP (Bit 5)                                  */
+ #define R_CPSCU_ICUSARM_SALVDVRTCWUP_Msk      (0x20UL)       /*!< SALVDVRTCWUP (Bitfield-Mask: 0x01)                    */
+ #define R_CPSCU_ICUSARM_SAEXLVDWUP_Pos        (6UL)          /*!< SAEXLVDWUP (Bit 6)                                    */
+ #define R_CPSCU_ICUSARM_SAEXLVDWUP_Msk        (0x40UL)       /*!< SAEXLVDWUP (Bitfield-Mask: 0x01)                      */
 /* ========================================================  BUSSARA  ======================================================== */
- #define R_CPSCU_BUSSARA_BUSSA0_Pos          (0UL)          /*!< BUSSA0 (Bit 0)                                        */
- #define R_CPSCU_BUSSARA_BUSSA0_Msk          (0x1UL)        /*!< BUSSA0 (Bitfield-Mask: 0x01)                          */
+ #define R_CPSCU_BUSSARA_BUSSA0_Pos            (0UL)          /*!< BUSSA0 (Bit 0)                                        */
+ #define R_CPSCU_BUSSARA_BUSSA0_Msk            (0x1UL)        /*!< BUSSA0 (Bitfield-Mask: 0x01)                          */
 /* ========================================================  BUSSARB  ======================================================== */
- #define R_CPSCU_BUSSARB_BUSSB0_Pos          (0UL)          /*!< BUSSB0 (Bit 0)                                        */
- #define R_CPSCU_BUSSARB_BUSSB0_Msk          (0x1UL)        /*!< BUSSB0 (Bitfield-Mask: 0x01)                          */
+ #define R_CPSCU_BUSSARB_BUSSB0_Pos            (0UL)          /*!< BUSSB0 (Bit 0)                                        */
+ #define R_CPSCU_BUSSARB_BUSSB0_Msk            (0x1UL)        /*!< BUSSB0 (Bitfield-Mask: 0x01)                          */
 /* ========================================================  BUSSARC  ======================================================== */
- #define R_CPSCU_BUSSARC_BUSSC0_Pos          (0UL)          /*!< BUSSC0 (Bit 0)                                        */
- #define R_CPSCU_BUSSARC_BUSSC0_Msk          (0x1UL)        /*!< BUSSC0 (Bitfield-Mask: 0x01)                          */
+ #define R_CPSCU_BUSSARC_BUSSC0_Pos            (0UL)          /*!< BUSSC0 (Bit 0)                                        */
+ #define R_CPSCU_BUSSARC_BUSSC0_Msk            (0x1UL)        /*!< BUSSC0 (Bitfield-Mask: 0x01)                          */
 /* ========================================================  BUSPARC  ======================================================== */
- #define R_CPSCU_BUSPARC_BUSPA0_Pos          (0UL)          /*!< BUSPA0 (Bit 0)                                        */
- #define R_CPSCU_BUSPARC_BUSPA0_Msk          (0x1UL)        /*!< BUSPA0 (Bitfield-Mask: 0x01)                          */
+ #define R_CPSCU_BUSPARC_BUSPA0_Pos            (0UL)          /*!< BUSPA0 (Bit 0)                                        */
+ #define R_CPSCU_BUSPARC_BUSPA0_Msk            (0x1UL)        /*!< BUSPA0 (Bitfield-Mask: 0x01)                          */
 /* =======================================================  MMPUSARA  ======================================================== */
- #define R_CPSCU_MMPUSARA_MMPUAnSA_Pos       (0UL)          /*!< MMPUAnSA (Bit 0)                                      */
- #define R_CPSCU_MMPUSARA_MMPUAnSA_Msk       (0xffUL)       /*!< MMPUAnSA (Bitfield-Mask: 0xff)                        */
+ #define R_CPSCU_MMPUSARA_MMPUAnSA_Pos         (0UL)          /*!< MMPUAnSA (Bit 0)                                      */
+ #define R_CPSCU_MMPUSARA_MMPUAnSA_Msk         (0xffUL)       /*!< MMPUAnSA (Bitfield-Mask: 0xff)                        */
 /* =======================================================  MMPUSARB  ======================================================== */
- #define R_CPSCU_MMPUSARB_MMPUB0SA_Pos       (0UL)          /*!< MMPUB0SA (Bit 0)                                      */
- #define R_CPSCU_MMPUSARB_MMPUB0SA_Msk       (0x1UL)        /*!< MMPUB0SA (Bitfield-Mask: 0x01)                        */
+ #define R_CPSCU_MMPUSARB_MMPUB0SA_Pos         (0UL)          /*!< MMPUB0SA (Bit 0)                                      */
+ #define R_CPSCU_MMPUSARB_MMPUB0SA_Msk         (0x1UL)        /*!< MMPUB0SA (Bitfield-Mask: 0x01)                        */
 /* ========================================================  TZFSAR  ========================================================= */
- #define R_CPSCU_TZFSAR_TZFSA0_Pos           (0UL)          /*!< TZFSA0 (Bit 0)                                        */
- #define R_CPSCU_TZFSAR_TZFSA0_Msk           (0x1UL)        /*!< TZFSA0 (Bitfield-Mask: 0x01)                          */
+ #define R_CPSCU_TZFSAR_TZFSA0_Pos             (0UL)          /*!< TZFSA0 (Bit 0)                                        */
+ #define R_CPSCU_TZFSAR_TZFSA0_Msk             (0x1UL)        /*!< TZFSA0 (Bitfield-Mask: 0x01)                          */
 /* =======================================================  DEBUGSAR  ======================================================== */
- #define R_CPSCU_DEBUGSAR_DBGSA0_Pos         (0UL)          /*!< DBGSA0 (Bit 0)                                        */
- #define R_CPSCU_DEBUGSAR_DBGSA0_Msk         (0x1UL)        /*!< DBGSA0 (Bitfield-Mask: 0x01)                          */
+ #define R_CPSCU_DEBUGSAR_DBGSA0_Pos           (0UL)          /*!< DBGSA0 (Bit 0)                                        */
+ #define R_CPSCU_DEBUGSAR_DBGSA0_Msk           (0x1UL)        /*!< DBGSA0 (Bitfield-Mask: 0x01)                          */
 /* =======================================================  DMACCHSAR  ======================================================= */
- #define R_CPSCU_DMACCHSAR_DMACCHSARn_Pos    (0UL)          /*!< DMACCHSARn (Bit 0)                                    */
- #define R_CPSCU_DMACCHSAR_DMACCHSARn_Msk    (0xffUL)       /*!< DMACCHSARn (Bitfield-Mask: 0xff)                      */
+ #define R_CPSCU_DMACCHSAR_DMACCHSARn_Pos      (0UL)          /*!< DMACCHSARn (Bit 0)                                    */
+ #define R_CPSCU_DMACCHSAR_DMACCHSARn_Msk      (0xffUL)       /*!< DMACCHSARn (Bitfield-Mask: 0xff)                      */
 /* ========================================================  CPUDSAR  ======================================================== */
- #define R_CPSCU_CPUDSAR_CPUDSA0_Pos         (0UL)          /*!< CPUDSA0 (Bit 0)                                       */
- #define R_CPSCU_CPUDSAR_CPUDSA0_Msk         (0x1UL)        /*!< CPUDSA0 (Bitfield-Mask: 0x01)                         */
+ #define R_CPSCU_CPUDSAR_CPUDSA0_Pos           (0UL)          /*!< CPUDSA0 (Bit 0)                                       */
+ #define R_CPSCU_CPUDSAR_CPUDSA0_Msk           (0x1UL)        /*!< CPUDSA0 (Bitfield-Mask: 0x01)                         */
 /* ======================================================  SRAMSABAR0  ======================================================= */
- #define R_CPSCU_SRAMSABAR0_SRAMSABAR_Pos    (13UL)         /*!< SRAMSABAR (Bit 13)                                    */
- #define R_CPSCU_SRAMSABAR0_SRAMSABAR_Msk    (0x1fe000UL)   /*!< SRAMSABAR (Bitfield-Mask: 0xff)                       */
+ #define R_CPSCU_SRAMSABAR0_SRAMSABAR_Pos      (13UL)         /*!< SRAMSABAR (Bit 13)                                    */
+ #define R_CPSCU_SRAMSABAR0_SRAMSABAR_Msk      (0x1fe000UL)   /*!< SRAMSABAR (Bitfield-Mask: 0xff)                       */
 /* ======================================================  SRAMSABAR1  ======================================================= */
- #define R_CPSCU_SRAMSABAR1_SRAMSABAR_Pos    (13UL)         /*!< SRAMSABAR (Bit 13)                                    */
- #define R_CPSCU_SRAMSABAR1_SRAMSABAR_Msk    (0x1fe000UL)   /*!< SRAMSABAR (Bitfield-Mask: 0xff)                       */
+ #define R_CPSCU_SRAMSABAR1_SRAMSABAR_Pos      (13UL)         /*!< SRAMSABAR (Bit 13)                                    */
+ #define R_CPSCU_SRAMSABAR1_SRAMSABAR_Msk      (0x1fe000UL)   /*!< SRAMSABAR (Bitfield-Mask: 0xff)                       */
 /* ========================================================  TEVTRCR  ======================================================== */
- #define R_CPSCU_TEVTRCR_TEVTE_Pos           (0UL)          /*!< TEVTE (Bit 0)                                         */
- #define R_CPSCU_TEVTRCR_TEVTE_Msk           (0x1UL)        /*!< TEVTE (Bitfield-Mask: 0x01)                           */
+ #define R_CPSCU_TEVTRCR_TEVTE_Pos             (0UL)          /*!< TEVTE (Bit 0)                                         */
+ #define R_CPSCU_TEVTRCR_TEVTE_Msk             (0x1UL)        /*!< TEVTE (Bitfield-Mask: 0x01)                           */
 
 /* =========================================================================================================================== */
 /* ================                                           R_TFU                                           ================ */

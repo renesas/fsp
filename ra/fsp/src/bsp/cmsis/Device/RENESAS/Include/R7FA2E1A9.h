@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+ * Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -8698,8 +8698,19 @@ typedef struct                         /*!< (@ 0x40044000) R_RTC Structure      
             __IOM uint8_t PMADJ : 2;   /*!< [7..6] Plus-Minus                                                         */
         } RADJ_b;
     };
-    __IM uint8_t           RESERVED19;
-    __IM uint16_t          RESERVED20[8];
+    __IM uint8_t RESERVED19;
+
+    union
+    {
+        __IOM uint16_t RADJ2;          /*!< (@ 0x00000030) Time Error Adjustment Register 2                           */
+
+        struct
+        {
+            uint16_t            : 5;
+            __IOM uint16_t FADJ : 11;  /*!< [15..5] Fractional Adjust Value                                           */
+        } RADJ2_b;
+    };
+    __IM uint16_t          RESERVED20[7];
     __IOM R_RTC_RTCCR_Type RTCCR[3];   /*!< (@ 0x00000040) Time Capture Control Register                              */
     __IM uint16_t          RESERVED21[5];
     __IOM R_RTC_CP_Type    CP[3];      /*!< (@ 0x00000050) Capture registers                                          */
@@ -8840,6 +8851,24 @@ typedef struct                         /*!< (@ 0x40070000) R_SCI0 Structure     
                 __IOM uint8_t RDF  : 1; /*!< [6..6] Receive FIFO data full flag                                        */
                 __IOM uint8_t TDFE : 1; /*!< [7..7] Transmit FIFO data empty flag                                      */
             } SSR_FIFO_b;
+        };
+
+        union
+        {
+            __IOM uint8_t SSR_MANC;     /*!< (@ 0x00000004) Serial Status Register for Manchester Mode (SCMR.SMIF
+                                         *                  = 0, and MMR.MANEN = 1)                                    */
+
+            struct
+            {
+                __IOM uint8_t MER  : 1; /*!< [0..0] Manchester Error Flag Valid for Manchester mode only               */
+                __IM uint8_t  MPB  : 1; /*!< [1..1] Multi-Processor                                                    */
+                __IM uint8_t  TEND : 1; /*!< [2..2] Transmit End Flag                                                  */
+                __IOM uint8_t PER  : 1; /*!< [3..3] Parity Error Flag                                                  */
+                __IOM uint8_t FER  : 1; /*!< [4..4] Framing Error Flag                                                 */
+                __IOM uint8_t ORER : 1; /*!< [5..5] Overrun Error Flag                                                 */
+                __IOM uint8_t RDRF : 1; /*!< [6..6] Receive Data Full Flag                                             */
+                __IOM uint8_t TDRE : 1; /*!< [7..7] Transmit Data Empty Flag                                           */
+            } SSR_MANC_b;
         };
 
         union
@@ -9027,6 +9056,21 @@ typedef struct                         /*!< (@ 0x40070000) R_SCI0 Structure     
             } FTDRHL_b;
         };
 
+        union
+        {
+            __IOM uint16_t TDRHL_MAN;     /*!< (@ 0x0000000E) Transmit Data Register for Manchester Mode (MMR.MANEN
+                                           *                  = 1)                                                       */
+
+            struct
+            {
+                __IOM uint16_t TDAT  : 9; /*!< [8..0] Serial transmit data                                               */
+                __IOM uint16_t MPBT  : 1; /*!< [9..9] Multi-processor Transfer Bit Flag                                  */
+                uint16_t             : 2;
+                __IOM uint16_t TSYNC : 1; /*!< [12..12] Transmit SYNC data bit                                           */
+                uint16_t             : 3;
+            } TDRHL_MAN_b;
+        };
+
         struct
         {
             union
@@ -9088,6 +9132,21 @@ typedef struct                         /*!< (@ 0x40070000) R_SCI0 Structure     
                 __IM uint16_t RDF  : 1; /*!< [14..14] Receive FIFO data full flag(It is same as SSR.RDF)               */
                 uint16_t           : 1;
             } FRDRHL_b;
+        };
+
+        union
+        {
+            __IM uint16_t RDRHL_MAN;     /*!< (@ 0x00000010) Receive Data Register for Manchester Mode (MMR.MANEN
+                                          *                  = 1)                                                       */
+
+            struct
+            {
+                __IM uint16_t RDAT  : 9; /*!< [8..0] Serial Receive Data                                                */
+                __IM uint16_t MPB   : 1; /*!< [9..9] Multi-processor Bit                                                */
+                uint16_t            : 2;
+                __IM uint16_t RSYNC : 1; /*!< [12..12] Receive SYNC data bit                                            */
+                uint16_t            : 3;
+            } RDRHL_MAN_b;
         };
 
         struct
@@ -9265,13 +9324,33 @@ typedef struct                         /*!< (@ 0x40070000) R_SCI0 Structure     
 
     union
     {
-        __IOM uint8_t ESMER;           /*!< (@ 0x00000020) Extended Serial Module Enable Register                     */
-
-        struct
+        union
         {
-            __IOM uint8_t ESME : 1;    /*!< [0..0] Extended Serial Mode Enable                                        */
-            uint8_t            : 7;
-        } ESMER_b;
+            __IOM uint8_t ESMER;        /*!< (@ 0x00000020) Extended Serial Module Enable Register                     */
+
+            struct
+            {
+                __IOM uint8_t ESME : 1; /*!< [0..0] Extended Serial Mode Enable                                        */
+                uint8_t            : 7;
+            } ESMER_b;
+        };
+
+        union
+        {
+            __IOM uint8_t MMR;            /*!< (@ 0x00000020) Manchester Mode Register                                   */
+
+            struct
+            {
+                __IOM uint8_t RMPOL  : 1; /*!< [0..0] Polarity of Received Manchester Code                               */
+                __IOM uint8_t TMPOL  : 1; /*!< [1..1] Polarity of Transmit Manchester Code                               */
+                __IOM uint8_t ERTEN  : 1; /*!< [2..2] Manchester Edge Retiming Enable                                    */
+                uint8_t              : 1;
+                __IOM uint8_t SYNVAL : 1; /*!< [4..4] SYNC Value Setting                                                 */
+                __IOM uint8_t SYNSEL : 1; /*!< [5..5] SYNC Select                                                        */
+                __IOM uint8_t SBSEL  : 1; /*!< [6..6] Start Bit Select                                                   */
+                __IOM uint8_t MANEN  : 1; /*!< [7..7] Manchester Mode Enable                                             */
+            } MMR_b;
+        };
     };
 
     union
@@ -9290,54 +9369,116 @@ typedef struct                         /*!< (@ 0x40070000) R_SCI0 Structure     
 
     union
     {
-        __IOM uint8_t CR1;             /*!< (@ 0x00000022) Control Register 1                                         */
-
-        struct
+        union
         {
-            __IOM uint8_t BFE   : 1;   /*!< [0..0] Break Field Enable                                                 */
-            __IOM uint8_t CF0RE : 1;   /*!< [1..1] Control Field 0 Reception Enable                                   */
-            __IOM uint8_t CF1DS : 2;   /*!< [3..2] Control Field 1 Data Register Select                               */
-            __IOM uint8_t PIBE  : 1;   /*!< [4..4] Priority Interrupt Bit Enable                                      */
-            __IOM uint8_t PIBS  : 3;   /*!< [7..5] Priority Interrupt Bit Select                                      */
-        } CR1_b;
+            __IOM uint8_t CR1;           /*!< (@ 0x00000022) Control Register 1                                         */
+
+            struct
+            {
+                __IOM uint8_t BFE   : 1; /*!< [0..0] Break Field Enable                                                 */
+                __IOM uint8_t CF0RE : 1; /*!< [1..1] Control Field 0 Reception Enable                                   */
+                __IOM uint8_t CF1DS : 2; /*!< [3..2] Control Field 1 Data Register Select                               */
+                __IOM uint8_t PIBE  : 1; /*!< [4..4] Priority Interrupt Bit Enable                                      */
+                __IOM uint8_t PIBS  : 3; /*!< [7..5] Priority Interrupt Bit Select                                      */
+            } CR1_b;
+        };
+
+        union
+        {
+            __IOM uint8_t TMPR;          /*!< (@ 0x00000022) Transmit Manchester Preface Setting Register               */
+
+            struct
+            {
+                __IOM uint8_t TPLEN : 4; /*!< [3..0] Transmit Preface Length                                            */
+                __IOM uint8_t TPPAT : 2; /*!< [5..4] Transmit Preface Pattern                                           */
+                uint8_t             : 2;
+            } TMPR_b;
+        };
     };
 
     union
     {
-        __IOM uint8_t CR2;             /*!< (@ 0x00000023) Control Register 2                                         */
-
-        struct
+        union
         {
-            __IOM uint8_t DFCS : 3;    /*!< [2..0] RXDXn Signal Digital Filter Clock Select                           */
-            uint8_t            : 1;
-            __IOM uint8_t BCCS : 2;    /*!< [5..4] Bus Collision Detection Clock Select                               */
-            __IOM uint8_t RTS  : 2;    /*!< [7..6] RXDXn Reception Sampling Timing Select                             */
-        } CR2_b;
+            __IOM uint8_t CR2;          /*!< (@ 0x00000023) Control Register 2                                         */
+
+            struct
+            {
+                __IOM uint8_t DFCS : 3; /*!< [2..0] RXDXn Signal Digital Filter Clock Select                           */
+                uint8_t            : 1;
+                __IOM uint8_t BCCS : 2; /*!< [5..4] Bus Collision Detection Clock Select                               */
+                __IOM uint8_t RTS  : 2; /*!< [7..6] RXDXn Reception Sampling Timing Select                             */
+            } CR2_b;
+        };
+
+        union
+        {
+            __IOM uint8_t RMPR;          /*!< (@ 0x00000023) Receive Manchester Preface Setting Register                */
+
+            struct
+            {
+                __IOM uint8_t RPLEN : 4; /*!< [3..0] Receive Preface Length                                             */
+                __IOM uint8_t RPPAT : 2; /*!< [5..4] Receive Preface Pattern                                            */
+                uint8_t             : 2;
+            } RMPR_b;
+        };
     };
 
     union
     {
-        __IOM uint8_t CR3;             /*!< (@ 0x00000024) Control Register 3                                         */
-
-        struct
+        union
         {
-            __IOM uint8_t SDST : 1;    /*!< [0..0] Start Frame Detection Start                                        */
-            uint8_t            : 7;
-        } CR3_b;
+            __IOM uint8_t CR3;          /*!< (@ 0x00000024) Control Register 3                                         */
+
+            struct
+            {
+                __IOM uint8_t SDST : 1; /*!< [0..0] Start Frame Detection Start                                        */
+                uint8_t            : 7;
+            } CR3_b;
+        };
+
+        union
+        {
+            __IOM uint8_t MESR;         /*!< (@ 0x00000024) Manchester Extended Error Status Register                  */
+
+            struct
+            {
+                __IOM uint8_t PFER : 1; /*!< [0..0] Preface Error Flag                                                 */
+                __IOM uint8_t SYER : 1; /*!< [1..1] SYNC Error Flag                                                    */
+                __IOM uint8_t SBER : 1; /*!< [2..2] Start Bit Error Flag                                               */
+                uint8_t            : 5;
+            } MESR_b;
+        };
     };
 
     union
     {
-        __IOM uint8_t PCR;             /*!< (@ 0x00000025) Port Control Register                                      */
-
-        struct
+        union
         {
-            __IOM uint8_t TXDXPS : 1;  /*!< [0..0] TXDXn Signal Polarity Select                                       */
-            __IOM uint8_t RXDXPS : 1;  /*!< [1..1] RXDXn Signal Polarity Select                                       */
-            uint8_t              : 2;
-            __IOM uint8_t SHARPS : 1;  /*!< [4..4] TXDXn/RXDXn Pin Multiplexing Select                                */
-            uint8_t              : 3;
-        } PCR_b;
+            __IOM uint8_t PCR;            /*!< (@ 0x00000025) Port Control Register                                      */
+
+            struct
+            {
+                __IOM uint8_t TXDXPS : 1; /*!< [0..0] TXDXn Signal Polarity Select                                       */
+                __IOM uint8_t RXDXPS : 1; /*!< [1..1] RXDXn Signal Polarity Select                                       */
+                uint8_t              : 2;
+                __IOM uint8_t SHARPS : 1; /*!< [4..4] TXDXn/RXDXn Pin Multiplexing Select                                */
+                uint8_t              : 3;
+            } PCR_b;
+        };
+
+        union
+        {
+            __IOM uint8_t MECR;           /*!< (@ 0x00000025) Manchester Extended Error Control Register                 */
+
+            struct
+            {
+                __IOM uint8_t PFEREN : 1; /*!< [0..0] Preface Error Flag                                                 */
+                __IOM uint8_t SYEREN : 1; /*!< [1..1] Receive SYNC Error Enable                                          */
+                __IOM uint8_t SBEREN : 1; /*!< [2..2] Start Bit Error Enable                                             */
+                uint8_t              : 5;
+            } MECR_b;
+        };
     };
 
     union
@@ -9453,7 +9594,21 @@ typedef struct                         /*!< (@ 0x40070000) R_SCI0 Structure     
     };
     __IOM uint8_t TPRE;                /*!< (@ 0x00000032) Timer Prescaler Register                                   */
     __IOM uint8_t TCNT;                /*!< (@ 0x00000033) Timer Count Register                                       */
-} R_SCI0_Type;                         /*!< Size = 52 (0x34)                                                          */
+    __IM uint16_t RESERVED1[4];
+
+    union
+    {
+        __IOM uint8_t SCIMSKEN;        /*!< (@ 0x0000003C) SCI5 TXD Output Mask Enable Register                       */
+
+        struct
+        {
+            __IOM uint8_t MSKEN : 1;   /*!< [0..0] SCI5 TXD Output Mask Enable                                        */
+            uint8_t             : 7;
+        } SCIMSKEN_b;
+    };
+    __IM uint8_t  RESERVED2;
+    __IM uint16_t RESERVED3;
+} R_SCI0_Type;                         /*!< Size = 64 (0x40)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_SPI0                                           ================ */
@@ -11874,7 +12029,9 @@ typedef struct                         /*!< (@ 0x407EC000) R_TSN Structure      
             };
         };
     };
-} R_TSN_Type;                          /*!< Size = 554 (0x22a)                                                        */
+    __IM uint16_t TSCDRR;              /*!< (@ 0x0000022A) Temperature Sensor Calibration Data Register
+                                        *                  (Room Temperature)                                         */
+} R_TSN_Type;                          /*!< Size = 556 (0x22c)                                                        */
 
 /* =========================================================================================================================== */
 /* ================                                           R_WDT                                           ================ */
@@ -12114,6 +12271,7 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_SCI9_BASE         0x40070120UL
  #define R_SPI0_BASE         0x40072000UL
  #define R_SPI1_BASE         0x40072100UL
+ #define R_SPI2_BASE         0x40072200UL
  #define R_SRAM_BASE         0x40002000UL
  #define R_SYSTEM_BASE       0x4001E000UL
  #define R_TRNG_BASE         0x400D1000UL
@@ -12214,6 +12372,7 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_SCI9         ((R_SCI0_Type *) R_SCI9_BASE)
  #define R_SPI0         ((R_SPI0_Type *) R_SPI0_BASE)
  #define R_SPI1         ((R_SPI0_Type *) R_SPI1_BASE)
+ #define R_SPI2         ((R_SPI0_Type *) R_SPI2_BASE)
  #define R_SRAM         ((R_SRAM_Type *) R_SRAM_BASE)
  #define R_SYSTEM       ((R_SYSTEM_Type *) R_SYSTEM_BASE)
  #define R_TRNG         ((R_TRNG_Type *) R_TRNG_BASE)
@@ -15947,6 +16106,9 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_RTC_RADJ_PMADJ_Msk         (0xc0UL)   /*!< PMADJ (Bitfield-Mask: 0x03)                           */
  #define R_RTC_RADJ_ADJ_Pos           (0UL)      /*!< ADJ (Bit 0)                                           */
  #define R_RTC_RADJ_ADJ_Msk           (0x3fUL)   /*!< ADJ (Bitfield-Mask: 0x3f)                             */
+/* =========================================================  RADJ2  ========================================================= */
+ #define R_RTC_RADJ2_FADJ_Pos         (5UL)      /*!< FADJ (Bit 5)                                          */
+ #define R_RTC_RADJ2_FADJ_Msk         (0xffe0UL) /*!< FADJ (Bitfield-Mask: 0x7ff)                           */
 
 /* =========================================================================================================================== */
 /* ================                                          R_SCI0                                           ================ */
@@ -16048,6 +16210,23 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_SCI0_SSR_FIFO_TEND_Msk       (0x4UL)    /*!< TEND (Bitfield-Mask: 0x01)                            */
  #define R_SCI0_SSR_FIFO_DR_Pos         (0UL)      /*!< DR (Bit 0)                                            */
  #define R_SCI0_SSR_FIFO_DR_Msk         (0x1UL)    /*!< DR (Bitfield-Mask: 0x01)                              */
+/* =======================================================  SSR_MANC  ======================================================== */
+ #define R_SCI0_SSR_MANC_TDRE_Pos       (7UL)      /*!< TDRE (Bit 7)                                          */
+ #define R_SCI0_SSR_MANC_TDRE_Msk       (0x80UL)   /*!< TDRE (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_RDRF_Pos       (6UL)      /*!< RDRF (Bit 6)                                          */
+ #define R_SCI0_SSR_MANC_RDRF_Msk       (0x40UL)   /*!< RDRF (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_ORER_Pos       (5UL)      /*!< ORER (Bit 5)                                          */
+ #define R_SCI0_SSR_MANC_ORER_Msk       (0x20UL)   /*!< ORER (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_FER_Pos        (4UL)      /*!< FER (Bit 4)                                           */
+ #define R_SCI0_SSR_MANC_FER_Msk        (0x10UL)   /*!< FER (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_SSR_MANC_PER_Pos        (3UL)      /*!< PER (Bit 3)                                           */
+ #define R_SCI0_SSR_MANC_PER_Msk        (0x8UL)    /*!< PER (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_SSR_MANC_TEND_Pos       (2UL)      /*!< TEND (Bit 2)                                          */
+ #define R_SCI0_SSR_MANC_TEND_Msk       (0x4UL)    /*!< TEND (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_SSR_MANC_MPB_Pos        (1UL)      /*!< MPB (Bit 1)                                           */
+ #define R_SCI0_SSR_MANC_MPB_Msk        (0x2UL)    /*!< MPB (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_SSR_MANC_MER_Pos        (0UL)      /*!< MER (Bit 0)                                           */
+ #define R_SCI0_SSR_MANC_MER_Msk        (0x1UL)    /*!< MER (Bitfield-Mask: 0x01)                             */
 /* =======================================================  SSR_SMCI  ======================================================== */
  #define R_SCI0_SSR_SMCI_TDRE_Pos       (7UL)      /*!< TDRE (Bit 7)                                          */
  #define R_SCI0_SSR_SMCI_TDRE_Msk       (0x80UL)   /*!< TDRE (Bitfield-Mask: 0x01)                            */
@@ -16176,6 +16355,20 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_SCI0_FRDRHL_MPB_Msk          (0x200UL)  /*!< MPB (Bitfield-Mask: 0x01)                             */
  #define R_SCI0_FRDRHL_RDAT_Pos         (0UL)      /*!< RDAT (Bit 0)                                          */
  #define R_SCI0_FRDRHL_RDAT_Msk         (0x1ffUL)  /*!< RDAT (Bitfield-Mask: 0x1ff)                           */
+/* =======================================================  TDRHL_MAN  ======================================================= */
+ #define R_SCI0_TDRHL_MAN_TDAT_Pos      (0UL)      /*!< TDAT (Bit 0)                                          */
+ #define R_SCI0_TDRHL_MAN_TDAT_Msk      (0x1ffUL)  /*!< TDAT (Bitfield-Mask: 0x1ff)                           */
+ #define R_SCI0_TDRHL_MAN_MPBT_Pos      (9UL)      /*!< MPBT (Bit 9)                                          */
+ #define R_SCI0_TDRHL_MAN_MPBT_Msk      (0x200UL)  /*!< MPBT (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_TDRHL_MAN_TSYNC_Pos     (12UL)     /*!< TSYNC (Bit 12)                                        */
+ #define R_SCI0_TDRHL_MAN_TSYNC_Msk     (0x1000UL) /*!< TSYNC (Bitfield-Mask: 0x01)                           */
+/* =======================================================  RDRHL_MAN  ======================================================= */
+ #define R_SCI0_RDRHL_MAN_RDAT_Pos      (0UL)      /*!< RDAT (Bit 0)                                          */
+ #define R_SCI0_RDRHL_MAN_RDAT_Msk      (0x1ffUL)  /*!< RDAT (Bitfield-Mask: 0x1ff)                           */
+ #define R_SCI0_RDRHL_MAN_MPB_Pos       (9UL)      /*!< MPB (Bit 9)                                           */
+ #define R_SCI0_RDRHL_MAN_MPB_Msk       (0x200UL)  /*!< MPB (Bitfield-Mask: 0x01)                             */
+ #define R_SCI0_RDRHL_MAN_RSYNC_Pos     (12UL)     /*!< RSYNC (Bit 12)                                        */
+ #define R_SCI0_RDRHL_MAN_RSYNC_Msk     (0x1000UL) /*!< RSYNC (Bitfield-Mask: 0x01)                           */
 /* =========================================================  FRDRH  ========================================================= */
  #define R_SCI0_FRDRH_RDF_Pos           (6UL)      /*!< RDF (Bit 6)                                           */
  #define R_SCI0_FRDRH_RDF_Msk           (0x40UL)   /*!< RDF (Bitfield-Mask: 0x01)                             */
@@ -16390,6 +16583,48 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
  #define R_SCI0_TMR_TCSS_Msk            (0x70UL) /*!< TCSS (Bitfield-Mask: 0x07)                            */
 /* =========================================================  TPRE  ========================================================== */
 /* =========================================================  TCNT  ========================================================== */
+/* =======================================================  SCIMSKEN  ======================================================== */
+ #define R_SCI0_SCIMSKEN_MSKEN_Pos      (0UL)    /*!< MSKEN (Bit 0)                                         */
+ #define R_SCI0_SCIMSKEN_MSKEN_Msk      (0x1UL)  /*!< MSKEN (Bitfield-Mask: 0x01)                           */
+/* ==========================================================  MMR  ========================================================== */
+ #define R_SCI0_MMR_MANEN_Pos           (7UL)    /*!< MANEN (Bit 7)                                         */
+ #define R_SCI0_MMR_MANEN_Msk           (0x80UL) /*!< MANEN (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_SBSEL_Pos           (6UL)    /*!< SBSEL (Bit 6)                                         */
+ #define R_SCI0_MMR_SBSEL_Msk           (0x40UL) /*!< SBSEL (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_SYNSEL_Pos          (5UL)    /*!< SYNSEL (Bit 5)                                        */
+ #define R_SCI0_MMR_SYNSEL_Msk          (0x20UL) /*!< SYNSEL (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MMR_SYNVAL_Pos          (4UL)    /*!< SYNVAL (Bit 4)                                        */
+ #define R_SCI0_MMR_SYNVAL_Msk          (0x10UL) /*!< SYNVAL (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MMR_ERTEN_Pos           (2UL)    /*!< ERTEN (Bit 2)                                         */
+ #define R_SCI0_MMR_ERTEN_Msk           (0x4UL)  /*!< ERTEN (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_TMPOL_Pos           (1UL)    /*!< TMPOL (Bit 1)                                         */
+ #define R_SCI0_MMR_TMPOL_Msk           (0x2UL)  /*!< TMPOL (Bitfield-Mask: 0x01)                           */
+ #define R_SCI0_MMR_RMPOL_Pos           (0UL)    /*!< RMPOL (Bit 0)                                         */
+ #define R_SCI0_MMR_RMPOL_Msk           (0x1UL)  /*!< RMPOL (Bitfield-Mask: 0x01)                           */
+/* =========================================================  TMPR  ========================================================== */
+ #define R_SCI0_TMPR_TPLEN_Pos          (0UL)    /*!< TPLEN (Bit 0)                                         */
+ #define R_SCI0_TMPR_TPLEN_Msk          (0xfUL)  /*!< TPLEN (Bitfield-Mask: 0x0f)                           */
+ #define R_SCI0_TMPR_TPPAT_Pos          (4UL)    /*!< TPPAT (Bit 4)                                         */
+ #define R_SCI0_TMPR_TPPAT_Msk          (0x30UL) /*!< TPPAT (Bitfield-Mask: 0x03)                           */
+/* =========================================================  RMPR  ========================================================== */
+ #define R_SCI0_RMPR_RPLEN_Pos          (0UL)    /*!< RPLEN (Bit 0)                                         */
+ #define R_SCI0_RMPR_RPLEN_Msk          (0xfUL)  /*!< RPLEN (Bitfield-Mask: 0x0f)                           */
+ #define R_SCI0_RMPR_RPPAT_Pos          (4UL)    /*!< RPPAT (Bit 4)                                         */
+ #define R_SCI0_RMPR_RPPAT_Msk          (0x30UL) /*!< RPPAT (Bitfield-Mask: 0x03)                           */
+/* =========================================================  MESR  ========================================================== */
+ #define R_SCI0_MESR_PFER_Pos           (0UL)    /*!< PFER (Bit 0)                                          */
+ #define R_SCI0_MESR_PFER_Msk           (0x1UL)  /*!< PFER (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_MESR_SYER_Pos           (1UL)    /*!< SYER (Bit 1)                                          */
+ #define R_SCI0_MESR_SYER_Msk           (0x2UL)  /*!< SYER (Bitfield-Mask: 0x01)                            */
+ #define R_SCI0_MESR_SBER_Pos           (2UL)    /*!< SBER (Bit 2)                                          */
+ #define R_SCI0_MESR_SBER_Msk           (0x4UL)  /*!< SBER (Bitfield-Mask: 0x01)                            */
+/* =========================================================  MECR  ========================================================== */
+ #define R_SCI0_MECR_PFEREN_Pos         (0UL)    /*!< PFEREN (Bit 0)                                        */
+ #define R_SCI0_MECR_PFEREN_Msk         (0x1UL)  /*!< PFEREN (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MECR_SYEREN_Pos         (1UL)    /*!< SYEREN (Bit 1)                                        */
+ #define R_SCI0_MECR_SYEREN_Msk         (0x2UL)  /*!< SYEREN (Bitfield-Mask: 0x01)                          */
+ #define R_SCI0_MECR_SBEREN_Pos         (2UL)    /*!< SBEREN (Bit 2)                                        */
+ #define R_SCI0_MECR_SBEREN_Msk         (0x4UL)  /*!< SBEREN (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_SPI0                                           ================ */
@@ -17404,6 +17639,7 @@ typedef struct                          /*!< (@ 0x40084000) R_AGTX0 Structure   
 /* ========================================================  TSCDRL  ========================================================= */
  #define R_TSN_TSCDRL_TSCDRL_Pos    (0UL)    /*!< TSCDRL (Bit 0)                                        */
  #define R_TSN_TSCDRL_TSCDRL_Msk    (0xffUL) /*!< TSCDRL (Bitfield-Mask: 0xff)                          */
+/* ========================================================  TSCDRR  ========================================================= */
 
 /* =========================================================================================================================== */
 /* ================                                           R_WDT                                           ================ */

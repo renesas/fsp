@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -596,4 +596,31 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT,
     FSP_PARAMETER_NOT_USED (OutData_PrivKey);
 
     return (HW_SCE_RSA2048_KeyPairGenerateSub(MAX_CNT, OutData_PubKeyIndex, OutData_PrivKeyIndex));
+}
+
+fsp_err_t HW_SCE_Aes128OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+{
+    uint32_t indata_key_mode[1] = {0};
+    uint32_t indata_cmd[1]      = {0};
+    uint32_t indata_key[4]      = {0};
+
+    return HW_SCE_Aes128OutputKeyForDotfSub(indata_key_mode, indata_cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
+}
+
+fsp_err_t HW_SCE_Aes192OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+{
+    uint32_t indata_key_mode[1] = {0};
+    uint32_t indata_cmd[1]      = {0};
+    uint32_t indata_key[8]      = {0};
+
+    return HW_SCE_Aes192OutputKeyForDotfSub(indata_key_mode, indata_cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
+}
+
+fsp_err_t HW_SCE_Aes256OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+{
+    uint32_t indata_key_mode[1] = {0};
+    uint32_t indata_cmd[1]      = {0};
+    uint32_t indata_key[8]      = {0};
+
+    return HW_SCE_Aes256OutputKeyForDotfSub(indata_key_mode, indata_cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
 }

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -449,6 +449,18 @@ rsip_ret_t r_rsip_wrapper_p6f_aes128 (const uint32_t InData_IV[],
     return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
 }
 
+rsip_ret_t r_rsip_wrapper_p6f_aes192 (const uint32_t InData_IV[],
+                                      const uint32_t InData_InstData[],
+                                      uint32_t       OutData_KeyIndex[])
+{
+    uint32_t CMD[1] = {bswap_32big(RSIP_OEM_CMD_AES192)};
+    uint32_t LC[1]  = {0};
+    LC[0]          = R_PSCU->DLMMON;
+    INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_AES192_INST_DATA_WORD;
+
+    return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
+}
+
 rsip_ret_t r_rsip_wrapper_p6f_aes256 (const uint32_t InData_IV[],
                                       const uint32_t InData_InstData[],
                                       uint32_t       OutData_KeyIndex[])
@@ -725,6 +737,18 @@ rsip_ret_t r_rsip_wrapper_p6f_rsa4096_priv (const uint32_t InData_IV[],
     return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
 }
 
+rsip_ret_t r_rsip_wrapper_p6f_hmacsha224 (const uint32_t InData_IV[],
+                                          const uint32_t InData_InstData[],
+                                          uint32_t       OutData_KeyIndex[])
+{
+    uint32_t CMD[1] = {bswap_32big(RSIP_OEM_CMD_HMAC_SHA224)};
+    uint32_t LC[1]  = {0};
+    LC[0]          = R_PSCU->DLMMON;
+    INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_HMAC_SHA224_KEY_INST_DATA_WORD;
+
+    return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
+}
+
 rsip_ret_t r_rsip_wrapper_p6f_hmacsha256 (const uint32_t InData_IV[],
                                           const uint32_t InData_InstData[],
                                           uint32_t       OutData_KeyIndex[])
@@ -967,6 +991,61 @@ rsip_ret_t r_rsip_wrapper_p36i_wrapped_iv (const uint32_t * InData_KeyIndex, con
     return r_rsip_p36i(InData_KeyIndex, &gs_cmd[CMD_AES_IV_TYPE_WRAPPED], InData_IV);
 }
 
+rsip_ret_t r_rsip_wrapper_p83i_plain_iv (const uint32_t * InData_KeyIndex, const uint32_t * InData_IV)
+{
+    return r_rsip_p83i(InData_KeyIndex,  InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p83i_wrapped_iv (const uint32_t * InData_KeyIndex, const uint32_t * InData_IV)
+{
+    return r_rsip_p83i(InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p85i_plain_iv (const uint32_t * InData_KeyIndex, const uint32_t * InData_IV)
+{
+    return r_rsip_p85i(InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p85i_wrapped_iv (const uint32_t * InData_KeyIndex, const uint32_t * InData_IV)
+{
+    return r_rsip_p85i(InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p89i_ecb_enc (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
+{
+    return r_rsip_p89i(&gs_cmd[CMD_AES_MODE_ECB_ENCRYPT], InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p89i_ecb_dec (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
+{
+    return r_rsip_p89i(&gs_cmd[CMD_AES_MODE_ECB_DECRYPT], InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p89i_cbc_enc (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
+{
+    return r_rsip_p89i(&gs_cmd[CMD_AES_MODE_CBC_ENCRYPT], InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p89i_cbc_dec (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
+{
+    return r_rsip_p89i(&gs_cmd[CMD_AES_MODE_CBC_DECRYPT], InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p89i_cbc_enc_wrapped_iv (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
+{
+    return r_rsip_p89i(&gs_cmd[CMD_AES_MODE_CBC_ENCRYPT], InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p89i_cbc_dec_wrapped_iv (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
+{
+    return r_rsip_p89i(&gs_cmd[CMD_AES_MODE_CBC_DECRYPT], InData_KeyIndex, InData_IV);
+}
+
+rsip_ret_t r_rsip_wrapper_p89i_ctr (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
+{
+    return r_rsip_p89i(&gs_cmd[CMD_AES_MODE_CTR_CRYPT], InData_KeyIndex, InData_IV);
+}
+
 rsip_ret_t r_rsip_wrapper_p95i_aes128ccm_encrypt (const uint32_t * InData_KeyIndex,
                                                   const uint32_t * InData_TextLen,
                                                   const uint32_t * InData_IV,
@@ -1035,6 +1114,55 @@ rsip_ret_t r_rsip_wrapper_p98f_aes128ccm_decrypt (const uint32_t * InData_Text,
     return r_rsip_p98f(InData_Text, InData_MAC, OutData_Text);
 }
 
+rsip_ret_t r_rsip_wrapper_pa7i_aes192ccm_encrypt (const uint32_t * InData_KeyIndex,
+                                                  const uint32_t * InData_TextLen,
+                                                  const uint32_t * InData_IV,
+                                                  const uint32_t * InData_Header,
+                                                  uint32_t         Header_Len)
+{
+    (void)InData_TextLen;
+
+    return r_rsip_pa7i(InData_KeyIndex,
+                       InData_IV,
+                       InData_Header,
+                       Header_Len);
+}
+
+rsip_ret_t r_rsip_wrapper_pa7f_aes192ccm_encrypt (const uint32_t * InData_Text,
+                                                  const uint32_t * InData_TextLen,
+                                                  uint32_t       * OutData_Text,
+                                                  uint32_t       * OutData_MAC)
+{
+
+    return r_rsip_pa7f(InData_Text, InData_TextLen, OutData_Text, OutData_MAC);
+}
+
+rsip_ret_t r_rsip_wrapper_pb0i_aes192ccm_decrypt (const uint32_t * InData_KeyIndex,
+                                                  const uint32_t * InData_TextLen,
+                                                  const uint32_t * InData_MACLength,
+                                                  const uint32_t * InData_IV,
+                                                  const uint32_t * InData_Header,
+                                                  uint32_t         Header_Len)
+{
+    (void)InData_TextLen;
+    (void)InData_MACLength;
+
+    return r_rsip_pb0i(InData_KeyIndex,
+                       InData_IV,
+                       InData_Header,
+                       Header_Len);
+}
+
+rsip_ret_t r_rsip_wrapper_pb0f_aes192ccm_decrypt (const uint32_t * InData_Text,
+                                                  const uint32_t * InData_TextLen,
+                                                  const uint32_t * InData_MAC,
+                                                  const uint32_t * InData_MACLength,
+                                                  uint32_t       * OutData_Text)
+{
+
+    return r_rsip_pb0f(InData_Text, InData_TextLen, InData_MAC, InData_MACLength, OutData_Text);
+}
+
 rsip_ret_t r_rsip_wrapper_pa1i_aes256ccm_encrypt (const uint32_t * InData_KeyIndex,
                                                   const uint32_t * InData_TextLen,
                                                   const uint32_t * InData_IV,
@@ -1093,6 +1221,40 @@ rsip_ret_t r_rsip_wrapper_p41f_aes128mac_verify (const uint32_t * InData_Text,
     (void) all_msg_len;
 
     return r_rsip_p41f(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
+}
+
+rsip_ret_t r_rsip_wrapper_p87f_aes192mac_generate (const uint32_t * InData_Text,
+                                                   uint32_t       * OutData_DataT,
+                                                   const uint32_t   all_msg_len)
+{
+    uint32_t InData_Cmd[1] =
+    {
+        ((0 == (all_msg_len % 16)) &&
+         (0 !=
+          all_msg_len)) ? RSIP_PRV_CMD_AES_CMAC_GENERATE_WITHOUT_REMAINDER :
+        RSIP_PRV_CMD_AES_CMAC_GENERATE_WITH_REMAINDER
+    };
+    uint32_t InData_DataT = 0;
+
+    return r_rsip_p87f(InData_Cmd, InData_Text, &InData_DataT, (uint32_t *) &all_msg_len, OutData_DataT);
+}
+
+rsip_ret_t r_rsip_wrapper_p87f_aes192mac_verify (const uint32_t * InData_Text,
+                                                 const uint32_t * InData_DataT,
+                                                 const uint32_t * InData_DataTLen,
+                                                 const uint32_t   all_msg_len)
+{
+    uint32_t InData_Cmd[1] =
+    {
+        ((0 == (all_msg_len % 16)) &&
+         (0 !=
+          all_msg_len)) ? RSIP_PRV_CMD_AES_CMAC_VERIFY_WITHOUT_REMAINDER :
+        RSIP_PRV_CMD_AES_CMAC_VERIFY_WITH_REMAINDER
+    };
+    uint32_t OutData_DataT[4] = {0};
+    (void) all_msg_len;
+
+    return r_rsip_p87f(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
 
 rsip_ret_t r_rsip_wrapper_p44f_aes256mac_generate (const uint32_t * InData_Text,
@@ -1637,6 +1799,12 @@ static rsip_ret_t select_hmac_key_index_size (const rsip_wrapped_key_t * p_wrapp
         {
             switch (p_wrapped_key->subtype)
             {
+                case RSIP_KEY_HMAC_SHA224:
+                {
+                    KEY_INDEX_SIZE = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA224);
+                    break;
+                }
+
                 case RSIP_KEY_HMAC_SHA256:
                 {
                     KEY_INDEX_SIZE = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA256);

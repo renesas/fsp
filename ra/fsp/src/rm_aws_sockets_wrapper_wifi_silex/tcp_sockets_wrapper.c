@@ -80,7 +80,7 @@ static uint32_t g_sockets_num_allocated = 0;
  * @param[in] pWiFiSocketContext Cellular socket wrapper context for socket operations.
  * @param[out] receiveTimeout Socket receive timeout in TickType_t.
  *
- * @return On success, SOCKETS_ERROR_NONE is returned. If an error occurred, error code defined
+ * @return On success, TCP_SOCKETS_ERRNO_NONE is returned. If an error occurred, error code defined
  * in tcp_sockets_wrapper.h is returned.
  */
 static BaseType_t prvSetupSocketRecvTimeout(wifiSocketWrapper_t * pWiFiSocketContext, TickType_t receiveTimeout);
@@ -95,7 +95,7 @@ static BaseType_t prvSetupSocketRecvTimeout(wifiSocketWrapper_t * pWiFiSocketCon
  * Any send timeout greater than UINT32_MAX_MS_TICKS( UINT32_MAX_DELAY_MS/MS_PER_TICKS ) or
  * portMAX_DELAY is regarded as UINT32_MAX_DELAY_MS for cellular API.
  *
- * @return On success, SOCKETS_ERROR_NONE is returned. If an error occurred, error code defined
+ * @return On success, TCP_SOCKETS_ERRNO_NONE is returned. If an error occurred, error code defined
  * in tcp_sockets_wrapper.h is returned.
  */
 static BaseType_t prvSetupSocketSendTimeout(wifiSocketWrapper_t * pWiFiSocketContext, TickType_t sendTimeout);

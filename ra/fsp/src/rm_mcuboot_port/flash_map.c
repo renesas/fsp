@@ -403,6 +403,7 @@ int flash_area_write (const struct flash_area * area, uint32_t off, const void *
                     break;
                 }
             }
+            err = (int) get_flash_status();
 #endif
         }
 
@@ -481,6 +482,8 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
                     }
                 }
             }
+
+            err = get_flash_status();
         }
 #endif
     }

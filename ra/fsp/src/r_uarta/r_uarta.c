@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -77,6 +77,12 @@
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
+
+#if defined(__ARMCC_VERSION) || defined(__ICCARM__)
+typedef void (BSP_CMSE_NONSECURE_CALL * uarta_prv_ns_callback)(uart_callback_args_t * p_args);
+#elif defined(__GNUC__)
+typedef BSP_CMSE_NONSECURE_CALL void (*volatile uarta_prv_ns_callback)(uart_callback_args_t * p_args);
+#endif
 
 /***********************************************************************************************************************
  * Private function prototypes
@@ -237,9 +243,10 @@ fsp_err_t R_UARTA_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * const
  #endif
 #endif
 
-    p_ctrl->p_cfg      = p_cfg;
-    p_ctrl->p_callback = p_cfg->p_callback;
-    p_ctrl->p_context  = p_cfg->p_context;
+    p_ctrl->p_cfg             = p_cfg;
+    p_ctrl->p_callback        = p_cfg->p_callback;
+    p_ctrl->p_context         = p_cfg->p_context;
+    p_ctrl->p_callback_memory = NULL;
 
 #if (BSP_PERIPHERAL_UARTA_CHANNEL_MASK > 1)
 
@@ -310,8 +317,8 @@ fsp_err_t R_UARTA_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * const
 
 #if (UARTA_CFG_TX_ENABLE)
 
-    /* Wait for the period of at least one cycle of the UARTA operation clock according to "Note" section 22.2.3
-     * "ASIMA00 : Operation Mode Setting Register 00" in the RA0E1 manual r01uh1040ej0060-ra0e1.pdf .*/
+    /* Wait for at least one cycle of the UARTA operation clock
+     * See in hardware manual: UARTA > Register Descriptions > ASIMA00 > Note */
     R_BSP_SoftwareDelay(p_extend->p_baud_setting->delay_time, BSP_DELAY_UNITS_MICROSECONDS);
 
     R_BSP_IrqCfgEnable(p_cfg->txi_irq, p_cfg->txi_ipl, p_ctrl);
@@ -524,6 +531,7 @@ fsp_err_t R_UARTA_Write (uart_ctrl_t * const p_api_ctrl, uint8_t const * const p
  * @retval  FSP_SUCCESS                  Callback updated successfully.
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
  **********************************************************************************************************************/
 fsp_err_t R_UARTA_CallbackSet (uart_ctrl_t * const          p_api_ctrl,
                                void (                     * p_callback)(uart_callback_args_t *),
@@ -531,16 +539,36 @@ fsp_err_t R_UARTA_CallbackSet (uart_ctrl_t * const          p_api_ctrl,
                                uart_callback_args_t * const p_callback_memory)
 {
     uarta_instance_ctrl_t * p_ctrl = (uarta_instance_ctrl_t *) p_api_ctrl;
-    FSP_PARAMETER_NOT_USED(p_callback_memory);
 #if UARTA_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl);
     FSP_ASSERT(p_callback);
     FSP_ERROR_RETURN(UARTA_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if UARTA_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    uart_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                       CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
     /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(uart_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
     p_ctrl->p_callback = p_callback;
-    p_ctrl->p_context  = p_context;
+#endif
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
 
     return FSP_SUCCESS;
 }
@@ -585,8 +613,8 @@ fsp_err_t R_UARTA_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const p_
     r_uarta_baud_set(p_ctrl, p_baud_setting);
 
     /* To enable transmission or reception again, set the TXEAn or RXEAn bit to 1 at least two cycles of the UARTAn
-     * operation clock after clearing the TXEAn or RXEAn bit to 0 according to "Note" section 22.2.3
-     * "ASIMA00 : Operation Mode Setting Register 00" in the RA0E1 manual r01uh1040ej0060-ra0e1.pdf.*/
+     * operation clock after clearing the TXEAn or RXEAn bit to 0
+     * See in hardware manual: UARTA > Register Descriptions > ASIMA00 > Note */
     uint16_t delay_time = r_uarta_calculate_wait_time(p_baud_setting);
     R_BSP_SoftwareDelay((uint32_t) delay_time << 1U, BSP_DELAY_UNITS_MICROSECONDS);
 
@@ -597,8 +625,8 @@ fsp_err_t R_UARTA_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const p_
     /* If transmission is enabled at build time, enable transmission. */
     if (preserved_asiman0 & R_UARTA0_ASIMAn0_TXEA_Msk)
     {
-        /* Wait for the period of at least one cycle of the UARTA operation clock according to "Note" section 22.2.3
-         * "ASIMA00 : Operation Mode Setting Register 00" in the RA0E1 manual r01uh1040ej0060-ra0e1.pdf .*/
+        /* Wait for at least one cycle of the UARTA operation clock
+         * See in hardware manual: UARTA > Register Descriptions > ASIMA00 > Note */
         R_BSP_SoftwareDelay((uint32_t) delay_time, BSP_DELAY_UNITS_MICROSECONDS);
     }
 #endif
@@ -1055,13 +1083,50 @@ static void r_uarta_call_callback (uarta_instance_ctrl_t * p_ctrl, uint32_t data
     {
         uart_callback_args_t args;
 
-        args.channel   = p_ctrl->p_cfg->channel;
-        args.data      = data;
-        args.event     = event;
-        args.p_context = p_ctrl->p_context;
+        /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+         * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+        uart_callback_args_t * p_args = p_ctrl->p_callback_memory;
+        if (NULL == p_args)
+        {
+            /* Store on stack */
+            p_args = &args;
+        }
+        else
+        {
+            /* Save current arguments on the stack in case this is a nested interrupt. */
+            args = *p_args;
+        }
+
+        p_args->channel   = p_ctrl->p_cfg->channel;
+        p_args->data      = data;
+        p_args->event     = event;
+        p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+        /* p_callback can point to a secure function or a non-secure function. */
+        if (!cmse_is_nsfptr(p_ctrl->p_callback))
+        {
+            /* If p_callback is secure, then the project does not need to change security state. */
+            p_ctrl->p_callback(p_args);
+        }
+        else
+        {
+            /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+            uarta_prv_ns_callback p_callback = (uarta_prv_ns_callback) (p_ctrl->p_callback);
+            p_callback(p_args);
+        }
+
+#else
 
         /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
-        p_ctrl->p_callback(&args);
+        p_ctrl->p_callback(p_args);
+#endif
+        if (NULL != p_ctrl->p_callback_memory)
+        {
+            /* Restore callback memory in case this is a nested interrupt. */
+            *p_ctrl->p_callback_memory = args;
+        }
     }
 }
 

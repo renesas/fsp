@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -11,20 +11,19 @@
 #include "bootutil/bootutil_log.h"
 #include "flash_map_backend/flash_map_backend.h"
 #include "sysflash/sysflash.h"
+
 #if RM_MCUBOOT_DUAL_BANK_ENABLED
  #if BSP_FEATURE_FLASH_HP_VERSION > 0
   #include "r_flash_hp.h"
+  #define R_FLASH_BankSwap                 R_FLASH_HP_BankSwap
  #else
   #include "r_flash_lp.h"
+  #include "r_flash_lp_cfg.h"
+  #define R_FLASH_BankSwap                 R_FLASH_LP_BankSwap
  #endif
 #endif
 
-/* Definitions for different flash implementation. */
-#if BSP_FEATURE_FLASH_HP_VERSION > 0
- #define R_FLASH_BankSwap                  R_FLASH_HP_BankSwap
-#else
- #define R_FLASH_BankSwap                  R_FLASH_LP_BankSwap
-#endif
+#define RM_MCUBOOT_BOOT_WITHOUT_RESET      (FLASH_LP_CFG_DUAL_BANK_INSTANT_SWAP)
 
 #if defined(__GNUC__) && !defined(__ARMCC_VERSION) && !defined(__clang_analyzer__)
  #define RM_MCUBOOT_PORT_NAKED_FUNCTION    __attribute__((naked, no_instrument_function, \
@@ -33,7 +32,10 @@
  #define RM_MCUBOOT_PORT_NAKED_FUNCTION    __attribute__((naked))
 #endif
 
+#if RM_MCUBOOT_DUAL_BANK_ENABLED
 extern void * const gp_mcuboot_flash_ctrl;
+#endif
+
 static void start_app(uint32_t pc, uint32_t sp) RM_MCUBOOT_PORT_NAKED_FUNCTION;
 
 /* This function jumps to the application image. */
@@ -80,8 +82,16 @@ void RM_MCUBOOT_PORT_BootApp (struct boot_rsp * rsp) {
     {
         R_FLASH_BankSwap(gp_mcuboot_flash_ctrl);
 
+ #if RM_MCUBOOT_BOOT_WITHOUT_RESET
+
+        /* If booting new image without reset, it is necessary to set the vector_table address to flash area 0. */
+        vector_table =
+            (uint32_t) (FLASH_AREA_MCUBOOT_OFFSET + RM_MCUBOOT_PORT_CFG_MCUBOOT_SIZE + rsp->br_hdr->ih_hdr_size);
+ #else
+
         /* Reset the MCU to swap to the other bank */
         __NVIC_SystemReset();
+ #endif
     }
 #endif
 

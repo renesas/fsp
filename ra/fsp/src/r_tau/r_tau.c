@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -732,6 +732,66 @@ fsp_err_t R_TAU_Close (timer_ctrl_t * const p_ctrl)
 #endif
 
     /* Return the error code */
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * This function is provided for the SAU LIN driver to support switching between low level measurement and input pulse
+ * measurement functions during LIN reception.
+ * It is not intended to be called directly by application code.
+ *
+ * @param[in]     p_ctrl               Pointer to TAU control structure
+ * @param[in]     func                 Measurement functions (TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT,
+ *                                     TAU_FUNCTION_INPUT_PULSE_INTERVAL_MEASUREMENT)
+ *
+ * @retval FSP_SUCCESS                 Switching was successful and measurement has started.
+ * @retval FSP_ERR_ASSERTION           A required input pointer is NULL.
+ * @retval FSP_ERR_NOT_OPEN            The instance is not opened.
+ * @retval FSP_ERR_INVALID_ARGUMENT    Invalid input function.
+ **********************************************************************************************************************/
+fsp_err_t R_TAU_LinMeasurementFuncSwitch (timer_ctrl_t * const p_ctrl, tau_function_t func)
+{
+    tau_instance_ctrl_t * p_instance_ctrl = (tau_instance_ctrl_t *) p_ctrl;
+
+#if TAU_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_instance_ctrl);
+    FSP_ERROR_RETURN(TAU_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    FSP_ERROR_RETURN((TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT == func) ||
+                     (TAU_FUNCTION_INPUT_PULSE_INTERVAL_MEASUREMENT == func),
+                     FSP_ERR_INVALID_ARGUMENT);
+#endif
+
+    timer_cfg_t const * p_cfg = p_instance_ctrl->p_cfg;
+
+    /* Stop counting */
+    R_TAU->TT0 = p_instance_ctrl->channel_bitmode_mask;
+
+    r_tau_disable_irq(p_cfg->cycle_end_irq);
+
+    uint32_t channel = p_cfg->channel;
+
+    /* Keep the current value of OPIRQ and CKS register bit */
+    uint32_t tmr = (R_TAU->TMR0[channel] & (R_TAU_TMR0_OPIRQ_Msk | R_TAU_TMR0_CKS_Msk));
+
+    /* Switch mode */
+    tmr |= tau_func_setting_lut[func];
+
+    /* Setting trigger edge */
+    uint32_t tmr_cis = (func == TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT) ?
+                       TAU_INPUT_LOW_LEVEL_MEASUREMENT_SETTING :
+                       TAU_TRIGGER_EDGE_FALLING;
+
+    tmr |= tmr_cis << R_TAU_TMR0_CIS_Pos;
+
+    /* Setting TMR0 register */
+    R_TAU->TMR0[channel] = (uint16_t) tmr;
+
+    r_tau_enable_irq(p_cfg->cycle_end_irq, p_cfg->cycle_end_ipl, p_instance_ctrl);
+
+    /* Start counting again */
+    R_TAU->TS0 = p_instance_ctrl->channel_bitmode_mask;
+
     return FSP_SUCCESS;
 }
 

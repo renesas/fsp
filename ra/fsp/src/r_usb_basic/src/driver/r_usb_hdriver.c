@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -1969,6 +1969,9 @@ void usb_hstd_send_start (usb_utr_t * ptr, uint16_t pipe)
     uint32_t    length;
     uint16_t    useport;
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
+  #if defined(USB_CFG_HUVC_USE) || defined(USB_CFG_HAUD_USE)
+    uint16_t buf;
+  #endif                               /* defined(USB_CFG_HUVC_USE) | defined(USB_CFG_HAUD_USE) */
     uint8_t               dma_ch;
     dmac_extended_cfg_t * channel_info;
  #endif                                /* ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE)) */
@@ -2054,6 +2057,20 @@ void usb_hstd_send_start (usb_utr_t * ptr, uint16_t pipe)
             }
 
             usb_cstd_dma_send_start(ptr, pipe, useport);
+
+  #if defined(USB_CFG_HUVC_USE) || defined(USB_CFG_HAUD_USE)
+            if (USB_TYPFIELD_ISO == usb_cstd_get_pipe_type(ptr, pipe))
+            {
+                while (1)
+                {
+                    buf = hw_usb_read_pipectr(ptr, pipe);
+                    if (!(buf & USB_BSTS))
+                    {
+                        break;
+                    }
+                }
+            }
+  #endif                               /* defined(USB_CFG_HUVC_USE) | defined(USB_CFG_HAUD_USE) */
 
             /* Set BUF */
             usb_cstd_set_buf(ptr, pipe);

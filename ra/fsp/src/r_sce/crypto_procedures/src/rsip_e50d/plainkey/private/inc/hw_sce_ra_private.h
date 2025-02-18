@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -376,6 +376,9 @@ fsp_err_t HW_SCE_Ed25519ScalarMultiplicationSub(const uint32_t InData_KeyIndex[]
 fsp_err_t HW_SCE_Aes128OutputKeyForDotfSub(const uint32_t InData_KeyMode[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_DOTFSEED[]);
 fsp_err_t HW_SCE_Aes192OutputKeyForDotfSub(const uint32_t InData_KeyMode[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_DOTFSEED[]);
 fsp_err_t HW_SCE_Aes256OutputKeyForDotfSub(const uint32_t InData_KeyMode[], const uint32_t InData_Cmd[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_DOTFSEED[]);
+fsp_err_t HW_SCE_Aes128OutputKeyForDotfSubAdaptor(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
+fsp_err_t HW_SCE_Aes192OutputKeyForDotfSubAdaptor(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
+fsp_err_t HW_SCE_Aes256OutputKeyForDotfSubAdaptor(uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[]);
 fsp_err_t HW_SCE_RSA2048_KeyPairGenerateSub(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 fsp_err_t HW_SCE_RSA3072_KeyPairGenerateSub(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 fsp_err_t HW_SCE_RSA4096_KeyPairGenerateSub(const uint32_t InData_KeyMode[], const uint32_t MAX_CNT, uint32_t OutData_PubKey[], uint32_t OutData_PrivKeyIndex[], uint32_t OutData_PrivKey[]);

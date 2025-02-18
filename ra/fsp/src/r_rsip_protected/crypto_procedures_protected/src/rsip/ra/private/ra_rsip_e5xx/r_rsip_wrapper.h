@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -62,6 +62,44 @@
 #define RSIP_PRV_FUNC_NAME_AES_CMAC_UPDATE_128                          r_rsip_p41u
 #define RSIP_PRV_FUNC_NAME_AES_CMAC_GENERATE_FINAL_128                  r_rsip_wrapper_p41f_aes128mac_generate
 #define RSIP_PRV_FUNC_NAME_AES_CMAC_VERIFY_FINAL_128                    r_rsip_wrapper_p41f_aes128mac_verify
+
+#define RSIP_PRV_FUNC_NAME_KEY_GENERATE_AES_192                         r_rsip_p15
+#define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_AES_192                         r_rsip_wrapper_p6f_aes192
+
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_ECB_ENC_192                  r_rsip_wrapper_p89i_ecb_enc
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_ECB_DEC_192                  r_rsip_wrapper_p89i_ecb_dec
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_ENC_192                  r_rsip_wrapper_p89i_cbc_enc
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_DEC_192                  r_rsip_wrapper_p89i_cbc_dec
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_ENC_192_WRAPPED_IV       r_rsip_wrapper_p89i_cbc_enc_wrapped_iv
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CBC_DEC_192_WRAPPED_IV       r_rsip_wrapper_p89i_cbc_dec_wrapped_iv
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_INIT_CTR_192                      r_rsip_wrapper_p89i_ctr
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_UPDATE_192                        r_rsip_p89u
+#define RSIP_PRV_FUNC_NAME_AES_CIPHER_FINAL_192                         r_rsip_p89f
+
+#define RSIP_PRV_FUNC_NAME_AES_GCM_ENC_INIT_192                         r_rsip_wrapper_p83i_plain_iv
+#define RSIP_PRV_FUNC_NAME_AES_GCM_ENC_INIT_192_WRAPPED_IV              r_rsip_wrapper_p83i_wrapped_iv
+#define RSIP_PRV_FUNC_NAME_AES_GCM_ENC_UPDATE_AAD_192                   r_rsip_p83a
+#define RSIP_PRV_FUNC_NAME_AES_GCM_ENC_UPDATE_TRANSITION_192            r_rsip_p83t
+#define RSIP_PRV_FUNC_NAME_AES_GCM_ENC_UPDATE_192                       r_rsip_p83u
+#define RSIP_PRV_FUNC_NAME_AES_GCM_ENC_FINAL_192                        r_rsip_p83f
+#define RSIP_PRV_FUNC_NAME_AES_GCM_DEC_INIT_192                         r_rsip_wrapper_p85i_plain_iv
+#define RSIP_PRV_FUNC_NAME_AES_GCM_DEC_INIT_192_WRAPPED_IV              r_rsip_wrapper_p85i_wrapped_iv
+#define RSIP_PRV_FUNC_NAME_AES_GCM_DEC_UPDATE_AAD_192                   r_rsip_p85a
+#define RSIP_PRV_FUNC_NAME_AES_GCM_DEC_UPDATE_TRANSITION_192            r_rsip_p85t
+#define RSIP_PRV_FUNC_NAME_AES_GCM_DEC_UPDATE_192                       r_rsip_p85u
+#define RSIP_PRV_FUNC_NAME_AES_GCM_DEC_FINAL_192                        r_rsip_p85f
+
+#define RSIP_PRV_FUNC_NAME_AES_CCM_ENC_INIT_192                         r_rsip_wrapper_pa7i_aes192ccm_encrypt
+#define RSIP_PRV_FUNC_NAME_AES_CCM_ENC_UPDATE_192                       r_rsip_pa7u
+#define RSIP_PRV_FUNC_NAME_AES_CCM_ENC_FINAL_192                        r_rsip_wrapper_pa7f_aes192ccm_encrypt
+#define RSIP_PRV_FUNC_NAME_AES_CCM_DEC_INIT_192                         r_rsip_wrapper_pb0i_aes192ccm_decrypt
+#define RSIP_PRV_FUNC_NAME_AES_CCM_DEC_UPDATE_192                       r_rsip_pb0u
+#define RSIP_PRV_FUNC_NAME_AES_CCM_DEC_FINAL_192                        r_rsip_wrapper_pb0f_aes192ccm_decrypt
+
+#define RSIP_PRV_FUNC_NAME_AES_CMAC_INIT_192                            r_rsip_p87i
+#define RSIP_PRV_FUNC_NAME_AES_CMAC_UPDATE_192                          r_rsip_p87u
+#define RSIP_PRV_FUNC_NAME_AES_CMAC_GENERATE_FINAL_192                  r_rsip_wrapper_p87f_aes192mac_generate
+#define RSIP_PRV_FUNC_NAME_AES_CMAC_VERIFY_FINAL_192                    r_rsip_wrapper_p87f_aes192mac_verify
 
 #define RSIP_PRV_FUNC_NAME_KEY_GENERATE_AES_256                         r_rsip_p08
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_AES_256                         r_rsip_wrapper_p6f_aes256
@@ -207,6 +245,9 @@
 #define RSIP_PRV_FUNC_NAME_RSA_ENCRYPT_4096                             r_rsip_p7b
 #define RSIP_PRV_FUNC_NAME_RSA_DECRYPT_4096                             r_rsip_p7c
 
+#define RSIP_PRV_FUNC_NAME_KEY_GENERATE_HMAC_SHA224                     r_rsip_p0a
+#define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_HMAC_SHA224                     r_rsip_wrapper_p6f_hmacsha224
+
 #define RSIP_PRV_FUNC_NAME_KEY_GENERATE_HMAC_SHA256                     r_rsip_p0b
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_HMAC_SHA256                     r_rsip_wrapper_p6f_hmacsha256
 
@@ -252,11 +293,13 @@
 #define RSIP_PRV_FUNC_NAME_RFC3394_AES_256_KEY_UNWRAP                   r_rsip_wrapper_p90_aes256
 
 #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_128                        r_rsip_p2c
+#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_192                        r_rsip_p2d
 #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_256                        r_rsip_p2e
 
 /* Key update inst data word */
 #define RSIP_OEM_KEY_SIZE_DUMMY_INST_DATA_WORD                              (0)
 #define RSIP_OEM_KEY_SIZE_AES128_INST_DATA_WORD                             (8)
+#define RSIP_OEM_KEY_SIZE_AES192_INST_DATA_WORD                             (12)
 #define RSIP_OEM_KEY_SIZE_AES256_INST_DATA_WORD                             (12)
 #define RSIP_OEM_KEY_SIZE_AES128_XTS_INST_DATA_WORD                         (12)
 #define RSIP_OEM_KEY_SIZE_AES256_XTS_INST_DATA_WORD                         (20)
@@ -276,6 +319,7 @@
 #define RSIP_OEM_KEY_SIZE_ECC_BRAINPOOLP512R1_PUBLIC_KEY_INST_DATA_WORD     (36)
 #define RSIP_OEM_KEY_SIZE_ECC_BRAINPOOLP512R1_PRIVATE_KEY_INST_DATA_WORD    (20)
 
+#define RSIP_OEM_KEY_SIZE_HMAC_SHA224_KEY_INST_DATA_WORD                    (12)
 #define RSIP_OEM_KEY_SIZE_HMAC_SHA256_KEY_INST_DATA_WORD                    (12)
 #define RSIP_OEM_KEY_SIZE_HMAC_SHA384_KEY_INST_DATA_WORD                    (16)
 #define RSIP_OEM_KEY_SIZE_HMAC_SHA512_KEY_INST_DATA_WORD                    (20)
@@ -363,6 +407,9 @@ rsip_ret_t r_rsip_wrapper_p3b_rsa4096(uint32_t OutData_PubKeyIndex[], uint32_t O
 rsip_ret_t r_rsip_wrapper_p6f_aes128(const uint32_t InData_IV[],
                                      const uint32_t InData_InstData[],
                                      uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p6f_aes192(const uint32_t InData_IV[],
+                                     const uint32_t InData_InstData[],
+                                     uint32_t       OutData_KeyIndex[]);
 rsip_ret_t r_rsip_wrapper_p6f_aes256(const uint32_t InData_IV[],
                                      const uint32_t InData_InstData[],
                                      uint32_t       OutData_KeyIndex[]);
@@ -432,6 +479,9 @@ rsip_ret_t r_rsip_wrapper_p6f_rsa4096_pub(const uint32_t InData_IV[],
 rsip_ret_t r_rsip_wrapper_p6f_rsa4096_priv(const uint32_t InData_IV[],
                                            const uint32_t InData_InstData[],
                                            uint32_t       OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p6f_hmacsha224(const uint32_t InData_IV[],
+                                         const uint32_t InData_InstData[],
+                                         uint32_t       OutData_KeyIndex[]);
 rsip_ret_t r_rsip_wrapper_p6f_hmacsha256(const uint32_t InData_IV[],
                                          const uint32_t InData_InstData[],
                                          uint32_t       OutData_KeyIndex[]);
@@ -479,6 +529,13 @@ rsip_ret_t r_rsip_wrapper_p50i_cbc_dec(const uint32_t InData_KeyIndex[], const u
 rsip_ret_t r_rsip_wrapper_p50i_cbc_enc_wrapped_iv(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
 rsip_ret_t r_rsip_wrapper_p50i_cbc_dec_wrapped_iv(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
 rsip_ret_t r_rsip_wrapper_p50i_ctr(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
+rsip_ret_t r_rsip_wrapper_p89i_ecb_enc(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
+rsip_ret_t r_rsip_wrapper_p89i_ecb_dec(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
+rsip_ret_t r_rsip_wrapper_p89i_cbc_enc(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
+rsip_ret_t r_rsip_wrapper_p89i_cbc_dec(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
+rsip_ret_t r_rsip_wrapper_p89i_cbc_enc_wrapped_iv(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
+rsip_ret_t r_rsip_wrapper_p89i_cbc_dec_wrapped_iv(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
+rsip_ret_t r_rsip_wrapper_p89i_ctr(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
 
 /* AES-GCM */
 rsip_ret_t r_rsip_wrapper_p29i_plain_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
@@ -489,6 +546,10 @@ rsip_ret_t r_rsip_wrapper_p34i_plain_iv(const uint32_t * InData_KeyIndex, const 
 rsip_ret_t r_rsip_wrapper_p34i_wrapped_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
 rsip_ret_t r_rsip_wrapper_p36i_plain_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
 rsip_ret_t r_rsip_wrapper_p36i_wrapped_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
+rsip_ret_t r_rsip_wrapper_p83i_plain_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
+rsip_ret_t r_rsip_wrapper_p83i_wrapped_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
+rsip_ret_t r_rsip_wrapper_p85i_plain_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
+rsip_ret_t r_rsip_wrapper_p85i_wrapped_iv(const uint32_t * InData_KeyIndex, const uint32_t * InData_IV);
 
 /* AES-CCM */
 rsip_ret_t r_rsip_wrapper_p95i_aes128ccm_encrypt(const uint32_t * InData_KeyIndex,
@@ -511,7 +572,26 @@ rsip_ret_t r_rsip_wrapper_p98f_aes128ccm_decrypt(const uint32_t * InData_Text,
                                                  const uint32_t * InData_MAC,
                                                  const uint32_t * InData_MACLength,
                                                  uint32_t       * OutData_Text);
-
+rsip_ret_t r_rsip_wrapper_pa7i_aes192ccm_encrypt(const uint32_t * InData_KeyIndex,
+                                                 const uint32_t * InData_TextLen,
+                                                 const uint32_t * InData_IV,
+                                                 const uint32_t * InData_Header,
+                                                 uint32_t         Header_Len);
+rsip_ret_t r_rsip_wrapper_pa7f_aes192ccm_encrypt(const uint32_t * InData_Text,
+                                                 const uint32_t * InData_TextLen,
+                                                 uint32_t       * OutData_Text,
+                                                 uint32_t       * OutData_MAC);
+rsip_ret_t r_rsip_wrapper_pb0i_aes192ccm_decrypt(const uint32_t * InData_KeyIndex,
+                                                 const uint32_t * InData_TextLen,
+                                                 const uint32_t * InData_MACLength,
+                                                 const uint32_t * InData_IV,
+                                                 const uint32_t * InData_Header,
+                                                 uint32_t         Header_Len);
+rsip_ret_t r_rsip_wrapper_pb0f_aes192ccm_decrypt(const uint32_t * InData_Text,
+                                                 const uint32_t * InData_TextLen,
+                                                 const uint32_t * InData_MAC,
+                                                 const uint32_t * InData_MACLength,
+                                                 uint32_t       * OutData_Text);
 rsip_ret_t r_rsip_wrapper_pa1i_aes256ccm_encrypt(const uint32_t * InData_KeyIndex,
                                                  const uint32_t * InData_TextLen,
                                                  const uint32_t * InData_IV,
@@ -529,6 +609,13 @@ rsip_ret_t r_rsip_wrapper_p41f_aes128mac_generate(const uint32_t * InData_Text,
                                                   uint32_t       * OutData_DataT,
                                                   const uint32_t   all_msg_len);
 rsip_ret_t r_rsip_wrapper_p41f_aes128mac_verify(const uint32_t * InData_Text,
+                                                const uint32_t * InData_DataT,
+                                                const uint32_t * InData_DataTLen,
+                                                const uint32_t   all_msg_len);
+rsip_ret_t r_rsip_wrapper_p87f_aes192mac_generate(const uint32_t * InData_Text,
+                                                  uint32_t       * OutData_DataT,
+                                                  const uint32_t   all_msg_len);
+rsip_ret_t r_rsip_wrapper_p87f_aes192mac_verify(const uint32_t * InData_Text,
                                                 const uint32_t * InData_DataT,
                                                 const uint32_t * InData_DataTLen,
                                                 const uint32_t   all_msg_len);

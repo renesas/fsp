@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -127,7 +127,7 @@ static void ccm_format(const uint8_t * nonce,
  * @par Conditions
  * @parblock
  * Key type of p_wrapped_key must be one of the following:
- * - @ref RSIP_KEY_TYPE_AES_128, @ref RSIP_KEY_TYPE_AES_256
+ * - @ref RSIP_KEY_TYPE_AES_128, @ref RSIP_KEY_TYPE_AES_192, @ref RSIP_KEY_TYPE_AES_256
  * - @ref RSIP_KEY_TYPE_XTS_AES_128, @ref RSIP_KEY_TYPE_XTS_AES_256
  *
  * Argument mode must be the following:
@@ -367,6 +367,7 @@ fsp_err_t R_RSIP_AES_Cipher_Finish (rsip_ctrl_t * const p_ctrl)
  * @parblock
  * Key type of p_wrapped_key must be one of the following:
  * - @ref RSIP_KEY_TYPE_AES_128
+ * - @ref RSIP_KEY_TYPE_AES_192
  * - @ref RSIP_KEY_TYPE_AES_256
  *
  * Argument mode accepts any member of enumeration @ref rsip_aes_aead_mode_t.
@@ -827,6 +828,7 @@ fsp_err_t R_RSIP_AES_AEAD_Verify (rsip_ctrl_t * const   p_ctrl,
  * @parblock
  * Key type of p_wrapped_key must be one of the following:
  * - @ref RSIP_KEY_TYPE_AES_128
+ * - @ref RSIP_KEY_TYPE_AES_192
  * - @ref RSIP_KEY_TYPE_AES_256
  *
  * Argument mode accepts any member of enumeration @ref rsip_aes_aead_mode_t.

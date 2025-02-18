@@ -6,6 +6,12 @@
  *
  */
 
+/*
+ *  Copyright The Mbed TLS Contributors
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+ *  Copyright (C) 2025 Modified by Renesas Electronics Corporation and/or its affiliates
+ */
+
 #ifndef MBEDTLS_AES_ALT_H
  #define MBEDTLS_AES_ALT_H
 
@@ -79,12 +85,12 @@ int mbedtls_internal_aes_decrypt_cbc(mbedtls_aes_context * ctx,
                                      unsigned char       * output);
 int mbedtls_internal_aes_encrypt_xts(mbedtls_aes_context * ctx,
                                      unsigned int          length,
-                                     const unsigned char       * iv,
+                                     const unsigned char * iv,
                                      const unsigned char * input,
                                      unsigned char       * output);
 int mbedtls_internal_aes_decrypt_xts(mbedtls_aes_context * ctx,
                                      unsigned int          length,
-                                     const unsigned char       * iv,
+                                     const unsigned char * iv,
                                      const unsigned char * input,
                                      unsigned char       * output);
 int mbedtls_internal_aes_encrypt_decrypt_ctr(mbedtls_aes_context * ctx,

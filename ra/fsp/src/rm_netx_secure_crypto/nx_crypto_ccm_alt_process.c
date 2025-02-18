@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -17,7 +17,8 @@
 #include "rm_netx_secure_crypto.h"
 #if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (((BSP_FEATURE_RSIP_SCE9_SUPPORTED ||             \
                                                                BSP_FEATURE_RSIP_SCE7_SUPPORTED ||             \
-                                                               BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1) || \
+                                                               BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED ||        \
+                                                               BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1) || \
     ((BSP_FEATURE_RSIP_SCE5_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED) == 1))
  #include "nx_crypto_aes.h"
  #include "hw_sce_private.h"
@@ -150,7 +151,8 @@ UINT sce_nx_crypto_ccm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
                                                   header_length);
     }
 
- #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+       BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
         err =
@@ -214,7 +216,8 @@ UINT sce_nx_crypto_ccm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, U
                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
 
- #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+       BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1)
         else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
         {
             HW_SCE_Aes192CcmEncryptUpdateSub((uint32_t *) input,
@@ -250,7 +253,8 @@ UINT sce_nx_crypto_ccm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, U
                                                    (uint32_t *) p_ccm_metadata->nx_crypto_ccm_X);
     }
 
- #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+       BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
         err =
@@ -340,7 +344,8 @@ UINT sce_nx_crypto_ccm_decrypt_init (NX_CRYPTO_AES * crypto_metadata,
                                                     header_length);
     }
 
- #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+       BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
     {
         err = HW_SCE_Aes192CcmDecryptInitSubGeneral(key_type,
@@ -411,7 +416,8 @@ UINT sce_nx_crypto_ccm_decrypt_update (NX_CRYPTO_AES * crypto_metadata,
                                              RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));
         }
 
- #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+       BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1)
         else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
         {
             HW_SCE_Aes192CcmDecryptUpdateSub((uint32_t *) input,
@@ -465,7 +471,8 @@ UINT sce_nx_crypto_ccm_decrypt_final (NX_CRYPTO_AES * crypto_metadata,
                                                      (uint32_t *) work_buffer);
     }
 
- #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) == 1)
+ #if ((BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+       BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == crypto_metadata->nx_crypto_aes_key_size)
     {
         err = HW_SCE_Aes192CcmDecryptFinalSub((uint32_t *) work_buffer,

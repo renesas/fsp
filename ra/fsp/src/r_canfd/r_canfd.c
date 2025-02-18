@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2020 - 2024 Renesas Electronics Corporation and/or its affiliates
+* Copyright (c) 2020 - 2025 Renesas Electronics Corporation and/or its affiliates
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -1073,7 +1073,7 @@ static void r_canfd_mb_read (R_CANFD_Type * p_reg, uint32_t buffer, can_frame_t 
     if (is_mb)
     {
         /* Clear RXMB New Data bit */
-        p_reg->CFDRMND0 &= ~(1U << buffer);
+        p_reg->CFDRMND0 = ~(1U << buffer);
     }
     else if (is_cfifo)
     {
