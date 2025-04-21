@@ -16,5 +16,6 @@ var searchData=
   ['lwip_20baremetal_20porting_20layer_20_28rm_5flwip_5fsys_5fbaremetal_29',['lwIP Baremetal Porting Layer (rm_lwip_sys_baremetal)',['../group___r_m___l_w_i_p___s_y_s___b_a_r_e_m_e_t_a_l.html',1,'']]],
   ['lwip_20freertos_20porting_20layer_20_28rm_5flwip_5fsys_5ffreertos_29',['lwIP FreeRTOS Porting Layer (rm_lwip_sys_freertos)',['../group___r_m___l_w_i_p___s_y_s___f_r_e_e_r_t_o_s.html',1,'']]],
   ['lin_20_28r_5fsau_5flin_29',['LIN (r_sau_lin)',['../group___s_a_u___l_i_n.html',1,'']]],
-  ['lin_20_28r_5fsci_5fb_5flin_29',['LIN (r_sci_b_lin)',['../group___s_c_i___b___l_i_n.html',1,'']]]
+  ['lin_20_28r_5fsci_5fb_5flin_29',['LIN (r_sci_b_lin)',['../group___s_c_i___b___l_i_n.html',1,'']]],
+  ['lin_20_28r_5fsci_5flin_29',['LIN (r_sci_lin)',['../group___s_c_i___l_i_n.html',1,'']]]
 ];

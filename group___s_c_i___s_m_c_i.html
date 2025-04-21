@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -301,6 +301,40 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 </table>
+ <h2>Configurations for Connectivity &gt; SMCI (r_sci_smci)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SMCI (r_sci_smci). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_smci0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel</td><td>Value must be a non-negative integer</td><td>0 </td><td>Select the SCI channel. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Baud  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Baud Rate</td><td>Value must be an integer greater than 0</td><td>9600 </td><td>Enter the desired baud rate.<br />
+<br />
+If the requested baud rate cannot be achieved, the settings with the smallest percent error are used. The theoretical calculated baud rate and percent error are printed in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock conversion integer</td><td>Refer to the RA Configuration tool for available options.</td><td>F=372 fmax=5MHz D=1 </td><td>Clock rate conversion integer is one of transmission parameters defined by ISO7816-3 as F and also decodes to f-max of the output clock. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Max Error (%)</td><td>Must be a valid non negative integer with a maximum configurable value of 100</td><td>5 </td><td>Maximum percent error allowed during baud calculation. This is used by the algorithm to determine whether or not to consider using less accurate alternative register settings.<br />
+<br />
+NOTE: The baud calculation does not show an error in the tool if this percent error was not achieved. The calculated percent error is recorded in a comment in the generated <a class="el" href="group___s_c_i___u_a_r_t.html#structbaud__setting__t">baud_setting_t</a> structure. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>user_smci_callback </td><td>A user callback function can be provided. If this callback function is provided, it will be called from the interrupt service routine (ISR). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Receive Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the receive interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Transmit Data Empty Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the transmit interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error interrupt priority. </td></tr>
+</table>
 </p>
 <h2><a class="anchor" id="r-sci-smci-clock-configuration"></a>
 Clock Configuration</h2>
@@ -320,6 +354,8 @@ Clock Configuration</h2>
 <td>RA2E3</td><td>PCLKB</td></tr>
 <tr>
 <td>RA2L1</td><td>PCLKB</td></tr>
+<tr>
+<td>RA2L2</td><td>PCLKB</td></tr>
 <tr>
 <td>RA4E1</td><td>PCLKA</td></tr>
 <tr>
@@ -421,7 +457,7 @@ computed_baud_rate</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a2d573fccff321eef1858f4388a8474df"></a>union <a class="el" href="group___s_c_i___s_m_c_i.html#unionsmci__baud__setting__t_8____unnamed____">smci_baud_setting_t</a></td>
+<a id="a9331da1cdd99b5635946df0bf806e69b"></a>union <a class="el" href="group___s_c_i___s_m_c_i.html#unionsmci__baud__setting__t_8____unnamed____">smci_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -942,7 +978,7 @@ Register settings for a desired baud rate. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

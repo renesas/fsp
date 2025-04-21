@@ -1,0 +1,847 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: PTX NSC Platform API</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.9.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group__grp__ptx__api__plat.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
+  <div class="headertitle">
+<div class="title">PTX NSC Platform API</div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga55dff159523a6813ce020ee465d9cb92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga55dff159523a6813ce020ee465d9cb92">ptxPLAT_DisableInterrupts</a> (struct ptxPlat *plat)</td></tr>
+<tr class="memdesc:ga55dff159523a6813ce020ee465d9cb92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Interrupts.  <a href="#ga55dff159523a6813ce020ee465d9cb92">More...</a><br /></td></tr>
+<tr class="separator:ga55dff159523a6813ce020ee465d9cb92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c305c2575055ed98b0d76ef3f4a865e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga7c305c2575055ed98b0d76ef3f4a865e">ptxPLAT_EnableInterrupts</a> (struct ptxPlat *plat)</td></tr>
+<tr class="memdesc:ga7c305c2575055ed98b0d76ef3f4a865e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Interrupts.  <a href="#ga7c305c2575055ed98b0d76ef3f4a865e">More...</a><br /></td></tr>
+<tr class="separator:ga7c305c2575055ed98b0d76ef3f4a865e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f63aeb5f1295c3332acec7504755a1d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga7f63aeb5f1295c3332acec7504755a1d">ptxPLAT_CheckRxActive</a> (struct ptxPlat *plat)</td></tr>
+<tr class="memdesc:ga7f63aeb5f1295c3332acec7504755a1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if PLAT interface reception is taking place at the moment.  <a href="#ga7f63aeb5f1295c3332acec7504755a1d">More...</a><br /></td></tr>
+<tr class="separator:ga7f63aeb5f1295c3332acec7504755a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structptx_p_l_a_t___config_pars__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#structptx_p_l_a_t___config_pars__t">ptxPLAT_ConfigPars_t</a></td></tr>
+<tr class="memdesc:structptx_p_l_a_t___config_pars__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific parameter initializers.  <a href="group__grp__ptx__api__plat.html#structptx_p_l_a_t___config_pars__t">More...</a><br /></td></tr>
+<tr class="separator:structptx_p_l_a_t___config_pars__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga3411b6bec4dd0150739471b90fccea40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga3411b6bec4dd0150739471b90fccea40">PTX_INTF_SPI</a></td></tr>
+<tr class="separator:ga3411b6bec4dd0150739471b90fccea40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c4eeb8482d3863c59db9034c9ee7b07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga4c4eeb8482d3863c59db9034c9ee7b07">PTX_PLAT_TRX_FLAGS_I2C_RESTART_CONDITION</a></td></tr>
+<tr class="memdesc:ga4c4eeb8482d3863c59db9034c9ee7b07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-specific flags parameter initializers.  <a href="#ga4c4eeb8482d3863c59db9034c9ee7b07">More...</a><br /></td></tr>
+<tr class="separator:ga4c4eeb8482d3863c59db9034c9ee7b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e3286caa21e0f7791353f84a8713808"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga4e3286caa21e0f7791353f84a8713808">PTX_PLAT_HOST_SPEED_I2C_100000</a></td></tr>
+<tr class="memdesc:ga4e3286caa21e0f7791353f84a8713808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-dependent I2C speeds/bitrates (Attention: Bitrates highly dependent on the target system and might require adaption!)  <a href="#ga4e3286caa21e0f7791353f84a8713808">More...</a><br /></td></tr>
+<tr class="separator:ga4e3286caa21e0f7791353f84a8713808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48a3aa9a9acf601413fe499e990ead63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga48a3aa9a9acf601413fe499e990ead63">PTX_PLAT_HOST_SPEED_I2C_400000</a></td></tr>
+<tr class="separator:ga48a3aa9a9acf601413fe499e990ead63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b99f2e847655522723f3976757d304b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga9b99f2e847655522723f3976757d304b">PTX_PLAT_HOST_SPEED_I2C_1000000</a></td></tr>
+<tr class="separator:ga9b99f2e847655522723f3976757d304b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ee53fa29d34e4690944fbdd087f1f45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga8ee53fa29d34e4690944fbdd087f1f45">PTX_PLAT_HOST_SPEED_I2C_3400000</a></td></tr>
+<tr class="separator:ga8ee53fa29d34e4690944fbdd087f1f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5893c7f7dd1c7359b78201d3a07b001f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga5893c7f7dd1c7359b78201d3a07b001f">PTX_PLAT_HOST_SPEED_I2C_MAX</a></td></tr>
+<tr class="separator:ga5893c7f7dd1c7359b78201d3a07b001f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae565bd4796b8c84ebd19d9e45201d0ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#gae565bd4796b8c84ebd19d9e45201d0ed">PTX_PLAT_HOST_SPEED_UART_9600</a></td></tr>
+<tr class="memdesc:gae565bd4796b8c84ebd19d9e45201d0ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-dependent UART speeds/bitrates (Attention: Bitrates highly dependent on the target system and might require adaption!)  <a href="#gae565bd4796b8c84ebd19d9e45201d0ed">More...</a><br /></td></tr>
+<tr class="separator:gae565bd4796b8c84ebd19d9e45201d0ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac625457bbf8c3fdb5910445e98a97a75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#gac625457bbf8c3fdb5910445e98a97a75">PTX_PLAT_HOST_SPEED_UART_14400</a></td></tr>
+<tr class="separator:gac625457bbf8c3fdb5910445e98a97a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3319768e4ad03b95e240afbfbdebee78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga3319768e4ad03b95e240afbfbdebee78">PTX_PLAT_HOST_SPEED_UART_19200</a></td></tr>
+<tr class="separator:ga3319768e4ad03b95e240afbfbdebee78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad17a7566fbe260d55cede4a9bfd6e877"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#gad17a7566fbe260d55cede4a9bfd6e877">PTX_PLAT_HOST_SPEED_UART_28800</a></td></tr>
+<tr class="separator:gad17a7566fbe260d55cede4a9bfd6e877"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga951209b992b9b5ee9e31325885cfcc91"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga951209b992b9b5ee9e31325885cfcc91">PTX_PLAT_HOST_SPEED_UART_38400</a></td></tr>
+<tr class="separator:ga951209b992b9b5ee9e31325885cfcc91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadba01a384a5f34be6898112865c4c237"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#gadba01a384a5f34be6898112865c4c237">PTX_PLAT_HOST_SPEED_UART_57600</a></td></tr>
+<tr class="separator:gadba01a384a5f34be6898112865c4c237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4911c3e7c51054aca009dce58120af86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga4911c3e7c51054aca009dce58120af86">PTX_PLAT_HOST_SPEED_UART_115200</a></td></tr>
+<tr class="separator:ga4911c3e7c51054aca009dce58120af86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3af836e6bb63ecb586742184a3988478"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga3af836e6bb63ecb586742184a3988478">PTX_PLAT_HOST_SPEED_UART_230400</a></td></tr>
+<tr class="separator:ga3af836e6bb63ecb586742184a3988478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5162478ec5b69e7a306c219ded7e190b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga5162478ec5b69e7a306c219ded7e190b">PTX_PLAT_HOST_SPEED_UART_460800</a></td></tr>
+<tr class="separator:ga5162478ec5b69e7a306c219ded7e190b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3a2ec5a0c855657b6b456f081cfb424"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#gaf3a2ec5a0c855657b6b456f081cfb424">PTX_PLAT_HOST_SPEED_UART_921600</a></td></tr>
+<tr class="separator:gaf3a2ec5a0c855657b6b456f081cfb424"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34cfc515119a1ab5db249b8ce1f20ab8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga34cfc515119a1ab5db249b8ce1f20ab8">PTX_PLAT_HOST_SPEED_UART_1843200</a></td></tr>
+<tr class="separator:ga34cfc515119a1ab5db249b8ce1f20ab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2d9ee9a3191e73f7c6183ff244dc535"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#gac2d9ee9a3191e73f7c6183ff244dc535">PTX_PLAT_HOST_SPEED_UART_3000000</a></td></tr>
+<tr class="separator:gac2d9ee9a3191e73f7c6183ff244dc535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b232e203303cf95a58547639f9e5e41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga0b232e203303cf95a58547639f9e5e41">PTX_PLAT_HOST_SPEED_UART_MAX</a></td></tr>
+<tr class="separator:ga0b232e203303cf95a58547639f9e5e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41d709ea70e6eb6d2204e523a71499c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga41d709ea70e6eb6d2204e523a71499c5">PTX_PLAT_HOST_DEFAULT_UART_SPEED</a></td></tr>
+<tr class="separator:ga41d709ea70e6eb6d2204e523a71499c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae077fadf32defeec9b59c78b2a7de36f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#gae077fadf32defeec9b59c78b2a7de36f">PTX_PLAT_HOST_SPEED_SPI_1M</a></td></tr>
+<tr class="memdesc:gae077fadf32defeec9b59c78b2a7de36f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-dependent SPI speeds/bitrates (Attention: Bitrates highly dependent on the target system and might require adaption!)  <a href="#gae077fadf32defeec9b59c78b2a7de36f">More...</a><br /></td></tr>
+<tr class="separator:gae077fadf32defeec9b59c78b2a7de36f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga988cfbd675a4e0deed1b07f543765a52"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga988cfbd675a4e0deed1b07f543765a52">PTX_PLAT_HOST_SPEED_SPI_5M</a></td></tr>
+<tr class="separator:ga988cfbd675a4e0deed1b07f543765a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b04842b0a148d4275310d13d3b6ea07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga4b04842b0a148d4275310d13d3b6ea07">PTX_PLAT_HOST_SPEED_SPI_10M</a></td></tr>
+<tr class="separator:ga4b04842b0a148d4275310d13d3b6ea07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5224dabe7d3859a11105a576beadb3fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga5224dabe7d3859a11105a576beadb3fa">PTX_PLAT_HOST_SPEED_SPI_MAX</a></td></tr>
+<tr class="separator:ga5224dabe7d3859a11105a576beadb3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga3ea66ab440654a04ea41e5bccb01cc0e"><td class="memItemLeft" align="right" valign="top"><a id="ga3ea66ab440654a04ea41e5bccb01cc0e"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga3ea66ab440654a04ea41e5bccb01cc0e">pptxPlat_RxCallBack_t</a>) (void *ctx)</td></tr>
+<tr class="memdesc:ga3ea66ab440654a04ea41e5bccb01cc0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function for IRQ triggered (asynchronously). <br /></td></tr>
+<tr class="separator:ga3ea66ab440654a04ea41e5bccb01cc0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9992c6ec5075342d126038e03090b7fc"><td class="memItemLeft" align="right" valign="top"><a id="ga9992c6ec5075342d126038e03090b7fc"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__grp__ptx__api__plat.html#ga9992c6ec5075342d126038e03090b7fc">pptxPlat_TimerCallBack_t</a>) (void *ctx)</td></tr>
+<tr class="memdesc:ga9992c6ec5075342d126038e03090b7fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function for Timer Interrupt. <br /></td></tr>
+<tr class="separator:ga9992c6ec5075342d126038e03090b7fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structptx_p_l_a_t___config_pars__t" id="structptx_p_l_a_t___config_pars__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structptx_p_l_a_t___config_pars__t">&#9670;&nbsp;</a></span>ptxPLAT_ConfigPars_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ptxPLAT_ConfigPars_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Platform-specific parameter initializers. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a244f5f0dbbc9163f584d18fe46ce560c"></a>uint32_t</td>
+<td class="fieldname">
+Speed</td>
+<td class="fielddoc">
+<p>Interface Speed (SPI, I2C or UART -&gt; see PTX_PLAT_HOST_SPEED* below. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="accd43438feadaa7bb25cf4e4f149f525"></a>uint8_t</td>
+<td class="fieldname">
+DeviceAddress</td>
+<td class="fielddoc">
+<p>Interface Device-Address (I2C only). </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga3411b6bec4dd0150739471b90fccea40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3411b6bec4dd0150739471b90fccea40">&#9670;&nbsp;</a></span>PTX_INTF_SPI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_INTF_SPI</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Adding this define for the SDK in place of pre-processor macro </p>
+
+</div>
+</div>
+<a id="ga4c4eeb8482d3863c59db9034c9ee7b07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4c4eeb8482d3863c59db9034c9ee7b07">&#9670;&nbsp;</a></span>PTX_PLAT_TRX_FLAGS_I2C_RESTART_CONDITION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_TRX_FLAGS_I2C_RESTART_CONDITION</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Platform-specific flags parameter initializers. </p>
+<p>Bit 0 ....: I2C: Restart-Condition required after Write-operation or not. Bit 1 - 3.: RFU Bit 4 - 7.: Custom Flags (free to use)I2C: If set, the restart condition should be issued after the write operation. </p>
+
+</div>
+</div>
+<a id="ga4e3286caa21e0f7791353f84a8713808"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e3286caa21e0f7791353f84a8713808">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_I2C_100000</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_I2C_100000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Platform-dependent I2C speeds/bitrates (Attention: Bitrates highly dependent on the target system and might require adaption!) </p>
+<p>I2C Standard (100 kHz). </p>
+
+</div>
+</div>
+<a id="ga48a3aa9a9acf601413fe499e990ead63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga48a3aa9a9acf601413fe499e990ead63">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_I2C_400000</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_I2C_400000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C Fast-Mode (400 kHz). </p>
+
+</div>
+</div>
+<a id="ga9b99f2e847655522723f3976757d304b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9b99f2e847655522723f3976757d304b">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_I2C_1000000</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_I2C_1000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C Fast-Mode-Plus (up to 1 MHz). </p>
+
+</div>
+</div>
+<a id="ga8ee53fa29d34e4690944fbdd087f1f45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8ee53fa29d34e4690944fbdd087f1f45">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_I2C_3400000</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_I2C_3400000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C High-Speed-Mode (up to 3.4 MHz). </p>
+
+</div>
+</div>
+<a id="ga5893c7f7dd1c7359b78201d3a07b001f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5893c7f7dd1c7359b78201d3a07b001f">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_I2C_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_I2C_MAX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>I2C Max. Speed/Bitrate </p>
+
+</div>
+</div>
+<a id="gae565bd4796b8c84ebd19d9e45201d0ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae565bd4796b8c84ebd19d9e45201d0ed">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_9600</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_9600</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Platform-dependent UART speeds/bitrates (Attention: Bitrates highly dependent on the target system and might require adaption!) </p>
+<p>UART 9600 Baud. </p>
+
+</div>
+</div>
+<a id="gac625457bbf8c3fdb5910445e98a97a75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac625457bbf8c3fdb5910445e98a97a75">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_14400</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_14400</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 14400 Baud. </p>
+
+</div>
+</div>
+<a id="ga3319768e4ad03b95e240afbfbdebee78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3319768e4ad03b95e240afbfbdebee78">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_19200</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_19200</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 19200 Baud. </p>
+
+</div>
+</div>
+<a id="gad17a7566fbe260d55cede4a9bfd6e877"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad17a7566fbe260d55cede4a9bfd6e877">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_28800</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_28800</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 28800 Baud. </p>
+
+</div>
+</div>
+<a id="ga951209b992b9b5ee9e31325885cfcc91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga951209b992b9b5ee9e31325885cfcc91">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_38400</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_38400</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 38400 Baud. </p>
+
+</div>
+</div>
+<a id="gadba01a384a5f34be6898112865c4c237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadba01a384a5f34be6898112865c4c237">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_57600</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_57600</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 57600 Baud. </p>
+
+</div>
+</div>
+<a id="ga4911c3e7c51054aca009dce58120af86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4911c3e7c51054aca009dce58120af86">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_115200</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_115200</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 115200 Baud. </p>
+
+</div>
+</div>
+<a id="ga3af836e6bb63ecb586742184a3988478"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3af836e6bb63ecb586742184a3988478">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_230400</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_230400</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 230400 Baud. </p>
+
+</div>
+</div>
+<a id="ga5162478ec5b69e7a306c219ded7e190b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5162478ec5b69e7a306c219ded7e190b">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_460800</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_460800</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 460800 Baud. </p>
+
+</div>
+</div>
+<a id="gaf3a2ec5a0c855657b6b456f081cfb424"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf3a2ec5a0c855657b6b456f081cfb424">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_921600</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_921600</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 921600 Baud. </p>
+
+</div>
+</div>
+<a id="ga34cfc515119a1ab5db249b8ce1f20ab8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga34cfc515119a1ab5db249b8ce1f20ab8">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_1843200</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_1843200</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 1843200 Baud. </p>
+
+</div>
+</div>
+<a id="gac2d9ee9a3191e73f7c6183ff244dc535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac2d9ee9a3191e73f7c6183ff244dc535">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_3000000</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_3000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART 3000000 Baud. </p>
+
+</div>
+</div>
+<a id="ga0b232e203303cf95a58547639f9e5e41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0b232e203303cf95a58547639f9e5e41">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_UART_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_UART_MAX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART Max. Speed/Bitrate </p>
+
+</div>
+</div>
+<a id="ga41d709ea70e6eb6d2204e523a71499c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41d709ea70e6eb6d2204e523a71499c5">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_DEFAULT_UART_SPEED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_DEFAULT_UART_SPEED</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UART default Speed after reset. </p>
+
+</div>
+</div>
+<a id="gae077fadf32defeec9b59c78b2a7de36f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae077fadf32defeec9b59c78b2a7de36f">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_SPI_1M</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_SPI_1M</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Platform-dependent SPI speeds/bitrates (Attention: Bitrates highly dependent on the target system and might require adaption!) </p>
+<p>SPI 1 MBit/s. </p>
+
+</div>
+</div>
+<a id="ga988cfbd675a4e0deed1b07f543765a52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga988cfbd675a4e0deed1b07f543765a52">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_SPI_5M</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_SPI_5M</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SPI 5 MBit/s. </p>
+
+</div>
+</div>
+<a id="ga4b04842b0a148d4275310d13d3b6ea07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4b04842b0a148d4275310d13d3b6ea07">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_SPI_10M</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_SPI_10M</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SPI 10 MBit/s. </p>
+
+</div>
+</div>
+<a id="ga5224dabe7d3859a11105a576beadb3fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5224dabe7d3859a11105a576beadb3fa">&#9670;&nbsp;</a></span>PTX_PLAT_HOST_SPEED_SPI_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PTX_PLAT_HOST_SPEED_SPI_MAX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SPI Max. Speed/Bitrate </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga55dff159523a6813ce020ee465d9cb92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga55dff159523a6813ce020ee465d9cb92">&#9670;&nbsp;</a></span>ptxPLAT_DisableInterrupts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptxPLAT_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">struct ptxPlat *&#160;</td>
+          <td class="paramname"><em>plat</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable Interrupts. </p>
+<p>This is used to disable IRQs from the underlying HW-platform.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">plat</td><td>Pointer to an initialized component structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7c305c2575055ed98b0d76ef3f4a865e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c305c2575055ed98b0d76ef3f4a865e">&#9670;&nbsp;</a></span>ptxPLAT_EnableInterrupts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ptxPLAT_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">struct ptxPlat *&#160;</td>
+          <td class="paramname"><em>plat</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable Interrupts. </p>
+<p>This is used to (re-)enable IRQs from the underlying HW-platform.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">plat</td><td>Pointer to an initialized component structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7f63aeb5f1295c3332acec7504755a1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f63aeb5f1295c3332acec7504755a1d">&#9670;&nbsp;</a></span>ptxPLAT_CheckRxActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ptxPLAT_CheckRxActive </td>
+          <td>(</td>
+          <td class="paramtype">struct ptxPlat *&#160;</td>
+          <td class="paramname"><em>plat</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if PLAT interface reception is taking place at the moment. </p>
+<dl class="section note"><dt>Note</dt><dd>The function is called in message reception loop after WFI -after CPU exits Sleep mode. This is relevant for UART interface since reception is interrupt driven (every byte received in ISR) and race condition might occur while checking if message has been received. If there is Rx activity on UART, WFI does not get called anymore in that loop. For other interfaces this function call always returns 0 and CPU enters sleep mode in every iteration.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">plat</td><td>Pointer to an initialized component structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Rx status: 0 - no rx activity, 1 - rx activity ongoing. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

@@ -79,6 +79,7 @@ var searchData=
   ['global_5flocation',['global_location',['../group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html#a62fa2ca59ae95be9b5023d932a2243ea',1,'rm_mesh_generic_loc_srv_state_info_t']]],
   ['global_5flongitude',['global_longitude',['../structrm__mesh__generic__loc__global__info__t.html#a4cfb9f70ef0db98d3769da2882bcb2db',1,'rm_mesh_generic_loc_global_info_t::global_longitude()'],['../group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html#a50efdad8c2ea5586542ae24c2ce192cd',1,'rm_mesh_generic_loc_srv_global_info_t::global_longitude()']]],
   ['go_5flp_5fand_5fback',['go_lp_and_back',['../group___m_i_p_i___d_s_i___a_p_i.html#abe39a9db55cd2a893f06aaa97b47cdba',1,'mipi_dsi_timing_t']]],
+  ['gpio',['Gpio',['../structptx_p_l_a_t___spi__t.html#a587ae10c9a40eff7addf3dec96f0f4ef',1,'ptxPLAT_Spi_t']]],
   ['gpt_5ftrigger_5fenable_5fmask',['gpt_trigger_enable_mask',['../group___a_d_c___b.html#abb18b3404175e52b7a04b537e357bc14',1,'adc_b_group_cfg_t']]],
   ['gradient_5fworst10_5finterval',['gradient_worst10_interval',['../group___p_t_p___a_p_i.html#a6a29b1beb38a9e80b6d945c8c37c9e8e',1,'ptp_stca_cfg_t']]],
   ['green_5fdata',['green_data',['../group___r_m___o_b1203___a_p_i.html#ab5f700a5790ea992d82af3a1c7216d66',1,'rm_ob1203_light_data_t']]],

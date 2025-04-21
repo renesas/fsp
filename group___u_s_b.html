@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -345,9 +345,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1a52197abba908bdd990e9bca22d50a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga1a52197abba908bdd990e9bca22d50a7">R_USB_OtgSRP</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="memdesc:ga1a52197abba908bdd990e9bca22d50a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the SRP processing for OTG on Azure RTOS.  <a href="#ga1a52197abba908bdd990e9bca22d50a7">More...</a><br /></td></tr>
 <tr class="separator:ga1a52197abba908bdd990e9bca22d50a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52389058b6c0136b4cefab08502d1336"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html#ga52389058b6c0136b4cefab08502d1336">R_USB_TypeCInfoGet</a> (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_api_ctrl, usb_typec_info_t *p_info)</td></tr>
-<tr class="memdesc:ga52389058b6c0136b4cefab08502d1336"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB Type-C connect Information get.  <a href="#ga52389058b6c0136b4cefab08502d1336">More...</a><br /></td></tr>
-<tr class="separator:ga52389058b6c0136b4cefab08502d1336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the USB peripheral on RA MCUs. This module implements the <a class="el" href="group___u_s_b___a_p_i.html">USB Interface</a>. </p>
@@ -480,8 +477,6 @@ Enabled</li>
 <td>Continuous Transfer Mode</td><td>MCU Specific Options</td><td></td><td>Enable or disable continuous transfer mode. </td></tr>
 <tr class="tree_none">
 <td>LDO Regulator</td><td>MCU Specific Options</td><td></td><td>Enable or disable LDO regulator. </td></tr>
-<tr class="tree_none">
-<td>Type-C</td><td>MCU Specific Options</td><td></td><td>Enable or disable Type-C. </td></tr>
 <tr class="tree_none">
 <td>DMA/DTC Support</td><td>MCU Specific Options</td><td></td><td>Enable or disable DMA/DTC support for the USB module. </td></tr>
 <tr class="tree_none">
@@ -2225,50 +2220,13 @@ In the FreeRTOS, please specify one of the following to the 1st argument of this
 
 </div>
 </div>
-<a id="ga52389058b6c0136b4cefab08502d1336"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga52389058b6c0136b4cefab08502d1336">&#9670;&nbsp;</a></span>R_USB_TypeCInfoGet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_TypeCInfoGet </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usb_typec_info_t *&#160;</td>
-          <td class="paramname"><em>p_info</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>USB Type-C connect Information get. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful completion. </td></tr>
-    <tr><td class="paramname">FSP_ERR_USB_FAILED</td><td>The function could not be completed successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

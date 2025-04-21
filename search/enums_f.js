@@ -1,5 +1,25 @@
 var searchData=
 [
-  ['qspi_5fqspclk_5fdiv_5ft',['qspi_qspclk_div_t',['../group___q_s_p_i.html#ga53abedddf8fc81df853fc93071edf117',1,'r_qspi.h']]],
-  ['qspi_5fqssl_5fmin_5fhigh_5flevel_5ft',['qspi_qssl_min_high_level_t',['../group___q_s_p_i.html#ga401b048dfc526a4ab5e3b9c709ab2396',1,'r_qspi.h']]]
+  ['pdc_5fclock_5fdivision_5ft',['pdc_clock_division_t',['../group___p_d_c.html#gaefcdde7fd248adecb15dfa8a16d173f8',1,'r_pdc.h']]],
+  ['pdc_5fendian_5ft',['pdc_endian_t',['../group___p_d_c.html#ga41559cfdb76f3c5f485b79dab1d8620a',1,'r_pdc.h']]],
+  ['pdc_5fevent_5ft',['pdc_event_t',['../group___p_d_c.html#ga31162259e060f212b6d1cb04778f3adb',1,'r_pdc.h']]],
+  ['pdc_5fhsync_5fpolarity_5ft',['pdc_hsync_polarity_t',['../group___p_d_c.html#ga994abe0ad9b4c832eedd74e4700fd7f6',1,'r_pdc.h']]],
+  ['pdc_5fvsync_5fpolarity_5ft',['pdc_vsync_polarity_t',['../group___p_d_c.html#ga5fdbba40243f5c6ac0060412b66675c9',1,'r_pdc.h']]],
+  ['poeg_5fgtetrg_5fnoise_5ffilter_5ft',['poeg_gtetrg_noise_filter_t',['../group___p_o_e_g___a_p_i.html#gab482b24d14d1c94f6f4ba9f5e39f8d0b',1,'r_poeg_api.h']]],
+  ['poeg_5fgtetrg_5fpolarity_5ft',['poeg_gtetrg_polarity_t',['../group___p_o_e_g___a_p_i.html#gaab60100277a3b044c01007e6142704b9',1,'r_poeg_api.h']]],
+  ['poeg_5fstate_5ft',['poeg_state_t',['../group___p_o_e_g___a_p_i.html#ga6964e3b0b8b2d32d2428d86b32dfeef2',1,'r_poeg_api.h']]],
+  ['poeg_5ftrigger_5ft',['poeg_trigger_t',['../group___p_o_e_g___a_p_i.html#gad3a55ae7d23b90cc2621a83116d2e7d9',1,'r_poeg_api.h']]],
+  ['ptp_5fclock_5fcorrection_5fmode_5ft',['ptp_clock_correction_mode_t',['../group___p_t_p___a_p_i.html#ga994397de43f548192e34142b61035199',1,'r_ptp_api.h']]],
+  ['ptp_5fclock_5fdelay_5fmechanism_5ft',['ptp_clock_delay_mechanism_t',['../group___p_t_p___a_p_i.html#gac083daddd3b756a4ef8b381b16d767de',1,'r_ptp_api.h']]],
+  ['ptp_5fethernet_5fphy_5finterface_5ft',['ptp_ethernet_phy_interface_t',['../group___p_t_p___a_p_i.html#gaec209fe84b18e38b2475e3c4f7c18e2f',1,'r_ptp_api.h']]],
+  ['ptp_5fevent_5ft',['ptp_event_t',['../group___p_t_p___a_p_i.html#gabed0a6a111a82eb8e8eb55254e1f3c0c',1,'r_ptp_api.h']]],
+  ['ptp_5fframe_5ffilter_5fmode_5ft',['ptp_frame_filter_mode_t',['../group___p_t_p___a_p_i.html#ga2934142038c79d935eaeda6b9e47fac3',1,'r_ptp_api.h']]],
+  ['ptp_5fframe_5fformat_5ft',['ptp_frame_format_t',['../group___p_t_p___a_p_i.html#gad14117b95f42287d2f41f9b8c7787638',1,'r_ptp_api.h']]],
+  ['ptp_5fmessage_5finterval_5ft',['ptp_message_interval_t',['../group___p_t_p___a_p_i.html#ga328e6fb8531c106b8f8374ae6df93395',1,'r_ptp_api.h']]],
+  ['ptp_5fmessage_5ftype_5ft',['ptp_message_type_t',['../group___p_t_p___a_p_i.html#gad488af97304ef1466637952ecb35ea37',1,'r_ptp_api.h']]],
+  ['ptp_5fport_5fstate_5ft',['ptp_port_state_t',['../group___p_t_p___a_p_i.html#ga5093799b09bcf8a2ec5865d38f1c46a1',1,'r_ptp_api.h']]],
+  ['ptp_5fstca_5fclock_5ffreq_5ft',['ptp_stca_clock_freq_t',['../group___p_t_p___a_p_i.html#ga1e783497c1170cb2f37547d91dd2838c',1,'r_ptp_api.h']]],
+  ['ptp_5fstca_5fclock_5fsel_5ft',['ptp_stca_clock_sel_t',['../group___p_t_p___a_p_i.html#gade7110068650c2c6db71b542c27c33b0',1,'r_ptp_api.h']]],
+  ['ptxplatgpio_5ftype_5ft',['ptxPlatGpio_Type_t',['../group__grp__ptx__api__plat__gpio.html#ga799bc1608244ea9ef416671b908a103b',1,'ptxPLAT_GPIO.h']]],
+  ['ptxplattimerstate_5ft',['ptxPlatTimerState_t',['../group__grp__ptx__api__plat__timer.html#ga79a7ab625f7b34431d13db7d9ade8506',1,'ptxPLAT_TIMER.h']]]
 ];

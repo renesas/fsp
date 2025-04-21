@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -291,7 +291,7 @@ Features</h2>
 <li>Invoking the user-callback function with an event code (RX/TX complete, error, etc)<a class="anchor" id="um_lin_callback_set"></a></li>
 <li>Auto synchronization is supported in slave mode<a class="anchor" id="um_sci_b_lin_auto_synchronization"></a></li>
 <li>Adjustable break field length<a class="anchor" id="um_sci_b_lin_break_field"></a></li>
-<li>Adjustable break field delimiter/stop bits length<a class="anchor" id="um_sci_b_lin_delimiter_bits"></a></li>
+<li>Adjustable break field delimiter/stop bits length<a class="anchor" id="um_sci_b_lin_stop_bits"></a></li>
 <li>Noise cancellation<a class="anchor" id="um_sci_b_lin_noise_cancellation"></a></li>
 <li>Abort in-progress read/write operations<a class="anchor" id="um_lin_abort"></a></li>
 <li>Error notifications of parity error in protected identifier, framing error, overrun error, bus collision, and counter overflow error (counter overflow error applies in slave mode only)<a class="anchor" id="um_lin_parity_error"></a><a class="anchor" id="um_lin_framing_error"></a><a class="anchor" id="um_lin_overrun_error"></a><a class="anchor" id="um_sci_b_lin_bus_collision"></a><a class="anchor" id="um_sci_b_lin_counter_overflow"></a></li>
@@ -476,6 +476,8 @@ Clock Configuration</h2>
 <tr>
 <td>RA8E1</td><td>SCICLK</td></tr>
 <tr>
+<td>RA8E2</td><td>SCICLK</td></tr>
+<tr>
 <td>RA8M1</td><td>SCICLK</td></tr>
 <tr>
 <td>RA8T1</td><td>SCICLK</td></tr>
@@ -659,7 +661,7 @@ Break field length setting (break field length is (bflw + 1) * clock of the time
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="adc9bd3cb9efed1984894352a504f5ba1"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
+<a id="a6666273573aeba7228c4c0865cc7df13"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -797,7 +799,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a098cf35a9d89acea0233352966bd037e"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
+<a id="aec75d784e3880b2d1cbe89d8aa8db09e"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1255,7 +1257,8 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data reception started successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.</td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort to cancel it if desired, or wait for the current transfer operation to complete before starting a new one. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CALL</td><td>Data reception is not possible because a header frame has not been received yet (slave mode only).</td></tr>
   </table>
   </dd>
 </dl>
@@ -1596,7 +1599,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

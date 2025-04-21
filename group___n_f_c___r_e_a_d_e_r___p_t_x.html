@@ -1,0 +1,1033 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: NFC Reader Driver on PTX (rm_nfc_reader_ptx)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.9.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___n_f_c___r_e_a_d_e_r___p_t_x.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">NFC Reader Driver on PTX (rm_nfc_reader_ptx)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga9466340ad67e0381d4eee64bd592189f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga9466340ad67e0381d4eee64bd592189f">RM_NFC_READER_PTX_Open</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, <a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__cfg__t">nfc_reader_ptx_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga9466340ad67e0381d4eee64bd592189f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84af4510254724a7ff8df9de6c0be404"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga84af4510254724a7ff8df9de6c0be404">RM_NFC_READER_PTX_DiscoveryStart</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga84af4510254724a7ff8df9de6c0be404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf468f9149af9e696e89a55fa94f0bbbc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaf468f9149af9e696e89a55fa94f0bbbc">RM_NFC_READER_PTX_StatusGet</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, ptxIoTRd_StatusType_t status_type, uint8_t *const p_status)</td></tr>
+<tr class="separator:gaf468f9149af9e696e89a55fa94f0bbbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4e37aa2bc8dcbe15ff61a4c40162ff3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gab4e37aa2bc8dcbe15ff61a4c40162ff3">RM_NFC_READER_PTX_CardRegistryGet</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, ptxIoTRd_CardRegistry_t **pp_card_registry)</td></tr>
+<tr class="separator:gab4e37aa2bc8dcbe15ff61a4c40162ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga715a36566a0552c3efe13f7be4c01533"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga715a36566a0552c3efe13f7be4c01533">RM_NFC_READER_PTX_CardActivate</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, ptxIoTRd_CardParams_t *const p_card_params, ptxIoTRd_CardProtocol_t protocol)</td></tr>
+<tr class="separator:ga715a36566a0552c3efe13f7be4c01533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa55d17b7e0f381acedc1a4b860a5e12c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaa55d17b7e0f381acedc1a4b860a5e12c">RM_NFC_READER_PTX_DataExchange</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, <a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__data__info__t">nfc_reader_ptx_data_info_t</a> *const p_data_info)</td></tr>
+<tr class="separator:gaa55d17b7e0f381acedc1a4b860a5e12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5">RM_NFC_READER_PTX_ReaderDeactivation</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, <a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga0e4be320b6d01c6d64a27b03d895b689">nfc_reader_ptx_return_state_t</a> return_state)</td></tr>
+<tr class="separator:ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa23fc59de5d93e021b33d8879237ad8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaa23fc59de5d93e021b33d8879237ad8d">RM_NFC_READER_PTX_Close</a> (<a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:gaa23fc59de5d93e021b33d8879237ad8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>NFC Reader driver implementation using the PTX NFC module on RA MCUs. </p>
+<h1><a class="anchor" id="rm-nfc-reader-ptx-overview"></a>
+Overview</h1>
+<p>This middleware module supplies an implementation for the NFC IoT Reader on the PTX module. The NFC functionalities are provided via a modular NFC Soft Controller (NCS) architecture, and this FSP module will include the NSC (aka NFC SDK). Functionality is provided in a split-stack architecture, where time-critical operations are running on the on-chip MCU, and the rest of the NFC logic is in the host controller to carry out applications such as IoT reader. The driver may also be adapted to further support next-generation PTX devices in future (which have not yet been released).</p>
+<p>The NFC Reader module supports the following modules:</p>
+<ul>
+<li>PTX105R</li>
+</ul>
+<h2><a class="anchor" id="rm-nfc-reader-ptx-features"></a>
+Features</h2>
+<p>The NFC Reader PTX driver supplies these features:</p>
+<ul>
+<li>Initializes the IOTRD (IoT Reader) API and NSC stack</li>
+<li>Initializes the PTX chip</li>
+<li>Discovers cards according to NFC Forum</li>
+<li>Selects a specific card in case multiple cards/protocols were discovered</li>
+<li>Retrieves card details like technical/activation parameters</li>
+<li>Exchanges RF data and bitstreams</li>
+<li>Stops RF communication</li>
+<li>Controls various GPIO pins of the PTX chip</li>
+</ul>
+<p>Future support is considered for the following features:</p>
+<ul>
+<li>Discovery support for “Low-Power-Card-Detection”</li>
+<li>Optionally updates RF and System configuration parameters at runtime</li>
+<li>Optionally puts the PTX chip into and wake up from stand-by mode</li>
+<li>Plus several add-on features for additional operations and testing</li>
+</ul>
+<h1><a class="anchor" id="rm-nfc-reader-ptx-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_nfc_reader_ptx</h2>
+The following build time configurations are defined in fsp_cfg/rm_nfc_reader_ptx_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Networking &gt; NFC IoT Reader on PTX (rm_nfc_reader_ptx)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; NFC IoT Reader on PTX (rm_nfc_reader_ptx).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> NFC Poll Type  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Type-A</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Select to discover NFC Type-A tags </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Type-B</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Select to discover NFC Type-B tags </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Type-V</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Select to discover NFC Type-V tags </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Type-F</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Select to discover NFC Type-F tags </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Temperature Sensor  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Calibrate Sensor</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable/Disable on-board temperature sensor calibration. Must be executed once per chip (lifetime), it is not needed after. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Shutdown Temperature (°C)</td><td>Must be an integer greater than 0 and less than 223</td><td>100 </td><td>Set the expected thermal shutdown threshold value (Celsius). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Ambient Temperature (°C)</td><td>Must be an integer greater than 0 and less than 85</td><td>25 </td><td>Set the ambient temperature value at which calibration takes place (Celsius). </td></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_nfc_reader_ptx0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>NFC Interrupt Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the interrupt port/pin used by the NFC chip to signal for SPI communications. </td></tr>
+<tr class="tree_none">
+<td>NFC Interrupt Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>module.driver.nfc_reader_ptx.pin_control_pin.PIN_DISABLE </td><td>Specify the interrupt port/pin used by the NFC chip to signal for SPI communications. </td></tr>
+<tr class="tree_none">
+<td>Device Limit</td><td>Must be an integer greater than 0 and less than 50</td><td>5 </td><td>Select the max number of tags to discover. </td></tr>
+<tr class="tree_none">
+<td>Idle Time</td><td>Must be an integer greater than 0 and less than 65535</td><td>100 </td><td>Select idle time between polling cycles (ms). </td></tr>
+</table>
+</p>
+<p>Note: This module provides the basic configurations in the FSP Configurator required to discover, activate, and exchange data with an NFC tag. The user can then copy these configurations to a new structure if they want to connect to a new tag type/make changes to the configurations dynamically.</p>
+<h2><a class="anchor" id="rm-nfc-reader-ptx-interrupt-configuration"></a>
+Interrupt Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___s_p_i.html">SPI (r_sci_spi)</a>. <a class="el" href="group___s_c_i___s_p_i.html#ga9ce8ace26bb551a1ad4b320202c894ec">R_SCI_SPI_Open()</a> is called by this module</p>
+<h2><a class="anchor" id="rm-nfc-reader-ptx-clock-configuration"></a>
+Clock Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___s_p_i.html">SPI (r_sci_spi)</a>.</p>
+<h2><a class="anchor" id="rm-nfc-reader-ptx-pin-configuration"></a>
+Pin Configuration</h2>
+<p>Refer to <a class="el" href="group___s_c_i___s_p_i.html">SPI (r_sci_spi)</a>. <a class="el" href="group___s_c_i___s_p_i.html#ga9ce8ace26bb551a1ad4b320202c894ec">R_SCI_SPI_Open()</a> is called by this module</p>
+<h1><a class="anchor" id="rm-nfc-reader-ptx-usage_notes"></a>
+Usage Notes</h1>
+<ul>
+<li>This module includes the NFC SDK which must be stored and compiled on the host RA MCU. The NFC IoT Reader claims that code size is roughly 39K B Code Flash (53 KB with the reference application) and 3-4 KB of Stack memory for the reference application. Consider this when looking at the device and the user application.</li>
+<li>This module also requires a minimal amount of heap allocation (256 bytes). Be sure to allocate some heap size in the FSP Configurator BSP tab.</li>
+<li>The NFC SDK provided with this module contains platform-specific and device-specific code related to using the FSP on RA devices. For other devices, the Platform API (ptxPLAT) must be implemented/ported.</li>
+<li>When selecting the NFC tag protocol (Type-A, Type-B, Type-V, and Type-F), ensure that at least one type is selected.</li>
+<li>For data exchange, the user must provide transmission/receive buffers with the exact data packet for the intended tag type. For information on commands, responses, and parameters, definitions can be found in the NFC Specification.</li>
+<li>The NFC SDK contains a default RF waveform configuration file (ptxNSC_RfConfigVal.c) which is compatible with the PTX105RQC Pmod board. For custom boards, this configuration file will need to be generated with the GUI tool available on the module webpage.</li>
+<li>The NFC chip provides an external interrupt pin which links to the ptxPLAT_GPIO_IsrCallback callback function. The same pin is also used during SPI communications for the NFC chip to signal it is ready and must be implemented in the FSP Configurator. The port/pin chosen for the interrupt pin should be the same for the NFC module properties and the External IRQ properties.</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li>The module will only support SPI for the first release, with other protocols (I2C, UART) planned for future releases.</li>
+<li>The PTX105RQC Pmod board only supports SPI, so consider the evaluation kit (PTX105REK) for other interfaces.</li>
+<li>The NFC chip reset pin (labeled as SEN pin) isn't supported in the FSP currently, and it does not have a pinout on the PTX105RQC Pmod board.</li>
+</ul>
+<h1><a class="anchor" id="rm-nfc-reader-ptx-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the NFC IoT Reader module in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> nfc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                err        = FSP_SUCCESS;</div><div class="line">    ptxIotRdInt_Demo_State_t demo_state = IoTRd_DemoState_WaitForActivation;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga9466340ad67e0381d4eee64bd592189f">RM_NFC_READER_PTX_Open</a>(&amp;g_rm_nfc_reader_ptx_instance, &amp;g_nfc_reader_ptx_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga84af4510254724a7ff8df9de6c0be404">RM_NFC_READER_PTX_DiscoveryStart</a>(&amp;g_rm_nfc_reader_ptx_instance);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    ptxIoTRd_CardRegistry_t * card_registry = NULL;</div><div class="line">    err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gab4e37aa2bc8dcbe15ff61a4c40162ff3">RM_NFC_READER_PTX_CardRegistryGet</a>(&amp;g_rm_nfc_reader_ptx_instance, &amp;card_registry);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* T2T Protocol Example =&gt; READ BLOCK 0 */</span></div><div class="line">    <span class="keyword">const</span> uint8_t PROT_T2T_EXAMPLE[] = {0x30, 0x00};</div><div class="line"></div><div class="line">    nfc_send_buf.<a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#a0f2131e513e9887ad1e7bfc1e5ccd7b6">tx_length</a> = <span class="keyword">sizeof</span>(PROT_T2T_EXAMPLE);</div><div class="line">    memcpy(&amp;nfc_tx_buf[0], &amp;PROT_T2T_EXAMPLE[0], nfc_send_buf.<a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#a0f2131e513e9887ad1e7bfc1e5ccd7b6">tx_length</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Check regularly for critical system errors */</span></div><div class="line">        uint8_t system_state = PTX_SYSTEM_STATUS_OK;</div><div class="line">        err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaf468f9149af9e696e89a55fa94f0bbbc">RM_NFC_READER_PTX_StatusGet</a>(&amp;g_rm_nfc_reader_ptx_instance, StatusType_System, &amp;system_state);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> ((PTX_SYSTEM_STATUS_ERR_OVERCURRENT == system_state) || (PTX_SYSTEM_STATUS_ERR_TEMPERATURE == system_state))</div><div class="line">        {</div><div class="line">            <span class="comment">/* Critical error detected, reset the device and stop */</span></div><div class="line">            <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaa23fc59de5d93e021b33d8879237ad8d">RM_NFC_READER_PTX_Close</a>(&amp;g_rm_nfc_reader_ptx_instance);</div><div class="line">            <span class="keywordflow">while</span> (1)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Do nothing */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            ;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Check optionally if PA current-limiter got activated */</span></div><div class="line">        uint8_t last_rf_error = PTX_RF_ERROR_NTF_CODE_NO_ERROR;</div><div class="line">        err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaf468f9149af9e696e89a55fa94f0bbbc">RM_NFC_READER_PTX_StatusGet</a>(&amp;g_rm_nfc_reader_ptx_instance, StatusType_LastRFError, &amp;last_rf_error);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="keywordflow">switch</span> (demo_state)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">case</span> IoTRd_DemoState_WaitForActivation:</div><div class="line">            {</div><div class="line">                uint8_t discover_status = RF_DISCOVER_STATUS_NO_CARD;</div><div class="line">                err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaf468f9149af9e696e89a55fa94f0bbbc">RM_NFC_READER_PTX_StatusGet</a>(&amp;g_rm_nfc_reader_ptx_instance, StatusType_Discover, &amp;discover_status);</div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">                <span class="keywordflow">switch</span> (discover_status)</div><div class="line">                {</div><div class="line">                    <span class="keywordflow">case</span> RF_DISCOVER_STATUS_NO_CARD:</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* Sleep */</span></div><div class="line">                        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(NFC_READER_NO_CARD_SLEEP_TIME, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">                        <span class="keywordflow">break</span>;</div><div class="line">                    }</div><div class="line"></div><div class="line">                    <span class="keywordflow">case</span> RF_DISCOVER_STATUS_CARD_ACTIVE:</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* Card activated */</span></div><div class="line">                        <span class="comment">/* Get card details to find the protocol/decide what data to send */</span></div><div class="line">                        err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gab4e37aa2bc8dcbe15ff61a4c40162ff3">RM_NFC_READER_PTX_CardRegistryGet</a>(&amp;g_rm_nfc_reader_ptx_instance, &amp;card_registry);</div><div class="line">                        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">                        demo_state = IoTRd_DemoState_DataExchange;</div><div class="line">                        <span class="keywordflow">break</span>;</div><div class="line">                    }</div><div class="line"></div><div class="line">                    <span class="keywordflow">case</span> RF_DISCOVER_STATUS_DISCOVER_RUNNING:</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* Multiple Card(s) detected - resolving */</span></div><div class="line">                        <span class="keywordflow">break</span>;</div><div class="line">                    }</div><div class="line"></div><div class="line">                    <span class="keywordflow">case</span> RF_DISCOVER_STATUS_DISCOVER_DONE:</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* Multiple Card(s) detected - resolved */</span></div><div class="line"></div><div class="line">                        <span class="comment">/* Get card details to find the protocol/decide what data to send */</span></div><div class="line">                        err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gab4e37aa2bc8dcbe15ff61a4c40162ff3">RM_NFC_READER_PTX_CardRegistryGet</a>(&amp;g_rm_nfc_reader_ptx_instance, &amp;card_registry);</div><div class="line">                        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">                        demo_state = IoTRd_DemoState_SelectCard;</div><div class="line">                        <span class="keywordflow">break</span>;</div><div class="line">                    }</div><div class="line"></div><div class="line">                    <span class="keywordflow">default</span>:</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* Unknown Discover-Status */</span></div><div class="line">                        <span class="keywordflow">break</span>;</div><div class="line">                    }</div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> IoTRd_DemoState_SelectCard:</div><div class="line">            {</div><div class="line">                <span class="comment">/* Case for detection of multiple cards */</span></div><div class="line">                err =</div><div class="line">                    <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga715a36566a0552c3efe13f7be4c01533">RM_NFC_READER_PTX_CardActivate</a>(&amp;g_rm_nfc_reader_ptx_instance, &amp;card_registry-&gt;Cards[0], Prot_T2T);</div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">                demo_state = IoTRd_DemoState_DataExchange;</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> IoTRd_DemoState_DataExchange:</div><div class="line">            {</div><div class="line">                <span class="comment">/* Case for data exchange due to detected card */</span></div><div class="line">                err = <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaa55d17b7e0f381acedc1a4b860a5e12c">RM_NFC_READER_PTX_DataExchange</a>(&amp;g_rm_nfc_reader_ptx_instance, &amp;nfc_send_buf);</div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">                demo_state = IoTRd_DemoState_DeactivateReader;</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> IoTRd_DemoState_DeactivateReader:</div><div class="line">            {</div><div class="line">                err =</div><div class="line">                    <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5">RM_NFC_READER_PTX_ReaderDeactivation</a>(&amp;g_rm_nfc_reader_ptx_instance, <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gga0e4be320b6d01c6d64a27b03d895b689aeeee7dee9a93b9d40a77bb1e552033ef">NFC_READER_PTX_RETURN_DISCOVER</a>);</div><div class="line">                assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">                demo_state = IoTRd_DemoState_WaitForActivation;</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">case</span> IoTRd_DemoState_SystemError:</div><div class="line">            {</div><div class="line">                <span class="comment">/* System error */</span></div><div class="line">                <a class="code" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#gaa23fc59de5d93e021b33d8879237ad8d">RM_NFC_READER_PTX_Close</a>(&amp;g_rm_nfc_reader_ptx_instance);</div><div class="line">                <span class="keywordflow">while</span> (1)</div><div class="line">                {</div><div class="line">                    <span class="comment">/* Do nothing */</span></div><div class="line">                }</div><div class="line"></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">default</span>:</div><div class="line">            {</div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structnfc__reader__ptx__data__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__data__info__t">nfc_reader_ptx_data_info_t</a></td></tr>
+<tr class="separator:structnfc__reader__ptx__data__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structnfc__reader__ptx__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__cfg__t">nfc_reader_ptx_cfg_t</a></td></tr>
+<tr class="separator:structnfc__reader__ptx__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structnfc__reader__ptx__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a></td></tr>
+<tr class="separator:structnfc__reader__ptx__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga90e6728b2176c384dbd8301b91df1c43"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga90e6728b2176c384dbd8301b91df1c43">nfc_reader_ptx_state_t</a> </td></tr>
+<tr class="separator:ga90e6728b2176c384dbd8301b91df1c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e4be320b6d01c6d64a27b03d895b689"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga0e4be320b6d01c6d64a27b03d895b689">nfc_reader_ptx_return_state_t</a> </td></tr>
+<tr class="separator:ga0e4be320b6d01c6d64a27b03d895b689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structnfc__reader__ptx__data__info__t" id="structnfc__reader__ptx__data__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structnfc__reader__ptx__data__info__t">&#9670;&nbsp;</a></span>nfc_reader_ptx_data_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct nfc_reader_ptx_data_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>NFC data exchange packet parameters </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a388504e284623a46e963bd7a81b0acee"></a>uint8_t *</td>
+<td class="fieldname">
+p_tx_buf</td>
+<td class="fielddoc">
+Pointer to buffer holding data to send. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0f2131e513e9887ad1e7bfc1e5ccd7b6"></a>uint32_t</td>
+<td class="fieldname">
+tx_length</td>
+<td class="fielddoc">
+Length of data to send. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa8672709e9cb86e1e42a711993bcd584"></a>uint8_t *</td>
+<td class="fieldname">
+p_rx_buf</td>
+<td class="fielddoc">
+Pointer to buffer for data to receive. </td></tr>
+<tr><td class="fieldtype">
+<a id="a211438cdc02bc868b1654a03239ef499"></a>uint32_t</td>
+<td class="fieldname">
+rx_length</td>
+<td class="fielddoc">
+Length of data to receive. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structnfc__reader__ptx__cfg__t" id="structnfc__reader__ptx__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structnfc__reader__ptx__cfg__t">&#9670;&nbsp;</a></span>nfc_reader_ptx_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct nfc_reader_ptx_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>NFC Configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3b8d4f046ce2921cf33589fa755bbcec"></a>bool</td>
+<td class="fieldname">
+poll_type_a</td>
+<td class="fielddoc">
+Flag to indicate enabling discovery for Type-A tags. </td></tr>
+<tr><td class="fieldtype">
+<a id="a808cd89555d537095deaa77025849ad8"></a>bool</td>
+<td class="fieldname">
+poll_type_b</td>
+<td class="fielddoc">
+Flag to indicate enabling discovery for Type-B tags. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5cfdba7bf8e20008fa67275a9aafd028"></a>bool</td>
+<td class="fieldname">
+poll_type_f</td>
+<td class="fielddoc">
+Flag to indicate enabling discovery for Type-F tags. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5d3439d854c853a65bd1af9a51f40e32"></a>bool</td>
+<td class="fieldname">
+poll_type_v</td>
+<td class="fielddoc">
+Flag to indicate enabling discovery for Type-V tags. </td></tr>
+<tr><td class="fieldtype">
+<a id="a56a4e62d97f153e2178ac5cc35076ca3"></a>uint8_t</td>
+<td class="fieldname">
+device_limit</td>
+<td class="fielddoc">
+Defines the maximum number of devices that can be connected at once. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5197c7969621017e028edebd0c4ed56d"></a>uint32_t</td>
+<td class="fieldname">
+idle_time_ms</td>
+<td class="fielddoc">
+RF-Discovery Loop. Idle time between polling cycles in milliseconds. </td></tr>
+<tr><td class="fieldtype">
+<a id="aff98a3625d07ee4813d4fe0101490a75"></a>uint8_t</td>
+<td class="fieldname">
+temp_sensor_calibrate</td>
+<td class="fielddoc">
+Flag to enable/disable temperature sensor calibration. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad01dc32103c21bf92e5b6c45d48def1d"></a>uint8_t</td>
+<td class="fieldname">
+temp_sensor_shutdown</td>
+<td class="fielddoc">
+Expected thermal shutdown threshold value. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8d3d061198a9a5cc4cbb0632dfdaa31b"></a>uint8_t</td>
+<td class="fieldname">
+temp_sensor_ambient</td>
+<td class="fielddoc">
+Ambient temperature at which temperature sensor calibration takes place. </td></tr>
+<tr><td class="fieldtype">
+<a id="a370d3949f042bcbaa0c6070a41525406"></a>const <a class="el" href="group___b_s_p___i_o.html#ga0adbfd4b7db319886d667acb4804d80a">bsp_io_port_pin_t</a></td>
+<td class="fieldname">
+interrupt_pin</td>
+<td class="fielddoc">
+Interrupt pin for NFC chip to signal for communication. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8c69aba8f2d86e406f8daf30fd3776de"></a>ptxIoTRd_t *</td>
+<td class="fieldname">
+iot_reader_context</td>
+<td class="fielddoc">
+Instance of the NFC SDK IoT Reader main structure. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7a33f883855e1f4d4625f960ceac5d7c"></a><a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t">rm_comms_instance_t</a> *</td>
+<td class="fieldname">
+p_comms_instance_ctrl</td>
+<td class="fielddoc">
+Pointer to the NFC module's Comms instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a99b029f4514040be1d942e396fbac2a1"></a><a class="el" href="group___i_o_p_o_r_t___a_p_i.html#structioport__instance__t">ioport_instance_t</a> *</td>
+<td class="fieldname">
+p_gpio_context</td>
+<td class="fielddoc">
+Pointer to the NFC module's GPIO instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a10680ed77fb87d04b1f2df6dd36f9e3d"></a><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__instance__t">external_irq_instance_t</a> *</td>
+<td class="fieldname">
+p_irq_context</td>
+<td class="fielddoc">
+Pointer to the NFC module's SPI external interrupt instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa244ee9d24ec5dd1b65fe3ca4f939244"></a><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__instance__t">timer_instance_t</a> *</td>
+<td class="fieldname">
+p_timer_context</td>
+<td class="fielddoc">
+Pointer to the NFC module's sleep timer instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad7c8e2fdcb48ecdf2ed46f4ab8c36992"></a><a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__instance__t">timer_instance_t</a> *</td>
+<td class="fieldname">
+p_app_timer</td>
+<td class="fielddoc">
+Pointer to the NFC module's Transparent Data Channel (TDC) timer instance. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structnfc__reader__ptx__instance__ctrl__t" id="structnfc__reader__ptx__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structnfc__reader__ptx__instance__ctrl__t">&#9670;&nbsp;</a></span>nfc_reader_ptx_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct nfc_reader_ptx_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>NFC_READER_PTX private control block. DO NOT MODIFY. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae6d5d538a1122f033a3ff49793ecd260"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Flag to indicate if NFC has been opened. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4a57780b6f5b970914725705fe84826e"></a><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga90e6728b2176c384dbd8301b91df1c43">nfc_reader_ptx_state_t</a></td>
+<td class="fieldname">
+state_flag</td>
+<td class="fielddoc">
+Flag to track Idle/discovered/activated. </td></tr>
+<tr><td class="fieldtype">
+<a id="af00953f8d951b4478fcbf197f5524611"></a><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__cfg__t">nfc_reader_ptx_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to p_cfg for NFC. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga90e6728b2176c384dbd8301b91df1c43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90e6728b2176c384dbd8301b91df1c43">&#9670;&nbsp;</a></span>nfc_reader_ptx_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga90e6728b2176c384dbd8301b91df1c43">nfc_reader_ptx_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>NFC state machine status </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga90e6728b2176c384dbd8301b91df1c43aafa4ea588dddd39f66b620c1d05e7fdb"></a>NFC_READER_PTX_IDLE&#160;</td><td class="fielddoc"><p>Idle state before starting discovery. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga90e6728b2176c384dbd8301b91df1c43ad2c7818e48c1ea047769e286f0045f87"></a>NFC_READER_PTX_POLLING&#160;</td><td class="fielddoc"><p>Polling state for discovering tags. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga90e6728b2176c384dbd8301b91df1c43a4a829bca9f6f9888b47051b9362fb4fe"></a>NFC_READER_PTX_DISCOVERED&#160;</td><td class="fielddoc"><p>Discovered state for tags that were found. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga90e6728b2176c384dbd8301b91df1c43a8968714d58d65719eebe063b4d29843a"></a>NFC_READER_PTX_ACTIVATED&#160;</td><td class="fielddoc"><p>Activated state for activating a discovered tag. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga0e4be320b6d01c6d64a27b03d895b689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0e4be320b6d01c6d64a27b03d895b689">&#9670;&nbsp;</a></span>nfc_reader_ptx_return_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga0e4be320b6d01c6d64a27b03d895b689">nfc_reader_ptx_return_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>NFC de-activation return state </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0e4be320b6d01c6d64a27b03d895b689af4d363797e02be5d7aa24974b02291df"></a>NFC_READER_PTX_RETURN_IDLE&#160;</td><td class="fielddoc"><p>Rf-Deactivation Type 0 - Turn off RF-field. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0e4be320b6d01c6d64a27b03d895b689aeeee7dee9a93b9d40a77bb1e552033ef"></a>NFC_READER_PTX_RETURN_DISCOVER&#160;</td><td class="fielddoc"><p>Rf-Deactivation Type 1 - Restart RF-Discovery. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0e4be320b6d01c6d64a27b03d895b689aa832f796d8cdc91123dab5b972ac6d66"></a>NFC_READER_PTX_RETURN_SLEEP&#160;</td><td class="fielddoc"><p>Rf-Deactivation Type 2 - Put remote device to sleep. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0e4be320b6d01c6d64a27b03d895b689ad0c5cfc43064ae0b32ca153ec2a33dc4"></a>NFC_READER_PTX_RETURN_SLEEP_NON_BLOCKING&#160;</td><td class="fielddoc"><p>Rf-Deactivation Type 3 - Put remote device to sleep (non-blocking) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0e4be320b6d01c6d64a27b03d895b689a3f2469977e3eb1f5af56401d0ff241aa"></a>NFC_READER_PTX_RETURN_NO_RF_RESET&#160;</td><td class="fielddoc"><p>Rf-Deactivation Type 4 - Common RF Deactivate but no Field Reset. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0e4be320b6d01c6d64a27b03d895b689a0118be35cec5c224e1fbadbd20bbca48"></a>NFC_READER_PTX_RETURN_IDLE_PROTOCOL&#160;</td><td class="fielddoc"><p>Rf-Deactivation Type 5 - Use protocol-specific Deactivation, IDLE afterwards. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0e4be320b6d01c6d64a27b03d895b689a5719e4e78eeb3588ccb112a2bc345abf"></a>NFC_READER_PTX_RETURN_DISCOVER_PROTOCOL&#160;</td><td class="fielddoc"><p>Rf-Deactivation Type 6 - Use protocol-specific Deactivation, RF-Discovery started afterwards. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga9466340ad67e0381d4eee64bd592189f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9466340ad67e0381d4eee64bd592189f">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__cfg__t">nfc_reader_ptx_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the NFC IoT Reader.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to NFC IoT Reader configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>NFC SDK initialization data was incomplete. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga84af4510254724a7ff8df9de6c0be404"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga84af4510254724a7ff8df9de6c0be404">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_DiscoveryStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_DiscoveryStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initiates discovery of NFC tags.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened yet. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>NFC module is not in the idle state. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_DATA</td><td>NFC Discovery parameters were invalid or discovery was not started. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf468f9149af9e696e89a55fa94f0bbbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf468f9149af9e696e89a55fa94f0bbbc">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ptxIoTRd_StatusType_t&#160;</td>
+          <td class="paramname"><em>status_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the status information on the provided status identifier (system, discovery, etc.). Used during polling to confirm a card was discovered.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">status_type</td><td>Status identifier for target info. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_status</td><td>Pointer to location to store NFC chip status flag.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened yet. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>NFC module is not in the polling state. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid input parameters to NFC Status function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab4e37aa2bc8dcbe15ff61a4c40162ff3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab4e37aa2bc8dcbe15ff61a4c40162ff3">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_CardRegistryGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_CardRegistryGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ptxIoTRd_CardRegistry_t **&#160;</td>
+          <td class="paramname"><em>pp_card_registry</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the internal card registry.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pp_card_registry</td><td>Pointer to card registry for discovered cards.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid input parameters to NFC registry function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga715a36566a0552c3efe13f7be4c01533"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga715a36566a0552c3efe13f7be4c01533">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_CardActivate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_CardActivate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ptxIoTRd_CardParams_t *const&#160;</td>
+          <td class="paramname"><em>p_card_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ptxIoTRd_CardProtocol_t&#160;</td>
+          <td class="paramname"><em>protocol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the details of the discovered card and connects to it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_card_params</td><td>Parameters of the card to be activated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">protocol</td><td>The NFC protocol of the card to be activated.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa55d17b7e0f381acedc1a4b860a5e12c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa55d17b7e0f381acedc1a4b860a5e12c">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_DataExchange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_DataExchange </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__data__info__t">nfc_reader_ptx_data_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_data_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sends and receives data to/from the activated card.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data_info</td><td>Pointer to the NFC TX/RX data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_ReaderDeactivation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_ReaderDeactivation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#ga0e4be320b6d01c6d64a27b03d895b689">nfc_reader_ptx_return_state_t</a>&#160;</td>
+          <td class="paramname"><em>return_state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deactivates the activated card to return to the desired state (idle, discovery, etc.).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_state</td><td>Expectation for end state of NFC state machine.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa23fc59de5d93e021b33d8879237ad8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa23fc59de5d93e021b33d8879237ad8d">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes the FSP NFC module and resets all variables.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Close being called before the module is Open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

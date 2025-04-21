@@ -1,5 +1,9 @@
 var group___r_m___z_m_o_d4_x_x_x =
 [
+    [ "rm_zmod4xxx_compensation_info_t", "group___r_m___z_m_o_d4_x_x_x.html#structrm__zmod4xxx__compensation__info__t", [
+      [ "p_compensation_sensor_cfg", "group___r_m___z_m_o_d4_x_x_x.html#a8a7762a9564074c61d984d1c4e747f14", null ],
+      [ "p_raw_data", "group___r_m___z_m_o_d4_x_x_x.html#a6885b655f430d05242578e94031caf88", null ]
+    ] ],
     [ "rm_zmod4xxx_init_process_params_t", "group___r_m___z_m_o_d4_x_x_x.html#structrm__zmod4xxx__init__process__params__t", [
       [ "delay_ms", "group___r_m___z_m_o_d4_x_x_x.html#a747d96b26c6228fd7505c18b11eb93cb", null ],
       [ "communication_finished", "group___r_m___z_m_o_d4_x_x_x.html#ae7072ae56668c282a2a667ad097a5667", null ],
@@ -17,6 +21,8 @@ var group___r_m___z_m_o_d4_x_x_x =
       [ "p_cfg", "group___r_m___z_m_o_d4_x_x_x.html#a55df2cbb3cdc4bbeb75db1dba936d2b1", null ],
       [ "p_comms_i2c_instance", "group___r_m___z_m_o_d4_x_x_x.html#afc82544a966e7f146ceee4ef404b7582", null ],
       [ "p_zmod4xxx_lib", "group___r_m___z_m_o_d4_x_x_x.html#a68cd23f22e6e0fea3b8d8869ea3954f5", null ],
+      [ "p_zmod4510_device", "group___r_m___z_m_o_d4_x_x_x.html#af392326e81273f4ae3656fb6915f6c13", null ],
+      [ "p_zmod4510_raw_data", "group___r_m___z_m_o_d4_x_x_x.html#adf3675f3c0c02df04205eb1fb168fb42", null ],
       [ "p_irq_instance", "group___r_m___z_m_o_d4_x_x_x.html#a993f572e2bc8acef02a151b7e1a38808", null ],
       [ "p_context", "group___r_m___z_m_o_d4_x_x_x.html#a6151d069461571549ecbf52193ab8624", null ],
       [ "p_comms_callback", "group___r_m___z_m_o_d4_x_x_x.html#a57301a9ef64a2317881cdc7d89783fb5", null ],
@@ -39,6 +45,7 @@ var group___r_m___z_m_o_d4_x_x_x =
     [ "RM_ZMOD4XXX_RelIaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga88a9173f1eb50d4c2f7ca7b310c98957", null ],
     [ "RM_ZMOD4XXX_PbaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga0c5aac5f58a3e8053557d02e3e781f3b", null ],
     [ "RM_ZMOD4XXX_No2O3DataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gac519d673353c988ae2af67b0db274045", null ],
+    [ "RM_ZMOD4XXX_CompensationInfoSet", "group___r_m___z_m_o_d4_x_x_x.html#ga2a2febec625f864dff4c7ea5c49d7808", null ],
     [ "RM_ZMOD4XXX_TemperatureAndHumiditySet", "group___r_m___z_m_o_d4_x_x_x.html#ga5a6c9c9dcb25bc3964b07ed7fe002477", null ],
     [ "RM_ZMOD4XXX_DeviceErrorCheck", "group___r_m___z_m_o_d4_x_x_x.html#gac455a0f48d2eb704341bd83bb37fff94", null ]
 ];

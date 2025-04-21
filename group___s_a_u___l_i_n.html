@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -581,6 +581,8 @@ The IRQ instance used in SAU LIN. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa09e839126b7d5c2ae1ab269790311d0a847e17431e16eba0a61fbfa3ce1d81d8"></a>SAU_LIN_STATE_AWAITING_PID_SIGNAL&#160;</td><td class="fielddoc"><p>Waiting to receive protected identifier. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaa09e839126b7d5c2ae1ab269790311d0a3865c132c25b29dc5d8e7f78c67785de"></a>SAU_LIN_STATE_HEADER_RECEIVED&#160;</td><td class="fielddoc"><p>LIN header received. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaa09e839126b7d5c2ae1ab269790311d0a3369733c9d5bcc79bd94d8f0e9574b13"></a>SAU_LIN_STATE_SENDING_DATA&#160;</td><td class="fielddoc"><p>Transmitting LIN data. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaa09e839126b7d5c2ae1ab269790311d0ad3b6a2225f1067ec090cf11c5ccbb2e3"></a>SAU_LIN_STATE_AWAITING_DATA&#160;</td><td class="fielddoc"><p>Receiving LIN data. </p>
@@ -774,7 +776,8 @@ The IRQ instance used in SAU LIN. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data reception started successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided, no header matching pid was received(only for slave mode). </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call <a class="el" href="group___s_a_u___l_i_n.html#ga13de6a3f9ab7521661d8a9983f4d81f5">R_SAU_LIN_CommunicationAbort</a> to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.</td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call <a class="el" href="group___s_a_u___l_i_n.html#ga13de6a3f9ab7521661d8a9983f4d81f5">R_SAU_LIN_CommunicationAbort</a> to cancel it if desired, or wait for the current transfer operation to complete before starting a new one. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CALL</td><td>Data reception is not possible because a header frame has not been received yet (slave mode only).</td></tr>
   </table>
   </dd>
 </dl>
@@ -996,7 +999,7 @@ The IRQ instance used in SAU LIN. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

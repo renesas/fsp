@@ -18,6 +18,7 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "I3C (r_i3c)", "group___i3_c.html", "group___i3_c" ],
     [ "LIN (r_sau_lin)", "group___s_a_u___l_i_n.html", "group___s_a_u___l_i_n" ],
     [ "LIN (r_sci_b_lin)", "group___s_c_i___b___l_i_n.html", "group___s_c_i___b___l_i_n" ],
+    [ "LIN (r_sci_lin)", "group___s_c_i___l_i_n.html", "group___s_c_i___l_i_n" ],
     [ "SMBUS Communication Device (rm_comms_smbus)", "group___r_m___c_o_m_m_s___s_m_b_u_s.html", "group___r_m___c_o_m_m_s___s_m_b_u_s" ],
     [ "SMCI (r_sci_smci)", "group___s_c_i___s_m_c_i.html", "group___s_c_i___s_m_c_i" ],
     [ "SPI (r_sau_spi)", "group___s_a_u___s_p_i.html", "group___s_a_u___s_p_i" ],
@@ -43,5 +44,6 @@ var group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s =
     [ "USB PMSC (r_usb_pmsc)", "group___u_s_b___p_m_s_c.html", null ],
     [ "USB PPRN (r_usb_pprn)", "group___u_s_b___p_p_r_n.html", null ],
     [ "USB Peripheral Vendor class (r_usb_pvnd)", "group___u_s_b___p_v_n_d.html", null ],
+    [ "USB-TYPEC (r_usb_typec)", "group___u_s_b___t_y_p_e_c.html", "group___u_s_b___t_y_p_e_c" ],
     [ "USB_PCDC Communication Device (rm_comms_usb_pcdc)", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c" ]
 ];

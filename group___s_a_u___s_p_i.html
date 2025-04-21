@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -343,6 +343,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable multiple slave compatibility mode when SAU SPI is configured to slave mode for multiple-slave applications. </td></tr>
+<tr class="tree_none">
+<td>Continuous Transfer Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Set to 'Enabled' if transfer in continuous mode is needed. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; SPI (r_sau_spi)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_sau_spi).<br />
@@ -364,11 +372,11 @@ Slave</li>
 <tr class="tree_none">
 <td>Operation Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-CK0</li>
+CKm0</li>
 <li>
-CK1</li>
+CKm1</li>
 </ul>
-</td><td>CK0 </td><td>Select the operation clock. Use the Clocks tab to set the operation clock divider. </td></tr>
+</td><td>CKm0 </td><td>Select the operation clock. Use the Clocks tab to set the operation clock divider. </td></tr>
 <tr class="tree_none">
 <td>Transfer Mode </td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -464,6 +472,11 @@ Enabling Single Channel By User With The SAU SPI</h2>
 </ul>
 <h2>Single Channel Use Case</h2>
 <p>If only SAU channel 00 is to be used for I2C or SPI or UART, enable single channel can reduce the code size.</p>
+<h2>Continuous Transfer Mode</h2>
+<ul>
+<li>In SAU SPI slave mode, the maximum bit rate of continuous transmission is up to 2.5 MHz.</li>
+<li>If only single transfer mode is to be used for SAU SPI, disabling 'Common &gt; Continuous Transfer Mode' can reduce the code size.</li>
+</ul>
 <h2><a class="anchor" id="r-sau-spi-operation-clock-frequency-selection"></a>
 Selecting Operation Clock Frequency</h2>
 <p>The relationship between operation clock frequency and bitrate is: <code>bitrate = f_mck / [ 2 * (SDRmn.STCLK + 1) ]</code> where:</p>
@@ -482,7 +495,6 @@ Selecting Operation Clock Frequency</h2>
 Limitations</h2>
 <ul>
 <li>When multiple channels on the same SAU unit need to be used, and one is configured as I2C, then critical section property needs to be enabled.</li>
-<li>Continuous transfer mode will be deprecated.</li>
 </ul>
 <h1><a class="anchor" id="r_sau_spi-examples"></a>
 Examples</h1>
@@ -1023,7 +1035,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

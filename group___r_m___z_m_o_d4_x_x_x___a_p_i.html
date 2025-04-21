@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -308,7 +308,22 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>ZMOD4XXX sensor API callback parameter definition </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afc7de35bee2acf74068852746ce4cbdd"></a>void const  *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Pointer to data provided by the user. </td></tr>
+<tr><td class="fieldtype">
+<a id="aff3af2ef87941d7baa5f8ff96bde910c"></a><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#gadd54ca8592a0f7cb81913d2250e89060">rm_zmod4xxx_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Callback event. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__zmod4xxx__raw__data__t" id="structrm__zmod4xxx__raw__data__t"></a>
@@ -323,7 +338,16 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>ZMOD4XXX raw data structure </p>
-</div>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a365aff617aa6dfb02c8712d8b097d46c"></a>uint8_t</td>
+<td class="fieldname">
+adc_data[32]</td>
+<td class="fielddoc">
+In RRH46410, this means measurement results. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structrm__zmod4xxx__iaq__1st__data__t" id="structrm__zmod4xxx__iaq__1st__data__t"></a>
@@ -401,6 +425,12 @@ rmox[13]</td>
 <td class="fielddoc">
 MOx resistance. </td></tr>
 <tr><td class="fieldtype">
+<a id="afe1eb49a590f77b03e1356874ef8a88f"></a>float</td>
+<td class="fieldname">
+compensation_rmox</td>
+<td class="fielddoc">
+MOx resistance for compensation. </td></tr>
+<tr><td class="fieldtype">
 <a id="a04d026df23f93a2ccd598b7fc7546c5d"></a>float</td>
 <td class="fieldname">
 log_rcda</td>
@@ -447,7 +477,7 @@ Sample ID. RRH46410 only. </td></tr>
 <td class="fieldname">
 rel_iaq</td>
 <td class="fielddoc">
-Relative IAQ. RRH46410 only. </td></tr>
+relative IAQ index. </td></tr>
 </table>
 
 </div>
@@ -507,13 +537,13 @@ MOx resistance. </td></tr>
 <td class="fieldname">
 intensity</td>
 <td class="fielddoc">
-odor intensity rating ranges from 0.0 to 5.0 for sulfur lib </td></tr>
+odor intensity rating ranges from 0.0 to 5.0 for sulfur lib. </td></tr>
 <tr><td class="fieldtype">
 <a id="a026e4a40776c79cd6cf745c8446b4bfd"></a><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga47f50ad1a54e470fb44b443351c39beb">rm_zmod4xxx_sulfur_odor_t</a></td>
 <td class="fieldname">
 odor</td>
 <td class="fielddoc">
-sulfur_odor classification for lib </td></tr>
+sulfur_odor classification for lib. </td></tr>
 </table>
 
 </div>
@@ -585,7 +615,7 @@ The ozone concentration in part-per-billion. </td></tr>
 <td class="fieldname">
 fast_aqi</td>
 <td class="fielddoc">
-1-minute average of the Air Quality Index according to the EPA standard based on ozone </td></tr>
+1-minute average of the Air Quality Index according to the EPA standard based on ozone. </td></tr>
 <tr><td class="fieldtype">
 <a id="aeb49c4d0925d19ef93f1b7836acbcaf1"></a>uint16_t</td>
 <td class="fieldname">
@@ -683,6 +713,12 @@ rmox[13]</td>
 <td class="fielddoc">
 MOx resistance. </td></tr>
 <tr><td class="fieldtype">
+<a id="a5f6615cd907269e0f651aeedb4265c70"></a>float</td>
+<td class="fieldname">
+compensation_rmox</td>
+<td class="fielddoc">
+MOx resistance for compensation. </td></tr>
+<tr><td class="fieldtype">
 <a id="a84714eb40a19ee482d532bfd7c937f2d"></a>float</td>
 <td class="fieldname">
 log_rcda</td>
@@ -712,6 +748,18 @@ TVOC concentration (mg/m^3). </td></tr>
 etoh</td>
 <td class="fielddoc">
 EtOH concentration (ppm). </td></tr>
+<tr><td class="fieldtype">
+<a id="a0e7ef354218b8e9f8e0057c903fe46dd"></a>float</td>
+<td class="fieldname">
+iaq</td>
+<td class="fielddoc">
+IAQ index. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab1247aedcf3da796f06c2dfe5a3ba6bd"></a>float</td>
+<td class="fieldname">
+rel_iaq</td>
+<td class="fielddoc">
+relative IAQ index. </td></tr>
 <tr><td class="fieldtype">
 <a id="a5b4b384231c7e7aa9d782c94abd2e1f3"></a>uint8_t</td>
 <td class="fieldname">
@@ -1344,11 +1392,19 @@ p_api</td>
 </div><div class="memdoc">
 <p>Event in the callback function </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060a55d1b247ecb594b099b15e120ae6b6a4"></a>RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET&#160;</td><td class="fielddoc"><p>Unexpected reset. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060ad4a8d5c5a86233ad7c751f3fc80a6c2a"></a>RM_ZMOD4XXX_EVENT_SUCCESS&#160;</td><td class="fielddoc"><p>Operation was completed successfully. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060a0facecd4f8a2114fb25cf0275e06564a"></a>RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE&#160;</td><td class="fielddoc"><p>Sensor measurement results read successfully. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060a9fabd943dcf61cf0cec562204845bf3e"></a>RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE&#160;</td><td class="fielddoc"><p>Sensor measurement in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060a55d1b247ecb594b099b15e120ae6b6a4"></a>RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET&#160;</td><td class="fielddoc"><p>Unexpected reset. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060aa55c18d81d34427bcfd2f631e6b2a3a4"></a>RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT&#160;</td><td class="fielddoc"><p>Getting invalid results while results readout. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060a1d714f6dc93f40773c087a51e3ff609c"></a>RM_ZMOD4XXX_EVENT_DEV_ERR_DAMAGE&#160;</td><td class="fielddoc"><p>Sensor may be damaged. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadd54ca8592a0f7cb81913d2250e89060a03264d65855c78d71b8e1c9030c0d1b1"></a>RM_ZMOD4XXX_EVENT_ERROR&#160;</td><td class="fielddoc"><p>A communication error has occurred. </p>
 </td></tr>
 </table>
 
@@ -1375,7 +1431,7 @@ p_api</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

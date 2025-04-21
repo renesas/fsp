@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -420,13 +420,7 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable clock stalling during the Address Assignment Phase of ENTDAA. </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Transition Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Enable clock stalling during the Transition Bit of a read transfer. </td></tr>
+<td class="tree_lvl_2_cell">Transition Phase</td><td>MCU Specific Options</td><td></td><td>Enable clock stalling during the Transition Bit of a read transfer. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Parity Phase</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -692,7 +686,7 @@ In slave mode, if the master issues a stop condition before the slave ends the t
 <p>Support for performing read and write operations on unaligned buffers can be disabled in order to improve performance. When unaligned buffer support is disabled, all buffers passed to read, ibiRead, write, ibiWrite, and commandSend must be aligned to 4 bytes and the size of the buffers must be a multiple of 4 bytes.</p>
 <p>In master mode, the value of the length passed to <a class="el" href="group___i3_c___a_p_i.html#ad013ffb59c95539c84fe217b90d897ad">i3c_api_t::read</a> and <a class="el" href="group___i3_c___a_p_i.html#a0b27ccf4720531545b0c2e118032539b">i3c_api_t::write</a> sets the total length of the operation in bytes. During the read or write operation, the driver may read or write to the last word of memory during the operation. This means that the allocated memory for the buffer passed to read and write needs to be a multiple of 4 bytes even though the transfer length is not a multiple of 4 bytes.</p>
 <p>In slave mode, the length passed to <a class="el" href="group___i3_c___a_p_i.html#ad013ffb59c95539c84fe217b90d897ad">i3c_api_t::read</a> must be a multiple of 4 bytes. The length passed to <a class="el" href="group___i3_c___a_p_i.html#a0b27ccf4720531545b0c2e118032539b">i3c_api_t::write</a> sets the number of bytes that the slave will write. The size of the buffer passed to write still needs to be a multiple of 4 bytes.</p>
-<h2>Max Data Speed Limitation on RA2E2 MCUs</h2>
+<h2>Max Data Speed Limitation on RA2E2/RA2L2 MCUs</h2>
 <p>In Slave Mode, it is highly recommended that BCR[0] be set to '1' in order to indicate to the master that the device doesn't support the max data speed. The master is then required to use the GETMXDS command to get the device specific data speed limitations.</p>
 <p>This will allow the slave to specify its maximum supported data rate for read/write, and the maximum read turnaround time (See GETMXDS in the MIPI I3C Specification v1.0).</p>
 <h2>Mixed Fast Bus</h2>
@@ -728,7 +722,7 @@ Limitations</h2>
 <p>Developers should be aware of the following limitations when using the I3C:</p>
 <ul>
 <li>The MIPI Reserved area and Vendor Extension area of Command Codes are not supported.</li>
-<li>Mixed Fast Bus topology has the following limitation on RA2E2 MCUs. The minimum SCL high period (T<sub>DIG_H</sub>) is 156 nanoseconds when PCLKD is 48 Mhz, and 120 nanoseconds when PCLKD is 64 Mhz. On a Mixed Fast Bus, the high period T<sub>DIG_HIGH_MIXED</sub> must be less than 45 nanoseconds in order to ensure that Legacy I2C devices do not interpret I3C signaling as valid I2C signaling (See Table 111 Push-Pull-Timing Parameters in the MIPI I3C Specification v1.1). This required high period cannot be achievable with RA2E2 MCUs.</li>
+<li>Mixed Fast Bus topology has the following limitation on RA2E2/RA2L2 MCUs. The minimum SCL high period (T<sub>DIG_H</sub>) is 156 nanoseconds when PCLKD is 48 Mhz, and 120 nanoseconds when PCLKD is 64 Mhz. On a Mixed Fast Bus, the high period T<sub>DIG_HIGH_MIXED</sub> must be less than 45 nanoseconds in order to ensure that Legacy I2C devices do not interpret I3C signaling as valid I2C signaling (See Table 111 Push-Pull-Timing Parameters in the MIPI I3C Specification v1.1). This required high period cannot be achievable with RA2E2/RA2L2 MCUs.</li>
 <li>Secondary Master device role is not currently supported.</li>
 </ul>
 <h1><a class="anchor" id="r-i3c-examples"></a>
@@ -2005,7 +1999,7 @@ Error and Event Interrupt Priority. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

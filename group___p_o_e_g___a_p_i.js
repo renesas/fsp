@@ -15,7 +15,8 @@ var group___p_o_e_g___a_p_i =
       [ "unit", "group___p_o_e_g___a_p_i.html#ac2badeb47b925853a420e184f35074e3", null ],
       [ "channel", "group___p_o_e_g___a_p_i.html#a540e9ef986cf2ad028ef51ba52454aab", null ],
       [ "irq", "group___p_o_e_g___a_p_i.html#a7f90a7d598df48543335416c0a4ab1a0", null ],
-      [ "ipl", "group___p_o_e_g___a_p_i.html#a57cfcbb853533296afebab7d58f231c2", null ]
+      [ "ipl", "group___p_o_e_g___a_p_i.html#a57cfcbb853533296afebab7d58f231c2", null ],
+      [ "p_extend", "group___p_o_e_g___a_p_i.html#a5c7e7814d553bd37fef5c69923c06850", null ]
     ] ],
     [ "poeg_api_t", "group___p_o_e_g___a_p_i.html#structpoeg__api__t", [
       [ "open", "group___p_o_e_g___a_p_i.html#a41c511a6b1b828d54f180b729ae4fe55", null ],

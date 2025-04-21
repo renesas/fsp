@@ -13,6 +13,7 @@ var group___s_a_u___l_i_n =
       [ "SAU_LIN_STATE_AWAITING_SYNC_SIGNAL", "group___s_a_u___l_i_n.html#ggaa09e839126b7d5c2ae1ab269790311d0a9f5b7b6711473c49f340904625f05ba1", null ],
       [ "SAU_LIN_STATE_SENDING_PID", "group___s_a_u___l_i_n.html#ggaa09e839126b7d5c2ae1ab269790311d0a8d43960b87a40470e214c14e2836139f", null ],
       [ "SAU_LIN_STATE_AWAITING_PID_SIGNAL", "group___s_a_u___l_i_n.html#ggaa09e839126b7d5c2ae1ab269790311d0a847e17431e16eba0a61fbfa3ce1d81d8", null ],
+      [ "SAU_LIN_STATE_HEADER_RECEIVED", "group___s_a_u___l_i_n.html#ggaa09e839126b7d5c2ae1ab269790311d0a3865c132c25b29dc5d8e7f78c67785de", null ],
       [ "SAU_LIN_STATE_SENDING_DATA", "group___s_a_u___l_i_n.html#ggaa09e839126b7d5c2ae1ab269790311d0a3369733c9d5bcc79bd94d8f0e9574b13", null ],
       [ "SAU_LIN_STATE_AWAITING_DATA", "group___s_a_u___l_i_n.html#ggaa09e839126b7d5c2ae1ab269790311d0ad3b6a2225f1067ec090cf11c5ccbb2e3", null ],
       [ "SAU_LIN_STATE_AWAITING_CHECKSUM", "group___s_a_u___l_i_n.html#ggaa09e839126b7d5c2ae1ab269790311d0acbbf1677cb28e47d7a6c9a52156c4340", null ],

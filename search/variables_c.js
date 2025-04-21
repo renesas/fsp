@@ -111,6 +111,7 @@ var searchData=
   ['low_5fthr',['low_thr',['../group___g_a_p___a_p_i.html#a037a70354d3078861e5175eca51a91f6',1,'st_ble_gap_set_path_loss_rpt_param_t']]],
   ['lower_5fbound_5flimit',['lower_bound_limit',['../group___a_d_c___d.html#a87aea7a5405d805a2d137fd95b4d5909',1,'adc_d_extended_cfg_t']]],
   ['lowpowermodeenter',['lowPowerModeEnter',['../group___l_p_m___a_p_i.html#a228634f790b05412af1965f680ec0f58',1,'lpm_api_t']]],
+  ['lowpowermodeset',['lowPowerModeSet',['../group___u_s_b___t_y_p_e_c___a_p_i.html#a39399f29a2b8c6c307d6905fbdb3d309',1,'usb_typec_api_t']]],
   ['lowpowerreconfigure',['lowPowerReconfigure',['../group___l_p_m___a_p_i.html#aa298013bd62b384202698d68fb3c6abd',1,'lpm_api_t']]],
   ['lp_5frx_5ftimeout',['lp_rx_timeout',['../group___m_i_p_i___d_s_i___a_p_i.html#a39ce95ef11ea6b15859781c5cfe369dc',1,'mipi_dsi_cfg_t']]],
   ['lpn_5faddr',['lpn_addr',['../group___r_m___b_l_e___m_e_s_h___a_c_c_e_s_s___a_p_i.html#af11ba484eea23972661b3374a4579e6e',1,'rm_ble_mesh_access_friend_security_credential_info_t']]],

@@ -11,7 +11,6 @@ var group___u_s_b___a_p_i =
       [ "irq_d0", "group___u_s_b___a_p_i.html#ae04e36ff3fa9300a3ef5d8164de4b208", null ],
       [ "irq_d1", "group___u_s_b___a_p_i.html#aa1c35110017ef581a9bdd25fe1fefc65", null ],
       [ "hsirq", "group___u_s_b___a_p_i.html#a83d5d9b65f3e72a2ad1bfd48dfa3f6b6", null ],
-      [ "irq_typec", "group___u_s_b___a_p_i.html#a0f32b557ed08ef46fcd11434492202f0", null ],
       [ "hsirq_d0", "group___u_s_b___a_p_i.html#a9377fde92482c219b69dd97211de03db", null ],
       [ "hsirq_d1", "group___u_s_b___a_p_i.html#a30a2bbf54db8e1ccd8a0e9bb76700297", null ],
       [ "ipl", "group___u_s_b___a_p_i.html#a1c67012ce6e635e594c1ef531d0ea2a6", null ],
@@ -19,7 +18,6 @@ var group___u_s_b___a_p_i =
       [ "ipl_d0", "group___u_s_b___a_p_i.html#a561cf36bc2219882c59f299d290cac82", null ],
       [ "ipl_d1", "group___u_s_b___a_p_i.html#a673353c9d6529d5f4999729604db3e5c", null ],
       [ "hsipl", "group___u_s_b___a_p_i.html#ab0a258c964328a3036b9b19cc97839d8", null ],
-      [ "ipl_typec", "group___u_s_b___a_p_i.html#a63b94886e27525895c2f726ac9a13a12", null ],
       [ "hsipl_d0", "group___u_s_b___a_p_i.html#a9b764125bd9610aba9ad3aad78285476", null ],
       [ "hsipl_d1", "group___u_s_b___a_p_i.html#abcea3b0ac51a19d427aaf28ff997195a", null ],
       [ "p_usb_apl_callback", "group___u_s_b___a_p_i.html#a58eb2b666cab78a4379cc49d802c019a", null ],
@@ -61,8 +59,7 @@ var group___u_s_b___a_p_i =
       [ "dataSizeGet", "group___u_s_b___a_p_i.html#a71d72da91bbf6d0939f38dc3c10de543", null ],
       [ "setupGet", "group___u_s_b___a_p_i.html#a0804dacbc320e7a380742335e6b24671", null ],
       [ "otgCallbackSet", "group___u_s_b___a_p_i.html#a06bae2a093adbc8027c341fc98a438ce", null ],
-      [ "otgSRP", "group___u_s_b___a_p_i.html#aa2ed94626d37e3666575bdc92aa063fc", null ],
-      [ "typecInfoGet", "group___u_s_b___a_p_i.html#aa5e803d92c801159322824c9f882f2f1", null ]
+      [ "otgSRP", "group___u_s_b___a_p_i.html#aa2ed94626d37e3666575bdc92aa063fc", null ]
     ] ],
     [ "usb_instance_t", "group___u_s_b___a_p_i.html#structusb__instance__t", [
       [ "p_ctrl", "group___u_s_b___a_p_i.html#ac8909c912596ac5e73604a533c526f90", null ],
@@ -249,26 +246,5 @@ var group___u_s_b___a_p_i =
       [ "USB_COMPLIANCETEST_OVRC", "group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a6f7dd243303d816f65ab5f83e3857b8a", null ],
       [ "USB_COMPLIANCETEST_NORES", "group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a6efe30ef900a8492f5f0a1e02a7beb34", null ],
       [ "USB_COMPLIANCETEST_SETUP_ERR", "group___u_s_b___a_p_i.html#gga565d5746bce505ef376bc2d3777d9302a26cbdc184b4aec0124d1b6b7fd23eb1c", null ]
-    ] ],
-    [ "usb_typec_mode_t", "group___u_s_b___a_p_i.html#gaa0c54c3c911dd9238e39549c9337fa4b", [
-      [ "USB_TYPEC_MODE_SINK", "group___u_s_b___a_p_i.html#ggaa0c54c3c911dd9238e39549c9337fa4baa9db4fef282988bf513cd3903ee396cc", null ],
-      [ "USB_TYPEC_MODE_USB20_ONLY_SINK", "group___u_s_b___a_p_i.html#ggaa0c54c3c911dd9238e39549c9337fa4ba4dca9677da99fdb506ec34a08389562d", null ]
-    ] ],
-    [ "usb_typec_plug_t", "group___u_s_b___a_p_i.html#ga77f5defa0e521a8142d8cbefe041720a", [
-      [ "USB_TYPEC_PLUG_CC1_CONNECTED", "group___u_s_b___a_p_i.html#gga77f5defa0e521a8142d8cbefe041720aa944eb97792bd753bd832675226ded3c1", null ],
-      [ "USB_TYPEC_PLUG_CC2_CONNECTED", "group___u_s_b___a_p_i.html#gga77f5defa0e521a8142d8cbefe041720aa15d1a251cc083cab5c3653bebfe8c019", null ]
-    ] ],
-    [ "usb_typec_connection_status_t", "group___u_s_b___a_p_i.html#gae1abccb216b62fc538787fb2feba93bd", [
-      [ "USB_TYPEC_CONNECTION_STATUS_DISABLED", "group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda3299cfc42726c50f4e9b2cb8cc2367f7", null ],
-      [ "USB_TYPEC_CONNECTION_STATUS_UNATTACHED", "group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda550273c40774cc6123b05bc124bd9413", null ],
-      [ "USB_TYPEC_CONNECTION_STATUS_ATTACHED_WAIT", "group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdabbf5871667db15320885aed3bf7dc6a6", null ],
-      [ "USB_TYPEC_CONNECTION_STATUS_ATTACHED", "group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdacf8a3f978bb2e8f691427ac17015884e", null ],
-      [ "USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_DEFAULT", "group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda2a96706d6314e832f85762280acf4208", null ],
-      [ "USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_15", "group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdaa43a4c20c5a71fe53627df89a2e104cb", null ],
-      [ "USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_30", "group___u_s_b___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bdab387bc3ac497a9486d081717a0828d43", null ]
-    ] ],
-    [ "usb_typec_vbus_status_t", "group___u_s_b___a_p_i.html#ga354e0b84a8f986a76dabc295f68d5ecb", [
-      [ "USB_TYPEC_VBUS_STATUS_OFF", "group___u_s_b___a_p_i.html#gga354e0b84a8f986a76dabc295f68d5ecbade2e2e6e9bd7efb80787527cc5ce8216", null ],
-      [ "USB_TYPEC_VBUS_STATUS_ON", "group___u_s_b___a_p_i.html#gga354e0b84a8f986a76dabc295f68d5ecba9e526e82d7dc1a0623ebe6c01b898006", null ]
     ] ]
 ];

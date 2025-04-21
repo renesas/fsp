@@ -153,6 +153,7 @@ var searchData=
   ['global_5flocation',['global_location',['../group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html#a62fa2ca59ae95be9b5023d932a2243ea',1,'rm_mesh_generic_loc_srv_state_info_t']]],
   ['global_5flongitude',['global_longitude',['../structrm__mesh__generic__loc__global__info__t.html#a4cfb9f70ef0db98d3769da2882bcb2db',1,'rm_mesh_generic_loc_global_info_t::global_longitude()'],['../group___r_m___m_e_s_h___g_e_n_e_r_i_c___l_o_c___s_r_v.html#a50efdad8c2ea5586542ae24c2ce192cd',1,'rm_mesh_generic_loc_srv_global_info_t::global_longitude()']]],
   ['go_5flp_5fand_5fback',['go_lp_and_back',['../group___m_i_p_i___d_s_i___a_p_i.html#abe39a9db55cd2a893f06aaa97b47cdba',1,'mipi_dsi_timing_t']]],
+  ['gpio',['Gpio',['../structptx_p_l_a_t___spi__t.html#a587ae10c9a40eff7addf3dec96f0f4ef',1,'ptxPLAT_Spi_t']]],
   ['gpt_5fadc_5fcompare_5fmatch_5fadc_5fa',['GPT_ADC_COMPARE_MATCH_ADC_A',['../group___g_p_t.html#gga2a838fffcbafd97778bbe3ffbfbf54b1a6f5dba4e42352f1bea9dccd3201021cc',1,'r_gpt.h']]],
   ['gpt_5fadc_5fcompare_5fmatch_5fadc_5fb',['GPT_ADC_COMPARE_MATCH_ADC_B',['../group___g_p_t.html#gga2a838fffcbafd97778bbe3ffbfbf54b1abc17524a1e6137946784a36c5d31f27b',1,'r_gpt.h']]],
   ['gpt_5fadc_5fcompare_5fmatch_5ft',['gpt_adc_compare_match_t',['../group___g_p_t.html#ga2a838fffcbafd97778bbe3ffbfbf54b1',1,'r_gpt.h']]],

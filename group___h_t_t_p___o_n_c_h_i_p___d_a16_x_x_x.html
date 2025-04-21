@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -297,6 +297,42 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Networking &gt; HTTP Client/Server on DA16XXX (rm_http_onchip_da16xxx)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; HTTP Client/Server on DA16XXX (rm_http_onchip_da16xxx).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Certificates  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">HTTP Certificates Header File</td><td>Must be a valid C symbol</td><td></td><td>Name of header file that will contain certificates (macros). User must create header file if this field is populated. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Root CA</td><td>Must be a valid C symbol</td><td>ROOT_CA </td><td>Links to user-defined macro of the same name for Root CA which user must define in application header. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Client Certificate</td><td>Must be a valid C symbol</td><td>CLIENT_CERT </td><td>Links to user-defined macro of the same name for client certificate which user must define in application header. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Private Key</td><td>Must be a valid C symbol</td><td>PRIVATE_KEY </td><td>Links to user-defined macro of the same name for private key which user must define in application header. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> ALPN  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ALPN 1</td><td>Manual Entry</td><td></td><td>Select Application Layer Protocol Negotiations (ALPNs) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ALPN 2</td><td>Manual Entry</td><td></td><td>Select Application Layer Protocol Negotiations (ALPNs) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ALPN 3</td><td>Manual Entry</td><td></td><td>Select Application Layer Protocol Negotiations (ALPNs) </td></tr>
+<tr class="tree_none">
+<td>Server Name Indication (SNI)</td><td>Manual Entry</td><td></td><td></td></tr>
+<tr class="tree_none">
+<td>TLS Authentification Level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+0 (None)</li>
+<li>
+1 (Optional)</li>
+<li>
+2 (Required)</li>
+</ul>
+</td><td>0 (None) </td><td>Level of TLS authentication for HTTP requests. </td></tr>
 </table>
 </p>
 <p>Refer to <a class="el" href="group___w_i_f_i___d_a16_x_x_x.html">WiFi Onchip DA16XXX Framework Driver (rm_wifi_da16xxx)</a>.</p>
@@ -859,7 +895,7 @@ Pointer to p_cfg for HTTP. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

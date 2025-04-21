@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -554,6 +554,7 @@ Limitations</h2>
 <li>The module does not support communicating with multiple slaves using different SSL pins. In order to achieve this, the module must either be closed and re-opened to change the SSL pin or drive SSL in software. It is recommended that SSL be driven in software when controlling multiple slave devices.</li>
 <li>The SPI peripheral has a minimum 3 SPI CLK delay between each data frame.</li>
 <li>The behavior for Byte Swap operation is not guaranteed for data frames other than 8-bit, 16-bit and 32bit.</li>
+<li>Full-duplex transmission and reception (writeRead) may experience RX overflows at very high bitrates when using DTC. In this case, use half-duplex (write and read) functions.</li>
 </ul>
 <h1><a class="anchor" id="r-spi-b-examples"></a>
 Examples</h1>
@@ -1326,7 +1327,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

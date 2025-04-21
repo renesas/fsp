@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -974,6 +974,8 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a131b2fe2c5b40032c04f1c8480bfaa86"></a>IOPORT_PERIPHERAL_GPT4&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad145d360f054370523490eab0dcaa963"></a>IOPORT_PERIPHERAL_GPT5&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a47ef2519e1ba6f5b2e0893de9cddeb49"></a>IOPORT_PERIPHERAL_ETHER_RMII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet RMMI peripheral pin </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab8aa7fa82f2c3eb0ac80e20e8f918304"></a>IOPORT_PERIPHERAL_PDC&#160;</td><td class="fielddoc"><p>Pin will function as a PDC peripheral pin </p>
@@ -1016,6 +1018,26 @@ Enumerations</h2></td></tr>
 <p>Options to configure pin functions </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb"></a>IOPORT_CFG_PORT_DIRECTION_INPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to input (default) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97"></a>IOPORT_CFG_PORT_DIRECTION_OUTPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a1913e3b0734a4be613eb2fba8ec888c5"></a>IOPORT_CFG_PORT_OUTPUT_LOW&#160;</td><td class="fielddoc"><p>Sets the pin level to low. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4b93b19150d018ab8ba5ef74e2852499"></a>IOPORT_CFG_PORT_OUTPUT_HIGH&#160;</td><td class="fielddoc"><p>Sets the pin level to high. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a925954d59fa1101a4784a0d64a64d133"></a>IOPORT_CFG_PULLUP_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's internal pull-up. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a619e7ce9643c81a165dd70aea63b7fe9"></a>IOPORT_CFG_PIM_TTL&#160;</td><td class="fielddoc"><p>Enables the pin's input mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff"></a>IOPORT_CFG_NMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's NMOS open-drain output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aec28fadf6109ec5ea80a1b1046bd25e5"></a>IOPORT_CFG_IRQ_ENABLE&#160;</td><td class="fielddoc"><p>Sets pin as an IRQ pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d329786cc601ca9341427dd0bed8ad8"></a>IOPORT_CFG_ANALOG_ENABLE&#160;</td><td class="fielddoc"><p>Enables pin to operate as an analog pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a2066555437a19b9e6e721fb494c8f5c3"></a>IOPORT_CFG_PERIPHERAL_PIN&#160;</td><td class="fielddoc"><p>Enables pin to operate as a peripheral pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb"></a>IOPORT_CFG_PORT_DIRECTION_INPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to input (default) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97"></a>IOPORT_CFG_PORT_DIRECTION_OUTPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to output. </p>
 </td></tr>
@@ -1661,7 +1683,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

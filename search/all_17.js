@@ -10,6 +10,7 @@ var searchData=
   ['value_5fhdl_5fnum',['value_hdl_num',['../group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a282f02e4fbd8715fd70b36de5e7961ab',1,'st_ble_gattc_rd_multi_char_evt_t']]],
   ['value_5flen',['value_len',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#a39a56c5c01628ece39d305a58e5b9ea8',1,'st_ble_gatt_value_t::value_len()'],['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#abf5830b5bdf7150f98b9ce2cf8035ec1',1,'st_ble_gatt_queue_att_val_t::value_len()']]],
   ['variance',['variance',['../group___p_t_p___a_p_i.html#a822688c8785df6d910f92051ff558f5a',1,'ptp_clock_properties_t']]],
+  ['vbus_5fstatus',['vbus_status',['../group___u_s_b___t_y_p_e_c___a_p_i.html#ae812495a954a9fffd7dcb94e633db8c7',1,'usb_typec_callback_args_t']]],
   ['vbusset',['vbusSet',['../group___u_s_b___a_p_i.html#ab72db69cc2005c0274f74bffdfb0a60b',1,'usb_api_t']]],
   ['vcodec_5fid',['vcodec_id',['../group___i_s_o___a_p_i.html#acb64af1a63a72e5842f5a6d35a18fcb7',1,'st_ble_iso_chan_path']]],
   ['vd',['vd',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a9b39071d195ba340bbdfcc765fe6c09f',1,'motor_angle_voltage_reference_t']]],

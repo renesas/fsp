@@ -1,0 +1,503 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: USB-TYPEC (r_usb_typec)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        }); 
+     }); 
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v5.9.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+ 
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+      </span>
+      <span class="right">
+          &nbsp; 
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___u_s_b___t_y_p_e_c.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { 
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works 
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len)); 
+            }
+          } 
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }    
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;  
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle">
+<div class="title">USB-TYPEC (r_usb_typec)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___m_o_d_u_l_e_s.html">Connectivity</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga9973134157f43fc1cc9ee3b09b5ccf2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#ga9973134157f43fc1cc9ee3b09b5ccf2f">R_USB_TYPEC_Open</a> (<a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const p_ctrl, <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#structusb__typec__cfg__t">usb_typec_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga9973134157f43fc1cc9ee3b09b5ccf2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize USB Type-C module and USB Type-C driver. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a4cb190098c40134a75845ad0e2a16a47">usb_typec_api_t::open</a>.  <a href="#ga9973134157f43fc1cc9ee3b09b5ccf2f">More...</a><br /></td></tr>
+<tr class="separator:ga9973134157f43fc1cc9ee3b09b5ccf2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6258e85ceeceb8945d660498144cfb7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#ga6258e85ceeceb8945d660498144cfb7b">R_USB_TYPEC_Close</a> (<a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga6258e85ceeceb8945d660498144cfb7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uninitialize USB Type-C module and disable interrupts. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a6c3b054ec4dedf015584fdb0a2fb26c9">usb_typec_api_t::close</a>.  <a href="#ga6258e85ceeceb8945d660498144cfb7b">More...</a><br /></td></tr>
+<tr class="separator:ga6258e85ceeceb8945d660498144cfb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87c42ae95ca304956a6eaf0cb4f53284"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#ga87c42ae95ca304956a6eaf0cb4f53284">R_USB_TYPEC_InfoGet</a> (<a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const p_ctrl, usb_typec_info_t *p_info)</td></tr>
+<tr class="memdesc:ga87c42ae95ca304956a6eaf0cb4f53284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get USB Type-C connect Information. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a503cdfe2eb44ba99be68a08f618114e9">usb_typec_api_t::infoGet</a>.  <a href="#ga87c42ae95ca304956a6eaf0cb4f53284">More...</a><br /></td></tr>
+<tr class="separator:ga87c42ae95ca304956a6eaf0cb4f53284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga546ad6b23c02d38ae5dc9f858f17ff64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#ga546ad6b23c02d38ae5dc9f858f17ff64">R_USB_TYPEC_LowPowerModeSet</a> (<a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const p_ctrl, <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ga8c9844eac6088d2111cb3cd4860dca28">usb_typec_ccs_status_t</a> status)</td></tr>
+<tr class="memdesc:ga546ad6b23c02d38ae5dc9f858f17ff64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set IRQ Mode for USB Type-C module by Low Power Mode. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a39399f29a2b8c6c307d6905fbdb3d309">usb_typec_api_t::lowPowerModeSet</a>.  <a href="#ga546ad6b23c02d38ae5dc9f858f17ff64">More...</a><br /></td></tr>
+<tr class="separator:ga546ad6b23c02d38ae5dc9f858f17ff64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the USB_TYPEC peripheral on RA MCUs. This module implements the <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html">USB TYPEC Interface</a>. </p>
+<h1><a class="anchor" id="r-usb-typec-overview"></a>
+Overview</h1>
+<p>The r_usb_typec module is used in combination with r_usb_basic and other device class for USB communication and with the Type C module alone for Type-C charging.</p>
+<h2><a class="anchor" id="r-usb-typec-features"></a>
+Features</h2>
+<p>The r_usb_typec module has the following key features:</p><ul>
+<li>Detection of Source Connect/Disconnect (CC1/CC2 pin and USB_VBUS pin)</li>
+<li>Detection of Source Partner's Current Capability, Default USB, Type-C 1.5A, or Type-C 3.0A</li>
+</ul>
+<h1><a class="anchor" id="r-usb-typec-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="r-usb-typec-basic_function"></a>
+Basic Functions</h2>
+<p>The main functions of thie module are the following:</p><ul>
+<li>Initialization and un-initialization of USB Type-C module.</li>
+<li>Getting of Type-C module information.</li>
+</ul>
+<h2><a class="anchor" id="r-usb_typec-note"></a>
+Note</h2>
+<ul>
+<li>Port Setting</li>
+</ul>
+<p>If the user is using an MCU that supports the USB Type-C module and all of the following conditions are satisfied, please add code to control the port connected to External Rd immediately after calling the R_USB_TYPEC_Open function. (Because it is necessary to control External Rd after Internal Rd is turned ON.)</p>
+<ol type="1">
+<li>The USB operating mode is Device mode.</li>
+<li>The power mode is BusPower. (External Rd is mounted on board)</li>
+</ol>
+<div class="fragment"><div class="line"><a class="code" href="group___u_s_b___t_y_p_e_c.html#ga9973134157f43fc1cc9ee3b09b5ccf2f">R_USB_TYPEC_Open</a>(&amp;g_usbcc0_ctrl, &amp;g_usbcc0_cfg);</div><div class="line"><a class="code" href="group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430">R_IOPORT_PinCfg</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa76448b711b7a8ced2aebce4f0763b5e5">BSP_IO_PORT_01_PIN_09</a>, (uint32_t) <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97">IOPORT_CFG_PORT_DIRECTION_OUTPUT</a> | (uint32_t) <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574a1913e3b0734a4be613eb2fba8ec888c5">IOPORT_CFG_PORT_OUTPUT_LOW</a>);</div></div><!-- fragment --><ul>
+<li>Debounce</li>
+</ul>
+<p>Depending on the user board, the user may need code to debaunce the USB_VBUS pin.</p>
+<h1><a class="anchor" id="r-usb-typec-examples"></a>
+Examples</h1>
+<h2>USB Type-C Example</h2>
+<p>The following is example code for USB Type-C.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : usb_typec_apl_callback</span></div><div class="line"><span class="comment"> * Description     : Callback function for Application program</span></div><div class="line"><span class="comment"> * Arguments       : usb_typec_callback_args_t * p_typec_args   : Callback function parameter data.</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> usb_typec_apl_callback (<a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#structusb__typec__callback__args__t">usb_typec_callback_args_t</a> * p_typec_args)</div><div class="line">{</div><div class="line">    g_typec_args = *p_typec_args;</div><div class="line"></div><div class="line">    <span class="comment">/* USB Type-C Callback Flag Set */</span></div><div class="line">    g_typec_callback_flg = 1;</div><div class="line">}                                      <span class="comment">/* End of function usb_apl_callback */</span></div><div class="line"></div><div class="line"><span class="comment">/******************************************************************************</span></div><div class="line"><span class="comment"> * Function Name   : usb_typec_example</span></div><div class="line"><span class="comment"> * Description     : USB Type-C application main process</span></div><div class="line"><span class="comment"> * Arguments       : none</span></div><div class="line"><span class="comment"> * Return value    : none</span></div><div class="line"><span class="comment"> ******************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> usb_typec_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    usb_typec_info_t typec_info;</div><div class="line"></div><div class="line"><span class="preprocessor">#if TYPEC_APL_SUPPORT_SOFTWARE_STANDBY</span></div><div class="line">    g_lpm_on_lpm.<a class="code" href="group___l_p_m___a_p_i.html#a1031cc746d15011284274cf0c7d6fed2">open</a>(&amp;g_lpm_ctrl, &amp;g_lpm_cfg);</div><div class="line"><span class="preprocessor">#endif  </span><span class="comment">/* TYPEC_APL_SUPPORT_SOFTWARE_STANDBY */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">    g_typec_on_typec.<a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a4cb190098c40134a75845ad0e2a16a47">open</a>(&amp;g_usbcc0_ctrl, &amp;g_usbcc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* EK-RA2L2 ExRd1_En(P109) = L */</span></div><div class="line">    <a class="code" href="group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430">R_IOPORT_PinCfg</a>(&amp;g_ioport_ctrl,</div><div class="line">                    <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa76448b711b7a8ced2aebce4f0763b5e5">BSP_IO_PORT_01_PIN_09</a>,</div><div class="line">                    (uint32_t) <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97">IOPORT_CFG_PORT_DIRECTION_OUTPUT</a> |</div><div class="line">                    (uint32_t) <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574a1913e3b0734a4be613eb2fba8ec888c5">IOPORT_CFG_PORT_OUTPUT_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* EK-RA2L2 ExRd2_En(P110) = L */</span></div><div class="line">    <a class="code" href="group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430">R_IOPORT_PinCfg</a>(&amp;g_ioport_ctrl,</div><div class="line">                    <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa9289cfd3efc73cdc0ed7e52ef54d416c">BSP_IO_PORT_01_PIN_10</a>,</div><div class="line">                    (uint32_t) <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97">IOPORT_CFG_PORT_DIRECTION_OUTPUT</a> |</div><div class="line">                    (uint32_t) <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574a1913e3b0734a4be613eb2fba8ec888c5">IOPORT_CFG_PORT_OUTPUT_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Waiting for USB Type-C event */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* USB Type-C Callback Flag Check */</span></div><div class="line">        <span class="keywordflow">if</span> (1 == g_typec_callback_flg)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">switch</span> (g_typec_args.status)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Connection Status Change */</span></div><div class="line">                <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ggadb5b8f06208581ed8e7c4b880d7786eaac2f95324895debb44f8127f59af9e17d">USB_TYPEC_STATUS_ISCN</a>:</div><div class="line">                    g_typec_on_typec.<a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a503cdfe2eb44ba99be68a08f618114e9">infoGet</a>(&amp;g_usbcc0_ctrl, &amp;typec_info);</div><div class="line">                    <span class="keywordflow">switch</span> (typec_info.connection_status)</div><div class="line">                    {</div><div class="line">                        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda550273c40774cc6123b05bc124bd9413">USB_TYPEC_CONNECTION_STATUS_UNATTACHED</a>:</div><div class="line">                            <span class="comment">/* None */</span></div><div class="line">                            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">                        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda2a96706d6314e832f85762280acf4208">USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_DEFAULT</a>:</div><div class="line">                            <span class="comment">/* In the case of Power1.5.SNK or Power3.0.SNK, the PowerDefault event is notified first. */</span></div><div class="line">                            <span class="comment">/* None */</span></div><div class="line">                            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">                        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda0b44c93a23d64cf12c9fab77028d1631">USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_1_5</a>:</div><div class="line">                            <span class="comment">/* None */</span></div><div class="line">                            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">                        <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ggae1abccb216b62fc538787fb2feba93bda422707ac2b4450c74376955fb690036a">USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_3_0</a>:</div><div class="line">                            <span class="comment">/* None */</span></div><div class="line">                            <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line">                        <span class="keywordflow">default</span>:</div><div class="line">                            <span class="comment">/* None */</span></div><div class="line">                            <span class="keywordflow">break</span>;</div><div class="line">                    }</div><div class="line">                    <span class="keywordflow">break</span>;</div><div class="line"></div><div class="line"><span class="preprocessor">#if TYPEC_APL_SUPPORT_SOFTWARE_STANDBY</span></div><div class="line">                <span class="comment">/* VBUS Status Change */</span></div><div class="line">                <span class="keywordflow">case</span> <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ggadb5b8f06208581ed8e7c4b880d7786eaacae3620261e7613c2d675018b0f7ac27">USB_TYPEC_STATUS_ISVBUS</a>:</div><div class="line">                    <span class="comment">/* Note: Depending on the board, it may be necessary to use software to prevent VBUS chattering.</span></div><div class="line"><span class="comment">                     *  */</span></div><div class="line">                    <span class="keywordflow">if</span> (<a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gga354e0b84a8f986a76dabc295f68d5ecbade2e2e6e9bd7efb80787527cc5ce8216">USB_TYPEC_VBUS_STATUS_OFF</a> == g_typec_args.vbus_status)</div><div class="line">                    {</div><div class="line">                        <span class="comment">/* USBCC CCS enable */</span></div><div class="line">                        g_typec_on_typec.<a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a39399f29a2b8c6c307d6905fbdb3d309">lowPowerModeSet</a> (&amp;g_usbcc0_ctrl, <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gga8c9844eac6088d2111cb3cd4860dca28ac12429f76bd55d18ccf8125ca77d0cf6">USB_TYPEC_CCS_STATUS_ON</a>);</div><div class="line"></div><div class="line">                        <span class="comment">/* Software Standby */</span></div><div class="line">                        g_lpm_on_lpm.<a class="code" href="group___l_p_m___a_p_i.html#a228634f790b05412af1965f680ec0f58">lowPowerModeEnter</a>(&amp;g_lpm_ctrl);</div><div class="line"></div><div class="line">                        <span class="comment">/* USBCC CCI enable */</span></div><div class="line">                        g_typec_on_typec.<a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a39399f29a2b8c6c307d6905fbdb3d309">lowPowerModeSet</a> (&amp;g_usbcc0_ctrl, <a class="code" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gga8c9844eac6088d2111cb3cd4860dca28a85a042baa9b5cfce626ed7bb8e73bda9">USB_TYPEC_CCS_STATUS_OFF</a>);</div><div class="line">                    }</div><div class="line">                    <span class="keywordflow">break</span>;</div><div class="line"><span class="preprocessor">#endif  </span><span class="comment">/* TYPEC_APL_SUPPORT_SOFTWARE_STANDBY */</span><span class="preprocessor"></span></div><div class="line"></div><div class="line">                <span class="keywordflow">default</span>:</div><div class="line">                    <span class="comment">/* None */</span></div><div class="line">                    <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* USB Type-C Callback Flag Clear */</span></div><div class="line">            g_typec_callback_flg = 0;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}                                      <span class="comment">/* End of function usb_typec_example() */</span></div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structusb__typec__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#structusb__typec__instance__ctrl__t">usb_typec_instance_ctrl_t</a></td></tr>
+<tr class="separator:structusb__typec__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structusb__typec__instance__ctrl__t" id="structusb__typec__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__typec__instance__ctrl__t">&#9670;&nbsp;</a></span>usb_typec_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_typec_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>USB TYPE-C control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a4cb190098c40134a75845ad0e2a16a47">usb_typec_api_t::open</a> is called. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a97803f56743d71e1ec4d5ae39d66d1cd"><td class="memItemLeft" align="right" valign="top"><a id="a97803f56743d71e1ec4d5ae39d66d1cd"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#a97803f56743d71e1ec4d5ae39d66d1cd">open</a></td></tr>
+<tr class="memdesc:a97803f56743d71e1ec4d5ae39d66d1cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:a97803f56743d71e1ec4d5ae39d66d1cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920548ca035f469c2c29251e6cc67492"><td class="memItemLeft" align="right" valign="top"><a id="a920548ca035f469c2c29251e6cc67492"></a>
+<a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#structusb__typec__cfg__t">usb_typec_cfg_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#a920548ca035f469c2c29251e6cc67492">p_cfg</a></td></tr>
+<tr class="memdesc:a920548ca035f469c2c29251e6cc67492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
+<tr class="separator:a920548ca035f469c2c29251e6cc67492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a196aabd462d989ba736f18cf385582eb"><td class="memItemLeft" align="right" valign="top"><a id="a196aabd462d989ba736f18cf385582eb"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#a196aabd462d989ba736f18cf385582eb">module_number</a></td></tr>
+<tr class="memdesc:a196aabd462d989ba736f18cf385582eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB module number (USB_IP0/USB_IP1) <br /></td></tr>
+<tr class="separator:a196aabd462d989ba736f18cf385582eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12035b9556cd88410edd716f7e49d564"><td class="memItemLeft" align="right" valign="top"><a id="a12035b9556cd88410edd716f7e49d564"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#a12035b9556cd88410edd716f7e49d564">irq_typec_cci</a></td></tr>
+<tr class="memdesc:a12035b9556cd88410edd716f7e49d564"><td class="mdescLeft">&#160;</td><td class="mdescRight">USBCC_CCI interrupt number storage variable. <br /></td></tr>
+<tr class="separator:a12035b9556cd88410edd716f7e49d564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81c265d968eb18ec92fda5a751670afa"><td class="memItemLeft" align="right" valign="top"><a id="a81c265d968eb18ec92fda5a751670afa"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#a81c265d968eb18ec92fda5a751670afa">irq_typec_ccs</a></td></tr>
+<tr class="memdesc:a81c265d968eb18ec92fda5a751670afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">USBCC_CCS interrupt number storage variable. <br /></td></tr>
+<tr class="separator:a81c265d968eb18ec92fda5a751670afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28dac8933de70615ecc0f2a3e8a21a2a"><td class="memItemLeft" align="right" valign="top"><a id="a28dac8933de70615ecc0f2a3e8a21a2a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#a28dac8933de70615ecc0f2a3e8a21a2a">ipl_typec_cci</a></td></tr>
+<tr class="memdesc:a28dac8933de70615ecc0f2a3e8a21a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable to store the interrupt priority of USBCC_CCI. <br /></td></tr>
+<tr class="separator:a28dac8933de70615ecc0f2a3e8a21a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1657950dd5e03f64d5287edc464585e0"><td class="memItemLeft" align="right" valign="top"><a id="a1657950dd5e03f64d5287edc464585e0"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___t_y_p_e_c.html#a1657950dd5e03f64d5287edc464585e0">ipl_typec_ccs</a></td></tr>
+<tr class="memdesc:a1657950dd5e03f64d5287edc464585e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable to store the interrupt priority of USBCC_CCS. <br /></td></tr>
+<tr class="separator:a1657950dd5e03f64d5287edc464585e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga9973134157f43fc1cc9ee3b09b5ccf2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9973134157f43fc1cc9ee3b09b5ccf2f">&#9670;&nbsp;</a></span>R_USB_TYPEC_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_TYPEC_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#structusb__typec__cfg__t">usb_typec_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize USB Type-C module and USB Type-C driver. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a4cb190098c40134a75845ad0e2a16a47">usb_typec_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>USB TYPEC module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6258e85ceeceb8945d660498144cfb7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6258e85ceeceb8945d660498144cfb7b">&#9670;&nbsp;</a></span>R_USB_TYPEC_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_TYPEC_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uninitialize USB Type-C module and disable interrupts. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a6c3b054ec4dedf015584fdb0a2fb26c9">usb_typec_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>USB TYPEC module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga87c42ae95ca304956a6eaf0cb4f53284"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga87c42ae95ca304956a6eaf0cb4f53284">&#9670;&nbsp;</a></span>R_USB_TYPEC_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_TYPEC_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">usb_typec_info_t *&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get USB Type-C connect Information. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a503cdfe2eb44ba99be68a08f618114e9">usb_typec_api_t::infoGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful completion. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>USB TYPEC module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga546ad6b23c02d38ae5dc9f858f17ff64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga546ad6b23c02d38ae5dc9f858f17ff64">&#9670;&nbsp;</a></span>R_USB_TYPEC_LowPowerModeSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_USB_TYPEC_LowPowerModeSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#gad88f6369920ad2164f1816cd81ddbc34">usb_typec_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#ga8c9844eac6088d2111cb3cd4860dca28">usb_typec_ccs_status_t</a>&#160;</td>
+          <td class="paramname"><em>status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set IRQ Mode for USB Type-C module by Low Power Mode. Implements <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html#a39399f29a2b8c6c307d6905fbdb3d309">usb_typec_api_t::lowPowerModeSet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful completion. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>USB TYPEC module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_USB_PARAMETER</td><td>Parameter error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

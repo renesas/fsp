@@ -1,7 +1,12 @@
 var group___r_m___z_m_o_d4_x_x_x___a_p_i =
 [
-    [ "rm_zmod4xxx_callback_args_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__callback__args__t", null ],
-    [ "rm_zmod4xxx_raw_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t", null ],
+    [ "rm_zmod4xxx_callback_args_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__callback__args__t", [
+      [ "p_context", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#afc7de35bee2acf74068852746ce4cbdd", null ],
+      [ "event", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aff3af2ef87941d7baa5f8ff96bde910c", null ]
+    ] ],
+    [ "rm_zmod4xxx_raw_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t", [
+      [ "adc_data", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a365aff617aa6dfb02c8712d8b097d46c", null ]
+    ] ],
     [ "rm_zmod4xxx_iaq_1st_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__1st__data__t", [
       [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8d8907540984f151e5d47932c1db9b18", null ],
       [ "rcda", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abdc449da78d2149a7b552ef545a1b069", null ],
@@ -12,6 +17,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
     ] ],
     [ "rm_zmod4xxx_iaq_2nd_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t", [
       [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6486c18c874aacc219e4015104c62431", null ],
+      [ "compensation_rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#afe1eb49a590f77b03e1356874ef8a88f", null ],
       [ "log_rcda", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a04d026df23f93a2ccd598b7fc7546c5d", null ],
       [ "log_nonlog_rcda", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a4bf54edf41460cfb0e6a8bd1cf9a825e", null ],
       [ "iaq", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a6de91ae7e87c6ad5197ceff295b7fdf3", null ],
@@ -52,11 +58,14 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
     ] ],
     [ "rm_zmod4xxx_pbaq_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__pbaq__data__t", [
       [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a29b261371c083057349366a8a79159a3", null ],
+      [ "compensation_rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5f6615cd907269e0f651aeedb4265c70", null ],
       [ "log_rcda", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84714eb40a19ee482d532bfd7c937f2d", null ],
       [ "rhtr", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8131af7e04832c883b3a2758d460e5d1", null ],
       [ "temperature", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a4e9292675723948829cbd6fc61957511", null ],
       [ "tvoc", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a20cacee1933b041699cb0ddc40cffeb2", null ],
       [ "etoh", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5bcd90e4eb1d705a71453a5c35229719", null ],
+      [ "iaq", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a0e7ef354218b8e9f8e0057c903fe46dd", null ],
+      [ "rel_iaq", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ab1247aedcf3da796f06c2dfe5a3ba6bd", null ],
       [ "sample_id", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a5b4b384231c7e7aa9d782c94abd2e1f3", null ]
     ] ],
     [ "rm_zmod4xxx_no2_o3_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__no2__o3__data__t", [
@@ -102,9 +111,13 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
     ] ],
     [ "rm_zmod4xxx_ctrl_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c", null ],
     [ "rm_zmod4xxx_event_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#gadd54ca8592a0f7cb81913d2250e89060", [
+      [ "RM_ZMOD4XXX_EVENT_SUCCESS", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060ad4a8d5c5a86233ad7c751f3fc80a6c2a", null ],
+      [ "RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060a0facecd4f8a2114fb25cf0275e06564a", null ],
+      [ "RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060a9fabd943dcf61cf0cec562204845bf3e", null ],
       [ "RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060a55d1b247ecb594b099b15e120ae6b6a4", null ],
       [ "RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060aa55c18d81d34427bcfd2f631e6b2a3a4", null ],
-      [ "RM_ZMOD4XXX_EVENT_DEV_ERR_DAMAGE", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060a1d714f6dc93f40773c087a51e3ff609c", null ]
+      [ "RM_ZMOD4XXX_EVENT_DEV_ERR_DAMAGE", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060a1d714f6dc93f40773c087a51e3ff609c", null ],
+      [ "RM_ZMOD4XXX_EVENT_ERROR", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ggadd54ca8592a0f7cb81913d2250e89060a03264d65855c78d71b8e1c9030c0d1b1", null ]
     ] ],
     [ "rm_zmod4xxx_sulfur_odor_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga47f50ad1a54e470fb44b443351c39beb", null ]
 ];

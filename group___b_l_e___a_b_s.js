@@ -1,7 +1,7 @@
 var group___b_l_e___a_b_s =
 [
     [ "abs_advertising_parameter_t", "group___b_l_e___a_b_s.html#structabs__advertising__parameter__t", [
-      [ "advertising_parameter", "group___b_l_e___a_b_s.html#a4ec9737dc6ca777c8f78b4bd00b4df98", null ],
+      [ "advertising_parameter", "group___b_l_e___a_b_s.html#a1606334b4a68379f60f915b6ba9062f5", null ],
       [ "advertising_status", "group___b_l_e___a_b_s.html#a405afac397b8a3595f073dde8e334bb3", null ],
       [ "remote_device_address", "group___b_l_e___a_b_s.html#a699d72b43a98e57d2bbd666390db824f", null ]
     ] ],

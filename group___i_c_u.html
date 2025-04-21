@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -238,7 +238,8 @@ $(document).ready(function(){initNavTree('group___i_c_u.html','');});
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">External IRQ (r_icu)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___i_n_p_u_t___m_o_d_u_l_e_s.html">Input</a></div></div>  </div>
 </div><!--header-->
@@ -276,7 +277,7 @@ Features</h2>
 </ul>
 <h1><a class="anchor" id="r-icu-configuration"></a>
 Configuration</h1>
-<p><a class="anchor" id="um_icu_open_channel"></a><a class="anchor" id="um_icu_open_priority"></a><a class="anchor" id="um_icu_open_digital_filter"></a> <h2>Build Time Configurations for r_icu</h2>
+<p><a class="anchor" id="um_icu_open_channel"></a><a class="anchor" id="um_icu_open_priority"></a><a class="anchor" id="um_icu_open_digital_filter"></a><a class="anchor" id="um_icu_open_digital_filter_by_loco"></a> <h2>Build Time Configurations for r_icu</h2>
 The following build time configurations are defined in fsp_cfg/r_icu_cfg.h:<br />
 </p><table class="doxtable">
 <tr>
@@ -305,6 +306,8 @@ This module can be added to the Stacks tab via New Stack &gt; Input &gt; Externa
 <td>Trigger</td><td>MCU Specific Options</td><td></td><td>Select the signal edge or state that triggers an interrupt. </td></tr>
 <tr class="tree_none">
 <td>Digital Filtering</td><td>MCU Specific Options</td><td></td><td>Select if the digital noise filter should be enabled. </td></tr>
+<tr class="tree_none">
+<td>Filter Source</td><td>MCU Specific Options</td><td></td><td>Select the clock source for digital filter (Only affected when the digital filter is enabled). </td></tr>
 <tr class="tree_none">
 <td>Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled)</td><td>MCU Specific Options</td><td></td><td>Select the clock divider for the digital noise filter. </td></tr>
 <tr class="tree_none">
@@ -336,10 +339,41 @@ Examples</h1>
 <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ICU_IRQN_PIN    BSP_IO_PORT_02_PIN_06</span></div><div class="line"><span class="preprocessor">#define ICU_IRQN        6</span></div><div class="line"></div><div class="line"><span class="comment">/* Called from icu_irq_isr */</span></div><div class="line"><span class="keywordtype">void</span> external_irq_callback (<a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    (void) p_args;</div><div class="line"></div><div class="line">    g_external_irq_complete = 1;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> simple_example ()</div><div class="line">{</div><div class="line">    <span class="comment">/* Example Configuration */</span></div><div class="line">    <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__cfg__t">external_irq_cfg_t</a> icu_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a1b7ba67ea2063df052d7cff54d642455">channel</a>          = ICU_IRQN,</div><div class="line">        .trigger          = <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca2d7a4f8fd21fad6f5a671336152d46b0">EXTERNAL_IRQ_TRIG_RISING</a>,</div><div class="line">        .filter_enable    = <span class="keyword">false</span>,</div><div class="line">        .clock_source_div = <a class="code" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga739b3c56a0ebe492581dc75c41fd1627a9ee6a36c6bbdc9b1069bd5e06f1a192c">EXTERNAL_IRQ_CLOCK_SOURCE_DIV_1</a>,</div><div class="line">        .p_callback       = external_irq_callback,</div><div class="line">        .p_context        = 0,</div><div class="line">        .ipl              = 0,</div><div class="line">        .irq              = (IRQn_Type) 0,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Configure the external interrupt. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___i_c_u.html#ga036e85b235d213b257cae159b9eba0a3">R_ICU_ExternalIrqOpen</a>(&amp;g_icu_ctrl, &amp;icu_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the external interrupt. */</span></div><div class="line">    <span class="comment">/* Enable not required when used with ELC or DMAC. */</span></div><div class="line">    err = <a class="code" href="group___i_c_u.html#ga56b7181d7a70a5b8655659d760993ad1">R_ICU_ExternalIrqEnable</a>(&amp;g_icu_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_external_irq_complete)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structicu__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#structicu__extended__cfg__t">icu_extended_cfg_t</a></td></tr>
+<tr class="separator:structicu__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structicu__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#structicu__instance__ctrl__t">icu_instance_ctrl_t</a></td></tr>
 <tr class="separator:structicu__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gad1258af39d17814f95bde231e98d8d2d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_c_u.html#gad1258af39d17814f95bde231e98d8d2d">e_external_irq_digital_filter_t</a> </td></tr>
+<tr class="separator:gad1258af39d17814f95bde231e98d8d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structicu__extended__cfg__t" id="structicu__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structicu__extended__cfg__t">&#9670;&nbsp;</a></span>icu_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct icu_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended ICU interface configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af0130345eb3afcfc853a0d83c51720a1"></a><a class="el" href="group___i_c_u.html#gad1258af39d17814f95bde231e98d8d2d">e_external_irq_digital_filter_t</a></td>
+<td class="fieldname">
+filter_src</td>
+<td class="fielddoc">
+Select digital filter clock source when digital filter is enabled. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structicu__instance__ctrl__t" id="structicu__instance__ctrl__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structicu__instance__ctrl__t">&#9670;&nbsp;</a></span>icu_instance_ctrl_t</h2>
 
@@ -385,6 +419,28 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 
 </div>
 </div>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gad1258af39d17814f95bde231e98d8d2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1258af39d17814f95bde231e98d8d2d">&#9670;&nbsp;</a></span>e_external_irq_digital_filter_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___i_c_u.html#gad1258af39d17814f95bde231e98d8d2d">e_external_irq_digital_filter_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>External IRQ input pin digital filtering clock selection. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad1258af39d17814f95bde231e98d8d2da7f2634d4f011174e5e6ab6207516b324"></a>EXTERNAL_IRQ_DIGITAL_FILTER_PCLK_DIV&#160;</td><td class="fielddoc"><p>Digital filter using clock PCLK dividers. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad1258af39d17814f95bde231e98d8d2da27be01f31dc97ed57ebffbeeb99c66fe"></a>EXTERNAL_IRQ_DIGITAL_FILTER_LOCO&#160;</td><td class="fielddoc"><p>Digital filter using clock LOCO. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -573,7 +629,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

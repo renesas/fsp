@@ -17,6 +17,7 @@ var group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s =
     [ "Ethernet (r_ether_phy)", "group___e_t_h_e_r___p_h_y.html", "group___e_t_h_e_r___p_h_y" ],
     [ "FreeRTOS+TCP Wrapper to r_ether (rm_freertos_plus_tcp)", "group___f_r_e_e_r_t_o_s___p_l_u_s___t_c_p.html", null ],
     [ "GTL BLE Abstraction (rm_ble_abs_gtl)", "group___b_l_e___a_b_s___g_t_l.html", null ],
+    [ "NFC Reader Driver on PTX (rm_nfc_reader_ptx)", "group___n_f_c___r_e_a_d_e_r___p_t_x.html", "group___n_f_c___r_e_a_d_e_r___p_t_x" ],
     [ "NetX Duo Ethernet Driver (rm_netxduo_ether)", "group___r_m___n_e_t_x_d_u_o___e_t_h_e_r.html", null ],
     [ "NetX Duo WiFi Driver (rm_netxduo_wifi)", "group___r_m___n_e_t_x_d_u_o___w_i_f_i.html", null ],
     [ "On Chip HTTP Client on DA16XXX (rm_http_onchip_da16xxx)", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x.html", "group___h_t_t_p___o_n_c_h_i_p___d_a16_x_x_x" ],

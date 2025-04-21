@@ -29,6 +29,7 @@ var searchData=
   ['i3c_5finstance_5ft',['i3c_instance_t',['../group___i3_c___a_p_i.html#structi3c__instance__t',1,'']]],
   ['i3c_5fslave_5fcommand_5fresponse_5finfo_5ft',['i3c_slave_command_response_info_t',['../group___i3_c.html#structi3c__slave__command__response__info__t',1,'']]],
   ['i3c_5fslave_5finfo_5ft',['i3c_slave_info_t',['../group___i3_c___a_p_i.html#structi3c__slave__info__t',1,'']]],
+  ['icu_5fextended_5fcfg_5ft',['icu_extended_cfg_t',['../group___i_c_u.html#structicu__extended__cfg__t',1,'']]],
   ['icu_5finstance_5fctrl_5ft',['icu_instance_ctrl_t',['../group___i_c_u.html#structicu__instance__ctrl__t',1,'']]],
   ['iic_5fb_5fmaster_5fclock_5fsettings_5ft',['iic_b_master_clock_settings_t',['../group___i_i_c___b___m_a_s_t_e_r.html#structiic__b__master__clock__settings__t',1,'']]],
   ['iic_5fb_5fmaster_5fextended_5fcfg_5ft',['iic_b_master_extended_cfg_t',['../group___i_i_c___b___m_a_s_t_e_r.html#structiic__b__master__extended__cfg__t',1,'']]],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -238,7 +238,8 @@ $(document).ready(function(){initNavTree('group___r_s_i_p___p_r_o_t_e_c_t_e_d.ht
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">Renesas Secure IP (r_rsip_protected)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_c_u_r_i_t_y___m_o_d_u_l_e_s.html">Security</a></div></div>  </div>
 </div><!--header-->
@@ -302,6 +303,28 @@ Functions</h2></td></tr>
 <tr class="separator:ga1b6da72c01f4ff1d69daddb0c8bde220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga88dc03024998371115fea7c6deae0e33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga88dc03024998371115fea7c6deae0e33">R_RSIP_ECDH_PlainKeyAgree</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_plain_public_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__secret__t">rsip_wrapped_secret_t</a> *const p_wrapped_secret)</td></tr>
 <tr class="separator:ga88dc03024998371115fea7c6deae0e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga447af011f4a0d4737651cf5a18e2b842"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga447af011f4a0d4737651cf5a18e2b842">R_RSIP_PureEdDSA_Sign</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_message, uint64_t const message_length, uint8_t *const p_signature)</td></tr>
+<tr class="separator:ga447af011f4a0d4737651cf5a18e2b842"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e74e8a5c2935bb8fdb56bbabf32d8ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga4e74e8a5c2935bb8fdb56bbabf32d8ae">R_RSIP_PureEdDSA_Verify</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_message, uint64_t const message_length, uint8_t const *const p_signature)</td></tr>
+<tr class="separator:ga4e74e8a5c2935bb8fdb56bbabf32d8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4ca55deaea9cccbc8f40633733b05b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gad4ca55deaea9cccbc8f40633733b05b8">R_RSIP_KDF_SHA_Init</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const hash_type)</td></tr>
+<tr class="separator:gad4ca55deaea9cccbc8f40633733b05b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f8df80ab06e2535b06e7208fe7378d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga7f8df80ab06e2535b06e7208fe7378d4">R_RSIP_KDF_SHA_ECDHSecretUpdate</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__secret__t">rsip_wrapped_secret_t</a> const *const p_wrapped_secret)</td></tr>
+<tr class="separator:ga7f8df80ab06e2535b06e7208fe7378d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5c2d607a0edc0dad56043daebb5e411"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gab5c2d607a0edc0dad56043daebb5e411">R_RSIP_KDF_SHA_Update</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_message, uint32_t const message_length)</td></tr>
+<tr class="separator:gab5c2d607a0edc0dad56043daebb5e411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7441d84f3204943d165b6283f9948efe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga7441d84f3204943d165b6283f9948efe">R_RSIP_KDF_SHA_Finish</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> *const p_wrapped_dkm)</td></tr>
+<tr class="separator:ga7441d84f3204943d165b6283f9948efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae694292c146b0b45024f885f90899119"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gae694292c146b0b45024f885f90899119">R_RSIP_KDF_SHA_Suspend</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__sha__handle__t">rsip_kdf_sha_handle_t</a> *const p_handle)</td></tr>
+<tr class="separator:gae694292c146b0b45024f885f90899119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab15d57fa3eb9e2160221066b888cc7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gab15d57fa3eb9e2160221066b888cc7e9">R_RSIP_KDF_SHA_Resume</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__sha__handle__t">rsip_kdf_sha_handle_t</a> const *const p_handle)</td></tr>
+<tr class="separator:gab15d57fa3eb9e2160221066b888cc7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19da4ae3f3dbfa1d5c9fbe73a436398f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga19da4ae3f3dbfa1d5c9fbe73a436398f">R_RSIP_KDF_SHA_DKMConcatenate</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> *const p_wrapped_dkm1, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> const *const p_wrapped_dkm2, uint32_t const wrapped_dkm1_buffer_length)</td></tr>
+<tr class="separator:ga19da4ae3f3dbfa1d5c9fbe73a436398f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedd265454a79fd87d1d401375bdaf258"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gaedd265454a79fd87d1d401375bdaf258">R_RSIP_KDF_SHA_DerivedKeyImport</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> const *const p_wrapped_dkm, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, uint32_t const position, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
+<tr class="separator:gaedd265454a79fd87d1d401375bdaf258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f3e35217c5e266ccdbfb80bcc0a5e2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga2f3e35217c5e266ccdbfb80bcc0a5e2b">R_RSIP_KDF_SHA_DerivedIVWrap</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> const *const p_wrapped_dkm, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gae61f4d26c0ba8bb71e87d9d7e1a049cd">rsip_initial_vector_type_t</a> const initial_vector_type, uint32_t const position, uint8_t const *const p_tls_sequence_num, uint8_t *const p_wrapped_initial_vector)</td></tr>
+<tr class="separator:ga2f3e35217c5e266ccdbfb80bcc0a5e2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga81da79c6a6b9819242d95d093b56ce3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga81da79c6a6b9819242d95d093b56ce3b">R_RSIP_KDF_MACKeyImport</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__mac__t">rsip_wrapped_mac_t</a> const *const p_wrapped_mac, uint32_t const key_length, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:ga81da79c6a6b9819242d95d093b56ce3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae622f085f6da7b3e4ad94b43115f3532"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gae622f085f6da7b3e4ad94b43115f3532">R_RSIP_KDF_ECDHSecretKeyImport</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const key_type, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__secret__t">rsip_wrapped_secret_t</a> const *const p_wrapped_secret, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
@@ -382,6 +405,8 @@ Functions</h2></td></tr>
 <tr class="separator:gafaed3bf40a39f370ec3ad676de4891f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb97c276b5b7c30829f4f0e9c889334c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafb97c276b5b7c30829f4f0e9c889334c">R_RSIP_HMAC_Resume</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__hmac__handle__t">rsip_hmac_handle_t</a> const *const p_handle)</td></tr>
 <tr class="separator:gafb97c276b5b7c30829f4f0e9c889334c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1b16661cd2630678f3a8701c6dc0602"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gae1b16661cd2630678f3a8701c6dc0602">R_RSIP_FSBL_OEM_BL_Digest_Generate</a> (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_key_cert, uint32_t const key_cert_max_length, uint8_t const *const p_code_cert, uint32_t const code_cert_max_length, uint32_t *const p_mac)</td></tr>
+<tr class="separator:gae1b16661cd2630678f3a8701c6dc0602"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the Renesas Secure IP on RA MPUs. This module implements the <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html">RSIP Interface</a>. </p>
@@ -429,7 +454,44 @@ Features</h2>
 <li>brainpool P256r1/P384r1/P512r1</li>
 </ul>
 </li>
+<li>EdDSA<a class="anchor" id="um_rsip_protected_ecc_eddsa"></a><ul>
+<li>Ed25519</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Key Agreement<ul>
 <li>ECDH<a class="anchor" id="um_rsip_protected_ecc_ecdh"></a><ul>
+<li>secp256r1/secp384r1/secp521r1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Key Derivation<ul>
+<li>Key Derivation Function (KDF) using SHA<a class="anchor" id="um_rsip_protected_kdf_sha"></a><ul>
+<li>SHA-256bit</li>
+</ul>
+</li>
+<li>Key Derivation Function (KDF) using HMAC<a class="anchor" id="um_rsip_protected_kdf_hmac"></a><ul>
+<li>HMAC-SHA256/384/512bit</li>
+</ul>
+</li>
+<li>Key Import by derived keying material</li>
+<li>IV output by derived keying material</li>
+</ul>
+</li>
+<li>Public Key Infrastructure (PKI)<a class="anchor" id="um_rsip_protected_pki"></a><ul>
+<li>Certificate Verification<ul>
+<li>ECDSA<ul>
+<li>secp256r1/secp384r1/secp521r1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Key Import from Certificate<ul>
+<li>ECC<ul>
 <li>secp256r1/secp384r1/secp521r1</li>
 </ul>
 </li>
@@ -467,7 +529,11 @@ Features</h2>
 </li>
 </ul>
 </li>
-<li>Random Number Generate<a class="anchor" id="um_rsip_protected_drbg"></a> </li>
+<li>Random Number Generate<a class="anchor" id="um_rsip_protected_drbg"></a></li>
+<li>Secure boot for FSBL<a class="anchor" id="um_rsip_protected_secure_boot"></a><ul>
+<li>Manifest verification and MAC generation (Refer to Application Note R11AN0774.)</li>
+</ul>
+</li>
 </ul>
 <h2><a class="anchor" id="r-rsip-protected-supported-algorithms"></a>
 Supported algorithms</h2>
@@ -519,6 +585,8 @@ Asymmetric Key</h3>
 <td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga4ed61c073c7b98245fd8e1c21410b083abce4cdc2b3b2a481fda13a0c71ac3e23">RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP384R1</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533adc74be12d6057717fa42f6aaca9a928a">RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a450d667fbef7c24a4cb217b8532d62c5">RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE</a> </td><td>Not Supported </td><td>Supported </td></tr>
 <tr>
 <td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga4ed61c073c7b98245fd8e1c21410b083afa2184274ee180495305104cb5a7a0ab">RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP512R1</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a303f33724bf2ddbac8b8a75d28e6d23b">RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PUBLIC</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533af3fff2339f53b87c403c5d7e5daf2b12">RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PRIVATE</a> </td><td>Not Supported </td><td>Supported </td></tr>
+<tr>
+<td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga4ed61c073c7b98245fd8e1c21410b083a5c4ae81ffaf879f40263225b8de54bae">RSIP_KEY_PAIR_TYPE_ECC_EDWARDS25519</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ae861da084419988c48b67f864922da6d">RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533adefa46b11670b22c52ea466d57b20ad8">RSIP_KEY_TYPE_ECC_EDWARDS25519_PRIVATE</a> </td><td>Not Supported </td><td>Supported </td></tr>
 <tr>
 <td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga4ed61c073c7b98245fd8e1c21410b083aa0cd2ab30ec0148ad600f992ce927aa3">RSIP_KEY_PAIR_TYPE_RSA_2048</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a42373d227654ba94eaf9bd837915e282">RSIP_KEY_TYPE_RSA_2048_PUBLIC</a> </td><td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a5c3eee3902dcd6f2161a40c2b9ff081b">RSIP_KEY_TYPE_RSA_2048_PRIVATE</a> </td><td>Not Supported </td><td>Supported </td></tr>
 <tr>
@@ -581,6 +649,20 @@ Hash Function</h3>
 <td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a42459c435a6732056efc9b0026efb69e">RSIP_HASH_TYPE_SHA512_224</a> </td><td>Not Supported </td><td>Supported </td></tr>
 <tr>
 <td><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a42c1bdd5072314a38acd3f128577c1b5">RSIP_HASH_TYPE_SHA512_256</a> </td><td>Not Supported </td><td>Supported </td></tr>
+</table>
+<h3><a class="anchor" id="r-rsip-protected-supported-algorithms-kdf-function"></a>
+Key Derivation Function</h3>
+<table class="doxtable">
+<tr>
+<th>Key Derivation Function </th><th>RSIP-E11A </th><th>RSIP-E51A  </th></tr>
+<tr>
+<td>SHA-256 </td><td>Supported </td><td>Not Supported </td></tr>
+<tr>
+<td>HMAC-SHA256 </td><td>Not Supported </td><td>Supported </td></tr>
+<tr>
+<td>HMAC-SHA384 </td><td>Not Supported </td><td>Supported </td></tr>
+<tr>
+<td>HMAC-SHA384 </td><td>Not Supported </td><td>Supported </td></tr>
 </table>
 <h1><a class="anchor" id="r-rsip-protected-configuration"></a>
 Configuration</h1>
@@ -715,6 +797,14 @@ Disabled</li>
 </td><td>Enabled </td><td>If the application uses only some of the algorithm in the function, the code size can be reduced by disabling the unused algorithms. This configuration is provided only for the functions for which it works effectively. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">ECC BRAINPOOLP512R1</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>If the application uses only some of the algorithm in the function, the code size can be reduced by disabling the unused algorithms. This configuration is provided only for the functions for which it works effectively. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ECC EDWARDS25519</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
@@ -918,6 +1008,8 @@ Disabled</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">ECC BRAINPOOLP512R1</td><td>Disabled</td><td>Disabled </td><td>If the application uses only some of the algorithm in the function, the code size can be reduced by disabling the unused algorithms. This configuration is provided only for the functions for which it works effectively. </td></tr>
 <tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ECC EDWARDS25519</td><td>Disabled</td><td>Disabled </td><td>If the application uses only some of the algorithm in the function, the code size can be reduced by disabling the unused algorithms. This configuration is provided only for the functions for which it works effectively. </td></tr>
+<tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">RSA-2048</td><td>Disabled</td><td>Disabled </td><td>If the application uses only some of the algorithm in the function, the code size can be reduced by disabling the unused algorithms. This configuration is provided only for the functions for which it works effectively. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">RSA-3072</td><td>Disabled</td><td>Disabled </td><td>If the application uses only some of the algorithm in the function, the code size can be reduced by disabling the unused algorithms. This configuration is provided only for the functions for which it works effectively. </td></tr>
@@ -1025,6 +1117,8 @@ State Transition</h2>
 <tr>
 <td>STATE_HMAC </td><td>Computing HMAC. </td></tr>
 <tr>
+<td>STATE_KDF_SHA </td><td>Computing KDF SHA. </td></tr>
+<tr>
 <td>STATE_KDF_HMAC </td><td>Computing KDF HMAC. </td></tr>
 </table>
 <p>There are two types of APIs provided by the RSIP driver for accelerating cryptographic operations: those that provide cryptographic operations in a single API and those that provide them in multiple APIs. In this document, the former is referred to as single-part operations and the latter as multi-part operations. Each corresponds to the following algorithms:</p>
@@ -1068,6 +1162,85 @@ HMAC Example</h2>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrsip__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#structrsip__instance__ctrl__t">rsip_instance_ctrl_t</a></td></tr>
 <tr class="separator:structrsip__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5a3ff940a6dd4274adb2bb743f89cb74"><td class="memItemLeft" align="right" valign="top"><a id="ga5a3ff940a6dd4274adb2bb743f89cb74"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga5a3ff940a6dd4274adb2bb743f89cb74">FSP_ERR_SB_INTERNAL_FAIL</a></td></tr>
+<tr class="memdesc:ga5a3ff940a6dd4274adb2bb743f89cb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">An internal failure. <br /></td></tr>
+<tr class="separator:ga5a3ff940a6dd4274adb2bb743f89cb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b60d187d644c7d7bf94f9acc9a52126"><td class="memItemLeft" align="right" valign="top"><a id="ga8b60d187d644c7d7bf94f9acc9a52126"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga8b60d187d644c7d7bf94f9acc9a52126">FSP_ERR_SB_INVALID_ARG</a></td></tr>
+<tr class="memdesc:ga8b60d187d644c7d7bf94f9acc9a52126"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid argument was entered. <br /></td></tr>
+<tr class="separator:ga8b60d187d644c7d7bf94f9acc9a52126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20b71bf29235caea74fc24c087e8b99c"><td class="memItemLeft" align="right" valign="top"><a id="ga20b71bf29235caea74fc24c087e8b99c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga20b71bf29235caea74fc24c087e8b99c">FSP_ERR_SB_UNSUPPORTED_FUNCTION</a></td></tr>
+<tr class="memdesc:ga20b71bf29235caea74fc24c087e8b99c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsupported function executed. <br /></td></tr>
+<tr class="separator:ga20b71bf29235caea74fc24c087e8b99c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga476579ab816d13afeab1221b1eb5cbe3"><td class="memItemLeft" align="right" valign="top"><a id="ga476579ab816d13afeab1221b1eb5cbe3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga476579ab816d13afeab1221b1eb5cbe3">FSP_ERR_SB_INVALID_ALIGNMENT</a></td></tr>
+<tr class="memdesc:ga476579ab816d13afeab1221b1eb5cbe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data entered with incorrect alignment. <br /></td></tr>
+<tr class="separator:ga476579ab816d13afeab1221b1eb5cbe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1159895d1080bac5fa304b0fb163cf3"><td class="memItemLeft" align="right" valign="top"><a id="gad1159895d1080bac5fa304b0fb163cf3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gad1159895d1080bac5fa304b0fb163cf3">FSP_ERR_SB_SAME_IMAGE_VERSION</a></td></tr>
+<tr class="memdesc:gad1159895d1080bac5fa304b0fb163cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same image version. <br /></td></tr>
+<tr class="separator:gad1159895d1080bac5fa304b0fb163cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3fbeeb8d6037e17e077f13a772f11bc"><td class="memItemLeft" align="right" valign="top"><a id="gae3fbeeb8d6037e17e077f13a772f11bc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gae3fbeeb8d6037e17e077f13a772f11bc">FSP_ERR_SB_LOWER_IMAGE_VERSION</a></td></tr>
+<tr class="memdesc:gae3fbeeb8d6037e17e077f13a772f11bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lower image version. <br /></td></tr>
+<tr class="separator:gae3fbeeb8d6037e17e077f13a772f11bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea2a2a260e5a04d10eb7a4130707151e"><td class="memItemLeft" align="right" valign="top"><a id="gaea2a2a260e5a04d10eb7a4130707151e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gaea2a2a260e5a04d10eb7a4130707151e">FSP_ERR_SB_MANI_INVALID_MAGIC</a></td></tr>
+<tr class="memdesc:gaea2a2a260e5a04d10eb7a4130707151e"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid magic number is set. <br /></td></tr>
+<tr class="separator:gaea2a2a260e5a04d10eb7a4130707151e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46a72cafbd7e6b57d4d63f00ba7c3e6d"><td class="memItemLeft" align="right" valign="top"><a id="ga46a72cafbd7e6b57d4d63f00ba7c3e6d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga46a72cafbd7e6b57d4d63f00ba7c3e6d">FSP_ERR_SB_MANI_UNSUPPORTED_VERSION</a></td></tr>
+<tr class="memdesc:ga46a72cafbd7e6b57d4d63f00ba7c3e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsupported version is set. <br /></td></tr>
+<tr class="separator:ga46a72cafbd7e6b57d4d63f00ba7c3e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga332ec419c4f5ba9265cacaddc4874321"><td class="memItemLeft" align="right" valign="top"><a id="ga332ec419c4f5ba9265cacaddc4874321"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga332ec419c4f5ba9265cacaddc4874321">FSP_ERR_SB_MANI_OUT_OF_RANGE_LEN</a></td></tr>
+<tr class="memdesc:ga332ec419c4f5ba9265cacaddc4874321"><td class="mdescLeft">&#160;</td><td class="mdescRight">Out of range TLV Length is set. <br /></td></tr>
+<tr class="separator:ga332ec419c4f5ba9265cacaddc4874321"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5ddd0355b84440506e0866ed7825f8f"><td class="memItemLeft" align="right" valign="top"><a id="gaf5ddd0355b84440506e0866ed7825f8f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gaf5ddd0355b84440506e0866ed7825f8f">FSP_ERR_SB_MANI_TLV_FIELD_ERR</a></td></tr>
+<tr class="memdesc:gaf5ddd0355b84440506e0866ed7825f8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Missing required TLV field. <br /></td></tr>
+<tr class="separator:gaf5ddd0355b84440506e0866ed7825f8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94870c76aaec736ff9bc880daa556b2d"><td class="memItemLeft" align="right" valign="top"><a id="ga94870c76aaec736ff9bc880daa556b2d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga94870c76aaec736ff9bc880daa556b2d">FSP_ERR_SB_MANI_TLV_INVALID_LEN</a></td></tr>
+<tr class="memdesc:ga94870c76aaec736ff9bc880daa556b2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length exceeding the end of the manifest is specified in length of the TLV field. <br /></td></tr>
+<tr class="separator:ga94870c76aaec736ff9bc880daa556b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab3995110fedc2ca74301ce673f98fa7"><td class="memItemLeft" align="right" valign="top"><a id="gaab3995110fedc2ca74301ce673f98fa7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gaab3995110fedc2ca74301ce673f98fa7">FSP_ERR_SB_MANI_INVALID_IMAGE_LEN</a></td></tr>
+<tr class="memdesc:gaab3995110fedc2ca74301ce673f98fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">An invalid image length is set. <br /></td></tr>
+<tr class="separator:gaab3995110fedc2ca74301ce673f98fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0745ee55b1f2939309de8e05be194ec"><td class="memItemLeft" align="right" valign="top"><a id="gaf0745ee55b1f2939309de8e05be194ec"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gaf0745ee55b1f2939309de8e05be194ec">FSP_ERR_SB_MANI_MISMATCH_SIGN_ALGORITHM</a></td></tr>
+<tr class="memdesc:gaf0745ee55b1f2939309de8e05be194ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">There is a wrong combination of signature algorithms. <br /></td></tr>
+<tr class="separator:gaf0745ee55b1f2939309de8e05be194ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7284516f203a639fe572757d0d8764d"><td class="memItemLeft" align="right" valign="top"><a id="gac7284516f203a639fe572757d0d8764d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gac7284516f203a639fe572757d0d8764d">FSP_ERR_SB_MANI_UNSUPPORTED_ALGORITHM</a></td></tr>
+<tr class="memdesc:gac7284516f203a639fe572757d0d8764d"><td class="mdescLeft">&#160;</td><td class="mdescRight">An algorithm was specified that the manifest does not support. <br /></td></tr>
+<tr class="separator:gac7284516f203a639fe572757d0d8764d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2becc62a266e021dbd40e3d94e5407b7"><td class="memItemLeft" align="right" valign="top"><a id="ga2becc62a266e021dbd40e3d94e5407b7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga2becc62a266e021dbd40e3d94e5407b7">FSP_ERR_SB_CRYPTO_FAIL</a></td></tr>
+<tr class="memdesc:ga2becc62a266e021dbd40e3d94e5407b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cryptographic processing failure. <br /></td></tr>
+<tr class="separator:ga2becc62a266e021dbd40e3d94e5407b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48a79bedac05bb9eaf4f7a548a8afb2a"><td class="memItemLeft" align="right" valign="top"><a id="ga48a79bedac05bb9eaf4f7a548a8afb2a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga48a79bedac05bb9eaf4f7a548a8afb2a">FSP_ERR_SB_CRYPTO_AUTH_FAIL</a></td></tr>
+<tr class="memdesc:ga48a79bedac05bb9eaf4f7a548a8afb2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verification failed. <br /></td></tr>
+<tr class="separator:ga48a79bedac05bb9eaf4f7a548a8afb2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41100687f112b08951d71d4f11ca9170"><td class="memItemLeft" align="right" valign="top"><a id="ga41100687f112b08951d71d4f11ca9170"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga41100687f112b08951d71d4f11ca9170">FSP_ERR_SB_CRYPTO_UNSUPPORTED_ALGORITHM</a></td></tr>
+<tr class="memdesc:ga41100687f112b08951d71d4f11ca9170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsupported algorithm. <br /></td></tr>
+<tr class="separator:ga41100687f112b08951d71d4f11ca9170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8e64530bfed122a6d72f9740836da9e"><td class="memItemLeft" align="right" valign="top"><a id="gaa8e64530bfed122a6d72f9740836da9e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gaa8e64530bfed122a6d72f9740836da9e">FSP_ERR_SB_CRYPTO_RESOURCE_CONFLICT</a></td></tr>
+<tr class="memdesc:gaa8e64530bfed122a6d72f9740836da9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">CryptoIP is in use. <br /></td></tr>
+<tr class="separator:gaa8e64530bfed122a6d72f9740836da9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacad0d7d833bedc26c8594ce335700038"><td class="memItemLeft" align="right" valign="top"><a id="gacad0d7d833bedc26c8594ce335700038"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gacad0d7d833bedc26c8594ce335700038">FSP_ERR_SB_CRYPTO_PARAM_ERR</a></td></tr>
+<tr class="memdesc:gacad0d7d833bedc26c8594ce335700038"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter error. <br /></td></tr>
+<tr class="separator:gacad0d7d833bedc26c8594ce335700038"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structrsip__instance__ctrl__t" id="structrsip__instance__ctrl__t"></a>
@@ -3164,6 +3337,660 @@ Data Structures</h2></td></tr>
 
 </div>
 </div>
+<a id="ga447af011f4a0d4737651cf5a18e2b842"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga447af011f4a0d4737651cf5a18e2b842">&#9670;&nbsp;</a></span>R_RSIP_PureEdDSA_Sign()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_PureEdDSA_Sign </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_private_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_public_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t const&#160;</td>
+          <td class="paramname"><em>message_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_signature</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generates an EdDSA signature.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a226a03a040b76d54d5fc3d43515e4ea0">rsip_api_t::eddsaSign</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd><p class="startdd">Key type of p_wrapped_private_key must be one of the following:</p><ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533adefa46b11670b22c52ea466d57b20ad8">RSIP_KEY_TYPE_ECC_EDWARDS25519_PRIVATE</a></li>
+</ul>
+<p class="enddd">Key type of p_wrapped_public_key must be one of the following:</p><ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ae861da084419988c48b67f864922da6d">RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC</a> </li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Input length is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL</td><td>Input key is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>Section <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#r-rsip-protected-supported-algorithms">Supported Algorithms</a>. </dd></dl>
+
+</div>
+</div>
+<a id="ga4e74e8a5c2935bb8fdb56bbabf32d8ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4e74e8a5c2935bb8fdb56bbabf32d8ae">&#9670;&nbsp;</a></span>R_RSIP_PureEdDSA_Verify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_PureEdDSA_Verify </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_public_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t const&#160;</td>
+          <td class="paramname"><em>message_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_signature</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verifies an EdDSA signature.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a8974daa8dc3a0d7181a05ed6a6f1e58b">rsip_api_t::eddsaVerify</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Key type of p_wrapped_public_key must be one of the following:<ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ae861da084419988c48b67f864922da6d">RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC</a> </li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Input length is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL</td><td>Input key is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>Section <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#r-rsip-protected-supported-algorithms">Supported Algorithms</a>. </dd></dl>
+
+</div>
+</div>
+<a id="gad4ca55deaea9cccbc8f40633733b05b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4ca55deaea9cccbc8f40633733b05b8">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_Init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> const&#160;</td>
+          <td class="paramname"><em>hash_type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepares a SHA generation.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aceb5ccdc7774bc8212eb761032dd5fb1">rsip_api_t::kdfshaInit</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Argument hash_type must be one of the following:<ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89aa9b386d1b29869e511efd8d28f95cf06">RSIP_HASH_TYPE_SHA256</a></li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_MAIN</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_KDF_SHA </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7f8df80ab06e2535b06e7208fe7378d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f8df80ab06e2535b06e7208fe7378d4">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_ECDHSecretUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_ECDHSecretUpdate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__secret__t">rsip_wrapped_secret_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_secret</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inputs wrapped ECDH secret as a message. Input the messages required to perform the SHA operation using this API and <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gab5c2d607a0edc0dad56043daebb5e411">R_RSIP_KDF_SHA_Update()</a> in the desired order.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a6e446dde7aa386179d6e0ebaaa0829b7">rsip_api_t::kdfshaEcdhSecretUpdate</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>The argument p_wrapped_secret must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga1b6da72c01f4ff1d69daddb0c8bde220">R_RSIP_ECDH_KeyAgree()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga88dc03024998371115fea7c6deae0e33">R_RSIP_ECDH_PlainKeyAgree()</a>. This API cannot be called multiple times in a process of performing SHA operation.</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_KDF_SHA</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab5c2d607a0edc0dad56043daebb5e411"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab5c2d607a0edc0dad56043daebb5e411">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_Update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>message_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inputs message. Input the messages required to perform the SHA operation using this API and <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga7f8df80ab06e2535b06e7208fe7378d4">R_RSIP_KDF_SHA_ECDHSecretUpdate()</a> in the desired order.</p>
+<p>The total message length that can be input is up to 64 bytes before and after calling <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga7f8df80ab06e2535b06e7208fe7378d4">R_RSIP_KDF_SHA_ECDHSecretUpdate()</a>.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a7a5acdf4bf82949202c35cc46311b8ac">rsip_api_t::kdfshaUpdate</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_KDF_SHA</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Input message_length is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7441d84f3204943d165b6283f9948efe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7441d84f3204943d165b6283f9948efe">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_Finish()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_Finish </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_dkm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes a SHA operation and generate DKM (Derived Keying Material).</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#acc7529cc06a6d51ee0f0e033cff4d9d9">rsip_api_t::kdfshaFinish</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_KDF_SHA</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value </th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_MAIN </td></tr>
+<tr>
+<td>FSP_ERR_ASSERTION </td><td>No change </td></tr>
+<tr>
+<td>FSP_ERR_NOT_OPEN </td><td>No change </td></tr>
+<tr>
+<td>FSP_ERR_INVALID_STATE</td><td>No change </td></tr>
+<tr>
+<td>Others </td><td>STATE_MAIN </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae694292c146b0b45024f885f90899119"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae694292c146b0b45024f885f90899119">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_Suspend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_Suspend </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__sha__handle__t">rsip_kdf_sha_handle_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Suspends SHA operation.</p>
+<p>This API releases RSIP resource and outputs intermediate results. Therefore, it can be used in the following cases:</p><ul>
+<li>Execute another cryptographic operations during inputting successive chunks of the message.</li>
+<li>Reuse intermediate results.</li>
+</ul>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a84330339762b9fa5323fd2a059273749">rsip_api_t::kdfshaSuspend</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_KDF_SHA</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_MAIN </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab15d57fa3eb9e2160221066b888cc7e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab15d57fa3eb9e2160221066b888cc7e9">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_Resume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_Resume </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__kdf__sha__handle__t">rsip_kdf_sha_handle_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resumes SHA operation suspended by <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gae694292c146b0b45024f885f90899119">R_RSIP_KDF_SHA_Suspend()</a>.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a05d40f33c5f4c57701da942e87681d05">rsip_api_t::kdfshaResume</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_MAIN</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_KDF_SHA </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga19da4ae3f3dbfa1d5c9fbe73a436398f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga19da4ae3f3dbfa1d5c9fbe73a436398f">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_DKMConcatenate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_DKMConcatenate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_dkm1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_dkm2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>wrapped_dkm1_buffer_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Concatenates two wrapped DKMs.</p>
+<p>DKM1 || DKM2 is output to p_wrapped_dkm1.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#aca0ab3125e5bf5bd4a6e8843dcd9ce7a">rsip_api_t::kdfshaDkmConcatenate</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd>This API can be executed in <b>any state</b> including STATE_INITIAL, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Any length is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaedd265454a79fd87d1d401375bdaf258"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaedd265454a79fd87d1d401375bdaf258">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_DerivedKeyImport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_DerivedKeyImport </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_dkm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga123baeaebf3b0eb3092b446a3aeed533">rsip_key_type_t</a> const&#160;</td>
+          <td class="paramname"><em>key_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a wrapped key from DKM information.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a69236072557562efe20873bc7223a4b7">rsip_api_t::kdfshaDerivedKeyImport</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Argument p_wrapped_dkm must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga7441d84f3204943d165b6283f9948efe">R_RSIP_KDF_SHA_Finish()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga19da4ae3f3dbfa1d5c9fbe73a436398f">R_RSIP_KDF_SHA_DKMConcatenate()</a>. Argument key_type must be one of the following:<ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a86a9d2eba8d8e913beb35a9ef77719ea">RSIP_KEY_TYPE_AES_128</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac73d8d9299a235cdd03315cc8d4cf10c">RSIP_KEY_TYPE_AES_256</a> </li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2f3e35217c5e266ccdbfb80bcc0a5e2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2f3e35217c5e266ccdbfb80bcc0a5e2b">&#9670;&nbsp;</a></span>R_RSIP_KDF_SHA_DerivedIVWrap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_KDF_SHA_DerivedIVWrap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaee5be5be348cb575aba312d9c410c825">rsip_wrapped_dkm_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_dkm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gae61f4d26c0ba8bb71e87d9d7e1a049cd">rsip_initial_vector_type_t</a> const&#160;</td>
+          <td class="paramname"><em>initial_vector_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_tls_sequence_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_wrapped_initial_vector</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Outputs a initial vector from DKM information.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a019b78c7dd53a0c051749bd70324582f">rsip_api_t::kdfshaDerivedIvWrap</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Argument p_wrapped_dkm must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga7441d84f3204943d165b6283f9948efe">R_RSIP_KDF_SHA_Finish()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga19da4ae3f3dbfa1d5c9fbe73a436398f">R_RSIP_KDF_SHA_DKMConcatenate()</a>. Argument initial_vector_type must be one of the following:<ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ggae61f4d26c0ba8bb71e87d9d7e1a049cda17e1e222c3312be0948ba9303854bfd9">RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE</a> </li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga81da79c6a6b9819242d95d093b56ce3b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga81da79c6a6b9819242d95d093b56ce3b">&#9670;&nbsp;</a></span>R_RSIP_KDF_MACKeyImport()</h2>
 
@@ -3207,6 +4034,36 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Converts wrapped data to wrapped HMAC key for KDF.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a565131ace3c34d51ebe423a49ac94213">rsip_api_t::kdfMacKeyImport</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd><p class="startdd">Argument key_type must be one of the following:</p><ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ad06544b015f3cb6936a8edb30fd76795">RSIP_KEY_TYPE_HMAC_SHA256</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533abf2c534a5b4e38bdd3e03578026cab80">RSIP_KEY_TYPE_HMAC_SHA384</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac0d24ca2cee6665e07acc3e48d3f176f">RSIP_KEY_TYPE_HMAC_SHA512</a></li>
+</ul>
+<p class="enddd">The argument p_wrapped_mac must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga75959622e38454728bfeb869616e4af7">R_RSIP_KDF_HMAC_SignFinish()</a>. </p>
+</dd></dl>
+<p>Argument kdf_data_length depends on key type.</p><ul>
+<li>32 to 64 ( <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ad06544b015f3cb6936a8edb30fd76795">RSIP_KEY_TYPE_HMAC_SHA256</a>)</li>
+<li>48 to 64 ( <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533abf2c534a5b4e38bdd3e03578026cab80">RSIP_KEY_TYPE_HMAC_SHA384</a>)</li>
+<li>64 ( <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac0d24ca2cee6665e07acc3e48d3f176f">RSIP_KEY_TYPE_HMAC_SHA512</a>)</li>
+</ul>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Any length is illegal.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Converts wrapped data to wrapped HMAC key for KDF.</p>
 <p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a565131ace3c34d51ebe423a49ac94213">rsip_api_t::kdfMacKeyImport</a>.</p>
 <dl class="section user"><dt>Conditions</dt><dd><p class="startdd">Argument key_type must be one of the following:</p><ul>
@@ -3295,6 +4152,29 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Converts wrapped ECDH secret to wrapped HMAC key for KDF.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a1f0dfc450e4ed2f25544bb4cb54a22fb">rsip_api_t::kdfEcdhSecretKeyImport</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Argument key_type must be one of the following:<ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ad06544b015f3cb6936a8edb30fd76795">RSIP_KEY_TYPE_HMAC_SHA256</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533abf2c534a5b4e38bdd3e03578026cab80">RSIP_KEY_TYPE_HMAC_SHA384</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac0d24ca2cee6665e07acc3e48d3f176f">RSIP_KEY_TYPE_HMAC_SHA512</a> </li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3326,6 +4206,36 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Prepares a HMAC generation.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ad441b8f8a4c0b68b88198ccbc4e98d06">rsip_api_t::kdfhmacInit</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Argument p_wrapped_key must be one of the following:<ul>
+<li>Output data p_wrapped_key from <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gae622f085f6da7b3e4ad94b43115f3532">R_RSIP_KDF_ECDHSecretKeyImport()</a>.</li>
+<li>Key type of p_wrapped_key is RSIP_KEY_TYPE_HMAC_xxx.</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_MAIN</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_KDF_HMAC </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL</td><td>Input key value is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Prepares a HMAC generation.</p>
 <p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ad441b8f8a4c0b68b88198ccbc4e98d06">rsip_api_t::kdfhmacInit</a>.</p>
 <dl class="section user"><dt>Conditions</dt><dd>Argument p_wrapped_key must be one of the following:<ul>
@@ -3393,6 +4303,21 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Inputs wrapped MAC as a message.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ac4268f59d3cac1280c12b99ee592e7fc">rsip_api_t::kdfhmacMacUpdate</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>The argument p_wrapped_mac must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga75959622e38454728bfeb869616e4af7">R_RSIP_KDF_HMAC_SignFinish()</a>.</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_KDF_HMAC</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3424,6 +4349,24 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Inputs wrapped ECDH secret as a message.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a328e931109fb8d6070fb1d702c397dd7">rsip_api_t::kdfhmacEcdhSecretUpdate</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>The argument p_wrapped_secret must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga1b6da72c01f4ff1d69daddb0c8bde220">R_RSIP_ECDH_KeyAgree()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga88dc03024998371115fea7c6deae0e33">R_RSIP_ECDH_PlainKeyAgree()</a>.</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_KDF_HMAC</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Inputs wrapped ECDH secret as a message.</p>
 <p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a328e931109fb8d6070fb1d702c397dd7">rsip_api_t::kdfhmacEcdhSecretUpdate</a>.</p>
 <dl class="section user"><dt>Conditions</dt><dd>The argument p_wrapped_secret must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga1b6da72c01f4ff1d69daddb0c8bde220">R_RSIP_ECDH_KeyAgree()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga88dc03024998371115fea7c6deae0e33">R_RSIP_ECDH_PlainKeyAgree()</a>.</dd></dl>
@@ -3488,6 +4431,23 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL</td><td>Input key is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Inputs message.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a35b1bfdf496fe3011ef3618687d8bd18">rsip_api_t::kdfhmacUpdate</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_KDF_HMAC</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL</td><td>Input key is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3519,6 +4479,38 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Finalizes a HMAC generation.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ae51b484aacbd3c60d9c34c971b2a8dbd">rsip_api_t::kdfhmacSignFinish</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_KDF_HMAC</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value </th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_MAIN </td></tr>
+<tr>
+<td>FSP_ERR_ASSERTION </td><td>No change </td></tr>
+<tr>
+<td>FSP_ERR_NOT_OPEN </td><td>No change </td></tr>
+<tr>
+<td>FSP_ERR_INVALID_STATE</td><td>No change </td></tr>
+<tr>
+<td>Others </td><td>STATE_MAIN </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL</td><td>Input key is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Finalizes a HMAC generation.</p>
 <p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ae51b484aacbd3c60d9c34c971b2a8dbd">rsip_api_t::kdfhmacSignFinish</a>.</p>
 <dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_KDF_HMAC</b>, and causes state transition.</p>
@@ -3601,6 +4593,33 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Suspends HMAC operation.</p>
+<p>This API releases RSIP resource and outputs intermediate results. Therefore, it can be used in the following cases:</p><ul>
+<li>Execute another cryptographic operations during inputting successive chunks of the message.</li>
+<li>Reuse intermediate results.</li>
+</ul>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a31aa8af0ae615c5540c335109cd13608">rsip_api_t::kdfhmacSuspend</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_KDF_HMAC</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_MAIN </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3632,6 +4651,29 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Resumes HMAC operation suspended by <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gab7394875bb1e7411e451d9f6157b0070">R_RSIP_KDF_HMAC_Suspend()</a>.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a69fc28fc75771e9bfa20e880e9191e6b">rsip_api_t::kdfhmacResume</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_MAIN</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_KDF_HMAC </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Resumes HMAC operation suspended by <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gab7394875bb1e7411e451d9f6157b0070">R_RSIP_KDF_HMAC_Suspend()</a>.</p>
 <p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a69fc28fc75771e9bfa20e880e9191e6b">rsip_api_t::kdfhmacResume</a>.</p>
 <dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_MAIN</b>, and causes state transition.</p>
@@ -3687,6 +4729,21 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Concatenates two wrapped MACs.</p>
+<p>MAC1 || MAC2 is output to p_wrapped_mac1.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a99c1fd487090bef1e2f88173779f8f43">rsip_api_t::kdfMacConcatenate</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd>This API can be executed in <b>any state</b> including STATE_INITIAL, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Any length is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Concatenates two wrapped MACs.</p>
 <p>MAC1 || MAC2 is output to p_wrapped_mac1.</p>
 <p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a99c1fd487090bef1e2f88173779f8f43">rsip_api_t::kdfMacConcatenate</a>.</p>
@@ -3767,6 +4824,31 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Outputs a wrapped key from KDF output.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a0e8a12784613003258064c753ad4b0f1">rsip_api_t::kdfDerivedKeyImport</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Argument p_wrapped_mac must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga75959622e38454728bfeb869616e4af7">R_RSIP_KDF_HMAC_SignFinish()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga483ff0c8bfc7e43f89ba991159947e88">R_RSIP_KDF_MACConcatenate()</a>. Argument key_type must be one of the following:<ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a86a9d2eba8d8e913beb35a9ef77719ea">RSIP_KEY_TYPE_AES_128</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac73d8d9299a235cdd03315cc8d4cf10c">RSIP_KEY_TYPE_AES_256</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ad06544b015f3cb6936a8edb30fd76795">RSIP_KEY_TYPE_HMAC_SHA256</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533abf2c534a5b4e38bdd3e03578026cab80">RSIP_KEY_TYPE_HMAC_SHA384</a></li>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac0d24ca2cee6665e07acc3e48d3f176f">RSIP_KEY_TYPE_HMAC_SHA512</a> </li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3822,6 +4904,27 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Outputs a initial vector from KDF output.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a9da0476101e8706d0c29266b5c6b3f3d">rsip_api_t::kdfDerivedIvWrap</a>.</p>
+<dl class="section user"><dt>Conditions</dt><dd>Argument p_wrapped_mac must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga75959622e38454728bfeb869616e4af7">R_RSIP_KDF_HMAC_SignFinish()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga483ff0c8bfc7e43f89ba991159947e88">R_RSIP_KDF_MACConcatenate()</a>. Argument initial_vector_type must be one of the following:<ul>
+<li><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ggae61f4d26c0ba8bb71e87d9d7e1a049cda17e1e222c3312be0948ba9303854bfd9">RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE</a> </li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Input key type is disabled in this function by configuration. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FAIL</td><td>Input parameter is invalid.</td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource required by the processing is in use by other processing. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Outputs a initial vector from KDF output.</p>
 <p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a9da0476101e8706d0c29266b5c6b3f3d">rsip_api_t::kdfDerivedIvWrap</a>.</p>
 <dl class="section user"><dt>Conditions</dt><dd>Argument p_wrapped_mac must be input the result of <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga75959622e38454728bfeb869616e4af7">R_RSIP_KDF_HMAC_SignFinish()</a> or <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga483ff0c8bfc7e43f89ba991159947e88">R_RSIP_KDF_MACConcatenate()</a>. Argument initial_vector_type must be one of the following:<ul>
@@ -5743,6 +6846,32 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Suspends HMAC operation.</p>
+<p>This API releases RSIP resource and outputs intermediate results. Therefore, it can be used in the following cases:</p><ul>
+<li>Execute another cryptographic operations during inputting successive chunks of the message.</li>
+<li>Reuse intermediate results.</li>
+</ul>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#af4f58de5f366f79fb57060821b7b8fa9">rsip_api_t::hmacSuspend</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_HMAC</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_MAIN </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_RSIP_FATAL</td><td>Software corruption is detected. </td></tr>
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
   </table>
@@ -5793,7 +6922,122 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Resumes HMAC operation suspended by <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gafaed3bf40a39f370ec3ad676de4891f5">R_RSIP_HMAC_Suspend()</a>.</p>
+<p>Implements <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a206b031964651bc1a9805ba1a9e67c1b">rsip_api_t::hmacResume</a>.</p>
+<dl class="section user"><dt>State transition</dt><dd><p class="startdd">This API can only be executed in <b>STATE_MAIN</b>, and causes state transition.</p>
+<table class="doxtable">
+<tr>
+<th>Return value</th><th>Next state  </th></tr>
+<tr>
+<td>FSP_SUCCESS </td><td>STATE_HMAC </td></tr>
+<tr>
+<td>Others </td><td>No change </td></tr>
+</table>
+</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae1b16661cd2630678f3a8701c6dc0602"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae1b16661cd2630678f3a8701c6dc0602">&#9670;&nbsp;</a></span>R_RSIP_FSBL_OEM_BL_Digest_Generate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RSIP_FSBL_OEM_BL_Digest_Generate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_key_cert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>key_cert_max_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_code_cert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>code_cert_max_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_mac</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verifies a Manifest signature and outputs the MAC of image and code certificate. The hash algorithm only supports HMAC-SHA256. The signature algorithm only supports ECDSA secp256r1.</p>
+<dl class="section user"><dt>State transition</dt><dd>This API can only be executed in <b>STATE_MAIN</b>, and does not cause any state transitions.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If this API returns FSP_ERR_SB_LOWER_IMAGE_VERSION or FSP_ERR_SB_CRYPTO_AUTH_FAIL, RSIP stops working. In this case, RSIP can be resumed by executing <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#gac7848f48d9f8484cb17e156e299046fe">R_RSIP_Close()</a> and <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d.html#ga0f3222e34aedf16a9eeba214db0aeeac">R_RSIP_Open()</a> in that order.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_key_cert</td><td>Pointer to key certificate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_cert_max_length</td><td>Maximum length of key certificate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_code_cert</td><td>Pointer to key code certificate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">code_cert_max_length</td><td>Maximum length of code certificate. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_mac</td><td>Pointer to output MAC. It is output in TLV format and consists of a 4-byte Type-Length and a 32-byte Value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>Internal state is illegal.</td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_INTERNAL_FAIL</td><td>An internal failure. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_INVALID_ARG</td><td>An invalid argument was entered. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_UNSUPPORTED_FUNCTION</td><td>Unsupported function executed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_INVALID_ALIGNMENT</td><td>Data entered with incorrect alignment. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_SAME_IMAGE_VERSION</td><td>An image of the same version as the current version is input. (verification completed successfully) </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_LOWER_IMAGE_VERSION</td><td>Image version lower than the current image version is installed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_INVALID_MAGIC</td><td>An invalid magic number is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_UNSUPPORTED_VERSION</td><td>Unsupported version is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_OUT_OF_RANGE_LEN</td><td>Out of range TLV Length is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_TLV_FIELD_ERR</td><td>Missing required TLV field. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_TLV_INVALID_LEN</td><td>The length exceeding the end of the manifest is specified in length of the TLV field. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_INVALID_IMAGE_LEN</td><td>An invalid image length is set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_MISMATCH_SIGN_ALGORITHM</td><td>There is a wrong combination of signature algorithms. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_MANI_UNSUPPORTED_ALGORITHM</td><td>An algorithm was specified that the manifest does not support. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_CRYPTO_FAIL</td><td>Cryptographic processing failure. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_CRYPTO_AUTH_FAIL</td><td>Verification failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_CRYPTO_PARAM_ERR</td><td>Parameter error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_SB_CRYPTO_RESOURCE_CONFLICT</td><td>CryptoIP is in use. </td></tr>
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This API is not supported on this device. </td></tr>
   </table>
   </dd>
@@ -5807,7 +7051,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

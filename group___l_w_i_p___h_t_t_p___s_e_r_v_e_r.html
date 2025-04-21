@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.8.0</span>
+   &#160;<span id="projectnumber">Release v5.9.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -249,7 +249,6 @@ Features</h2>
 <p>The LwIP HTTP Server:</p><ul>
 <li>Can respond from HTTP GET and POST requests.</li>
 <li>Supports Server-Side Includes (SSI) and Common Gateway Interface (CGI).</li>
-<li>Can set up TLS connection handling (HTTPS).</li>
 </ul>
 <h1><a class="anchor" id="rm-lwip_http_server-configuration"></a>
 Configuration</h1>
@@ -561,6 +560,7 @@ Limitations</h2>
 <ul>
 <li>In normal mode, the user must select the "HTTP Is Data Volatile" option as Allow Copy mode (TCP_WRITE_FLAG_COPY) in the FSP Configurator properties to ensure tcp_write() functions correctly.</li>
 <li>When using the Server-Side Includes (SSI) mode or the Common Gateway Interface (CGI) mode, make sure that the "HTTP Is Data Volatile" option is set to Allow Copy and More mode (TCP_WRITE_FLAG_COPY | TCP_WRITE_FLAG_MORE) in the FSP Configurator properties to work properly.</li>
+<li>TLS connection handling (HTTPS) is not currently supported.</li>
 </ul>
 <h2>How to use fsdata file</h2>
 <p>There are two ways to use fsdata file as follows:</p>
@@ -603,7 +603,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.8.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
