@@ -633,9 +633,12 @@ static void r_sau_spi_hw_config (sau_spi_instance_ctrl_t * const p_ctrl)
     uint16_t scr = SAU_SPI_SCR_INIT_VALUE;
 
     /* Write settings that are common to master and slave mode. */
+#if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
     smr |= ((uint16_t) (p_cfg->operating_mode << R_SAU0_SMR_CCS_Pos) |
             (uint16_t) (p_extend->transfer_mode << R_SAU0_SMR_MD0_Pos));
-
+#else
+    smr |= (uint16_t) (p_cfg->operating_mode << R_SAU0_SMR_CCS_Pos);
+#endif
     scr |= (uint16_t) (p_extend->data_phase << R_SAU0_SCR_DCP1_Pos) |
            (uint16_t) (p_extend->clock_phase << R_SAU0_SCR_DCP_Pos) |
            (uint16_t) (p_cfg->bit_order << R_SAU0_SCR_DIR_Pos);
@@ -881,7 +884,6 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
  #endif
 #endif
 
-    sau_spi_extended_cfg_t * p_extend = (sau_spi_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     FSP_ERROR_RETURN(p_ctrl->transfer_in_progress == false, FSP_ERR_IN_USE);
 
     /* If single channel is disabled, then save the channel number on the stack. */
@@ -899,7 +901,8 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
     SAU_REG->SCR[SAU_SPI_PRV_CHANNEL] = (uint16_t) (tmp & (uint16_t) ~1) | (SPI_BIT_WIDTH_8_BITS == bit_width);
 
     SAU_REG->SS = (uint16_t) (1 << SAU_SPI_PRV_CHANNEL);
-
+#if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+    sau_spi_extended_cfg_t * p_extend = (sau_spi_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     tmp = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
     if (SAU_SPI_TRANSFER_MODE_CONTINUOUS == p_extend->transfer_mode)
     {
@@ -913,6 +916,7 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
 
         SAU_REG->SMR[SAU_SPI_PRV_CHANNEL] = tmp;
     }
+#endif
 
     /* Setup the control block. */
     p_ctrl->count    = length;
@@ -922,7 +926,11 @@ static fsp_err_t r_sau_spi_write_read_common (sau_spi_instance_ctrl_t * const p_
     p_ctrl->p_dest   = (uint8_t *) p_dest;
 #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE == 1
     p_ctrl->activation_on_tei = false;
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
     if ((1 < length) && !(tmp & (SAU_SPI_TRANSFER_MODE_CONTINUOUS << R_SAU0_SMR_MD0_Pos)))
+ #else
+    if (1 < length)
+ #endif
     {
         r_sau_spi_reconfigure_for_transfer(p_ctrl, 1);
     }
@@ -1066,26 +1074,32 @@ static void r_sau_spi_do_reception (sau_spi_instance_ctrl_t * p_ctrl)
 {
     /* If single channel is disabled, then save the channel number on the stack. */
     SAU_SPI_PRV_CHANNEL_DECLARATION;
-
-    uint16_t smr                = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
-    uint8_t  continous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+    uint16_t smr                 = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
+    uint8_t  continuous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+ #endif
  #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
     if (true == p_ctrl->activation_on_tei)
     {
         p_ctrl->activation_on_tei = false;
-        p_ctrl->rx_count          = p_ctrl->count - 1 - continous_transfer;
-        p_ctrl->tx_count          = p_ctrl->count;
+  #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+        p_ctrl->rx_count = p_ctrl->count - 1 - continuous_transfer;
+  #else
+        p_ctrl->rx_count = p_ctrl->count - 1;
+  #endif
+        p_ctrl->tx_count = p_ctrl->count;
 
         return;
     }
  #endif
-    if (continous_transfer)
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+    if (continuous_transfer)
     {
         if (0 == p_ctrl->tx_count)
         {
- #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+  #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
             r_sau_spi_reconfigure_for_transfer(p_ctrl, 2);
- #endif
+  #endif
             SAU_REG->SDR_b[SAU_SPI_PRV_CHANNEL].DAT = R_SAU_SDR_DUMMY_DATA;
             p_ctrl->tx_count++;
         }
@@ -1109,6 +1123,7 @@ static void r_sau_spi_do_reception (sau_spi_instance_ctrl_t * p_ctrl)
         }
     }
     else
+ #endif
     {
         r_sau_spi_receive(p_ctrl);
         if (p_ctrl->rx_count == p_ctrl->count)
@@ -1129,11 +1144,14 @@ static void r_sau_spi_do_reception (sau_spi_instance_ctrl_t * p_ctrl)
 #elif (SAU_SPI_TRANSFER_OPERATION_MODE == SAU_SPI_TRANSFER_MODE_TRANSMISSION)
 static void r_sau_spi_do_transmission (sau_spi_instance_ctrl_t * p_ctrl)
 {
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+
     /* If single channel is disabled, then save the channel number on the stack. */
     SAU_SPI_PRV_CHANNEL_DECLARATION;
 
-    uint16_t smr                = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
-    uint8_t  continous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+    uint16_t smr                 = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
+    uint8_t  continuous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+ #endif
  #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
     if (true == p_ctrl->activation_on_tei)
     {
@@ -1143,23 +1161,28 @@ static void r_sau_spi_do_transmission (sau_spi_instance_ctrl_t * p_ctrl)
         return;
     }
 
-    if (continous_transfer)
+  #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+    if (continuous_transfer)
     {
         if (1U == p_ctrl->tx_count)
         {
             r_sau_spi_reconfigure_for_transfer(p_ctrl, 2);
         }
     }
+  #endif
  #endif
     if (p_ctrl->tx_count < p_ctrl->count)
     {
         r_sau_spi_transmit(p_ctrl);
     }
-    else if (continous_transfer)
+
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+    else if (continuous_transfer)
     {
         smr &= (uint16_t) ~SAU_SPI_TRANSFER_MODE_CONTINUOUS;
         SAU_REG->SMR[SAU_SPI_PRV_CHANNEL] = smr;
     }
+ #endif
     else
     {
         r_sau_spi_call_callback(p_ctrl, SPI_EVENT_TRANSFER_COMPLETE);
@@ -1170,36 +1193,45 @@ static void r_sau_spi_do_transmission (sau_spi_instance_ctrl_t * p_ctrl)
 #else
 static void r_sau_spi_do_transmission_reception (sau_spi_instance_ctrl_t * p_ctrl)
 {
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+
     /* If single channel is disabled, then save the channel number on the stack. */
     SAU_SPI_PRV_CHANNEL_DECLARATION;
 
-    uint16_t smr                = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
-    uint8_t  continous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+    uint16_t smr                 = SAU_REG->SMR[SAU_SPI_PRV_CHANNEL];
+    uint8_t  continuous_transfer = smr & R_SAU0_SMR_MD0_Msk;
+ #endif
  #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
     if (true == p_ctrl->activation_on_tei)
     {
         p_ctrl->activation_on_tei = false;
-        p_ctrl->rx_count          = p_ctrl->count - 1 - continous_transfer;
-        p_ctrl->tx_count          = p_ctrl->count;
+  #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+        p_ctrl->rx_count = p_ctrl->count - 1 - continuous_transfer;
+  #else
+        p_ctrl->rx_count = p_ctrl->count - 1;
+  #endif
+        p_ctrl->tx_count = p_ctrl->count;
 
         return;
     }
  #endif
-    if (continous_transfer)
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+    if (continuous_transfer)
     {
         if (1U < p_ctrl->tx_count)
         {
             r_sau_spi_receive(p_ctrl);
         }
 
- #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
+  #if SAU_SPI_CFG_DTC_SUPPORT_ENABLE
         else
         {
             r_sau_spi_reconfigure_for_transfer(p_ctrl, 2);
         }
- #endif
+  #endif
     }
     else
+ #endif
     {
         r_sau_spi_receive(p_ctrl);
     }
@@ -1208,12 +1240,15 @@ static void r_sau_spi_do_transmission_reception (sau_spi_instance_ctrl_t * p_ctr
     {
         r_sau_spi_transmit(p_ctrl);
     }
-    else if (continous_transfer)
+
+ #if SAU_SPI_TRANSFER_MODE_CONTINUOUS_ENABLE
+    else if (continuous_transfer)
     {
         /* 2nd to last byte */
         smr &= (uint16_t) ~SAU_SPI_TRANSFER_MODE_CONTINUOUS;
         SAU_REG->SMR[SAU_SPI_PRV_CHANNEL] = smr;
     }
+ #endif
     else
     {
         /* last byte */

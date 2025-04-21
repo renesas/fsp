@@ -401,6 +401,7 @@ fsp_err_t R_SAU_LIN_InformationFrameWrite (lin_ctrl_t * const                  p
  *                                   no header matching pid was received(only for slave mode).
  * @retval  FSP_ERR_IN_USE           A transmission or reception is currently in progress. Call @ref R_SAU_LIN_CommunicationAbort
  *                                   to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
+ * @retval  FSP_ERR_INVALID_CALL     Data reception is not possible because a header frame has not been received yet (slave mode only).
  *
  * @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                                   return codes.
@@ -414,6 +415,10 @@ fsp_err_t R_SAU_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ct
 #if SAU_LIN_CFG_PARAM_CHECKING_ENABLE
     status = r_sau_lin_information_read_write_param_check(p_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+
+    /* In slave mode, check that data reception is possible (due to successful header reception) */
+    FSP_ERROR_RETURN((LIN_MODE_MASTER == p_ctrl->p_cfg->mode) || (SAU_LIN_STATE_HEADER_RECEIVED == p_ctrl->state),
+                     FSP_ERR_INVALID_CALL);
 #endif
 
 #if SAU_LIN_CFG_CHECKSUM_SUPPORT_ENABLE
@@ -423,6 +428,7 @@ fsp_err_t R_SAU_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ct
 #endif
     p_ctrl->rx_bytes_expected = p_transfer_params->num_bytes;
     p_ctrl->p_information     = p_transfer_params->p_information;
+    p_ctrl->state             = SAU_LIN_STATE_AWAITING_DATA;
 
     sau_lin_extended_cfg_t const * const p_extend = (sau_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     status = R_SAU_UART_Read(p_extend->p_uart->p_ctrl, p_transfer_params->p_information, p_transfer_params->num_bytes);
@@ -1153,7 +1159,7 @@ static void r_sau_lin_rx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
         FSP_PARAMETER_NOT_USED(p_uart_ctrl);
 #endif
     }
-    else if ((SAU_LIN_STATE_AWAITING_DATA == p_ctrl->state) || (LIN_MODE_MASTER == p_ctrl->p_cfg->mode))
+    else if (SAU_LIN_STATE_AWAITING_DATA == p_ctrl->state)
     {
 #if SAU_LIN_CFG_CHECKSUM_SUPPORT_ENABLE
         if (p_ctrl->validate_checksum)
@@ -1182,7 +1188,7 @@ static void r_sau_lin_rx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
         }
         else
         {
-            p_ctrl->state = SAU_LIN_STATE_AWAITING_DATA;
+            p_ctrl->state = SAU_LIN_STATE_HEADER_RECEIVED;
             event         = LIN_EVENT_RX_START_FRAME_COMPLETE;
         }
     }

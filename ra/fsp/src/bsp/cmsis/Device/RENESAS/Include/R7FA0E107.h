@@ -1069,9 +1069,9 @@ typedef struct
             __IOM uint16_t PIM   : 1;  /*!< [5..5] PIM                                                                */
             __IOM uint16_t NCODR : 1;  /*!< [6..6] NCODR                                                              */
             uint16_t             : 1;
-            __IOM uint16_t PSEL  : 3;  /*!< [10..8] These bits select the peripheral function. For individual
+            __IOM uint16_t PSEL  : 4;  /*!< [11..8] These bits select the peripheral function. For individual
                                         *   pin functions, see the associated tables in this chapter.                 */
-            uint16_t            : 3;
+            uint16_t            : 2;
             __IOM uint16_t ISEL : 1;   /*!< [14..14] IRQ Input Enable                                                 */
             __IOM uint16_t PMC  : 1;   /*!< [15..15] Pin mode control                                                 */
         } PmnPFS_b;
@@ -2536,7 +2536,10 @@ typedef struct                         /*!< (@ 0x40006000) R_ICU Structure      
                                          *   Software Standby/Snooze Mode Returns Enable                               */
             __IOM uint32_t UR1ED : 1;   /*!< [13..13] UARTA1 Reception Transfer End Interrupt Software Standby/Snooze
                                          *   Mode Returns Enable                                                       */
-            uint32_t : 18;
+            uint32_t              : 2;
+            __IOM uint32_t CTSUED : 1;  /*!< [16..16] CTSU Measurement End Interrupt Snooze Mode Returns
+                                         *   Enable                                                                    */
+            uint32_t : 15;
         } SBYEDCR1_b;
     };
 } R_ICU_Type;                           /*!< Size = 840 (0x348)                                                        */
@@ -3373,7 +3376,36 @@ typedef struct                         /*!< (@ 0x400A1000) R_PORGA Structure    
             uint8_t             : 2;
         } ULBS_b;
     };
-} R_PORGA_Type;                        /*!< Size = 10 (0xa)                                                           */
+    __IM uint8_t RESERVED2[6];
+
+    union
+    {
+        __IOM uint8_t CCS[8];          /*!< (@ 0x00000010) Output Current Select Register [0..7]                      */
+
+        struct
+        {
+            __IOM uint8_t SET : 3;     /*!< [2..0] Setting for the low-level output current                           */
+            uint8_t           : 5;
+        } CCS_b[8];
+    };
+
+    union
+    {
+        __IOM uint8_t CCDE;            /*!< (@ 0x00000018) Output Current Control Enable Register                     */
+
+        struct
+        {
+            __IOM uint8_t EN0 : 1;     /*!< [0..0] Output Current Control Function Enable for CCD0 Pin                */
+            __IOM uint8_t EN1 : 1;     /*!< [1..1] Output Current Control Function Enable for CCD1 Pin                */
+            __IOM uint8_t EN2 : 1;     /*!< [2..2] Output Current Control Function Enable for CCD2 Pin                */
+            __IOM uint8_t EN3 : 1;     /*!< [3..3] Output Current Control Function Enable for CCD3 Pin                */
+            __IOM uint8_t EN4 : 1;     /*!< [4..4] Output Current Control Function Enable for CCD4 Pin                */
+            __IOM uint8_t EN5 : 1;     /*!< [5..5] Output Current Control Function Enable for CCD5 Pin                */
+            __IOM uint8_t EN6 : 1;     /*!< [6..6] Output Current Control Function Enable for CCD6 Pin                */
+            __IOM uint8_t EN7 : 1;     /*!< [7..7] Output Current Control Function Enable for CCD7 Pin                */
+        } CCDE_b;
+    };
+} R_PORGA_Type;                        /*!< Size = 25 (0x19)                                                          */
 
 /* =========================================================================================================================== */
 /* ================                                           R_PFS                                           ================ */
@@ -5236,7 +5268,7 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_PFS_PORT_PIN_PmnPFS_PDR_Pos      (2UL)      /*!< PDR (Bit 2)                                           */
  #define R_PFS_PORT_PIN_PmnPFS_PDR_Msk      (0x4UL)    /*!< PDR (Bitfield-Mask: 0x01)                             */
  #define R_PFS_PORT_PIN_PmnPFS_PSEL_Pos     (8UL)      /*!< PSEL (Bit 8)                                          */
- #define R_PFS_PORT_PIN_PmnPFS_PSEL_Msk     (0x700UL)  /*!< PSEL (Bitfield-Mask: 0x07)                            */
+ #define R_PFS_PORT_PIN_PmnPFS_PSEL_Msk     (0xf00UL)  /*!< PSEL (Bitfield-Mask: 0x0f)                            */
  #define R_PFS_PORT_PIN_PmnPFS_ISEL_Pos     (14UL)     /*!< ISEL (Bit 14)                                         */
  #define R_PFS_PORT_PIN_PmnPFS_ISEL_Msk     (0x4000UL) /*!< ISEL (Bitfield-Mask: 0x01)                            */
  #define R_PFS_PORT_PIN_PmnPFS_PMC_Pos      (15UL)     /*!< PMC (Bit 15)                                          */
@@ -5811,6 +5843,8 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_ICU_SBYEDCR1_UT1ED_Msk         (0x1000UL)     /*!< UT1ED (Bitfield-Mask: 0x01)                           */
  #define R_ICU_SBYEDCR1_UR1ED_Pos         (13UL)         /*!< UR1ED (Bit 13)                                        */
  #define R_ICU_SBYEDCR1_UR1ED_Msk         (0x2000UL)     /*!< UR1ED (Bitfield-Mask: 0x01)                           */
+ #define R_ICU_SBYEDCR1_CTSUED_Pos        (16UL)         /*!< CTSUED (Bit 16)                                       */
+ #define R_ICU_SBYEDCR1_CTSUED_Msk        (0x10000UL)    /*!< CTSUED (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
 /* ================                                          R_IICA0                                          ================ */
@@ -6034,6 +6068,12 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_PORGA_ULBS_ULBS4_Msk       (0x10UL) /*!< ULBS4 (Bitfield-Mask: 0x01)                           */
  #define R_PORGA_ULBS_ULBS5_Pos       (5UL)    /*!< ULBS5 (Bit 5)                                         */
  #define R_PORGA_ULBS_ULBS5_Msk       (0x20UL) /*!< ULBS5 (Bitfield-Mask: 0x01)                           */
+/* ==========================================================  CCS  ========================================================== */
+ #define R_PORGA_CCS_SET_Pos          (0UL)    /*!< SET (Bit 0)                                           */
+ #define R_PORGA_CCS_SET_Msk          (0x7UL)  /*!< SET (Bitfield-Mask: 0x07)                             */
+/* =========================================================  CCDE  ========================================================== */
+ #define R_PORGA_CCDE_EN_Pos          (0UL)    /*!< EN (Bit 0)                                            */
+ #define R_PORGA_CCDE_EN_Msk          (0x1UL)  /*!< EN (Bitfield-Mask: 0x01)                              */
 
 /* =========================================================================================================================== */
 /* ================                                           R_PFS                                           ================ */

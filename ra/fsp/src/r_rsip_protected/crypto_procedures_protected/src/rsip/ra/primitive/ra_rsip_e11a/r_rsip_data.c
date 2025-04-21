@@ -14,10 +14,11 @@
  * Global variables
  **********************************************************************************************************************/
 
+uint32_t         S_RAM[RSIP_PRV_WORD_SIZE_S_RAM];
 uint32_t const * S_INST2;
-uint32_t INST_DATA_SIZE;
-uint32_t KEY_INDEX_SIZE;
-uint32_t WRAPPED_KEY_SIZE;
+uint32_t         INST_DATA_SIZE;
+uint32_t         KEY_INDEX_SIZE;
+uint32_t         WRAPPED_KEY_SIZE;
 
 uint32_t const DomainParam_NIST_P256[] =
 {

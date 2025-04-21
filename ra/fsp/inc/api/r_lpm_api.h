@@ -31,6 +31,10 @@
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
 
+#if __has_include("r_lpm_device_types.h")
+ #include "r_lpm_device_types.h"
+#endif
+
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
@@ -565,7 +569,7 @@ typedef struct st_lpm_cfg
     lpm_ram_retention_t ram_retention_cfg;
 #endif
 
-#if BSP_FEATURE_LPM_HAS_LDO_CONTROL
+#if BSP_FEATURE_LPM_HAS_LDO_SKEEP
 
     /** Configure LDOs that are disabled in standby mode. */
     lpm_ldo_standby_cfg_t ldo_standby_cfg;

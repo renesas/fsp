@@ -437,19 +437,16 @@ void usb_cstd_dma_send_restart (usb_utr_t * ptr, uint32_t src, uint32_t data_siz
     uint16_t useport = 0;
     uint16_t usb_dir;
 
-    if ((USB_PIPE1 == pipe) || (USB_PIPE2 == pipe))
+    hw_usb_write_pipesel(ptr, pipe);
+    usb_dir = hw_usb_read_pipecfg(ptr);
+    usb_dir = usb_dir & USB_DIRFIELD;
+    if (0 == usb_dir)
     {
-        hw_usb_write_pipesel(ptr, pipe);
-        usb_dir = hw_usb_read_pipecfg(ptr);
-        usb_dir = usb_dir & USB_DIRFIELD;
-        if (0 == usb_dir)
-        {
-            useport = USB_D0USE;
-        }
-        else
-        {
-            useport = USB_D1USE;
-        }
+        useport = USB_D0USE;
+    }
+    else
+    {
+        useport = USB_D1USE;
     }
 
     /* Changes the FIFO port by the pipe. */
@@ -970,22 +967,6 @@ void usb_cstd_dma_send_complete (uint8_t ip_no, uint16_t use_port)
  #if (USB_CFG_DMA == USB_CFG_ENABLE)
 
 /*******************************************************************************
- * Function Name: usb_ip0_d0fifo_callback
- * Description  : Interrupt service routine of D0FIFO
- * Arguments    : none
- * Return Value : none
- *******************************************************************************/
-void usb_ip0_d0fifo_callback (dmac_callback_args_t * cb_data)
-{
-    (void) *cb_data;
-    usb_cstd_dma_send_complete(USB_IP0, USB_D0USE);
-}
-
-/******************************************************************************
- * End of function usb_cstd_d0fifo_cb
- ******************************************************************************/
-
-/*******************************************************************************
  * Function Name: usb_ip0_d1fifo_callback
  * Description  : Interrupt service routine of D1FIFO
  * Arguments    : none
@@ -998,23 +979,7 @@ void usb_ip0_d1fifo_callback (dmac_callback_args_t * cb_data)
 }
 
 /******************************************************************************
- * End of function usb_ip1_d0fifo_callback
- ******************************************************************************/
-
-/*******************************************************************************
- * Function Name: usb_ip1_d0fifo_callback
- * Description  : Interrupt service routine of D0FIFO
- * Arguments    : none
- * Return Value : none
- *******************************************************************************/
-void usb_ip1_d0fifo_callback (dmac_callback_args_t * cb_data)
-{
-    (void) *cb_data;
-    usb_cstd_dma_send_complete(USB_IP1, USB_D0USE);
-}
-
-/******************************************************************************
- * End of function usb_ip1_d0fifo_callback
+ * End of function usb_ip0_d1fifo_callback
  ******************************************************************************/
 
 /*******************************************************************************

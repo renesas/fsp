@@ -14,13 +14,6 @@
  Macro definitions
  *********************************************************************************************************************/
 
-/* Return code */
-#define FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT      (0x10100)      ///< Hardware resource is busy
-#define FSP_ERR_CRYPTO_RSIP_FATAL                  (0x10101)      ///< Hardware fatal error or unexpected return
-#define FSP_ERR_CRYPTO_RSIP_FAIL                   (0x10102)      ///< Internal error
-#define FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL           (0x10103)      ///< Input key type is illegal
-#define FSP_ERR_CRYPTO_RSIP_AUTHENTICATION         (0x10104)      ///< Authentication failed
-
 /* Version Number of API. */
 #define SCE_VERSION_MAJOR    (1U)
 #define SCE_VERSION_MINOR    (9U)
@@ -319,6 +312,11 @@ void HW_SCE_Aes192GctrUpdateSub(const uint32_t InData_Text[], uint32_t OutData_T
 fsp_err_t HW_SCE_GhashSub (const uint32_t InData_HV[], const uint32_t InData_IV[], const uint32_t InData_Text[], uint32_t OutData_DataT[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_ShaGenerateMessageDigestSub (const uint32_t InData_HashType[], const uint32_t InData_Cmd[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_State[], uint32_t OutData_MsgDigest[], uint32_t OutData_State[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_ShaGenerateMessageDigest_SingleOpSub (const uint32_t InData_HashType[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], uint32_t OutData_MsgDigest[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_ShaGenerateMessageDigestInitSub (const uint32_t InData_HashType[], const uint32_t InData_MsgLen[]);
+fsp_err_t HW_SCE_ShaGenerateMessageDigestUpdateSub (const uint32_t InData_Msg[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_ShaGenerateMessageDigestFinalSub (const uint32_t InData_Msg[], uint32_t OutData_MsgDigest[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_ShaGenerateMessageDigestSuspendSub (uint32_t OutData_State[]);
+fsp_err_t HW_SCE_ShaGenerateMessageDigestResumeSub (const uint32_t InData_HashType[], const uint32_t InData_State[]);
 fsp_err_t HW_SCE_GenerateAes128RandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
 fsp_err_t HW_SCE_GenerateAes192RandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
 fsp_err_t HW_SCE_GenerateAes256RandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
@@ -370,6 +368,15 @@ void HW_SCE_Sha224HmacUpdateSub(const uint32_t InData_Msg[], const uint32_t MAX_
 fsp_err_t HW_SCE_Sha224HmacFinalSub (const uint32_t InData_Cmd[], const uint32_t InData_MAC[], const uint32_t InData_MACLength[], uint32_t OutData_MAC[]);
 fsp_err_t HW_SCE_Sha224HmacMessageDigest(const uint32_t InData_KeyIndex[], const uint32_t InData_Cmd[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_MAC[], const uint32_t InData_length[], uint32_t InData_State[], uint32_t OutData_MAC[], uint32_t OutData_State[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_Sha256HmacMessageDigest(const uint32_t InData_KeyIndex[], const uint32_t InData_Cmd[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_MAC[], const uint32_t InData_length[], uint32_t InData_State[], uint32_t OutData_MAC[], uint32_t OutData_State[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_GenerateSha224HmacRandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
+fsp_err_t HW_SCE_GenerateSha256HmacRandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
+fsp_err_t HW_SCE_GenerateSha384HmacRandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
+fsp_err_t HW_SCE_GenerateSha512HmacRandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
+fsp_err_t HW_SCE_Sha2HmacFinalSub (const uint32_t InData_Cmd[], const uint32_t InData_Msg[], const uint32_t InData_MAC[], const uint32_t InData_length[], uint32_t OutData_MAC[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_Sha2HmacInitSub (const uint32_t InData_KeyMode[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t KEY_SIZE, const uint32_t InData_HashType[], const uint32_t InData_MsgLen[]);
+fsp_err_t HW_SCE_Sha2HmacResumeSub (const uint32_t InData_KeyMode[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t KEY_SIZE, const uint32_t InData_HashType[], const uint32_t InData_State[]);
+fsp_err_t HW_SCE_Sha2HmacSuspendSub (uint32_t OutData_State[]);
+fsp_err_t HW_SCE_Sha2HmacUpdateSub (const uint32_t InData_Msg[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_EddsaSignatureGenerateSub(const uint32_t InData_PrivKeyIndex[], const uint32_t InData_PubKeyIndex[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_DomainParam[], uint32_t OutData_Signature[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_EddsaSignatureVerificationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_Signature[], const uint32_t InData_DomainParam[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_Ed25519ScalarMultiplicationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_XYZ[], const uint32_t InData_DomainParam[], uint32_t OutData_XYZ[]);
@@ -419,5 +426,12 @@ fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral (uint32_t *InData_KeyType, uint3
         uint32_t *InData_Cmd, uint32_t *InData_KeyIndex, uint32_t *InData_IV, uint32_t *InData_SeqNum);
 fsp_err_t HW_SCE_Aes256GcmEncryptInitSubGeneral (uint32_t *InData_KeyType, uint32_t *InData_DataType,
         uint32_t *InData_Cmd, uint32_t *InData_KeyIndex, uint32_t *InData_IV, uint32_t *InData_SeqNum);
-
+fsp_err_t HW_SCE_Aes128XtsEncryptInitSubGeneral (const uint32_t InData_KeyMode[],
+                                                 const uint32_t InData_KeyIndex[],
+                                                 const uint32_t InData_Key[],
+                                                 const uint32_t InData_IV[]);
+fsp_err_t HW_SCE_Aes128XtsDecryptInitSubGeneral (const uint32_t InData_KeyMode[],
+                                                 const uint32_t InData_KeyIndex[],
+                                                 const uint32_t InData_Key[],
+                                                 const uint32_t InData_IV[]);
 #endif /* HW_SCE_RA_PRIVATE_HEADER_FILE */

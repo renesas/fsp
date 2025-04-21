@@ -57,7 +57,16 @@ typedef enum e_rm_zmod4xxx_lib_type
     RM_ZMOD4510_LIB_TYPE_OAQ_2ND_GEN,
     RM_ZMOD4510_LIB_TYPE_NO2_O3,
     RM_ZMOD4450_LIB_TYPE_RAQ,
+    RM_ZMOD4510_LIB_TYPE_COMP,
+    RM_ZMOD4510_LIB_TYPE_COMP_ULP,
 } rm_zmod4xxx_lib_type_t;
+
+/** ZMOD4XXX compensation info */
+typedef struct st_rm_zmod4xxx_compensation_info
+{
+    rm_zmod4xxx_cfg_t const * p_compensation_sensor_cfg; ///< Pointer to configuration structure of compensation sensor.
+    rm_zmod4xxx_raw_data_t  * p_raw_data;                ///< Pointer to compensation sensor raw data
+} rm_zmod4xxx_compensation_info_t;
 
 /** ZMOD4XXX initialization process block */
 typedef struct st_rm_zmod4xxx_init_process_params
@@ -103,8 +112,10 @@ typedef struct st_rm_zmod4xxx_instance_ctrl
     rm_zmod4xxx_cfg_t const         * p_cfg;                         ///< Pointer of configuration block
     rm_comms_instance_t const       * p_comms_i2c_instance;          ///< Pointer of I2C Communications Middleware instance structure
     rm_zmod4xxx_lib_extended_cfg_t  * p_zmod4xxx_lib;                ///< Pointer of ZMOD4XXX Lib extended configuration
-    void const * p_irq_instance;                                     ///< Pointer to IRQ instance.
-    void const * p_context;                                          ///< Pointer to the user-provided context
+    void const             * p_zmod4510_device;                      ///< Pointer of ZMOD4510 device
+    rm_zmod4xxx_raw_data_t * p_zmod4510_raw_data;                    ///< Raw data of ZMOD4510 device for calculating compensation data
+    void const             * p_irq_instance;                         ///< Pointer to IRQ instance.
+    void const             * p_context;                              ///< Pointer to the user-provided context
 
     /* Pointer to callback and optional working memory */
     void (* p_comms_callback)(rm_zmod4xxx_callback_args_t * p_args); ///< I2C Communications callback
@@ -131,6 +142,8 @@ fsp_err_t RM_ZMOD4XXX_StatusCheck(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 fsp_err_t RM_ZMOD4XXX_Read(rm_zmod4xxx_ctrl_t * const p_api_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data);
 fsp_err_t RM_ZMOD4XXX_TemperatureAndHumiditySet(rm_zmod4xxx_ctrl_t * const p_api_ctrl, float temperature,
                                                 float humidity);
+fsp_err_t RM_ZMOD4XXX_CompensationInfoSet(rm_zmod4xxx_ctrl_t * const                    p_api_ctrl,
+                                          rm_zmod4xxx_compensation_info_t const * const p_compensation_info);
 fsp_err_t RM_ZMOD4XXX_DeviceErrorCheck(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
 fsp_err_t RM_ZMOD4XXX_Iaq1stGenDataCalculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,

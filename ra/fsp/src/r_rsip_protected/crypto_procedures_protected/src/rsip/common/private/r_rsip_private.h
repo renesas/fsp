@@ -61,6 +61,14 @@ typedef rsip_ret_t (* rsip_func_ecdsa_sign_t)(const uint32_t InData_KeyIndex[], 
 typedef rsip_ret_t (* rsip_func_ecdsa_verify_t)(const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[],
                                                 const uint32_t InData_Signature[]);
 
+/* EdDSA */
+typedef rsip_ret_t (* rsip_func_eddsa_sign_t)(const uint32_t InData_PrivKeyIndex[], const uint32_t InData_PubKeyIndex[],
+                                              const uint32_t InData_Msg[], const uint64_t InData_MsgLen,
+                                              uint32_t OutData_Signature[]);
+
+typedef rsip_ret_t (* rsip_func_eddsa_verify_t)(const uint32_t InData_KeyIndex[], const uint32_t InData_Msg[],
+                                                const uint64_t InData_MsgLen, const uint32_t InData_Signature[]);
+
 /* ECDH */
 typedef rsip_ret_t (* rsip_func_ecdh_t)(const uint32_t InData_PubKey[], const uint32_t InData_KeyIndex[],
                                         uint32_t OutData_EncSecret[]);
@@ -222,6 +230,9 @@ extern const rsip_func_subset_aes_cmac_t   gp_func_aes_cmac[RSIP_KEY_AES_NUM];
 extern const rsip_func_ecdsa_sign_t   gp_func_ecdsa_sign[RSIP_KEY_ECC_NUM];
 extern const rsip_func_ecdsa_verify_t gp_func_ecdsa_verify[RSIP_KEY_ECC_NUM];
 
+extern const rsip_func_eddsa_sign_t   gp_func_eddsa_sign[RSIP_KEY_ECC_NUM];
+extern const rsip_func_eddsa_verify_t gp_func_eddsa_verify[RSIP_KEY_ECC_NUM];
+
 extern const rsip_func_ecdh_t gp_func_ecdh_wrapped[RSIP_KEY_ECC_NUM];
 extern const rsip_func_ecdh_t gp_func_ecdh_plain[RSIP_KEY_ECC_NUM];
 
@@ -236,17 +247,23 @@ extern const rsip_func_pki_cert_key_import_t     gp_func_pki_cert_key_import_rsa
 extern const rsip_func_rng_t   gp_func_rng;
 extern const rsip_func_ghash_t gp_func_ghash_compute;
 
+extern const rsip_func_kdf_ecdh_secret_msg_wrap_t gp_func_kdf_sha_ecdh_secret_msg_wrap[RSIP_DKM_SUBTYPE_SHA_NUM];
+
+extern const rsip_func_kdf_derived_key_import_t gp_func_kdf_sha_derived_key_import_aes
+[RSIP_DKM_SUBTYPE_SHA_NUM][RSIP_KEY_AES_NUM];
+extern const rsip_func_kdf_derived_iv_wrap_t gp_func_kdf_sha_derived_iv_wrap[RSIP_DKM_SUBTYPE_SHA_NUM][2];
+
 extern const rsip_func_kdf_ecdh_secret_key_import_t gp_func_kdf_ecdh_secret_key_import[RSIP_KEY_KDF_HMAC_NUM];
 extern const rsip_func_kdf_ecdh_secret_msg_wrap_t   gp_func_kdf_ecdh_secret_msg_wrap[RSIP_KEY_KDF_HMAC_NUM];
 extern const rsip_func_kdf_mac_key_import_t         gp_func_kdf_mac_key_import[RSIP_KEY_KDF_HMAC_NUM];
 
-extern const rsip_func_kdf_derived_key_import_t     gp_func_kdf_derived_key_import_aes
+extern const rsip_func_kdf_derived_key_import_t gp_func_kdf_derived_key_import_aes
 [RSIP_KEY_KDF_HMAC_NUM][RSIP_KEY_AES_NUM];
 extern const rsip_func_kdf_derived_key_import_t gp_func_kdf_derived_key_import_hmac
 [RSIP_KEY_KDF_HMAC_NUM][RSIP_KEY_HMAC_NUM];
-extern const rsip_func_kdf_derived_iv_wrap_t               gp_func_kdf_derived_iv_wrap[RSIP_KEY_KDF_HMAC_NUM][2];
+extern const rsip_func_kdf_derived_iv_wrap_t gp_func_kdf_derived_iv_wrap[RSIP_KEY_KDF_HMAC_NUM][2];
 
-extern const rsip_func_rfc3394_key_wrap_t gp_func_rfc3394_key_wrap[RSIP_KEY_AES_NUM];
+extern const rsip_func_rfc3394_key_wrap_t   gp_func_rfc3394_key_wrap[RSIP_KEY_AES_NUM];
 extern const rsip_func_rfc3394_key_unwrap_t gp_func_rfc3394_key_unwrap[RSIP_KEY_AES_NUM];
 
 extern const rsip_func_otf_t gp_func_otf[RSIP_OTF_CHANNEL_NUM][RSIP_KEY_AES_NUM];
@@ -455,11 +472,11 @@ rsip_ret_t r_rsip_hmac_update(const rsip_wrapped_key_t * p_wrapped_key,
 /*******************************************************************************************************************//**
  * Suspend HMAC operation.
  *
- * @param[in,out] internal_state Buffer of internal state.
+ * @param[in,out] p_handle Pointer to handle.
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_hmac_suspend(uint32_t * internal_state);
+rsip_ret_t r_rsip_hmac_suspend(rsip_hmac_handle_t * p_handle);
 
 /*******************************************************************************************************************//**
  * 1. Initialize HMAC operation.
@@ -594,6 +611,16 @@ rsip_ret_t r_rsip_hmac_verify(const rsip_wrapped_key_t * p_wrapped_key,
                               const uint8_t            * p_mac,
                               uint32_t                   mac_length,
                               uint32_t                 * internal_state);
+
+/*******************************************************************************************************************//**
+ * Input the message and finalize hash operation.
+ *
+ * @param[in]     p_handle Pointer to destination of KDF SHA control block.
+ * @param[out]    p_digest Pointer to destination of message digest.
+ *
+ * @return The return value of the internally called primitive function.
+ **********************************************************************************************************************/
+rsip_ret_t r_rsip_kdf_sha_final(rsip_kdf_sha_handle_t * p_handle, uint8_t * p_digest);
 
 /*******************************************************************************************************************//**
  * 1. Initialize HMAC operation.

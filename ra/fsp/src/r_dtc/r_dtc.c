@@ -18,7 +18,7 @@
 #define DTC_OPEN                    (0x44544300)
 
 /** Size of vector table is based on number of vectors defined in BSP. */
-#define DTC_VECTOR_TABLE_ENTRIES    (BSP_ICU_VECTOR_MAX_ENTRIES)
+#define DTC_VECTOR_TABLE_ENTRIES    (BSP_ICU_VECTOR_NUM_ENTRIES)
 
 /** The size of transfer_info_t is defined in the Hardware Manual therefore it must be 16 bytes. */
 #define DTC_TRANSFER_INFO_SIZE      (16U)

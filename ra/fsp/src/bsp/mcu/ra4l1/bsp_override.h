@@ -59,6 +59,7 @@ typedef enum
     LVD_THRESHOLD_MONITOR_2_LEVEL_2_09V = 0x05UL, ///< 2.09V
     LVD_THRESHOLD_MONITOR_2_LEVEL_1_88V = 0x06UL, ///< 1.88V
     LVD_THRESHOLD_MONITOR_2_LEVEL_1_67V = 0x07UL, ///< 1.67V
+    LVD_THRESHOLD_NOT_AVAILABLE         = 0xFFUL, ///< Not Used
 } lvd_threshold_t;
 
 /** Wake from deep sleep or standby mode sources, does not apply to sleep or deep standby modes */
@@ -126,7 +127,7 @@ typedef enum e_lpm_snooze_request
     LPM_SNOOZE_REQUEST_IRQ13          = 0x00002000ULL, ///< Enable IRQ13 pin snooze request
     LPM_SNOOZE_REQUEST_IRQ14          = 0x00004000ULL, ///< Enable IRQ14 pin snooze request
     LPM_SNOOZE_REQUEST_IRQ15          = 0x00008000ULL, ///< Enable IRQ15 pin snooze request
-    LPM_SNOOZE_REQUEST_ACMPLP0        = 0x00400000ULL, ///< Enable Low-speed analog comparator 0 snooze request
+    LPM_SNOOZE_REQUEST_ACMPLP0        = 0x00800000ULL, ///< Enable Low-speed analog comparator 0 snooze request
     LPM_SNOOZE_REQUEST_RTC_ALARM      = 0x01000000ULL, ///< Enable RTC alarm snooze request
     LPM_SNOOZE_REQUEST_RTC_PERIOD     = 0x02000000ULL, ///< Enable RTC period snooze request
     LPM_SNOOZE_REQUEST_AGT1_UNDERFLOW = 0x10000000ULL, ///< Enable AGT1 underflow snooze request
@@ -137,14 +138,14 @@ typedef enum e_lpm_snooze_request
 /** Snooze end control */
 typedef enum e_lpm_snooze_end
 {
-    LPM_SNOOZE_END_STANDBY_WAKE_SOURCES       = 0x00U, ///< Transition from Snooze to Normal mode directly
-    LPM_SNOOZE_END_AGT1_UNDERFLOW             = 0x01U, ///< AGT1 underflow
-    LPM_SNOOZE_END_DTC_TRANS_COMPLETE         = 0x02U, ///< Last DTC transmission completion
-    LPM_SNOOZE_END_DTC_TRANS_COMPLETE_NEGATED = 0x04U, ///< Not Last DTC transmission completion
-    LPM_SNOOZE_END_ADC0_COMPARE_MATCH         = 0x08U, ///< ADC Channel 0 compare match
-    LPM_SNOOZE_END_ADC0_COMPARE_MISMATCH      = 0x10U, ///< ADC Channel 0 compare mismatch
-    LPM_SNOOZE_END_SCI0_ADDRESS_MISMATCH      = 0x20U, ///< SCI0 address mismatch
-    LPM_SNOOZE_END_CTSU_NAJED                 = 0x40U, ///< CTSU2SLa non-touch automatic judgment
+    LPM_SNOOZE_END_STANDBY_WAKE_SOURCES       = 0x00U,  ///< Transition from Snooze to Normal mode directly
+    LPM_SNOOZE_END_AGT1_UNDERFLOW             = 0x01U,  ///< AGT1 underflow
+    LPM_SNOOZE_END_DTC_TRANS_COMPLETE         = 0x02U,  ///< Last DTC transmission completion
+    LPM_SNOOZE_END_DTC_TRANS_COMPLETE_NEGATED = 0x04U,  ///< Not Last DTC transmission completion
+    LPM_SNOOZE_END_ADC0_COMPARE_MATCH         = 0x08U,  ///< ADC Channel 0 compare match
+    LPM_SNOOZE_END_ADC0_COMPARE_MISMATCH      = 0x10U,  ///< ADC Channel 0 compare mismatch
+    LPM_SNOOZE_END_SCI0_ADDRESS_MISMATCH      = 0x80U,  ///< SCI0 address mismatch
+    LPM_SNOOZE_END_CTSU_NAJED                 = 0x200U, ///< CTSU2SLa non-touch automatic judgment
 } lpm_snooze_end_t;
 
 typedef uint16_t lpm_snooze_end_bits_t;

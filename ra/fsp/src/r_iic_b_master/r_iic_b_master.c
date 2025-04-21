@@ -62,7 +62,7 @@
 #define IIC_B_MASTER_ROUNDING_OFF_COMP                (1U)
 
 #if IIC_B_MASTER_CFG_PARAM_CHECKING_ENABLE
- #if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS && IIC_B_MASTER_CFG_DTC_ENABLE
+ #if BSP_FEATURE_IIC_B_CHECK_SCILV_BEFORE_MASTER_WRITE_TX_DATA && IIC_B_MASTER_CFG_DTC_ENABLE
 
 /* The address of the MCU Version Register on RA2E2 MCUs. Different transmission procedures are used depending on the
  * version of the MCU (This is only used on RA2E2 devices). */
@@ -278,7 +278,7 @@ fsp_err_t R_IIC_B_MASTER_Read (i2c_master_ctrl_t * const p_api_ctrl,
 #if IIC_B_MASTER_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl != NULL);
     FSP_ASSERT(bytes != 0U);
- #if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS && IIC_B_MASTER_CFG_DTC_ENABLE
+ #if BSP_FEATURE_IIC_B_CHECK_SCILV_BEFORE_MASTER_WRITE_TX_DATA && IIC_B_MASTER_CFG_DTC_ENABLE
     if (1 == I2C_A2E2_VERSION)
     {
         FSP_ASSERT(NULL == ((iic_b_master_instance_ctrl_t *) p_api_ctrl)->p_cfg->p_transfer_tx);
@@ -316,7 +316,7 @@ fsp_err_t R_IIC_B_MASTER_Write (i2c_master_ctrl_t * const p_api_ctrl,
 {
 #if IIC_B_MASTER_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_api_ctrl != NULL);
- #if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS && IIC_B_MASTER_CFG_DTC_ENABLE
+ #if BSP_FEATURE_IIC_B_CHECK_SCILV_BEFORE_MASTER_WRITE_TX_DATA && IIC_B_MASTER_CFG_DTC_ENABLE
     if (1 == I2C_A2E2_VERSION)
     {
         FSP_ASSERT(NULL == ((iic_b_master_instance_ctrl_t *) p_api_ctrl)->p_cfg->p_transfer_tx);
@@ -851,7 +851,7 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
         (I2C_MASTER_RATE_FASTPLUS ==
          p_ctrl->p_cfg->rate) ? IIC_B_MASTER_BFRECDT_FASTPLUS_DELAY_CONST : IIC_B_MASTER_BFRECDT_DELAY_CONST;
     uint32_t iic_clock_ns = (uint32_t) IIC_B_MASTER_BILLION / p_extend->iic_clock_freq;
-    p_ctrl->p_reg->BFRECDT = (uint32_t) (BSP_FEATURE_IIC_BUS_FREE_TIME_MULTIPLIER + IIC_B_MASTER_ROUNDING_OFF_COMP +
+    p_ctrl->p_reg->BFRECDT = (uint32_t) (BSP_FEATURE_IIC_B_BUS_FREE_TIME_MULTIPLIER + IIC_B_MASTER_ROUNDING_OFF_COMP +
                                          extra_ns / iic_clock_ns);
 }
 
@@ -1079,7 +1079,7 @@ static void iic_b_master_txi_master (iic_b_master_instance_ctrl_t * p_ctrl)
         if (p_ctrl->remain > 0U)
 #endif
         {
-#if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS
+#if BSP_FEATURE_IIC_B_CHECK_SCILV_BEFORE_MASTER_WRITE_TX_DATA
 
             /* Confirm that PRSTDBG.SCILV = 0 (check the status of SCL) before writing the transmission data.
              * Please refer to UMH r01uh0919ej0130-ra2e2 25.3.3.3.1 I2C Master Transmission Flow (Single Buffer Transfer) for details.
@@ -1498,7 +1498,7 @@ static void iic_b_master_txi_send_address (iic_b_master_instance_ctrl_t * const 
         }
 #endif
 
-#if BSP_FEATURE_IIC_B_CHECK_SCL_STATUS
+#if BSP_FEATURE_IIC_B_CHECK_SCILV_BEFORE_MASTER_WRITE_TX_DATA
 
         /* Confirm that PRSTDBG.SCILV = 0 (check the status of SCL) before writing the transmission data.
          * Please refer to UMH r01uh0919ej0130-ra2e2 25.3.3.3.1 I2C Master Transmission Flow (Single Buffer Transfer) for details.

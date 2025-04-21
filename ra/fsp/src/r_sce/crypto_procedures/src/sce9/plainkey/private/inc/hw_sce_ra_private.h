@@ -661,6 +661,7 @@ fsp_err_t HW_SCE_Sha1GenerateMessageDigestSub(uint32_t *InData_SHA1InitVal, uint
         uint32_t MAX_CNT, uint32_t *OutData_MsgDigest);
 fsp_err_t HW_SCE_Sha224256GenerateMessageDigestSub(const uint32_t *InData_SHAInitVal, const uint32_t *InData_PaddedMsg,
         const uint32_t MAX_CNT, uint32_t *OutData_MsgDigest);
+fsp_err_t HW_SCE_ShaGenerateMessageDigestSubAdaptor (const uint32_t InData_InitVal[], const uint32_t InData_PaddedMsg[], uint32_t OutData_MsgDigest[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_ShaGenerateMessageDigestSub(const uint32_t InData_HashType[], const uint32_t InData_Cmd[],
         const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_State[],
         uint32_t OutData_MsgDigest[], uint32_t OutData_State[], const uint32_t MAX_CNT);       
@@ -864,4 +865,12 @@ fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
                                  const uint32_t InData_DataT[],
                                  const uint32_t InData_DataTLen[],
                                  uint32_t       OutData_DataT[]);
+fsp_err_t HW_SCE_Aes128XtsEncryptInitSubGeneral (uint32_t InData_KeyMode[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_Key[],
+                                                 uint32_t InData_IV[]);
+fsp_err_t HW_SCE_Aes128XtsDecryptInitSubGeneral (uint32_t InData_KeyMode[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_Key[],
+                                                 uint32_t InData_IV[]);
 #endif /* HW_SCE_RA_PRIVATE_HEADER_FILE */

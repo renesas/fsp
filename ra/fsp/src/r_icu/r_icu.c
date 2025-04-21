@@ -22,6 +22,10 @@
 #if BSP_FEATURE_ICU_HAS_FILTER
  #define ICU_FCLKSEL_OFFSET    (4)
  #define ICU_FLTEN_OFFSET      (7)
+ #if BSP_FEATURE_ICU_HAS_LOCO_FILTER
+  #define LOCO_CLOCK_HZ        (R_BSP_SourceClockHzGet(FSP_PRIV_CLOCK_LOCO))
+  #define SYSTEM_CLOCK_HZ      (SystemCoreClock)
+ #endif
 #endif
 
 /* If the mask is larger than 0xFFFF, then it requires 32-bit values instead of 16-bit */
@@ -109,12 +113,18 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
     FSP_ERROR_RETURN(ICU_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
     FSP_ASSERT(NULL != p_cfg);
+
+ #if BSP_FEATURE_ICU_HAS_LOCO_FILTER
+    FSP_ASSERT(NULL != p_cfg->p_extend);
+ #endif
+
  #if !BSP_FEATURE_ICU_HAS_FILTER
 
     /* Verify the configuration trigger source is correct */
     FSP_ERROR_RETURN((EXTERNAL_IRQ_TRIG_FALLING == p_cfg->trigger) ||
                      (EXTERNAL_IRQ_TRIG_RISING == p_cfg->trigger) ||
-                     (EXTERNAL_IRQ_TRIG_BOTH_EDGE == p_cfg->trigger),
+                     (EXTERNAL_IRQ_TRIG_BOTH_EDGE == p_cfg->trigger) ||
+                     (EXTERNAL_IRQ_TRIG_LEVEL_LOW == p_cfg->trigger),
                      FSP_ERR_UNSUPPORTED);
  #endif
 
@@ -150,14 +160,22 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
     p_ctrl->channel    = p_cfg->channel;
 
     uint8_t channel = ICU_IRQCR_CH(p_ctrl->channel);
+    uint8_t irqcr   = 0;
 
 #if BSP_FEATURE_ICU_HAS_FILTER
 
     /* Disable digital filter */
     ICU_IRQCR_REG[channel] = 0U;
 
+ #if BSP_FEATURE_ICU_HAS_LOCO_FILTER
+    icu_extended_cfg_t * p_extend = (icu_extended_cfg_t *) p_cfg->p_extend;
+
     /* Set the digital filter divider. */
-    uint8_t irqcr = (uint8_t) (p_cfg->clock_source_div << ICU_FCLKSEL_OFFSET);
+    irqcr = (uint8_t) (p_extend->filter_src << R_ICU_IRQCR_LOCOSEL_Pos);
+ #endif
+
+    /* Set the digital filter divider. */
+    irqcr |= (uint8_t) (p_cfg->clock_source_div << ICU_FCLKSEL_OFFSET);
 
     /* Enable/Disable digital filter. */
     irqcr |= (uint8_t) (p_cfg->filter_enable << ICU_FLTEN_OFFSET);
@@ -165,13 +183,26 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
     /* Set the IRQ trigger. */
     irqcr |= (uint8_t) (p_cfg->trigger << ICU_IRQMD_OFFSET);
 #else
-    uint8_t irqcr = (uint8_t) (p_cfg->trigger << ICU_IRQMD_OFFSET);
+    irqcr = (uint8_t) (p_cfg->trigger << ICU_IRQMD_OFFSET);
 #endif
 
     /* Write IRQCR */
     ICU_IRQCR_REG[channel] = irqcr;
 
 #if BSP_FEATURE_ICU_HAS_IELSR
+ #if BSP_FEATURE_ICU_HAS_LOCO_FILTER
+
+    /* If LOCO is used as Digital Filtering Sample Clock, delay 4 LOCO clock cycles before restore IELSR */
+    if (EXTERNAL_IRQ_DIGITAL_FILTER_LOCO == p_extend->filter_src)
+    {
+        /* If LOCO is used as Digital Filtering Sample Clock, delay 4 LOCO clock cycles before restore IELSR.
+         * Total_cycles = (4 * system_clock_hz) / (loco_clock_hz).
+         */
+        uint32_t total_cycles = (uint32_t) ((4 * SYSTEM_CLOCK_HZ) / LOCO_CLOCK_HZ);
+
+        bsp_prv_software_delay_loop(BSP_DELAY_LOOPS_CALCULATE(total_cycles));
+    }
+ #endif
 
     /* Restore IELSR. */
     R_ICU->IELSR[p_ctrl->irq] = ielsr;

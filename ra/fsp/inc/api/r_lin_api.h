@@ -65,9 +65,9 @@ typedef enum e_lin_event
     LIN_EVENT_RX_WAKEUP_COMPLETE            = (1UL << 7),  ///< Receive wake up complete event
     LIN_EVENT_ERR_BUS_COLLISION_DETECTED    = (1UL << 9),  ///< Bus collision detection event
     LIN_EVENT_ERR_COUNTER_OVERFLOW          = (1UL << 14), ///< Counter overflow event
-    LIN_EVENT_ERR_OVERRUN = (1UL << 24),                   ///< Overrun error event
-    LIN_EVENT_ERR_PARITY  = (1UL << 27),                   ///< Parity error event (start frame only, LIN information is sent without parity)
-    LIN_EVENT_ERR_FRAMING = (1UL << 28),                   ///< Framing error event
+    LIN_EVENT_ERR_OVERRUN                   = (1UL << 24), ///< Overrun error event
+    LIN_EVENT_ERR_PARITY                    = (1UL << 27), ///< Parity error event (start frame only, LIN information is sent without parity)
+    LIN_EVENT_ERR_FRAMING                   = (1UL << 28), ///< Framing error event
 } lin_event_t;
 
 /** LIN Transfer Parameters */

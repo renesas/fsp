@@ -25,13 +25,34 @@ FSP_HEADER
  **********************************************************************************************************************/
 
 /* Version Number of Module. */
-#define FSP_R_RSIP_PROTECTED_VERSION_MAJOR  (1U)
-#define FSP_R_RSIP_PROTECTED_VERSION_MINOR  (6U)
-#define FSP_R_RSIP_PROTECTED_VERSION_PATCH  (0U)
+#define FSP_R_RSIP_PROTECTED_VERSION_MAJOR    (1U)
+#define FSP_R_RSIP_PROTECTED_VERSION_MINOR    (7U)
+#define FSP_R_RSIP_PROTECTED_VERSION_PATCH    (0U)
 
-#define RSIP_PRV_BYTE_SIZE_AES_BLOCK               (16U)
-#define RSIP_PRV_BYTE_SIZE_CCM_NONCE_MAX           (13U)
-#define RSIP_PRV_BYTE_SIZE_CCM_AAD_MAX             (110U)
+#define RSIP_PRV_BYTE_SIZE_AES_BLOCK          (16U)
+#define RSIP_PRV_BYTE_SIZE_CCM_NONCE_MAX      (13U)
+#define RSIP_PRV_BYTE_SIZE_CCM_AAD_MAX        (110U)
+
+/* Return code for SB-Lib */
+#define FSP_ERR_SB_INTERNAL_FAIL                   (0x00030000UL) ///< An internal failure
+#define FSP_ERR_SB_INVALID_ARG                     (0x00030001UL) ///< An invalid argument was entered
+#define FSP_ERR_SB_UNSUPPORTED_FUNCTION            (0x00030002UL) ///< Unsupported function executed
+#define FSP_ERR_SB_INVALID_ALIGNMENT               (0x00030003UL) ///< Data entered with incorrect alignment
+#define FSP_ERR_SB_SAME_IMAGE_VERSION              (0x00030004UL) ///< Same image version
+#define FSP_ERR_SB_LOWER_IMAGE_VERSION             (0x00030005UL) ///< Lower image version
+#define FSP_ERR_SB_MANI_INVALID_MAGIC              (0x00031000UL) ///< An invalid magic number is set
+#define FSP_ERR_SB_MANI_UNSUPPORTED_VERSION        (0x00031001UL) ///< Unsupported version is set
+#define FSP_ERR_SB_MANI_OUT_OF_RANGE_LEN           (0x00031002UL) ///< Out of range TLV Length is set
+#define FSP_ERR_SB_MANI_TLV_FIELD_ERR              (0x00031003UL) ///< Missing required TLV field
+#define FSP_ERR_SB_MANI_TLV_INVALID_LEN            (0x00031004UL) ///< The length exceeding the end of the manifest is specified in length of the TLV field
+#define FSP_ERR_SB_MANI_INVALID_IMAGE_LEN          (0x00031005UL) ///< An invalid image length is set
+#define FSP_ERR_SB_MANI_MISMATCH_SIGN_ALGORITHM    (0x00031006UL) ///< There is a wrong combination of signature algorithms
+#define FSP_ERR_SB_MANI_UNSUPPORTED_ALGORITHM      (0x00031007UL) ///< An algorithm was specified that the manifest does not support
+#define FSP_ERR_SB_CRYPTO_FAIL                     (0x00032000UL) ///< Cryptographic processing failure
+#define FSP_ERR_SB_CRYPTO_AUTH_FAIL                (0x00032001UL) ///< Verification failed
+#define FSP_ERR_SB_CRYPTO_UNSUPPORTED_ALGORITHM    (0x00032002UL) ///< Unsupported algorithm
+#define FSP_ERR_SB_CRYPTO_RESOURCE_CONFLICT        (0x00032003UL) ///< CryptoIP is in use.
+#define FSP_ERR_SB_CRYPTO_PARAM_ERR                (0x00032004UL) ///< Parameter error
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -87,6 +108,7 @@ typedef union u_rsip_handle
     rsip_aes_cmac_handle_t   aes_cmac;   // AES-CMAC
     rsip_sha_handle_t        sha;        // SHA
     rsip_hmac_handle_t       hmac;       // HMAC
+    rsip_kdf_sha_handle_t    kdf_sha;    // KDF SHA
     rsip_kdf_hmac_handle_t   kdf_hmac;   // KDF HMAC
 } rsip_handle_t;
 
@@ -112,6 +134,7 @@ typedef enum e_rsip_state
     RSIP_STATE_AES_CMAC,                // AES-CMAC
     RSIP_STATE_SHA,                     // SHA
     RSIP_STATE_HMAC,                    // HMAC
+    RSIP_STATE_KDF_SHA,                 // KDF SHA
     RSIP_STATE_KDF_HMAC,                // KDF HMAC
 } rsip_state_t;
 
@@ -236,6 +259,19 @@ fsp_err_t R_RSIP_ECDH_PlainKeyAgree(rsip_ctrl_t * const              p_ctrl,
                                     uint8_t const * const            p_plain_public_key,
                                     rsip_wrapped_secret_t * const    p_wrapped_secret);
 
+fsp_err_t R_RSIP_PureEdDSA_Sign(rsip_ctrl_t * const              p_ctrl,
+                                rsip_wrapped_key_t const * const p_wrapped_private_key,
+                                rsip_wrapped_key_t const * const p_wrapped_public_key,
+                                uint8_t const * const            p_message,
+                                uint64_t const                   message_length,
+                                uint8_t * const                  p_signature);
+
+fsp_err_t R_RSIP_PureEdDSA_Verify(rsip_ctrl_t * const              p_ctrl,
+                                  rsip_wrapped_key_t const * const p_wrapped_public_key,
+                                  uint8_t const * const            p_message,
+                                  uint64_t const                   message_length,
+                                  uint8_t const * const            p_signature);
+
 /* r_rsip_rsa.c */
 fsp_err_t R_RSIP_RSA_Encrypt(rsip_ctrl_t * const              p_ctrl,
                              rsip_wrapped_key_t const * const p_wrapped_public_key,
@@ -351,6 +387,30 @@ fsp_err_t R_RSIP_PKI_CertKeyImport(rsip_ctrl_t * const        p_ctrl,
                                    rsip_wrapped_key_t * const p_wrapped_public_key);
 
 /* r_rsip_kdf.c */
+fsp_err_t R_RSIP_KDF_SHA_Init(rsip_ctrl_t * const p_ctrl, rsip_hash_type_t const hash_type);
+fsp_err_t R_RSIP_KDF_SHA_ECDHSecretUpdate(rsip_ctrl_t * const                 p_ctrl,
+                                          rsip_wrapped_secret_t const * const p_wrapped_secret);
+fsp_err_t R_RSIP_KDF_SHA_Update(rsip_ctrl_t * const   p_ctrl,
+                                uint8_t const * const p_message,
+                                uint32_t const        message_length);
+fsp_err_t R_RSIP_KDF_SHA_Finish(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t * const p_wrapped_dkm);
+fsp_err_t R_RSIP_KDF_SHA_Suspend(rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_t * const p_handle);
+fsp_err_t R_RSIP_KDF_SHA_Resume(rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_t const * const p_handle);
+fsp_err_t R_RSIP_KDF_SHA_DKMConcatenate(rsip_wrapped_dkm_t * const       p_wrapped_dkm1,
+                                        rsip_wrapped_dkm_t const * const p_wrapped_dkm2,
+                                        uint32_t const                   wrapped_dkm1_buffer_length);
+fsp_err_t R_RSIP_KDF_SHA_DerivedKeyImport(rsip_ctrl_t * const              p_ctrl,
+                                          rsip_wrapped_dkm_t const * const p_wrapped_dkm,
+                                          rsip_key_type_t const            key_type,
+                                          uint32_t const                   position,
+                                          rsip_wrapped_key_t * const       p_wrapped_key);
+fsp_err_t R_RSIP_KDF_SHA_DerivedIVWrap(rsip_ctrl_t * const              p_ctrl,
+                                       rsip_wrapped_dkm_t const * const p_wrapped_dkm,
+                                       rsip_initial_vector_type_t const initial_vector_type,
+                                       uint32_t const                   position,
+                                       uint8_t const * const            p_tls_sequence_num,
+                                       uint8_t * const                  p_wrapped_initial_vector);
+
 fsp_err_t R_RSIP_KDF_MACKeyImport(rsip_ctrl_t * const              p_ctrl,
                                   rsip_key_type_t const            key_type,
                                   rsip_wrapped_mac_t const * const p_wrapped_mac,
@@ -390,6 +450,14 @@ fsp_err_t R_RSIP_OTF_Init(rsip_ctrl_t * const        p_ctrl,
                           rsip_otf_channel_t const   channel,
                           rsip_wrapped_key_t * const p_wrapped_key,
                           uint8_t const * const      p_seed);
+
+/* r_rsip_ra.c */
+fsp_err_t R_RSIP_FSBL_OEM_BL_Digest_Generate(rsip_ctrl_t * const   p_ctrl,
+                                             uint8_t const * const p_key_cert,
+                                             uint32_t const        key_cert_max_length,
+                                             uint8_t const * const p_code_cert,
+                                             uint32_t const        code_cert_max_length,
+                                             uint32_t * const      p_mac);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

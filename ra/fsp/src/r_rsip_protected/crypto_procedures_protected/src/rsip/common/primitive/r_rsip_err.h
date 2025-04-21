@@ -29,6 +29,7 @@ typedef enum e_rsip_ret
     RSIP_RET_PARAM_FAIL,
     RSIP_RET_VERIFICATION_FAIL,
     RSIP_RET_AUTH_FAIL,
+    RSIP_RET_VERSION_MATCH,
     RSIP_RET_UNKNOWN
 } rsip_ret_t;
 

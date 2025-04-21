@@ -157,15 +157,7 @@ fsp_err_t R_SDADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     err = r_sdadc_open_irq_cfg(p_instance_ctrl, p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-    /* SDADC clock must be disabled to begin power supply activation. */
-    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
-#if BSP_CFG_SDADC_CLOCK_SOURCE == BSP_CLOCKS_SOURCE_CLOCK_HOCO
-    uint8_t sdadcckcr = 1U;
-#else
-    uint8_t sdadcckcr = 0U;
-#endif
     p_instance_ctrl->calib_status = false;
-    R_SYSTEM->SDADCCKCR           = sdadcckcr;
 
     /* Initialize the hardware based on the configuration. */
 
@@ -198,7 +190,8 @@ fsp_err_t R_SDADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
      * manual R01UH0888EJ0100. */
 
     /* Supply the 24-bit sigma-delta A/D converter clock (SDADCCLK). */
-    R_SYSTEM->SDADCCKCR = sdadcckcr | R_SYSTEM_SDADCCKCR_SDADCCKEN_Msk;
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
+    R_SYSTEM->SDADCCKCR |= R_SYSTEM_SDADCCKCR_SDADCCKEN_Msk;
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 
     /* Turn on the power of ADBGR, SBIAS, and ADREG. */
@@ -718,7 +711,7 @@ fsp_err_t R_SDADC_Close (adc_ctrl_t * p_ctrl)
 
     /* Stop the input clock for the 24-bit sigma-delta A/D converter (SDADCCLK). */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
-    R_SYSTEM->SDADCCKCR = 0U;
+    R_SYSTEM->SDADCCKCR &= (uint8_t) ~R_SYSTEM_SDADCCKCR_SDADCCKEN_Msk;
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 
     /* Enter the module-stop state. */

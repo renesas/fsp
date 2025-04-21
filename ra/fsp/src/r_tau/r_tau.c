@@ -849,22 +849,6 @@ static fsp_err_t r_tau_open_param_checking (tau_instance_ctrl_t * p_instance_ctr
     {
         /* CK02, CK03 are only available in channels 1 and 3 */
         FSP_ERROR_RETURN(p_instance_ctrl->channel_mask & TAU_CK02_CK03_CAPABLE_CHANNELS_MASK, FSP_ERR_INVALID_CHANNEL);
-
-        /* Checking invalid clock source for operation clock CK02 */
-        FSP_ERROR_RETURN((TAU_OPERATION_CK02 != p_extend->operation_clock) ||
-                         (TIMER_SOURCE_DIV_2 == p_cfg->source_div) ||
-                         (TIMER_SOURCE_DIV_4 == p_cfg->source_div) ||
-                         (TIMER_SOURCE_DIV_16 == p_cfg->source_div) ||
-                         (TIMER_SOURCE_DIV_64 == p_cfg->source_div),
-                         FSP_ERR_INVALID_MODE);
-
-        /* Checking invalid clock source for operation clock CK03 */
-        FSP_ERROR_RETURN((TAU_OPERATION_CK03 != p_extend->operation_clock) ||
-                         (TIMER_SOURCE_DIV_256 == p_cfg->source_div) ||
-                         (TIMER_SOURCE_DIV_1024 == p_cfg->source_div) ||
-                         (TIMER_SOURCE_DIV_4096 == p_cfg->source_div) ||
-                         (TIMER_SOURCE_DIV_16384 == p_cfg->source_div),
-                         FSP_ERR_INVALID_MODE);
     }
     else
     {

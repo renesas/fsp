@@ -33,6 +33,10 @@
 #endif
 #include "r_transfer_api.h"
 
+#if __has_include("r_adc_device_types.h")
+ #include "r_adc_device_types.h"
+#endif
+
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
@@ -214,14 +218,14 @@ typedef struct st_adc_callback_args
 /** ADC Information Structure for Transfer Interface */
 typedef struct st_adc_info
 {
-    __I void * p_address;                 ///< The address to start reading the data from
-    uint32_t   length;                    ///< The total number of transfers to read
+    __I void * p_address;              ///< The address to start reading the data from
+    uint32_t   length;                 ///< The total number of transfers to read
 
-    transfer_size_t  transfer_size;       ///< The size of each transfer
-    elc_peripheral_t elc_peripheral;      ///< Name of the peripheral in the ELC list
-    elc_event_t      elc_event;           ///< Name of the ELC event for the peripheral
-    uint32_t         calibration_data;    ///< Temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
-    int16_t          slope_microvolts;    ///< Temperature sensor slope in microvolts/degrees C
+    transfer_size_t  transfer_size;    ///< The size of each transfer
+    elc_peripheral_t elc_peripheral;   ///< Name of the peripheral in the ELC list
+    elc_event_t      elc_event;        ///< Name of the ELC event for the peripheral
+    uint32_t         calibration_data; ///< Temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
+    int16_t          slope_microvolts; ///< Temperature sensor slope in microvolts/degrees C
 } adc_info_t;
 
 #endif

@@ -34,7 +34,8 @@ typedef struct mbedtls_sha256_context
                                                                           * 0: Use SHA-256, or 1: Use SHA-224. */
     uint32_t       used;                                                 // Used to indicate if the final block has user data or only padding
     sce_hash_cmd_t sce_operation_state;
- #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+ #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+    BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
     uint32_t      rsip_internal_state[20];                               // RSIP specific state array
     unsigned char rsip_buffer[SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES]; /*!< buffered data for RSIP procedure. */
     uint32_t      use_rsip_buffer;                                       // Used to indicate if the rsip_buffer is to be used or not

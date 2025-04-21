@@ -195,6 +195,8 @@ const rsip_api_t g_rsip_on_rsip =
     .aesMacVerifyFinish        = R_RSIP_AES_MAC_VerifyFinish,
     .ecdsaSign                 = R_RSIP_ECDSA_Sign,
     .ecdsaVerify               = R_RSIP_ECDSA_Verify,
+    .eddsaSign                 = R_RSIP_PureEdDSA_Sign,
+    .eddsaVerify               = R_RSIP_PureEdDSA_Verify,
     .ecdhKeyAgree              = R_RSIP_ECDH_KeyAgree,
     .ecdhPlainKeyAgree         = R_RSIP_ECDH_PlainKeyAgree,
     .rsaEncrypt                = R_RSIP_RSA_Encrypt,
@@ -225,6 +227,15 @@ const rsip_api_t g_rsip_on_rsip =
     .pkiVerifiedCertInfoExport = R_RSIP_PKI_VerifiedCertInfoExport,
     .pkiVerifiedCertInfoImport = R_RSIP_PKI_VerifiedCertInfoImport,
     .pkiCertKeyImport          = R_RSIP_PKI_CertKeyImport,
+    .kdfshaInit                = R_RSIP_KDF_SHA_Init,
+    .kdfshaEcdhSecretUpdate    = R_RSIP_KDF_SHA_ECDHSecretUpdate,
+    .kdfshaUpdate              = R_RSIP_KDF_SHA_Update,
+    .kdfshaFinish              = R_RSIP_KDF_SHA_Finish,
+    .kdfshaSuspend             = R_RSIP_KDF_SHA_Suspend,
+    .kdfshaResume              = R_RSIP_KDF_SHA_Resume,
+    .kdfshaDkmConcatenate      = R_RSIP_KDF_SHA_DKMConcatenate,
+    .kdfshaDerivedKeyImport    = R_RSIP_KDF_SHA_DerivedKeyImport,
+    .kdfshaDerivedIvWrap       = R_RSIP_KDF_SHA_DerivedIVWrap,
     .kdfMacKeyImport           = R_RSIP_KDF_MACKeyImport,
     .kdfEcdhSecretKeyImport    = R_RSIP_KDF_ECDHSecretKeyImport,
     .kdfhmacInit               = R_RSIP_KDF_HMAC_Init,
@@ -746,12 +757,13 @@ fsp_err_t R_RSIP_RFC3394_KeyWrap (rsip_ctrl_t * const              p_ctrl,
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_key_type_t key_type = (rsip_key_type_t)RSIP_PRV_KEY_TYPE(p_wrapped_target_key->alg, p_wrapped_target_key->subtype);
+    rsip_key_type_t key_type = (rsip_key_type_t) RSIP_PRV_KEY_TYPE(p_wrapped_target_key->alg,
+                                                                   p_wrapped_target_key->subtype);
     rsip_ret_t rsip_ret =
-            gp_func_rfc3394_key_wrap[p_wrapped_kek->subtype]((const uint32_t *)      p_wrapped_kek->value,
-                                                                                     key_type,
-                                                             (const uint32_t *)      p_wrapped_target_key->value,
-                                                             (uint32_t *)            p_rfc3394_wrapped_target_key);
+        gp_func_rfc3394_key_wrap[p_wrapped_kek->subtype]((const uint32_t *) p_wrapped_kek->value,
+                                                         key_type,
+                                                         (const uint32_t *) p_wrapped_target_key->value,
+                                                         (uint32_t *) p_rfc3394_wrapped_target_key);
 
     /* Check error */
     fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
@@ -856,10 +868,10 @@ fsp_err_t R_RSIP_RFC3394_KeyUnwrap (rsip_ctrl_t * const              p_ctrl,
 
     /* Call primitive (cast to match the argument type with the primitive function) */
     rsip_ret_t rsip_ret =
-            gp_func_rfc3394_key_unwrap[p_wrapped_kek->subtype]((const uint32_t *)      p_wrapped_kek->value,
-                                                                                       key_type,
-                                                               (const uint32_t *)      p_rfc3394_wrapped_target_key,
-                                                               (uint32_t *)            p_wrapped_target_key->value);
+        gp_func_rfc3394_key_unwrap[p_wrapped_kek->subtype]((const uint32_t *) p_wrapped_kek->value,
+                                                           key_type,
+                                                           (const uint32_t *) p_rfc3394_wrapped_target_key,
+                                                           (uint32_t *) p_wrapped_target_key->value);
 
     /* Check error */
     fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;

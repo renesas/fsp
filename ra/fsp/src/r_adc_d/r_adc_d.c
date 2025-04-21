@@ -530,7 +530,7 @@ fsp_err_t R_ADC_D_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     p_adc_info->calibration_data = UINT32_MAX;
 
     /* Provide the previously retrieved slope information */
-    p_adc_info->slope_microvolts = BSP_FEATURE_ADC_TSN_SLOPE;
+    p_adc_info->slope_microvolts = BSP_FEATURE_TSN_SLOPE;
 
     return FSP_SUCCESS;
 }

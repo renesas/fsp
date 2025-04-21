@@ -16,8 +16,11 @@
  **********************************************************************************************************************/
 
 #define LPM_LPSCR_SYSTEM_ACTIVE                  (0x0U)
-#define LPM_LPSCR_SOFTWARE_STANDBY_MODE          (0x4U)
-#define LPM_LPSCR_SOFTWARE_STANDBY_MODE2         (0x5U)
+#if BSP_MCU_GROUP_NEPTUNE
+ #define LPM_LPSCR_SOFTWARE_STANDBY_MODE         (0x5U)
+#else
+ #define LPM_LPSCR_SOFTWARE_STANDBY_MODE         (0x4U)
+#endif
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE1    (0x8U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE2    (0x9U)
 #define LPM_LPSCR_DEEP_SOFTWARE_STANDBY_MODE3    (0xAU)
@@ -502,7 +505,7 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
     uint32_t dpsbycr = 0;
 #endif
 
-#if BSP_FEATURE_LPM_HAS_LDO_CONTROL
+#if BSP_FEATURE_LPM_HAS_LDO_SKEEP
     if ((R_SYSTEM->PLL1LDOCR_b.SKEEP != p_cfg->ldo_standby_cfg.pll1_ldo) ||
         (R_SYSTEM->PLL2LDOCR_b.SKEEP != p_cfg->ldo_standby_cfg.pll2_ldo) ||
         (R_SYSTEM->HOCOLDOCR_b.SKEEP != p_cfg->ldo_standby_cfg.hoco_ldo))
@@ -660,7 +663,7 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
             R_SYSTEM->PDRAMSCR0 = p_cfg->ram_retention_cfg.ram_retention;
 #endif
 
-#if BSP_FEATURE_LPM_HAS_LDO_CONTROL
+#if BSP_FEATURE_LPM_HAS_LDO_SKEEP
 
             /* PLL1LDOCR may only be written in High Speed Mode. If PLL1DOCR setting is not changed, then skip
              * writing to it. */

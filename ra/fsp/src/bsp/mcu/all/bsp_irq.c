@@ -31,12 +31,12 @@
  **********************************************************************************************************************/
 
 /* This table is used to store the context in the ISR. */
-void * gp_renesas_isr_context[BSP_ICU_VECTOR_MAX_ENTRIES];
+void * gp_renesas_isr_context[BSP_ICU_VECTOR_NUM_ENTRIES];
 
 /***********************************************************************************************************************
  * Private global variables and functions
  **********************************************************************************************************************/
-const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_MAX_ENTRIES] BSP_WEAK_REFERENCE =
+const bsp_interrupt_event_t g_interrupt_event_link_select[BSP_ICU_VECTOR_NUM_ENTRIES] BSP_WEAK_REFERENCE =
 {
     (bsp_interrupt_event_t) 0
 };
@@ -227,7 +227,7 @@ BSP_SECTION_FLASH_GAP void bsp_irq_cfg (void)
     uint32_t interrupt_security_state[BSP_ICU_VECTOR_MAX_ENTRIES / BSP_PRV_BITS_PER_WORD];
     memset(&interrupt_security_state, UINT8_MAX, sizeof(interrupt_security_state));
 
-    for (uint32_t i = 0U; i < BSP_ICU_VECTOR_MAX_ENTRIES; i++)
+    for (uint32_t i = 0U; i < BSP_ICU_VECTOR_NUM_ENTRIES; i++)
     {
         if (0U != g_interrupt_event_link_select[i])
         {
@@ -253,7 +253,15 @@ BSP_SECTION_FLASH_GAP void bsp_irq_cfg (void)
 #endif
 
 #if BSP_FEATURE_ICU_HAS_IELSR
-    for (uint32_t i = 0U; i < (BSP_ICU_VECTOR_MAX_ENTRIES - BSP_FEATURE_ICU_FIXED_IELSR_COUNT); i++)
+
+    /* Calculate the number of IELSR registers that need to be initialized. */
+    uint32_t ielsr_count = BSP_ICU_VECTOR_MAX_ENTRIES - BSP_FEATURE_ICU_FIXED_IELSR_COUNT;
+    if (ielsr_count > BSP_ICU_VECTOR_NUM_ENTRIES)
+    {
+        ielsr_count = BSP_ICU_VECTOR_NUM_ENTRIES;
+    }
+
+    for (uint32_t i = 0U; i < ielsr_count; i++)
     {
         if (0U != g_interrupt_event_link_select[i])
         {

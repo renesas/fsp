@@ -241,11 +241,7 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
         USB_M0->D1FIFOSEL |= USB_BIGEND;
  #endif                                /* USB_CFG_ENDIAN == USB_CFG_BIG */
 
- #if defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
-        USB_M0->INTENB0 = (USB_BEMPE | USB_BRDYE | USB_DVSE | USB_CTRE);
- #else  /* defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE) */
         USB_M0->INTENB0 = (USB_BEMPE | USB_BRDYE | USB_VBSE | USB_DVSE | USB_CTRE);
- #endif                                /* defined(USB_SUPPORT_TYPEC) && (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE) */
     }
     else
     {

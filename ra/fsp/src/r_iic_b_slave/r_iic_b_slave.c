@@ -614,9 +614,9 @@ static void iic_b_open_hw_slave (iic_b_slave_instance_ctrl_t * const p_ctrl)
     uint8_t digital_filter_stages =
         (((iic_b_slave_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->clock_settings.digital_filter_stages);
     p_ctrl->p_reg->INCTL =
-        ((uint32_t) (digital_filter_stages >
-                     0U ? ((digital_filter_stages - 1U) & R_I3C0_INCTL_DNFS_Msk) : 0U) << R_I3C0_INCTL_DNFS_Pos) |
-        R_I3C0_INCTL_DNFE_Msk;
+        (uint32_t) (digital_filter_stages > 0U ?
+                    (((digital_filter_stages - 1U) & R_I3C0_INCTL_DNFS_Msk) << R_I3C0_INCTL_DNFS_Pos) |
+                    R_I3C0_INCTL_DNFE_Msk : 0);
 
     /* 1. Enable FM+ slope circuit if fast mode plus is enabled.
      * 2. Set Master Arbitration-Lost Detection Enable

@@ -102,10 +102,11 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
             {
                 case AES_CTR_KEY_SIZE_128_ROUNDS:
                 {
-                    status = HW_SCE_Aes128EncryptDecryptInitSub(&indata_key_type,
-                                                                &indata_cmd,
-                                                                (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                    status = HW_SCE_Aes128EncryptDecryptInitSubAdaptor(&indata_key_type,
+                                                                       &indata_cmd,
+                                                                       (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                                       NULL,
+                                                                       (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
                     FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
                     HW_SCE_Aes128EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
                                                          (uint32_t *) p_aligned_output,
@@ -131,10 +132,11 @@ UINT sce_nx_crypto_ctr_encrypt (VOID          * crypto_metadata,
  #endif
                 case AES_CTR_KEY_SIZE_256_ROUNDS:
                 {
-                    status = HW_SCE_Aes256EncryptDecryptInitSub(&indata_key_type,
-                                                                &indata_cmd,
-                                                                (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
-                                                                (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
+                    status = HW_SCE_Aes256EncryptDecryptInitSubAdaptor(&indata_key_type,
+                                                                       &indata_cmd,
+                                                                       (uint32_t *) aes_ptr->nx_crypto_aes_key_schedule,
+                                                                       NULL,
+                                                                       (uint32_t *) ctr_metadata->nx_crypto_ctr_counter_block);
                     FSP_ERROR_RETURN((FSP_SUCCESS == status), NX_CRYPTO_NOT_SUCCESSFUL);
                     HW_SCE_Aes256EncryptDecryptUpdateSub((uint32_t const *) p_aligned_input,
                                                          (uint32_t *) p_aligned_output,

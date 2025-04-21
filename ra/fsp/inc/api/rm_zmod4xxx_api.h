@@ -55,27 +55,14 @@ FSP_HEADER
 /** Event in the callback function */
 typedef enum e_rm_zmod4xxx_event
 {
-    RM_ZMOD4XXX_EVENT_SUCCESS = 0,
-    RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE,
-    RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE,
-    RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET,  ///< Unexpected reset
-    RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT, ///< Getting invalid results while results readout
-    RM_ZMOD4XXX_EVENT_DEV_ERR_DAMAGE,          ///< Sensor may be damaged.
-    RM_ZMOD4XXX_EVENT_ERROR,
+    RM_ZMOD4XXX_EVENT_SUCCESS = 0,               ///< Operation was completed successfully.
+    RM_ZMOD4XXX_EVENT_MEASUREMENT_COMPLETE,      ///< Sensor measurement results read successfully.
+    RM_ZMOD4XXX_EVENT_MEASUREMENT_NOT_COMPLETE,  ///< Sensor measurement in progress.
+    RM_ZMOD4XXX_EVENT_DEV_ERR_POWER_ON_RESET,    ///< Unexpected reset.
+    RM_ZMOD4XXX_EVENT_DEV_ERR_ACCESS_CONFLICT,   ///< Getting invalid results while results readout.
+    RM_ZMOD4XXX_EVENT_DEV_ERR_DAMAGE,            ///< Sensor may be damaged.
+    RM_ZMOD4XXX_EVENT_ERROR,                     ///< A communication error has occurred.
 } rm_zmod4xxx_event_t;
-
-/** ZMOD4XXX sensor API callback parameter definition */
-typedef struct st_rm_zmod4xxx_callback_args
-{
-    void const        * p_context;
-    rm_zmod4xxx_event_t event;
-} rm_zmod4xxx_callback_args_t;
-
-/** ZMOD4XXX raw data structure */
-typedef struct st_rm_zmod4xxx_raw_data
-{
-    uint8_t adc_data[32]; // In RRH46410, this means measurement results
-} rm_zmod4xxx_raw_data_t;
 
 /** Sulfur-Odor status */
 typedef enum e_rm_zmod4xxx_sulfur_odor
@@ -83,6 +70,19 @@ typedef enum e_rm_zmod4xxx_sulfur_odor
     RM_ZMOD4XXX_SULFUR_ODOR_ACCEPTABLE = 0,
     RM_ZMOD4XXX_SULFUR_ODOR_UNACCEPTABLE,
 } rm_zmod4xxx_sulfur_odor_t;
+
+/** ZMOD4XXX sensor API callback parameter definition */
+typedef struct st_rm_zmod4xxx_callback_args
+{
+    void const        * p_context;  ///< Pointer to data provided by the user.
+    rm_zmod4xxx_event_t event;      ///< Callback event.
+} rm_zmod4xxx_callback_args_t;
+
+/** ZMOD4XXX raw data structure */
+typedef struct st_rm_zmod4xxx_raw_data
+{
+    uint8_t adc_data[32]; ///< In RRH46410, this means measurement results.
+} rm_zmod4xxx_raw_data_t;
 
 /** ZMOD4XXX IAQ 1st gen data structure */
 typedef struct st_rm_zmod4xxx_iaq_1st_data
@@ -98,15 +98,16 @@ typedef struct st_rm_zmod4xxx_iaq_1st_data
 /** ZMOD4XXX IAQ 2nd gen data structure */
 typedef struct st_rm_zmod4xxx_iaq_2nd_data
 {
-    float rmox[13];                    ///< MOx resistance.
-    float log_rcda;                    ///< log10 of CDA resistance for IAQ 2nd Gen.
-    float log_nonlog_rcda[3];          ///< log10 of CDA resistance for IAQ 2nd Gen ULP.
-    float iaq;                         ///< IAQ index.
-    float tvoc;                        ///< TVOC concentration (mg/m^3).
-    float etoh;                        ///< EtOH concentration (ppm).
-    float eco2;                        ///< eCO2 concentration (ppm).
+    float   rmox[13];                  ///< MOx resistance.
+    float   compensation_rmox;         ///< MOx resistance for compensation
+    float   log_rcda;                  ///< log10 of CDA resistance for IAQ 2nd Gen.
+    float   log_nonlog_rcda[3];        ///< log10 of CDA resistance for IAQ 2nd Gen ULP.
+    float   iaq;                       ///< IAQ index.
+    float   tvoc;                      ///< TVOC concentration (mg/m^3).
+    float   etoh;                      ///< EtOH concentration (ppm).
+    float   eco2;                      ///< eCO2 concentration (ppm).
     uint8_t sample_id;                 ///< Sample ID. RRH46410 only.
-    float   rel_iaq;                   ///< Relative IAQ. RRH46410 only.
+    float   rel_iaq;                   ///< relative IAQ index.
 } rm_zmod4xxx_iaq_2nd_data_t;
 
 /** ZMOD4XXX Odor structure */
@@ -120,25 +121,25 @@ typedef struct st_rm_zmod4xxx_odor_data
 typedef struct st_rm_zmod4xxx_sulfur_odor_data
 {
     float rmox[9];                     ///< MOx resistance.
-    float intensity;                   ///< odor intensity rating ranges from 0.0 to 5.0 for sulfur lib
-    rm_zmod4xxx_sulfur_odor_t odor;    ///< sulfur_odor classification for lib
+    float intensity;                   ///< odor intensity rating ranges from 0.0 to 5.0 for sulfur lib.
+    rm_zmod4xxx_sulfur_odor_t odor;    ///< sulfur_odor classification for lib.
 } rm_zmod4xxx_sulfur_odor_data_t;
 
 /** ZMOD4XXX OAQ 1st gen data structure */
 typedef struct st_rm_zmod4xxx_oaq_1st_data
 {
-    float rmox[15];                    ///< MOx resistance
-    float aiq;                         ///< Air Quality
+    float rmox[15];                    ///< MOx resistance.
+    float aiq;                         ///< Air Quality.
 } rm_zmod4xxx_oaq_1st_data_t;
 
 /** ZMOD4XXX OAQ 2nd gen data structure */
 typedef struct st_rm_zmod4xxx_oaq_2nd_data
 {
     float    rmox[8];                  ///< MOx resistance.
-    float    temperature;              ///< Temperature (degC) used for ambient compensation
-    float    ozone_concentration;      ///< The ozone concentration in part-per-billion
-    uint16_t fast_aqi;                 ///< 1-minute average of the Air Quality Index according to the EPA standard based on ozone
-    uint16_t epa_aqi;                  ///< The Air Quality Index according to the EPA standard based on ozone
+    float    temperature;              ///< Temperature (degC) used for ambient compensation.
+    float    ozone_concentration;      ///< The ozone concentration in part-per-billion.
+    uint16_t fast_aqi;                 ///< 1-minute average of the Air Quality Index according to the EPA standard based on ozone.
+    uint16_t epa_aqi;                  ///< The Air Quality Index according to the EPA standard based on ozone.
 } rm_zmod4xxx_oaq_2nd_data_t;
 
 /** ZMOD4XXX RAQ structure */
@@ -159,24 +160,27 @@ typedef struct st_rm_zmod4xxx_rel_iaq_data
 /** ZMOD4XXX PBAQ data structure */
 typedef struct st_rm_zmod4xxx_pbaq_data
 {
-    float rmox[13];                    ///< MOx resistance.
-    float log_rcda;                    ///< log10 of CDA resistance.
-    float rhtr;                        ///< heater resistance.
-    float temperature;                 ///< ambient temperature (degC).
-    float tvoc;                        ///< TVOC concentration (mg/m^3).
-    float etoh;                        ///< EtOH concentration (ppm).
+    float   rmox[13];                  ///< MOx resistance.
+    float   compensation_rmox;         ///< MOx resistance for compensation
+    float   log_rcda;                  ///< log10 of CDA resistance.
+    float   rhtr;                      ///< heater resistance.
+    float   temperature;               ///< ambient temperature (degC).
+    float   tvoc;                      ///< TVOC concentration (mg/m^3).
+    float   etoh;                      ///< EtOH concentration (ppm).
+    float   iaq;                       ///< IAQ index.
+    float   rel_iaq;                   ///< relative IAQ index.
     uint8_t sample_id;                 ///< Sample ID. RRH46410 only.
 } rm_zmod4xxx_pbaq_data_t;
 
 /** ZMOD4XXX NO2 O3 data structure */
 typedef struct st_rm_zmod4xxx_no2_o3_data
 {
-    float    rmox[4];                           ///< MOx resistance.
-    float    temperature;                       ///< Temperature (degC) used for ambient compensation
-    float    ozone_concentration;               ///< O3_conc_ppb stands for the ozone concentration in part-per-billion
-    float    no2_concentration;                 ///< NO2_conc_ppb stands for the NO2 concentration in part-per-billion
-    uint16_t fast_aqi;                          ///< FAST_AQI stands for a 1-minute average of the Air Quality Index according to the EPA standard based on ozone
-    uint16_t epa_aqi;                           ///< EPA_AQI stands for the Air Quality Index according to the EPA standard based on ozone.
+    float    rmox[4];                  ///< MOx resistance.
+    float    temperature;              ///< Temperature (degC) used for ambient compensation.
+    float    ozone_concentration;      ///< O3_conc_ppb stands for the ozone concentration in part-per-billion.
+    float    no2_concentration;        ///< NO2_conc_ppb stands for the NO2 concentration in part-per-billion.
+    uint16_t fast_aqi;                 ///< FAST_AQI stands for a 1-minute average of the Air Quality Index according to the EPA standard based on ozone.
+    uint16_t epa_aqi;                  ///< EPA_AQI stands for the Air Quality Index according to the EPA standard based on ozone.
 } rm_zmod4xxx_no2_o3_data_t;
 
 /** ZMOD4XXX configuration block */
@@ -186,8 +190,8 @@ typedef struct st_rm_zmod4xxx_cfg
     void const                * p_irq_instance;                      ///< Pointer to IRQ instance.
     void const                * p_context;                           ///< Pointer to the user-provided context.
     void const                * p_extend;                            ///< Pointer to extended configuration by instance of interface.
-    void (* p_comms_callback)(rm_zmod4xxx_callback_args_t * p_args); ///< I2C Communications callback
-    void (* p_irq_callback)(rm_zmod4xxx_callback_args_t * p_args);   ///< IRQ callback
+    void (* p_comms_callback)(rm_zmod4xxx_callback_args_t * p_args); ///< I2C Communications callback.
+    void (* p_irq_callback)(rm_zmod4xxx_callback_args_t * p_args);   ///< IRQ callback.
 } rm_zmod4xxx_cfg_t;
 
 /** ZMOD4xxx Control block. Allocate an instance specific control block to pass into the API calls.
@@ -317,7 +321,7 @@ typedef struct st_rm_zmod4xxx_api
      * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
      */
     fsp_err_t (* no2O3DataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
-                                         rm_zmod4xxx_no2_o3_data_t * const p_zmod4xxx_data);
+                                     rm_zmod4xxx_no2_o3_data_t * const p_zmod4xxx_data);
 
     /** Set temperature and humidity.
      *

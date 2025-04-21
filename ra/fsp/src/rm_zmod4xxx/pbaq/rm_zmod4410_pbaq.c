@@ -20,10 +20,14 @@
  #include "../zmod4xxx_types.h"
  #include "pbaq.h"
  #include "zmod4410_config_pbaq.h"
+ #include "rm_zmod4xxx_pbaq_cfg.h"
 
 /**********************************************************************************************************************
  * Macro definitions
  *********************************************************************************************************************/
+
+/* Definitions of PBAQ Parameter */
+ #define RM_ZMOD4410_PBAQ_RMOX3_OFFSET    (15 * 2)
 
 /**********************************************************************************************************************
  * Local Typedef definitions
@@ -131,7 +135,7 @@ static fsp_err_t rm_zmod4410_pbaq_open (rm_zmod4xxx_ctrl_t * const p_api_ctrl, r
 }
 
 /*******************************************************************************************************************//**
- * @brief  Calculate the IAQ 2nd Gen. data with the library API.
+ * @brief  Calculate the PBAQ data with the library API.
  *
  * @retval FSP_SUCCESS                            Successfully results are read.
  * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
@@ -147,15 +151,32 @@ static fsp_err_t rm_zmod4410_pbaq_data_calculate (rm_zmod4xxx_ctrl_t * const    
     pbaq_handle_t  * p_handle               = (pbaq_handle_t *) p_lib->p_handle;
     pbaq_results_t * p_results              = (pbaq_results_t *) p_lib->p_results;
     zmod4xxx_dev_t * p_device               = (zmod4xxx_dev_t *) p_lib->p_device;
-    uint16_t         i;
-    int8_t           lib_err = 0;
-    pbaq_inputs_t    algorithm_input;
 
-    /* Calculate IAQ 2nd Gen. data form ADC data */
+ #if RM_ZMOD4XXX_CFG_OXIDIZING_GAS_CORRECTION_PBAQ_ENABLE
+    zmod4xxx_dev_t         * p_device_4510   = (zmod4xxx_dev_t *) p_ctrl->p_zmod4510_device;
+    rm_zmod4xxx_raw_data_t * p_raw_data_4510 = p_ctrl->p_zmod4510_raw_data;
+
+  #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_device_4510);
+    FSP_ASSERT(NULL != p_raw_data_4510);
+  #endif
+ #else
+    zmod4xxx_dev_t * p_device_4510 = NULL;
+ #endif
+
+    uint16_t      i;
+    int8_t        lib_err = 0;
+    pbaq_inputs_t algorithm_input;
+
+    /* Calculate PBAQ. data form ADC data */
+ #if RM_ZMOD4XXX_CFG_OXIDIZING_GAS_CORRECTION_PBAQ_ENABLE
+    algorithm_input.adc_rmox3_4510 = p_raw_data_4510->adc_data + RM_ZMOD4410_PBAQ_RMOX3_OFFSET;
+ #endif
     algorithm_input.adc_result       = &p_raw_data->adc_data[0];
     algorithm_input.humidity_pct     = p_lib->humidity;
     algorithm_input.temperature_degc = p_lib->temperature;
-    lib_err = calc_pbaq(p_handle, p_device, &algorithm_input, p_results);
+    lib_err = calc_pbaq(p_handle, p_device, p_device_4510, &algorithm_input, p_results);
+
     FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
 
     /* Set Data */
@@ -164,11 +185,17 @@ static fsp_err_t rm_zmod4410_pbaq_data_calculate (rm_zmod4xxx_ctrl_t * const    
         p_zmod4xxx_data->rmox[i] = p_results->rmox[i];
     }
 
+ #if RM_ZMOD4XXX_CFG_OXIDIZING_GAS_CORRECTION_PBAQ_ENABLE
+    p_zmod4xxx_data->compensation_rmox = p_results->zmod4510_rmox3;
+ #endif
     p_zmod4xxx_data->log_rcda    = p_results->log_rcda;
     p_zmod4xxx_data->rhtr        = p_results->rhtr;
     p_zmod4xxx_data->temperature = p_results->temperature;
     p_zmod4xxx_data->tvoc        = p_results->tvoc;
     p_zmod4xxx_data->etoh        = p_results->etoh;
+    p_zmod4xxx_data->rel_iaq     = p_results->rel_iaq;
+    p_zmod4xxx_data->iaq         = p_results->iaq;
+
     FSP_ERROR_RETURN(PBAQ_STABILIZATION != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
     FSP_ERROR_RETURN(PBAQ_DAMAGE != lib_err, FSP_ERR_SENSOR_INVALID_DATA);
 

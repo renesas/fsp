@@ -35,6 +35,7 @@ typedef enum e_sau_lin_state
     SAU_LIN_STATE_AWAITING_SYNC_SIGNAL, ///< Waiting to receive sync word
     SAU_LIN_STATE_SENDING_PID,          ///< Transmitting protected identifier
     SAU_LIN_STATE_AWAITING_PID_SIGNAL,  ///< Waiting to receive protected identifier
+    SAU_LIN_STATE_HEADER_RECEIVED,      ///< LIN header received
     SAU_LIN_STATE_SENDING_DATA,         ///< Transmitting LIN data
     SAU_LIN_STATE_AWAITING_DATA,        ///< Receiving LIN data
     SAU_LIN_STATE_AWAITING_CHECKSUM,    ///< Receiving LIN checksum

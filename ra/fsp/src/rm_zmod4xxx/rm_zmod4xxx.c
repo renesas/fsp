@@ -691,7 +691,8 @@ fsp_err_t RM_ZMOD4XXX_No2O3DataCalculate (rm_zmod4xxx_ctrl_t * const        p_ap
                                           rm_zmod4xxx_raw_data_t * const    p_raw_data,
                                           rm_zmod4xxx_no2_o3_data_t * const p_zmod4xxx_data)
 {
-    fsp_err_t err = FSP_SUCCESS; rm_zmod4xxx_instance_ctrl_t * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t err = FSP_SUCCESS;
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
     rm_zmod4xxx_lib_extended_cfg_t * p_lib;
 
 #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
@@ -711,6 +712,47 @@ fsp_err_t RM_ZMOD4XXX_No2O3DataCalculate (rm_zmod4xxx_ctrl_t * const        p_ap
     FSP_ERROR_RETURN(FSP_ERR_SENSOR_INVALID_DATA != err, err);
 
     return err;
+}
+
+/*******************************************************************************************************************//**
+ * @brief This function should be called when setting the compensation info from ZMOD4510 device for the ZMOD4410 device
+ * and when the ZMOD4510 for oxidizing gas correction option is enabled. After reading the raw data from the ZMOD4510 device,
+ * set the compensation info for the ZMOD4410 to begin calculating the compensation data.
+ *
+ * @retval FSP_SUCCESS                            Successfully compensation info are set.
+ * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter or library internal error occured.
+ * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
+ * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
+ **********************************************************************************************************************/
+fsp_err_t RM_ZMOD4XXX_CompensationInfoSet (rm_zmod4xxx_ctrl_t * const                    p_api_ctrl,
+                                           rm_zmod4xxx_compensation_info_t const * const p_compensation_info)
+{
+    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
+    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
+
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+#endif
+
+    /* Set ZMOD4XXX library specific */
+    p_lib = p_ctrl->p_zmod4xxx_lib;
+    FSP_ERROR_RETURN(((RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN == p_lib->lib_type) ||
+                      (RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN_ULP == p_lib->lib_type) ||
+                      (RM_ZMOD4410_LIB_TYPE_PBAQ == p_lib->lib_type)),
+                     FSP_ERR_UNSUPPORTED);
+
+#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_compensation_info);
+    FSP_ASSERT(NULL != p_compensation_info->p_compensation_sensor_cfg);
+    FSP_ASSERT(NULL != p_compensation_info->p_raw_data);
+    FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+    rm_zmod4xxx_lib_extended_cfg_t * p_extend =
+        (rm_zmod4xxx_lib_extended_cfg_t *) p_compensation_info->p_compensation_sensor_cfg->p_extend;
+    p_ctrl->p_zmod4510_device   = p_extend->p_device;
+    p_ctrl->p_zmod4510_raw_data = p_compensation_info->p_raw_data;
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

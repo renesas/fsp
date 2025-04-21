@@ -111,11 +111,6 @@ void usbhs_interrupt_handler(void);
 void usbhs_d0fifo_handler(void);
 void usbhs_d1fifo_handler(void);
 
-#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
-void usb_typec_interrupt_handler(void);
-
-#endif                                 /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
-
 #if defined(USB_CFG_OTG_USE)
 static usb_utr_t g_usb_irq_otg_msg;
 static usb_utr_t g_usb_otg_detach_msg;
@@ -132,10 +127,6 @@ static uint16_t g_usb_hstd_m1_reg_intenb0;
 static uint16_t g_usb_hstd_m1_reg_intenb1;
  #endif                                /* defined(USB_HIGH_SPEED_MODULE) */
 #endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
-
-#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
-uint32_t g_usb_typec_reg_tcs;
-#endif                                 /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 
 /******************************************************************************
  * Renesas Abstracted RSK functions
@@ -434,13 +425,6 @@ void usb_cpu_usbint_init (uint8_t ip_type, usb_cfg_t const * const cfg)
  #endif                                /*((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)*/
 #endif                                 /* defined (USB_HIGH_SPEED_MODULE) */
     }
-
-#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
-    if (cfg->irq_typec >= 0)
-    {
-        R_BSP_IrqCfgEnable(cfg->irq_typec, cfg->ipl_typec, (void *) cfg); /* USBCC CCI enable */
-    }
-#endif /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 }
 
 /******************************************************************************
@@ -932,29 +916,6 @@ static void usbfs_usbi_isr (void)
  * End of function usbfs_usbi_isr
  ******************************************************************************/
 
-#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
-
-/*******************************************************************************
- * Function Name: usb_typec_isr
- * Description  : Interrupt service routine of USB TypeC
- * Arguments    : none
- * Return Value : none
- *******************************************************************************/
-static void usb_typec_isr (void)
-{
-    if (USB_TYPEC_IES_ISCN == (R_USBCC->IES & USB_TYPEC_IES_ISCN))
-    {
-        R_USBCC->IES        = (R_USBCC->IES | USB_TYPEC_IES_ISCN);
-        g_usb_typec_reg_tcs = R_USBCC->TCS;
-        USB_M0->INTENB0    |= USB_VBSE;
-    }
-}
-
-/******************************************************************************
- * End of function usb_typec_isr
- ******************************************************************************/
-#endif                                 /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
-
 #if defined(USB_HIGH_SPEED_MODULE)
 
 /*******************************************************************************
@@ -1173,23 +1134,6 @@ void usbhs_d1fifo_handler (void)
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
 }
-
-#if (USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE)
-void usb_typec_interrupt_handler (void)
-{
-    /* Save context if RTOS is used */
-    FSP_CONTEXT_SAVE
-
-    IRQn_Type irq = R_FSP_CurrentIrqGet();
-    R_BSP_IrqStatusClear(irq);
-
-    usb_typec_isr();
-
-    /* Restore context if RTOS is used */
-    FSP_CONTEXT_RESTORE
-}
-
-#endif                                 /* USB_CFG_TYPEC_FEATURE == USB_CFG_ENABLE */
 
 /******************************************************************************
  * End  Of File

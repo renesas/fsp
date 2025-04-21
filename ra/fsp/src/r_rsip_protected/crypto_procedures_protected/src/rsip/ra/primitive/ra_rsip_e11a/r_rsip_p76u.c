@@ -18,5 +18,5 @@
 void r_rsip_p76u (const uint32_t InData_PaddedMsg[], uint32_t MAX_CNT)
 {
     r_rsip_func000(InData_PaddedMsg, MAX_CNT);
-    r_rsip_func101(bswap_32big(0xb5be4530U), bswap_32big(0x9f7cceaeU), bswap_32big(0x964899f8U), bswap_32big(0xcecd2777U));
+    r_rsip_func101(bswap_32big(0xb6206caaU), bswap_32big(0x2f50cb05U), bswap_32big(0x84a3a896U), bswap_32big(0x5c33b3a1U));
 }

@@ -219,6 +219,9 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
                      FSP_ERR_CLOCK_INACTIVE);
    #endif
   #else
+   #if (BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS == 1U)
+
+    /* PLL/PLL2 has 1 possible output that can be used for DLL */
 
     /* Check that PLL/PLL2 is running when it is selected as the DLL source clock */
     FSP_ERROR_RETURN(0U ==
@@ -227,6 +230,17 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
                       FSP_STYPE3_REG8_READ(R_SYSTEM->PLLCR, !R_SYSTEM->CGFSAR_b.NONSEC08) :
                       FSP_STYPE3_REG8_READ(R_SYSTEM->PLL2CR, !R_SYSTEM->CGFSAR_b.NONSEC09)),
                      FSP_ERR_CLOCK_INACTIVE);
+   #else
+
+    /* The PLL is available and it has 1 possible output that can be used for DLL */
+
+    /* Check that PLL is running when it is seclected as the DLL source clock */
+    FSP_ERROR_RETURN(0U ==
+                     (FSP_STYPE3_REG8_READ(R_SYSTEM->CANFDCKCR,
+                                           !R_SYSTEM->CGFSAR_b.NONSEC18) == BSP_CLOCKS_SOURCE_CLOCK_PLL ?
+                      FSP_STYPE3_REG8_READ(R_SYSTEM->PLLCR, !R_SYSTEM->CGFSAR_b.NONSEC08) : 0),
+                     FSP_ERR_CLOCK_INACTIVE);
+   #endif
   #endif
  #endif
 

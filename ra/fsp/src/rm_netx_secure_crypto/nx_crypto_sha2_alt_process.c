@@ -128,10 +128,10 @@ UINT sce_nx_crypto_sha256_update (NX_CRYPTO_SHA256 * context, UCHAR * input_ptr,
         NX_CRYPTO_MEMCPY((void *) &(context->nx_sha256_buffer[current_bytes]), (void *) input_ptr, needed_fill_bytes); /* Use case of memcpy is verified. */
 
         /* Process the 64-byte (512 bit) buffer.  */
-        ret = HW_SCE_Sha224256GenerateMessageDigestSub((uint32_t *) context->nx_sha256_states,
-                                                       (uint32_t *) context->nx_sha256_buffer,
-                                                       16,
-                                                       out_data);
+        ret = HW_SCE_ShaGenerateMessageDigestSubAdaptor((uint32_t *) context->nx_sha256_states,
+                                                        (uint32_t *) context->nx_sha256_buffer,
+                                                        out_data,
+                                                        16);
         NX_CRYPTO_MEMCPY((uint32_t *) context->nx_sha256_states, out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
         FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
 
@@ -147,10 +147,17 @@ UINT sce_nx_crypto_sha256_update (NX_CRYPTO_SHA256 * context, UCHAR * input_ptr,
     {
         /* Process any and all whole blocks of input.  */
         uint32_t aligned_words = ((input_length >> 6) << 4);
+ #if (1U == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED)
+        ret = HW_SCE_ShaGenerateMessageDigestSub((uint32_t *) context->nx_sha256_states,
+                                                 (const uint32_t *) input_ptr,
+                                                 out_data,
+                                                 aligned_words);
+ #else
         ret = HW_SCE_Sha224256GenerateMessageDigestSub((uint32_t *) context->nx_sha256_states,
                                                        (const uint32_t *) input_ptr,
                                                        aligned_words,
                                                        out_data);
+ #endif
         NX_CRYPTO_MEMCPY((uint32_t *) context->nx_sha256_states, out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
         FSP_ERROR_RETURN((FSP_SUCCESS == ret), NX_CRYPTO_NOT_SUCCESSFUL);
 

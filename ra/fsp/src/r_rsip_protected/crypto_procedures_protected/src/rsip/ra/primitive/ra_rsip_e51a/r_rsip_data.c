@@ -14,12 +14,12 @@
  * Global variables
  **********************************************************************************************************************/
 
-uint32_t S_RAM[RSIP_PRV_WORD_SIZE_S_RAM];
-uint32_t S_HEAP[RSIP_PRV_WORD_SIZE_S_HEAP];
+uint32_t         S_RAM[RSIP_PRV_WORD_SIZE_S_RAM];
+uint32_t         S_HEAP[RSIP_PRV_WORD_SIZE_S_HEAP];
 uint32_t const * S_INST2;
-uint32_t INST_DATA_SIZE;
-uint32_t KEY_INDEX_SIZE;
-uint32_t WRAPPED_KEY_SIZE;
+uint32_t         INST_DATA_SIZE;
+uint32_t         KEY_INDEX_SIZE;
+uint32_t         WRAPPED_KEY_SIZE;
 
 uint32_t const DomainParam_NIST_P192[] =
 {
@@ -163,7 +163,7 @@ uint32_t const DomainParam_NIST_P521[] =
     BSWAP_32BIG_C(0x8c1a5b55U), BSWAP_32BIG_C(0xbc379280U), BSWAP_32BIG_C(0xb9a30278U), BSWAP_32BIG_C(0xef0dba99U),
 };
 
-uint32_t const DomainParam_NIST_Ed25519[] =
+uint32_t const DomainParam_Ed25519[] =
 {
     BSWAP_32BIG_C(0x7e954da9U), BSWAP_32BIG_C(0xa5a8035eU), BSWAP_32BIG_C(0x292f36b3U), BSWAP_32BIG_C(0xd86e2375U),
     BSWAP_32BIG_C(0x7d7d7f8eU), BSWAP_32BIG_C(0x63969f29U), BSWAP_32BIG_C(0x44419852U), BSWAP_32BIG_C(0x3530be90U),
@@ -297,4 +297,3 @@ uint32_t const DomainParam_Koblitz_secp256k1[] =
     BSWAP_32BIG_C(0x2b33ac23U), BSWAP_32BIG_C(0x91ac4a3bU), BSWAP_32BIG_C(0x4ed4a36bU), BSWAP_32BIG_C(0xe273eac4U),
     BSWAP_32BIG_C(0xb480b510U), BSWAP_32BIG_C(0x5978645cU), BSWAP_32BIG_C(0x76491482U), BSWAP_32BIG_C(0xba9bf7afU),
 };
-

@@ -330,6 +330,9 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
     /* Initialize the SCI in Simple LIN mode. */
     r_sci_b_lin_hw_configure(p_ctrl);
 
+    /* Enable interrupt handlers in the NVIC */
+    SCI_B_LIN_IRQS_ENABLE();
+
     /* Mark the control block as open */
     p_ctrl->open = SCI_B_LIN_OPEN;
 
@@ -480,8 +483,9 @@ fsp_err_t R_SCI_B_LIN_InformationFrameWrite (lin_ctrl_t * const                 
  * @retval  FSP_ERR_ASSERTION        Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided
  * @retval  FSP_ERR_IN_USE           A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort
  *                                   to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
+ * @retval  FSP_ERR_INVALID_CALL     Data reception is not possible because a header frame has not been received yet (slave mode only).
  *
- * @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
+ *  @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                                   return codes.
  **********************************************************************************************************************/
 fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ctrl,
@@ -493,7 +497,15 @@ fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_
     fsp_err_t err = r_sci_b_lin_information_read_write_param_check(p_api_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
+
     R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
+
+#if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
+
+    /* In slave mode, check that data reception is possible (due to successful header reception) */
+    FSP_ERROR_RETURN((LIN_MODE_MASTER == p_ctrl->p_cfg->mode) || (0 == (R_SCI_B0_XSR0_SFSF_Msk & p_reg->XSR0)),
+                     FSP_ERR_INVALID_CALL);
+#endif
 
     /* Disable reception interrupts */
     p_reg->CCR0_b.RIE = 0;
@@ -1176,7 +1188,7 @@ static uint8_t r_sci_b_lin_checksum_calculate (uint8_t               id,
 #endif
 
 /*******************************************************************************************************************//**
- * Initializes the SCI common (CCRn) and Simple LIN (XCRn) register settings and enable LIN interrupts.
+ * Initializes the SCI common (CCRn) and Simple LIN (XCRn) register settings.
  *
  * Initial settings are based on Figure 26.105 "Example of Start Frame Reception Flowchart" of the RA6T2 manual
  * R01UH0951EJ0130 and related Table 26.26 "Example flow of SCI initialization in asynchronous mode with non-FIFO selected."
@@ -1264,9 +1276,6 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     p_reg->CCR2 = ccr2;
     p_reg->CCR1 = ccr1;
     p_reg->CCR4 = 0;
-
-    /* Enable interrupt handlers in the NVIC */
-    SCI_B_LIN_IRQS_ENABLE();
 
     /* Enable reception. RE and RIE must be set simultaneously (see RA6T2 manual R01UH0951EJ0130 Table 26.26
      * "Example flow of SCI initialization in asynchronous mode with non-FIFO selected."). The CFCLR

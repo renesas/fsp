@@ -535,7 +535,7 @@ fsp_err_t R_GPT_DutyCycleSet (timer_ctrl_t * const p_ctrl, uint32_t const duty_c
     }
 
     FSP_ERROR_RETURN(GPT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(duty_cycle_counts <= (p_instance_ctrl->p_reg->GTPR + 1), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(duty_cycle_counts <= (p_instance_ctrl->p_reg->GTPBR + 1), FSP_ERR_INVALID_ARGUMENT);
  #endif
 
     /* Set duty cycle. */

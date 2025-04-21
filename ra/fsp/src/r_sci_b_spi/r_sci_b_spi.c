@@ -25,7 +25,6 @@
 
 #define SCI_B_SPI_PRV_CLK_MAX_N                   (0xFFU)
 #define SCI_B_SPI_PRV_CLK_MAX_n                   (3U)
-#define SCI_B_SPI_PRV_CLK_MIN_DIV                 (4U)
 #define SCI_B_SPI_PRV_CLK_MAX_DIV                 ((SCI_B_SPI_PRV_CLK_MAX_N + 1) * 8 * \
                                                    (1 << (2 * SCI_B_SPI_PRV_CLK_MAX_n - 1)))
 #define SCI_B_SPI_PRV_CHR_RST_VALUE               (0x0200U)
@@ -445,29 +444,31 @@ fsp_err_t R_SCI_B_SPI_CalculateBitrate (uint32_t                  bitrate,
     FSP_ASSERT(bitrate >= (peripheral_clock + SCI_B_SPI_PRV_CLK_MAX_DIV - 1U) / SCI_B_SPI_PRV_CLK_MAX_DIV);
 #endif
 
-    int32_t divisor = 0;
-    int32_t brr     = 0;
-    int32_t cks     = -1;
+    uint32_t divisor = 0;
+    uint32_t brr     = 0;
 
-    for (uint32_t i = 0; i <= 3; i++)
+    for (uint8_t cks = 0; cks <= 3; cks++)
     {
-        cks++;
-        divisor = (1 << (2 * (i + 1))) * (int32_t) bitrate;
-
-        /* Calculate BRR so that the bit rate is the largest possible value less than or equal to the desired
-         * bitrate. */
-        brr = ((int32_t) peripheral_clock + divisor - 1) / divisor - 1;
-
-        if (brr <= UINT8_MAX)
+        for (int8_t bgdm = 1; bgdm >= 0; bgdm--)
         {
-            break;
+            divisor = (1 << (2 * (cks + 1) - bgdm)) * bitrate;
+
+            /* Calculate BRR so that the bit rate is the largest possible value less than or equal to the desired
+             * bitrate. */
+            brr = (peripheral_clock + divisor - 1) / divisor - 1;
+
+            if (brr <= UINT8_MAX)
+            {
+                sclk_div->brr  = (uint8_t) brr;
+                sclk_div->cks  = (uint8_t) (cks & 3);
+                sclk_div->bgdm = (uint8_t) (bgdm & 1);
+
+                return FSP_SUCCESS;
+            }
         }
     }
 
-    sclk_div->brr = (uint8_t) brr;
-    sclk_div->cks = (uint8_t) (cks & 3);
-
-    return FSP_SUCCESS;
+    return FSP_ERR_INVALID_ARGUMENT;
 }
 
 /*******************************************************************************************************************//**
@@ -542,10 +543,14 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     /* Write settings to CCR2:
      * - Write the BRR setting.
      * - Write the clock divider setting.
+     * - Write the Baud Rate Generator Double-Speed Mode setting.
      */
-    ccr2 |= (uint32_t) (p_extend->clk_div.cks << R_SCI_B0_CCR2_CKS_Pos);
-
-    ccr2 |= (uint32_t) ((p_extend->clk_div.brr) << R_SCI_B0_CCR2_BRR_Pos);
+    if (SPI_MODE_MASTER == p_cfg->operating_mode)
+    {
+        ccr2 |= (uint32_t) (p_extend->clk_div.cks << R_SCI_B0_CCR2_CKS_Pos);
+        ccr2 |= (uint32_t) ((p_extend->clk_div.brr) << R_SCI_B0_CCR2_BRR_Pos);
+        ccr2 |= (uint32_t) ((p_extend->clk_div.bgdm) << R_SCI_B0_CCR2_BGDM_Pos);
+    }
 
     /* Enable Clock for the SCI Channel. */
     R_BSP_MODULE_START(FSP_IP_SCI, p_cfg->channel);

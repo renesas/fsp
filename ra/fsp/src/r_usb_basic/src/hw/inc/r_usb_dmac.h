@@ -67,9 +67,7 @@ void usb_cstd_dma_send_restart(usb_utr_t * ptr, uint32_t src, uint32_t data_size
 void usb_cstd_dma_send_complete(uint8_t ip_no, uint16_t use_port);
 
  #if (USB_CFG_DMA == USB_CFG_ENABLE)
-void usb_ip0_d0fifo_callback(dmac_callback_args_t * cb_data);
 void usb_ip0_d1fifo_callback(dmac_callback_args_t * cb_data);
-void usb_ip1_d0fifo_callback(dmac_callback_args_t * cb_data);
 void usb_ip1_d1fifo_callback(dmac_callback_args_t * cb_data);
 
  #endif                                /* #if (USB_CFG_DMA == USB_CFG_ENABLE) */

@@ -15,11 +15,14 @@
 
 #include "rm_netx_secure_crypto_cfg.h"
 #include "rm_netx_secure_crypto.h"
-#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && (((BSP_FEATURE_RSIP_SCE9_SUPPORTED ||             \
-                                                               BSP_FEATURE_RSIP_SCE7_SUPPORTED ||             \
-                                                               BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED ||        \
-                                                               BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED) == 1) || \
-    ((BSP_FEATURE_RSIP_SCE5_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED) == 1))
+#if (1U == NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT) && ((BSP_FEATURE_RSIP_SCE9_SUPPORTED ||      \
+                                                              BSP_FEATURE_RSIP_SCE7_SUPPORTED ||      \
+                                                              BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+                                                              BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+                                                              BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED || \
+                                                              BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
+                                                              BSP_FEATURE_RSIP_SCE5_SUPPORTED ||      \
+                                                              BSP_FEATURE_RSIP_SCE5B_SUPPORTED) == 1)
  #include "nx_crypto_aes.h"
  #include "hw_sce_private.h"
  #include "hw_sce_ra_private.h"

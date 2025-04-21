@@ -754,4 +754,12 @@ fsp_err_t HW_SCE_Aes256CmacFinal(const uint32_t InData_Cmd[],
                                  const uint32_t InData_DataT[],
                                  const uint32_t InData_DataTLen[],
                                  uint32_t       OutData_DataT[]);
+fsp_err_t HW_SCE_Aes128XtsEncryptInitSubGeneral (uint32_t InData_KeyMode[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_Key[],
+                                                 uint32_t InData_IV[]);
+fsp_err_t HW_SCE_Aes128XtsDecryptInitSubGeneral (uint32_t InData_KeyMode[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_Key[],
+                                                 uint32_t InData_IV[]);
 #endif /* HW_SCE_RA_PRIVATE_HEADER_FILE */

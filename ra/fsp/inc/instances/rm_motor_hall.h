@@ -128,7 +128,7 @@ fsp_err_t RM_MOTOR_HALL_FunctionSelect(motor_ctrl_t * const p_ctrl, motor_functi
  * @} (end addtogroup MOTOR_HALL)
  **********************************************************************************************************************/
 
-/* Common macro for SSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 
 #endif                                 // RM_MOTOR_HALL_H

@@ -615,7 +615,7 @@ fsp_err_t R_RSIP_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const
     memcpy(p_handle->wrapped_key, p_wrapped_key, RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_HMAC_MAX);
 
     /* Set block size */
-    switch(p_wrapped_key->subtype)
+    switch (p_wrapped_key->subtype)
     {
         /* SHA-1, SHA-224, SHA-256 */
         case RSIP_KEY_HMAC_SHA1:
@@ -966,14 +966,11 @@ fsp_err_t R_RSIP_HMAC_VerifyFinish (rsip_ctrl_t * const p_ctrl, uint8_t const * 
  * @retval FSP_ERR_NOT_OPEN                      Module is not open.
  * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
- * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t * const p_handle)
 {
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
-
-#if !BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+    fsp_err_t              err             = FSP_ERR_CRYPTO_RSIP_FATAL;
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
@@ -991,7 +988,7 @@ fsp_err_t R_RSIP_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t * 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         {
             /* Read internal state */
-            rsip_ret = r_rsip_hmac_suspend(p_instance_ctrl->handle.hmac.internal_state);
+            rsip_ret = r_rsip_hmac_suspend(&p_instance_ctrl->handle.hmac);
 
             /* Handle state transition */
             p_instance_ctrl->handle.hmac.handle_state = RSIP_USER_HANDLE_STATE_RESUME;
@@ -1024,12 +1021,6 @@ fsp_err_t R_RSIP_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t * 
 
     /* State transition */
     p_instance_ctrl->state = RSIP_STATE_MAIN;
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_PARAMETER_NOT_USED(p_handle);
-
-    err = FSP_ERR_UNSUPPORTED;
-#endif
 
     return err;
 }
@@ -1053,13 +1044,9 @@ fsp_err_t R_RSIP_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t * 
  * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
  * @retval FSP_ERR_NOT_OPEN                      Module is not open.
  * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
- * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_HMAC_Resume (rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t const * const p_handle)
 {
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
-
-#if !BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
 #if RSIP_CFG_PARAM_CHECKING_ENABLE
@@ -1077,15 +1064,7 @@ fsp_err_t R_RSIP_HMAC_Resume (rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t con
     /* State transition */
     p_instance_ctrl->state = RSIP_STATE_HMAC;
 
-    err = FSP_SUCCESS;
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_PARAMETER_NOT_USED(p_handle);
-
-    err = FSP_ERR_UNSUPPORTED;
-#endif
-
-    return err;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**

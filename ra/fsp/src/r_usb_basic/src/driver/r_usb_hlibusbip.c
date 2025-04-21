@@ -355,7 +355,11 @@ uint16_t usb_hstd_pipe2fport (usb_utr_t * ptr, uint16_t pipe)
 
  #if ((USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_DMA == USB_CFG_ENABLE))
     {
+  #if ((USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE))
         if ((USB_PIPE1 == pipe) || (USB_PIPE2 == pipe))
+  #else
+        if (USB_PIPE5 >= pipe)
+  #endif
         {
             hw_usb_write_pipesel(ptr, pipe);
             usb_dir = hw_usb_read_pipecfg(ptr);

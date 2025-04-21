@@ -137,7 +137,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
     const unsigned char * p_internal_key = key;
    #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED ||       \
     BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || \
-    BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+    BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
 
     /* Create storage to hold the generated OEM key index. Size = Largest key size possible. */
     uint8_t encrypted_aes_key[SIZE_AES_192BIT_KEYLEN_BYTES_WRAPPED] = {0};
@@ -149,7 +149,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
    #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
             BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED ||                           \
             BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED ||                                                              \
-            BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+            BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
             local_keybits = SIZE_AES_128BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 10;
             if (false == (bool) ctx->vendor_ctx)
@@ -217,7 +217,7 @@ int aes_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, un
     #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE5B_SUPPORTED || BSP_FEATURE_RSIP_SCE5_SUPPORTED || \
             BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED ||                            \
             BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED ||                                                               \
-            BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+            BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
 
             local_keybits = SIZE_AES_256BIT_KEYLEN_BITS_WRAPPED;
             ctx->nr       = 14;
@@ -591,12 +591,13 @@ int mbedtls_internal_aes_encrypt_xts (mbedtls_aes_context * ctx,
     uint32_t copy_size       = 0;
     uint8_t  local_input[HW_SCE_AES_BLOCK_BYTE_SIZE * 2];
     uint8_t  local_output[HW_SCE_AES_BLOCK_BYTE_SIZE * 2];
+    uint32_t indata_key_type = 0;
 
     if (ctx->nr == 10)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes128XtsEncryptInitSub(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes128XtsEncryptInitSubGeneral(&indata_key_type, ctx->buf, NULL, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -857,12 +858,13 @@ int mbedtls_internal_aes_decrypt_xts (mbedtls_aes_context * ctx,
     uint32_t copy_size       = 0;
     uint8_t  local_input[HW_SCE_AES_BLOCK_BYTE_SIZE * 2];
     uint8_t  local_output[HW_SCE_AES_BLOCK_BYTE_SIZE * 2];
+    uint32_t indata_key_type = 0;
 
     if (ctx->nr == 10)
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes128XtsDecryptInitSub(ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes128XtsDecryptInitSubGeneral(&indata_key_type, ctx->buf, NULL, (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;

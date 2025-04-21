@@ -18,5 +18,5 @@
 void r_rsip_pdcu (const uint32_t InData_PaddedMsg[], uint32_t MAX_CNT)
 {
     r_rsip_func000(InData_PaddedMsg, MAX_CNT);
-    r_rsip_func101(bswap_32big(0xb07f8862U), bswap_32big(0x0d2c9451U), bswap_32big(0x2bd5ec7cU), bswap_32big(0x752a67adU));
+    r_rsip_func101(bswap_32big(0x52cc5c35U), bswap_32big(0x2d523679U), bswap_32big(0x560361e9U), bswap_32big(0x99a5c085U));
 }

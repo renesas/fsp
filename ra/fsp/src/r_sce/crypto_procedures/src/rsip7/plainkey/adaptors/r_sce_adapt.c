@@ -485,6 +485,26 @@ fsp_err_t HW_SCE_Aes128CcmDecryptFinalSubGeneral (const uint32_t * InData_Text,
     return HW_SCE_Aes128CcmDecryptFinalSub(InData_Text, InData_MAC, OutData_Text);
 }
 
+fsp_err_t HW_SCE_Aes128XtsEncryptInitSubGeneral (const uint32_t InData_KeyMode[],
+                                                 const uint32_t InData_KeyIndex[],
+                                                 const uint32_t InData_Key[],
+                                                 const uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Aes128XtsEncryptInitSub(InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes128XtsDecryptInitSubGeneral (const uint32_t InData_KeyMode[],
+                                                 const uint32_t InData_KeyIndex[],
+                                                 const uint32_t InData_Key[],
+                                                 const uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Aes128XtsDecryptInitSub(InData_KeyIndex, InData_IV);
+}
+
 fsp_err_t HW_SCE_Ecc256ScalarMultiplicationSubAdaptor (const uint32_t InData_CurveType[],
                                                        const uint32_t InData_Cmd[],
                                                        const uint32_t InData_KeyIndex[],

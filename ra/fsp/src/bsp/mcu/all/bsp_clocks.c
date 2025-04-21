@@ -1166,10 +1166,12 @@ void bsp_prv_clock_set (uint32_t clock, uint32_t sckdivcr, uint16_t sckdivcr2)
     uint8_t new_rom_wait_state = bsp_clock_set_prechange(iclk_freq_hz_post_change);
 
  #if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS
+ #if BSP_CFG_CLOCK_SETTLING_DELAY_ENABLE
     uint32_t extraclk1_div = (sckdivcr2 & BSP_INTERNAL_SCKDIVCR2_EXTRACK1_MASK) >>
                              BSP_INTERNAL_SCKDIVCR2_EXTRACK1_POS;
     uint32_t extraclk2_div = (sckdivcr2 & BSP_INTERNAL_SCKDIVCR2_EXTRACK2_MASK) >>
                              BSP_INTERNAL_SCKDIVCR2_EXTRACK2_POS;
+ #endif
     uint32_t extraclk3_div = (sckdivcr2 & BSP_INTERNAL_SCKDIVCR2_EXTRACK3_MASK) >>
                              BSP_INTERNAL_SCKDIVCR2_EXTRACK3_POS;
 
@@ -2690,9 +2692,9 @@ void bsp_clock_init (void)
  #if BSP_CFG_UCK_SOURCE != BSP_CLOCKS_CLOCK_DISABLED
 
     /* If the USB clock has a divider setting in SCKDIVCR2. */
-  #if BSP_FEATURE_BSP_HAS_USB_CLOCK_DIV && !BSP_FEATURE_BSP_HAS_USBCKDIVCR
+  #if BSP_FEATURE_BSP_SCKDIVCR2_HAS_USB_CLOCK_DIV
     R_SYSTEM->SCKDIVCR2 = BSP_PRV_UCK_DIV << BSP_PRV_SCKDIVCR2_UCK_BIT;
-  #endif                               /* BSP_FEATURE_BSP_HAS_USB_CLOCK_DIV && !BSP_FEATURE_BSP_HAS_USBCKDIVCR */
+  #endif                               /* BSP_FEATURE_BSP_SCKDIVCR2_HAS_USB_CLOCK_DIV */
 
     /* If there is a REQ bit in USBCKCR, then follow sequence from section 8.2.29 in RA6M4 hardware manual R01UH0890EJ0050. */
   #if BSP_FEATURE_BSP_HAS_USB_CLOCK_REQ
@@ -2704,9 +2706,10 @@ void bsp_clock_init (void)
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->USBCKCR_b.USBCKSRDY, 1U);
 
    #if BSP_FEATURE_BSP_HAS_USBCKDIVCR
+
     /* Write the settings. */
     R_SYSTEM->USBCKDIVCR = BSP_PRV_UCK_DIV;
-   #endif /* BSP_FEATURE_BSP_HAS_USBCKDIVCR */
+   #endif                              /* BSP_FEATURE_BSP_HAS_USBCKDIVCR */
 
     /* Select the USB Clock without enabling it. */
     R_SYSTEM->USBCKCR = BSP_CFG_UCK_SOURCE | R_SYSTEM_USBCKCR_USBCKSREQ_Msk;

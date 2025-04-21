@@ -838,6 +838,7 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(LVD_OPENED != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
     FSP_ASSERT(NULL != p_cfg);
+    FSP_ERROR_RETURN(LVD_THRESHOLD_NOT_AVAILABLE != p_cfg->voltage_threshold, FSP_ERR_INVALID_ARGUMENT);
  #if (BSP_FEATURE_LVD_HAS_EXT_MONITOR == 1)
     FSP_ASSERT(1U <= p_cfg->monitor_number && 5U >= p_cfg->monitor_number);
  #else
@@ -886,22 +887,22 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
         case 3:
         {
             /* High voltage thresholds correspond to low register settings. */
-            FSP_ASSERT(threshold <= (int32_t) LVD_THRESHOLD_EXLVDVBAT_LEVEL_3_1V &&
-                       threshold >= (int32_t) LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_2V);
+            FSP_ASSERT(threshold <= (int32_t) BSP_FEATURE_LVD_EXLVDVBAT_HI_THRESHOLD &&
+                       threshold >= (int32_t) BSP_FEATURE_LVD_EXLVDVBAT_LOW_THRESHOLD);
             break;
         }
 
         case 4:
         {
             /* High voltage thresholds correspond to low register settings. */
-            FSP_ASSERT(threshold <= (int32_t) LVD_THRESHOLD_LVDVRTC_LEVEL_2_8V &&
-                       threshold >= (int32_t) LVD_THRESHOLD_LVDVRTC_LEVEL_2_2V);
+            FSP_ASSERT(threshold <= (int32_t) BSP_FEATURE_LVD_EXLVDVRTC_HI_THRESHOLD &&
+                       threshold >= (int32_t) BSP_FEATURE_LVD_EXLVDVRTC_LOW_THRESHOLD);
             break;
         }
 
         case 5:
         {
-            /* Checking for EXLVD will be skipped because it don't have threshold configuration. */
+            /* Checking for EXLVD will be skipped because it doesn't have threshold configuration. */
             break;
         }
  #endif
@@ -959,6 +960,10 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
 {
     /* Calculate index used to get monitor registers from look-up tables and perform other calculations. */
     uint32_t monitor_index = p_ctrl->p_cfg->monitor_number - 3;
+ #if (0UL != BSP_FEATURE_LVD_VRTC_LVL_STABILIZATION_TIME_US)
+    uint8_t current_rtclvl = 0;
+    uint8_t new_rtclvl     = 0;
+ #endif
 
     /* Enable access to LVD registers. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
@@ -976,15 +981,44 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
 
         case 1:
         {
-            /* Configure voltage threshold for LVD of VRTC */
+ #if (0UL == BSP_FEATURE_LVD_VRTC_LVL_STABILIZATION_TIME_US)
+
+            /* Configure voltage threshold for LVD of VRTC. */
             *g_ext_lvdcr_lut[monitor_index] =
                 (uint8_t) (p_ctrl->p_cfg->voltage_threshold << R_SYSTEM_VRTLVDCR_LVL_Pos);
             break;
+ #elif (0UL != BSP_FEATURE_LVD_VRTC_LVL_STABILIZATION_TIME_US)
+
+            /* Check the current state and new desire state of LVL field. */
+            new_rtclvl = (uint8_t) (p_ctrl->p_cfg->voltage_threshold) < LVD_THRESHOLD_LVDVRTC_LEVEL_1_99V ? 0 : 1;
+
+            current_rtclvl = (uint8_t) (*g_ext_lvdcr_lut[monitor_index] >> R_SYSTEM_VRTLVDCR_LVL_Pos) <=
+                             LVD_THRESHOLD_LVDVRTC_LEVEL_1_99V ? 0 : 1;
+
+            /* If change from voltage_threshold > 2 back to voltage_threshold < 2 a intermidiate stage and 300us is required. */
+            if (new_rtclvl >= current_rtclvl)
+            {
+                /* Direct change */
+                *g_ext_lvdcr_lut[monitor_index] =
+                    (uint8_t) (p_ctrl->p_cfg->voltage_threshold << R_SYSTEM_VRTLVDCR_LVL_Pos);
+            }
+            else
+            {
+                /* Change to (intermidiate stage) and wait 300us before change to desired voltage_threshold */
+                *g_ext_lvdcr_lut[monitor_index] =
+                    (uint8_t) (LVD_THRESHOLD_LVDVRTC_LEVEL_1_99V << R_SYSTEM_VRTLVDCR_LVL_Pos);
+                R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_VRTC_LVL_STABILIZATION_TIME_US,
+                                    BSP_DELAY_UNITS_MICROSECONDS);
+                *g_ext_lvdcr_lut[monitor_index] =
+                    (uint8_t) (p_ctrl->p_cfg->voltage_threshold << R_SYSTEM_VRTLVDCR_LVL_Pos);
+            }
+            break;
+ #endif
         }
 
         case 2:
         {
-            /* EXLVD don't have threshold configuration */
+            /* EXLVD doesn't have threshold configuration */
             break;
         }
 

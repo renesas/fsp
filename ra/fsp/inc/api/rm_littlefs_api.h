@@ -76,7 +76,7 @@ typedef struct st_rm_littlefs_instance
     rm_littlefs_api_t const * p_api;   ///< Pointer to the API structure for this instance
 } rm_littlefs_instance_t;
 
-/* Common macro for SSP header files. There is also a corresponding SSP_HEADER macro at the top of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER
 
 /*******************************************************************************************************************//**

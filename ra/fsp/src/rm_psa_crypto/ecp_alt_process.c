@@ -509,7 +509,7 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     uint32_t * p_point_result_buff_R_32;
     uint32_t * p_common_buff_32;
     uint8_t    padding = 0U;
-  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
+  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
     uint32_t indata_key_type = 0;
   #endif
 
@@ -619,7 +619,7 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
         ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
     }
 
-  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
+  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
     else if (FSP_SUCCESS !=
              p_hw_sce_ecc_scalarmultiplication(&curve_type, &indata_key_type, p_integer_buff_m_wrapped_32,
                                                p_point_buff_P_32, p_domain_param, p_point_result_buff_R_32))

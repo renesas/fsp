@@ -44,7 +44,7 @@ typedef enum e_sau_spi_operation_clock
 typedef enum e_sau_spi_transfer_mode
 {
     SAU_SPI_TRANSFER_MODE_SINGLE     = 0, ///< Single transfer mode
-    SAU_SPI_TRANSFER_MODE_CONTINUOUS = 1, ///< Continuous transfer mode will be deprecated.
+    SAU_SPI_TRANSFER_MODE_CONTINUOUS = 1, ///< Continuous transfer mode
 } sau_spi_transfer_mode_t;
 
 /** Data phase */

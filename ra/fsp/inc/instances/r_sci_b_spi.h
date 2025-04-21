@@ -32,7 +32,8 @@ FSP_HEADER
 typedef struct
 {
     uint8_t brr;
-    uint8_t cks : 2;
+    uint8_t cks  : 2;
+    uint8_t bgdm : 1;
 } sci_b_spi_div_setting_t;
 
 /** Source clock selection options for SCI. */

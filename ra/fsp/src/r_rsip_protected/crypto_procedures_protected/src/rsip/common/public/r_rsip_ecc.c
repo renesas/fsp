@@ -13,6 +13,8 @@
  * Macro definitions
  **********************************************************************************************************************/
 
+#define RSIP_PRV_BYTE_SIZE_EDWARDS25519_MESSAGE_MAX    (uint64_t) (0x1FFFFFFFFFFFFFBFU)
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -588,6 +590,214 @@ fsp_err_t R_RSIP_ECDH_PlainKeyAgree (rsip_ctrl_t * const              p_ctrl,
         {
             p_wrapped_secret->type = p_wrapped_private_key->subtype;
 
+            err = FSP_SUCCESS;
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_KEY_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Generates an EdDSA signature.
+ *
+ * Implements @ref rsip_api_t::eddsaSign.
+ *
+ * @par Conditions
+ * @parblock
+ * Key type of p_wrapped_private_key must be one of the following:
+ * - @ref RSIP_KEY_TYPE_ECC_EDWARDS25519_PRIVATE
+ *
+ * Key type of p_wrapped_public_key must be one of the following:
+ * - @ref RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC
+ * @endparblock
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_MAIN**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_INVALID_SIZE                  Input length is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
+ * @retval FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL      Input key is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ *
+ * @sa Section @ref r-rsip-protected-supported-algorithms "Supported Algorithms".
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_PureEdDSA_Sign (rsip_ctrl_t * const              p_ctrl,
+                                 rsip_wrapped_key_t const * const p_wrapped_private_key,
+                                 rsip_wrapped_key_t const * const p_wrapped_public_key,
+                                 uint8_t const * const            p_message,
+                                 uint64_t const                   message_length,
+                                 uint8_t * const                  p_signature)
+{
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+#if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_wrapped_private_key);
+    FSP_ASSERT(p_wrapped_public_key);
+    FSP_ASSERT(p_message);
+    FSP_ASSERT(p_signature);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check key type */
+    FSP_ERROR_RETURN(RSIP_ALG_ECC_PRIVATE == p_wrapped_private_key->alg, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+    FSP_ERROR_RETURN(RSIP_ALG_ECC_PUBLIC == p_wrapped_public_key->alg, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+    FSP_ERROR_RETURN(p_wrapped_private_key->subtype == p_wrapped_public_key->subtype, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(gp_func_eddsa_sign[p_wrapped_private_key->subtype], FSP_ERR_NOT_ENABLED);
+#endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    /* Check length */
+    FSP_ERROR_RETURN(RSIP_PRV_BYTE_SIZE_EDWARDS25519_MESSAGE_MAX >= message_length, FSP_ERR_INVALID_SIZE);
+
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret =
+        gp_func_eddsa_sign[p_wrapped_private_key->subtype]((const uint32_t *) p_wrapped_private_key->value,
+                                                           (const uint32_t *) p_wrapped_public_key->value,
+                                                           (const uint32_t *) p_message,
+                                                           message_length,
+                                                           (uint32_t *) p_signature);
+
+    /* Check error */
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
+            err = FSP_SUCCESS;
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_KEY_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Verifies an EdDSA signature.
+ *
+ * Implements @ref rsip_api_t::eddsaVerify.
+ *
+ * @par Conditions
+ * @parblock
+ * Key type of p_wrapped_public_key must be one of the following:
+ * - @ref RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC
+ * @endparblock
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_MAIN**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_INVALID_SIZE                  Input length is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
+ * @retval FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL      Input key is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ *
+ * @sa Section @ref r-rsip-protected-supported-algorithms "Supported Algorithms".
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_PureEdDSA_Verify (rsip_ctrl_t * const              p_ctrl,
+                                   rsip_wrapped_key_t const * const p_wrapped_public_key,
+                                   uint8_t const * const            p_message,
+                                   uint64_t const                   message_length,
+                                   uint8_t const * const            p_signature)
+{
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+#if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_wrapped_public_key);
+    FSP_ASSERT(p_message);
+    FSP_ASSERT(p_signature);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check key type */
+    FSP_ERROR_RETURN(RSIP_ALG_ECC_PUBLIC == p_wrapped_public_key->alg, FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(gp_func_eddsa_verify[p_wrapped_public_key->subtype], FSP_ERR_NOT_ENABLED);
+#endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    /* Check length */
+    FSP_ERROR_RETURN(RSIP_PRV_BYTE_SIZE_EDWARDS25519_MESSAGE_MAX >= message_length, FSP_ERR_INVALID_SIZE);
+
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret =
+        gp_func_eddsa_verify[p_wrapped_public_key->subtype]((const uint32_t *) p_wrapped_public_key->value,
+                                                            (const uint32_t *) p_message,
+                                                            message_length,
+                                                            (uint32_t *) p_signature);
+
+    /* Check error */
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
             err = FSP_SUCCESS;
             break;
         }

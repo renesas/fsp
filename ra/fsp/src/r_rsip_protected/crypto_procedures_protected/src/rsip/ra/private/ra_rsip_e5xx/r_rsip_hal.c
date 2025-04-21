@@ -17,12 +17,12 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define MSTP_SECURITY                                       R_MSTP->MSTPCRC_b.MSTPC31
+#define MSTP_SECURITY                         R_MSTP->MSTPCRC_b.MSTPC31
 
 /* For SHA, HMAC-SHA */
-#define RSIP_PRV_SHA_INIT_VAL1                              (0x80000000U)
-#define RSIP_PRV_SHA_INIT_VAL2                              (0x00000000U)
-#define RSIP_PRV_WORD_SIZE_HMAC_MAC_BUFFER                  (16U)
+#define RSIP_PRV_SHA_INIT_VAL1                (0x80000000U)
+#define RSIP_PRV_SHA_INIT_VAL2                (0x00000000U)
+#define RSIP_PRV_WORD_SIZE_HMAC_MAC_BUFFER    (16U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -293,9 +293,8 @@ rsip_ret_t r_rsip_hmac_resume_update (const rsip_wrapped_key_t * p_wrapped_key,
                                       uint32_t                 * internal_state)
 {
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_wrapper_p75r(p_wrapped_key,
-                                              &gs_hmac_hash_type[p_wrapped_key->subtype],
-                                              internal_state);
+    rsip_ret_t rsip_ret =
+        r_rsip_wrapper_p75r(p_wrapped_key, &gs_hmac_hash_type[p_wrapped_key->subtype], internal_state);
     if (RSIP_RET_PASS == rsip_ret)
     {
         rsip_ret = r_rsip_p75u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
@@ -316,11 +315,11 @@ rsip_ret_t r_rsip_hmac_update (const rsip_wrapped_key_t * p_wrapped_key,
     return r_rsip_p75u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
 }
 
-rsip_ret_t r_rsip_hmac_suspend (uint32_t * internal_state)
+rsip_ret_t r_rsip_hmac_suspend (rsip_hmac_handle_t * p_handle)
 {
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    return r_rsip_p75s(internal_state);
+    return r_rsip_p75s(p_handle->internal_state);
 }
 
 rsip_ret_t r_rsip_hmac_init_final (const rsip_wrapped_key_t * p_wrapped_key,
@@ -335,9 +334,7 @@ rsip_ret_t r_rsip_hmac_init_final (const rsip_wrapped_key_t * p_wrapped_key,
     };
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_wrapper_p75i(p_wrapped_key,
-                                              &gs_hmac_hash_type[p_wrapped_key->subtype],
-                                              msg_len);
+    rsip_ret_t rsip_ret = r_rsip_wrapper_p75i(p_wrapped_key, &gs_hmac_hash_type[p_wrapped_key->subtype], msg_len);
     if (RSIP_RET_PASS == rsip_ret)
     {
         rsip_ret =
@@ -366,9 +363,8 @@ rsip_ret_t r_rsip_hmac_resume_final (const rsip_wrapped_key_t * p_wrapped_key,
     internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_wrapper_p75r(p_wrapped_key,
-                                              &gs_hmac_hash_type[p_wrapped_key->subtype],
-                                              internal_state);
+    rsip_ret_t rsip_ret =
+        r_rsip_wrapper_p75r(p_wrapped_key, &gs_hmac_hash_type[p_wrapped_key->subtype], internal_state);
     if (RSIP_RET_PASS == rsip_ret)
     {
         rsip_ret =
@@ -427,9 +423,7 @@ rsip_ret_t r_rsip_hmac_init_verify (const rsip_wrapped_key_t * p_wrapped_key,
     };
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_wrapper_p75i(p_wrapped_key,
-                                              &gs_hmac_hash_type[p_wrapped_key->subtype],
-                                              msg_len);
+    rsip_ret_t rsip_ret = r_rsip_wrapper_p75i(p_wrapped_key, &gs_hmac_hash_type[p_wrapped_key->subtype], msg_len);
     if (RSIP_RET_PASS == rsip_ret)
     {
         rsip_ret =
@@ -469,9 +463,8 @@ rsip_ret_t r_rsip_hmac_resume_verify (const rsip_wrapped_key_t * p_wrapped_key,
     };
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_wrapper_p75r(p_wrapped_key,
-                                              &gs_hmac_hash_type[p_wrapped_key->subtype],
-                                              internal_state);
+    rsip_ret_t rsip_ret =
+        r_rsip_wrapper_p75r(p_wrapped_key, &gs_hmac_hash_type[p_wrapped_key->subtype], internal_state);
     if (RSIP_RET_PASS == rsip_ret)
     {
         rsip_ret =
@@ -508,6 +501,14 @@ rsip_ret_t r_rsip_hmac_verify (const rsip_wrapped_key_t * p_wrapped_key,
     }
 
     return rsip_ret;
+}
+
+rsip_ret_t r_rsip_kdf_sha_final (rsip_kdf_sha_handle_t * p_handle, uint8_t * p_digest)
+{
+    FSP_PARAMETER_NOT_USED(p_handle);
+    FSP_PARAMETER_NOT_USED(p_digest);
+
+    return RSIP_RET_FAIL;
 }
 
 rsip_ret_t r_rsip_kdf_hmac_init_update (const rsip_wrapped_key_t * p_wrapped_key,
@@ -700,7 +701,7 @@ static uint32_t get_cmd_kdf_hmac_subtype (uint8_t alg, uint8_t subtype)
         subtype = gs_convert_to_kdf_hmac_subtype[subtype];
     }
 
-    switch(subtype)
+    switch (subtype)
     {
         /* SHA-256 */
         case RSIP_KEY_KDF_HMAC_SHA256:

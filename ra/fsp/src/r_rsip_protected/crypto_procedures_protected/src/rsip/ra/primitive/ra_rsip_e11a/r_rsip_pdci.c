@@ -107,6 +107,8 @@ rsip_ret_t r_rsip_pdci (const uint32_t InData_KeyIndex[])
 
         r_rsip_func001();
 
+        r_rsip_func101(bswap_32big(0xf7f66beaU), bswap_32big(0x9a2860d2U), bswap_32big(0x47c25ea1U), bswap_32big(0x247e6b15U));
+
         return RSIP_RET_PASS;
     }
 }

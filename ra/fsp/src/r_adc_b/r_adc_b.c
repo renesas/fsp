@@ -868,11 +868,11 @@ fsp_err_t R_ADC_B_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
     if (R_TSN_CTRL->TSCR_b.TSEN)
     {
         uint32_t data = R_TSN_CAL->TSCDR;
-        p_adc_info->calibration_data = (data & BSP_FEATURE_ADC_B_TSN_CALIBRATION32_MASK);
+        p_adc_info->calibration_data = (data & BSP_FEATURE_TSN_CALIBRATION32_MASK);
     }
 
     /* Provide the previously retrieved slope information */
-    p_adc_info->slope_microvolts = BSP_FEATURE_ADC_B_TSN_SLOPE;
+    p_adc_info->slope_microvolts = BSP_FEATURE_TSN_SLOPE;
 
     return FSP_SUCCESS;
 }

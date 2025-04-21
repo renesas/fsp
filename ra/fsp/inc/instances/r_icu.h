@@ -29,6 +29,19 @@ FSP_HEADER
  * Typedef definitions
  *********************************************************************************************************************/
 
+/** External IRQ input pin digital filtering clock selection. */
+typedef enum e_external_irq_digital_filter
+{
+    EXTERNAL_IRQ_DIGITAL_FILTER_PCLK_DIV = 0, ///< Digital filter using clock PCLK dividers.
+    EXTERNAL_IRQ_DIGITAL_FILTER_LOCO     = 1, ///< Digital filter using clock LOCO.
+} e_external_irq_digital_filter_t;
+
+/** Extended ICU interface configuration */
+typedef struct st_icu_extended_cfg
+{
+    e_external_irq_digital_filter_t filter_src; ///< Select digital filter clock source when digital filter is enabled.
+} icu_extended_cfg_t;
+
 /** ICU private control block. DO NOT MODIFY.  Initialization occurs when R_ICU_ExternalIrqOpen is called. */
 typedef struct st_icu_instance_ctrl
 {

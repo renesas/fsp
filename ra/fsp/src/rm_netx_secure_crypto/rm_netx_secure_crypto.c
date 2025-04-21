@@ -103,10 +103,13 @@ uint32_t rm_netx_secure_crypto_ecc_key_pair_generate (uint32_t   curve_id,
         sce_ecc384_public_key_index_t public_key = {0};
         uint32_t indata_key_type                 = 0;
         err =
-            HW_SCE_GenerateEccP384RandomKeyIndexSubAdaptor(&curve_type, &indata_key_type, &DomainParam_NIST_P384[0],
-                                                    (uint32_t *) &public_key.value,
-                                                    (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
-                                                    (uint32_t *) &public_key.plain_value);
+            HW_SCE_GenerateEccP384RandomKeyIndexSubAdaptor(&curve_type,
+                                                           &indata_key_type,
+                                                           &DomainParam_NIST_P384[0],
+                                                           (uint32_t *) &public_key.value,
+                                                           (uint32_t *) &public_key.plain_value,
+                                                           (uint32_t *) wrapped_key,
+                                                           (uint32_t *) &public_key.plain_value);
 
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
         NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.value.key_q, curve_size);
@@ -114,16 +117,47 @@ uint32_t rm_netx_secure_crypto_ecc_key_pair_generate (uint32_t   curve_id,
     }
     else if (curve_id == NX_CRYPTO_EC_SECP256R1)
     {
+ #if (0 == BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED) && (0 == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED)
         sce_ecc_public_key_index_t public_key = {0};
         uint32_t indata_key_type              = 0;
         err =
-            HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(&curve_type, &cmd, &indata_key_type,
-                                                &DomainParam_NIST_P256[0], (uint32_t *) &public_key.value,
-                                                (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
-                                                (uint32_t *) &public_key.plain_value);
+            HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(&curve_type,
+                                                       &cmd,
+                                                       &indata_key_type,
+                                                       &DomainParam_NIST_P256[0],
+                                                       (uint32_t *) &public_key.value,
+                                                       (uint32_t *) &public_key.plain_value,
+                                                       (uint32_t *) wrapped_key,
+                                                       (uint32_t *) &public_key.plain_value);
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
         NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.value.key_q, curve_size);
         NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], &public_key.value.key_q[curve_size], curve_size);
+ #else
+        sce_ecc_public_key_index_t public_key  = {0};
+        sce_ecc_public_key_index_t private_key = {0};
+        uint32_t indata_key_type               = 0;
+        uint32_t adjust_privatekey_address     = 3;
+        err =
+            HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(&curve_type,
+                                                       &cmd,
+                                                       &indata_key_type,
+                                                       &DomainParam_NIST_P256[0],
+                                                       (uint32_t *) &public_key.value,
+                                                       (uint32_t *) &public_key.plain_value.key,
+                                                       (uint32_t *) wrapped_key,
+                                                       (uint32_t *) &private_key.plain_value.key);
+
+        NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.plain_value.key, curve_size << 1U);
+
+        /* 0x4 is added to first byte in public key value array. So the last byte of public key
+         * and 3 bytes of private key will is same memory address after convert from uint8_t to uint32_t.
+         * Add 3 memory address to separate the last byte of public_key and 3 bytes of private_key after
+         * convert uint8_t to uint32_t.  */
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + (curve_size << 1U) + adjust_privatekey_address],
+                         private_key.plain_value.key,
+                         curve_size);
+ #endif
     }
     else if (curve_id == NX_CRYPTO_EC_SECP224R1)
     {
@@ -131,10 +165,14 @@ uint32_t rm_netx_secure_crypto_ecc_key_pair_generate (uint32_t   curve_id,
         cmd = RM_NETX_CRYPTO_CHANGE_ULONG_ENDIAN(RM_NETX_SECURE_CRYPTO_ECC_224_CURVE_OPERATION);
         uint32_t indata_key_type = 0;
         err =
-            HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(&curve_type, &cmd, &indata_key_type,
-                                                &DomainParam_NIST_P256[0], (uint32_t *) &public_key.value,
-                                                (uint32_t *) &public_key.plain_value, (uint32_t *) wrapped_key,
-                                                (uint32_t *) &public_key.plain_value);
+            HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(&curve_type,
+                                                       &cmd,
+                                                       &indata_key_type,
+                                                       &DomainParam_NIST_P256[0],
+                                                       (uint32_t *) &public_key.value,
+                                                       (uint32_t *) &public_key.plain_value,
+                                                       (uint32_t *) wrapped_key,
+                                                       (uint32_t *) &public_key.plain_value);
 
         /* This generates the public key as:
          * 4/16-bytes key info|| 4-bytes 0s || 28 bytes x-coordinate || 4-bytes 0s || 28 bytes y-coordinate || 16-bytes key info

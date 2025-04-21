@@ -55,7 +55,7 @@
 
 /* Function pointer declarations */
 #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
-    BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+    BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
  #define ECC_PUBLIC_KEY_SIZE_BYTES(curve_size)    (curve_size * 2 + 20U)
 typedef fsp_err_t (* hw_sce_ecc_scalarmultiplication_t)(const uint32_t * InData_CurveType, const uint32_t * InData_Cmd,
                                                         const uint32_t * InData_K, const uint32_t * InData_P,

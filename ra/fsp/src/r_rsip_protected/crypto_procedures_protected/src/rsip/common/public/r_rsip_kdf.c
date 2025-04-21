@@ -32,6 +32,7 @@
  * Private global variables
  **********************************************************************************************************************/
 
+#if RSIP_CFG_KDF_HMAC_ENABLE
 static rsip_func_kdf_derived_key_import_t select_func_derived_key_import(uint8_t         kdf_mac_type,
                                                                          rsip_key_type_t key_type);
 static rsip_ret_t kdf_hmac_update(rsip_ctrl_t * const p_ctrl,
@@ -66,6 +67,14 @@ static const uint8_t gs_kdf_hmac_byte_length_max[] =
     [RSIP_KEY_KDF_HMAC_SHA384] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA384_MAX,
     [RSIP_KEY_KDF_HMAC_SHA512] = RSIP_PRV_BYTE_SIZE_KDF_HMAC_SHA512_MAX,
 };
+#endif
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+static const uint8_t gs_convert_to_kdf_sha_subtype[] =
+{
+    [RSIP_HASH_TYPE_SHA256] = RSIP_DKM_SUBTYPE_SHA_256,
+};
+#endif
 
 /***********************************************************************************************************************
  * Global variables
@@ -79,6 +88,814 @@ static const uint8_t gs_kdf_hmac_byte_length_max[] =
 /***********************************************************************************************************************
  * Functions
  **********************************************************************************************************************/
+
+/*******************************************************************************************************************//**
+ * Prepares a SHA generation.
+ *
+ * Implements @ref rsip_api_t::kdfshaInit.
+ *
+ * @par Conditions
+ * Argument hash_type must be one of the following:
+ *   - @ref RSIP_HASH_TYPE_SHA256
+ *
+ * @par State transition
+ * @parblock
+ * This API can only be executed in **STATE_MAIN**, and causes state transition.
+ *
+ * |Return value|Next state   |
+ * |------------|-------------|
+ * |FSP_SUCCESS |STATE_KDF_SHA|
+ * |Others      |No change    |
+ * @endparblock
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_Init (rsip_ctrl_t * const p_ctrl, rsip_hash_type_t const hash_type)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(RSIP_HASH_TYPE_SHA256 == hash_type, FSP_ERR_NOT_ENABLED);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    rsip_kdf_sha_handle_t * p_handle = &p_instance_ctrl->handle.kdf_sha;
+
+    /* Reset handle */
+    memset(p_handle->buffer1, 0, RSIP_CFG_BYTE_SIZE_KDF_SHA_PLAIN_MSG1_MAX);
+    memset(p_handle->buffer2, 0, RSIP_CFG_BYTE_SIZE_KDF_SHA_PLAIN_MSG2_MAX);
+    p_handle->buffered_length1          = 0;
+    p_handle->buffered_length2          = 0;
+    p_handle->total_length              = 0;
+    p_handle->wrapped_msg_length        = 0;
+    p_handle->actual_wrapped_msg_length = 0;
+
+    /* Set hash type */
+    p_handle->type = hash_type;
+
+    /* Set block size */
+    switch (hash_type)
+    {
+        /* SHA-256 */
+        case RSIP_HASH_TYPE_SHA256:
+        {
+            p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA1_SHA224_SHA256;
+            break;
+        }
+
+        default:
+        {
+            /* Do nothing */
+        }
+    }
+
+    /* State transition */
+    p_instance_ctrl->state = RSIP_STATE_KDF_SHA;
+    p_handle->handle_state = RSIP_USER_HANDLE_STATE_INIT;
+
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(hash_type);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Inputs wrapped ECDH secret as a message.
+ * Input the messages required to perform the SHA operation using this API and R_RSIP_KDF_SHA_Update() in the desired order.
+ *
+ * Implements @ref rsip_api_t::kdfshaEcdhSecretUpdate.
+ *
+ * @par Conditions
+ * The argument p_wrapped_secret must be input the result of R_RSIP_ECDH_KeyAgree() or R_RSIP_ECDH_PlainKeyAgree().
+ * This API cannot be called multiple times in a process of performing SHA operation.
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_KDF_SHA**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
+ *
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_ECDHSecretUpdate (rsip_ctrl_t * const                 p_ctrl,
+                                           rsip_wrapped_secret_t const * const p_wrapped_secret)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t  * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+    rsip_kdf_sha_handle_t * p_handle        = &p_instance_ctrl->handle.kdf_sha;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_wrapped_secret);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* Set function */
+    uint8_t subtype = gs_convert_to_kdf_sha_subtype[p_handle->type];
+    FSP_ERROR_RETURN(subtype < RSIP_DKM_SUBTYPE_SHA_NUM, FSP_ERR_CRYPTO_RSIP_FATAL);
+    rsip_func_kdf_ecdh_secret_key_import_t p_func = gp_func_kdf_sha_ecdh_secret_msg_wrap[subtype];
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_KDF_SHA == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+    FSP_ERROR_RETURN(0 == p_handle->wrapped_msg_length, FSP_ERR_INVALID_STATE);
+
+    /* Call function (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret = p_func((const uint32_t *) (p_wrapped_secret->value), (uint32_t *) (p_handle->wrapped_msg));
+
+    /* Check error */
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
+            /* Set length */
+            switch (p_wrapped_secret->type)
+            {
+                /* ECC secp256r1 */
+                case RSIP_KEY_ECC_SECP256R1:
+                {
+                    p_handle->wrapped_msg_length        = RSIP_CFG_BYTE_SIZE_ECDH_WRAPPED_SECRET_256;
+                    p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_256_PARAM;
+                    p_handle->total_length             += p_handle->actual_wrapped_msg_length;
+
+                    /* State transition */
+                    p_handle->handle_state = RSIP_USER_HANDLE_STATE_UPDATE;
+
+                    err = FSP_SUCCESS;
+                    break;
+                }
+
+                default:
+                {
+                    /* Do nothing */
+                }
+            }
+
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_secret);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Inputs message.
+ * Input the messages required to perform the SHA operation using this API and R_RSIP_KDF_SHA_ECDHSecretUpdate() in the desired order.
+ *
+ * The total message length that can be input is up to 64 bytes before and after calling R_RSIP_KDF_SHA_ECDHSecretUpdate().
+ *
+ * Implements @ref rsip_api_t::kdfshaUpdate.
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_KDF_SHA**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_INVALID_SIZE                  Input message_length is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_Update (rsip_ctrl_t * const   p_ctrl,
+                                 uint8_t const * const p_message,
+                                 uint32_t const        message_length)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_message || (0 == message_length));
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_KDF_SHA == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    rsip_kdf_sha_handle_t * p_handle = &p_instance_ctrl->handle.kdf_sha;
+
+    if (0 == message_length)
+    {
+        err = FSP_SUCCESS;
+    }
+    else
+    {
+        /* Check if the Wrapped Message exists in the buffer */
+        if (0 == p_handle->wrapped_msg_length)
+        {
+            if (p_handle->buffered_length1 + message_length <= RSIP_CFG_BYTE_SIZE_KDF_SHA_PLAIN_MSG1_MAX)
+            {
+                /* Copy head of new message to buffer */
+                memcpy(p_handle->buffer1 + p_handle->buffered_length1, p_message, message_length);
+                p_handle->buffered_length1 += message_length;
+                p_handle->total_length     += message_length;
+
+                /* State transition */
+                p_handle->handle_state = RSIP_USER_HANDLE_STATE_UPDATE;
+
+                err = FSP_SUCCESS;
+            }
+            else
+            {
+                err = FSP_ERR_INVALID_SIZE;
+            }
+        }
+        else
+        {
+            if (p_handle->buffered_length2 + message_length <= RSIP_CFG_BYTE_SIZE_KDF_SHA_PLAIN_MSG2_MAX)
+            {
+                /* Copy head of new message to buffer */
+                memcpy(p_handle->buffer2 + p_handle->buffered_length2, p_message, message_length);
+                p_handle->buffered_length2 += message_length;
+                p_handle->total_length     += message_length;
+
+                /* State transition */
+                p_handle->handle_state = RSIP_USER_HANDLE_STATE_UPDATE;
+
+                err = FSP_SUCCESS;
+            }
+            else
+            {
+                err = FSP_ERR_INVALID_SIZE;
+            }
+        }
+    }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_message);
+    FSP_PARAMETER_NOT_USED(message_length);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Finalizes a SHA operation and generate DKM (Derived Keying Material).
+ *
+ * Implements @ref rsip_api_t::kdfshaFinish.
+ *
+ * @par State transition
+ * @parblock
+ * This API can only be executed in **STATE_KDF_SHA**, and causes state transition.
+ *
+ * |Return value         |Next state|
+ * |---------------------|----------|
+ * |FSP_SUCCESS          |STATE_MAIN|
+ * |FSP_ERR_ASSERTION    |No change |
+ * |FSP_ERR_NOT_OPEN     |No change |
+ * |FSP_ERR_INVALID_STATE|No change |
+ * |Others               |STATE_MAIN|
+ * @endparblock
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_Finish (rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t * const p_wrapped_dkm)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t  * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+    rsip_kdf_sha_handle_t * p_handle        = &p_instance_ctrl->handle.kdf_sha;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_wrapped_dkm);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_KDF_SHA == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    /* Call function */
+    rsip_ret_t rsip_ret = r_rsip_kdf_sha_final(p_handle, p_wrapped_dkm->value);
+
+    /* Check error */
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
+            /* State transition */
+            p_instance_ctrl->state = RSIP_STATE_MAIN;
+
+            p_wrapped_dkm->alg    = RSIP_DKM_ALG_SHA;
+            p_wrapped_dkm->blocks = 1;
+            switch (p_handle->type)
+            {
+                /* SHA-256 */
+                case RSIP_HASH_TYPE_SHA256:
+                {
+                    p_wrapped_dkm->subtype      = RSIP_DKM_SUBTYPE_SHA_256;
+                    p_wrapped_dkm->block_length = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA256;
+
+                    err = FSP_SUCCESS;
+                    break;
+                }
+
+                default:
+                {
+                    /* Do nothing */
+                }
+            }
+
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_dkm);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Suspends SHA operation.
+ *
+ * This API releases RSIP resource and outputs intermediate results. Therefore, it can be used in the following cases:
+ * - Execute another cryptographic operations during inputting successive chunks of the message.
+ * - Reuse intermediate results.
+ *
+ * Implements @ref rsip_api_t::kdfshaSuspend.
+ *
+ * @par State transition
+ * @parblock
+ * This API can only be executed in **STATE_KDF_SHA**, and causes state transition.
+ *
+ * |Return value|Next state|
+ * |------------|----------|
+ * |FSP_SUCCESS |STATE_MAIN|
+ * |Others      |No change |
+ * @endparblock
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_Suspend (rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_t * const p_handle)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_handle);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_KDF_SHA == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    /* Copy handle */
+    *p_handle = p_instance_ctrl->handle.kdf_sha;
+
+    /* Handle state transition */
+    p_instance_ctrl->handle.kdf_sha.handle_state = RSIP_USER_HANDLE_STATE_RESUME;
+
+    /* State transition */
+    p_instance_ctrl->state = RSIP_STATE_MAIN;
+
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_handle);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Resumes SHA operation suspended by R_RSIP_KDF_SHA_Suspend().
+ *
+ * Implements @ref rsip_api_t::kdfshaResume.
+ *
+ * @par State transition
+ * @parblock
+ * This API can only be executed in **STATE_MAIN**, and causes state transition.
+ *
+ * |Return value|Next state   |
+ * |------------|-------------|
+ * |FSP_SUCCESS |STATE_KDF_SHA|
+ * |Others      |No change    |
+ * @endparblock
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_Resume (rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_t const * const p_handle)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_handle);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    /* Copy handle */
+    p_instance_ctrl->handle.kdf_sha = *p_handle;
+
+    /* State transition */
+    p_instance_ctrl->state = RSIP_STATE_KDF_SHA;
+
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_handle);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Concatenates two wrapped DKMs.
+ *
+ * DKM1 || DKM2 is output to p_wrapped_dkm1.
+ *
+ * Implements @ref rsip_api_t::kdfshaDkmConcatenate.
+ *
+ * @par State transition
+ * This API can be executed in **any state** including STATE_INITIAL, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
+ * @retval FSP_ERR_INVALID_SIZE                  Any length is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_DKMConcatenate (rsip_wrapped_dkm_t * const       p_wrapped_dkm1,
+                                         rsip_wrapped_dkm_t const * const p_wrapped_dkm2,
+                                         uint32_t const                   wrapped_dkm1_buffer_length)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_wrapped_dkm1);
+    FSP_ASSERT(p_wrapped_dkm2);
+
+    /* Check dkm type */
+    FSP_ERROR_RETURN(p_wrapped_dkm1->alg == p_wrapped_dkm2->alg, FSP_ERR_CRYPTO_RSIP_FAIL);
+    FSP_ERROR_RETURN(p_wrapped_dkm1->subtype == p_wrapped_dkm2->subtype, FSP_ERR_CRYPTO_RSIP_FAIL);
+ #endif
+
+    uint32_t len1 = p_wrapped_dkm1->block_length * p_wrapped_dkm1->blocks;
+    uint32_t len2 = p_wrapped_dkm2->block_length * p_wrapped_dkm2->blocks;
+
+    /* Check length */
+    FSP_ERROR_RETURN(wrapped_dkm1_buffer_length >= (sizeof(rsip_wrapped_dkm_t) + len1 + len2), FSP_ERR_INVALID_SIZE);
+
+    /* Copy DKM */
+    memcpy(p_wrapped_dkm1->value + len1, p_wrapped_dkm2->value, len2);
+    p_wrapped_dkm1->blocks += p_wrapped_dkm2->blocks;
+
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_wrapped_dkm1);
+    FSP_PARAMETER_NOT_USED(p_wrapped_dkm2);
+    FSP_PARAMETER_NOT_USED(wrapped_dkm1_buffer_length);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Outputs a wrapped key from DKM information.
+ *
+ * Implements @ref rsip_api_t::kdfshaDerivedKeyImport.
+ *
+ * @par Conditions
+ * @parblock
+ * Argument p_wrapped_dkm must be input the result of R_RSIP_KDF_SHA_Finish() or R_RSIP_KDF_SHA_DKMConcatenate().
+ * Argument key_type must be one of the following:
+ *  - @ref RSIP_KEY_TYPE_AES_128
+ *  - @ref RSIP_KEY_TYPE_AES_256
+ * @endparblock
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_MAIN**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
+ *
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
+                                           rsip_wrapped_dkm_t const * const p_wrapped_dkm,
+                                           rsip_key_type_t const            key_type,
+                                           uint32_t const                   position,
+                                           rsip_wrapped_key_t * const       p_wrapped_key)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_wrapped_key);
+    FSP_ASSERT(p_wrapped_dkm);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+ #endif
+
+    /* Set function */
+    uint8_t subtype = r_rsip_key_type_to_subtype(key_type);
+    rsip_func_kdf_derived_key_import_t p_func = gp_func_kdf_sha_derived_key_import_aes[p_wrapped_dkm->subtype][subtype];
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    uint32_t blocks[1] = {bswap_32big(p_wrapped_dkm->blocks)};
+    uint32_t pos[1]    = {bswap_32big(position)};
+
+    /* Call function (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret =
+        p_func((const uint32_t *) p_wrapped_dkm->value, blocks, pos, (uint32_t *) p_wrapped_key->value);
+
+    /* Check error */
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
+            p_wrapped_key->alg     = r_rsip_key_type_to_alg(key_type);
+            p_wrapped_key->subtype = r_rsip_key_type_to_subtype(key_type);
+
+            err = FSP_SUCCESS;
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_dkm);
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(position);
+    FSP_PARAMETER_NOT_USED(p_wrapped_key);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Outputs a initial vector from DKM information.
+ *
+ * Implements @ref rsip_api_t::kdfshaDerivedIvWrap.
+ *
+ * @par Conditions
+ * @parblock
+ * Argument p_wrapped_dkm must be input the result of R_RSIP_KDF_SHA_Finish() or R_RSIP_KDF_SHA_DKMConcatenate().
+ * Argument initial_vector_type must be one of the following:
+ *  - @ref RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE
+ * @endparblock
+ *
+ * @par State transition
+ * This API can only be executed in **STATE_MAIN**, and does not cause any state transitions.
+ *
+ * @retval FSP_SUCCESS                           Normal termination.
+ * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
+ * @retval FSP_ERR_NOT_OPEN                      Module is not open.
+ * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
+ * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
+ *
+ * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
+ *                                               by the processing is in use by other processing.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
+ **********************************************************************************************************************/
+fsp_err_t R_RSIP_KDF_SHA_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
+                                        rsip_wrapped_dkm_t const * const p_wrapped_dkm,
+                                        rsip_initial_vector_type_t const initial_vector_type,
+                                        uint32_t const                   position,
+                                        uint8_t const * const            p_tls_sequence_num,
+                                        uint8_t * const                  p_wrapped_initial_vector)
+{
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_SHA_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ASSERT(p_tls_sequence_num || (RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE == initial_vector_type) ||
+               (RSIP_INITIAL_VECTOR_TYPE_AES_TLS12_CBC == initial_vector_type));
+    FSP_ASSERT(p_wrapped_initial_vector);
+    FSP_ASSERT(p_wrapped_dkm);
+    FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check dkm type */
+    FSP_ERROR_RETURN(RSIP_DKM_ALG_SHA == p_wrapped_dkm->alg, FSP_ERR_CRYPTO_RSIP_FAIL);
+ #endif
+
+    /* Set function */
+    rsip_func_kdf_derived_iv_wrap_t p_func =
+        gp_func_kdf_sha_derived_iv_wrap[p_wrapped_dkm->subtype][initial_vector_type];
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
+
+    /* Check configuration */
+    FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
+ #endif
+
+    /* Check state */
+    FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
+
+    uint32_t blocks[1] = {bswap_32big(p_wrapped_dkm->blocks)};
+    uint32_t pos[1]    = {bswap_32big(position)};
+
+    /* Call function (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret =
+        p_func((const uint32_t *) p_wrapped_dkm->value,
+               blocks,
+               pos,
+               (const uint32_t *) p_tls_sequence_num,
+               (uint32_t *) p_wrapped_initial_vector);
+
+    /* Check error */
+    switch (rsip_ret)
+    {
+        case RSIP_RET_PASS:
+        {
+            err = FSP_SUCCESS;
+            break;
+        }
+
+        case RSIP_RET_RESOURCE_CONFLICT:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT;
+            break;
+        }
+
+        case RSIP_RET_FAIL:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+        }
+
+        default:
+        {
+            err = FSP_ERR_CRYPTO_RSIP_FATAL;
+        }
+    }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_dkm);
+    FSP_PARAMETER_NOT_USED(initial_vector_type);
+    FSP_PARAMETER_NOT_USED(position);
+    FSP_PARAMETER_NOT_USED(p_tls_sequence_num);
+    FSP_PARAMETER_NOT_USED(p_wrapped_initial_vector);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
 
 /*******************************************************************************************************************//**
  * Converts wrapped data to wrapped HMAC key for KDF.
@@ -115,6 +932,7 @@ static const uint8_t gs_kdf_hmac_byte_length_max[] =
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
                                    rsip_key_type_t const            key_type,
@@ -122,12 +940,15 @@ fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
                                    uint32_t const                   key_length,
                                    rsip_wrapped_key_t * const       p_wrapped_key)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
     uint8_t subtype = gs_convert_to_kdf_hmac_subtype[r_rsip_key_type_to_subtype(key_type)];
     FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FAIL);
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_mac);
     FSP_ASSERT(p_wrapped_key);
@@ -139,7 +960,7 @@ fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
 
     /* Check configuration */
     FSP_ERROR_RETURN(gp_func_kdf_mac_key_import[subtype], FSP_ERR_NOT_ENABLED);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -158,7 +979,6 @@ fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
                                                               (uint32_t *) p_wrapped_key->value);
 
     /* Check error */
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
     switch (rsip_ret)
     {
         case RSIP_RET_PASS:
@@ -187,6 +1007,16 @@ fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
             err = FSP_ERR_CRYPTO_RSIP_FATAL;
         }
     }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_mac);
+    FSP_PARAMETER_NOT_USED(key_length);
+    FSP_PARAMETER_NOT_USED(p_wrapped_key);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
 
     return err;
 }
@@ -217,18 +1047,22 @@ fsp_err_t R_RSIP_KDF_MACKeyImport (rsip_ctrl_t * const              p_ctrl,
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_ctrl,
                                           rsip_key_type_t const               key_type,
                                           rsip_wrapped_secret_t const * const p_wrapped_secret,
                                           rsip_wrapped_key_t * const          p_wrapped_key)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
     uint8_t subtype = gs_convert_to_kdf_hmac_subtype[r_rsip_key_type_to_subtype(key_type)];
     FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FAIL);
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_secret);
     FSP_ASSERT(p_wrapped_key);
@@ -240,7 +1074,7 @@ fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_
 
     /* Check configuration */
     FSP_ERROR_RETURN(gp_func_kdf_ecdh_secret_key_import[subtype], FSP_ERR_NOT_ENABLED);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -251,7 +1085,6 @@ fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_
                                                     (uint32_t *) p_wrapped_key->value);
 
     /* Check error */
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
     switch (rsip_ret)
     {
         case RSIP_RET_PASS:
@@ -280,6 +1113,15 @@ fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_
             err = FSP_ERR_CRYPTO_RSIP_FATAL;
         }
     }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_secret);
+    FSP_PARAMETER_NOT_USED(p_wrapped_key);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
 
     return err;
 }
@@ -311,12 +1153,16 @@ fsp_err_t R_RSIP_KDF_ECDHSecretKeyImport (rsip_ctrl_t * const                 p_
  * @retval FSP_ERR_NOT_ENABLED                   Input key type is disabled in this function by configuration.
  * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
  * @retval FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL      Input key value is illegal.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_key)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_key);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
@@ -324,21 +1170,21 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
     /* Check key type */
     FSP_ERROR_RETURN((RSIP_ALG_KDF_HMAC == p_wrapped_key->alg) || (RSIP_ALG_HMAC == p_wrapped_key->alg),
                      FSP_ERR_CRYPTO_RSIP_KEY_SET_FAIL);
-#endif
+ #endif
 
     /* Get subtype in RSIP_KEY_HMAC_SHAxxx format */
     uint8_t subtype = p_wrapped_key->subtype;
-    if(RSIP_ALG_KDF_HMAC == p_wrapped_key->alg)
+    if (RSIP_ALG_KDF_HMAC == p_wrapped_key->alg)
     {
         subtype = gs_convert_to_hmac_subtype[subtype];
         FSP_ERROR_RETURN(subtype < RSIP_KEY_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FAIL);
     }
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
 
     /* Check configuration */
     FSP_ERROR_RETURN(g_hmac_enabled[subtype], FSP_ERR_NOT_ENABLED);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -355,7 +1201,7 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
     memcpy(p_handle->wrapped_key, p_wrapped_key, RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_MAX);
 
     /* Set block size */
-    switch(subtype)
+    switch (subtype)
     {
         /* SHA-256 */
         case RSIP_KEY_HMAC_SHA256:
@@ -376,7 +1222,15 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
     p_instance_ctrl->state = RSIP_STATE_KDF_HMAC;
     p_handle->handle_state = RSIP_USER_HANDLE_STATE_INIT;
 
-    return FSP_SUCCESS;
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_key);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -394,17 +1248,22 @@ fsp_err_t R_RSIP_KDF_HMAC_Init (rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t c
  * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
  * @retval FSP_ERR_NOT_OPEN                      Module is not open.
  * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_MACUpdate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_mac_t const * const p_wrapped_mac)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t   * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
     rsip_kdf_hmac_handle_t * p_handle        = &p_instance_ctrl->handle.kdf_hmac;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_mac);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_KDF_HMAC == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -416,7 +1275,7 @@ fsp_err_t R_RSIP_KDF_HMAC_MACUpdate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_ma
     memcpy(p_handle->wrapped_msg, p_wrapped_mac->value, RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MSG_MAX);
 
     /* Set length */
-    switch(p_wrapped_mac->subtype)
+    switch (p_wrapped_mac->subtype)
     {
         /* SHA-256 */
         case RSIP_KEY_KDF_HMAC_SHA256:
@@ -443,7 +1302,15 @@ fsp_err_t R_RSIP_KDF_HMAC_MACUpdate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_ma
         }
     }
 
-    return FSP_SUCCESS;
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_mac);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -467,23 +1334,27 @@ fsp_err_t R_RSIP_KDF_HMAC_MACUpdate (rsip_ctrl_t * const p_ctrl, rsip_wrapped_ma
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 p_ctrl,
                                             rsip_wrapped_secret_t const * const p_wrapped_secret)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t   * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
     rsip_kdf_hmac_handle_t * p_handle        = &p_instance_ctrl->handle.kdf_hmac;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_secret);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Get subtype in RSIP_KEY_KDF_HMAC_SHAxxx format */
     rsip_wrapped_key_t * p_wrapped_key = (rsip_wrapped_key_t *) p_handle->wrapped_key;
     uint8_t              subtype       = p_wrapped_key->subtype;
-    if(RSIP_ALG_HMAC == p_wrapped_key->alg)
+    if (RSIP_ALG_HMAC == p_wrapped_key->alg)
     {
         subtype = gs_convert_to_kdf_hmac_subtype[subtype];
         FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FATAL);
@@ -492,11 +1363,11 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
     /* Set function */
     rsip_func_kdf_ecdh_secret_key_import_t p_func = gp_func_kdf_ecdh_secret_msg_wrap[subtype];
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
 
     /* Check configuration */
     FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_KDF_HMAC == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -508,13 +1379,12 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
     rsip_ret_t rsip_ret = p_func((const uint32_t *) (p_wrapped_secret->value), (uint32_t *) (p_handle->wrapped_msg));
 
     /* Check error */
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
     switch (rsip_ret)
     {
         case RSIP_RET_PASS:
         {
             /* Set length */
-            switch(p_wrapped_secret->type)
+            switch (p_wrapped_secret->type)
             {
                 /* ECC secp256r1 */
                 case RSIP_KEY_ECC_SECP256R1:
@@ -563,6 +1433,13 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
         }
     }
 
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_secret);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
     return err;
 }
 
@@ -583,19 +1460,22 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_Update (rsip_ctrl_t * const   p_ctrl,
                                   uint8_t const * const p_message,
                                   uint32_t const        message_length)
 {
-    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
-    fsp_err_t              err             = FSP_ERR_CRYPTO_RSIP_FATAL;
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+#if RSIP_CFG_KDF_HMAC_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_message || (0 == message_length));
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_KDF_HMAC == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -701,6 +1581,14 @@ fsp_err_t R_RSIP_KDF_HMAC_Update (rsip_ctrl_t * const   p_ctrl,
         }
     }
 
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_message);
+    FSP_PARAMETER_NOT_USED(message_length);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
     return err;
 }
 
@@ -731,23 +1619,26 @@ fsp_err_t R_RSIP_KDF_HMAC_Update (rsip_ctrl_t * const   p_ctrl,
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_SignFinish (rsip_ctrl_t * const p_ctrl, rsip_wrapped_mac_t * const p_wrapped_mac)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t   * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
     rsip_kdf_hmac_handle_t * p_handle        = &p_instance_ctrl->handle.kdf_hmac;
-    fsp_err_t                err             = FSP_ERR_CRYPTO_RSIP_FATAL;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_mac);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Get subtype in RSIP_KEY_KDF_HMAC_SHAxxx format */
     rsip_wrapped_key_t * p_wrapped_key = (rsip_wrapped_key_t *) p_handle->wrapped_key;
     uint8_t              subtype       = p_wrapped_key->subtype;
-    if(RSIP_ALG_HMAC == p_wrapped_key->alg)
+    if (RSIP_ALG_HMAC == p_wrapped_key->alg)
     {
         subtype = gs_convert_to_kdf_hmac_subtype[subtype];
         FSP_ERROR_RETURN(subtype < RSIP_KEY_KDF_HMAC_NUM, FSP_ERR_CRYPTO_RSIP_FATAL);
@@ -767,9 +1658,9 @@ fsp_err_t R_RSIP_KDF_HMAC_SignFinish (rsip_ctrl_t * const p_ctrl, rsip_wrapped_m
             /* State transition */
             p_instance_ctrl->state = RSIP_STATE_MAIN;
 
-            p_wrapped_mac->alg          = RSIP_ALG_KDF_HMAC;
-            p_wrapped_mac->blocks       = 1;
-            switch(subtype)
+            p_wrapped_mac->alg    = RSIP_ALG_KDF_HMAC;
+            p_wrapped_mac->blocks = 1;
+            switch (subtype)
             {
                 /* SHA-256 */
                 case RSIP_KEY_KDF_HMAC_SHA256:
@@ -824,6 +1715,13 @@ fsp_err_t R_RSIP_KDF_HMAC_SignFinish (rsip_ctrl_t * const p_ctrl, rsip_wrapped_m
         }
     }
 
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_mac);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
     return err;
 }
 
@@ -851,17 +1749,20 @@ fsp_err_t R_RSIP_KDF_HMAC_SignFinish (rsip_ctrl_t * const p_ctrl, rsip_wrapped_m
  * @retval FSP_ERR_NOT_OPEN                      Module is not open.
  * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_handle_t * const p_handle)
 {
-    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
-    fsp_err_t              err             = FSP_ERR_CRYPTO_RSIP_FATAL;
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+#if RSIP_CFG_KDF_HMAC_ENABLE
+    rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
+
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_handle);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_KDF_HMAC == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -906,6 +1807,12 @@ fsp_err_t R_RSIP_KDF_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_han
 
     /* State transition */
     p_instance_ctrl->state = RSIP_STATE_MAIN;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_handle);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
 
     return err;
 }
@@ -929,16 +1836,21 @@ fsp_err_t R_RSIP_KDF_HMAC_Suspend (rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_han
  * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
  * @retval FSP_ERR_NOT_OPEN                      Module is not open.
  * @retval FSP_ERR_INVALID_STATE                 Internal state is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_HMAC_Resume (rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_handle_t const * const p_handle)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_handle);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -949,7 +1861,15 @@ fsp_err_t R_RSIP_KDF_HMAC_Resume (rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_hand
     /* State transition */
     p_instance_ctrl->state = RSIP_STATE_KDF_HMAC;
 
-    return FSP_SUCCESS;
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_handle);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -965,20 +1885,25 @@ fsp_err_t R_RSIP_KDF_HMAC_Resume (rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_hand
  * @retval FSP_SUCCESS                           Normal termination.
  * @retval FSP_ERR_ASSERTION                     A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_RSIP_FAIL              Input parameter is invalid.
- *
  * @retval FSP_ERR_INVALID_SIZE                  Any length is illegal.
+ * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_MACConcatenate (rsip_wrapped_mac_t * const       p_wrapped_mac1,
                                      rsip_wrapped_mac_t const * const p_wrapped_mac2,
                                      uint32_t const                   wrapped_mac1_buffer_length)
 {
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_wrapped_mac1);
     FSP_ASSERT(p_wrapped_mac2);
 
     /* Check mac type */
+    FSP_ERROR_RETURN(p_wrapped_mac1->alg == p_wrapped_mac2->alg, FSP_ERR_CRYPTO_RSIP_FAIL);
     FSP_ERROR_RETURN(p_wrapped_mac1->subtype == p_wrapped_mac2->subtype, FSP_ERR_CRYPTO_RSIP_FAIL);
-#endif
+ #endif
 
     uint32_t len1 = p_wrapped_mac1->block_length * p_wrapped_mac1->blocks;
     uint32_t len2 = p_wrapped_mac2->block_length * p_wrapped_mac2->blocks;
@@ -990,7 +1915,16 @@ fsp_err_t R_RSIP_KDF_MACConcatenate (rsip_wrapped_mac_t * const       p_wrapped_
     memcpy(p_wrapped_mac1->value + len1, p_wrapped_mac2->value, len2);
     p_wrapped_mac1->blocks += p_wrapped_mac2->blocks;
 
-    return FSP_SUCCESS;
+    err = FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_wrapped_mac1);
+    FSP_PARAMETER_NOT_USED(p_wrapped_mac2);
+    FSP_PARAMETER_NOT_USED(wrapped_mac1_buffer_length);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -1022,6 +1956,7 @@ fsp_err_t R_RSIP_KDF_MACConcatenate (rsip_wrapped_mac_t * const       p_wrapped_
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
                                        rsip_wrapped_mac_t const * const p_wrapped_mac,
@@ -1029,23 +1964,26 @@ fsp_err_t R_RSIP_KDF_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
                                        uint32_t const                   position,
                                        rsip_wrapped_key_t * const       p_wrapped_key)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_wrapped_key);
     FSP_ASSERT(p_wrapped_mac);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Set function */
     rsip_func_kdf_derived_key_import_t p_func = select_func_derived_key_import(p_wrapped_mac->subtype, key_type);
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
 
     /* Check configuration */
     FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -1058,7 +1996,6 @@ fsp_err_t R_RSIP_KDF_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
         p_func((const uint32_t *) p_wrapped_mac->value, blocks, pos, (uint32_t *) p_wrapped_key->value);
 
     /* Check error */
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
     switch (rsip_ret)
     {
         case RSIP_RET_PASS:
@@ -1088,6 +2025,16 @@ fsp_err_t R_RSIP_KDF_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
         }
     }
 
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_mac);
+    FSP_PARAMETER_NOT_USED(key_type);
+    FSP_PARAMETER_NOT_USED(position);
+    FSP_PARAMETER_NOT_USED(p_wrapped_key);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
     return err;
 }
 
@@ -1116,6 +2063,7 @@ fsp_err_t R_RSIP_KDF_DerivedKeyImport (rsip_ctrl_t * const              p_ctrl,
  * @retval FSP_ERR_CRYPTO_RSIP_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource required
  *                                               by the processing is in use by other processing.
  * @retval FSP_ERR_CRYPTO_RSIP_FATAL             Software corruption is detected.
+ * @retval FSP_ERR_UNSUPPORTED                   This API is not supported on this device.
  **********************************************************************************************************************/
 fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
                                     rsip_wrapped_mac_t const * const p_wrapped_mac,
@@ -1124,9 +2072,12 @@ fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
                                     uint8_t const * const            p_tls_sequence_num,
                                     uint8_t * const                  p_wrapped_initial_vector)
 {
+    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_tls_sequence_num || (RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE == initial_vector_type) ||
                (RSIP_INITIAL_VECTOR_TYPE_AES_TLS12_CBC == initial_vector_type));
@@ -1136,16 +2087,16 @@ fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
 
     /* Check mac type */
     FSP_ERROR_RETURN(RSIP_ALG_KDF_HMAC == p_wrapped_mac->alg, FSP_ERR_CRYPTO_RSIP_FAIL);
-#endif
+ #endif
 
     /* Set function */
     rsip_func_kdf_derived_iv_wrap_t p_func = gp_func_kdf_derived_iv_wrap[p_wrapped_mac->subtype][initial_vector_type];
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
 
     /* Check configuration */
     FSP_ERROR_RETURN(p_func, FSP_ERR_NOT_ENABLED);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -1162,7 +2113,6 @@ fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
                (uint32_t *) p_wrapped_initial_vector);
 
     /* Check error */
-    fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
     switch (rsip_ret)
     {
         case RSIP_RET_PASS:
@@ -1189,6 +2139,17 @@ fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
         }
     }
 
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_wrapped_mac);
+    FSP_PARAMETER_NOT_USED(initial_vector_type);
+    FSP_PARAMETER_NOT_USED(position);
+    FSP_PARAMETER_NOT_USED(p_tls_sequence_num);
+    FSP_PARAMETER_NOT_USED(p_wrapped_initial_vector);
+
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
     return err;
 }
 
@@ -1199,6 +2160,8 @@ fsp_err_t R_RSIP_KDF_DerivedIVWrap (rsip_ctrl_t * const              p_ctrl,
 /***********************************************************************************************************************
  * Private Functions
  **********************************************************************************************************************/
+
+#if RSIP_CFG_KDF_HMAC_ENABLE
 
 /*******************************************************************************************************************//**
  * Select primitive function of key import from key type.
@@ -1363,3 +2326,5 @@ static rsip_ret_t kdf_hmac_sign_finish (rsip_ctrl_t * const p_ctrl, uint8_t * p_
 
     return ret;
 }
+
+#endif

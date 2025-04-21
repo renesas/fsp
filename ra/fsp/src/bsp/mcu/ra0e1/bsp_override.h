@@ -182,6 +182,7 @@ typedef enum
     LVD_THRESHOLD_MONITOR_1_LEVEL_1_84V = 0x1DUL, ///< 1.84V
     LVD_THRESHOLD_MONITOR_1_LEVEL_1_74V = 0x1EUL, ///< 1.74V
     LVD_THRESHOLD_MONITOR_1_LEVEL_1_63V = 0x1FUL, ///< 1.63V
+    LVD_THRESHOLD_NOT_AVAILABLE         = 0xFFUL, ///< Not Used
 } lvd_threshold_t;
 
 /** ADC channels */

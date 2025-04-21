@@ -76,12 +76,12 @@ typedef enum e_external_irq_clock_source_div
 /** User configuration structure, used in open function */
 typedef struct st_external_irq_cfg
 {
-    uint8_t                         channel;          ///< Hardware channel used.
-    uint8_t                         ipl;              ///< Interrupt priority
-    IRQn_Type                       irq;              ///< Interrupt number assigned to this instance
-    external_irq_trigger_t          trigger;          ///< Trigger setting.
-    external_irq_clock_source_div_t clock_source_div; ///< Digital filter clock divisor setting.
-    bool filter_enable;                               ///< Digital filter enable/disable setting.
+    uint8_t                             channel;          ///< Hardware channel used.
+    uint8_t                             ipl;              ///< Interrupt priority
+    IRQn_Type                           irq;              ///< Interrupt number assigned to this instance
+    external_irq_trigger_t              trigger;          ///< Trigger setting.
+    external_irq_clock_source_div_t     clock_source_div; ///< Digital filter clock divisor setting.
+    bool                                filter_enable;    ///< Digital filter enable/disable selection.
 
     /** Callback provided external input trigger occurs. */
     void (* p_callback)(external_irq_callback_args_t * p_args);

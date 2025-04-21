@@ -3420,43 +3420,19 @@ static uint8_t usb_hvnd_get_pipe_no (usb_utr_t * p_utr, uint8_t type, uint8_t di
         for (pipe = USB_BULK_PIPE_START; pipe < (USB_BULK_PIPE_END + 1); pipe++)
         {
   #if (USB_CFG_DMA == USB_CFG_ENABLE || USB_CFG_DTC == USB_CFG_ENABLE)
-            if ((USB_PIPE1 == pipe) || (USB_PIPE2 == pipe))
+            if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
             {
-                if ((USB_PIPE_DIR_IN == dir) && (0 != p_utr->p_transfer_rx))
+                /* Check direction and transfer validity */
+                if (((USB_PIPE_DIR_IN == dir) && (p_utr->p_transfer_rx != 0)) ||
+                    ((USB_PIPE_DIR_IN != dir) && (p_utr->p_transfer_tx != 0)))
                 {
-                    /* For IN transfer */
-
-                    /* Check Free pipe */
-                    if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
-                    {
-                        pipe_no = pipe; /* Set Free pipe */
-                        break;
-                    }
-                }
-                else if ((USB_PIPE_DIR_IN != dir) && (0 != p_utr->p_transfer_tx))
-                {
-                    /* For OUT Transfer */
-
-                    /* Check Free pipe */
-                    if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
-                    {
-                        pipe_no = pipe; /* Set Free pipe */
-                        break;
-                    }
-                }
-                else
-                {
-                    /* Nothing */
+                    pipe_no = pipe;    /* Set free pipe */
+                    break;
                 }
             }
             else
             {
-                /* Check Free pipe */
-                if (USB_FALSE == g_usb_pipe_table[p_utr->ip][pipe].use_flag)
-                {
-                    pipe_no = pipe;    /* Set Free pipe */
-                    break;
-                }
+                /* Nothing */
             }
 
   #else

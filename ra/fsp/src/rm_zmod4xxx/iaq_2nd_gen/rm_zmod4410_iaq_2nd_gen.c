@@ -20,6 +20,7 @@
  #include "../zmod4xxx_types.h"
  #include "iaq_2nd_gen.h"
  #include "zmod4410_config_iaq2.h"
+ #include "rm_zmod4xxx_iaq_2nd_cfg.h"
 
 /**********************************************************************************************************************
  * Macro definitions
@@ -28,6 +29,7 @@
 /* Definitions of IAQ 2nd gen Parameter */
  #define RM_ZMOD4410_IAQ_2ND_GEN_DEFAULT_HUMIDITY       (50.0F)
  #define RM_ZMOD4410_IAQ_2ND_GEN_DEFAULT_TEMPERATURE    (20.0F)
+ #define RM_ZMOD4410_IAQ_2ND_GEN_RMOX3_OFFSET           (15 * 2)
 
 /**********************************************************************************************************************
  * Local Typedef definitions
@@ -40,7 +42,6 @@
 /**********************************************************************************************************************
  * Private (static) variables and functions
  *********************************************************************************************************************/
-
 static fsp_err_t rm_zmod4410_iaq_2nd_gen_open(rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
                                               rm_zmod4xxx_cfg_t const * const p_cfg);
 static fsp_err_t rm_zmod4410_iaq_2nd_gen_measurement_start(rm_zmod4xxx_ctrl_t * const p_api_ctrl);
@@ -157,15 +158,32 @@ static fsp_err_t rm_zmod4410_iaq_2nd_gen_data_calculate (rm_zmod4xxx_ctrl_t * co
     iaq_2nd_gen_handle_t           * p_handle  = (iaq_2nd_gen_handle_t *) p_lib->p_handle;
     iaq_2nd_gen_results_t          * p_results = (iaq_2nd_gen_results_t *) p_lib->p_results;
     zmod4xxx_dev_t                 * p_device  = (zmod4xxx_dev_t *) p_lib->p_device;
+
+ #if RM_ZMOD4XXX_CFG_OXIDIZING_GAS_CORRECTION_IAQ_2ND_ENABLE
+    zmod4xxx_dev_t         * p_device_4510   = (zmod4xxx_dev_t *) p_ctrl->p_zmod4510_device;
+    rm_zmod4xxx_raw_data_t * p_raw_data_4510 = p_ctrl->p_zmod4510_raw_data;
+
+  #if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_device_4510);
+    FSP_ASSERT(NULL != p_raw_data_4510);
+  #endif
+ #else
+    zmod4xxx_dev_t * p_device_4510 = NULL;
+ #endif
+
     uint16_t             i;
     int8_t               lib_err = 0;
     iaq_2nd_gen_inputs_t algorithm_input;
 
     /* Calculate IAQ 2nd Gen. data form ADC data */
+ #if RM_ZMOD4XXX_CFG_OXIDIZING_GAS_CORRECTION_IAQ_2ND_ENABLE
+    algorithm_input.adc_rmox3_4510 = p_raw_data_4510->adc_data + RM_ZMOD4410_IAQ_2ND_GEN_RMOX3_OFFSET;
+ #endif
     algorithm_input.adc_result       = &p_raw_data->adc_data[0];
     algorithm_input.humidity_pct     = p_lib->humidity;
     algorithm_input.temperature_degc = p_lib->temperature;
-    lib_err = calc_iaq_2nd_gen(p_handle, p_device, &algorithm_input, p_results);
+    lib_err = calc_iaq_2nd_gen(p_handle, p_device, p_device_4510, &algorithm_input, p_results);
+
     FSP_ERROR_RETURN(0 <= lib_err, FSP_ERR_ASSERTION);
 
     /* Set Data */
@@ -174,11 +192,16 @@ static fsp_err_t rm_zmod4410_iaq_2nd_gen_data_calculate (rm_zmod4xxx_ctrl_t * co
         p_zmod4xxx_data->rmox[i] = p_results->rmox[i];
     }
 
+ #if RM_ZMOD4XXX_CFG_OXIDIZING_GAS_CORRECTION_IAQ_2ND_ENABLE
+    p_zmod4xxx_data->compensation_rmox = p_results->zmod4510_rmox3;
+ #endif
     p_zmod4xxx_data->log_rcda = p_results->log_rcda;
     p_zmod4xxx_data->iaq      = p_results->iaq;
     p_zmod4xxx_data->tvoc     = p_results->tvoc;
     p_zmod4xxx_data->etoh     = p_results->etoh;
     p_zmod4xxx_data->eco2     = p_results->eco2;
+    p_zmod4xxx_data->rel_iaq  = p_results->rel_iaq;
+
     FSP_ERROR_RETURN(IAQ_2ND_GEN_STABILIZATION != lib_err, FSP_ERR_SENSOR_IN_STABILIZATION);
     FSP_ERROR_RETURN(IAQ_2ND_GEN_DAMAGE != lib_err, FSP_ERR_SENSOR_INVALID_DATA);
 

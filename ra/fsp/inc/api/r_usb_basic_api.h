@@ -292,40 +292,6 @@ typedef enum e_usb_address
     USB_ADDRESS5,
 } usb_address_t;
 
-/** USB TypeC operation_mode */
-typedef enum e_usb_typec_mode
-{
-    USB_TYPEC_MODE_SINK = 0,                ///< Sink Only Mode
-    USB_TYPEC_MODE_USB20_ONLY_SINK,         ///< USB 2.0 Only Sink Mode
-} usb_typec_mode_t;
-
-/** USB TypeC Connection of Plug Orientation */
-typedef enum e_usb_typec_plug
-{
-    USB_TYPEC_PLUG_CC1_CONNECTED = 0,       ///< CC1 connected
-    USB_TYPEC_PLUG_CC2_CONNECTED,           ///< CC2 connected
-} usb_typec_plug_t;
-
-/** USB TypeC Status of Connection State Machine */
-typedef enum e_usb_typec_connection_status
-{
-    USB_TYPEC_CONNECTION_STATUS_DISABLED = 0,            ///< Disabled
-    USB_TYPEC_CONNECTION_STATUS_UNATTACHED,              ///< Unattached.SNK
-    USB_TYPEC_CONNECTION_STATUS_ATTACHED_WAIT,           ///< AttachedWait.SNK
-    USB_TYPEC_CONNECTION_STATUS_ATTACHED,                ///< Attached.SNK
-    USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_DEFAULT,  ///< Attached.SNK (PowerDefault.SNK)
-    USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_15,       ///< Attached.SNK (Power1.5.SNK)
-    USB_TYPEC_CONNECTION_STATUS_ATTACHED_POWER_30,       ///< Attached.SNK (Power3.0.SNK)
-} usb_typec_connection_status_t;
-
-/** USB TypeC VBUS status */
-typedef enum e_usb_typec_vbus_status
-{
-    USB_TYPEC_VBUS_STATUS_OFF = 0,            ///< VBUS Off State
-    USB_TYPEC_VBUS_STATUS_ON,                 ///< VBUS On State
-} usb_typec_vbus_status_t;
-
-
 /** USB control block.  Allocate an instance specific control block to pass into the USB API calls.
  */
 typedef void usb_ctrl_t;
@@ -387,14 +353,6 @@ typedef struct st_usb_event_info
     const transfer_instance_t * p_transfer_rx;  ///< Receive context
 } usb_event_info_t;
 
-typedef struct st_usb_typec_info
-{
-    usb_typec_mode_t                operation_mode;     ///< Connection State Mode
-    usb_typec_plug_t                plug;               ///< Connection of Plug Orientation
-    usb_typec_connection_status_t   connection_status;  ///< Status of Connection Statue Machine
-    usb_typec_vbus_status_t         vbus_status;        ///< Status of VBUS
-} usb_typec_info_t;
-
 typedef usb_event_info_t usb_callback_args_t;
 
 #if (BSP_CFG_RTOS == 0)
@@ -429,7 +387,6 @@ typedef struct st_usb_cfg
     IRQn_Type                   irq_d0;             ///< FS D0FIFO dedicated interrupt number storage variable.
     IRQn_Type                   irq_d1;             ///< FS D1FIFO dedicated interrupt number storage variable.
     IRQn_Type                   hsirq;              ///< USBIR dedicated interrupt number storage variable.
-    IRQn_Type                   irq_typec;          ///< USB Type-C IR dedicated interrupt number storage variable.
     IRQn_Type                   hsirq_d0;           ///< HS D0FIFO dedicated interrupt number storage variable.
     IRQn_Type                   hsirq_d1;           ///< HS D1FIFO dedicated interrupt number storage variable.
     uint8_t                     ipl;                ///< Variable to store the interrupt priority of USBI
@@ -437,7 +394,6 @@ typedef struct st_usb_cfg
     uint8_t                     ipl_d0;             ///< Variable to store the interrupt priority of FS D0FIFO.
     uint8_t                     ipl_d1;             ///< Variable to store the interrupt priority of FS D1FIFO.
     uint8_t                     hsipl;              ///< Variable to store the interrupt priority of USBIR.
-    uint8_t                     ipl_typec;          ///< Variable to store the interrupt priority of USB Type-C IR.
     uint8_t                     hsipl_d0;           ///< Variable to store the interrupt priority of HS D0FIFO.
     uint8_t                     hsipl_d1;           ///< Variable to store the interrupt priority of HS D1FIFO.
     usb_callback_t            * p_usb_apl_callback; ///< Application Callback
@@ -690,13 +646,6 @@ typedef struct st_usb_api
      * @param[in]  p_ctrl           USB control structure.
      */
     fsp_err_t (* otgSRP)(usb_ctrl_t * const p_ctrl);
-
-    /** Get information on USB Type-C Connection.
-     *
-     * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[in]  p_info       Pointer to usb_typec_info_t structure area.
-     */
-    fsp_err_t (* typecInfoGet)(usb_ctrl_t * const p_ctrl, usb_typec_info_t * p_info);
 
 } usb_api_t;
 

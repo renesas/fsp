@@ -95,7 +95,9 @@ fsp_err_t R_SLCDC_Open (slcdc_ctrl_t * const p_ctrl, slcdc_cfg_t const * const p
 #if BSP_FEATURE_SLCDC_HAS_VL1SEL
 
     /* Set SELVL to 1 first before using the VL1 function. */
-    R_PFS->VLSEL.VL1SEL_b.SELVL = 1;
+    R_PFS->VLSEL.VL1SEL = 1;
+#endif
+#if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
 
     /* Set voltage reference */
     R_SLCDC->VLCD =
@@ -129,7 +131,7 @@ fsp_err_t R_SLCDC_Open (slcdc_ctrl_t * const p_ctrl, slcdc_cfg_t const * const p
     if (SLCDC_VOLT_INTERNAL == p_cfg->drive_volt_gen)
     {
         /* Set boost (contrast) setting */
- #if BSP_FEATURE_SLCDC_HAS_VL1SEL
+ #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
         R_SLCDC->VLCD = (uint8_t) (((R_SLCDC->VLCD) & R_SLCDC_VLCD_MDSET2_Msk) |
                                    (p_cfg->contrast + SLCDC_PRV_VLCD_CONTRAST_OFFSET));
  #else
@@ -333,6 +335,11 @@ fsp_err_t R_SLCDC_SetContrast (slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t con
         return FSP_ERR_UNSUPPORTED;
     }
 
+    if ((SLCDC_BIAS_3 == p_cfg->bias_method) && (BSP_FEATURE_SLCDC_CONTRAST_MAX < contrast))
+    {
+        return FSP_ERR_UNSUPPORTED;
+    }
+
  #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
  #endif
@@ -341,7 +348,7 @@ fsp_err_t R_SLCDC_SetContrast (slcdc_ctrl_t * const p_ctrl, slcdc_contrast_t con
     R_SLCDC->LCDM1_b.VLCON = 0;
 
     /* Set new voltage value. */
- #if BSP_FEATURE_SLCDC_HAS_VL1SEL
+ #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
     R_SLCDC->VLCD =
         (uint8_t) (((R_SLCDC->VLCD) & R_SLCDC_VLCD_MDSET2_Msk) | (contrast + SLCDC_PRV_VLCD_CONTRAST_OFFSET));
  #else
@@ -414,7 +421,7 @@ fsp_err_t R_SLCDC_Close (slcdc_ctrl_t * const p_ctrl)
     R_SLCDC->LCDM1_b.VLCON = 0;
 
  #if BSP_FEATURE_SLCDC_HAS_VL1SEL
-    R_PFS->VLSEL.VL1SEL_b.SELVL = 0;
+    R_PFS->VLSEL.VL1SEL = 0;
  #endif
 #endif
 
@@ -422,7 +429,7 @@ fsp_err_t R_SLCDC_Close (slcdc_ctrl_t * const p_ctrl)
      * section 45.2.2 "LCD Mode Register 1 (LCDM1)" Note 2) */
     R_SLCDC->LCDM0_b.MDSET = 0;
 
-#if BSP_FEATURE_SLCDC_HAS_VL1SEL
+#if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
 
     /* Switch to external resistance method (MREF_INTERNAL_007)*/
     R_SLCDC->VLCD_b.MDSET2 = 0;
@@ -473,7 +480,7 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
     slcdc_drive_volt_gen_t drive_volt_gen = p_cfg->drive_volt_gen;
     slcdc_waveform_t       waveform       = p_cfg->waveform;
 
- #if BSP_FEATURE_SLCDC_HAS_VL1SEL
+ #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
     slcdc_ref_volt_sel_t ref_volt_sel = p_cfg->ref_volt_sel;
  #endif
 
@@ -481,7 +488,7 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
     bool drive_is_external = (SLCDC_VOLT_EXTERNAL == drive_volt_gen);
 
  #if BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
-  #if BSP_FEATURE_SLCDC_HAS_VL1SEL
+  #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
     drive_is_external = ((SLCDC_VOLT_EXTERNAL == drive_volt_gen) &&
                          (ref_volt_sel == SLCDC_REF_INTERNAL_VL1_CAPACITOR_VCC_EXTERNAL));
     bool drive_is_invalid_external = ((SLCDC_VOLT_EXTERNAL == drive_volt_gen) &&
@@ -491,7 +498,7 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
   #endif
  #endif
 
- #if BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE & !BSP_FEATURE_SLCDC_HAS_VL1SEL
+ #if BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE & !BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
     bool drive_is_capacitor = (SLCDC_VOLT_CAPACITOR == drive_volt_gen);
  #endif
 
@@ -505,7 +512,7 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
     }
  #endif
 
- #if BSP_FEATURE_SLCDC_HAS_VL1SEL & BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
+ #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2 & BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
 
     /* The below checks the configuration against the list of valid modes (MREF_INTERNAL_008) */
 
@@ -562,11 +569,13 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
  **********************************************************************************************************************/
 static fsp_err_t r_slcdc_clock_operation (slcdc_cfg_t const * const p_cfg)
 {
+    volatile uint8_t sckcr_value;
+
     /* Unprotect CGC registers */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
 
     /* Disable LCD clock */
-    R_SYSTEM->SLCDSCKCR_b.LCDSCKEN = 0;
+    R_SYSTEM->SLCDSCKCR = 0;
 
     /* Set Division of LCDC clock source. */
     R_SLCDC->LCDC0 = (uint8_t) p_cfg->slcdc_clock_setting;
@@ -578,7 +587,8 @@ static fsp_err_t r_slcdc_clock_operation (slcdc_cfg_t const * const p_cfg)
     (void) (R_SYSTEM->SLCDSCKCR);
 
     /* Enable LCD clock */
-    R_SYSTEM->SLCDSCKCR_b.LCDSCKEN = 1;
+    sckcr_value         = (R_SYSTEM->SLCDSCKCR) | R_SYSTEM_SLCDSCKCR_LCDSCKEN_Msk;
+    R_SYSTEM->SLCDSCKCR = sckcr_value;
 
     /* Protect CGC registers */
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);

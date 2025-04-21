@@ -88,7 +88,8 @@ typedef enum
     LVD_THRESHOLD_LVDVRTC_LEVEL_2_8V = 0x03UL,    ///< 2.8V
     LVD_THRESHOLD_LVDVRTC_LEVEL_2_6V = 0x02UL,    ///< 2.6V
     LVD_THRESHOLD_LVDVRTC_LEVEL_2_4V = 0x01UL,    ///< 2.4V
-    LVD_THRESHOLD_LVDVRTC_LEVEL_2_2V = 0x00UL     ///< 2.2V
+    LVD_THRESHOLD_LVDVRTC_LEVEL_2_2V = 0x00UL,    ///< 2.2V
+    LVD_THRESHOLD_NOT_AVAILABLE      = 0xFFUL,    ///< Not Used
 } lvd_threshold_t;
 #endif
 

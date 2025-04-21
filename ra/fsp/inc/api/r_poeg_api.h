@@ -128,6 +128,7 @@ typedef struct st_poeg_cfg
     uint32_t     channel;              ///< Channel 0 corresponds to GTETRGA, 1 to GTETRGB, etc.
     IRQn_Type    irq;                  ///< Interrupt number assigned to this instance
     uint8_t      ipl;                  ///< POEG interrupt priority
+    void const * p_extend;             ///< Extension parameter for hardware specific settings
 } poeg_cfg_t;
 
 /** Port Output Enable for GPT (POEG) API structure. POEG functions implemented at the HAL layer will follow this API. */

@@ -263,8 +263,14 @@ fsp_err_t R_I3C_Open (i3c_ctrl_t * const p_api_ctrl, i3c_cfg_t const * const p_c
     /* The field will be cleared automatically upon reset completion (See section 25.2.5 in the hardware user manual R01UH0919EJ0100). */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL, 0U);
 
+    /* Set internal reset to one before setting I3C mode. */
+    p_ctrl->p_reg->RSTCTL = R_I3C0_RSTCTL_INTLRST_Msk;
+
     /* Set I3C mode. */
     p_ctrl->p_reg->PRTS = 0U;
+
+    /* Clear internal reset. */
+    p_ctrl->p_reg->RSTCTL = 0;
 
     return FSP_SUCCESS;
 }
@@ -447,7 +453,7 @@ fsp_err_t R_I3C_Enable (i3c_ctrl_t * const p_api_ctrl)
  #if BSP_FEATURE_I3C_HAS_HDR_MODE
     uint32_t cghdrcap = (uint32_t) p_extend->slave_command_response_info.hdr_ddr_support;
     cghdrcap |= (uint32_t) p_extend->slave_command_response_info.hdr_tsp_support << R_I3C0_CGHDRCAP_TSPEN_Pos;
-    cghdrcap |= (uint32_t) p_extend->slave_command_response_info.hdr_tsp_support << R_I3C0_CGHDRCAP_TSLEN_Pos;
+    cghdrcap |= (uint32_t) p_extend->slave_command_response_info.hdr_tsl_support << R_I3C0_CGHDRCAP_TSLEN_Pos;
  #endif
 
     /* Write Slave Command Response Info. */

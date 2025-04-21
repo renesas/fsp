@@ -375,21 +375,19 @@ void hw_usb_write_pipetrn(usb_utr_t * ptr, uint16_t pipeno, uint16_t data);
 /************/
 /* BCCTRL   */
 /************/
-void      hw_usb_set_bcctrl(usb_utr_t * ptr, uint16_t data);
-void      hw_usb_clear_bcctrl(usb_utr_t * ptr, uint16_t data);
-uint16_t  hw_usb_read_bcctrl(usb_utr_t * ptr);
-void      hw_usb_set_vdmsrce(usb_utr_t * ptr);
-void      hw_usb_clear_vdmsrce(usb_utr_t * ptr);
-void      hw_usb_set_idpsinke(usb_utr_t * ptr);
-void      hw_usb_set_suspendm(uint8_t usb_ip);
-void      hw_usb_clear_suspm(uint8_t usb_ip);
-void      hw_usb_clear_idpsinke(usb_utr_t * ptr);
-void      hw_usb_set_vdcen(void);
-void      hw_usb_clear_vdcen(void);
-void      hw_usb_set_uckselc(void);
-void      hw_usb_clear_uckselc(void);
-fsp_err_t hw_usb_typec_module_init(void);
-void      hw_usb_typec_module_uninit(void);
+void     hw_usb_set_bcctrl(usb_utr_t * ptr, uint16_t data);
+void     hw_usb_clear_bcctrl(usb_utr_t * ptr, uint16_t data);
+uint16_t hw_usb_read_bcctrl(usb_utr_t * ptr);
+void     hw_usb_set_vdmsrce(usb_utr_t * ptr);
+void     hw_usb_clear_vdmsrce(usb_utr_t * ptr);
+void     hw_usb_set_idpsinke(usb_utr_t * ptr);
+void     hw_usb_set_suspendm(uint8_t usb_ip);
+void     hw_usb_clear_suspm(uint8_t usb_ip);
+void     hw_usb_clear_idpsinke(usb_utr_t * ptr);
+void     hw_usb_set_vdcen(void);
+void     hw_usb_clear_vdcen(void);
+void     hw_usb_set_uckselc(void);
+void     hw_usb_clear_uckselc(void);
 
  #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 void hw_usb_hset_dcpmode(usb_utr_t * ptr);

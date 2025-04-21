@@ -7,7 +7,7 @@
 /**
   * @file    iaq_2nd_gen.h
   * @author  Renesas Electronics Corporation
-  * @version 3.2.0
+  * @version 4.2.0
   * @brief   This file contains the data structure definitions and
   *          the function definitions for the 2nd generation IAQ algorithm.
   * @details The library contains an algorithm to calculate an EtOH, TVOC and
@@ -46,8 +46,13 @@ extern "C" {
 
 typedef struct {
     float log_rcda[9]; /**< log10 of CDA resistances. */
+    float log_mox_225c_5_rcda;
     float rh_cda;
     float t_cda;
+    float log_rmox_filtered[9];
+    float log_mox_225c_5_filtered;
+    float rh_filtered;
+    float t_filtered;
     uint32_t sample_counter;
     float tvoc_smooth;
     float tvoc_deltafilter;
@@ -56,6 +61,12 @@ typedef struct {
     float eco2;
     float etoh;
     float iaq;
+    float o3;
+    float rg_mean;
+    float rel_iaq_raw;
+    float log10_rel_iaq_smooth;
+    float var_log10_rel_iaq;
+    float dev_log10_rel_iaq_target;
     uint8_t need_filter_init;
 } iaq_2nd_gen_handle_t;
 
@@ -64,6 +75,7 @@ typedef struct {
 */
 typedef struct {
     float rmox[13]; /**< MOx resistance. */
+    float zmod4510_rmox3; /**< MOx resistance of ZMOD4510. */
     float log_rcda; /**< log10 of CDA resistance. */
     float rhtr; /**< heater resistance. */
     float temperature; /**< ambient temperature (degC). */
@@ -71,6 +83,7 @@ typedef struct {
     float tvoc; /**< TVOC concentration (mg/m^3). */
     float etoh; /**< EtOH concentration (ppm). */
     float eco2; /**< eCO2 concentration (ppm). */
+    float rel_iaq; /**< relative IAQ index. */
 } iaq_2nd_gen_results_t;
 
 /**
@@ -81,6 +94,7 @@ typedef struct {
 */
 typedef struct {
     uint8_t *adc_result;
+    uint8_t *adc_rmox3_4510;
     float humidity_pct;
     float temperature_degc;
 } iaq_2nd_gen_inputs_t;
@@ -94,6 +108,7 @@ typedef struct {
  * @return  error code.
  */
 int8_t calc_iaq_2nd_gen(iaq_2nd_gen_handle_t *handle, const zmod4xxx_dev_t *dev,
+                        const zmod4xxx_dev_t *dev4510,
                         const iaq_2nd_gen_inputs_t *algo_input,
                         iaq_2nd_gen_results_t *results);
 

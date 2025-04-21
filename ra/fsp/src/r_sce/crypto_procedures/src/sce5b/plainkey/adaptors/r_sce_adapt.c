@@ -645,3 +645,23 @@ fsp_err_t HW_SCE_Aes256GcmDecryptInitSubGeneral (uint32_t * InData_KeyType,
 
     return HW_SCE_Aes256GcmDecryptInitSub(InData_KeyType, InData_KeyIndex, InData_IV);
 }
+
+fsp_err_t HW_SCE_Aes128XtsEncryptInitSubGeneral (uint32_t InData_KeyMode[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_Key[],
+                                                 uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Aes128XtsEncryptInitSub(InData_KeyIndex, InData_IV);
+}
+
+fsp_err_t HW_SCE_Aes128XtsDecryptInitSubGeneral (uint32_t InData_KeyMode[],
+                                                 uint32_t InData_KeyIndex[],
+                                                 uint32_t InData_Key[],
+                                                 uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Aes128XtsDecryptInitSub(InData_KeyIndex, InData_IV);
+}

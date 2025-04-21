@@ -5,11 +5,11 @@
 */
 
 /**
- * @file zmod4410_config_pbaq.h
- * @brief This is the configuration for zmod4410 module - pbaq library
- * @author  Renesas Electronics Corporation
- * @version 1.0.0
- */
+  * @file zmod4410_config_pbaq.h
+  * @brief This is the configuration for zmod4410 module - pbaq library
+  * @author  Renesas Electronics Corporation
+  * @version 2.1.0
+  */
 
 #ifndef _ZMOD4410_CONFIG_PBAQ_H
 #define _ZMOD4410_CONFIG_PBAQ_H

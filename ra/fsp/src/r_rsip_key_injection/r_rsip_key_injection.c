@@ -427,7 +427,7 @@ fsp_err_t R_RSIP_AES128_XTS_InitialKeyWrap (rsip_key_injection_type_t const key_
                                             rsip_aes_wrapped_key_t * const  p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_AES128_XTS);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -502,7 +502,7 @@ fsp_err_t R_RSIP_AES256_XTS_InitialKeyWrap (rsip_key_injection_type_t const key_
                                             rsip_aes_wrapped_key_t * const  p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_AES256_XTS);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -578,7 +578,7 @@ fsp_err_t R_RSIP_RSA2048_InitialPublicKeyWrap (rsip_key_injection_type_t const  
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA2048_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -654,7 +654,7 @@ fsp_err_t R_RSIP_RSA2048_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA2048_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -730,7 +730,7 @@ fsp_err_t R_RSIP_RSA3072_InitialPublicKeyWrap (rsip_key_injection_type_t const  
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA3072_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -805,7 +805,7 @@ fsp_err_t R_RSIP_RSA3072_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
                                                 rsip_rsa3072_private_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA3072_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -881,7 +881,7 @@ fsp_err_t R_RSIP_RSA4096_InitialPublicKeyWrap (rsip_key_injection_type_t const  
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA4096_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -956,7 +956,7 @@ fsp_err_t R_RSIP_RSA4096_InitialPrivateKeyWrap (rsip_key_injection_type_t const 
                                                 rsip_rsa4096_private_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_RSA4096_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1032,7 +1032,7 @@ fsp_err_t R_RSIP_ECC_secp256r1_InitialPublicKeyWrap (rsip_key_injection_type_t c
 {
     fsp_err_t error_code = FSP_SUCCESS;
 
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP256R1_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1170,7 +1170,7 @@ fsp_err_t R_RSIP_ECC_secp384r1_InitialPublicKeyWrap (rsip_key_injection_type_t c
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP384R1_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1245,7 +1245,8 @@ fsp_err_t R_RSIP_ECC_secp384r1_InitialPrivateKeyWrap (rsip_key_injection_type_t 
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+     BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP384R1_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1320,7 +1321,7 @@ fsp_err_t R_RSIP_ECC_secp521r1_InitialPublicKeyWrap (rsip_key_injection_type_t c
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP521R1_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1395,7 +1396,7 @@ fsp_err_t R_RSIP_ECC_secp521r1_InitialPrivateKeyWrap (rsip_key_injection_type_t 
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP521R1_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1470,7 +1471,7 @@ fsp_err_t R_RSIP_ECC_secp256k1_InitialPublicKeyWrap (rsip_key_injection_type_t c
                                                      rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_SECP256K1_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1609,7 +1610,7 @@ fsp_err_t R_RSIP_ECC_brainpoolP256r1_InitialPublicKeyWrap (rsip_key_injection_ty
                                                            rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP256R1_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1748,7 +1749,7 @@ fsp_err_t R_RSIP_ECC_brainpoolP384r1_InitialPublicKeyWrap (rsip_key_injection_ty
                                                            rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1823,7 +1824,8 @@ fsp_err_t R_RSIP_ECC_brainpoolP384r1_InitialPrivateKeyWrap (rsip_key_injection_t
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+     BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP384R1_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1898,7 +1900,7 @@ fsp_err_t R_RSIP_ECC_brainpoolP512r1_InitialPublicKeyWrap (rsip_key_injection_ty
                                                            rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP512R1_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -1973,7 +1975,7 @@ fsp_err_t R_RSIP_ECC_brainpoolP512r1_InitialPrivateKeyWrap (rsip_key_injection_t
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_BRAINPOOLP512R1_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -2048,7 +2050,7 @@ fsp_err_t R_RSIP_ECC_Ed25519_InitialPublicKeyWrap (rsip_key_injection_type_t con
                                                    rsip_ecc_public_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_ED25519_PUBLIC);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -2123,7 +2125,8 @@ fsp_err_t R_RSIP_ECC_Ed25519_InitialPrivateKeyWrap (rsip_key_injection_type_t co
                                                     rsip_ecc_private_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+     BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_ECC_ED25519_PRIVATE);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -2196,10 +2199,12 @@ fsp_err_t R_RSIP_HMAC_SHA224_InitialKeyWrap (rsip_key_injection_type_t const    
                                              uint8_t const * const               p_user_key,
                                              rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
 {
-    fsp_err_t error_code               = FSP_SUCCESS;
-    uint32_t  in_data_key_type         = key_injection_type;
-    uint32_t  in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA224);
-    uint32_t  in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
+    fsp_err_t error_code = FSP_SUCCESS;
+#if (BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || \
+     BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
+    uint32_t in_data_key_type         = key_injection_type;
+    uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA224);
+    uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
 
     if (RSIP_KEY_INJECTION_TYPE_ENCRYPTED == in_data_key_type)
     {
@@ -2227,6 +2232,16 @@ fsp_err_t R_RSIP_HMAC_SHA224_InitialKeyWrap (rsip_key_injection_type_t const    
     {
         p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
     }
+
+#elif (BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
+    error_code          = FSP_ERR_UNSUPPORTED;
+    p_wrapped_key->type = RSIP_KEY_TYPE_INVALID;
+
+    FSP_PARAMETER_NOT_USED(key_injection_type);
+    FSP_PARAMETER_NOT_USED(p_wrapped_user_factory_programming_key);
+    FSP_PARAMETER_NOT_USED(p_initial_vector);
+    FSP_PARAMETER_NOT_USED(p_user_key);
+#endif
 
     return error_code;
 }
@@ -2324,7 +2339,8 @@ fsp_err_t R_RSIP_HMAC_SHA384_InitialKeyWrap (rsip_key_injection_type_t const    
                                              rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+     BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA384);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -2399,7 +2415,8 @@ fsp_err_t R_RSIP_HMAC_SHA512_InitialKeyWrap (rsip_key_injection_type_t const    
                                              rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+     BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA512);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -2474,7 +2491,7 @@ fsp_err_t R_RSIP_HMAC_SHA512_224_InitialKeyWrap (rsip_key_injection_type_t const
                                                  rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA512_224);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
@@ -2549,7 +2566,7 @@ fsp_err_t R_RSIP_HMAC_SHA512_256_InitialKeyWrap (rsip_key_injection_type_t const
                                                  rsip_hmac_sha_wrapped_key_t * const p_wrapped_key)
 {
     fsp_err_t error_code = FSP_SUCCESS;
-#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+#if (BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED)
     uint32_t in_data_key_type         = key_injection_type;
     uint32_t in_data_cmd              = change_endian_long(RSIP_OEM_CMD_HMAC_SHA512_256);
     uint32_t in_data_shared_key_index = R_RSIP_INSTALL_KEY_RING_INDEX;
