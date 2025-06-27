@@ -9,7 +9,8 @@ var group___e_t_h_e_r___p_h_y =
     ] ],
     [ "ether_phy_extended_cfg_t", "group___e_t_h_e_r___p_h_y.html#structether__phy__extended__cfg__t", [
       [ "p_target_init", "group___e_t_h_e_r___p_h_y.html#af0c6ab36f68bd77ecb3e35650c38c7fd", null ],
-      [ "p_target_link_partner_ability_get", "group___e_t_h_e_r___p_h_y.html#a8109750ea2743d96e7939822bd7b2fad", null ]
+      [ "p_target_link_partner_ability_get", "group___e_t_h_e_r___p_h_y.html#a8109750ea2743d96e7939822bd7b2fad", null ],
+      [ "p_phy_lsi_cfg_list", "group___e_t_h_e_r___p_h_y.html#a35a6eff63bf0cb41e2c4b822e6933b23", null ]
     ] ],
     [ "ether_phy_interface_status_t", "group___e_t_h_e_r___p_h_y.html#ga42a75f14ab026764468078631e8d0260", [
       [ "ETHER_PHY_INTERFACE_STATUS_UNINITIALIZED", "group___e_t_h_e_r___p_h_y.html#gga42a75f14ab026764468078631e8d0260a610feb2607497c96b87e05e1c83bd55d", null ],

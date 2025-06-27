@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___n_e_t_
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___n_e_t_
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_e___m_e_s_h___n_e_t_
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -535,7 +535,7 @@ event_data</td>
 <td class="fielddoc">
 Event data. </td></tr>
 <tr><td class="fieldtype">
-<a id="a85792cea5a321637d44eab15ed60ff58"></a>void const  *</td>
+<a id="aaf6e65647039f7a326ac7d26e147c96f"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -573,10 +573,10 @@ Context provided to user during callback. </td></tr>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#aac1246d225d000dbf490294e70c6cc2c">p_callback</a> )(<a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#structrm__ble__mesh__network__callback__args__t">rm_ble_mesh_network_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:aac1246d225d000dbf490294e70c6cc2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function. <br /></td></tr>
 <tr class="separator:aac1246d225d000dbf490294e70c6cc2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09bf31b1148736746301565e1e1fe148"><td class="memItemLeft" align="right" valign="top"><a id="a09bf31b1148736746301565e1e1fe148"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a09bf31b1148736746301565e1e1fe148">p_context</a></td></tr>
-<tr class="memdesc:a09bf31b1148736746301565e1e1fe148"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__callback__args__t">ble_abs_callback_args_t</a>. <br /></td></tr>
-<tr class="separator:a09bf31b1148736746301565e1e1fe148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbdc4595d6ca35dc249824c82c384fb3"><td class="memItemLeft" align="right" valign="top"><a id="acbdc4595d6ca35dc249824c82c384fb3"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#acbdc4595d6ca35dc249824c82c384fb3">p_context</a></td></tr>
+<tr class="memdesc:acbdc4595d6ca35dc249824c82c384fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___b_l_e___a_b_s___a_p_i.html#structble__abs__callback__args__t">ble_abs_callback_args_t</a>. <br /></td></tr>
+<tr class="separator:acbdc4595d6ca35dc249824c82c384fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30ce8c3276d5413615a6a9ee2c15e092"><td class="memItemLeft" align="right" valign="top"><a id="a30ce8c3276d5413615a6a9ee2c15e092"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a30ce8c3276d5413615a6a9ee2c15e092">p_extend</a></td></tr>
 <tr class="memdesc:a30ce8c3276d5413615a6a9ee2c15e092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user extension. <br /></td></tr>
@@ -1375,7 +1375,7 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8522d95c55fe5ca77557704e3d612ecca6b77df1c3eed734007533198f3a02d71"></a>RM_BLE_MESH_NETWORK_EVENT_PROXY_STATUS&#160;</td><td class="fielddoc"><p>GATT Proxy Event - Status </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga8522d95c55fe5ca77557704e3d612eccae6e42dbb363440d34c7d71b55625229a"></a>RM_BLE_MESH_NETWORK_EVENT_RECIEVE&#160;</td><td class="fielddoc"><p>GATT Proxy Event - Receive </p>
+<tr><td class="fieldname"><a id="gga8522d95c55fe5ca77557704e3d612ecca05995da48eb6dcb982061613febed07a"></a>RM_BLE_MESH_NETWORK_EVENT_RECEIVE&#160;</td><td class="fielddoc"><p>GATT Proxy Event - Receive </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8522d95c55fe5ca77557704e3d612ecca3f2b60f4a91230f6634f2110705f9693"></a>RM_BLE_MESH_NETWORK_EVENT_TX_QUEUE_EMPTY&#160;</td><td class="fielddoc"><p>GATT Proxy Event - TX queue empty </p>
 </td></tr>
@@ -1389,7 +1389,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

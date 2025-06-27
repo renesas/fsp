@@ -154,7 +154,7 @@ var group___a_d_c =
     ] ],
     [ "R_ADC_Open", "group___a_d_c.html#gade895e0810cecb3be6a9e5217f5c78ac", null ],
     [ "R_ADC_ScanCfg", "group___a_d_c.html#ga994514574730e0701dc1a6ad41889f88", null ],
-    [ "R_ADC_CallbackSet", "group___a_d_c.html#ga9110aa7c0d36661e561641f522eeb737", null ],
+    [ "R_ADC_CallbackSet", "group___a_d_c.html#gaa9b3fa07413ee3cf26ae0ebfc5091602", null ],
     [ "R_ADC_ScanStart", "group___a_d_c.html#ga4a7fb2265b5a03c7586253ff28b3faf2", null ],
     [ "R_ADC_ScanGroupStart", "group___a_d_c.html#gacbc895a0d0e7849fe0844f0d1938d9cd", null ],
     [ "R_ADC_ScanStop", "group___a_d_c.html#ga9b5242c153c6320a564ed9ffd324f144", null ],

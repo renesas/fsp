@@ -76,7 +76,7 @@ var group___s_p_i___b =
     [ "R_SPI_B_Read", "group___s_p_i___b.html#gabcc557f95c75b12b462962f6c709e229", null ],
     [ "R_SPI_B_Write", "group___s_p_i___b.html#ga2adf0b091362e84b71f1bd3a1d821f40", null ],
     [ "R_SPI_B_WriteRead", "group___s_p_i___b.html#ga44658a0ea656e093e0eac61186aef274", null ],
-    [ "R_SPI_B_CallbackSet", "group___s_p_i___b.html#ga588348788f8ed3f933befc5a1cbe9b90", null ],
+    [ "R_SPI_B_CallbackSet", "group___s_p_i___b.html#ga1c207065aea768ff24cf497f088ffcb6", null ],
     [ "R_SPI_B_Close", "group___s_p_i___b.html#ga8e700b9cda9c467dde6090fb4c4a6969", null ],
     [ "R_SPI_B_CalculateBitrate", "group___s_p_i___b.html#ga4312b8a1c4aee284f3007621403a0b6d", null ]
 ];

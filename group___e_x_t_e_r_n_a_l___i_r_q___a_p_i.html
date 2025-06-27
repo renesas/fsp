@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___e_x_t_e_r_n_a_l___i_r_q___a_p_
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___e_x_t_e_r_n_a_l___i_r_q___a_p_
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___e_x_t_e_r_n_a_l___i_r_q___a_p_
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -289,7 +289,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="ade4504697e9cde129dfbe8796985f66a"></a>void const  *</td>
+<a id="a4a6da8578a7a7896578ae4bea1101098"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -345,8 +345,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="separator:aa77181dcffe927e006c2ed112c1a62ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8dadd8ef06c625a7b02c2eb06da7959"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ac8dadd8ef06c625a7b02c2eb06da7959">p_callback</a> )(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *p_args)</td></tr>
 <tr class="separator:ac8dadd8ef06c625a7b02c2eb06da7959"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4237b56a314b7e145aefb59e6e1def1b"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a4237b56a314b7e145aefb59e6e1def1b">p_context</a></td></tr>
-<tr class="separator:a4237b56a314b7e145aefb59e6e1def1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaa82577e1da25392f0c527661100263"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#abaa82577e1da25392f0c527661100263">p_context</a></td></tr>
+<tr class="separator:abaa82577e1da25392f0c527661100263"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abce89fd1740fefc7c2d179ca751df78f"><td class="memItemLeft" align="right" valign="top"><a id="abce89fd1740fefc7c2d179ca751df78f"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#abce89fd1740fefc7c2d179ca751df78f">p_extend</a></td></tr>
 <tr class="memdesc:abce89fd1740fefc7c2d179ca751df78f"><td class="mdescLeft">&#160;</td><td class="mdescRight">External IRQ hardware dependent configuration. <br /></td></tr>
@@ -368,14 +368,14 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a4237b56a314b7e145aefb59e6e1def1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4237b56a314b7e145aefb59e6e1def1b">&#9670;&nbsp;</a></span>p_context</h2>
+<a id="abaa82577e1da25392f0c527661100263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abaa82577e1da25392f0c527661100263">&#9670;&nbsp;</a></span>p_context</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void const* external_irq_cfg_t::p_context</td>
+          <td class="memname">void* external_irq_cfg_t::p_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -406,8 +406,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a9cb81e4b2d313458c747cdc401179a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ecb5664f627d1b731a4fd0a74e5f2bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a6ecb5664f627d1b731a4fd0a74e5f2bc">disable</a> )(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a6ecb5664f627d1b731a4fd0a74e5f2bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36986e495396d0adb98953771245d6cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#a36986e495396d0adb98953771245d6cd">callbackSet</a> )(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a36986e495396d0adb98953771245d6cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae632875adf1c82d7344e212cd1fbb67a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ae632875adf1c82d7344e212cd1fbb67a">callbackSet</a> )(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *), void *const p_context, <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ae632875adf1c82d7344e212cd1fbb67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0c4d6063af093a3a19a63924aae61ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ad0c4d6063af093a3a19a63924aae61ac">close</a> )(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ad0c4d6063af093a3a19a63924aae61ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -476,14 +476,14 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a36986e495396d0adb98953771245d6cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36986e495396d0adb98953771245d6cd">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="ae632875adf1c82d7344e212cd1fbb67a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae632875adf1c82d7344e212cd1fbb67a">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  external_irq_api_t::callbackSet) (<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  external_irq_api_t::callbackSet) (<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#ga3dc909b21d5ebe0d1d671221e4190246">external_irq_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *), void *const p_context, <a class="el" href="group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#structexternal__irq__callback__args__t">external_irq_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -635,7 +635,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

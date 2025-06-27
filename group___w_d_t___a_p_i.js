@@ -1,7 +1,7 @@
 var group___w_d_t___a_p_i =
 [
     [ "wdt_callback_args_t", "group___w_d_t___a_p_i.html#structwdt__callback__args__t", [
-      [ "p_context", "group___w_d_t___a_p_i.html#a64eb19cb40d1c2e0d7a81d773289af4d", null ]
+      [ "p_context", "group___w_d_t___a_p_i.html#a32cd821e4325a02bbfcee394cc1d40c0", null ]
     ] ],
     [ "wdt_timeout_values_t", "group___w_d_t___a_p_i.html#structwdt__timeout__values__t", [
       [ "clock_frequency_hz", "group___w_d_t___a_p_i.html#a4afd304a6d5116ff17d004a9db0b68de", null ],
@@ -15,7 +15,7 @@ var group___w_d_t___a_p_i =
       [ "reset_control", "group___w_d_t___a_p_i.html#aaa3b53f7c79a5f385cc6a8f987623b10", null ],
       [ "stop_control", "group___w_d_t___a_p_i.html#a4be884c6982d93cdb759e8d3994b62a3", null ],
       [ "p_callback", "group___w_d_t___a_p_i.html#a123b3dbdef324ba5e27939fef7575cb6", null ],
-      [ "p_context", "group___w_d_t___a_p_i.html#a7d1afa07628f9a7c0b9e3c74206d44e9", null ],
+      [ "p_context", "group___w_d_t___a_p_i.html#afcaedb79563f6da20b6a9d852379a04e", null ],
       [ "p_extend", "group___w_d_t___a_p_i.html#a7291179f9c5dea0f40d384398f2d81fe", null ]
     ] ],
     [ "wdt_api_t", "group___w_d_t___a_p_i.html#structwdt__api__t", [
@@ -25,7 +25,7 @@ var group___w_d_t___a_p_i =
       [ "statusClear", "group___w_d_t___a_p_i.html#af66d798489c7ace801fee8b5a9c833c2", null ],
       [ "counterGet", "group___w_d_t___a_p_i.html#a724c02d7265d5eaa846cf97a3556f5d6", null ],
       [ "timeoutGet", "group___w_d_t___a_p_i.html#ac2b6d848e8be0ff1a0a1be43289ad925", null ],
-      [ "callbackSet", "group___w_d_t___a_p_i.html#a0237b5cdf9261e1b80bc085b3a6e5583", null ]
+      [ "callbackSet", "group___w_d_t___a_p_i.html#a92f2416b138202a68fe551dd1a247c10", null ]
     ] ],
     [ "wdt_instance_t", "group___w_d_t___a_p_i.html#structwdt__instance__t", [
       [ "p_ctrl", "group___w_d_t___a_p_i.html#ac301430918784342b3f136d2afc705a7", null ],

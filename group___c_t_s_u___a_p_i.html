@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___c_t_s_u___a_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___c_t_s_u___a_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___c_t_s_u___a_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -315,7 +315,7 @@ event</td>
 <td class="fielddoc">
 The event can be used to identify what caused the callback. </td></tr>
 <tr><td class="fieldtype">
-<a id="a05fc4dbd779debbd12835663a072e9a3"></a>void const  *</td>
+<a id="a811ca159a68b6c0bdda732ff86dcdaa0"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -580,10 +580,10 @@ IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#adfdb692d8d85db036f69dd700d5c65c1">end_irq</a></td></tr>
 <tr class="memdesc:adfdb692d8d85db036f69dd700d5c65c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">CTSU_CTSUFN interrupt vector. <br /></td></tr>
 <tr class="separator:adfdb692d8d85db036f69dd700d5c65c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab481d8aeac9d6abd4fe4e551cf0d3adb"><td class="memItemLeft" align="right" valign="top"><a id="ab481d8aeac9d6abd4fe4e551cf0d3adb"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ab481d8aeac9d6abd4fe4e551cf0d3adb">p_context</a></td></tr>
-<tr class="memdesc:ab481d8aeac9d6abd4fe4e551cf0d3adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
-<tr class="separator:ab481d8aeac9d6abd4fe4e551cf0d3adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4249ab79394438ff347b40b2689fdb14"><td class="memItemLeft" align="right" valign="top"><a id="a4249ab79394438ff347b40b2689fdb14"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a4249ab79394438ff347b40b2689fdb14">p_context</a></td></tr>
+<tr class="memdesc:a4249ab79394438ff347b40b2689fdb14"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
+<tr class="separator:a4249ab79394438ff347b40b2689fdb14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7449580617af95b04736b986fa00a35"><td class="memItemLeft" align="right" valign="top"><a id="ac7449580617af95b04736b986fa00a35"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35">p_extend</a></td></tr>
 <tr class="memdesc:ac7449580617af95b04736b986fa00a35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to extended configuration by instance of interface. <br /></td></tr>
@@ -632,8 +632,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:ac21a98eaa673d72b7da701ba90093f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42a81fef42f2bf61bde59cba4796cc0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e">diagnosis</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a42a81fef42f2bf61bde59cba4796cc0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82efcf3288a27b4cb60a1c9d4dceb48d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a82efcf3288a27b4cb60a1c9d4dceb48d">callbackSet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a82efcf3288a27b4cb60a1c9d4dceb48d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95464ec2211af496368b86116be8991a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#a95464ec2211af496368b86116be8991a">callbackSet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a95464ec2211af496368b86116be8991a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb44bb4a59bad9025f0897cee306a395"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395">close</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:aeb44bb4a59bad9025f0897cee306a395"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf2f74b741c739e9e21b1ce544292872"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_t_s_u___a_p_i.html#adf2f74b741c739e9e21b1ce544292872">specificDataGet</a> )(<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, uint16_t *p_specific_data, <a class="el" href="group___c_t_s_u___a_p_i.html#ga1fe870ee0162807f8f9387749ba4e0a6">ctsu_specific_data_type_t</a> specific_data_type)</td></tr>
@@ -753,14 +753,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 
 </div>
 </div>
-<a id="a82efcf3288a27b4cb60a1c9d4dceb48d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82efcf3288a27b4cb60a1c9d4dceb48d">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a95464ec2211af496368b86116be8991a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95464ec2211af496368b86116be8991a">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ctsu_api_t::callbackSet) (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ctsu_api_t::callbackSet) (<a class="el" href="group___c_t_s_u___a_p_i.html#gad2634158ab8191a774e7b99eacee5a98">ctsu_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_t_s_u___a_p_i.html#structctsu__callback__args__t">ctsu_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1200,7 +1200,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___p_h_y.html','');})
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___p_h_y.html','');})
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___p_h_y.html','');})
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -308,7 +308,7 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Disabled </td><td>Select whether to use KSZ8091RNB Phy LSI or not. </td></tr>
+</td><td>Disabled </td><td>Select whether to use KSZ8091RNB PHY-LSI or not. </td></tr>
 <tr class="tree_none">
 <td>KSZ8041 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -316,7 +316,7 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Disabled </td><td>Select whether to use KSZ8041 Phy LSI or not. </td></tr>
+</td><td>Disabled </td><td>Select whether to use KSZ8041 PHY-LSI or not. </td></tr>
 <tr class="tree_none">
 <td>DP83620 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -324,7 +324,7 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Disabled </td><td>Select whether to use DP83620 Phy LSI or not. </td></tr>
+</td><td>Disabled </td><td>Select whether to use DP83620 PHY-LSI or not. </td></tr>
 <tr class="tree_none">
 <td>ICS1894 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -332,7 +332,7 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Disabled </td><td>Select whether to use ICS1894 Phy LSI or not. </td></tr>
+</td><td>Disabled </td><td>Select whether to use ICS1894 PHY-LSI or not. </td></tr>
 <tr class="tree_none">
 <td>User Own Target</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -340,7 +340,7 @@ Disabled</li>
 <li>
 Enabled</li>
 </ul>
-</td><td>Disabled </td><td>Select whether to use User own Phy LSI or not. </td></tr>
+</td><td>Disabled </td><td>Select whether to use User own PHY-LSI or not. </td></tr>
 <tr class="tree_none">
 <td>Reference Clock</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -362,13 +362,13 @@ Disabled</li>
 </ul>
 </td><td>Default </td><td>Select whether to use the RMII reference clock. Selecting 'Default' will automatically choose the correct option when using a Renesas development board. </td></tr>
 <tr class="tree_none">
-<td>Automatic Phy LSI Initialization</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Automatic PHY-LSI Initialization</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>Select whether to initialize the Ethernet Phy LSI in the open function. </td></tr>
+</td><td>Enabled </td><td>Select whether to initialize the Ethernet PHY-LSI in the open function. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; Ethernet (r_ether_phy)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Ethernet (r_ether_phy). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -388,6 +388,8 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Et
 <tr class="tree_none">
 <td>PHY-LSI Address</td><td>Specify a value between 0 and 31.</td><td>0 </td><td>Specify the address of the PHY-LSI used. </td></tr>
 <tr class="tree_none">
+<td>Default PHY-LSI port</td><td>0</td><td>0 </td><td>Specify the default port for PHY-LSI configuration. </td></tr>
+<tr class="tree_none">
 <td>PHY-LSI Reset Completion Timeout</td><td>Specify a value between 0x1 and 0xFFFFFFFF.</td><td>0x00020000 </td><td>Specify the number of times to read the PHY-LSI control register while waiting for reset completion. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
 <tr class="tree_none">
 <td>Select MII type</td><td><ul style="margin-top:0;margin-bottom:0;">
@@ -398,7 +400,7 @@ RMII</li>
 </ul>
 </td><td>RMII </td><td>Specify whether to use MII or RMII. </td></tr>
 <tr class="tree_none">
-<td>Phy LSI type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>PHY-LSI type</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Kit Component</li>
 <li>
@@ -571,6 +573,10 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y.html#a8109750ea2743d96e7939822bd7b2fad">p_target_link_partner_ability_get</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y.html#structether__phy__instance__ctrl__t">ether_phy_instance_ctrl_t</a> *p_instance_ctrl, uint32_t line_speed_duplex)</td></tr>
 <tr class="memdesc:a8109750ea2743d96e7939822bd7b2fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called to get the link partner ability. <br /></td></tr>
 <tr class="separator:a8109750ea2743d96e7939822bd7b2fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35a6eff63bf0cb41e2c4b822e6933b23"><td class="memItemLeft" align="right" valign="top"><a id="a35a6eff63bf0cb41e2c4b822e6933b23"></a>
+<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__lsi__cfg__t">ether_phy_lsi_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y.html#a35a6eff63bf0cb41e2c4b822e6933b23">p_phy_lsi_cfg_list</a> [BSP_FEATURE_ETHER_MAX_CHANNELS]</td></tr>
+<tr class="memdesc:a35a6eff63bf0cb41e2c4b822e6933b23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer list of PHY LSI configurations. <br /></td></tr>
+<tr class="separator:a35a6eff63bf0cb41e2c4b822e6933b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -926,7 +932,7 @@ bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -8,7 +8,7 @@ var group___u_a_r_t___a_p_i =
       [ "channel", "group___u_a_r_t___a_p_i.html#acf60bc172eb7d382b406364f64b928f6", null ],
       [ "event", "group___u_a_r_t___a_p_i.html#a558f63e26549462cf3a893ed73fd26ad", null ],
       [ "data", "group___u_a_r_t___a_p_i.html#a828d44762a5e4d11aead4d811a1c5c70", null ],
-      [ "p_context", "group___u_a_r_t___a_p_i.html#af39b34ea2c03d20876045cbe6cba70a7", null ]
+      [ "p_context", "group___u_a_r_t___a_p_i.html#a9f0309492cbd6c48f393ef591131bd51", null ]
     ] ],
     [ "uart_cfg_t", "group___u_a_r_t___a_p_i.html#structuart__cfg__t", [
       [ "channel", "group___u_a_r_t___a_p_i.html#a8f5b1d9fc38fbb83007d904b814bf66b", null ],
@@ -26,7 +26,7 @@ var group___u_a_r_t___a_p_i =
       [ "p_transfer_rx", "group___u_a_r_t___a_p_i.html#a465fe0c740b4c6f289956849180e2621", null ],
       [ "p_transfer_tx", "group___u_a_r_t___a_p_i.html#a60b6abd0d74f5305fda32373371d8b3a", null ],
       [ "p_callback", "group___u_a_r_t___a_p_i.html#a83efd5806d31817983f75bab4d415c87", null ],
-      [ "p_context", "group___u_a_r_t___a_p_i.html#a2ef1ef69636aec9cbfbac44db4a67db6", null ],
+      [ "p_context", "group___u_a_r_t___a_p_i.html#a78f47238e5cd88b2c1898b40a3ea2c94", null ],
       [ "p_extend", "group___u_a_r_t___a_p_i.html#af0950404b4fc6329f9d6f7802b850531", null ]
     ] ],
     [ "uart_api_t", "group___u_a_r_t___a_p_i.html#structuart__api__t", [
@@ -36,9 +36,11 @@ var group___u_a_r_t___a_p_i =
       [ "baudSet", "group___u_a_r_t___a_p_i.html#a8b0f901bcc26bd6836fe620235585f98", null ],
       [ "infoGet", "group___u_a_r_t___a_p_i.html#aa6d5231c2b45a6479fc513d087924a50", null ],
       [ "communicationAbort", "group___u_a_r_t___a_p_i.html#af4aeab25d6aa83e0d47307043c053d11", null ],
-      [ "callbackSet", "group___u_a_r_t___a_p_i.html#acfd849190deedb8f9c35bed54dccc111", null ],
+      [ "callbackSet", "group___u_a_r_t___a_p_i.html#a1cf0382f2cc7b1e292042eb058ee2e61", null ],
       [ "close", "group___u_a_r_t___a_p_i.html#a4e7e47514702ff0e3515280590dd9659", null ],
-      [ "readStop", "group___u_a_r_t___a_p_i.html#acb47c360a2ac4ddd36e53f0a4ad71b92", null ]
+      [ "readStop", "group___u_a_r_t___a_p_i.html#acb47c360a2ac4ddd36e53f0a4ad71b92", null ],
+      [ "receiveSuspend", "group___u_a_r_t___a_p_i.html#a441d26cbdce5b95e5971d812341014b1", null ],
+      [ "receiveResume", "group___u_a_r_t___a_p_i.html#aebbc3c8f1ae7fe8d7006fe31e233288c", null ]
     ] ],
     [ "uart_instance_t", "group___u_a_r_t___a_p_i.html#structuart__instance__t", [
       [ "p_ctrl", "group___u_a_r_t___a_p_i.html#ae01cedb63e8739651eb14d0ccc9b54a4", null ],
@@ -57,6 +59,10 @@ var group___u_a_r_t___a_p_i =
       [ "UART_EVENT_TX_DATA_EMPTY", "group___u_a_r_t___a_p_i.html#ggaf739f04f788018b4b59fb7ad75da0a8da03e2fd44218712f18f3cceb0a0ad7442", null ]
     ] ],
     [ "uart_data_bits_t", "group___u_a_r_t___a_p_i.html#gadc68b8fd9ded3990f84129df23fee798", [
+      [ "UART_DATA_BITS_5", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a20932d2daf15a9ac33d71d9d91550e01", null ],
+      [ "UART_DATA_BITS_9", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a57a012c58e476a76ed8f54db28d94810", null ],
+      [ "UART_DATA_BITS_7", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a317e473e32315f1632829d176fbfd545", null ],
+      [ "UART_DATA_BITS_8", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798ad768185f3773e2d5953b28f3345561db", null ],
       [ "UART_DATA_BITS_5", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a20932d2daf15a9ac33d71d9d91550e01", null ],
       [ "UART_DATA_BITS_9", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a57a012c58e476a76ed8f54db28d94810", null ],
       [ "UART_DATA_BITS_7", "group___u_a_r_t___a_p_i.html#ggadc68b8fd9ded3990f84129df23fee798a317e473e32315f1632829d176fbfd545", null ],

@@ -12,7 +12,7 @@ var group___c_a_c___a_p_i =
     ] ],
     [ "cac_callback_args_t", "group___c_a_c___a_p_i.html#structcac__callback__args__t", [
       [ "event", "group___c_a_c___a_p_i.html#a30235d33a7f1e9ed1885c73f9fa95195", null ],
-      [ "p_context", "group___c_a_c___a_p_i.html#af974f92bbdc94e73f4fd593ecf09bff6", null ]
+      [ "p_context", "group___c_a_c___a_p_i.html#abdaffa98ff441af47b5946296b20b41c", null ]
     ] ],
     [ "cac_cfg_t", "group___c_a_c___a_p_i.html#structcac__cfg__t", [
       [ "cac_ref_clock", "group___c_a_c___a_p_i.html#ae25f95b6a8d287a2349ffd0f9aa5fd46", null ],
@@ -26,7 +26,7 @@ var group___c_a_c___a_p_i =
       [ "ovfi_ipl", "group___c_a_c___a_p_i.html#a5033977f8f57e6f79145196d35fef492", null ],
       [ "ferri_ipl", "group___c_a_c___a_p_i.html#acef89ea28d5150476d76a714be8d497a", null ],
       [ "p_callback", "group___c_a_c___a_p_i.html#a34dcc64c380ef99d0b0d9cf68b37c8b2", null ],
-      [ "p_context", "group___c_a_c___a_p_i.html#ae3a4b565ba5210e1bd706c0285a04891", null ],
+      [ "p_context", "group___c_a_c___a_p_i.html#a2356d7c5c1baa3d03f558971838036c4", null ],
       [ "p_extend", "group___c_a_c___a_p_i.html#a8f4186237976b6b7acfc89c5f55b125b", null ]
     ] ],
     [ "cac_api_t", "group___c_a_c___a_p_i.html#structcac__api__t", [
@@ -34,7 +34,7 @@ var group___c_a_c___a_p_i =
       [ "startMeasurement", "group___c_a_c___a_p_i.html#a0127958a35cee5c81d568f22a5aae493", null ],
       [ "stopMeasurement", "group___c_a_c___a_p_i.html#ad536fdf0808d540e48dc31c4291dd5fb", null ],
       [ "read", "group___c_a_c___a_p_i.html#ab6d120c2fa73011a153e05dbfe62571d", null ],
-      [ "callbackSet", "group___c_a_c___a_p_i.html#a77566d160b545ebc3172e5ded7fffbc3", null ],
+      [ "callbackSet", "group___c_a_c___a_p_i.html#a4216d3665bdca8211e5748452c3820ba", null ],
       [ "close", "group___c_a_c___a_p_i.html#a60344482e6c3f0086e96fbf860e626be", null ]
     ] ],
     [ "cac_instance_t", "group___c_a_c___a_p_i.html#structcac__instance__t", [

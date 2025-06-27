@@ -1,7 +1,7 @@
 var group___i2_c___m_a_s_t_e_r___a_p_i =
 [
     [ "i2c_master_callback_args_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__callback__args__t", [
-      [ "p_context", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab98d1221b3a246270ef56a57d947ac0c", null ],
+      [ "p_context", "group___i2_c___m_a_s_t_e_r___a_p_i.html#add5699678fe6c40d065fd68c769e16ed", null ],
       [ "event", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a3a8cc9e360253e44176a6d3cecb5ece8", null ]
     ] ],
     [ "i2c_master_status_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__status__t", [
@@ -20,7 +20,7 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
       [ "p_transfer_tx", "group___i2_c___m_a_s_t_e_r___a_p_i.html#afc60a909796633071932179988fc8d53", null ],
       [ "p_transfer_rx", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a80f1272727c156915cd589c2a881a58f", null ],
       [ "p_callback", "group___i2_c___m_a_s_t_e_r___a_p_i.html#adbd429cb907c4f2484900e4b0845b8f8", null ],
-      [ "p_context", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a37cfd76fa962aea67e76d6efaf16dfd7", null ],
+      [ "p_context", "group___i2_c___m_a_s_t_e_r___a_p_i.html#af2b6c84340a5e3ee8954f1473e4a8ad9", null ],
       [ "p_extend", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a6b8f5358d8bbec687ddcdb32c88a5f59", null ]
     ] ],
     [ "i2c_master_api_t", "group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__api__t", [
@@ -29,7 +29,7 @@ var group___i2_c___m_a_s_t_e_r___a_p_i =
       [ "write", "group___i2_c___m_a_s_t_e_r___a_p_i.html#ab2ca2f7ee7e55628bcdd9e3492d7dfd2", null ],
       [ "abort", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a0a0800aaa24f36b2eac8b315a0c5437e", null ],
       [ "slaveAddressSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a6e1d2e41f4dc058c06c1f5aae0c7bce5", null ],
-      [ "callbackSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#aab666b9c130b25efdc4b354e62e91c40", null ],
+      [ "callbackSet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a3eb95ef6d94082a07cb299eb2cb88bce", null ],
       [ "statusGet", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a165fd3df3df2c5dacbfd5c75b9685181", null ],
       [ "close", "group___i2_c___m_a_s_t_e_r___a_p_i.html#a7d093cf28da6a99e56dbeb7b82ad3f5f", null ]
     ] ],

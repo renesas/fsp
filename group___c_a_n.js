@@ -76,5 +76,5 @@ var group___c_a_n =
     [ "R_CAN_Read", "group___c_a_n.html#ga5cb0bf31f1486af2af0839b5ff5924b7", null ],
     [ "R_CAN_ModeTransition", "group___c_a_n.html#ga8909b3cbadf32e0aeb0f4a546ff8d8a7", null ],
     [ "R_CAN_InfoGet", "group___c_a_n.html#ga6c032135d3ee684c327e1ca135f3550f", null ],
-    [ "R_CAN_CallbackSet", "group___c_a_n.html#gace90c8d14d728fd8e58943f258eb2bea", null ]
+    [ "R_CAN_CallbackSet", "group___c_a_n.html#ga2b74855940c383171ca077a5586fc86e", null ]
 ];

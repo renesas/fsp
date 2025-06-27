@@ -8,11 +8,11 @@ var group___r_m___c_o_m_m_s___u_s_b___p_c_d_c =
       [ "ctrl_line_state", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a9487bd392e61587199c9b497d4dd655a", null ],
       [ "line_coding", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a52afbc0da68d67be4c7676d53abf37da", null ],
       [ "p_callback", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a2eae5f84d89185b9e27484525f0b1703", null ],
-      [ "p_context", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a5d8eb8291ad41c9fe352be6c6c510676", null ]
+      [ "p_context", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#a4f78138f98a2433dea6f2d8855663b3b", null ]
     ] ],
     [ "RM_COMMS_USB_PCDC_Open", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#gaad67d7010999cb88626b67a64fa0400c", null ],
     [ "RM_COMMS_USB_PCDC_Close", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#ga5f0be9f62e273923e925437368efe0ca", null ],
-    [ "RM_COMMS_USB_PCDC_CallbackSet", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#ga57a7e5d4b927a634acc336facd0e372e", null ],
+    [ "RM_COMMS_USB_PCDC_CallbackSet", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#ga3f7ef568b8781ed864aad8c3ace73f03", null ],
     [ "RM_COMMS_USB_PCDC_Read", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#gad8bbc0e261e312c8a958ef6a4cae903d", null ],
     [ "RM_COMMS_USB_PCDC_Write", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#ga0c967085c304078c11e95bf7700eead3", null ],
     [ "RM_COMMS_USB_PCDC_WriteRead", "group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html#ga85327431878d6e2a8bdf84c51ddd1d1c", null ],

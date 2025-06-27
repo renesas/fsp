@@ -4,6 +4,7 @@ var searchData=
   ['mbedtls_5fgcm_5fcontext',['mbedtls_gcm_context',['../structmbedtls__gcm__context.html',1,'']]],
   ['mbedtls_5fplatform_5fcontext',['mbedtls_platform_context',['../structmbedtls__platform__context.html',1,'']]],
   ['mbedtls_5fsha256_5fcontext',['mbedtls_sha256_context',['../structmbedtls__sha256__context.html',1,'']]],
+  ['mbedtls_5fsha3_5fcontext',['mbedtls_sha3_context',['../structmbedtls__sha3__context.html',1,'']]],
   ['mbedtls_5fsha512_5fcontext',['mbedtls_sha512_context',['../structmbedtls__sha512__context.html',1,'']]],
   ['mcb_5fsce_5fecc_5fpublic_5fwrapped_5fkey_5ft',['mcb_sce_ecc_public_wrapped_key_t',['../structmcb__sce__ecc__public__wrapped__key__t.html',1,'']]],
   ['mipi_5fdsi_5fack_5ferr_5fstatus_5ft',['mipi_dsi_ack_err_status_t',['../group___m_i_p_i___d_s_i___a_p_i.html#unionmipi__dsi__ack__err__status__t',1,'']]],
@@ -91,5 +92,6 @@ var searchData=
   ['mqtt_5fonchip_5fda16xxx_5fcfg_5ft',['mqtt_onchip_da16xxx_cfg_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__cfg__t',1,'']]],
   ['mqtt_5fonchip_5fda16xxx_5finstance_5fctrl_5ft',['mqtt_onchip_da16xxx_instance_ctrl_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__instance__ctrl__t',1,'']]],
   ['mqtt_5fonchip_5fda16xxx_5fpub_5finfo_5ft',['mqtt_onchip_da16xxx_pub_info_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__pub__info__t',1,'']]],
-  ['mqtt_5fonchip_5fda16xxx_5fsub_5finfo_5ft',['mqtt_onchip_da16xxx_sub_info_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__sub__info__t',1,'']]]
+  ['mqtt_5fonchip_5fda16xxx_5fsub_5finfo_5ft',['mqtt_onchip_da16xxx_sub_info_t',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__sub__info__t',1,'']]],
+  ['mram_5finstance_5fctrl_5ft',['mram_instance_ctrl_t',['../group___m_r_a_m.html#structmram__instance__ctrl__t',1,'']]]
 ];

@@ -19,7 +19,7 @@ var group___s_c_i___b___i2_c =
     [ "R_SCI_B_I2C_Write", "group___s_c_i___b___i2_c.html#gaa214ca399eb4bb9cb198237f608b4767", null ],
     [ "R_SCI_B_I2C_Abort", "group___s_c_i___b___i2_c.html#gadddbf1fa35661d53916faae95db97202", null ],
     [ "R_SCI_B_I2C_SlaveAddressSet", "group___s_c_i___b___i2_c.html#ga286e5448d62d962610e1c7e104eb3fe9", null ],
-    [ "R_SCI_B_I2C_CallbackSet", "group___s_c_i___b___i2_c.html#gaa8c8d381f7c639650bf775c3eec125b9", null ],
+    [ "R_SCI_B_I2C_CallbackSet", "group___s_c_i___b___i2_c.html#ga11ac150f6551fdf6c3b6397a50b00ee8", null ],
     [ "R_SCI_B_I2C_StatusGet", "group___s_c_i___b___i2_c.html#ga677766a68a258bb7a2e97090cff1c03b", null ],
     [ "R_SCI_B_I2C_Close", "group___s_c_i___b___i2_c.html#ga1d57041c70f924d2968792d59d1b980b", null ]
 ];

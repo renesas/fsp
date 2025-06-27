@@ -2,7 +2,7 @@ var group___m_i_p_i___d_s_i___a_p_i =
 [
     [ "mipi_dsi_cmd_t", "group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t", [
       [ "channel", "group___m_i_p_i___d_s_i___a_p_i.html#ae77cb8b13b73b076ae22b9cfbae513cf", null ],
-      [ "cmd_id", "group___m_i_p_i___d_s_i___a_p_i.html#a251039fd2491f883d6f631fb5df54c77", null ],
+      [ "cmd_id", "group___m_i_p_i___d_s_i___a_p_i.html#a8c60319fe67e327625d2f782d92430b8", null ],
       [ "flags", "group___m_i_p_i___d_s_i___a_p_i.html#a62202cbf3d27914c5532a9c7315c4e5a", null ],
       [ "tx_len", "group___m_i_p_i___d_s_i___a_p_i.html#aa9b332d365238037e89c86518985dc31", null ],
       [ "p_tx_buffer", "group___m_i_p_i___d_s_i___a_p_i.html#adda44a2844356e0fd86fab47be1e7ab8", null ],
@@ -20,7 +20,7 @@ var group___m_i_p_i___d_s_i___a_p_i =
     [ "mipi_dsi_callback_args_t", "group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t", [
       [ "event", "group___m_i_p_i___d_s_i___a_p_i.html#acd4f908e602a78ff747cc0bed9f05763", null ],
       [ "p_result", "group___m_i_p_i___d_s_i___a_p_i.html#a92d378242562304b84f9425afd361441", null ],
-      [ "p_context", "group___m_i_p_i___d_s_i___a_p_i.html#a9536c5b3a3ab8c474158edf58c6ab6dd", null ]
+      [ "p_context", "group___m_i_p_i___d_s_i___a_p_i.html#a3786270ddc4dd820fc3e3fc7ca59935d", null ]
     ] ],
     [ "mipi_dsi_timing_t", "group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__timing__t", [
       [ "clock_stop_time", "group___m_i_p_i___d_s_i___a_p_i.html#a0f10375ecbb69fbe7451c56262d67b8f", null ],
@@ -63,7 +63,7 @@ var group___m_i_p_i___d_s_i___a_p_i =
       [ "horizontal_back_porch", "group___m_i_p_i___d_s_i___a_p_i.html#aeb0438da02343625c8c953e837b89a79", null ],
       [ "horizontal_front_porch", "group___m_i_p_i___d_s_i___a_p_i.html#a7cefbfd4e59f7393fcf32d80180ded02", null ],
       [ "p_callback", "group___m_i_p_i___d_s_i___a_p_i.html#a96007efbaaa0a0ba47a1cb100d33eb01", null ],
-      [ "p_context", "group___m_i_p_i___d_s_i___a_p_i.html#a6fd6675144041cfe111bff2459cc8e97", null ],
+      [ "p_context", "group___m_i_p_i___d_s_i___a_p_i.html#a27a41efdafe3ab73c0b2224553723ef8", null ],
       [ "p_extend", "group___m_i_p_i___d_s_i___a_p_i.html#a0c726681ef760d838f7b6b38b971082f", null ]
     ] ],
     [ "mipi_dsi_api_t", "group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__api__t", [
@@ -339,7 +339,7 @@ var group___m_i_p_i___d_s_i___a_p_i =
       [ "MIPI_DSI_LANE_CLOCK", "group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703aa460b5f21cef72cc959cf6a7f1a2a840", null ],
       [ "MIPI_DSI_LANE_DATA_ALL", "group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703ab2abdfdb21f33213982d6f70aeaea662", null ]
     ] ],
-    [ "cmd_id", "group___m_i_p_i___d_s_i___a_p_i.html#ga9ba043d4f48bfd247a032b674aeff3a5", null ],
+    [ "cmd_id", "group___m_i_p_i___d_s_i___a_p_i.html#gac73b36784bc7a6dd383ee6384ee78251", null ],
     [ "virtual_channel_id", "group___m_i_p_i___d_s_i___a_p_i.html#ga6fd53b70f4fe46fc044141ea0914fad7", null ],
     [ "long_packet", "group___m_i_p_i___d_s_i___a_p_i.html#gabc772ab15154feaf4078c52ed6e669c8", null ],
     [ "rx_success", "group___m_i_p_i___d_s_i___a_p_i.html#gaf04c5791f1f0caa423ac01df8adbde93", null ],

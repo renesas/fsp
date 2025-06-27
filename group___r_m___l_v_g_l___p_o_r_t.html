@@ -1,0 +1,1041 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: LVGL Port (rm_lvgl_port)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___l_v_g_l___p_o_r_t.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">LVGL Port (rm_lvgl_port)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___g_r_a_p_h_i_c_s___m_o_d_u_l_e_s.html">Graphics</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga0e77d30a6c689de31f089b582d3e98bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#ga0e77d30a6c689de31f089b582d3e98bf">RM_LVGL_PORT_Open</a> (<a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#structrm__lvgl__port__instance__ctrl__t">rm_lvgl_port_instance_ctrl_t</a> *const p_instance_ctrl, <a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#structrm__lvgl__port__cfg__t">rm_lvgl_port_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga0e77d30a6c689de31f089b582d3e98bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>LVGL graphics library port for RA MCUs. </p>
+<h1><a class="anchor" id="rm-lvgl-port-overview"></a>
+Overview</h1>
+<p><a class="anchor" id="um_lvgl_port"></a> The LVGL RA Port module provides the configuration necessary for use of the LVGL graphics library on RA products. The port provides integration for GLCDC into the LVGL display system, a time source for LVGL timer logic, and optional integration with FreeRTOS.</p>
+<dl class="section note"><dt>Note</dt><dd>This port layer primarily enables hardware acceleration and background handling of many display operations and does not contain code intended to be directly called by the user. Please consult the <a href="https://docs.lvgl.io/">LVGL Project Documentation</a> for details on how to use LVGL in your project.</dd></dl>
+<h2><a class="anchor" id="rm-lvgl-port-hw-accel"></a>
+Hardware Acceleration</h2>
+<p>Hardware acceleration is optionally provided by DRW using a lightly modified fork of the upstream driver provided by the LVGL project. Most rendering operations are supported. </p><hr/>
+<h1><a class="anchor" id="rm-lvgl-port-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for lvgl</h2>
+The following build time configurations are defined in fsp_cfg/lvgl/lvgl/lv_conf.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Custom lv_conf.h</td><td>Manual Entry</td><td></td><td>Add a path to your custom lv_conf.h file. It can be used to override some or all of the configurations defined here, and to define additional configurations. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> LVGL  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Display  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_COLOR_DEPTH</td><td>Value must equal 16 or 32.</td><td>16 </td><td>Color depth. 16 or 32 supported. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Memory  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_MEM_SIZE</td><td>Value must be an integer multiple of 1024 between 0x800 and 0xFFFFFFFF.</td><td>0x10000 </td><td>Size of the memory available for `lv_malloc()` in bytes. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_LAYER_SIMPLE_BUF_SIZE</td><td>Value must be an integer multiple of 1024 between 0x400 and 0xFFFFFFFF.</td><td>0x6000 </td><td>Buffer size for simple layer chunks. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_LAYER_MAX_MEMORY</td><td>Value must be an integer.</td><td>0 </td><td>Limit the max allocated memory for simple and transformed layers.<br />
+0 for no limit.<br />
+Otherwise, should be greater than or equal to LV_DRAW_LAYER_SIMPLE_BUF_SIZE.<br />
+If transformed layers are used, it should be large enough for the largest widget (width x height x 4 area). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_THREAD_STACK_SIZE</td><td>Value must be an integer multiple of 1024 between 0x400 and 0xFFFFFFFF.</td><td>0x2000 </td><td>Stack size of the drawing thread in bytes. Only used when FreeRTOS integration is used. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; OS Integration  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_OS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LV_OS_NONE</li>
+<li>
+LV_OS_FREERTOS</li>
+</ul>
+</td><td>LV_OS_FREERTOS </td><td>Select LVGL RTOS integration. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_THREAD_PRIO</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LV_THREAD_PRIO_LOWEST</li>
+<li>
+LV_THREAD_PRIO_LOW</li>
+<li>
+LV_THREAD_PRIO_MID</li>
+<li>
+LV_THREAD_PRIO_HIGH</li>
+<li>
+LV_THREAD_PRIO_HIGHEST</li>
+</ul>
+</td><td>LV_THREAD_PRIO_HIGH </td><td>Thread priority of the drawing task. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Software Rendering  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_RGB565</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_RGB565_SWAPPED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_RGB565A8</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_RGB888</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_XRGB8888</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_ARGB8888</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_ARGB8888_PREMULTIPLIED</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_L8</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_AL88</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_A8</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_DRAW_SW_SUPPORT_I1</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable software rendering support for the specified color format.<br />
+Disable to reduce code size.<br />
+Some formats may be used internally for some features. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Hardware Rendering  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_DRAW_DAVE2D</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in DRW Engine support. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Debug  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_ASSERT_HANDLER_INCLUDE</td><td>Manual Entry</td><td>&lt;stdint.h&gt; </td><td>Header file to include to support LV_ASSERT_HANDLER macro. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_ASSERT_HANDLER</td><td>Manual Entry</td><td></td><td>Macro to execute when an LV_ASSERT occurs. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Widgets  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_OBJ_NAME</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable support for widget names. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Input Devices  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_GESTURE_RECOGNITION</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable support for multi-touch gesture recognition.<br />
+Requires floating point support. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_IME_PINYIN</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Pinyin input method. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_IME_PINYIN_USE_DEFAULT_DICT</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Use default thesaurus. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_IME_PINYIN_CAND_TEXT_NUM</td><td>Value must be positive.</td><td>6 </td><td>Maximum number of displayed candidate panels. Adjust according to screen size. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_IME_PINYIN_USE_K9_MODE</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Use nine key (K9) input. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_IME_PINYIN_K9_CAND_TEXT_NUM</td><td>Value must be positive.</td><td>3 </td><td>Maximum number of displayed candidate panels in K9 mode. Adjust according to screen size. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Fonts  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Fonts &gt; Montserrat  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_8</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 8. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_10</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 10. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_12</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 12. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_14</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 14. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_16</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 16. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_18</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 18. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_20</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 20. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_22</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 22. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_24</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 24. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_26</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 26. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_28</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 28. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_30</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 30. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_32</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 32. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_34</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 34. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_36</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 36. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_38</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 38. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_40</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 40. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_42</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 42. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_44</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 44. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_46</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 46. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_MONTSERRAT_48</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font (FontAwesome5, Montserrat) size 48. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Fonts &gt; DejaVu  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_DEJAVU_16_PERSIAN_HEBREW</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font DejaVu (Arabic, Hebrew, Persian) size 16. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Fonts &gt; SourceHanSansSC  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_SOURCE_HAN_SANS_SC_14_CJK</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font SourceHanSansSC size 14. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_SOURCE_HAN_SANS_SC_16_CJK</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font SourceHanSansSC size 16. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> LVGL &gt; Fonts &gt; Unscii  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_UNSCII_8</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font unscii-8 size 8. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">LV_FONT_UNSCII_16</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable built-in font unscii-8 size 16. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_FONT_DEFAULT</td><td>Name must be a valid C symbol.</td><td>lv_font_montserrat_14 </td><td>Set a default font for LVGL. Required. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_FONT_PLACEHOLDER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Draw a placeholder when a glyph is not found. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_BIDI</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable bidirectional text. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_ARABIC_PERSIAN_CHARS</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable Arabic and Persian language processing. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_USE_FONT_MANAGER</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable the font manager. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LV_FONT_MANAGER_NAME_MAX_LEN</td><td>Value must be positive.</td><td>32 </td><td>Maximum font name length when font manager is enabled. </td></tr>
+</table>
+ <h2>Build Time Configurations for rm_lvgl_port</h2>
+The following build time configurations are defined in fsp_cfg/middleware/rm_lvgl_port_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Provide Tick Callback</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable the LVGL port driver to provide a tick callback to LVGL. </td></tr>
+</table>
+ <h2>Configurations for Graphics &gt; LVGL Port (rm_lvgl_port)</h2>
+<table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_lvgl_port0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Target Display Layer</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Graphics Layer 1</li>
+<li>
+Graphics Layer 2</li>
+</ul>
+</td><td>Graphics Layer 1 </td><td>Specify which graphics screen to inherit the buffer and display dimensions from. </td></tr>
+<tr class="tree_none">
+<td>Callback Function</td><td>Must be a valid C symbol</td><td>NULL </td><td>If a callback function is provided it will be called when Display events occur. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm-lvgl-port-hw-config"></a>
+Hardware Configuration</h2>
+<p>No clocks or pins are directly required by this module. Please consult the GLCDC Usage Guide for its requirements here: <a class="el" href="group___g_l_c_d_c.html">Graphics LCD (r_glcdc)</a></p>
+<h2><a class="anchor" id="rm-lvgl-port-lib-config"></a>
+LVGL Configuration</h2>
+<p>LVGL is configured via the use of a configuration header. The port layer provides configuration options within e2 Studio for commonly changed LVGL settings and autogenerates the required header files. It is also possible to provide a custom LVGL configuration header which overrides the LVGL configuration options set in e2 Studio, or configures options that are not exposed in the port layer in e2 Studio. </p><hr/>
+<h1><a class="anchor" id="rm-lvgl-port-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm-lvgl-port-getting_started"></a>
+Getting Started</h2>
+<p>To get started with LVGL in an RA project the following must be performed:</p>
+<ol type="1">
+<li>In e2 studio, open the RA Configuration editor for your project</li>
+<li>Add LVGL to your project in the Stacks view by clicking <b>New Stack -&gt; Graphics -&gt; LVGL</b><ul>
+<li>If using FreeRTOS, first create a new thread and add the LVGL stack to it</li>
+</ul>
+</li>
+<li>Set the properties for the GLCDC module to match the timing and memory requirements of your display panel</li>
+<li>Ensure interrupts on all modules are enabled:<ul>
+<li>GLCDC Vertical Position (GLCDC_VPOS) Interrupt</li>
+<li>DRW Interrupt (if applicable)</li>
+</ul>
+</li>
+<li>Confirm stack size and global heap size are configured as needed<ul>
+<li>If using FreeRTOS, it is suggested to add the Heap_4 stack to provide memory allocation to DRW</li>
+<li>Stack size must be adequate for the thread executing the LVGL timer handler loop</li>
+<li>Stack size is configured per thread if FreeRTOS is used</li>
+<li>Final heap and stack usage must be characterized</li>
+</ul>
+</li>
+<li>Ensure the configuration options for LVGL are set as necessary for your application</li>
+<li>Confirm LVGL heap size is configured as needed<ul>
+<li>Final LVGL heap usage must be characterized</li>
+</ul>
+</li>
+<li>Confirm other LVGL memory parameters are configured as needed<ul>
+<li>Final memory usage for miscellaneous memory parameters must be characterized</li>
+</ul>
+</li>
+<li>Resolve any remaining constraints</li>
+<li>Click Generate Project Content to save and commit configuration changes</li>
+</ol>
+<p>At this point the project is now ready to build with LVGL. Please refer to the <a href="https://docs.lvgl.io/">LVGL Project Documentation</a> for details on how to use LVGL in your project, as well as LVGL demo and example code.</p>
+<h2>Demos and Examples</h2>
+<p>The LVGL packed with FSP also includes the <code>demos</code> and <code>examples</code> directories that are in the LVGL project. To allow the demos to be included and built in a user project:</p>
+<ol type="1">
+<li>Create a custom LVGL configuration header, for example <code>lv_conf_custom.h</code></li>
+<li>Specify the header file name in the <b>General|Custom lv_conf.h</b> LVGL stack configuration property</li>
+<li>Set the <code>LV_BUILD_DEMOS</code> macro to <code>1</code> in the custom header, to override the value set in the generated <code>lv_conf.h</code></li>
+<li>Set the desired <code>LV_USE_DEMO_*</code> macro to <code>1</code> in the the custom header, to enable the desired demo</li>
+<li>Call the desired demo function prior to <code>lv_timer_handler()</code> to set up the demo</li>
+</ol>
+<p>Including and building the examples in a user project are the same steps, but set the <code>LV_BUILD_EXAMPLES</code> macro to <code>1</code> in the custom header instead. No <code>LV_USE_</code> macros should be required for the examples.</p>
+<dl class="section note"><dt>Note</dt><dd>Not all upstream demos and examples material are available, so some demos or examples may not build or execute.</dd></dl>
+<h2>Libraries</h2>
+<p>The LVGL packed with FSP also includes the <code>libs</code> directory that is in the LVGL project. Only <code>bin_decoder</code> is packed as a mandatory library. The source for the remaining libraries is omitted.</p>
+<dl class="section note"><dt>Note</dt><dd>This means that some third party libraries included with upstream LVGL are unavailable. The excluded libraries are mostly inapplicable to an RA embedded context.</dd></dl>
+<h2>Multi-thread Support</h2>
+<p>LVGL is not a thread safe library. Please refer to <a href="https://docs.lvgl.io/master/porting/os.html#tasks-and-threads">Tasks and threads</a> for information on how to use LVGL in a multi-thread environment.</p>
+<dl class="section note"><dt>Note</dt><dd>This includes both bare metal and FreeRTOS projects. RTOS support is optionally configured depending on whether FreeRTOS is used in the project.</dd></dl>
+<h2><a class="anchor" id="rm-lvgl-port-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using LVGL with FSP:</p>
+<ul>
+<li>Compilers may produce different results at this time (v9.3.0). AC6 is known to produce different software rendering output when blending certain image formats with a 32-bit color depth. LLVM is known to create artifacts with LVGL image decoding and blending.</li>
+<li>The DRW upstream driver does not support all LVGL rendering features. Some unsupported features are horizontal gradients, dashed lines, and blitting of certain image formats. In some cases, the LVGL software renderer will act as a fallback renderer, such as when an unsupported image format is used. <hr/>
+</li>
+</ul>
+<h1><a class="anchor" id="rm-lvgl-port-examples"></a>
+Examples</h1>
+<h2><a class="anchor" id="rm-lvgl-port-examples-minimal"></a>
+Basic Example</h2>
+<p>This is a basic example demonstrating the initialization of LVGL and the port layer within a FreeRTOS thread entry function, then servicing LVGL timer logic in a loop.</p>
+<dl class="section note"><dt>Note</dt><dd>The port layer manages the GLCDC submodule internally, while the LVGL project manages the DRW submodule; they do not need to be opened directly.</dd></dl>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> lvgl_thread_entry (<span class="keywordtype">void</span> * pvParameters)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(pvParameters);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> error;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize LVGL. */</span></div><div class="line">    lv_init();</div><div class="line"></div><div class="line">    <span class="comment">/* TODO: Perform any initialization necessary for the physical display. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the LVGL port driver. */</span></div><div class="line">    error = <a class="code" href="group___r_m___l_v_g_l___p_o_r_t.html#ga0e77d30a6c689de31f089b582d3e98bf">RM_LVGL_PORT_Open</a>(&amp;g_lvgl_port_ctrl, &amp;g_lvgl_port_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* TODO: Handle fsp_err_t return values as required. */</span></div><div class="line">    (void) error;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* TODO: Create an input device using LVGL. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* TODO: Create a user defined UI using LVGL widgets. */</span></div><div class="line"></div><div class="line">    <span class="comment">/* For example, add a label to the LVGL active screen on the default display. */</span></div><div class="line"></div><div class="line">    lv_obj_t * active_screen = lv_screen_active();</div><div class="line">    lv_obj_set_style_text_color(active_screen, lv_color_black(), 0);</div><div class="line">    lv_obj_set_style_bg_color(active_screen, lv_color_white(), 0);</div><div class="line"></div><div class="line">    lv_obj_t * label_object = lv_label_create(active_screen);</div><div class="line">    lv_label_set_text(label_object, <span class="stringliteral">&quot;Hello World!&quot;</span>);</div><div class="line"></div><div class="line">    <span class="comment">/* Call lv_timer_handler() to process LVGL timer tasks, which includes display refresh. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        lv_timer_handler();</div><div class="line">        vTaskDelay(1);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>For further example code please consult the <a href="https://docs.lvgl.io/">LVGL Project Documentation</a>.</dd></dl>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structrm__lvgl__port__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#structrm__lvgl__port__callback__args__t">rm_lvgl_port_callback_args_t</a></td></tr>
+<tr class="separator:structrm__lvgl__port__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__lvgl__port__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#structrm__lvgl__port__cfg__t">rm_lvgl_port_cfg_t</a></td></tr>
+<tr class="separator:structrm__lvgl__port__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrm__lvgl__port__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#structrm__lvgl__port__instance__ctrl__t">rm_lvgl_port_instance_ctrl_t</a></td></tr>
+<tr class="separator:structrm__lvgl__port__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga0a0b09ae391f0d0ecc1804b32a3ca2fd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#ga0a0b09ae391f0d0ecc1804b32a3ca2fd">rm_lvgl_port_device_t</a> </td></tr>
+<tr class="separator:ga0a0b09ae391f0d0ecc1804b32a3ca2fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20a4e6d45ca12f67d0a26c9c02eb12f8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#ga20a4e6d45ca12f67d0a26c9c02eb12f8">rm_lvgl_port_event_t</a> </td></tr>
+<tr class="separator:ga20a4e6d45ca12f67d0a26c9c02eb12f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrm__lvgl__port__callback__args__t" id="structrm__lvgl__port__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__lvgl__port__callback__args__t">&#9670;&nbsp;</a></span>rm_lvgl_port_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_lvgl_port_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Callback arguments for the FSP LVGL Port </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="addf822ede8902cf7d7feeda3f5adf888"></a><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#ga0a0b09ae391f0d0ecc1804b32a3ca2fd">rm_lvgl_port_device_t</a></td>
+<td class="fieldname">
+device</td>
+<td class="fielddoc">
+Device code. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7951d2201313d420063975f29e2b5a62"></a><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#ga20a4e6d45ca12f67d0a26c9c02eb12f8">rm_lvgl_port_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Event code of the low level hardware. </td></tr>
+<tr><td class="fieldtype">
+<a id="a52d17c67ecd33796b76e99f3928e9161"></a>uint32_t</td>
+<td class="fieldname">
+error</td>
+<td class="fielddoc">
+Error code if RM_LVGL_PORT_EVENT_ERROR. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structrm__lvgl__port__cfg__t" id="structrm__lvgl__port__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__lvgl__port__cfg__t">&#9670;&nbsp;</a></span>rm_lvgl_port_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_lvgl_port_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration structure for the FSP LVGL Port </p>
+</div>
+</div>
+</div>
+<a name="structrm__lvgl__port__instance__ctrl__t" id="structrm__lvgl__port__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__lvgl__port__instance__ctrl__t">&#9670;&nbsp;</a></span>rm_lvgl_port_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_lvgl_port_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Instance control block for LVGL Port </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga0a0b09ae391f0d0ecc1804b32a3ca2fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a0b09ae391f0d0ecc1804b32a3ca2fd">&#9670;&nbsp;</a></span>rm_lvgl_port_device_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#ga0a0b09ae391f0d0ecc1804b32a3ca2fd">rm_lvgl_port_device_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Low level device code for the LVGL Port </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0a0b09ae391f0d0ecc1804b32a3ca2fda4a76a4150d71bfb05216416e1e3fa7c0"></a>RM_LVGL_PORT_DEVICE_NONE&#160;</td><td class="fielddoc"><p>Non hardware. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga0a0b09ae391f0d0ecc1804b32a3ca2fda2e548e2d40212eeee0f08911240648b6"></a>RM_LVGL_PORT_DEVICE_DISPLAY&#160;</td><td class="fielddoc"><p>Display device. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga20a4e6d45ca12f67d0a26c9c02eb12f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga20a4e6d45ca12f67d0a26c9c02eb12f8">&#9670;&nbsp;</a></span>rm_lvgl_port_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#ga20a4e6d45ca12f67d0a26c9c02eb12f8">rm_lvgl_port_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Display event codes </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga20a4e6d45ca12f67d0a26c9c02eb12f8ad608b64380a9e3adbbdeada32a4125b2"></a>RM_LVGL_PORT_EVENT_DISPLAY_VPOS&#160;</td><td class="fielddoc"><p>Display interface VPOS. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga20a4e6d45ca12f67d0a26c9c02eb12f8a210a7041fca95d5365b192aab22549e6"></a>RM_LVGL_PORT_EVENT_UNDERFLOW&#160;</td><td class="fielddoc"><p>Display interface underflow. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga0e77d30a6c689de31f089b582d3e98bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0e77d30a6c689de31f089b582d3e98bf">&#9670;&nbsp;</a></span>RM_LVGL_PORT_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_LVGL_PORT_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#structrm__lvgl__port__instance__ctrl__t">rm_lvgl_port_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_instance_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___l_v_g_l___p_o_r_t.html#structrm__lvgl__port__cfg__t">rm_lvgl_port_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open the LVGL port driver module.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the LVGL port driver. */</span></div><div class="line">    error = <a class="code" href="group___r_m___l_v_g_l___p_o_r_t.html#ga0e77d30a6c689de31f089b582d3e98bf">RM_LVGL_PORT_Open</a>(&amp;g_lvgl_port_ctrl, &amp;g_lvgl_port_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* TODO: Handle fsp_err_t return values as required. */</span></div><div class="line">    (void) error;</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>This function should be called after the LVGL function lv_init() has been called.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>LVGL port successfully opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_OUT_OF_MEMORY</td><td>Internal call to lv_display_create() failed to allocate memory for a display.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>See Common_Error_Codes for other possible return codes. This function calls <a class="el" href="group___g_l_c_d_c.html#ga61603db8684d31ac86b2960096c91f58">R_GLCDC_Open()</a>, <a class="el" href="group___g_l_c_d_c.html#ga0e8a7d17184b405e6caae3ba21857baa">R_GLCDC_Start()</a>, and <a class="el" href="group___g_l_c_d_c.html#ga0d020f73e547ae005c666638a0dff427">R_GLCDC_BufferChange()</a>. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

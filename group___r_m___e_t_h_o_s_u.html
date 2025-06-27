@@ -1,0 +1,550 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Ethos-U (rm_ethosu)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___e_t_h_o_s_u.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle">
+<div class="title">Ethos-U (rm_ethosu)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_i___m_o_d_u_l_e_s.html">AI</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gacd1c7cd71693260a8d882c17c8c7dd0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_o_s_u.html#gacd1c7cd71693260a8d882c17c8c7dd0b">RM_ETHOSU_Open</a> (<a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#gab0c33859e1f8e49ad050a1a3c41861c0">rm_ethosu_ctrl_t</a> *p_api_ctrl, <a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#structrm__ethosu__cfg__t">rm_ethosu_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gacd1c7cd71693260a8d882c17c8c7dd0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc95be8fa7696a8e2e6249827fa69460"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_o_s_u.html#gafc95be8fa7696a8e2e6249827fa69460">RM_ETHOSU_CallbackSet</a> (<a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#gab0c33859e1f8e49ad050a1a3c41861c0">rm_ethosu_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#structrm__ethosu__callback__args__t">rm_ethosu_callback_args_t</a> *), void *const p_context, <a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#structrm__ethosu__callback__args__t">rm_ethosu_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gafc95be8fa7696a8e2e6249827fa69460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e0ec822de4bfcd0c07175e650ac3e3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_o_s_u.html#ga6e0ec822de4bfcd0c07175e650ac3e3f">RM_ETHOSU_Close</a> (<a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#gab0c33859e1f8e49ad050a1a3c41861c0">rm_ethosu_ctrl_t</a> *p_api_ctrl)</td></tr>
+<tr class="separator:ga6e0ec822de4bfcd0c07175e650ac3e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Middleware to support Ethos-U NPU driver. This module implements the <a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html">Ethos-U Interface</a>. </p>
+<h1><a class="anchor" id="rm-ethosu-overview"></a>
+Overview</h1>
+<p>RM_ETHOSU module is a wrapper of the Ethos-U core driver.</p>
+<h2><a class="anchor" id="rm_ethosu-features"></a>
+Features</h2>
+<ul>
+<li>Initialization Ethos-U core driver</li>
+<li>NPU secure and privilege level can be configured</li>
+<li>Callback Events<ul>
+<li>NPU finishes inference job</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="rm_ethosu-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_ethosu</h2>
+The following build time configurations are defined in fsp_cfg/rm_ethosu_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>Selects if code for parameter checking is to be included in the build. </td></tr>
+<tr class="tree_none">
+<td>Debug log level</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+RM_ETHOSU_LOG_LEVEL_OFF</li>
+<li>
+RM_ETHOSU_LOG_LEVEL_ERROR</li>
+<li>
+RM_ETHOSU_LOG_LEVEL_WARNING</li>
+<li>
+RM_ETHOSU_LOG_LEVEL_INFO</li>
+<li>
+RM_ETHOSU_LOG_LEVEL_DEBUG</li>
+</ul>
+</td><td>RM_ETHOSU_LOG_LEVEL_OFF </td><td>Defines ethosu log level. </td></tr>
+</table>
+ <h2>Configurations for AI &gt; Arm Ethos-U Core Driver Wrapper (rm_ethosu)</h2>
+This module can be added to the Stacks tab via New Stack &gt; AI &gt; Arm Ethos-U Core Driver Wrapper (rm_ethosu).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_rm_ethosu0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function that will be called from the interrupt service routine (ISR). </td></tr>
+<tr class="tree_none">
+<td>NPU Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the NPU interrupt priority. </td></tr>
+<tr class="tree_none">
+<td>Enable Secure Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Set Ethos-U NPU secure mode. </td></tr>
+<tr class="tree_none">
+<td>Enable Privilege Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Enabled </td><td>Set Ethos-U NPU privilege mode. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm_ethosu-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The NPU clock is configurable on the clocks tab.</p>
+<h1><a class="anchor" id="rm_ethosu-notes"></a>
+Usage Notes</h1>
+<p>Here are the steps to create an AI application in e2studio. Please refer to the example code for details.</p>
+<h2>Getting Started: Creating an AI Project with NPU stacks</h2>
+<p>Start by creating a new c++ project in e&sup2; studio. On the Stacks tab, add New Stack &gt; AI &gt; TFLM Core Lib. On the BSP tab, stack and heap need to be configured. On the Clocks tab, NPU clock needs to be configured. Generate the project content. Please note an Ethos-U core driver instance will be automatically created. It will be used by RM_ETHOSU API to initialize/deinitialize Ethos-U driver. Application also must use the same instance to call other Ethos-U core driver API if needed.</p>
+<h2>Getting Started: Confirming operators used in the model</h2>
+<p>Users can use tools like Netron to find out what operators are used by the model (.tflite). If there are opeartors not yet supported by Ethos-U55, then they need to be run on MCU. There are two types of kernels: optimized kernel based on CMSIS-NN, and reference kernel. Optimized kernel (CMSIS-NN kernel)should always be preferred on ARM MCUs. Please refer to <code><a href="https://github.com/tensorflow/tflite-micro/blob/main/tensorflow/lite/micro/docs/optimized_kernel_implementations.md">https://github.com/tensorflow/tflite-micro/blob/main/tensorflow/lite/micro/docs/optimized_kernel_implementations.md</a></code> for more information.</p>
+<h2>Getting Started: Learning inference process framework</h2>
+<p>Users can refer to inference process <code><a href="https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-core-software/-/tree/main/applications">https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-core-software/-/tree/main/applications</a></code> for how to integrate TFLM inference functions, e.g parsing model, creating interpreter, allocating tensors and running inference. Please note by default lots of operators are registered to micro_op_resolver in micro_mutable_all_ops_resolver.h. What opreators are needed should be determined by your model.</p>
+<h2>Getting Started: Defining functions and PMU events for MCU performance profiling</h2>
+<p><code>ticks_per_second</code> and <code>GetCurrentTimeTicks</code> need to be defined for MCU profiling. Here is an example </p><div class="fragment"><div class="line">namespace tflite {</div><div class="line"></div><div class="line">    uint32_t ticks_per_second();</div><div class="line">    uint32_t GetCurrentTimeTicks();</div><div class="line"></div><div class="line">    uint32_t ticks_per_second() { return US_IN_SECOND; }</div><div class="line"></div><div class="line">    uint32_t GetCurrentTimeTicks() {</div><div class="line"></div><div class="line">        static bool is_initialized = false;</div><div class="line"></div><div class="line">        if (!is_initialized) {</div><div class="line">            ARM_PMU_Enable();</div><div class="line">            DCB-&gt;DEMCR |= DCB_DEMCR_TRCENA_Msk;</div><div class="line"></div><div class="line">            ARM_PMU_CYCCNT_Reset();</div><div class="line">            ARM_PMU_CNTR_Enable(PMU_CNTENSET_CCNTR_ENABLE_Msk);</div><div class="line"></div><div class="line">            is_initialized = true;</div><div class="line">        }</div><div class="line"></div><div class="line">        return ARM_PMU_Get_CCNTR();</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><p> There are 4 PMU event counters. Each can be used to monitor an event, e.g </p><div class="fragment"><div class="line">#define ETHOSU_PMU_EVENT_0 ETHOSU_PMU_CYCLE</div><div class="line">#define ETHOSU_PMU_EVENT_1 ETHOSU_PMU_NPU_ACTIVE</div></div><!-- fragment --><h2>Getting Started: Overriding weak functions in application</h2>
+<p>There are weak functions need to be overridden if needed </p><table class="doxtable">
+<tr>
+<th>Module </th><th>Function </th><th>Description  </th></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_flush_dcache</code> </td><td>Flush/clean the data cache by address and size. Passing NULL as p argument expects the whole cache to be flushed. </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_invalidate_dcache</code> </td><td>Invalidate the data cache by address and size. Passing NULL as p argument expects the whole cache to be invalidated. </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_mutex_create</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_mutex_destroy</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_mutex_lock</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_mutex_unlock</code> </td><td>define mutex API based on RTOS </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_semaphore_create</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_semaphore_destroy</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_semaphore_take</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td>NPU Driver</td><td><code>ethosu_semaphore_give</code> </td><td>define semaphore API based on RTOS </td></tr>
+<tr>
+<td>NPU Core</td><td><code>ethosu_inference_begin</code> </td><td>Callback invoked just before the inference is started. </td></tr>
+<tr>
+<td>NPU Core</td><td><code>ethosu_inference_end</code> </td><td>Callback invoked just after the inference has completed. </td></tr>
+</table>
+<h2>Getting Started: Creating AI inference</h2>
+<p>Create inference job and run, e.g </p><div class="fragment"><div class="line">InferenceJob job(std::string(modelName),</div><div class="line">                DataPtr(networkModelData, networkModelDataLen),</div><div class="line">                {DataPtr(inputData, inputDataLen)},</div><div class="line">                {DataPtr(outputData, outputDataLen)},</div><div class="line">                {DataPtr(expectedOutputData, expectedOutputDataLen)},</div><div class="line">                numBytesToPrint);</div><div class="line"></div><div class="line">// Run job</div><div class="line">bool failed = inferenceProcess.runJob(job);</div></div><!-- fragment --> <h2><a class="anchor" id="rm_ethosu-limitations"></a>
+Limitations</h2>
+<p>Users have to implement weak functions if needed. Please refer to <a href="https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md">https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md</a> for further information.</p>
+<p>Users have to update linker script if they want to save AI model and data to external memories.</p>
+<h1><a class="anchor" id="rm_ethosu-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of Ethos-U NPU application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* These variables are auto generated. */</span></div><div class="line"><span class="keyword">extern</span> <span class="keyword">struct </span>ethosu_driver g_ethosu_dev;</div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___r_m___e_t_h_o_s_u___a_p_i.html#structrm__ethosu__cfg__t">rm_ethosu_cfg_t</a> g_ethosu_cfg;</div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___r_m___e_t_h_o_s_u.html#structrm__ethosu__instance__ctrl__t">rm_ethosu_instance_ctrl_t</a> g_ethosu_ctrl;</div><div class="line"></div><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div><div class="line">{</div><div class="line">    <span class="comment">/* Override the SysTick Handler. */</span></div><div class="line">    <span class="keyword">extern</span> <span class="keywordtype">void</span> SysTick_Handler(<span class="keywordtype">void</span>);</div><div class="line">    <span class="keywordtype">void</span> SysTick_Handler(<span class="keywordtype">void</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">// Disable systick, preventing new systick interrupt to fire while we call the Ethos-U monitor</span></div><div class="line">        SysTick-&gt;CTRL = 0;</div><div class="line"></div><div class="line">        <span class="keywordflow">if</span> (ethosuDrv != NULL) {</div><div class="line">            ethosuMonitor.monitorSample(ethosuDrv);</div><div class="line"></div><div class="line">            <span class="comment">// Restart the systick timer</span></div><div class="line">            SysTick_Config(usDelay);</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordtype">void</span> ethosu_inference_begin(<span class="keyword">struct</span> ethosu_driver *drv, <span class="keywordtype">void</span> *)</div><div class="line">    {</div><div class="line">        ethosuDrv = drv;</div><div class="line">        ethosuMonitor.configure(drv, pmuEventConfig);</div><div class="line">        SysTick_Config(usDelay);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordtype">void</span> ethosu_inference_end(<span class="keyword">struct</span> ethosu_driver *drv, <span class="keywordtype">void</span> *)</div><div class="line">    {</div><div class="line">        <span class="comment">// Disable polling</span></div><div class="line">        SysTick-&gt;CTRL = 0;</div><div class="line"></div><div class="line">        ethosuDrv = NULL;</div><div class="line">        ethosuMonitor.monitorSample(drv);</div><div class="line">        ethosuMonitor.release(drv);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_ethosu_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___e_t_h_o_s_u.html#gacd1c7cd71693260a8d882c17c8c7dd0b">RM_ETHOSU_Open</a>(&amp;g_ethosu_ctrl, &amp;g_ethosu_cfg);</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle any errors. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize event recoder */</span></div><div class="line">    EventRecorderInitialize(EventRecordAll, 1);</div><div class="line"></div><div class="line">    InferenceJob job(std::string(modelName),</div><div class="line">                    DataPtr(networkModelData, networkModelDataLen),</div><div class="line">                    {DataPtr(inputData, inputDataLen)},</div><div class="line">                    {DataPtr(outputData, outputDataLen)},</div><div class="line">                    {DataPtr(expectedOutputData, expectedOutputDataLen)},</div><div class="line">                    numBytesToPrint);</div><div class="line"></div><div class="line">    <span class="comment">// Run job</span></div><div class="line">    <span class="keywordtype">bool</span> failed = inferenceProcess.runJob(job);</div><div class="line">    printf(<span class="stringliteral">&quot;Status of executed job: %s\n&quot;</span>, failed ? <span class="stringliteral">&quot;Failed\n&quot;</span> : <span class="stringliteral">&quot;Success\n&quot;</span>);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___e_t_h_o_s_u.html#ga6e0ec822de4bfcd0c07175e650ac3e3f">RM_ETHOSU_Close</a>(&amp;g_ethosu_ctrl);</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle any errors. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structrm__ethosu__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_o_s_u.html#structrm__ethosu__instance__ctrl__t">rm_ethosu_instance_ctrl_t</a></td></tr>
+<tr class="separator:structrm__ethosu__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structrm__ethosu__instance__ctrl__t" id="structrm__ethosu__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrm__ethosu__instance__ctrl__t">&#9670;&nbsp;</a></span>rm_ethosu_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rm_ethosu_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Instance control block. This is private to the FSP and should not be used or modified by the application. </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gacd1c7cd71693260a8d882c17c8c7dd0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacd1c7cd71693260a8d882c17c8c7dd0b">&#9670;&nbsp;</a></span>RM_ETHOSU_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ETHOSU_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#gab0c33859e1f8e49ad050a1a3c41861c0">rm_ethosu_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#structrm__ethosu__cfg__t">rm_ethosu_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable Ethos-U NPU and initialize driver. Implements <a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#a4ff4e975b5fdf9c065c5f34815f77629">rm_ethosu_api_t::open</a>.</p>
+<p>This function performs the following tasks:</p><ul>
+<li>Performs parameter checking and processes error conditions.</li>
+<li>Enables NPU module</li>
+<li>Initializes Ethos-U NPU driver.</li>
+<li>Provides the handle for use with other API functions.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_api_ctrl</td><td>Pointer to the control structure. </td></tr>
+    <tr><td class="paramname">p_cfg</td><td>Pointer to a configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>NPU initialized successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter is invalid or NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The instance has already been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Failed to initialize ethosu driver </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafc95be8fa7696a8e2e6249827fa69460"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafc95be8fa7696a8e2e6249827fa69460">&#9670;&nbsp;</a></span>RM_ETHOSU_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ETHOSU_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#gab0c33859e1f8e49ad050a1a3c41861c0">rm_ethosu_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#structrm__ethosu__callback__args__t">rm_ethosu_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#structrm__ethosu__callback__args__t">rm_ethosu_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#a5017d37efc4f5b9c201dbcd498e91e11">rm_ethosu_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6e0ec822de4bfcd0c07175e650ac3e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6e0ec822de4bfcd0c07175e650ac3e3f">&#9670;&nbsp;</a></span>RM_ETHOSU_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ETHOSU_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#gab0c33859e1f8e49ad050a1a3c41861c0">rm_ethosu_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disable NPU and set the instance as not open. Implements <a class="el" href="group___r_m___e_t_h_o_s_u___a_p_i.html#af7d517dba379510716e21a7815f9f1b6">rm_ethosu_api_t::close</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_api_ctrl</td><td>Pointer to an opened instance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The parameter p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

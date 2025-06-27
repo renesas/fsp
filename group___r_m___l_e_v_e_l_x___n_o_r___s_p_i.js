@@ -2,7 +2,7 @@ var group___r_m___l_e_v_e_l_x___n_o_r___s_p_i =
 [
     [ "rm_levelx_nor_spi_callback_args_t", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#structrm__levelx__nor__spi__callback__args__t", [
       [ "event", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#a381b10499c261c1e18267d3a56a89b49", null ],
-      [ "p_context", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#a6ed5d899c9fa3b0ac3dff0d0f1cfdbc6", null ]
+      [ "p_context", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#adfa298c52fd3d39dfe07f63dcd81cd48", null ]
     ] ],
     [ "rm_levelx_nor_spi_cfg_t", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#structrm__levelx__nor__spi__cfg__t", [
       [ "p_lower_lvl", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#a7dcadbcfcfa10de3673c1c008e35bfc5", null ],
@@ -11,7 +11,7 @@ var group___r_m___l_e_v_e_l_x___n_o_r___s_p_i =
       [ "address_offset", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#a6d6dc54ab7b793bc4c241956cf743a2d", null ],
       [ "size", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#a28e980602115f51ad7b912d79d42015a", null ],
       [ "poll_status_count", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#ab18036aee930a79ce8cc82caefa8bc63", null ],
-      [ "p_context", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#aadf680f50a26fdf72954748acb34f28a", null ],
+      [ "p_context", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#a166aad26844679ac2a44935fe88fb4c0", null ],
       [ "p_callback", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#aebbd865b547c53c18bec452285c0f52b", null ]
     ] ],
     [ "rm_levelx_nor_spi_instance_ctrl_t", "group___r_m___l_e_v_e_l_x___n_o_r___s_p_i.html#structrm__levelx__nor__spi__instance__ctrl__t", [

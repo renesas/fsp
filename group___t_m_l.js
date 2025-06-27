@@ -9,7 +9,7 @@ var group___t_m_l =
       [ "p_cfg", "group___t_m_l.html#a998c4e91a8ef3eb35545c16fe6a2534b", null ],
       [ "channel_mask", "group___t_m_l.html#abc7c39990e565f196633be8240d60225", null ],
       [ "p_callback", "group___t_m_l.html#af801e77c5d1e75520623ea6ea11c0888", null ],
-      [ "p_context", "group___t_m_l.html#ad41e0380a06c6dac7dc902b34d7c6242", null ]
+      [ "p_context", "group___t_m_l.html#aa36d1387104e468a46cbc82a26287431", null ]
     ] ],
     [ "tml_clock_t", "group___t_m_l.html#ga22eff268fd61dc006f8591e02c415c9c", [
       [ "TML_CLOCK_HOCO", "group___t_m_l.html#gga22eff268fd61dc006f8591e02c415c9ca8e49e644a44a64b74d0065b80f91e6d8", null ],
@@ -39,6 +39,6 @@ var group___t_m_l =
     [ "R_TML_CompareMatchSet", "group___t_m_l.html#ga8692c74464f18fbd9655fda165aca56c", null ],
     [ "R_TML_InfoGet", "group___t_m_l.html#gaa3261ff80745d9c908e36a73051eca31", null ],
     [ "R_TML_StatusGet", "group___t_m_l.html#ga149d8f610888e969da961c06d3682059", null ],
-    [ "R_TML_CallbackSet", "group___t_m_l.html#gacb41c3ab55f0f6e767ff1e808c5b31af", null ],
+    [ "R_TML_CallbackSet", "group___t_m_l.html#ga1aa9ca268ac98fa1e1998dcbc891a567", null ],
     [ "R_TML_Close", "group___t_m_l.html#ga86e82d5763c011a5bff4b186faf83f4f", null ]
 ];

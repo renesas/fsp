@@ -15,7 +15,7 @@ var group___s_c_i___s_m_c_i =
     [ "R_SCI_SMCI_BaudSet", "group___s_c_i___s_m_c_i.html#gae93d0d470c41b66250dc452bf2907b22", null ],
     [ "R_SCI_SMCI_StatusGet", "group___s_c_i___s_m_c_i.html#ga3d600ae7699ba4988e007a03aa28c93e", null ],
     [ "R_SCI_SMCI_ClockControl", "group___s_c_i___s_m_c_i.html#ga64d56497dd40550887bfdffa9edc7089", null ],
-    [ "R_SCI_SMCI_CallbackSet", "group___s_c_i___s_m_c_i.html#gaa56b1e3ce036ca95d9186fffa1a6f87d", null ],
+    [ "R_SCI_SMCI_CallbackSet", "group___s_c_i___s_m_c_i.html#ga1161f78bfb6b8b83aafd3353377a3f0d", null ],
     [ "R_SCI_SMCI_Close", "group___s_c_i___s_m_c_i.html#ga2dd22a1d0b7720dbe84a888897320c8c", null ],
     [ "R_SCI_SMCI_BaudCalculate", "group___s_c_i___s_m_c_i.html#ga59cb52f2d340fddc4abfdda54e0f660f", null ]
 ];

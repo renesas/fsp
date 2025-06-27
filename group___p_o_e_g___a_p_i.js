@@ -4,14 +4,14 @@ var group___p_o_e_g___a_p_i =
       [ "state", "group___p_o_e_g___a_p_i.html#aeae55874b243b6034a81711e3494bc6d", null ]
     ] ],
     [ "poeg_callback_args_t", "group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t", [
-      [ "p_context", "group___p_o_e_g___a_p_i.html#a87c6c18eb74b68a3849822c777864f79", null ]
+      [ "p_context", "group___p_o_e_g___a_p_i.html#a8f0c59e654e29b1cf52996e7cd14ae1a", null ]
     ] ],
     [ "poeg_cfg_t", "group___p_o_e_g___a_p_i.html#structpoeg__cfg__t", [
       [ "trigger", "group___p_o_e_g___a_p_i.html#ace17b160cb26724e59f6aa82e39ed80b", null ],
       [ "polarity", "group___p_o_e_g___a_p_i.html#a685fb10923443de2749de75bebcae85b", null ],
       [ "noise_filter", "group___p_o_e_g___a_p_i.html#a7f4c9f27604cdf1b772dc2d4ed8c3a2f", null ],
       [ "p_callback", "group___p_o_e_g___a_p_i.html#a70ca0636c969217533571c505f2e68ca", null ],
-      [ "p_context", "group___p_o_e_g___a_p_i.html#a4c643319683a792e608a1331f00c0d9c", null ],
+      [ "p_context", "group___p_o_e_g___a_p_i.html#ace3bb2cd79e87f068eae1e2790847432", null ],
       [ "unit", "group___p_o_e_g___a_p_i.html#ac2badeb47b925853a420e184f35074e3", null ],
       [ "channel", "group___p_o_e_g___a_p_i.html#a540e9ef986cf2ad028ef51ba52454aab", null ],
       [ "irq", "group___p_o_e_g___a_p_i.html#a7f90a7d598df48543335416c0a4ab1a0", null ],
@@ -21,7 +21,7 @@ var group___p_o_e_g___a_p_i =
     [ "poeg_api_t", "group___p_o_e_g___a_p_i.html#structpoeg__api__t", [
       [ "open", "group___p_o_e_g___a_p_i.html#a41c511a6b1b828d54f180b729ae4fe55", null ],
       [ "statusGet", "group___p_o_e_g___a_p_i.html#ab377a80211d85f8c90b578e93dfd7964", null ],
-      [ "callbackSet", "group___p_o_e_g___a_p_i.html#a77b8a93a87cb6e37bd2f3213223b949b", null ],
+      [ "callbackSet", "group___p_o_e_g___a_p_i.html#a2bf7a4d8b7533c0d017e4223163f8aaa", null ],
       [ "outputDisable", "group___p_o_e_g___a_p_i.html#afe1feb1a5288478eea8d339ffaa1c68e", null ],
       [ "reset", "group___p_o_e_g___a_p_i.html#a5765dcf518892b71b73b5ae38942bd7f", null ],
       [ "close", "group___p_o_e_g___a_p_i.html#a1576cf3362e4341bf14ec8ba9592abc4", null ]

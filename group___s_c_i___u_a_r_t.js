@@ -80,10 +80,12 @@ var group___s_c_i___u_a_r_t =
     [ "R_SCI_UART_Close", "group___s_c_i___u_a_r_t.html#ga49e8b74b71d1901a209a94ed4c220d4d", null ],
     [ "R_SCI_UART_Read", "group___s_c_i___u_a_r_t.html#gac2be874dbe37956cf84532a6ca901165", null ],
     [ "R_SCI_UART_Write", "group___s_c_i___u_a_r_t.html#ga8916449e6e6de86681c04d1931645e7c", null ],
-    [ "R_SCI_UART_CallbackSet", "group___s_c_i___u_a_r_t.html#gad990fe4af20d895bf37fd26721677410", null ],
+    [ "R_SCI_UART_CallbackSet", "group___s_c_i___u_a_r_t.html#ga8cb29f225b4110a6b0610793cd564ec2", null ],
     [ "R_SCI_UART_BaudSet", "group___s_c_i___u_a_r_t.html#ga3b3a6c761a66c6cbcca3c72a451b3371", null ],
     [ "R_SCI_UART_InfoGet", "group___s_c_i___u_a_r_t.html#ga00f07c25ed95b9e1de217f34c42b9d38", null ],
     [ "R_SCI_UART_Abort", "group___s_c_i___u_a_r_t.html#ga816beee7f9f27113cd2d792c54c6af53", null ],
     [ "R_SCI_UART_ReadStop", "group___s_c_i___u_a_r_t.html#gae084836f4ee37c2730f7a8b332d58325", null ],
-    [ "R_SCI_UART_BaudCalculate", "group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2", null ]
+    [ "R_SCI_UART_BaudCalculate", "group___s_c_i___u_a_r_t.html#ga864f43cde0ddc087748610357cbcd6c2", null ],
+    [ "R_SCI_UART_ReceiveSuspend", "group___s_c_i___u_a_r_t.html#gaa0482711f16a1b1246bedb7d78c29dc0", null ],
+    [ "R_SCI_UART_ReceiveResume", "group___s_c_i___u_a_r_t.html#ga47c30422670f7627bd952cc5e5b8c2a7", null ]
 ];

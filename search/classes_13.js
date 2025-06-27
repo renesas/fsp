@@ -15,7 +15,7 @@ var searchData=
   ['timer_5finfo_5ft',['timer_info_t',['../group___t_i_m_e_r___a_p_i.html#structtimer__info__t',1,'']]],
   ['timer_5finstance_5ft',['timer_instance_t',['../group___t_i_m_e_r___a_p_i.html#structtimer__instance__t',1,'']]],
   ['timer_5fstatus_5ft',['timer_status_t',['../group___t_i_m_e_r___a_p_i.html#structtimer__status__t',1,'']]],
-  ['timerstatus_5ft',['TimerStatus_t',['../group__grp__ptx__api__peripherals__timer.html#struct_timer_status__t',1,'']]],
+  ['timerstatus_5ft',['TimerStatus_t',['../struct_timer_status__t.html',1,'']]],
   ['tml_5fextended_5fcfg_5ft',['tml_extended_cfg_t',['../group___t_m_l.html#structtml__extended__cfg__t',1,'']]],
   ['tml_5finstance_5fctrl_5ft',['tml_instance_ctrl_t',['../group___t_m_l.html#structtml__instance__ctrl__t',1,'']]],
   ['touch_5fapi_5ft',['touch_api_t',['../group___t_o_u_c_h___a_p_i.html#structtouch__api__t',1,'']]],

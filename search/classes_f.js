@@ -2,6 +2,14 @@ var searchData=
 [
   ['pdc_5fextended_5fcfg_5ft',['pdc_extended_cfg_t',['../group___p_d_c.html#structpdc__extended__cfg__t',1,'']]],
   ['pdc_5finstance_5fctrl_5ft',['pdc_instance_ctrl_t',['../group___p_d_c.html#structpdc__instance__ctrl__t',1,'']]],
+  ['pdm_5fapi_5ft',['pdm_api_t',['../group___p_d_m___a_p_i.html#structpdm__api__t',1,'']]],
+  ['pdm_5fcallback_5fargs_5ft',['pdm_callback_args_t',['../group___p_d_m___a_p_i.html#structpdm__callback__args__t',1,'']]],
+  ['pdm_5fcfg_5ft',['pdm_cfg_t',['../group___p_d_m___a_p_i.html#structpdm__cfg__t',1,'']]],
+  ['pdm_5fextended_5fcfg_5ft',['pdm_extended_cfg_t',['../group___p_d_m.html#structpdm__extended__cfg__t',1,'']]],
+  ['pdm_5finstance_5fctrl_5ft',['pdm_instance_ctrl_t',['../group___p_d_m.html#structpdm__instance__ctrl__t',1,'']]],
+  ['pdm_5finstance_5ft',['pdm_instance_t',['../group___p_d_m___a_p_i.html#structpdm__instance__t',1,'']]],
+  ['pdm_5fsound_5fdetection_5fsetting_5ft',['pdm_sound_detection_setting_t',['../group___p_d_m___a_p_i.html#structpdm__sound__detection__setting__t',1,'']]],
+  ['pdm_5fstatus_5ft',['pdm_status_t',['../group___p_d_m___a_p_i.html#structpdm__status__t',1,'']]],
   ['poeg_5fapi_5ft',['poeg_api_t',['../group___p_o_e_g___a_p_i.html#structpoeg__api__t',1,'']]],
   ['poeg_5fcallback_5fargs_5ft',['poeg_callback_args_t',['../group___p_o_e_g___a_p_i.html#structpoeg__callback__args__t',1,'']]],
   ['poeg_5fcfg_5ft',['poeg_cfg_t',['../group___p_o_e_g___a_p_i.html#structpoeg__cfg__t',1,'']]],
@@ -31,12 +39,12 @@ var searchData=
   ['ptp_5fsynfp_5fcfg_5ft_2eether',['ptp_synfp_cfg_t.ether',['../group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ether',1,'']]],
   ['ptp_5fsynfp_5fcfg_5ft_2eipv4',['ptp_synfp_cfg_t.ipv4',['../group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ipv4',1,'']]],
   ['ptp_5ftime_5ft',['ptp_time_t',['../group___p_t_p___a_p_i.html#structptp__time__t',1,'']]],
-  ['ptxplat_5fconfigpars_5ft',['ptxPLAT_ConfigPars_t',['../group__grp__ptx__api__plat.html#structptx_p_l_a_t___config_pars__t',1,'']]],
+  ['ptxplat_5fconfigpars_5ft',['ptxPLAT_ConfigPars_t',['../structptx_p_l_a_t___config_pars__t.html',1,'']]],
   ['ptxplat_5fspi_5ft',['ptxPLAT_Spi_t',['../structptx_p_l_a_t___spi__t.html',1,'']]],
   ['ptxplat_5fspiconfigpars_5ft',['ptxPLAT_SpiConfigPars_t',['../structptx_p_l_a_t___spi_config_pars__t.html',1,'']]],
   ['ptxplat_5fspiport_5ft',['ptxPLAT_SpiPort_t',['../structptx_p_l_a_t___spi_port__t.html',1,'']]],
-  ['ptxplat_5ft',['ptxPlat_t',['../group__grp__ptx__api__plat__int.html#structptx_plat__t',1,'']]],
-  ['ptxplatgpio_5fconfig_5ft',['ptxPlatGpio_Config_t',['../group__grp__ptx__api__plat__gpio.html#structptx_plat_gpio___config__t',1,'']]],
-  ['ptxplatgpio_5ft',['ptxPlatGpio_t',['../group__grp__ptx__api__plat__gpio.html#structptx_plat_gpio__t',1,'']]],
-  ['ptxplattimer_5ft',['ptxPlatTimer_t',['../group__grp__ptx__api__plat__timer.html#structptx_plat_timer__t',1,'']]]
+  ['ptxplat_5ft',['ptxPlat_t',['../structptx_plat__t.html',1,'']]],
+  ['ptxplatgpio_5fconfig_5ft',['ptxPlatGpio_Config_t',['../structptx_plat_gpio___config__t.html',1,'']]],
+  ['ptxplatgpio_5ft',['ptxPlatGpio_t',['../structptx_plat_gpio__t.html',1,'']]],
+  ['ptxplattimer_5ft',['ptxPlatTimer_t',['../structptx_plat_timer__t.html',1,'']]]
 ];

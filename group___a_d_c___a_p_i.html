@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___a_d_c___a_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___a_d_c___a_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___a_d_c___a_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -343,7 +343,7 @@ event</td>
 <td class="fielddoc">
 ADC callback event. </td></tr>
 <tr><td class="fieldtype">
-<a id="a68c6287d395bac7964e20441638c69ac"></a>void const  *</td>
+<a id="a68e424d32ae30297f148e476d7eacabd"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -421,6 +421,18 @@ calibration_data</td>
 <td class="fielddoc">
 Temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage. </td></tr>
 <tr><td class="fieldtype">
+<a id="a2f0af8e462cc0c544b8535f5ca636b5c"></a>uint16_t</td>
+<td class="fieldname">
+room_calibration_data</td>
+<td class="fielddoc">
+Room temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage. </td></tr>
+<tr><td class="fieldtype">
+<a id="a848f34a97ee1be2638f8d4963e981a67"></a>uint16_t</td>
+<td class="fieldname">
+low_calibration_data</td>
+<td class="fielddoc">
+Low temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage. </td></tr>
+<tr><td class="fieldtype">
 <a id="abaf272ea2350e486390dc250ae8f9af3"></a>int16_t</td>
 <td class="fieldname">
 slope_microvolts</td>
@@ -492,10 +504,10 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a0e6dc3fd369994f549bf634f482fa4ae">p_callback</a> )(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:a0e6dc3fd369994f549bf634f482fa4ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function; set to NULL for none. <br /></td></tr>
 <tr class="separator:a0e6dc3fd369994f549bf634f482fa4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f426d9b4992a45674c0e8ead528202b"><td class="memItemLeft" align="right" valign="top"><a id="a3f426d9b4992a45674c0e8ead528202b"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a3f426d9b4992a45674c0e8ead528202b">p_context</a></td></tr>
-<tr class="memdesc:a3f426d9b4992a45674c0e8ead528202b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a>. <br /></td></tr>
-<tr class="separator:a3f426d9b4992a45674c0e8ead528202b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6c28969bc3e4c8781d00933d4e2feb5"><td class="memItemLeft" align="right" valign="top"><a id="ab6c28969bc3e4c8781d00933d4e2feb5"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#ab6c28969bc3e4c8781d00933d4e2feb5">p_context</a></td></tr>
+<tr class="memdesc:ab6c28969bc3e4c8781d00933d4e2feb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a>. <br /></td></tr>
+<tr class="separator:ab6c28969bc3e4c8781d00933d4e2feb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5463ef8731c3b8a0094fbfff74c73449"><td class="memItemLeft" align="right" valign="top"><a id="a5463ef8731c3b8a0094fbfff74c73449"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a5463ef8731c3b8a0094fbfff74c73449">p_extend</a></td></tr>
 <tr class="memdesc:a5463ef8731c3b8a0094fbfff74c73449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension parameter for hardware specific settings. <br /></td></tr>
@@ -538,8 +550,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a1020d90e58d3bf86cee2f46a62e62fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a305b2c2466cd88fdddf6134db542dc7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e">offsetSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, int32_t const offset)</td></tr>
 <tr class="separator:a305b2c2466cd88fdddf6134db542dc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cd8e8911dcf8c4c617fe62f185b4363"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a2cd8e8911dcf8c4c617fe62f185b4363">callbackSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a2cd8e8911dcf8c4c617fe62f185b4363"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25d62d18aadd36fe959e71aa9e3d3dc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a25d62d18aadd36fe959e71aa9e3d3dc5">callbackSet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a25d62d18aadd36fe959e71aa9e3d3dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cce8ff1af572c11ef31442f2679124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#a83cce8ff1af572c11ef31442f2679124">close</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a83cce8ff1af572c11ef31442f2679124"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc68017ee284386b5d13c027bc10bf87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___a_p_i.html#acc68017ee284386b5d13c027bc10bf87">infoGet</a> )(<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *const p_adc_info)</td></tr>
@@ -768,14 +780,14 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a2cd8e8911dcf8c4c617fe62f185b4363"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cd8e8911dcf8c4c617fe62f185b4363">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a25d62d18aadd36fe959e71aa9e3d3dc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25d62d18aadd36fe959e71aa9e3d3dc5">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  adc_api_t::callbackSet) (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  adc_api_t::callbackSet) (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1255,6 +1267,82 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aaf6faa9be42319ebd7c0faeaaacebf84"></a>ADC_CHANNEL_SELF_DIAGNOSIS_ADC0&#160;</td><td class="fielddoc"><p>Self-Diagnosis channel for ADC Unit 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aeadad71ec3156ee91de9adec52484302"></a>ADC_CHANNEL_SELF_DIAGNOSIS_ADC1&#160;</td><td class="fielddoc"><p>Self-Diagnosis channel for ADC Unit 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aff4cf0b5a9bfd1fc634f6b097e34fe73"></a>ADC_CHANNEL_TEMPERATURE&#160;</td><td class="fielddoc"><p>Temperature sensor output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a511e70765f3a63d0dea47ea585329641"></a>ADC_CHANNEL_VOLT&#160;</td><td class="fielddoc"><p>Internal reference voltage. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a433a0ebc097214a7f63ff3f5aec04cac"></a>ADC_CHANNEL_VBATT&#160;</td><td class="fielddoc"><p>VBATT 1/3 voltage monitor. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aee8fb112ab2f4218a1f6179f4816a7dc"></a>ADC_CHANNEL_DA0&#160;</td><td class="fielddoc"><p>D/A converter channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ac9dcb888def48e903008fdc40af7035f"></a>ADC_CHANNEL_DA1&#160;</td><td class="fielddoc"><p>D/A converter channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa28d310d4fb573a71e0c5b7426424d87"></a>ADC_CHANNEL_SELF_DIAGNOSIS_SH0&#160;</td><td class="fielddoc"><p>Self-Diagnosis Sample-and-hold Circuit Unit 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a0913145a325e83eff1104e6e01f4f93c"></a>ADC_CHANNEL_SELF_DIAGNOSIS_SH1&#160;</td><td class="fielddoc"><p>Self-Diagnosis Sample-and-hold Circuit Unit 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aaf304297234b9da87afdb473d8eccd42"></a>ADC_CHANNEL_SELF_DIAGNOSIS_SH2&#160;</td><td class="fielddoc"><p>Self-Diagnosis Sample-and-hold Circuit Unit 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa9967b0c71b3500c55dfb1081de9dd15"></a>ADC_CHANNEL_SELF_DIAGNOSIS_SH4&#160;</td><td class="fielddoc"><p>Self-Diagnosis Sample-and-hold Circuit Unit 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aaa957da2355f53587c964058baf4e299"></a>ADC_CHANNEL_SELF_DIAGNOSIS_SH5&#160;</td><td class="fielddoc"><p>Self-Diagnosis Sample-and-hold Circuit Unit 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a6f82584bbcf4889fedaa78602c683009"></a>ADC_CHANNEL_SELF_DIAGNOSIS_SH6&#160;</td><td class="fielddoc"><p>Self-Diagnosis Sample-and-hold Circuit Unit 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a04759bed9e72fcffdfb9c2dfd820d2f5"></a>ADC_CHANNEL_FIRST_INTERNAL&#160;</td><td class="fielddoc"><p>Highest physical channel. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a4a11e1f40ab550244bfc3133c00c7c3b"></a>ADC_CHANNEL_LAST_INTERNAL&#160;</td><td class="fielddoc"><p>First internal channel. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104"></a>ADC_CHANNEL_0&#160;</td><td class="fielddoc"><p>ADC channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a203b48944d019f4fda969a6fc2a9e492"></a>ADC_CHANNEL_1&#160;</td><td class="fielddoc"><p>ADC channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ab5ff3c915ec02ae6ac3980a1312a4815"></a>ADC_CHANNEL_2&#160;</td><td class="fielddoc"><p>ADC channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a6ca054f67bee5197eec92a0379cffb6e"></a>ADC_CHANNEL_3&#160;</td><td class="fielddoc"><p>ADC channel 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a358c6f5e7243a7ed09640253d83d2131"></a>ADC_CHANNEL_4&#160;</td><td class="fielddoc"><p>ADC channel 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814add27743e52a0719102130818d31d545a"></a>ADC_CHANNEL_5&#160;</td><td class="fielddoc"><p>ADC channel 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814acf3be71bfeb9d342e6d845db91782b79"></a>ADC_CHANNEL_6&#160;</td><td class="fielddoc"><p>ADC channel 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ad6ef86ca1b448f220905d771f258586a"></a>ADC_CHANNEL_7&#160;</td><td class="fielddoc"><p>ADC channel 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a2875a590dc7e8502581ff68a075ce019"></a>ADC_CHANNEL_8&#160;</td><td class="fielddoc"><p>ADC channel 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a0e198353a76bf512e4dcc8224710d6b0"></a>ADC_CHANNEL_9&#160;</td><td class="fielddoc"><p>ADC channel 9. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9db3195dade30ed8b254187c22616898"></a>ADC_CHANNEL_10&#160;</td><td class="fielddoc"><p>ADC channel 10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814af6193eda0e4807c9d560aac13e302093"></a>ADC_CHANNEL_11&#160;</td><td class="fielddoc"><p>ADC channel 11. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a42838efffa3e21e6b970eee65de86e40"></a>ADC_CHANNEL_12&#160;</td><td class="fielddoc"><p>ADC channel 12. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa2718519e5964f136de3e5234e36264c"></a>ADC_CHANNEL_13&#160;</td><td class="fielddoc"><p>ADC channel 13. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7f3900d4031a3f01889fbe4179d8cade"></a>ADC_CHANNEL_14&#160;</td><td class="fielddoc"><p>ADC channel 14. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afa75046e6f6f23ed8e6573c7bc8563d2"></a>ADC_CHANNEL_15&#160;</td><td class="fielddoc"><p>ADC channel 15. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a61914b17568b94ef0651ee10e79e6892"></a>ADC_CHANNEL_16&#160;</td><td class="fielddoc"><p>ADC channel 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a22aa8198d9a4012a012ddd838adf256c"></a>ADC_CHANNEL_17&#160;</td><td class="fielddoc"><p>ADC channel 17. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814ae47fe79b66fda5fcb9f02d6a648c8dc9"></a>ADC_CHANNEL_18&#160;</td><td class="fielddoc"><p>ADC channel 18. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a514ca4fdb7e9862d3d9ebe1d4e926349"></a>ADC_CHANNEL_19&#160;</td><td class="fielddoc"><p>ADC channel 19. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afdcbeb5840bd281a4a2ec3f1f64ed52b"></a>ADC_CHANNEL_20&#160;</td><td class="fielddoc"><p>ADC channel 20. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814afaf1207b06cd7dc48c7f10ed6c95fb4a"></a>ADC_CHANNEL_21&#160;</td><td class="fielddoc"><p>ADC channel 21. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814aa5b37816645da11ff633a7e2d539da12"></a>ADC_CHANNEL_22&#160;</td><td class="fielddoc"><p>ADC channel 22. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a9009b78e30e87985cbfb40296a0bab16"></a>ADC_CHANNEL_23&#160;</td><td class="fielddoc"><p>ADC channel 23. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaafc4060027875f8fe46242b0656d7814a7ae985a21367ea6d7488517948fc625d"></a>ADC_CHANNEL_24&#160;</td><td class="fielddoc"><p>ADC channel 24. </p>
@@ -1382,7 +1470,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

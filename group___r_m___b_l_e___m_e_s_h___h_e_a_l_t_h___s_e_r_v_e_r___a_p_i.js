@@ -15,7 +15,7 @@ var group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i =
       [ "p_self_tests", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a766314337333fadb416ae7d5ecc9d327", null ],
       [ "company_id", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a2ae28df98f89429ebfc5b195527d28a5", null ],
       [ "num_self_tests", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ad5254d9e7aa30dcadc034b58d606cde3", null ],
-      [ "p_context", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a862a747800c97e5f971c97f8d8d422a5", null ],
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#a36b3fdc0200137eecab3ff5b72f82fd5", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#ae319563d6c2f03aa92f17a73993a4b1e", null ]
     ] ],
     [ "rm_ble_mesh_health_server_api_t", "group___r_m___b_l_e___m_e_s_h___h_e_a_l_t_h___s_e_r_v_e_r___a_p_i.html#structrm__ble__mesh__health__server__api__t", [

@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___f_i_l_e_x___b_l_o_c_k___
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___f_i_l_e_x___b_l_o_c_k___
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___f_i_l_e_x___b_l_o_c_k___
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -590,7 +590,7 @@ Examples</h1>
 <p>This shows how to use the callback to wait for media insertion.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint32_t g_rm_filex_block_media_insertion_events = 0;</div><div class="line"><span class="keyword">volatile</span> uint32_t g_rm_filex_block_media_removal_events   = 0;</div><div class="line"></div><div class="line"><span class="comment">/* Callback called by media driver when a removable device is inserted or removed. */</span></div><div class="line"><span class="keywordtype">void</span> rm_filex_block_media_test_callback (<a class="code" href="group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__filex__block__media__callback__args__t">rm_filex_block_media_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (p_args-&gt;<a class="code" href="group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a9daee8dc246992319bf85f04ecead786">event</a> &amp; <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca824ad009871b7f393b49e7a8a63c6ed9">RM_BLOCK_MEDIA_EVENT_MEDIA_INSERTED</a>)</div><div class="line">    {</div><div class="line">        g_rm_filex_block_media_insertion_events++;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (p_args-&gt;<a class="code" href="group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a9daee8dc246992319bf85f04ecead786">event</a> &amp; <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96cae1eaef4a8e7225d6ccee904c4e6795df">RM_BLOCK_MEDIA_EVENT_MEDIA_REMOVED</a>)</div><div class="line">    {</div><div class="line">        g_rm_filex_block_media_removal_events++;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_filex_block_media_media_insertion_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open media driver.*/</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a.html#ga9a2d0b8326679daa0b5e0dcb3e361d08">RM_FILEX_BLOCK_MEDIA_Open</a>(&amp;g_filex_block_media0_ctrl, &amp;g_filex_block_media0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for media insertion. */</span></div><div class="line">    <span class="keywordflow">while</span> (0U == g_rm_filex_block_media_insertion_events)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for media insertion. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the media. If the media is removable, it must be inserted before calling</span></div><div class="line"><span class="comment">     * fx_media_open. This assumes the disk is already partitioned and formatted. */</span></div><div class="line">    UINT fx_err = fx_media_open(&amp;g_fx_media0,</div><div class="line">                                <span class="stringliteral">&quot;filex_example_media&quot;</span>,</div><div class="line">                                <a class="code" href="group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a.html#ga137a5f28a4ba749468ec0bf7e2528607">RM_FILEX_BLOCK_MEDIA_BlockDriver</a>,</div><div class="line">                                &amp;g_filex_block_media0,</div><div class="line">                                g_fx_media0_memory,</div><div class="line">                                <span class="keyword">sizeof</span>(g_fx_media0_memory));</div><div class="line">    handle_fx_error(fx_err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Using FileX with Custom Block Media Implementations</h2>
 <p>When using a Custom Block Media implementation with rm_filex_block_media the custom implementation must call rm_filex_block_media_memory_callback upon the completion of a read/write operation. This callback should be called with an event of RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE and p_context of <a class="el" href="group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a.html#structrm__filex__block__media__instance__ctrl__t">rm_filex_block_media_instance_ctrl_t</a> *. The following example shows how this should be done in the context of a demo RAM block media read function.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define EXAMPLE_BLOCK_MEDIA_RAM_START_ADDR          (0x20004AFE)</span></div><div class="line"><span class="preprocessor">#define EXAMPLE_BLOCK_MEDIA_RAM_BLOCK_SIZE_BYTES    (512)</span></div><div class="line"></div><div class="line"><span class="comment">/* Example implementation of rm_block_media_api_t::read(), user should define custom block media RAM implementation. */</span></div><div class="line"><a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_BLOCK_MEDIA_CUSTOM_RAM_Read (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> * <span class="keyword">const</span> p_ctrl,</div><div class="line">                                          uint8_t * <span class="keyword">const</span>               p_dest_address,</div><div class="line">                                          uint32_t <span class="keyword">const</span>                block_address,</div><div class="line">                                          uint32_t <span class="keyword">const</span>                num_blocks)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_ctrl);</div><div class="line"></div><div class="line">    memcpy(p_dest_address,</div><div class="line">           (<span class="keywordtype">void</span> *) (EXAMPLE_BLOCK_MEDIA_RAM_START_ADDR + (block_address * EXAMPLE_BLOCK_MEDIA_RAM_BLOCK_SIZE_BYTES)),</div><div class="line">           (EXAMPLE_BLOCK_MEDIA_RAM_BLOCK_SIZE_BYTES * num_blocks));</div><div class="line"></div><div class="line">    <span class="comment">/* Notify FileX port of operation complete through calling the callback, this is required for custom block media/FileX port integration */</span></div><div class="line">    <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> args;</div><div class="line">    args.<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>     = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca5150a4a6be559ecc22ce94d509af55e3">RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE</a>;</div><div class="line">    args.<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ab4bf95c6ac852ce84523363671b60af3">p_context</a> = (<span class="keywordtype">void</span> *) &amp;g_filex_block_media0_ctrl;</div><div class="line">    rm_filex_block_media_memory_callback(&amp;args);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> FSP_SUCCESS;</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define EXAMPLE_BLOCK_MEDIA_RAM_START_ADDR          (0x20004AFE)</span></div><div class="line"><span class="preprocessor">#define EXAMPLE_BLOCK_MEDIA_RAM_BLOCK_SIZE_BYTES    (512)</span></div><div class="line"></div><div class="line"><span class="comment">/* Example implementation of rm_block_media_api_t::read(), user should define custom block media RAM implementation. */</span></div><div class="line"><a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_BLOCK_MEDIA_CUSTOM_RAM_Read (<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> * <span class="keyword">const</span> p_ctrl,</div><div class="line">                                          uint8_t * <span class="keyword">const</span>               p_dest_address,</div><div class="line">                                          uint32_t <span class="keyword">const</span>                block_address,</div><div class="line">                                          uint32_t <span class="keyword">const</span>                num_blocks)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_ctrl);</div><div class="line"></div><div class="line">    memcpy(p_dest_address,</div><div class="line">           (<span class="keywordtype">void</span> *) (EXAMPLE_BLOCK_MEDIA_RAM_START_ADDR + (block_address * EXAMPLE_BLOCK_MEDIA_RAM_BLOCK_SIZE_BYTES)),</div><div class="line">           (EXAMPLE_BLOCK_MEDIA_RAM_BLOCK_SIZE_BYTES * num_blocks));</div><div class="line"></div><div class="line">    <span class="comment">/* Notify FileX port of operation complete through calling the callback, this is required for custom block media/FileX port integration */</span></div><div class="line">    <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> args;</div><div class="line">    args.<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aa13fc0ea05379836574c850687293ade">event</a>     = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ggaa3f328da3b53e36f2682f63d0ae1c96ca5150a4a6be559ecc22ce94d509af55e3">RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE</a>;</div><div class="line">    args.<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a925d333afc8edf119d0c03cdd447163e">p_context</a> = &amp;g_filex_block_media0_ctrl;</div><div class="line">    rm_filex_block_media_memory_callback(&amp;args);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> FSP_SUCCESS;</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrm__filex__block__media__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_i_l_e_x___b_l_o_c_k___m_e_d_i_a.html#structrm__filex__block__media__instance__ctrl__t">rm_filex_block_media_instance_ctrl_t</a></td></tr>
@@ -722,7 +722,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

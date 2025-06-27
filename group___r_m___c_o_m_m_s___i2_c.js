@@ -8,7 +8,7 @@ var group___r_m___c_o_m_m_s___i2_c =
       [ "transfer_data_bytes", "group___r_m___c_o_m_m_s___i2_c.html#a4323a08a846785496c0fdea5f1219f1e", null ],
       [ "p_transfer_data", "group___r_m___c_o_m_m_s___i2_c.html#a709194cfb42435320dd9a2f263850811", null ],
       [ "smbus_operation", "group___r_m___c_o_m_m_s___i2_c.html#a5bf558d2b4ffada3ff72ea4755882e8c", null ],
-      [ "p_context", "group___r_m___c_o_m_m_s___i2_c.html#a2bb5f217d51637d4e27b8da6761c2021", null ]
+      [ "p_context", "group___r_m___c_o_m_m_s___i2_c.html#a6ac8cdf7b500f85e5eb995b460d6b3c5", null ]
     ] ],
     [ "RM_COMMS_I2C_Open", "group___r_m___c_o_m_m_s___i2_c.html#ga0560f3c49dbff678d8cbda3e5b8bf44b", null ],
     [ "RM_COMMS_I2C_Close", "group___r_m___c_o_m_m_s___i2_c.html#ga85e5f34d0ec4c6e2633a37fcdba7a255", null ],

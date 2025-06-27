@@ -61,5 +61,9 @@ var searchData=
   ['ioport_5finstance_5fctrl_5ft',['ioport_instance_ctrl_t',['../group___i_o_p_o_r_t.html#structioport__instance__ctrl__t',1,'']]],
   ['ioport_5finstance_5ft',['ioport_instance_t',['../group___i_o_p_o_r_t___a_p_i.html#structioport__instance__t',1,'']]],
   ['ioport_5fpin_5fcfg_5ft',['ioport_pin_cfg_t',['../group___i_o_p_o_r_t___a_p_i.html#structioport__pin__cfg__t',1,'']]],
+  ['ipc_5fapi_5ft',['ipc_api_t',['../group___i_p_c___a_p_i.html#structipc__api__t',1,'']]],
+  ['ipc_5fcallback_5fargs_5ft',['ipc_callback_args_t',['../group___i_p_c___a_p_i.html#structipc__callback__args__t',1,'']]],
+  ['ipc_5fcfg_5ft',['ipc_cfg_t',['../group___i_p_c___a_p_i.html#structipc__cfg__t',1,'']]],
+  ['ipc_5finstance_5ft',['ipc_instance_t',['../group___i_p_c___a_p_i.html#structipc__instance__t',1,'']]],
   ['iwdt_5finstance_5fctrl_5ft',['iwdt_instance_ctrl_t',['../group___i_w_d_t.html#structiwdt__instance__ctrl__t',1,'']]]
 ];

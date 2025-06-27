@@ -7,7 +7,7 @@ var group___c_o_m_p_a_r_a_t_o_r___a_p_i =
       [ "state", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a570feb8ab835efa00e76803447ecf0e5", null ]
     ] ],
     [ "comparator_callback_args_t", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__callback__args__t", [
-      [ "p_context", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a1c9d871e89c51b46d436f83e091468f6", null ],
+      [ "p_context", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a2dddf2e1244e7096a1280a28ec6a12b1", null ],
       [ "channel", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a6ea738d1ad125361615052376516a53f", null ]
     ] ],
     [ "comparator_cfg_t", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__cfg__t", [
@@ -21,7 +21,7 @@ var group___c_o_m_p_a_r_a_t_o_r___a_p_i =
       [ "ipl", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ad4b25e36e77a132105f63d342bc165e1", null ],
       [ "irq", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a7a576b7b9f5d7c64ecc38c79d99a6250", null ],
       [ "p_callback", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ad438e503fb56b89d971b34372f9f1d5a", null ],
-      [ "p_context", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a447ae6d6d813cd0c1e029f0cccae1459", null ],
+      [ "p_context", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#a117c843fd8ab26c366520bb8a2b92b7b", null ],
       [ "p_extend", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#adf5fa6b9ace283b52d161540a25da51c", null ]
     ] ],
     [ "comparator_api_t", "group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__api__t", [

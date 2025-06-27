@@ -1,7 +1,7 @@
 var group___d_o_c___a_p_i =
 [
     [ "doc_callback_args_t", "group___d_o_c___a_p_i.html#structdoc__callback__args__t", [
-      [ "p_context", "group___d_o_c___a_p_i.html#a347a5deb389e566a05d9c65e2368b57e", null ]
+      [ "p_context", "group___d_o_c___a_p_i.html#a6dea8e0ad997f4fefa554b8dd5452968", null ]
     ] ],
     [ "doc_cfg_t", "group___d_o_c___a_p_i.html#structdoc__cfg__t", [
       [ "event", "group___d_o_c___a_p_i.html#aa17c5eb8c7b707a093dba24c076daf1c", null ],
@@ -11,14 +11,14 @@ var group___d_o_c___a_p_i =
       [ "ipl", "group___d_o_c___a_p_i.html#ab475d31f98b5c8f661eb51b3cb1a09d1", null ],
       [ "irq", "group___d_o_c___a_p_i.html#a45684e420b6afc4836687ce497f4a946", null ],
       [ "p_callback", "group___d_o_c___a_p_i.html#a6a590908bc73ffeaf3dded64f96a5a1e", null ],
-      [ "p_context", "group___d_o_c___a_p_i.html#abda2b91a765e7c4232fc933548665d3d", null ]
+      [ "p_context", "group___d_o_c___a_p_i.html#a0653eaa6dacb20ffaf38595166b0c1dc", null ]
     ] ],
     [ "doc_api_t", "group___d_o_c___a_p_i.html#structdoc__api__t", [
       [ "open", "group___d_o_c___a_p_i.html#abbbbf13adc94767c3efdb1aaa7b948ae", null ],
       [ "close", "group___d_o_c___a_p_i.html#ad2214941bcd6ee492790b34239861dcf", null ],
       [ "read", "group___d_o_c___a_p_i.html#ac1dc79126e15b9645898828e42c93eab", null ],
       [ "write", "group___d_o_c___a_p_i.html#ae2544a78047cbd0f852d24da5d3f1050", null ],
-      [ "callbackSet", "group___d_o_c___a_p_i.html#a7329180b5940baa737f3f486e8250364", null ]
+      [ "callbackSet", "group___d_o_c___a_p_i.html#aabad4f27a94ebbc03b94a7438fee5db8", null ]
     ] ],
     [ "doc_instance_t", "group___d_o_c___a_p_i.html#structdoc__instance__t", [
       [ "p_ctrl", "group___d_o_c___a_p_i.html#a0174fec705f46b8edd28917a4d3ad77b", null ],

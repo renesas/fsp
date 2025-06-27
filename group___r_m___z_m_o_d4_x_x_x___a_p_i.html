@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___z_m_o_d4_x_x_x___a_p_i.h
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___z_m_o_d4_x_x_x___a_p_i.h
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___z_m_o_d4_x_x_x___a_p_i.h
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -260,12 +260,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structrm__zmod4xxx__iaq__1st__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__zmod4xxx__iaq__2nd__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t">rm_zmod4xxx_iaq_2nd_data_t</a></td></tr>
 <tr class="separator:structrm__zmod4xxx__iaq__2nd__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structrm__zmod4xxx__odor__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a></td></tr>
-<tr class="separator:structrm__zmod4xxx__odor__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__zmod4xxx__sulfur__odor__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t">rm_zmod4xxx_sulfur_odor_data_t</a></td></tr>
 <tr class="separator:structrm__zmod4xxx__sulfur__odor__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structrm__zmod4xxx__oaq__1st__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a></td></tr>
-<tr class="separator:structrm__zmod4xxx__oaq__1st__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__zmod4xxx__oaq__2nd__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a></td></tr>
 <tr class="separator:structrm__zmod4xxx__oaq__2nd__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrm__zmod4xxx__raq__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a></td></tr>
@@ -311,7 +307,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="afc7de35bee2acf74068852746ce4cbdd"></a>void const  *</td>
+<a id="ae29ae87c526a6d533d5a804cb64d09dd"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -482,36 +478,6 @@ relative IAQ index. </td></tr>
 
 </div>
 </div>
-<a name="structrm__zmod4xxx__odor__data__t" id="structrm__zmod4xxx__odor__data__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structrm__zmod4xxx__odor__data__t">&#9670;&nbsp;</a></span>rm_zmod4xxx_odor_data_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct rm_zmod4xxx_odor_data_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>ZMOD4XXX Odor structure </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="aa95d3545e0fcfe3070532d2b1e4923b0"></a>bool</td>
-<td class="fieldname">
-control_signal</td>
-<td class="fielddoc">
-Control signal input for odor lib. </td></tr>
-<tr><td class="fieldtype">
-<a id="a107e482f18f60935d5454a87539565b2"></a>float</td>
-<td class="fieldname">
-odor</td>
-<td class="fielddoc">
-Concentration ratio for odor lib. </td></tr>
-</table>
-
-</div>
-</div>
 <a name="structrm__zmod4xxx__sulfur__odor__data__t" id="structrm__zmod4xxx__sulfur__odor__data__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structrm__zmod4xxx__sulfur__odor__data__t">&#9670;&nbsp;</a></span>rm_zmod4xxx_sulfur_odor_data_t</h2>
 
@@ -544,36 +510,6 @@ odor intensity rating ranges from 0.0 to 5.0 for sulfur lib. </td></tr>
 odor</td>
 <td class="fielddoc">
 sulfur_odor classification for lib. </td></tr>
-</table>
-
-</div>
-</div>
-<a name="structrm__zmod4xxx__oaq__1st__data__t" id="structrm__zmod4xxx__oaq__1st__data__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structrm__zmod4xxx__oaq__1st__data__t">&#9670;&nbsp;</a></span>rm_zmod4xxx_oaq_1st_data_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct rm_zmod4xxx_oaq_1st_data_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>ZMOD4XXX OAQ 1st gen data structure </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a322cc10b5fcff9b42f07c575c48da56f"></a>float</td>
-<td class="fieldname">
-rmox[15]</td>
-<td class="fielddoc">
-MOx resistance. </td></tr>
-<tr><td class="fieldtype">
-<a id="abcdbe1de7b8f7c882f5f7bdbb60a2274"></a>float</td>
-<td class="fieldname">
-aiq</td>
-<td class="fielddoc">
-Air Quality. </td></tr>
 </table>
 
 </div>
@@ -846,10 +782,10 @@ EPA_AQI stands for the Air Quality Index according to the EPA standard based on 
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a692f0a4eaad2c9e8e8cdbb0a2e792dd9">p_irq_instance</a></td></tr>
 <tr class="memdesc:a692f0a4eaad2c9e8e8cdbb0a2e792dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to IRQ instance. <br /></td></tr>
 <tr class="separator:a692f0a4eaad2c9e8e8cdbb0a2e792dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc68dcd903ac59de8c478b0d22d25bfa"><td class="memItemLeft" align="right" valign="top"><a id="abc68dcd903ac59de8c478b0d22d25bfa"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abc68dcd903ac59de8c478b0d22d25bfa">p_context</a></td></tr>
-<tr class="memdesc:abc68dcd903ac59de8c478b0d22d25bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
-<tr class="separator:abc68dcd903ac59de8c478b0d22d25bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4422da4c3756c35a3bfeb2389bc776c8"><td class="memItemLeft" align="right" valign="top"><a id="a4422da4c3756c35a3bfeb2389bc776c8"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a4422da4c3756c35a3bfeb2389bc776c8">p_context</a></td></tr>
+<tr class="memdesc:a4422da4c3756c35a3bfeb2389bc776c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
+<tr class="separator:a4422da4c3756c35a3bfeb2389bc776c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af76dfeb408164a58e2571d56bcb40101"><td class="memItemLeft" align="right" valign="top"><a id="af76dfeb408164a58e2571d56bcb40101"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af76dfeb408164a58e2571d56bcb40101">p_extend</a></td></tr>
 <tr class="memdesc:af76dfeb408164a58e2571d56bcb40101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to extended configuration by instance of interface. <br /></td></tr>
@@ -894,12 +830,8 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <tr class="separator:a84760f27fa7ca93259cf43597772c781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88ffe068c172b8719782357b16cbe937"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a88ffe068c172b8719782357b16cbe937">iaq2ndGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__iaq__2nd__data__t">rm_zmod4xxx_iaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
 <tr class="separator:a88ffe068c172b8719782357b16cbe937"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92c5b2fd0fba637202780d8423b170dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92c5b2fd0fba637202780d8423b170dc">odorDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:a92c5b2fd0fba637202780d8423b170dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8d15ec491a454d5d120f21aa41e8f9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af8d15ec491a454d5d120f21aa41e8f9f">sulfurOdorDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t">rm_zmod4xxx_sulfur_odor_data_t</a> *const p_zmod4xxx_data)</td></tr>
 <tr class="separator:af8d15ec491a454d5d120f21aa41e8f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49bdc7ca88b2859fd18b3d33890d32bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a49bdc7ca88b2859fd18b3d33890d32bd">oaq1stGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a> *const p_zmod4xxx_data)</td></tr>
-<tr class="separator:a49bdc7ca88b2859fd18b3d33890d32bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae56592403602103a28a5d1e13d6dec03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ae56592403602103a28a5d1e13d6dec03">oaq2ndGenDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t">rm_zmod4xxx_oaq_2nd_data_t</a> *const p_zmod4xxx_data)</td></tr>
 <tr class="separator:ae56592403602103a28a5d1e13d6dec03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a557c09febce20b7bd5e1e7418d760f9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a557c09febce20b7bd5e1e7418d760f9a">raqDataCalculate</a> )(<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raq__data__t">rm_zmod4xxx_raq_data_t</a> *const p_zmod4xxx_data)</td></tr>
@@ -1071,29 +1003,6 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="a92c5b2fd0fba637202780d8423b170dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92c5b2fd0fba637202780d8423b170dc">&#9670;&nbsp;</a></span>odorDataCalculate</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::odorDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t">rm_zmod4xxx_odor_data_t</a> *const p_zmod4xxx_data)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Calculate Odor values from ADC data.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="af8d15ec491a454d5d120f21aa41e8f9f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af8d15ec491a454d5d120f21aa41e8f9f">&#9670;&nbsp;</a></span>sulfurOdorDataCalculate</h2>
 
@@ -1106,29 +1015,6 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
       </table>
 </div><div class="memdoc">
 <p>Calculate Sulfur Odor values from ADC data.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_raw_data</td><td>Pointer to raw data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_zmod4xxx_data</td><td>Pointer to ZMOD4XXXX data structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a49bdc7ca88b2859fd18b3d33890d32bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49bdc7ca88b2859fd18b3d33890d32bd">&#9670;&nbsp;</a></span>oaq1stGenDataCalculate</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rm_zmod4xxx_api_t::oaq1stGenDataCalculate) (<a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ga65db663ec670e25cc0294f22f96abb5c">rm_zmod4xxx_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t">rm_zmod4xxx_raw_data_t</a> *const p_raw_data, <a class="el" href="group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t">rm_zmod4xxx_oaq_1st_data_t</a> *const p_zmod4xxx_data)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Calculate OAQ 1st Gen. values from ADC data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
@@ -1431,7 +1317,7 @@ p_api</td>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

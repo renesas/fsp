@@ -18,7 +18,7 @@ var group___s_m_c_i___a_p_i =
       [ "channel", "group___s_m_c_i___a_p_i.html#a3e79092419f237c12c41ca766f985896", null ],
       [ "event", "group___s_m_c_i___a_p_i.html#ad4350398420bfc484382c51fe6d7a45f", null ],
       [ "data", "group___s_m_c_i___a_p_i.html#a8793eceeb57502f91db935dee7e73d78", null ],
-      [ "p_context", "group___s_m_c_i___a_p_i.html#a10dc88af61283020f6a81ac6f72348e0", null ]
+      [ "p_context", "group___s_m_c_i___a_p_i.html#a4dae7032e1efe0b2993c4131fec6c0b5", null ]
     ] ],
     [ "smci_cfg_t", "group___s_m_c_i___a_p_i.html#structsmci__cfg__t", [
       [ "channel", "group___s_m_c_i___a_p_i.html#a9d3000cf1a92439b59eacefe7cf20046", null ],
@@ -29,7 +29,7 @@ var group___s_m_c_i___a_p_i =
       [ "txi_irq", "group___s_m_c_i___a_p_i.html#ae99c636d8d049b93792ab815aa96568b", null ],
       [ "eri_irq", "group___s_m_c_i___a_p_i.html#ab4d38c2c589555e5dd4308d02926728b", null ],
       [ "p_callback", "group___s_m_c_i___a_p_i.html#aeb92e3791bd2c76546164e3511c255a0", null ],
-      [ "p_context", "group___s_m_c_i___a_p_i.html#a97bab6202cffea14145b3553233ddd75", null ],
+      [ "p_context", "group___s_m_c_i___a_p_i.html#ad2bb1cb3a9097eedf29ac941f1841cbf", null ],
       [ "p_extend", "group___s_m_c_i___a_p_i.html#a228c17b22de4c143e589035463930dd5", null ]
     ] ],
     [ "smci_api_t", "group___s_m_c_i___a_p_i.html#structsmci__api__t", [
@@ -40,7 +40,7 @@ var group___s_m_c_i___a_p_i =
       [ "baudSet", "group___s_m_c_i___a_p_i.html#a8d5f3d07f5f746a977e8dff3c3ee1d4c", null ],
       [ "statusGet", "group___s_m_c_i___a_p_i.html#af9ee15358ff516dc2113002475c8768a", null ],
       [ "clockControl", "group___s_m_c_i___a_p_i.html#ad5770c33d3cd5488a8b80356b03bd4b1", null ],
-      [ "callbackSet", "group___s_m_c_i___a_p_i.html#a3787b5dd3cdf7487a7ee39513013cc57", null ],
+      [ "callbackSet", "group___s_m_c_i___a_p_i.html#a6b6ed317a0786bf7ff7c409bde5e5548", null ],
       [ "close", "group___s_m_c_i___a_p_i.html#ae15c4e9a6bd3cdc5b3d3194ec30bcf93", null ]
     ] ],
     [ "smci_instance_t", "group___s_m_c_i___a_p_i.html#structsmci__instance__t", [

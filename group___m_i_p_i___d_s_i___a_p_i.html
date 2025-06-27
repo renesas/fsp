@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___m_i_p_i___d_s_i___a_p_i.html',
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___m_i_p_i___d_s_i___a_p_i.html',
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___m_i_p_i___d_s_i___a_p_i.html',
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -311,10 +311,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga9ba043d4f48bfd247a032b674aeff3a5"><td class="memItemLeft" align="right" valign="top"><a id="ga9ba043d4f48bfd247a032b674aeff3a5"></a>
-<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga0c9af0d3591f144aca9637850d11b09e">mipi_dsi_cmd_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga9ba043d4f48bfd247a032b674aeff3a5">cmd_id</a></td></tr>
-<tr class="memdesc:ga9ba043d4f48bfd247a032b674aeff3a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data type. <br /></td></tr>
-<tr class="separator:ga9ba043d4f48bfd247a032b674aeff3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac73b36784bc7a6dd383ee6384ee78251"><td class="memItemLeft" align="right" valign="top"><a id="gac73b36784bc7a6dd383ee6384ee78251"></a>
+<a class="el" href="group___m_i_p_i___c_m_d___t_y_p_e_s.html#ga9a042e2f4df8c3cdfc8f0a8c6c5fe073">mipi_cmd_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#gac73b36784bc7a6dd383ee6384ee78251">cmd_id</a></td></tr>
+<tr class="memdesc:gac73b36784bc7a6dd383ee6384ee78251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data type. <br /></td></tr>
+<tr class="separator:gac73b36784bc7a6dd383ee6384ee78251"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6fd53b70f4fe46fc044141ea0914fad7"><td class="memItemLeft" align="right" valign="top"><a id="ga6fd53b70f4fe46fc044141ea0914fad7"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga6fd53b70f4fe46fc044141ea0914fad7">virtual_channel_id</a></td></tr>
 <tr class="memdesc:ga6fd53b70f4fe46fc044141ea0914fad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual channel ID. <br /></td></tr>
@@ -374,7 +374,7 @@ channel</td>
 <td class="fielddoc">
 Virtual Channel ID. </td></tr>
 <tr><td class="fieldtype">
-<a id="a251039fd2491f883d6f631fb5df54c77"></a><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#ga0c9af0d3591f144aca9637850d11b09e">mipi_dsi_cmd_id_t</a></td>
+<a id="a8c60319fe67e327625d2f782d92430b8"></a><a class="el" href="group___m_i_p_i___c_m_d___t_y_p_e_s.html#ga9a042e2f4df8c3cdfc8f0a8c6c5fe073">mipi_cmd_id_t</a></td>
 <td class="fieldname">
 cmd_id</td>
 <td class="fielddoc">
@@ -506,7 +506,7 @@ event</td>
 <td class="fielddoc">
 Event code. </td></tr>
 <tr><td class="fieldtype">
-<a id="a61bd7f35a78675e7a09d9a8e4a92620a"></a>union <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#unionmipi__dsi__callback__args__t_8____unnamed____">mipi_dsi_callback_args_t</a></td>
+<a id="af40da63599dce5f12f0b32318a581e17"></a>union <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#unionmipi__dsi__callback__args__t_8____unnamed____">mipi_dsi_callback_args_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -518,7 +518,7 @@ p_result</td>
 <td class="fielddoc">
 Receive result pointer. </td></tr>
 <tr><td class="fieldtype">
-<a id="a9536c5b3a3ab8c474158edf58c6ab6dd"></a>void const  *</td>
+<a id="a3786270ddc4dd820fc3e3fc7ca59935d"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -718,10 +718,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memitem:a96007efbaaa0a0ba47a1cb100d33eb01"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a96007efbaaa0a0ba47a1cb100d33eb01">p_callback</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:a96007efbaaa0a0ba47a1cb100d33eb01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function.  <a href="#a96007efbaaa0a0ba47a1cb100d33eb01">More...</a><br /></td></tr>
 <tr class="separator:a96007efbaaa0a0ba47a1cb100d33eb01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fd6675144041cfe111bff2459cc8e97"><td class="memItemLeft" align="right" valign="top"><a id="a6fd6675144041cfe111bff2459cc8e97"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a6fd6675144041cfe111bff2459cc8e97">p_context</a></td></tr>
-<tr class="memdesc:a6fd6675144041cfe111bff2459cc8e97"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
-<tr class="separator:a6fd6675144041cfe111bff2459cc8e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27a41efdafe3ab73c0b2224553723ef8"><td class="memItemLeft" align="right" valign="top"><a id="a27a41efdafe3ab73c0b2224553723ef8"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a27a41efdafe3ab73c0b2224553723ef8">p_context</a></td></tr>
+<tr class="memdesc:a27a41efdafe3ab73c0b2224553723ef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
+<tr class="separator:a27a41efdafe3ab73c0b2224553723ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c726681ef760d838f7b6b38b971082f"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#a0c726681ef760d838f7b6b38b971082f">p_extend</a></td></tr>
 <tr class="memdesc:a0c726681ef760d838f7b6b38b971082f"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI hardware dependent configuration.  <a href="#a0c726681ef760d838f7b6b38b971082f">More...</a><br /></td></tr>
 <tr class="separator:a0c726681ef760d838f7b6b38b971082f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1053,7 +1053,9 @@ Pointer to the API structure for this instance. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>MIPI DSI packet Data Type (commands) - See MIPI specification for additional information </p>
+<p>DEPRECATED - MIPI DSI packet Data Type (commands) - See MIPI specification for additional information</p><ul>
+<li>The use of mipi_dsi_cmd_id_t has been deprecated and will be fully relpaced with the use of mipi_cmd_t in a future release. </li>
+</ul>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0c9af0d3591f144aca9637850d11b09ea1f0f53ee105f08391594a690719e5af7"></a>MIPI_DSI_CMD_ID_V_SYNC_START&#160;</td><td class="fielddoc"><p>(Short) Sync Event, V Sync Start </p>
 </td></tr>
@@ -1741,7 +1743,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

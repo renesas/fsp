@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___f_r_e_e_r_t_o_s___p_o_r_
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___f_r_e_e_r_t_o_s___p_o_r_
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___f_r_e_e_r_t_o_s___p_o_r_
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -867,7 +867,7 @@ Hardware Stack Monitor (PSPLIM)</h2>
 <p>A UsageFault is generated if PSP goes out of the memory area for the stack allocated for the current task. If UsageFault is not enabled, it is escalated to HardFault.</p>
 <h2><a class="anchor" id="r-freertos-port-hardware-stack-monitor"></a>
 Hardware Stack Monitor (SPMON)</h2>
-<p>The hardware stack monitor generates an NMI if the PSP goes out of the memory area for the stack allocated for the current task. A callback can be registered using <a class="el" href="group___b_s_p___m_c_u.html#ga3a512475e2d974eaddf1cd30f6508228">R_BSP_GroupIrqWrite()</a> to be called whenever a stack overflow or underflow of the PSP for a particular thread is detected.</p>
+<p>The hardware stack monitor generates an NMI if the PSP goes out of the memory area for the stack allocated for the current task. A callback can be registered using <a class="el" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite()</a> to be called whenever a stack overflow or underflow of the PSP for a particular thread is detected.</p>
 <h3><a class="anchor" id="r-freertos-port-hardware-stack-monitor-underflow"></a>
 Stack Monitor Underflow Detection</h3>
 <p>By default the hardware stack monitor only checks for overflow of the process stack. To check for underflow define configRECORD_STACK_HIGH_ADDRESS as 1 on the command line.</p>
@@ -882,7 +882,7 @@ TrustZone Integration</h2>
 Examples</h1>
 <h2>Stack Monitor Example</h2>
 <p>This is an example of using the stack monitor in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#if BSP_FEATURE_BSP_HAS_SP_MON</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback (<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(irq);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[0].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle main stack monitor error here. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[1].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle process stack monitor error here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Register a callback to be called when the stack goes outside the allocated stack area. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga3a512475e2d974eaddf1cd30f6508228">R_BSP_GroupIrqWrite</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d">BSP_GRP_IRQ_MPU_STACK</a>, stack_monitor_callback);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line"><span class="comment">/* Allocate stack space to return from UsageFault. */</span></div><div class="line">uint32_t g_stack_overflow_exception_stack[8] BSP_ALIGN_VARIABLE(<a class="code" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a>) BSP_PLACE_IN_SECTION(</div><div class="line">    BSP_SECTION_STACK);</div><div class="line"></div><div class="line"><span class="comment">/* MCUs that do not have an SPMON stack monitor use PSPLIM to detect stack overflows. When a stack overflow error</span></div><div class="line"><span class="comment"> * occurs, the UsageFault_Handler fires if it has been enabled. */</span></div><div class="line"><span class="keywordtype">void</span> UsageFault_Handler (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">register</span> uint32_t cfsr = SCB-&gt;CFSR;</div><div class="line">    <span class="keywordflow">if</span> (cfsr &amp; SCB_CFSR_STKOF_Msk)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update PSP and PSPLIM to point to an exception stack frame allocated for stack overflows. */</span></div><div class="line">        <span class="keyword">register</span> uint32_t * p_exception_stack_frame = (uint32_t *) (&amp;g_stack_overflow_exception_stack);</div><div class="line">        __set_PSP((uint32_t) p_exception_stack_frame);</div><div class="line">        __set_PSPLIM((uint32_t) p_exception_stack_frame);</div><div class="line"></div><div class="line">        <span class="comment">/* Clear XPSR, only set T-bit. */</span></div><div class="line">        p_exception_stack_frame[7] = 1U &lt;&lt; 24;</div><div class="line"></div><div class="line">        <span class="comment">/* Set PC to stack overflow error while loop. When execution returns from the UsageFault, it will go to the</span></div><div class="line"><span class="comment">         * stack_overflow_error_occurred function. It cannot return to the location where the fault occurred because</span></div><div class="line"><span class="comment">         * the MCU does not save the exception stack frame to the stack when a stack overflow error occurs. */</span></div><div class="line">        p_exception_stack_frame[6] = (uint32_t) stack_overflow_error_occurred;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Clear flags. */</span></div><div class="line">    SCB-&gt;CFSR = cfsr;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* This function is called from UsageFault_Handler after a stack overflow occurs. */</span></div><div class="line"><span class="keywordtype">void</span> stack_overflow_error_occurred (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When recovering from a stack overflow, move the task to a while(1) loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Enable usage fault. */</span></div><div class="line">    SCB-&gt;SHCSR |= SCB_SHCSR_USGFAULTENA_Msk;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --> <h2>TrustZone Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#if BSP_FEATURE_BSP_HAS_SP_MON</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> stack_monitor_callback (<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2">bsp_grp_irq_t</a> irq)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(irq);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[0].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle main stack monitor error here. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (1U == R_MPU_SPMON-&gt;SP[1].CTL_b.ERROR)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle process stack monitor error here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Register a callback to be called when the stack goes outside the allocated stack area. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaed27ea47f0c85a1af9bb515600d5e2ba">R_BSP_GroupIrqWrite</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga72e70676360e6a4d753a8d235e6b93a2a3ddc13da630734d6b18004ffe3696d1d">BSP_GRP_IRQ_MPU_STACK</a>, stack_monitor_callback);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line"><span class="comment">/* Allocate stack space to return from UsageFault. */</span></div><div class="line">uint32_t g_stack_overflow_exception_stack[8] BSP_ALIGN_VARIABLE(<a class="code" href="group___b_s_p___m_c_u.html#gadecec24d538312129b60def6152f5992">BSP_STACK_ALIGNMENT</a>) BSP_PLACE_IN_SECTION(</div><div class="line">    BSP_UNINIT_SECTION_PREFIX <span class="stringliteral">&quot;.ram_noinit&quot;</span>);</div><div class="line"></div><div class="line"><span class="comment">/* MCUs that do not have an SPMON stack monitor use PSPLIM to detect stack overflows. When a stack overflow error</span></div><div class="line"><span class="comment"> * occurs, the UsageFault_Handler fires if it has been enabled. */</span></div><div class="line"><span class="keywordtype">void</span> UsageFault_Handler (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">register</span> uint32_t cfsr = SCB-&gt;CFSR;</div><div class="line">    <span class="keywordflow">if</span> (cfsr &amp; SCB_CFSR_STKOF_Msk)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Update PSP and PSPLIM to point to an exception stack frame allocated for stack overflows. */</span></div><div class="line">        <span class="keyword">register</span> uint32_t * p_exception_stack_frame = (uint32_t *) (&amp;g_stack_overflow_exception_stack);</div><div class="line">        __set_PSP((uint32_t) p_exception_stack_frame);</div><div class="line">        __set_PSPLIM((uint32_t) p_exception_stack_frame);</div><div class="line"></div><div class="line">        <span class="comment">/* Clear XPSR, only set T-bit. */</span></div><div class="line">        p_exception_stack_frame[7] = 1U &lt;&lt; 24;</div><div class="line"></div><div class="line">        <span class="comment">/* Set PC to stack overflow error while loop. When execution returns from the UsageFault, it will go to the</span></div><div class="line"><span class="comment">         * stack_overflow_error_occurred function. It cannot return to the location where the fault occurred because</span></div><div class="line"><span class="comment">         * the MCU does not save the exception stack frame to the stack when a stack overflow error occurs. */</span></div><div class="line">        p_exception_stack_frame[6] = (uint32_t) stack_overflow_error_occurred;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Clear flags. */</span></div><div class="line">    SCB-&gt;CFSR = cfsr;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* This function is called from UsageFault_Handler after a stack overflow occurs. */</span></div><div class="line"><span class="keywordtype">void</span> stack_overflow_error_occurred (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When recovering from a stack overflow, move the task to a while(1) loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_stack_monitor_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Enable usage fault. */</span></div><div class="line">    SCB-&gt;SHCSR |= SCB_SHCSR_USGFAULTENA_Msk;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div></div><!-- fragment --> <h2>TrustZone Example</h2>
 <p>This is an example of calling portALLOCATE_SECURE_CONTEXT before calling any non-secure callable functions in a task.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_freertos_port_trustzone_task_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* When FreeRTOS is used in a non-secure TrustZone application, portALLOCATE_SECURE_CONTEXT must be called prior</span></div><div class="line"><span class="comment">     * to calling any non-secure callable function in a task. The parameter is unused in the FSP implementation. */</span></div><div class="line">    portALLOCATE_SECURE_CONTEXT(0);</div><div class="line"></div><div class="line">    rm_freertos_port_nsc_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -890,7 +890,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

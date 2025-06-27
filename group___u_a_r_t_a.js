@@ -45,10 +45,12 @@ var group___u_a_r_t_a =
     [ "R_UARTA_Close", "group___u_a_r_t_a.html#gaca130942011303e10b7f5ed4ce52e259", null ],
     [ "R_UARTA_Read", "group___u_a_r_t_a.html#gafbe209369007245cdb6a4f32c9526486", null ],
     [ "R_UARTA_Write", "group___u_a_r_t_a.html#ga011855e3038bf3d976329d7586751a0d", null ],
-    [ "R_UARTA_CallbackSet", "group___u_a_r_t_a.html#gab040a3df77e5a8b5d503fb8c7d47ef4e", null ],
+    [ "R_UARTA_CallbackSet", "group___u_a_r_t_a.html#gaf72290d6d297092adea16dd8123f289a", null ],
     [ "R_UARTA_BaudSet", "group___u_a_r_t_a.html#ga70a1e7269d839ad7992d91937db9b6e5", null ],
     [ "R_UARTA_InfoGet", "group___u_a_r_t_a.html#ga88234ec51812219a8bd521079524bb2d", null ],
     [ "R_UARTA_Abort", "group___u_a_r_t_a.html#gac87ed2cf537ebd57a86d87eb771ae4e9", null ],
     [ "R_UARTA_ReadStop", "group___u_a_r_t_a.html#ga1dd2d0ffba032d16de9403f5f7bbae2c", null ],
-    [ "R_UARTA_BaudCalculate", "group___u_a_r_t_a.html#gae2b4736f66bcb1bad4b234be78bf5ce0", null ]
+    [ "R_UARTA_BaudCalculate", "group___u_a_r_t_a.html#gae2b4736f66bcb1bad4b234be78bf5ce0", null ],
+    [ "R_UARTA_ReceiveSuspend", "group___u_a_r_t_a.html#ga63b2ac7b56ae577201eec1f4bb1b1c6d", null ],
+    [ "R_UARTA_ReceiveResume", "group___u_a_r_t_a.html#ga9aaeb3b421fe6a1d0231a68aad8d18fa", null ]
 ];

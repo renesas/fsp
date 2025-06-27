@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___c_g_c.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___c_g_c.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___c_g_c.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -266,8 +266,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1a02897dd353e879f32de19f7a4fd283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00fa9cabb71b0cc504aa413c0d48b916"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c.html#ga00fa9cabb71b0cc504aa413c0d48b916">R_CGC_OscStopStatusClear</a> (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ga00fa9cabb71b0cc504aa413c0d48b916"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga300b8011ca9bd0c77130c60c3874d7a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c.html#ga300b8011ca9bd0c77130c60c3874d7a4">R_CGC_CallbackSet</a> (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ga300b8011ca9bd0c77130c60c3874d7a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdc7037f42917cde33f1ff4f104fb2b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c.html#gafdc7037f42917cde33f1ff4f104fb2b0">R_CGC_CallbackSet</a> (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gafdc7037f42917cde33f1ff4f104fb2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf4a220e7ffbeb997676ba5d84a8c7983"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c.html#gaf4a220e7ffbeb997676ba5d84a8c7983">R_CGC_Close</a> (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:gaf4a220e7ffbeb997676ba5d84a8c7983"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -475,7 +475,7 @@ Low Power Operation</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the CGC in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> cgc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the CGC module. */</span></div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open</a>(&amp;g_cgc0_ctrl, &amp;g_cgc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Change the system clock to LOCO for power saving. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the LOCO. */</span></div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga9c6dbd3c1987e7b4b24c1e9a481ce24d">R_CGC_ClockStart</a>(&amp;g_cgc0_ctrl, <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6ac8e8533716349cdc1396bdb313ec2651">CGC_CLOCK_LOCO</a>, NULL);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the LOCO stabilization wait time.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * NOTE: The MOCO, LOCO and subclock do not have stabilization status bits, so any stabilization time must be</span></div><div class="line"><span class="comment">     * performed via a software wait when starting these oscillators. For all other oscillators, R_CGC_ClockCheck can</span></div><div class="line"><span class="comment">     * be used to verify stabilization status.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(BSP_FEATURE_CGC_LOCO_STABILIZATION_MAX_US, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set divisors. Divisors for clocks that don&#39;t exist on the MCU are ignored. */</span></div><div class="line">    <a class="code" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a> dividers =</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if !BSP_FEATURE_CGC_REGISTER_SET_B</span></div><div class="line"></div><div class="line">        <span class="comment">/* PCLKB is not used in this application, so select the maximum divisor for lowest power. */</span></div><div class="line">        .sckdivcr_b.pclkb_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9">CGC_SYS_CLOCK_DIV_64</a>,</div><div class="line"></div><div class="line">        <span class="comment">/* PCLKD is not used in this application, so select the maximum divisor for lowest power. */</span></div><div class="line">        .sckdivcr_b.pclkd_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9">CGC_SYS_CLOCK_DIV_64</a>,</div><div class="line"></div><div class="line">        <span class="comment">/* ICLK is the MCU clock, allow it to run as fast as the LOCO is capable. */</span></div><div class="line">        .sckdivcr_b.iclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line"></div><div class="line">        <span class="comment">/* These clocks do not exist on some devices. If any clocks don&#39;t exist, set the divider to 1. */</span></div><div class="line">        .sckdivcr_b.pclka_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .sckdivcr_b.pclkc_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .sckdivcr_b.fclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .sckdivcr_b.bclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">        .moco_divider = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6">CGC_SYS_CLOCK_DIV_2</a>,</div><div class="line">        .hoco_divider = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .mosc_divider = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>,</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Switch the system clock to LOCO. */</span></div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga7f14fdc1ec5733550f503bd6868f98cd">R_CGC_SystemClockSet</a>(&amp;g_cgc0_ctrl, <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6ac8e8533716349cdc1396bdb313ec2651">CGC_CLOCK_LOCO</a>, &amp;dividers);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Configuring Multiple Clocks</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> cgc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the CGC module. */</span></div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open</a>(&amp;g_cgc0_ctrl, &amp;g_cgc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Change the system clock to LOCO for power saving. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the LOCO. */</span></div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga9c6dbd3c1987e7b4b24c1e9a481ce24d">R_CGC_ClockStart</a>(&amp;g_cgc0_ctrl, <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6ac8e8533716349cdc1396bdb313ec2651">CGC_CLOCK_LOCO</a>, NULL);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the LOCO stabilization wait time.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * NOTE: The MOCO, LOCO and subclock do not have stabilization status bits, so any stabilization time must be</span></div><div class="line"><span class="comment">     * performed via a software wait when starting these oscillators. For all other oscillators, R_CGC_ClockCheck can</span></div><div class="line"><span class="comment">     * be used to verify stabilization status.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(BSP_FEATURE_CGC_LOCO_STABILIZATION_MAX_US, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set divisors. Divisors for clocks that don&#39;t exist on the MCU are ignored. */</span></div><div class="line">    <a class="code" href="group___c_g_c___a_p_i.html#structcgc__divider__cfg__t">cgc_divider_cfg_t</a> dividers =</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if !BSP_FEATURE_CGC_REGISTER_SET_B</span></div><div class="line"></div><div class="line">        <span class="comment">/* PCLKB is not used in this application, so select the maximum divisor for lowest power. */</span></div><div class="line">        .sckdivcr_b.pclkb_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9">CGC_SYS_CLOCK_DIV_64</a>,</div><div class="line"></div><div class="line">        <span class="comment">/* PCLKD is not used in this application, so select the maximum divisor for lowest power. */</span></div><div class="line">        .sckdivcr_b.pclkd_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9">CGC_SYS_CLOCK_DIV_64</a>,</div><div class="line"></div><div class="line">        <span class="comment">/* ICLK is the MCU clock, allow it to run as fast as the LOCO is capable. */</span></div><div class="line">        .sckdivcr_b.iclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line"></div><div class="line">        <span class="comment">/* These clocks do not exist on some devices. If any clocks don&#39;t exist, set the divider to 1. */</span></div><div class="line">        .sckdivcr_b.pclka_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .sckdivcr_b.pclkc_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .sckdivcr_b.fclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .sckdivcr_b.bclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">        .moco_divider = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6">CGC_SYS_CLOCK_DIV_2</a>,</div><div class="line">        .hoco_divider = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>,</div><div class="line">        .mosc_divider = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>,</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Switch the system clock to LOCO. */</span></div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga7f14fdc1ec5733550f503bd6868f98cd">R_CGC_SystemClockSet</a>(&amp;g_cgc0_ctrl, <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6ac8e8533716349cdc1396bdb313ec2651">CGC_CLOCK_LOCO</a>, &amp;dividers);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Configuring Multiple Clocks</h2>
 <p>This example demonstrates switching to a new source clock and stopping the previous source clock in a single function call using <a class="el" href="group___c_g_c.html#ga203fc7fb47f71f67b1ce1c17cea0ec04">R_CGC_ClocksCfg()</a>.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> cgc_clocks_cfg_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the CGC module. */</span></div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open</a>(&amp;g_cgc0_ctrl, &amp;g_cgc0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Change the system clock to PLL running from the main oscillator. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Assuming the system clock is MOCO, switch to HOCO. */</span></div><div class="line">    <a class="code" href="group___c_g_c___a_p_i.html#structcgc__clocks__cfg__t">cgc_clocks_cfg_t</a> clocks_cfg;</div><div class="line"><span class="preprocessor">#if !BSP_FEATURE_CGC_REGISTER_SET_B</span></div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a654bf74a6f5fa9b5b278f4bd1144658c">system_clock</a>                     = <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a14141e6db3711cbc45bb67a3704b3ac3">CGC_CLOCK_PLL</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#ac83f91bc046e3cc482b538b59fe41923">pll_state</a>                        = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8a4778b4e094845ab42e902ffc9a68842c">CGC_CLOCK_CHANGE_NONE</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253">pll_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#a6f058eabfd3597c5c63cace8c31e5bef">source_clock</a>             = <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a196d6c6f8b51c53e520613a529f112e3">CGC_CLOCK_MAIN_OSC</a>; <span class="comment">// unused</span></div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253">pll_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#a5c8a65a3f88aa763363962e0bb183473">multiplier</a>               = CGC_PLL_MUL_10_0;   <span class="comment">// unused</span></div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253">pll_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#aba5f99b4167c421692d274aab5b954b4">divider</a>                  = <a class="code" href="group___c_g_c___a_p_i.html#ggaba4cdc2e548dc20fb3800c3d1adcc315a5f2f46c73e1f9db203129250b371ac7f">CGC_PLL_DIV_2</a>;      <span class="comment">// unused</span></div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.iclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclka_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclkb_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclkc_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclkd_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.bclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.fclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line"><span class="preprocessor">#else</span></div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a654bf74a6f5fa9b5b278f4bd1144658c">system_clock</a>             = <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6aa095d545b0a585466b727a9ec0311b36">CGC_CLOCK_HOCO</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#a839bbaf4f8e14ee81168a4899cff35db">moco_divider</a> = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#abf8bbaa7af1d17dbee46453c50dc14f7">hoco_divider</a> = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6">CGC_SYS_CLOCK_DIV_2</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#ae000b3fadee4fd715032f5980d1f343a">mosc_divider</a> = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#ab2a7b402ef0700179bbc3cc303ecb6b3">mainosc_state</a> = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8a4778b4e094845ab42e902ffc9a68842c">CGC_CLOCK_CHANGE_NONE</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a12aa92642ebaa4e7abb3ba767d59e90e">hoco_state</a>    = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8afc34723b6efeafd271fb3cfb365f8ec1">CGC_CLOCK_CHANGE_START</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a617d47cbafc921e9f3d02da103b83afc">moco_state</a>    = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8ab254feb9ce2b8227de97b93ab5ea4de5">CGC_CLOCK_CHANGE_STOP</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a616ba1cfab671dc6183198ad0c6044ca">loco_state</a>    = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8a4778b4e094845ab42e902ffc9a68842c">CGC_CLOCK_CHANGE_NONE</a>;</div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga203fc7fb47f71f67b1ce1c17cea0ec04">R_CGC_ClocksCfg</a>(&amp;g_cgc0_ctrl, &amp;clocks_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"><span class="preprocessor">#if BSP_FEATURE_CGC_HAS_PLL</span></div><div class="line"></div><div class="line">    <span class="comment">/* Assuming the system clock is HOCO, switch to PLL running from main oscillator and stop MOCO. */</span></div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a654bf74a6f5fa9b5b278f4bd1144658c">system_clock</a>                     = <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a14141e6db3711cbc45bb67a3704b3ac3">CGC_CLOCK_PLL</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#ac83f91bc046e3cc482b538b59fe41923">pll_state</a>                        = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8afc34723b6efeafd271fb3cfb365f8ec1">CGC_CLOCK_CHANGE_START</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253">pll_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#a6f058eabfd3597c5c63cace8c31e5bef">source_clock</a>             = <a class="code" href="group___c_g_c___a_p_i.html#gga4dcbe960cf591207eef834969b83f8a6a196d6c6f8b51c53e520613a529f112e3">CGC_CLOCK_MAIN_OSC</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253">pll_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#a5c8a65a3f88aa763363962e0bb183473">multiplier</a>               = (cgc_pll_mul_t) BSP_CFG_PLL_MUL;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a1340ff6ca7569ae56130fa1a6ea23253">pll_cfg</a>.<a class="code" href="group___c_g_c___a_p_i.html#aba5f99b4167c421692d274aab5b954b4">divider</a>                  = (<a class="code" href="group___c_g_c___a_p_i.html#gaba4cdc2e548dc20fb3800c3d1adcc315">cgc_pll_div_t</a>) BSP_CFG_PLL_DIV;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.iclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326">CGC_SYS_CLOCK_DIV_1</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclka_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclkb_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclkc_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.pclkd_div = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.bclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a160f655d324ea23224112f5f030a95aa">divider_cfg</a>.sckdivcr_b.fclk_div  = <a class="code" href="group___c_g_c___a_p_i.html#gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0">CGC_SYS_CLOCK_DIV_4</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#ab2a7b402ef0700179bbc3cc303ecb6b3">mainosc_state</a>                    = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8afc34723b6efeafd271fb3cfb365f8ec1">CGC_CLOCK_CHANGE_START</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a12aa92642ebaa4e7abb3ba767d59e90e">hoco_state</a>                       = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8ab254feb9ce2b8227de97b93ab5ea4de5">CGC_CLOCK_CHANGE_STOP</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a617d47cbafc921e9f3d02da103b83afc">moco_state</a>                       = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8a4778b4e094845ab42e902ffc9a68842c">CGC_CLOCK_CHANGE_NONE</a>;</div><div class="line">    clocks_cfg.<a class="code" href="group___c_g_c___a_p_i.html#a616ba1cfab671dc6183198ad0c6044ca">loco_state</a>                       = <a class="code" href="group___c_g_c___a_p_i.html#gga67f8525be602a7cce075f0b33d5f2ad8a4778b4e094845ab42e902ffc9a68842c">CGC_CLOCK_CHANGE_NONE</a>;</div><div class="line">    err = <a class="code" href="group___c_g_c.html#ga203fc7fb47f71f67b1ce1c17cea0ec04">R_CGC_ClocksCfg</a>(&amp;g_cgc0_ctrl, &amp;clocks_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Oscillation Stop Detection</h2>
 <p>This example demonstrates registering a callback for oscillation stop detection of the main oscillator.</p>
@@ -500,18 +500,18 @@ Data Structures</h2></td></tr>
 <div class="textblock"><p>CGC private control block. DO NOT MODIFY. Initialization occurs when <a class="el" href="group___c_g_c.html#ga84e412218c7f8074623d521bfc331a3c">R_CGC_Open()</a> is called. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a2aa5bbf8a683a13d763b88843e4d0b68"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c.html#a2aa5bbf8a683a13d763b88843e4d0b68">p_context</a></td></tr>
-<tr class="separator:a2aa5bbf8a683a13d763b88843e4d0b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab647aa9350074a2514195e0299258631"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c.html#ab647aa9350074a2514195e0299258631">p_context</a></td></tr>
+<tr class="separator:ab647aa9350074a2514195e0299258631"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="a2aa5bbf8a683a13d763b88843e4d0b68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2aa5bbf8a683a13d763b88843e4d0b68">&#9670;&nbsp;</a></span>p_context</h2>
+<a id="ab647aa9350074a2514195e0299258631"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab647aa9350074a2514195e0299258631">&#9670;&nbsp;</a></span>p_context</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void const* cgc_instance_ctrl_t::p_context</td>
+          <td class="memname">void* cgc_instance_ctrl_t::p_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -932,8 +932,8 @@ the internal clocks".</p>
 
 </div>
 </div>
-<a id="ga300b8011ca9bd0c77130c60c3874d7a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga300b8011ca9bd0c77130c60c3874d7a4">&#9670;&nbsp;</a></span>R_CGC_CallbackSet()</h2>
+<a id="gafdc7037f42917cde33f1ff4f104fb2b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafdc7037f42917cde33f1ff4f104fb2b0">&#9670;&nbsp;</a></span>R_CGC_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -953,7 +953,7 @@ the internal clocks".</p>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -969,7 +969,7 @@ the internal clocks".</p>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___c_g_c___a_p_i.html#ae6320b1734cebe9041c65aa581ecb1c4">cgc_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___c_g_c___a_p_i.html#a092a83d15ace9e2a3851da9e0163a71b">cgc_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1016,7 +1016,7 @@ the internal clocks".</p>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

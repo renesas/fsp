@@ -8,7 +8,7 @@ var group___j_p_e_g___a_p_i =
     [ "jpeg_callback_args_t", "group___j_p_e_g___a_p_i.html#structjpeg__callback__args__t", [
       [ "status", "group___j_p_e_g___a_p_i.html#a5e74ded10676c413e76915719eac3c91", null ],
       [ "image_size", "group___j_p_e_g___a_p_i.html#a099502317869819025d4c106f7407482", null ],
-      [ "p_context", "group___j_p_e_g___a_p_i.html#ad237939cf7ce057010fc92b9cace23f8", null ]
+      [ "p_context", "group___j_p_e_g___a_p_i.html#a34bc953f9f527aaa8d56503e43fe2dc6", null ]
     ] ],
     [ "jpeg_cfg_t", "group___j_p_e_g___a_p_i.html#structjpeg__cfg__t", [
       [ "jedi_irq", "group___j_p_e_g___a_p_i.html#ad303e421b740045cc55845ae49020ec4", null ],
@@ -21,7 +21,7 @@ var group___j_p_e_g___a_p_i =
       [ "pixel_format", "group___j_p_e_g___a_p_i.html#a7d8a9f4621943071bc4d88615f609a78", null ],
       [ "alpha_value", "group___j_p_e_g___a_p_i.html#a322f2b515077a630ef146fd1b3bb3d8e", null ],
       [ "p_decode_callback", "group___j_p_e_g___a_p_i.html#a67243de810472f802b59870db30ddcd3", null ],
-      [ "p_decode_context", "group___j_p_e_g___a_p_i.html#a887df506dad96908476f3e8e340159be", null ],
+      [ "p_decode_context", "group___j_p_e_g___a_p_i.html#ade472d0f4bec0f764c6b7b5fd8e65464", null ],
       [ "encode_input_data_order", "group___j_p_e_g___a_p_i.html#a56be35f81ebc72b986b4b1894b8275a8", null ],
       [ "encode_output_data_order", "group___j_p_e_g___a_p_i.html#a5ec520a3c6cf8378ade0a2b25cb64e4c", null ],
       [ "dri_marker", "group___j_p_e_g___a_p_i.html#af234e6fa57c92f76fc6241b87a3014cc", null ],
@@ -35,7 +35,7 @@ var group___j_p_e_g___a_p_i =
       [ "p_huffman_chroma_ac_table", "group___j_p_e_g___a_p_i.html#a4ed8df6f81d507229606308bf0711232", null ],
       [ "p_huffman_chroma_dc_table", "group___j_p_e_g___a_p_i.html#a4be469c9f9618512c3210667bd0cb32b", null ],
       [ "p_encode_callback", "group___j_p_e_g___a_p_i.html#ab82f75f20fbbe2a4603506cfb81e88d9", null ],
-      [ "p_encode_context", "group___j_p_e_g___a_p_i.html#a5b98541eb3e648bd0f2826df7abd6310", null ]
+      [ "p_encode_context", "group___j_p_e_g___a_p_i.html#a60d94accc49508d60108f0b03df40353", null ]
     ] ],
     [ "jpeg_api_t", "group___j_p_e_g___a_p_i.html#structjpeg__api__t", [
       [ "open", "group___j_p_e_g___a_p_i.html#a1d5e667447fa87ac5a3940bf1da89ee5", null ],

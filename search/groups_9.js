@@ -15,6 +15,8 @@ var searchData=
   ['iir_20filter_20accelerator_20_28r_5fiirfa_29',['IIR Filter Accelerator (r_iirfa)',['../group___i_i_r_f_a.html',1,'']]],
   ['i_2fo_20port_20_28r_5fioport_29',['I/O Port (r_ioport)',['../group___i_o_p_o_r_t.html',1,'']]],
   ['i_2fo_20port_20interface',['I/O Port Interface',['../group___i_o_p_o_r_t___a_p_i.html',1,'']]],
+  ['inter_2dprocessor_20communication_20_28r_5fipc_29',['Inter-Processor Communication (r_ipc)',['../group___i_p_c.html',1,'']]],
+  ['ipc_20interface',['IPC Interface',['../group___i_p_c___a_p_i.html',1,'']]],
   ['iso',['ISO',['../group___i_s_o___a_p_i.html',1,'']]],
   ['independent_20watchdog_20_28r_5fiwdt_29',['Independent Watchdog (r_iwdt)',['../group___i_w_d_t.html',1,'']]],
   ['input',['Input',['../group___r_e_n_e_s_a_s___i_n_p_u_t___i_n_t_e_r_f_a_c_e_s.html',1,'']]],

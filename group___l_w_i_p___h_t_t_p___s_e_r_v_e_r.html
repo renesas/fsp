@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___l_w_i_p___h_t_t_p___s_e_r_v_e_
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___l_w_i_p___h_t_t_p___s_e_r_v_e_
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___l_w_i_p___h_t_t_p___s_e_r_v_e_
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -249,6 +249,7 @@ Features</h2>
 <p>The LwIP HTTP Server:</p><ul>
 <li>Can respond from HTTP GET and POST requests.</li>
 <li>Supports Server-Side Includes (SSI) and Common Gateway Interface (CGI).</li>
+<li>Can set up TLS connection handling (HTTPS).</li>
 </ul>
 <h1><a class="anchor" id="rm-lwip_http_server-configuration"></a>
 Configuration</h1>
@@ -292,7 +293,7 @@ Disabled</li>
 <tr class="tree_none">
 <td>LwIP HTTPD SSI By File Extension</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Overriden</li>
+Overridden</li>
 <li>
 Enabled</li>
 <li>
@@ -560,7 +561,6 @@ Limitations</h2>
 <ul>
 <li>In normal mode, the user must select the "HTTP Is Data Volatile" option as Allow Copy mode (TCP_WRITE_FLAG_COPY) in the FSP Configurator properties to ensure tcp_write() functions correctly.</li>
 <li>When using the Server-Side Includes (SSI) mode or the Common Gateway Interface (CGI) mode, make sure that the "HTTP Is Data Volatile" option is set to Allow Copy and More mode (TCP_WRITE_FLAG_COPY | TCP_WRITE_FLAG_MORE) in the FSP Configurator properties to work properly.</li>
-<li>TLS connection handling (HTTPS) is not currently supported.</li>
 </ul>
 <h2>How to use fsdata file</h2>
 <p>There are two ways to use fsdata file as follows:</p>
@@ -597,13 +597,13 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the LwIP HTTP Server APIs in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;lwip/timeouts.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/ip4.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/httpd.h&quot;</span></div><div class="line"></div><div class="line"><span class="comment">/* LwIP HTTPD example */</span></div><div class="line"><span class="keywordtype">void</span> lwip_httpd_example () {</div><div class="line">    <span class="keyword">struct </span>netif netif;</div><div class="line"></div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the httpd */</span></div><div class="line">    httpd_init();</div><div class="line"></div><div class="line">    <span class="comment">/* WAIT_LOOP */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+<div class="fragment"><div class="line"><span class="preprocessor">#if HTTPD_ENABLE_HTTPS</span></div><div class="line"><span class="preprocessor"> #include &quot;lwip/altcp_tls.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;mbedtls/platform.h&quot;</span></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/timeouts.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/ip4.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/httpd.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if HTTPD_ENABLE_HTTPS</span></div><div class="line"></div><div class="line"><span class="comment">/* Example server key, needs to be updated. */</span></div><div class="line"><span class="keyword">static</span> uint8_t gs_server_key[] =</div><div class="line">    <span class="stringliteral">&quot;-----BEGIN PRIVATE KEY-----\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDKrJdfXTLDsPb4\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;7ACEg7kfMYuISDOaIgTlZBUSfAbeozju5zZoTigOTbJG4oUgV52qkoumSQ8L6c80\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;RA+0hnslzuYXo2mz3zdlLBL1PZwXOvQIJ1IdveYIiH7DIsEiQ5o1wvPz7RrKCUGY\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;CfhDLFfxgZUDQ51p31V1KgU92pIgEJUfrmKyYT1HK3dQC9QP4AkmUrADmZInhzku\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;NktnE9/aZAC1DqVH+bcIizT4WJDY7wY1lRAM9GghRhJOOGPDbBfCrUsTd7qOd1pT\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;BPGTnGVskrmC2YsO+Xtc0Mbh+26V6rfES7QmKtlLPDnApnyEPe4EzlluMhXLKI6M\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;UhGWRp8TAgMBAAECggEBAKdS2h33OaPqA9v6K2s7vKgOJV48Da4gi94+RE9gaeOA\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;6c4CwR5X+CXm61ouRS4wZ5CdMAH2qx9wxool7rlhlWXfbILzfJ7tmDREsNobJTTg\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;jPv2SosXbkR5O/4qQTzihvv/mZw2kjlebvLwuC/s+iX+j2GEfv8bTNhP+sfYHW+u\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;CL11deCRosu5GHe5Jgs2YSGmi1sMrrzAMBIq/K6SkjzM+Ty9e6AhW0/EAkqeHZmU\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;jUT7MVgfATpf1jBe5Blgu0/ZRixdb01PeOxxEmqOdjl6sKLneczNS7i1yUsAjR7J\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;dlLjNvp7bz91zl08BoRBk/XdkNKkWuVA5Eo/XMotcLECgYEA64i9rymLb5EVbP56\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;a9MJVnmQQ3IA3nX26Vi3ksHyzSeegazA3xQxHM2R99dNJNvXP4OkNyL1TZQVVhsb\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;rHR9QFMk1WxoLmw42krba1gdQ8UMh/C21HN7Q7eyVDYoEWHOBoKWQoZI6SFgLx8W\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;S4CRZObExsRxtknHr7NUuFiINrUCgYEA3EjofZrzENzzZUzzsKVm2q8R6GIhYC06\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;5VFcBEsoz1NNzyf93iLDwCluvUqt8jsaQsjNDpwdeSe273f80Hp3xqe7ADg5O6rK\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;S2ZMmWpcuugMI/l9KnhLmQmFz62phL4ioT5ojIUBhs8J/oXrldv1K/7ZkuOj0179\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;v6vhsW2dk6cCgYABskJreIkgjJLy7gJDtIlkrgtz8OZAs+jLVXA9BliRUa+6j1v0\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;P1j7NB/RASP1GAA83N3Z586MeHyO2jMg0tX0GKUzREybyPu/1rot07yiOFEWyY0H\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;iq1gl3oZUSqItYOeWGJsqDruMudWb4rhkFN7vo28QL3w6iceBNSfX0Pb4QKBgEs4\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;jkNN5RBuEqMV2uUIJg4o2BmdYL5B06m41Y4VyDK7xIcnpdXz0xpMS6dR2AIuUnJZ\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;tUP25U2Y1SwCsg7SsxHf9shFaq3ITVnf7eo5Wr7sPDEQocAd4dq5WLspFwjgEF01\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;PWg2huXszwHd4yuCN781QECbgTbNaiLIY8I9pyBjAoGBAIY8y7uN+pU2LdW7LG56\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;E6wxhSl9Epz1PV31W93gQyOfY8RZSZ3upbe4uylg2ONe3m7cLB3cPg4ohSxM84RI\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;60jvXHWPi+DG0Ub0Y3E1O6ZAW1UnrE3Q+J01bhNK8oy3X4sht9dg6VFZK8UFCk4V\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;cPZoDs+ykQpvVD8dnII31qAw\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;-----END PRIVATE KEY-----&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Example server certificate, needs to be updated. */</span></div><div class="line"><span class="keyword">static</span> uint8_t g_server_crt[] =</div><div class="line">    <span class="stringliteral">&quot;-----BEGIN CERTIFICATE-----\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;MIIDbTCCAlWgAwIBAgIUKvNkxPfd58IpndbgRLZetCiVS84wDQYJKoZIhvcNAQEL\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;BQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAgFw0yMDA5MTExNjE5NThaGA8yMjAw\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;MDIxNjE2MTk1OFowRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUx\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;ITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcN\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;AQEBBQADggEPADCCAQoCggEBAMqsl19dMsOw9vjsAISDuR8xi4hIM5oiBOVkFRJ8\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;Bt6jOO7nNmhOKA5NskbihSBXnaqSi6ZJDwvpzzRED7SGeyXO5hejabPfN2UsEvU9\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;nBc69AgnUh295giIfsMiwSJDmjXC8/PtGsoJQZgJ+EMsV/GBlQNDnWnfVXUqBT3a\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;kiAQlR+uYrJhPUcrd1AL1A/gCSZSsAOZkieHOS42S2cT39pkALUOpUf5twiLNPhY\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;kNjvBjWVEAz0aCFGEk44Y8NsF8KtSxN3uo53WlME8ZOcZWySuYLZiw75e1zQxuH7\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;bpXqt8RLtCYq2Us8OcCmfIQ97gTOWW4yFcsojoxSEZZGnxMCAwEAAaNTMFEwHQYD\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;VR0OBBYEFCL0XSgJ4bT7qqLtjdNHHfDhXoV5MB8GA1UdIwQYMBaAFCL0XSgJ4bT7\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;qqLtjdNHHfDhXoV5MA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;AIREt6x3cwQeRHaNkBjuYbOmB1LXa1az32d4nrvHG9aVfAOlIZuI2Zz3l3JJFT1M\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;7NsSyhYojOgagEFs+pfgW6o6YG62e8Stne2J1wppGNqckLTJyeYnAFzKakfc9KXU\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;Cq4v+JesOwzXmz3hbZywZ5rDJJHt/BoixL6C82fHUFNgzyH4dFpGWbndH29p8wr4\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;hiTR4JxH5qlogMmWqnIJ26pOu26+xfPVhLy4o84MZl0e5QqRg05LBrFd5c8/BKxq\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;Cr1qcy3Gc67/skwXMO1Dm+OSmDyGgvpAC0XXX1XpY3+/Y2yIT2glx09JsnyoXfES\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;pasiCAXmwq48oPhw9PKoYCQ=\n&quot;</span></div><div class="line">    <span class="stringliteral">&quot;-----END CERTIFICATE-----&quot;</span>;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="comment">/* LwIP HTTPD example */</span></div><div class="line"><span class="keywordtype">void</span> lwip_httpd_example () {</div><div class="line">    <span class="keyword">struct </span>netif netif;</div><div class="line"></div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable. */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line"><span class="preprocessor">#if !HTTPD_ENABLE_HTTPS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the HTTP server. */</span></div><div class="line">    httpd_init();</div><div class="line"><span class="preprocessor">#else</span></div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the SCE. */</span></div><div class="line">    <a class="code" href="group___r_m___p_s_a___c_r_y_p_t_o.html#gaf0f37c11be234650bec95ce37e9a4a6b">mbedtls_platform_setup</a>(NULL);</div><div class="line"></div><div class="line">    <span class="comment">/* Create an TLS server configuratio.n */</span></div><div class="line">    <span class="keyword">struct </span>altcp_tls_config * configuration = altcp_tls_create_config_server_privkey_cert((<span class="keyword">const</span> u8_t *) gs_server_key,</div><div class="line">                                                                                          <span class="keyword">sizeof</span>(gs_server_key),</div><div class="line">                                                                                          NULL,</div><div class="line">                                                                                          0,</div><div class="line">                                                                                          (<span class="keyword">const</span> u8_t *) g_server_crt,</div><div class="line">                                                                                          <span class="keyword">sizeof</span>(g_server_crt));</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the HTTPS server. */</span></div><div class="line">    httpd_inits(configuration);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Program main loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

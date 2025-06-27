@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___a_c_m_p_h_s.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___a_c_m_p_h_s.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___a_c_m_p_h_s.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -373,7 +373,7 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>The following is a basic example of using the ACMPHS to detect when the analog voltage input to IVCMP rises above the analog voltage input to IVREF. A GPIO output acts as the comparator input and is externally connected to the IVCMP input of the ACMPHS. An analog voltage input should also be supplied to the IVREF input pin.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ADC_PGA_BYPASS_VALUE          (0x9999)</span></div><div class="line"></div><div class="line"><span class="comment">/* Connect this control pin to the IVCMP input of the comparator. This can be any GPIO pin</span></div><div class="line"><span class="comment"> * that is not input only. */</span></div><div class="line"><span class="preprocessor">#define ACMPHS_EXAMPLE_CONTROL_PIN    (BSP_IO_PORT_05_PIN_03)</span></div><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint32_t g_comparator_events = 0U;</div><div class="line"></div><div class="line"><span class="comment">/* This callback is called when a comparator event occurs. */</span></div><div class="line"><span class="keywordtype">void</span> acmphs_example_callback (<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__callback__args__t">comparator_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    g_comparator_events++;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> acmphs_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Disable pin register write protection, if enabled */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga0ad2123f7a5152cf108883163581f11b">R_BSP_PinAccessEnable</a>();</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * Start with the IVCMP pin low. This example assumes the comparator is configured to trigger</span></div><div class="line"><span class="comment">     * when the voltage of the analog input to IVCMP rises above voltage of the analog input to</span></div><div class="line"><span class="comment">     * IVREF.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPHS_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ACMPHS module */</span></div><div class="line">    err = <a class="code" href="group___a_c_m_p_h_s.html#gac7869c5964b098497c2eb1d1747ae888">R_ACMPHS_Open</a>(&amp;g_comparator_ctrl, &amp;g_comparator_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * If an ADC PGA exists for the analog input pin, then the PGA must be manually configured in order for the pin to be used as</span></div><div class="line"><span class="comment">     * an IVCMP input. This procedure is slightly different depending on the MCU (See below).</span></div><div class="line"><span class="comment">     */</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if BSP_MCU_GROUP_RA6M3</span></div><div class="line"></div><div class="line">    <span class="comment">/* The following applies for MCUs with the ADC peripheral:</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Bypass the PGA on ADC unit 0.</span></div><div class="line"><span class="comment">     * (See Table 50.2 &quot;Input source configuration of the ACMPHS&quot; in the RA6M3 User&#39;s Manual (R01UH0886EJ0100)) */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250">FSP_IP_ADC</a>, 0);</div><div class="line">    R_ADC0-&gt;ADPGACR   = ADC_PGA_BYPASS_VALUE;</div><div class="line">    R_ADC0-&gt;ADPGADCR0 = 0;</div><div class="line"><span class="preprocessor">#elif BSP_MCU_GROUP_RA6T2</span></div><div class="line"></div><div class="line">    <span class="comment">/* The following applies for MCUs with the ADC_B peripheral:</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Configure PGA on ADC unit 0.</span></div><div class="line"><span class="comment">     * (See Table 36.11 &quot;PGA Settings and Available Related Functions&quot; in the RA6T2 User&#39;s Manual (R01UH0951EJ0100)) */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250">FSP_IP_ADC</a>, 0);</div><div class="line">    R_ADC_B-&gt;ADPGACR[0] = R_ADC_B0_ADPGACR_PGAGEN_Msk;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the minimum stabilization wait time before enabling output. */</span></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__info__t">comparator_info_t</a> info;</div><div class="line">    <a class="code" href="group___a_c_m_p_h_s.html#ga4c3e2f1898bc9a020367cd0b5285edda">R_ACMPHS_InfoGet</a>(&amp;g_comparator_ctrl, &amp;info);</div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(info.<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ad0c2dd54f8ae5b8a775385bd46036ada">min_stabilization_wait_us</a>, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the comparator output */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gae6cceb0647ded468eb7da79d02136e89">R_ACMPHS_OutputEnable</a>(&amp;g_comparator_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the IVCMP pin high. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPHS_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_comparator_events)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__status__t">comparator_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Check status of comparator, Status will be COMPARATOR_STATE_OUTPUT_HIGH */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet</a>(&amp;g_comparator_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define ADC_PGA_BYPASS_VALUE          (0x9999)</span></div><div class="line"></div><div class="line"><span class="comment">/* Connect this control pin to the IVCMP input of the comparator. This can be any GPIO pin</span></div><div class="line"><span class="comment"> * that is not input only. */</span></div><div class="line"><span class="preprocessor">#define ACMPHS_EXAMPLE_CONTROL_PIN    (BSP_IO_PORT_05_PIN_03)</span></div><div class="line"></div><div class="line"><span class="keyword">volatile</span> uint32_t g_comparator_events = 0U;</div><div class="line"></div><div class="line"><span class="comment">/* This callback is called when a comparator event occurs. */</span></div><div class="line"><span class="keywordtype">void</span> acmphs_example_callback (<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__callback__args__t">comparator_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_args);</div><div class="line">    g_comparator_events++;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> acmphs_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Disable pin register write protection, if enabled */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga0ad2123f7a5152cf108883163581f11b">R_BSP_PinAccessEnable</a>();</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * Start with the IVCMP pin low. This example assumes the comparator is configured to trigger</span></div><div class="line"><span class="comment">     * when the voltage of the analog input to IVCMP rises above voltage of the analog input to</span></div><div class="line"><span class="comment">     * IVREF.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPHS_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the ACMPHS module */</span></div><div class="line">    err = <a class="code" href="group___a_c_m_p_h_s.html#gac7869c5964b098497c2eb1d1747ae888">R_ACMPHS_Open</a>(&amp;g_comparator_ctrl, &amp;g_comparator_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * If an ADC PGA exists for the analog input pin, then the PGA must be manually configured in order for the pin to be used as</span></div><div class="line"><span class="comment">     * an IVCMP input. This procedure is slightly different depending on the MCU (See below).</span></div><div class="line"><span class="comment">     */</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if BSP_MCU_GROUP_RA6M3</span></div><div class="line"></div><div class="line">    <span class="comment">/* The following applies for MCUs with the ADC peripheral:</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Bypass the PGA on ADC unit 0.</span></div><div class="line"><span class="comment">     * (See Table 50.2 &quot;Input source configuration of the ACMPHS&quot; in the RA6M3 User&#39;s Manual (R01UH0886EJ0100)) */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250">FSP_IP_ADC</a>, 0);</div><div class="line">    R_ADC0-&gt;ADPGACR   = ADC_PGA_BYPASS_VALUE;</div><div class="line">    R_ADC0-&gt;ADPGADCR0 = 0;</div><div class="line"><span class="preprocessor">#elif BSP_MCU_GROUP_RA6T2</span></div><div class="line"></div><div class="line">    <span class="comment">/* The following applies for MCUs with the ADC_B peripheral:</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Configure PGA on ADC unit 0.</span></div><div class="line"><span class="comment">     * (See Table 36.11 &quot;PGA Settings and Available Related Functions&quot; in the RA6T2 User&#39;s Manual (R01UH0951EJ0100)) */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950ac49bfca1e1ccf88f53586fc28bd54250">FSP_IP_ADC</a>, 0);</div><div class="line">    R_ADC_B-&gt;ADPGACR[0] = R_ADC_B0_ADPGACR_PGAGEN_Msk;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the minimum stabilization wait time before enabling output. */</span></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__info__t">comparator_info_t</a> info;</div><div class="line">    <a class="code" href="group___a_c_m_p_h_s.html#ga4c3e2f1898bc9a020367cd0b5285edda">R_ACMPHS_InfoGet</a>(&amp;g_comparator_ctrl, &amp;info);</div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(info.<a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#ad0c2dd54f8ae5b8a775385bd46036ada">min_stabilization_wait_us</a>, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable the comparator output */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gae6cceb0647ded468eb7da79d02136e89">R_ACMPHS_OutputEnable</a>(&amp;g_comparator_ctrl);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the IVCMP pin high. */</span></div><div class="line">    (void) <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(ACMPHS_EXAMPLE_CONTROL_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (0 == g_comparator_events)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Wait for interrupt. */</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___c_o_m_p_a_r_a_t_o_r___a_p_i.html#structcomparator__status__t">comparator_status_t</a> status;</div><div class="line"></div><div class="line">    <span class="comment">/* Check status of comparator, Status will be COMPARATOR_STATE_OUTPUT_HIGH */</span></div><div class="line">    (void) <a class="code" href="group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23">R_ACMPHS_StatusGet</a>(&amp;g_comparator_ctrl, &amp;status);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="gac7869c5964b098497c2eb1d1747ae888"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gac7869c5964b098497c2eb1d1747ae888">&#9670;&nbsp;</a></span>R_ACMPHS_Open()</h2>
 
@@ -548,7 +548,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

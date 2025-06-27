@@ -1,0 +1,2265 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Layer3 Ethernet Switch (r_layer3_switch)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_a_y_e_r3___s_w_i_t_c_h.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Layer3 Ethernet Switch (r_layer3_switch)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga4aec278118b9d59cbeebbe42e373344c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__cfg__t">ether_switch_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga4aec278118b9d59cbeebbe42e373344c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2091f6bf45559fb944aecf2e5ab65911"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga2091f6bf45559fb944aecf2e5ab65911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables interrupts and stop module. Implements <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#aae0ab28824d9aa76793f175b978a6251">ether_switch_api_t::close</a>.  <a href="#ga2091f6bf45559fb944aecf2e5ab65911">More...</a><br /></td></tr>
+<tr class="separator:ga2091f6bf45559fb944aecf2e5ab65911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9609b328abab50cc2e311079077d3d5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint32_t *const p_queue_index, const <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> *const p_queue_cfg)</td></tr>
+<tr class="memdesc:ga9609b328abab50cc2e311079077d3d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new descriptor queue and set it to LINKFIX table. This function must be called before calling <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a> and <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4d4d3d661e020ca06ddb863b16f756de">R_LAYER3_SWITCH_GetDescriptor</a>.  <a href="#ga9609b328abab50cc2e311079077d3d5f">More...</a><br /></td></tr>
+<tr class="separator:ga9609b328abab50cc2e311079077d3d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4490ebda9cf2fcc83c076bbd66237e28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint32_t queue_index, const <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> *const p_descriptor)</td></tr>
+<tr class="memdesc:ga4490ebda9cf2fcc83c076bbd66237e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set descripotor data to a target descriptor.  <a href="#ga4490ebda9cf2fcc83c076bbd66237e28">More...</a><br /></td></tr>
+<tr class="separator:ga4490ebda9cf2fcc83c076bbd66237e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d4d3d661e020ca06ddb863b16f756de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4d4d3d661e020ca06ddb863b16f756de">R_LAYER3_SWITCH_GetDescriptor</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint32_t queue_index, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> *const p_descriptor)</td></tr>
+<tr class="memdesc:ga4d4d3d661e020ca06ddb863b16f756de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get descripotor data from a target descriptor.  <a href="#ga4d4d3d661e020ca06ddb863b16f756de">More...</a><br /></td></tr>
+<tr class="separator:ga4d4d3d661e020ca06ddb863b16f756de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga764348620bb502a2f564e06d3a251a1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint32_t queue_index)</td></tr>
+<tr class="memdesc:ga764348620bb502a2f564e06d3a251a1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reload and enable a descriptor queue. In a TX descriptor queue, the queue start transmission. In a RX descriptor queue, the queue start reception.  <a href="#ga764348620bb502a2f564e06d3a251a1e">More...</a><br /></td></tr>
+<tr class="separator:ga764348620bb502a2f564e06d3a251a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a03b0bbb0118e95215c472e3f08491b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5a03b0bbb0118e95215c472e3f08491b">R_LAYER3_SWITCH_CallbackSet</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *), void *const p_context, <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga5a03b0bbb0118e95215c472e3f08491b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08a836e498d5995d4472630c294c15cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga08a836e498d5995d4472630c294c15cb">R_LAYER3_SWITCH_ConfigurePort</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint8_t port, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a> *p_port_cfg)</td></tr>
+<tr class="separator:ga08a836e498d5995d4472630c294c15cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa73731a934620002b891c5c14ad46699"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a> const *const p_target_frame, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a> const *const p_entry_cfg)</td></tr>
+<tr class="separator:gaa73731a934620002b891c5c14ad46699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4f90a2572ba536da1d95122dd376ec2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gae4f90a2572ba536da1d95122dd376ec2">R_LAYER3_SWITCH_SearchTableEntry</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a> const *const p_target_frame, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a> *const p_entry_cfg)</td></tr>
+<tr class="separator:gae4f90a2572ba536da1d95122dd376ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga584a1c701442875d7e3f29f1360fdc7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__cfg__t">layer3_switch_table_cfg_t</a> const *const p_table_cfg)</td></tr>
+<tr class="separator:ga584a1c701442875d7e3f29f1360fdc7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7202ab557137d6fe7c540e3cbb45f59b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga7202ab557137d6fe7c540e3cbb45f59b">R_LAYER3_SWITCH_GetTable</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__t">layer3_switch_table_t</a> *const p_table)</td></tr>
+<tr class="separator:ga7202ab557137d6fe7c540e3cbb45f59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>The LAYER3 SWITCH module (r_layer3_switch) provides an API for standard Ethernet communications applications that use the ESWM peripheral. It implements the <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html">Ethernet Switch Interface</a>. </p>
+<h1><a class="anchor" id="r-layer3-switch-overview"></a>
+Overview</h1>
+<p>This module performs Ethernet frame transmission and reception using Ethernet Switch Module.</p>
+<h2><a class="anchor" id="r-layer3-switch-features"></a>
+Features</h2>
+<p>The layer3 switch module supports the following features:</p><ul>
+<li>Transmit/receive data using a descriptor.</li>
+<li>Timestamp feature</li>
+<li>Optional callback function when transmit/receive complete or an error occurs</li>
+</ul>
+<h1><a class="anchor" id="r-layer3-switch-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_layer3_switch</h2>
+The following build time configurations are defined in fsp_cfg/r_layer3_switch_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Available queue num</td><td>Value must be an integer between 1 and 64</td><td>4 </td><td>available queue num. </td></tr>
+</table>
+ <h2>Configurations for Networking &gt; Switch (r_layer3_switch)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Switch (r_layer3_switch). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the layer3_switch interrupt priority. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Ports  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Port 0 Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 0 fowarding </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Port 1 Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 1 fowarding </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Port 0 MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 0. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Port 1 MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 1. </td></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_layer3_switch0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Channel</td><td>0</td><td>0 </td><td>Select the layer3 switch controller channel number. </td></tr>
+<tr class="tree_none">
+<td>Context</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Placeholder for user data. Passed to the user callback in <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a>.  </td></tr>
+<tr class="tree_none">
+<td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs </td></tr>
+<tr class="tree_none">
+<td>Number of Layer 3 routing entries</td><td>Value must be an integer between 1 and 256</td><td>10 </td><td>Maximum number of Layer 3 routing entries. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="r-layer3-switch-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="r-layer3-switch-limitations"></a>
+Limitations</h2>
+<h1><a class="anchor" id="r-layer3-switch-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of transmission use of the LAYER3 SWITCH.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE            (8)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE              (1514)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER        ((uint8_t) ((LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE &amp; \</span></div><div class="line"><span class="preprocessor">                                                                           0xFF00) &gt;&gt; 8))</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER        ((uint8_t) LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE &amp; \</span></div><div class="line"><span class="preprocessor">                                                               0x00FF)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE    (60)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_SOURCE_MAC_ADDRESS              0x74, 0x90, 0x50, 0x00, 0x79, 0x01</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_DESTINATION_MAC_ADDRESS         0x74, 0x90, 0x50, 0x00, 0x79, 0x02</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_FRAME_TYPE                      0x00, 0x2E</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PAYLOAD                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \</span></div><div class="line"><span class="preprocessor">    0x00,                                                                                                           \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                     \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                     \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00</span></div><div class="line"></div><div class="line"><a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> gp_descriptor_pool[LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE];</div><div class="line">uint8_t gp_ether_buffer0[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer1[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer2[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer3[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer4[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer5[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer6[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer7[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line"></div><div class="line">uint8_t * gpp_ether_buffers[8] =</div><div class="line">{</div><div class="line">    &amp;gp_ether_buffer0[0],</div><div class="line">    &amp;gp_ether_buffer1[0],</div><div class="line">    &amp;gp_ether_buffer2[0],</div><div class="line">    &amp;gp_ether_buffer3[0],</div><div class="line">    &amp;gp_ether_buffer4[0],</div><div class="line">    &amp;gp_ether_buffer5[0],</div><div class="line">    &amp;gp_ether_buffer6[0],</div><div class="line">    &amp;gp_ether_buffer7[0],</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Transmit data buffer */</span></div><div class="line">uint8_t gp_send_data[LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">{</div><div class="line">    LAYER3_SWITCH_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_transmit_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err         = FSP_SUCCESS;</div><div class="line">    uint32_t  queue_index = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure transmission queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> transmission_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type               = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04af29cf0e59d9c0e555490c288acb0df9e">LAYER3_SWITCH_QUEUE_TYPE_TX</a>,</div><div class="line">        .write_back_mode    = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array = gp_descriptor_pool,</div><div class="line">        .array_length       = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports              = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Prepare data for transmission. */</span></div><div class="line">    memcpy(gpp_ether_buffers[0], gp_send_data, LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize transmission descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> transmission_descriptor = {0};</div><div class="line">    transmission_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    transmission_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    transmission_descriptor.basic.die    = 1;</div><div class="line">    transmission_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    transmission_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58a6da12aac07fab773f2ff28c2eb91251f">LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE</a>;</div><div class="line">    transmission_descriptor.info1_tx.fmt = 1;</div><div class="line">    transmission_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize PHY-LSI chip. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e">R_RMAC_PHY_ChipInit</a>(&amp;g_rmac_phy0_ctrl, &amp;g_rmac_phy0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#gac96ef5fa0c9eb9c86c89ab5aae7e20ea">R_RMAC_PHY_StartAutoNegotiate</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Get the Ethernet link status read from the PHY-LSI Basic Status registers until link-up. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga25794f823211f7b3de4605787738a22e">R_RMAC_PHY_LinkStatusGet</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;transmission_queue_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set descriptor to queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start transmission. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get descriptor status. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4d4d3d661e020ca06ddb863b16f756de">R_LAYER3_SWITCH_GetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if transmission is completed. */</span></div><div class="line">    assert(<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe">LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY</a> == transmission_descriptor.basic.dt);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the layer3 switch instance. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a>(&amp;g_layer3_switch0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> This is a basic example of reception use of the LAYER3 SWITCH.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH    (4)</span></div><div class="line"></div><div class="line"><span class="keywordtype">bool</span> g_complete_reception_flag;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_receive_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err         = FSP_SUCCESS;</div><div class="line">    uint32_t  queue_index = 1;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure reception queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> reception_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type               = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04aaca4e31e8b9e516e20c50be9c8408d7a">LAYER3_SWITCH_QUEUE_TYPE_RX</a>,</div><div class="line">        .write_back_mode    = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array = gp_descriptor_pool,</div><div class="line">        .array_length       = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports              = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize reception descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> reception_descriptor = {0};</div><div class="line">    reception_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    reception_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    reception_descriptor.basic.die    = 1;</div><div class="line">    reception_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    reception_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe">LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY</a>;</div><div class="line">    reception_descriptor.info1_tx.fmt = 1;</div><div class="line">    reception_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize PHY-LSI chip. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e">R_RMAC_PHY_ChipInit</a>(&amp;g_rmac_phy0_ctrl, &amp;g_rmac_phy0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#gac96ef5fa0c9eb9c86c89ab5aae7e20ea">R_RMAC_PHY_StartAutoNegotiate</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Get the Ethernet link status read from the PHY-LSI Basic Status registers until link-up. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga25794f823211f7b3de4605787738a22e">R_RMAC_PHY_LinkStatusGet</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;reception_queue_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Copy descriptor to queue. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH - 1; i++)</div><div class="line">    {</div><div class="line">        memset(gpp_ether_buffers[i], 0, LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE);</div><div class="line">        reception_descriptor.basic.ptr_l = (uintptr_t) gpp_ether_buffers[i];</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;reception_descriptor);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    g_complete_reception_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Start reception. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait to complete reception. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span> != g_complete_reception_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the layer3 switch instance. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a>(&amp;g_layer3_switch0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_example_callback (<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> * p_args) {</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a4fe5367c86c4967b3ab5b240536cfb8b">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524aa0a0514df6bac40c835e4fcda32073b4">ETHER_SWITCH_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_complete_reception_flag = <span class="keyword">true</span>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a0487493c21c16952bd6586b0230c88d7">ETHER_SWITCH_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a200ad7f19a1e015a4212e6fc5a9f164f">ETHER_SWITCH_EVENT_RX_QUEUE_FULL</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e">ETHER_SWITCH_EVENT_RX_MESSAGE_LOST</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structlayer3__switch__basic__descriptor__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__basic__descriptor__t">layer3_switch_basic_descriptor_t</a></td></tr>
+<tr class="separator:structlayer3__switch__basic__descriptor__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__descriptor__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a></td></tr>
+<tr class="separator:structlayer3__switch__descriptor__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__descriptor__queue__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__descriptor__queue__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__port__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__port__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__descriptor__queue__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__status__t">layer3_switch_descriptor_queue_status_t</a></td></tr>
+<tr class="separator:structlayer3__switch__descriptor__queue__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__ipv6__filter__address__offset__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__ipv6__filter__address__offset__t">layer3_switch_ipv6_filter_address_offset_t</a></td></tr>
+<tr class="separator:structlayer3__switch__ipv6__filter__address__offset__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__l3__stream__filter__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__l3__stream__filter__cfg__t">layer3_switch_l3_stream_filter_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__l3__stream__filter__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__frame__vlan__tag__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__vlan__tag__t">layer3_switch_frame_vlan_tag_t</a></td></tr>
+<tr class="separator:structlayer3__switch__frame__vlan__tag__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__frame__filter__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a></td></tr>
+<tr class="separator:structlayer3__switch__frame__filter__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__l3__filter__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__l3__filter__t">layer3_switch_l3_filter_t</a></td></tr>
+<tr class="separator:structlayer3__switch__l3__filter__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__l3__update__config__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__l3__update__config__t">layer3_switch_l3_update_config_t</a></td></tr>
+<tr class="separator:structlayer3__switch__l3__update__config__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__table__entry__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__table__entry__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__table__entry__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a></td></tr>
+<tr class="separator:structlayer3__switch__table__entry__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__forwarding__port__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__forwarding__port__cfg__t">layer3_switch_forwarding_port_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__forwarding__port__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__table__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__t">layer3_switch_table_t</a></td></tr>
+<tr class="separator:structlayer3__switch__table__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__table__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__cfg__t">layer3_switch_table_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__table__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__extended__cfg__t">layer3_switch_extended_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__instance__ctrl__t">layer3_switch_instance_ctrl_t</a></td></tr>
+<tr class="separator:structlayer3__switch__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga6e36f8895c3397d72343e2df2de37a58"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga6e36f8895c3397d72343e2df2de37a58">layer3_switch_descriptor_type_t</a> </td></tr>
+<tr class="separator:ga6e36f8895c3397d72343e2df2de37a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7363c7f13ca6d95350e732c699fca85b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga7363c7f13ca6d95350e732c699fca85b">layer3_switch_port_bitmask_t</a> </td></tr>
+<tr class="separator:ga7363c7f13ca6d95350e732c699fca85b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5037f4e98ab3c474ec9cfde36b0e4f04"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5037f4e98ab3c474ec9cfde36b0e4f04">layer3_switch_queue_type_t</a> </td></tr>
+<tr class="separator:ga5037f4e98ab3c474ec9cfde36b0e4f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5bf3e03175ddd4e81e4068df21dab440"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5bf3e03175ddd4e81e4068df21dab440">layer3_switch_descriptor_format_t</a> </td></tr>
+<tr class="separator:ga5bf3e03175ddd4e81e4068df21dab440"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97af1e0d115b4f3b917e9095f1edfde3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga97af1e0d115b4f3b917e9095f1edfde3">layer3_switch_write_back_mode_t</a> </td></tr>
+<tr class="separator:ga97af1e0d115b4f3b917e9095f1edfde3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3d5858ccf2af10a68836e0c5a17f2e4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gac3d5858ccf2af10a68836e0c5a17f2e4">layer3_switch_ip_version_t</a> </td></tr>
+<tr class="separator:gac3d5858ccf2af10a68836e0c5a17f2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ee003b80feac24c5a418637472769b2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5ee003b80feac24c5a418637472769b2">layer3_switch_ip_address_direction_t</a> </td></tr>
+<tr class="separator:ga5ee003b80feac24c5a418637472769b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e6fc72445d9c525f90a02be6422665d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1e6fc72445d9c525f90a02be6422665d">layer3_switch_magic_packet_detection_t</a> </td></tr>
+<tr class="separator:ga1e6fc72445d9c525f90a02be6422665d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c9d922fd96fab6fec1e248190d13587"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1c9d922fd96fab6fec1e248190d13587">layer3_switch_vlan_mode_t</a> </td></tr>
+<tr class="separator:ga1c9d922fd96fab6fec1e248190d13587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga67505de50455180044c38c855caae713"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga67505de50455180044c38c855caae713">layer3_switch_vlan_ingress_mode_t</a> </td></tr>
+<tr class="separator:ga67505de50455180044c38c855caae713"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11b00ba97d60d23e7e2bcd37af8c20b7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga11b00ba97d60d23e7e2bcd37af8c20b7">layer3_switch_vlan_egress_mode_t</a> </td></tr>
+<tr class="separator:ga11b00ba97d60d23e7e2bcd37af8c20b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa918058dba01e2d9fe7127115c0fa3fd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa918058dba01e2d9fe7127115c0fa3fd">layer3_switch_ip_protocol_t</a> </td></tr>
+<tr class="separator:gaa918058dba01e2d9fe7127115c0fa3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1ec51deb790a57c4efc8affc40d0408"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gab1ec51deb790a57c4efc8affc40d0408">layer3_switch_forwarding_r_tag_t</a> </td></tr>
+<tr class="separator:gab1ec51deb790a57c4efc8affc40d0408"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf2e22cc4b55ed27063083f9a7c2570aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaf2e22cc4b55ed27063083f9a7c2570aa">layer3_switch_l3_filter_bitmask_t</a> </td></tr>
+<tr class="separator:gaf2e22cc4b55ed27063083f9a7c2570aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8f7c5de38ae1d742608d5ed9729d531"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gab8f7c5de38ae1d742608d5ed9729d531">layer3_switch_l3_update_bitmask_t</a> </td></tr>
+<tr class="separator:gab8f7c5de38ae1d742608d5ed9729d531"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga972628bbf4d3df0f61f064bac5e7e66d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga972628bbf4d3df0f61f064bac5e7e66d">layer3_switch_table_entry_type_t</a> </td></tr>
+<tr class="separator:ga972628bbf4d3df0f61f064bac5e7e66d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a4a3bd0d79183646aac764abdaea5a0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8a4a3bd0d79183646aac764abdaea5a0">layer3_switch_table_status_t</a> </td></tr>
+<tr class="separator:ga8a4a3bd0d79183646aac764abdaea5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structlayer3__switch__basic__descriptor__t" id="structlayer3__switch__basic__descriptor__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__basic__descriptor__t">&#9670;&nbsp;</a></span>layer3_switch_basic_descriptor_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_basic_descriptor_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>GWCA descriptor. </p>
+</div>
+</div>
+</div>
+<a name="structlayer3__switch__descriptor__t" id="structlayer3__switch__descriptor__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__descriptor__t">&#9670;&nbsp;</a></span>layer3_switch_descriptor_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_descriptor_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>GWCA extended descriptor. </p>
+</div>
+</div>
+</div>
+<a name="structlayer3__switch__descriptor__queue__cfg__t" id="structlayer3__switch__descriptor__queue__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__descriptor__queue__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_descriptor_queue_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_descriptor_queue_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of a descriptor queue. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a09902b4ef8f11a9d954aac33fe36b002"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5bf3e03175ddd4e81e4068df21dab440">layer3_switch_descriptor_format_t</a></td>
+<td class="fieldname">
+descriptor_format</td>
+<td class="fielddoc">
+Enable or disable extended descriptors. </td></tr>
+<tr><td class="fieldtype">
+<a id="a501ccb8383c797945fec346ccfab36a6"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5037f4e98ab3c474ec9cfde36b0e4f04">layer3_switch_queue_type_t</a></td>
+<td class="fieldname">
+type</td>
+<td class="fielddoc">
+Reception queue or transmission queue. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad887e6021caf1d7d20ef54057375dfdb"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga97af1e0d115b4f3b917e9095f1edfde3">layer3_switch_write_back_mode_t</a></td>
+<td class="fieldname">
+write_back_mode</td>
+<td class="fielddoc">
+Configure write-back to descriptor fields. </td></tr>
+<tr><td class="fieldtype">
+<a id="a41547671737fdd412141c0c017c9591d"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> *</td>
+<td class="fieldname">
+p_descriptor_array</td>
+<td class="fielddoc">
+Descriptor array that use to create queue. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae66a70d6241552d2bb029944991e3bc6"></a>uint32_t</td>
+<td class="fieldname">
+array_length</td>
+<td class="fielddoc">
+Length of descriptor array. This length includes terminate descriptor at the end. </td></tr>
+<tr><td class="fieldtype">
+<a id="ade0b6f513f0df12dbf183d260b5127b3"></a>uint32_t</td>
+<td class="fieldname">
+ports</td>
+<td class="fielddoc">
+Bitmap of ports that use this queue. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__port__cfg__t" id="structlayer3__switch__port__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__port__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_port_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_port_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of each Ethernet port. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a4addc60cb74071212878fc65b38a1e35"><td class="memItemLeft" align="right" valign="top"><a id="a4addc60cb74071212878fc65b38a1e35"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a4addc60cb74071212878fc65b38a1e35">p_mac_address</a></td></tr>
+<tr class="memdesc:a4addc60cb74071212878fc65b38a1e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to MAC address. <br /></td></tr>
+<tr class="separator:a4addc60cb74071212878fc65b38a1e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac29cf11b036c76601e05767b0a3313f0"><td class="memItemLeft" align="right" valign="top"><a id="ac29cf11b036c76601e05767b0a3313f0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ac29cf11b036c76601e05767b0a3313f0">forwarding_to_cpu_enable</a></td></tr>
+<tr class="memdesc:ac29cf11b036c76601e05767b0a3313f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable reception on CPU. <br /></td></tr>
+<tr class="separator:ac29cf11b036c76601e05767b0a3313f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa966970f88f620fb5e2865cc972b136f"><td class="memItemLeft" align="right" valign="top"><a id="aa966970f88f620fb5e2865cc972b136f"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa966970f88f620fb5e2865cc972b136f">p_callback</a> )(<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:aa966970f88f620fb5e2865cc972b136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when an ISR occurs. <br /></td></tr>
+<tr class="separator:aa966970f88f620fb5e2865cc972b136f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4516a5e64651c279bc195fa528814bf4"><td class="memItemLeft" align="right" valign="top"><a id="a4516a5e64651c279bc195fa528814bf4"></a>
+<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a4516a5e64651c279bc195fa528814bf4">p_callback_memory</a></td></tr>
+<tr class="memdesc:a4516a5e64651c279bc195fa528814bf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to optional callback argument memory. <br /></td></tr>
+<tr class="separator:a4516a5e64651c279bc195fa528814bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d010f25ca6fde268ec5b70ff6aba1a7"><td class="memItemLeft" align="right" valign="top"><a id="a2d010f25ca6fde268ec5b70ff6aba1a7"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a2d010f25ca6fde268ec5b70ff6aba1a7">p_context</a></td></tr>
+<tr class="memdesc:a2d010f25ca6fde268ec5b70ff6aba1a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context to be passed into callback function. <br /></td></tr>
+<tr class="separator:a2d010f25ca6fde268ec5b70ff6aba1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__descriptor__queue__status__t" id="structlayer3__switch__descriptor__queue__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__descriptor__queue__status__t">&#9670;&nbsp;</a></span>layer3_switch_descriptor_queue_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_descriptor_queue_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Status of a descriptor queue. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7773cd221d8fc6315383815eb2063bb6"></a>uint32_t</td>
+<td class="fieldname">
+head</td>
+<td class="fielddoc">
+Index at the head of the queue. This used for GetDescriptor API. </td></tr>
+<tr><td class="fieldtype">
+<a id="a18e04947dae6835141614e2e7c72b2b1"></a>uint32_t</td>
+<td class="fieldname">
+tail</td>
+<td class="fielddoc">
+Index at the tail of the queue. This used for SetDescriptor API. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0a7139c9654d1561636a7c50d0c51ab7"></a>bool</td>
+<td class="fieldname">
+created</td>
+<td class="fielddoc">
+This queue is already created. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9efb9c42c056ae8017afdf3d55b5f503"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> <br class="typebreak" />
+const  *</td>
+<td class="fieldname">
+p_queue_cfg</td>
+<td class="fielddoc">
+Configuration of this queue. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__ipv6__filter__address__offset__t" id="structlayer3__switch__ipv6__filter__address__offset__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__ipv6__filter__address__offset__t">&#9670;&nbsp;</a></span>layer3_switch_ipv6_filter_address_offset_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_ipv6_filter_address_offset_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>IP address offset for creating IPv6 filter of Layer3 forwarding. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a39e8b85d4ebfde2e103aae0deebe9598"></a>uint8_t</td>
+<td class="fieldname">
+offset</td>
+<td class="fielddoc">
+Offset of IPv6 address. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9eb2fad7d8e2e520789dac6d2c6eb712"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5ee003b80feac24c5a418637472769b2">layer3_switch_ip_address_direction_t</a></td>
+<td class="fieldname">
+direction</td>
+<td class="fielddoc">
+Select source or destination. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__l3__stream__filter__cfg__t" id="structlayer3__switch__l3__stream__filter__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__l3__stream__filter__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_l3_stream_filter_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_l3_stream_filter_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of stream filter in Layer3 forwarding. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8655f35f891063fcfa70854805bdf135"></a>uint16_t</td>
+<td class="fieldname">
+filter_field_bitmask</td>
+<td class="fielddoc">
+Bitmask of which feilds is enabled in stream filter. Use <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaf2e22cc4b55ed27063083f9a7c2570aa">layer3_switch_l3_filter_bitmask_t</a>. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1588b5cfbacfa9ea1ef15ee5de9f9b9e"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__ipv6__filter__address__offset__t">layer3_switch_ipv6_filter_address_offset_t</a></td>
+<td class="fieldname">
+ipv6_address0</td>
+<td class="fielddoc">
+Offset of IPv6 address 0. </td></tr>
+<tr><td class="fieldtype">
+<a id="afb5b645c71110b913e3090c29ec74d6a"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__ipv6__filter__address__offset__t">layer3_switch_ipv6_filter_address_offset_t</a></td>
+<td class="fieldname">
+ipv6_address1</td>
+<td class="fielddoc">
+Offset of IPv6 address 1. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__frame__vlan__tag__t" id="structlayer3__switch__frame__vlan__tag__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__frame__vlan__tag__t">&#9670;&nbsp;</a></span>layer3_switch_frame_vlan_tag_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_frame_vlan_tag_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VLAN tag structre. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a729e5743c6e8abf7cf9d9c9705f45340"></a>uint16_t</td>
+<td class="fieldname">
+pcp: 3</td>
+<td class="fielddoc">
+Priority Code Point (3 bit). </td></tr>
+<tr><td class="fieldtype">
+<a id="ac44f5ce0c2560e7d4879605b7549fadf"></a>uint16_t</td>
+<td class="fieldname">
+dei: 1</td>
+<td class="fielddoc">
+Drop Eligible Indicator (1 bit). </td></tr>
+<tr><td class="fieldtype">
+<a id="aa49518f0313678c86f3705bb85e695b8"></a>uint16_t</td>
+<td class="fieldname">
+id: 12</td>
+<td class="fielddoc">
+VLAN ID (12 bit). </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__frame__filter__t" id="structlayer3__switch__frame__filter__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__frame__filter__t">&#9670;&nbsp;</a></span>layer3_switch_frame_filter_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_frame_filter_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Frame filter of a MAC/VLAN/Layer3 forwarding entry. Set values for members required for filtering. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0227c6168c0c59e1de2efeebb8a4c336"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga972628bbf4d3df0f61f064bac5e7e66d">layer3_switch_table_entry_type_t</a></td>
+<td class="fieldname">
+entry_type</td>
+<td class="fielddoc">
+Type of this entry. Selcet MAC, VLAN or Layer3. </td></tr>
+<tr><td class="fieldtype">
+<a id="aeb32d19171dc949791510fe19c36f646"></a>uint8_t *</td>
+<td class="fieldname">
+p_destination_mac_address</td>
+<td class="fielddoc">
+Destination MAC address. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4672fb33f1aa707fec83025c41c73f87"></a>uint8_t *</td>
+<td class="fieldname">
+p_source_mac_address</td>
+<td class="fielddoc">
+Source MAC address. </td></tr>
+<tr><td class="fieldtype">
+<a id="a347da6a2fff34e82022398499432aa17"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__vlan__tag__t">layer3_switch_frame_vlan_tag_t</a></td>
+<td class="fieldname">
+vlan_c_tag</td>
+<td class="fielddoc">
+VLAN C-TAG. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac52e5e8ff2f014fd14d2dcfb0c55940e"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__vlan__tag__t">layer3_switch_frame_vlan_tag_t</a></td>
+<td class="fieldname">
+vlan_s_tag</td>
+<td class="fielddoc">
+VLAN S-TAG. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9da476d3df38479470c2b3306cd07e49"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gac3d5858ccf2af10a68836e0c5a17f2e4">layer3_switch_ip_version_t</a></td>
+<td class="fieldname">
+ip_version</td>
+<td class="fielddoc">
+IP version. Select IPv4, IPv6, or not IP packet. </td></tr>
+<tr><td class="fieldtype">
+<a id="af9305bca9b910c5403b2f7f44c6d4d9e"></a>uint8_t</td>
+<td class="fieldname">
+protocol</td>
+<td class="fielddoc">
+IP protocol. </td></tr>
+<tr><td class="fieldtype">
+<a id="adb5ce895dacd382e6ab907c061bc62a6"></a>uint8_t *</td>
+<td class="fieldname">
+p_source_ip_address</td>
+<td class="fielddoc">
+Source IP address. </td></tr>
+<tr><td class="fieldtype">
+<a id="aea3a04d8fd1cc7a4d12f0dacc2fd9e07"></a>uint8_t *</td>
+<td class="fieldname">
+p_destination_ip_address</td>
+<td class="fielddoc">
+Destination IP address. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad7a40e87ab80ed10f55b085582d5de34"></a>uint16_t</td>
+<td class="fieldname">
+layer4_source_port</td>
+<td class="fielddoc">
+TCP/UDP source port. </td></tr>
+<tr><td class="fieldtype">
+<a id="afd2abcccd40496dc901bd79176df77e2"></a>uint16_t</td>
+<td class="fieldname">
+layer4_destination_port</td>
+<td class="fielddoc">
+TCP/UDP destination port. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__l3__filter__t" id="structlayer3__switch__l3__filter__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__l3__filter__t">&#9670;&nbsp;</a></span>layer3_switch_l3_filter_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_l3_filter_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Store filter information of Layer3 forwarding entry. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a9d6231b5bf49e2109e60616c8afcd46f"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a></td>
+<td class="fieldname">
+frame</td>
+<td class="fielddoc">
+Target frame format that used to Layer3 forwarding. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__l3__update__config__t" id="structlayer3__switch__l3__update__config__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__l3__update__config__t">&#9670;&nbsp;</a></span>layer3_switch_l3_update_config_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_l3_update_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of a L2/L3 update feature for output frames. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a93e3e2db43ab89e98a80a60b80b1d19b"></a>uint32_t</td>
+<td class="fieldname">
+enable_destination_ports</td>
+<td class="fielddoc">
+Destination ports that this update config is enabled. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7a466c07e44f3dace20707571abfecdf"></a>uint32_t</td>
+<td class="fieldname">
+update_field_bitmask</td>
+<td class="fielddoc">
+Bit mask of which fields will be updated. Use <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gab8f7c5de38ae1d742608d5ed9729d531">layer3_switch_l3_update_bitmask_t</a>. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3fa87af1ce79e9bfcacdc275ccfbce00"></a>uint8_t *</td>
+<td class="fieldname">
+p_mac_destination_address</td>
+<td class="fielddoc">
+MAC Destination Address. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0f89776bc87a2aed3c6cf15901b4bbab"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__vlan__tag__t">layer3_switch_frame_vlan_tag_t</a></td>
+<td class="fieldname">
+vlan_c_tag</td>
+<td class="fielddoc">
+VLAN C-tag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0f1291914d078f84777fae9928b2d1ad"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__vlan__tag__t">layer3_switch_frame_vlan_tag_t</a></td>
+<td class="fieldname">
+vlan_s_tag</td>
+<td class="fielddoc">
+VLAN S-tag. </td></tr>
+<tr><td class="fieldtype">
+<a id="a32d91a13fd5e19d14530afedce8912db"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gab1ec51deb790a57c4efc8affc40d0408">layer3_switch_forwarding_r_tag_t</a></td>
+<td class="fieldname">
+r_tag_update_mode</td>
+<td class="fielddoc">
+R-TAG update setting. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__table__entry__cfg__t" id="structlayer3__switch__table__entry__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__table__entry__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_table_entry_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_table_entry_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Table entry configuration of MAC/VLAN/Layer3 forwarding. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acbd5ea9cfb996323c9b54b79d91e8093"></a>bool</td>
+<td class="fieldname">
+entry_enable</td>
+<td class="fielddoc">
+Enable or disable entry. If this field is false, entry will be removed. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab7c67b6a8af420660f048163476dc46e"></a>bool</td>
+<td class="fieldname">
+security_enable</td>
+<td class="fielddoc">
+Entry is secure or not. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8a1047a9e331a283dc402d4220ccf699"></a>uint32_t</td>
+<td class="fieldname">
+destination_ports</td>
+<td class="fielddoc">
+Destination ports of forwarding. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6fc334dfc9c9199ba78e5549473f5cf0"></a>uint32_t</td>
+<td class="fieldname">
+source_ports</td>
+<td class="fielddoc">
+Source ports that enable forwarding of incoming frame. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab4624dbaba71621612168c388d750e69"></a>uint32_t</td>
+<td class="fieldname">
+destination_queue_index</td>
+<td class="fielddoc">
+Destination queue. This fields is only used when a destination port is CPU. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa2df8fe4f9d9e29adf04da8b02378011"></a>uint32_t</td>
+<td class="fieldname">
+internal_priority_update_enable</td>
+<td class="fielddoc">
+Enable to update internal priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad49a9c36e935dba56058a7b63a6940cf"></a>uint32_t</td>
+<td class="fieldname">
+internal_priority_update_value</td>
+<td class="fielddoc">
+Internal priority when updating is enabled. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6584f9e8b66dc2465178d609ff1c303d"></a>union <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#unionlayer3__switch__table__entry__cfg__t_8____unnamed____">layer3_switch_table_entry_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__table__entry__t" id="structlayer3__switch__table__entry__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__table__entry__t">&#9670;&nbsp;</a></span>layer3_switch_table_entry_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_table_entry_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Table entry of MAC/VLAN/Layer3 forwarding. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af6d1ef31a86f3cd5e5b22dea77a86ef5"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a></td>
+<td class="fieldname">
+target_frame</td>
+<td class="fielddoc">
+Target frame of forwarding by this entry. </td></tr>
+<tr><td class="fieldtype">
+<a id="a850337a2e605b3eb95a40d7731af0758"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a></td>
+<td class="fieldname">
+entry_cfg</td>
+<td class="fielddoc">
+Configuration of this entry. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__forwarding__port__cfg__t" id="structlayer3__switch__forwarding__port__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__forwarding__port__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_forwarding_port_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_forwarding_port_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of forwarding feature for each port. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3bfd9a3b5cc9fa61cc6bd4a7b3569122"></a>bool</td>
+<td class="fieldname">
+mac_table_enable</td>
+<td class="fielddoc">
+Enable MAC table and forwarding feature. </td></tr>
+<tr><td class="fieldtype">
+<a id="aab74c4556b9a248596a1a3d61ad71296"></a>bool</td>
+<td class="fieldname">
+mac_reject_unknown</td>
+<td class="fielddoc">
+Reject frame with unknown MAC address. </td></tr>
+<tr><td class="fieldtype">
+<a id="abdf19795847617a1e1166a622716c681"></a>bool</td>
+<td class="fieldname">
+mac_hardware_learning_enable</td>
+<td class="fielddoc">
+Enable hardware learning and migration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a63bab2e9e2deb1297eba4b4386356cc7"></a>bool</td>
+<td class="fieldname">
+vlan_table_enable</td>
+<td class="fielddoc">
+Enable VLAN table and forwarding feature. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1ff32747a1985cc4f876ce98066dcc67"></a>bool</td>
+<td class="fieldname">
+vlan_reject_unknown</td>
+<td class="fielddoc">
+Reject frame with unknown VLAN ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae536f51d4ec8d42d8be333d501aeca63"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga67505de50455180044c38c855caae713">layer3_switch_vlan_ingress_mode_t</a></td>
+<td class="fieldname">
+vlan_ingress_mode</td>
+<td class="fielddoc">
+Select Tag-based VLAN or Port-based VLAN for incoming frame. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7655c0e27534d480020de7338100cdeb"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga11b00ba97d60d23e7e2bcd37af8c20b7">layer3_switch_vlan_egress_mode_t</a></td>
+<td class="fieldname">
+vlan_egress_mode</td>
+<td class="fielddoc">
+Tagging/untagging mode for outgoing frame. </td></tr>
+<tr><td class="fieldtype">
+<a id="a81f7205c04e855cb2a17afa81bee74d9"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__vlan__tag__t">layer3_switch_frame_vlan_tag_t</a></td>
+<td class="fieldname">
+vlan_s_tag</td>
+<td class="fielddoc">
+S-TAG of this port. When egress mode is hardware SC-TAG, add this to outgoing frame. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0331cc2aebfce4db29eec9dd54c5ad31"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__vlan__tag__t">layer3_switch_frame_vlan_tag_t</a></td>
+<td class="fieldname">
+vlan_c_tag</td>
+<td class="fielddoc">
+C-TAG of this port. When egress mode is hardware C-TAG, add this to outgoing frame. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6338eebeb2cabd7c7f0fe601695c5070"></a>bool</td>
+<td class="fieldname">
+layer3_table_enable</td>
+<td class="fielddoc">
+Enable Layer3 table and forwarding feature. </td></tr>
+<tr><td class="fieldtype">
+<a id="a99ce3080a5685e18caea73d89cbde421"></a>bool</td>
+<td class="fieldname">
+layer3_reject_unknown</td>
+<td class="fielddoc">
+Reject frame that not found in Layer3 table. </td></tr>
+<tr><td class="fieldtype">
+<a id="acc7d367b91c90393fe46ab64ab6d828d"></a>bool</td>
+<td class="fieldname">
+layer3_ipv4_filter_enable</td>
+<td class="fielddoc">
+Enable IPv4 stream filter. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaae224f5524bbd4614e5452360aaf804"></a>bool</td>
+<td class="fieldname">
+layer3_ipv6_filter_enable</td>
+<td class="fielddoc">
+Enable IPv6 stream filter. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9c98552cde124cf0c7bb0926fc5a1388"></a>bool</td>
+<td class="fieldname">
+layer3_l2_filter_enable</td>
+<td class="fielddoc">
+Enable L2 stream filter. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__table__t" id="structlayer3__switch__table__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__table__t">&#9670;&nbsp;</a></span>layer3_switch_table_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_table_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Forwarding table containing MAC/VLAN/Layer3 forwarding entries. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af554746382dbc11baa8601c35a9278f6"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a> *</td>
+<td class="fieldname">
+p_mac_entry_list</td>
+<td class="fielddoc">
+List of MAC entries. </td></tr>
+<tr><td class="fieldtype">
+<a id="af43c1f82e49421101bec04f3f59b2509"></a>uint32_t</td>
+<td class="fieldname">
+mac_list_length</td>
+<td class="fielddoc">
+Length of the MAC entry list. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0ff9ca4b9b1e800c182c890ba1a4954b"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a> *</td>
+<td class="fieldname">
+p_vlan_entry_list</td>
+<td class="fielddoc">
+List of VLAN entries. </td></tr>
+<tr><td class="fieldtype">
+<a id="a57e6332084d2be7c0e5311c5cd3fd58b"></a>uint32_t</td>
+<td class="fieldname">
+vlan_list_length</td>
+<td class="fielddoc">
+Length of the VLAN entry list. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7f9a0b6cf89352fbc0471057bba9620c"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a> *</td>
+<td class="fieldname">
+p_l3_entry_list</td>
+<td class="fielddoc">
+List of Layer3 entries. </td></tr>
+<tr><td class="fieldtype">
+<a id="a95569e6e87ef7cf92dfadb3bb0095e4e"></a>uint32_t</td>
+<td class="fieldname">
+l3_list_length</td>
+<td class="fielddoc">
+Length of the Layer3 entry list. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__table__cfg__t" id="structlayer3__switch__table__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__table__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_table_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_table_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of the forwarding table. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a25db5747cb55fc103d680354df0036ca"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__t">layer3_switch_table_t</a> *</td>
+<td class="fieldname">
+p_table</td>
+<td class="fielddoc">
+Pointer to forwarding table. </td></tr>
+<tr><td class="fieldtype">
+<a id="aeecfaeb2df35b87d6e5e44a69da40ab6"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__forwarding__port__cfg__t">layer3_switch_forwarding_port_cfg_t</a></td>
+<td class="fieldname">
+port_cfg_list[BSP_FEATURE_ETHER_MAX_CHANNELS+1]</td>
+<td class="fielddoc">
+Forwarding configuration of each port. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1e8ee768db80685c093fc06f93637971"></a>uint32_t</td>
+<td class="fieldname">
+unsecure_entry_maximum_num</td>
+<td class="fielddoc">
+Maximum number of unsecure entries. </td></tr>
+<tr><td class="fieldtype">
+<a id="a127b972a405fabaebda44b15571446fd"></a>bool</td>
+<td class="fieldname">
+mac_entry_aging_enable</td>
+<td class="fielddoc">
+Enable aging feature of MAC table. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0eb8fe0936c3f76da9e1d7d7fed2599e"></a>uint32_t</td>
+<td class="fieldname">
+mac_entry_aging_time_sec</td>
+<td class="fielddoc">
+Time[s] to delete an entry by aging. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae4697eb48c7a9513a0fdce2a956d4882"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1c9d922fd96fab6fec1e248190d13587">layer3_switch_vlan_mode_t</a></td>
+<td class="fieldname">
+vlan_mode</td>
+<td class="fielddoc">
+VLAN mode options: NO VLAN, C-TAG, or SC-TAG. </td></tr>
+<tr><td class="fieldtype">
+<a id="a159f5b02b1a13417d6454222eb0bd312"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__l3__stream__filter__cfg__t">layer3_switch_l3_stream_filter_cfg_t</a></td>
+<td class="fieldname">
+l3_stream_filter_cfg</td>
+<td class="fielddoc">
+Configuration of stream filter in Layer3 forwarding. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__extended__cfg__t" id="structlayer3__switch__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__extended__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ESWM extension configures each Ethernet port and forwarding feature. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af74fc96ef239b9e94c0626ba01ce266a"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__instance__t">ether_phy_instance_t</a> const  *</td>
+<td class="fieldname">
+p_ether_phy_instances[BSP_FEATURE_ETHER_MAX_CHANNELS]</td>
+<td class="fielddoc">
+List of pointers to ETHER_PHY instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7c96b02f8d28d001a5a22701bba7b372"></a>uint32_t</td>
+<td class="fieldname">
+fowarding_target_port_masks[BSP_FEATURE_ETHER_MAX_CHANNELS]</td>
+<td class="fielddoc">
+List of ports to which incoming frames are forwarded. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad2841eed7722a199fde200d93ccc932b"></a>uint8_t *</td>
+<td class="fieldname">
+p_mac_addresses[BSP_FEATURE_ETHER_MAX_CHANNELS]</td>
+<td class="fielddoc">
+MAC address of each port. </td></tr>
+<tr><td class="fieldtype">
+<a id="af953b505c992bd5dc7ce07cdcc8ccb51"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__l3__filter__t">layer3_switch_l3_filter_t</a> *</td>
+<td class="fieldname">
+l3_filter_list</td>
+<td class="fielddoc">
+Filter list of Layer3 routing. </td></tr>
+<tr><td class="fieldtype">
+<a id="a008bae8da99e0dad1c77e6e55fc37dc9"></a>uint32_t</td>
+<td class="fieldname">
+l3_filter_list_length</td>
+<td class="fielddoc">
+Length of Layer3 filter list. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__instance__ctrl__t" id="structlayer3__switch__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__instance__ctrl__t">&#9670;&nbsp;</a></span>layer3_switch_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>LAYER3_SWITCH control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ab10f70e9fedb5561a08fb18da3deec19">ether_switch_api_t::open</a> is called. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:af81e9ca24eba70ee70c0b58e33cfaa2e"><td class="memItemLeft" align="right" valign="top"><a id="af81e9ca24eba70ee70c0b58e33cfaa2e"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af81e9ca24eba70ee70c0b58e33cfaa2e">open</a></td></tr>
+<tr class="memdesc:af81e9ca24eba70ee70c0b58e33cfaa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:af81e9ca24eba70ee70c0b58e33cfaa2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fd2d1e2197a9b6f26d8463185a556cf"><td class="memItemLeft" align="right" valign="top"><a id="a8fd2d1e2197a9b6f26d8463185a556cf"></a>
+<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__cfg__t">ether_switch_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8fd2d1e2197a9b6f26d8463185a556cf">p_cfg</a></td></tr>
+<tr class="memdesc:a8fd2d1e2197a9b6f26d8463185a556cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
+<tr class="separator:a8fd2d1e2197a9b6f26d8463185a556cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f3aeb9dc113906accbcb9c345cac3d"><td class="memItemLeft" align="right" valign="top"><a id="a51f3aeb9dc113906accbcb9c345cac3d"></a>
+R_GWCA0_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a51f3aeb9dc113906accbcb9c345cac3d">p_gwca_reg</a></td></tr>
+<tr class="memdesc:a51f3aeb9dc113906accbcb9c345cac3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to GWCA register. <br /></td></tr>
+<tr class="separator:a51f3aeb9dc113906accbcb9c345cac3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7290f62208b19f19057a7a5720e93e23"><td class="memItemLeft" align="right" valign="top"><a id="a7290f62208b19f19057a7a5720e93e23"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7290f62208b19f19057a7a5720e93e23">allocated_descriptor_queue_index</a></td></tr>
+<tr class="memdesc:a7290f62208b19f19057a7a5720e93e23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the descriptor pool. <br /></td></tr>
+<tr class="separator:a7290f62208b19f19057a7a5720e93e23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3573a915b3092ac8df517c10d616eeb5"><td class="memItemLeft" align="right" valign="top"><a id="a3573a915b3092ac8df517c10d616eeb5"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__basic__descriptor__t">layer3_switch_basic_descriptor_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a3573a915b3092ac8df517c10d616eeb5">p_descriptor_queue_list</a> [LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM]</td></tr>
+<tr class="memdesc:a3573a915b3092ac8df517c10d616eeb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descriptor queue lists used by hardware. <br /></td></tr>
+<tr class="separator:a3573a915b3092ac8df517c10d616eeb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacc4db180865c99ce68006fde435eae0"><td class="memItemLeft" align="right" valign="top"><a id="aacc4db180865c99ce68006fde435eae0"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__status__t">layer3_switch_descriptor_queue_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aacc4db180865c99ce68006fde435eae0">p_queues_status</a> [LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM]</td></tr>
+<tr class="memdesc:aacc4db180865c99ce68006fde435eae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status of each descriptor queues. <br /></td></tr>
+<tr class="separator:aacc4db180865c99ce68006fde435eae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1be9150a61d8b3d9695379b3ef635aaf"><td class="memItemLeft" align="right" valign="top"><a id="a1be9150a61d8b3d9695379b3ef635aaf"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a1be9150a61d8b3d9695379b3ef635aaf">p_port_cfg_list</a> [BSP_FEATURE_ETHER_MAX_CHANNELS]</td></tr>
+<tr class="memdesc:a1be9150a61d8b3d9695379b3ef635aaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for each port. <br /></td></tr>
+<tr class="separator:a1be9150a61d8b3d9695379b3ef635aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce17291fb9031efc375ac5c38b0357e"><td class="memItemLeft" align="right" valign="top"><a id="a6ce17291fb9031efc375ac5c38b0357e"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8a4a3bd0d79183646aac764abdaea5a0">layer3_switch_table_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6ce17291fb9031efc375ac5c38b0357e">table_status</a></td></tr>
+<tr class="memdesc:a6ce17291fb9031efc375ac5c38b0357e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwarding table is initialized or not. <br /></td></tr>
+<tr class="separator:a6ce17291fb9031efc375ac5c38b0357e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a322984452143b7e30846083586d22d7e"><td class="memItemLeft" align="right" valign="top"><a id="a322984452143b7e30846083586d22d7e"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a322984452143b7e30846083586d22d7e">l3_entry_count</a></td></tr>
+<tr class="memdesc:a322984452143b7e30846083586d22d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts of valid LAYER3 entry. <br /></td></tr>
+<tr class="separator:a322984452143b7e30846083586d22d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3888ccc411391ce068c1e5803b891bc"><td class="memItemLeft" align="right" valign="top"><a id="ad3888ccc411391ce068c1e5803b891bc"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad3888ccc411391ce068c1e5803b891bc">l3_routing_number</a></td></tr>
+<tr class="memdesc:ad3888ccc411391ce068c1e5803b891bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routing number for L2/L3 update feature. <br /></td></tr>
+<tr class="separator:ad3888ccc411391ce068c1e5803b891bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae96451e0b5053be4c141516ae3a8e62f"><td class="memItemLeft" align="right" valign="top"><a id="ae96451e0b5053be4c141516ae3a8e62f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ae96451e0b5053be4c141516ae3a8e62f">l3_remapping_number</a></td></tr>
+<tr class="memdesc:ae96451e0b5053be4c141516ae3a8e62f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remapping number for L2/L3 update feature. <br /></td></tr>
+<tr class="separator:ae96451e0b5053be4c141516ae3a8e62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa252f8417c88002cef8353a56060156a"><td class="memItemLeft" align="right" valign="top"><a id="aa252f8417c88002cef8353a56060156a"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa252f8417c88002cef8353a56060156a">p_callback</a> )(<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:aa252f8417c88002cef8353a56060156a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when an ISR occurs. <br /></td></tr>
+<tr class="separator:aa252f8417c88002cef8353a56060156a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15a12fed4bee9a79d56adce303e5cd1c"><td class="memItemLeft" align="right" valign="top"><a id="a15a12fed4bee9a79d56adce303e5cd1c"></a>
+<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a15a12fed4bee9a79d56adce303e5cd1c">p_callback_memory</a></td></tr>
+<tr class="memdesc:a15a12fed4bee9a79d56adce303e5cd1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to optional callback argument memory. <br /></td></tr>
+<tr class="separator:a15a12fed4bee9a79d56adce303e5cd1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28b4e51a85668041308a749383cbc976"><td class="memItemLeft" align="right" valign="top"><a id="a28b4e51a85668041308a749383cbc976"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a28b4e51a85668041308a749383cbc976">p_context</a></td></tr>
+<tr class="memdesc:a28b4e51a85668041308a749383cbc976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context to be passed into callback function. <br /></td></tr>
+<tr class="separator:a28b4e51a85668041308a749383cbc976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga6e36f8895c3397d72343e2df2de37a58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6e36f8895c3397d72343e2df2de37a58">&#9670;&nbsp;</a></span>layer3_switch_descriptor_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga6e36f8895c3397d72343e2df2de37a58">layer3_switch_descriptor_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>GWCA descriptor type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a5593fe659def5efa24deb36b8b8fee3e"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_LINKFIX&#160;</td><td class="fielddoc"><p>Linkfix. Control element pointing to next descriptor in chain. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58aef9fdfd2fc463fea6fa34e165dcbee10"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_IS&#160;</td><td class="fielddoc"><p>Frame Empty Incremental Start. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a8ecbe364861652017ea5c7b1ede78b4b"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_IC&#160;</td><td class="fielddoc"><p>Frame Empty Incremental Continue. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a66b73c007eca2cd08866d96e27b39450"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND&#160;</td><td class="fielddoc"><p>Frame Empty No Data Storage. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY&#160;</td><td class="fielddoc"><p>Frame Empty. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58aa330c678396e8d004c1103ef9b82f8cb"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_START&#160;</td><td class="fielddoc"><p>Frame Empty Start. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58ac709a4024f353f7da6d3e497fa696f17"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_MID&#160;</td><td class="fielddoc"><p>Frame Empty Mid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58aa741ba67c79fc7ec650e3be27135fb19"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_END&#160;</td><td class="fielddoc"><p>Frame Empty End. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a6da12aac07fab773f2ff28c2eb91251f"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE&#160;</td><td class="fielddoc"><p>Frame Single. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a0ca622929d28bceb1419f4513713753e"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FSTART&#160;</td><td class="fielddoc"><p>Frame Start. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58afdced96d7a19f4a0ec8e57a27ba97ae9"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FMID&#160;</td><td class="fielddoc"><p>Frame Mid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a210b893c01840bd3c6bf32803ec5b651"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_FEND&#160;</td><td class="fielddoc"><p>Frame End. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a4b5cd351653aa4ea7a2aa69ee2caef6e"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_LEMPTY&#160;</td><td class="fielddoc"><p>Link Empty. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58af5014b9ac564c04650bb9a203c254121"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_EEMPTY&#160;</td><td class="fielddoc"><p>EOS Empty. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a22f38da1a7d4adb9d7692c2b8c609b9f"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_LINK&#160;</td><td class="fielddoc"><p>Link. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6e36f8895c3397d72343e2df2de37a58a7be4557bbfa0cd81f170a8344cdf040a"></a>LAYER3_SWITCH_DESCRIPTOR_TYPE_EOS&#160;</td><td class="fielddoc"><p>End of Set. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga7363c7f13ca6d95350e732c699fca85b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7363c7f13ca6d95350e732c699fca85b">&#9670;&nbsp;</a></span>layer3_switch_port_bitmask_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga7363c7f13ca6d95350e732c699fca85b">layer3_switch_port_bitmask_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bitmasks for each port. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78"></a>LAYER3_SWITCH_PORT_BITMASK_PORT0&#160;</td><td class="fielddoc"><p>Port 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7363c7f13ca6d95350e732c699fca85bac21153fdd58a3b598333836a6581bf78"></a>LAYER3_SWITCH_PORT_BITMASK_PORT1&#160;</td><td class="fielddoc"><p>Port 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7363c7f13ca6d95350e732c699fca85ba2f34f07023a46b0725b8cacf22d6c504"></a>LAYER3_SWITCH_PORT_BITMASK_PORT2&#160;</td><td class="fielddoc"><p>Port 2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5037f4e98ab3c474ec9cfde36b0e4f04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5037f4e98ab3c474ec9cfde36b0e4f04">&#9670;&nbsp;</a></span>layer3_switch_queue_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5037f4e98ab3c474ec9cfde36b0e4f04">layer3_switch_queue_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descriptor queue type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5037f4e98ab3c474ec9cfde36b0e4f04aaca4e31e8b9e516e20c50be9c8408d7a"></a>LAYER3_SWITCH_QUEUE_TYPE_RX&#160;</td><td class="fielddoc"><p>Reception queue. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5037f4e98ab3c474ec9cfde36b0e4f04af29cf0e59d9c0e555490c288acb0df9e"></a>LAYER3_SWITCH_QUEUE_TYPE_TX&#160;</td><td class="fielddoc"><p>Transmission queue. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5bf3e03175ddd4e81e4068df21dab440"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5bf3e03175ddd4e81e4068df21dab440">&#9670;&nbsp;</a></span>layer3_switch_descriptor_format_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5bf3e03175ddd4e81e4068df21dab440">layer3_switch_descriptor_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descriptor format type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5bf3e03175ddd4e81e4068df21dab440a5d9a40d500734beb1cf2ca11f173e00a"></a>LAYER3_SWITCH_DISCRIPTOR_FORMTAT_BASIC&#160;</td><td class="fielddoc"><p>Using basic descriptor. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0"></a>LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED&#160;</td><td class="fielddoc"><p>Using extended descriptor with additional fields. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga97af1e0d115b4f3b917e9095f1edfde3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga97af1e0d115b4f3b917e9095f1edfde3">&#9670;&nbsp;</a></span>layer3_switch_write_back_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga97af1e0d115b4f3b917e9095f1edfde3">layer3_switch_write_back_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write back mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013"></a>LAYER3_SWITCH_WRITE_BACK_MODE_FULL&#160;</td><td class="fielddoc"><p>All fields are updated by hardware. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97af1e0d115b4f3b917e9095f1edfde3a85d35fb090c9ced58602ac4b3f67f1e5"></a>LAYER3_SWITCH_WRITE_BACK_MODE_DISABLE&#160;</td><td class="fielddoc"><p>No fields are updated by hardware. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga97af1e0d115b4f3b917e9095f1edfde3a28121839d5e11b47e7fd2a35321c4588"></a>LAYER3_SWITCH_WRITE_BACK_MODE_KEEP_DT&#160;</td><td class="fielddoc"><p>Fields exclude DT are updated by hardware. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gac3d5858ccf2af10a68836e0c5a17f2e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac3d5858ccf2af10a68836e0c5a17f2e4">&#9670;&nbsp;</a></span>layer3_switch_ip_version_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gac3d5858ccf2af10a68836e0c5a17f2e4">layer3_switch_ip_version_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IP version options. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac3d5858ccf2af10a68836e0c5a17f2e4ad1d94df41f983da253e1a3d5c5e94b69"></a>LAYER3_SWITCH_IP_VERSION_NONE&#160;</td><td class="fielddoc"><p>Not IP packet. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3d5858ccf2af10a68836e0c5a17f2e4a16875ff1c3a7b6ca3f05e6094a8194c1"></a>LAYER3_SWITCH_IP_VERSION_IPV4&#160;</td><td class="fielddoc"><p>IPv4 packet. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac3d5858ccf2af10a68836e0c5a17f2e4a9823afe806c415ca8f114a9d5b6ab3f9"></a>LAYER3_SWITCH_IP_VERSION_IPV6&#160;</td><td class="fielddoc"><p>IPv6 packet. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5ee003b80feac24c5a418637472769b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5ee003b80feac24c5a418637472769b2">&#9670;&nbsp;</a></span>layer3_switch_ip_address_direction_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5ee003b80feac24c5a418637472769b2">layer3_switch_ip_address_direction_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Direction of IP address. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5ee003b80feac24c5a418637472769b2aac15f872fe8d6f455c9300c3a6b359e6"></a>LAYER3_SWITCH_IP_ADDRESS_DIRECTION_SOURCE&#160;</td><td class="fielddoc"><p>Use IP source address in stream ID. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5ee003b80feac24c5a418637472769b2aa7bc3b41ab43c027c38c057bae9659d4"></a>LAYER3_SWITCH_IP_ADDRESS_DIRECTION_DESTINATION&#160;</td><td class="fielddoc"><p>Use IP destination address in stream ID. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1e6fc72445d9c525f90a02be6422665d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1e6fc72445d9c525f90a02be6422665d">&#9670;&nbsp;</a></span>layer3_switch_magic_packet_detection_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1e6fc72445d9c525f90a02be6422665d">layer3_switch_magic_packet_detection_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Magic packet detection options. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1e6fc72445d9c525f90a02be6422665dadd9c4678cbdb8da48b0e20dbfb272f8e"></a>LAYER3_SWITCH_MAGIC_PACKET_DETECTION_ENABLE&#160;</td><td class="fielddoc"><p>Enable magic packet detection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1e6fc72445d9c525f90a02be6422665daf4e9020f043ed326f7644fd9c059292c"></a>LAYER3_SWITCH_MAGIC_PACKET_DETECTION_DISABLE&#160;</td><td class="fielddoc"><p>Disable magic packet detection. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga1c9d922fd96fab6fec1e248190d13587"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1c9d922fd96fab6fec1e248190d13587">&#9670;&nbsp;</a></span>layer3_switch_vlan_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga1c9d922fd96fab6fec1e248190d13587">layer3_switch_vlan_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VLAN detection mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1c9d922fd96fab6fec1e248190d13587ab8866d52e48fc9d412c4a27e4cd52e42"></a>LAYER3_SWITCH_VLAN_MODE_NO_VLAN&#160;</td><td class="fielddoc"><p>Not use VLAN feature. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c9d922fd96fab6fec1e248190d13587a73e0c1a553f5d37a7f340574ddf027a0"></a>LAYER3_SWITCH_VLAN_MODE_C_TAG&#160;</td><td class="fielddoc"><p>Detect and use VLAN C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1c9d922fd96fab6fec1e248190d13587a3df108ed34b0ebc424b3d18fed526fc8"></a>LAYER3_SWITCH_VLAN_MODE_SC_TAG&#160;</td><td class="fielddoc"><p>Detect and use VLAN SC-TAG. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga67505de50455180044c38c855caae713"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga67505de50455180044c38c855caae713">&#9670;&nbsp;</a></span>layer3_switch_vlan_ingress_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga67505de50455180044c38c855caae713">layer3_switch_vlan_ingress_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VLAN ingress mode determines whether the switch operates with tagged VLAN or port-based VLAN. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga67505de50455180044c38c855caae713ae46d906e4db28e121e52ef16081518f8"></a>LAYER3_SWITCH_VLAN_INGRESS_MODE_TAG_BASED&#160;</td><td class="fielddoc"><p>Use VLAN ID of the incoming frame. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga67505de50455180044c38c855caae713aeb0ed908a08709f7419452dc3a767126"></a>LAYER3_SWITCH_VLAN_INGRESS_MODE_PORT_BASED&#160;</td><td class="fielddoc"><p>Use VLAN ID of the incoming port. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga11b00ba97d60d23e7e2bcd37af8c20b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga11b00ba97d60d23e7e2bcd37af8c20b7">&#9670;&nbsp;</a></span>layer3_switch_vlan_egress_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga11b00ba97d60d23e7e2bcd37af8c20b7">layer3_switch_vlan_egress_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VLAN egress mode determines the VLAN tag that is added to output frames. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga11b00ba97d60d23e7e2bcd37af8c20b7a9d8bbc8c78d1ddb26af0f38fc5901dd8"></a>LAYER3_SWITCH_VLAN_EGRESS_MODE_NO_VLAN&#160;</td><td class="fielddoc"><p>Frame always outgoing without VLAN TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga11b00ba97d60d23e7e2bcd37af8c20b7a4a18991cf14cd3e671841c0be9724eb2"></a>LAYER3_SWITCH_VLAN_EGRESS_MODE_C_TAG&#160;</td><td class="fielddoc"><p>Frame outgoing with C-TAG of incoming frame. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga11b00ba97d60d23e7e2bcd37af8c20b7ad9d1cef2040cce1bea8e4cfff75ffa94"></a>LAYER3_SWITCH_VLAN_EGRESS_MODE_HW_C_TAG&#160;</td><td class="fielddoc"><p>Frame always outgoing with C-TAG of output port. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga11b00ba97d60d23e7e2bcd37af8c20b7a07e3d9684961960b8c3fb4bb4206921a"></a>LAYER3_SWITCH_VLAN_EGRESS_MODE_SC_TAG&#160;</td><td class="fielddoc"><p>Frame always outgoing with SC-TAG of incoming frame. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga11b00ba97d60d23e7e2bcd37af8c20b7af496e624e26b22b116f55ada1f6e2490"></a>LAYER3_SWITCH_VLAN_EGRESS_MODE_HW_SC_TAG&#160;</td><td class="fielddoc"><p>Frame always outgoing with SC-TAG of output port. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaa918058dba01e2d9fe7127115c0fa3fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa918058dba01e2d9fe7127115c0fa3fd">&#9670;&nbsp;</a></span>layer3_switch_ip_protocol_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa918058dba01e2d9fe7127115c0fa3fd">layer3_switch_ip_protocol_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IP protocols type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa918058dba01e2d9fe7127115c0fa3fdace71a2b7bb5fa4b2877a18ee29c85923"></a>LAYER3_SWITCH_IP_PROTOCOL_TCP&#160;</td><td class="fielddoc"><p>IP protocol is TCP. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa918058dba01e2d9fe7127115c0fa3fda4ff182b9d5fcec44b453b45d348f780f"></a>LAYER3_SWITCH_IP_PROTOCOL_UDP&#160;</td><td class="fielddoc"><p>IP protocol is UDP. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gab1ec51deb790a57c4efc8affc40d0408"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab1ec51deb790a57c4efc8affc40d0408">&#9670;&nbsp;</a></span>layer3_switch_forwarding_r_tag_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gab1ec51deb790a57c4efc8affc40d0408">layer3_switch_forwarding_r_tag_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>R-TAG filed update options. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab1ec51deb790a57c4efc8affc40d0408a8e595bb336ded862ad4c8660f22035b1"></a>LAYER3_SWITCH_FORWARDING_R_TAG_UPDATE&#160;</td><td class="fielddoc"><p>Incoming frame with R-TAG will be updated with new R-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab1ec51deb790a57c4efc8affc40d0408ad1f413aec51ca835928f42f8b5b75f4e"></a>LAYER3_SWITCH_FORWARDING_R_TAG_ALWAYS_ADD&#160;</td><td class="fielddoc"><p>ALl incoming frame will be added new R-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab1ec51deb790a57c4efc8affc40d0408a96b42ea447df6fc387bd5f29fc6b7cb7"></a>LAYER3_SWITCH_FORWARDING_R_TAG_ALWAYS_ELIMINATE&#160;</td><td class="fielddoc"><p>ALl incoming frame will be removed R-TAG. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf2e22cc4b55ed27063083f9a7c2570aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf2e22cc4b55ed27063083f9a7c2570aa">&#9670;&nbsp;</a></span>layer3_switch_l3_filter_bitmask_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaf2e22cc4b55ed27063083f9a7c2570aa">layer3_switch_l3_filter_bitmask_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Frame filters options for layer3 forwarding. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaa6c3cdc496cb67a1ff96edac8027b81b0"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_MAC_DESTINATION&#160;</td><td class="fielddoc"><p>Enable MAC destination address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaac62252baaa1101f9c2fc331da4b59b80"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_MAC_SOURCE&#160;</td><td class="fielddoc"><p>Enable MAC source address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaaad79304e31ae9033764086d27b17dcc3"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_STAG_ID&#160;</td><td class="fielddoc"><p>Enable VLAN ID of S-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaa58cee5483b62433593cadd25a3aa33a6"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_STAG_PCP&#160;</td><td class="fielddoc"><p>Enable PCP of S-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaa66865289415fb06a32c0e9b5b26e1286"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_STAG_DEI&#160;</td><td class="fielddoc"><p>Enable DEI of S-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaab3f877163a290ddfc8926aba452f3774"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_CTAG_ID&#160;</td><td class="fielddoc"><p>Enable VLAN ID of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaa3552971f736c10c747d486d670f1ef20"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_CTAG_PCP&#160;</td><td class="fielddoc"><p>Enable PCP of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaaac396176a39993398efc91272690d678"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_CTAG_DEI&#160;</td><td class="fielddoc"><p>Enable DEI of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaaaa032b33dc224d7544efa9b611f13551"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_IP_SOURCE_ADDRESS&#160;</td><td class="fielddoc"><p>Enable IP source address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaaeb183a09ccfd1acc7212601e686b2d99"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_IP_DESTINATION_ADDRESS&#160;</td><td class="fielddoc"><p>Enable IP destination address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaa14e74291812bd6c8d5df34077d1e036d"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_PROTOCOL&#160;</td><td class="fielddoc"><p>Enable IP protocol. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaa2343f7f838c493d1e9c5bd83ab4596ad"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_IP_SOURCE_PORT&#160;</td><td class="fielddoc"><p>Enable layer4 source port. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2e22cc4b55ed27063083f9a7c2570aaae989259633fe988357136ed78845b1e8"></a>LAYER3_SWITCH_L3_FILTER_BITMASK_IP_DESTINATION_PORT&#160;</td><td class="fielddoc"><p>Enable layer4 destination port. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gab8f7c5de38ae1d742608d5ed9729d531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab8f7c5de38ae1d742608d5ed9729d531">&#9670;&nbsp;</a></span>layer3_switch_l3_update_bitmask_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gab8f7c5de38ae1d742608d5ed9729d531">layer3_switch_l3_update_bitmask_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable L2/L3 update feature. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531ada80499473af53abec83bb583d1bf9d9"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_TTL&#160;</td><td class="fielddoc"><p>Update TTL. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531a985cc3a88539a2d8053fd02371ea30ea"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_MAC_DESTINATION&#160;</td><td class="fielddoc"><p>Update MAC destination address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531a8afbd55c60de5f96cb158225f245b395"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_MAC_SOURCE&#160;</td><td class="fielddoc"><p>Update MAC source address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531a90a56fb4ed6c8d39ae87f9b697721f7e"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_CTAG_ID&#160;</td><td class="fielddoc"><p>Update VLAN ID of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531ad1f216a41cbc0ebaf038fdd6ee5083de"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_CTAG_PCP&#160;</td><td class="fielddoc"><p>Update PCP of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531a4cc33aeea679f2640ca012a4e00d0606"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_CTAG_DEI&#160;</td><td class="fielddoc"><p>Update DEI of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531ab2579dd57a915ede327b290761abd5ff"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_STAG_ID&#160;</td><td class="fielddoc"><p>Update VLAN ID of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531a43e725827adfc70346e3353fbaa74555"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_STAG_PCP&#160;</td><td class="fielddoc"><p>Update PCP of C-TAG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab8f7c5de38ae1d742608d5ed9729d531aaa03c0f4225eb784d4bab4a78dd740ae"></a>LAYER3_SWITCH_L3_UPDATE_BITMASK_STAG_DEI&#160;</td><td class="fielddoc"><p>Update DEI of C-TAG. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga972628bbf4d3df0f61f064bac5e7e66d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga972628bbf4d3df0f61f064bac5e7e66d">&#9670;&nbsp;</a></span>layer3_switch_table_entry_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga972628bbf4d3df0f61f064bac5e7e66d">layer3_switch_table_entry_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Table entry type for forwarding feature. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga972628bbf4d3df0f61f064bac5e7e66da1bf64a8097665c1a18104e9b345648fd"></a>LAYER3_SWITCH_TABLE_ENTRY_TYPE_EMPTY&#160;</td><td class="fielddoc"><p>Entry is not initialized yet. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga972628bbf4d3df0f61f064bac5e7e66da313bda2569c67577a5fdc2faaccfa1d2"></a>LAYER3_SWITCH_TABLE_ENTRY_TYPE_MAC&#160;</td><td class="fielddoc"><p>Entry of MAC table. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga972628bbf4d3df0f61f064bac5e7e66da4331e0574672728540291917bedda00f"></a>LAYER3_SWITCH_TABLE_ENTRY_TYPE_VLAN&#160;</td><td class="fielddoc"><p>Entry of VLAN table. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga972628bbf4d3df0f61f064bac5e7e66daf3bd7fd944c9e37134072e2fb702b103"></a>LAYER3_SWITCH_TABLE_ENTRY_TYPE_LAYER3&#160;</td><td class="fielddoc"><p>Entry of Layer3 table. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga8a4a3bd0d79183646aac764abdaea5a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a4a3bd0d79183646aac764abdaea5a0">&#9670;&nbsp;</a></span>layer3_switch_table_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8a4a3bd0d79183646aac764abdaea5a0">layer3_switch_table_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Table status for forwarding feature. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8a4a3bd0d79183646aac764abdaea5a0ab3232a747ea7661792050fe2798eed84"></a>LAYER3_SWITCH_TABLE_STATUS_UNINITIALIZED&#160;</td><td class="fielddoc"><p>Forwarding table is uninitialized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8a4a3bd0d79183646aac764abdaea5a0ab9109a12eb1a95f8b3ed7c0832d4d904"></a>LAYER3_SWITCH_TABLE_STATUS_INITIALIZED&#160;</td><td class="fielddoc"><p>Forwarding table is initialized. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga4aec278118b9d59cbeebbe42e373344c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4aec278118b9d59cbeebbe42e373344c">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__cfg__t">ether_switch_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the switch module and applies configurations. Implements <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ab10f70e9fedb5561a08fb18da3deec19">ether_switch_api_t::open</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block, config structure or extended config structure is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_ERROR_PHY_COMMUNICATION</td><td>Initialization of PHY-LSI failed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid configuration value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2091f6bf45559fb944aecf2e5ab65911"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2091f6bf45559fb944aecf2e5ab65911">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disables interrupts and stop module. Implements <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#aae0ab28824d9aa76793f175b978a6251">ether_switch_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9609b328abab50cc2e311079077d3d5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9609b328abab50cc2e311079077d3d5f">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_CreateDescriptorQueue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_CreateDescriptorQueue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_queue_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_queue_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a new descriptor queue and set it to LINKFIX table. This function must be called before calling <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a> and <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4d4d3d661e020ca06ddb863b16f756de">R_LAYER3_SWITCH_GetDescriptor</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Descipritor created successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_OUT_OF_MEMORY</td><td>Descriptor queue list is depleted. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4490ebda9cf2fcc83c076bbd66237e28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4490ebda9cf2fcc83c076bbd66237e28">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_SetDescriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_SetDescriptor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>queue_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_descriptor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set descripotor data to a target descriptor. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Descriptor set successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Queue index is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>This descriptor queue is not created. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Target descriptor is now running. </td></tr>
+    <tr><td class="paramname">FSP_ERR_OVERFLOW</td><td>Descriptor queue is full. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4d4d3d661e020ca06ddb863b16f756de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4d4d3d661e020ca06ddb863b16f756de">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_GetDescriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_GetDescriptor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>queue_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_descriptor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get descripotor data from a target descriptor. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Descriptor got successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Queue index is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>This descriptor queue is not created or target descriptor is not set. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Target descriptor is now running. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga764348620bb502a2f564e06d3a251a1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga764348620bb502a2f564e06d3a251a1e">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_StartDescriptorQueue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_StartDescriptorQueue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>queue_index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reload and enable a descriptor queue. In a TX descriptor queue, the queue start transmission. In a RX descriptor queue, the queue start reception. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Descriptor queue started successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Queue index is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>Target descriptor queue is not created. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Target descriptor queue is already running. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5a03b0bbb0118e95215c472e3f08491b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a03b0bbb0118e95215c472e3f08491b">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga08a836e498d5995d4472630c294c15cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga08a836e498d5995d4472630c294c15cb">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_ConfigurePort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_ConfigurePort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a> *&#160;</td>
+          <td class="paramname"><em>p_port_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure Ethernet port features, including callback function for each port.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Port configured successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL.. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Port number is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa73731a934620002b891c5c14ad46699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa73731a934620002b891c5c14ad46699">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_AddTableEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_AddTableEntry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_target_frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_entry_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add or update an entry of the forwarding table.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully add/updated an entry into the table. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_OVERFLOW</td><td>The number of unsecure entries exceeded the configured value. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>A hardware error occurred while learning the entry. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Target frame or entry type is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>VLAN feature is disabled and a VLAN entry is passed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae4f90a2572ba536da1d95122dd376ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae4f90a2572ba536da1d95122dd376ec2">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_SearchTableEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_SearchTableEntry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_target_frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_entry_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Search an entry from the forwarding table.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The entry is found successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_FOUND</td><td>The entry is not found in the table. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Target frame or entry type is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>VLAN feature is disabled and a VLAN entry is passed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga584a1c701442875d7e3f29f1360fdc7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga584a1c701442875d7e3f29f1360fdc7c">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_ConfigureTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_ConfigureTable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__cfg__t">layer3_switch_table_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_table_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure and initailze an forwarding table.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Table configured successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Failed to add entries. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7202ab557137d6fe7c540e3cbb45f59b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7202ab557137d6fe7c540e3cbb45f59b">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_GetTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_GetTable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__t">layer3_switch_table_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_table</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get a pointer to the forwarding table.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Table got successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>VLAN feature is disabled and a VLAN entry list is passed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

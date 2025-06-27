@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___s_c_i___s_m_c_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___s_c_i___s_m_c_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___s_c_i___s_m_c_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -260,8 +260,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga3d600ae7699ba4988e007a03aa28c93e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga64d56497dd40550887bfdffa9edc7089"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga64d56497dd40550887bfdffa9edc7089">R_SCI_SMCI_ClockControl</a> (<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_api_ctrl, bool clock_enable)</td></tr>
 <tr class="separator:ga64d56497dd40550887bfdffa9edc7089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa56b1e3ce036ca95d9186fffa1a6f87d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#gaa56b1e3ce036ca95d9186fffa1a6f87d">R_SCI_SMCI_CallbackSet</a> (<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:gaa56b1e3ce036ca95d9186fffa1a6f87d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1161f78bfb6b8b83aafd3353377a3f0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga1161f78bfb6b8b83aafd3353377a3f0d">R_SCI_SMCI_CallbackSet</a> (<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *), void *const p_context, <a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__callback__args__t">smci_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga1161f78bfb6b8b83aafd3353377a3f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2dd22a1d0b7720dbe84a888897320c8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga2dd22a1d0b7720dbe84a888897320c8c">R_SCI_SMCI_Close</a> (<a class="el" href="group___s_m_c_i___a_p_i.html#ga57de10ab58c1265be3227fa2f8cf9fd1">smci_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga2dd22a1d0b7720dbe84a888897320c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59cb52f2d340fddc4abfdda54e0f660f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html#ga59cb52f2d340fddc4abfdda54e0f660f">R_SCI_SMCI_BaudCalculate</a> (<a class="el" href="group___s_m_c_i___a_p_i.html#structsmci__speed__params__t">smci_speed_params_t</a> const *const p_speed_params, uint32_t baud_rate_error_x_1000, void *const p_baud_setting)</td></tr>
@@ -357,6 +357,10 @@ Clock Configuration</h2>
 <tr>
 <td>RA2L2</td><td>PCLKB</td></tr>
 <tr>
+<td>RA2T1</td><td>PCLKB</td></tr>
+<tr>
+<td>RA4C1</td><td>PCLKA</td></tr>
+<tr>
 <td>RA4E1</td><td>PCLKA</td></tr>
 <tr>
 <td>RA4E2</td><td>PCLKA</td></tr>
@@ -392,7 +396,7 @@ Clock Configuration</h2>
 <td>RA6T3</td><td>PCLKA</td></tr>
 </table>
 </p>
-<p>The clock source for the baud-rate clock generator is the PCLK. It is scaled by the SMR_SMCI.CKS bits to acheive the requested baud rate. This is done in R_SCI_SMCI_BaudSet routine.<a class="anchor" id="um_sci_smci_clock_configuration"></a> </p>
+<p>The clock source for the baud-rate clock generator is the PCLK. It is scaled by the SMR_SMCI.CKS bits to achieve the requested baud rate. This is done in R_SCI_SMCI_BaudSet routine.<a class="anchor" id="um_sci_smci_clock_configuration"></a> </p>
 <h2><a class="anchor" id="r-sci-smci-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses TXDx and RXDx to communicate to external devices. TXDx and RXDx need to be tied together and pulled up to VCC externally via a pullup resistor and connected to the DATA line of a connected card.</p>
@@ -457,7 +461,7 @@ computed_baud_rate</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a9331da1cdd99b5635946df0bf806e69b"></a>union <a class="el" href="group___s_c_i___s_m_c_i.html#unionsmci__baud__setting__t_8____unnamed____">smci_baud_setting_t</a></td>
+<a id="a0c9aa89663593e7ee14f78938c58e9b5"></a>union <a class="el" href="group___s_c_i___s_m_c_i.html#unionsmci__baud__setting__t_8____unnamed____">smci_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -532,7 +536,7 @@ Register settings for a desired baud rate. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_api_ctrl</td><td>Pointer to SMCI control block that is to be opened </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to the config structure that shall be used to set paramters of the SMCI baud calculations needed to be have done and set into p_cfg-&gt;p_extend-&gt;p_smci_baud_setting</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to the config structure that shall be used to set parameters of the SMCI baud calculations needed to be have done and set into p_cfg-&gt;p_extend-&gt;p_smci_baud_setting</td></tr>
   </table>
   </dd>
 </dl>
@@ -838,8 +842,8 @@ Register settings for a desired baud rate. </td></tr>
 
 </div>
 </div>
-<a id="gaa56b1e3ce036ca95d9186fffa1a6f87d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa56b1e3ce036ca95d9186fffa1a6f87d">&#9670;&nbsp;</a></span>R_SCI_SMCI_CallbackSet()</h2>
+<a id="ga1161f78bfb6b8b83aafd3353377a3f0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1161f78bfb6b8b83aafd3353377a3f0d">&#9670;&nbsp;</a></span>R_SCI_SMCI_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -859,7 +863,7 @@ Register settings for a desired baud rate. </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -875,7 +879,7 @@ Register settings for a desired baud rate. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_m_c_i___a_p_i.html#a3787b5dd3cdf7487a7ee39513013cc57">smci_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_m_c_i___a_p_i.html#a6b6ed317a0786bf7ff7c409bde5e5548">smci_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -978,7 +982,7 @@ Register settings for a desired baud rate. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

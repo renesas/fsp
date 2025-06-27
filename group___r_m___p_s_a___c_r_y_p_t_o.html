@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___p_s_a___c_r_y_p_t_o.html
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___p_s_a___c_r_y_p_t_o.html
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___p_s_a___c_r_y_p_t_o.html
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -265,11 +265,11 @@ Overview</h1>
 <tr>
 <td>RSIP-E51A </td><td>RA8M1, RA8D1, RA8T1 </td></tr>
 <tr>
-<td>RSIP-E50D </td><td></td></tr>
+<td>RSIP-E50D </td><td>RA8P1 </td></tr>
 <tr>
-<td>RSIP-E31A </td><td></td></tr>
+<td>RSIP-E31A </td><td>RA4C1 </td></tr>
 <tr>
-<td>RSIP-E11A </td><td></td></tr>
+<td>RSIP-E11A </td><td>RA4L1 </td></tr>
 <tr>
 <td>SCE9 </td><td>RA6M4, RA4M3, RA4M2, RA6M5 </td></tr>
 <tr>
@@ -281,64 +281,88 @@ Overview</h1>
 <tr>
 <td>AES Engine </td><td>RA2A1, RA2E1, RA2E2, RA2L1 </td></tr>
 <tr>
-<td>TRNG </td><td>RA4E1, RA4E2, RA4T1, RA6E1, RA6E2, RA6T3 </td></tr>
+<td>AES Engine 2 </td><td>RA2A2 </td></tr>
 <tr>
-<td>RSIP-E51A </td><td>RA8M1, RA8D1, RA8T1 </td></tr>
+<td>TRNG </td><td>RA0E1, RA0E2, RA2L2, RA4E1, RA4E2, RA4T1, RA6E1, RA6E2, RA6T3, RA8E1, RA8E2 </td></tr>
 </table>
 <h2><a class="anchor" id="rm-psa-crypto-features"></a>
 Features</h2>
-<p>The PSA_Crypto module provides hardware support for the following PSA Crypto operations</p><ul>
-<li>Hash<ul>
-<li>SHA256 calculation <a class="anchor" id="um_sha256_hash_calculation"></a><a class="anchor" id="um_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_sha256_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_sha256_hash_read"></a><a class="anchor" id="um_sha256_hash_clone"></a></li>
-<li>SHA224 calculation <a class="anchor" id="um_sha224_hash_read"></a></li>
-<li>SHA512 calculation (Available only on RSIP-E51A) <a class="anchor" id="um_sha512_hash_multipart_calculation"></a><a class="anchor" id="um_sha512_hash_multipart_long_message_calculation"></a></li>
-<li>SHA384 calculation (Available only on RSIP-E51A) <a class="anchor" id="um_sha384_hash_multipart_calculation"></a><a class="anchor" id="um_sha384_hash_multipart_long_message_calculation"></a></li>
-</ul>
-</li>
-<li>MAC<ul>
-<li>HMAC <a class="anchor" id="um_sha512_hmac"></a><a class="anchor" id="um_sha384_hmac"></a><a class="anchor" id="um_sha256_hmac"></a><a class="anchor" id="um_sha224_hmac"></a></li>
-<li>CMAC <a class="anchor" id="um_AES_cmac"></a></li>
-</ul>
-</li>
-<li>AES<ul>
-<li>Keybits - 128, 192, 256</li>
-<li>Plain-Text Key Generation <a class="anchor" id="um_AES_hardware_acceleration"></a><a class="anchor" id="um_AES256_key_generation_plaintext"></a><a class="anchor" id="um_AES128_key_generation_plaintext"></a><a class="anchor" id="um_AES192_key_generation_plaintext"></a></li>
-<li>Wrapped Key Generation <a class="anchor" id="um_AES256_key_generation_wrapped"></a><a class="anchor" id="um_AES128_key_generation_wrapped"></a><a class="anchor" id="um_AES192_key_generation_wrapped"></a></li>
-<li>Encryption and Decryption with no padding and with PKCS7 padding. <a class="anchor" id="um_AES_pkcs7_padding"></a><a class="anchor" id="um_AES128_encryption_decryption"></a><a class="anchor" id="um_AES192_encryption_decryption"></a><a class="anchor" id="um_AES256_encryption_decryption"></a></li>
-<li>CBC, CTR, CCM , XTS and GCM modes <a class="anchor" id="um_AES_cbc"></a><a class="anchor" id="um_AES_ccm"></a><a class="anchor" id="um_AES_gcm"></a><a class="anchor" id="um_AES_multipart_ctr"></a><a class="anchor" id="um_AES_xts"></a></li>
-<li>Export and Import of Plaintext and Wrapped keys <a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_plaintext_export"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_export"></a></li>
-</ul>
-</li>
-<li>ECC<ul>
-<li>Curves:<ul>
-<li>SECP256R1 <a class="anchor" id="um_ECC_key_generation_256K1"></a></li>
-<li>SECP256K1 <a class="anchor" id="um_ECC_key_generation_256R1"></a></li>
-<li>Brainpool256R1 <a class="anchor" id="um_ECC_key_generation_BP256R1"></a></li>
-<li>SECP384R1 <a class="anchor" id="um_ECC_key_generation_384R1"></a></li>
-<li>Brainpool384R1 <a class="anchor" id="um_ECC_key_generation_BP384R1"></a></li>
-</ul>
-</li>
-<li>Plain-Text Key Generation (Unavailable on SCE9 and RSIP-E51A)</li>
-<li>Wrapped Key Generation <a class="anchor" id="um_ECC_key_generation_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_521R1Wrapped"></a>(Available only on RSIP-E51A) <a class="anchor" id="um_ECC_key_generation_25519Wrapped"></a>(Available only on RSIP-E51A) <a class="anchor" id="um_ECC_key_export_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_521R1Wrapped"></a></li>
-<li>Signing and Verification <a class="anchor" id="um_ECC_sign_verify_smaller_hash"></a></li>
-<li>Export and Import of Plaintext keys <a class="anchor" id="um_ECC_key_export_256R1"></a><a class="anchor" id="um_ECC_key_export_256K1"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_export_384R1"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1"></a></li>
-<li>Export and Import of Wrapped keys generated by PSA. <a class="anchor" id="um_ECC_key_import_256R1"></a><a class="anchor" id="um_ECC_key_import_256K1"></a><a class="anchor" id="um_ECC_key_import_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_import_384R1"></a><a class="anchor" id="um_ECC_key_import_521R1"></a><a class="anchor" id="um_ECC_key_import_BrainPool384R1"></a></li>
-<li>ECDH Support <a class="anchor" id="um_ECC_ECDH_support"></a></li>
-</ul>
-</li>
-<li>RSA<ul>
-<li>Plain-Text Key Generation for RSA-2048. Unavailable on RSIP-E31A and RSIP-E51A. RSA-1024 on SCE9 only. <a class="anchor" id="um_RSA_key_generation"></a><a class="anchor" id="um_RSA_1024_key_generation"></a></li>
-<li>Wrapped Key Generation for RSA-2048. RSA-3072 and 4096 on RSIP-E51A only. RSA-1024 on SCE9 only. <a class="anchor" id="um_RSA_1024_key_generationWrapped"></a><a class="anchor" id="um_RSA_key_generationWrapped"></a><a class="anchor" id="um_RSA_3072_key_generationWrapped"></a><a class="anchor" id="um_RSA_4096_key_generationWrapped"></a></li>
-<li>Signature Generation for RSA-2048. RSA-3072 and 4096 on RSIP-E51A only. RSA-1024 on SCE9 only.</li>
-<li>Verification for RSA-2048. RSA-3072 and 4096 on SCE9 and RSIP-E51A only. RSA-1024 on SCE9 only. <a class="anchor" id="um_RSA_1024_key_import_verify"></a><a class="anchor" id="um_RSA_3072_key_import_verify"></a><a class="anchor" id="um_RSA_4096_key_import_verify"></a></li>
-<li>Encryption and Decryption with PKCS1V15 and OAEP padding <a class="anchor" id="um_RSA_PKCS1V15_encrypt_decrypt"></a><a class="anchor" id="um_RSA_OAEP_encrypt_decrypt"></a></li>
-<li>Export and Import of Plaintext keys <a class="anchor" id="um_RSA_key_export_import"></a><a class="anchor" id="um_RSA_key_import"></a><a class="anchor" id="um_RSA_key_import_e3"></a></li>
-<li>Export and Import of Wrapped keys generated by PSA. <a class="anchor" id="um_RSA_key_export_import_wrapped"></a></li>
-</ul>
-</li>
-<li>Random number generation <a class="anchor" id="um_psa_random_number_generation"></a><a class="anchor" id="um_RNG_hardware_acceleration"></a></li>
-<li>Persistent Key Storage <a class="anchor" id="um_AES_persistent_key"></a><a class="anchor" id="um_RSA_persistent_key"></a> </li>
-</ul>
+<table class="doxtable">
+<tr>
+<th></th><th></th><th>AES Engine </th><th>AES Engine 2 </th><th>SCE5 </th><th>SCE5_B </th><th>SCE7 </th><th>SCE9 </th><th>RSIP-E11A </th><th>RSIP-E31A </th><th>RSIP-E51A </th><th>RSIP-E50D  </th></tr>
+<tr>
+<td>TRNG </td><td></td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>Hash </td><td>SHA224, SHA256 </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>SHA384, SHA512 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>SHA3-(224/256/384/512) </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td></tr>
+<tr>
+<td>MAC </td><td>HMAC-SHA224, HMAC-SHA256 </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>HMAC-SHA384, HMAC-SHA512 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES128-CMAC </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES192-CMAC </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES256-CMAC </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>AES </td><td>AES128-ECB, CBC, CTR </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES128-XTS </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES128-GCM, GMAC, CCM </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES192-ECB, CBC, CTR </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES192-GCM, GMAC, CCM </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES256-ECB, CBC, CTR </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES256-XTS </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES256-GCM, GMAC, CCM </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>Key generation - plaintext </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>Key generation - wrapped </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>ChaCha20 </td><td>Poly1305 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td></tr>
+<tr>
+<td>ECC </td><td>secp256r1 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>secp384r1 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>secp521r1 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>Brainpool256r1 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>Brainpool384r1 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>Key generation - plaintext </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td></tr>
+<tr>
+<td></td><td>Key generation - wrapped </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>RSA </td><td>RSA-1024 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td></tr>
+<tr>
+<td></td><td>RSA-2048 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>RSA-3072 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>(1) </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>RSA-4096 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>(1) </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>Key generation - plaintext </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td></tr>
+<tr>
+<td></td><td>Key generation - wrapped </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>(2) </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd><ol type="1">
+<li>Signature verification only</li>
+<li>RSA-1024 and RSA-2048 only</li>
+</ol>
+</dd></dl>
+<p><a class="anchor" id="um_sha256_hash_calculation"></a><a class="anchor" id="um_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_sha256_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_sha256_hash_read"></a><a class="anchor" id="um_sha256_hash_clone"></a><a class="anchor" id="um_sha224_hash_read"></a><a class="anchor" id="um_sha512_hash_multipart_calculation"></a><a class="anchor" id="um_sha512_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_sha384_hash_multipart_calculation"></a><a class="anchor" id="um_sha384_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_sha3_224_hash_multipart_calculation"></a><a class="anchor" id="um_sha3_256_hash_multipart_calculation"></a><a class="anchor" id="um_sha3_256_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_sha3_384_hash_multipart_calculation"></a><a class="anchor" id="um_sha3_512_hash_multipart_calculation"></a><a class="anchor" id="um_sha3_512_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_sha512_hmac"></a><a class="anchor" id="um_sha384_hmac"></a><a class="anchor" id="um_sha256_hmac"></a><a class="anchor" id="um_sha224_hmac"></a><a class="anchor" id="um_AES_hardware_acceleration"></a><a class="anchor" id="um_AES256_key_generation_plaintext"></a><a class="anchor" id="um_AES128_key_generation_plaintext"></a><a class="anchor" id="um_AES192_key_generation_plaintext"></a><a class="anchor" id="um_AES_cmac"></a><a class="anchor" id="um_AES256_key_generation_wrapped"></a><a class="anchor" id="um_AES128_key_generation_wrapped"></a><a class="anchor" id="um_AES192_key_generation_wrapped"></a><a class="anchor" id="um_AES_pkcs7_padding"></a><a class="anchor" id="um_AES128_encryption_decryption"></a><a class="anchor" id="um_AES192_encryption_decryption"></a><a class="anchor" id="um_AES256_encryption_decryption"></a><a class="anchor" id="um_AES_cbc"></a><a class="anchor" id="um_AES_ccm"></a><a class="anchor" id="um_AES_gcm"></a><a class="anchor" id="um_AES_multipart_ctr"></a><a class="anchor" id="um_AES_xts"></a><a class="anchor" id="um_AES256_key_generation_plaintext_export"></a><a class="anchor" id="um_AES128_key_generation_plaintext_export"></a><a class="anchor" id="um_AES192_key_generation_plaintext_export"></a><a class="anchor" id="um_AES256_key_generation_wrapped_export"></a><a class="anchor" id="um_AES128_key_generation_wrapped_export"></a><a class="anchor" id="um_AES192_key_generation_wrapped_export"></a><a class="anchor" id="um_ECC_key_generation_256K1"></a><a class="anchor" id="um_ECC_key_generation_256R1"></a><a class="anchor" id="um_ECC_key_generation_BP256R1"></a><a class="anchor" id="um_ECC_key_generation_384R1"></a><a class="anchor" id="um_ECC_key_generation_BP384R1"></a><a class="anchor" id="um_ECC_key_generation_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP256R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_BP384R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_521R1Wrapped"></a><a class="anchor" id="um_ECC_key_generation_25519Wrapped"></a><a class="anchor" id="um_ECC_key_export_256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256K1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_521R1Wrapped"></a><a class="anchor" id="um_ECC_key_export_256R1"></a><a class="anchor" id="um_ECC_key_export_256K1"></a><a class="anchor" id="um_ECC_key_export_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_export_384R1"></a><a class="anchor" id="um_ECC_key_export_BrainPool384R1"></a><a class="anchor" id="um_ECC_sign_verify_smaller_hash"></a><a class="anchor" id="um_ECC_key_import_256R1"></a><a class="anchor" id="um_ECC_key_import_256K1"></a><a class="anchor" id="um_ECC_key_import_BrainPool256R1"></a><a class="anchor" id="um_ECC_key_import_384R1"></a><a class="anchor" id="um_ECC_key_import_521R1"></a><a class="anchor" id="um_ECC_key_import_BrainPool384R1"></a><a class="anchor" id="um_ECC_ECDH_support"></a><a class="anchor" id="um_RSA_key_generation"></a><a class="anchor" id="um_RSA_1024_key_generation"></a><a class="anchor" id="um_RSA_1024_key_generationWrapped"></a><a class="anchor" id="um_RSA_key_generationWrapped"></a><a class="anchor" id="um_RSA_3072_key_generationWrapped"></a><a class="anchor" id="um_RSA_4096_key_generationWrapped"></a><a class="anchor" id="um_RSA_1024_key_import_verify"></a><a class="anchor" id="um_RSA_3072_key_import_verify"></a><a class="anchor" id="um_RSA_4096_key_import_verify"></a><a class="anchor" id="um_RSA_PKCS1V15_encrypt_decrypt"></a><a class="anchor" id="um_RSA_OAEP_encrypt_decrypt"></a><a class="anchor" id="um_RSA_key_export_import"></a><a class="anchor" id="um_RSA_key_import"></a><a class="anchor" id="um_RSA_key_import_e3"></a><a class="anchor" id="um_RSA_key_export_import_wrapped"></a><a class="anchor" id="um_psa_random_number_generation"></a><a class="anchor" id="um_RNG_hardware_acceleration"></a><a class="anchor" id="um_AES_persistent_key"></a><a class="anchor" id="um_RSA_persistent_key"></a> </p>
 <h1><a class="anchor" id="rm-psa-crypto-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for mbedCrypto</h2>
@@ -362,6 +386,8 @@ The following build time configurations are defined in arm/mbedtls/config.h:<br 
 <td class="tree_lvl_2_cell">SHA256/224</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_SHA256_ALT and MBEDTLS_SHA256_PROCESS_ALT. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">SHA512/384</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_SHA512_ALT and MBEDTLS_SHA512_PROCESS_ALT. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">SHA3_224/256/384/512</td><td>MCU Specific Options</td><td></td><td>Defines MBEDTLS_SHA3_ALT and MBEDTLS_SHA3_PROCESS_ALT. </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Cipher  </td></tr>
 <tr class="tree_lvl_2_item">
@@ -2356,7 +2382,7 @@ Wrapped Key Usage</h2>
 <p>To use the Secure Crypto Engine to generate and use wrapped keys, use PSA_KEY_TYPE_AES_WRAPPED or PSA_KEY_TYPE_ECC_KEY_PAIR_WRAPPED(curve) or PSA_KEY_TYPE_RSA_KEY_PAIR when setting the key type attribute. Setting the key's type attribute using this value will cause the SCE to use wrapped key mode for all operations related to that key. The user can use the export functionality to save the wrapped keys to user ROM and import it later for usage. This mode requires that Wrapped Key functionality for the algorithm is enabled in the project configuration. </p><dl class="section note"><dt>Note</dt><dd><b>On the SCE9 devices, only the RSA public key can be exported. A file system must be used to store the internally generated private key.</b></dd></dl>
 <h2><a class="anchor" id="rm-psa-crypto-persistent-key-storage"></a>
 Persistent Key Storage</h2>
-<p>Persistent key storage can be enabled by defining MBEDTLS_FS_IO, MBEDTLS_PSA_CRYPTO_STORAGE_C, and MBEDTLS_PSA_ITS_FILE_C. The key lifetime must also be specifed as PSA_KEY_LIFETIME_PERSISTENT. A lower level storage module must be added in the RA Configuration editor and initialized in the code before generating persistent keys. Persistent storage supports the use of plaintext and vendor keys. Refer to the lower level storage module documentation for information on how it should be initialized. To generate a persistent key the key must be assigned a unique id prior to calling generate using the psa_set_key_id api.<a class="anchor" id="um_PSA_ITS_persistent_storage"></a> </p><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm-psa-crypto-platform-configuration"></a>
+<p>Persistent key storage can be enabled by defining MBEDTLS_FS_IO, MBEDTLS_PSA_CRYPTO_STORAGE_C, and MBEDTLS_PSA_ITS_FILE_C. The key lifetime must also be specified as PSA_KEY_LIFETIME_PERSISTENT. A lower level storage module must be added in the RA Configuration editor and initialized in the code before generating persistent keys. Persistent storage supports the use of plaintext and vendor keys. Refer to the lower level storage module documentation for information on how it should be initialized. To generate a persistent key the key must be assigned a unique id prior to calling generate using the psa_set_key_id api.<a class="anchor" id="um_PSA_ITS_persistent_storage"></a> </p><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (PSA_KEY_LIFETIME_IS_PERSISTENT(lifetime))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Set the id to a positive integer. */</span></div><div class="line">        psa_set_key_id(&amp;attributes, (psa_key_id_t) 5);</div><div class="line">    }</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="rm-psa-crypto-platform-configuration"></a>
 Platform Configuration</h2>
 <p>To run the mbedCrypto implementation of the PSA Crypto API on the MCU, the macro MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT must be defined in the configuration file. This enables code that will initialize the SCE. Parameter checking (General|MBEDTLS_CHECK_PARAMS) is enabled by default. To reduce code size, disable parameter checking.</p>
 <h2><a class="anchor" id="rm-psa-crypto-entropy-configuration"></a>
@@ -2550,7 +2576,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

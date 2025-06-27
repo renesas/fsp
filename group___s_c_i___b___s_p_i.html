@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___s_p_i.html','');})
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___s_p_i.html','');})
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___s_p_i.html','');})
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -254,8 +254,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga89bf96620387a4c7a3286c0124b2ccd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2d012c000949b800916228622a17c7b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___s_p_i.html#ga2d012c000949b800916228622a17c7b0">R_SCI_B_SPI_WriteRead</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void const *p_src, void *p_dest, uint32_t const length, <a class="el" href="group___s_p_i___a_p_i.html#ga6ba4a8eef274a5b227fc2ab6ee61f8fd">spi_bit_width_t</a> const bit_width)</td></tr>
 <tr class="separator:ga2d012c000949b800916228622a17c7b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2aa7152ee6c0af0c0b88fd1a3583963b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___s_p_i.html#ga2aa7152ee6c0af0c0b88fd1a3583963b">R_SCI_B_SPI_CallbackSet</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ga2aa7152ee6c0af0c0b88fd1a3583963b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3da02037acf009facd290ecd3cb8ab30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___s_p_i.html#ga3da02037acf009facd290ecd3cb8ab30">R_SCI_B_SPI_CallbackSet</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *), void *const p_context, <a class="el" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga3da02037acf009facd290ecd3cb8ab30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3bc70797e94e3b2ff3c58c99470c9212"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___s_p_i.html#ga3bc70797e94e3b2ff3c58c99470c9212">R_SCI_B_SPI_Close</a> (<a class="el" href="group___s_p_i___a_p_i.html#gacb036be7f805dbb8d2092486d1aeb242">spi_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga3bc70797e94e3b2ff3c58c99470c9212"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5483b01cc27623ef5886f62f10f37585"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___s_p_i.html#ga5483b01cc27623ef5886f62f10f37585">R_SCI_B_SPI_CalculateBitrate</a> (uint32_t bitrate, sci_b_spi_clock_source_t clock_source, <a class="el" href="group___s_c_i___b___s_p_i.html#structsci__b__spi__div__setting__t">sci_b_spi_div_setting_t</a> *sclk_div)</td></tr>
@@ -315,7 +315,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>If support for transfering data using the DTC will be compiled in. </td></tr>
+</td><td>Enabled </td><td>If support for transferring data using the DTC will be compiled in. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; SPI (r_sci_b_spi)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_sci_b_spi). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -407,6 +407,8 @@ Clock Configuration</h2>
 <tr>
 <td>RA8M1</td><td>PCLKA</td></tr>
 <tr>
+<td>RA8P1</td><td>PCLKA</td></tr>
+<tr>
 <td>RA8T1</td><td>PCLKA</td></tr>
 </table>
 </p>
@@ -418,7 +420,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r_sci_b_spi-usage_notes"></a>
 Usage Notes</h1>
 <h2>Transfer Complete Event</h2>
-<p>The transfer complete event is triggered when all of the data has been transfered. In slave mode if the SS pin is de-asserted then no transfer complete event is generated until the SS pin is asserted and the remaining data is transferred.</p>
+<p>The transfer complete event is triggered when all of the data has been transferred. In slave mode if the SS pin is de-asserted then no transfer complete event is generated until the SS pin is asserted and the remaining data is transferred.</p>
 <h2>Performance</h2>
 <p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in RX Overflow errors.</p>
 <p>In order to improve performance at high bit rates, it is recommended that the instance be configured to service transfers using the DTC.</p>
@@ -433,7 +435,7 @@ Usage Notes</h1>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the SCI_B_SPI module in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_sci_b_spi_callback (<a class="code" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_p_i___a_p_i.html#gga6e4960e8b344a8a8ec60f0c11d60f54ca2b456074a7304b0ac4be1cbe69d6dad1">SPI_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_p_i___a_p_i.html#ae1e14270178c91fb89697630627c1eee">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> sci_b_spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_buffer[TRANSFER_SIZE];</div><div class="line">    uint8_t rx_buffer[TRANSFER_SIZE];</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___s_p_i.html#gae022be262ad9a9ab9b3bb25a77130bb5">R_SCI_B_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___b___s_p_i.html#ga2d012c000949b800916228622a17c7b0">R_SCI_B_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for minimum time required between transfers. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(SSL_NEXT_ACCESS_DELAY, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___b___s_p_i.html#ga2d012c000949b800916228622a17c7b0">R_SCI_B_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_sci_b_spi_callback (<a class="code" href="group___s_p_i___a_p_i.html#structspi__callback__args__t">spi_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___s_p_i___a_p_i.html#gga6e4960e8b344a8a8ec60f0c11d60f54ca2b456074a7304b0ac4be1cbe69d6dad1">SPI_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___s_p_i___a_p_i.html#ae1e14270178c91fb89697630627c1eee">event</a>)</div><div class="line">    {</div><div class="line">        g_transfer_complete = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> sci_b_spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_buffer[TRANSFER_SIZE];</div><div class="line">    uint8_t rx_buffer[TRANSFER_SIZE];</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SPI module. */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___s_p_i.html#gae022be262ad9a9ab9b3bb25a77130bb5">R_SCI_B_SPI_Open</a>(&amp;g_spi_ctrl, &amp;g_spi_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___b___s_p_i.html#ga2d012c000949b800916228622a17c7b0">R_SCI_B_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 1 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_1, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for minimum time required between transfers. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(SSL_NEXT_ACCESS_DELAY, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start a write/read transfer */</span></div><div class="line">    g_transfer_complete = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___b___s_p_i.html#ga2d012c000949b800916228622a17c7b0">R_SCI_B_SPI_WriteRead</a>(&amp;g_spi_ctrl, tx_buffer, rx_buffer, TRANSFER_SIZE, <a class="code" href="group___s_p_i___a_p_i.html#gga6ba4a8eef274a5b227fc2ab6ee61f8fdad6fa8af050db98465c43fd25fb8e8090">SPI_BIT_WIDTH_8_BITS</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for SPI_EVENT_TRANSFER_COMPLETE callback event. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">false</span> == g_transfer_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* De-assert Slave Select Line 2 */</span></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#ga33cef14f93543bcb3531b4f2e377c5c4">R_BSP_PinWrite</a>(SLAVE_SELECT_LINE_2, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structsci__b__spi__div__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___s_p_i.html#structsci__b__spi__div__setting__t">sci_b_spi_div_setting_t</a></td></tr>
@@ -761,8 +763,8 @@ Data Structures</h2></td></tr>
 
 </div>
 </div>
-<a id="ga2aa7152ee6c0af0c0b88fd1a3583963b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2aa7152ee6c0af0c0b88fd1a3583963b">&#9670;&nbsp;</a></span>R_SCI_B_SPI_CallbackSet()</h2>
+<a id="ga3da02037acf009facd290ecd3cb8ab30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3da02037acf009facd290ecd3cb8ab30">&#9670;&nbsp;</a></span>R_SCI_B_SPI_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -782,7 +784,7 @@ Data Structures</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -798,7 +800,7 @@ Data Structures</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#ad3409ec3b694f2d68043360f466c31ce">spi_api_t::callbackSet</a></p>
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___s_p_i___a_p_i.html#a3bc51b110de8f9ae23a752450bcaaf68">spi_api_t::callbackSet</a></p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -901,7 +903,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

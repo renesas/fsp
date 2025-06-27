@@ -2,7 +2,7 @@ var group___r_m___v_e_e___a_p_i =
 [
     [ "rm_vee_callback_args_t", "group___r_m___v_e_e___a_p_i.html#structrm__vee__callback__args__t", [
       [ "state", "group___r_m___v_e_e___a_p_i.html#a5662b9b3bd5dbde822594f87aaf46cdd", null ],
-      [ "p_context", "group___r_m___v_e_e___a_p_i.html#a81b1d05978598d20624e9eb484305a6f", null ]
+      [ "p_context", "group___r_m___v_e_e___a_p_i.html#a20819311a1460781fde0d53a1bc37a8e", null ]
     ] ],
     [ "rm_vee_cfg_t", "group___r_m___v_e_e___a_p_i.html#structrm__vee__cfg__t", [
       [ "start_addr", "group___r_m___v_e_e___a_p_i.html#a591db393049e30cc9a79f499de75823b", null ],
@@ -12,7 +12,7 @@ var group___r_m___v_e_e___a_p_i =
       [ "record_max_id", "group___r_m___v_e_e___a_p_i.html#acd8744e620366980739912f30af4b45c", null ],
       [ "rec_offset", "group___r_m___v_e_e___a_p_i.html#a3aed6af80b7c6c56e55da9199c3ab2b0", null ],
       [ "p_callback", "group___r_m___v_e_e___a_p_i.html#a6b4cedcf941d94bc97029ca15705fcec", null ],
-      [ "p_context", "group___r_m___v_e_e___a_p_i.html#a8132a0f63b5d4e898714cf71e7488f75", null ],
+      [ "p_context", "group___r_m___v_e_e___a_p_i.html#aea5b52a953ad284a5aa468715048df64", null ],
       [ "p_extend", "group___r_m___v_e_e___a_p_i.html#a7666f6551b1479d17ff3debfbfbd019e", null ]
     ] ],
     [ "rm_vee_api_t", "group___r_m___v_e_e___a_p_i.html#structrm__vee__api__t", [
@@ -24,7 +24,7 @@ var group___r_m___v_e_e___a_p_i =
       [ "statusGet", "group___r_m___v_e_e___a_p_i.html#a3bdb3d09f70fca2b78380d2dfb8eefc3", null ],
       [ "refresh", "group___r_m___v_e_e___a_p_i.html#af9b151f78090db849beecfad30c734ae", null ],
       [ "format", "group___r_m___v_e_e___a_p_i.html#a8dfcc3419ebd36cf3081a6b0a87618cc", null ],
-      [ "callbackSet", "group___r_m___v_e_e___a_p_i.html#a34a4e9e64c18c008336248fb9a6f9ddf", null ],
+      [ "callbackSet", "group___r_m___v_e_e___a_p_i.html#a523f381debb383e99117ca3af38b0d09", null ],
       [ "close", "group___r_m___v_e_e___a_p_i.html#ac275b976b44492bffacf67e6badcab7b", null ]
     ] ],
     [ "rm_vee_instance_t", "group___r_m___v_e_e___a_p_i.html#structrm__vee__instance__t", [

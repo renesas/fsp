@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___a_p_i.html','');})
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___a_p_i.html','');})
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___a_p_i.html','');})
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -259,6 +259,8 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structether__nic__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__nic__info__t">ether_nic_info_t</a></td></tr>
+<tr class="separator:structether__nic__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structether__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a></td></tr>
 <tr class="separator:structether__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structether__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__cfg__t">ether_cfg_t</a></td></tr>
@@ -289,6 +291,30 @@ Enumerations</h2></td></tr>
 <tr class="separator:gad029483e98651bf40e3e3439ed6d1973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structether__nic__info__t" id="structether__nic__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structether__nic__info__t">&#9670;&nbsp;</a></span>ether_nic_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ether_nic_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Network interface device infomation </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afdabff0b6a2c0c4b02fa4305b0271f6c"></a>uint8_t *</td>
+<td class="fieldname">
+p_mac_address</td>
+<td class="fielddoc">
+MAC address. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structether__callback__args__t" id="structether__callback__args__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structether__callback__args__t">&#9670;&nbsp;</a></span>ether_callback_args_t</h2>
 
@@ -328,7 +354,13 @@ status_eesr</td>
 <td class="fielddoc">
 ETHERC/EDMAC status register for interrupt handler. </td></tr>
 <tr><td class="fieldtype">
-<a id="a2bd7c2f49c32654e803bf44001aacfb4"></a>void const  *</td>
+<a id="a0c32723d86bcb754eba11c887bb3c12a"></a><a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__nic__info__t">ether_nic_info_t</a> *</td>
+<td class="fieldname">
+p_nic_info</td>
+<td class="fielddoc">
+Pointer of NIC info. </td></tr>
+<tr><td class="fieldtype">
+<a id="adf90ac315d3ce0d8d4d60bd1ba1374e5"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -419,23 +451,23 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__instance__t">ether_phy_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a5ed0d3b67615afba9bfc66fa05d18d72">p_ether_phy_instance</a></td></tr>
 <tr class="memdesc:a5ed0d3b67615afba9bfc66fa05d18d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to ETHER_PHY instance. <br /></td></tr>
 <tr class="separator:a5ed0d3b67615afba9bfc66fa05d18d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6591011e2bea6dbacb87a3f137eb88a"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#af6591011e2bea6dbacb87a3f137eb88a">p_context</a></td></tr>
-<tr class="memdesc:af6591011e2bea6dbacb87a3f137eb88a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data.  <a href="#af6591011e2bea6dbacb87a3f137eb88a">More...</a><br /></td></tr>
-<tr class="separator:af6591011e2bea6dbacb87a3f137eb88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89b1e7ee4cf65f5e30454388814d9120"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a89b1e7ee4cf65f5e30454388814d9120">p_context</a></td></tr>
+<tr class="memdesc:a89b1e7ee4cf65f5e30454388814d9120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data.  <a href="#a89b1e7ee4cf65f5e30454388814d9120">More...</a><br /></td></tr>
+<tr class="separator:a89b1e7ee4cf65f5e30454388814d9120"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d76a15c4de55427a96f762727816558"><td class="memItemLeft" align="right" valign="top"><a id="a2d76a15c4de55427a96f762727816558"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d76a15c4de55427a96f762727816558">p_extend</a></td></tr>
 <tr class="memdesc:a2d76a15c4de55427a96f762727816558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user extension. <br /></td></tr>
 <tr class="separator:a2d76a15c4de55427a96f762727816558"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a id="af6591011e2bea6dbacb87a3f137eb88a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6591011e2bea6dbacb87a3f137eb88a">&#9670;&nbsp;</a></span>p_context</h2>
+<a id="a89b1e7ee4cf65f5e30454388814d9120"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89b1e7ee4cf65f5e30454388814d9120">&#9670;&nbsp;</a></span>p_context</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void const* ether_cfg_t::p_context</td>
+          <td class="memname">void* ether_cfg_t::p_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -480,8 +512,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:acde8967c0512722ca73a1596daf654ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad52cabec533efaaef3258caade1e0640"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#ad52cabec533efaaef3258caade1e0640">txStatusGet</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer_address)</td></tr>
 <tr class="separator:ad52cabec533efaaef3258caade1e0640"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeb0eaa99a7a62dfa5b65494db7f1ab4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#aaeb0eaa99a7a62dfa5b65494db7f1ab4">callbackSet</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:aaeb0eaa99a7a62dfa5b65494db7f1ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d85d35c6eb31690a2c050dffed7a0df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d85d35c6eb31690a2c050dffed7a0df">callbackSet</a> )(<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *), void *const p_context, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a2d85d35c6eb31690a2c050dffed7a0df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="aa0c703be12efe73efdd0d47168239470"></a>
@@ -680,14 +712,14 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="aaeb0eaa99a7a62dfa5b65494db7f1ab4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaeb0eaa99a7a62dfa5b65494db7f1ab4">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a2d85d35c6eb31690a2c050dffed7a0df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d85d35c6eb31690a2c050dffed7a0df">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_api_t::callbackSet) (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ether_api_t::callbackSet) (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *), void *const p_context, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -884,8 +916,6 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad029483e98651bf40e3e3439ed6d1973a910e3b1bc2c7ad6d12ed9851f995dd20"></a>ETHER_EVENT_LINK_OFF&#160;</td><td class="fielddoc"><p>Link down detection event. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggad029483e98651bf40e3e3439ed6d1973a1d528f77a7fdfb14f6fe93179ac2b5ee"></a>ETHER_EVENT_INTERRUPT&#160;</td><td class="fielddoc"><p>DEPRECATED Interrupt event. </p>
-</td></tr>
 <tr><td class="fieldname"><a id="ggad029483e98651bf40e3e3439ed6d1973a118f12d6a25a71bb430e76c2b1842d4a"></a>ETHER_EVENT_RX_COMPLETE&#160;</td><td class="fielddoc"><p>Receive complete event. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad029483e98651bf40e3e3439ed6d1973ac704f1554ad4ee63876e46bde19504a3"></a>ETHER_EVENT_RX_MESSAGE_LOST&#160;</td><td class="fielddoc"><p>Receive FIFO overflow or Receive descriptor is full. </p>
@@ -898,6 +928,8 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad029483e98651bf40e3e3439ed6d1973a5407dfdc90714dc920d15e2255e7f352"></a>ETHER_EVENT_ERR_GLOBAL&#160;</td><td class="fielddoc"><p>Global error has occurred. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggad029483e98651bf40e3e3439ed6d1973a4739ade7d0fbba45c17018dd3b4969d1"></a>ETHER_EVENT_GET_NIC_INFO&#160;</td><td class="fielddoc"><p>Get NIC Info. </p>
+</td></tr>
 </table>
 
 </div>
@@ -908,7 +940,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

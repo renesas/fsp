@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___b_l_e___a_b_s___g_t_l.html',''
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___b_l_e___a_b_s___g_t_l.html',''
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___b_l_e___a_b_s___g_t_l.html',''
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -256,6 +256,8 @@ Features</h2>
 </li>
 <li>The following GAP Role support<ul>
 <li>Peripheral: The device that accepts a connection request from Central and establishes a connection.</li>
+<li>Central: The device that initiates a connection with a peripheral.</li>
+<li>All roles: The device may act as a central and peripheral the same time.</li>
 </ul>
 </li>
 <li>GAP functionality<ul>
@@ -263,6 +265,7 @@ Features</h2>
 <li>Setting address.</li>
 <li>Start/Stop Advertising.</li>
 <li>Connect/Disconnect a link.<a class="anchor" id="um_ble_abs_checking_start_legacy_connection_gtl"></a></li>
+<li>Scan</li>
 </ul>
 </li>
 <li>GATT Common functionality<ul>
@@ -272,8 +275,15 @@ Features</h2>
 <li>GATT Server functionality<ul>
 <li>Initialization of GATT Server.</li>
 <li>Loading of Profile definition.</li>
-<li>Notification of characteristics modification.</li>
+<li>Notifications and Indications.</li>
 <li>Read/Write of GATT Profile from host.</li>
+<li>Optionally the application and not the device may handle the attributes (Read Indication).</li>
+</ul>
+</li>
+<li>Gatt Client functionality<ul>
+<li>Discover Peripheral Services/Characteristics.</li>
+<li>Read/Write Peripheral Characteristics.</li>
+<li>Receive Notifications and Indications.</li>
 </ul>
 </li>
 <li>Security functionality (DA14531/DA14535 module acting as Peripheral)<ul>
@@ -281,6 +291,15 @@ Features</h2>
 <li>Legacy Pairing supporting Passkey functionality.</li>
 <li>Initiate security request procedure from Peripheral as well.</li>
 <li>Secure connection with Numeric Comparison</li>
+<li>Support security for both roles (Central - Peripheral).</li>
+<li>Store bonding data to flash.</li>
+<li>Enable security configuration.</li>
+<li>Delete all bonding data.</li>
+<li>Delete bonding data with specific BD address.</li>
+</ul>
+</li>
+<li>DA1453x Sleep support<ul>
+<li>Three sleep modes are supported with UART HW flow control.</li>
 </ul>
 </li>
 </ul>
@@ -290,7 +309,7 @@ Configuration</h1>
 Pin Configuration</h2>
 <p>Pins used by the BLE driver to control the DA14531/DA14535 module:</p><ul>
 <li>Reset Pin : Active low reset line for DA14531/DA14535 module.</li>
-<li><a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a> : RX/TX Pins</li>
+<li><a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a> : RX/TX/RTS Pins. The PMOD DA1453x modules require manually setting CTS GPIO as input. PMOD2_SS should be Input and PMOD2_CLK Output Low.</li>
 </ul>
 <h1><a class="anchor" id="rm_ble_abs_gtl-usage_notes"></a>
 Usage Notes</h1>
@@ -298,13 +317,16 @@ Usage Notes</h1>
 <p>The below guide walks users through building a fully working solution that allows booting from the host via 1-wire UART in order to run a BLE application from the RA MCU using the GTL interface.</p>
 <p><a href="https://lpccs-docs.renesas.com/DA1453x-FSP_BLE_Framework/UM-B-172/index.html">https://lpccs-docs.renesas.com/DA1453x-FSP_BLE_Framework/UM-B-172/index.html</a></p>
 <h2>Addresses</h2>
-<p>When using a public BD address the address pre-programmed into the DA14531/DA14535 will be used and can't be overridden.</p>
-<p>A random address can be set by calling the R_BLE_VS_SetBdAddr function before the R_BLE_GAP_Init function is called.</p>
+<ul>
+<li>A public BD address the address pre-programmed into the DA14531/DA14535 and will be used as default.</li>
+<li>A random BD address can be set by calling the R_BLE_VS_SetBdAddr function before the R_BLE_GAP_Init function is called.</li>
+<li>A public BD address can be set by calling the R_BLE_GTL_VS_SetPublicBdAddress() after R_BLE_GAP_Init function is called.</li>
+</ul>
 <h2>Heap Requirements</h2>
 <p>Ensure the BSP heap size is set to at least 2K bytes.</p>
 <p>When using FreeRTOS ensure the heap 4 size is set to a minimum of 2K bytes.</p>
 <h2>Module Firmware Compatibility</h2>
-<p>This middleware module is compatible with GTL binary version 6.0.22 and later. You must ensure that the DA14531/DA14535 Module (or PMOD) you are using contains this version (or later) firmware or that you use the boot from host feature and have the host MCU load the binary into the DA14531/DA14535. Note that DA14531 and DA14535 are not firmware compatible even though the GTL API is the same.</p>
+<p>This middleware module is compatible with GTL binary version 6.0.23.1451 and later. You must ensure that the DA14531/DA14535 Module (or PMOD) you are using contains this version (or later) firmware or that you use the boot from host feature and have the host MCU load the binary into the DA14531/DA14535. Note that DA14531 and DA14535 are not firmware compatible even though the GTL API is the same.</p>
 <p>Instructions detailing how to upgrade the firmware in a DA14531 Module can be found here:</p>
 <p><a href="https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html">https://lpccs-docs.renesas.com/US159-DA14531EVZ_Firmware_Upgrade/index.html</a></p>
 <p>The GTL binary file can be downloaded using the tool described in the above instructions, or by using the following link:</p>
@@ -313,14 +335,36 @@ Usage Notes</h1>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the BLE_ABS:</p>
 <p>Following a power on reset, the R_BLE_VS_GetRand function always returns the same number. Subsequent calls to this function produce random numbers.</p>
-<p>Service and characteristic write callback functions, created when using the QE Tool are not supported</p>
+<p>Up to 3 concurrent connections are supported.</p>
+<p>For DA1453x Sleep mode CTSRTS0 (EK-RA6M4) should be set to P413. Flow Control CTS/RTS Selection should be set to Hardware CTS. If RA is required to wake-up from DA453x P413 and P414 should be shorted and P414 should be se to interrupt mode.</p>
+<p>For bonded devices Client Characteristic Configuration (CCC) values are not saved to flash memory. They are kept to RAM as long as reset does not take place. If the user wishes to save the CCC values to non-volatile memory, he should handle it from the application layer by marking them as Read Indicated (RI, please find the description bellow).</p>
+<p>The CCC values are not kept per connection, the value of a CCC is the value of the last modification by a GATT Client. If the user wishes to keep CCC values per connection, he should handle it from the application layer by marking them as Read Indicated (RI, please find the description bellow).</p>
+<p>Maximum bonded devices are limited to seven (7). Application must delete an entry before bonding with a new device. Saving bond data is supported with devices that use HP_Flash and boards RA6M4_EK, RA6M5_EK, RA4M3_EK, RA4M2_EK.</p>
+<p>Role switching between Central and Peripheral is not supported after the devices have been bonded.</p>
+<p>Out Of Band (OOB) paring is not supported.</p>
+<p>GAP operations cannot overlap, e.g. you cannot initiate two connections concurrently</p>
 <p>The boot from host feature currently supports 1-wire and 2-wire UART operation. If using a 1-wire boot from host the UART RX and TX pins on the host RA MCU must be tied together using a 1K ohm resistor in order to boot the DA14531/DA14535 - this resistor can remain in place after the boot operation has been completed. Boot from host using 2-wire UART is not supported when using a DA14531MOD module because not all the required pins are exposed. Boot from host using 2-wire UART is supported when a DA14535PMOD with SmartBoot (UM-B-171) is already flashed in DA14535. In this case the same pins used for GTL communication are also used for 2-wire boot.</p>
-<p>Legacy pairing functionality currently works with the DA14531/DA14535 module acting as a Peripheral. Bonding data supports only one connection. Bonding data is stored in RAM and not in Flash. Data will be lost after a reset.</p>
-<p>The RI feature of attributes is controlled from the flag read_notify = 1. In case of a write request the local data base is automatically updated. The app will be notified by an BLE_GATTS_OP_PEER_XXX_WRITE_REQ. In case of a read request and read_notify==1 (read indication) the local data base is not automatically accessed to get the value. The user is responsible to provide the reply value from gatts_cb by using R_BLE_GTL_GATTS_ReadCfm after a BLE_GATTS_EVENT_DB_ACCESS_IND with BLE_GATTS_OP_PEER_XXX_READ_REQ. The CCC values are always treated as RI values. If the attribute is CCC and it is not marked as read_notify, then r_ble_gtl automatically handles it by using a cached value.</p>
+<p>The RI feature of attributes (values are not stored in DA1453x database) is controlled from the flag Enable Characteristic Value Read Callback of QE Tool. In case of a write request the local data base is automatically updated. The app will be notified by an BLE_GATTS_OP_PEER_XXX_WRITE_REQ. In case of a read request and Value Read Callback is enabled (read indication) the local data base is not automatically accessed to get the value. The user is responsible to provide the reply value from gatts_cb by using R_BLE_GTL_GATTS_ReadCfm after a BLE_GATTS_EVENT_DB_ACCESS_IND with BLE_GATTS_OP_PEER_XXX_READ_REQ. The Client Characteristic Configuration (CCC) values are always treated as RI values. If the attribute is CCC and it is not marked as read_notify, then r_ble_gtl automatically handles it by using a cached value.</p>
+<p>Service and characteristic write callback functions, are not generated by the QE Tool. Thus, R_BLE_GTL_GATTC_WRITE_REQ_IND always confirms with R_BLE_GTL_GAP_ERR_NO_ERROR. No value check is provided for incorrect value/range etc</p>
+<p>R_BLE_GTL_GAP_StartScan supports only :</p><ul>
+<li>Passive Scan (R_BLE_GTL_GAPM_OP_SCAN_PASSIVE)</li>
+<li>General Discovery Mode (R_BLE_GTL_GAP_GEN_DISCOVERY)</li>
+<li>No White Listing (R_BLE_GTL_SCAN_ALLOW_ADV_ALL)</li>
+<li>Static own address (R_BLE_GTL_GAPM_STATIC_ADDR)</li>
+<li>Slow Scan input</li>
+<li>1M Phy</li>
+<li>Timeout of 7.7 Seconds restricted by DA145xx ROM.</li>
+</ul>
+<p>R_BLE_GTL_GAP_CreateConn supports only :</p><ul>
+<li>Static own address (R_BLE_GTL_GAPM_STATIC_ADDR)</li>
+<li>Automatic connection operation (R_BLE_GTL_GAPM_OP_CONNECTION_AUTO)</li>
+</ul>
 <p>Currently supported rm_ble_abs_gtl interface functions:</p><ul>
 <li>RM_BLE_ABS_Open</li>
 <li>RM_BLE_ABS_Close</li>
 <li>RM_BLE_ABS_StartLegacyAdvertising</li>
+<li>RM_BLE_ABS_CreateConnection</li>
+<li>RM_BLE_ABS_StartScanning</li>
 </ul>
 <p>Currently supported r_ble_api interface functions:</p><ul>
 <li>R_BLE_Open</li>
@@ -333,6 +377,7 @@ Limitations</h2>
 <li>R_BLE_GAP_UpdConn</li>
 <li>R_BLE_GAP_SetDataLen</li>
 <li>R_BLE_GAP_Disconnect</li>
+<li>R_BLE_GAP_ConfWhiteList</li>
 <li>R_BLE_GAP_GetVerInfo</li>
 <li>R_BLE_GAP_ReadRssi</li>
 <li>R_BLE_GAP_ReadChMap</li>
@@ -342,6 +387,10 @@ Limitations</h2>
 <li>R_BLE_GAP_StopAdv</li>
 <li>R_BLE_GAP_GetRemainAdvBufSize</li>
 <li>R_BLE_GAP_GetRemDevInfo</li>
+<li>R_BLE_GAP_CreateConn</li>
+<li>R_BLE_GAP_CancelCreateConn</li>
+<li>R_BLE_GAP_StartScan</li>
+<li>R_BLE_GAP_StopScan</li>
 <li>R_BLE_GATTS_SetDbInst</li>
 <li>R_BLE_GATT_GetMtu</li>
 <li>R_BLE_GATTS_RegisterCb</li>
@@ -350,27 +399,41 @@ Limitations</h2>
 <li>R_BLE_GATTS_Indication</li>
 <li>R_BLE_GATTS_GetAttr</li>
 <li>R_BLE_GATTS_SetAttr</li>
+<li>R_BLE_GATTC_DiscAllPrimServ</li>
+<li>R_BLE_GATTC_DiscPrimServ</li>
+<li>R_BLE_GATTC_DiscCharByUuid</li>
+<li>R_BLE_GATTC_DiscIncServ</li>
+<li>R_BLE_GATTC_DiscAllChar</li>
+<li>R_BLE_GATTC_DiscAllCharDesc</li>
 <li>R_BLE_GATTC_RegisterCb</li>
 <li>R_BLE_GATTC_DeregisterCb</li>
 <li>R_BLE_GATTC_ReqExMtu</li>
-<li>R_BLE_GATTC_DiscAllPrimServ</li>
-<li>R_BLE_GATTC_DiscIncServ</li>
 <li>R_BLE_GATTC_ReadChar</li>
+<li>R_BLE_GATTC_ReadCharUsingUuid</li>
+<li>R_BLE_GATTC_ReadLongChar</li>
+<li>R_BLE_GATTC_ReadMultiChar</li>
 <li>R_BLE_GATTC_WriteCharWithoutRsp</li>
-<li>R_BLE_GATTC_SignedWriteChar</li>
 <li>R_BLE_GATTC_WriteChar</li>
 <li>R_BLE_GATTC_WriteLongChar</li>
+<li>R_BLE_GATTC_ReliableWrites</li>
 <li>R_BLE_GATTC_ExecWrite</li>
 <li>R_BLE_VS_Init</li>
 <li>R_BLE_VS_GetBdAddr</li>
 <li>R_BLE_VS_SetBdAddr</li>
 <li>R_BLE_VS_GetRand</li>
+<li>R_BLE_VS_SetTxPower</li>
+<li>R_BLE_VS_GetTxPower</li>
+<li>R_BLE_VS_SetSleepMode</li>
+<li>R_BLE_VS_SetPublicBdAddress</li>
 <li>R_BLE_GAP_SetPairingParams</li>
 <li>R_BLE_GAP_ReplyPairing</li>
 <li>R_BLE_GAP_ReplyLtkReq</li>
 <li>R_BLE_GAP_ReplyExKeyInfoReq</li>
 <li>R_BLE_GAP_StartPairing</li>
 <li>R_BLE_GAP_ReplyNumComp</li>
+<li>R_BLE_GAP_ReplyPasskeyEntry</li>
+<li>R_BLE_GAP_StartEnc</li>
+<li>R_BLE_GAP_GetDevSecInfo</li>
 </ul>
 <p>Currently supported callback events:</p><ul>
 <li>BLE_GAP_EVENT_STACK_ON</li>
@@ -381,11 +444,14 @@ Limitations</h2>
 <li>BLE_GAP_EVENT_CONN_PARAM_UPD_COMP</li>
 <li>BLE_GAP_EVENT_ADV_ON</li>
 <li>BLE_GAP_EVENT_ADV_OFF</li>
+<li>BLE_GAP_EVENT_ADV_REPT_IND</li>
 <li>BLE_GAP_EVENT_SET_DATA_LEN_COMP</li>
 <li>BLE_GAP_EVENT_LOC_VER_INFO</li>
 <li>BLE_GAP_EVENT_RSSI_RD_COMP</li>
 <li>BLE_GAP_EVENT_CH_MAP_RD_COMP</li>
 <li>BLE_GAP_EVENT_GET_REM_DEV_INFO</li>
+<li>BLE_GAP_EVENT_CONN_CANCEL_COMP</li>
+<li>BLE_GAP_EVENT_CONN_PARAM_UPD_REQ</li>
 <li>BLE_GATTS_EVENT_WRITE_RSP_COMP</li>
 <li>BLE_GATTS_EVENT_HDL_VAL_CNF</li>
 <li>BLE_GATTS_EVENT_DB_ACCESS_IND</li>
@@ -393,6 +459,18 @@ Limitations</h2>
 <li>BLE_GATTC_EVENT_PRIM_SERV_16_DISC_IND</li>
 <li>BLE_GATTC_EVENT_PRIM_SERV_128_DISC_IND</li>
 <li>BLE_GATTC_EVENT_ALL_PRIM_SERV_DISC_COMP</li>
+<li>BLE_GATTC_EVENT_CHAR_READ_BY_UUID_RSP</li>
+<li>BLE_GATTC_EVENT_CHAR_READ_RSP</li>
+<li>BLE_GATTC_EVENT_CONN_IND</li>
+<li>BLE_GATTC_EVENT_CHAR_WRITE_RSP</li>
+<li>BLE_GATTC_EVENT_CHAR_WRITE_WITHOUT_RSP</li>
+<li>BLE_GATTC_EVENT_CHAR_DISC_COMP</li>
+<li>BLE_GATTC_EVENT_CHAR_128_DISC_IND</li>
+<li>BLE_GATTC_EVENT_HDL_VAL_IND</li>
+<li>BLE_GATTC_EVENT_HDL_VAL_NTF</li>
+<li>BLE_GATTC_EVENT_EXECUTE_WRITE_COMP</li>
+<li>BLE_GATTC_EVENT_ATT_INFO_REQ_IND</li>
+<li>BLE_GATTC_EVENT_HDL_VAL_SVC_CHNG</li>
 <li>BLE_GAP_EVENT_EX_KEY_REQ</li>
 <li>BLE_GAP_EVENT_PASSKEY_ENTRY_REQ</li>
 <li>BLE_GAP_EVENT_PEER_KEY_INFO</li>
@@ -411,7 +489,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

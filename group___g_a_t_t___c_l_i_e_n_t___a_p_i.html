@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___g_a_t_t___c_l_i_e_n_t___a_p_i.
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___g_a_t_t___c_l_i_e_n_t___a_p_i.
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___g_a_t_t___c_l_i_e_n_t___a_p_i.
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -365,12 +365,21 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structst__ble__gattc__ind__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__ind__evt__t">st_ble_gattc_ind_evt_t</a></td></tr>
 <tr class="memdesc:structst__ble__gattc__ind__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that a Indication PDU has been received from a GATT Server.  <a href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__ind__evt__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__gattc__ind__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gattc__svc__chng__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__svc__chng__evt__t">st_ble_gattc_svc_chng_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gattc__svc__chng__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that a service changed PDU has been received from a GATT Server.  <a href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__svc__chng__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gattc__svc__chng__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structst__ble__gattc__rd__char__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__rd__char__evt__t">st_ble_gattc_rd_char_evt_t</a></td></tr>
 <tr class="memdesc:structst__ble__gattc__rd__char__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that read response to <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga274bbff9678e8d5aa4229f49d4d0cd7e" title="This function reads a Characteristic/Characteristic Descriptor in a GATT Server. ">R_BLE_GATTC_ReadChar()</a> or <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga9079c11d83d4ab4d74bc71c159bb4962" title="This function reads a Characteristic in a GATT Server using a specified UUID. ">R_BLE_GATTC_ReadCharUsingUuid()</a> has been received from a GATT Server.  <a href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__rd__char__evt__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__gattc__rd__char__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structst__ble__gattc__wr__char__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__wr__char__evt__t">st_ble_gattc_wr_char_evt_t</a></td></tr>
 <tr class="memdesc:structst__ble__gattc__wr__char__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that write response to <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga6f8b2f95dc0a2fb5f3c3609d08ca3c25" title="This function writes a Characteristic in a GATT Server. ">R_BLE_GATTC_WriteChar()</a> has been received from a GATT Server.  <a href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__wr__char__evt__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__gattc__wr__char__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gattc__att__info__req__ind__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__att__info__req__ind__evt__t">st_ble_gattc_att_info_req_ind_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gattc__att__info__req__ind__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that an att_info_req_ind event has arrived.  <a href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__att__info__req__ind__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gattc__att__info__req__ind__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structst__ble__gattc__wr__char__without__rsp__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__wr__char__without__rsp__evt__t">st_ble_gattc_wr_char_without_rsp_evt_t</a></td></tr>
+<tr class="memdesc:structst__ble__gattc__wr__char__without__rsp__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that write response to <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga46367600ad811c2e801bc6cfe727309b" title="This function writes a Characteristic in a GATT Server without response. ">R_BLE_GATTC_WriteCharWithoutRsp()</a> has been received from a GATT Server.  <a href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__wr__char__without__rsp__evt__t">More...</a><br /></td></tr>
+<tr class="separator:structst__ble__gattc__wr__char__without__rsp__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structst__ble__gattc__rd__multi__char__evt__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__rd__multi__char__evt__t">st_ble_gattc_rd_multi_char_evt_t</a></td></tr>
 <tr class="memdesc:structst__ble__gattc__rd__multi__char__evt__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure notifies that read response to <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga85e7dd4c355c400f9d798ed5bbf7003d" title="This function reads multiple Characteristics in a GATT Server. ">R_BLE_GATTC_ReadMultiChar()</a> has been received from a GATT Server.  <a href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__rd__multi__char__evt__t">More...</a><br /></td></tr>
 <tr class="separator:structst__ble__gattc__rd__multi__char__evt__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1030,6 +1039,30 @@ Characteristic that causes the Indication. </td></tr>
 
 </div>
 </div>
+<a name="structst__ble__gattc__svc__chng__evt__t" id="structst__ble__gattc__svc__chng__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gattc__svc__chng__evt__t">&#9670;&nbsp;</a></span>st_ble_gattc_svc_chng_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gattc_svc_chng_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies that a service changed PDU has been received from a GATT Server. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a80194bb38eb44e02b7ed4ff5436ac311"></a>uint16_t</td>
+<td class="fieldname">
+ind_cfg</td>
+<td class="fielddoc">
+Client Characteristic Configuration Descriptor value. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structst__ble__gattc__rd__char__evt__t" id="structst__ble__gattc__rd__char__evt__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gattc__rd__char__evt__t">&#9670;&nbsp;</a></span>st_ble_gattc_rd_char_evt_t</h2>
 
@@ -1070,6 +1103,54 @@ The contents of the Characteristic that has been read. </td></tr>
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
 <a id="a02b72111156bcb443313a9637673dd23"></a>uint16_t</td>
+<td class="fieldname">
+value_hdl</td>
+<td class="fielddoc">
+Value Handle of the Characteristic/Characteristic Descriptor that has been written. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gattc__att__info__req__ind__evt__t" id="structst__ble__gattc__att__info__req__ind__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gattc__att__info__req__ind__evt__t">&#9670;&nbsp;</a></span>st_ble_gattc_att_info_req_ind_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gattc_att_info_req_ind_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies that an att_info_req_ind event has arrived. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a5c0b512988d58dc555d0f9c72ab6f3db"></a>uint16_t</td>
+<td class="fieldname">
+value_hdl</td>
+<td class="fielddoc">
+Value Handle of the Characteristic/Characteristic Descriptor that information is required. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structst__ble__gattc__wr__char__without__rsp__evt__t" id="structst__ble__gattc__wr__char__without__rsp__evt__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structst__ble__gattc__wr__char__without__rsp__evt__t">&#9670;&nbsp;</a></span>st_ble_gattc_wr_char_without_rsp_evt_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct st_ble_gattc_wr_char_without_rsp_evt_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure notifies that write response to <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga46367600ad811c2e801bc6cfe727309b" title="This function writes a Characteristic in a GATT Server without response. ">R_BLE_GATTC_WriteCharWithoutRsp()</a> has been received from a GATT Server. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a1269f2fa3d4db667b564873383582014"></a>uint16_t</td>
 <td class="fieldname">
 value_hdl</td>
 <td class="fielddoc">
@@ -1185,7 +1266,7 @@ This field indicates the command of the Execute Write that has been done. <table
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a64eb0ba2ff0d3c6946a0aa0e3991e182"></a>uint16_t *</td>
+<a id="afbc4dc1065a690646333095354a683bc"></a>uint16_t *</td>
 <td class="fieldname">
 p_hdl_list</td>
 <td class="fielddoc">
@@ -1196,6 +1277,12 @@ List of Value Handles that point the Characteristics to be read. </td></tr>
 list_count</td>
 <td class="fielddoc">
 The number of Value Handles included in the hdl_list parameter. </td></tr>
+<tr><td class="fieldtype">
+<a id="a37f7b304a283c54c7c6b44c28f572f2e"></a>uint16_t *</td>
+<td class="fieldname">
+p_len_list</td>
+<td class="fielddoc">
+List of Value Length that point the Characteristics to be read. </td></tr>
 </table>
 
 </div>
@@ -1479,6 +1566,22 @@ Attribute Value. </td></tr>
 <h2>Event Data:</h2>
 <p>st_ble_gattc_wr_char_evt_tBLE_GATTC_EVENT_CHAR_WRITE_RSP </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga93b59d868d4143bbff42881a1e0d420eafa2ce44ac02d65a58023f8bb6752c99b"></a>BLE_GATTC_EVENT_CHAR_WRITE_WITHOUT_RSP&#160;</td><td class="fielddoc"><p>This event notifies the application layer that the write without response of Characteristic/Characteristic Descriptor has been completed. </p>
+<h2>Event Code: 0x4014</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+<tr>
+<td class="paramname">BLE_ERR_RSP_TIMEOUT(0x0011) </td><td>30 seconds or more have passed without receiving a write response since GATT Client sent a request for write by R_BLE_GTL_GATTC_WriteCharWithoutRsp() to the GATT Server.   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p><a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__wr__char__evt__t" title="This structure notifies that write response to R_BLE_GATTC_WriteChar() has been received from a GATT ...">st_ble_gattc_wr_char_evt_t</a> </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga93b59d868d4143bbff42881a1e0d420eab3806098e5e0f90da56bd645689cc6c6"></a>BLE_GATTC_EVENT_CHAR_PART_WRITE_RSP&#160;</td><td class="fielddoc"><p>This event notifies the application layer of the one of the following. </p>
 <ul>
 <li>A segmentation to be written to Long Characteristic/Long Characteristic Descriptor has been sent to the GATT Server.</li>
@@ -1529,6 +1632,23 @@ Attribute Value. </td></tr>
 </dl>
 <h2>Event Data:</h2>
 <p>st_ble_gattc_ind_evt_tBLE_GATTC_EVENT_HDL_VAL_IND </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga93b59d868d4143bbff42881a1e0d420ea85b6ca93f921f1b9c5a8f585f340d681"></a>BLE_GATTC_EVENT_HDL_VAL_SVC_CHNG&#160;</td><td class="fielddoc"><p>This event notifies the application layer that a service changed indication has been received from a GATT Server. </p>
+<p>When the GATT Client has received a Indication from a Service Changed characteristic.</p>
+<h2>Event Code: 0x401E</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+<tr>
+<td class="paramname">BLE_ERR_MEM_ALLOC_FAILED(0x000C) </td><td>Insufficient resource is needed to generate the confirmation packet.   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>st_ble_gattc_svc_chng_evt_tBLE_GATTC_EVENT_HDL_VAL_SVC_CHNG </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga93b59d868d4143bbff42881a1e0d420ea13f4d034d85f22b4cc0b0c7aa0a3fc9b"></a>BLE_GATTC_EVENT_CONN_IND&#160;</td><td class="fielddoc"><p>This event notifies the application layer that the link with the GATT Server has been established. </p>
 <h2>Event Code: 0x4081</h2>
@@ -1849,12 +1969,40 @@ Attribute Value. </td></tr>
 <tr>
 <td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
 <tr>
-<td class="paramname">BLE_ERR_RSP_TIMEOUT(0x0011) </td><td>30 seconds or more have passed without receiving a response since GATT Client sent a request for execute write by <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gafdb67dc27c6fb7570850e1bedcc7e918" title="This function performs the Reliable Writes procedure described in GATT Specification. ">R_BLE_GATTC_ReliableWrites()</a> or <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga819b92c49e995c81e63e09cfa3def5d8" title="If the auto execute of Reliable Writes is not specified by R_BLE_GATTC_ReliableWrites(), this function is used to execute a write to Characteristic. ">R_BLE_GATTC_ExecWrite()</a> to the GATT Server.   </td></tr>
+<td class="paramname">BLE_ERR_RSP_TIMEOUT(0x0011) </td><td>30 seconds or more have passed without receiving a response since GATT Client sent a request for execute write by <a class="el" href="group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gafdb67dc27c6fb7570850e1bedcc7e918" title="This function performs the Reliable Writes procedure described in GATT Specification. ">R_BLE_GATTC_ReliableWrites()</a> to the GATT Server.   </td></tr>
 </table>
 </dd>
 </dl>
 <h2>Event Data:</h2>
 <p>st_ble_gattc_reliable_writes_comp_evt_tBLE_GATTC_EVENT_RELIABLE_WRITES_COMP </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga93b59d868d4143bbff42881a1e0d420eac315144857c51101823e436944309df0"></a>BLE_GATTC_EVENT_EXECUTE_WRITE_COMP&#160;</td><td class="fielddoc"><p>This event notifies the application layer that the Execute Write Command has been completed. </p>
+<h2>Event Code: 0x40F5</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>st_ble_gattc_reliable_writes_comp_evt_tBLE_GATTC_EVENT_RELIABLE_WRITES_COMP </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga93b59d868d4143bbff42881a1e0d420eaaf2705dbe640d227e5480d6f56861f4a"></a>BLE_GATTC_EVENT_ATT_INFO_REQ_IND&#160;</td><td class="fielddoc"><p>This event notifies the application layer that an Information Request Indication has been received. </p>
+<h2>Event Code: 0x40F6</h2>
+<h2>result:</h2>
+<dl class="retval">
+<dt></dt>
+<dd><table class="retval">
+<tr>
+<td class="paramname">BLE_SUCCESS(0x0000) </td><td>Success   </td></tr>
+</table>
+</dd>
+</dl>
+<h2>Event Data:</h2>
+<p>st_ble_gattc_reliable_writes_comp_evt_tBLE_GATTC_EVENT_ATT_INFO_REQ_IND </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga93b59d868d4143bbff42881a1e0d420ea401762bba6a8ddd8e911e3578ca886fb"></a>BLE_GATTC_EVENT_INVALID&#160;</td><td class="fielddoc"><p>Invalid GATT Client Event. </p>
 <h2>Event Code: 0x40FF</h2>
@@ -2993,7 +3141,7 @@ Attribute Value. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

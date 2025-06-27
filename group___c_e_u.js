@@ -64,6 +64,6 @@ var group___c_e_u =
     [ "R_CEU_Open", "group___c_e_u.html#ga160a6d072bdc63cbe5ae43d054e64eb8", null ],
     [ "R_CEU_Close", "group___c_e_u.html#ga4395a4040b13c2a49a4140c31063997a", null ],
     [ "R_CEU_CaptureStart", "group___c_e_u.html#gaa6e10ee7af8822bca330a5dd729c287d", null ],
-    [ "R_CEU_CallbackSet", "group___c_e_u.html#gaab5f5bcf69d3f54bdb4f4c3b6c276cce", null ],
+    [ "R_CEU_CallbackSet", "group___c_e_u.html#ga6ec5a9760feedf64db5dd573d6e0d8a1", null ],
     [ "R_CEU_StatusGet", "group___c_e_u.html#ga56c6d254842e002d2a1f5d0d66f55c4d", null ]
 ];

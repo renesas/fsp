@@ -197,7 +197,7 @@ var group___g_p_t =
     [ "R_GPT_OutputDisable", "group___g_p_t.html#gae204e5d6c9305923e98724005dcdf03d", null ],
     [ "R_GPT_AdcTriggerSet", "group___g_p_t.html#ga311c91c55f20338f7082fa4369e7c80f", null ],
     [ "R_GPT_PwmOutputDelaySet", "group___g_p_t.html#gaff2d30ece9bd30b5a9cc2117623834c6", null ],
-    [ "R_GPT_CallbackSet", "group___g_p_t.html#ga2a09de185d3b7f1c301b33330931bac4", null ],
+    [ "R_GPT_CallbackSet", "group___g_p_t.html#ga6cd6772e3474cf80cb49b562b11c269e", null ],
     [ "R_GPT_Close", "group___g_p_t.html#ga2fc5d6a737a00948802e2bb77fbe8d8c", null ],
     [ "R_GPT_PwmOutputDelayInitialize", "group___g_p_t.html#gada982ef1873ca00147f9692b42aba8f0", null ]
 ];

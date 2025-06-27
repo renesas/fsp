@@ -7,7 +7,7 @@ var group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i =
     [ "rm_ble_mesh_config_client_cfg_t", "group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__config__client__cfg__t", [
       [ "p_access_instance", "group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i.html#ae5504ef4844cecacf35485e987800b2a", null ],
       [ "p_callback", "group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i.html#aa35dab3ebae9655c52e672f9193ff5b1", null ],
-      [ "p_context", "group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i.html#ac53136d1be9a73948b2d7d52aac7f7dc", null ],
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i.html#a85c0646c05e662bacfc543ffcbc90ca8", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i.html#a5eb71ba55dccd66626d41796c5be875b", null ]
     ] ],
     [ "rm_ble_mesh_config_client_api_t", "group___r_m___b_l_e___m_e_s_h___c_o_n_f_i_g___c_l_i_e_n_t___a_p_i.html#structrm__ble__mesh__config__client__api__t", [

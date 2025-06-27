@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['mipi_5fcmd_5fid_5ft',['mipi_cmd_id_t',['../group___m_i_p_i___c_m_d___t_y_p_e_s.html#ga9a042e2f4df8c3cdfc8f0a8c6c5fe073',1,'r_mipi_cmd_types.h']]],
   ['mipi_5fdsi_5fack_5ferr_5ft',['mipi_dsi_ack_err_t',['../group___m_i_p_i___d_s_i___a_p_i.html#ga1f107e89f3b165bc57a5b7a575d4db63',1,'r_mipi_dsi_api.h']]],
   ['mipi_5fdsi_5fcmd_5fflag_5ft',['mipi_dsi_cmd_flag_t',['../group___m_i_p_i___d_s_i___a_p_i.html#gadc3bdd29eb397d22d89b1fe84a307bb0',1,'r_mipi_dsi_api.h']]],
   ['mipi_5fdsi_5fcmd_5fid_5ft',['mipi_dsi_cmd_id_t',['../group___m_i_p_i___d_s_i___a_p_i.html#ga0c9af0d3591f144aca9637850d11b09e',1,'r_mipi_dsi_api.h']]],

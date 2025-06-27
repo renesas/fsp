@@ -20,21 +20,28 @@ var group___e_t_h_e_r =
       [ "link_establish_status", "group___e_t_h_e_r.html#a72f0205de3ce7f074088034cbdbc6f06", null ]
     ] ],
     [ "ether_previous_link_status_t", "group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621", [
-      [ "ETHER_PREVIOUS_LINK_STATUS_DOWN", "group___e_t_h_e_r.html#gga84685e14baf908ba6180ecbfafc18621a0cb808fc5ef37f4af6a44e9f0156c123", null ],
-      [ "ETHER_PREVIOUS_LINK_STATUS_UP", "group___e_t_h_e_r.html#gga84685e14baf908ba6180ecbfafc18621afc172a815ac21e377ad33af9f15ca4be", null ]
+      [ "ETHER_PREVIOUS_LINK_STATUS_DOWN", "group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621a0cb808fc5ef37f4af6a44e9f0156c123", null ],
+      [ "ETHER_PREVIOUS_LINK_STATUS_UP", "group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621afc172a815ac21e377ad33af9f15ca4be", null ],
+      [ "ETHER_PREVIOUS_LINK_STATUS_DOWN", "group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621a0cb808fc5ef37f4af6a44e9f0156c123", null ],
+      [ "ETHER_PREVIOUS_LINK_STATUS_UP", "group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621afc172a815ac21e377ad33af9f15ca4be", null ]
     ] ],
     [ "ether_link_change_t", "group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2", [
-      [ "ETHER_LINK_CHANGE_NO_CHANGE", "group___e_t_h_e_r.html#ggab0df8da3261a6a2dc9b9b430c00c6ad2aadfc4290b54066048b67e26e367907e3", null ],
-      [ "ETHER_LINK_CHANGE_LINK_DOWN", "group___e_t_h_e_r.html#ggab0df8da3261a6a2dc9b9b430c00c6ad2a705aae645a6a1aa81ab26d15197c1456", null ],
-      [ "ETHER_LINK_CHANGE_LINK_UP", "group___e_t_h_e_r.html#ggab0df8da3261a6a2dc9b9b430c00c6ad2a6c325e2fb4268597e346f6a21dfc4d02", null ]
+      [ "ETHER_LINK_CHANGE_NO_CHANGE", "group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2aadfc4290b54066048b67e26e367907e3", null ],
+      [ "ETHER_LINK_CHANGE_LINK_DOWN", "group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2a705aae645a6a1aa81ab26d15197c1456", null ],
+      [ "ETHER_LINK_CHANGE_LINK_UP", "group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2a6c325e2fb4268597e346f6a21dfc4d02", null ],
+      [ "ETHER_LINK_CHANGE_NO_CHANGE", "group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2aadfc4290b54066048b67e26e367907e3", null ],
+      [ "ETHER_LINK_CHANGE_LINK_DOWN", "group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2a705aae645a6a1aa81ab26d15197c1456", null ],
+      [ "ETHER_LINK_CHANGE_LINK_UP", "group___e_t_h_e_r.html#gab0df8da3261a6a2dc9b9b430c00c6ad2a6c325e2fb4268597e346f6a21dfc4d02", null ]
     ] ],
     [ "ether_magic_packet_t", "group___e_t_h_e_r.html#gac38559e233d4678a9b24d2ee16aa9d7b", [
       [ "ETHER_MAGIC_PACKET_NOT_DETECTED", "group___e_t_h_e_r.html#ggac38559e233d4678a9b24d2ee16aa9d7ba655f088c230f2c5495ef492408337e09", null ],
       [ "ETHER_MAGIC_PACKET_DETECTED", "group___e_t_h_e_r.html#ggac38559e233d4678a9b24d2ee16aa9d7ba0e6a084b224d9f4cda97146dda0cb0f5", null ]
     ] ],
     [ "ether_link_establish_status_t", "group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784", [
-      [ "ETHER_LINK_ESTABLISH_STATUS_DOWN", "group___e_t_h_e_r.html#gga9a49b9f7718ca059e906c12de43c0784aa8c8ee515baf9098d043094378fdf0c5", null ],
-      [ "ETHER_LINK_ESTABLISH_STATUS_UP", "group___e_t_h_e_r.html#gga9a49b9f7718ca059e906c12de43c0784a52c3f79c649e8bb24e98b66480b2870f", null ]
+      [ "ETHER_LINK_ESTABLISH_STATUS_DOWN", "group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784aa8c8ee515baf9098d043094378fdf0c5", null ],
+      [ "ETHER_LINK_ESTABLISH_STATUS_UP", "group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784a52c3f79c649e8bb24e98b66480b2870f", null ],
+      [ "ETHER_LINK_ESTABLISH_STATUS_DOWN", "group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784aa8c8ee515baf9098d043094378fdf0c5", null ],
+      [ "ETHER_LINK_ESTABLISH_STATUS_UP", "group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784a52c3f79c649e8bb24e98b66480b2870f", null ]
     ] ],
     [ "ether_eesr_event_mask_t", "group___e_t_h_e_r.html#ga10526c4424a99be131f6fe8063b1f88c", [
       [ "ETHER_EESR_EVENT_MASK_CERF", "group___e_t_h_e_r.html#gga10526c4424a99be131f6fe8063b1f88ca6dedc9137344d78ba04c3918f0c38b05", null ],
@@ -76,5 +83,5 @@ var group___e_t_h_e_r =
     [ "R_ETHER_Read", "group___e_t_h_e_r.html#ga174de3d54336469ca7a1e5949820bd3f", null ],
     [ "R_ETHER_Write", "group___e_t_h_e_r.html#gaad54ccf1420a5c32afe90762eebde112", null ],
     [ "R_ETHER_TxStatusGet", "group___e_t_h_e_r.html#ga8993d43da08dc2f328d67be680fa85e0", null ],
-    [ "R_ETHER_CallbackSet", "group___e_t_h_e_r.html#gafa25a6f9ce0103ffee3ccbe545073d1e", null ]
+    [ "R_ETHER_CallbackSet", "group___e_t_h_e_r.html#gafbc68025e0a2c9eb49efc196f800c264", null ]
 ];

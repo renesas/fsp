@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___q_s_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___q_s_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___q_s_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -405,7 +405,7 @@ Fast Read Quad I/O</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">QSPKCLK Divisor</td><td>MCU Specific Options</td><td></td><td>Select the divisor to apply to PCLK to get QSPCLK. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Minimum QSSL Deselect Cycles</td><td>Refer to the RA Configuration tool for available options.</td><td>4 QSPCLK </td><td>Define the minimum number of QSPCLK cycles for QSSL to remain high beween operations. </td></tr>
+<td class="tree_lvl_1_cell">Minimum QSSL Deselect Cycles</td><td>Refer to the RA Configuration tool for available options.</td><td>4 QSPCLK </td><td>Define the minimum number of QSPCLK cycles for QSSL to remain high between operations. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-qspi-clock-configuration"></a>
@@ -437,7 +437,7 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p><a class="anchor" id="um_qspi_sections"></a> This is a basic example of minimal use of the QSPI in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define QSPI_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[QSPI_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .qspi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[QSPI_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.qspi_flash&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .code_in_qspi section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_qspi_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.code_in_qspi&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_qspi_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_qspi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the QSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open</a>(&amp;g_qspi0_ctrl, &amp;g_qspi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Send device specific initialization commands. */</span></div><div class="line">    r_qspi_example_init();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_QSPI_Open() and any required device specific intiialization, data can be read directly from the QSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], QSPI_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_QSPI_Open() and any required device specific intiialization, functions in the QSPI flash can be called. */</span></div><div class="line">    r_qspi_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Initialization Command Structure Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define QSPI_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[QSPI_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .qspi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[QSPI_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.qspi_flash&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .qspi_flash_code section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_qspi_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.qspi_flash_code&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_qspi_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_qspi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the QSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___q_s_p_i.html#ga9126728f755c2b34939013218ab81b44">R_QSPI_Open</a>(&amp;g_qspi0_ctrl, &amp;g_qspi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Send device specific initialization commands. */</span></div><div class="line">    r_qspi_example_init();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_QSPI_Open() and any required device specific intiialization, data can be read directly from the QSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], QSPI_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_QSPI_Open() and any required device specific intiialization, functions in the QSPI flash can be called. */</span></div><div class="line">    r_qspi_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Initialization Command Structure Example</h2>
 <p>This is an example of the types of commands that can be used to initialize the QSPI.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define QSPI_COMMAND_WRITE_ENABLE             (0x06U)</span></div><div class="line"><span class="preprocessor">#define QSPI_COMMAND_WRITE_STATUS_REGISTER    (0x01U)</span></div><div class="line"><span class="preprocessor">#define QSPI_COMMAND_ENTER_QPI_MODE           (0x38U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define QSPI_EXAMPLE_STATUS_REGISTER_1        (0x40)</span></div><div class="line"><span class="preprocessor">#define QSPI_EXAMPLE_STATUS_REGISTER_2        (0x00)</span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> r_qspi_example_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Write status registers */</span></div><div class="line">    <span class="comment">/* Write one byte to enable writing to the status register, then deassert QSSL. */</span></div><div class="line">    uint8_t   data[4];</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    data[0] = QSPI_COMMAND_WRITE_ENABLE;</div><div class="line">    err     = <a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;data[0], 1, <span class="keyword">false</span>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write 3 bytes, including the write status register command followed by values for both status registers. In the</span></div><div class="line"><span class="comment">     * status registers, set QE to 1 and other bits to their default setting. After all data is written, deassert the</span></div><div class="line"><span class="comment">     * QSSL line. */</span></div><div class="line">    data[0] = QSPI_COMMAND_WRITE_STATUS_REGISTER;</div><div class="line">    data[1] = QSPI_EXAMPLE_STATUS_REGISTER_1;</div><div class="line">    data[2] = QSPI_EXAMPLE_STATUS_REGISTER_2;</div><div class="line">    err     = <a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;data[0], 3, <span class="keyword">false</span>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for status register to update. */</span></div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__status__t">spi_flash_status_t</a> status;</div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        (void) <a class="code" href="group___q_s_p_i.html#ga03da39d9d9f82ea0dfd0f7cc4f253189">R_QSPI_StatusGet</a>(&amp;g_qspi0_ctrl, &amp;status);</div><div class="line">    } <span class="keywordflow">while</span> (<span class="keyword">true</span> == status.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ae20d4bed523ca4e802f5da6fdec4ca43">write_in_progress</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Write one byte to enter QSPI mode, then deassert QSSL. After entering QPI mode on the device, change the SPI</span></div><div class="line"><span class="comment">     * protocol to QPI mode on the MCU peripheral. */</span></div><div class="line">    data[0] = QSPI_COMMAND_ENTER_QPI_MODE;</div><div class="line">    err     = <a class="code" href="group___q_s_p_i.html#ga80ea8f11ac3c0f354d89a3e06fbf6a4c">R_QSPI_DirectWrite</a>(&amp;g_qspi0_ctrl, &amp;data[0], 1, <span class="keyword">false</span>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    (void) <a class="code" href="group___q_s_p_i.html#ga7d09918d3ab7458bbd15908f17bae951">R_QSPI_SpiProtocolSet</a>(&amp;g_qspi0_ctrl, <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535abf7718fe53c0e4daa1dcad6f4d6d215e">SPI_FLASH_PROTOCOL_QPI</a>);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reading Status Register Example (R_QSPI_DirectWrite, R_QSPI_DirectRead)</h2>
 <p>This is an example of using R_QSPI_DirectWrite followed by R_QSPI_DirectRead to send the read status register command and read back the status register from the device.</p>
@@ -1109,7 +1109,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -24,7 +24,7 @@ var group___r_m___z_m_o_d4_x_x_x =
       [ "p_zmod4510_device", "group___r_m___z_m_o_d4_x_x_x.html#af392326e81273f4ae3656fb6915f6c13", null ],
       [ "p_zmod4510_raw_data", "group___r_m___z_m_o_d4_x_x_x.html#adf3675f3c0c02df04205eb1fb168fb42", null ],
       [ "p_irq_instance", "group___r_m___z_m_o_d4_x_x_x.html#a993f572e2bc8acef02a151b7e1a38808", null ],
-      [ "p_context", "group___r_m___z_m_o_d4_x_x_x.html#a6151d069461571549ecbf52193ab8624", null ],
+      [ "p_context", "group___r_m___z_m_o_d4_x_x_x.html#a86386963ee85208f6492c398cc60e0fe", null ],
       [ "p_comms_callback", "group___r_m___z_m_o_d4_x_x_x.html#a57301a9ef64a2317881cdc7d89783fb5", null ],
       [ "p_irq_callback", "group___r_m___z_m_o_d4_x_x_x.html#a0438d7a16c46e81db655c9627a2e3fac", null ]
     ] ],
@@ -37,9 +37,7 @@ var group___r_m___z_m_o_d4_x_x_x =
     [ "RM_ZMOD4XXX_Read", "group___r_m___z_m_o_d4_x_x_x.html#gafabd01cfcb93ac2bcdc4378dc94ec804", null ],
     [ "RM_ZMOD4XXX_Iaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga3ee9369b728a5687fcc637114b563875", null ],
     [ "RM_ZMOD4XXX_Iaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaa2b8de7170ff85a0f991dfdb6fb71317", null ],
-    [ "RM_ZMOD4XXX_OdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaed61c1d9714552e574a4e6037d926180", null ],
     [ "RM_ZMOD4XXX_SulfurOdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaf200a9dc7ca8bf0601c2a2b96c341ecf", null ],
-    [ "RM_ZMOD4XXX_Oaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gaeafe7943df31f237ac45310796df64b2", null ],
     [ "RM_ZMOD4XXX_Oaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga8dcfe9a7b0b9419f1ecfce5d82c3fc33", null ],
     [ "RM_ZMOD4XXX_RaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#gadaee5fde2afbb40e28f40b1de50daf45", null ],
     [ "RM_ZMOD4XXX_RelIaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x.html#ga88a9173f1eb50d4c2f7ca7b310c98957", null ],

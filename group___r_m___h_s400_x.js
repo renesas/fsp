@@ -8,7 +8,7 @@ var group___r_m___h_s400_x =
       [ "open", "group___r_m___h_s400_x.html#a45b5fb27d54a8998d37ae8f90bc6bc47", null ],
       [ "p_cfg", "group___r_m___h_s400_x.html#a8a565adac63233a59d03487d1417b33b", null ],
       [ "p_comms_i2c_instance", "group___r_m___h_s400_x.html#a977c323e9b1fba0858f58d4e9baf0ad5", null ],
-      [ "p_context", "group___r_m___h_s400_x.html#afae51fca4d0796c27b1234c4d050f9e9", null ],
+      [ "p_context", "group___r_m___h_s400_x.html#a225a13bf2e9e688eb7e1397acafa0d9b", null ],
       [ "init_process_params", "group___r_m___h_s400_x.html#a5af51eb4d4038952763bba41f2dee7b7", null ],
       [ "resolution_register", "group___r_m___h_s400_x.html#a5a901725d640aab3b802cffa3159276e", null ],
       [ "periodic_measurement_register", "group___r_m___h_s400_x.html#aefb5d5f935001b4f4e33272387317282", null ],

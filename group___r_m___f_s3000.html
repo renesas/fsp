@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: FS3000 Flow Sensor (rm_fs3000)</title>
+<title>RA Flexible Software Package Documentation: FS3000 Flow Sensor (rm_fs3000) [Deprecated]</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___f_s3000.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___f_s3000.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___f_s3000.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -240,7 +240,7 @@ $(document).ready(function(){initNavTree('group___r_m___f_s3000.html','');});
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">FS3000 Flow Sensor (rm_fs3000)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_n_s_o_r___m_o_d_u_l_e_s.html">Sensor</a></div></div>  </div>
+<div class="title">FS3000 Flow Sensor (rm_fs3000) [Deprecated]<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_e_n_s_o_r___m_o_d_u_l_e_s.html">Sensor</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -263,6 +263,7 @@ Functions</h2></td></tr>
 <p>Middleware to implement the FS3000 sensor interface. This module implements the <a class="el" href="group___r_m___f_s_x_x_x_x___a_p_i.html">FSXXXX Middleware Interface</a>. </p>
 <h1><a class="anchor" id="rm-fs3000-overview"></a>
 Overview</h1>
+<p><span style="color: red; ">FS3000 is EOL.</span></p>
 <h2><a class="anchor" id="rm-fs3000-features"></a>
 Features</h2>
 <p>The FS3000 sensor interface implementation has the following key features:</p><ul>
@@ -294,8 +295,8 @@ Disabled</li>
 <tr class="tree_none">
 <td>Device Type</td><td>FS3000-1005</td><td>FS3000-1005 </td><td>Select FS3000 device used. </td></tr>
 </table>
- <h2>Configurations for Sensor &gt; FS3000 Flow Sensor (rm_fs3000)</h2>
-This module can be added to the Stacks tab via New Stack &gt; Sensor &gt; FS3000 Flow Sensor (rm_fs3000).<br />
+ <h2>Configurations for Sensor &gt; FS3000 Flow Sensor (rm_fs3000) [Deprecated]</h2>
+This module can be added to the Stacks tab via New Stack &gt; Sensor &gt; FS3000 Flow Sensor (rm_fs3000) [Deprecated].<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -322,7 +323,7 @@ If ADC data is invalid, it is needed to read ADC data from FS3000 again. The mod
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of FS3000 sensor implementation in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_fs3000_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>            err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___r_m___f_s_x_x_x_x___a_p_i.html#structrm__fsxxxx__raw__data__t">rm_fsxxxx_raw_data_t</a> fs3000_raw_data;</div><div class="line">    <a class="code" href="group___r_m___f_s_x_x_x_x___a_p_i.html#structrm__fsxxxx__data__t">rm_fsxxxx_data_t</a>     fs3000_data;</div><div class="line">    uint8_t              calculated_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the I2C bus if it is not already open. */</span></div><div class="line">    rm_comms_i2c_bus_extended_cfg_t * p_extend =</div><div class="line">        (rm_comms_i2c_bus_extended_cfg_t *) g_fs3000_cfg.p_instance-&gt;p_cfg-&gt;p_extend;</div><div class="line">    <a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> * p_driver_instance = (<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> *) p_extend-&gt;p_driver_instance;</div><div class="line">    p_driver_instance-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a3258c94576c0bc4a69095906a314386d">p_api</a>-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a6a35b07fde984333fdce6859dfd56e64">open</a>(p_driver_instance-&gt;p_ctrl, p_driver_instance-&gt;p_cfg);</div><div class="line"></div><div class="line"><span class="preprocessor">#if BSP_CFG_RTOS</span></div><div class="line">    <span class="comment">/* Create a semaphore for blocking if a semaphore is not NULL */</span></div><div class="line">    <span class="keywordflow">if</span> (NULL != p_extend-&gt;p_blocking_semaphore)</div><div class="line">    {</div><div class="line"><span class="preprocessor"> #if BSP_CFG_RTOS == 1                 // AzureOS</span></div><div class="line">        tx_semaphore_create(p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_handle,</div><div class="line">                            p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_name,</div><div class="line">                            (ULONG) 0);</div><div class="line"><span class="preprocessor"> #elif BSP_CFG_RTOS == 2               // FreeRTOS</span></div><div class="line">        *(p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_handle) =</div><div class="line">            xSemaphoreCreateCountingStatic((UBaseType_t) 1,</div><div class="line">                                           (UBaseType_t) 0,</div><div class="line">                                           p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_memory);</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Create a recursive mutex for bus lock if a recursive mutex is not NULL */</span></div><div class="line">    <span class="keywordflow">if</span> (NULL != p_extend-&gt;p_bus_recursive_mutex)</div><div class="line">    {</div><div class="line"><span class="preprocessor"> #if BSP_CFG_RTOS == 1                 // AzureOS</span></div><div class="line">        tx_mutex_create(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_handle,</div><div class="line">                        p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_name,</div><div class="line">                        TX_INHERIT);</div><div class="line"><span class="preprocessor"> #elif BSP_CFG_RTOS == 2               // FreeRTOS</span></div><div class="line">        *(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_handle) =</div><div class="line">            xSemaphoreCreateRecursiveMutexStatic(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_memory);</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line">    }</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___f_s3000.html#ga5570c02b735e6a1080f5b4a322335f5c">RM_FS3000_Open</a>(&amp;g_fs3000_ctrl, &amp;g_fs3000_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line">            g_flag = 0;</div><div class="line"></div><div class="line">            <span class="comment">/* Read ADC Data from FS3000 */</span></div><div class="line">            <a class="code" href="group___r_m___f_s3000.html#ga3ea61546dbcd10c32a40df121aaa510c">RM_FS3000_Read</a>(&amp;g_fs3000_ctrl, &amp;fs3000_raw_data);</div><div class="line">            <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Wait callback */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* Calculate Flow value from ADC data */</span></div><div class="line">            err = <a class="code" href="group___r_m___f_s3000.html#ga1a488e47dea0eeec171a3707d404e276">RM_FS3000_DataCalculate</a>(&amp;g_fs3000_ctrl, &amp;fs3000_raw_data, &amp;fs3000_data);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                calculated_flag = 1;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a47bedb95f9926c8f1330bcf7846a548e">FSP_ERR_SENSOR_INVALID_DATA</a> == err) <span class="comment">/* Checksum error */</span></div><div class="line">            {</div><div class="line">                calculated_flag = 0;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span></div><div class="line">            {</div><div class="line">                handle_error(err);</div><div class="line">            }</div><div class="line">        } <span class="keywordflow">while</span> (0 == calculated_flag);</div><div class="line"></div><div class="line">        <span class="comment">/* Wait 125 milliseconds. See table 4 on the page 7 of the datasheet. */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(FS3000_DELAY_125, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> rm_fs3000_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>            err = FSP_SUCCESS;</div><div class="line">    <a class="code" href="group___r_m___f_s_x_x_x_x___a_p_i.html#structrm__fsxxxx__raw__data__t">rm_fsxxxx_raw_data_t</a> fs3000_raw_data;</div><div class="line">    <a class="code" href="group___r_m___f_s_x_x_x_x___a_p_i.html#structrm__fsxxxx__data__t">rm_fsxxxx_data_t</a>     fs3000_data;</div><div class="line">    uint8_t              calculated_flag = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the I2C bus if it is not already open. */</span></div><div class="line">    rm_comms_i2c_bus_extended_cfg_t * p_extend =</div><div class="line">        (rm_comms_i2c_bus_extended_cfg_t *) g_fs3000_cfg.p_instance-&gt;p_cfg-&gt;p_extend;</div><div class="line">    <a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> * p_driver_instance = (<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#structi2c__master__instance__t">i2c_master_instance_t</a> *) p_extend-&gt;p_driver_instance;</div><div class="line">    p_driver_instance-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a3258c94576c0bc4a69095906a314386d">p_api</a>-&gt;<a class="code" href="group___i2_c___m_a_s_t_e_r___a_p_i.html#a6a35b07fde984333fdce6859dfd56e64">open</a>(p_driver_instance-&gt;p_ctrl, p_driver_instance-&gt;p_cfg);</div><div class="line"></div><div class="line"><span class="preprocessor">#if BSP_CFG_RTOS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Create a semaphore for blocking if a semaphore is not NULL */</span></div><div class="line">    <span class="keywordflow">if</span> (NULL != p_extend-&gt;p_blocking_semaphore)</div><div class="line">    {</div><div class="line"><span class="preprocessor"> #if BSP_CFG_RTOS == 1                 // AzureOS</span></div><div class="line">        tx_semaphore_create(p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_handle,</div><div class="line">                            p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_name,</div><div class="line">                            (ULONG) 0);</div><div class="line"><span class="preprocessor"> #elif BSP_CFG_RTOS == 2               // FreeRTOS</span></div><div class="line">        *(p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_handle) =</div><div class="line">            xSemaphoreCreateCountingStatic((UBaseType_t) 1,</div><div class="line">                                           (UBaseType_t) 0,</div><div class="line">                                           p_extend-&gt;p_blocking_semaphore-&gt;p_semaphore_memory);</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Create a recursive mutex for bus lock if a recursive mutex is not NULL */</span></div><div class="line">    <span class="keywordflow">if</span> (NULL != p_extend-&gt;p_bus_recursive_mutex)</div><div class="line">    {</div><div class="line"><span class="preprocessor"> #if BSP_CFG_RTOS == 1                 // AzureOS</span></div><div class="line">        tx_mutex_create(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_handle,</div><div class="line">                        p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_name,</div><div class="line">                        TX_INHERIT);</div><div class="line"><span class="preprocessor"> #elif BSP_CFG_RTOS == 2               // FreeRTOS</span></div><div class="line">        *(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_handle) =</div><div class="line">            xSemaphoreCreateRecursiveMutexStatic(p_extend-&gt;p_bus_recursive_mutex-&gt;p_mutex_memory);</div><div class="line"><span class="preprocessor"> #endif</span></div><div class="line">    }</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___f_s3000.html#ga5570c02b735e6a1080f5b4a322335f5c">RM_FS3000_Open</a>(&amp;g_fs3000_ctrl, &amp;g_fs3000_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">do</span></div><div class="line">        {</div><div class="line">            g_flag = 0;</div><div class="line"></div><div class="line">            <span class="comment">/* Read ADC Data from FS3000 */</span></div><div class="line">            <a class="code" href="group___r_m___f_s3000.html#ga3ea61546dbcd10c32a40df121aaa510c">RM_FS3000_Read</a>(&amp;g_fs3000_ctrl, &amp;fs3000_raw_data);</div><div class="line">            <span class="keywordflow">while</span> (0 == g_flag)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Wait callback */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* Calculate Flow value from ADC data */</span></div><div class="line">            err = <a class="code" href="group___r_m___f_s3000.html#ga1a488e47dea0eeec171a3707d404e276">RM_FS3000_DataCalculate</a>(&amp;g_fs3000_ctrl, &amp;fs3000_raw_data, &amp;fs3000_data);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                calculated_flag = 1;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a47bedb95f9926c8f1330bcf7846a548e">FSP_ERR_SENSOR_INVALID_DATA</a> == err) <span class="comment">/* Checksum error */</span></div><div class="line">            {</div><div class="line">                calculated_flag = 0;</div><div class="line">            }</div><div class="line">            <span class="keywordflow">else</span></div><div class="line">            {</div><div class="line">                handle_error(err);</div><div class="line">            }</div><div class="line">        } <span class="keywordflow">while</span> (0 == calculated_flag);</div><div class="line"></div><div class="line">        <span class="comment">/* Wait 125 milliseconds. See table 4 on the page 7 of the datasheet. */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(FS3000_DELAY_125, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrm__fs3000__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_s3000.html#structrm__fs3000__instance__ctrl__t">rm_fs3000_instance_ctrl_t</a></td></tr>
@@ -355,10 +356,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t">rm_comms_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_s3000.html#adf242fb515626f9be02b18319ebbe5c0">p_comms_i2c_instance</a></td></tr>
 <tr class="memdesc:adf242fb515626f9be02b18319ebbe5c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer of I2C Communications Middleware instance structure. <br /></td></tr>
 <tr class="separator:adf242fb515626f9be02b18319ebbe5c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02f7531b46408c806f1a5039ec3842a9"><td class="memItemLeft" align="right" valign="top"><a id="a02f7531b46408c806f1a5039ec3842a9"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_s3000.html#a02f7531b46408c806f1a5039ec3842a9">p_context</a></td></tr>
-<tr class="memdesc:a02f7531b46408c806f1a5039ec3842a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
-<tr class="separator:a02f7531b46408c806f1a5039ec3842a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51b23a0d7638e3312e89e52371c9b27f"><td class="memItemLeft" align="right" valign="top"><a id="a51b23a0d7638e3312e89e52371c9b27f"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___f_s3000.html#a51b23a0d7638e3312e89e52371c9b27f">p_context</a></td></tr>
+<tr class="memdesc:a51b23a0d7638e3312e89e52371c9b27f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the user-provided context. <br /></td></tr>
+<tr class="separator:a51b23a0d7638e3312e89e52371c9b27f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -519,7 +520,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

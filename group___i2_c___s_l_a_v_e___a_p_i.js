@@ -1,7 +1,7 @@
 var group___i2_c___s_l_a_v_e___a_p_i =
 [
     [ "i2c_slave_callback_args_t", "group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__callback__args__t", [
-      [ "p_context", "group___i2_c___s_l_a_v_e___a_p_i.html#a8480d2ef5f292fa836adfbaef1a0689c", null ],
+      [ "p_context", "group___i2_c___s_l_a_v_e___a_p_i.html#ad8b49414df4bec89b834981e01c22e7e", null ],
       [ "bytes", "group___i2_c___s_l_a_v_e___a_p_i.html#a43903d76b59b527cef993d5cdbe9a2b9", null ],
       [ "event", "group___i2_c___s_l_a_v_e___a_p_i.html#ab8f7ff67f811463a59921e4fbe11898e", null ]
     ] ],
@@ -21,14 +21,14 @@ var group___i2_c___s_l_a_v_e___a_p_i =
       [ "p_transfer_tx", "group___i2_c___s_l_a_v_e___a_p_i.html#a396548dfcb29b480fc122a89c42cc9bc", null ],
       [ "p_transfer_rx", "group___i2_c___s_l_a_v_e___a_p_i.html#a16c339fdbe177593d15cfdfdcb645ece", null ],
       [ "p_callback", "group___i2_c___s_l_a_v_e___a_p_i.html#ac194239c95dc0a5a71e220937295d67c", null ],
-      [ "p_context", "group___i2_c___s_l_a_v_e___a_p_i.html#a6cc910e14348a5c42bb4ffbf41dad5ba", null ],
+      [ "p_context", "group___i2_c___s_l_a_v_e___a_p_i.html#af362276c1001b739cd26ba87f3d91331", null ],
       [ "p_extend", "group___i2_c___s_l_a_v_e___a_p_i.html#a6b56336af0eaf92db7006a028876c575", null ]
     ] ],
     [ "i2c_slave_api_t", "group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__api__t", [
       [ "open", "group___i2_c___s_l_a_v_e___a_p_i.html#a3f978820e80073c05ef95e3b1ef31601", null ],
       [ "read", "group___i2_c___s_l_a_v_e___a_p_i.html#ad9693d9cbb58cc0abb6e4e85548e4e18", null ],
       [ "write", "group___i2_c___s_l_a_v_e___a_p_i.html#a8a7c8ec91840338adbabcea5b5400f19", null ],
-      [ "callbackSet", "group___i2_c___s_l_a_v_e___a_p_i.html#acaf522087321868585ab1753caa08d2e", null ],
+      [ "callbackSet", "group___i2_c___s_l_a_v_e___a_p_i.html#a0454066af282fcdb56bb247f8c641714", null ],
       [ "close", "group___i2_c___s_l_a_v_e___a_p_i.html#a23919938fff411b2275548e6c0dc0c7a", null ]
     ] ],
     [ "i2c_slave_instance_t", "group___i2_c___s_l_a_v_e___a_p_i.html#structi2c__slave__instance__t", [

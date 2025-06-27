@@ -64,11 +64,20 @@ var group___g_a_t_t___c_l_i_e_n_t___a_p_i =
     [ "st_ble_gattc_ind_evt_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__ind__evt__t", [
       [ "data", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ac65103a7c12a22a14dea31780ad27181", null ]
     ] ],
+    [ "st_ble_gattc_svc_chng_evt_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__svc__chng__evt__t", [
+      [ "ind_cfg", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a80194bb38eb44e02b7ed4ff5436ac311", null ]
+    ] ],
     [ "st_ble_gattc_rd_char_evt_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__rd__char__evt__t", [
       [ "read_data", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a6315d1c7a0f803400acc57ff2f8230dc", null ]
     ] ],
     [ "st_ble_gattc_wr_char_evt_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__wr__char__evt__t", [
       [ "value_hdl", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a02b72111156bcb443313a9637673dd23", null ]
+    ] ],
+    [ "st_ble_gattc_att_info_req_ind_evt_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__att__info__req__ind__evt__t", [
+      [ "value_hdl", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a5c0b512988d58dc555d0f9c72ab6f3db", null ]
+    ] ],
+    [ "st_ble_gattc_wr_char_without_rsp_evt_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__wr__char__without__rsp__evt__t", [
+      [ "value_hdl", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a1269f2fa3d4db667b564873383582014", null ]
     ] ],
     [ "st_ble_gattc_rd_multi_char_evt_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__rd__multi__char__evt__t", [
       [ "value_hdl_num", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a282f02e4fbd8715fd70b36de5e7961ab", null ],
@@ -82,8 +91,9 @@ var group___g_a_t_t___c_l_i_e_n_t___a_p_i =
       [ "exe_flag", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a93e9a3e0addce28127ced4d7ae13f8b5", null ]
     ] ],
     [ "st_ble_gattc_rd_multi_req_param_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__rd__multi__req__param__t", [
-      [ "p_hdl_list", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a64eb0ba2ff0d3c6946a0aa0e3991e182", null ],
-      [ "list_count", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#af85be08c11ac87db8a1a991a4a66234f", null ]
+      [ "p_hdl_list", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#afbc4dc1065a690646333095354a683bc", null ],
+      [ "list_count", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#af85be08c11ac87db8a1a991a4a66234f", null ],
+      [ "p_len_list", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#a37f7b304a283c54c7c6b44c28f572f2e", null ]
     ] ],
     [ "st_ble_gattc_evt_data_t", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#structst__ble__gattc__evt__data__t", [
       [ "conn_hdl", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#aced990e8ffc37b8ba57db72674a45994", null ],
@@ -113,9 +123,11 @@ var group___g_a_t_t___c_l_i_e_n_t___a_p_i =
       [ "BLE_GATTC_EVENT_CHAR_PART_READ_RSP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420ea9fa8988d644dc2e4e7e71059f390afd0", null ],
       [ "BLE_GATTC_EVENT_MULTI_CHAR_READ_RSP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420ea9cc16793efedd07789dfdf73937b1b9a", null ],
       [ "BLE_GATTC_EVENT_CHAR_WRITE_RSP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eaa780c28b3e6d1edd9782e61a48fb71fa", null ],
+      [ "BLE_GATTC_EVENT_CHAR_WRITE_WITHOUT_RSP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eafa2ce44ac02d65a58023f8bb6752c99b", null ],
       [ "BLE_GATTC_EVENT_CHAR_PART_WRITE_RSP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eab3806098e5e0f90da56bd645689cc6c6", null ],
       [ "BLE_GATTC_EVENT_HDL_VAL_NTF", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420ea9420ccaa034081b6cc3670663503c954", null ],
       [ "BLE_GATTC_EVENT_HDL_VAL_IND", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eac15b1df9caa3b1435b68b98918c495d1", null ],
+      [ "BLE_GATTC_EVENT_HDL_VAL_SVC_CHNG", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420ea85b6ca93f921f1b9c5a8f585f340d681", null ],
       [ "BLE_GATTC_EVENT_CONN_IND", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420ea13f4d034d85f22b4cc0b0c7aa0a3fc9b", null ],
       [ "BLE_GATTC_EVENT_DISCONN_IND", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eae560bc7b20267ca2ee7bf44cdfa22624", null ],
       [ "BLE_GATTC_EVENT_PRIM_SERV_16_DISC_IND", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eaff777de642dd6894131f5ce30daf980b", null ],
@@ -139,6 +151,8 @@ var group___g_a_t_t___c_l_i_e_n_t___a_p_i =
       [ "BLE_GATTC_EVENT_LONG_CHAR_WRITE_COMP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eaa6f084b69cc4baef24d737c9929d1fd7", null ],
       [ "BLE_GATTC_EVENT_RELIABLE_WRITES_TX_COMP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eae7b4547b6473976bb181316907ba5929", null ],
       [ "BLE_GATTC_EVENT_RELIABLE_WRITES_COMP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420ea889e6792be3d370c7c90eea9e81462b5", null ],
+      [ "BLE_GATTC_EVENT_EXECUTE_WRITE_COMP", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eac315144857c51101823e436944309df0", null ],
+      [ "BLE_GATTC_EVENT_ATT_INFO_REQ_IND", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420eaaf2705dbe640d227e5480d6f56861f4a", null ],
       [ "BLE_GATTC_EVENT_INVALID", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#gga93b59d868d4143bbff42881a1e0d420ea401762bba6a8ddd8e911e3578ca886fb", null ]
     ] ],
     [ "R_BLE_GATTC_Init", "group___g_a_t_t___c_l_i_e_n_t___a_p_i.html#ga414926c5dcfd832e32f093b4fded4af0", null ],

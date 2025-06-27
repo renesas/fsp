@@ -25,7 +25,7 @@ var group___m_i_p_i___d_s_i =
       [ "ulps_status", "group___m_i_p_i___d_s_i.html#acc71757352c7cb7d94101ea01b484b0a", null ],
       [ "p_cfg", "group___m_i_p_i___d_s_i.html#ac8ad85fb5293a7c68ce1397d0dc5e8f5", null ],
       [ "p_callback", "group___m_i_p_i___d_s_i.html#ad33d9ad3a04fa17d3e4a0e795d0deb80", null ],
-      [ "p_context", "group___m_i_p_i___d_s_i.html#aff6c47f281873d4c6a2867b364038ec0", null ],
+      [ "p_context", "group___m_i_p_i___d_s_i.html#a123e6d7f0e0e78c6c28f6a0db70f38e4", null ],
       [ "p_callback_memory", "group___m_i_p_i___d_s_i.html#acf3345d3ca118a9772d02cf31c4b15c1", null ]
     ] ],
     [ "R_MIPI_DSI_Open", "group___m_i_p_i___d_s_i.html#ga9deba8b38c43ba56ca6c8ab6680c7bc4", null ],

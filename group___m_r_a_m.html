@@ -1,0 +1,1148 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: MRAM (r_mram)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___m_r_a_m.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle">
+<div class="title">MRAM (r_mram)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html">Storage</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga69d098f76008a129638d1f2be56157bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga69d098f76008a129638d1f2be56157bf">R_MRAM_Open</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__cfg__t">flash_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga69d098f76008a129638d1f2be56157bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae407c1c608630bbb944486584de1016f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gae407c1c608630bbb944486584de1016f">R_MRAM_Write</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, uint32_t const src_address, uint32_t mram_address, uint32_t const num_bytes)</td></tr>
+<tr class="separator:gae407c1c608630bbb944486584de1016f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7de7ba71acc5ed8c3f58883dc4d5c719"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga7de7ba71acc5ed8c3f58883dc4d5c719">R_MRAM_Erase</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, uint32_t const address, uint32_t const num_blocks)</td></tr>
+<tr class="separator:ga7de7ba71acc5ed8c3f58883dc4d5c719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1915bd41f0570d7cba4ec1105277ff66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga1915bd41f0570d7cba4ec1105277ff66">R_MRAM_BlankCheck</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, uint32_t const address, uint32_t num_bytes, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga79d0373f9f1ae1d8bd99c40edb44a5b6">flash_result_t</a> *p_blank_check_result)</td></tr>
+<tr class="separator:ga1915bd41f0570d7cba4ec1105277ff66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf746648250588fe88a2e4b10f2d9319"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gacf746648250588fe88a2e4b10f2d9319">R_MRAM_StatusGet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#gab551389322a209cca1dcc1a7b2440f7a">flash_status_t</a> *const p_status)</td></tr>
+<tr class="separator:gacf746648250588fe88a2e4b10f2d9319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c6692ed76c236e9f4fbd6487b5a141e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga8c6692ed76c236e9f4fbd6487b5a141e">R_MRAM_IdCodeSet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, uint8_t const *const p_id_code, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga5879fbdf1d24018416c1c7ccf448b64f">flash_id_code_mode_t</a> mode)</td></tr>
+<tr class="separator:ga8c6692ed76c236e9f4fbd6487b5a141e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga897c87eaa3f2568c43dc36543cfafb87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga897c87eaa3f2568c43dc36543cfafb87">R_MRAM_AccessWindowSet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, uint32_t const start_addr, uint32_t const end_addr)</td></tr>
+<tr class="separator:ga897c87eaa3f2568c43dc36543cfafb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b2a527a7569d615ef697e46ac28c774"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga5b2a527a7569d615ef697e46ac28c774">R_MRAM_AccessWindowClear</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:ga5b2a527a7569d615ef697e46ac28c774"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0e2e5ac84dcad168f3211866178518a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gab0e2e5ac84dcad168f3211866178518a">R_MRAM_Reset</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gab0e2e5ac84dcad168f3211866178518a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2dfee0185357cb519520578c6ca7b80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gae2dfee0185357cb519520578c6ca7b80">R_MRAM_StartUpAreaSelect</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#gac8629165c2d649fbbf8c9854c3c7d20b">flash_startup_area_swap_t</a> swap_type, bool is_temporary)</td></tr>
+<tr class="separator:gae2dfee0185357cb519520578c6ca7b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaede7ad9bb1641631b6fea249d16a89a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gaede7ad9bb1641631b6fea249d16a89a7">R_MRAM_BankSwap</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:gaede7ad9bb1641631b6fea249d16a89a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga884dba0aacbc01ccc53008ed6cc3f51c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga884dba0aacbc01ccc53008ed6cc3f51c">R_MRAM_UpdateFlashClockFreq</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:ga884dba0aacbc01ccc53008ed6cc3f51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb6d935f83af0ecbbeaeb72a0aa4f0a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gadb6d935f83af0ecbbeaeb72a0aa4f0a5">R_MRAM_InfoGet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__info__t">flash_info_t</a> *const p_info)</td></tr>
+<tr class="separator:gadb6d935f83af0ecbbeaeb72a0aa4f0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2807e807f67d09214845c788de4f7370"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga2807e807f67d09214845c788de4f7370">R_MRAM_Close</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:ga2807e807f67d09214845c788de4f7370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga889066f02cad5d573b21ff0ec2996287"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga889066f02cad5d573b21ff0ec2996287">R_MRAM_CallbackSet</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *), void *const p_context, <a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga889066f02cad5d573b21ff0ec2996287"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab11a55d17e7263a04aa273cca7036c17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gab11a55d17e7263a04aa273cca7036c17">R_MRAM_AntiRollbackCounterIncrement</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter)</td></tr>
+<tr class="separator:gab11a55d17e7263a04aa273cca7036c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfd393388b4405bb1bd390af26edcc4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#gacfd393388b4405bb1bd390af26edcc4a">R_MRAM_AntiRollbackCounterRefresh</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter)</td></tr>
+<tr class="separator:gacfd393388b4405bb1bd390af26edcc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7248f0a33daa59dcb02f3fa0643d9d11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a> counter, uint32_t *const p_count)</td></tr>
+<tr class="separator:ga7248f0a33daa59dcb02f3fa0643d9d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3523bef800ff7e16c084d84a9fb8f4ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#ga3523bef800ff7e16c084d84a9fb8f4ae">R_MRAM_UserLockableAreaWrite</a> (<a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const p_api_ctrl, uint32_t const src_address, uint32_t mram_address, uint32_t const num_bytes)</td></tr>
+<tr class="separator:ga3523bef800ff7e16c084d84a9fb8f4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the MRAM memory on RA MCUs. This module implements the <a class="el" href="group___f_l_a_s_h___a_p_i.html">Flash Interface</a>. </p>
+<h1><a class="anchor" id="r-mram-overview"></a>
+Overview</h1>
+<p>The MRAM HAL module APIs allow an application to write and erase MRAM areas that reside within the MCU. The amount of MRAM memory available varies across MCU parts.</p>
+<h2><a class="anchor" id="r-mram-features"></a>
+Features</h2>
+<p>The R_MRAM module has the following key features:</p>
+<ul>
+<li>Blocking writing and erasing of MRAM.</li>
+<li>Boot block-swapping.</li>
+<li>Anti-rollback counter support (select MCUs).<a class="anchor" id="um_mram_anti_rollback_counter_read"></a> </li>
+</ul>
+<h1><a class="anchor" id="r-mram-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_mram</h2>
+The following build time configurations are defined in fsp_cfg/r_mram_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Storage &gt; MRAM (r_mram)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Storage &gt; MRAM (r_mram). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_mram0 </td><td>Module name. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-mram-clock-configuration"></a>
+Clock Configuration</h2>
+<p>MRAM uses MRAM bus clock for Code MRAM and MRAM clock for Extra MRAM.</p>
+<h2><a class="anchor" id="r-mram-pin-configuration"></a>
+Pin Configuration</h2>
+<p>This module does not use I/O pins.</p>
+<h1><a class="anchor" id="r-mram-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="r-mram-code-precautions"></a>
+Code MRAM Precautions</h2>
+<p>Code MRAM cannot be accessed while writing or erasing code MRAM. In order to support modifying code MRAM all supporting code must reside in RAM. Code MRAM operation will not return before the operation has completed. By default, the vector table resides in the code MRAM. If an interrupt occurs during the code MRAM operation, then code MRAM will be accessed to fetch the interrupt's starting address and an error will occur. The simplest work-around is to disable interrupts during code MRAM operations. Another option is to copy the vector table to RAM, update the VTOR (Vector Table Offset Register) accordingly and ensure that any interrupt service routines execute out of RAM. Similarly, you must ensure that if in a multi-threaded environment, threads running from code MRAM cannot become active while a code MRAM operation is in progress.</p>
+<h2>Erase condsiderations</h2>
+<p>The erase API was designed with flash blocks in mind. The Erase API provides a mechanism for quickly overwriting blocks of data at a single time. The block size is determined by the MRAM Unit of Programming size.</p>
+<h2><a class="anchor" id="r-mram-anti-rollback-counters"></a>
+Anti Rollback Counter</h2>
+<p>Anti-rollback counters are available on select MCUs and can be used to prevent or limit firmware downgrade. The counters can only be incremented and never decremented or reset, even with an external programming tool.</p>
+<dl class="section note"><dt>Note</dt><dd><b>The OEM bootloader anti-rollback counter is protected by the security engine and cannot be incremented past the version number specified in the code certificate. This counter works with the First Stage Bootloader (FSBL) set to enabled. For more information, read the 'Secure Boot' section in the 'Security Features' chapter of the user manual of the target MCU and refer to Application Note R11AN0774.</b></dd></dl>
+<h3>Anti-Rollback Counter Configuration Setting</h3>
+<p>When anti-rollback counters are used for one or more non-secure applications, the Anti-Rollback Counter Configuration Setting for ARC_NSEC (ARCCS) must be configured as either a single line (1xn bits) or multi-line counter (mxn bits). Single line is suitable when there is only one non-secure application using the anti-rollback counter. Multi-line is suitable when there are multiple non-secure applications. Before the counter is configured, it can't be used.</p>
+<p>This configuration setting is permanent and must be performed with an external programming tool such as Renesas Flash Programmer (RFP). It cannot be configured in e2 studio.</p>
+<p>The secure application and OEM bootloader anti-rollback counters do not require any initial configuration.</p>
+<h3>Anti-Rollback Counter Lock Setting</h3>
+<p>Select MCUs have the ability to permanently lock the anti-rollback counters using the Anti-Rollback Counter Lock Setting (ARCLS). It cannot be set with e2 studio, but if needed, it can be configured with an external programming tool such as Renesas Flash Programmer (RFP). <b>Once the lock protection is applied to a counter, the counter value can never be incremented again.</b> It is still possible to read the value of a locked counter.</p>
+<h2><a class="anchor" id="r-mram-e2studio-caching"></a>
+Viewing MRAM contents in e2 studio</h2>
+<p>By default, the contents of code MRAM are cached by e<sup>2</sup> studio. This means that during a debug session, modifications to these memory regions will not be observed by e<sup>2</sup> studio. When debugging applications using e<sup>2</sup> studio, disable the "Allow caching of flash contents" option in the debug configuration in order to view modified MRAM contents (Debug Configuration &gt; Debugger &gt; Debug Tool Settings &gt; Allow caching of flash contents).</p>
+<h1><a class="anchor" id="r-mram-examples"></a>
+Examples</h1>
+<h2>MRAM Basic Example</h2>
+<p>This is a basic example of writing to MRAM.</p>
+<div class="fragment"><div class="line"></div><div class="line">uint8_t g_dest[TRANSFER_LENGTH];</div><div class="line">uint8_t g_src[TRANSFER_LENGTH];</div><div class="line"><span class="keywordtype">void</span> r_mram_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize p_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the MRAM instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___m_r_a_m.html#ga69d098f76008a129638d1f2be56157bf">R_MRAM_Open</a>(&amp;g_mram_ctrl, &amp;g_mram_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable interrupts to prevent vector table access while MRAM is programming. */</span></div><div class="line">    __disable_irq();</div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to an area of MRAM. */</span></div><div class="line">    err = <a class="code" href="group___m_r_a_m.html#gae407c1c608630bbb944486584de1016f">R_MRAM_Write</a>(&amp;g_mram_ctrl, (uint32_t) g_src, MRAM_WRITE_ADDRESS, MRAM_EXAMPLE_WRITE_SIZE);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable interrupts after MRAM operations are complete. */</span></div><div class="line">    __enable_irq();</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    assert(0 == memcmp(g_src, (uint8_t *) MRAM_WRITE_ADDRESS, MRAM_EXAMPLE_WRITE_SIZE));</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Anti-Rollback Counter Basic Example</h2>
+<p>This example demonstrates basic usage of the anti-rollback counter functions.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_mram_anti_rollback_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the MRAM instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___m_r_a_m.html#ga69d098f76008a129638d1f2be56157bf">R_MRAM_Open</a>(&amp;g_mram_ctrl, &amp;g_mram_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    uint32_t current_count;</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value for the secure application */</span></div><div class="line">    err = <a class="code" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ad3e7b0a0fb8f3856e924021bff04cd3e">FLASH_ARC_SEC</a>, &amp;current_count);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value for the OEM bootloader */</span></div><div class="line">    err = <a class="code" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21a7cc7171bf4d5525892452eb6dc9901fb">FLASH_ARC_OEMBL</a>, &amp;current_count);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value for the non-secure application if counter is configured as 1xn bits */</span></div><div class="line">    err = <a class="code" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ae3656fc3704a6f0ed1ce99086d2bf15a">FLASH_ARC_NSEC_0</a>, &amp;current_count);  <span class="comment">// NSEC App</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value for 4 non-secure applications if counter is configured as mxn bits */</span></div><div class="line">    err  = <a class="code" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ae3656fc3704a6f0ed1ce99086d2bf15a">FLASH_ARC_NSEC_0</a>, &amp;current_count); <span class="comment">// NSEC App 0</span></div><div class="line">    err |= <a class="code" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21a034781b29bee3dfb73c84957259c37c8">FLASH_ARC_NSEC_1</a>, &amp;current_count); <span class="comment">// NSEC App 1</span></div><div class="line">    err |= <a class="code" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21a00d992daf7a6f08dac482f7ffc579f18">FLASH_ARC_NSEC_2</a>, &amp;current_count); <span class="comment">// NSEC App 2</span></div><div class="line">    err |= <a class="code" href="group___m_r_a_m.html#ga7248f0a33daa59dcb02f3fa0643d9d11">R_MRAM_AntiRollbackCounterRead</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ae81af622dbcb602583ef2f894aa367ce">FLASH_ARC_NSEC_3</a>, &amp;current_count); <span class="comment">// NSEC App 3</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Increment the counter value for the secure application. Caution: The increment cannot be reversed. */</span></div><div class="line">    err = <a class="code" href="group___m_r_a_m.html#gab11a55d17e7263a04aa273cca7036c17">R_MRAM_AntiRollbackCounterIncrement</a>(&amp;g_mram_ctrl, <a class="code" href="group___f_l_a_s_h___a_p_i.html#gga83b0266a3edcc6c865f79a3d04785c21ad3e7b0a0fb8f3856e924021bff04cd3e">FLASH_ARC_SEC</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structmram__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_r_a_m.html#structmram__instance__ctrl__t">mram_instance_ctrl_t</a></td></tr>
+<tr class="separator:structmram__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structmram__instance__ctrl__t" id="structmram__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structmram__instance__ctrl__t">&#9670;&nbsp;</a></span>mram_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct mram_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>MRAM instance control block. DO NOT INITIALIZE. </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga69d098f76008a129638d1f2be56157bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga69d098f76008a129638d1f2be56157bf">&#9670;&nbsp;</a></span>R_MRAM_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__cfg__t">flash_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the MRAM peripheral. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a8166d0d1e4f3a59b8bf7f9e89fef9e44">flash_api_t::open</a>.</p>
+<p>The Open function initializes the MRAM.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the MRAM instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___m_r_a_m.html#ga69d098f76008a129638d1f2be56157bf">R_MRAM_Open</a>(&amp;g_mram_ctrl, &amp;g_mram_cfg);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The MRAM control block is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl or p_cfg. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>Caller is requesting BGO but the MRAM interrupts are not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae407c1c608630bbb944486584de1016f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae407c1c608630bbb944486584de1016f">&#9670;&nbsp;</a></span>R_MRAM_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>src_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mram_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>num_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes to the specified MRAM memory area. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a01c35b7f1ad8a9bc3a932d4a05f2bcb6">flash_api_t::write</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Disable interrupts to prevent vector table access while MRAM is programming. */</span></div><div class="line">    __disable_irq();</div><div class="line"></div><div class="line">    <span class="comment">/* Write 32 bytes to an area of MRAM. */</span></div><div class="line">    err = <a class="code" href="group___m_r_a_m.html#gae407c1c608630bbb944486584de1016f">R_MRAM_Write</a>(&amp;g_mram_ctrl, (uint32_t) g_src, MRAM_WRITE_ADDRESS, MRAM_EXAMPLE_WRITE_SIZE);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable interrupts after MRAM operations are complete. */</span></div><div class="line">    __enable_irq();</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Operation successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>The MRAM peripheral is busy with a prior on-going transaction. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The MRAM API is not Open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CMD_LOCKED</td><td>MRAM Application Command Interface is in locked state </td></tr>
+    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Status is indicating a Programming error for the requested operation. This may be returned if the requested MRAM area is not blank. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timed out waiting for write operation to complete. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>Number of bytes provided was invalid </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ADDRESS</td><td>Invalid address was input or address not on programming boundary. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl. </td></tr>
+    <tr><td class="paramname">FSP_ERR_PE_FAILURE</td><td>Failed to enter or exit P/E mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7de7ba71acc5ed8c3f58883dc4d5c719"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7de7ba71acc5ed8c3f58883dc4d5c719">&#9670;&nbsp;</a></span>R_MRAM_Erase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_Erase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>num_blocks</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Erases the specified MRAM blocks. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#ac32a91bb4217997e2ca465463b644211">flash_api_t::erase</a> by the block_erase_address.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Disable interrupts to prevent vector table access while MRAM is programming. */</span></div><div class="line">    __disable_irq();</div><div class="line"></div><div class="line">    <span class="comment">/* Erase 10 programmable units of MRAM */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___m_r_a_m.html#ga7de7ba71acc5ed8c3f58883dc4d5c719">R_MRAM_Erase</a>(&amp;g_mram_ctrl, MRAM_ERASE_ADDRESS, 10);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable interrupts after MRAM operations are complete. */</span></div><div class="line">    __enable_irq();</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_BLOCKS</td><td>Invalid number of blocks specified </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ADDRESS</td><td>Invalid address specified. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Other MRAM operation in progress, or API not initialized </td></tr>
+    <tr><td class="paramname">FSP_ERR_CMD_LOCKED</td><td>MRAM Application Command Interface is in locked state </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The MRAM API is not Open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ERASE_FAILED</td><td>Status is indicating a Erase error. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timed out waiting for the MACI to become ready. </td></tr>
+    <tr><td class="paramname">FSP_ERR_PE_FAILURE</td><td>Failed to enter or exit P/E mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1915bd41f0570d7cba4ec1105277ff66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1915bd41f0570d7cba4ec1105277ff66">&#9670;&nbsp;</a></span>R_MRAM_BlankCheck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_BlankCheck </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num_bytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#ga79d0373f9f1ae1d8bd99c40edb44a5b6">flash_result_t</a> *&#160;</td>
+          <td class="paramname"><em>p_blank_check_result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a285a6f933817c94e26a5aa11c48a1b3c">flash_api_t::blankCheck</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Blank Check is not supported on this MCU. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gacf746648250588fe88a2e4b10f2d9319"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacf746648250588fe88a2e4b10f2d9319">&#9670;&nbsp;</a></span>R_MRAM_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gab551389322a209cca1dcc1a7b2440f7a">flash_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Query the MRAM peripheral for its status. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a5533acb74f21270a17a013d149c32a58">flash_api_t::statusGet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>MRAM peripheral is ready to use. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The MRAM API is not Open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8c6692ed76c236e9f4fbd6487b5a141e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8c6692ed76c236e9f4fbd6487b5a141e">&#9670;&nbsp;</a></span>R_MRAM_IdCodeSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_IdCodeSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_id_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#ga5879fbdf1d24018416c1c7ccf448b64f">flash_id_code_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#aa27024990278c87ac8ea489c400bab5e">flash_api_t::idCodeSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>ID Code is not supported on this MCU. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga897c87eaa3f2568c43dc36543cfafb87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga897c87eaa3f2568c43dc36543cfafb87">&#9670;&nbsp;</a></span>R_MRAM_AccessWindowSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_AccessWindowSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>start_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>end_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#ab8f7f57d6c9b1d3a08281eee4edc0683">flash_api_t::accessWindowSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Access window is not supported on this MCU. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5b2a527a7569d615ef697e46ac28c774"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b2a527a7569d615ef697e46ac28c774">&#9670;&nbsp;</a></span>R_MRAM_AccessWindowClear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_AccessWindowClear </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a47d162b634f769385c2d39c4cbc6217b">flash_api_t::accessWindowClear</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Access window is not supported on this MCU. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab0e2e5ac84dcad168f3211866178518a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab0e2e5ac84dcad168f3211866178518a">&#9670;&nbsp;</a></span>R_MRAM_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_Reset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reset the MRAM peripheral. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#af87f6e3215253ad33a0c961c79979da0">flash_api_t::reset</a>.</p>
+<p>No attempt is made to check if the MRAM is busy before executing the reset since the assumption is that a reset will terminate any existing operation.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>MRAM circuit successfully reset. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_PE_FAILURE</td><td>Failed to enter or exit P/E mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timed out waiting for the MACI to become ready. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CMD_LOCKED</td><td>MRAM Application Command Interface is in locked state </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae2dfee0185357cb519520578c6ca7b80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2dfee0185357cb519520578c6ca7b80">&#9670;&nbsp;</a></span>R_MRAM_StartUpAreaSelect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_StartUpAreaSelect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac8629165c2d649fbbf8c9854c3c7d20b">flash_startup_area_swap_t</a>&#160;</td>
+          <td class="paramname"><em>swap_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_temporary</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Selects which block, Default (Block 0) or Alternate (Block 1), is used as the startup area block. The provided parameters determine which block will become the active startup block and whether that action will be immediate (but temporary), or permanent subsequent to the next reset. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#af01c458da5ffbd29ee404ccc5e8e6869">flash_api_t::startupAreaSelect</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Start-up area successfully toggled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>MRAM peripheral is busy with a prior operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_PE_FAILURE</td><td>Failed to enter or exit MRAM P/E mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timed out waiting for the MACI to become ready. </td></tr>
+    <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>Status is indicating a Programming error for the requested operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CMD_LOCKED</td><td>MRAM Application Command Interface is in locked state </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaede7ad9bb1641631b6fea249d16a89a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaede7ad9bb1641631b6fea249d16a89a7">&#9670;&nbsp;</a></span>R_MRAM_BankSwap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_BankSwap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function <a class="el" href="group___f_l_a_s_h___a_p_i.html#a27dd022e07eebb8750e1a1be7f80563f">flash_api_t::bankSwap</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Bank Swap is not supported on this MCU. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga884dba0aacbc01ccc53008ed6cc3f51c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga884dba0aacbc01ccc53008ed6cc3f51c">&#9670;&nbsp;</a></span>R_MRAM_UpdateFlashClockFreq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_UpdateFlashClockFreq </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicate to the MRAM module that the system clock has changed. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#ae357c91afece41b956ece618eb82c1a1">flash_api_t::updateFlashClockFreq</a>.</p>
+<p>This should be the case if the application has changed the system clock.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Start-up area successfully toggled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>MRAM is busy with an on-going operation. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>MRAM API has not yet been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gadb6d935f83af0ecbbeaeb72a0aa4f0a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb6d935f83af0ecbbeaeb72a0aa4f0a5">&#9670;&nbsp;</a></span>R_MRAM_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__info__t">flash_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the information about the MRAM regions. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#aa1168146a81e1cbeab18848c110bf0a2">flash_api_t::infoGet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful retrieved the request information. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl or p_info. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2807e807f67d09214845c788de4f7370"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2807e807f67d09214845c788de4f7370">&#9670;&nbsp;</a></span>R_MRAM_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Releases any resources that were allocated by the Open() or any subsequent MRAM operations. Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a038ae85f83322bc1e71a8f3937b26c5d">flash_api_t::close</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Successful close. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_ctrl or p_cfg. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga889066f02cad5d573b21ff0ec2996287"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga889066f02cad5d573b21ff0ec2996287">&#9670;&nbsp;</a></span>R_MRAM_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t">flash_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#ad7f5d12c7a8d269de3d55ca91b29edb7">flash_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Interrupt driven operation is not supported on this MCU. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab11a55d17e7263a04aa273cca7036c17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab11a55d17e7263a04aa273cca7036c17">&#9670;&nbsp;</a></span>R_MRAM_AntiRollbackCounterIncrement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_AntiRollbackCounterIncrement </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a>&#160;</td>
+          <td class="paramname"><em>counter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Increments the selected anti-rollback counter.</p>
+<dl class="section note"><dt>Note</dt><dd>The counter is read internally before increment.</dd></dl>
+<p>Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a04bcaaac166052c618406a22df055ad3">flash_api_t::antiRollbackCounterIncrement</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Counter incremented successfully </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_api_ctrl </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>The specified counter has not been configured (configuration is only required for ARC_NSEC) </td></tr>
+    <tr><td class="paramname">FSP_ERR_OVERFLOW</td><td>The counter cannot be incremented because it is already at its max value </td></tr>
+    <tr><td class="paramname">FSP_ERR_PE_FAILURE</td><td>Failed to enter or exit MRAM P/E mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timed out waiting for the MACI to become ready. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CMD_LOCKED</td><td>MRAM Application Command Interface is in locked state </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Selected anti-rollback counter is not supported on this MCU </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gacfd393388b4405bb1bd390af26edcc4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacfd393388b4405bb1bd390af26edcc4a">&#9670;&nbsp;</a></span>R_MRAM_AntiRollbackCounterRefresh()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_AntiRollbackCounterRefresh </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a>&#160;</td>
+          <td class="paramname"><em>counter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#aff7182230c963d80fbb4708be92e70d9">flash_api_t::antiRollbackCounterRefresh</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Anti-Rollback counter refresh is not supported on this MCU </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7248f0a33daa59dcb02f3fa0643d9d11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7248f0a33daa59dcb02f3fa0643d9d11">&#9670;&nbsp;</a></span>R_MRAM_AntiRollbackCounterRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_AntiRollbackCounterRead </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#ga83b0266a3edcc6c865f79a3d04785c21">flash_arc_t</a>&#160;</td>
+          <td class="paramname"><em>counter</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads the selected anti-rollback counter and returns the number of counter bits set.</p>
+<p>Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#ae292bc9f330a52094347c2745705c001">flash_api_t::antiRollbackCounterRead</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Counter read successfully into p_count </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL provided for p_api_ctrl or p_count </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>The specified counter has not been configured (configuration is only required for ARC_NSEC) </td></tr>
+    <tr><td class="paramname">FSP_ERR_PE_FAILURE</td><td>Failed to enter or exit MRAM P/E mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timed out waiting for the MACI to become ready. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CMD_LOCKED</td><td>MRAM Application Command Interface is in locked state </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3523bef800ff7e16c084d84a9fb8f4ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3523bef800ff7e16c084d84a9fb8f4ae">&#9670;&nbsp;</a></span>R_MRAM_UserLockableAreaWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_MRAM_UserLockableAreaWrite </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___f_l_a_s_h___a_p_i.html#gac4a1fa08b027086853668911ce51c705">flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>src_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mram_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>num_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stub function Implements <a class="el" href="group___f_l_a_s_h___a_p_i.html#a6e935b63452c47faaad9a1979f303e1c">flash_api_t::userLockableAreaWrite</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>User Lockable Area is not supported on this MCU </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

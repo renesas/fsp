@@ -6,7 +6,7 @@ var group___u_s_b___t_y_p_e_c___a_p_i =
       [ "plug", "group___u_s_b___t_y_p_e_c___a_p_i.html#ad5752a3ca79f8e9656b2396b4a99b1c0", null ],
       [ "connection_status", "group___u_s_b___t_y_p_e_c___a_p_i.html#ab1fb99c3dff46614d9b555afd276b2dd", null ],
       [ "vbus_status", "group___u_s_b___t_y_p_e_c___a_p_i.html#ae812495a954a9fffd7dcb94e633db8c7", null ],
-      [ "p_context", "group___u_s_b___t_y_p_e_c___a_p_i.html#af3d83930d0b2280c22f30ad8770ba184", null ]
+      [ "p_context", "group___u_s_b___t_y_p_e_c___a_p_i.html#ab555483d975b71b6fd464300e83425b3", null ]
     ] ],
     [ "usb_typec_cfg_t", "group___u_s_b___t_y_p_e_c___a_p_i.html#structusb__typec__cfg__t", [
       [ "module_number", "group___u_s_b___t_y_p_e_c___a_p_i.html#a083f27d3a0e763d7157362b02882be40", null ],
@@ -17,7 +17,7 @@ var group___u_s_b___t_y_p_e_c___a_p_i =
       [ "ipl_typec_cci", "group___u_s_b___t_y_p_e_c___a_p_i.html#a13dd05d44fcedd3635d550946bcdc7f7", null ],
       [ "ipl_typec_ccs", "group___u_s_b___t_y_p_e_c___a_p_i.html#acc24a2b0255355ae996e655b55afba46", null ],
       [ "p_callback", "group___u_s_b___t_y_p_e_c___a_p_i.html#a628eae97b0f5fbad77dcf658793d61cd", null ],
-      [ "p_context", "group___u_s_b___t_y_p_e_c___a_p_i.html#ae0e0e1608ce4d91d3138c3c325544e1b", null ],
+      [ "p_context", "group___u_s_b___t_y_p_e_c___a_p_i.html#a49187cf67e22a46797b7f4ee86c16993", null ],
       [ "p_extend", "group___u_s_b___t_y_p_e_c___a_p_i.html#a084556b39c79f4437f1c3803800eb5c4", null ]
     ] ],
     [ "usb_typec_api_t", "group___u_s_b___t_y_p_e_c___a_p_i.html#structusb__typec__api__t", [

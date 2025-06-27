@@ -1,0 +1,595 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: DAC_B (r_dac_b)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___d_a_c___b.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">DAC_B (r_dac_b)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html">Analog</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gadc3b16cca9abbb0da1e864972d60592c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#gadc3b16cca9abbb0da1e864972d60592c">R_DAC_B_Open</a> (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_api_ctrl, <a class="el" href="group___d_a_c___a_p_i.html#structdac__cfg__t">dac_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:gadc3b16cca9abbb0da1e864972d60592c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6f3d04706f9b9befa4c167d77175ddb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#gae6f3d04706f9b9befa4c167d77175ddb">R_DAC_B_Write</a> (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_api_ctrl, uint16_t value)</td></tr>
+<tr class="separator:gae6f3d04706f9b9befa4c167d77175ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd4d9e01d831fa622f6c14bc3ea415c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#gafd4d9e01d831fa622f6c14bc3ea415c9">R_DAC_B_Start</a> (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_api_ctrl)</td></tr>
+<tr class="separator:gafd4d9e01d831fa622f6c14bc3ea415c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa853364df5e46ee252e39e7595ac4662"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#gaa853364df5e46ee252e39e7595ac4662">R_DAC_B_Stop</a> (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_api_ctrl)</td></tr>
+<tr class="separator:gaa853364df5e46ee252e39e7595ac4662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43a2dbc0d07e246a0a3e85d777d2a64a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#ga43a2dbc0d07e246a0a3e85d777d2a64a">R_DAC_B_Close</a> (<a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *p_api_ctrl)</td></tr>
+<tr class="separator:ga43a2dbc0d07e246a0a3e85d777d2a64a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the DAC12 peripheral on RA MCUs. This module implements the <a class="el" href="group___d_a_c___a_p_i.html">DAC Interface</a>. </p>
+<h1><a class="anchor" id="r-dac_b-overview"></a>
+Overview</h1>
+<h2><a class="anchor" id="r-dac_b-features"></a>
+Features</h2>
+<p>The DAC_B module outputs one of 4096 voltage levels between the positive and negative reference voltages.</p>
+<ul>
+<li><a class="anchor" id="um_dac_dac_input_data_format"></a>Supports setting left-justified or right-justified 12-bit value format for the 16-bit input data registers</li>
+</ul>
+<p><h2>Build Time Configurations for r_dac_b</h2>
+The following build time configurations are defined in fsp_cfg/r_dac_b_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Analog &gt; DAC (r_dac_b)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Analog &gt; DAC (r_dac_b). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_dac_b0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Channel</td><td>Value must be an integer greater than or equal to 0</td><td>0 </td><td>Specify the hardware channel. </td></tr>
+<tr class="tree_none">
+<td>DAC Operating Voltage Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Normal voltage mode (VREFH &gt;= 2.7v)</li>
+<li>
+Low voltage mode (VREFH &lt; 2.7v)</li>
+</ul>
+</td><td>Normal voltage mode (VREFH &gt;= 2.7v) </td><td>Select VREFH voltage for optimization of DAC output. </td></tr>
+<tr class="tree_none">
+<td>Data Format</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Right Justified</li>
+<li>
+Left Justified</li>
+</ul>
+</td><td>Right Justified </td><td>Specify the DAC data format. </td></tr>
+<tr class="tree_none">
+<td>Internal Output</td><td>MCU Specific Options</td><td></td><td>Enable DAC output to internal modules. </td></tr>
+<tr class="tree_none">
+<td>ELC Trigger Source</td><td>MCU Specific Options</td><td></td><td>ELC event source that will trigger the DAC to start a conversion. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-dac_b-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The DAC peripheral module uses PCLKB as its clock source.</p>
+<h2><a class="anchor" id="r-dac_b-pin-configuration"></a>
+Pin Configuration</h2>
+<p>The DAn pins are used as analog outputs. Each DAC channel has one output pin.</p>
+<p>The AVCC0 and AVSS0 pins are power and ground supply pins for the DAC and ADC.</p>
+<p>The VREFH and VREFL pins are top and ground voltage reference pins for the DAC and ADC.</p>
+<h1><a class="anchor" id="r-dac_b-usage_notes"></a>
+Usage Notes</h1>
+<h2>Output to Internal Modules</h2>
+<p><a class="anchor" id="um_dac_dac_internal_output_enable"></a>The DAC output can be used as an analog input to other peripherals on the MCU (eg. ACMPHS, ADC) without outputting the voltage to an external pin.</p>
+<p>This functionality must be enabled during configuration using <a class="el" href="group___d_a_c___b.html#ade9b02aa52427cebdfa516b378999ce5">dac_b_extended_cfg_t::internal_output_enabled</a>. When internal output is enabled, the DAC output will be routed to internal modules. If the internal output is disabled, the output will be routed to the DAC output pin (DAn).</p>
+<h1><a class="anchor" id="r-dac_b-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the R_DAC_B in an application. This example shows how this driver can be used for basic Digital to Analog Conversion operations.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    uint16_t  value;</div><div class="line"></div><div class="line">    <span class="comment">/* Pin configuration: Output enable DA0 as Analog. */</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the DAC channel */</span></div><div class="line">    err = <a class="code" href="group___d_a_c___b.html#gadc3b16cca9abbb0da1e864972d60592c">R_DAC_B_Open</a>(&amp;g_dac_b_ctrl, &amp;g_dac_b_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    value = (uint16_t) DAC_EXAMPLE_VALUE;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_a_c___b.html#gae6f3d04706f9b9befa4c167d77175ddb">R_DAC_B_Write</a>(&amp;g_dac_b_ctrl, value);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_a_c___b.html#gafd4d9e01d831fa622f6c14bc3ea415c9">R_DAC_B_Start</a>(&amp;g_dac_b_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structdac__b__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#structdac__b__instance__ctrl__t">dac_b_instance_ctrl_t</a></td></tr>
+<tr class="separator:structdac__b__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdac__b__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#structdac__b__extended__cfg__t">dac_b_extended_cfg_t</a></td></tr>
+<tr class="separator:structdac__b__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaab471864207ed901266c39c3f337035b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___b.html#gaab471864207ed901266c39c3f337035b">dac_b_vrefh_t</a> </td></tr>
+<tr class="separator:gaab471864207ed901266c39c3f337035b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structdac__b__instance__ctrl__t" id="structdac__b__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdac__b__instance__ctrl__t">&#9670;&nbsp;</a></span>dac_b_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dac_b_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DAC instance control block. </p>
+</div>
+</div>
+</div>
+<a name="structdac__b__extended__cfg__t" id="structdac__b__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdac__b__extended__cfg__t">&#9670;&nbsp;</a></span>dac_b_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dac_b_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DAC extended configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ade9b02aa52427cebdfa516b378999ce5"></a>bool</td>
+<td class="fieldname">
+internal_output_enabled</td>
+<td class="fielddoc">
+Internal output enable available on selected MCUs. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac25574ee21a5474fb1bb10e06a9632fd"></a><a class="el" href="group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591">dac_data_format_t</a></td>
+<td class="fieldname">
+data_format</td>
+<td class="fielddoc">
+Data format. </td></tr>
+<tr><td class="fieldtype">
+<a id="a753057451de46f3b452e2e5cfea54e59"></a><a class="el" href="group___d_a_c___b.html#gaab471864207ed901266c39c3f337035b">dac_b_vrefh_t</a></td>
+<td class="fieldname">
+vrefh</td>
+<td class="fielddoc">
+High voltage reference range. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gaab471864207ed901266c39c3f337035b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab471864207ed901266c39c3f337035b">&#9670;&nbsp;</a></span>dac_b_vrefh_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_a_c___b.html#gaab471864207ed901266c39c3f337035b">dac_b_vrefh_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DAC Vref Type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaab471864207ed901266c39c3f337035ba0efa21015eab217d12a93877cb357aab"></a>DAC_B_VREFH_NORMAL&#160;</td><td class="fielddoc"><p>VREFH &gt;= 2.7v. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaab471864207ed901266c39c3f337035ba62142dede6bc68d22b139cc169304429"></a>DAC_B_VREFH_LOW&#160;</td><td class="fielddoc"><p>VREFH &lt; 2.7v. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gadc3b16cca9abbb0da1e864972d60592c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc3b16cca9abbb0da1e864972d60592c">&#9670;&nbsp;</a></span>R_DAC_B_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DAC_B_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___d_a_c___a_p_i.html#structdac__cfg__t">dac_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Perform required initialization described in hardware manual. Implements <a class="el" href="group___d_a_c___a_p_i.html#acf1499043008fef274392889f70be8a5">dac_api_t::open</a>. Configures a single DAC channel, starts the channel, and provides a handle for use with the DAC API Write and Close functions. Must be called once prior to calling any other DAC API functions. After a channel is opened, Open should not be called again for the same channel without calling Close first.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The channel was successfully opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Parameter check failure due to one or more reasons below:<ol type="1">
+<li>One or both of the following parameters may be NULL: p_api_ctrl or p_cfg</li>
+<li>data_format value in p_cfg is out of range.</li>
+<li>Extended configuration structure is set to NULL </li>
+</ol>
+</td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>Channel ID requested in p_cfg may not available on the devices. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The control structure is already opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae6f3d04706f9b9befa4c167d77175ddb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae6f3d04706f9b9befa4c167d77175ddb">&#9670;&nbsp;</a></span>R_DAC_B_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DAC_B_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write data to the D/A converter and enable the output if it has not been enabled.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Data is successfully written to the D/A Converter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Channel associated with p_ctrl has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafd4d9e01d831fa622f6c14bc3ea415c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafd4d9e01d831fa622f6c14bc3ea415c9">&#9670;&nbsp;</a></span>R_DAC_B_Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DAC_B_Start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start the D/A conversion output if it has not been started.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The channel is started successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>Attempt to re-start a channel. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Channel associated with p_ctrl has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa853364df5e46ee252e39e7595ac4662"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa853364df5e46ee252e39e7595ac4662">&#9670;&nbsp;</a></span>R_DAC_B_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DAC_B_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop the D/A conversion and disable the output signal.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The control is successfully stopped. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Channel associated with p_ctrl has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga43a2dbc0d07e246a0a3e85d777d2a64a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga43a2dbc0d07e246a0a3e85d777d2a64a">&#9670;&nbsp;</a></span>R_DAC_B_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DAC_B_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___d_a_c___a_p_i.html#ga0c5864c6762764cdf2ca366233d7a065">dac_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop the D/A conversion, stop output, and close the DAC channel.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The channel is successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Channel associated with p_ctrl has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

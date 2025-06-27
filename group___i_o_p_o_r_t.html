@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___i_o_p_o_r_t.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___i_o_p_o_r_t.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___i_o_p_o_r_t.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -366,7 +366,7 @@ Examples</h1>
 <p>This is a basic example of minimal use of the IOPORT in an application.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#gab4ef0cc3fce421d48310f23c614aadc0">bsp_io_level_t</a> readLevel;</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>      err;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the IOPORT module and configure the pins</span></div><div class="line"><span class="comment">     * Note: The default pin configuration name in the RA Configuration tool is g_bsp_pin_cfg */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;g_ioport_ctrl, &amp;g_bsp_pin_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Call R_IOPORT_PinsCfg if the configuration was not part of initial configurations made in open */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#ga3daa7097b08c7f623a741e2e481cf89f">R_IOPORT_PinsCfg</a>(&amp;g_ioport_ctrl, &amp;g_runtime_pin_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set Pin 00 of Port 06 to High */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aae9d15e574de9e35f7e1197c95d05dad9">BSP_IO_PORT_06_PIN_00</a>, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read Pin 00 of Port 06*/</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#gadb3ad72c9add6d73eb896c58c36f34ee">R_IOPORT_PinRead</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aae9d15e574de9e35f7e1197c95d05dad9">BSP_IO_PORT_06_PIN_00</a>, &amp;readLevel);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Blinky Example</h2>
 <p>This example uses IOPORT to configure and toggle a pin to blink an LED.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> blinky_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the IOPORT module and configure the pins */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;g_ioport_ctrl, &amp;g_bsp_pin_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Pin as output</span></div><div class="line"><span class="comment">     * Call the R_IOPORT_PinCfg if the configuration was not part of initial configurations made in open */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430">R_IOPORT_PinCfg</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aae9d15e574de9e35f7e1197c95d05dad9">BSP_IO_PORT_06_PIN_00</a>, <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97">IOPORT_CFG_PORT_DIRECTION_OUTPUT</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#gab4ef0cc3fce421d48310f23c614aadc0">bsp_io_level_t</a> level = <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>;</div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Determine the next state of the LEDs */</span></div><div class="line">        <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a> == level)</div><div class="line">        {</div><div class="line">            level = <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>;</div><div class="line">        }</div><div class="line">        <span class="keywordflow">else</span></div><div class="line">        {</div><div class="line">            level = <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Update LED on RA6M3-PK */</span></div><div class="line">        err = <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aae9d15e574de9e35f7e1197c95d05dad9">BSP_IO_PORT_06_PIN_00</a>, level);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(100, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>); <span class="comment">// NOLINT</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>ELC Example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> blinky_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the IOPORT module and configure the pins */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;g_ioport_ctrl, &amp;g_bsp_pin_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure Pin as output</span></div><div class="line"><span class="comment">     * Call the R_IOPORT_PinCfg if the configuration was not part of initial configurations made in open */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430">R_IOPORT_PinCfg</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aae9d15e574de9e35f7e1197c95d05dad9">BSP_IO_PORT_06_PIN_00</a>, <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97">IOPORT_CFG_PORT_DIRECTION_OUTPUT</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#gab4ef0cc3fce421d48310f23c614aadc0">bsp_io_level_t</a> level = <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>;</div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Determine the next state of the LEDs */</span></div><div class="line">        <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a> == level)</div><div class="line">        {</div><div class="line">            level = <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>;</div><div class="line">        }</div><div class="line">        <span class="keywordflow">else</span></div><div class="line">        {</div><div class="line">            level = <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Update LED on RA6M3-PK */</span></div><div class="line">        err = <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aae9d15e574de9e35f7e1197c95d05dad9">BSP_IO_PORT_06_PIN_00</a>, level);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(100, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>); <span class="comment">// NOLINT</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>ELC Example</h2>
 <p>This is an example of using IOPORT with ELC events. The ELC event system allows the captured data to be stored when it occurs and then read back at a later time.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <a class="code" href="group___e_l_c.html#structelc__instance__ctrl__t">elc_instance_ctrl_t</a> g_elc_ctrl;</div><div class="line"><span class="keyword">static</span> <a class="code" href="group___e_l_c___a_p_i.html#structelc__cfg__t">elc_cfg_t</a>           g_elc_cfg;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ioport_elc_example ()</div><div class="line">{</div><div class="line">    <a class="code" href="group___b_s_p___i_o.html#gab4ef0cc3fce421d48310f23c614aadc0">bsp_io_level_t</a> eventValue;</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>      err;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the software and sets the links defined in the control structure. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga35864de459d2ef45a03da4343729712f">R_ELC_Open</a>(&amp;g_elc_ctrl, &amp;g_elc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create or modify a link between a peripheral function and an event source. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4b40a4cb59194b6315cf608cd5e36bd9">R_ELC_LinkSet</a>(&amp;g_elc_ctrl, (<a class="code" href="group___b_s_p___m_c_u___r_a0_e1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a>) ELC_PERIPHERAL_IOPORT2, ELC_EVENT_ELC_SOFTWARE_EVENT_0);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Globally enable event linking in the ELC. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#ga4bcac22edb575069ba86d87ce9aea84c">R_ELC_Enable</a>(&amp;g_elc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the IOPORT module and configure the pins */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;g_ioport_ctrl, &amp;g_bsp_pin_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Call the R_IOPORT_PinCfg if the configuration was not part of initial configurations made in open */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#gab518fc544fe2b59722e30bd0a28ef430">R_IOPORT_PinCfg</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa635ed7a090bf9052c6cfc6c225335c9a">BSP_IO_PORT_02_PIN_00</a>, <a class="code" href="group___i_o_p_o_r_t.html#ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb">IOPORT_CFG_PORT_DIRECTION_INPUT</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Generate an event signal through software to the linked peripheral. */</span></div><div class="line">    err = <a class="code" href="group___e_l_c.html#gaa8735a16325cfeff3c47a50345d11d82">R_ELC_SoftwareEventGenerate</a>(&amp;g_elc_ctrl, <a class="code" href="group___e_l_c___a_p_i.html#gga5fed76c06664ddad69c5a7ccb0330f0ea862eb8abb2f512a4b4caaa1ee6900d27">ELC_SOFTWARE_EVENT_0</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read Pin Event Input. The data(BSP_IO_LEVEL_HIGH/ BSP_IO_LEVEL_LOW) from BSP_IO_PORT_02_PIN_00 is read into the</span></div><div class="line"><span class="comment">     * EIDR bit */</span></div><div class="line">    err = <a class="code" href="group___i_o_p_o_r_t.html#ga01fe1fa97720d982173bf110032fa21f">R_IOPORT_PinEventInputRead</a>(&amp;g_ioport_ctrl, <a class="code" href="group___b_s_p___i_o.html#gga0adbfd4b7db319886d667acb4804d80aa635ed7a090bf9052c6cfc6c225335c9a">BSP_IO_PORT_02_PIN_00</a>, &amp;eventValue);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -974,6 +974,98 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a131b2fe2c5b40032c04f1c8480bfaa86"></a>IOPORT_PERIPHERAL_GPT4&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a47ef2519e1ba6f5b2e0893de9cddeb49"></a>IOPORT_PERIPHERAL_ETHER_RMII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet RMMI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab8aa7fa82f2c3eb0ac80e20e8f918304"></a>IOPORT_PERIPHERAL_PDC&#160;</td><td class="fielddoc"><p>Pin will function as a PDC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a90c6c9da7046edfa46f22a16994d13f9"></a>IOPORT_PERIPHERAL_LCD_GRAPHICS&#160;</td><td class="fielddoc"><p>Pin will function as a graphics LCD peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8adfc4164cbbca202aff659966748d4dbf"></a>IOPORT_PERIPHERAL_CAC&#160;</td><td class="fielddoc"><p>Pin will function as a CAC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d"></a>IOPORT_PERIPHERAL_TRACE&#160;</td><td class="fielddoc"><p>Pin will function as a debug trace peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a83951c39c247388f70f38287edd67a2d"></a>IOPORT_PERIPHERAL_OSPI&#160;</td><td class="fielddoc"><p>Pin will function as a OSPI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afd795256ce7d3bc9bd58d36d1f41e294"></a>IOPORT_PERIPHERAL_CEC&#160;</td><td class="fielddoc"><p>Pin will function as a CEC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ac44530278e8f5cd9db7c0aab1f434c18"></a>IOPORT_PERIPHERAL_PGAOUT0&#160;</td><td class="fielddoc"><p>Pin will function as a PGAOUT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8af931a6809462aee181fdb63ed0f7b405"></a>IOPORT_PERIPHERAL_PGAOUT1&#160;</td><td class="fielddoc"><p>Pin will function as a PGAOUT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad768e3b8c746f0f7b851e8605f1d37e0"></a>IOPORT_PERIPHERAL_ULPT&#160;</td><td class="fielddoc"><p>Pin will function as a ULPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a569ee3b30428745c75d109ece3cdd8b4"></a>IOPORT_PERIPHERAL_MIPI&#160;</td><td class="fielddoc"><p>Pin will function as a MIPI DSI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a18f2966de960ffb7b1e0ae87df427309"></a>IOPORT_PERIPHERAL_ETHER_RGMII&#160;</td><td class="fielddoc"><p>Pin will function as a RGMII peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a45d8a5eb2cf84e2ecb8496cb00fe8f51"></a>IOPORT_PERIPHERAL_ESC&#160;</td><td class="fielddoc"><p>Pin will function as a ETHERNET slave controller peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acf2f52f2df32000c7e25589e63b999b9"></a>IOPORT_PERIPHERAL_PDM&#160;</td><td class="fielddoc"><p>Pin will function as a PDM peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a2f6455c416051e088f2339737b030b67"></a>IOPORT_PERIPHERAL_IO&#160;</td><td class="fielddoc"><p>Pin will functions as an IO pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a66b5b7838b3c4b965e06bd030e78878a"></a>IOPORT_PERIPHERAL_DEBUG&#160;</td><td class="fielddoc"><p>Pin will function as a DEBUG pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a64d1b8cceeda767076613c173c787cf9"></a>IOPORT_PERIPHERAL_AGT&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab524021406375820083226f41b14295a"></a>IOPORT_PERIPHERAL_AGTW&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a09128fc454daf266119a4f2515899c68"></a>IOPORT_PERIPHERAL_AGT1&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a85992fdc078e24d3dd245eba9e2794a0"></a>IOPORT_PERIPHERAL_GPT0&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acb7bd1929db899ee77ce971fd6c66a75"></a>IOPORT_PERIPHERAL_GPT1&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a565b54d88476fba903552efc818d06c5"></a>IOPORT_PERIPHERAL_SCI0_2_4_6_8&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a28760366d088db7869519e2bcc78de8e"></a>IOPORT_PERIPHERAL_SCI1_3_5_7_9&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acd94aa1c9a39bccb4329a4392bf8a860"></a>IOPORT_PERIPHERAL_SPI&#160;</td><td class="fielddoc"><p>Pin will function as a SPI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab770cd7374758858d40474812845564d"></a>IOPORT_PERIPHERAL_IIC&#160;</td><td class="fielddoc"><p>Pin will function as a IIC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a24f92451e2cb175211ecf3055816d3e9"></a>IOPORT_PERIPHERAL_KEY&#160;</td><td class="fielddoc"><p>Pin will function as a KEY peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a3eada69cccad3f6a386f62892ce16f7c"></a>IOPORT_PERIPHERAL_CLKOUT_COMP_RTC&#160;</td><td class="fielddoc"><p>Pin will function as a clock/comparator/RTC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a57bd915b4be73b08e72d9a059b1e8ac0"></a>IOPORT_PERIPHERAL_CAC_AD&#160;</td><td class="fielddoc"><p>Pin will function as a CAC/ADC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a50c4e60416f5c5909fa614b3089cf200"></a>IOPORT_PERIPHERAL_BUS&#160;</td><td class="fielddoc"><p>Pin will function as a BUS peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a4009808e34e8af6f5791f1469a7dc081"></a>IOPORT_PERIPHERAL_CTSU&#160;</td><td class="fielddoc"><p>Pin will function as a CTSU peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a749d8f405d2dc05308293c8eb53bd186"></a>IOPORT_PERIPHERAL_ACMPHS&#160;</td><td class="fielddoc"><p>Pin will function as a CMPHS peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a4d5e3c2e03c9f7ab7ae2493dbbc32ebf"></a>IOPORT_PERIPHERAL_LCDC&#160;</td><td class="fielddoc"><p>Pin will function as a segment LCD peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab80e34dc5a5ce362b478eac4cf2e3c9c"></a>IOPORT_PERIPHERAL_DE_SCI0_2_4_6_8&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral DEn pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab81d0424499b239175c48d9f683f3fcb"></a>IOPORT_PERIPHERAL_DE_SCI1_3_5_7_9&#160;</td><td class="fielddoc"><p>Pin will function as an SCI DEn peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acc900c1e3372304244580adb42974a22"></a>IOPORT_PERIPHERAL_DALI&#160;</td><td class="fielddoc"><p>Pin will function as a DALI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acd3f5c8ec6ad2a790dbda0ca6fe828df"></a>IOPORT_PERIPHERAL_CEU&#160;</td><td class="fielddoc"><p>Pin will function as a CEU peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a153635d8d01b41c463d29d89da0fe372"></a>IOPORT_PERIPHERAL_CAN&#160;</td><td class="fielddoc"><p>Pin will function as a CAN peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a9717b9d492c8f817c8c0fc7eae8f1434"></a>IOPORT_PERIPHERAL_QSPI&#160;</td><td class="fielddoc"><p>Pin will function as a QSPI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a0ab0d9fffa96813f7e78bcd7b3e42c8f"></a>IOPORT_PERIPHERAL_SSI&#160;</td><td class="fielddoc"><p>Pin will function as an SSI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8abf3bde65f7a1ecea24a313f04af7056b"></a>IOPORT_PERIPHERAL_USB_FS&#160;</td><td class="fielddoc"><p>Pin will function as a USB full speed peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afc5008644a2fa64bd99da0ca24aeb4dc"></a>IOPORT_PERIPHERAL_USB_HS&#160;</td><td class="fielddoc"><p>Pin will function as a USB high speed peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ae00c4cc7522a48fef213912e1f67ea04"></a>IOPORT_PERIPHERAL_GPT2&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ae9f418a61b3e072e2a6b46744a12c00d"></a>IOPORT_PERIPHERAL_SDHI_MMC&#160;</td><td class="fielddoc"><p>Pin will function as an SD/MMC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad1185b58efcb7dc8c9852a1f18d91bc5"></a>IOPORT_PERIPHERAL_GPT3&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afe4d1025a70ef6bf2954f9601fd3d54a"></a>IOPORT_PERIPHERAL_ETHER_MII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet MMI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a131b2fe2c5b40032c04f1c8480bfaa86"></a>IOPORT_PERIPHERAL_GPT4&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad145d360f054370523490eab0dcaa963"></a>IOPORT_PERIPHERAL_GPT5&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a47ef2519e1ba6f5b2e0893de9cddeb49"></a>IOPORT_PERIPHERAL_ETHER_RMII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet RMMI peripheral pin </p>
@@ -1071,7 +1163,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff"></a>IOPORT_CFG_NMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's NMOS open-drain output. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aa6f841964b20d6d4bfc1a8f7b2040554"></a>IOPORT_CFG_PMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's PMOS open-drain ouput. </p>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aa6f841964b20d6d4bfc1a8f7b2040554"></a>IOPORT_CFG_PMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's PMOS open-drain output. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a3b65ecea77e425c0ec1a0c29324a042b"></a>IOPORT_CFG_DRIVE_MID&#160;</td><td class="fielddoc"><p>Sets pin drive output to medium. </p>
 </td></tr>
@@ -1683,7 +1775,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

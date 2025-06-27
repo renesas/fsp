@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___p_d_c.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___p_d_c.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___p_d_c.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -258,8 +258,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga0cd3f8319ab9da6ae2a9231d35d3f1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga926341335ac197ca8cc6164a90a04aca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga926341335ac197ca8cc6164a90a04aca">R_PDC_StatusGet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *p_status)</td></tr>
 <tr class="separator:ga926341335ac197ca8cc6164a90a04aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7429b98eb04e4547ec5df388190e74b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga7429b98eb04e4547ec5df388190e74b0">R_PDC_CallbackSet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ga7429b98eb04e4547ec5df388190e74b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ad3c05b7cd7be24425a0f66514a9234"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#ga2ad3c05b7cd7be24425a0f66514a9234">R_PDC_CallbackSet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga2ad3c05b7cd7be24425a0f66514a9234"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the PDC peripheral on RA MCUs. This module implements the <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html">CAPTURE Interface</a>. </p>
@@ -417,7 +417,7 @@ PDC setup with external camera</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the PDC in an application. This example shows how this driver can be used for capturing data from an external I/O device such as an image sensor.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> g_pdc_user_callback (<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___p_d_c.html#gga31162259e060f212b6d1cb04778f3adbad22565606f1dc388ea5c3102272ea7f3">PDC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#ae6ef34b8317e856d0d84b45231fc52db">event</a>)</div><div class="line">    {</div><div class="line">        g_capture_ready = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#gae0f8b645014660caf1312ef3554c24b9">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the camera module at this point. This implementation is camera vendor specific. */</span></div><div class="line">    camera_module_initialization();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize capture ready flag to false. This gets set to true in PDC callback upon successful frame capture. */</span></div><div class="line">    g_capture_ready = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga0cd3f8319ab9da6ae2a9231d35d3f1a2">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    uint32_t timeout_ms = PDC_DELAY_MS;</div><div class="line"></div><div class="line">    <span class="comment">/* Since there is nothing else to do, block until Callback triggers*/</span></div><div class="line">    <span class="keywordflow">while</span> ((<span class="keyword">true</span> != g_capture_ready) &amp;&amp; timeout_ms)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        timeout_ms--;;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0U == timeout_ms)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> camera_module_initialization (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Camera vendor specific initialization to be done here */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> g_pdc_user_callback (<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___p_d_c.html#gga31162259e060f212b6d1cb04778f3adbad22565606f1dc388ea5c3102272ea7f3">PDC_EVENT_TRANSFER_COMPLETE</a> == p_args-&gt;<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#ae6ef34b8317e856d0d84b45231fc52db">event</a>)</div><div class="line">    {</div><div class="line">        g_capture_ready = <span class="keyword">true</span>;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the PDC module */</span></div><div class="line">    err = <a class="code" href="group___p_d_c.html#gae0f8b645014660caf1312ef3554c24b9">R_PDC_Open</a>(&amp;g_pdc0_ctrl, &amp;g_pdc0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the camera module at this point. This implementation is camera vendor specific. */</span></div><div class="line">    camera_module_initialization();</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize capture ready flag to false. This gets set to true in PDC callback upon successful frame capture. */</span></div><div class="line">    g_capture_ready = <span class="keyword">false</span>;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___p_d_c.html#ga0cd3f8319ab9da6ae2a9231d35d3f1a2">R_PDC_CaptureStart</a>(&amp;g_pdc0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    uint32_t timeout_ms = PDC_DELAY_MS;</div><div class="line"></div><div class="line">    <span class="comment">/* Since there is nothing else to do, block until Callback triggers*/</span></div><div class="line">    <span class="keywordflow">while</span> ((<span class="keyword">true</span> != g_capture_ready) &amp;&amp; timeout_ms)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        timeout_ms--;;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0U == timeout_ms)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> camera_module_initialization (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Camera vendor specific initialization to be done here */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structpdc__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_c.html#structpdc__extended__cfg__t">pdc_extended_cfg_t</a></td></tr>
@@ -824,8 +824,8 @@ Pointer to the transfer instance the PDC should use. </td></tr>
 
 </div>
 </div>
-<a id="ga7429b98eb04e4547ec5df388190e74b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7429b98eb04e4547ec5df388190e74b0">&#9670;&nbsp;</a></span>R_PDC_CallbackSet()</h2>
+<a id="ga2ad3c05b7cd7be24425a0f66514a9234"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2ad3c05b7cd7be24425a0f66514a9234">&#9670;&nbsp;</a></span>R_PDC_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -845,7 +845,7 @@ Pointer to the transfer instance the PDC should use. </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -862,7 +862,7 @@ Pointer to the transfer instance the PDC should use. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Updates the user callback and has option of providing memory for callback structure.</p>
-<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a4cd5ee5ded7aaf45445f6c594c98081e">capture_api_t::callbackSet</a>.</p>
+<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad7733eb50e6cd25714a266ff5961e1e3">capture_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This is just a stub at present </td></tr>
@@ -878,7 +878,7 @@ Pointer to the transfer instance the PDC should use. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

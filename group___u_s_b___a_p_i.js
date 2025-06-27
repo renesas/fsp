@@ -21,7 +21,7 @@ var group___u_s_b___a_p_i =
       [ "hsipl_d0", "group___u_s_b___a_p_i.html#a9b764125bd9610aba9ad3aad78285476", null ],
       [ "hsipl_d1", "group___u_s_b___a_p_i.html#abcea3b0ac51a19d427aaf28ff997195a", null ],
       [ "p_usb_apl_callback", "group___u_s_b___a_p_i.html#a58eb2b666cab78a4379cc49d802c019a", null ],
-      [ "p_context", "group___u_s_b___a_p_i.html#a50d0295fd704209b6cc0cab3347fe989", null ],
+      [ "p_context", "group___u_s_b___a_p_i.html#a8e801dbb56d66e7e7d5edb6840da5377", null ],
       [ "p_transfer_tx", "group___u_s_b___a_p_i.html#adaef59d2c43e7ffefa6926894c8ca7e8", null ],
       [ "p_transfer_rx", "group___u_s_b___a_p_i.html#ae2cd91b73a5b0970986567b045956db6", null ],
       [ "p_extend", "group___u_s_b___a_p_i.html#a2a7b1aa130a3bbc7c8d9f92bf89386ca", null ]

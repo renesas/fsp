@@ -17,7 +17,7 @@ var group___s_d_m_m_c___a_p_i =
     [ "sdmmc_callback_args_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t", [
       [ "event", "group___s_d_m_m_c___a_p_i.html#a0d7d301a941f2d863035acb5574719e3", null ],
       [ "response", "group___s_d_m_m_c___a_p_i.html#ab083228c33e9c702e8caf91fcdea0ffe", null ],
-      [ "p_context", "group___s_d_m_m_c___a_p_i.html#a07513c165370d5e64468e227ac9e13b3", null ]
+      [ "p_context", "group___s_d_m_m_c___a_p_i.html#ab234367dde42449dfae0ebe7fd6550e8", null ]
     ] ],
     [ "sdmmc_write_io_args_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__write__io__args__t", null ],
     [ "sdmmc_read_io_ext_args_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__read__io__ext__args__t", null ],
@@ -27,7 +27,7 @@ var group___s_d_m_m_c___a_p_i =
       [ "bus_width", "group___s_d_m_m_c___a_p_i.html#a2169b066e0d84bdf2f8349348ea5f749", null ],
       [ "p_lower_lvl_transfer", "group___s_d_m_m_c___a_p_i.html#a0c44c5ce0dbed006580ae1dba87b9052", null ],
       [ "p_callback", "group___s_d_m_m_c___a_p_i.html#acabda2dc1122a1c077ee34466743004b", null ],
-      [ "p_context", "group___s_d_m_m_c___a_p_i.html#a2f801348fe2fbe8e4b750a0301aa34ce", null ],
+      [ "p_context", "group___s_d_m_m_c___a_p_i.html#ad5f60698c048eb37fc5feb8c0f99d802", null ],
       [ "p_extend", "group___s_d_m_m_c___a_p_i.html#a4369302a13dde0772e2c7831443c5788", null ],
       [ "block_size", "group___s_d_m_m_c___a_p_i.html#a080f2e6f72ca0a2e4c2c9559b91826c0", null ],
       [ "card_detect", "group___s_d_m_m_c___a_p_i.html#aad4f71bc76197f3cd9e32839ee99f7fc", null ],
@@ -53,7 +53,7 @@ var group___s_d_m_m_c___a_p_i =
       [ "ioIntEnable", "group___s_d_m_m_c___a_p_i.html#a3a7228d697b714229e37a1bf54352f5a", null ],
       [ "statusGet", "group___s_d_m_m_c___a_p_i.html#a5bb1be42ac391c9016bd3f6efb3a6b68", null ],
       [ "erase", "group___s_d_m_m_c___a_p_i.html#adeb37ae1b226f926ffe36f5dc19f47b2", null ],
-      [ "callbackSet", "group___s_d_m_m_c___a_p_i.html#afa41f67009d31e59c090024c86186ba8", null ],
+      [ "callbackSet", "group___s_d_m_m_c___a_p_i.html#a0941852f918ca36c68c0856ec959289f", null ],
       [ "close", "group___s_d_m_m_c___a_p_i.html#a36c443d21eb54717d3658aada3ba1720", null ]
     ] ],
     [ "sdmmc_instance_t", "group___s_d_m_m_c___a_p_i.html#structsdmmc__instance__t", [

@@ -1,0 +1,1499 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Pulse Density Modulation Interface (r_pdm)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___p_d_m.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Pulse Density Modulation Interface (r_pdm)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_u_d_i_o___m_o_d_u_l_e_s.html">Audio</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga348be7b997dd1200eb549ff3e7f946a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga348be7b997dd1200eb549ff3e7f946a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga745fa70668486ae2a7d16bd72eb93a54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void *const p_buffer, size_t const buffer_size, uint32_t const number_of_data_to_callback)</td></tr>
+<tr class="separator:ga745fa70668486ae2a7d16bd72eb93a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35f2abc47410d9906e8ae5bac12d7a29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga35f2abc47410d9906e8ae5bac12d7a29">R_PDM_Stop</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga35f2abc47410d9906e8ae5bac12d7a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81dc4496418f929e3f94339700008104"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga81dc4496418f929e3f94339700008104">R_PDM_SoundDetectionEnable</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__sound__detection__setting__t">pdm_sound_detection_setting_t</a> sound_detection_setting)</td></tr>
+<tr class="separator:ga81dc4496418f929e3f94339700008104"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga67db55f70c75153156284e6e6d6f1b01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga67db55f70c75153156284e6e6d6f1b01">R_PDM_SoundDetectionDisable</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga67db55f70c75153156284e6e6d6f1b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62fc9390544cabfb4800f38125f748ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga62fc9390544cabfb4800f38125f748ab">R_PDM_Read</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void *const p_dest, uint32_t const bytes)</td></tr>
+<tr class="separator:ga62fc9390544cabfb4800f38125f748ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5696a4b5a4e9f33f89baefe9a7e1f94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gaf5696a4b5a4e9f33f89baefe9a7e1f94">R_PDM_StatusGet</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__status__t">pdm_status_t</a> *const p_status)</td></tr>
+<tr class="separator:gaf5696a4b5a4e9f33f89baefe9a7e1f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f07fb3bab80af13bd260b7f7f54062e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga0f07fb3bab80af13bd260b7f7f54062e">R_PDM_Close</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga0f07fb3bab80af13bd260b7f7f54062e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19cb3e540a215f0839315f0c8d9adaba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga19cb3e540a215f0839315f0c8d9adaba">R_PDM_CallbackSet</a> (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *), void *const p_context, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga19cb3e540a215f0839315f0c8d9adaba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the PDM peripheral on RA MCUs. This module implements the <a class="el" href="group___p_d_m___a_p_i.html">PDM Interface</a>. </p>
+<h1><a class="anchor" id="r-pdm-overview"></a>
+Overview</h1>
+<p>The Pulse Density Modulation Interface (PDM-IF) has channels that are connectable with external microphone which outputs the pulse density modulated signal. PDM-IF can filter and convert 1-bit digital data streams that were pulse density modulated at a high sampling rate into 20-bit or 16-bit digital data at a lower sampling rate.</p>
+<h2><a class="anchor" id="r-pdm-features"></a>
+Features</h2>
+<ul>
+<li>Capable of filtering 1-bit digital input data and converting them into 20-bit or 16-bit digital data. The bit order is little-endian.<a class="anchor" id="um_pdm_basic_communication"></a></li>
+<li>Sound detection can be enabled for each channel. A moving average filter can be enabled for sound detection. Sound detection can be used to wake up the MCU from software standby mode.<a class="anchor" id="um_pdm_sound_detection"></a></li>
+<li>Each channel of IP includes programmable filters: 4th order sinc filter, high-pass filter (for suppression of DC bias), correction filter (for sinc passband distortion), and half-band decimation filter (for aliasing distortion). – IP supports programmable and flexible decimation ratios. – The sinc filter is selectable as first-, second-, third-, fourth-order.</li>
+<li>IP supports DMA operation through APB. – Each channel has a 32 stage FIFO for receiving converted PDM data.</li>
+<li>Configurable callback for each channel which notifies of received data based on a configurable threshold as well as sound detection and error events.<a class="anchor" id="um_pdm_user_event_notification"></a><a class="anchor" id="um_pdm_callback_set"></a> </li>
+</ul>
+<h1><a class="anchor" id="r-pdm-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_pdm_driver_configurations"></a> <h2>Build Time Configurations for r_pdm</h2>
+The following build time configurations are defined in fsp_cfg/r_pdm_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>DMAC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If enabled code for DMAC transfer support is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Audio &gt; PDM (r_pdm)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Audio &gt; PDM (r_pdm).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Input  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Rising</li>
+<li>
+Falling</li>
+</ul>
+</td><td>Rising </td><td>Select the edge of input audio data. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">PDM_CLK Frequency</td><td>Refer to the RA Configuration tool for available options.</td><td>module.driver.pdm.clock_div.clock_div_2 </td><td>Select PDM_CLK Frequency (Hz).  </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Bit Format</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+20 Bits mode {1 Sign bit and [18:0] bits of the buffer}</li>
+<li>
+20 Bits mode {2 Sign bits and [18:1] bits of the buffer}</li>
+<li>
+20 Bits mode {3 Sign bits and [18:2] bits of the buffer}</li>
+<li>
+20 Bits mode {4 Sign bits and [18:3] bits of the buffer}</li>
+<li>
+16 Bits mode {1 Sign bit and [18:4] bits of the buffer}</li>
+<li>
+16 Bits mode {1 Sign bit and [17:3] bits of the buffer}</li>
+<li>
+16 Bits mode {1 Sign bit and [16:2] bits of the buffer}</li>
+<li>
+16 Bits mode {1 Sign bit and [15:1] bits of the buffer}</li>
+<li>
+16 Bits mode {1 Sign bit and [14:0] bits of the buffer}</li>
+</ul>
+</td><td>module.driver.pdm.pcm_width.pcm_width_20bits_0_18 </td><td>Select the bit format of the PCM data stored into the data FIFO. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Target Sampling Frequency (Hz)</td><td>Manual Entry</td><td>32000 </td><td>Select Target sampling Frequency (Hz).  </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Filter  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Filter &gt; Low-pass Filter  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Low-pass Filter Input Shift</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No shift</li>
+<li>
+1-bit right shift</li>
+<li>
+2-bits right shift</li>
+<li>
+3-bits right shift</li>
+</ul>
+</td><td>No shift </td><td>Select the low-pass (half-band decimation) filter input shift setting. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h0(10)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0400 </td><td>Specify the Low-Pass Filter Coefficient h0(10) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(0)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FF8 </td><td>Specify the Low-Pass Filter Coefficient h1(0) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(1)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x000A </td><td>Specify the Low-Pass Filter Coefficient h1(1) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(2)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FF0 </td><td>Specify the Low-Pass Filter Coefficient h1(2) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(3)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0018 </td><td>Specify the Low-Pass Filter Coefficient h1(3) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(4)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FDC </td><td>Specify the Low-Pass Filter Coefficient h1(4) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(5)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0034 </td><td>Specify the Low-Pass Filter Coefficient h1(5) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(6)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FB3 </td><td>Specify the Low-Pass Filter Coefficient h1(6) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(7)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0076 </td><td>Specify the Low-Pass Filter Coefficient h1(7) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(8)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1F2E </td><td>Specify the Low-Pass Filter Coefficient h1(8) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(9)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0289 </td><td>Specify the Low-Pass Filter Coefficient h1(9) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(10)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0289 </td><td>Specify the Low-Pass Filter Coefficient h1(10) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(11)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1F2E </td><td>Specify the Low-Pass Filter Coefficient h1(11) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(12)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0076 </td><td>Specify the Low-Pass Filter Coefficient h1(12) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(13)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FB3 </td><td>Specify the Low-Pass Filter Coefficient h1(13) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(14)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0034 </td><td>Specify the Low-Pass Filter Coefficient h1(14) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(15)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FDC </td><td>Specify the Low-Pass Filter Coefficient h1(15) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(16)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0018 </td><td>Specify the Low-Pass Filter Coefficient h1(16) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(17)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FF0 </td><td>Specify the Low-Pass Filter Coefficient h1(17) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(18)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x000A </td><td>Specify the Low-Pass Filter Coefficient h1(18) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">LPF Coefficient h1(19)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FF8 </td><td>Specify the Low-Pass Filter Coefficient h1(19) </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Filter &gt; Compensation Filter  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Input Shift</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No shift</li>
+<li>
+1-bit right shift</li>
+<li>
+2-bits right shift</li>
+<li>
+3-bits right shift</li>
+</ul>
+</td><td>No shift </td><td>Select the compensation filter input shift setting. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(0)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FE8 </td><td>Specify the Compensation Filter Coefficient h(0) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(1)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0039 </td><td>Specify the Compensation Filter Coefficient h(1) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(2)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x003C </td><td>Specify the Compensation Filter Coefficient h(2) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(3)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1E56 </td><td>Specify the Compensation Filter Coefficient h(3) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(4)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x01DC </td><td>Specify the Compensation Filter Coefficient h(4) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(5)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x06E1 </td><td>Specify the Compensation Filter Coefficient h(5) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(6)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x01DC </td><td>Specify the Compensation Filter Coefficient h(6) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(7)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1E56 </td><td>Specify the Compensation Filter Coefficient h(7) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(8)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x003C </td><td>Specify the Compensation Filter Coefficient h(8) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(9)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0039 </td><td>Specify the Compensation Filter Coefficient h(9) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Compensation Filter Coefficient h(10)</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x1FE8 </td><td>Specify the Compensation Filter Coefficient h(10) </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Filter &gt; High-pass Filter  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">High-pass Filter Input Shift</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No shift</li>
+<li>
+1-bit right shift</li>
+<li>
+2-bits right shift</li>
+<li>
+3-bits right shift</li>
+</ul>
+</td><td>No shift </td><td>Select the high-pass filter input shift setting. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">HPF Coefficient s(0)</td><td>Value must be an integer between 0x0000 and 0xFFFF</td><td>0x3F61 </td><td>Specify the High-Pass Filter Coefficient s(0) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">HPF Coefficient k(1)</td><td>Value must be an integer between 0x0000 and 0xFFFF</td><td>0x3EC1 </td><td>Specify the High-Pass Filter Coefficient k(1) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">HPF Coefficient h(0)</td><td>Value must be an integer between 0x0000 and 0xFFFF</td><td>0x4000 </td><td>Specify the High-Pass Filter Coefficient h(0) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">HPF Coefficient h(1)</td><td>Value must be an integer between 0x0000 and 0xFFFF</td><td>0xC000 </td><td>Specify the High-Pass Filter Coefficient h(1) </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Moving Average Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1-order (filter is skipped)</li>
+<li>
+2-order</li>
+<li>
+4-order</li>
+</ul>
+</td><td>1-order (filter is skipped) </td><td>Select the moving average mode for sound detection data. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sinc Filter Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1-order</li>
+<li>
+2-order</li>
+<li>
+3-order</li>
+<li>
+4-order</li>
+</ul>
+</td><td>4-order </td><td>Select the sinc filter mode setting. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Data Reception  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Buffer Overwrite Detection Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Select buffer overwrite detection.  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Reception Interrupt Threshold</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 or more data</li>
+<li>
+2 or more data</li>
+<li>
+4 or more data</li>
+<li>
+8 or more data</li>
+<li>
+16 or more data</li>
+</ul>
+</td><td>16 or more data </td><td>Select Data reception interrupt threshold.  </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Short Circuit Detection  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Short Circuit Detection Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select short circuit detection.  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Short Circuit Detection High Continuous Detection Count</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0 </td><td>Specify the Short circuit detection High Continuous detection count. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Short Circuit Detection Low Continuous Detection Count</td><td>Value must be an integer between 0x0000 and 0x1FFF</td><td>0x0 </td><td>Short circuit detection Low Continuous detection count. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Overvoltage Detection  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Overvoltage Detection Lower Limit Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select overvoltage detection lower limit.  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Overvoltage Detection Lower Limit</td><td>Value must be an integer between 0x0000 and 0xFFFFF</td><td>0x0 </td><td>Specify the Overvoltage detection lower limit </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Overvoltage Detection Upper Limit Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select overvoltage detection upper limit.  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Overvoltage Detection Upper Limit</td><td>Value must be an integer between 0x0000 and 0xFFFFF</td><td>0x0 </td><td>Specify the Overvoltage detection upper limit </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupt  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be provided. If this callback function is provided, it will be called from all three interrupt service routines (ISR). </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Sound Detection Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the sound detection interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Data Reception Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the data reception interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Detection Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the error detection interrupt priority. </td></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_pdm0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Channel</td><td>Value must be an non-negative integer</td><td>0 </td><td>Specify the PDM channel. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="r-pdm-usage_notes"></a>
+Usage Notes</h1>
+<h2>Startup and Settling Time</h2>
+<p>Upon calling <a class="el" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a> the user must wait for the filters to settle and any connected microphones to startup, otherwise PDM data may not be correct upon calling <a class="el" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start</a>.</p>
+<p>A macro <code>G_PDMn_FILTER_SETTLING_TIME_US</code> (where n is the channel number) is generated for the settling time. The user can use this macro to delay for the settling time via their preferred method of doing a delay.</p>
+<p>In addition to the filter settling time any connected microphone startup time should be accounted for. This can be found in the connected microphone's datasheet.</p>
+<h2>Audio Data</h2>
+<p>PDM hardware converts PDM data to PCM data.</p>
+<p>Data arrays have the following size, alignment, and length based on the "Bit Depth" setting:</p>
+<table class="doxtable">
+<tr>
+<th>Bit Depth </th><th>Array Data Type </th><th>Required Alignment  </th></tr>
+<tr>
+<td>16 Bits </td><td>32-bit integer, right justified </td><td>4 byte alignment </td></tr>
+<tr>
+<td>20 Bits </td><td>32-bit integer, right justified </td><td>4 byte alignment </td></tr>
+</table>
+<h3>Data Format for 16 Bits</h3>
+<table class="doxtable">
+<tr>
+<th>Bit </th><th>Description  </th></tr>
+<tr>
+<td>31-20 </td><td>Fixed to 0 </td></tr>
+<tr>
+<td>19-16 </td><td>Sign bits </td></tr>
+<tr>
+<td>15-0 </td><td>Fixed-point data </td></tr>
+</table>
+<h3>Data Format for 20 Bits</h3>
+<table class="doxtable">
+<tr>
+<th>Bit </th><th>Description  </th></tr>
+<tr>
+<td>31-20 </td><td>Fixed to 0 </td></tr>
+<tr>
+<td>19-0 </td><td>Fixed-point data </td></tr>
+</table>
+<h2>Modes of Operation</h2>
+<p>In addition to calling <a class="el" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a>, other APIs need to be called to activate certain features of PDM. The following table lists what each API controls:</p>
+<table class="doxtable">
+<tr>
+<th>API </th><th>Features Enabled by API  </th></tr>
+<tr>
+<td><a class="el" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a> </td><td>over/undervoltage detection, short circuit detection </td></tr>
+<tr>
+<td><a class="el" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start</a> </td><td>data reception via interrupts or DMAC depending configuration, error interrupts </td></tr>
+<tr>
+<td><a class="el" href="group___p_d_m.html#ga81dc4496418f929e3f94339700008104">R_PDM_SoundDetectionEnable</a> </td><td>sound detection, sound detection thresholds, error interrupts </td></tr>
+</table>
+<h2>Error Interrupts</h2>
+<p>Error interrupts are only enabled when data reception is enabled (<a class="el" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start</a> has been called) OR sound detection is enabled (<a class="el" href="group___p_d_m.html#ga81dc4496418f929e3f94339700008104">R_PDM_SoundDetectionEnable</a> has been called).</p>
+<p><a class="el" href="group___p_d_m.html#gaf5696a4b5a4e9f33f89baefe9a7e1f94">R_PDM_StatusGet</a> can be called to get error statuses if error interrupts are not enabled (e.g. if only <a class="el" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a> has been called).</p>
+<h2>Low Power Mode</h2>
+<dl class="section note"><dt>Note</dt><dd>In order to use PDM during low power mode MOCO must be enabled for software standby mode (see MOCOSCR register).</dd></dl>
+<p>Some microphones support going into a low power mode by changing the PDM clock to a low frequency. In order to do this with r_pdm the module instance should be closed and reopened with a separate configuration that uses a lower PDM clock.</p>
+<h2>Limitations</h2>
+<ul>
+<li>Stereo mode is not fully supported. Two r_pdm driver instances can be used in combination with the <code>pcm_edge</code> configuration to get left/right stereo output from an appropriately configured PDM data stream, however, the data from these two instances will not be synchronized. Full synchronization of PDM channels requires using PDM mirror registers and starting data reading at the same time between channels. In the future a stereo-specific driver may be implemented using the r_pdm driver as a lower level driver to cover this use case.</li>
+<li>When calling <code>R_PDM_Start</code> any data in the FIFO before DATRE is enabled will be discarded.</li>
+</ul>
+<h1><a class="anchor" id="r-pdm-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define PDM_BUFFER_NUM_SAMPLES      1024                       // Number of samples to store in data buffer</span></div><div class="line"><span class="preprocessor">#define PDM_CALLBACK_NUM_SAMPLES    PDM_BUFFER_NUM_SAMPLES / 2 // Number of samples to store in data buffer before getting a callback</span></div><div class="line"><span class="preprocessor">#define PDM_MIC_STARTUP_TIME_US     35000                      // PDM microphone startup time, RA8P1_EK mic startup time is 35ms</span></div><div class="line"><span class="preprocessor">#define PDM_SDE_UPPER_LIMIT         5000                       // Detect sound above this value</span></div><div class="line"><span class="preprocessor">#define PDM_SDE_LOWER_LIMIT         0xFFF80000                 // Detect sound below this value</span></div><div class="line"></div><div class="line">uint32_t g_pdm0_buffer[PDM_BUFFER_NUM_SAMPLES];</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_pdm_basic_messaging_core0_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open PDM instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___p_d_m.html#ga348be7b997dd1200eb549ff3e7f946a0">R_PDM_Open</a>(&amp;g_pdm0_ctrl, &amp;g_pdm0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for PDM filters to settle. Use settling time calculated by e2 studio.</span></div><div class="line"><span class="comment">     * Also wait for PDM mic to startup. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(G_PDM0_FILTER_SETTLING_TIME_US + PDM_MIC_STARTUP_TIME_US, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Enable sound detection (if desired). */</span></div><div class="line">    <a class="code" href="group___p_d_m___a_p_i.html#structpdm__sound__detection__setting__t">pdm_sound_detection_setting_t</a> sound_detection_setting =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___p_d_m___a_p_i.html#a6975853a845298fb1fe31504df9c0071">sound_detection_lower_limit</a> = PDM_SDE_LOWER_LIMIT,</div><div class="line">        .sound_detection_upper_limit = PDM_SDE_UPPER_LIMIT</div><div class="line">    };</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___p_d_m.html#ga81dc4496418f929e3f94339700008104">R_PDM_SoundDetectionEnable</a>(&amp;g_pdm0_ctrl, sound_detection_setting);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start receiving PDM data. */</span></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga745fa70668486ae2a7d16bd72eb93a54">R_PDM_Start</a>(&amp;g_pdm0_ctrl, g_pdm0_buffer, <span class="keyword">sizeof</span>(g_pdm0_buffer), PDM_CALLBACK_NUM_SAMPLES);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* DATA PROCESSING HERE */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Stop receiving PDM data. */</span></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga35f2abc47410d9906e8ae5bac12d7a29">R_PDM_Stop</a>(&amp;g_pdm0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Close PDM instance. */</span></div><div class="line">    err = <a class="code" href="group___p_d_m.html#ga0f07fb3bab80af13bd260b7f7f54062e">R_PDM_Close</a>(&amp;g_pdm0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> pdm_example_callback (<a class="code" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___p_d_m___a_p_i.html#a4baa164d236e7f2c62cd33ddb64f41ec">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___p_d_m___a_p_i.html#ggafb514c195258d2f14c8e18e3778ad946a3cf03b37b166de31e8e8761161bf7e44">PDM_EVENT_SOUND_DETECTION</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Sound has been detected based on configured thresholds. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___p_d_m___a_p_i.html#ggafb514c195258d2f14c8e18e3778ad946ac3719cfdf7fc1e91172888da1ab6f511">PDM_EVENT_DATA</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* PDM_CALLBACK_NUM_SAMPLES has been stored in g_pdm0_buffer. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___p_d_m___a_p_i.html#ggafb514c195258d2f14c8e18e3778ad946a6ab9b149f9673d692a581c5211f13134">PDM_EVENT_ERROR</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (p_args-&gt;<a class="code" href="group___p_d_m___a_p_i.html#a98b4bbf5bb1bf1feccda12382e919bbc">error</a> &amp; <a class="code" href="group___p_d_m___a_p_i.html#ggaf682776db13b51a982b047a8eb5fef2da0507dc19cc300d66e07d4b452a44c9a9">PDM_ERROR_SHORT_CIRCUIT</a>)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Short circuit has been detected based on configured counts */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (p_args-&gt;<a class="code" href="group___p_d_m___a_p_i.html#a98b4bbf5bb1bf1feccda12382e919bbc">error</a> &amp; <a class="code" href="group___p_d_m___a_p_i.html#ggaf682776db13b51a982b047a8eb5fef2da70bb4c740eec0bdd92cf20e63e540ba7">PDM_ERROR_OVERVOLTAGE_LOWER</a>)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Overvoltage has been detected based on configured lower limit */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (p_args-&gt;<a class="code" href="group___p_d_m___a_p_i.html#a98b4bbf5bb1bf1feccda12382e919bbc">error</a> &amp; <a class="code" href="group___p_d_m___a_p_i.html#ggaf682776db13b51a982b047a8eb5fef2dab00a11e564c13def3c78e520e09573ab">PDM_ERROR_OVERVOLTAGE_UPPER</a>)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Overvoltage has been detected based on configured upper limit */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">if</span> (p_args-&gt;<a class="code" href="group___p_d_m___a_p_i.html#a98b4bbf5bb1bf1feccda12382e919bbc">error</a> &amp; <a class="code" href="group___p_d_m___a_p_i.html#ggaf682776db13b51a982b047a8eb5fef2da61c56fc9d6d836096a7c7e4b10c0ee17">PDM_ERROR_BUFFER_OVERWRITE</a>)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Buffer overwrite has occurred */</span></div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structpdm__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#structpdm__instance__ctrl__t">pdm_instance_ctrl_t</a></td></tr>
+<tr class="separator:structpdm__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structpdm__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#structpdm__extended__cfg__t">pdm_extended_cfg_t</a></td></tr>
+<tr class="separator:structpdm__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gad8832e264190f14e85f9e853da1f6880"><td class="memItemLeft" align="right" valign="top"><a id="gad8832e264190f14e85f9e853da1f6880"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gad8832e264190f14e85f9e853da1f6880">PDM_NUM_HPF_COEFFICIENT_H</a></td></tr>
+<tr class="memdesc:gad8832e264190f14e85f9e853da1f6880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of high pass filter h coefficients. <br /></td></tr>
+<tr class="separator:gad8832e264190f14e85f9e853da1f6880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f01406148d312d413280b8ef071188e"><td class="memItemLeft" align="right" valign="top"><a id="ga8f01406148d312d413280b8ef071188e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga8f01406148d312d413280b8ef071188e">PDM_NUM_COMPENSATION_FILTER_COEFFICIENT_H</a></td></tr>
+<tr class="memdesc:ga8f01406148d312d413280b8ef071188e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of compensation filter h coefficients. <br /></td></tr>
+<tr class="separator:ga8f01406148d312d413280b8ef071188e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62eeb36bfda104c7d1fdf247663e19ba"><td class="memItemLeft" align="right" valign="top"><a id="ga62eeb36bfda104c7d1fdf247663e19ba"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga62eeb36bfda104c7d1fdf247663e19ba">PDM_NUM_LPF_FILTER_COEFFICIENT_H1</a></td></tr>
+<tr class="memdesc:ga62eeb36bfda104c7d1fdf247663e19ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of low pass filter h1 coefficients. <br /></td></tr>
+<tr class="separator:ga62eeb36bfda104c7d1fdf247663e19ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga2666e0193f3d484391172283f9532c71"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga2666e0193f3d484391172283f9532c71">pdm_clk_div_t</a> </td></tr>
+<tr class="separator:ga2666e0193f3d484391172283f9532c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga667e7ccab805f0976adc5015ecc35ecb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga667e7ccab805f0976adc5015ecc35ecb">pdm_moving_average_mode_t</a> </td></tr>
+<tr class="separator:ga667e7ccab805f0976adc5015ecc35ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacaad67afced89e9de93c82536d4dea0b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gacaad67afced89e9de93c82536d4dea0b">pdm_low_pass_filter_shift_t</a> </td></tr>
+<tr class="separator:gacaad67afced89e9de93c82536d4dea0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6b9c09e74442b86d88d1718f30844bc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gad6b9c09e74442b86d88d1718f30844bc">pdm_compensation_filter_shift_t</a> </td></tr>
+<tr class="separator:gad6b9c09e74442b86d88d1718f30844bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf2a94b0febed706bdad5526b11cb50c1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gaf2a94b0febed706bdad5526b11cb50c1">pdm_high_pass_filter_shift_t</a> </td></tr>
+<tr class="separator:gaf2a94b0febed706bdad5526b11cb50c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10725534d91789f15654a46786339569"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#ga10725534d91789f15654a46786339569">pdm_sinc_filter_mode_t</a> </td></tr>
+<tr class="separator:ga10725534d91789f15654a46786339569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa14fe788b2c7ab49898fb7030c7fbee8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gaa14fe788b2c7ab49898fb7030c7fbee8">pdm_interrupt_threshold_t</a> </td></tr>
+<tr class="separator:gaa14fe788b2c7ab49898fb7030c7fbee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf30a2284491fafaec6a835746e4001a9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gaf30a2284491fafaec6a835746e4001a9">pdm_short_circuit_enable_t</a> </td></tr>
+<tr class="separator:gaf30a2284491fafaec6a835746e4001a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae98d0a1699440f8d6405968bdb6a855a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gae98d0a1699440f8d6405968bdb6a855a">pdm_overvoltage_lower_limit_enable_t</a> </td></tr>
+<tr class="separator:gae98d0a1699440f8d6405968bdb6a855a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa418eb6efe7d4d243ea4af5a074b10ae"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gaa418eb6efe7d4d243ea4af5a074b10ae">pdm_overvoltage_upper_limit_enable_t</a> </td></tr>
+<tr class="separator:gaa418eb6efe7d4d243ea4af5a074b10ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaceae8e5dc8a19d9beaae7dbb64e78742"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m.html#gaceae8e5dc8a19d9beaae7dbb64e78742">pdm_buffer_overwrite_detection_enable_t</a> </td></tr>
+<tr class="separator:gaceae8e5dc8a19d9beaae7dbb64e78742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structpdm__instance__ctrl__t" id="structpdm__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__instance__ctrl__t">&#9670;&nbsp;</a></span>pdm_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel instance control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> is called. </p>
+</div>
+</div>
+</div>
+<a name="structpdm__extended__cfg__t" id="structpdm__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__extended__cfg__t">&#9670;&nbsp;</a></span>pdm_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>PDM configuration extension. This extension is optional. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a73d4ca013e3c3d061bc3c0c693e12ffa"></a><a class="el" href="group___p_d_m.html#ga2666e0193f3d484391172283f9532c71">pdm_clk_div_t</a></td>
+<td class="fieldname">
+clock_div</td>
+<td class="fielddoc">
+PDM_CLKn's division ratio to core clock. </td></tr>
+<tr><td class="fieldtype">
+<a id="aacf4972341f60c6dcf631954ff7b61a2"></a><a class="el" href="group___p_d_m.html#gaf30a2284491fafaec6a835746e4001a9">pdm_short_circuit_enable_t</a></td>
+<td class="fieldname">
+short_circuit_detection_enable</td>
+<td class="fielddoc">
+Short circuit detection enable. <p>Function Settings. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a059836a5b664558a8d99829fa7c49357"></a><a class="el" href="group___p_d_m.html#gae98d0a1699440f8d6405968bdb6a855a">pdm_overvoltage_lower_limit_enable_t</a></td>
+<td class="fieldname">
+over_voltage_lower_limit_detection_enable</td>
+<td class="fielddoc">
+Overvoltage detection lower limit enable. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2e437b59ddb93c3eeee68ef39ce6a9ab"></a><a class="el" href="group___p_d_m.html#gaa418eb6efe7d4d243ea4af5a074b10ae">pdm_overvoltage_upper_limit_enable_t</a></td>
+<td class="fieldname">
+over_voltage_upper_limit_detection_enable</td>
+<td class="fielddoc">
+Overvoltage detection upper limit enable. </td></tr>
+<tr><td class="fieldtype">
+<a id="a04910315cd69f31ef4999c76f04600fc"></a><a class="el" href="group___p_d_m.html#gaceae8e5dc8a19d9beaae7dbb64e78742">pdm_buffer_overwrite_detection_enable_t</a></td>
+<td class="fieldname">
+buffer_overwrite_detection_enable</td>
+<td class="fielddoc">
+Buffer overwrite detection enable. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8a21b70e69c6f770a87ea331311e1f04"></a><a class="el" href="group___p_d_m.html#ga667e7ccab805f0976adc5015ecc35ecb">pdm_moving_average_mode_t</a></td>
+<td class="fieldname">
+moving_average_mode</td>
+<td class="fielddoc">
+Moving average mode f or sound detection data. <p>Filter Settings. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ada9786751a8901b1f014d50f825692ed"></a><a class="el" href="group___p_d_m.html#gacaad67afced89e9de93c82536d4dea0b">pdm_low_pass_filter_shift_t</a></td>
+<td class="fieldname">
+low_pass_filter_shift</td>
+<td class="fielddoc">
+Low-pass (half -band decimation) filter input shift setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="adf0d5ca09d9fc77bca06739dc943d9a2"></a><a class="el" href="group___p_d_m.html#gad6b9c09e74442b86d88d1718f30844bc">pdm_compensation_filter_shift_t</a></td>
+<td class="fieldname">
+compensation_filter_shift</td>
+<td class="fielddoc">
+Compensation filter input shift setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="aaa73de553356b3e3fd5e8f7ecfb7ecc5"></a><a class="el" href="group___p_d_m.html#gaf2a94b0febed706bdad5526b11cb50c1">pdm_high_pass_filter_shift_t</a></td>
+<td class="fieldname">
+high_pass_filter_shift</td>
+<td class="fielddoc">
+High-pass filter input shift setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a41d1c3d3272bd0eb06a52b46643300e1"></a><a class="el" href="group___p_d_m.html#ga10725534d91789f15654a46786339569">pdm_sinc_filter_mode_t</a></td>
+<td class="fieldname">
+sinc_filter_mode</td>
+<td class="fielddoc">
+Sinc filter mode setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0c16174f6a3b0f80300db586bd8a8ed5"></a>uint8_t</td>
+<td class="fieldname">
+sincrng</td>
+<td class="fielddoc">
+Sinc filter output valid range. </td></tr>
+<tr><td class="fieldtype">
+<a id="a765c7cf7a108dbfedcca720f616d5a2e"></a>uint8_t</td>
+<td class="fieldname">
+sincdec</td>
+<td class="fielddoc">
+Sinc filter decimation ratio. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8ade0b0f232d6b93df9322c969d35588"></a>uint16_t</td>
+<td class="fieldname">
+hpf_coefficient_s0</td>
+<td class="fielddoc">
+High-pass filter coefficient s0 (16-bit signed fixed point data) </td></tr>
+<tr><td class="fieldtype">
+<a id="ab3d0506ad03a69effde1841833806543"></a>uint16_t</td>
+<td class="fieldname">
+hpf_coefficient_k1</td>
+<td class="fielddoc">
+High-pass filter coefficient k1 (16-bit signed fixed point data) </td></tr>
+<tr><td class="fieldtype">
+<a id="acb60b76ab89777ed95a0051aab3c5b40"></a>uint16_t</td>
+<td class="fieldname">
+hpf_coefficient_h[<a class="el" href="group___p_d_m.html#gad8832e264190f14e85f9e853da1f6880">PDM_NUM_HPF_COEFFICIENT_H</a>]</td>
+<td class="fielddoc">
+High-pass filter coefficient h(p) (16-bit signed fixed point data) </td></tr>
+<tr><td class="fieldtype">
+<a id="ae9e6e1078bf96822c34f34df04688bab"></a>uint16_t</td>
+<td class="fieldname">
+compensation_filter_coefficient_h[<a class="el" href="group___p_d_m.html#ga8f01406148d312d413280b8ef071188e">PDM_NUM_COMPENSATION_FILTER_COEFFICIENT_H</a>]</td>
+<td class="fielddoc">
+High-pass filter coefficient h(p) (13-bit signed fixed point data) </td></tr>
+<tr><td class="fieldtype">
+<a id="a8301f1ffd1bd3c06615b57cbab9f06cd"></a>uint16_t</td>
+<td class="fieldname">
+lpf_coefficient_h0</td>
+<td class="fielddoc">
+Low-pass (half-band decimation) filter coefficient h0 (13-bit signed fixed point data) </td></tr>
+<tr><td class="fieldtype">
+<a id="adf3dc2f0a04dbd4b928086324751025c"></a>uint16_t</td>
+<td class="fieldname">
+lpf_coefficient_h1[<a class="el" href="group___p_d_m.html#ga62eeb36bfda104c7d1fdf247663e19ba">PDM_NUM_LPF_FILTER_COEFFICIENT_H1</a>]</td>
+<td class="fielddoc">
+Low-pass (half-band decimation) filter coefficient h1 (13-bit signed fixed point data) </td></tr>
+<tr><td class="fieldtype">
+<a id="a9bebea7c9ae5cf6a2db4a89ea992a4f9"></a><a class="el" href="group___p_d_m.html#gaa14fe788b2c7ab49898fb7030c7fbee8">pdm_interrupt_threshold_t</a></td>
+<td class="fieldname">
+interrupt_threshold</td>
+<td class="fielddoc">
+Data reception interrupt threshold. <p>Data Reception. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a74236150297943f2448c63624550ca8e"></a>uint16_t</td>
+<td class="fieldname">
+short_circuit_count_h</td>
+<td class="fielddoc">
+Short circuit detection High Continuous detection count. <p>Short-Circuit Detection. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a173087f61b03fcc91f7f3dd2215ae0d5"></a>uint16_t</td>
+<td class="fieldname">
+short_circuit_count_l</td>
+<td class="fielddoc">
+Continuous detection count. </td></tr>
+<tr><td class="fieldtype">
+<a id="afd360fdbe979a72620ce845f137a4390"></a>uint32_t</td>
+<td class="fieldname">
+overvoltage_detection_lower_limit</td>
+<td class="fielddoc">
+Overvoltage detection lower limit (20-bit signed fixed point data) <p>Overvoltage Detection. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab9e18bf68240ab5a3ddf4cc59a1fafb2"></a>uint32_t</td>
+<td class="fieldname">
+overvoltage_detection_upper_limit</td>
+<td class="fielddoc">
+Overvoltage detection upper limit (20-bit signed fixed point data) </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga2666e0193f3d484391172283f9532c71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2666e0193f3d484391172283f9532c71">&#9670;&nbsp;</a></span>pdm_clk_div_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#ga2666e0193f3d484391172283f9532c71">pdm_clk_div_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PDM_CLKn's division ratio to core clock. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a54c68c8a370a4d7e1a1a1e8c1f88bbf7"></a>PDM_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>0000b: 1/2 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71ac892e5ea2e5d37f3d7b04a8bf21a0fb1"></a>PDM_CLOCK_DIV_4&#160;</td><td class="fielddoc"><p>0001b: 1/4 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71aa9152eb960ed85321d4deb69838ed45f"></a>PDM_CLOCK_DIV_6&#160;</td><td class="fielddoc"><p>0010b: 1/6 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71acae0bbc7c1abd4d0f572c4c468f3c738"></a>PDM_CLOCK_DIV_8&#160;</td><td class="fielddoc"><p>0011b: 1/8 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71addce245567626c37c31fc74845fbeb31"></a>PDM_CLOCK_DIV_10&#160;</td><td class="fielddoc"><p>0100b: 1/10 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a045a957540a61e6d165357e660e3fe83"></a>PDM_CLOCK_DIV_12&#160;</td><td class="fielddoc"><p>0101b: 1/12 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71af4822ad9efdcb34b3b627492c8d67791"></a>PDM_CLOCK_DIV_14&#160;</td><td class="fielddoc"><p>0110b: 1/14 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71aaddbe76456afe39d63fea05b73a91b95"></a>PDM_CLOCK_DIV_16&#160;</td><td class="fielddoc"><p>0111b: 1/16 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a2c5cb536d231f56d0ed006ca29cf0737"></a>PDM_CLOCK_DIV_18&#160;</td><td class="fielddoc"><p>1000b: 1/18 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71acec983b4a1f0f8048e33198a113c34fd"></a>PDM_CLOCK_DIV_20&#160;</td><td class="fielddoc"><p>1001b: 1/20 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a6bc7098eb41738d9d95b47732e83f5a1"></a>PDM_CLOCK_DIV_22&#160;</td><td class="fielddoc"><p>1010b: 1/22 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a75233dc7e955467e9ec57d112b8a798f"></a>PDM_CLOCK_DIV_24&#160;</td><td class="fielddoc"><p>1011b: 1/24 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71ac173036e4d0c9187705b36bc9ccbe115"></a>PDM_CLOCK_DIV_26&#160;</td><td class="fielddoc"><p>1100b: 1/26 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a3ec822a9c16b6773b5fee81bf37514b7"></a>PDM_CLOCK_DIV_28&#160;</td><td class="fielddoc"><p>1101b: 1/28 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a8bb7b28dcfb9f3f5860897e85becbeda"></a>PDM_CLOCK_DIV_30&#160;</td><td class="fielddoc"><p>1110b: 1/30 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2666e0193f3d484391172283f9532c71a10032f0bd87fc702ba0d0ef6db2f2371"></a>PDM_CLOCK_DIV_32&#160;</td><td class="fielddoc"><p>1111b: 1/32 </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga667e7ccab805f0976adc5015ecc35ecb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga667e7ccab805f0976adc5015ecc35ecb">&#9670;&nbsp;</a></span>pdm_moving_average_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#ga667e7ccab805f0976adc5015ecc35ecb">pdm_moving_average_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Moving average mode for sound detection data. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga667e7ccab805f0976adc5015ecc35ecba6c440f66cd7e5625ca174c6d9c32bbd7"></a>PDM_MOVING_AVERAGE_MODE_1_ORDER&#160;</td><td class="fielddoc"><p>1-order </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga667e7ccab805f0976adc5015ecc35ecba224f34fe0e01101dddc123bb84485c65"></a>PDM_MOVING_AVERAGE_MODE_2_ORDER&#160;</td><td class="fielddoc"><p>2-order </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga667e7ccab805f0976adc5015ecc35ecba23061ce2fa64f6353fca3b383e431342"></a>PDM_MOVING_AVERAGE_MODE_4_ORDER&#160;</td><td class="fielddoc"><p>4-order </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gacaad67afced89e9de93c82536d4dea0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacaad67afced89e9de93c82536d4dea0b">&#9670;&nbsp;</a></span>pdm_low_pass_filter_shift_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gacaad67afced89e9de93c82536d4dea0b">pdm_low_pass_filter_shift_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Low-pass (half-band decimation) filter input shift setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacaad67afced89e9de93c82536d4dea0bab5b68c6092d9115647ae1cb92ca47118"></a>PDM_LPF_RIGHT_SHIFT_0&#160;</td><td class="fielddoc"><p>No shift. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacaad67afced89e9de93c82536d4dea0ba9898049fbff6af21ffbf9be9db8df58c"></a>PDM_LPF_RIGHT_SHIFT_1&#160;</td><td class="fielddoc"><p>1-bit right shift </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacaad67afced89e9de93c82536d4dea0bae87ed3ba2651f1e731c14d7a9628c598"></a>PDM_LPF_RIGHT_SHIFT_2&#160;</td><td class="fielddoc"><p>2-bit right shift </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacaad67afced89e9de93c82536d4dea0baaf0fe07eca85a9fe3d708e60c2178eea"></a>PDM_LPF_RIGHT_SHIFT_3&#160;</td><td class="fielddoc"><p>3-bit right shift </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gad6b9c09e74442b86d88d1718f30844bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad6b9c09e74442b86d88d1718f30844bc">&#9670;&nbsp;</a></span>pdm_compensation_filter_shift_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gad6b9c09e74442b86d88d1718f30844bc">pdm_compensation_filter_shift_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compensation filter input shift setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad6b9c09e74442b86d88d1718f30844bca2d2217dde029d6b5477c1ebdb623459c"></a>PDM_COMPENSATION_FILTER_RIGHT_SHIFT_0&#160;</td><td class="fielddoc"><p>No shift. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6b9c09e74442b86d88d1718f30844bca26667abb7f4f7364d38993e2ac0329b9"></a>PDM_COMPENSATION_FILTER_RIGHT_SHIFT_1&#160;</td><td class="fielddoc"><p>1-bit right shift </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6b9c09e74442b86d88d1718f30844bca2487e27fddb6866e2b540f4bf270b83a"></a>PDM_COMPENSATION_FILTER_RIGHT_SHIFT_2&#160;</td><td class="fielddoc"><p>2-bit right shift </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6b9c09e74442b86d88d1718f30844bca61655ec7848f1bfc1604dd0d266a0b3b"></a>PDM_COMPENSATION_FILTER_RIGHT_SHIFT_3&#160;</td><td class="fielddoc"><p>3-bit right shift </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf2a94b0febed706bdad5526b11cb50c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf2a94b0febed706bdad5526b11cb50c1">&#9670;&nbsp;</a></span>pdm_high_pass_filter_shift_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gaf2a94b0febed706bdad5526b11cb50c1">pdm_high_pass_filter_shift_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>High-pass filter input shift setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf2a94b0febed706bdad5526b11cb50c1a3387643d4f8b7d4407785a063f7209a6"></a>PDM_HPF_RIGHT_SHIFT_0&#160;</td><td class="fielddoc"><p>No shift. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2a94b0febed706bdad5526b11cb50c1a05b61524d21f269e1d6e80495d18a54d"></a>PDM_HPF_RIGHT_SHIFT_1&#160;</td><td class="fielddoc"><p>1-bit right shift </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2a94b0febed706bdad5526b11cb50c1a10de74577af853e342fb6fa74cf5d701"></a>PDM_HPF_RIGHT_SHIFT_2&#160;</td><td class="fielddoc"><p>2-bit right shift </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf2a94b0febed706bdad5526b11cb50c1a35ce50e6bef8cda1c1be3e751d8dd683"></a>PDM_HPF_RIGHT_SHIFT_3&#160;</td><td class="fielddoc"><p>3-bit right shift </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga10725534d91789f15654a46786339569"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga10725534d91789f15654a46786339569">&#9670;&nbsp;</a></span>pdm_sinc_filter_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#ga10725534d91789f15654a46786339569">pdm_sinc_filter_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sinc filter mode setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga10725534d91789f15654a46786339569af155835da1b4cb3df6766324e5b641c5"></a>PDM_SINC_FILTER_MODE_1&#160;</td><td class="fielddoc"><p>1-order </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10725534d91789f15654a46786339569a3dbb88baf2e552e517cc521917be33f4"></a>PDM_SINC_FILTER_MODE_2&#160;</td><td class="fielddoc"><p>2-order </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10725534d91789f15654a46786339569a2ff3cb58ab5a06c75199c82be7d36e39"></a>PDM_SINC_FILTER_MODE_3&#160;</td><td class="fielddoc"><p>3-order </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga10725534d91789f15654a46786339569a4c023e6c0fd378a1efb57bf80297809c"></a>PDM_SINC_FILTER_MODE_4&#160;</td><td class="fielddoc"><p>4-order </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaa14fe788b2c7ab49898fb7030c7fbee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa14fe788b2c7ab49898fb7030c7fbee8">&#9670;&nbsp;</a></span>pdm_interrupt_threshold_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gaa14fe788b2c7ab49898fb7030c7fbee8">pdm_interrupt_threshold_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Data reception interrupt threshold. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa14fe788b2c7ab49898fb7030c7fbee8a1b7068a93d97db9482f25f1c5bb89ab4"></a>PDM_INTERRUPT_THRESHOLD_1&#160;</td><td class="fielddoc"><p>000b: Output interrupt when receiving 1 or more data </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa14fe788b2c7ab49898fb7030c7fbee8a7ae437c0a00a82fb0d1155f2ae28e300"></a>PDM_INTERRUPT_THRESHOLD_2&#160;</td><td class="fielddoc"><p>001b: Output interrupt when receiving 2 or more data </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa14fe788b2c7ab49898fb7030c7fbee8a5042bd3cf5897af4199e6834fde1e341"></a>PDM_INTERRUPT_THRESHOLD_4&#160;</td><td class="fielddoc"><p>010b: Output interrupt when receiving 4 or more data </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa14fe788b2c7ab49898fb7030c7fbee8addbf54abea07e335a42267a1172e44bd"></a>PDM_INTERRUPT_THRESHOLD_8&#160;</td><td class="fielddoc"><p>011b: Output interrupt when receiving 8 or more data </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa14fe788b2c7ab49898fb7030c7fbee8addb15f7e3c60581f90c436ab9eb3055d"></a>PDM_INTERRUPT_THRESHOLD_16&#160;</td><td class="fielddoc"><p>100b: Output interrupt when receiving 16 or more data </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf30a2284491fafaec6a835746e4001a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf30a2284491fafaec6a835746e4001a9">&#9670;&nbsp;</a></span>pdm_short_circuit_enable_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gaf30a2284491fafaec6a835746e4001a9">pdm_short_circuit_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Short circuit detection enable setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf30a2284491fafaec6a835746e4001a9ac8bedd96c3d137a5da70bf96407ed158"></a>PDM_SHORT_CIRCUIT_DISABLED&#160;</td><td class="fielddoc"><p>Short circuit disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf30a2284491fafaec6a835746e4001a9ac3a0ffc3b639f155fca29ed23d7b3464"></a>PDM_SHORT_CIRCUIT_ENABLED&#160;</td><td class="fielddoc"><p>Short circuit enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae98d0a1699440f8d6405968bdb6a855a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae98d0a1699440f8d6405968bdb6a855a">&#9670;&nbsp;</a></span>pdm_overvoltage_lower_limit_enable_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gae98d0a1699440f8d6405968bdb6a855a">pdm_overvoltage_lower_limit_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Overvoltage lower limit enable setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae98d0a1699440f8d6405968bdb6a855aa5e3d26fab9eae562f86996594193b518"></a>PDM_OVERVOLTAGE_LOWER_LIMIT_DISABLED&#160;</td><td class="fielddoc"><p>Overvoltage lower limit disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae98d0a1699440f8d6405968bdb6a855aa5ade27dd0f5c1c6b430039253e2bc0d7"></a>PDM_OVERVOLTAGE_LOWER_LIMIT_ENABLED&#160;</td><td class="fielddoc"><p>Overvoltage lower limit enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaa418eb6efe7d4d243ea4af5a074b10ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa418eb6efe7d4d243ea4af5a074b10ae">&#9670;&nbsp;</a></span>pdm_overvoltage_upper_limit_enable_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gaa418eb6efe7d4d243ea4af5a074b10ae">pdm_overvoltage_upper_limit_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Overvoltage upper limit enable setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa418eb6efe7d4d243ea4af5a074b10aea0f734c2cb607b99681c4fc7b6348635a"></a>PDM_OVERVOLTAGE_UPPER_LIMIT_DISABLED&#160;</td><td class="fielddoc"><p>Overvoltage upper limit disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa418eb6efe7d4d243ea4af5a074b10aeaf4f186ec9d044337d5da73f86ee138f6"></a>PDM_OVERVOLTAGE_UPPER_LIMIT_ENABLED&#160;</td><td class="fielddoc"><p>Overvoltage upper limit enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaceae8e5dc8a19d9beaae7dbb64e78742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaceae8e5dc8a19d9beaae7dbb64e78742">&#9670;&nbsp;</a></span>pdm_buffer_overwrite_detection_enable_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m.html#gaceae8e5dc8a19d9beaae7dbb64e78742">pdm_buffer_overwrite_detection_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Buffer overwrite detection enable setting. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaceae8e5dc8a19d9beaae7dbb64e78742a92d2d9a6fe3f835da690bbdbd4fba0cd"></a>PDM_BUFFER_OVERWRITE_DETECTION_DISABLED&#160;</td><td class="fielddoc"><p>Buffer overwrite detection disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaceae8e5dc8a19d9beaae7dbb64e78742aea10d60946c58fb3928dbba804808bbb"></a>PDM_BUFFER_OVERWRITE_DETECTION_ENABLED&#160;</td><td class="fielddoc"><p>Buffer overwrite detection enabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga348be7b997dd1200eb549ff3e7f946a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga348be7b997dd1200eb549ff3e7f946a0">&#9670;&nbsp;</a></span>R_PDM_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Opens the PDM. Implements <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a>.</p>
+<p>This function sets this clock divisor and the configurations specified in <a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Ready for PDM communication. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl or p_cfg is null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The control block has already been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>Channel number is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. </dd></dl>
+
+</div>
+</div>
+<a id="ga745fa70668486ae2a7d16bd72eb93a54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga745fa70668486ae2a7d16bd72eb93a54">&#9670;&nbsp;</a></span>R_PDM_Start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_Start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t const&#160;</td>
+          <td class="paramname"><em>buffer_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>number_of_data_to_callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts PDM. Implements <a class="el" href="group___p_d_m___a_p_i.html#abf43fd87ed8c5bdaccb5474009fa6006">pdm_api_t::start</a>.</p>
+<p>This function enables reception, and enables any transfer instances used.</p>
+<p>The PDM will start on the next frame boundary.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>PDM communication stop request issued. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>The size of buffer is not a multiple of pdm_interrupt_threshold_t. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ALIGNMENT</td><td>The alignment of argument buffer_size is not matched with hardware specification. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or lower level drivers for other possible return codes. </dd></dl>
+
+</div>
+</div>
+<a id="ga35f2abc47410d9906e8ae5bac12d7a29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga35f2abc47410d9906e8ae5bac12d7a29">&#9670;&nbsp;</a></span>R_PDM_Stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_Stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops PDM. Implements <a class="el" href="group___p_d_m___a_p_i.html#ad8342d4be5d02082a860b08303d0478c">pdm_api_t::stop</a>.</p>
+<p>This function disables reception, and disables any transfer instances used.</p>
+<p>The PDM will stop on the next frame boundary.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>PDM communication stop request issued. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or lower level drivers for other possible return codes. </dd></dl>
+
+</div>
+</div>
+<a id="ga81dc4496418f929e3f94339700008104"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga81dc4496418f929e3f94339700008104">&#9670;&nbsp;</a></span>R_PDM_SoundDetectionEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_SoundDetectionEnable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__sound__detection__setting__t">pdm_sound_detection_setting_t</a>&#160;</td>
+          <td class="paramname"><em>sound_detection_setting</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configures and enables sound detection. Implements <a class="el" href="group___p_d_m___a_p_i.html#a7505ff95fb609170382ac5c91db60abf">pdm_api_t::soundDetectionEnable</a>.</p>
+<p>This function configures sound detection based on the passed in settings. It then enables sound detection.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Sound detection configured and enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or lower level drivers for other possible return codes. </dd></dl>
+
+</div>
+</div>
+<a id="ga67db55f70c75153156284e6e6d6f1b01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga67db55f70c75153156284e6e6d6f1b01">&#9670;&nbsp;</a></span>R_PDM_SoundDetectionDisable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_SoundDetectionDisable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables sound detection. Implements <a class="el" href="group___p_d_m___a_p_i.html#ac73ccdf3b6695640bf0abfc5ecbd3570">pdm_api_t::soundDetectionDisable</a>.</p>
+<p>This function disables sound detection.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Sound detection disabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or lower level drivers for other possible return codes. </dd></dl>
+
+</div>
+</div>
+<a id="ga62fc9390544cabfb4800f38125f748ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga62fc9390544cabfb4800f38125f748ab">&#9670;&nbsp;</a></span>R_PDM_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is not supported. Implements <a class="el" href="group___p_d_m___a_p_i.html#ac5a449eb8492fef49421d8e3babf205f">pdm_api_t::read</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf5696a4b5a4e9f33f89baefe9a7e1f94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5696a4b5a4e9f33f89baefe9a7e1f94">&#9670;&nbsp;</a></span>R_PDM_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__status__t">pdm_status_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets PDM status and stores it in provided pointer p_status. Implements <a class="el" href="group___p_d_m___a_p_i.html#a2b1840e35134d539722e741e0b00042c">pdm_api_t::statusGet</a>.</p>
+<p>Calling this function will clear any set error flags in the hardware.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Information stored successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The p_ctrl or p_status parameter was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0f07fb3bab80af13bd260b7f7f54062e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f07fb3bab80af13bd260b7f7f54062e">&#9670;&nbsp;</a></span>R_PDM_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Closes PDM. Implements <a class="el" href="group___p_d_m___a_p_i.html#a37bb473e04c42ef4dc01e03f6c52ce75">pdm_api_t::close</a>.</p>
+<p>This function powers down the PDM and closes the lower level timer and transfer drivers if they are used.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Device closed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>The pointer to p_ctrl was null. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel is not opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga19cb3e540a215f0839315f0c8d9adaba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga19cb3e540a215f0839315f0c8d9adaba">&#9670;&nbsp;</a></span>R_PDM_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_PDM_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback and has option of providing memory for callback structure. Implements <a class="el" href="group___p_d_m___a_p_i.html#a4d32e65923124bdd22cc0a241402995a">pdm_api_t::callbackSet</a></p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

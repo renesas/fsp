@@ -2,7 +2,6 @@ var group___l_i_n___a_p_i =
 [
     [ "lin_transfer_params_t", "group___l_i_n___a_p_i.html#structlin__transfer__params__t", [
       [ "id", "group___l_i_n___a_p_i.html#aa24c43c5df396418efba7f93c71c2f6b", null ],
-      [ "p_information", "group___l_i_n___a_p_i.html#a4edd3430e363109754446c79bf646da3", null ],
       [ "num_bytes", "group___l_i_n___a_p_i.html#afe681d74e72baac9af01cb15e732f1ee", null ],
       [ "checksum_type", "group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940", null ]
     ] ],
@@ -12,26 +11,28 @@ var group___l_i_n___a_p_i =
       [ "bytes_received", "group___l_i_n___a_p_i.html#a8d57becd55ba155f218e98327f1dddc3", null ],
       [ "pid", "group___l_i_n___a_p_i.html#a56d7dcf4d2acb8e0b5a209eecc676ef0", null ],
       [ "checksum", "group___l_i_n___a_p_i.html#ac34b61415600ab875af5dda8fb7fe748", null ],
-      [ "p_context", "group___l_i_n___a_p_i.html#a4debbd9d2d5bdbea76add8f74f910228", null ]
+      [ "p_context", "group___l_i_n___a_p_i.html#acf635b625bbfd5d3f83cc2d9e41a5f0c", null ]
     ] ],
     [ "lin_cfg_t", "group___l_i_n___a_p_i.html#structlin__cfg__t", [
       [ "channel", "group___l_i_n___a_p_i.html#a238f2f12d37279529b9a99d7278fd8b8", null ],
       [ "mode", "group___l_i_n___a_p_i.html#a61bb86c03d458a8b1173bb1c55603398", null ],
       [ "p_callback", "group___l_i_n___a_p_i.html#a464087017b51b356e0a520f4c92b1535", null ],
-      [ "p_context", "group___l_i_n___a_p_i.html#aa4c9123bbd44e7257125830fad51eb49", null ],
+      [ "p_context", "group___l_i_n___a_p_i.html#a272f62ce1d1d767102094afda214dd6f", null ],
       [ "p_extend", "group___l_i_n___a_p_i.html#af5988db9d76c7a9357da2e1bb6d57812", null ]
     ] ],
     [ "lin_api_t", "group___l_i_n___a_p_i.html#structlin__api__t", [
       [ "open", "group___l_i_n___a_p_i.html#a6dd8c405cf45ef0fc3ec162913f5ed1e", null ],
-      [ "startFrameWrite", "group___l_i_n___a_p_i.html#aebeb9517b0b7e67c7418a6104f5f7cb1", null ],
-      [ "informationFrameWrite", "group___l_i_n___a_p_i.html#aa1103bd6a75fd2e6f005d3ad3e2dc4e1", null ],
-      [ "informationFrameRead", "group___l_i_n___a_p_i.html#af38bdf9c3929d5c9010066ec35c32b4e", null ],
+      [ "write", "group___l_i_n___a_p_i.html#a0a78fe81994f49adfbfc4335e55fc0c6", null ],
+      [ "read", "group___l_i_n___a_p_i.html#a3c86d34c55cdf8f114fda53f372d5fb8", null ],
       [ "communicationAbort", "group___l_i_n___a_p_i.html#a5595034306ba0b95e664ef4fc4a2ffce", null ],
-      [ "callbackSet", "group___l_i_n___a_p_i.html#af3c026803e304b6a626fde3d069d7140", null ],
+      [ "callbackSet", "group___l_i_n___a_p_i.html#a932c1fc139ea379a1fea1fda53b42368", null ],
       [ "wakeupSend", "group___l_i_n___a_p_i.html#ab98fb75bc7215ada0754ae527fc2b1f1", null ],
       [ "sleepEnter", "group___l_i_n___a_p_i.html#a84ed4cf6f80344d86973bf89668225bf", null ],
       [ "sleepExit", "group___l_i_n___a_p_i.html#aadd38030572a3bca23b797a360196e4d", null ],
-      [ "close", "group___l_i_n___a_p_i.html#a362c949cfdf9ce62f5bd90788464b49d", null ]
+      [ "close", "group___l_i_n___a_p_i.html#a362c949cfdf9ce62f5bd90788464b49d", null ],
+      [ "informationFrameRead", "group___l_i_n___a_p_i.html#af38bdf9c3929d5c9010066ec35c32b4e", null ],
+      [ "startFrameWrite", "group___l_i_n___a_p_i.html#aebeb9517b0b7e67c7418a6104f5f7cb1", null ],
+      [ "informationFrameWrite", "group___l_i_n___a_p_i.html#aa1103bd6a75fd2e6f005d3ad3e2dc4e1", null ]
     ] ],
     [ "lin_instance_t", "group___l_i_n___a_p_i.html#structlin__instance__t", [
       [ "p_ctrl", "group___l_i_n___a_p_i.html#ad93aefc5c8ff90cd456d05abdc42f9f2", null ],
@@ -54,6 +55,10 @@ var group___l_i_n___a_p_i =
       [ "LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72afae5a2ecd0e7539ebf8e10c000577321", null ],
       [ "LIN_EVENT_TX_START_FRAME_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a849c350c804a580611d9608cbf08d377", null ],
       [ "LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6", null ],
+      [ "LIN_EVENT_RX_HEADER_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a28a4e0d8f7b5779b6ec36a4c6fcbd23e", null ],
+      [ "LIN_EVENT_RX_DATA_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1a2bb2468c5d41614b86fe9936e9749a", null ],
+      [ "LIN_EVENT_TX_HEADER_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a49669a6b914a5179a758eb60df18aa0d", null ],
+      [ "LIN_EVENT_TX_DATA_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a9e8ae326573130cc9a65b85481c1cb80", null ],
       [ "LIN_EVENT_ERR_INVALID_CHECKSUM", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48", null ],
       [ "LIN_EVENT_TX_WAKEUP_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ae61c7a9be7adadae38b3564e7238d759", null ],
       [ "LIN_EVENT_RX_WAKEUP_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a2f0a3f2cd095b347aebce928d11b6bc3", null ],

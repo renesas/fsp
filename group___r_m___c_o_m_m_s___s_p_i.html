@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___c_o_m_m_s___s_p_i.html',
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___c_o_m_m_s___s_p_i.html',
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___c_o_m_m_s___s_p_i.html',
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -252,9 +252,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6d578a26873728dafce205fa6d18f41d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#ga6d578a26873728dafce205fa6d18f41d">RM_COMMS_SPI_Close</a> (<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20">rm_comms_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="memdesc:ga6d578a26873728dafce205fa6d18f41d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables specified SPI Comms module. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#abd464feb634b589687a0b8f55d0a078a">rm_comms_api_t::close</a>.  <a href="#ga6d578a26873728dafce205fa6d18f41d">More...</a><br /></td></tr>
 <tr class="separator:ga6d578a26873728dafce205fa6d18f41d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e6bae867fca0b914cbf7751d76513db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#ga5e6bae867fca0b914cbf7751d76513db">RM_COMMS_SPI_CallbackSet</a> (<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20">rm_comms_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> *), void const *const p_context)</td></tr>
-<tr class="memdesc:ga5e6bae867fca0b914cbf7751d76513db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the SPI Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#af1a782cc776093ebd3e07c711cf5bad5">rm_comms_api_t::callbackSet</a>.  <a href="#ga5e6bae867fca0b914cbf7751d76513db">More...</a><br /></td></tr>
-<tr class="separator:ga5e6bae867fca0b914cbf7751d76513db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga282dbe09b7401c686f1498c3a195b78e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#ga282dbe09b7401c686f1498c3a195b78e">RM_COMMS_SPI_CallbackSet</a> (<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20">rm_comms_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> *), void *const p_context)</td></tr>
+<tr class="memdesc:ga282dbe09b7401c686f1498c3a195b78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the SPI Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#a83f31e5edbc638f47900624b563b0476">rm_comms_api_t::callbackSet</a>.  <a href="#ga282dbe09b7401c686f1498c3a195b78e">More...</a><br /></td></tr>
+<tr class="separator:ga282dbe09b7401c686f1498c3a195b78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga40eac6cc71608a82f24b5f2b7ae2412f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#ga40eac6cc71608a82f24b5f2b7ae2412f">RM_COMMS_SPI_Read</a> (<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20">rm_comms_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_dest, uint32_t const bytes)</td></tr>
 <tr class="memdesc:ga40eac6cc71608a82f24b5f2b7ae2412f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a read from the SPI bus. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#a40779e10d71d444a436dc2382003bc0b">rm_comms_api_t::read</a>.  <a href="#ga40eac6cc71608a82f24b5f2b7ae2412f">More...</a><br /></td></tr>
 <tr class="separator:ga40eac6cc71608a82f24b5f2b7ae2412f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -270,7 +270,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <tr class="separator:ga583e542e357e3e3a597a847fb909ba60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Middleware to implement a generic communications interface over SPI. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a>. </p>
+<p>Middleware to implement a generic communications interface over SPI. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communications Middleware Interface</a>. </p>
 <h1><a class="anchor" id="rm-comms-spi-overview"></a>
 Overview</h1>
 <p>The RM_COMMS_SPI module implements COMMS API for SPI interface.</p>
@@ -379,7 +379,7 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of SPI communications implementation in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_comms_spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___c_o_m_m_s___s_p_i.html#ga4874b5d3481783a29abf948535f48c8e">RM_COMMS_SPI_Open</a>(&amp;g_comms_spi_ctrl, &amp;g_comms_spi_cfg);</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle any errors. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Send data. */</span></div><div class="line">        g_error     = 0;</div><div class="line">        g_completed = 0;</div><div class="line"></div><div class="line"></div><div class="line">        err = <a class="code" href="group___r_m___c_o_m_m_s___s_p_i.html#ga2e452ddd6810ca45e9e31a76d788848d">RM_COMMS_SPI_Write</a>(&amp;g_comms_spi_ctrl, g_tx_buf, TX_BUF_LEN);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle any errors. */</span></div><div class="line">        }</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keywordflow">while</span> ((0 == g_completed) &amp;&amp; (0 == g_error))</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Receive data. */</span></div><div class="line">        g_error     = 0;</div><div class="line">        g_completed = 0;</div><div class="line"></div><div class="line">        <span class="comment">/* Wait for minimum time required between transfers. */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(SSL_NEXT_ACCESS_DELAY, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line">        err = <a class="code" href="group___r_m___c_o_m_m_s___s_p_i.html#ga40eac6cc71608a82f24b5f2b7ae2412f">RM_COMMS_SPI_Read</a>(&amp;g_comms_spi_ctrl, g_rx_buf, RX_BUF_LEN);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle any errors.*/</span></div><div class="line">        }</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keywordflow">while</span> ((0 == g_completed) &amp;&amp; (0 == g_error))</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait callback */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> rm_comms_user_callback (<a class="code" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (p_args-&gt;event == RM_COMMS_EVENT_OPERATION_COMPLETE)</div><div class="line">    {</div><div class="line">        g_completed = 1;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        g_error = 1;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_comms_spi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___r_m___c_o_m_m_s___s_p_i.html#ga4874b5d3481783a29abf948535f48c8e">RM_COMMS_SPI_Open</a>(&amp;g_comms_spi_ctrl, &amp;g_comms_spi_cfg);</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Handle any errors. */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Send data. */</span></div><div class="line">        g_error     = 0;</div><div class="line">        g_completed = 0;</div><div class="line"></div><div class="line"></div><div class="line">        err = <a class="code" href="group___r_m___c_o_m_m_s___s_p_i.html#ga2e452ddd6810ca45e9e31a76d788848d">RM_COMMS_SPI_Write</a>(&amp;g_comms_spi_ctrl, g_tx_buf, TX_BUF_LEN);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle any errors. */</span></div><div class="line">        }</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keywordflow">while</span> ((0 == g_completed) &amp;&amp; (0 == g_error))</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait callback */</span></div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">/* Receive data. */</span></div><div class="line">        g_error     = 0;</div><div class="line">        g_completed = 0;</div><div class="line"></div><div class="line">        <span class="comment">/* Wait for minimum time required between transfers. */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(SSL_NEXT_ACCESS_DELAY, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2baa0312618f2508347a9a815b5887c12ae">BSP_DELAY_UNITS_MICROSECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line">        err = <a class="code" href="group___r_m___c_o_m_m_s___s_p_i.html#ga40eac6cc71608a82f24b5f2b7ae2412f">RM_COMMS_SPI_Read</a>(&amp;g_comms_spi_ctrl, g_rx_buf, RX_BUF_LEN);</div><div class="line">        <span class="keywordflow">if</span> (FSP_SUCCESS != err)</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle any errors.*/</span></div><div class="line">        }</div><div class="line"></div><div class="line"></div><div class="line">        <span class="keywordflow">while</span> ((0 == g_completed) &amp;&amp; (0 == g_error))</div><div class="line">        {</div><div class="line">            <span class="comment">/* Wait callback */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> rm_comms_user_callback (<a class="code" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (p_args-&gt;event == RM_COMMS_EVENT_OPERATION_COMPLETE)</div><div class="line">    {</div><div class="line">        g_completed = 1;</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        g_error = 1;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrm__comms__spi__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#structrm__comms__spi__instance__ctrl__t">rm_comms_spi_instance_ctrl_t</a></td></tr>
@@ -420,10 +420,10 @@ rm_comms_spi_device_extended_cfg_t *&#160;</td><td class="memItemRight" valign="
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#afcf6a61517289ea0cd458be6a4f4e1ce">p_callback</a> )(<a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__callback__args__t">rm_comms_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:afcf6a61517289ea0cd458be6a4f4e1ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called when a spi_event_t occurs. <br /></td></tr>
 <tr class="separator:afcf6a61517289ea0cd458be6a4f4e1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ac8defcffd1e9cf1d63f295f2f00795"><td class="memItemLeft" align="right" valign="top"><a id="a0ac8defcffd1e9cf1d63f295f2f00795"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#a0ac8defcffd1e9cf1d63f295f2f00795">p_context</a></td></tr>
-<tr class="memdesc:a0ac8defcffd1e9cf1d63f295f2f00795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context passed into callback function. <br /></td></tr>
-<tr class="separator:a0ac8defcffd1e9cf1d63f295f2f00795"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1c15454f8c0062f8deb13b087b9f1c"><td class="memItemLeft" align="right" valign="top"><a id="a9c1c15454f8c0062f8deb13b087b9f1c"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html#a9c1c15454f8c0062f8deb13b087b9f1c">p_context</a></td></tr>
+<tr class="memdesc:a9c1c15454f8c0062f8deb13b087b9f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context passed into callback function. <br /></td></tr>
+<tr class="separator:a9c1c15454f8c0062f8deb13b087b9f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -497,8 +497,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="ga5e6bae867fca0b914cbf7751d76513db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5e6bae867fca0b914cbf7751d76513db">&#9670;&nbsp;</a></span>RM_COMMS_SPI_CallbackSet()</h2>
+<a id="ga282dbe09b7401c686f1498c3a195b78e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga282dbe09b7401c686f1498c3a195b78e">&#9670;&nbsp;</a></span>RM_COMMS_SPI_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -518,7 +518,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>&#160;</td>
         </tr>
         <tr>
@@ -529,7 +529,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
       </table>
 </div><div class="memdoc">
 
-<p>Updates the SPI Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#af1a782cc776093ebd3e07c711cf5bad5">rm_comms_api_t::callbackSet</a>. </p>
+<p>Updates the SPI Comms callback. Implements <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html#a83f31e5edbc638f47900624b563b0476">rm_comms_api_t::callbackSet</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Successfully set. </td></tr>
@@ -677,7 +677,7 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -13,7 +13,7 @@ var group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i =
       [ "instance_id", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a521055ef058b9c76036e3ad20805c936", null ],
       [ "frame_buf_len", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a0315721107506837b7ee02ce856b7566", null ],
       [ "p_frame_buf", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a8a0107f2c2a78b9e4ef18d18182bcbbb", null ],
-      [ "p_context", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a2c66dffec83339966c8d274b9be351a9", null ]
+      [ "p_context", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a79e2e12e0be2c4771a9c120fc38eb409", null ]
     ] ],
     [ "rai_data_collector_snapshot_cfg_t", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__snapshot__cfg__t", [
       [ "channels", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#ac5f98311db103b661b46745b29bd2f3f", null ],
@@ -36,7 +36,7 @@ var group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i =
       [ "p_extend", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a919ee169f894405e7c3c043907ed07f4", null ],
       [ "p_callback", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a8a2ebe7c4ce5814bcfa22ed1bf809d43", null ],
       [ "p_error_callback", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#aafdec821bd3a42d31d46c239fe79a1e8", null ],
-      [ "p_context", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#adf43f89fac2c736a36cae6a4fa1db27b", null ]
+      [ "p_context", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#adffee46423b41ed72f775da97d5732f5", null ]
     ] ],
     [ "rai_data_collector_api_t", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#structrai__data__collector__api__t", [
       [ "open", "group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a1d91365ceebb5e62e3cdce1be7692803", null ],

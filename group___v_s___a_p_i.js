@@ -92,6 +92,12 @@ var group___v_s___a_p_i =
     [ "BLE_VS_CS_CONN_S_2", "group___v_s___a_p_i.html#ga08c1b615bbd1585890acf580d83987d0", null ],
     [ "BLE_VS_TX_FLOW_CTL_ON", "group___v_s___a_p_i.html#ga35ab99e395aa18a518559d7f2c012cb0", null ],
     [ "BLE_VS_TX_FLOW_CTL_OFF", "group___v_s___a_p_i.html#gaea17e4b3c3da0daf46f39e96a1223b72", null ],
+    [ "BLE_VS_SLEEP_OFF", "group___v_s___a_p_i.html#gad5d8926d5baf9ed0887a45639567c24c", null ],
+    [ "BLE_VS_EXTENDED_SLEEP", "group___v_s___a_p_i.html#gaedbea9a0abd5e3b96e9d7f894686f5f8", null ],
+    [ "BLE_VS_DEEP_SLEEP", "group___v_s___a_p_i.html#ga127bb0fb02b88658e8121a5dfa6599b8", null ],
+    [ "BLE_VS_HIBERNATION", "group___v_s___a_p_i.html#gaf2acad4012e1c3ca38cd65791d21d8c0", null ],
+    [ "BLE_VS_RAM_POWER_ON", "group___v_s___a_p_i.html#ga595768d4dc64e5a8fa725d1347c2b758", null ],
+    [ "BLE_VS_RAM_POWER_OFF", "group___v_s___a_p_i.html#ga90d6d2f70fbe508f628621f7b952a9b0", null ],
     [ "ble_vs_app_cb_t", "group___v_s___a_p_i.html#ga35cfc1fb6715e37ceb8d4f2b67031b36", null ],
     [ "e_r_ble_vs_evt_t", "group___v_s___a_p_i.html#ga750cb97a97e51e829021134b5fd32579", [
       [ "BLE_VS_EVENT_SET_TX_POWER", "group___v_s___a_p_i.html#gga750cb97a97e51e829021134b5fd32579aef29df161eab4f37ede55d46fab4a09a", null ],

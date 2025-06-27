@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___m_q_t_t___o_n_c_h_i_p___d_a16_
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___m_q_t_t___o_n_c_h_i_p___d_a16_
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___m_q_t_t___o_n_c_h_i_p___d_a16_
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -260,8 +260,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1ec24b97383e595ade22beb73e29402b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga60feb10ab5392050b178f249bdf05b11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga60feb10ab5392050b178f249bdf05b11">RM_MQTT_DA16XXX_UnSubscribe</a> (<a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__instance__ctrl__t">mqtt_onchip_da16xxx_instance_ctrl_t</a> *p_ctrl, <a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__sub__info__t">mqtt_onchip_da16xxx_sub_info_t</a> *const p_sub_info)</td></tr>
 <tr class="separator:ga60feb10ab5392050b178f249bdf05b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga894c1ad6fd8ebf0649411deec7b7a695"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga894c1ad6fd8ebf0649411deec7b7a695">RM_MQTT_DA16XXX_Receive</a> (<a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__instance__ctrl__t">mqtt_onchip_da16xxx_instance_ctrl_t</a> *p_ctrl, <a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__cfg__t">mqtt_onchip_da16xxx_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="separator:ga894c1ad6fd8ebf0649411deec7b7a695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86952566e1442e024be0e8fbca4b72bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga86952566e1442e024be0e8fbca4b72bb">RM_MQTT_DA16XXX_Receive</a> (<a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__instance__ctrl__t">mqtt_onchip_da16xxx_instance_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga86952566e1442e024be0e8fbca4b72bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc5e7350b4869b052517d5190e78f7a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gabc5e7350b4869b052517d5190e78f7a8">RM_MQTT_DA16XXX_Close</a> (<a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__instance__ctrl__t">mqtt_onchip_da16xxx_instance_ctrl_t</a> *p_ctrl)</td></tr>
 <tr class="separator:gabc5e7350b4869b052517d5190e78f7a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -418,7 +418,7 @@ Usage Notes</h1>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of MQTT Middleware in an application.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> mqtt_onchip_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a> wifi_err;</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>        mqtt_err;</div><div class="line"></div><div class="line">    <span class="comment">/* Setup Access Point connection parameters */</span></div><div class="line">    <a class="code" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a> net_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___w_i_f_i___a_p_i.html#a3cbd247faa28474c860d8e9dd31cfab5">ucChannel</a>                  = 0,</div><div class="line">        .xPassword.xWPA.cPassphrase = WIFI_PWD,</div><div class="line">        .ucSSID                     = WIFI_SSID,</div><div class="line">        .xPassword.xWPA.ucLength = <span class="keyword">sizeof</span>(WIFI_PWD),</div><div class="line">        .ucSSIDLength            = <span class="keyword">sizeof</span>(WIFI_SSID),</div><div class="line">        .xSecurity               = <a class="code" href="group___w_i_f_i___a_p_i.html#gga827dc938c214035b938c5ebe7d7b6816ac4775007ba0bfdb4e4ba754f219387df">eWiFiSecurityWPA2</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open connection to the Wifi Module */</span></div><div class="line">    wifi_err = <a class="code" href="group___w_i_f_i___a_p_i.html#ga2ee26776a00869c415da4a108031af1d">WIFI_On</a>();</div><div class="line">    assert(<a class="code" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> == wifi_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Connect to the Access Point */</span></div><div class="line">    wifi_err = <a class="code" href="group___w_i_f_i___a_p_i.html#ga430d72715054198b6ce0885410b027a5">WIFI_ConnectAP</a>(&amp;net_params);</div><div class="line">    assert(<a class="code" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> == wifi_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the MQTT Client connection */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gaac0b39b7888dd502415792649540e788">RM_MQTT_DA16XXX_Open</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, &amp;g_mqtt_onchip_da16xxx_cfg);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Subscribe to MQTT topics to be received */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga1ec24b97383e595ade22beb73e29402b">RM_MQTT_DA16XXX_Subscribe</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, subTopics, 1);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Connect to the MQTT Broker */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga07fea437424b1558d1f1f35064a8473c">RM_MQTT_DA16XXX_Connect</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, CONNECT_TIMEOUT);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Publish data to the MQTT Broker */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gaea8caf550df7f0a55119acb765b358d6">RM_MQTT_DA16XXX_Publish</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, &amp;pubTopics[0]);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Loop to receive data from the MQTT Broker */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga894c1ad6fd8ebf0649411deec7b7a695">RM_MQTT_DA16XXX_Receive</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, &amp;g_mqtt_onchip_da16xxx_cfg);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(CONNECT_TIMEOUT, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (cb_flag == 0);</div><div class="line"></div><div class="line">    <span class="comment">/* Disconnect from the MQTT Broker */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga6e434d3becfe7db174b89ed71cef5e1f">RM_MQTT_DA16XXX_Disconnect</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Close the MQTT Client module */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gabc5e7350b4869b052517d5190e78f7a8">RM_MQTT_DA16XXX_Close</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> mqtt_onchip_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a> wifi_err;</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>        mqtt_err;</div><div class="line"></div><div class="line">    <span class="comment">/* Setup Access Point connection parameters */</span></div><div class="line">    <a class="code" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a> net_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___w_i_f_i___a_p_i.html#a3cbd247faa28474c860d8e9dd31cfab5">ucChannel</a>                  = 0,</div><div class="line">        .xPassword.xWPA.cPassphrase = WIFI_PWD,</div><div class="line">        .ucSSID                     = WIFI_SSID,</div><div class="line">        .xPassword.xWPA.ucLength = <span class="keyword">sizeof</span>(WIFI_PWD),</div><div class="line">        .ucSSIDLength            = <span class="keyword">sizeof</span>(WIFI_SSID),</div><div class="line">        .xSecurity               = <a class="code" href="group___w_i_f_i___a_p_i.html#gga827dc938c214035b938c5ebe7d7b6816ac4775007ba0bfdb4e4ba754f219387df">eWiFiSecurityWPA2</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open connection to the Wifi Module */</span></div><div class="line">    wifi_err = <a class="code" href="group___w_i_f_i___a_p_i.html#ga2ee26776a00869c415da4a108031af1d">WIFI_On</a>();</div><div class="line">    assert(<a class="code" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> == wifi_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Connect to the Access Point */</span></div><div class="line">    wifi_err = <a class="code" href="group___w_i_f_i___a_p_i.html#ga430d72715054198b6ce0885410b027a5">WIFI_ConnectAP</a>(&amp;net_params);</div><div class="line">    assert(<a class="code" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> == wifi_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the MQTT Client connection */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gaac0b39b7888dd502415792649540e788">RM_MQTT_DA16XXX_Open</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, &amp;g_mqtt_onchip_da16xxx_cfg);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Subscribe to MQTT topics to be received */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga1ec24b97383e595ade22beb73e29402b">RM_MQTT_DA16XXX_Subscribe</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, subTopics, 1);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Connect to the MQTT Broker */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga07fea437424b1558d1f1f35064a8473c">RM_MQTT_DA16XXX_Connect</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, CONNECT_TIMEOUT);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Publish data to the MQTT Broker */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gaea8caf550df7f0a55119acb765b358d6">RM_MQTT_DA16XXX_Publish</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance, &amp;pubTopics[0]);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Loop to receive data from the MQTT Broker */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga86952566e1442e024be0e8fbca4b72bb">RM_MQTT_DA16XXX_Receive</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(CONNECT_TIMEOUT, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (cb_flag == 0);</div><div class="line"></div><div class="line">    <span class="comment">/* Disconnect from the MQTT Broker */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga6e434d3becfe7db174b89ed71cef5e1f">RM_MQTT_DA16XXX_Disconnect</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line"></div><div class="line">    <span class="comment">/* Close the MQTT Client module */</span></div><div class="line">    mqtt_err = <a class="code" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gabc5e7350b4869b052517d5190e78f7a8">RM_MQTT_DA16XXX_Close</a>(&amp;g_rm_mqtt_onchip_da16xxx_instance);</div><div class="line">    assert(FSP_SUCCESS == mqtt_err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structmqtt__onchip__da16xxx__sub__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__sub__info__t">mqtt_onchip_da16xxx_sub_info_t</a></td></tr>
@@ -592,7 +592,7 @@ data_length</td>
 <td class="fielddoc">
 Length of the MQTT payload. </td></tr>
 <tr><td class="fieldtype">
-<a id="ae6f8833427b845dd8c04eb9dcf88a649"></a>void const  *</td>
+<a id="acfe28d920563d6c044b73d03ebe64549"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -631,10 +631,10 @@ const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a0f7270ea8ba19975ed5a27ce10994916">p_callback</a> )(<a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__callback__args__t">mqtt_onchip_da16xxx_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:a0f7270ea8ba19975ed5a27ce10994916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location of user callback. <br /></td></tr>
 <tr class="separator:a0f7270ea8ba19975ed5a27ce10994916"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5a6ad616a842886725b7bc117b5c5ab"><td class="memItemLeft" align="right" valign="top"><a id="aa5a6ad616a842886725b7bc117b5c5ab"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#aa5a6ad616a842886725b7bc117b5c5ab">p_context</a></td></tr>
-<tr class="memdesc:aa5a6ad616a842886725b7bc117b5c5ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__callback__args__t">mqtt_onchip_da16xxx_callback_args_t</a>. <br /></td></tr>
-<tr class="separator:aa5a6ad616a842886725b7bc117b5c5ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac41f4bcb8c9f0081becf676803585379"><td class="memItemLeft" align="right" valign="top"><a id="ac41f4bcb8c9f0081becf676803585379"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ac41f4bcb8c9f0081becf676803585379">p_context</a></td></tr>
+<tr class="memdesc:ac41f4bcb8c9f0081becf676803585379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__callback__args__t">mqtt_onchip_da16xxx_callback_args_t</a>. <br /></td></tr>
+<tr class="separator:ac41f4bcb8c9f0081becf676803585379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cf25023a0f63903a7bf04fe7c2884f8"><td class="memItemLeft" align="right" valign="top"><a id="a8cf25023a0f63903a7bf04fe7c2884f8"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a8cf25023a0f63903a7bf04fe7c2884f8">clean_session</a></td></tr>
 <tr class="memdesc:a8cf25023a0f63903a7bf04fe7c2884f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to establish a new, clean session or resume a previous session. <br /></td></tr>
@@ -1121,8 +1121,8 @@ Pointer to p_cfg for MQTT. </td></tr>
 
 </div>
 </div>
-<a id="ga894c1ad6fd8ebf0649411deec7b7a695"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga894c1ad6fd8ebf0649411deec7b7a695">&#9670;&nbsp;</a></span>RM_MQTT_DA16XXX_Receive()</h2>
+<a id="ga86952566e1442e024be0e8fbca4b72bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga86952566e1442e024be0e8fbca4b72bb">&#9670;&nbsp;</a></span>RM_MQTT_DA16XXX_Receive()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1131,26 +1131,15 @@ Pointer to p_cfg for MQTT. </td></tr>
           <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_MQTT_DA16XXX_Receive </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__instance__ctrl__t">mqtt_onchip_da16xxx_instance_ctrl_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__cfg__t">mqtt_onchip_da16xxx_cfg_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_cfg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Receive data subscribed to on DA16XXX MQTT Client service.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MQTT Client instance control structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to MQTT Client configuration structure.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to MQTT Client instance control structure.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1205,7 +1194,7 @@ Pointer to p_cfg for MQTT. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

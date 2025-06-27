@@ -77,6 +77,8 @@ var group___s_p_i___f_l_a_s_h___a_p_i =
       [ "SPI_FLASH_PROTOCOL_4S_4S_4S", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05", null ]
     ] ],
     [ "spi_flash_address_bytes_t", "group___s_p_i___f_l_a_s_h___a_p_i.html#ga289ef915326b8e75e7d0dd331c2d0797", [
+      [ "SPI_FLASH_ADDRESS_BYTES_1", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga289ef915326b8e75e7d0dd331c2d0797a78dc24be75474314260c6d65be82baec", null ],
+      [ "SPI_FLASH_ADDRESS_BYTES_2", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga289ef915326b8e75e7d0dd331c2d0797acfcc090d510ab014e1e7e0c5cac43be8", null ],
       [ "SPI_FLASH_ADDRESS_BYTES_3", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga289ef915326b8e75e7d0dd331c2d0797ab4c7c4e57259098044562889ba84709f", null ],
       [ "SPI_FLASH_ADDRESS_BYTES_4", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga289ef915326b8e75e7d0dd331c2d0797a186abc2724fdf1c4fac86d0d83cb5303", null ],
       [ "SPI_FLASH_ADDRESS_BYTES_4_4BYTE_READ_CODE", "group___s_p_i___f_l_a_s_h___a_p_i.html#gga289ef915326b8e75e7d0dd331c2d0797aed752a37fe0a5f0b6dfb6781d67319bb", null ]

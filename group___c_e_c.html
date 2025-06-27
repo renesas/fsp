@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___c_e_c.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___c_e_c.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___c_e_c.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -255,8 +255,8 @@ Functions</h2></td></tr>
 <tr class="separator:gae07bce6075e572a3b7644b14d898c8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7c699bcb296c73118a4fd516cf5d4a76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c.html#ga7c699bcb296c73118a4fd516cf5d4a76">R_CEC_StatusGet</a> (<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, cec_status_t *const p_status)</td></tr>
 <tr class="separator:ga7c699bcb296c73118a4fd516cf5d4a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3a83c3312222786e6695f3c00983a52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c.html#gae3a83c3312222786e6695f3c00983a52">R_CEC_CallbackSet</a> (<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:gae3a83c3312222786e6695f3c00983a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8e0bd223dfe3d249c0d39800e7749f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c.html#gac8e0bd223dfe3d249c0d39800e7749f7">R_CEC_CallbackSet</a> (<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gac8e0bd223dfe3d249c0d39800e7749f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the CEC peripheral on RA MCUs. This module implements the <a class="el" href="group___c_e_c___a_p_i.html">CEC Interface</a>. </p>
@@ -481,7 +481,7 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the CEC in an application.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/***********************************************************************************************************************</span></div><div class="line"><span class="comment"> * Application defined callback</span></div><div class="line"><span class="comment"> * - May be assigned at compile-time via the e2 studio configuration tool or set at run-time via R_CEC_CallbackSet()</span></div><div class="line"><span class="comment"> **********************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> cec_callback (<a class="code" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___c_e_c___a_p_i.html#a42b0fbe7afb86ea286aaa310e05f2848">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07baca2c1ca501294928e84f2d5e902d6897bb">CEC_EVENT_READY</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application processing for address allocation success. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07baca8fd858f20a34223e9e44f85fd26a67cb">CEC_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Any required processing after transmission has completed. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07baca12dc0e9e25154bc6f83687876046d5b7">CEC_EVENT_ERR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Error processing. See cec_error_t for possible errors. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07bacabff4078abf6ff537cded51cec1e904e4">CEC_EVENT_RX_DATA</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application to store and process received data bytes. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07bacadc6424d0fff95001651ee0cbc6affef5">CEC_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application processing for message reception complete. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/***********************************************************************************************************************</span></div><div class="line"><span class="comment"> * Basic example</span></div><div class="line"><span class="comment"> **********************************************************************************************************************/</span></div><div class="line"><span class="preprocessor">#define     CEC_TIMEOUT_MS     (50)</span></div><div class="line"><span class="preprocessor">#define     CEC_MSG_STANDBY    (0X36)  </span><span class="comment">/* See CEC Specification for message definitions */</span><span class="preprocessor"></span></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the CEC module */</span></div><div class="line">    err = <a class="code" href="group___c_e_c.html#ga047c31c8cd73ce4c77b7a156e96d1f6f">R_CEC_Open</a>(&amp;g_cec0_ctrl, &amp;g_cec0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the CEC module and allocate an address */</span></div><div class="line">    uint32_t timeout_ms = CEC_TIMEOUT_MS;</div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* R_CEC_MediaInit may return FSP_ERR_IN_USE for up to 45 milliseconds after calling R_CEC_Open */</span></div><div class="line">        err = <a class="code" href="group___c_e_c.html#gad60333889bfc6a56399387b6cc0b02c7">R_CEC_MediaInit</a>(&amp;g_cec0_ctrl, <a class="code" href="group___c_e_c___a_p_i.html#ggaee839bc3eb51afc189efbb1da7684ce7afdf40775c95f4e8a16955cd01432f475">CEC_ADDR_TV</a>);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> ((<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a2273c35317c397d5b1b3e2709facadd0">FSP_ERR_IN_USE</a> == err) &amp;&amp; --timeout_ms);</div><div class="line"></div><div class="line">    assert(timeout_ms);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for local address allocation and CEC bus to be free */</span></div><div class="line">    cec_status_t status;</div><div class="line">    err = <a class="code" href="group___c_e_c.html#ga7c699bcb296c73118a4fd516cf5d4a76">R_CEC_StatusGet</a>(&amp;g_cec0_ctrl, &amp;status);</div><div class="line">    <span class="keywordflow">while</span> ((FSP_SUCCESS == err) &amp;&amp; (<a class="code" href="group___c_e_c___a_p_i.html#gga987d78502eb9c4165d4ae36929773d67a3d3767588613d69bb2a5c76303337f78">CEC_STATE_READY</a> != status.state))</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_e_c.html#ga7c699bcb296c73118a4fd516cf5d4a76">R_CEC_StatusGet</a>(&amp;g_cec0_ctrl, &amp;status);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___c_e_c___a_p_i.html#unioncec__message__t">cec_message_t</a> cec_msg;</div><div class="line">    uint8_t       total_transmit_size;</div><div class="line"></div><div class="line">    cec_msg.destination = <a class="code" href="group___c_e_c___a_p_i.html#ggaee839bc3eb51afc189efbb1da7684ce7ac9c771da375ed7065804b94d2542871d">CEC_ADDR_BROADCAST</a>;       <span class="comment">/* For this example, send message to all devices on the bus */</span></div><div class="line">    cec_msg.opcode      = CEC_MSG_STANDBY;          <span class="comment">/* Send Standby Request */</span></div><div class="line">    memset(cec_msg.data, 0U, <span class="keyword">sizeof</span>(cec_msg.data)); <span class="comment">/* See CEC Specification for other message data structures */</span></div><div class="line">    total_transmit_size = 2U;                       <span class="comment">/* Total message size, including header, opcode, and data */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Send asynchronous message.</span></div><div class="line"><span class="comment">     * - Application will then be free for other processing while message is being sent.</span></div><div class="line"><span class="comment">     * - Do not modify the message buffer until transmission has completed. */</span></div><div class="line">    err = <a class="code" href="group___c_e_c.html#gae07bce6075e572a3b7644b14d898c8ba">R_CEC_Write</a>(&amp;g_cec0_ctrl, &amp;cec_msg, total_transmit_size);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/***********************************************************************************************************************</span></div><div class="line"><span class="comment"> * Application defined callback</span></div><div class="line"><span class="comment"> * - May be assigned at compile-time via the e2 studio configuration tool or set at run-time via R_CEC_CallbackSet()</span></div><div class="line"><span class="comment"> **********************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> cec_callback (<a class="code" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___c_e_c___a_p_i.html#a42b0fbe7afb86ea286aaa310e05f2848">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07baca2c1ca501294928e84f2d5e902d6897bb">CEC_EVENT_READY</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application processing for address allocation success. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07baca8fd858f20a34223e9e44f85fd26a67cb">CEC_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Any required processing after transmission has completed. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07baca12dc0e9e25154bc6f83687876046d5b7">CEC_EVENT_ERR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Error processing. See cec_error_t for possible errors. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07bacabff4078abf6ff537cded51cec1e904e4">CEC_EVENT_RX_DATA</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application to store and process received data bytes. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___c_e_c___a_p_i.html#gga1c8113bb531f28281c2d225346d07bacadc6424d0fff95001651ee0cbc6affef5">CEC_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application processing for message reception complete. */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/***********************************************************************************************************************</span></div><div class="line"><span class="comment"> * Basic example</span></div><div class="line"><span class="comment"> **********************************************************************************************************************/</span></div><div class="line"><span class="preprocessor">#define     CEC_TIMEOUT_MS     (50)</span></div><div class="line"><span class="preprocessor">#define     CEC_MSG_STANDBY    (0X36)  </span><span class="comment">/* See CEC Specification for message definitions */</span><span class="preprocessor"></span></div><div class="line"><span class="keywordtype">void</span> basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the CEC module */</span></div><div class="line">    err = <a class="code" href="group___c_e_c.html#ga047c31c8cd73ce4c77b7a156e96d1f6f">R_CEC_Open</a>(&amp;g_cec0_ctrl, &amp;g_cec0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the CEC module and allocate an address */</span></div><div class="line">    uint32_t timeout_ms = CEC_TIMEOUT_MS;</div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* R_CEC_MediaInit may return FSP_ERR_IN_USE for up to 45 milliseconds after calling R_CEC_Open */</span></div><div class="line">        err = <a class="code" href="group___c_e_c.html#gad60333889bfc6a56399387b6cc0b02c7">R_CEC_MediaInit</a>(&amp;g_cec0_ctrl, <a class="code" href="group___c_e_c___a_p_i.html#ggaee839bc3eb51afc189efbb1da7684ce7afdf40775c95f4e8a16955cd01432f475">CEC_ADDR_TV</a>);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> ((<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a2273c35317c397d5b1b3e2709facadd0">FSP_ERR_IN_USE</a> == err) &amp;&amp; --timeout_ms);</div><div class="line"></div><div class="line">    assert(timeout_ms);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Wait for local address allocation and CEC bus to be free */</span></div><div class="line">    cec_status_t status;</div><div class="line">    err = <a class="code" href="group___c_e_c.html#ga7c699bcb296c73118a4fd516cf5d4a76">R_CEC_StatusGet</a>(&amp;g_cec0_ctrl, &amp;status);</div><div class="line">    <span class="keywordflow">while</span> ((FSP_SUCCESS == err) &amp;&amp; (<a class="code" href="group___c_e_c___a_p_i.html#gga987d78502eb9c4165d4ae36929773d67a3d3767588613d69bb2a5c76303337f78">CEC_STATE_READY</a> != status.state))</div><div class="line">    {</div><div class="line">        err = <a class="code" href="group___c_e_c.html#ga7c699bcb296c73118a4fd516cf5d4a76">R_CEC_StatusGet</a>(&amp;g_cec0_ctrl, &amp;status);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___c_e_c___a_p_i.html#unioncec__message__t">cec_message_t</a> cec_msg;</div><div class="line">    uint8_t       total_transmit_size;</div><div class="line"></div><div class="line">    cec_msg.destination = <a class="code" href="group___c_e_c___a_p_i.html#ggaee839bc3eb51afc189efbb1da7684ce7ac9c771da375ed7065804b94d2542871d">CEC_ADDR_BROADCAST</a>;       <span class="comment">/* For this example, send message to all devices on the bus */</span></div><div class="line">    cec_msg.opcode      = CEC_MSG_STANDBY;          <span class="comment">/* Send Standby Request */</span></div><div class="line">    memset(cec_msg.data, 0U, <span class="keyword">sizeof</span>(cec_msg.data)); <span class="comment">/* See CEC Specification for other message data structures */</span></div><div class="line">    total_transmit_size = 2U;                       <span class="comment">/* Total message size, including header, opcode, and data */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Send asynchronous message.</span></div><div class="line"><span class="comment">     * - Application will then be free for other processing while message is being sent.</span></div><div class="line"><span class="comment">     * - Do not modify the message buffer until transmission has completed. */</span></div><div class="line">    err = <a class="code" href="group___c_e_c.html#gae07bce6075e572a3b7644b14d898c8ba">R_CEC_Write</a>(&amp;g_cec0_ctrl, &amp;cec_msg, total_transmit_size);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga047c31c8cd73ce4c77b7a156e96d1f6f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga047c31c8cd73ce4c77b7a156e96d1f6f">&#9670;&nbsp;</a></span>R_CEC_Open()</h2>
 
@@ -547,7 +547,7 @@ Examples</h1>
 </div><div class="memdoc">
 <p>Allocate provided CEC Local Address and Initialize the CEC module for operation.</p>
 <dl class="section note"><dt>Note</dt><dd>After calling R_CEC_Open this function may return FSP_ERR_IN_USE for up to 45 milliseconds.</dd></dl>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the CEC module and allocate an address */</span></div><div class="line">    uint32_t timeout_ms = CEC_TIMEOUT_MS;</div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* R_CEC_MediaInit may return FSP_ERR_IN_USE for up to 45 milliseconds after calling R_CEC_Open */</span></div><div class="line">        err = <a class="code" href="group___c_e_c.html#gad60333889bfc6a56399387b6cc0b02c7">R_CEC_MediaInit</a>(&amp;g_cec0_ctrl, <a class="code" href="group___c_e_c___a_p_i.html#ggaee839bc3eb51afc189efbb1da7684ce7afdf40775c95f4e8a16955cd01432f475">CEC_ADDR_TV</a>);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> ((<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a2273c35317c397d5b1b3e2709facadd0">FSP_ERR_IN_USE</a> == err) &amp;&amp; --timeout_ms);</div><div class="line"></div><div class="line">    assert(timeout_ms);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Initialize the CEC module and allocate an address */</span></div><div class="line">    uint32_t timeout_ms = CEC_TIMEOUT_MS;</div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* R_CEC_MediaInit may return FSP_ERR_IN_USE for up to 45 milliseconds after calling R_CEC_Open */</span></div><div class="line">        err = <a class="code" href="group___c_e_c.html#gad60333889bfc6a56399387b6cc0b02c7">R_CEC_MediaInit</a>(&amp;g_cec0_ctrl, <a class="code" href="group___c_e_c___a_p_i.html#ggaee839bc3eb51afc189efbb1da7684ce7afdf40775c95f4e8a16955cd01432f475">CEC_ADDR_TV</a>);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> ((<a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#ggadfb1288da0fcc7ae1dc88c58601374f8a2273c35317c397d5b1b3e2709facadd0">FSP_ERR_IN_USE</a> == err) &amp;&amp; --timeout_ms);</div><div class="line"></div><div class="line">    assert(timeout_ms);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>CEC Module Initialized successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input argument is invalid or callback has not been set. </td></tr>
@@ -680,8 +680,8 @@ Examples</h1>
 
 </div>
 </div>
-<a id="gae3a83c3312222786e6695f3c00983a52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae3a83c3312222786e6695f3c00983a52">&#9670;&nbsp;</a></span>R_CEC_CallbackSet()</h2>
+<a id="gac8e0bd223dfe3d249c0d39800e7749f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac8e0bd223dfe3d249c0d39800e7749f7">&#9670;&nbsp;</a></span>R_CEC_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -701,7 +701,7 @@ Examples</h1>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -717,7 +717,7 @@ Examples</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___c_e_c___a_p_i.html#a15d4a68068e36ccd9b49d82069d819dc">cec_api_t::callbackSet</a>.</p>
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___c_e_c___a_p_i.html#a15d3e31252d9eca74a04121a7f48685d">cec_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -736,7 +736,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

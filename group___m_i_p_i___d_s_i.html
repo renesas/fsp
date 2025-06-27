@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___m_i_p_i___d_s_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___m_i_p_i___d_s_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___m_i_p_i___d_s_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -330,6 +330,12 @@ Disabled</li>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">UI</td><td>Value must be a number, greater than or equal to zero.</td><td>5 </td><td>(UI portion) Duration of the data lane LP-00 state, immediately before entry to the HS-0 state (UI) </td></tr>
 <tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing &gt; THSSETT  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">ns</td><td>Value must be a number, greater than or equal to zero.</td><td>200 </td><td>(Nanosecond portion) Period over which a transition to the HS state is to be ignored after the TCLK-PREPARE period has begun in the data lane. (ns) </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">UI</td><td>Value must be a number, greater than or equal to zero.</td><td>0 </td><td>(UI portion) Period over which a transition to the HS state is to be ignored after the TCLK-PREPARE period has begun in the data lane. (UI) </td></tr>
+<tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing &gt; THSZERO  </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">ns</td><td>Value must be a number, greater than or equal to zero.</td><td>140 </td><td>(Nanosecond portion) Specify the data lane zero time before sending data (ns). </td></tr>
@@ -359,6 +365,18 @@ Disabled</li>
 <td class="tree_lvl_2_cell">ns</td><td>Value must be a number, greater than or equal to zero.</td><td>75 </td><td>(Nanosecond portion) Duration of the clock lane LP-00 state, immediately before entry to the HS-0 state (ns) </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">UI</td><td>Value must be a number, greater than or equal to zero.</td><td>0 </td><td>(UI portion) Duration of the clock lane LP-00 state, immediately before entry to the HS-0 state (UI) </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing &gt; TCLKSETT  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">ns</td><td>Value must be a number, greater than or equal to zero.</td><td>500 </td><td>(Nanosecond portion) Duration over which a transition to the HS state is to be ignored after the TCLK_PREPARE period has begun in the clock lane (ns). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">UI</td><td>Value must be a number, greater than or equal to zero.</td><td>0 </td><td>(UI portion) Duration over which a transition to the HS state is to be ignored after the TCLK_PREPARE period has begun in the clock lane (ui). </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing &gt; TCLKMISS  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">ns</td><td>Value must be a number, greater than or equal to zero.</td><td>300 </td><td>(Nanosecond portion) Period from detection of the absence of a clock until disabling of the HS-RX in the clock lane (ns). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">UI</td><td>Value must be a number, greater than or equal to zero.</td><td>0 </td><td>(UI portion) Period from detection of the absence of a clock until disabling of the HS-RX in the clock lane (ui). </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing &gt; TLPX  </td></tr>
 <tr class="tree_lvl_2_item">
@@ -754,7 +772,7 @@ Examples</h1>
 <h2><a class="anchor" id="r-mipi-dsi-examples-minimal"></a>
 Basic Example</h2>
 <p>This is a basic example showing the minimum code required to initialize and start the MIPI DSI module.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> mipi_dsi_minimal_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga9deba8b38c43ba56ca6c8ab6680c7bc4">R_MIPI_DSI_Open</a>(&amp;g_mipi_dsi0_ctrl, &amp;g_mipi_dsi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Application to perform display specific initialization. */</span></div><div class="line">    uint8_t        cmd_tx_buffer[] = {0x30, 0x01}; <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">    <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t">mipi_dsi_cmd_t</a> cmd             =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ae77cb8b13b73b076ae22b9cfbae513cf">channel</a>     = 0,</div><div class="line">        .cmd_id      = <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga0c9af0d3591f144aca9637850d11b09eaa753348d85cc3f41d5e1c82535b63fce">MIPI_DSI_CMD_ID_DCS_SHORT_WRITE_1_PARAM</a>,</div><div class="line">        .flags       = (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gadc3bdd29eb397d22d89b1fe84a307bb0">mipi_dsi_cmd_flag_t</a>) (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a9045aaf71ee86b4eaf12aaadabd336eb">MIPI_DSI_CMD_FLAG_LOW_POWER</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a525c62314fd5ffe7902034bc0a7dfef0">MIPI_DSI_CMD_FLAG_BTA_READ</a>),</div><div class="line">        .tx_len      = 1,</div><div class="line">        .p_tx_buffer = cmd_tx_buffer,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gabf8b7f0c8bc9abbbf26dd0f6e2f0023a">R_MIPI_DSI_Command</a>(&amp;g_mipi_dsi0_ctrl, &amp;cmd);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for tx/rx complete before sending additional messages */</span></div><div class="line">    <span class="keywordflow">while</span> (!message_tx_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!message_rx_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gaa17551cb56eb4d746b6a1f39a6375cae">R_MIPI_DSI_Start</a>(&amp;g_mipi_dsi0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Trigger status message from peripheral by sending LP BTA</span></div><div class="line"><span class="comment">     * NOTE: This is requried for ack_err status data to be populated */</span></div><div class="line">    <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t">mipi_dsi_cmd_t</a> read_cmd = {0};</div><div class="line">    read_cmd.<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#a251039fd2491f883d6f631fb5df54c77">cmd_id</a> = <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga0c9af0d3591f144aca9637850d11b09ea7d4c9608e09708e4b6e961d0c8033f8e">MIPI_DSI_CMD_ID_DCS_READ</a>;</div><div class="line">    read_cmd.<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#a62202cbf3d27914c5532a9c7315c4e5a">flags</a> |= <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a998fcc195846975ef3189404cc1dcdae">MIPI_DSI_CMD_FLAG_BTA_NO_WRITE</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a9045aaf71ee86b4eaf12aaadabd336eb">MIPI_DSI_CMD_FLAG_LOW_POWER</a>;</div><div class="line"></div><div class="line">    message_rx_complete = <span class="keyword">false</span>;</div><div class="line">    err                 = <a class="code" href="group___m_i_p_i___d_s_i.html#gabf8b7f0c8bc9abbbf26dd0f6e2f0023a">R_MIPI_DSI_Command</a>(&amp;g_mipi_dsi0_ctrl, &amp;read_cmd);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!message_rx_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read peripheral and local MIPI DSI status</span></div><div class="line"><span class="comment">     * Note: peripheral ack_err status is cleared each time it is read using StatusGet */</span></div><div class="line">    <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__status__t">mipi_dsi_status_t</a> status;</div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga9ab454076d1e97f84a5f91675ffe08a0">R_MIPI_DSI_StatusGet</a>(&amp;g_mipi_dsi0_ctrl, &amp;status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga6881bbf42f10b39ac59b44c62e8c872d">R_MIPI_DSI_Stop</a>(&amp;g_mipi_dsi0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gad6f54f10dc2cde8d38ede51a4cb2cf53">R_MIPI_DSI_UlpsEnter</a>(&amp;g_mipi_dsi0_ctrl, (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a>) (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703aa460b5f21cef72cc959cf6a7f1a2a840">MIPI_DSI_LANE_CLOCK</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703ab2abdfdb21f33213982d6f70aeaea662">MIPI_DSI_LANE_DATA_ALL</a>));</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga0602540df04e03c029e9d765a874893c">R_MIPI_DSI_UlpsExit</a>(&amp;g_mipi_dsi0_ctrl, (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a>) (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703aa460b5f21cef72cc959cf6a7f1a2a840">MIPI_DSI_LANE_CLOCK</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703ab2abdfdb21f33213982d6f70aeaea662">MIPI_DSI_LANE_DATA_ALL</a>));</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gab049f2ff98ae60c27a2f70ce65cfa20c">R_MIPI_DSI_Close</a>(&amp;g_mipi_dsi0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> mipi_dsi0_callback (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#acd4f908e602a78ff747cc0bed9f05763">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga47d5a52762575f9e8f3ae6404c9d5ab1a5ff5ed8a579a2a0191af5a8820324c6e">MIPI_DSI_EVENT_POST_OPEN</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application to configure peripheral using necessary interface and commands */</span></div><div class="line">            configure_dsi_peripheral();</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga47d5a52762575f9e8f3ae6404c9d5ab1ac3bd6cc9ccdf58b8465cf549caee3310">MIPI_DSI_EVENT_RECEIVE</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application to perform receive processing */</span></div><div class="line">            message_rx_complete = <span class="keyword">true</span>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga47d5a52762575f9e8f3ae6404c9d5ab1a863ce97ba480162c5facd0cac9afc5a1">MIPI_DSI_EVENT_SEQUENCE_0</a>:</div><div class="line">        {</div><div class="line">            message_tx_complete = (p_args-&gt;tx_status == <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga2668d830371ded94dc6c3afb92b1a3dfaa28ad25105ee949c68ae453494d591e6">MIPI_DSI_SEQUENCE_STATUS_DESCRIPTORS_FINISHED</a>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> configure_dsi_peripheral (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Send necessary commands to configure LCD */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> mipi_dsi_minimal_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga9deba8b38c43ba56ca6c8ab6680c7bc4">R_MIPI_DSI_Open</a>(&amp;g_mipi_dsi0_ctrl, &amp;g_mipi_dsi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Application to perform display specific initialization. */</span></div><div class="line">    uint8_t        cmd_tx_buffer[] = {0x30, 0x01}; <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">    <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t">mipi_dsi_cmd_t</a> cmd             =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ae77cb8b13b73b076ae22b9cfbae513cf">channel</a>     = 0,</div><div class="line">        .cmd_id      = <a class="code" href="group___m_i_p_i___c_m_d___t_y_p_e_s.html#gga9a042e2f4df8c3cdfc8f0a8c6c5fe073a26501544f06c0b36eb0e5aebad38cf0a">MIPI_CMD_ID_DCS_SHORT_WRITE_1_PARAM</a>,</div><div class="line">        .flags       = (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gadc3bdd29eb397d22d89b1fe84a307bb0">mipi_dsi_cmd_flag_t</a>) (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a9045aaf71ee86b4eaf12aaadabd336eb">MIPI_DSI_CMD_FLAG_LOW_POWER</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a525c62314fd5ffe7902034bc0a7dfef0">MIPI_DSI_CMD_FLAG_BTA_READ</a>),</div><div class="line">        .tx_len      = 1,</div><div class="line">        .p_tx_buffer = cmd_tx_buffer,</div><div class="line">    };</div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gabf8b7f0c8bc9abbbf26dd0f6e2f0023a">R_MIPI_DSI_Command</a>(&amp;g_mipi_dsi0_ctrl, &amp;cmd);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for tx/rx complete before sending additional messages */</span></div><div class="line">    <span class="keywordflow">while</span> (!message_tx_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!message_rx_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gaa17551cb56eb4d746b6a1f39a6375cae">R_MIPI_DSI_Start</a>(&amp;g_mipi_dsi0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Trigger status message from peripheral by sending LP BTA</span></div><div class="line"><span class="comment">     * NOTE: This is required for ack_err status data to be populated */</span></div><div class="line">    <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__cmd__t">mipi_dsi_cmd_t</a> read_cmd = {0};</div><div class="line">    read_cmd.<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#a8c60319fe67e327625d2f782d92430b8">cmd_id</a> = <a class="code" href="group___m_i_p_i___c_m_d___t_y_p_e_s.html#gga9a042e2f4df8c3cdfc8f0a8c6c5fe073a87878e47741eed02b60d6badb6643d05">MIPI_CMD_ID_DCS_READ</a>;</div><div class="line">    read_cmd.<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#a62202cbf3d27914c5532a9c7315c4e5a">flags</a> |= <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a998fcc195846975ef3189404cc1dcdae">MIPI_DSI_CMD_FLAG_BTA_NO_WRITE</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggadc3bdd29eb397d22d89b1fe84a307bb0a9045aaf71ee86b4eaf12aaadabd336eb">MIPI_DSI_CMD_FLAG_LOW_POWER</a>;</div><div class="line"></div><div class="line">    message_rx_complete = <span class="keyword">false</span>;</div><div class="line">    err                 = <a class="code" href="group___m_i_p_i___d_s_i.html#gabf8b7f0c8bc9abbbf26dd0f6e2f0023a">R_MIPI_DSI_Command</a>(&amp;g_mipi_dsi0_ctrl, &amp;read_cmd);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (!message_rx_complete)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read peripheral and local MIPI DSI status</span></div><div class="line"><span class="comment">     * Note: peripheral ack_err status is cleared each time it is read using StatusGet */</span></div><div class="line">    <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__status__t">mipi_dsi_status_t</a> status;</div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga9ab454076d1e97f84a5f91675ffe08a0">R_MIPI_DSI_StatusGet</a>(&amp;g_mipi_dsi0_ctrl, &amp;status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga6881bbf42f10b39ac59b44c62e8c872d">R_MIPI_DSI_Stop</a>(&amp;g_mipi_dsi0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gad6f54f10dc2cde8d38ede51a4cb2cf53">R_MIPI_DSI_UlpsEnter</a>(&amp;g_mipi_dsi0_ctrl, (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a>) (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703aa460b5f21cef72cc959cf6a7f1a2a840">MIPI_DSI_LANE_CLOCK</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703ab2abdfdb21f33213982d6f70aeaea662">MIPI_DSI_LANE_DATA_ALL</a>));</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#ga0602540df04e03c029e9d765a874893c">R_MIPI_DSI_UlpsExit</a>(&amp;g_mipi_dsi0_ctrl, (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gac64221aa26233766a89b534fdd596703">mipi_dsi_lane_t</a>) (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703aa460b5f21cef72cc959cf6a7f1a2a840">MIPI_DSI_LANE_CLOCK</a> | <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#ggac64221aa26233766a89b534fdd596703ab2abdfdb21f33213982d6f70aeaea662">MIPI_DSI_LANE_DATA_ALL</a>));</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___m_i_p_i___d_s_i.html#gab049f2ff98ae60c27a2f70ce65cfa20c">R_MIPI_DSI_Close</a>(&amp;g_mipi_dsi0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> mipi_dsi0_callback (<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#acd4f908e602a78ff747cc0bed9f05763">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga47d5a52762575f9e8f3ae6404c9d5ab1a5ff5ed8a579a2a0191af5a8820324c6e">MIPI_DSI_EVENT_POST_OPEN</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application to configure peripheral using necessary interface and commands */</span></div><div class="line">            configure_dsi_peripheral();</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga47d5a52762575f9e8f3ae6404c9d5ab1ac3bd6cc9ccdf58b8465cf549caee3310">MIPI_DSI_EVENT_RECEIVE</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Application to perform receive processing */</span></div><div class="line">            message_rx_complete = <span class="keyword">true</span>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga47d5a52762575f9e8f3ae6404c9d5ab1a863ce97ba480162c5facd0cac9afc5a1">MIPI_DSI_EVENT_SEQUENCE_0</a>:</div><div class="line">        {</div><div class="line">            message_tx_complete = (p_args-&gt;tx_status == <a class="code" href="group___m_i_p_i___d_s_i___a_p_i.html#gga2668d830371ded94dc6c3afb92b1a3dfaa28ad25105ee949c68ae453494d591e6">MIPI_DSI_SEQUENCE_STATUS_DESCRIPTORS_FINISHED</a>);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> configure_dsi_peripheral (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Send necessary commands to configure LCD */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structmipi__dsi__irq__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i.html#structmipi__dsi__irq__cfg__t">mipi_dsi_irq_cfg_t</a></td></tr>
@@ -923,10 +941,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i.html#ad33d9ad3a04fa17d3e4a0e795d0deb80">p_callback</a> )(<a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a> *)</td></tr>
 <tr class="memdesc:ad33d9ad3a04fa17d3e4a0e795d0deb80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called when an adc_event_t occurs. <br /></td></tr>
 <tr class="separator:ad33d9ad3a04fa17d3e4a0e795d0deb80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff6c47f281873d4c6a2867b364038ec0"><td class="memItemLeft" align="right" valign="top"><a id="aff6c47f281873d4c6a2867b364038ec0"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i.html#aff6c47f281873d4c6a2867b364038ec0">p_context</a></td></tr>
-<tr class="memdesc:aff6c47f281873d4c6a2867b364038ec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context to be passed into callback function. <br /></td></tr>
-<tr class="separator:aff6c47f281873d4c6a2867b364038ec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a123e6d7f0e0e78c6c28f6a0db70f38e4"><td class="memItemLeft" align="right" valign="top"><a id="a123e6d7f0e0e78c6c28f6a0db70f38e4"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i.html#a123e6d7f0e0e78c6c28f6a0db70f38e4">p_context</a></td></tr>
+<tr class="memdesc:a123e6d7f0e0e78c6c28f6a0db70f38e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context to be passed into callback function. <br /></td></tr>
+<tr class="separator:a123e6d7f0e0e78c6c28f6a0db70f38e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf3345d3ca118a9772d02cf31c4b15c1"><td class="memItemLeft" align="right" valign="top"><a id="acf3345d3ca118a9772d02cf31c4b15c1"></a>
 <a class="el" href="group___m_i_p_i___d_s_i___a_p_i.html#structmipi__dsi__callback__args__t">mipi_dsi_callback_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_p_i___d_s_i.html#acf3345d3ca118a9772d02cf31c4b15c1">p_callback_memory</a></td></tr>
 <tr class="memdesc:acf3345d3ca118a9772d02cf31c4b15c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory. <br /></td></tr>
@@ -1221,7 +1239,7 @@ p_data memory must not be updated until sequence operation is complete if byte_c
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

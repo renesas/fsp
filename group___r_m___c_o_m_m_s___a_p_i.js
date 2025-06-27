@@ -6,7 +6,7 @@ var group___r_m___c_o_m_m_s___a_p_i =
       [ "semaphore_timeout", "group___r_m___c_o_m_m_s___a_p_i.html#a5376df7fa8ffa67c59162a527046a7e0", null ],
       [ "p_extend", "group___r_m___c_o_m_m_s___a_p_i.html#acfd68d17c8cad67545ef754a1f5f1322", null ],
       [ "p_lower_level_cfg", "group___r_m___c_o_m_m_s___a_p_i.html#a8bcd1db3bbb96b2dd0cb252d2b580f53", null ],
-      [ "p_context", "group___r_m___c_o_m_m_s___a_p_i.html#ac2f5d7d5bc7207eb617bcc8b668dc5b3", null ],
+      [ "p_context", "group___r_m___c_o_m_m_s___a_p_i.html#abe3bad924b42b7c37e1223f31f73afb0", null ],
       [ "p_callback", "group___r_m___c_o_m_m_s___a_p_i.html#aa7c637235b98c380a288bb1e5bbb4569", null ]
     ] ],
     [ "rm_comms_api_t", "group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__api__t", [
@@ -15,7 +15,7 @@ var group___r_m___c_o_m_m_s___a_p_i =
       [ "read", "group___r_m___c_o_m_m_s___a_p_i.html#a40779e10d71d444a436dc2382003bc0b", null ],
       [ "write", "group___r_m___c_o_m_m_s___a_p_i.html#af5486a540964c7c37f3115739be3e6cb", null ],
       [ "writeRead", "group___r_m___c_o_m_m_s___a_p_i.html#a468f1e4f571140989fa274d8f40a5bb1", null ],
-      [ "callbackSet", "group___r_m___c_o_m_m_s___a_p_i.html#af1a782cc776093ebd3e07c711cf5bad5", null ]
+      [ "callbackSet", "group___r_m___c_o_m_m_s___a_p_i.html#a83f31e5edbc638f47900624b563b0476", null ]
     ] ],
     [ "rm_comms_instance_t", "group___r_m___c_o_m_m_s___a_p_i.html#structrm__comms__instance__t", null ],
     [ "rm_comms_ctrl_t", "group___r_m___c_o_m_m_s___a_p_i.html#gaa137827e6f43e420c5eb269149c82f20", null ],

@@ -2,7 +2,7 @@ var group___m_o_t_o_r___d_r_i_v_e_r___a_p_i =
 [
     [ "motor_driver_callback_args_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#structmotor__driver__callback__args__t", [
       [ "event", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ad42324d7341cda0ab033ae19fdfd3221", null ],
-      [ "p_context", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a1ed5b726c79eaa5551d342292797a370", null ]
+      [ "p_context", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a7c9ef92496f870f3963037871efe909e", null ]
     ] ],
     [ "motor_driver_current_get_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#structmotor__driver__current__get__t", [
       [ "iu", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#aa85b8ed64920d0f4fa3ce2c0bad90104", null ],
@@ -21,7 +21,7 @@ var group___m_o_t_o_r___d_r_i_v_e_r___a_p_i =
       [ "sin_ad_ch", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#abca37efdd1235f59576627331a9ea8db", null ],
       [ "cos_ad_ch", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ab708b23b9d6951a6886c7f3fc4db1f24", null ],
       [ "shunt", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a52fa6889c19ec5ff6b914a5245eb7d92", null ],
-      [ "p_context", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#abe65d17f971544891695da263564cca0", null ]
+      [ "p_context", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#ac74d4da47c93620ffac18eafe0c2d20d", null ]
     ] ],
     [ "motor_driver_api_t", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#structmotor__driver__api__t", [
       [ "open", "group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#a8429930c08fa6bdb6222d8ab066c5aa9", null ],

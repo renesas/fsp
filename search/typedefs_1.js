@@ -13,5 +13,6 @@ var searchData=
   ['ble_5fgatts_5fapp_5fcb_5ft',['ble_gatts_app_cb_t',['../group___g_a_t_t___s_e_r_v_e_r___a_p_i.html#gaddd939a01a1e5499c47e142e89798be8',1,'r_ble_api.h']]],
   ['ble_5fl2cap_5fcf_5fapp_5fcb_5ft',['ble_l2cap_cf_app_cb_t',['../group___l2_c_a_p___a_p_i.html#gacf0bb80f1c897a2c7096ae83ca675dcf',1,'r_ble_api.h']]],
   ['ble_5fvendor_5fspecific_5fapplication_5fcallback_5ft',['ble_vendor_specific_application_callback_t',['../group___b_l_e___a_b_s___a_p_i.html#ga0ce85fc03a2dab118c422d5cbcdc178c',1,'rm_ble_abs_api.h']]],
-  ['ble_5fvs_5fapp_5fcb_5ft',['ble_vs_app_cb_t',['../group___v_s___a_p_i.html#ga35cfc1fb6715e37ceb8d4f2b67031b36',1,'r_ble_api.h']]]
+  ['ble_5fvs_5fapp_5fcb_5ft',['ble_vs_app_cb_t',['../group___v_s___a_p_i.html#ga35cfc1fb6715e37ceb8d4f2b67031b36',1,'r_ble_api.h']]],
+  ['bsp_5fipc_5fnmi_5fcb_5ft',['bsp_ipc_nmi_cb_t',['../group___b_s_p___m_c_u.html#ga7c11519eca195fb988272c3b4459e761',1,'bsp_ipc.h']]]
 ];

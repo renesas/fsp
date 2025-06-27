@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___o_s_p_i___b.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___o_s_p_i___b.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___o_s_p_i___b.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -239,6 +239,7 @@ $(document).ready(function(){initNavTree('group___o_s_p_i___b.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">OSPI Flash (r_ospi_b)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___s_t_o_r_a_g_e___m_o_d_u_l_e_s.html">Storage</a></div></div>  </div>
@@ -273,6 +274,10 @@ Functions</h2></td></tr>
 <tr class="separator:ga4070e46f2fadda4ec4cb8b8f023c1a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac3441de6c487a640fae584248007a3a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gac3441de6c487a640fae584248007a3a6">R_OSPI_B_AutoCalibrate</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:gac3441de6c487a640fae584248007a3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8ca05a2a44468130ef9e97aee6e9f66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gaf8ca05a2a44468130ef9e97aee6e9f66">R_OSPI_B_RowLoad</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint32_t row_index)</td></tr>
+<tr class="separator:gaf8ca05a2a44468130ef9e97aee6e9f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd7b272b5cd5d961d742d681bdc651bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gafd7b272b5cd5d961d742d681bdc651bc">R_OSPI_B_RowStore</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, uint32_t row_index)</td></tr>
+<tr class="separator:gafd7b272b5cd5d961d742d681bdc651bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga215959cccab9f53a2516920ed0182dfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga215959cccab9f53a2516920ed0182dfc">R_OSPI_B_DOTF_Configure</a> (<a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const p_ctrl, <a class="el" href="group___o_s_p_i___b.html#structospi__b__dotf__cfg__t">ospi_b_dotf_cfg_t</a> *const p_dotf_cfg)</td></tr>
 <tr class="separator:ga215959cccab9f53a2516920ed0182dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -290,16 +295,19 @@ Features</h2>
 <li>Programming the xSPI device using combination write (up to 64 bytes)<a class="anchor" id="um_ospi_page_program"></a></li>
 <li>Erasing the xSPI device<a class="anchor" id="um_ospi_erase"></a></li>
 <li>Sending device specific commands and reading back responses of up to 8 bytes<a class="anchor" id="um_ospi_direct_transfer"></a></li>
+<li>1- and 2-byte addressing intended for row-column memories</li>
 <li>3 byte addressing<a class="anchor" id="um_ospi_3byte_address"></a></li>
 <li>4 byte addressing<a class="anchor" id="um_ospi_4byte_address"></a></li>
 <li>Auto-calibration<a class="anchor" id="um_ospi_autocalibration"></a></li>
 <li>Decryption-on-the-fly</li>
+<li>Support for standard SPI frames, xSPI Protocol 1.0, xSPI Protocol 2.0, and xSPI Protocol 2.0 Extended frames.</li>
 </ul>
 <p>Additional build-time features:</p><ul>
 <li>Optional (build-time) DMAC support for data transmission when used with OSPI_B.<a class="anchor" id="um_ospi_optional_dmac_support_for_data_transmission"></a></li>
 <li>Optional (build-time) XiP support for entering/exiting XiP mode of the target device.<a class="anchor" id="um_ospi_xip_mode"></a></li>
 <li>Optional (build-time) Data-strobe (DS) auto-calibration support for target devices using the DS signal.</li>
 <li>Optional (build-time) Decryption on the fly (DOTF)<a class="anchor" id="um_ospi_dotf"></a></li>
+<li>Optional (build-time) Support for memory which use row-column addressing.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>For OSPI_B, use of DMAC for data transmission is strongly recommended. Without the use of DMAC, due to the high-speed hardware design of the OSPI peripheral, data transmission can be sensitive to timing variance, which could cause software-based memory-mapped operations to fail unexpectedly.</dd></dl>
 <h1><a class="anchor" id="r-ospi-b-configuration"></a>
@@ -321,7 +329,7 @@ Disable</li>
 </ul>
 </td><td>Enable </td><td>Enable prefetch function on memory-mapped reads. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Combination Function</td><td>Refer to the RA Configuration tool for available options.</td><td>64 Byte </td><td>Enable combination function on memory-mapped writes. </td></tr>
+<td class="tree_lvl_1_cell">Combination Function</td><td>Refer to the RA Configuration tool for available options.</td><td>64 Bytes </td><td>Enable combination function on memory-mapped writes. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">XiP Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -366,9 +374,17 @@ Enable (Compatibility Mode)</li>
 Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable DOTF support for the OSPI module. </td></tr>
+<tr class="tree_none">
+<td>Row Addressing Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enable</li>
+<li>
+Disable</li>
+</ul>
+</td><td>Disable </td><td>Enable support for xSPI devices which utilize row-column addressing of the memory array. </td></tr>
 </table>
- <h2>Configurations for Storage &gt; OSPI Flash (r_ospi_b)</h2>
-This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI Flash (r_ospi_b).<br />
+ <h2>Configurations for Storage &gt; OSPI (r_ospi_b)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI (r_ospi_b).<br />
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
@@ -379,7 +395,7 @@ This module can be added to the Stacks tab via New Stack &gt; Storage &gt; OSPI 
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Unit</td><td>MCU Specific Options</td><td></td><td>Specify the OSPI peripheral to use. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td class="tree_lvl_1_cell">Chip Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 CS0</li>
 <li>
@@ -387,7 +403,111 @@ CS1</li>
 </ul>
 </td><td>CS1 </td><td>Specify the OSPI chip select line to use. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Initial Protocol Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td class="tree_lvl_1_cell">Write Status Bit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+b0</li>
+<li>
+b1</li>
+<li>
+b2</li>
+<li>
+b3</li>
+<li>
+b4</li>
+<li>
+b5</li>
+<li>
+b6</li>
+<li>
+b7</li>
+</ul>
+</td><td>b0 </td><td>Which bit contains the write in progress status returned from the Write Status Command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Write Enable Bit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+b0</li>
+<li>
+b1</li>
+<li>
+b2</li>
+<li>
+b3</li>
+<li>
+b4</li>
+<li>
+b5</li>
+<li>
+b6</li>
+<li>
+b7</li>
+</ul>
+</td><td>b1 </td><td>Which bit contains the write enable status returned from the Write Enable Command. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DS Auto-calibration Pattern Address</td><td>Must be a valid pointer address</td><td>0 </td><td>Address to the auto-calibration pattern in the target flash memory's address space. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Command Sets  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Custom Table  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Table Pointer</td><td>Must be a vaild C symbol</td><td></td><td>Specify the custom command set table (<a class="el" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a>[]) to use. If provided, all other command set settings are ignored. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Table Length</td><td>Length must be an integer greater than or equal to zero.</td><td>0 </td><td>Length of the custom command set table. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Erase Sizes  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sector Erase</td><td>Erase size must be an integer greater-than or equal-to zero and less than 4,294,967,296 (0xFFFF_FFFF).</td><td>4096 </td><td>Size of the memory region erased by Sector Erase </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Block Erase</td><td>Erase size must be an integer greater-than or equal-to zero and less than 4,294,967,296 (0xFFFF_FFFF).</td><td>262144 </td><td>Size of the memory region erased by Block Erase </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Read  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x13 </td><td>Read command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Read commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Program  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x12 </td><td>Program command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Program commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Row Load  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x00 </td><td>Row Load command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Row Load commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Row Store  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x00 </td><td>Row Store command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Row Store commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Write Enable  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x06 </td><td>Write Enable command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Status Read  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x05 </td><td>Status Read command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Status Read commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Sector Erase  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x21 </td><td>Sector Erase command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Block Erase  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0xDC </td><td>Block Erase command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; Initial Mode &gt; Chip Erase  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x60 </td><td>Chip Erase command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Protocol Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 SPI (1S-1S-1S)</li>
 <li>
@@ -403,79 +523,115 @@ QSPI (4S-4D-4D)</li>
 <li>
 Dual data rate OPI (8D-8D-8D)</li>
 </ul>
-</td><td>SPI (1S-1S-1S) </td><td>Select the initial protocol mode of the xSPI target device. Please see the documentation for examples of changing the protocol mode. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Initial Address Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
+</td><td>SPI (1S-1S-1S) </td><td>Signal protocol mode to use for this command set. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Frame Format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-3</li>
+Standard</li>
 <li>
-4</li>
+xSPI Profile 1.0</li>
+<li>
+xSPI Profile 2.0</li>
+<li>
+xSPI Profile 2.0 Extended</li>
 </ul>
-</td><td>4 </td><td>Select the number of address bytes. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Write Status Bit</td><td>Must be an integer between 0 and 7</td><td>0 </td><td>Which bit contains the write in progress status returned from the Write Status Command. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Write Enable Bit</td><td>Must be an integer between 0 and 7</td><td>1 </td><td>Which bit contains the write enable status returned from the Write Enable Command. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Sector Erase Size</td><td>Must be an integer greater than or equal to 0 and less than 4294967296</td><td>4096 </td><td>The sector erase size. Set Sector Erase Size to 0 if Sector Erase is not supported. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Block Erase Size</td><td>Must be an integer greater than or equal to 0 and less than 4294967296</td><td>262144 </td><td>The block erase size. Set Block Erase Size to 0 if Block Erase is not supported. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Command Set Table</td><td>Must be a vaild C symbol</td><td></td><td>Specify the custom command set table (<a class="el" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a>[]) to use. If provided, all properties for High-speed Mode will be ignored. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Command Set Table Length</td><td>Length must be an integer greater than or equal to zero.</td><td>0 </td><td>Length of the custom command set table. </td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Defaults  </td></tr>
+</td><td>Standard </td><td>Frame format to use with this command set. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Latency Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Fixed</li>
+<li>
+Variable (DQS)</li>
+</ul>
+</td><td>Fixed </td><td>Latency mode to use with this command set. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Address Length</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 byte</li>
+<li>
+2 bytes</li>
+<li>
+3 bytes</li>
+<li>
+4 bytes</li>
+</ul>
+</td><td>3 bytes </td><td>Number of bytes used to address data in a memory page or row. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Address MSB Mask</td><td>Address mask must be between 0x00 and 0xFF.</td><td>0xF0 </td><td>Mask of bits to zero for the most-significant byte of the address stage during memory-mapped operations </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Command Code Length</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 byte</li>
+<li>
+2 bytes</li>
+</ul>
+</td><td>1 byte </td><td></td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Register Address Length</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No address</li>
+<li>
+1 byte</li>
+<li>
+2 bytes</li>
+<li>
+3 bytes</li>
+<li>
+4 bytes</li>
+</ul>
+</td><td>No address </td><td>Number of bytes used for addressing the status register. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Register Address</td><td>Status register address must be between 0x00 and 0xFFFF_FFFF, inclusive.</td><td>0x00 </td><td>Address of the status register that reports Write-in-Progress and Write-Enable flags. </td></tr>
 <tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Defaults &gt; Command Definitions  </td></tr>
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Read  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0xEEEE </td><td>Read command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>20 </td><td>Dummy cycles to use between the address and data phase for Read commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Program  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x1212 </td><td>Program command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Program commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Row Load  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x00 </td><td>Row Load command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Row Load commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Row Store  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x00 </td><td>Row Store command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>0 </td><td>Dummy cycles to use between the address and data phase for Row Store commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Write Enable  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x0606 </td><td>Write Enable command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Status Read  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x0505 </td><td>Status Read command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Dummy Cycles</td><td>Dummy cycle counts must be an integer between 0 and 31.</td><td>3 </td><td>Dummy cycles to use between the address and data phase for Status Read commands. Set to 0 to disable dummy cycles. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Sector Erase  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x2121 </td><td>Sector Erase command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Block Erase  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0xDCDC </td><td>Block Erase command code. Set to 0x00 to disable. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Command Sets &gt; High-speed Mode &gt; Chip Erase  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Command Code</td><td>Command codes must be positive and fit in the selected command byte length.</td><td>0x6060 </td><td>Chip Erase command code. Set to 0x00 to disable. </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Page Program Command</td><td>Must be a 8-bit OSPI Page Program Command under SPI Mode|Command Definitions</td><td>0x12 </td><td>Default command to program a page. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Read Command</td><td>Must be a 8-bit OSPI Read Command under SPI Mode|Command Definitions</td><td>0x13 </td><td>Default command to read. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under SPI Mode|Command Definitions</td><td>0x06 </td><td>Default command to enable write. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Status Command</td><td>Must be a 16-bit OSPI Status Command under SPI Mode|Command Definitions</td><td>0x05 </td><td>Default command to query the status of a write or erase command. </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Defaults &gt; Erase Command Definitions  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Sector Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0x2121 </td><td>Default command to erase a sector. The lowwer byte will be used for 1-byte commands. Set to 0 if unused. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Block Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0xDCDC </td><td>Default command to erase a block. The lowwer byte will be used for 1-byte commands. Set to 0 if unused. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Chip Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0x6060 </td><td>Default command to erase the entire chip. The lowwer byte will be used for 1-byte commands. Set to 0 if unused. </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Defaults &gt; Dummy Cycles  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Memory Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>0 </td><td>Default memory read dummy cycles </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Status Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>0 </td><td>Default status read dummy cycles </td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> High-speed Mode  </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> High-speed Mode &gt; Auto-Calibration  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Data latching delay</td><td>Must be a valid non-negative integer with maximum configurable value of 0x1F</td><td>0x08 </td><td>If auto-calibration support is enabled, set this to 0 to trigger auto-calibration when appropriate. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Auto-Calibration Address</td><td>Must be a valid non-negative integer with maximum configurable value of 0xFFFFFFFF</td><td>0x00 </td><td>Set the address of the read/write destination to be performed for auto-calibration. </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> High-speed Mode &gt; Command Definitions  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Page Program Command</td><td>Must be a 16-bit OSPI Page Program Command under High-speed Mode|Command Definitions</td><td>0x1212 </td><td>The command to program a page in OPI mode. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Dual Read Command</td><td>Must be a 16-bit OSPI Dual Read Command under High-speed Mode|Command Definitions</td><td>0xEEEE </td><td>The command to read in High-speed mode (8DTRD). </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Write Enable Command</td><td>Must be a 16-bit OSPI Write Enable Command under High-speed Mode|Command Definitions</td><td>0x0606 </td><td>The command to enable write in OPI mode. Set to 0 to ignore. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Status Command</td><td>Must be a 16-bit OSPI Status Command under High-speed Mode|Command Definitions</td><td>0x0505 </td><td>The command to query the status of a write or erase command in OPI mode. Set to 0 to ignore. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Sector Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0 </td><td>The command to erase a sector for high-speed mode. Set to 0 if unused. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Block Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0 </td><td>The command to erase a block for high-speed mode. Set to 0 if unused. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Chip Erase Command</td><td>Must be an integer between 0x01 and 0xFFFF, inclusive.</td><td>0 </td><td>The command to erase the entire chip for high-speed mode. Set to 0 if unused. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Protocol</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td class="tree_lvl_2_cell">Protocol Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 SPI (1S-1S-1S)</li>
 <li>
@@ -491,39 +647,149 @@ QSPI (4S-4D-4D)</li>
 <li>
 Dual data rate OPI (8D-8D-8D)</li>
 </ul>
-</td><td>Dual data rate OPI (8D-8D-8D) </td><td>Select the High-Speed xSPI protocol. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Command Length Bytes</td><td><ul style="margin-top:0;margin-bottom:0;">
+</td><td>Dual data rate OPI (8D-8D-8D) </td><td>Signal protocol mode to use for this command set. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Frame Format</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-1</li>
+Standard</li>
 <li>
-2</li>
+xSPI Profile 1.0</li>
+<li>
+xSPI Profile 2.0</li>
+<li>
+xSPI Profile 2.0 Extended</li>
 </ul>
-</td><td>2 </td><td>Command length in bytes </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Memory Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>20 </td><td>Memory read dummy cycles </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Status Read Dummy Cycles</td><td>Must be an integer between 0 and 31</td><td>3 </td><td>Status read dummy cycles </td></tr>
+</td><td>xSPI Profile 1.0 </td><td>Frame format to use with this command set. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Latency Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Fixed</li>
+<li>
+Variable (DQS)</li>
+</ul>
+</td><td>Fixed </td><td>Latency mode to use with this command set. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Address Length</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 byte</li>
+<li>
+2 bytes</li>
+<li>
+3 bytes</li>
+<li>
+4 bytes</li>
+</ul>
+</td><td>4 bytes </td><td>Number of bytes used to address data in a memory page or row. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Address MSB Mask</td><td>Address mask must be between 0x00 and 0xFF.</td><td>0xF0 </td><td>Mask of bits to zero for the most-significant byte of the address stage during memory-mapped operations </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Command Code Length</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+1 byte</li>
+<li>
+2 bytes</li>
+</ul>
+</td><td>2 bytes </td><td></td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Register Address Length</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No address</li>
+<li>
+1 byte</li>
+<li>
+2 bytes</li>
+<li>
+3 bytes</li>
+<li>
+4 bytes</li>
+</ul>
+</td><td>4 bytes </td><td>Number of bytes used for addressing the status register. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Status Register Address</td><td>Status register address must be between 0x00 and 0xFFFF_FFFF, inclusive.</td><td>0x00 </td><td>Address of the status register that reports Write-in-Progress and Write-Enable flags. </td></tr>
 <tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Chip Select Timing Setting  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Command Interval</td><td>Refer to the RA Configuration tool for available options.</td><td>2 </td><td>Command execution interval setting in OCTACLK units </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Timing Settings  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing Settings &gt; Chip Select  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Command Interval</td><td>Refer to the RA Configuration tool for available options.</td><td>2 cycles </td><td>Minimum clock cycles between two consecutive xSPI frames (CS idle time). </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pull-up Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Extension</li>
 <li>
 1 Cycle</li>
 </ul>
-</td><td>No Extension </td><td>Signal pull-up timing (CS asserting extention) setting in OCTACLK units </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+</td><td>No Extension </td><td>Signal pull-up timing (CS asserting extension) setting in OCTACLK units </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Pull-down Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 No Extension</li>
 <li>
 1 Cycle</li>
 </ul>
-</td><td>No Extension </td><td>Signal pull-down timing (CS negating extention) setting in OCTACLK units </td></tr>
+</td><td>No Extension </td><td>Signal pull-down timing (CS negating extension) setting in OCTACLK units </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing Settings &gt; SDR  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Drive Timing</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Drive 1/2 cycle before CK</li>
+<li>
+Drive at CK</li>
+</ul>
+</td><td>Drive 1/2 cycle before CK </td><td>Data signal timing relative to the rising-edge of the CK signal. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">CK Sampling Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Falling edge</li>
+<li>
+Rising edge</li>
+</ul>
+</td><td>Falling edge </td><td>Selects the clock edge to sample the data signal. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sampling Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+None</li>
+<li>
+1 cycle</li>
+<li>
+2 cycles</li>
+<li>
+3 cycles</li>
+<li>
+4 cycles</li>
+<li>
+5 cycles</li>
+<li>
+6 cycles</li>
+<li>
+7 cycles</li>
+</ul>
+</td><td>None </td><td>Number of cycles to delay before sampling the data signal. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Timing Settings &gt; DDR  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Sampling Window Extension</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+None</li>
+<li>
+1 cycle</li>
+<li>
+2 cycles</li>
+<li>
+3 cycles</li>
+<li>
+4 cycles</li>
+<li>
+5 cycles</li>
+<li>
+6 cycles</li>
+<li>
+7 cycles</li>
+</ul>
+</td><td>None </td><td>Number of cycles to extending the data sampling window in DDR mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DS Latching Delay</td><td>Refer to the RA Configuration tool for available options.</td><td>Auto-calibrate </td><td>Number of delay cells for the data strobe signal. This value must be set to zero if auto-calibration is used. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> XiP Mode  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -543,21 +809,36 @@ No Extension</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Key Format</td><td>MCU Specific Options</td><td></td><td>Select key format </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Decryption start address</td><td>Value must be an integer between 0x80000000 and 0x9FFFFFFF</td><td>0x90000000 </td><td>OSPI decryption start address </td></tr>
+<td class="tree_lvl_1_cell">Decryption start address</td><td>Value must be an integer between 0x80000000 and 0x9FFFF000</td><td>0x90000000 </td><td>OSPI decryption start address </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Decryption end address</td><td>Value must be an integer between 0x80000000 and 0x9FFFFFFF</td><td>0x90001FFF </td><td>OSPI decryption end address </td></tr>
+<td class="tree_lvl_1_cell">Decryption end address</td><td>Value must be an integer between 0x80000FFF and 0x9FFFFFFF</td><td>0x90001FFF </td><td>OSPI decryption end address </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Row Addressing  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Row Address Length</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No address</li>
+<li>
+1 byte</li>
+<li>
+2 bytes</li>
+<li>
+3 bytes</li>
+<li>
+4 bytes</li>
+</ul>
+</td><td>No address </td><td>Number of bytes used for addressing the row index. </td></tr>
 </table>
 </p>
 <dl class="section note"><dt>Note</dt><dd>The user is expected to modify the command definitions based on the xSPI chip and SPI communication mode. The default mode is SPI mode and default erase commands are set for DOPI mode based on Infineon S28HS256.</dd></dl>
 <h2><a class="anchor" id="r-ospi-b-clock-configuration"></a>
 Clock Configuration</h2>
-<p>PCLKA is the Octal-SPI bus interface, and PCLKB is used to set OSPI registers.</p>
-<p>The signals to the xSPI target device are derived from OCTASPICLK. The OMSCLK signal is OCTASPICLK / 2. Data can be output at the OCTASPICLK rate if protocol mode is set to a Dual Data Rate mode (8D-8D-8D or 4S-4D-4D).</p>
-<p>The PCLKB, PCLKA, and OCTASPICLK frequencies can be set on the <b>Clocks</b> tab of the RA Configuration editor.</p>
+<p>The signals to the xSPI target device are derived from OCTACLK. OCTACLK must be set to twice the desired OMSCLK signal frequency. This allows data to be latched on either clock edge for Dual-Data-Rate modes (4S-4D-4D or 8D-8D-8D).</p>
+<p>Please refer to the Hardware User Manual for the clocks which control the OSPI_B registers. These along with OCTACLK can be set on the <b>Clocks</b> tab of the RA Configuration editor.</p>
 <h2><a class="anchor" id="r-ospi-b-pin-configuration"></a>
 Pin Configuration</h2>
 <p>The following pins are available to connect to an external OSPI device:</p><ul>
-<li>OMSCLK: OSPI clock output (OCTASPICLK / 2)</li>
+<li>OMSCLK: OSPI clock output (OCTACLK / 2)</li>
 <li>OMDQS: OSPI data strobe signal</li>
 <li>OMCS0: OSPI device 0 select</li>
 <li>OMCS1: OSPI device 1 select</li>
@@ -577,7 +858,8 @@ Chip Select pins should be configured with at least IOPORT_CFG_DRIVE_MEDIUM.</dd
 Usage Notes</h1>
 <h2><a class="anchor" id="r-ospi-b-usage_notes-for-octaflash-interfacing"></a>
 Usage Notes for xSPI support</h2>
-<p>After <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a> completes successfully, the xSPI device contents are mapped to address 0x80000000 (bank CS0) or 0x90000000 (bank CS1) and can be read like on-chip flash. Bank CS0 is only accessible from OSPI_B channel/slave 0 and likewise, bank CS1 is only accessible from OSPI_B channel/slave 1. Bank CS0 and CS1 support up to 256&#160;MB of address space each.</p>
+<p>After <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a> completes successfully, the xSPI device contents are mapped to the appropriate external memory regions for each OSPI_B unit. For example, on the RA8M1, R_OSPI_B0 maps the CS0 device to address 0x80000000 and the CS1 device to address 0x90000000. After opening, the addresses can be accessed like on-chip flash.</p>
+<p>Bank CS0 and CS1 support up to 256&#160;MB of address space each depending on the platform.</p>
 <h3><a class="anchor" id="r-ospi-b-auto-calibration-octaflash"></a>
 Auto-calibration</h3>
 <p>If support is enabled, auto-calibration procedures are triggered automatically when the 'Data latching delay' field in the configurator properties is set to 0. The user application is responsible for setting the appropriate preamble pattern before calling <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a> when using a data strobe (DS) mode or changing the SPI protocol to a DS mode using the <a class="el" href="group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c">R_OSPI_B_SpiProtocolSet()</a> API. The appropriate preamble pattern can be written to the desired address using the <a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a> API while in simple SPI mode (recommended), or a non-DS mode. Ensure that the same address is passed through the configurator. If the xSPI device is already in a DS mode, the preamble pattern must be programmed using the debugger before calling <a class="el" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open()</a>.</p>
@@ -589,30 +871,32 @@ Chip Select Latencies</h3>
 XiP Support</h3>
 <p>OSPI_B supports eXecute in Place (XiP) modes of operation. This can be used for read-only memory-mapped accesses to reduce overall read latency by skipping the command sequence in the xSPI transaction. Separate XiP enter and exit codes may be specified for either attached target device. Upon calling <a class="el" href="group___o_s_p_i___b.html#ga15282e9d7ef4d8c5471be859da55dd4a">R_OSPI_B_XipEnter()</a>, the associated memory region for the target device is switched to read-only mode and the enter code sent to the device. Calling <a class="el" href="group___o_s_p_i___b.html#ga96bc15adf392eccfa44eed3fb91fa7ef">R_OSPI_B_XipExit()</a> will transmit the exit code and transition the memory region back to read-write access.</p>
 <p>Only one flash device should be used after entering XiP mode. Once entered, XiP codes will be transmitted to all attached devices.</p>
-<h2><a class="anchor" id="r-ospi-b-octaflash-commands-octaflash"></a>
-xSPI Commands</h2>
-<p>Command sets and erase commands may be specified individually for each supported protocol mode. By default, the configurator only supports an alternative command set for DOPI (8D-8D-8D) mode. The command sets cannot be changed during run-time. The appropriate command set will be selected when changing protocol modes. If a command set is not found, it defaults to the SPI command set.</p>
+<h3><a class="anchor" id="r-ospi-b-octaflash-commands-octaflash"></a>
+xSPI Commands</h3>
+<p>Command sets and erase commands may be specified individually for each supported protocol mode. By default, the configurator only supports an alternative command set for "High-Speed Mode" (DOPI 8D-8D-8D) mode. The command sets cannot be changed during run-time, but the appropriate command set will be selected when changing protocol modes. If a command set is not found, an <code>FSP_ERR_INVALID_MODE</code> error code will be returned.</p>
 <p>If custom DOPI erase commands are not specified, ensure the erase commands are the appropriate 2-byte DOPI commands. The lower byte will be used for 1-byte command protocols.</p>
 <h3><a class="anchor" id="r-ospi-dotf-configuration"></a>
 DOTF Support</h3>
 <p>Decryption-On-The-Fly is configurable for OSPI Flash and is disabled from the build by default.</p>
-<h4>Supported Key Formats</h4>
+<p>Using the DOTF feature requires first creating the encrypted blob on the PC and then configuring the DOTF module with the appropriate parameters to allow decryption of the blob once it is programmed into OSPI. Use the Security Key Management Tool (<a href="https://www.renesas.com/us/en/software-tool/security-key-management-tool">https://www.renesas.com/us/en/software-tool/security-key-management-tool</a>) to create the encrypted blob.</p>
+<p>Example: To encrypt a 4096 byte area in a input srec file from <code>0x90000000</code> to <code>0x90000FFF</code> using a 128 AES encryption key <code>FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</code> and IV <code>00000000000000000000000000000000</code> use SKMT with the following arguments:</p>
+<div class="fragment"><div class="line">skmt.exe /encdotf /keytype &quot;AES-128&quot; /enckey &quot;FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF&quot; /nonce &quot;00000000000000000000000000000000&quot; /startaddr &quot;90000000&quot; /endaddr &quot;90000FFF&quot; /prg &quot;input.srec&quot; /incplain /output &quot;encrypted_output.srec&quot;</div></div><!-- fragment --><p>The values for key, iv and decryption area start and end addresses that were used to create the blob using SKMT must be set in the DOTF configuration in FSP.</p>
+<p>Make sure that the Key and IV passed into DOTF configuration are 4 byte aligned. This can be done using a compiler alignment attribute as shown below:</p>
+<div class="fragment"><div class="line">uint8_t aes_key[] __attribute__((aligned(4))) =</div><div class="line">{</div><div class="line">    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,</div><div class="line">    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f</div><div class="line">};</div></div><!-- fragment --><h4>Supported Key Formats</h4>
 <ul>
 <li>When the Compatibility Mode stack is added for the crypto engine, the user can provide either a wrapped or plaintext AES key to the DOTF module.</li>
 <li>When the Protected Mode stack is used, only wrapped keys are supported.</li>
 </ul>
 <p>When configuring the DOTF options, make sure that the key format is specified.</p>
 <dl class="section note"><dt>Note</dt><dd><b>For a detailed description of the Crypto Engine operating modes, refer to Application Note R11AN0498.</b></dd></dl>
-<p>Using the DOTF feature requires first creating the encrypted blob on the PC and then configuring the DOTF module with the appropriate parameters to allow decryption of the blob once it is programmed into OSPI. Use the Security Key Management Tool (<a href="https://www.renesas.com/us/en/software-tool/security-key-management-tool">https://www.renesas.com/us/en/software-tool/security-key-management-tool</a>) to create the encrypted blob. Example: To encrypt a 4096 byte area in a input srec file from 0x90000000 to 0x90000FFF using a 128 AES encryption key "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" and iv "00000000000000000000000000000000" use SKMT with the following arguments: skmt.exe /encdotf /keytype "AES-128" /enckey "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" /nonce "00000000000000000000000000000000" /startaddr "90000000" /endaddr "90000FFF" /prg "input.srec" /incplain /output "encrypted_output.srec"</p>
-<p>The values for key, iv and decryption area start and end addresses that were used to create the blob using SKMT must be set in the DOTF configuration in FSP.</p>
-<p>Make sure that the Key and IV passed into DOTF configuration are 4 byte aligned. This can be done using a compiler alignment attribute as shown below: uint8_t aes_key[] <b>attribute</b>((aligned(4))) = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f };</p>
 <h2><a class="anchor" id="r-ospi-b-limitations"></a>
 Limitations</h2>
-<p>Developers should be aware of the following limitations when using the OSPI_B driver: </p>
+<p>Developers should be aware of the following limitations when using the OSPI_B driver:</p>
 <h3><a class="anchor" id="r-ospi-b-limitations-octaflash"></a>
 OSPI_B</h3>
 <ul>
-<li>Prefetch and combination support for memory-mapped access is applied globally to all slave devices.</li>
+<li>The R_OSPI_B driver expects memory devices to have uniform sector sizes. If a design requires using a memory with non-uniform sectors, the end-user application must appropriately manage sectors.</li>
+<li>Prefetch and combination support for memory-mapped access is applied globally to all slave devices per OSPI_B unit.</li>
 <li>Combination writes are limited to a maximum of 64 bytes. The user should verify the write has completed before attempting to write more bytes.</li>
 <li>Writing to the memory-mapped regions with the CPU is restricted to 64-bit accesses with 8-byte destination alignments. This restriction is not applicable to other bus masters (e.g. DTC or DMAC).</li>
 <li>When using Arm LLVM ensure any read-only (<code>const</code>) data used with <code><a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a></code> is word (4-byte) aligned if the DMAC is not being used. If parameter checking is enabled, the source pointer alignment will be verified for calls to <code><a class="el" href="group___o_s_p_i___b.html#gabeb33594cd4d4f031f090857a7b3832b">R_OSPI_B_Write()</a></code>.</li>
@@ -620,6 +904,7 @@ OSPI_B</h3>
 <li>When using 8D-8D-8D mode, care should be taken to access on even-aligned addresses. Problems may occur if odd address alignment is used. This restriction applies to all bus masters using OSPI_B.</li>
 <li>DOTF: AES-192 is not supported when the Protected Mode stack is used.</li>
 <li>When using the IAR compiler, OSPI data must be <code>const</code> qualified to be downloaded by the debugger.</li>
+<li>Memories which use row-column addressing must be managed by the end-user application to ensure the appropriate memory row is loaded and stored.</li>
 </ul>
 <h1><a class="anchor" id="r-ospi-b-examples"></a>
 Examples</h1>
@@ -627,7 +912,7 @@ Examples</h1>
 <p>The following definitions are used across various example snippets below.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_WRITE_ENABLE_SPI_MODE     (0x06U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_WRITE_DISABLE_SPI_MODE    (0x04U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_STATUS_SPI_MODE      (0x05U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_REGISTER_SPI_MODE    (0x65U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_QSPI_MODE            (0x0BU)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_PROGRAM_QSPI_MODE         (0x12U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_WRITE_ENABLE_QSPI_MODE    (0x06U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_STATUS_QSPI_MODE          (0x05U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_BLOCK_ERASE_DOPI_MODE     (0x21DEU)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_SECTOR_ERASE_DOPI_MODE    (0xDC23U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_CHIP_ERASE_DOPI_MODE      (0x609FU)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_DOPI_MODE            (0xEE11U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_PROGRAM_DOPI_MODE         (0x12EDU)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_WRITE_ENABLE_DOPI_MODE    (0x06F9U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_STATUS_DOPI_MODE          (0x05FAU)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_B_WEN_BIT_MASK                      (0x02U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_WIP_BIT_MASK                      (0x01U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_B_BLOCK_ERASE_SIZE                  (4096U)</span></div><div class="line"><span class="preprocessor">#define OSPI_B_SECTOR_ERASE_SIZE                 (262144U)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_B_EXAMPLE_DESTINATION_ADDRESS       ((void *) 0x90000000U) </span><span class="comment">/* Device on CS1 */</span><span class="preprocessor"></span></div><div class="line"></div></div><!-- fragment --> <div class="fragment"><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_b_change_mode (<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga17c347a498a8a9d38ffc36c0de49a535">spi_flash_protocol_t</a> new_protocol)</div><div class="line">{</div><div class="line">    <span class="comment">/* Step 1. Identify current device configuration and reconfigure as needed... */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Step 2. Update clocks... */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Step 3. Transition driver to the new protocol. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c">R_OSPI_B_SpiProtocolSet</a>(&amp;g_ospi0_ctrl, new_protocol);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Step 4. Verify mode change... */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Basic Example</h3>
 <p><a class="anchor" id="um_ospi_sections"></a> This is a basic example of minimal use of the OSPI in an application with OctaFlash.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_B_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_B_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .ospi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[OSPI_B_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi_flash&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .code_in_ospi section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.code_in_ospi&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Change SPI to DOPI mode */</span></div><div class="line">    ospi_b_change_mode(<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606">SPI_FLASH_PROTOCOL_8D_8D_8D</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Reading Status Register Example (R_OSPI_B_DirectTransfer)</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_B_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_B_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .ospi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[OSPI_B_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi0_cs1&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .ospi0_cs1_code section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi0_cs1_code&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Change SPI to DOPI mode */</span></div><div class="line">    ospi_b_change_mode(<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606">SPI_FLASH_PROTOCOL_8D_8D_8D</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Reading Status Register Example (R_OSPI_B_DirectTransfer)</h3>
 <p>This is an example of using R_OSPI_B_DirectWrite followed by R_OSPI_B_DirectRead to send the read status register command and read back the status register from the device.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_STATUS_REGISTER    (0x05U)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_direct_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> ospi_b_test_direct_transfer =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_B_COMMAND_READ_STATUS_SPI_MODE,</div><div class="line">        .address        = 0U,</div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 0U,</div><div class="line">        .data_length    = 0U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_b_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read Status Register */</span></div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>     = OSPI_B_COMMAND_READ_STATUS_SPI_MODE;</div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a5e3c48eb88187944722f745231f955f3">data_length</a> = 1U;</div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_b_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if Write Enable is set */</span></div><div class="line">    <span class="keywordflow">if</span> (OSPI_B_WEN_BIT_MASK != (ospi_b_test_direct_transfer.data &amp; OSPI_B_WEN_BIT_MASK))</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Auto-calibration Example (R_OSPI_B_DirectTransfer, R_OSPI_B_Write, R_OSPI_B_SpiProtocolSet)</h3>
 <p>This is an example of using R_OSPI_B_SpiProtocolSet to change the operating mode from SPI to DOPI and allow the driver to initiate auto-calibration.</p>
@@ -635,7 +920,7 @@ Examples</h1>
 <p>This is an example of using R_BSP_OctaclkUpdate to change the Octal-SPI clock frequency during run time. The OCTACLK frequency must be updated before calling the R_OSPI_B_SpiProtocolSet with appropriate clock source and divider settings required to be set for the new SPI protocol mode. Ensure that the clock source selected is started.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * Changes the OCTACLK divider; assumes PLL2 is being used as the source for OCTACLK.</span></div><div class="line"><span class="comment"> * @param divider New clock divider to switch to.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_b_change_omclk (bsp_clocks_octaclk_div_t divider)</div><div class="line">{</div><div class="line">    <span class="comment">/* Ensure clock source (PLL2 in this example) is running before changing the OCTACLK frequency */</span></div><div class="line">    bsp_octaclk_settings_t octaclk_settings;</div><div class="line">    octaclk_settings.source_clock = BSP_CLOCKS_CLOCK_PLL2;</div><div class="line">    octaclk_settings.divider      = divider;</div><div class="line">    R_BSP_OctaclkUpdate(&amp;octaclk_settings);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Using a Custom xSPI Command Set Example</h3>
 <p>This is an example of using custom command sets for 8D-8D-8D and 4S-4S-4S protocol modes.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Custom two-byte erase commands. */</span></div><div class="line"><a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__erase__command__t">spi_flash_erase_command_t</a> g_2B_erase_commands[] =</div><div class="line">{</div><div class="line">    {.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a27f37ac5d1f031fd33f3b2ff5b914751">command</a> = OSPI_B_COMMAND_BLOCK_ERASE_DOPI_MODE,  .size = OSPI_B_BLOCK_ERASE_SIZE        },</div><div class="line">    {.command = OSPI_B_COMMAND_SECTOR_ERASE_DOPI_MODE, .size = OSPI_B_SECTOR_ERASE_SIZE       },</div><div class="line">    {.command = OSPI_B_COMMAND_CHIP_ERASE_DOPI_MODE,   .size = SPI_FLASH_ERASE_SIZE_CHIP_ERASE},</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___o_s_p_i___b.html#structospi__b__table__t">ospi_b_table_t</a> g_2B_erase_table =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___o_s_p_i___b.html#a1002da50d4a396df19f505f370ea85b3">p_table</a> = g_2B_erase_commands,</div><div class="line">    .length  = (uint8_t) (<span class="keyword">sizeof</span>(g_2B_erase_commands) / <span class="keyword">sizeof</span>(g_2B_erase_commands[0])),</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Custom command sets. */</span></div><div class="line"><a class="code" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a> g_command_sets[] =</div><div class="line">{</div><div class="line">    <span class="comment">/* 8D-8D-8D example with inverted lower command byte. */</span></div><div class="line">    {</div><div class="line">        .<a class="code" href="group___o_s_p_i___b.html#a71f30710dcb8f6a40f5254d408f38216">protocol</a>             = <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606">SPI_FLASH_PROTOCOL_8D_8D_8D</a>,</div><div class="line">        .command_bytes        = <a class="code" href="group___o_s_p_i___b.html#gga4bf54e3468d5d4de83db9e021bdbb2d3a165af2425e8e2fbcc301f0c7081cf9e2">OSPI_B_COMMAND_BYTES_2</a>,</div><div class="line">        .read_command         = OSPI_B_COMMAND_READ_DOPI_MODE,</div><div class="line">        .page_program_command = OSPI_B_COMMAND_PROGRAM_DOPI_MODE,</div><div class="line">        .write_enable_command = OSPI_B_COMMAND_WRITE_ENABLE_DOPI_MODE,</div><div class="line">        .status_command       = OSPI_B_COMMAND_STATUS_DOPI_MODE,</div><div class="line">        .read_dummy_cycles    = 20U,</div><div class="line">        .program_dummy_cycles = 0U,</div><div class="line">        .status_dummy_cycles  = 3U,</div><div class="line">        .p_erase_commands     = &amp;g_2B_erase_table</div><div class="line">    },</div><div class="line"></div><div class="line">    <span class="comment">/* 4S-4S-4S example with different .read_command and dummy cycles. */</span></div><div class="line">    {</div><div class="line">        .protocol             = <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05">SPI_FLASH_PROTOCOL_4S_4S_4S</a>,</div><div class="line">        .command_bytes        = <a class="code" href="group___o_s_p_i___b.html#gga4bf54e3468d5d4de83db9e021bdbb2d3a6aa3fcd6c65bf42cb3ee95b050fe12dd">OSPI_B_COMMAND_BYTES_1</a>,</div><div class="line">        .read_command         = OSPI_B_COMMAND_READ_QSPI_MODE,</div><div class="line">        .page_program_command = OSPI_B_COMMAND_PROGRAM_QSPI_MODE,</div><div class="line">        .write_enable_command = OSPI_B_COMMAND_WRITE_ENABLE_QSPI_MODE,</div><div class="line">        .status_command       = OSPI_B_COMMAND_STATUS_QSPI_MODE,</div><div class="line">        .read_dummy_cycles    = 10U,</div><div class="line">        .program_dummy_cycles = 0U,</div><div class="line">        .status_dummy_cycles  = 1U,</div><div class="line">        .p_erase_commands     = NULL,  <span class="comment">// Use the common erase definitions.</span></div><div class="line">    },</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_command_table_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instance.</span></div><div class="line"><span class="comment">     * Specify `g_command_sets` using the configurator. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Change SPI to DOPI mode */</span></div><div class="line">    ospi_b_change_mode(<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606">SPI_FLASH_PROTOCOL_8D_8D_8D</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line"></div><div class="line">    <span class="comment">/* Change SPI to QSPI mode */</span></div><div class="line">    ospi_b_change_mode(<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05">SPI_FLASH_PROTOCOL_4S_4S_4S</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Read data from an external device, this time in QSPI mode. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* Run the example function again in QSPI mode. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Change Protocol Mode Example (R_OSPI_B_DirectTransfer, R_OSPI_B_SpiProtocolSet)</h3>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Custom two-byte erase commands. */</span></div><div class="line"><a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__erase__command__t">spi_flash_erase_command_t</a> g_2B_erase_commands[] =</div><div class="line">{</div><div class="line">    {.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a27f37ac5d1f031fd33f3b2ff5b914751">command</a> = OSPI_B_COMMAND_BLOCK_ERASE_DOPI_MODE,  .size = OSPI_B_BLOCK_ERASE_SIZE        },</div><div class="line">    {.command = OSPI_B_COMMAND_SECTOR_ERASE_DOPI_MODE, .size = OSPI_B_SECTOR_ERASE_SIZE       },</div><div class="line">    {.command = OSPI_B_COMMAND_CHIP_ERASE_DOPI_MODE,   .size = SPI_FLASH_ERASE_SIZE_CHIP_ERASE},</div><div class="line">};</div><div class="line"></div><div class="line"><a class="code" href="group___o_s_p_i___b.html#structospi__b__table__t">ospi_b_table_t</a> g_2B_erase_table =</div><div class="line">{</div><div class="line">    .<a class="code" href="group___o_s_p_i___b.html#a1002da50d4a396df19f505f370ea85b3">p_table</a> = g_2B_erase_commands,</div><div class="line">    .length  = (uint8_t) (<span class="keyword">sizeof</span>(g_2B_erase_commands) / <span class="keyword">sizeof</span>(g_2B_erase_commands[0])),</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Custom command sets. */</span></div><div class="line"><a class="code" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a> g_command_sets[] =</div><div class="line">{</div><div class="line">    <span class="comment">/* 8D-8D-8D example with inverted lower command byte. */</span></div><div class="line">    {</div><div class="line">        .<a class="code" href="group___o_s_p_i___b.html#a71f30710dcb8f6a40f5254d408f38216">protocol</a>             = <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606">SPI_FLASH_PROTOCOL_8D_8D_8D</a>,</div><div class="line">        .command_bytes        = <a class="code" href="group___o_s_p_i___b.html#gga4bf54e3468d5d4de83db9e021bdbb2d3a165af2425e8e2fbcc301f0c7081cf9e2">OSPI_B_COMMAND_BYTES_2</a>,</div><div class="line">        .read_command         = OSPI_B_COMMAND_READ_DOPI_MODE,</div><div class="line">        .program_command      = OSPI_B_COMMAND_PROGRAM_DOPI_MODE,</div><div class="line">        .write_enable_command = OSPI_B_COMMAND_WRITE_ENABLE_DOPI_MODE,</div><div class="line">        .status_command       = OSPI_B_COMMAND_STATUS_DOPI_MODE,</div><div class="line">        .read_dummy_cycles    = 20U,</div><div class="line">        .program_dummy_cycles = 0U,</div><div class="line">        .status_dummy_cycles  = 3U,</div><div class="line">        .p_erase_commands     = &amp;g_2B_erase_table</div><div class="line">    },</div><div class="line"></div><div class="line">    <span class="comment">/* 4S-4S-4S example with different .read_command and dummy cycles. */</span></div><div class="line">    {</div><div class="line">        .protocol             = <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05">SPI_FLASH_PROTOCOL_4S_4S_4S</a>,</div><div class="line">        .command_bytes        = <a class="code" href="group___o_s_p_i___b.html#gga4bf54e3468d5d4de83db9e021bdbb2d3a6aa3fcd6c65bf42cb3ee95b050fe12dd">OSPI_B_COMMAND_BYTES_1</a>,</div><div class="line">        .read_command         = OSPI_B_COMMAND_READ_QSPI_MODE,</div><div class="line">        .program_command      = OSPI_B_COMMAND_PROGRAM_QSPI_MODE,</div><div class="line">        .write_enable_command = OSPI_B_COMMAND_WRITE_ENABLE_QSPI_MODE,</div><div class="line">        .status_command       = OSPI_B_COMMAND_STATUS_QSPI_MODE,</div><div class="line">        .read_dummy_cycles    = 10U,</div><div class="line">        .program_dummy_cycles = 0U,</div><div class="line">        .status_dummy_cycles  = 1U,</div><div class="line">        .p_erase_commands     = NULL,  <span class="comment">// Use the common erase definitions.</span></div><div class="line">    },</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_command_table_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instance.</span></div><div class="line"><span class="comment">     * Specify `g_command_sets` using the configurator. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga9134500bd9ee50551e218a81868f5b1a">R_OSPI_B_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Change SPI to DOPI mode */</span></div><div class="line">    ospi_b_change_mode(<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535acf8fc61585bd2209fc3953d8d2eb4606">SPI_FLASH_PROTOCOL_8D_8D_8D</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_B_Open() and any required device specific initialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line"></div><div class="line">    <span class="comment">/* Change SPI to QSPI mode */</span></div><div class="line">    ospi_b_change_mode(<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535a21ac68039ffa6d214173ada7fe558a05">SPI_FLASH_PROTOCOL_4S_4S_4S</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Read data from an external device, this time in QSPI mode. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_B_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* Run the example function again in QSPI mode. */</span></div><div class="line">    r_ospi_b_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Change Protocol Mode Example (R_OSPI_B_DirectTransfer, R_OSPI_B_SpiProtocolSet)</h3>
 <p>This is an example of using R_OSPI_B_DirectTransfer to change the attached flash device to a new protocol mode during run time.</p>
 <div class="fragment"><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * This example file is only intended for use with Infineon S28HS256 flash devices and is non-exhaustive.</span></div><div class="line"><span class="comment"> * Other flash devices will require modification of command codes, addresses, and/or command sequences.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;r_ospi_b.h&quot;</span></div><div class="line"></div><div class="line"><span class="comment">/***********************************************************************************************************************</span></div><div class="line"><span class="comment"> * Macro definitions</span></div><div class="line"><span class="comment"> **********************************************************************************************************************/</span></div><div class="line"></div><div class="line"><span class="comment">/* Command code for enabling write operations. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_WRITE_ENABLE_SPI_MODE      (0x06U)</span></div><div class="line"></div><div class="line"><span class="comment">/* Command code to query the status register. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_STATUS_SPI_MODE       (0x05U)</span></div><div class="line"></div><div class="line"><span class="comment">/* Command code to read a configuration register. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_READ_REGISTER_SPI_MODE     (0x65U)</span></div><div class="line"></div><div class="line"><span class="comment">/* Command code to write to a configuration register. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_COMMAND_WRITE_REGISTER_SPI_MODE    (0x71U)</span></div><div class="line"></div><div class="line"><span class="comment">/* Location of the write-enable bit in the status register. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_WEN_BIT_MASK                       (0x02U)</span></div><div class="line"></div><div class="line"><span class="comment">/* Register setting for CFR5 of the Infineon S28HS256 to enable 8D-8D-8D mode. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_DOPI_REGISTER_SETTING              (0x43U)</span></div><div class="line"></div><div class="line"><span class="comment">/* Register setting for CFR3 of the Infineon S28HS256 to support faster clock rates (up to 166 MHz DOPI). */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_FAST_CLOCK_REGISTER_SETTING        (0x80U)</span></div><div class="line"></div><div class="line"><span class="comment">/* Address of the CFR3 volatile register for the Infineon S28HS256. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_CFR3V_ADDRESS                      (0x800004)</span></div><div class="line"></div><div class="line"><span class="comment">/* Address of the CFR5 volatile register for the Infineon S28HS256. */</span></div><div class="line"><span class="preprocessor">#define OSPI_B_CFR5V_ADDRESS                      (0x800006)</span></div><div class="line"></div><div class="line"><span class="comment">/***********************************************************************************************************************</span></div><div class="line"><span class="comment"> * Function prototypes</span></div><div class="line"><span class="comment"> **********************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_spi_to_dopi(<a class="code" href="group___o_s_p_i___b.html#structospi__b__instance__ctrl__t">ospi_b_instance_ctrl_t</a> * <span class="keyword">const</span> p_ctrl);</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_b_write_enable_and_verify(<a class="code" href="group___o_s_p_i___b.html#structospi__b__instance__ctrl__t">ospi_b_instance_ctrl_t</a> * <span class="keyword">const</span> p_ctrl, <span class="keywordtype">bool</span> is_8d);</div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_b_change_omclk(bsp_clocks_octaclk_div_t divider);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * Enables write operations on the target flash and verifies the change by reading the status register.</span></div><div class="line"><span class="comment"> * @param [in] p_ctrl Pointer to the OSPI_B control struct.</span></div><div class="line"><span class="comment"> * @param is_8d Indicates the target is currently configured for 8D-8D-8D protocol mode.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_b_write_enable_and_verify (<a class="code" href="group___o_s_p_i___b.html#structospi__b__instance__ctrl__t">ospi_b_instance_ctrl_t</a> * <span class="keyword">const</span> p_ctrl, <span class="keywordtype">bool</span> is_8d)</div><div class="line">{</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> ospi_b_test_direct_transfer =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_B_COMMAND_WRITE_ENABLE_SPI_MODE,</div><div class="line">        .address        = 0U,</div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 0U,</div><div class="line">        .data_length    = 0U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(p_ctrl, &amp;ospi_b_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>     = OSPI_B_COMMAND_READ_STATUS_SPI_MODE;</div><div class="line">    ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a5e3c48eb88187944722f745231f955f3">data_length</a> = 1U;</div><div class="line"></div><div class="line">    <span class="comment">/* Adjust the dummy cycles if currently operating in 8D-8D-8D mode. */</span></div><div class="line">    <span class="keywordflow">if</span> (is_8d)</div><div class="line">    {</div><div class="line">        ospi_b_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ad4a653cf90fd97dc9d0a5f8fce3c3795">dummy_cycles</a> = 5U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read Status Register */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(p_ctrl, &amp;ospi_b_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (OSPI_B_WEN_BIT_MASK != (ospi_b_test_direct_transfer.data &amp; OSPI_B_WEN_BIT_MASK))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Verification of the write enable status failed. */</span></div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * Changes the OCTACLK divider; assumes PLL2 is being used as the source for OCTACLK.</span></div><div class="line"><span class="comment"> * @param divider New clock divider to switch to.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ospi_b_change_omclk (bsp_clocks_octaclk_div_t divider)</div><div class="line">{</div><div class="line">    <span class="comment">/* Ensure clock source (PLL2 in this example) is running before changing the OCTACLK frequency */</span></div><div class="line">    bsp_octaclk_settings_t octaclk_settings;</div><div class="line">    octaclk_settings.source_clock = BSP_CLOCKS_CLOCK_PLL2;</div><div class="line">    octaclk_settings.divider      = divider;</div><div class="line">    R_BSP_OctaclkUpdate(&amp;octaclk_settings);</div><div class="line">}</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> * Example function to change from 1S-1S-1S (SPI) to 8D-8D-8D (DOPI) protocol mode.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * This assumes S28HS256 is in default factory configuration:</span></div><div class="line"><span class="comment"> *  - 3-byte address lengths</span></div><div class="line"><span class="comment"> *  - Memory read latency of 8/20 (1S/8S) up to 166 MHz DOPI</span></div><div class="line"><span class="comment"> *  - Register read latency of 0/3 up to 25 MHz DPOI</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * @param [in] p_ctrl Pointer to the OSPI_B control struct.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * The OCTACLK source must be within range to support this example as written. Clocks are intended to be configured</span></div><div class="line"><span class="comment"> * as follows to obtain a PLL2P frequency of 240 MHz and OCTACLK starting frequency of 60 MHz.</span></div><div class="line"><span class="comment"> * HOCO (48 MHz) -&gt; PLL2 -&gt; /3 -&gt; x60.0 {960 MHz} -&gt; PLL2P /4 {240 MHz} -&gt; OCTACLK -&gt; /4 -&gt; {60 MHz}.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_b_example_spi_to_dopi (<a class="code" href="group___o_s_p_i___b.html#structospi__b__instance__ctrl__t">ospi_b_instance_ctrl_t</a> * <span class="keyword">const</span> p_ctrl)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Step 1: Enable write access to the registers. */</span></div><div class="line">    ospi_b_write_enable_and_verify(p_ctrl, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">    <span class="comment">/* Step 2: Adjust the dummy cycles for a faster clock later.</span></div><div class="line"><span class="comment">     * Changes the dummy cycles for register commands to 1 for SPI and 5 for OSPI.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> xfer_adjust_cfr3 =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_B_COMMAND_WRITE_REGISTER_SPI_MODE,</div><div class="line">        .address        = OSPI_B_CFR3V_ADDRESS,</div><div class="line">        .data           = OSPI_B_FAST_CLOCK_REGISTER_SETTING,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 3U,</div><div class="line">        .data_length    = 1U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(p_ctrl, &amp;xfer_adjust_cfr3, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Step 3: Change the target flash&#39;s configuration to use 8D-8D-8D mode. */</span></div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> xfer_change_mode =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_B_COMMAND_WRITE_REGISTER_SPI_MODE,</div><div class="line">        .address        = OSPI_B_CFR5V_ADDRESS,</div><div class="line">        .data           = OSPI_B_DOPI_REGISTER_SETTING,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 3U,</div><div class="line">        .data_length    = 1U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(p_ctrl, &amp;xfer_change_mode, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Step 4: Speed up the bus by lowering the input divider.</span></div><div class="line"><span class="comment">     * If using the suggested clock settings this will increase the bus speed from 60 MHz to 120 MHz. */</span></div><div class="line">    ospi_b_change_omclk(BSP_CLOCKS_OCTACLK_DIV_2);</div><div class="line"></div><div class="line">    <span class="comment">/* Step 5: Transition the OSPI peripheral to DOPI mode. This will initiate auto calibration as MDTR is 0.</span></div><div class="line"><span class="comment">     * This must happen after the device has been re-configured to the new mode. Otherwise, communications will be</span></div><div class="line"><span class="comment">     * lost as both MCU and flash device will be in different modes. */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c">R_OSPI_B_SpiProtocolSet</a>(p_ctrl, <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#gga17c347a498a8a9d38ffc36c0de49a535afd83f451b4164b209b240ebb0f4bb158">SPI_FLASH_PROTOCOL_DOPI</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Step 6: Verify that the chip is in requested DOPI mode. */</span></div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> xfer_read_register =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_B_COMMAND_READ_REGISTER_SPI_MODE,</div><div class="line">        .address        = OSPI_B_CFR5V_ADDRESS,</div><div class="line">        .data           = 0,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 4U,</div><div class="line">        .data_length    = 1U,</div><div class="line">        .dummy_cycles   = 5U,</div><div class="line">    };</div><div class="line">    err = <a class="code" href="group___o_s_p_i___b.html#ga7b42dbc86db7f4c82ed640620743c609">R_OSPI_B_DirectTransfer</a>(p_ctrl, &amp;xfer_read_register, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (OSPI_B_DOPI_REGISTER_SETTING != xfer_read_register.data)</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -653,6 +938,11 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structospi__b__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#structospi__b__instance__ctrl__t">ospi_b_instance_ctrl_t</a></td></tr>
 <tr class="separator:structospi__b__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga84d19b0f9d6698d68364b7c4c2bb1126"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga84d19b0f9d6698d68364b7c4c2bb1126">OSPI_B_MAX_WRITE_ENABLE_POLLING_LOOPS</a></td></tr>
+<tr class="separator:ga84d19b0f9d6698d68364b7c4c2bb1126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga76971feb991ff5a55ffdc3e1c6834c1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f">ospi_b_device_number_t</a> </td></tr>
@@ -665,6 +955,20 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga910082046980b0d68cf3927d2a465e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab6aad607f2de843932644cf1137eeeac"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gab6aad607f2de843932644cf1137eeeac">ospi_b_command_cs_pulldown_clocks_t</a> </td></tr>
 <tr class="separator:gab6aad607f2de843932644cf1137eeeac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b8f9d8f7c05070b5b4826882dbb15fa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga7b8f9d8f7c05070b5b4826882dbb15fa">ospi_b_ds_timing_delay_t</a> </td></tr>
+<tr class="separator:ga7b8f9d8f7c05070b5b4826882dbb15fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f788d0293774da421928e43112397c0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga6f788d0293774da421928e43112397c0">ospi_b_sdr_drive_timing_t</a> </td></tr>
+<tr class="separator:ga6f788d0293774da421928e43112397c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae27c294bf3112e9fa6ef652cc470e12d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gae27c294bf3112e9fa6ef652cc470e12d">ospi_b_ck_edge_t</a> </td></tr>
+<tr class="separator:gae27c294bf3112e9fa6ef652cc470e12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga936cdfcd8adcd5e8623598ff2abea12e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga936cdfcd8adcd5e8623598ff2abea12e">ospi_b_sdr_sampling_delay_t</a> </td></tr>
+<tr class="separator:ga936cdfcd8adcd5e8623598ff2abea12e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80c573b83c220daa0a6cf15c9f238bf2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga80c573b83c220daa0a6cf15c9f238bf2">ospi_b_ddr_sampling_extension_t</a> </td></tr>
+<tr class="separator:ga80c573b83c220daa0a6cf15c9f238bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada8a65f95a308ffd7a5bfa58a8a2b183"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#gada8a65f95a308ffd7a5bfa58a8a2b183">ospi_b_frame_format_t</a> </td></tr>
+<tr class="separator:gada8a65f95a308ffd7a5bfa58a8a2b183"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fb4c8bc061b939bd501610e8a687359"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga5fb4c8bc061b939bd501610e8a687359">ospi_b_latency_mode_t</a> </td></tr>
+<tr class="separator:ga5fb4c8bc061b939bd501610e8a687359"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga131fd33e93249afc3733475ad2786a3b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga131fd33e93249afc3733475ad2786a3b">ospi_b_prefetch_function_t</a> </td></tr>
 <tr class="separator:ga131fd33e93249afc3733475ad2786a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7d821ba8f342427fa60390abdf6cdf87"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s_p_i___b.html#ga7d821ba8f342427fa60390abdf6cdf87">ospi_b_combination_function_t</a> </td></tr>
@@ -718,7 +1022,7 @@ Number of entries in the table. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Memory mapped timing </p>
+<div class="textblock"><p>Fixed timing configuration for bus signals. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -739,6 +1043,30 @@ Duration to de-assert CS line after the last command. </td></tr>
 cs_pulldown_lead</td>
 <td class="fielddoc">
 Duration to assert CS line before the first command. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa1a699aabe5a094bc91914d64f0012d9"></a><a class="el" href="group___o_s_p_i___b.html#ga6f788d0293774da421928e43112397c0">ospi_b_sdr_drive_timing_t</a></td>
+<td class="fieldname">
+sdr_drive_timing</td>
+<td class="fielddoc">
+Data signal timing relative to the rising-edge of the CK signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="a84fcde7cfd0c05ba7110f54ee97275ee"></a><a class="el" href="group___o_s_p_i___b.html#gae27c294bf3112e9fa6ef652cc470e12d">ospi_b_ck_edge_t</a></td>
+<td class="fieldname">
+sdr_sampling_edge</td>
+<td class="fielddoc">
+Selects the clock edge to sample the data signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8d579ef2c6da8af85efa5a15048c873a"></a><a class="el" href="group___o_s_p_i___b.html#ga936cdfcd8adcd5e8623598ff2abea12e">ospi_b_sdr_sampling_delay_t</a></td>
+<td class="fieldname">
+sdr_sampling_delay</td>
+<td class="fielddoc">
+Number of cycles to delay before sampling the data signal. </td></tr>
+<tr><td class="fieldtype">
+<a id="ada634ce7da29913306be35a68c72cea7"></a><a class="el" href="group___o_s_p_i___b.html#ga80c573b83c220daa0a6cf15c9f238bf2">ospi_b_ddr_sampling_extension_t</a></td>
+<td class="fieldname">
+ddr_sampling_extension</td>
+<td class="fielddoc">
+Number of cycles to extending the data sampling window in DDR mode. </td></tr>
 </table>
 
 </div>
@@ -754,7 +1082,7 @@ Duration to assert CS line before the first command. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Command set used for a protocol mode other than normal (1S-1S-1S) SPI. </p>
+<div class="textblock"><p>Command set used for a protocol mode. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
@@ -764,11 +1092,29 @@ protocol</td>
 <td class="fielddoc">
 Protocol mode associated with this command set. </td></tr>
 <tr><td class="fieldtype">
+<a id="add13f94149340dec69e96c4a35eccf7b"></a><a class="el" href="group___o_s_p_i___b.html#gada8a65f95a308ffd7a5bfa58a8a2b183">ospi_b_frame_format_t</a></td>
+<td class="fieldname">
+frame_format</td>
+<td class="fielddoc">
+Frame format to use for this command set. </td></tr>
+<tr><td class="fieldtype">
+<a id="a00f0550cb7be11932add1ab09ca2daa8"></a><a class="el" href="group___o_s_p_i___b.html#ga5fb4c8bc061b939bd501610e8a687359">ospi_b_latency_mode_t</a></td>
+<td class="fieldname">
+latency_mode</td>
+<td class="fielddoc">
+Configurable or variable latency, only valid for OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2 and OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2_EXTENDED. </td></tr>
+<tr><td class="fieldtype">
 <a id="ac84822e6456c6d507ed77584d0bbeac1"></a><a class="el" href="group___o_s_p_i___b.html#ga4bf54e3468d5d4de83db9e021bdbb2d3">ospi_b_command_bytes_t</a></td>
 <td class="fieldname">
 command_bytes</td>
 <td class="fielddoc">
 Number of command bytes for each command code. </td></tr>
+<tr><td class="fieldtype">
+<a id="a06e423259b6456b5c7a177fafa4e1eba"></a><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga289ef915326b8e75e7d0dd331c2d0797">spi_flash_address_bytes_t</a></td>
+<td class="fieldname">
+address_bytes</td>
+<td class="fielddoc">
+Number of bytes used during the address phase. </td></tr>
 <tr><td class="fieldtype">
 <a id="a00f83d7b93418be05caa4310ee86b065"></a>uint16_t</td>
 <td class="fieldname">
@@ -776,11 +1122,11 @@ read_command</td>
 <td class="fielddoc">
 Read command. </td></tr>
 <tr><td class="fieldtype">
-<a id="afc0516d6e75a20ee38af5b7b0ec1cacc"></a>uint16_t</td>
+<a id="aef831de4dec7f7dca345791db9da02a7"></a>uint16_t</td>
 <td class="fieldname">
-page_program_command</td>
+program_command</td>
 <td class="fielddoc">
-Page program/write command. </td></tr>
+Memory program/write command. </td></tr>
 <tr><td class="fieldtype">
 <a id="a6a3858f70d10ad02727a77db3dc7812e"></a>uint16_t</td>
 <td class="fieldname">
@@ -793,6 +1139,18 @@ Command to enable write or erase, set to 0x00 to ignore. </td></tr>
 status_command</td>
 <td class="fielddoc">
 Command to read the write status, set to 0x00 to ignore. </td></tr>
+<tr><td class="fieldtype">
+<a id="a33b0b9b9466be77656b5528d5071ab4d"></a>uint16_t</td>
+<td class="fieldname">
+row_load_command</td>
+<td class="fielddoc">
+Load a page into the device's internal buffer, set to 0x00 to ignore. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac9c8360552cd4692d23cdedd1b30124e"></a>uint16_t</td>
+<td class="fieldname">
+row_store_command</td>
+<td class="fielddoc">
+Stores the device's internal buffer to the memory page, set to 0x00 to ignore. </td></tr>
 <tr><td class="fieldtype">
 <a id="aefcc9d11688943faff97d79d0a7580b8"></a>uint8_t</td>
 <td class="fieldname">
@@ -811,6 +1169,42 @@ Dummy cycles to be inserted for page program commands. </td></tr>
 status_dummy_cycles</td>
 <td class="fielddoc">
 Dummy cycles to be inserted for status read commands. </td></tr>
+<tr><td class="fieldtype">
+<a id="aba7c637ada23d85938025e622e6f705d"></a>uint8_t</td>
+<td class="fieldname">
+row_load_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for the page load command. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0526d05dcd366ee7ebad1f88714001b9"></a>uint8_t</td>
+<td class="fieldname">
+row_store_dummy_cycles</td>
+<td class="fielddoc">
+Dummy cycles to be inserted for the page store command. </td></tr>
+<tr><td class="fieldtype">
+<a id="abef464c831b5cc1705c8e51085ef0dd8"></a>uint8_t</td>
+<td class="fieldname">
+address_msb_mask</td>
+<td class="fielddoc">
+Mask of bits to zero when using memory-mapped operations; only applies to the most-significant byte. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8702c9b52d6ae6ba2a1be6db6ab702cb"></a>bool</td>
+<td class="fieldname">
+status_needs_address</td>
+<td class="fielddoc">
+Indicates that reading the status register requires an address stage. </td></tr>
+<tr><td class="fieldtype">
+<a id="a186b5ffb2bc40c5a1043d681bbe39db7"></a>uint32_t</td>
+<td class="fieldname">
+status_address</td>
+<td class="fielddoc">
+Address to use for reading the status register with "busy" and "write-enable" flags. </td></tr>
+<tr><td class="fieldtype">
+<a id="a07dbd2c6892093be321f57711848d2f3"></a><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga289ef915326b8e75e7d0dd331c2d0797">spi_flash_address_bytes_t</a></td>
+<td class="fieldname">
+status_address_bytes</td>
+<td class="fielddoc">
+Number of bytes used for status register addressing. </td></tr>
 <tr><td class="fieldtype">
 <a id="adcbff92ffccf92dc8bf1272dab7e294a"></a><a class="el" href="group___o_s_p_i___b.html#structospi__b__table__t">ospi_b_table_t</a> const  *</td>
 <td class="fieldname">
@@ -867,7 +1261,7 @@ Device number to be used for memory device. </td></tr>
 <td class="fieldname">
 p_timing_settings</td>
 <td class="fielddoc">
-Memory-mapped timing settings. </td></tr>
+Fixed protocol timing settings. </td></tr>
 <tr><td class="fieldtype">
 <a id="a508364a048f6aeec3f7ba9aa56053da0"></a><a class="el" href="group___o_s_p_i___b.html#structospi__b__table__t">ospi_b_table_t</a> const  *</td>
 <td class="fieldname">
@@ -875,41 +1269,23 @@ p_xspi_command_set</td>
 <td class="fielddoc">
 Additional protocol command sets; if additional protocol commands set are not used set this to NULL. </td></tr>
 <tr><td class="fieldtype">
+<a id="aa3273ae681e006597303a7c4671673fd"></a><a class="el" href="group___o_s_p_i___b.html#ga7b8f9d8f7c05070b5b4826882dbb15fa">ospi_b_ds_timing_delay_t</a></td>
+<td class="fieldname">
+data_latch_delay_clocks</td>
+<td class="fielddoc">
+Delay after assertion of the DS signal where data should be latched. </td></tr>
+<tr><td class="fieldtype">
 <a id="a8562f207c43dc832c1f78ac06f9b522a"></a>uint8_t *</td>
 <td class="fieldname">
 p_autocalibration_preamble_pattern_addr</td>
 <td class="fielddoc">
 OctaFlash memory address holding the preamble pattern. </td></tr>
 <tr><td class="fieldtype">
-<a id="af914eb67d0d2dda9e70770c54ef6d283"></a>uint8_t</td>
-<td class="fieldname">
-data_latch_delay_clocks</td>
-<td class="fielddoc">
-Specify delay between OM_DQS and OM_DQS Strobe. Set to 0 to auto-calibrate. Typical value is 0x80. </td></tr>
-<tr><td class="fieldtype">
 <a id="a61141668e0ed6019ecabfaba780f2cf0"></a><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *</td>
 <td class="fieldname">
 p_lower_lvl_transfer</td>
 <td class="fielddoc">
 DMA Transfer instance used for data transmission. </td></tr>
-<tr><td class="fieldtype">
-<a id="a4bfc8375b7a10512fed0694b9bb801a1"></a>uint8_t</td>
-<td class="fieldname">
-read_dummy_cycles</td>
-<td class="fielddoc">
-Dummy cycles to be inserted for read commands. </td></tr>
-<tr><td class="fieldtype">
-<a id="a2e0c01bff80f18b8f0535dde912693c0"></a>uint8_t</td>
-<td class="fieldname">
-program_dummy_cycles</td>
-<td class="fielddoc">
-Dummy cycles to be inserted for page program commands. </td></tr>
-<tr><td class="fieldtype">
-<a id="aa3bd97568f04755e775e5f49746cc79d"></a>uint8_t</td>
-<td class="fieldname">
-status_dummy_cycles</td>
-<td class="fielddoc">
-Dummy cycles to be inserted for status read commands. </td></tr>
 </table>
 
 </div>
@@ -953,6 +1329,12 @@ channel</td>
 <td class="fielddoc">
 Device number to be used for memory device. </td></tr>
 <tr><td class="fieldtype">
+<a id="ab80b799761f032f97c0effe0c68748bb"></a>uint8_t</td>
+<td class="fieldname">
+ospi_b_unit</td>
+<td class="fielddoc">
+OSPI_B instance number. </td></tr>
+<tr><td class="fieldtype">
 <a id="a1bf3034bfe77a6165e54d1ab593bfcdb"></a><a class="el" href="group___o_s_p_i___b.html#structospi__b__xspi__command__set__t">ospi_b_xspi_command_set_t</a> const  *</td>
 <td class="fieldname">
 p_cmd_set</td>
@@ -965,6 +1347,22 @@ p_reg</td>
 <td class="fielddoc">
 Address for the OSPI peripheral associated with this channel. </td></tr>
 </table>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga84d19b0f9d6698d68364b7c4c2bb1126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga84d19b0f9d6698d68364b7c4c2bb1126">&#9670;&nbsp;</a></span>OSPI_B_MAX_WRITE_ENABLE_POLLING_LOOPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define OSPI_B_MAX_WRITE_ENABLE_POLLING_LOOPS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum number of status polling checks after enabling memory writes. </p>
 
 </div>
 </div>
@@ -1097,6 +1495,241 @@ Address for the OSPI peripheral associated with this channel. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab6aad607f2de843932644cf1137eeeacae46135ac72afa0bea87eccfb6ecce566"></a>OSPI_B_COMMAND_CS_PULLDOWN_CLOCKS_NO_EXTENSION&#160;</td><td class="fielddoc"><p>CS negating No extension. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab6aad607f2de843932644cf1137eeeaca4fa5ffc6899c6e6d8cb69168c3e8627c"></a>OSPI_B_COMMAND_CS_PULLDOWN_CLOCKS_1&#160;</td><td class="fielddoc"><p>CS negating Extend 1 cycle. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga7b8f9d8f7c05070b5b4826882dbb15fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7b8f9d8f7c05070b5b4826882dbb15fa">&#9670;&nbsp;</a></span>ospi_b_ds_timing_delay_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga7b8f9d8f7c05070b5b4826882dbb15fa">ospi_b_ds_timing_delay_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI data strobe delay. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa866af4a57107ec1f8e1ce50d7d3a1be1"></a>OSPI_B_DS_TIMING_DELAY_NONE&#160;</td><td class="fielddoc"><p>Sample without delay. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faaf63effc13d9736337456da954173bc64"></a>OSPI_B_DS_TIMING_DELAY_1&#160;</td><td class="fielddoc"><p>Delay sampling by 1 clock cell. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa1909a5ef1344e1844f214a472dac3d1e"></a>OSPI_B_DS_TIMING_DELAY_2&#160;</td><td class="fielddoc"><p>Delay sampling by 2 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa525a46d783e425279495c7577a087160"></a>OSPI_B_DS_TIMING_DELAY_3&#160;</td><td class="fielddoc"><p>Delay sampling by 3 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa5637c6ea1b3744644428c35d5257f125"></a>OSPI_B_DS_TIMING_DELAY_4&#160;</td><td class="fielddoc"><p>Delay sampling by 4 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa9d433678f1b985a398fbe2f4815c64ca"></a>OSPI_B_DS_TIMING_DELAY_5&#160;</td><td class="fielddoc"><p>Delay sampling by 5 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa8e6d4130108e6d02661ff6e844ad4b1e"></a>OSPI_B_DS_TIMING_DELAY_6&#160;</td><td class="fielddoc"><p>Delay sampling by 6 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faad5db99ec58b5a6a1c1e8a503fe91000f"></a>OSPI_B_DS_TIMING_DELAY_7&#160;</td><td class="fielddoc"><p>Delay sampling by 7 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa831e2554bc4ddeb3f91a43b4472811bd"></a>OSPI_B_DS_TIMING_DELAY_8&#160;</td><td class="fielddoc"><p>Delay sampling by 8 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa96953ca77d475071af0a6505cfc63876"></a>OSPI_B_DS_TIMING_DELAY_9&#160;</td><td class="fielddoc"><p>Delay sampling by 9 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faae649dcc9c4464b6b56823de95661fa69"></a>OSPI_B_DS_TIMING_DELAY_10&#160;</td><td class="fielddoc"><p>Delay sampling by 10 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa7650eccd88381e2c549a4f3f05f98452"></a>OSPI_B_DS_TIMING_DELAY_11&#160;</td><td class="fielddoc"><p>Delay sampling by 11 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa29751edf8ce3c00957a38d5a1d370613"></a>OSPI_B_DS_TIMING_DELAY_12&#160;</td><td class="fielddoc"><p>Delay sampling by 12 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa64f7af03a6ec5f43ca25ec574f32c0f6"></a>OSPI_B_DS_TIMING_DELAY_13&#160;</td><td class="fielddoc"><p>Delay sampling by 13 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faae2e979e2ae5912f3fc7c1f5013e415af"></a>OSPI_B_DS_TIMING_DELAY_14&#160;</td><td class="fielddoc"><p>Delay sampling by 14 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa0b91a9a412f722da82d83f774ba8a5f5"></a>OSPI_B_DS_TIMING_DELAY_15&#160;</td><td class="fielddoc"><p>Delay sampling by 15 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa84109b879cb5046bf02caaaae8094f2b"></a>OSPI_B_DS_TIMING_DELAY_16&#160;</td><td class="fielddoc"><p>Delay sampling by 16 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa26e50cf9966c02fb8f1286f9aafabfe8"></a>OSPI_B_DS_TIMING_DELAY_17&#160;</td><td class="fielddoc"><p>Delay sampling by 17 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa75aec25ef776fb372913322c40f0cb16"></a>OSPI_B_DS_TIMING_DELAY_18&#160;</td><td class="fielddoc"><p>Delay sampling by 18 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faaa3ad7ad49bbb5f1ced665fab13dd4e9b"></a>OSPI_B_DS_TIMING_DELAY_19&#160;</td><td class="fielddoc"><p>Delay sampling by 19 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faab62d36b86156eaf71f4a288c14b8dd05"></a>OSPI_B_DS_TIMING_DELAY_20&#160;</td><td class="fielddoc"><p>Delay sampling by 20 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faab03c2761ddee55d3bcccca791a46bdf3"></a>OSPI_B_DS_TIMING_DELAY_21&#160;</td><td class="fielddoc"><p>Delay sampling by 21 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa2b9304d3764cb5cafcc92714d16eefe5"></a>OSPI_B_DS_TIMING_DELAY_22&#160;</td><td class="fielddoc"><p>Delay sampling by 22 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa55d664ab669d71c1e775295f56cf0199"></a>OSPI_B_DS_TIMING_DELAY_23&#160;</td><td class="fielddoc"><p>Delay sampling by 23 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faaaea80d13a1fb72e37e1c58043dc5d816"></a>OSPI_B_DS_TIMING_DELAY_24&#160;</td><td class="fielddoc"><p>Delay sampling by 24 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa7a1b01d09b27fb37f1eef35daceabadc"></a>OSPI_B_DS_TIMING_DELAY_25&#160;</td><td class="fielddoc"><p>Delay sampling by 25 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa0f2968601f05c21d890e47ac3961bb93"></a>OSPI_B_DS_TIMING_DELAY_26&#160;</td><td class="fielddoc"><p>Delay sampling by 26 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa5d0c6d8ff66bec6e097e95f94b0241ba"></a>OSPI_B_DS_TIMING_DELAY_27&#160;</td><td class="fielddoc"><p>Delay sampling by 27 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa9cbea51eb280ccf19faeb8c878a62935"></a>OSPI_B_DS_TIMING_DELAY_28&#160;</td><td class="fielddoc"><p>Delay sampling by 28 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa9c002310cda757e04e39d02edbc64c5a"></a>OSPI_B_DS_TIMING_DELAY_29&#160;</td><td class="fielddoc"><p>Delay sampling by 29 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faa3e67aa925afb0ed8a507bf1ce73026cc"></a>OSPI_B_DS_TIMING_DELAY_30&#160;</td><td class="fielddoc"><p>Delay sampling by 30 clock cells. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7b8f9d8f7c05070b5b4826882dbb15faaa757baa9dee40a468c2b24732819f999"></a>OSPI_B_DS_TIMING_DELAY_31&#160;</td><td class="fielddoc"><p>Delay sampling by 31 clock cells. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga6f788d0293774da421928e43112397c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6f788d0293774da421928e43112397c0">&#9670;&nbsp;</a></span>ospi_b_sdr_drive_timing_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga6f788d0293774da421928e43112397c0">ospi_b_sdr_drive_timing_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OSPI SDR signal drive timing. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6f788d0293774da421928e43112397c0a65a6b65c9fa75feda107e436e53433ae"></a>OSPI_B_SDR_DRIVE_TIMING_BEFORE_CK&#160;</td><td class="fielddoc"><p>SDR is asserted 1/2 cycle before the rising-edge of CK. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6f788d0293774da421928e43112397c0a002dddb081f4281905c4b2353cbf51e2"></a>OSPI_B_SDR_DRIVE_TIMING_AT_CK&#160;</td><td class="fielddoc"><p>SDR is asserted at the rising-edge of CK. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae27c294bf3112e9fa6ef652cc470e12d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae27c294bf3112e9fa6ef652cc470e12d">&#9670;&nbsp;</a></span>ospi_b_ck_edge_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#gae27c294bf3112e9fa6ef652cc470e12d">ospi_b_ck_edge_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clock edge useed to sample data in SDR mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae27c294bf3112e9fa6ef652cc470e12da6b199035d0c7fca722a4cb7fd043b321"></a>OSPI_B_CK_EDGE_FALLING&#160;</td><td class="fielddoc"><p>Falling-edge of CK signal. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae27c294bf3112e9fa6ef652cc470e12da52a33dd79fa38ea8f78d343c90afab1a"></a>OSPI_B_CK_EDGE_RISING&#160;</td><td class="fielddoc"><p>Rising-edge of CK signal. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga936cdfcd8adcd5e8623598ff2abea12e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga936cdfcd8adcd5e8623598ff2abea12e">&#9670;&nbsp;</a></span>ospi_b_sdr_sampling_delay_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga936cdfcd8adcd5e8623598ff2abea12e">ospi_b_sdr_sampling_delay_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SDR sampling window delay. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12eab1efb7515f395381b43ce27caf406d55"></a>OSPI_B_SDR_SAMPLING_DELAY_NONE&#160;</td><td class="fielddoc"><p>No sampling delay. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12eaa86bbb0eae7b03b1bf48ccfd3763220f"></a>OSPI_B_SDR_SAMPLING_DELAY_1&#160;</td><td class="fielddoc"><p>Delay sampling by 1 cycle. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12eaf99d0dd0eb6e386321b6588625f4acce"></a>OSPI_B_SDR_SAMPLING_DELAY_2&#160;</td><td class="fielddoc"><p>Delay sampling by 2 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12ea283367fffd00325be788fa3809bfcf17"></a>OSPI_B_SDR_SAMPLING_DELAY_3&#160;</td><td class="fielddoc"><p>Delay sampling by 3 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12eadb86a30e6c553cad2d3c4aa550468b72"></a>OSPI_B_SDR_SAMPLING_DELAY_4&#160;</td><td class="fielddoc"><p>Delay sampling by 4 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12ea9fa78fc8affc012a87f6f812ce1db265"></a>OSPI_B_SDR_SAMPLING_DELAY_5&#160;</td><td class="fielddoc"><p>Delay sampling by 5 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12ea9b00206e11fc532e2f5ff339fbb970fe"></a>OSPI_B_SDR_SAMPLING_DELAY_6&#160;</td><td class="fielddoc"><p>Delay sampling by 6 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga936cdfcd8adcd5e8623598ff2abea12ea1855da65c9e700e70dccfdec100e7882"></a>OSPI_B_SDR_SAMPLING_DELAY_7&#160;</td><td class="fielddoc"><p>Delay sampling by 7 cycles. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga80c573b83c220daa0a6cf15c9f238bf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga80c573b83c220daa0a6cf15c9f238bf2">&#9670;&nbsp;</a></span>ospi_b_ddr_sampling_extension_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga80c573b83c220daa0a6cf15c9f238bf2">ospi_b_ddr_sampling_extension_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DDR sampling window extension. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2a6c0c0e52ce891457429582926f893061"></a>OSPI_B_DDR_SAMPLING_EXTENSION_NONE&#160;</td><td class="fielddoc"><p>No sampling extension. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2a166df5fcfc26217dc36fc5c88349f5e6"></a>OSPI_B_DDR_SAMPLING_EXTENSION_1&#160;</td><td class="fielddoc"><p>Sampling extended by 1 cycle. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2aae89918bb8530c6e71e653fef38c93f6"></a>OSPI_B_DDR_SAMPLING_EXTENSION_2&#160;</td><td class="fielddoc"><p>Sampling extended by 2 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2a2a44da0203e93abcac977fecd2b0165c"></a>OSPI_B_DDR_SAMPLING_EXTENSION_3&#160;</td><td class="fielddoc"><p>Sampling extended by 3 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2aa194d392dd8eb9c9932fa3a03207b9be"></a>OSPI_B_DDR_SAMPLING_EXTENSION_4&#160;</td><td class="fielddoc"><p>Sampling extended by 4 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2a53931ec25391c197f7fd78469c39326b"></a>OSPI_B_DDR_SAMPLING_EXTENSION_5&#160;</td><td class="fielddoc"><p>Sampling extended by 5 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2a14ba326da28a6f3f12bf4dc10e557cce"></a>OSPI_B_DDR_SAMPLING_EXTENSION_6&#160;</td><td class="fielddoc"><p>Sampling extended by 6 cycles. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga80c573b83c220daa0a6cf15c9f238bf2a6ef8e2bf6d1f727651b0cc0e4123aa5c"></a>OSPI_B_DDR_SAMPLING_EXTENSION_7&#160;</td><td class="fielddoc"><p>Sampling extended by 7 cycles. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gada8a65f95a308ffd7a5bfa58a8a2b183"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gada8a65f95a308ffd7a5bfa58a8a2b183">&#9670;&nbsp;</a></span>ospi_b_frame_format_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#gada8a65f95a308ffd7a5bfa58a8a2b183">ospi_b_frame_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Format of data frames used for communicating with the target device. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggada8a65f95a308ffd7a5bfa58a8a2b183af9ddf00cc395878dfd4486dcd6354db8"></a>OSPI_B_FRAME_FORMAT_STANDARD&#160;</td><td class="fielddoc"><p>Standard frame with command, address, and data phases. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggada8a65f95a308ffd7a5bfa58a8a2b183ad7a6eeb97b3ac2b5df3fc03ce41258b2"></a>OSPI_B_FRAME_FORMAT_XSPI_PROFILE_1&#160;</td><td class="fielddoc"><p>JEDEC XSPI 8D-8D-8D Profile 1.0 frame. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggada8a65f95a308ffd7a5bfa58a8a2b183aa17e9454fae1fdbe8bc1090adf6dd213"></a>OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2&#160;</td><td class="fielddoc"><p>JEDEC XSPI 8D-8D-8D Profile 2.0 frame. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggada8a65f95a308ffd7a5bfa58a8a2b183a737189d3185afa26ec870a453ecec645"></a>OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2_EXTENDED&#160;</td><td class="fielddoc"><p>JEDEC XSPI 8D-8D-8D Profile 2.0 extended 6-byte command-address frame, used with HyperRAM. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5fb4c8bc061b939bd501610e8a687359"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5fb4c8bc061b939bd501610e8a687359">&#9670;&nbsp;</a></span>ospi_b_latency_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___o_s_p_i___b.html#ga5fb4c8bc061b939bd501610e8a687359">ospi_b_latency_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Variable or fixed latency selection for flash devices which can notify the host of requiring additional time. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5fb4c8bc061b939bd501610e8a687359ab9c47d1045bfdab42bb95e2599fb194f"></a>OSPI_B_LATENCY_MODE_FIXED&#160;</td><td class="fielddoc"><p>Latency is fixed to the number of dummy cycles for the command. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5fb4c8bc061b939bd501610e8a687359a8f75b46c5467ffde0834594a821ee41f"></a>OSPI_B_LATENCY_MODE_VARIABLE&#160;</td><td class="fielddoc"><p>The flash target signifies additional latency (2x dummy cycles) by asserting the DQS line during the address phase. </p>
 </td></tr>
 </table>
 
@@ -1724,6 +2357,98 @@ Address for the OSPI peripheral associated with this channel. </td></tr>
 
 </div>
 </div>
+<a id="gaf8ca05a2a44468130ef9e97aee6e9f66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf8ca05a2a44468130ef9e97aee6e9f66">&#9670;&nbsp;</a></span>R_OSPI_B_RowLoad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_RowLoad </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>row_index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Loads a row into the page buffer on devices which support row addressing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">row_index</td><td>Index of the row in the OSPI device.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Page transaction succeeded. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Row addressing support is not enabled </td></tr>
+    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>On going asynchronous operation or the device in in XiP mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafd7b272b5cd5d961d742d681bdc651bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafd7b272b5cd5d961d742d681bdc651bc">&#9670;&nbsp;</a></span>R_OSPI_B_RowStore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_OSPI_B_RowStore </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ga0f14c8b55d2948c30b99ab157e16488f">spi_flash_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>row_index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stores (programs) the page buffer to a row on devices which support row addressing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to a driver handle. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">row_index</td><td>Index of the row in the OSPI device.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Page transaction succeeded. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid argument. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Driver has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Row addressing support is not enabled </td></tr>
+    <tr><td class="paramname">FSP_ERR_DEVICE_BUSY</td><td>On going asynchronous operation or the device in in XiP mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga215959cccab9f53a2516920ed0182dfc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga215959cccab9f53a2516920ed0182dfc">&#9670;&nbsp;</a></span>R_OSPI_B_DOTF_Configure()</h2>
 
@@ -1776,7 +2501,7 @@ Address for the OSPI peripheral associated with this channel. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

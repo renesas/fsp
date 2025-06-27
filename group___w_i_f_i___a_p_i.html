@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___w_i_f_i___a_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___w_i_f_i___a_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___w_i_f_i___a_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -339,9 +339,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gad7a2781f77890983d8c7181a37020723"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#gad7a2781f77890983d8c7181a37020723">WIFI_StartDisconnectStation</a> (uint8_t *pucMac)</td></tr>
 <tr class="memdesc:gad7a2781f77890983d8c7181a37020723"><td class="mdescLeft">&#160;</td><td class="mdescRight">AP mode disconnecting a station.  <a href="#gad7a2781f77890983d8c7181a37020723">More...</a><br /></td></tr>
 <tr class="separator:gad7a2781f77890983d8c7181a37020723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0883f2b15f71a1723c599baa06eb954"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#gaf0883f2b15f71a1723c599baa06eb954">WIFI_SetMAC</a> (uint8_t *pucMac)</td></tr>
-<tr class="memdesc:gaf0883f2b15f71a1723c599baa06eb954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Wi-Fi MAC addresses.  <a href="#gaf0883f2b15f71a1723c599baa06eb954">More...</a><br /></td></tr>
-<tr class="separator:gaf0883f2b15f71a1723c599baa06eb954"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga11d78c85d0621f36cf99c70fb915b2df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df">WIFI_SetSpoofingMAC</a> (uint8_t *pucMac)</td></tr>
 <tr class="memdesc:ga11d78c85d0621f36cf99c70fb915b2df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Wi-Fi MAC addresses.  <a href="#ga11d78c85d0621f36cf99c70fb915b2df">More...</a><br /></td></tr>
 <tr class="separator:ga11d78c85d0621f36cf99c70fb915b2df"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -542,7 +539,7 @@ xSecurity</td>
 <td class="fielddoc">
 Wi-Fi Security. </td></tr>
 <tr><td class="fieldtype">
-<a id="a2735f3f610a59bdaaa2294d09f11c5bf"></a>union <a class="el" href="group___w_i_f_i___a_p_i.html#union_w_i_f_i_network_params__t_8x_password">WIFINetworkParams_t</a></td>
+<a id="a629ec64d4db86983edb266df32746ac9"></a>union <a class="el" href="group___w_i_f_i___a_p_i.html#union_w_i_f_i_network_params__t_8x_password">WIFINetworkParams_t</a></td>
 <td class="fieldname">
 xPassword</td>
 <td class="fielddoc">
@@ -1684,7 +1681,7 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
 </div><div class="memdoc">
 
 <p>Connects to the Wi-Fi Access Point (AP) specified in the input. </p>
-<p>The Wi-Fi should stay connected when the same Access Point it is currently connected to is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point specified. If the new Access Point specifed has invalid parameters, then the Wi-Fi should be disconnected.</p>
+<p>The Wi-Fi should stay connected when the same Access Point it is currently connected to is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point specified. If the new Access Point specified has invalid parameters, then the Wi-Fi should be disconnected.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pxNetworkParams</td><td>Configuration to join AP.</td></tr>
@@ -1694,7 +1691,7 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a> if connection is successful, failure code otherwise.</dd></dl>
 <p><b>Example</b> </p><div class="fragment"><div class="line"><a class="code" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a> xNetworkParams;</div><div class="line"><a class="code" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a> xWifiStatus;</div><div class="line">xNetworkParams.pcSSID = <span class="stringliteral">&quot;SSID String&quot;</span>;</div><div class="line">xNetworkParams.<a class="code" href="group___w_i_f_i___a_p_i.html#a1e1281ce26368d300c5ce311dcf380e6">ucSSIDLength</a> = SSIDLen;</div><div class="line">xNetworkParams.pcPassword = <span class="stringliteral">&quot;Password String&quot;</span>;</div><div class="line">xNetworkParams.ucPasswordLength = PassLength;</div><div class="line">xNetworkParams.<a class="code" href="group___w_i_f_i___a_p_i.html#a069e5ebdba235bdc5f7b151175e59c82">xSecurity</a> = <a class="code" href="group___w_i_f_i___a_p_i.html#gga827dc938c214035b938c5ebe7d7b6816ac4775007ba0bfdb4e4ba754f219387df">eWiFiSecurityWPA2</a>;</div><div class="line">xWifiStatus = <a class="code" href="group___w_i_f_i___a_p_i.html#ga430d72715054198b6ce0885410b027a5">WIFI_ConnectAP</a>( &amp;( xNetworkParams ) );</div><div class="line"><span class="keywordflow">if</span>(xWifiStatus == <a class="code" href="group___w_i_f_i___a_p_i.html#ggadfe3543e18f4b10860f77c2654903222a9329b10b8a89e4ef0676b3dec41d3e6f">eWiFiSuccess</a>)</div><div class="line">{</div><div class="line">    <span class="comment">//Connected to AP.</span></div><div class="line">}</div></div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="group___w_i_f_i___a_p_i.html#struct_w_i_f_i_network_params__t">WIFINetworkParams_t</a></dd></dl>
 <p>Connects to the Wi-Fi Access Point (AP) specified in the input.</p>
-<p>The Wi-Fi should stay connected when the same Access Point it is currently connected to is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point specified. If the new Access Point specifed has invalid parameters, then the Wi-Fi should be disconnected.</p>
+<p>The Wi-Fi should stay connected when the same Access Point it is currently connected to is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point specified. If the new Access Point specified has invalid parameters, then the Wi-Fi should be disconnected.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pxNetworkParams</td><td>Configuration to join AP.</td></tr>
@@ -2601,36 +2598,6 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
 
 </div>
 </div>
-<a id="gaf0883f2b15f71a1723c599baa06eb954"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf0883f2b15f71a1723c599baa06eb954">&#9670;&nbsp;</a></span>WIFI_SetMAC()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___w_i_f_i___a_p_i.html#gadfe3543e18f4b10860f77c2654903222">WIFIReturnCode_t</a> WIFI_SetMAC </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pucMac</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set Wi-Fi MAC addresses. </p>
-<p>The given MAC address will become the station MAC address. The AP MAC address (i.e. BSSID) will be the same MAC address but with the local bit set.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pucMac</td><td>- Station MAC address.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>eWiFiSuccess if MAC address was set successfully, failure code otherwise.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>On some platforms the change of MAC address can only take effect after reboot.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>This function is deprecated, please use <a class="el" href="group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df" title="Set Wi-Fi MAC addresses. ">WIFI_SetSpoofingMAC()</a> instead. </dd></dl>
-
-</div>
-</div>
 <a id="ga11d78c85d0621f36cf99c70fb915b2df"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga11d78c85d0621f36cf99c70fb915b2df">&#9670;&nbsp;</a></span>WIFI_SetSpoofingMAC()</h2>
 
@@ -2648,6 +2615,18 @@ Supported features bitmap, e.g., WIFI_WPS_SUPPORTED. </td></tr>
 </div><div class="memdoc">
 
 <p>Set Wi-Fi MAC addresses. </p>
+<p>The given MAC address is for MAC SPOOFING. The original MAC address is not changed. This MAC address can be set only for Station. The AP MAC address (i.e. BSSID) will not be changed. If the original MAC address needs to be used, then MAC spoofing needs to be disabled.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pucMac</td><td>- Station MAC address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>eWiFiSuccess if MAC address was set successfully, failure code otherwise.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function performs MAC SPOOFING, it does not change the “manufacturer” WIFI MAC address.</dd>
+<dd>
+On some platforms the change of MAC address can only take effect after reboot.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>This function is deprecated, please use <a class="el" href="group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df" title="Set Wi-Fi MAC addresses. ">WIFI_SetSpoofingMAC()</a> instead. </dd></dl>
 <p>The given MAC address is for MAC SPOOFING. The original MAC address is not changed. This MAC address can be set only for Station. The AP MAC address (i.e. BSSID) will not be changed. If the original MAC address needs to be used, then MAC spoofing needs to be disabled.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2776,7 +2755,7 @@ On some platforms the change of MAC address can only take effect after reboot. <
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

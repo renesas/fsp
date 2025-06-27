@@ -80,7 +80,7 @@ var group___d_i_s_p_l_a_y___a_p_i =
     ] ],
     [ "display_callback_args_t", "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__callback__args__t", [
       [ "event", "group___d_i_s_p_l_a_y___a_p_i.html#abe45960d623a2871a797db6c27907511", null ],
-      [ "p_context", "group___d_i_s_p_l_a_y___a_p_i.html#ac34165366bb93b94e1122d0032262117", null ]
+      [ "p_context", "group___d_i_s_p_l_a_y___a_p_i.html#ae7f5c87cf4f42ba56b3cf83a3d0be940", null ]
     ] ],
     [ "display_cfg_t", "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__cfg__t", [
       [ "input", "group___d_i_s_p_l_a_y___a_p_i.html#af1c92072b2aa6751e9c304ebc780549c", null ],
@@ -93,7 +93,7 @@ var group___d_i_s_p_l_a_y___a_p_i =
       [ "underflow_1_irq", "group___d_i_s_p_l_a_y___a_p_i.html#a6d5a1539547d96032d069b293816c5b2", null ],
       [ "underflow_2_irq", "group___d_i_s_p_l_a_y___a_p_i.html#a339c532a3d62b28af846be326a5b4ac2", null ],
       [ "p_callback", "group___d_i_s_p_l_a_y___a_p_i.html#ae33f2048706974d3603dc41b9309d577", null ],
-      [ "p_context", "group___d_i_s_p_l_a_y___a_p_i.html#af46f17b405735313c8fb614c9e72e423", null ],
+      [ "p_context", "group___d_i_s_p_l_a_y___a_p_i.html#abc5efd0167afc0580a2edbfe517b43ad", null ],
       [ "p_extend", "group___d_i_s_p_l_a_y___a_p_i.html#a3efcb593d49cab8768fe8acff349881d", null ]
     ] ],
     [ "display_runtime_cfg_t", "group___d_i_s_p_l_a_y___a_p_i.html#structdisplay__runtime__cfg__t", [

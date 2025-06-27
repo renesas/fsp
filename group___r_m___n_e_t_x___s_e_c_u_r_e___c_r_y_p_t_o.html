@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___n_e_t_x___s_e_c_u_r_e___
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___n_e_t_x___s_e_c_u_r_e___
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___n_e_t_x___s_e_c_u_r_e___
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -252,9 +252,11 @@ Overview</h1>
 <tr>
 <td>RSIP-E51A </td><td>RA8M1, RA8D1, RA8T1 </td></tr>
 <tr>
-<td>RSIP-E50D </td><td>T.B.D </td></tr>
+<td>RSIP-E50D </td><td>RA8P1 </td></tr>
 <tr>
-<td>RSIP-E31A </td><td>T.B.D </td></tr>
+<td>RSIP-E31A </td><td>RA4C1 </td></tr>
+<tr>
+<td>RSIP-E11A </td><td>RA4L1 </td></tr>
 <tr>
 <td>SCE9 </td><td>RA6M4, RA4M3, RA4M2, RA6M5 </td></tr>
 <tr>
@@ -265,83 +267,70 @@ Overview</h1>
 <td>SCE5B </td><td>RA6T2 </td></tr>
 <tr>
 <td>AES Engine </td><td>RA2A1, RA2E1, RA2E2, RA2L1 </td></tr>
+<tr>
+<td>AES Engine 2 </td><td>RA2A2 </td></tr>
+<tr>
+<td>TRNG </td><td>RA0E1, RA0E2, RA2L2, RA4E1, RA4E2, RA4T1, RA6E1, RA6E2, RA6T3, RA8E1, RA8E2 </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>NetX Crypto hardware acceleration is unsupported on 'SCE5' and 'AES Engine' crypto peripherals listed above. </dd></dl>
 <h2><a class="anchor" id="rm-netx-secure-crypto-features"></a>
 Features</h2>
-<p>This module provides SCE9 hardware support for the following NetX Crypto operations</p><ul>
-<li>SHA256 calculation <a class="anchor" id="um_crypto_sha256_hash_calculation"></a><a class="anchor" id="um_crypto_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha256_hash_read"></a></li>
-<li>SHA224 calculation <a class="anchor" id="um_crypto_sha224_hash_calculation"></a><a class="anchor" id="um_crypto_sha224_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha224_hash_read"></a></li>
-<li>MAC Operations<ul>
-<li>HMAC with SHA224<a class="anchor" id="um_sha224_crypto_hmac"></a></li>
-<li>HMAC with SHA256<a class="anchor" id="um_sha256_crypto_hmac"></a></li>
-</ul>
-</li>
-<li>AES<ul>
-<li>Keybits - 128, 192, 256<ul>
-<li>Encryption and Decryption. <a class="anchor" id="um_crypto_AES128_encryption_decryption"></a><a class="anchor" id="um_crypto_AES192_encryption_decryption"></a><a class="anchor" id="um_crypto_AES256_encryption_decryption"></a></li>
-<li>Chaining Modes: CBC, CTR, GCM mode <table class="doxtable">
+<table class="doxtable">
 <tr>
-<th>AES Chaining Mode </th><th>HW Acceleration  </th></tr>
+<th></th><th></th><th>AES Engine </th><th>AES Engine 2 </th><th>SCE5 </th><th>SCE5_B </th><th>SCE7 </th><th>SCE9 </th><th>RSIP-E11A </th><th>RSIP-E31A </th><th>RSIP-E51A </th><th>RSIP-E50D  </th></tr>
 <tr>
-<td>CBC </td><td>Fully accelerated </td></tr>
+<td>TRNG </td><td></td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
 <tr>
-<td>CTR </td><td>Fully accelerated </td></tr>
+<td>Hash </td><td>SHA224, SHA256 </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td></tr>
 <tr>
-<td>GCM </td><td>Encrypt - Fully accelerated; Decrypt - Only GHASH and block cipher unit is HW accelerated </td></tr>
+<td></td><td>SHA384, SHA512 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
 <tr>
-<td>CCM </td><td>Only block cipher unit is HW accelerated </td></tr>
+<td></td><td>SHA512/224, SHA512/256 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>MAC </td><td>HMAC-SHA224, HMAC-SHA256 </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td></tr>
+<tr>
+<td></td><td>HMAC-SHA384, HMAC-SHA512 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>HMAC-SHA512/224 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>HMAC-SHA512/256 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>AES </td><td>AES128-CBC, CTR </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES128-GCM (1) </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>(2) </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES128-CCM (1) </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES192-CBC, CTR </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES192-GCM (1) </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>(2) </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES192-CCM (1) </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES256-CBC, CTR </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES256-GCM (1) </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>(2) </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>AES256-CCM (1) </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>ECC </td><td>secp256r1 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>secp384r1 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>RSA </td><td>RSA-1024 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td></tr>
+<tr>
+<td></td><td>RSA-2048 </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>RSA-3072 (3) </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td></td><td>RSA-4096 (3) </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>&ndash; </td><td>&ndash; </td><td>Yes </td><td>Yes </td></tr>
 </table>
-<a class="anchor" id="um_crypto_AES_cbc"></a><a class="anchor" id="um_crypto_AES_ctr"></a><a class="anchor" id="um_crypto_AES_gcm"></a><a class="anchor" id="um_crypto_AES_ccm"></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Random number generation <a class="anchor" id="um_crypto_random_number_generation"></a></li>
-<li>ECC<ul>
-<li>ECDSA: Supported Curves - SECP384R1, SECP256R1. <a class="anchor" id="um_crypto_ECC_ECDSA_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDSA_256R1"></a></li>
-<li>ECDH: Supported Curves - SECP384R1, SECP256R1. <a class="anchor" id="um_crypto_ECC_ECDH_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDH_256R1"></a></li>
-</ul>
-</li>
-<li>RSA<ul>
-<li>Signature Generation - RSA 2048 (Plain or Wrapped private) key. (This can be used for decryption) <a class="anchor" id="um_crypto_RSA_2048_wrapped_key"></a></li>
-<li>Signature Verification - RSA 2048, RSA 3072 and RSA 4096 keys. (This can be used for encryption) <a class="anchor" id="um_crypto_RSA_1024"></a><a class="anchor" id="um_crypto_RSA_2048"></a><a class="anchor" id="um_crypto_RSA_3072"></a><a class="anchor" id="um_crypto_RSA_4096"></a></li>
-<li>Supported encoding scheme: PKCS1V15 <a class="anchor" id="um_crypto_RSA_PKCS1V15_sign_verify"></a>&#160;</li>
-</ul>
-</li>
-</ul>
-<p>This module provides SCE7, SCE9, RSIP-E51A, and RSIP-E50D hardware support for the following NetX Crypto operations:</p><ul>
-<li>SHA256 calculation</li>
-<li>SHA224 calculation</li>
-<li>AES<ul>
-<li>Keybits - 128, 192, 256<ul>
-<li>Encryption and Decryption.</li>
-<li>Chaining Modes: CBC, CTR, GCM mode <table class="doxtable">
-<tr>
-<th>AES Chaining Mode </th><th>HW Acceleration  </th></tr>
-<tr>
-<td>CBC </td><td>Fully accelerated </td></tr>
-<tr>
-<td>CTR </td><td>Fully accelerated </td></tr>
-<tr>
-<td>GCM </td><td>Only block cipher unit is HW accelerated </td></tr>
-<tr>
-<td>CCM </td><td>Only block cipher unit is HW accelerated </td></tr>
-</table>
-- ECC</li>
-</ul>
-</li>
-<li>ECDSA: Supported Curves - SECP384R1, SECP256R1.</li>
-<li>ECDH: Supported Curves - SECP384R1, SECP256R1.</li>
-</ul>
-</li>
-<li>RSA<ul>
-<li>Signature Generation - RSA 2048 (Plain or Wrapped private) key. (This can be used for decryption)</li>
-<li>Signature Verification - RSA 2048. (This can be used for encryption)</li>
-<li>Supported encoding scheme: PKCS1V15 </li>
-</ul>
-</li>
-</ul>
+<dl class="section note"><dt>Note</dt><dd><ol type="1">
+<li>Only block cipher unit is HW accelerated</li>
+<li>Encrypt - Fully accelerated; Decrypt - Only GHASH and block cipher unit is HW accelerated</li>
+<li>Signature verification only</li>
+</ol>
+</dd></dl>
+<p><a class="anchor" id="um_crypto_sha256_hash_calculation"></a><a class="anchor" id="um_crypto_sha256_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha256_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_crypto_sha256_hash_read"></a><a class="anchor" id="um_crypto_sha224_hash_calculation"></a><a class="anchor" id="um_crypto_sha224_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha224_hash_read"></a><a class="anchor" id="um_crypto_sha384_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha384_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_crypto_sha512_hash_multipart_calculation"></a><a class="anchor" id="um_crypto_sha512_hash_multipart_long_message_calculation"></a><a class="anchor" id="um_sha224_crypto_hmac"></a><a class="anchor" id="um_sha256_crypto_hmac"></a><a class="anchor" id="um_sha384_crypto_hmac"></a><a class="anchor" id="um_sha512_crypto_hmac"></a><a class="anchor" id="um_crypto_AES128_encryption_decryption"></a><a class="anchor" id="um_crypto_AES192_encryption_decryption"></a><a class="anchor" id="um_crypto_AES256_encryption_decryption"></a><a class="anchor" id="um_crypto_AES_cbc"></a><a class="anchor" id="um_crypto_AES_ctr"></a><a class="anchor" id="um_crypto_AES_gcm"></a><a class="anchor" id="um_crypto_AES_ccm"></a><a class="anchor" id="um_crypto_random_number_generation"></a><a class="anchor" id="um_crypto_ECC_ECDSA_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDSA_256R1"></a><a class="anchor" id="um_crypto_ECC_ECDH_384R1"></a><a class="anchor" id="um_crypto_ECC_ECDH_256R1"></a><a class="anchor" id="um_crypto_RSA_2048_wrapped_key"></a><a class="anchor" id="um_crypto_RSA_1024"></a><a class="anchor" id="um_crypto_RSA_2048"></a><a class="anchor" id="um_crypto_RSA_3072"></a><a class="anchor" id="um_crypto_RSA_4096"></a><a class="anchor" id="um_crypto_RSA_PKCS1V15_sign_verify"></a>&#160;</p>
 <h1><a class="anchor" id="rm-netx-secure-crypto-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for rm_netx_secure_crypto_sw_port</h2>
@@ -381,6 +370,8 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_net
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Hash  </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">SHA256/224</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">SHA512/384</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA512_ALT. </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Cipher  </td></tr>
 <tr class="tree_lvl_2_item">
@@ -392,9 +383,9 @@ The following build time configurations are defined in fsp_cfg/middleware/rm_net
 <tr class="tree_lvl_3_item">
 <td class="tree_lvl_3_cell">ECC</td><td>MCU Specific Options</td><td></td><td>Enables NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_ECC_ALT </td></tr>
 <tr class="tree_lvl_3_item">
-<td class="tree_lvl_3_cell">ECDSA Scratch Buffer Size (Bytes)</td><td>Value must be an integer</td><td>3016 </td><td>Sets value of NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE </td></tr>
+<td class="tree_lvl_3_cell">ECDSA Scratch Buffer Size (Bytes)</td><td>Value must be a non-negative integer</td><td>3016 </td><td>Sets value of NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE </td></tr>
 <tr class="tree_lvl_3_item">
-<td class="tree_lvl_3_cell">ECDH Scratch Buffer Size (Bytes)</td><td>Value must be an integer</td><td>2464 </td><td>Sets value of NX_CRYPTO_ECDH_SCRATCH_BUFFER_SIZE </td></tr>
+<td class="tree_lvl_3_cell">ECDH Scratch Buffer Size (Bytes)</td><td>Value must be a non-negative integer</td><td>2464 </td><td>Sets value of NX_CRYPTO_ECDH_SCRATCH_BUFFER_SIZE </td></tr>
 <tr class="tree_lvl_3">
 <td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Hardware Acceleration &gt; Public Key Cryptography (PKC) &gt; RSA  </td></tr>
 <tr class="tree_lvl_3_item">
@@ -432,9 +423,9 @@ Random Number Generator Configuration</h2>
 <p>To enable hardware acceleration for the TRNG, the macro NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_TRNG_ALT must be defined in the configuration file. By default TRNG is enabled which can be disabled using the RA Configuration editor.</p>
 <p>Once enabled 'rand' function will be mapped to HW TRNG; the 'srand' function is not supported, any calls to this function will have no effect. Functionality to re-seed the HW TRNG is not supported by the existing implementation.</p>
 <p>If disabled, both 'rand' and 'srand' will be mapped to the C Standard Library. This would require setting up the heap as 'rand' implementation calls 'malloc'.</p>
-<h2><a class="anchor" id="rm-netx-secure-crypto-sha256-configuration"></a>
-SHA256 Configuration</h2>
-<p>To enable hardware acceleration for the SHA256/224 calculation, the macro NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT must be defined in the configuration file. By default SHA256 is enabled which can be disabled using the RA Configuration editor.</p>
+<h2><a class="anchor" id="rm-netx-secure-crypto-sha-configuration"></a>
+SHA Configuration</h2>
+<p>To enable hardware acceleration for the SHA256/224 or SHA384/512 calculation, the macro NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA256_ALT or NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_SHA512_ALT must be defined in the configuration file. By default SHA is enabled which can be disabled using the RA Configuration editor.</p>
 <h2><a class="anchor" id="rm-netx-secure-crypto-aes-configuration"></a>
 AES Configuration</h2>
 <p>To enable hardware acceleration for the AES128/192/256 operation, the macro NETX_SECURE_CRYPTO_NX_CRYPTO_METHODS_AES_ALT must be defined in the configuration file. By default AES is enabled which can be disabled using the RA Configuration editor.</p>
@@ -476,7 +467,7 @@ GCM mode</h3>
 <h3><a class="anchor" id="rm-netx-secure-crypto-ctr-mode"></a>
 CTR mode</h3>
 <p>For CTR mode the IV pointer must be as defined in <a href="https://tools.ietf.org/html/rfc3686">Using Advanced Encryption Standard (AES) Counter Mode With IPsec Encapsulating Security Payload (ESP)</a> under 'Figure 2. Counter Block Format'. The IV must be 8 bytes in length. The Nonce field in the reference above must be 4 bytes and should be passed to _nx_crypto_method_aes_operation through the key pointer stored after the actual AES key. For Example, if the AES 128-bit Plain Key is {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} and the Nonce is {0x01, 0x07, 0xBD, 0xFD}, the key passed to the _nx_crypto_method_aes_operation during Encryption/Decryption should be set as {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x07, 0xBD, 0xFD}. This format would also be valid for Wrapped keys where the Nonce is appended at the end of the actual Wrapped key. Refer to the example code for actual usage.</p>
-<p>The 'Block Counter' field in the above reference is fixed to {0x00, 0x00, 0x00, 0x01} at the beginning and increments internally after every subsequent AES block is processed. Test vectors that have the initial Block Counter not set to {0x00, 0x00, 0x00, 0x01} cannnot be used in this implementation.</p>
+<p>The 'Block Counter' field in the above reference is fixed to {0x00, 0x00, 0x00, 0x01} at the beginning and increments internally after every subsequent AES block is processed. Test vectors that have the initial Block Counter not set to {0x00, 0x00, 0x00, 0x01} cannot be used in this implementation.</p>
 <h2><a class="anchor" id="rm-netx-secure-ecc-usage"></a>
 ECC Usage</h2>
 <p>ECC operations include ECDH and ECDSA. As a part of ECDSA operation the input message can be hashed before signing or verification, or the message digest can be provided directly. ECC Scratch buffer size can be optionally reduced as supported ECC computations are now done by the HW. This is controlled by NX_CRYPTO_ECDSA_SCRATCH_BUFFER_SIZE and NX_CRYPTO_ECDH_SCRATCH_BUFFER_SIZE macros for ECDSA and ECDH respectively.</p>
@@ -544,7 +535,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

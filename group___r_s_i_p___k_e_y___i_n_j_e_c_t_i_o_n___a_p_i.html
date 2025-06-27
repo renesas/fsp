@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_s_i_p___k_e_y___i_n_j_e_c_t_
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_s_i_p___k_e_y___i_n_j_e_c_t_
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_s_i_p___k_e_y___i_n_j_e_c_t_
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -253,20 +253,14 @@ Summary</h1>
 Data Structures</h2></td></tr>
 <tr class="memitem:structrsip__aes__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__aes__wrapped__key__t">rsip_aes_wrapped_key_t</a></td></tr>
 <tr class="separator:structrsip__aes__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structrsip__rsa2048__public__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa2048__public__wrapped__key__t">rsip_rsa2048_public_wrapped_key_t</a></td></tr>
-<tr class="separator:structrsip__rsa2048__public__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structrsip__rsa3072__public__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa3072__public__wrapped__key__t">rsip_rsa3072_public_wrapped_key_t</a></td></tr>
-<tr class="separator:structrsip__rsa3072__public__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structrsip__rsa4096__public__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa4096__public__wrapped__key__t">rsip_rsa4096_public_wrapped_key_t</a></td></tr>
-<tr class="separator:structrsip__rsa4096__public__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structrsip__chacha20__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__chacha20__wrapped__key__t">rsip_chacha20_wrapped_key_t</a></td></tr>
+<tr class="separator:structrsip__chacha20__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__rsa2048__private__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa2048__private__wrapped__key__t">rsip_rsa2048_private_wrapped_key_t</a></td></tr>
 <tr class="separator:structrsip__rsa2048__private__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__rsa3072__private__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa3072__private__wrapped__key__t">rsip_rsa3072_private_wrapped_key_t</a></td></tr>
 <tr class="separator:structrsip__rsa3072__private__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__rsa4096__private__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa4096__private__wrapped__key__t">rsip_rsa4096_private_wrapped_key_t</a></td></tr>
 <tr class="separator:structrsip__rsa4096__private__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structrsip__ecc__public__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a></td></tr>
-<tr class="separator:structrsip__ecc__public__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__ecc__private__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a></td></tr>
 <tr class="separator:structrsip__ecc__private__wrapped__key__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structrsip__hmac__sha__wrapped__key__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__hmac__sha__wrapped__key__t">rsip_hmac_sha_wrapped_key_t</a></td></tr>
@@ -310,90 +304,30 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a name="structrsip__rsa2048__public__wrapped__key__t" id="structrsip__rsa2048__public__wrapped__key__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structrsip__rsa2048__public__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_rsa2048_public_wrapped_key_t</h2>
+<a name="structrsip__chacha20__wrapped__key__t" id="structrsip__chacha20__wrapped__key__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structrsip__chacha20__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_chacha20_wrapped_key_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct rsip_rsa2048_public_wrapped_key_t</td>
+          <td class="memname">struct rsip_chacha20_wrapped_key_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>RSA 2048bit public wrapped key data structure. DO NOT MODIFY. </p>
+<div class="textblock"><p>CHACHA20 wrapped key data structure. DO NOT MODIFY. </p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a3648ff6de92b327cd7215909af6258ef"></a>uint32_t</td>
+<a id="a8d83e63dc65a10c50ee1922d5c916db3"></a>uint32_t</td>
 <td class="fieldname">
 type</td>
 <td class="fielddoc">
 Key type. </td></tr>
 <tr><td class="fieldtype">
-<a id="a79c7f1a19496aaaee12762e0484715da"></a>uint32_t</td>
+<a id="a02b5c57ab099a892b3b1c05cac582065"></a>uint32_t</td>
 <td class="fieldname">
-value[R_RSIP_RSA2048_PUBLIC_KEY_INDEX_WORD_SIZE]</td>
-<td class="fielddoc">
-Wrapped key value. </td></tr>
-</table>
-
-</div>
-</div>
-<a name="structrsip__rsa3072__public__wrapped__key__t" id="structrsip__rsa3072__public__wrapped__key__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structrsip__rsa3072__public__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_rsa3072_public_wrapped_key_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct rsip_rsa3072_public_wrapped_key_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>RSA 3072bit public wrapped key data structure. DO NOT MODIFY. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a3473146de2c8f8e6fc2ea89beda1239d"></a>uint32_t</td>
-<td class="fieldname">
-type</td>
-<td class="fielddoc">
-Key type. </td></tr>
-<tr><td class="fieldtype">
-<a id="a8becfa8a89d7aabda0f64119642279c5"></a>uint32_t</td>
-<td class="fieldname">
-value[R_RSIP_RSA3072_PUBLIC_KEY_INDEX_WORD_SIZE]</td>
-<td class="fielddoc">
-Wrapped key value. </td></tr>
-</table>
-
-</div>
-</div>
-<a name="structrsip__rsa4096__public__wrapped__key__t" id="structrsip__rsa4096__public__wrapped__key__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structrsip__rsa4096__public__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_rsa4096_public_wrapped_key_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct rsip_rsa4096_public_wrapped_key_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>RSA 4096bit public wrapped key data structure. DO NOT MODIFY. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a3a346271114c0572a1a69ddcdeacd515"></a>uint32_t</td>
-<td class="fieldname">
-type</td>
-<td class="fielddoc">
-Key type. </td></tr>
-<tr><td class="fieldtype">
-<a id="afeae129587cc787e0ea19e8ecfadfe3a"></a>uint32_t</td>
-<td class="fieldname">
-value[R_RSIP_RSA4096_PUBLIC_KEY_INDEX_WORD_SIZE]</td>
+value[R_RSIP_CHACHA20_KEY_INDEX_WORD_SIZE]</td>
 <td class="fielddoc">
 Wrapped key value. </td></tr>
 </table>
@@ -490,36 +424,6 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a name="structrsip__ecc__public__wrapped__key__t" id="structrsip__ecc__public__wrapped__key__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structrsip__ecc__public__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_ecc_public_wrapped_key_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct rsip_ecc_public_wrapped_key_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>ECC 256/384/512/521 public wrapped key data structure. DO NOT MODIFY. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a68d9954e56322a7ff288a9a45b779da2"></a>uint32_t</td>
-<td class="fieldname">
-type</td>
-<td class="fielddoc">
-Key type. </td></tr>
-<tr><td class="fieldtype">
-<a id="a8d5546e9cc0bc6ff00d7abc7df137e50"></a>uint32_t</td>
-<td class="fieldname">
-value[R_RSIP_ECCP521_PUBLIC_KEY_INDEX_WORD_SIZE]</td>
-<td class="fielddoc">
-Wrapped key value. </td></tr>
-</table>
-
-</div>
-</div>
 <a name="structrsip__ecc__private__wrapped__key__t" id="structrsip__ecc__private__wrapped__key__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structrsip__ecc__private__wrapped__key__t">&#9670;&nbsp;</a></span>rsip_ecc_private_wrapped_key_t</h2>
 
@@ -604,48 +508,28 @@ Wrapped key value. </td></tr>
 <tr class="separator:a273ebf03a18920a186f23ff4f84d9d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a443c99fb781464ed6e355836fe4bf738"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a443c99fb781464ed6e355836fe4bf738">AES256_XTS_InitialKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__aes__wrapped__key__t">rsip_aes_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a443c99fb781464ed6e355836fe4bf738"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa91367d1ae8b426291000daf1cdef55e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#aa91367d1ae8b426291000daf1cdef55e">RSA2048_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa2048__public__wrapped__key__t">rsip_rsa2048_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:aa91367d1ae8b426291000daf1cdef55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a7d55a864fbd9606e1380499e0deb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a21a7d55a864fbd9606e1380499e0deb7">ChaCha20_InitialKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__chacha20__wrapped__key__t">rsip_chacha20_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
+<tr class="separator:a21a7d55a864fbd9606e1380499e0deb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf374ffcaf2ee9ee589a9129b90c1808"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#abf374ffcaf2ee9ee589a9129b90c1808">RSA2048_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa2048__private__wrapped__key__t">rsip_rsa2048_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:abf374ffcaf2ee9ee589a9129b90c1808"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83eed4e8da654008493f5bf83f419219"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a83eed4e8da654008493f5bf83f419219">RSA3072_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa3072__public__wrapped__key__t">rsip_rsa3072_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:a83eed4e8da654008493f5bf83f419219"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87c5c0d508c24a13483928a3a6b47f9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a87c5c0d508c24a13483928a3a6b47f9a">RSA3072_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa3072__private__wrapped__key__t">rsip_rsa3072_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a87c5c0d508c24a13483928a3a6b47f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51a71785c7290b2362ea23ea4c53169c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a51a71785c7290b2362ea23ea4c53169c">RSA4096_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa4096__public__wrapped__key__t">rsip_rsa4096_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:a51a71785c7290b2362ea23ea4c53169c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dd92d7cd342c489b11c7733c6756b77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a1dd92d7cd342c489b11c7733c6756b77">RSA4096_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa4096__private__wrapped__key__t">rsip_rsa4096_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a1dd92d7cd342c489b11c7733c6756b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa87aa62da463d3c9afaa83f83fdb63d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#afa87aa62da463d3c9afaa83f83fdb63d">ECC_secp256r1_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:afa87aa62da463d3c9afaa83f83fdb63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7df22022cba32d53e86986d53cee8afb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a7df22022cba32d53e86986d53cee8afb">ECC_secp256r1_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a7df22022cba32d53e86986d53cee8afb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f37c19124a00679954ed9cc9f8e4d91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a9f37c19124a00679954ed9cc9f8e4d91">ECC_secp384r1_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:a9f37c19124a00679954ed9cc9f8e4d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a979d9e6390e7b73b1a2cd638c0c199b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a979d9e6390e7b73b1a2cd638c0c199b8">ECC_secp384r1_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a979d9e6390e7b73b1a2cd638c0c199b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a286915058837bd2e2da1da678426acff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a286915058837bd2e2da1da678426acff">ECC_secp521r1_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:a286915058837bd2e2da1da678426acff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab444175a5a058470b16626a1493e847d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ab444175a5a058470b16626a1493e847d">ECC_secp521r1_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:ab444175a5a058470b16626a1493e847d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f69c83e8a44f20274882a5f04256701"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a0f69c83e8a44f20274882a5f04256701">ECC_secp256k1_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:a0f69c83e8a44f20274882a5f04256701"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34dd274630c267a3e2e084aeb809b03d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a34dd274630c267a3e2e084aeb809b03d">ECC_secp256k1_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a34dd274630c267a3e2e084aeb809b03d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af87971d6d53005198083a71ce96ada3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#af87971d6d53005198083a71ce96ada3d">ECC_brainpoolP256r1_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:af87971d6d53005198083a71ce96ada3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a884f761511ba1448778eff9d2b3ef7dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a884f761511ba1448778eff9d2b3ef7dc">ECC_brainpoolP256r1_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a884f761511ba1448778eff9d2b3ef7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35d9b86e48dee666fff67b6ed31e5247"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a35d9b86e48dee666fff67b6ed31e5247">ECC_brainpoolP384r1_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:a35d9b86e48dee666fff67b6ed31e5247"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad00c5581166048b2cf23cc12154e12c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ad00c5581166048b2cf23cc12154e12c3">ECC_brainpoolP384r1_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:ad00c5581166048b2cf23cc12154e12c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2442ba3daa1fd6be61d2e58e2c5ed86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#af2442ba3daa1fd6be61d2e58e2c5ed86">ECC_brainpoolP512r1_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:af2442ba3daa1fd6be61d2e58e2c5ed86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade18be4f20c9fa2550158c8658412e27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ade18be4f20c9fa2550158c8658412e27">ECC_brainpoolP512r1_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:ade18be4f20c9fa2550158c8658412e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4ea2eb7d9f02f74c087dd5312caac2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ad4ea2eb7d9f02f74c087dd5312caac2a">ECC_Ed25519_InitialPublicKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
-<tr class="separator:ad4ea2eb7d9f02f74c087dd5312caac2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d71c8d359b1aea89a7519a8b1eb54e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a5d71c8d359b1aea89a7519a8b1eb54e1">ECC_Ed25519_InitialPrivateKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__private__wrapped__key__t">rsip_ecc_private_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
 <tr class="separator:a5d71c8d359b1aea89a7519a8b1eb54e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ba6176bf91a4414e54b8129225dd44c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#a5ba6176bf91a4414e54b8129225dd44c">HMAC_SHA224_InitialKeyWrap</a> )(<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__hmac__sha__wrapped__key__t">rsip_hmac_sha_wrapped_key_t</a> *const p_wrapped_key)</td></tr>
@@ -787,25 +671,25 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a id="aa91367d1ae8b426291000daf1cdef55e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa91367d1ae8b426291000daf1cdef55e">&#9670;&nbsp;</a></span>RSA2048_InitialPublicKeyWrap</h2>
+<a id="a21a7d55a864fbd9606e1380499e0deb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21a7d55a864fbd9606e1380499e0deb7">&#9670;&nbsp;</a></span>ChaCha20_InitialKeyWrap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::RSA2048_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa2048__public__wrapped__key__t">rsip_rsa2048_public_wrapped_key_t</a> *const p_wrapped_key)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ChaCha20_InitialKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__chacha20__wrapped__key__t">rsip_chacha20_wrapped_key_t</a> *const p_wrapped_key)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This API outputs 2048-bit RSA wrapped public key.</p>
+<p>This API outputs 256-bit ChaCha20 wrapped key.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>2048-bit RSA wrapped public key </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>256-bit ChaCha20 wrapped key </td></tr>
   </table>
   </dd>
 </dl>
@@ -837,31 +721,6 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a id="a83eed4e8da654008493f5bf83f419219"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83eed4e8da654008493f5bf83f419219">&#9670;&nbsp;</a></span>RSA3072_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::RSA3072_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa3072__public__wrapped__key__t">rsip_rsa3072_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 3072-bit RSA wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>3072-bit RSA wrapped public key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a87c5c0d508c24a13483928a3a6b47f9a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a87c5c0d508c24a13483928a3a6b47f9a">&#9670;&nbsp;</a></span>RSA3072_InitialPrivateKeyWrap</h2>
 
@@ -881,31 +740,6 @@ Wrapped key value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>3072-bit RSA wrapped private key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a51a71785c7290b2362ea23ea4c53169c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51a71785c7290b2362ea23ea4c53169c">&#9670;&nbsp;</a></span>RSA4096_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::RSA4096_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__rsa4096__public__wrapped__key__t">rsip_rsa4096_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 4096-bit RSA wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>4096-bit RSA wrapped public key </td></tr>
   </table>
   </dd>
 </dl>
@@ -937,31 +771,6 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a id="afa87aa62da463d3c9afaa83f83fdb63d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa87aa62da463d3c9afaa83f83fdb63d">&#9670;&nbsp;</a></span>ECC_secp256r1_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_secp256r1_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 256-bit ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>256-bit ECC wrapped public key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a7df22022cba32d53e86986d53cee8afb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7df22022cba32d53e86986d53cee8afb">&#9670;&nbsp;</a></span>ECC_secp256r1_InitialPrivateKeyWrap</h2>
 
@@ -981,31 +790,6 @@ Wrapped key value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>256-bit ECC wrapped private key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a9f37c19124a00679954ed9cc9f8e4d91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f37c19124a00679954ed9cc9f8e4d91">&#9670;&nbsp;</a></span>ECC_secp384r1_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_secp384r1_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 384-bit ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>384-bit ECC wrapped public key </td></tr>
   </table>
   </dd>
 </dl>
@@ -1037,31 +821,6 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a id="a286915058837bd2e2da1da678426acff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a286915058837bd2e2da1da678426acff">&#9670;&nbsp;</a></span>ECC_secp521r1_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_secp521r1_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 521-bit ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>521-bit ECC wrapped public key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ab444175a5a058470b16626a1493e847d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab444175a5a058470b16626a1493e847d">&#9670;&nbsp;</a></span>ECC_secp521r1_InitialPrivateKeyWrap</h2>
 
@@ -1081,31 +840,6 @@ Wrapped key value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>521-bit ECC wrapped private key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a0f69c83e8a44f20274882a5f04256701"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f69c83e8a44f20274882a5f04256701">&#9670;&nbsp;</a></span>ECC_secp256k1_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_secp256k1_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 256-bit ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>256-bit ECC wrapped public key </td></tr>
   </table>
   </dd>
 </dl>
@@ -1137,31 +871,6 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a id="af87971d6d53005198083a71ce96ada3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af87971d6d53005198083a71ce96ada3d">&#9670;&nbsp;</a></span>ECC_brainpoolP256r1_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_brainpoolP256r1_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 256-bit brainpool ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>256-bit ECC wrapped public key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a884f761511ba1448778eff9d2b3ef7dc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a884f761511ba1448778eff9d2b3ef7dc">&#9670;&nbsp;</a></span>ECC_brainpoolP256r1_InitialPrivateKeyWrap</h2>
 
@@ -1181,31 +890,6 @@ Wrapped key value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>256-bit ECC wrapped private key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a35d9b86e48dee666fff67b6ed31e5247"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35d9b86e48dee666fff67b6ed31e5247">&#9670;&nbsp;</a></span>ECC_brainpoolP384r1_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_brainpoolP384r1_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 384-bit brainpool ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>384-bit ECC wrapped public key </td></tr>
   </table>
   </dd>
 </dl>
@@ -1237,31 +921,6 @@ Wrapped key value. </td></tr>
 
 </div>
 </div>
-<a id="af2442ba3daa1fd6be61d2e58e2c5ed86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2442ba3daa1fd6be61d2e58e2c5ed86">&#9670;&nbsp;</a></span>ECC_brainpoolP512r1_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_brainpoolP512r1_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 512-bit brainpool ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>512-bit ECC wrapped public key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ade18be4f20c9fa2550158c8658412e27"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ade18be4f20c9fa2550158c8658412e27">&#9670;&nbsp;</a></span>ECC_brainpoolP512r1_InitialPrivateKeyWrap</h2>
 
@@ -1281,31 +940,6 @@ Wrapped key value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>512-bit ECC wrapped private key </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad4ea2eb7d9f02f74c087dd5312caac2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4ea2eb7d9f02f74c087dd5312caac2a">&#9670;&nbsp;</a></span>ECC_Ed25519_InitialPublicKeyWrap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_key_injection_api_t::ECC_Ed25519_InitialPublicKeyWrap) (<a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#ga7cb66638a0b1abf96913892cb252dc6f">rsip_key_injection_type_t</a> const key_injection_type, uint8_t const *const p_wrapped_user_factory_programming_key, uint8_t const *const p_initial_vector, uint8_t const *const p_user_key, <a class="el" href="group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#structrsip__ecc__public__wrapped__key__t">rsip_ecc_public_wrapped_key_t</a> *const p_wrapped_key)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API outputs 256-bit Edwards curve ECC wrapped public key.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_injection_type</td><td>Selection key injection type when generating wrapped key </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_user_factory_programming_key</td><td>Wrapped user factory programming key by the Renesas Key Wrap Service. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_initial_vector</td><td>Initialization vector when generating encrypted key. When key injection type is plain, this is not required and any value can be specified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_user_key</td><td>User key. If key injection type is not plain, it must be encrypted and have MAC appended. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_wrapped_key</td><td>256-bit ECC wrapped public key </td></tr>
   </table>
   </dd>
 </dl>
@@ -1518,7 +1152,7 @@ Wrapped key value. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

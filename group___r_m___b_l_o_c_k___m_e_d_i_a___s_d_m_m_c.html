@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_o_c_k___m_e_d_i_a___
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_o_c_k___m_e_d_i_a___
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___b_l_o_c_k___m_e_d_i_a___
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -255,8 +255,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga8aef1a3d2667ecbb50aba78bba1778c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7de8017643a4087d373c95e660f308d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga7de8017643a4087d373c95e660f308d8">RM_BLOCK_MEDIA_SDMMC_Erase</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, uint32_t const block_address, uint32_t const num_blocks)</td></tr>
 <tr class="separator:ga7de8017643a4087d373c95e660f308d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa495bb279277427acb8d0e185dbafea6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#gaa495bb279277427acb8d0e185dbafea6">RM_BLOCK_MEDIA_SDMMC_CallbackSet</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:gaa495bb279277427acb8d0e185dbafea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga761e5b0ca76b32dbeaf8c1b0d8d994b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga761e5b0ca76b32dbeaf8c1b0d8d994b6">RM_BLOCK_MEDIA_SDMMC_CallbackSet</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *), void *const p_context, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__callback__args__t">rm_block_media_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga761e5b0ca76b32dbeaf8c1b0d8d994b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga73b4346848877bc43776e371b5fd0d51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga73b4346848877bc43776e371b5fd0d51">RM_BLOCK_MEDIA_SDMMC_StatusGet</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__status__t">rm_block_media_status_t</a> *const p_status)</td></tr>
 <tr class="separator:ga73b4346848877bc43776e371b5fd0d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafc142e5784f845043f7e87b6ff2ac132"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#gafc142e5784f845043f7e87b6ff2ac132">RM_BLOCK_MEDIA_SDMMC_InfoGet</a> (<a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ga19bc09de5e45b09066d0bddcc46956b0">rm_block_media_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__info__t">rm_block_media_info_t</a> *const p_info)</td></tr>
@@ -314,7 +314,7 @@ Pin Configuration</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of minimal use of the SD/MMC block media implementation in an application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE    (512)</span></div><div class="line"></div><div class="line">uint8_t  g_dest[RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t  g_src[RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line"><span class="keywordtype">void</span> rm_block_media_sdmmc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the RM_BLOCK_MEDIA_SDMMC driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga1a4441d532355a2bf38b2f66b023a711">RM_BLOCK_MEDIA_SDMMC_Open</a>(&amp;g_rm_block_media0_ctrl, &amp;g_rm_block_media0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card.  This should not be done until the card is plugged in for SD devices. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga60210d60a2409bc31072fb70ad967f1f">RM_BLOCK_MEDIA_SDMMC_MediaInit</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write a block of data to sector 3 of an SD card. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga8aef1a3d2667ecbb50aba78bba1778c1">RM_BLOCK_MEDIA_SDMMC_Write</a>(&amp;g_rm_block_media0_ctrl, g_src, 3, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read a block of data from sector 3 of an SD card. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga1d5bb5db3172ceb8c98c218154db31e5">RM_BLOCK_MEDIA_SDMMC_Read</a>(&amp;g_rm_block_media0_ctrl, g_dest, 3, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#define RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE    (512)</span></div><div class="line"></div><div class="line">uint8_t  g_dest[RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t  g_src[RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line">uint32_t g_transfer_complete = 0;</div><div class="line"><span class="keywordtype">void</span> rm_block_media_sdmmc_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; RM_BLOCK_MEDIA_SDMMC_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the RM_BLOCK_MEDIA_SDMMC driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga1a4441d532355a2bf38b2f66b023a711">RM_BLOCK_MEDIA_SDMMC_Open</a>(&amp;g_rm_block_media0_ctrl, &amp;g_rm_block_media0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* A device shall be ready to accept the first command within 1ms from detecting VDD min. Reference section 6.4.1.1</span></div><div class="line"><span class="comment">     * &quot;Power Up Time of Card&quot; in the SD Physical Layer Simplified Specification Version 6.00. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1U, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize the SD card.  This should not be done until the card is plugged in for SD devices. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga60210d60a2409bc31072fb70ad967f1f">RM_BLOCK_MEDIA_SDMMC_MediaInit</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write a block of data to sector 3 of an SD card. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga8aef1a3d2667ecbb50aba78bba1778c1">RM_BLOCK_MEDIA_SDMMC_Write</a>(&amp;g_rm_block_media0_ctrl, g_src, 3, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read a block of data from sector 3 of an SD card. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___s_d_m_m_c.html#ga1d5bb5db3172ceb8c98c218154db31e5">RM_BLOCK_MEDIA_SDMMC_Read</a>(&amp;g_rm_block_media0_ctrl, g_dest, 3, 1);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga1a4441d532355a2bf38b2f66b023a711"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga1a4441d532355a2bf38b2f66b023a711">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_SDMMC_Open()</h2>
 
@@ -546,8 +546,8 @@ Examples</h1>
 
 </div>
 </div>
-<a id="gaa495bb279277427acb8d0e185dbafea6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa495bb279277427acb8d0e185dbafea6">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_SDMMC_CallbackSet()</h2>
+<a id="ga761e5b0ca76b32dbeaf8c1b0d8d994b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga761e5b0ca76b32dbeaf8c1b0d8d994b6">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_SDMMC_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -567,7 +567,7 @@ Examples</h1>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -583,7 +583,7 @@ Examples</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#a44e8eff381c878cbf878bdc8c331502b">rm_block_media_api_t::callbackSet</a>.</p>
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#ad57b54039d47e3f0173ff38809d30591">rm_block_media_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -704,7 +704,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

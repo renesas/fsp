@@ -5,7 +5,7 @@ var group___w_i_f_i___d_a16_x_x_x =
       [ "country_code", "group___w_i_f_i___d_a16_x_x_x.html#a32031e682efca11abf56e26211d0a9de", null ],
       [ "sntp_server_ip", "group___w_i_f_i___d_a16_x_x_x.html#adf5fde7b91a84e1f07517702fee63391", null ],
       [ "sntp_utc_offset_in_hours", "group___w_i_f_i___d_a16_x_x_x.html#a7409f9a5c6dbd338f15bbc1b8f5e51f4", null ],
-      [ "p_context", "group___w_i_f_i___d_a16_x_x_x.html#a5db3ed8f21ec948baf1aac9097461928", null ],
+      [ "p_context", "group___w_i_f_i___d_a16_x_x_x.html#a1c477f6ab953d0f10ef8e8dad5a227e3", null ],
       [ "p_extend", "group___w_i_f_i___d_a16_x_x_x.html#ad0075269f7d9aecda47c282f2455548c", null ]
     ] ],
     [ "da16xxx_socket_t", "group___w_i_f_i___d_a16_x_x_x.html#structda16xxx__socket__t", [

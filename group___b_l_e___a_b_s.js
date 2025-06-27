@@ -1,7 +1,7 @@
 var group___b_l_e___a_b_s =
 [
     [ "abs_advertising_parameter_t", "group___b_l_e___a_b_s.html#structabs__advertising__parameter__t", [
-      [ "advertising_parameter", "group___b_l_e___a_b_s.html#a1606334b4a68379f60f915b6ba9062f5", null ],
+      [ "advertising_parameter", "group___b_l_e___a_b_s.html#a776f6d0933be7f218fb868c0c6ca17c2", null ],
       [ "advertising_status", "group___b_l_e___a_b_s.html#a405afac397b8a3595f073dde8e334bb3", null ],
       [ "remote_device_address", "group___b_l_e___a_b_s.html#a699d72b43a98e57d2bbd666390db824f", null ]
     ] ],
@@ -12,7 +12,7 @@ var group___b_l_e___a_b_s =
     ] ],
     [ "ble_abs_instance_ctrl_t", "group___b_l_e___a_b_s.html#structble__abs__instance__ctrl__t", [
       [ "open", "group___b_l_e___a_b_s.html#a7a66a232d141ab0816c1d79ea6ae5518", null ],
-      [ "p_context", "group___b_l_e___a_b_s.html#ad9eb4e55c01850a2de4821fc405477e1", null ],
+      [ "p_context", "group___b_l_e___a_b_s.html#a00490cbe5e98d9eef1a63f0046ce36e1", null ],
       [ "abs_gap_callback", "group___b_l_e___a_b_s.html#a03f344b2687721cb3544879b1ec08077", null ],
       [ "abs_vendor_specific_callback", "group___b_l_e___a_b_s.html#a09a0d029b8a0389cd364cd67d3c93443", null ],
       [ "abs_delete_bond_callback", "group___b_l_e___a_b_s.html#acb9fe105040554b6a69a9387968bc0a5", null ],

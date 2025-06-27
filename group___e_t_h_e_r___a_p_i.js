@@ -1,11 +1,15 @@
 var group___e_t_h_e_r___a_p_i =
 [
+    [ "ether_nic_info_t", "group___e_t_h_e_r___a_p_i.html#structether__nic__info__t", [
+      [ "p_mac_address", "group___e_t_h_e_r___a_p_i.html#afdabff0b6a2c0c4b02fa4305b0271f6c", null ]
+    ] ],
     [ "ether_callback_args_t", "group___e_t_h_e_r___a_p_i.html#structether__callback__args__t", [
       [ "channel", "group___e_t_h_e_r___a_p_i.html#a3fbb224027c537cfb660c215d5f2a35d", null ],
       [ "event", "group___e_t_h_e_r___a_p_i.html#aa28fdd797448d1ed0d56604ec87b349a", null ],
       [ "status_ecsr", "group___e_t_h_e_r___a_p_i.html#af3841da2d8c5298a41614fd264f429b3", null ],
       [ "status_eesr", "group___e_t_h_e_r___a_p_i.html#abf2b41c4e54e2e99bab4e00b131f8a7e", null ],
-      [ "p_context", "group___e_t_h_e_r___a_p_i.html#a2bd7c2f49c32654e803bf44001aacfb4", null ]
+      [ "p_nic_info", "group___e_t_h_e_r___a_p_i.html#a0c32723d86bcb754eba11c887bb3c12a", null ],
+      [ "p_context", "group___e_t_h_e_r___a_p_i.html#adf90ac315d3ce0d8d4d60bd1ba1374e5", null ]
     ] ],
     [ "ether_cfg_t", "group___e_t_h_e_r___a_p_i.html#structether__cfg__t", [
       [ "channel", "group___e_t_h_e_r___a_p_i.html#a39981c364879be25298a5c7656338af3", null ],
@@ -25,7 +29,7 @@ var group___e_t_h_e_r___a_p_i =
       [ "interrupt_priority", "group___e_t_h_e_r___a_p_i.html#ab61eca8e923f4bb332f99ebb168fc6b0", null ],
       [ "p_callback", "group___e_t_h_e_r___a_p_i.html#ace5cc37cc4af9146b146de63b77cf786", null ],
       [ "p_ether_phy_instance", "group___e_t_h_e_r___a_p_i.html#a5ed0d3b67615afba9bfc66fa05d18d72", null ],
-      [ "p_context", "group___e_t_h_e_r___a_p_i.html#af6591011e2bea6dbacb87a3f137eb88a", null ],
+      [ "p_context", "group___e_t_h_e_r___a_p_i.html#a89b1e7ee4cf65f5e30454388814d9120", null ],
       [ "p_extend", "group___e_t_h_e_r___a_p_i.html#a2d76a15c4de55427a96f762727816558", null ]
     ] ],
     [ "ether_api_t", "group___e_t_h_e_r___a_p_i.html#structether__api__t", [
@@ -38,7 +42,7 @@ var group___e_t_h_e_r___a_p_i =
       [ "linkProcess", "group___e_t_h_e_r___a_p_i.html#ae11e3e3521df4c3efe6e0dafecddee72", null ],
       [ "wakeOnLANEnable", "group___e_t_h_e_r___a_p_i.html#acde8967c0512722ca73a1596daf654ea", null ],
       [ "txStatusGet", "group___e_t_h_e_r___a_p_i.html#ad52cabec533efaaef3258caade1e0640", null ],
-      [ "callbackSet", "group___e_t_h_e_r___a_p_i.html#aaeb0eaa99a7a62dfa5b65494db7f1ab4", null ]
+      [ "callbackSet", "group___e_t_h_e_r___a_p_i.html#a2d85d35c6eb31690a2c050dffed7a0df", null ]
     ] ],
     [ "ether_instance_t", "group___e_t_h_e_r___a_p_i.html#structether__instance__t", [
       [ "p_ctrl", "group___e_t_h_e_r___a_p_i.html#a013ed407826d291e797c6b5eb44eb5ba", null ],
@@ -70,12 +74,12 @@ var group___e_t_h_e_r___a_p_i =
       [ "ETHER_EVENT_WAKEON_LAN", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a11318f9e3ab9d48c75dacd4b1ec0b9de", null ],
       [ "ETHER_EVENT_LINK_ON", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973ae80e4569638a5a44618fa437270b0e7d", null ],
       [ "ETHER_EVENT_LINK_OFF", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a910e3b1bc2c7ad6d12ed9851f995dd20", null ],
-      [ "ETHER_EVENT_INTERRUPT", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a1d528f77a7fdfb14f6fe93179ac2b5ee", null ],
       [ "ETHER_EVENT_RX_COMPLETE", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a118f12d6a25a71bb430e76c2b1842d4a", null ],
       [ "ETHER_EVENT_RX_MESSAGE_LOST", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973ac704f1554ad4ee63876e46bde19504a3", null ],
       [ "ETHER_EVENT_TX_COMPLETE", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a4d43dd3828844f2e4218dc1357af86a1", null ],
       [ "ETHER_EVENT_TX_BUFFER_EMPTY", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a052805436818f77bba1db2b599973b55", null ],
       [ "ETHER_EVENT_TX_ABORTED", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a3285ee91ebe4d886519059dcfd509a94", null ],
-      [ "ETHER_EVENT_ERR_GLOBAL", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a5407dfdc90714dc920d15e2255e7f352", null ]
+      [ "ETHER_EVENT_ERR_GLOBAL", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a5407dfdc90714dc920d15e2255e7f352", null ],
+      [ "ETHER_EVENT_GET_NIC_INFO", "group___e_t_h_e_r___a_p_i.html#ggad029483e98651bf40e3e3439ed6d1973a4739ade7d0fbba45c17018dd3b4969d1", null ]
     ] ]
 ];

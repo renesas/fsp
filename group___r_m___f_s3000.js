@@ -4,7 +4,7 @@ var group___r_m___f_s3000 =
       [ "open", "group___r_m___f_s3000.html#ac7efe7adff88550ba4f031c14f4ef722", null ],
       [ "p_cfg", "group___r_m___f_s3000.html#a55b53b6b6040e5b3b323c09e01e3d9a4", null ],
       [ "p_comms_i2c_instance", "group___r_m___f_s3000.html#adf242fb515626f9be02b18319ebbe5c0", null ],
-      [ "p_context", "group___r_m___f_s3000.html#a02f7531b46408c806f1a5039ec3842a9", null ]
+      [ "p_context", "group___r_m___f_s3000.html#a51b23a0d7638e3312e89e52371c9b27f", null ]
     ] ],
     [ "RM_FS3000_Open", "group___r_m___f_s3000.html#ga5570c02b735e6a1080f5b4a322335f5c", null ],
     [ "RM_FS3000_Close", "group___r_m___f_s3000.html#ga33cde621cbe8928ac936920afe62cfe1", null ],

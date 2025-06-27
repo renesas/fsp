@@ -11,6 +11,6 @@ var group___i_i_c___b___s_l_a_v_e =
     [ "R_IIC_B_SLAVE_Open", "group___i_i_c___b___s_l_a_v_e.html#ga3ecc5e5e2481cfa4f77a18d086d10814", null ],
     [ "R_IIC_B_SLAVE_Read", "group___i_i_c___b___s_l_a_v_e.html#ga2b520288e7fc9e4481f608164dcf0144", null ],
     [ "R_IIC_B_SLAVE_Write", "group___i_i_c___b___s_l_a_v_e.html#gad9c8d17d33ab4cc1ee5b978370478cd7", null ],
-    [ "R_IIC_B_SLAVE_CallbackSet", "group___i_i_c___b___s_l_a_v_e.html#ga7e697559a06f6ea2f27feafabcffa559", null ],
+    [ "R_IIC_B_SLAVE_CallbackSet", "group___i_i_c___b___s_l_a_v_e.html#gabe8df2dec8b032a7064e39bd224406ad", null ],
     [ "R_IIC_B_SLAVE_Close", "group___i_i_c___b___s_l_a_v_e.html#ga91d9d05b98c11c03bea96ab9401402d7", null ]
 ];

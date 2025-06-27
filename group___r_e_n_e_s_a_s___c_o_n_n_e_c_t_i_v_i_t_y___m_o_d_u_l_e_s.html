@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -259,7 +259,7 @@ Modules</h2></td></tr>
 <tr class="memdesc:group___c_e_c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the CEC peripheral on RA MCUs. This module implements the <a class="el" href="group___c_e_c___a_p_i.html">CEC Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___r_m___c_o_m_m_s___i2_c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___i2_c.html">I2C Communication Device (rm_comms_i2c)</a></td></tr>
-<tr class="memdesc:group___r_m___c_o_m_m_s___i2_c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement the I2C communications interface. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a>. <br /></td></tr>
+<tr class="memdesc:group___r_m___c_o_m_m_s___i2_c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement the I2C communications interface. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communications Middleware Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___i_i_c___b___m_a_s_t_e_r"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_i_c___b___m_a_s_t_e_r.html">I2C Master (r_iic_b_master)</a></td></tr>
 <tr class="memdesc:group___i_i_c___b___m_a_s_t_e_r"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C Driver for the IIC/I3C peripheral on RA MCUs. This module implements the <a class="el" href="group___i2_c___m_a_s_t_e_r___a_p_i.html">I2C Master Interface</a>. <br /></td></tr>
@@ -304,7 +304,7 @@ Modules</h2></td></tr>
 <tr class="memdesc:group___s_c_i___l_i_n"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the SCI peripheral on RA MCUs. This module implements the <a class="el" href="group___l_i_n___a_p_i.html">LIN Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___r_m___c_o_m_m_s___s_m_b_u_s"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_m_b_u_s.html">SMBUS Communication Device (rm_comms_smbus)</a></td></tr>
-<tr class="memdesc:group___r_m___c_o_m_m_s___s_m_b_u_s"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement the SMBUS communications interface. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a>. <br /></td></tr>
+<tr class="memdesc:group___r_m___c_o_m_m_s___s_m_b_u_s"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement the SMBUS communications interface. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communications Middleware Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___s_c_i___s_m_c_i"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___s_m_c_i.html">SMCI (r_sci_smci)</a></td></tr>
 <tr class="memdesc:group___s_c_i___s_m_c_i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the SCI peripheral on RA MCUs. This module implements the <a class="el" href="group___s_m_c_i___a_p_i.html">SMCI Interface</a>. <br /></td></tr>
@@ -325,7 +325,7 @@ Modules</h2></td></tr>
 <tr class="memdesc:group___s_p_i___b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the SPI peripheral on RA MCUs. This module implements the <a class="el" href="group___s_p_i___a_p_i.html">SPI Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___r_m___c_o_m_m_s___s_p_i"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___s_p_i.html">SPI Communication Device (rm_comms_spi)</a></td></tr>
-<tr class="memdesc:group___r_m___c_o_m_m_s___s_p_i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement a generic communications interface over SPI. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a>. <br /></td></tr>
+<tr class="memdesc:group___r_m___c_o_m_m_s___s_p_i"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement a generic communications interface over SPI. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communications Middleware Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___s_a_u___u_a_r_t"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_a_u___u_a_r_t.html">UART (r_sau_uart)</a></td></tr>
 <tr class="memdesc:group___s_a_u___u_a_r_t"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART driver for the SAU peripheral on RA MCUs. This module implements the <a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a>. <br /></td></tr>
@@ -340,7 +340,7 @@ Modules</h2></td></tr>
 <tr class="memdesc:group___u_a_r_t_a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the UARTA peripheral on RA MCUs. This module implements the <a class="el" href="group___u_a_r_t___a_p_i.html">UART Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___r_m___c_o_m_m_s___u_a_r_t"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_a_r_t.html">UART Communication Device (rm_comms_uart)</a></td></tr>
-<tr class="memdesc:group___r_m___c_o_m_m_s___u_a_r_t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement a generic communications interface over UART. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a>. <br /></td></tr>
+<tr class="memdesc:group___r_m___c_o_m_m_s___u_a_r_t"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement a generic communications interface over UART. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communications Middleware Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___u_s_b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a></td></tr>
 <tr class="memdesc:group___u_s_b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the USB peripheral on RA MCUs. This module implements the <a class="el" href="group___u_s_b___a_p_i.html">USB Interface</a>. <br /></td></tr>
@@ -379,7 +379,7 @@ Modules</h2></td></tr>
 <tr class="memdesc:group___u_s_b___t_y_p_e_c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the USB_TYPEC peripheral on RA MCUs. This module implements the <a class="el" href="group___u_s_b___t_y_p_e_c___a_p_i.html">USB TYPEC Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___r_m___c_o_m_m_s___u_s_b___p_c_d_c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___c_o_m_m_s___u_s_b___p_c_d_c.html">USB_PCDC Communication Device (rm_comms_usb_pcdc)</a></td></tr>
-<tr class="memdesc:group___r_m___c_o_m_m_s___u_s_b___p_c_d_c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement a generic communications interface over USB_PCDC. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communicatons Middleware Interface</a>. <br /></td></tr>
+<tr class="memdesc:group___r_m___c_o_m_m_s___u_s_b___p_c_d_c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware to implement a generic communications interface over USB_PCDC. This module implements the <a class="el" href="group___r_m___c_o_m_m_s___a_p_i.html">Communications Middleware Interface</a>. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -388,7 +388,7 @@ Modules</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___l_i_n.html','');})
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___l_i_n.html','');})
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___l_i_n.html','');})
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -249,16 +249,14 @@ $(document).ready(function(){initNavTree('group___s_c_i___b___l_i_n.html','');})
 Functions</h2></td></tr>
 <tr class="memitem:gaa75358cefce98ad90bc771b36cdc259d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__cfg__t">lin_cfg_t</a> const *const p_cfg)</td></tr>
 <tr class="separator:gaa75358cefce98ad90bc771b36cdc259d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacaa0649108cc7f7728e622ecdcf37a3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e">R_SCI_B_LIN_StartFrameWrite</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, uint8_t const id)</td></tr>
-<tr class="separator:gacaa0649108cc7f7728e622ecdcf37a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga335ad22f31235e8b15440faddf169afa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, const <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
-<tr class="separator:ga335ad22f31235e8b15440faddf169afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1231f2072e85988ef6c1d118cd17edda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
-<tr class="separator:ga1231f2072e85988ef6c1d118cd17edda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6efd824293f8fb48aa448bc35d2da060"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, const <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
+<tr class="separator:ga6efd824293f8fb48aa448bc35d2da060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga092acd39ca8d8e5ce0872491236e6c34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
+<tr class="separator:ga092acd39ca8d8e5ce0872491236e6c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga848db61b12a7178213637819835b1248"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga848db61b12a7178213637819835b1248">R_SCI_B_LIN_CommunicationAbort</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga848db61b12a7178213637819835b1248"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19d40c60780f7af15a6ec52038e7df61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga19d40c60780f7af15a6ec52038e7df61">R_SCI_B_LIN_CallbackSet</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ga19d40c60780f7af15a6ec52038e7df61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64521088a13a5c7b6aa704a88c25d0ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga64521088a13a5c7b6aa704a88c25d0ad">R_SCI_B_LIN_CallbackSet</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *), void *const p_context, <a class="el" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga64521088a13a5c7b6aa704a88c25d0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga870b00cee0bf5c018d5e4384e25d793f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga870b00cee0bf5c018d5e4384e25d793f">R_SCI_B_LIN_BaudCalculate</a> (<a class="el" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__baud__params__t">sci_b_lin_baud_params_t</a> const *const p_baud_params, <a class="el" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__baud__setting__t">sci_b_lin_baud_setting_t</a> *const p_baud_setting)</td></tr>
 <tr class="separator:ga870b00cee0bf5c018d5e4384e25d793f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf970991953cfe55dad17aaaa98b4e90d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d">R_SCI_B_LIN_IdFilterSet</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__id__filter__setting__t">sci_b_lin_id_filter_setting_t</a> const *const p_config)</td></tr>
@@ -273,6 +271,12 @@ Functions</h2></td></tr>
 <tr class="separator:gaefad753e01a2e1261f1eb4876d616f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga570356c73be7b0898520fa52cd127c58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl)</td></tr>
 <tr class="separator:ga570356c73be7b0898520fa52cd127c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1231f2072e85988ef6c1d118cd17edda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
+<tr class="separator:ga1231f2072e85988ef6c1d118cd17edda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacaa0649108cc7f7728e622ecdcf37a3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e">R_SCI_B_LIN_StartFrameWrite</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, uint8_t const id)</td></tr>
+<tr class="separator:gacaa0649108cc7f7728e622ecdcf37a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga335ad22f31235e8b15440faddf169afa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a> (<a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const p_api_ctrl, const <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const p_transfer_params)</td></tr>
+<tr class="separator:ga335ad22f31235e8b15440faddf169afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the SCI peripheral on RA MCUs. This module implements the <a class="el" href="group___l_i_n___a_p_i.html">LIN Interface</a>. </p>
@@ -282,7 +286,7 @@ Overview</h1>
 <h2><a class="anchor" id="r-sci-b-lin-features"></a>
 Features</h2>
 <ul>
-<li>Half-duplex master or slave mode LIN communication<a class="anchor" id="um_lin_information_frame_read"></a><a class="anchor" id="um_lin_information_frame_write"></a><a class="anchor" id="um_lin_start_frame"></a></li>
+<li>Half-duplex master or slave mode LIN communication<a class="anchor" id="um_lin_data_frame_read"></a><a class="anchor" id="um_lin_write"></a><a class="anchor" id="um_lin_header"></a></li>
 <li>Interrupt-driven data transmission and reception</li>
 <li>Generation of the sync (0x55) and Protected Identifier fields when in master mode<a class="anchor" id="um_lin_protected_identifier"></a><a class="anchor" id="um_sci_b_lin_sync_byte"></a></li>
 <li>Validation of the Protected Identifier field when in slave mode</li>
@@ -364,6 +368,20 @@ Disable</li>
 </ul>
 </td><td>Disable </td><td>Enable the digital noise filter on RXDn pin. The digital noise filter block in SCI consists of two-stage flipflop circuits. </td></tr>
 <tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Noise Filter Clock Select</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+The base clock signal divided by 1</li>
+<li>
+The on-chip baud rate generator source clock divided by 1</li>
+<li>
+The on-chip baud rate generator source clock divided by 2</li>
+<li>
+The on-chip baud rate generator source clock divided by 4</li>
+<li>
+The on-chip baud rate generator source clock divided by 8</li>
+</ul>
+</td><td>The base clock signal divided by 1 </td><td>Select the clock division setting for the digital noise filter </td></tr>
+<tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Bus Conflict Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable</li>
@@ -395,6 +413,16 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Disable </td><td>Enable LIN synchronization to the master's clock by measuring the effective edges of the input signal from the RXDn pin during reception of the sync byte. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Base Clock Cycles Per Bit Period</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Auto-Select</li>
+<li>
+8</li>
+<li>
+16</li>
+</ul>
+</td><td>Auto-Select </td><td>Select number of SCI base clock cycles per single bit period at the configured baud rate. When 16 base clock cycles is selected, the period of the SCI base clock is 1/16 of a single bit period. When 8 base clock cycles is selected, the period of the SCI base clock is 1/8 of a single bit period. 'Auto-Select' will calculate the base clock period automatically. 'Auto-Select' is not recommended when bus conflict detection is used, see usage notes. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Framing  </td></tr>
 <tr class="tree_lvl_2">
@@ -480,6 +508,8 @@ Clock Configuration</h2>
 <tr>
 <td>RA8M1</td><td>SCICLK</td></tr>
 <tr>
+<td>RA8P1</td><td>SCICLK</td></tr>
+<tr>
 <td>RA8T1</td><td>SCICLK</td></tr>
 </table>
 </p>
@@ -508,40 +538,77 @@ Bus Conflict Detection Configuration</h2>
 <p>When Bus Conflict Detection is enabled, the TXDn pin output and the RXDn pin input are sampled by the selected bus conflict detection clock. When a mismatch occurs three times in a row, an SCIn_ERI interrupt is generated and transmission is stopped. This function only works during transmission.</p>
 <p>Consideration of the specific application's LIN bus characteristics should be taken into account when enabling this function. If the bus collision sampling clock is too fast, the expected propagation delay through the transceiver may be erroneously detected as a bus collision (false positive). If the bus collision sampling clock is too slow, collisions may be missed (false negative).</p>
 <p>When CCR2.ABCS = 1, setting the bus conflict clock divider to 4 is is prohibited by the SCI_B hardware.</p>
-<p>A LIN transceiver is required to detect bus collisions.</p>
+<p>A LIN transceiver is required to detect bus collisions. The propagation delay through the transceiver varies depending on individual transceiver design.</p>
+<p>When Bus Conflict Detection is enabled, set the Bus Conflict Clock Divider to divide down the clock at least slow enough to avoid false positive collision detections caused by the worst case transceiver propagation delay. The Baud|Base Clock Cycles Per Bit Period setting can be used to adjust the SCI_B Base Clock frequency if needed.</p>
+<p><em><b>Example:</b></em></p>
+<p>The SCI_B base clock frequency can be calculated by the following formula:</p>
+<blockquote class="doxtable">
+<p>sci_base_clock_frequency = 1 / [ (1/baud_rate)/cycles_per_bit_period ] </p>
+</blockquote>
+<p>The following relationship must be satisfied to avoid false positives:</p>
+<blockquote class="doxtable">
+<p>2 * [ 1e6 / (sci_base_clock_frequency/bus_conflict_clock_divider) ] &gt; max_propagation_delay_us </p>
+</blockquote>
+<p>Suppose:</p><ul>
+<li>Transceiver TXD-&gt;LIN BUS max delay = 6us</li>
+<li>Transceiver LIN BUS-&gt;RXD max delay = 6us</li>
+<li>Transceiver max_propagation_delay_us: 6us + 6us = 12us</li>
+<li>baud_rate = 19200</li>
+<li>cycles_per_bit_period = 16</li>
+</ul>
+<p>Then:</p><ul>
+<li>1 bit time @ 19200bps = 1e6/19200 = 52us</li>
+<li>sci_base_clock_frequency = 1/[ (1/19200)/16 ] = 307200 Hz</li>
+</ul>
+<p>Bus Conflict Divider Selection Process:</p><ul>
+<li>Divider of 1:<ul>
+<li>2 * [ 1e6 / (307200/1) ] = 6.51 us (not &gt; 12us, may cause false positives)</li>
+</ul>
+</li>
+<li>Divider of 2:<ul>
+<li>2 * [ 1e6 / (307200/2) ] = 13.02 us (is &gt; 12us, can be used)</li>
+</ul>
+</li>
+<li>Divider of 4:<ul>
+<li>2 * [ 1e6 / (307200/4) ] = 26.04 us (is &gt; 12us, can be used, but will be less accurate at detecting real collisions than divider of 2 due to slower bus collision clock)</li>
+</ul>
+</li>
+</ul>
+<p>If no possible divider is found with 16 cycles, Baud|Base Clock Cycles Per Bit Period can be reduced to 8, which will reduce the SCI_B Base Clock by half compared to 16.</p>
+<p>If Baud|Base Clock Cycles Per Bit Period is set to 'Auto Select' the cycles per bit period will be selected automatically. In slave mode, if auto synchronization is enabled, the base cycles per bit period may change during bit rate synchronization, but the bus conflict clock divider and noise filter clock divider will not be changed at runtime. To prevent changing the base cycles per bit period during bit rate synchronization, fix the base clock cycles to 16 or 8 cycles by the procedure described above.</p>
 <h2><a class="anchor" id="r-sci-b-lin-id-filter"></a>
 ID Filter Configuration</h2>
-<p>The SCI performs optional hardware PID filtering in slave mode. When enabled, only start frames with PIDs that pass through the filter are received and passed to the user callback. Other start frames are ignored.</p>
+<p>The SCI performs optional hardware PID filtering in slave mode. When enabled, only headers with PIDs that pass through the filter are received and passed to the user callback. Other headers are ignored.</p>
 <p>An initial configuration of the filter settings can be applied in the properties view by selecting Framing -&gt; ID Filter and choosing the desired settings. See <a class="el" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__id__filter__setting__t">sci_b_lin_id_filter_setting_t</a> for the available filter settings, as well as the examples in this document. By default, filtering is disabled and all PIDs can be received.</p>
 <p>The filter can be updated at runtime by using using <a class="el" href="group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d">R_SCI_B_LIN_IdFilterSet</a>. The current filter settings can be viewed with <a class="el" href="group___s_c_i___b___l_i_n.html#ga0e89579495524bd1f953345bac148b4f">R_SCI_B_LIN_IdFilterGet</a>.</p>
 <h1><a class="anchor" id="r-sci-b-lin-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-sci-b-lin-tx-rx"></a>
 LIN Transmission and Reception</h2>
-<p>SCI data reception is disabled until a break field is detected (slave mode) or a call to <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead()</a> is made (master and slave mode).</p>
+<p>SCI data reception is disabled until a break field is detected (slave mode) or a call to <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read()</a> is made (master and slave mode).</p>
 <h3>Slave Mode Transmission and Reception</h3>
-<p>The start frame is detected in slave mode only. Start frame reception is interrupt driven, and is enabled after a successful call to <a class="el" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open()</a> in slave mode.</p>
-<p>When the LIN break field is detected by the slave node, start frame reception begins without action from the application. When start frame reception completes, the user callback is called.</p>
-<p>If the slave node needs to receive the information frame data, the slave node must call <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead()</a> before the first information data is received in order to receive the data. The user callback is called when reception is complete. It is permitted to call <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead()</a> from the callback context.</p>
-<p>If the slave node needs to publish a response to the start frame, the slave node must call <a class="el" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite()</a> and provide the response data and the PID of the received header in the <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a>. The user callback is called when transmission is complete.</p>
-<p>If the slave node neither needs to receive the information frame data, nor publish a response for a received start frame, no action is required to ignore the frame. Data reception is disabled until a new break field is detected.</p>
+<p>The header is detected in slave mode only. Header reception is interrupt driven, and is enabled after a successful call to <a class="el" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open()</a> in slave mode.</p>
+<p>When the LIN break field is detected by the slave node, header reception begins without action from the application. When header reception completes, the user callback is called.</p>
+<p>If the slave node needs to receive the data frame, the slave node must call <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read()</a> before the first data is received in order to receive the data. The user callback is called when reception is complete. It is permitted to call <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read()</a> from the callback context.</p>
+<p>If the slave node needs to publish a response to the header, the slave node must call <a class="el" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write()</a> and provide the response data and the PID of the received header in the <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a>. The user callback is called when transmission is complete.</p>
+<p>If the slave node neither needs to receive a data frame, nor publish a response for a received header, no action is required to ignore the frame. Data reception is disabled until a new break field is detected.</p>
 <h3>Master Mode Transmission and Reception</h3>
-<p>The start frame is not detected in master mode. Information frame reception is enabled only after a call to <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead()</a>.</p>
-<p>The start frame is transmitted by calling <a class="el" href="group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e">R_SCI_B_LIN_StartFrameWrite()</a>. The user callback is called when transmission is complete.</p>
-<p>If the master node needs to receive the information frame data response, call <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead()</a> after start frame transmission has completed and before the first information frame data is received. It is permitted to call <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead()</a> from the callback context.</p>
-<p>If the master node needs to publish a response to its own start frame, the master node must call <a class="el" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite()</a> only after start frame transmission has completed, and provide the response data and the PID of the transmitted header in the <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a>. The user callback is called when transmission is complete.</p>
+<p>The header is not detected in master mode. Data frame reception is enabled only after a call to <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read()</a>.</p>
+<p>The header is transmitted by calling <a class="el" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write()</a>. The user callback is called when transmission is complete.</p>
+<p>If the master node needs to receive the data response, call <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read()</a> after header transmission has completed and before the first data is received. It is permitted to call <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read()</a> from the callback context.</p>
+<p>If the master node needs to publish a response to its own header, the master node must call <a class="el" href="group___s_a_u___l_i_n.html#ga2b1245bf77fd435ccd41bed248445893">R_SAU_LIN_Write()</a> and provide a pointer to the response data. The response will be published following the header. The user callback is called when the full frame transmission is complete.</p>
 <h2>Timeouts/Errors</h2>
-<p>The application is responsible for managing timeouts in case <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead()</a> is called, but the data is not received in the expected time period. If a timeout occurs, <a class="el" href="group___s_c_i___b___l_i_n.html#ga848db61b12a7178213637819835b1248">R_SCI_B_LIN_CommunicationAbort()</a> may be called to cancel a pending read.</p>
+<p>The application is responsible for managing timeouts in case <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read()</a> is called, but the data is not received in the expected time period. If a timeout occurs, <a class="el" href="group___s_c_i___b___l_i_n.html#ga848db61b12a7178213637819835b1248">R_SCI_B_LIN_CommunicationAbort()</a> may be called to cancel a pending read.</p>
 <p>When an error occurs, reception is stopped and the user callback is called with the relevant error code.</p>
 <h2><a class="anchor" id="r-sci-b-lin-checksum"></a>
 Checksum Generation and Validation</h2>
 <ul>
 <li>The checksum calculation is performed in software for both checksum generation and validation.</li>
 <li>Checksum generation and validation are both optional.</li>
-<li>The LIN checksum may be generated by passing <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5bada36f3e7dd737c1f332917a82efb2db2">lin_transfer_params_t::LIN_CHECKSUM_TYPE_CLASSIC</a> or <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">lin_transfer_params_t::LIN_CHECKSUM_TYPE_ENHANCED</a> when writing the information frame data.</li>
-<li>The LIN checksum may be validated by passing <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5bada36f3e7dd737c1f332917a82efb2db2">lin_transfer_params_t::LIN_CHECKSUM_TYPE_CLASSIC</a> or <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">lin_transfer_params_t::LIN_CHECKSUM_TYPE_ENHANCED</a> when reading the information frame data.</li>
-<li>To skip driver checksum generation/validation, pass <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba26e93d617a43afc1ecd4470e0a959fb1">lin_transfer_params_t::LIN_CHECKSUM_TYPE_NONE</a> to the read/write functions. Instead the checksum can be included as part of the information data buffer, or omitted entirely depending on the application's needs.</li>
-<li>The maximum number of information frame bytes that can be transmitted per frame is 255, including the checksum byte. Thus, when checksum generation/validation is requested in the transfer parameters, the maximum number of bytes that can be specified in transfer_params.num_bytes is 254. When checksum generation/validation is not requested in the transfer parameters, the maximum number of bytes that can be specified in transfer_params.num_bytes is 255.</li>
+<li>The LIN checksum may be generated by passing <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5bada36f3e7dd737c1f332917a82efb2db2">lin_transfer_params_t::LIN_CHECKSUM_TYPE_CLASSIC</a> or <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">lin_transfer_params_t::LIN_CHECKSUM_TYPE_ENHANCED</a> when writing data.</li>
+<li>The LIN checksum may be validated by passing <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5bada36f3e7dd737c1f332917a82efb2db2">lin_transfer_params_t::LIN_CHECKSUM_TYPE_CLASSIC</a> or <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">lin_transfer_params_t::LIN_CHECKSUM_TYPE_ENHANCED</a> when reading data.</li>
+<li>To skip driver checksum generation/validation, pass <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba26e93d617a43afc1ecd4470e0a959fb1">lin_transfer_params_t::LIN_CHECKSUM_TYPE_NONE</a> to the read/write functions. Instead the checksum can be included as part of the data buffer, or omitted entirely depending on the application's needs.</li>
+<li>The maximum number of data bytes that can be transmitted per frame is 255, including the checksum byte. Thus, when checksum generation/validation is requested in the transfer parameters, the maximum number of bytes that can be specified in transfer_params.num_bytes is 254. When checksum generation/validation is not requested in the transfer parameters, the maximum number of bytes that can be specified in transfer_params.num_bytes is 255.</li>
 </ul>
 <h2><a class="anchor" id="r-sci-b-lin-auto-synchronization"></a>
 Auto Synchronization</h2>
@@ -551,8 +618,8 @@ Auto Synchronization</h2>
 <li>Auto synchronization is not the same as automatic baud rate detection. Auto synchronization is used for correcting small clock drift/difference in baud rate between nodes.</li>
 <li>Auto synchronization performs small automatic baud rate adjustments to synchronize with the master's clock by measuring the effective edges of the input signal from the RXDn pin during reception of the LIN sync byte.</li>
 <li>The sync byte is measured and the baud setting and break field detection threshold are re-adjusted for every LIN sync byte received.</li>
-<li>If reception of the sync byte fails, or the required register settings detected would not be possible in the hardware, the baud/timer settings are not updated, and auto synchronization will be re-attempted on the next received start frame.<a class="anchor" id="um_sci_b_lin_auto_synchronization_errors"></a></li>
-<li>If two or more start frames are received consecutively and ignored by software (no call to <a class="el" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead</a>), <em>and</em> there is no information frame transmission by any node on the bus between the start frames, auto synchronization is performed only on the first start frame. Following the transmission of the next information frame (by any node), auto synchronization will be re-attempted on the next received start frame.</li>
+<li>If reception of the sync byte fails, or the required register settings detected would not be possible in the hardware, the baud/timer settings are not updated, and auto synchronization will be re-attempted on the next received header.<a class="anchor" id="um_sci_b_lin_auto_synchronization_errors"></a></li>
+<li>If two or more headers are received consecutively and ignored by software (no call to <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read</a>), <em>and</em> there is no data transmission by any node on the bus between the headers, auto synchronization is performed only on the first header. Following the transmission of the next data frame (by any node), auto synchronization will be re-attempted on the next received header.</li>
 </ul>
 <h2><a class="anchor" id="r-sci-b-lin-limitations"></a>
 Limitations</h2>
@@ -566,15 +633,15 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic LIN Master Read Example</h2>
 <p>The following demonstrates a basic example of frame reception for a LIN master.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_master_read_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_master_ctrl, &amp;g_master_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN start frame */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e">R_SCI_B_LIN_StartFrameWrite</a>(&amp;g_master_ctrl, FRAME_ID);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for start frame transmission to complete before starting a read of the response */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_start_frame_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> read_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = FRAME_ID,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_information = g_rx_buf</div><div class="line">    };</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Begin reception of the information frame data */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead</a>(&amp;g_master_ctrl, &amp;read_params);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for information frame reception to complete. The application is responsible for</span></div><div class="line"><span class="comment">     * timing out if data is not received within the expected time interval*/</span></div><div class="line">    <span class="keywordflow">while</span> (!g_information_frame_rx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> master_callback (<a class="code" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the LIN event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___l_i_n___a_p_i.html#a6dc50b21f5754e10404f94f8a83cc7a3">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72afae5a2ecd0e7539ebf8e10c000577321">LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_information_frame_rx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a849c350c804a580611d9608cbf08d377">LIN_EVENT_TX_START_FRAME_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_start_frame_tx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6">LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_information_frame_tx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48">LIN_EVENT_ERR_INVALID_CHECKSUM</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96">LIN_EVENT_ERR_BUS_COLLISION_DETECTED</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ac8f3050424e7ac3c528d8616ef86cfdc">LIN_EVENT_ERR_FRAMING</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1b5e897b9f7b6c31df9e99b119d71551">LIN_EVENT_ERR_COUNTER_OVERFLOW</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ae3376187275c3f4b572e77b89ec80348">LIN_EVENT_ERR_OVERRUN</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ab651808839cddeec7ee56e86a12c76d9">LIN_EVENT_ERR_PARITY</a>:</div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle error */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Basic LIN Master Write Example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_master_read_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_master_ctrl, &amp;g_master_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Send the header only */</span></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = FRAME_ID,</div><div class="line">        .num_bytes     = 0,</div><div class="line">        .p_data        = NULL          <span class="comment">/* Set to NULL to send header only */</span></div><div class="line">    };</div><div class="line"></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a>(&amp;g_master_ctrl, &amp;write_params);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for header transmission to complete before starting a read of the response */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_header_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> read_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = FRAME_ID,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_data        = g_rx_buf</div><div class="line">    };</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Begin reception of the data */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read</a>(&amp;g_master_ctrl, &amp;read_params);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for data reception to complete. The application is responsible for</span></div><div class="line"><span class="comment">     * timing out if data is not received within the expected time interval*/</span></div><div class="line">    <span class="keywordflow">while</span> (!g_data_rx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> master_callback (<a class="code" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the LIN event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___l_i_n___a_p_i.html#a6dc50b21f5754e10404f94f8a83cc7a3">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1a2bb2468c5d41614b86fe9936e9749a">LIN_EVENT_RX_DATA_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_data_rx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a49669a6b914a5179a758eb60df18aa0d">LIN_EVENT_TX_HEADER_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_header_tx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a9e8ae326573130cc9a65b85481c1cb80">LIN_EVENT_TX_DATA_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_data_tx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48">LIN_EVENT_ERR_INVALID_CHECKSUM</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96">LIN_EVENT_ERR_BUS_COLLISION_DETECTED</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ac8f3050424e7ac3c528d8616ef86cfdc">LIN_EVENT_ERR_FRAMING</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1b5e897b9f7b6c31df9e99b119d71551">LIN_EVENT_ERR_COUNTER_OVERFLOW</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ae3376187275c3f4b572e77b89ec80348">LIN_EVENT_ERR_OVERRUN</a>:</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ab651808839cddeec7ee56e86a12c76d9">LIN_EVENT_ERR_PARITY</a>:</div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle error */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Basic LIN Master Write Example</h2>
 <p>The following demonstrates a basic example of frame transmission for a LIN master.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_master_write_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize transmit buffer to known data. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_tx_buf[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_master_ctrl, &amp;g_master_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN start frame: break, sync, and protected identifier */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e">R_SCI_B_LIN_StartFrameWrite</a>(&amp;g_master_ctrl, FRAME_ID);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for start frame transmission to complete before sending the information frame */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_start_frame_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = FRAME_ID,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_information = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN information frame */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a>(&amp;g_master_ctrl, &amp;write_params);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for information frame transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_information_frame_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_master_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Basic LIN Slave Example</h2>
-<p>The following demonstrates a basic example of start frame reception and information frame response for a LIN slave.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_slave_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize transmit buffer to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_tx_buf[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_slave_ctrl, &amp;g_slave_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the header that this slave publishes the response to. */</span></div><div class="line">    <span class="keywordflow">for</span> ( ; ; )</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> (g_start_frame_rx_complete)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (g_received_pid == FRAME_ID)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Frame ID of interest received */</span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* Ignore this header. No action required by slave. */</span></div><div class="line">            g_start_frame_rx_complete = <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = g_received_pid,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_information = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN information frame response */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a>(&amp;g_slave_ctrl, &amp;write_params);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the response transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_information_frame_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> slave_callback (<a class="code" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the LIN event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___l_i_n___a_p_i.html#a6dc50b21f5754e10404f94f8a83cc7a3">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a7a645d62c0a254686a2df8f8cecf1426">LIN_EVENT_RX_START_FRAME_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_start_frame_rx_complete = 1;</div><div class="line">            g_received_pid            = p_args-&gt;<a class="code" href="group___l_i_n___a_p_i.html#a56d7dcf4d2acb8e0b5a209eecc676ef0">pid</a>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72afae5a2ecd0e7539ebf8e10c000577321">LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_information_frame_rx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6">LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_information_frame_tx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle error */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Basic LIN Slave ID Filtering Example</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_master_write_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize transmit buffer to known data. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_tx_buf[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_master_ctrl, &amp;g_master_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = FRAME_ID,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_data        = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN data. In master mode, the header (break, sync, and protected identifier) will be sent before the data. */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a>(&amp;g_master_ctrl, &amp;write_params);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_data_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_master_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Basic LIN Slave Example</h2>
+<p>The following demonstrates a basic example of header reception and data response for a LIN slave.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_slave_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize transmit buffer to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; TRANSFER_LENGTH; i++)</div><div class="line">    {</div><div class="line">        g_tx_buf[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_slave_ctrl, &amp;g_slave_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the header that this slave publishes the response to. */</span></div><div class="line">    <span class="keywordflow">for</span> ( ; ; )</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> (g_header_rx_complete)</div><div class="line">        {</div><div class="line">            <span class="keywordflow">if</span> (g_received_pid == FRAME_ID)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Frame ID of interest received */</span></div><div class="line">                <span class="keywordflow">break</span>;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="comment">/* Ignore this header. No action required by slave. */</span></div><div class="line">            g_header_rx_complete = <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = g_received_pid,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_data        = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN data response */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a>(&amp;g_slave_ctrl, &amp;write_params);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the response transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_data_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> slave_callback (<a class="code" href="group___l_i_n___a_p_i.html#structlin__callback__args__t">lin_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="comment">/* Handle the LIN event */</span></div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___l_i_n___a_p_i.html#a6dc50b21f5754e10404f94f8a83cc7a3">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a28a4e0d8f7b5779b6ec36a4c6fcbd23e">LIN_EVENT_RX_HEADER_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_header_rx_complete = 1;</div><div class="line">            g_received_pid       = p_args-&gt;<a class="code" href="group___l_i_n___a_p_i.html#a56d7dcf4d2acb8e0b5a209eecc676ef0">pid</a>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1a2bb2468c5d41614b86fe9936e9749a">LIN_EVENT_RX_DATA_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_data_rx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a9e8ae326573130cc9a65b85481c1cb80">LIN_EVENT_TX_DATA_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_data_tx_complete = 1;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Handle error */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Basic LIN Slave ID Filtering Example</h2>
 <p>The following example demonstrates a basic example of frame ID filtering.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define BASIC_FILTER_MASK               (0x30)</span></div><div class="line"><span class="preprocessor">#define BASIC_PRIORITY_FILTER_DATA      (0x20)</span></div><div class="line"><span class="preprocessor">#define BASIC_SECONDARY_FILTER_DATA     (0x00) // Don&#39;t-care value in this example</span></div><div class="line"><span class="preprocessor">#define BASIC_PRIORITY_INTERRUPT_BIT    (0)    // Don&#39;t-care value in this example</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_id_filtering_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_slave_ctrl, &amp;g_slave_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* If the application is using dynamically assigned identifiers, perform</span></div><div class="line"><span class="comment">     * any required initial communications to get the identifiers for this slave */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure filter to accept only frame IDs in the range 0x20-0x2F.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * The start frame is received only when the PID bits match the bits</span></div><div class="line"><span class="comment">     * specified by the filter.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Example: If ID 0x24 is received (PID 0x64), the filter mask (0x30) is applied</span></div><div class="line"><span class="comment">     * first (0x64 &amp; 0x30 = 0x20) and then the result is compared to the priority</span></div><div class="line"><span class="comment">     * compare data filter (0x20). Since the result matches the filter, the start</span></div><div class="line"><span class="comment">     * frame is received and the user callback is called. Otherwise, the SCI awaits</span></div><div class="line"><span class="comment">     * the next break field, and the callback is not called.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Note: The most significant 2 bits of the PID are the parity bits, and are</span></div><div class="line"><span class="comment">     * masked off by the filter mask in this example.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__id__filter__setting__t">sci_b_lin_id_filter_setting_t</a> filter =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_c_i___b___l_i_n.html#a60b8145478f5282a63ca6736d257fcb1">compare_data_mask</a>             = BASIC_FILTER_MASK,</div><div class="line">        .priority_compare_data         = BASIC_PRIORITY_FILTER_DATA,</div><div class="line">        .secondary_compare_data        = BASIC_SECONDARY_FILTER_DATA,</div><div class="line">        .priority_interrupt_bit_select = BASIC_PRIORITY_INTERRUPT_BIT,</div><div class="line">        .priority_interrupt_enable     = <a class="code" href="group___s_c_i___b___l_i_n.html#ggab8a9755cf910edbab7d20a94a2d28111adf26e19821d5bffe038d7fcddae2be35">SCI_B_LIN_PRIORITY_INTERRUPT_BIT_DISABLE</a>,</div><div class="line">        .compare_data_select           = <a class="code" href="group___s_c_i___b___l_i_n.html#ggac0c746e4e586201c62318b45489ecebea57ec49e8c7b01836a8b65c3b00a5d27e">SCI_B_LIN_COMPARE_DATA_SELECT_PRIORITY</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Configure the ID filter */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d">R_SCI_B_LIN_IdFilterSet</a>(&amp;g_slave_ctrl, &amp;filter);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a header frame which matches the filter */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_start_frame_rx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = g_received_pid,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_information = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN information frame response */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a>(&amp;g_slave_ctrl, &amp;write_params);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the response transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_information_frame_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Advanced LIN Slave ID Filtering Example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define BASIC_FILTER_MASK               (0x30)</span></div><div class="line"><span class="preprocessor">#define BASIC_PRIORITY_FILTER_DATA      (0x20)</span></div><div class="line"><span class="preprocessor">#define BASIC_SECONDARY_FILTER_DATA     (0x00) // Don&#39;t-care value in this example</span></div><div class="line"><span class="preprocessor">#define BASIC_PRIORITY_INTERRUPT_BIT    (0)    // Don&#39;t-care value in this example</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_basic_id_filtering_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_slave_ctrl, &amp;g_slave_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* If the application is using dynamically assigned identifiers, perform</span></div><div class="line"><span class="comment">     * any required initial communications to get the identifiers for this slave */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure filter to accept only frame IDs in the range 0x20-0x2F.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * The header is received only when the PID bits match the bits</span></div><div class="line"><span class="comment">     * specified by the filter.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Example: If ID 0x24 is received (PID 0x64), the filter mask (0x30) is applied</span></div><div class="line"><span class="comment">     * first (0x64 &amp; 0x30 = 0x20) and then the result is compared to the priority</span></div><div class="line"><span class="comment">     * compare data filter (0x20). Since the result matches the filter, the header</span></div><div class="line"><span class="comment">     * is received and the user callback is called. Otherwise, the SCI awaits</span></div><div class="line"><span class="comment">     * the next break field, and the callback is not called.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Note: The most significant 2 bits of the PID are the parity bits, and are</span></div><div class="line"><span class="comment">     * masked off by the filter mask in this example.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__id__filter__setting__t">sci_b_lin_id_filter_setting_t</a> filter =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_c_i___b___l_i_n.html#a60b8145478f5282a63ca6736d257fcb1">compare_data_mask</a>             = BASIC_FILTER_MASK,</div><div class="line">        .priority_compare_data         = BASIC_PRIORITY_FILTER_DATA,</div><div class="line">        .secondary_compare_data        = BASIC_SECONDARY_FILTER_DATA,</div><div class="line">        .priority_interrupt_bit_select = BASIC_PRIORITY_INTERRUPT_BIT,</div><div class="line">        .priority_interrupt_enable     = <a class="code" href="group___s_c_i___b___l_i_n.html#ggab8a9755cf910edbab7d20a94a2d28111adf26e19821d5bffe038d7fcddae2be35">SCI_B_LIN_PRIORITY_INTERRUPT_BIT_DISABLE</a>,</div><div class="line">        .compare_data_select           = <a class="code" href="group___s_c_i___b___l_i_n.html#ggac0c746e4e586201c62318b45489ecebea57ec49e8c7b01836a8b65c3b00a5d27e">SCI_B_LIN_COMPARE_DATA_SELECT_PRIORITY</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Configure the ID filter */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d">R_SCI_B_LIN_IdFilterSet</a>(&amp;g_slave_ctrl, &amp;filter);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a header which matches the filter */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_header_rx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = g_received_pid,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_data        = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN data response */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a>(&amp;g_slave_ctrl, &amp;write_params);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the response transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_data_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Advanced LIN Slave ID Filtering Example</h2>
 <p>The following example demonstrates an advanced example of frame ID filtering.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define ADVANCED_FILTER_MASK               (0x3E)</span></div><div class="line"><span class="preprocessor">#define ADVANCED_PRIORITY_FILTER_DATA      (0x20)</span></div><div class="line"><span class="preprocessor">#define ADVANCED_SECONDARY_FILTER_DATA     (0x08)</span></div><div class="line"><span class="preprocessor">#define ADVANCED_PRIORITY_INTERRUPT_BIT    (5)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_advanced_id_filtering_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_slave_ctrl, &amp;g_slave_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* If the application is using dynamically assigned identifiers, perform</span></div><div class="line"><span class="comment">     * any required initial communications to get the identifiers for this slave */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure filter to accept the following frame IDs:</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * - Any ID in which bit 5 is set to 1 (0x20-0x3F).</span></div><div class="line"><span class="comment">     * - IDs 0x08 and 0x09</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * The priority compare data filter is set to 0x20 (bit 5 set).</span></div><div class="line"><span class="comment">     * The priority interrupt bit select function is enabled for bit 5.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * The secondary compare data filter is be set to 0x08. This will allow</span></div><div class="line"><span class="comment">     * both 0x08 and 0x09 through the filter, even though bit 5 is not set for</span></div><div class="line"><span class="comment">     * those values (0x08 &amp; 0x3E = 0x08 and 0x09 &amp; 0x3E = 0x08). All other</span></div><div class="line"><span class="comment">     * identifiers are filtered out.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__id__filter__setting__t">sci_b_lin_id_filter_setting_t</a> filter =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_c_i___b___l_i_n.html#a60b8145478f5282a63ca6736d257fcb1">compare_data_mask</a>             = ADVANCED_FILTER_MASK,</div><div class="line">        .priority_compare_data         = ADVANCED_PRIORITY_FILTER_DATA,</div><div class="line">        .secondary_compare_data        = ADVANCED_SECONDARY_FILTER_DATA,</div><div class="line">        .priority_interrupt_bit_select = ADVANCED_PRIORITY_INTERRUPT_BIT,</div><div class="line">        .priority_interrupt_enable     = <a class="code" href="group___s_c_i___b___l_i_n.html#ggab8a9755cf910edbab7d20a94a2d28111a77eee8d78ab5789788895b55fb130b49">SCI_B_LIN_PRIORITY_INTERRUPT_BIT_ENABLE</a>,</div><div class="line">        .compare_data_select           = <a class="code" href="group___s_c_i___b___l_i_n.html#ggac0c746e4e586201c62318b45489ecebea7e79477f89b4bd67feeffb4d13a4e9fb">SCI_B_LIN_COMPARE_DATA_SELECT_BOTH</a>,</div><div class="line">    };</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Configure the ID filter */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d">R_SCI_B_LIN_IdFilterSet</a>(&amp;g_slave_ctrl, &amp;filter);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a header frame which matches the filter */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_start_frame_rx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = g_received_pid,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_information = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN information frame response */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a>(&amp;g_slave_ctrl, &amp;write_params);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the response transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_information_frame_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="preprocessor">#define ADVANCED_FILTER_MASK               (0x3E)</span></div><div class="line"><span class="preprocessor">#define ADVANCED_PRIORITY_FILTER_DATA      (0x20)</span></div><div class="line"><span class="preprocessor">#define ADVANCED_SECONDARY_FILTER_DATA     (0x08)</span></div><div class="line"><span class="preprocessor">#define ADVANCED_PRIORITY_INTERRUPT_BIT    (5)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_sci_b_lin_advanced_id_filtering_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the LIN instance with initial configuration. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d">R_SCI_B_LIN_Open</a>(&amp;g_slave_ctrl, &amp;g_slave_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* If the application is using dynamically assigned identifiers, perform</span></div><div class="line"><span class="comment">     * any required initial communications to get the identifiers for this slave */</span></div><div class="line"></div><div class="line">    <span class="comment">/* Configure filter to accept the following frame IDs:</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * - Any ID in which bit 5 is set to 1 (0x20-0x3F).</span></div><div class="line"><span class="comment">     * - IDs 0x08 and 0x09</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * The priority compare data filter is set to 0x20 (bit 5 set).</span></div><div class="line"><span class="comment">     * The priority interrupt bit select function is enabled for bit 5.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * The secondary compare data filter is set to 0x08. This will allow</span></div><div class="line"><span class="comment">     * both 0x08 and 0x09 through the filter, even though bit 5 is not set for</span></div><div class="line"><span class="comment">     * those values (0x08 &amp; 0x3E = 0x08 and 0x09 &amp; 0x3E = 0x08). All other</span></div><div class="line"><span class="comment">     * identifiers are filtered out.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__id__filter__setting__t">sci_b_lin_id_filter_setting_t</a> filter =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_c_i___b___l_i_n.html#a60b8145478f5282a63ca6736d257fcb1">compare_data_mask</a>             = ADVANCED_FILTER_MASK,</div><div class="line">        .priority_compare_data         = ADVANCED_PRIORITY_FILTER_DATA,</div><div class="line">        .secondary_compare_data        = ADVANCED_SECONDARY_FILTER_DATA,</div><div class="line">        .priority_interrupt_bit_select = ADVANCED_PRIORITY_INTERRUPT_BIT,</div><div class="line">        .priority_interrupt_enable     = <a class="code" href="group___s_c_i___b___l_i_n.html#ggab8a9755cf910edbab7d20a94a2d28111a77eee8d78ab5789788895b55fb130b49">SCI_B_LIN_PRIORITY_INTERRUPT_BIT_ENABLE</a>,</div><div class="line">        .compare_data_select           = <a class="code" href="group___s_c_i___b___l_i_n.html#ggac0c746e4e586201c62318b45489ecebea7e79477f89b4bd67feeffb4d13a4e9fb">SCI_B_LIN_COMPARE_DATA_SELECT_BOTH</a>,</div><div class="line">    };</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Configure the ID filter */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d">R_SCI_B_LIN_IdFilterSet</a>(&amp;g_slave_ctrl, &amp;filter);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for a header which matches the filter */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_header_rx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = g_received_pid,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_data        = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN data response */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a>(&amp;g_slave_ctrl, &amp;write_params);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait for the response transmission to complete */</span></div><div class="line">    <span class="keywordflow">while</span> (!g_data_tx_complete)</div><div class="line">    {</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_slave_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structsci__b__lin__timer__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#structsci__b__lin__timer__setting__t">sci_b_lin_timer_setting_t</a></td></tr>
@@ -604,10 +671,14 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaf86f9f22b0a9e1fa1f022d8ae557501a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad382945aec8de4cc06de19835090038e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gad382945aec8de4cc06de19835090038e">sci_b_lin_noise_cancellation_t</a> </td></tr>
 <tr class="separator:gad382945aec8de4cc06de19835090038e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb3d777dabeb4f83e9ad1b250cf1d348"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gafb3d777dabeb4f83e9ad1b250cf1d348">sci_b_lin_noise_cancellation_clock_t</a> </td></tr>
+<tr class="separator:gafb3d777dabeb4f83e9ad1b250cf1d348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga664ff05c84c6b04136da98e1ff002cb5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga664ff05c84c6b04136da98e1ff002cb5">e_sci_b_lin_bus_conflict_detection_t</a> </td></tr>
 <tr class="separator:ga664ff05c84c6b04136da98e1ff002cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga009a0e1cdeb3af467427df5bad12c8ff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#ga009a0e1cdeb3af467427df5bad12c8ff">sci_b_lin_bus_conflict_clock_t</a> </td></tr>
 <tr class="separator:ga009a0e1cdeb3af467427df5bad12c8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3bb6e54dc2837b01610d5a412e1ff6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_i___b___l_i_n.html#gad3bb6e54dc2837b01610d5a412e1ff6e">sci_b_lin_base_clock_t</a> </td></tr>
+<tr class="separator:gad3bb6e54dc2837b01610d5a412e1ff6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structsci__b__lin__timer__setting__t" id="structsci__b__lin__timer__setting__t"></a>
@@ -661,7 +732,7 @@ Break field length setting (break field length is (bflw + 1) * clock of the time
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a6666273573aeba7228c4c0865cc7df13"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
+<a id="ab37b13747fef3dcfca362bcf598365a1"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__baud__setting__t_8____unnamed____">sci_b_lin_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -773,7 +844,7 @@ Peripheral clock source. </td></tr>
 <td class="fieldname">
 bus_conflict_clock</td>
 <td class="fielddoc">
-Bus collision clock divider. </td></tr>
+DEPRECATED, not used to set baudrate. </td></tr>
 <tr><td class="fieldtype">
 <a id="a2ac5de8e69277da539c395be89c06b4b"></a>uint16_t</td>
 <td class="fieldname">
@@ -799,7 +870,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="aec75d784e3880b2d1cbe89d8aa8db09e"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
+<a id="ab1d0ccef10f064b8fd5c0e3dd2214958"></a>union <a class="el" href="group___s_c_i___b___l_i_n.html#unionsci__b__lin__extended__cfg__t_8____unnamed____">sci_b_lin_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1052,6 +1123,33 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 
 </div>
 </div>
+<a id="gafb3d777dabeb4f83e9ad1b250cf1d348"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafb3d777dabeb4f83e9ad1b250cf1d348">&#9670;&nbsp;</a></span>sci_b_lin_noise_cancellation_clock_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_c_i___b___l_i_n.html#gafb3d777dabeb4f83e9ad1b250cf1d348">sci_b_lin_noise_cancellation_clock_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Noise cancellation clock configuration. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggafb3d777dabeb4f83e9ad1b250cf1d348a18de509780bf4b9a14920f8439843607"></a>SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BASE_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>Noise filter clock is the base clock/1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafb3d777dabeb4f83e9ad1b250cf1d348afcebd87d44de51ce97d82a4bbc48d653"></a>SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>Noise filter clock is on-chip baudrate generator source clock/1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafb3d777dabeb4f83e9ad1b250cf1d348a593bb92d0a5df26563b4bdfac2f28923"></a>SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>Noise filter clock is on-chip baudrate generator source clock/2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafb3d777dabeb4f83e9ad1b250cf1d348a7a32840bfd861bcc9d59fee1647697cb"></a>SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_4&#160;</td><td class="fielddoc"><p>Noise filter clock is on-chip baudrate generator source clock/3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafb3d777dabeb4f83e9ad1b250cf1d348a7611b9bf9630fdf0315a8341f0548749"></a>SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_8&#160;</td><td class="fielddoc"><p>Noise filter clock is on-chip baudrate generator source clock/4. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="ga664ff05c84c6b04136da98e1ff002cb5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga664ff05c84c6b04136da98e1ff002cb5">&#9670;&nbsp;</a></span>e_sci_b_lin_bus_conflict_detection_t</h2>
 
@@ -1091,6 +1189,29 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <tr><td class="fieldname"><a id="gga009a0e1cdeb3af467427df5bad12c8ffa0ee167878dc2283051264f847f7fdd92"></a>SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>Bus conflict detection clock is base clock/2. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga009a0e1cdeb3af467427df5bad12c8ffa2b0deed715e1819dfb18395ffe38ca7e"></a>SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_4&#160;</td><td class="fielddoc"><p>Bus conflict detection clock is base clock/4. Setting prohibited when CCR2.ABCS = 1. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gad3bb6e54dc2837b01610d5a412e1ff6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad3bb6e54dc2837b01610d5a412e1ff6e">&#9670;&nbsp;</a></span>sci_b_lin_base_clock_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_c_i___b___l_i_n.html#gad3bb6e54dc2837b01610d5a412e1ff6e">sci_b_lin_base_clock_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Asynchronous Mode Base Clock Selection </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad3bb6e54dc2837b01610d5a412e1ff6ea55a313bfaf10f6dd94fc8677dd63560c"></a>SCI_B_LIN_BASE_CLOCK_16_CYCLES_PER_BIT&#160;</td><td class="fielddoc"><p>Select 16 base clock cycles for 1-bit period. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3bb6e54dc2837b01610d5a412e1ff6ea54652b03b6e39de75cc2c6b04b82c2ab"></a>SCI_B_LIN_BASE_CLOCK_8_CYCLES_PER_BIT&#160;</td><td class="fielddoc"><p>Select 8 base clock cycles for 1-bit period. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3bb6e54dc2837b01610d5a412e1ff6eaf33789256b74c99aa05e04677d7d4330"></a>SCI_B_LIN_BASE_CLOCK_AUTO_CYCLES_PER_BIT&#160;</td><td class="fielddoc"><p>Automatic software selection of the base clock cycles (16 or 8) for 1-bit period. </p>
 </td></tr>
 </table>
 
@@ -1139,57 +1260,14 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 
 </div>
 </div>
-<a id="gacaa0649108cc7f7728e622ecdcf37a3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacaa0649108cc7f7728e622ecdcf37a3e">&#9670;&nbsp;</a></span>R_SCI_B_LIN_StartFrameWrite()</h2>
+<a id="ga6efd824293f8fb48aa448bc35d2da060"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6efd824293f8fb48aa448bc35d2da060">&#9670;&nbsp;</a></span>R_SCI_B_LIN_Write()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_StartFrameWrite </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_api_ctrl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t const&#160;</td>
-          <td class="paramname"><em>id</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Begins non-blocking transmission of a LIN start frame (break, sync and protected identifier).</p>
-<p>On successful start frame transmission, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a849c350c804a580611d9608cbf08d377">lin_event_t::LIN_EVENT_TX_START_FRAME_COMPLETE</a>.</p>
-<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#aebeb9517b0b7e67c7418a6104f5f7cb1">lin_api_t::startFrameWrite</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN start frame: break, sync, and protected identifier */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e">R_SCI_B_LIN_StartFrameWrite</a>(&amp;g_master_ctrl, FRAME_ID);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Start frame transmission started successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>ID out of range (unprotected ID must be less than 64) </td></tr>
-    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Function called by slave node (not supported for slave nodes) </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. </dd></dl>
-
-</div>
-</div>
-<a id="ga335ad22f31235e8b15440faddf169afa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga335ad22f31235e8b15440faddf169afa">&#9670;&nbsp;</a></span>R_SCI_B_LIN_InformationFrameWrite()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_InformationFrameWrite </td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_Write </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
           <td class="paramname"><em>p_api_ctrl</em>, </td>
@@ -1207,15 +1285,21 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Begins non-blocking transmission of a LIN information frame.</p>
-<p>On successful information frame transmission, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a3318ad3d6c9e147052f5dbc2f9c0a6c6">lin_event_t::LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE</a>.</p>
-<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#aa1103bd6a75fd2e6f005d3ad3e2dc4e1">lin_api_t::informationFrameWrite</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN information frame */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa">R_SCI_B_LIN_InformationFrameWrite</a>(&amp;g_master_ctrl, &amp;write_params);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Begins non-blocking transmission of a LIN frame.</p>
+<p>In master mode, the LIN header (break, sync and protected identifier) is sent before the LIN data.</p><ul>
+<li>To transmit the LIN header only, set p_transfer_params-&gt;p_data to NULL.</li>
+<li>To transmit both header and data, set p_transfer_params-&gt;p_data to the TX buffer to transmit.</li>
+</ul>
+<p>The LIN header is not transmitted in slave mode. Set p_transfer_params-&gt;p_data to the TX buffer to transmit.</p>
+<p>On successful header-only transmission completion, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a49669a6b914a5179a758eb60df18aa0d">lin_event_t::LIN_EVENT_TX_HEADER_COMPLETE</a>. On successful data transmission or header+data transmission completion, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a9e8ae326573130cc9a65b85481c1cb80">lin_event_t::LIN_EVENT_TX_DATA_COMPLETE</a>.</p>
+<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#a0a78fe81994f49adfbfc4335e55fc0c6">lin_api_t::write</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <a class="code" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> write_params =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940">checksum_type</a> = <a class="code" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba6bedd4c7d6ab5b1291f791e4ba081856">LIN_CHECKSUM_TYPE_ENHANCED</a>,</div><div class="line">        .id            = FRAME_ID,</div><div class="line">        .num_bytes     = TRANSFER_LENGTH,</div><div class="line">        .p_data        = g_tx_buf</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Send the LIN data. In master mode, the header (break, sync, and protected identifier) will be sent before the data. */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a>(&amp;g_master_ctrl, &amp;write_params);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Data transmission started successfully. </td></tr>
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Transmission started successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.</td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>ID out of range (unprotected ID must be less than 64). Only applies in master mode. In slave mode, p_transfer_params-&gt;id is ignored. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call <a class="el" href="group___s_c_i___b___l_i_n.html#ga848db61b12a7178213637819835b1248">R_SCI_B_LIN_CommunicationAbort</a> to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1223,14 +1307,14 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 
 </div>
 </div>
-<a id="ga1231f2072e85988ef6c1d118cd17edda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1231f2072e85988ef6c1d118cd17edda">&#9670;&nbsp;</a></span>R_SCI_B_LIN_InformationFrameRead()</h2>
+<a id="ga092acd39ca8d8e5ce0872491236e6c34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga092acd39ca8d8e5ce0872491236e6c34">&#9670;&nbsp;</a></span>R_SCI_B_LIN_Read()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_InformationFrameRead </td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_Read </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
           <td class="paramname"><em>p_api_ctrl</em>, </td>
@@ -1248,16 +1332,16 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Begins non-blocking information frame reception to receive user specified number of bytes into destination buffer pointer.</p>
+<p>Begins non-blocking data reception to receive user specified number of bytes into destination buffer pointer.</p>
 <p>The checksum type specifies the checksum type used for validation. If a non-standard algorithm is used, or the application prefers to validate the checksum outside the driver, or the application prefers to skip checksum validation, specify <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba26e93d617a43afc1ecd4470e0a959fb1">lin_checksum_type_t::LIN_CHECKSUM_TYPE_NONE</a>. If checksum validation is skipped, the <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48">lin_checksum_type_t::LIN_EVENT_ERR_INVALID_CHECKSUM</a> event is not possible. When <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba26e93d617a43afc1ecd4470e0a959fb1">lin_checksum_type_t::LIN_CHECKSUM_TYPE_NONE</a> is used, the number of bytes specified in the receive buffer length will be received (the driver will not expect to receive an additional 1 checksum byte), so if a non-standard checksum is used, sufficient space must be allocated in the write buffer and accounted for in the provided length.</p>
-<p>On successful information frame reception, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72afae5a2ecd0e7539ebf8e10c000577321">lin_event_t::LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE</a>.</p>
-<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#af38bdf9c3929d5c9010066ec35c32b4e">lin_api_t::informationFrameRead</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Begin reception of the information frame data */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda">R_SCI_B_LIN_InformationFrameRead</a>(&amp;g_master_ctrl, &amp;read_params);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>On successful data reception completion, the callback is called with event <a class="el" href="group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1a2bb2468c5d41614b86fe9936e9749a">lin_event_t::LIN_EVENT_RX_DATA_COMPLETE</a>.</p>
+<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#a3c86d34c55cdf8f114fda53f372d5fb8">lin_api_t::read</a>.</p>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Begin reception of the data */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read</a>(&amp;g_master_ctrl, &amp;read_params);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Data reception started successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided </td></tr>
-    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort to cancel it if desired, or wait for the current transfer operation to complete before starting a new one. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>A transmission or reception is currently in progress. Call <a class="el" href="group___s_c_i___b___l_i_n.html#ga848db61b12a7178213637819835b1248">R_SCI_B_LIN_CommunicationAbort</a> to cancel it if desired, or wait for the current transfer operation to complete before starting a new one. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_CALL</td><td>Data reception is not possible because a header frame has not been received yet (slave mode only).</td></tr>
   </table>
   </dd>
@@ -1281,7 +1365,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cancels in progress information frame read or write, or start frame read or write. Break field reception cannot be cancelled. For slave nodes, reception of a new start frame reception is still enabled after a call to this function.</p>
+<p>Cancels in progress data read or write, or header read or write. Break field reception cannot be cancelled. For slave nodes, reception of a new header is still enabled after a call to this function.</p>
 <p>Implements <a class="el" href="group___l_i_n___a_p_i.html#a5595034306ba0b95e664ef4fc4a2ffce">lin_api_t::communicationAbort</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -1295,8 +1379,8 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 
 </div>
 </div>
-<a id="ga19d40c60780f7af15a6ec52038e7df61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga19d40c60780f7af15a6ec52038e7df61">&#9670;&nbsp;</a></span>R_SCI_B_LIN_CallbackSet()</h2>
+<a id="ga64521088a13a5c7b6aa704a88c25d0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64521088a13a5c7b6aa704a88c25d0ad">&#9670;&nbsp;</a></span>R_SCI_B_LIN_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1316,7 +1400,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -1333,7 +1417,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
       </table>
 </div><div class="memdoc">
 <p>Updates the user callback and has option of providing memory for callback structure.</p>
-<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#af3c026803e304b6a626fde3d069d7140">lin_api_t::callbackSet</a>.</p>
+<p>Implements <a class="el" href="group___l_i_n___a_p_i.html#a932c1fc139ea379a1fea1fda53b42368">lin_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
@@ -1375,6 +1459,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 <p>Calculates baud rate and LIN timer (BFLW and TCSS) register settings. This function evaluates and determines the most accurate settings for the baud rate and timer related registers.</p>
 <p>The LIN timer setting is used for break field transmission/detection. Because the timer setting is specified in terms of bits, and the duration of a bit varies depending on baud rate, the baud rate register settings and timer register settings are related. The smallest possible LIN timer divider which can achieve the desired break field bits setting at the configured baud rate is selected to provide the highest measurement accuracy.</p>
 <p>The baud rate cannot be updated at runtime with this function. This function is provided to ease configuration of the initial baud settings.</p>
+<dl class="section note"><dt>Note</dt><dd>The parameter p_baud_setting-&gt;bus_conflict_clock is deprecated and is not used to determine the baud rate settings. See Usage Notes for a description of how to select the bus conflict clock divider.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_baud_params</td><td>Parameters required to calculate the baud rate </td></tr>
@@ -1419,7 +1504,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
       </table>
 </div><div class="memdoc">
 <p>Set the the ID filter settings for filtering control field 1 (PID byte).</p>
-<p>NOTE: Setting the ID filter will abort any in-progress LIN start frame reception, as the ID filter settings cannot be changed during reception of the start frame. The next start frame will be received with the new settings.</p>
+<p>NOTE: Setting the ID filter will abort any in-progress LIN header reception, as the ID filter settings cannot be changed during reception of the header. The next header will be received with the new settings.</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Configure the ID filter */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d">R_SCI_B_LIN_IdFilterSet</a>(&amp;g_slave_ctrl, &amp;filter);</div><div class="line"></div></div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to the LIN control block. </td></tr>
@@ -1581,7 +1666,7 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 </div><div class="memdoc">
 <p>Closes the LIN driver.</p>
 <p>Implements <a class="el" href="group___l_i_n___a_p_i.html#a362c949cfdf9ce62f5bd90788464b49d">lin_api_t::close</a>.</p>
-<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close the driver  */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_master_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Close the driver */</span></div><div class="line">    err = <a class="code" href="group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58">R_SCI_B_LIN_Close</a>(&amp;g_master_ctrl);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to LIN control block is NULL. </td></tr>
@@ -1593,13 +1678,103 @@ Master mode: Number of break field bits to transmit. Slave mode: Number of break
 
 </div>
 </div>
+<a id="ga1231f2072e85988ef6c1d118cd17edda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1231f2072e85988ef6c1d118cd17edda">&#9670;&nbsp;</a></span>R_SCI_B_LIN_InformationFrameRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_InformationFrameRead </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_transfer_params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>[DEPRECATED] Use <a class="el" href="group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34">R_SCI_B_LIN_Read</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. </dd></dl>
+
+</div>
+</div>
+<a id="gacaa0649108cc7f7728e622ecdcf37a3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacaa0649108cc7f7728e622ecdcf37a3e">&#9670;&nbsp;</a></span>R_SCI_B_LIN_StartFrameWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_StartFrameWrite </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const&#160;</td>
+          <td class="paramname"><em>id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>[DEPRECATED] Use <a class="el" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a></p>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. </dd></dl>
+
+</div>
+</div>
+<a id="ga335ad22f31235e8b15440faddf169afa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga335ad22f31235e8b15440faddf169afa">&#9670;&nbsp;</a></span>R_SCI_B_LIN_InformationFrameWrite()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_SCI_B_LIN_InformationFrameWrite </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group___l_i_n___a_p_i.html#structlin__transfer__params__t">lin_transfer_params_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_transfer_params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>[DEPRECATED] Use <a class="el" href="group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060">R_SCI_B_LIN_Write</a></p>
+<dl class="section return"><dt>Returns</dt><dd>See <a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html">Common Error Codes</a> or functions called by this function for other possible return codes. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

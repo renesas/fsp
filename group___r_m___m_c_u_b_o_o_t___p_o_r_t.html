@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___r_m___m_c_u_b_o_o_t___p_o_r_t.
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___r_m___m_c_u_b_o_o_t___p_o_r_t.
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___r_m___m_c_u_b_o_o_t___p_o_r_t.
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -243,7 +243,9 @@ $(document).ready(function(){initNavTree('group___r_m___m_c_u_b_o_o_t___p_o_r_t.
 <p>MCUboot Port for RA MCUs. </p>
 <h1><a class="anchor" id="r-mcuboot-port-overview"></a>
 Overview</h1>
-<dl class="section note"><dt>Note</dt><dd>The MCUboot Port does not provide any interfaces to the user. Consult the MCUboot documentation at <a href="https://mcu-tools.github.io/mcuboot/">https://mcu-tools.github.io/mcuboot/</a> for further information.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The MCUboot Port does not provide any interfaces to the user. Consult the MCUboot documentation at <a href="https://mcu-tools.github.io/mcuboot/">https://mcu-tools.github.io/mcuboot/</a> for further information. </dd>
+<dd>
+FSP 6.0.0 changes the way linker scripts are handled which in turn will change how the user configures MCUboot. Where applicable, the documentation below will have a separate section if the usage is markedly different in 6.0.0.</dd></dl>
 <h1><a class="anchor" id="r-mcuboot-port-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for MCUboot</h2>
@@ -283,14 +285,6 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Prevent downgrades by enforcing incrementing version numbers. When this option is set, any upgrade must have greater major version or greater minor version with equal major version. This mechanism only protects against some attacks against version downgrades (for example, a JTAG could be used to write an older version). </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Number of Images Per Application</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-1</li>
-<li>
-2 (TrustZone)</li>
-</ul>
-</td><td>1 </td><td>Number of separately updateable images. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Watchdog Feed</td><td>Manual Entry</td><td></td><td>This function might be implemented if the OS / HW watchdog is enabled while doing a swap upgrade and the time it takes for a swapping is long enough to cause an unwanted reset. If implementing this, the OS main.c must also enable the watchdog (if required)! </td></tr>
 <tr class="tree_lvl_1_item">
@@ -348,28 +342,6 @@ Encryption Disabled</li>
 </ul>
 </td><td>Encryption Disabled </td><td>Choose the encryption scheme. </td></tr>
 <tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Flash Layout  </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Flash Layout &gt; TrustZone  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Non-Secure Callable Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable region of the Secure image. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Non-Secure Flash Area Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the Non-Secure region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. If the Non-Secure region can be updated separately, this size must account for the header and trailer. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Non-Secure Callable RAM Region Size (Bytes)</td><td>Value must be an integer multiple of the 1024.</td><td>0x0 </td><td>Size of the Non-Secure Callable RAM region of the Secure image. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Non-Secure RAM Region Size (Bytes) (TrustZone Non-Secure)</td><td>Value must be an integer multiple of the 8192.</td><td>0x0 </td><td>Size of the Non-Secure RAM region. This must be non-zero for all TrustZone projects to ensure memory is partitioned correctly, even if the Secure and Non-Secure regions are treated as a single image. </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Image 2 Header Size (Bytes)</td><td>Manual Entry</td><td>0x200 </td><td>Size of the flash reserved for the application image header for Image 2. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Bootloader Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the flash reserved for the bootloader. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Image 1 Header Size (Bytes)</td><td>Manual Entry</td><td>0x200 </td><td>Size of the flash reserved for the application image header. Must meet minimum VTOR alignment requirements for the core (0x200 for all RA MCUs). </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Image 1 Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x20000 </td><td>Size of the application image 1, including the header and trailer. For TrustZone projects, enter the combined size of the Secure and Non-Secure Callable regions if the Non-Secure image can be updated separately, or enter the size of the entire image slot if Secure, Non-Secure Callable, and Non-Secure regions are updated as a single image. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Scratch Flash Area Size (Bytes)</td><td>Value must be an integer multiple of the largest erase size on the mcu.</td><td>0x0 </td><td>Size of the scratch area. Only required for swap update method. </td></tr>
-<tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Flash Configuration  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Dual Bank Mode</td><td>MCU Specific Options</td><td></td><td>Enable dual bank mode for Direct XIP. </td></tr>
@@ -398,13 +370,19 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-mcuboot-port-usage-notes"></a>
 Usage Notes</h1>
 <h2>Getting Started: Creating an MCUboot Project</h2>
-<p>Start by creating a new project in e&sup2; studio or RASC. Select 'Flat (Non TrustZone) Project' template for non TrustZone based projects. For TrustZone based projects, select 'TrustZone Secure Project' template and set the clock circuit under the clocks tab to secure. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
+<p>Start by creating a new project in e&sup2; studio or RASC. Select 'Flat Project' template for single-image projects. For TrustZone based projects, select 'TrustZone Secure Project' template and set the clock circuit under the clocks tab to secure. On the Stacks tab, add New &gt; Bootloader &gt; MCUboot. Resolve any constraint errors and edit configurations as desired. Add either the example keys or generate your own key. The MCUboot key generation tool is provided at ra/mcu-tools/MCUboot/scripts/imgtool.py and documented at <a href="https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md">https://github.com/mcu-tools/mcuboot/blob/master/docs/imgtool.md</a>. Install the following required python packages to use imgtool.py: <a href="https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt">https://github.com/mcu-tools/mcuboot/blob/master/scripts/requirements.txt</a>.</p>
 <p>In src/hal_entry.c, drag in Developer Assistance &gt; HAL/Common &gt; MCUboot &gt; Quick Setup &gt; Call Quick Setup. Add a call to mcuboot_quick_setup() in the application and make any desired updates.</p>
 <dl class="section note"><dt>Note</dt><dd>MCUboot will contain either the verification public key or its hash. During production it is necessary to permanently lock the flash region where MCUboot is programmed to prevent the keys or the code from being modified.</dd></dl>
-<h2>Getting Started: Signing Tool Prerequisite</h2>
+<h3>MCUboot Layout</h3>
+<div class="image">
+<img src="mcuboot_flat_imgtool.png" alt="mcuboot_flat_imgtool.png"/>
+<div class="caption">
+imgtool.py siging script adds header and trailer to user binary</div></div>
+ <h2>Getting Started: Signing Tool Prerequisite</h2>
 <p>To use the MCUboot signing tool, ensure you have Python 3.x installed on your system. Then install the Python packages required for the signing tool with the following command (modifying the path as needed depending on current directory):</p>
 <p><code>pip3 install --user -r ra/mcu-tools/MCUboot/scripts/requirements.txt</code></p>
-<h2>Getting Started: Converting a Project to an MCUboot Image</h2>
+<h2><a class="anchor" id="r-mcuboot-solution-section-naming-dummy2"></a>
+Getting Started: Converting an Application Project to an MCUboot Image</h2>
 <p>MCUboot application images must execute from the image slot defined by the MCUboot project. They are also limited to a single downloadable flash region. All of this is configured in the MCUboot module and the information is added to the generated SecureBundle (.sbd) file in the MCUboot project.</p>
 <p>Any existing project can be converted to an MCUboot image.</p>
 <ol type="1">
@@ -416,7 +394,7 @@ Usage Notes</h1>
 <li>Click OK, then Apply and Close.</li>
 </ol>
 <p>To convert a TrustZone image, follow the steps above for the Secure project. The Non-Secure project will already use the SmartBundle from the Secure project which will inherit required data from the MCUboot SmartBundle.</p>
-<p>MCUboot application images must also be signed to work with MCUboot. At a minimum, this involves adding a SHA and MCUboot specific constant data called boot magic in the image trailer.</p>
+<p>MCUboot application images must also be signed to work with MCUboot. At a minimum, this involves adding a SHA and MCUboot specific constant data called boot magic in the image trailer. The size of the image trailer is <code>(5 * BOOT_MAX_ALIGN) + (BOOT_MAX_IMG_SECTORS * min-write-size * 3)</code>.</p>
 <p>Signing can be done on the as a post-build step in e&sup2; studio. To sign the image as a post-build step:</p>
 <ol type="1">
 <li>If Linux is used to develop the application image, change the MCUboot property <code>Signing &gt; Python</code> to <code>python3</code>.</li>
@@ -447,6 +425,51 @@ Usage Notes</h1>
 <li>Build the project.</li>
 <li>The signed image is output next to the application &lt;project&gt;.elf file with the name &lt;project&gt;bin.signed.</li>
 </ol>
+<h3><a class="anchor" id="r-mcuboot-solution-section-naming-dummy3"></a>
+FSP 6.0.0 and newer</h3>
+<p>An FSP Solution project must be created in order to set up the bootloader slots; the slot size and header information was previously in the MCUboot module.</p>
+<h4><a class="anchor" id="r-mcuboot-solution-section-naming"></a>
+Bootloader region encoding in FSP 6.0.0</h4>
+<p>The header and image regions have to be named in the manner described below in the Solution project:</p>
+<ul>
+<li><code>__BL</code>: Indicates this is a bootloader symbol.</li>
+<li><code>_</code>: delimiter between fields.</li>
+<li><code>([0-9])|S</code>: Image definitions field.<ul>
+<li><code>S</code> indicates the Scratch area.</li>
+<li><code>0-9</code> correspond to traditional image IDs (only using 0/1 in legacy).</li>
+</ul>
+</li>
+<li><code>_</code>: delimiter between fields.</li>
+<li><code>(P|S)</code>: Indicates Primary or Secondary area.<ul>
+<li><code>S</code> Secondary areas must have both Header (<code>H</code>) and Image (<code>I</code>) component.</li>
+<li><code>P</code> Primary areas must not have an <code>I</code> component (as the Image component is defined by the solution application region).</li>
+<li>Secondary header must be the same size as Primary header.</li>
+<li>Secondary images must be the same size as the area allocated for the project (Primary Image).</li>
+<li>Headers must immediately precede the Image/application space.</li>
+</ul>
+</li>
+<li><code>_</code>: delimiter between fields</li>
+<li><code>(H|I)</code>: Indicates bootloader Header or Image component (not used with Scratch).<ul>
+<li><code>H</code> indicates the MCUboot Header for Primary or Secondary (<code>P</code>/<code>S</code>) areas (use 0x200 for compatibility).</li>
+<li><code>I</code> indicates the MCUboot Secondary (<code>S</code>) Image allocation space (not used with Primary images).</li>
+</ul>
+</li>
+<li>Examples:<ul>
+<li><code>__BL_0_P_H</code>: Image 0 Primary Header.</li>
+<li><code>__BL_1_S_I</code>: Image 1 Secondary Image.</li>
+<li><code>__BL_S</code> : Scratch area.</li>
+</ul>
+</li>
+</ul>
+<ol type="1">
+<li>Create the bootloader and set up any required configurations.</li>
+<li>Build the bootloader project.</li>
+<li>Create the application project, selecting the bootloader project as the "Preceding project" in the e2 studio wizard. The SmartBundle (.sbd) will be automatically linked.</li>
+<li>Build the application project.</li>
+<li>Create an "FSP Solution Project (Advanced)" and chose the final project in the chain (typically the application project).</li>
+<li>Create the Header and Image regions according to the encoding described above.</li>
+<li>Build the Solution project.</li>
+</ol>
 <h2>Getting Started: Download and Debug</h2>
 <p>For projects that do not use TrustZone, debug the MCUboot project using the default configuration. Before running, load the signed image to the address specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e&sup2; studio. Upgrade images can be loaded to the upgrade image slots using the same method.</p>
 <dl class="section note"><dt>Note</dt><dd>e&sup2; studio projects targeting RA8 devices that do not use TrustZone must disable the "Set TrustZone secure/non-secure boundaries" setting (Debug Configurations &gt; Debugger &gt; Connection Settings &gt; TrustZone &gt; Set TrustZone secure/non-secure boundaries).</dd></dl>
@@ -466,7 +489,7 @@ Usage Notes</h1>
 <dl class="section note"><dt>Note</dt><dd>Memory Mirror Functions is available on some MCUs, please check the hardware user manual for the availability.</dd>
 <dd>
 This mode only available in linear memory mode.</dd></dl>
-<p>When "Memory Mirror Funtion (MMF) support" under Common &gt; Flash Layout is enabled, MCUBoot decides which image will be "mirrored". After the image is reflected on MMF region, the MCUBoot will start booting the application from start address of MMF.</p>
+<p>When "Memory Mirror Function (MMF) support" under Common &gt; Flash Layout is enabled, MCUBoot decides which image will be "mirrored". After the image is reflected on MMF region, the MCUBoot will start booting the application from start address of MMF.</p>
 <div class="image">
 <img src="mcuboot_with_mmf_primary_app.png" alt="mcuboot_with_mmf_primary_app.png"/>
 <div class="caption">
@@ -562,8 +585,6 @@ Limitations</h2>
 <li>The operating clock speeds.</li>
 <li>Whether flash programming was required.</li>
 </ol>
-<h3>Reducing boot time on SCE9 devices</h3>
-<p>On devices that have the SCE9, it is possible to reduce the time taken for EC-P256 signature verification by setting the Initialization property for the SCE9 module to only initialize the crypto primitives required for EC-P256 verification. Note that this feature is only supported for EC-P256 currently. Enabling it for any other algorithm will cause a runtime failure.</p>
 <h2>Using SCE9 Protected Mode Crypto Stack</h2>
 <p>Using this crypto stack with MCUBoot provides additional security by ensuring that any keys that are used were securely provisioned for the specific device. The Application Note "Installing and Updating Secure Keys for RA Family" (R11AN0496) provides detailed steps on how to go about installing these keys. Since the section "Preparing Keys for Installation and Update Using RFP" document currently only provides information on how to install an AES key, this section will provide information on how to install an ECC public key. These steps can be used to install the public keys used for image verification or the keys used for image encryption.</p>
 <dl class="section note"><dt>Note</dt><dd>When using the SCE9 Protected Mode Stack with MCUboot it is required that the public keys in the format described in the "MCUboot Example Keys" module in the stack is also provided in the project.</dd></dl>
@@ -586,7 +607,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

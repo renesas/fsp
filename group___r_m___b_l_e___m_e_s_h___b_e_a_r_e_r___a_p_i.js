@@ -31,7 +31,7 @@ var group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i =
     [ "rm_ble_mesh_bearer_cfg_t", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#structrm__ble__mesh__bearer__cfg__t", [
       [ "channel", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a1d73c9eb48414014902b0756233e5585", null ],
       [ "p_mesh_instance", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a82db85de0e0f8068258ed910ac66e560", null ],
-      [ "p_context", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a45dcac5bcedbcb794f5d098629d38ece", null ],
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a2dbe738a72312263d003288435f87a75", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#a17224bc4f82ff4ab841c77e2ec65c734", null ]
     ] ],
     [ "rm_ble_mesh_bearer_api_t", "group___r_m___b_l_e___m_e_s_h___b_e_a_r_e_r___a_p_i.html#structrm__ble__mesh__bearer__api__t", [

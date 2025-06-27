@@ -15,7 +15,7 @@ var group___r_m___r_r_h47000 =
       [ "init_process_params", "group___r_m___r_r_h47000.html#a125d94e2ae69d485658bba468bd94c97", null ],
       [ "p_cfg", "group___r_m___r_r_h47000.html#ab1ebe79dc10c723a36bc500049824d11", null ],
       [ "p_comms_i2c_instance", "group___r_m___r_r_h47000.html#aaabdb6b639d564ccece1de31a804a3b1", null ],
-      [ "p_context", "group___r_m___r_r_h47000.html#a3e8d59cf2cf35f9377a21f0156b7df7d", null ],
+      [ "p_context", "group___r_m___r_r_h47000.html#a0774eb89bfc769694fb0831014629c50", null ],
       [ "p_comms_callback", "group___r_m___r_r_h47000.html#ae0c807f4a6f2f2b39f8c73e13ac10200", null ]
     ] ],
     [ "rm_rrh47000_abc_t", "group___r_m___r_r_h47000.html#ga2e77861d29a54958cf2fced9fafee301", [

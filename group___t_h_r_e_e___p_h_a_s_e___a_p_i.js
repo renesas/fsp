@@ -9,7 +9,7 @@ var group___t_h_r_e_e___p_h_a_s_e___a_p_i =
       [ "p_timer_instance", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a8190d90a166e32697891e7b0bb415296", null ],
       [ "callback_ch", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a86be19724a2e04704a5e6ea2395f998a", null ],
       [ "channel_mask", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#aaeeda614c3c86c7619865f13b0600221", null ],
-      [ "p_context", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#ad1585d05f0d02415739b1e06b705fbd9", null ],
+      [ "p_context", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a17cb5f5116ecf47f1af497e6bdf22519", null ],
       [ "p_extend", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a3d93041839befbd9b01fc87b0efb7b89", null ]
     ] ],
     [ "three_phase_api_t", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#structthree__phase__api__t", [
@@ -18,7 +18,7 @@ var group___t_h_r_e_e___p_h_a_s_e___a_p_i =
       [ "stop", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a769ed088f638d4379dfd6a959f72741e", null ],
       [ "reset", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a7a17e3e7e2de1c1a9605a2eb34d3b82e", null ],
       [ "dutyCycleSet", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a6b55c9d4c5fd7be3c1d4398acbce4fa7", null ],
-      [ "callbackSet", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a554fd0df3e9a3c1e09a81daf956f2244", null ],
+      [ "callbackSet", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a02a3425bdd66b81955e29df21ce2608c", null ],
       [ "close", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#aced10bd196df8bd3de4fff2bd52a2e07", null ]
     ] ],
     [ "three_phase_instance_t", "group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#structthree__phase__instance__t", [

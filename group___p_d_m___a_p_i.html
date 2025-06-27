@@ -1,0 +1,944 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: PDM Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___p_d_m___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">PDM Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_u_d_i_o___i_n_t_e_r_f_a_c_e_s.html">Audio</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for PDM audio communication. </p>
+<h1><a class="anchor" id="PDM_API_SUMMARY"></a>
+Summary</h1>
+<p>The pulse-density modulation(PDM) interface provides APIs and definitions for PDM audio communication. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structpdm__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a></td></tr>
+<tr class="separator:structpdm__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structpdm__sound__detection__setting__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__sound__detection__setting__t">pdm_sound_detection_setting_t</a></td></tr>
+<tr class="separator:structpdm__sound__detection__setting__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structpdm__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__status__t">pdm_status_t</a></td></tr>
+<tr class="separator:structpdm__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structpdm__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a></td></tr>
+<tr class="separator:structpdm__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structpdm__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__api__t">pdm_api_t</a></td></tr>
+<tr class="separator:structpdm__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structpdm__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#structpdm__instance__t">pdm_instance_t</a></td></tr>
+<tr class="separator:structpdm__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga16be2346ab1fd4d3929228a28914430c"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a></td></tr>
+<tr class="separator:ga16be2346ab1fd4d3929228a28914430c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gac80768e70548497f4a739b84d0af572f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#gac80768e70548497f4a739b84d0af572f">pdm_pcm_width_t</a> </td></tr>
+<tr class="separator:gac80768e70548497f4a739b84d0af572f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga471ab0afd7d0f709e50ece23087b1759"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ga471ab0afd7d0f709e50ece23087b1759">pdm_input_data_edge_t</a> </td></tr>
+<tr class="separator:ga471ab0afd7d0f709e50ece23087b1759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb514c195258d2f14c8e18e3778ad946"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#gafb514c195258d2f14c8e18e3778ad946">pdm_event_t</a> </td></tr>
+<tr class="separator:gafb514c195258d2f14c8e18e3778ad946"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf682776db13b51a982b047a8eb5fef2d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#gaf682776db13b51a982b047a8eb5fef2d">pdm_error_t</a> </td></tr>
+<tr class="separator:gaf682776db13b51a982b047a8eb5fef2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09df76d543b0cc6b39c5fed3bf1f4485"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ga09df76d543b0cc6b39c5fed3bf1f4485">pdm_state_t</a> </td></tr>
+<tr class="separator:ga09df76d543b0cc6b39c5fed3bf1f4485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structpdm__callback__args__t" id="structpdm__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__callback__args__t">&#9670;&nbsp;</a></span>pdm_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Callback function parameter data </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a5c87f614d45601b1c39d3a2e4604d31f"></a>void *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+<p>Placeholder for user data. Set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> function in <a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a>. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a4baa164d236e7f2c62cd33ddb64f41ec"></a><a class="el" href="group___p_d_m___a_p_i.html#gafb514c195258d2f14c8e18e3778ad946">pdm_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+The event can be used to identify what caused the callback (overflow or error). </td></tr>
+<tr><td class="fieldtype">
+<a id="a98b4bbf5bb1bf1feccda12382e919bbc"></a><a class="el" href="group___p_d_m___a_p_i.html#gaf682776db13b51a982b047a8eb5fef2d">pdm_error_t</a></td>
+<td class="fieldname">
+error</td>
+<td class="fielddoc">
+The kind of error. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structpdm__sound__detection__setting__t" id="structpdm__sound__detection__setting__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__sound__detection__setting__t">&#9670;&nbsp;</a></span>pdm_sound_detection_setting_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_sound_detection_setting_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Sound detection window setting </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a6975853a845298fb1fe31504df9c0071"></a>uint32_t</td>
+<td class="fieldname">
+sound_detection_lower_limit</td>
+<td class="fielddoc">
+Sound detection lower limit (20-bit signed fixed point data) </td></tr>
+<tr><td class="fieldtype">
+<a id="a3feb7a0ac1bec98afe500c6347dd14b6"></a>uint32_t</td>
+<td class="fieldname">
+sound_detection_upper_limit</td>
+<td class="fielddoc">
+Sound detection upper limit (20-bit signed fixed point data) </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structpdm__status__t" id="structpdm__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__status__t">&#9670;&nbsp;</a></span>pdm_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>PDM status. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a2c6cf4b37d45d78d3c1f61721877a691"></a><a class="el" href="group___p_d_m___a_p_i.html#ga09df76d543b0cc6b39c5fed3bf1f4485">pdm_state_t</a></td>
+<td class="fieldname">
+state</td>
+<td class="fielddoc">
+Current PDM data state. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0513231b3e8d097635940848be1ce2c2"></a>bool</td>
+<td class="fieldname">
+sound_detection_enabled</td>
+<td class="fielddoc">
+Current PDM sound detection status. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9fa860006a65df25c9150c146db601e0"></a><a class="el" href="group___p_d_m___a_p_i.html#gaf682776db13b51a982b047a8eb5fef2d">pdm_error_t</a></td>
+<td class="fieldname">
+error</td>
+<td class="fielddoc">
+Bitfield of current PDM errors. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structpdm__cfg__t" id="structpdm__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__cfg__t">&#9670;&nbsp;</a></span>pdm_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>User configuration structure, used in open function </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a336b1d202eafdf805edd3cc274ef89e3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a336b1d202eafdf805edd3cc274ef89e3">unit</a></td></tr>
+<tr class="separator:a336b1d202eafdf805edd3cc274ef89e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef7c8d0fc16829d08bf291a64b996b7"><td class="memItemLeft" align="right" valign="top"><a id="a5ef7c8d0fc16829d08bf291a64b996b7"></a>
+<a class="el" href="group___p_d_m___a_p_i.html#gac80768e70548497f4a739b84d0af572f">pdm_pcm_width_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a5ef7c8d0fc16829d08bf291a64b996b7">pcm_width</a></td></tr>
+<tr class="memdesc:a5ef7c8d0fc16829d08bf291a64b996b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio PCM data width. <br /></td></tr>
+<tr class="separator:a5ef7c8d0fc16829d08bf291a64b996b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab612a5c37643d9c506a10a9967b887c8"><td class="memItemLeft" align="right" valign="top"><a id="ab612a5c37643d9c506a10a9967b887c8"></a>
+<a class="el" href="group___p_d_m___a_p_i.html#ga471ab0afd7d0f709e50ece23087b1759">pdm_input_data_edge_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ab612a5c37643d9c506a10a9967b887c8">pcm_edge</a></td></tr>
+<tr class="memdesc:ab612a5c37643d9c506a10a9967b887c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input data select. <br /></td></tr>
+<tr class="separator:ab612a5c37643d9c506a10a9967b887c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad25f36a51d384189ebc129a471f88c4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ad25f36a51d384189ebc129a471f88c4c">p_transfer_rx</a></td></tr>
+<tr class="separator:ad25f36a51d384189ebc129a471f88c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee193c08a4d958f6dc4905479594109f"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#aee193c08a4d958f6dc4905479594109f">p_callback</a> )(<a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *p_args)</td></tr>
+<tr class="separator:aee193c08a4d958f6dc4905479594109f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21fafde266ee885ba6d43453051344f6"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a21fafde266ee885ba6d43453051344f6">p_context</a></td></tr>
+<tr class="separator:a21fafde266ee885ba6d43453051344f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abff3295dd414d671e7c75d538d657cf7"><td class="memItemLeft" align="right" valign="top"><a id="abff3295dd414d671e7c75d538d657cf7"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#abff3295dd414d671e7c75d538d657cf7">p_extend</a></td></tr>
+<tr class="memdesc:abff3295dd414d671e7c75d538d657cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension parameter for hardware specific settings. <br /></td></tr>
+<tr class="separator:abff3295dd414d671e7c75d538d657cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a298ee7b058b5cddae6a30ac90a093818"><td class="memItemLeft" align="right" valign="top"><a id="a298ee7b058b5cddae6a30ac90a093818"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a298ee7b058b5cddae6a30ac90a093818">dat_ipl</a></td></tr>
+<tr class="memdesc:a298ee7b058b5cddae6a30ac90a093818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data reception interrupt priority. <br /></td></tr>
+<tr class="separator:a298ee7b058b5cddae6a30ac90a093818"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a346098539bddc9e3c5228e7360553a9e"><td class="memItemLeft" align="right" valign="top"><a id="a346098539bddc9e3c5228e7360553a9e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a346098539bddc9e3c5228e7360553a9e">sdet_ipl</a></td></tr>
+<tr class="memdesc:a346098539bddc9e3c5228e7360553a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sound detection interrupt priority. <br /></td></tr>
+<tr class="separator:a346098539bddc9e3c5228e7360553a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f32ed867759c9d830f46a64a453d9c0"><td class="memItemLeft" align="right" valign="top"><a id="a5f32ed867759c9d830f46a64a453d9c0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a5f32ed867759c9d830f46a64a453d9c0">err_ipl</a></td></tr>
+<tr class="memdesc:a5f32ed867759c9d830f46a64a453d9c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Idle/Error interrupt priority. <br /></td></tr>
+<tr class="separator:a5f32ed867759c9d830f46a64a453d9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a22105924178bfeb3d5d4e21e6cb5a4"><td class="memItemLeft" align="right" valign="top"><a id="a5a22105924178bfeb3d5d4e21e6cb5a4"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a5a22105924178bfeb3d5d4e21e6cb5a4">dat_irq</a></td></tr>
+<tr class="memdesc:a5a22105924178bfeb3d5d4e21e6cb5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">IRQ number of data reception interrupt. <br /></td></tr>
+<tr class="separator:a5a22105924178bfeb3d5d4e21e6cb5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4b909dedca5d5099654a1342ae76d20"><td class="memItemLeft" align="right" valign="top"><a id="ae4b909dedca5d5099654a1342ae76d20"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ae4b909dedca5d5099654a1342ae76d20">sdet_irq</a></td></tr>
+<tr class="memdesc:ae4b909dedca5d5099654a1342ae76d20"><td class="mdescLeft">&#160;</td><td class="mdescRight">IRQ number of sound detection interrupt. <br /></td></tr>
+<tr class="separator:ae4b909dedca5d5099654a1342ae76d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f4774f5b5da972990370a2efbeae9f3"><td class="memItemLeft" align="right" valign="top"><a id="a2f4774f5b5da972990370a2efbeae9f3"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a2f4774f5b5da972990370a2efbeae9f3">err_irq</a></td></tr>
+<tr class="memdesc:a2f4774f5b5da972990370a2efbeae9f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">IRQ number of error detection interrupt. <br /></td></tr>
+<tr class="separator:a2f4774f5b5da972990370a2efbeae9f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a336b1d202eafdf805edd3cc274ef89e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a336b1d202eafdf805edd3cc274ef89e3">&#9670;&nbsp;</a></span>unit</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pdm_cfg_t::unit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Select a unit/channel corresponding to the unit/channel number of the hardware. </p>
+
+</div>
+</div>
+<a id="ad25f36a51d384189ebc129a471f88c4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad25f36a51d384189ebc129a471f88c4c">&#9670;&nbsp;</a></span>p_transfer_rx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___t_r_a_n_s_f_e_r___a_p_i.html#structtransfer__instance__t">transfer_instance_t</a> const* pdm_cfg_t::p_transfer_rx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>To use DMA for receiving link a Transfer instance here. Set to NULL if unused. </p>
+
+</div>
+</div>
+<a id="aee193c08a4d958f6dc4905479594109f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee193c08a4d958f6dc4905479594109f">&#9670;&nbsp;</a></span>p_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(*  pdm_cfg_t::p_callback) (<a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *p_args)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Callback provided when an PDM ISR occurs. Set to NULL for no CPU interrupt. </p>
+
+</div>
+</div>
+<a id="a21fafde266ee885ba6d43453051344f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21fafde266ee885ba6d43453051344f6">&#9670;&nbsp;</a></span>p_context</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* pdm_cfg_t::p_context</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Placeholder for user data. Passed to the user callback in <a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a>. </p>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structpdm__api__t" id="structpdm__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__api__t">&#9670;&nbsp;</a></span>pdm_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>PDM functions implemented at the HAL layer will follow this API. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a9144eb5d334c37cba16c54a931ff0b39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">open</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a9144eb5d334c37cba16c54a931ff0b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf43fd87ed8c5bdaccb5474009fa6006"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#abf43fd87ed8c5bdaccb5474009fa6006">start</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void *const p_buffer, size_t const buffer_size, uint32_t const number_of_data_to_callback)</td></tr>
+<tr class="separator:abf43fd87ed8c5bdaccb5474009fa6006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8342d4be5d02082a860b08303d0478c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ad8342d4be5d02082a860b08303d0478c">stop</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ad8342d4be5d02082a860b08303d0478c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7505ff95fb609170382ac5c91db60abf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a7505ff95fb609170382ac5c91db60abf">soundDetectionEnable</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__sound__detection__setting__t">pdm_sound_detection_setting_t</a> pdm_sound_detection_setting)</td></tr>
+<tr class="separator:a7505ff95fb609170382ac5c91db60abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac73ccdf3b6695640bf0abfc5ecbd3570"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ac73ccdf3b6695640bf0abfc5ecbd3570">soundDetectionDisable</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ac73ccdf3b6695640bf0abfc5ecbd3570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5a449eb8492fef49421d8e3babf205f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#ac5a449eb8492fef49421d8e3babf205f">read</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void *const p_dest, uint32_t const bytes)</td></tr>
+<tr class="separator:ac5a449eb8492fef49421d8e3babf205f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b1840e35134d539722e741e0b00042c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a2b1840e35134d539722e741e0b00042c">statusGet</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__status__t">pdm_status_t</a> *const p_status)</td></tr>
+<tr class="separator:a2b1840e35134d539722e741e0b00042c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37bb473e04c42ef4dc01e03f6c52ce75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a37bb473e04c42ef4dc01e03f6c52ce75">close</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a37bb473e04c42ef4dc01e03f6c52ce75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d32e65923124bdd22cc0a241402995a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_d_m___a_p_i.html#a4d32e65923124bdd22cc0a241402995a">callbackSet</a> )(<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *), void *const p_context, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a4d32e65923124bdd22cc0a241402995a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a9144eb5d334c37cba16c54a931ff0b39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9144eb5d334c37cba16c54a931ff0b39">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::open) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial configuration.</p>
+<dl class="section pre"><dt>Precondition</dt><dd>Peripheral clocks and any required output pins should be configured prior to calling this function. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>To reconfigure after calling this function, call <a class="el" href="group___p_d_m___a_p_i.html#a37bb473e04c42ef4dc01e03f6c52ce75">pdm_api_t::close</a> first. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. Must be declared by user. Elements set here. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to configuration structure. All elements of this structure must be set by user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abf43fd87ed8c5bdaccb5474009fa6006"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf43fd87ed8c5bdaccb5474009fa6006">&#9670;&nbsp;</a></span>start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::start) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void *const p_buffer, size_t const buffer_size, uint32_t const number_of_data_to_callback)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start communication.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to the reception buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_size</td><td>Size of the buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">number_of_data_to_callback</td><td>Number of the data to call the callback function from dat_isr </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad8342d4be5d02082a860b08303d0478c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8342d4be5d02082a860b08303d0478c">&#9670;&nbsp;</a></span>stop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::stop) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop communication. Communication is stopped when callback is called with PDM_EVENT_IDLE.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7505ff95fb609170382ac5c91db60abf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7505ff95fb609170382ac5c91db60abf">&#9670;&nbsp;</a></span>soundDetectionEnable</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::soundDetectionEnable) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__sound__detection__setting__t">pdm_sound_detection_setting_t</a> pdm_sound_detection_setting)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable sound detection with the specified settings.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pdm_sound_detection_setting</td><td>Settings to configure sound detection. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac73ccdf3b6695640bf0abfc5ecbd3570"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac73ccdf3b6695640bf0abfc5ecbd3570">&#9670;&nbsp;</a></span>soundDetectionDisable</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::soundDetectionDisable) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disable sound detection.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac5a449eb8492fef49421d8e3babf205f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5a449eb8492fef49421d8e3babf205f">&#9670;&nbsp;</a></span>read</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::read) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void *const p_dest, uint32_t const bytes)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read remaining PDM data. This function can be called during PDM_STATE_STOPPED.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Buffer to store PCM samples. Must be 4 byte aligned. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bytes</td><td>Number of bytes in the buffer. Recommended requesting a multiple of 8 bytes. If not a multiple of 8, receive will stop at the multiple of 8 below requested bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2b1840e35134d539722e741e0b00042c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b1840e35134d539722e741e0b00042c">&#9670;&nbsp;</a></span>statusGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::statusGet) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__status__t">pdm_status_t</a> *const p_status)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get current status and store it in provided pointer p_status.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Current status of the driver. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a37bb473e04c42ef4dc01e03f6c52ce75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37bb473e04c42ef4dc01e03f6c52ce75">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::close) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Allows driver to be reconfigured and may reduce power consumption.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___p_d_m___a_p_i.html#a9144eb5d334c37cba16c54a931ff0b39">pdm_api_t::open</a> call for this instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4d32e65923124bdd22cc0a241402995a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d32e65923124bdd22cc0a241402995a">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  pdm_api_t::callbackSet) (<a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *), void *const p_context, <a class="el" href="group___p_d_m___a_p_i.html#structpdm__callback__args__t">pdm_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to the PDM control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structpdm__instance__t" id="structpdm__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structpdm__instance__t">&#9670;&nbsp;</a></span>pdm_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct pdm_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a3c9a2ef616d009192da8185b064ba3ab"></a><a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa7507f32d16aa2574b645cd8ac720e30"></a><a class="el" href="group___p_d_m___a_p_i.html#structpdm__cfg__t">pdm_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a82eac8296ce13d4a73f461bd10bf9242"></a><a class="el" href="group___p_d_m___a_p_i.html#structpdm__api__t">pdm_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga16be2346ab1fd4d3929228a28914430c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga16be2346ab1fd4d3929228a28914430c">&#9670;&nbsp;</a></span>pdm_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___p_d_m___a_p_i.html#ga16be2346ab1fd4d3929228a28914430c">pdm_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PDM control block. Allocate an instance specific control block to pass into the PDM API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gac80768e70548497f4a739b84d0af572f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac80768e70548497f4a739b84d0af572f">&#9670;&nbsp;</a></span>pdm_pcm_width_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m___a_p_i.html#gac80768e70548497f4a739b84d0af572f">pdm_pcm_width_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Audio PCM width </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fa66dcfd2b5e3f5c788bf30d09e33ecea9"></a>PDM_PCM_WIDTH_20_BITS_0_18&#160;</td><td class="fielddoc"><p>Using 20-bit PCM Clips [18:0] bit of the buffer and 1-bit of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fa5c1961f77255f5cc1e9b10bb2eb7a610"></a>PDM_PCM_WIDTH_20_BITS_1_18&#160;</td><td class="fielddoc"><p>Using 20-bit PCM Clips [18:1] bit of the buffer and 2-bits of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fa422ec8ffc432c508a18febbd57f857c9"></a>PDM_PCM_WIDTH_20_BITS_2_18&#160;</td><td class="fielddoc"><p>Using 20-bit PCM Clips [18:2] bit of the buffer and 3-bits of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fabd56bdeaef4f1e776b865066e1dbe6b1"></a>PDM_PCM_WIDTH_20_BITS_3_18&#160;</td><td class="fielddoc"><p>Using 20-bit PCM Clips [18:3] bit of the buffer and 4-bits of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fae0af427ccb4ce9337eded095b609a2b6"></a>PDM_PCM_WIDTH_16_BITS_4_18&#160;</td><td class="fielddoc"><p>Using 16-bit PCM Clips [18:4] bit of the buffer and 1-bit of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fac2744c4aaff0de1651b0c61c39c2291e"></a>PDM_PCM_WIDTH_16_BITS_3_17&#160;</td><td class="fielddoc"><p>Using 16-bit PCM Clips [17:3] bit of the buffer and 1-bit of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fa8778dcb9208e5416f680c6fe1f1f6279"></a>PDM_PCM_WIDTH_16_BITS_2_16&#160;</td><td class="fielddoc"><p>Using 16-bit PCM Clips [16:2] bit of the buffer and 1-bit of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fa324772bd777c1f50889a17b70f3444a8"></a>PDM_PCM_WIDTH_16_BITS_1_15&#160;</td><td class="fielddoc"><p>Using 16-bit PCM Clips [15:1] bit of the buffer and 1-bit of sign. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac80768e70548497f4a739b84d0af572fa3adeaaa39404c582601c40179f1e6629"></a>PDM_PCM_WIDTH_16_BITS_0_14&#160;</td><td class="fielddoc"><p>Using 16-bit PCM Clips [14:0] bit of the buffer and 1-bit of sign. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga471ab0afd7d0f709e50ece23087b1759"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga471ab0afd7d0f709e50ece23087b1759">&#9670;&nbsp;</a></span>pdm_input_data_edge_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m___a_p_i.html#ga471ab0afd7d0f709e50ece23087b1759">pdm_input_data_edge_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Input data select. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga471ab0afd7d0f709e50ece23087b1759ab7bc06eef0965cb223d7da74d5164afb"></a>PDM_INPUT_DATA_EDGE_RISE&#160;</td><td class="fielddoc"><p>Rise-edge data of channel n. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga471ab0afd7d0f709e50ece23087b1759ad4f961a1e93d174697084cd288c0e57f"></a>PDM_INPUT_DATA_EDGE_FALL&#160;</td><td class="fielddoc"><p>Fall-edge data of channel n-1 (In case of n = 0, fall-edge data of channel 2 is selected.) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gafb514c195258d2f14c8e18e3778ad946"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafb514c195258d2f14c8e18e3778ad946">&#9670;&nbsp;</a></span>pdm_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m___a_p_i.html#gafb514c195258d2f14c8e18e3778ad946">pdm_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Events that can trigger a callback function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggafb514c195258d2f14c8e18e3778ad946aa4e2f360c85f3e28c57bfa71b932a57d"></a>PDM_EVENT_IDLE&#160;</td><td class="fielddoc"><p>IDLE. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafb514c195258d2f14c8e18e3778ad946ac3719cfdf7fc1e91172888da1ab6f511"></a>PDM_EVENT_DATA&#160;</td><td class="fielddoc"><p>Data reception. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafb514c195258d2f14c8e18e3778ad946a3cf03b37b166de31e8e8761161bf7e44"></a>PDM_EVENT_SOUND_DETECTION&#160;</td><td class="fielddoc"><p>Sound detection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafb514c195258d2f14c8e18e3778ad946a6ab9b149f9673d692a581c5211f13134"></a>PDM_EVENT_ERROR&#160;</td><td class="fielddoc"><p>Error. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf682776db13b51a982b047a8eb5fef2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf682776db13b51a982b047a8eb5fef2d">&#9670;&nbsp;</a></span>pdm_error_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m___a_p_i.html#gaf682776db13b51a982b047a8eb5fef2d">pdm_error_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Error information included in a callback function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf682776db13b51a982b047a8eb5fef2da671ce73279c7542fa4fe0f04ec631b35"></a>PDM_ERROR_NONE&#160;</td><td class="fielddoc"><p>No error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf682776db13b51a982b047a8eb5fef2da0507dc19cc300d66e07d4b452a44c9a9"></a>PDM_ERROR_SHORT_CIRCUIT&#160;</td><td class="fielddoc"><p>Short circuit detection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf682776db13b51a982b047a8eb5fef2da70bb4c740eec0bdd92cf20e63e540ba7"></a>PDM_ERROR_OVERVOLTAGE_LOWER&#160;</td><td class="fielddoc"><p>Overvoltage lower limit exceeded detection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf682776db13b51a982b047a8eb5fef2dab00a11e564c13def3c78e520e09573ab"></a>PDM_ERROR_OVERVOLTAGE_UPPER&#160;</td><td class="fielddoc"><p>Overvoltage upper limit exceeded detection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf682776db13b51a982b047a8eb5fef2da61c56fc9d6d836096a7c7e4b10c0ee17"></a>PDM_ERROR_BUFFER_OVERWRITE&#160;</td><td class="fielddoc"><p>Buffer overwriting detection. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga09df76d543b0cc6b39c5fed3bf1f4485"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga09df76d543b0cc6b39c5fed3bf1f4485">&#9670;&nbsp;</a></span>pdm_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___p_d_m___a_p_i.html#ga09df76d543b0cc6b39c5fed3bf1f4485">pdm_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Possible status values returned by <a class="el" href="group___p_d_m___a_p_i.html#a2b1840e35134d539722e741e0b00042c">pdm_api_t::statusGet</a>. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga09df76d543b0cc6b39c5fed3bf1f4485a886d05c63fd087836c605e609908161c"></a>PDM_STATE_IN_USE&#160;</td><td class="fielddoc"><p>PDM is actively reading data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga09df76d543b0cc6b39c5fed3bf1f4485a571969657d1a5ca91391807510eed100"></a>PDM_STATE_STOPPED&#160;</td><td class="fielddoc"><p>PDM is stopped and not actively reading data. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

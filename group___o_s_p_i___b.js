@@ -7,18 +7,33 @@ var group___o_s_p_i___b =
     [ "ospi_b_timing_setting_t", "group___o_s_p_i___b.html#structospi__b__timing__setting__t", [
       [ "command_to_command_interval", "group___o_s_p_i___b.html#af0e0540243e26295aabcca09b184cd50", null ],
       [ "cs_pullup_lag", "group___o_s_p_i___b.html#a603a91ae60d9fa42498306e0275c6f55", null ],
-      [ "cs_pulldown_lead", "group___o_s_p_i___b.html#ac8f8a74990e7ffb6f9efc1b36a5c6ad0", null ]
+      [ "cs_pulldown_lead", "group___o_s_p_i___b.html#ac8f8a74990e7ffb6f9efc1b36a5c6ad0", null ],
+      [ "sdr_drive_timing", "group___o_s_p_i___b.html#aa1a699aabe5a094bc91914d64f0012d9", null ],
+      [ "sdr_sampling_edge", "group___o_s_p_i___b.html#a84fcde7cfd0c05ba7110f54ee97275ee", null ],
+      [ "sdr_sampling_delay", "group___o_s_p_i___b.html#a8d579ef2c6da8af85efa5a15048c873a", null ],
+      [ "ddr_sampling_extension", "group___o_s_p_i___b.html#ada634ce7da29913306be35a68c72cea7", null ]
     ] ],
     [ "ospi_b_xspi_command_set_t", "group___o_s_p_i___b.html#structospi__b__xspi__command__set__t", [
       [ "protocol", "group___o_s_p_i___b.html#a71f30710dcb8f6a40f5254d408f38216", null ],
+      [ "frame_format", "group___o_s_p_i___b.html#add13f94149340dec69e96c4a35eccf7b", null ],
+      [ "latency_mode", "group___o_s_p_i___b.html#a00f0550cb7be11932add1ab09ca2daa8", null ],
       [ "command_bytes", "group___o_s_p_i___b.html#ac84822e6456c6d507ed77584d0bbeac1", null ],
+      [ "address_bytes", "group___o_s_p_i___b.html#a06e423259b6456b5c7a177fafa4e1eba", null ],
       [ "read_command", "group___o_s_p_i___b.html#a00f83d7b93418be05caa4310ee86b065", null ],
-      [ "page_program_command", "group___o_s_p_i___b.html#afc0516d6e75a20ee38af5b7b0ec1cacc", null ],
+      [ "program_command", "group___o_s_p_i___b.html#aef831de4dec7f7dca345791db9da02a7", null ],
       [ "write_enable_command", "group___o_s_p_i___b.html#a6a3858f70d10ad02727a77db3dc7812e", null ],
       [ "status_command", "group___o_s_p_i___b.html#aaa8203b5b53605fee6a89d155f2d3281", null ],
+      [ "row_load_command", "group___o_s_p_i___b.html#a33b0b9b9466be77656b5528d5071ab4d", null ],
+      [ "row_store_command", "group___o_s_p_i___b.html#ac9c8360552cd4692d23cdedd1b30124e", null ],
       [ "read_dummy_cycles", "group___o_s_p_i___b.html#aefcc9d11688943faff97d79d0a7580b8", null ],
       [ "program_dummy_cycles", "group___o_s_p_i___b.html#a6322dc0be297d305d55ec25632687a55", null ],
       [ "status_dummy_cycles", "group___o_s_p_i___b.html#ae881924edab459fec5c1f0a4519ad77a", null ],
+      [ "row_load_dummy_cycles", "group___o_s_p_i___b.html#aba7c637ada23d85938025e622e6f705d", null ],
+      [ "row_store_dummy_cycles", "group___o_s_p_i___b.html#a0526d05dcd366ee7ebad1f88714001b9", null ],
+      [ "address_msb_mask", "group___o_s_p_i___b.html#abef464c831b5cc1705c8e51085ef0dd8", null ],
+      [ "status_needs_address", "group___o_s_p_i___b.html#a8702c9b52d6ae6ba2a1be6db6ab702cb", null ],
+      [ "status_address", "group___o_s_p_i___b.html#a186b5ffb2bc40c5a1043d681bbe39db7", null ],
+      [ "status_address_bytes", "group___o_s_p_i___b.html#a07dbd2c6892093be321f57711848d2f3", null ],
       [ "p_erase_commands", "group___o_s_p_i___b.html#adcbff92ffccf92dc8bf1272dab7e294a", null ]
     ] ],
     [ "ospi_b_dotf_cfg_t", "group___o_s_p_i___b.html#structospi__b__dotf__cfg__t", null ],
@@ -27,21 +42,20 @@ var group___o_s_p_i___b =
       [ "channel", "group___o_s_p_i___b.html#a7e2e7c493d3ca31a1dde6b4307e4d725", null ],
       [ "p_timing_settings", "group___o_s_p_i___b.html#a6cf36a43b286b455e32b5d3557662966", null ],
       [ "p_xspi_command_set", "group___o_s_p_i___b.html#a508364a048f6aeec3f7ba9aa56053da0", null ],
+      [ "data_latch_delay_clocks", "group___o_s_p_i___b.html#aa3273ae681e006597303a7c4671673fd", null ],
       [ "p_autocalibration_preamble_pattern_addr", "group___o_s_p_i___b.html#a8562f207c43dc832c1f78ac06f9b522a", null ],
-      [ "data_latch_delay_clocks", "group___o_s_p_i___b.html#af914eb67d0d2dda9e70770c54ef6d283", null ],
-      [ "p_lower_lvl_transfer", "group___o_s_p_i___b.html#a61141668e0ed6019ecabfaba780f2cf0", null ],
-      [ "read_dummy_cycles", "group___o_s_p_i___b.html#a4bfc8375b7a10512fed0694b9bb801a1", null ],
-      [ "program_dummy_cycles", "group___o_s_p_i___b.html#a2e0c01bff80f18b8f0535dde912693c0", null ],
-      [ "status_dummy_cycles", "group___o_s_p_i___b.html#aa3bd97568f04755e775e5f49746cc79d", null ]
+      [ "p_lower_lvl_transfer", "group___o_s_p_i___b.html#a61141668e0ed6019ecabfaba780f2cf0", null ]
     ] ],
     [ "ospi_b_instance_ctrl_t", "group___o_s_p_i___b.html#structospi__b__instance__ctrl__t", [
       [ "p_cfg", "group___o_s_p_i___b.html#a4fa5199637964dc5a2890aa94dd29cb8", null ],
       [ "open", "group___o_s_p_i___b.html#ab3666fb8e1312a2c7c8b16b8f95d94bb", null ],
       [ "spi_protocol", "group___o_s_p_i___b.html#afd8dc5866bca51974a80b793bff2fa81", null ],
       [ "channel", "group___o_s_p_i___b.html#af12618bf3fa4bf86967dca5eeb918ca3", null ],
+      [ "ospi_b_unit", "group___o_s_p_i___b.html#ab80b799761f032f97c0effe0c68748bb", null ],
       [ "p_cmd_set", "group___o_s_p_i___b.html#a1bf3034bfe77a6165e54d1ab593bfcdb", null ],
       [ "p_reg", "group___o_s_p_i___b.html#a220f063a15c4b9a60e75ee7c50dfbbfe", null ]
     ] ],
+    [ "OSPI_B_MAX_WRITE_ENABLE_POLLING_LOOPS", "group___o_s_p_i___b.html#ga84d19b0f9d6698d68364b7c4c2bb1126", null ],
     [ "ospi_b_device_number_t", "group___o_s_p_i___b.html#ga76971feb991ff5a55ffdc3e1c6834c1f", [
       [ "OSPI_B_DEVICE_NUMBER_0", "group___o_s_p_i___b.html#gga76971feb991ff5a55ffdc3e1c6834c1fa92f8ffbf2e66985d3809b4e4b538be6b", null ],
       [ "OSPI_B_DEVICE_NUMBER_1", "group___o_s_p_i___b.html#gga76971feb991ff5a55ffdc3e1c6834c1fa0f6cd25fb2ea2323c39f116ea0f60643", null ]
@@ -75,6 +89,78 @@ var group___o_s_p_i___b =
     [ "ospi_b_command_cs_pulldown_clocks_t", "group___o_s_p_i___b.html#gab6aad607f2de843932644cf1137eeeac", [
       [ "OSPI_B_COMMAND_CS_PULLDOWN_CLOCKS_NO_EXTENSION", "group___o_s_p_i___b.html#ggab6aad607f2de843932644cf1137eeeacae46135ac72afa0bea87eccfb6ecce566", null ],
       [ "OSPI_B_COMMAND_CS_PULLDOWN_CLOCKS_1", "group___o_s_p_i___b.html#ggab6aad607f2de843932644cf1137eeeaca4fa5ffc6899c6e6d8cb69168c3e8627c", null ]
+    ] ],
+    [ "ospi_b_ds_timing_delay_t", "group___o_s_p_i___b.html#ga7b8f9d8f7c05070b5b4826882dbb15fa", [
+      [ "OSPI_B_DS_TIMING_DELAY_NONE", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa866af4a57107ec1f8e1ce50d7d3a1be1", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_1", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faaf63effc13d9736337456da954173bc64", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_2", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa1909a5ef1344e1844f214a472dac3d1e", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_3", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa525a46d783e425279495c7577a087160", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_4", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa5637c6ea1b3744644428c35d5257f125", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_5", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa9d433678f1b985a398fbe2f4815c64ca", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_6", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa8e6d4130108e6d02661ff6e844ad4b1e", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_7", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faad5db99ec58b5a6a1c1e8a503fe91000f", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_8", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa831e2554bc4ddeb3f91a43b4472811bd", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_9", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa96953ca77d475071af0a6505cfc63876", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_10", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faae649dcc9c4464b6b56823de95661fa69", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_11", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa7650eccd88381e2c549a4f3f05f98452", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_12", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa29751edf8ce3c00957a38d5a1d370613", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_13", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa64f7af03a6ec5f43ca25ec574f32c0f6", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_14", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faae2e979e2ae5912f3fc7c1f5013e415af", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_15", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa0b91a9a412f722da82d83f774ba8a5f5", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_16", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa84109b879cb5046bf02caaaae8094f2b", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_17", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa26e50cf9966c02fb8f1286f9aafabfe8", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_18", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa75aec25ef776fb372913322c40f0cb16", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_19", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faaa3ad7ad49bbb5f1ced665fab13dd4e9b", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_20", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faab62d36b86156eaf71f4a288c14b8dd05", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_21", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faab03c2761ddee55d3bcccca791a46bdf3", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_22", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa2b9304d3764cb5cafcc92714d16eefe5", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_23", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa55d664ab669d71c1e775295f56cf0199", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_24", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faaaea80d13a1fb72e37e1c58043dc5d816", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_25", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa7a1b01d09b27fb37f1eef35daceabadc", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_26", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa0f2968601f05c21d890e47ac3961bb93", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_27", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa5d0c6d8ff66bec6e097e95f94b0241ba", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_28", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa9cbea51eb280ccf19faeb8c878a62935", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_29", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa9c002310cda757e04e39d02edbc64c5a", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_30", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faa3e67aa925afb0ed8a507bf1ce73026cc", null ],
+      [ "OSPI_B_DS_TIMING_DELAY_31", "group___o_s_p_i___b.html#gga7b8f9d8f7c05070b5b4826882dbb15faaa757baa9dee40a468c2b24732819f999", null ]
+    ] ],
+    [ "ospi_b_sdr_drive_timing_t", "group___o_s_p_i___b.html#ga6f788d0293774da421928e43112397c0", [
+      [ "OSPI_B_SDR_DRIVE_TIMING_BEFORE_CK", "group___o_s_p_i___b.html#gga6f788d0293774da421928e43112397c0a65a6b65c9fa75feda107e436e53433ae", null ],
+      [ "OSPI_B_SDR_DRIVE_TIMING_AT_CK", "group___o_s_p_i___b.html#gga6f788d0293774da421928e43112397c0a002dddb081f4281905c4b2353cbf51e2", null ]
+    ] ],
+    [ "ospi_b_ck_edge_t", "group___o_s_p_i___b.html#gae27c294bf3112e9fa6ef652cc470e12d", [
+      [ "OSPI_B_CK_EDGE_FALLING", "group___o_s_p_i___b.html#ggae27c294bf3112e9fa6ef652cc470e12da6b199035d0c7fca722a4cb7fd043b321", null ],
+      [ "OSPI_B_CK_EDGE_RISING", "group___o_s_p_i___b.html#ggae27c294bf3112e9fa6ef652cc470e12da52a33dd79fa38ea8f78d343c90afab1a", null ]
+    ] ],
+    [ "ospi_b_sdr_sampling_delay_t", "group___o_s_p_i___b.html#ga936cdfcd8adcd5e8623598ff2abea12e", [
+      [ "OSPI_B_SDR_SAMPLING_DELAY_NONE", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12eab1efb7515f395381b43ce27caf406d55", null ],
+      [ "OSPI_B_SDR_SAMPLING_DELAY_1", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12eaa86bbb0eae7b03b1bf48ccfd3763220f", null ],
+      [ "OSPI_B_SDR_SAMPLING_DELAY_2", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12eaf99d0dd0eb6e386321b6588625f4acce", null ],
+      [ "OSPI_B_SDR_SAMPLING_DELAY_3", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12ea283367fffd00325be788fa3809bfcf17", null ],
+      [ "OSPI_B_SDR_SAMPLING_DELAY_4", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12eadb86a30e6c553cad2d3c4aa550468b72", null ],
+      [ "OSPI_B_SDR_SAMPLING_DELAY_5", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12ea9fa78fc8affc012a87f6f812ce1db265", null ],
+      [ "OSPI_B_SDR_SAMPLING_DELAY_6", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12ea9b00206e11fc532e2f5ff339fbb970fe", null ],
+      [ "OSPI_B_SDR_SAMPLING_DELAY_7", "group___o_s_p_i___b.html#gga936cdfcd8adcd5e8623598ff2abea12ea1855da65c9e700e70dccfdec100e7882", null ]
+    ] ],
+    [ "ospi_b_ddr_sampling_extension_t", "group___o_s_p_i___b.html#ga80c573b83c220daa0a6cf15c9f238bf2", [
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_NONE", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2a6c0c0e52ce891457429582926f893061", null ],
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_1", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2a166df5fcfc26217dc36fc5c88349f5e6", null ],
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_2", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2aae89918bb8530c6e71e653fef38c93f6", null ],
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_3", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2a2a44da0203e93abcac977fecd2b0165c", null ],
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_4", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2aa194d392dd8eb9c9932fa3a03207b9be", null ],
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_5", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2a53931ec25391c197f7fd78469c39326b", null ],
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_6", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2a14ba326da28a6f3f12bf4dc10e557cce", null ],
+      [ "OSPI_B_DDR_SAMPLING_EXTENSION_7", "group___o_s_p_i___b.html#gga80c573b83c220daa0a6cf15c9f238bf2a6ef8e2bf6d1f727651b0cc0e4123aa5c", null ]
+    ] ],
+    [ "ospi_b_frame_format_t", "group___o_s_p_i___b.html#gada8a65f95a308ffd7a5bfa58a8a2b183", [
+      [ "OSPI_B_FRAME_FORMAT_STANDARD", "group___o_s_p_i___b.html#ggada8a65f95a308ffd7a5bfa58a8a2b183af9ddf00cc395878dfd4486dcd6354db8", null ],
+      [ "OSPI_B_FRAME_FORMAT_XSPI_PROFILE_1", "group___o_s_p_i___b.html#ggada8a65f95a308ffd7a5bfa58a8a2b183ad7a6eeb97b3ac2b5df3fc03ce41258b2", null ],
+      [ "OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2", "group___o_s_p_i___b.html#ggada8a65f95a308ffd7a5bfa58a8a2b183aa17e9454fae1fdbe8bc1090adf6dd213", null ],
+      [ "OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2_EXTENDED", "group___o_s_p_i___b.html#ggada8a65f95a308ffd7a5bfa58a8a2b183a737189d3185afa26ec870a453ecec645", null ]
+    ] ],
+    [ "ospi_b_latency_mode_t", "group___o_s_p_i___b.html#ga5fb4c8bc061b939bd501610e8a687359", [
+      [ "OSPI_B_LATENCY_MODE_FIXED", "group___o_s_p_i___b.html#gga5fb4c8bc061b939bd501610e8a687359ab9c47d1045bfdab42bb95e2599fb194f", null ],
+      [ "OSPI_B_LATENCY_MODE_VARIABLE", "group___o_s_p_i___b.html#gga5fb4c8bc061b939bd501610e8a687359a8f75b46c5467ffde0834594a821ee41f", null ]
     ] ],
     [ "ospi_b_prefetch_function_t", "group___o_s_p_i___b.html#ga131fd33e93249afc3733475ad2786a3b", [
       [ "OSPI_B_PREFETCH_FUNCTION_DISABLE", "group___o_s_p_i___b.html#gga131fd33e93249afc3733475ad2786a3ba7c4c7495152f1c522f914833daac9877", null ],
@@ -116,5 +202,7 @@ var group___o_s_p_i___b =
     [ "R_OSPI_B_SpiProtocolSet", "group___o_s_p_i___b.html#ga39b3c250a591ffd092cd6ded8c45249c", null ],
     [ "R_OSPI_B_Close", "group___o_s_p_i___b.html#ga4070e46f2fadda4ec4cb8b8f023c1a00", null ],
     [ "R_OSPI_B_AutoCalibrate", "group___o_s_p_i___b.html#gac3441de6c487a640fae584248007a3a6", null ],
+    [ "R_OSPI_B_RowLoad", "group___o_s_p_i___b.html#gaf8ca05a2a44468130ef9e97aee6e9f66", null ],
+    [ "R_OSPI_B_RowStore", "group___o_s_p_i___b.html#gafd7b272b5cd5d961d742d681bdc651bc", null ],
     [ "R_OSPI_B_DOTF_Configure", "group___o_s_p_i___b.html#ga215959cccab9f53a2516920ed0182dfc", null ]
 ];

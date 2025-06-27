@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___c_g_c___a_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___c_g_c___a_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___c_g_c___a_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -314,7 +314,7 @@ event</td>
 <td class="fielddoc">
 The event can be used to identify what caused the callback. </td></tr>
 <tr><td class="fieldtype">
-<a id="a97655cadd0631f2bf9e21449ff628411"></a>void const  *</td>
+<a id="a9c3742d74ecf11d0073084ce8f720405"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -410,13 +410,25 @@ mosc_divider</td>
 <td class="fielddoc">
 Main oscillator divider. </td></tr>
 <tr><td class="fieldtype">
-<a id="a937e26fcc80a4c03c7e5abdcc7807d40"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
+<a id="a172c4e154d211557e84d210ac924196e"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a376435fc18d3ce30e4a93e36278f7e30"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
+<a id="a2d90452f2ca6a446fbcaa41378515ca6"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a1a5f0e16034a7c958c28ac50ff5a8eea"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aceaacb6ca9ef7c5e924081f57331a746"></a>union <a class="el" href="group___c_g_c___a_p_i.html#unioncgc__divider__cfg__t_8____unnamed____">cgc_divider_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -565,8 +577,8 @@ State of Sub oscillator. </td></tr>
 <tr class="separator:a7df2f7359a1521bf0d6ae79eaa8d396a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adec8be986fe880ef29ecc2eed9e89f41"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#adec8be986fe880ef29ecc2eed9e89f41">oscStopStatusClear</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:adec8be986fe880ef29ecc2eed9e89f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6320b1734cebe9041c65aa581ecb1c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#ae6320b1734cebe9041c65aa581ecb1c4">callbackSet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:ae6320b1734cebe9041c65aa581ecb1c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a092a83d15ace9e2a3851da9e0163a71b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#a092a83d15ace9e2a3851da9e0163a71b">callbackSet</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a092a83d15ace9e2a3851da9e0163a71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13a62b83132e592aa8c9e0071312633a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_g_c___a_p_i.html#a13a62b83132e592aa8c9e0071312633a">close</a> )(<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a13a62b83132e592aa8c9e0071312633a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -781,14 +793,14 @@ State of Sub oscillator. </td></tr>
 
 </div>
 </div>
-<a id="ae6320b1734cebe9041c65aa581ecb1c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6320b1734cebe9041c65aa581ecb1c4">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a092a83d15ace9e2a3851da9e0163a71b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a092a83d15ace9e2a3851da9e0163a71b">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::callbackSet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cgc_api_t::callbackSet) (<a class="el" href="group___c_g_c___a_p_i.html#ga7d46f6df6a02fa807190bc97103cb5b7">cgc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_g_c___a_p_i.html#structcgc__callback__args__t">cgc_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1134,6 +1146,28 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da2d10334d1d3c50092e4abb37b65a8bad"></a>CGC_SYS_CLOCK_DIV_12&#160;</td><td class="fielddoc"><p>System clock divided by 12. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da4471bb31a6a33ff8ad6799be51c1dcb9"></a>CGC_SYS_CLOCK_DIV_24&#160;</td><td class="fielddoc"><p>System clock divided by 24. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326"></a>CGC_SYS_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>System clock divided by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6"></a>CGC_SYS_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>System clock divided by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8daa98de579e2e476fee94e150c58ee22c0"></a>CGC_SYS_CLOCK_DIV_4&#160;</td><td class="fielddoc"><p>System clock divided by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8daecead8b5b6ef0f7fc4e0c684720736b4"></a>CGC_SYS_CLOCK_DIV_8&#160;</td><td class="fielddoc"><p>System clock divided by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da5fb7e35f2b14f47d71fc3ddce999d9a9"></a>CGC_SYS_CLOCK_DIV_16&#160;</td><td class="fielddoc"><p>System clock divided by 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dadd88ebecf942a2a5d0ee88cbadec6bdf"></a>CGC_SYS_CLOCK_DIV_32&#160;</td><td class="fielddoc"><p>System clock divided by 32. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da9c8cfa14a56287b98664ef514fbbd7e9"></a>CGC_SYS_CLOCK_DIV_64&#160;</td><td class="fielddoc"><p>System clock divided by 64. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dac3d14ab764b2f8801dab6b51ce2be2aa"></a>CGC_SYS_CLOCK_DIV_3&#160;</td><td class="fielddoc"><p>System clock divided by 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da5d47048906b04154ddaa3535211db7cb"></a>CGC_SYS_CLOCK_DIV_6&#160;</td><td class="fielddoc"><p>System clock divided by 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da2d10334d1d3c50092e4abb37b65a8bad"></a>CGC_SYS_CLOCK_DIV_12&#160;</td><td class="fielddoc"><p>System clock divided by 12. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8dae6ea5bbf6e91e8f916fd3f34b6a06326"></a>CGC_SYS_CLOCK_DIV_1&#160;</td><td class="fielddoc"><p>System clock divided by 1. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga78ac772149fadd3ec1fb21dc674e2b8da1abcfb2e0f62f263168e747ab41630a6"></a>CGC_SYS_CLOCK_DIV_2&#160;</td><td class="fielddoc"><p>System clock divided by 2. </p>
@@ -1229,7 +1263,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

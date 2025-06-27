@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___s_d_m_m_c___a_p_i.html','');})
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___s_d_m_m_c___a_p_i.html','');})
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___s_d_m_m_c___a_p_i.html','');})
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -434,7 +434,7 @@ response</td>
 <td class="fielddoc">
 Response from card, only valid if SDMMC_EVENT_RESPONSE is set in event. </td></tr>
 <tr><td class="fieldtype">
-<a id="a07513c165370d5e64468e227ac9e13b3"></a>void const  *</td>
+<a id="ab234367dde42449dfae0ebe7fd6550e8"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -518,10 +518,10 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#acabda2dc1122a1c077ee34466743004b">p_callback</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:acabda2dc1122a1c077ee34466743004b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function. <br /></td></tr>
 <tr class="separator:acabda2dc1122a1c077ee34466743004b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f801348fe2fbe8e4b750a0301aa34ce"><td class="memItemLeft" align="right" valign="top"><a id="a2f801348fe2fbe8e4b750a0301aa34ce"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#a2f801348fe2fbe8e4b750a0301aa34ce">p_context</a></td></tr>
-<tr class="memdesc:a2f801348fe2fbe8e4b750a0301aa34ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
-<tr class="separator:a2f801348fe2fbe8e4b750a0301aa34ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5f60698c048eb37fc5feb8c0f99d802"><td class="memItemLeft" align="right" valign="top"><a id="ad5f60698c048eb37fc5feb8c0f99d802"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#ad5f60698c048eb37fc5feb8c0f99d802">p_context</a></td></tr>
+<tr class="memdesc:ad5f60698c048eb37fc5feb8c0f99d802"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined context passed into callback function. <br /></td></tr>
+<tr class="separator:ad5f60698c048eb37fc5feb8c0f99d802"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4369302a13dde0772e2c7831443c5788"><td class="memItemLeft" align="right" valign="top"><a id="a4369302a13dde0772e2c7831443c5788"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#a4369302a13dde0772e2c7831443c5788">p_extend</a></td></tr>
 <tr class="memdesc:a4369302a13dde0772e2c7831443c5788"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD/MMC hardware dependent configuration. <br /></td></tr>
@@ -650,8 +650,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <tr class="separator:a5bb1be42ac391c9016bd3f6efb3a6b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adeb37ae1b226f926ffe36f5dc19f47b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#adeb37ae1b226f926ffe36f5dc19f47b2">erase</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl, uint32_t const start_sector, uint32_t const sector_count)</td></tr>
 <tr class="separator:adeb37ae1b226f926ffe36f5dc19f47b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa41f67009d31e59c090024c86186ba8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#afa41f67009d31e59c090024c86186ba8">callbackSet</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:afa41f67009d31e59c090024c86186ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0941852f918ca36c68c0856ec959289f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#a0941852f918ca36c68c0856ec959289f">callbackSet</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a0941852f918ca36c68c0856ec959289f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36c443d21eb54717d3658aada3ba1720"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_d_m_m_c___a_p_i.html#a36c443d21eb54717d3658aada3ba1720">close</a> )(<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a36c443d21eb54717d3658aada3ba1720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -918,14 +918,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 
 </div>
 </div>
-<a id="afa41f67009d31e59c090024c86186ba8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa41f67009d31e59c090024c86186ba8">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a0941852f918ca36c68c0856ec959289f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0941852f918ca36c68c0856ec959289f">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  sdmmc_api_t::callbackSet) (<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  sdmmc_api_t::callbackSet) (<a class="el" href="group___s_d_m_m_c___a_p_i.html#ga81be65bcaee41616f4702b84eb51a499">sdmmc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___s_d_m_m_c___a_p_i.html#structsdmmc__callback__args__t">sdmmc_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1246,7 +1246,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

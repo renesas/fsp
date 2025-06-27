@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___c_a_c___a_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___c_a_c___a_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___c_a_c___a_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -381,7 +381,7 @@ event</td>
 <td class="fielddoc">
 The event can be used to identify what caused the callback. </td></tr>
 <tr><td class="fieldtype">
-<a id="af974f92bbdc94e73f4fd593ecf09bff6"></a>void const  *</td>
+<a id="abdaffa98ff441af47b5946296b20b41c"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -448,10 +448,10 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a34dcc64c380ef99d0b0d9cf68b37c8b2">p_callback</a> )(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:a34dcc64c380ef99d0b0d9cf68b37c8b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when a CAC interrupt ISR occurs. <br /></td></tr>
 <tr class="separator:a34dcc64c380ef99d0b0d9cf68b37c8b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3a4b565ba5210e1bd706c0285a04891"><td class="memItemLeft" align="right" valign="top"><a id="ae3a4b565ba5210e1bd706c0285a04891"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#ae3a4b565ba5210e1bd706c0285a04891">p_context</a></td></tr>
-<tr class="memdesc:ae3a4b565ba5210e1bd706c0285a04891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passed to user callback in <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a>. <br /></td></tr>
-<tr class="separator:ae3a4b565ba5210e1bd706c0285a04891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2356d7c5c1baa3d03f558971838036c4"><td class="memItemLeft" align="right" valign="top"><a id="a2356d7c5c1baa3d03f558971838036c4"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a2356d7c5c1baa3d03f558971838036c4">p_context</a></td></tr>
+<tr class="memdesc:a2356d7c5c1baa3d03f558971838036c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Passed to user callback in <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a>. <br /></td></tr>
+<tr class="separator:a2356d7c5c1baa3d03f558971838036c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f4186237976b6b7acfc89c5f55b125b"><td class="memItemLeft" align="right" valign="top"><a id="a8f4186237976b6b7acfc89c5f55b125b"></a>
 void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a8f4186237976b6b7acfc89c5f55b125b">p_extend</a></td></tr>
 <tr class="memdesc:a8f4186237976b6b7acfc89c5f55b125b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAC hardware dependent configuration */. <br /></td></tr>
@@ -482,8 +482,8 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:ad536fdf0808d540e48dc31c4291dd5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6d120c2fa73011a153e05dbfe62571d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#ab6d120c2fa73011a153e05dbfe62571d">read</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, uint32_t *const p_counter)</td></tr>
 <tr class="separator:ab6d120c2fa73011a153e05dbfe62571d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77566d160b545ebc3172e5ded7fffbc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a77566d160b545ebc3172e5ded7fffbc3">callbackSet</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a77566d160b545ebc3172e5ded7fffbc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4216d3665bdca8211e5748452c3820ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a4216d3665bdca8211e5748452c3820ba">callbackSet</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a4216d3665bdca8211e5748452c3820ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60344482e6c3f0086e96fbf860e626be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_a_c___a_p_i.html#a60344482e6c3f0086e96fbf860e626be">close</a> )(<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a60344482e6c3f0086e96fbf860e626be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -570,14 +570,14 @@ void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a id="a77566d160b545ebc3172e5ded7fffbc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77566d160b545ebc3172e5ded7fffbc3">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a4216d3665bdca8211e5748452c3820ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4216d3665bdca8211e5748452c3820ba">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cac_api_t::callbackSet) (<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cac_api_t::callbackSet) (<a class="el" href="group___c_a_c___a_p_i.html#gaaf1442f7ef6645e475d4d53e8fc01ef1">cac_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_a_c___a_p_i.html#structcac__callback__args__t">cac_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -851,7 +851,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

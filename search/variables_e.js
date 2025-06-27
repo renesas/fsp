@@ -6,6 +6,8 @@ var searchData=
   ['nc_5f1',['nc_1',['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a3379f2156a11904d6c9ee6997652b32c',1,'rm_air_sensor_data_t']]],
   ['nc_5f2p5',['nc_2p5',['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a53a705812e7210f46d3adbf4a72c67f0',1,'rm_air_sensor_data_t']]],
   ['nc_5f4',['nc_4',['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a7b20e115c1bb7c66d99f144807541492',1,'rm_air_sensor_data_t']]],
+  ['ndef_5fopen',['ndef_open',['../group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#aec2d924f65ad11b58ba48e451b73f5fa',1,'nfc_reader_ptx_instance_ctrl_t']]],
+  ['ndef_5fwork_5fbuf',['ndef_work_buf',['../group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#a10f0215bb5b8d339d6973e8b66ef1b04',1,'nfc_reader_ptx_instance_ctrl_t']]],
   ['negation_5fdelay',['negation_delay',['../group___l_v_d___a_p_i.html#a4ee0cbde3ba8457e75b8475161a29704',1,'lvd_cfg_t']]],
   ['negation_5ftime',['negation_time',['../group___s_c_i___b___u_a_r_t.html#adeab6a6a24f0ccbf45a24fd0185f1e3b',1,'sci_b_uart_rs485_setting_t']]],
   ['negative_5fvref',['negative_vref',['../group___a_d_c___d.html#a3a18ce046b2222f5f316acf2711f5078',1,'adc_d_extended_cfg_t']]],

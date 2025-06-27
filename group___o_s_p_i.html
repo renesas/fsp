@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___o_s_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___o_s_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___o_s_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -797,12 +797,12 @@ Byte1, Byte0, Byte3, Byte2</li>
 <h2><a class="anchor" id="r-ospi-clock-configuration"></a>
 Clock Configuration</h2>
 <p>PCLKA is the Octal-SPI bus interface, and PCLKB is used to set OSPI registers.</p>
-<p>The signals to the OSPI device are derived from OCTASPICLK. The OMSCLK signal is OCTASPICLK / 2. Data can be output at the OCTASPICLK rate if SPI Protocol is set to Dual Data Rate OPI.</p>
-<p>The PCLKB, PCLKA, and OCTASPICLK frequencies can be set on the <b>Clocks</b> tab of the RA Configuration editor.</p>
+<p>The signals to the OSPI device are derived from OCTACLK. The OMSCLK signal is OCTACLK / 2. Data can be output at the OCTACLK rate if SPI Protocol is set to Dual Data Rate OPI.</p>
+<p>The PCLKB, PCLKA, and OCTACLK frequencies can be set on the <b>Clocks</b> tab of the RA Configuration editor.</p>
 <h2><a class="anchor" id="r-ospi-pin-configuration"></a>
 Pin Configuration</h2>
 <p>The following pins are available to connect to an external OSPI device:</p><ul>
-<li>OMSCLK: OSPI clock output (OCTASPICLK / 2)</li>
+<li>OMSCLK: OSPI clock output (OCTACLK / 2)</li>
 <li>OMDQS: OSPI data strobe signal</li>
 <li>OMCS0: OSPI device 0 select</li>
 <li>OMCS1: OSPI device 1 select</li>
@@ -866,7 +866,7 @@ Examples</h1>
 <h2>OSPI Flash:</h2>
 <h3>Basic Example</h3>
 <p><a class="anchor" id="um_ospi_sections"></a> This is a basic example of minimal use of the OSPI in an application with OctaFlash.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .ospi_flash section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[OSPI_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi_flash&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .code_in_ospi section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.code_in_ospi&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instancee */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#gaec5430be37b10e19509cf5f31e045bc4">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Change SPI to DOPI mode */</span></div><div class="line">    r_ospi_example_spi_to_dopi();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Reading Status Register Example (R_OSPI_DirectTransfer)</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place data in the .ospi0_cs1 section to flash it during programming. */</span></div><div class="line"><span class="keyword">const</span> uint8_t g_src[OSPI_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi0_cs1&quot;</span>) = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div><div class="line"></div><div class="line"><span class="comment">/* Place code in the .ospi0_cs1 section to flash it during programming. */</span></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function(<span class="keywordtype">void</span>) BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi0_cs1_code&quot;</span>) __attribute__((noinline));</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_example_function (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Add code here. */</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instancee */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#gaec5430be37b10e19509cf5f31e045bc4">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Change SPI to DOPI mode */</span></div><div class="line">    r_ospi_example_spi_to_dopi();</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, data can be read directly from the OSPI flash. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src[0], OSPI_EXAMPLE_DATA_LENGTH);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, functions in the OSPI flash can be called. */</span></div><div class="line">    r_ospi_example_function();</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Reading Status Register Example (R_OSPI_DirectTransfer)</h3>
 <p>This is an example of using R_OSPI_DirectWrite followed by R_OSPI_DirectRead to send the read status register command and read back the status register from the device.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_COMMAND_READ_STATUS_REGISTER    (0x05U)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_direct_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> ospi_test_direct_transfer =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = OSPI_TEST_READ_STATUS_COMMAND_SPI_MODE,</div><div class="line">        .address        = 0U,</div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 1U,</div><div class="line">        .address_length = 0U,</div><div class="line">        .data_length    = 0U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the OSPI instance. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#gaec5430be37b10e19509cf5f31e045bc4">R_OSPI_Open</a>(&amp;g_ospi0_ctrl, &amp;g_ospi0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Write Enable */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#ga71105098bc41e1d98ea07a6e4f3a26ff">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read Status Register */</span></div><div class="line">    ospi_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>     = OSPI_TEST_READ_STATUS_COMMAND_SPI_MODE;</div><div class="line">    ospi_test_direct_transfer.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#a5e3c48eb88187944722f745231f955f3">data_length</a> = 1U;</div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#ga71105098bc41e1d98ea07a6e4f3a26ff">R_OSPI_DirectTransfer</a>(&amp;g_ospi0_ctrl, &amp;ospi_test_direct_transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if Write Enable is set */</span></div><div class="line">    <span class="keywordflow">if</span> (OSPI_WEN_BIT_MASK != (ospi_test_direct_transfer.data &amp; OSPI_WEN_BIT_MASK))</div><div class="line">    {</div><div class="line">        __BKPT(0);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Auto-calibration Example (R_OSPI_DirectTransfer, R_OSPI_Write, R_OSPI_SpiProtocolSet)</h3>
 <p>This is an example of using R_OSPI_SpiProtocolSet to change the operating mode from SPI to SOPI and allow the driver to initiate auto-calibration.</p>
@@ -877,7 +877,7 @@ Examples</h1>
 <h2>OSPI RAM:</h2>
 <h3>Basic Example</h3>
 <p>This is a basic example of minimal use of the OSPI in an application with OctaRAM.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_RAM_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_RAM_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place uninitialized data buffers in the ospi_device_0_no_load section.</span></div><div class="line"><span class="comment"> * Use ospi_device_1_no_load section if the OctaRAM is configured on channel 1.</span></div><div class="line"><span class="comment"> */</span></div><div class="line">uint8_t g_src_1[OSPI_RAM_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi_device_0_no_load&quot;</span>);</div><div class="line">uint8_t g_src_2[OSPI_RAM_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi_device_0_no_load&quot;</span>);</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_ram_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instancee.</span></div><div class="line"><span class="comment">     * Ensure valid setting of the &#39;Data latching delay&#39; field in the configurator.</span></div><div class="line"><span class="comment">     * To successfully perform OSPI RAM reads this value must not be 0.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#gaec5430be37b10e19509cf5f31e045bc4">R_OSPI_Open</a>(&amp;g_ospi_ram0_ctrl, &amp;g_ospi_ram0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, data can be read from or written to directly from the OSPI RAM. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src_1[0], OSPI_RAM_EXAMPLE_DATA_LENGTH);</div><div class="line">    memcpy(&amp;g_src_2[0], &amp;g_src_1[0], OSPI_RAM_EXAMPLE_DATA_LENGTH);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Auto-calibration Example (R_OSPI_DirectTransfer, R_OSPI_AutoCalibrate)</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#define OSPI_RAM_EXAMPLE_DATA_LENGTH    (1024)</span></div><div class="line"></div><div class="line">uint8_t g_dest[OSPI_RAM_EXAMPLE_DATA_LENGTH];</div><div class="line"></div><div class="line"><span class="comment">/* Place uninitialized data buffers in the ospi0_cs1_noinit section.</span></div><div class="line"><span class="comment"> * Use ospi0_cs1_noinit section if the OctaRAM is configured on channel 1.</span></div><div class="line"><span class="comment"> */</span></div><div class="line">uint8_t g_src_1[OSPI_RAM_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi0_cs1_noinit&quot;</span>);</div><div class="line">uint8_t g_src_2[OSPI_RAM_EXAMPLE_DATA_LENGTH] BSP_PLACE_IN_SECTION(<span class="stringliteral">&quot;.ospi0_cs1_noinit&quot;</span>);</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_ram_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instancee.</span></div><div class="line"><span class="comment">     * Ensure valid setting of the &#39;Data latching delay&#39; field in the configurator.</span></div><div class="line"><span class="comment">     * To successfully perform OSPI RAM reads this value must not be 0.</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#gaec5430be37b10e19509cf5f31e045bc4">R_OSPI_Open</a>(&amp;g_ospi_ram0_ctrl, &amp;g_ospi_ram0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* After R_OSPI_Open() and any required device specific intiialization, data can be read from or written to directly from the OSPI RAM. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src_1[0], OSPI_RAM_EXAMPLE_DATA_LENGTH);</div><div class="line">    memcpy(&amp;g_src_2[0], &amp;g_src_1[0], OSPI_RAM_EXAMPLE_DATA_LENGTH);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Auto-calibration Example (R_OSPI_DirectTransfer, R_OSPI_AutoCalibrate)</h3>
 <p>This is an example of using R_OSPI_AutoCalibrate to calibrate OSPI peripheral to read data from the OctaRAM device.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define OSPI_RAM_EXAMPLE_PREAMBLE_ADDRESS                     (0x68000000U) </span><span class="comment">/* Device connected to CS0 */</span><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#define OSPI_RAM_EXAMPLE_OCTARAM_CR_LATENCY_COUNTER_MASK      (0x00F0U)</span></div><div class="line"><span class="preprocessor">#define OSPI_RAM_EXAMPLE_OCTARAM_CR_LATENCY_COUNTER_POS       (4U)</span></div><div class="line"><span class="preprocessor">#define OSPI_RAM_EXAMPLE_OCTARAM_100MHZ_4CLOCKS_CR_SETTING    (1U)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> r_ospi_ram_auto_calibrate_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Open the OSPI instancee */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___o_s_p_i.html#gaec5430be37b10e19509cf5f31e045bc4">R_OSPI_Open</a>(&amp;g_ospi_ram0_ctrl, &amp;g_ospi_ram0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* OctaRAM Configuration Register (cr)  read and write command definition */</span></div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> read_cr =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = 0xC000U,     <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">        .address        = 0x00040000U, <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 2U,</div><div class="line">        .address_length = 4U,</div><div class="line">        .data_length    = 2U,</div><div class="line"></div><div class="line">        <span class="comment">/* Dummy Cycles set to the default value specified in the OctaRAM device Configuration Register */</span></div><div class="line">        .dummy_cycles   = 5U</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#structspi__flash__direct__transfer__t">spi_flash_direct_transfer_t</a> write_cr =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ab20fca5fa35e25becd87abc7539a4246">command</a>        = 0x4000U,     <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">        .address        = 0x00040000U, <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">        .data           = 0U,</div><div class="line">        .command_length = 2U,</div><div class="line">        .address_length = 4U,</div><div class="line">        .data_length    = 2U,</div><div class="line">        .dummy_cycles   = 0U</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Read OctaRAM device Configuration Register */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#ga71105098bc41e1d98ea07a6e4f3a26ff">R_OSPI_DirectTransfer</a>(&amp;g_ospi_ram0_ctrl, &amp;read_cr, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    uint16_t config_reg = (uint16_t) (((uint16_t) (read_cr.data) &amp; ~OSPI_RAM_EXAMPLE_OCTARAM_CR_LATENCY_COUNTER_MASK) |</div><div class="line">                                      ((uint16_t) (OSPI_RAM_EXAMPLE_OCTARAM_100MHZ_4CLOCKS_CR_SETTING &lt;&lt;</div><div class="line">                                                   OSPI_RAM_EXAMPLE_OCTARAM_CR_LATENCY_COUNTER_POS) &amp;</div><div class="line">                                       OSPI_RAM_EXAMPLE_OCTARAM_CR_LATENCY_COUNTER_MASK));</div><div class="line"></div><div class="line">    <span class="comment">/* Write Configuration Register */</span></div><div class="line">    write_cr.data = (uint32_t) config_reg;</div><div class="line">    err           = <a class="code" href="group___o_s_p_i.html#ga71105098bc41e1d98ea07a6e4f3a26ff">R_OSPI_DirectTransfer</a>(&amp;g_ospi_ram0_ctrl, &amp;write_cr, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    read_cr.data = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Set Dummy Clocks to value configured above (4 Clocks) */</span></div><div class="line">    read_cr.<a class="code" href="group___s_p_i___f_l_a_s_h___a_p_i.html#ad4a653cf90fd97dc9d0a5f8fce3c3795">dummy_cycles</a> = 4U;</div><div class="line"></div><div class="line">    <span class="comment">/* Read Configuration Register */</span></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#ga71105098bc41e1d98ea07a6e4f3a26ff">R_OSPI_DirectTransfer</a>(&amp;g_ospi_ram0_ctrl, &amp;read_cr, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Confirm the intended Configuration Register value */</span></div><div class="line">    assert(config_reg == (uint16_t) (read_cr.data &amp; UINT16_MAX));</div><div class="line"></div><div class="line">    <span class="keyword">volatile</span> uint32_t * ram_addr = (uint32_t *) OSPI_RAM_EXAMPLE_PREAMBLE_ADDRESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Write the auto-calibration preamble pattern for DOPI mode as specified by the Hardware Manual */</span></div><div class="line">    ram_addr[0] = 0xFFFF0000;          <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">    ram_addr[1] = 0x0800FF00;          <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">    ram_addr[2] = 0xFF0000F7;          <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line">    ram_addr[3] = 0x00F708F7;          <span class="comment">// NOLINT(readability-magic-numbers)</span></div><div class="line"></div><div class="line">    err = <a class="code" href="group___o_s_p_i.html#ga700da26fc2e62ec14786f0f017c81d02">R_OSPI_AutoCalibrate</a>(&amp;g_ospi_ram0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* After Auto-calibration data can be read from or written to directly from the OSPI RAM. */</span></div><div class="line">    memcpy(&amp;g_dest[0], &amp;g_src_1[0], OSPI_RAM_EXAMPLE_DATA_LENGTH);</div><div class="line">    memcpy(&amp;g_src_2[0], &amp;g_src_1[0], OSPI_RAM_EXAMPLE_DATA_LENGTH);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -1541,7 +1541,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

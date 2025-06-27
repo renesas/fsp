@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___l_v_d___a_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___l_v_d___a_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___l_v_d___a_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -345,7 +345,7 @@ current_state</td>
 <td class="fielddoc">
 Current state of the voltage monitor. </td></tr>
 <tr><td class="fieldtype">
-<a id="a9c1b4169079ccc7dc30206cdff7302a1"></a>void const  *</td>
+<a id="ad35d64bd8755e3568a1d38f183cdda44"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -386,8 +386,8 @@ Placeholder for user data. </td></tr>
 <tr class="separator:a2fdbf521ab9713b2e8b7c8f8c0bbfba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf94ce45a96112afe798bd26e0265c8e"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#aaf94ce45a96112afe798bd26e0265c8e">p_callback</a> )(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *p_args)</td></tr>
 <tr class="separator:aaf94ce45a96112afe798bd26e0265c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac05e963ac0e323e2a37f8b3cb3d53fc1"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#ac05e963ac0e323e2a37f8b3cb3d53fc1">p_context</a></td></tr>
-<tr class="separator:ac05e963ac0e323e2a37f8b3cb3d53fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19d64bc76964fc1b9e702a3205355ed1"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#a19d64bc76964fc1b9e702a3205355ed1">p_context</a></td></tr>
+<tr class="separator:a19d64bc76964fc1b9e702a3205355ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1e62b65988656519ca7a915729b3c0a"><td class="memItemLeft" align="right" valign="top">void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#af1e62b65988656519ca7a915729b3c0a">p_extend</a></td></tr>
 <tr class="separator:af1e62b65988656519ca7a915729b3c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -527,14 +527,14 @@ Placeholder for user data. </td></tr>
 
 </div>
 </div>
-<a id="ac05e963ac0e323e2a37f8b3cb3d53fc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac05e963ac0e323e2a37f8b3cb3d53fc1">&#9670;&nbsp;</a></span>p_context</h2>
+<a id="a19d64bc76964fc1b9e702a3205355ed1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19d64bc76964fc1b9e702a3205355ed1">&#9670;&nbsp;</a></span>p_context</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void const* lvd_cfg_t::p_context</td>
+          <td class="memname">void* lvd_cfg_t::p_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -580,8 +580,8 @@ Placeholder for user data. </td></tr>
 <tr class="separator:a45aded1845bbc43ef8b6b1e3a08f2e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b9134701c646b8e2295bd30aea3177d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#a2b9134701c646b8e2295bd30aea3177d">statusClear</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:a2b9134701c646b8e2295bd30aea3177d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9405d41b90122cce9c1e22086a4fcd6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#aa9405d41b90122cce9c1e22086a4fcd6">callbackSet</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:aa9405d41b90122cce9c1e22086a4fcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55bbd52dbdd24a183c4b11156dc06909"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#a55bbd52dbdd24a183c4b11156dc06909">callbackSet</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a55bbd52dbdd24a183c4b11156dc06909"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6f844f12b555da5aca1e2c8420deb2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_v_d___a_p_i.html#ad6f844f12b555da5aca1e2c8420deb2d">close</a> )(<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl)</td></tr>
 <tr class="separator:ad6f844f12b555da5aca1e2c8420deb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -648,14 +648,14 @@ Placeholder for user data. </td></tr>
 
 </div>
 </div>
-<a id="aa9405d41b90122cce9c1e22086a4fcd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9405d41b90122cce9c1e22086a4fcd6">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a55bbd52dbdd24a183c4b11156dc06909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55bbd52dbdd24a183c4b11156dc06909">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lvd_api_t::callbackSet) (<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  lvd_api_t::callbackSet) (<a class="el" href="group___l_v_d___a_p_i.html#gafc2fa0c7d61c75abca4c3446af93fb3a">lvd_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *), void *const p_context, <a class="el" href="group___l_v_d___a_p_i.html#structlvd__callback__args__t">lvd_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -876,6 +876,106 @@ Pointer to the API structure for this interface instance. </td></tr>
 <tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca34b85de745f7aff43b9cafb02aff09c3"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_1_88V&#160;</td><td class="fielddoc"><p>1.88V </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caaa1173c6ec8db10d51db345da2f60073"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_1_67V&#160;</td><td class="fielddoc"><p>1.67V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caeb49d6af226414eb06345f0c14fc1117"></a>LVD_THRESHOLD_EXLVDVBAT_LEVEL_3_08V&#160;</td><td class="fielddoc"><p>3_08V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca59020b50f7d75e3cffbea613274ae873"></a>LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_88V&#160;</td><td class="fielddoc"><p>2_88V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caf9fc6e6164cfc2282071b61fdbd5056a"></a>LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_68V&#160;</td><td class="fielddoc"><p>2_68V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caa05d007d9d7dca42fa81840c210458e2"></a>LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_58V&#160;</td><td class="fielddoc"><p>2_58V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caae7e122f436c2fe8fb8c78b8336fc222"></a>LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_38V&#160;</td><td class="fielddoc"><p>2_38V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca6eaff0099726324161e0d8c8cf4c3aec"></a>LVD_THRESHOLD_EXLVDVBAT_LEVEL_2_18V&#160;</td><td class="fielddoc"><p>2_18V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cac25505a79cf132b4330334db9addb27d"></a>LVD_THRESHOLD_EXLVDVBAT_LEVEL_1_59V&#160;</td><td class="fielddoc"><p>1_59V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca41a2c25a8c0cac111c6fb38652f6dd1a"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_2_99V&#160;</td><td class="fielddoc"><p>2_99V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca01908ca570a38e6e07680b786dccc256"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_2_79V&#160;</td><td class="fielddoc"><p>2_79V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca1bd43174e992875259bad0dfe50e9904"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_2_59V&#160;</td><td class="fielddoc"><p>2_59V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca541d72414f1ded6772a538e8234ffb11"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_2_39V&#160;</td><td class="fielddoc"><p>2_39V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caada2cabb5d8654902d763eb64ef6e4d7"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_2_19V&#160;</td><td class="fielddoc"><p>2_19V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cab9c3357e90593087579084b4ff95a4b6"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_1_99V&#160;</td><td class="fielddoc"><p>1_99V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca2c902237baecf0dd691500bcbea86c3d"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_1_79V&#160;</td><td class="fielddoc"><p>1_79V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca8e989d44179e7648a066a0a82a8c18e2"></a>LVD_THRESHOLD_LVDVRTC_LEVEL_1_59V&#160;</td><td class="fielddoc"><p>1_59V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca4c48089bb1d47fdd4b7406c31f660dea"></a>LVD_THRESHOLD_NOT_AVAILABLE&#160;</td><td class="fielddoc"><p>Not Used. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cae53d1206ea839dea325b410f8120bff4"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_3_10V&#160;</td><td class="fielddoc"><p>3.10V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca5eb5122d20b3547b6c66029fee6e97c1"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_3_00V&#160;</td><td class="fielddoc"><p>3.00V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca0b8008cee644a875a386783ebb3f2e74"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_2_90V&#160;</td><td class="fielddoc"><p>2.90V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caedf6f48a42a5d97d044738a15813ce67"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_2_79V&#160;</td><td class="fielddoc"><p>2.79V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caef4503df4d171a8333917fb9164b3111"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_2_68V&#160;</td><td class="fielddoc"><p>2.68V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caca6198222aa73afe22c9d88930133428"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_2_58V&#160;</td><td class="fielddoc"><p>2.58V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca59bb65cb5494fc7732a906781347e772"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_2_48V&#160;</td><td class="fielddoc"><p>2.48V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cae454d325b021da4de41c08466eeed048"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_2_20V&#160;</td><td class="fielddoc"><p>2.20V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caba541ce2821a73bdff6a56926f011a53"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_1_96V&#160;</td><td class="fielddoc"><p>1.96V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca34fe61981b55c67f75a10fa40b23a71d"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_1_86V&#160;</td><td class="fielddoc"><p>1.86V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cad22f7b1c928d5ba6023f500283bdf4f3"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_1_75V&#160;</td><td class="fielddoc"><p>1.75V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca8ae2564b1ae97bc8a5ef4ae9ab780c84"></a>LVD_THRESHOLD_MONITOR_1_LEVEL_1_65V&#160;</td><td class="fielddoc"><p>1.65V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca89f7008677db17396bb2bf53a18105fd"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_3_13V&#160;</td><td class="fielddoc"><p>3.13V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caa1edb8d4e508a3613c6abb70653b47f0"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_2_92V&#160;</td><td class="fielddoc"><p>2.92V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cac1d36a981ee03065288a4ffa7cc3b889"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_2_71V&#160;</td><td class="fielddoc"><p>2.71V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca211d3b29642ff056250661ee109998df"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_2_50V&#160;</td><td class="fielddoc"><p>2.50V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca162a1a3dd66b5a4c90ff49b5b6fc7d40"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_2_30V&#160;</td><td class="fielddoc"><p>2.30V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca4837f3879209ee09d928f039e0d04775"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_2_09V&#160;</td><td class="fielddoc"><p>2.09V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca34b85de745f7aff43b9cafb02aff09c3"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_1_88V&#160;</td><td class="fielddoc"><p>1.88V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caaa1173c6ec8db10d51db345da2f60073"></a>LVD_THRESHOLD_MONITOR_2_LEVEL_1_67V&#160;</td><td class="fielddoc"><p>1.67V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca4c48089bb1d47fdd4b7406c31f660dea"></a>LVD_THRESHOLD_NOT_AVAILABLE&#160;</td><td class="fielddoc"><p>Not Used. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caeaae6faf968396c5eae1b8f378e2e648"></a>LVD_THRESHOLD_MONITOR_LEVEL_3_86V&#160;</td><td class="fielddoc"><p>3.86V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cac8d60bd701f926762eaa1752535cf8ae"></a>LVD_THRESHOLD_MONITOR_LEVEL_3_14V&#160;</td><td class="fielddoc"><p>3.14V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5caf22250dc5ec4e1c0170cecd996d2c5f8"></a>LVD_THRESHOLD_MONITOR_LEVEL_3_10V&#160;</td><td class="fielddoc"><p>3.10V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca179a85bad46633013909aaa1c0344760"></a>LVD_THRESHOLD_MONITOR_LEVEL_3_08V&#160;</td><td class="fielddoc"><p>3.08V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cab8521a98b8c6d0001549f6d676fc6222"></a>LVD_THRESHOLD_MONITOR_LEVEL_2_85V&#160;</td><td class="fielddoc"><p>2.85V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca87b9bcf26e014af7074d497c82193bd7"></a>LVD_THRESHOLD_MONITOR_LEVEL_2_83V&#160;</td><td class="fielddoc"><p>2.83V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cacec460a0d26f8e4c27c0b03530ed25d9"></a>LVD_THRESHOLD_MONITOR_LEVEL_2_80V&#160;</td><td class="fielddoc"><p>2.80V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca9d2de1157b3e3db19a861461c352e7c7"></a>LVD_THRESHOLD_MONITOR_LEVEL_2_62V&#160;</td><td class="fielddoc"><p>2.62V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5cab3b548a0c85a9ccf33830a1efade3c27"></a>LVD_THRESHOLD_MONITOR_LEVEL_2_33V&#160;</td><td class="fielddoc"><p>2.33V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca36dcc1c6dc57ea6cd129327069d67abe"></a>LVD_THRESHOLD_MONITOR_LEVEL_1_90V&#160;</td><td class="fielddoc"><p>1.90V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca001d108041ab5fc2af1a3b4518f8a0cf"></a>LVD_THRESHOLD_MONITOR_LEVEL_1_86V&#160;</td><td class="fielddoc"><p>1.86V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca3f0f6f9ecc8c00f2107be033030336c7"></a>LVD_THRESHOLD_MONITOR_LEVEL_1_74V&#160;</td><td class="fielddoc"><p>1.74V </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca353f4dd99ce9159b080d5ee049d8c5f2"></a>LVD_THRESHOLD_MONITOR_LEVEL_1_71V&#160;</td><td class="fielddoc"><p>1.71V </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggacfeb6d23a9c897df8217734c11f10d5ca4c48089bb1d47fdd4b7406c31f660dea"></a>LVD_THRESHOLD_NOT_AVAILABLE&#160;</td><td class="fielddoc"><p>Not Used. </p>
 </td></tr>
@@ -1257,7 +1357,7 @@ Pointer to the API structure for this interface instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

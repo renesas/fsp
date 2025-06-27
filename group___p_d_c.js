@@ -47,5 +47,5 @@ var group___p_d_c =
     [ "R_PDC_Close", "group___p_d_c.html#ga98f665fe22de40ec3ddcb4d2884bd4ca", null ],
     [ "R_PDC_CaptureStart", "group___p_d_c.html#ga0cd3f8319ab9da6ae2a9231d35d3f1a2", null ],
     [ "R_PDC_StatusGet", "group___p_d_c.html#ga926341335ac197ca8cc6164a90a04aca", null ],
-    [ "R_PDC_CallbackSet", "group___p_d_c.html#ga7429b98eb04e4547ec5df388190e74b0", null ]
+    [ "R_PDC_CallbackSet", "group___p_d_c.html#ga2ad3c05b7cd7be24425a0f66514a9234", null ]
 ];

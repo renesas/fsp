@@ -16,14 +16,14 @@ var group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x =
       [ "p_data", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#afb4fa37cbd2c68adc4c72e442771ca1c", null ],
       [ "p_topic", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a7b590b7fb1534d26235e5f678bcbf2f2", null ],
       [ "data_length", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a2544816a507eea4594de9359b424b437", null ],
-      [ "p_context", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ae6f8833427b845dd8c04eb9dcf88a649", null ]
+      [ "p_context", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#acfe28d920563d6c044b73d03ebe64549", null ]
     ] ],
     [ "mqtt_onchip_da16xxx_cfg_t", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#structmqtt__onchip__da16xxx__cfg__t", [
       [ "use_mqtt_v311", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#af768af49c99c257de9d780f01109a72a", null ],
       [ "rx_timeout", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#aeb199443575d26df76bb5f49a55da238", null ],
       [ "tx_timeout", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a6c94c0e7685a76ef8cbf5f0a1fe19fb0", null ],
       [ "p_callback", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a0f7270ea8ba19975ed5a27ce10994916", null ],
-      [ "p_context", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#aa5a6ad616a842886725b7bc117b5c5ab", null ],
+      [ "p_context", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ac41f4bcb8c9f0081becf676803585379", null ],
       [ "clean_session", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a8cf25023a0f63903a7bf04fe7c2884f8", null ],
       [ "alpn_count", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a240549882234ebdf6b890703af5bf161", null ],
       [ "p_alpns", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a1f4ac50196432afb92e5df1804b4adb4", null ],
@@ -89,6 +89,6 @@ var group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x =
     [ "RM_MQTT_DA16XXX_Publish", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gaea8caf550df7f0a55119acb765b358d6", null ],
     [ "RM_MQTT_DA16XXX_Subscribe", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga1ec24b97383e595ade22beb73e29402b", null ],
     [ "RM_MQTT_DA16XXX_UnSubscribe", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga60feb10ab5392050b178f249bdf05b11", null ],
-    [ "RM_MQTT_DA16XXX_Receive", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga894c1ad6fd8ebf0649411deec7b7a695", null ],
+    [ "RM_MQTT_DA16XXX_Receive", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#ga86952566e1442e024be0e8fbca4b72bb", null ],
     [ "RM_MQTT_DA16XXX_Close", "group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#gabc5e7350b4869b052517d5190e78f7a8", null ]
 ];

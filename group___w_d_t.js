@@ -7,5 +7,5 @@ var group___w_d_t =
     [ "R_WDT_StatusGet", "group___w_d_t.html#ga17bf328598042575cbe4f126f59bbc1b", null ],
     [ "R_WDT_StatusClear", "group___w_d_t.html#gacd5b9ff42df96b9fd4603dda47b946cb", null ],
     [ "R_WDT_CounterGet", "group___w_d_t.html#gaf6b4f726ecfe6795c7887dc1226450ca", null ],
-    [ "R_WDT_CallbackSet", "group___w_d_t.html#ga602ed1a63b61c46df822059ab6a5395e", null ]
+    [ "R_WDT_CallbackSet", "group___w_d_t.html#ga8e45154309eeaa001100877245c150c8", null ]
 ];

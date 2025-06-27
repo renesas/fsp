@@ -9,7 +9,7 @@ var group___d_m_a_c =
       [ "src_buffer_size", "group___d_m_a_c.html#a6a54c3a163ff659e26a6f7ed319f4777", null ],
       [ "activation_source", "group___d_m_a_c.html#ae520b30cee620c91a4aa4d123ef437bc", null ],
       [ "p_callback", "group___d_m_a_c.html#a1aa5df5a650e272348c4bd6c71ad4392", null ],
-      [ "p_context", "group___d_m_a_c.html#a179371bb68b6d1ae0f7c1da5a2c46d34", null ]
+      [ "p_context", "group___d_m_a_c.html#a23d67e9dcb77c2929401542935579c68", null ]
     ] ],
     [ "DMAC_MAX_NORMAL_TRANSFER_LENGTH", "group___d_m_a_c.html#ga1e459d63cbd5b7c819ca786a55093307", null ],
     [ "DMAC_MAX_REPEAT_TRANSFER_LENGTH", "group___d_m_a_c.html#ga786c4e53754be810f4483273fd1b2e35", null ],
@@ -25,6 +25,6 @@ var group___d_m_a_c =
     [ "R_DMAC_Disable", "group___d_m_a_c.html#ga6b64368039ad6617f091a20b5ac16206", null ],
     [ "R_DMAC_InfoGet", "group___d_m_a_c.html#gade7f6c387756ca9728194ac15f01fc43", null ],
     [ "R_DMAC_Reload", "group___d_m_a_c.html#ga697b9273351d29eb3e0c9319dce2e382", null ],
-    [ "R_DMAC_CallbackSet", "group___d_m_a_c.html#ga0ceeef1307c7e022a38aabfafcfb7e01", null ],
+    [ "R_DMAC_CallbackSet", "group___d_m_a_c.html#ga077f508a90dcb91ca3b65b164bbd17d0", null ],
     [ "R_DMAC_Close", "group___d_m_a_c.html#ga3423bb11f0d76dbe760ed01cf03ccd45", null ]
 ];

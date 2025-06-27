@@ -87,16 +87,18 @@ var group___s_c_i___l_i_n =
       [ "SCI_LIN_BASE_CLOCK_8", "group___s_c_i___l_i_n.html#gga01c11ac1b48b709f68403e73dbb2737aae06b6878a19682cfbfde970e37689c52", null ]
     ] ],
     [ "R_SCI_LIN_Open", "group___s_c_i___l_i_n.html#gae59b11e448da10b7c5e057412bed96f7", null ],
-    [ "R_SCI_LIN_StartFrameWrite", "group___s_c_i___l_i_n.html#gac55dd756968810a814b6681d27874e38", null ],
-    [ "R_SCI_LIN_InformationFrameWrite", "group___s_c_i___l_i_n.html#ga19267a09e054651b41c0c94da668c381", null ],
-    [ "R_SCI_LIN_InformationFrameRead", "group___s_c_i___l_i_n.html#ga320315962a7ac8396d597aa128788d63", null ],
+    [ "R_SCI_LIN_Write", "group___s_c_i___l_i_n.html#ga3850d888c6cfd6d2c65c9f6c5c002e1f", null ],
+    [ "R_SCI_LIN_Read", "group___s_c_i___l_i_n.html#ga004a26dbe22296814dc371e4426b0276", null ],
     [ "R_SCI_LIN_CommunicationAbort", "group___s_c_i___l_i_n.html#ga97101c9805596795170ef016c3097935", null ],
-    [ "R_SCI_LIN_CallbackSet", "group___s_c_i___l_i_n.html#gaf345e9ab935f15d800d4b02651353a91", null ],
+    [ "R_SCI_LIN_CallbackSet", "group___s_c_i___l_i_n.html#gad2f136c557b072a6a57a02efecced874", null ],
     [ "R_SCI_LIN_BaudCalculate", "group___s_c_i___l_i_n.html#ga28b93d072f71e1477d214599724147ba", null ],
     [ "R_SCI_LIN_IdFilterSet", "group___s_c_i___l_i_n.html#ga90c4277d709f9db6b3a475bd22264886", null ],
     [ "R_SCI_LIN_IdFilterGet", "group___s_c_i___l_i_n.html#gafdb4e91d63d60ea70c13f7dea7f2155c", null ],
     [ "R_SCI_LIN_Close", "group___s_c_i___l_i_n.html#ga02b9fdec10922fdc3a23465a3723f0de", null ],
     [ "R_SCI_LIN_WakeupSend", "group___s_c_i___l_i_n.html#ga22084cb822f9570d9f181974d1ef17a4", null ],
     [ "R_SCI_LIN_SleepEnter", "group___s_c_i___l_i_n.html#gab372131b89075c5c77e6f988801c5585", null ],
-    [ "R_SCI_LIN_SleepExit", "group___s_c_i___l_i_n.html#ga2ec9d35f039e9b9d539d70f418bb54e6", null ]
+    [ "R_SCI_LIN_SleepExit", "group___s_c_i___l_i_n.html#ga2ec9d35f039e9b9d539d70f418bb54e6", null ],
+    [ "R_SCI_LIN_InformationFrameRead", "group___s_c_i___l_i_n.html#ga320315962a7ac8396d597aa128788d63", null ],
+    [ "R_SCI_LIN_StartFrameWrite", "group___s_c_i___l_i_n.html#gac55dd756968810a814b6681d27874e38", null ],
+    [ "R_SCI_LIN_InformationFrameWrite", "group___s_c_i___l_i_n.html#ga19267a09e054651b41c0c94da668c381", null ]
 ];

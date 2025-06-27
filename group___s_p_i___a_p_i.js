@@ -3,7 +3,7 @@ var group___s_p_i___a_p_i =
     [ "spi_callback_args_t", "group___s_p_i___a_p_i.html#structspi__callback__args__t", [
       [ "channel", "group___s_p_i___a_p_i.html#a1fdddcdf63a3270438eac756a7f4d6a4", null ],
       [ "event", "group___s_p_i___a_p_i.html#ae1e14270178c91fb89697630627c1eee", null ],
-      [ "p_context", "group___s_p_i___a_p_i.html#acdafc89def1a4325004c5f7022e9488f", null ]
+      [ "p_context", "group___s_p_i___a_p_i.html#ab94e42a5f3726dfa3dbdbf0b8bdfedaf", null ]
     ] ],
     [ "spi_write_read_guard_args_t", "group___s_p_i___a_p_i.html#structspi__write__read__guard__args__t", null ],
     [ "spi_cfg_t", "group___s_p_i___a_p_i.html#structspi__cfg__t", [
@@ -24,7 +24,7 @@ var group___s_p_i___a_p_i =
       [ "p_transfer_tx", "group___s_p_i___a_p_i.html#a312e4358f12551a3f7aaa5f0a09c0501", null ],
       [ "p_transfer_rx", "group___s_p_i___a_p_i.html#ab38fb6af687bdf7e0ea9143499849bc6", null ],
       [ "p_callback", "group___s_p_i___a_p_i.html#ae9becc8fedef1f029e6adc788611a276", null ],
-      [ "p_context", "group___s_p_i___a_p_i.html#ac54861ff0fab10bfb9cd8834c31ad9c0", null ],
+      [ "p_context", "group___s_p_i___a_p_i.html#a49a55bd887d552abbe5275f38a16b3cd", null ],
       [ "p_extend", "group___s_p_i___a_p_i.html#a78b80f52103ccfc52dbc78bffbc832b6", null ]
     ] ],
     [ "spi_api_t", "group___s_p_i___a_p_i.html#structspi__api__t", [
@@ -32,7 +32,7 @@ var group___s_p_i___a_p_i =
       [ "read", "group___s_p_i___a_p_i.html#a43d0988501f90910690a3357bda1a936", null ],
       [ "write", "group___s_p_i___a_p_i.html#af053cb19a14773a51d1e060c5a624555", null ],
       [ "writeRead", "group___s_p_i___a_p_i.html#a6ed153d8e5e54e417fda95b044ac2fd6", null ],
-      [ "callbackSet", "group___s_p_i___a_p_i.html#ad3409ec3b694f2d68043360f466c31ce", null ],
+      [ "callbackSet", "group___s_p_i___a_p_i.html#a3bc51b110de8f9ae23a752450bcaaf68", null ],
       [ "close", "group___s_p_i___a_p_i.html#aa23ca0243886b64c90aa17744d72aee5", null ]
     ] ],
     [ "spi_instance_t", "group___s_p_i___a_p_i.html#structspi__instance__t", [

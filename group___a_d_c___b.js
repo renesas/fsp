@@ -109,7 +109,7 @@ var group___a_d_c___b =
       [ "p_cfg", "group___a_d_c___b.html#a8208ad88c193a83416146ca0d37fc417", null ],
       [ "p_callback", "group___a_d_c___b.html#af85736296fbefdbd17db19871ac8d092", null ],
       [ "p_callback_memory", "group___a_d_c___b.html#af537b46785127c47b0b7194729670388", null ],
-      [ "p_context", "group___a_d_c___b.html#a58c900a79b313569c771952295ff012b", null ],
+      [ "p_context", "group___a_d_c___b.html#a3a9d7403a0d612046e8f91c98d4e031e", null ],
       [ "initialized", "group___a_d_c___b.html#acdddd663a99fb881fc4a95350e90f112", null ],
       [ "opened", "group___a_d_c___b.html#a065e088c761f6943b53847cd3a123678", null ]
     ] ],
@@ -295,7 +295,7 @@ var group___a_d_c___b =
     ] ],
     [ "R_ADC_B_Open", "group___a_d_c___b.html#gaa70d037030e931e9645d0d13caa9fd5b", null ],
     [ "R_ADC_B_ScanCfg", "group___a_d_c___b.html#gacfe241a4fa1069fbb1a5d731b01fed5b", null ],
-    [ "R_ADC_B_CallbackSet", "group___a_d_c___b.html#ga938080cae666663ae01bc1f33242f811", null ],
+    [ "R_ADC_B_CallbackSet", "group___a_d_c___b.html#ga9af8783e09ec961a9d57c2980b46ba9e", null ],
     [ "R_ADC_B_ScanStart", "group___a_d_c___b.html#ga4ba715bef636283b61beea8952ff2d57", null ],
     [ "R_ADC_B_ScanGroupStart", "group___a_d_c___b.html#ga8d95c7e3d20f54f196be0ec932914869", null ],
     [ "R_ADC_B_ScanStop", "group___a_d_c___b.html#ga129e300b5e495e9b8aa7afe2ab12f204", null ],

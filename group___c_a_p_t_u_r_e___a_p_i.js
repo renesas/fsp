@@ -7,8 +7,10 @@ var group___c_a_p_t_u_r_e___a_p_i =
     ] ],
     [ "capture_callback_args_t", "group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t", [
       [ "event", "group___c_a_p_t_u_r_e___a_p_i.html#ae6ef34b8317e856d0d84b45231fc52db", null ],
+      [ "event_status", "group___c_a_p_t_u_r_e___a_p_i.html#a9b1607a933434566692dd53313f39a35", null ],
+      [ "interrupt_status", "group___c_a_p_t_u_r_e___a_p_i.html#a20ad513a32282103d98d1c0e6ae69f20", null ],
       [ "p_buffer", "group___c_a_p_t_u_r_e___a_p_i.html#aa110c0d1f3a306148fdc89938cee6460", null ],
-      [ "p_context", "group___c_a_p_t_u_r_e___a_p_i.html#acd3c14a1c00eeacfa2eb0f65a37ebf31", null ]
+      [ "p_context", "group___c_a_p_t_u_r_e___a_p_i.html#a763d1c091edb8b59fbc6a84b6d15a6dd", null ]
     ] ],
     [ "capture_cfg_t", "group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t", [
       [ "x_capture_start_pixel", "group___c_a_p_t_u_r_e___a_p_i.html#a0fc5dd7195e4a8e744a16b15471d4ed1", null ],
@@ -17,14 +19,14 @@ var group___c_a_p_t_u_r_e___a_p_i =
       [ "y_capture_pixels", "group___c_a_p_t_u_r_e___a_p_i.html#a67a18472f1dc816be88ab1e4b35a3864", null ],
       [ "bytes_per_pixel", "group___c_a_p_t_u_r_e___a_p_i.html#ac1de73c3720c90585ce65b2a236e209a", null ],
       [ "p_callback", "group___c_a_p_t_u_r_e___a_p_i.html#aa0d1d6be97b6e457572f74736dcdeb51", null ],
-      [ "p_context", "group___c_a_p_t_u_r_e___a_p_i.html#a1208e6c13e764823da8b6e12c811cfd2", null ],
+      [ "p_context", "group___c_a_p_t_u_r_e___a_p_i.html#a65a8b9b8131a7edf327e40b53343e9f0", null ],
       [ "p_extend", "group___c_a_p_t_u_r_e___a_p_i.html#a39fad13fcc68879ba15ab75a223aa7d4", null ]
     ] ],
     [ "capture_api_t", "group___c_a_p_t_u_r_e___a_p_i.html#structcapture__api__t", [
       [ "open", "group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4", null ],
       [ "close", "group___c_a_p_t_u_r_e___a_p_i.html#a9a67c2ec8ab248f375326a14bd476b37", null ],
       [ "captureStart", "group___c_a_p_t_u_r_e___a_p_i.html#ac4bb5bd99af525a14f75fb1422d92ae9", null ],
-      [ "callbackSet", "group___c_a_p_t_u_r_e___a_p_i.html#a4cd5ee5ded7aaf45445f6c594c98081e", null ],
+      [ "callbackSet", "group___c_a_p_t_u_r_e___a_p_i.html#ad7733eb50e6cd25714a266ff5961e1e3", null ],
       [ "statusGet", "group___c_a_p_t_u_r_e___a_p_i.html#a66812a782c5871df038b2e34a7c4d13e", null ]
     ] ],
     [ "capture_instance_t", "group___c_a_p_t_u_r_e___a_p_i.html#structcapture__instance__t", [

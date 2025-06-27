@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -318,6 +318,18 @@ $(document).ready(function(){initNavTree('_s_t_a_r_t__d_e_v.html','');});
 </ul>
 </li>
 <li class="level2"><a href="#run-the-blinky-project">Run the Blinky Project</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#tutorial-your-first-multicore-application-blinky">Tutorial: Your First RA Multicore Application - Blinky</a><ul><li class="level2"><a href="#tutorial-multicore-intro">Introduction</a></li>
+<li class="level2"><a href="#tutorial-multicore-project-gen">Generate Multicore Project Pair</a></li>
+<li class="level2"><a href="#tutorial-multicore-hal-entry-changes">Information On Multicore Related Changes To hal_entry.c</a></li>
+<li class="level2"><a href="#tutorial-multicore-build">Build Projects</a></li>
+<li class="level2"><a href="#tutorial-multicore-launch-cfgs">Information On Multicore Related Changes To Launch Configs</a></li>
+<li class="level2"><a href="#tutorial-multicore-tz-boundaries">Reset TrustZone Partition Boundaries</a></li>
+<li class="level2"><a href="#tutorial-multicore-start-debugging">Start Debugging</a></li>
+<li class="level2"><a href="#tutorial-multicore-debugging-control">Multicore Debugging Control</a></li>
+<li class="level2"><a href="#tutorial-multicore-debug-terminate">Terminating a Multicore Debugging Session</a></li>
+<li class="level2"><a href="#tutorial-multicore-debug-start-again">Starting Future Debug Sessions</a></li>
 </ul>
 </li>
 <li class="level1"><a href="#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a><ul><li class="level2"><a href="#application-wdt">Application WDT</a></li>
@@ -423,7 +435,7 @@ Starting Development Introduction</h1>
 <li>Read the section <a class="el" href="_s_t_a_r_t__d_e_v.html#what-is-e2studio">What is e&sup2; studio?</a>, up to but not including <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e&sup2; studio Prerequisites</a>. This will provide a description of the various windows and views to use e&sup2; studio to create a project, add modules and threads, configure module properties, add code, and debug a project. It also describes how to use key coding 'accelerators' like Developer Assist (to drag and drop parameter populated API function calls right into your code), a context aware Autocomplete (to easily find and select from suggested enumerations, functions, types, and many other coding elements), and many other similar productivity enhancers.</li>
 <li>Read the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a>, <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-modules">FSP Modules</a> and <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#fsp-stacks">FSP Stacks</a> sections. These provide the basic background on how FSP modules and stacks are used to construct your application. Understanding their definitions and the theory behind how they combine will make it easier to develop with FSP.</li>
 <li>Read a few <a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> sections to see how to use API function calls, structures, enumerations, types and callbacks. These module guides provide the information you will use to implement your project code.</li>
-<li>After you have a Kit and you have downloaded and installed e&sup2; studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e&sup2; studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project in section <a class="el" href="_s_t_a_r_t__d_e_v.html#create-a-new-project-for-blinky">Create a New Project for Blinky</a>. It will use some of the key steps for managing projects within e&sup2; studio and is a good way to learn the basics.</li>
+<li>After you have a Kit and you have downloaded and installed e&sup2; studio and FSP, you can build and debug a simple project to test your installation, tool flow, and the kit. (If you do not have a Kit or have not yet installed the development software, use the links included in the <a class="el" href="_s_t_a_r_t__d_e_v.html#e2studio-prerequisites">e&sup2; studio Prerequisites</a> for more information.) The simple <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> will Blink an LED on and off. Follow the instructions for importing and running this project in section <a class="el" href="_s_t_a_r_t__d_e_v.html#create-a-new-project-for-blinky">Create a New Project for Blinky</a>. It will use some of the key steps for managing projects within e&sup2; studio and is a good way to learn the basics. If you are using a multicore RA MCU then you will want to read <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-multicore-application-blinky">Tutorial: Your First RA Multicore Application - Blinky</a> for information on creating a multicore blinky application.</li>
 <li>Once you have successfully run Blinky you have a good starting point for using FSP for more complex projects. The Using HAL Drivers Tutorial, available at <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-using-hal-drivers-programming-the-wdt">Tutorial: Using HAL Drivers - Programming the WDT</a>, shows how to create a project from scratch, using FSP API functions. Do this next.</li>
 <li>Several Hands-on Quick FSP Labs are available that cover key development topics with short 15-minute Do it Yourself (DiY) activities targeting the EK-RA6M3. Topics covered include code development accelerators like Developer Assistance, Autocomplete, Help, Visual Expressions and using Example Projects. The complete list of available Quick FSP Labs can be found here: <a href="https://en-support.renesas.com/knowledgeBase/category/31087/subcategory/31090">https://en-support.renesas.com/knowledgeBase/category/31087/subcategory/31090</a>. Doing a couple of these labs provides further details on using FSP, and is also good practice. Running these labs is highly recommended.</li>
 <li>The balance of the <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html">FSP Architecture</a> sections (that is, those not called out in step 2 above) contain additional reference material that may be helpful in the future. Scan them so you know what they contain, in case you need them.</li>
@@ -1333,11 +1345,135 @@ Run the Blinky Project</h2>
 <div class="caption">
 e&sup2; studio Debugger Play icon</div></div>
 <p> The LEDs on the board marked LED1, LED2, and LED3 should now be blinking.</p>
-<h1><a class="anchor" id="tutorial-using-hal-drivers-programming-the-wdt"></a>
+<h1><a class="anchor" id="tutorial-your-first-multicore-application-blinky"></a>
+Tutorial: Your First RA Multicore Application - Blinky</h1>
+<h2><a class="anchor" id="tutorial-multicore-intro"></a>
+Introduction</h2>
+<p>This section provides information on how to create and debug multicore projects using e&sup2; studio and FSP. It is recommended that users read the section <a class="el" href="_s_t_a_r_t__d_e_v.html#tutorial-your-first-ra-mcu-project-blinky">Tutorial: Your First RA MCU Project - Blinky</a> before this one. The multicore application created will consist of a single project for each core of an RA8P1. Multicore support was added to FSP in v6.0.0 and the features available will be expanding in future releases. This section will be updated as needed.</p>
+<p><b>Note:</b> This section assumes the user already has a working knowledge of normal (non-multicore) usage of RA FSP and e&sup2; studio.</p>
+<h2><a class="anchor" id="tutorial-multicore-project-gen"></a>
+Generate Multicore Project Pair</h2>
+<p>e&sup2; studio now offers a mechanism to generate a multicore project pair using a single run through the project wizard. This is accessed via the "Renesas RA FSP Solution" option (rather than using the traditional C/C++ Project option):</p>
+<div class="image">
+<img src="sd-multicore-proj-gen-solution.png" alt="sd-multicore-proj-gen-solution.png"/>
+<div class="caption">
+Project Generator - RA FSP Solution</div></div>
+<p> When this option is selected, a similar set of dialog pages to the standard wizard will then be displayed, but currently reduced in number and with fewer options available.</p>
+<p>Enter a name that will be used for the Solution project and the prefix for individual core projects. For example, if you choose a project name of "my_application" for an RA MCU with 2 cores, then there will be 3 resulting projects: "my_application" (Solution), "my_application_CPU0", and "my_application_CPU1".</p>
+<div class="image">
+<img src="sd-multicore-proj-gen-name.png" alt="sd-multicore-proj-gen-name.png"/>
+<div class="caption">
+Project Generator - Enter Root Name</div></div>
+<p> Choose the board you are using and confirm the toolchain you wish to use.</p>
+<div class="image">
+<img src="sd-multicore-proj-gen-board.png" alt="sd-multicore-proj-gen-board.png"/>
+<div class="caption">
+Project Generator - Configure Setup</div></div>
+<p> Choose the "Bare Metal - Blinky" project template. This template will be used for creating the projects for all cores.</p>
+<div class="image">
+<img src="sd-multicore-proj-gen-template.png" alt="sd-multicore-proj-gen-template.png"/>
+<div class="caption">
+Project Generator - Choose Template</div></div>
+<p> After clicking on the Finish button in the wizard, a set of projects will be generated with appropriate linkage between them. Two of the projects are “normal” projects independent to each core which, when combined, will generate the overall multicore application that will be downloaded to the target MCU. The third project is the "container" Solution project which contains and controls configuration of the overall MCU and the CPU projects.</p>
+<div class="image">
+<img src="sd-multicore-solution-projects-overview.png" alt="sd-multicore-solution-projects-overview.png"/>
+<div class="caption">
+FSP Solution - Project Overview</div></div>
+ <dl class="section note"><dt>Note</dt><dd>After project creation, in order to carry out the population of some of the configuration data stored in the central solution project an initial build of both of the created CPU projects will be automatically performed.</dd></dl>
+<h2><a class="anchor" id="tutorial-multicore-hal-entry-changes"></a>
+Information On Multicore Related Changes To hal_entry.c</h2>
+<p>Starting in FSP 6.0.0, the <code>hal_entry.c</code> file generated as part of the Blinky project template has been updated to support multicore projects. First, a call to the FSP inline function <code><a class="el" href="group___b_s_p___m_c_u.html#gae832f27e31e0508d5cc762620dc2ca27">R_BSP_SecondaryCoreStart()</a></code> (that starts execution of CPU1 by releasing it from reset) has been added to <code>hal_entry()</code> in the case that this file is being built for the primary core in a set of multicore projects.</p>
+<div class="image">
+<img src="sd-multicore-start-secondary-core.png" alt="sd-multicore-start-secondary-core.png"/>
+<div class="caption">
+Multicore Blinky - Starting secondary core</div></div>
+<p> Second, the LED flashing code in <code>hal_entry()</code> has been changed so that it only blinks one of the LEDs for a multicore project (rather than all LEDs on the board).</p>
+<div class="image">
+<img src="sd-multicore-blinky-code.png" alt="sd-multicore-blinky-code.png"/>
+<div class="caption">
+Multicore Blinky - Updated Code</div></div>
+<p> This means that for a multicore application the primary core (CPU0) will blink the first LED on the board and the secondary core (CPU1) will blink the second LED. This allows the user to easily tell which core or cores are currently active.</p>
+<h2><a class="anchor" id="tutorial-multicore-build"></a>
+Build Projects</h2>
+<p>When a FSP Solution application is used, builds should always be triggered from the Solution project. The reason is that the Solution project stores information that is applicable to all downstream projects. Building from the Solution ensures that all the latest settings are propagated to each downstream project.</p>
+<dl class="section note"><dt>Note</dt><dd>To trigger a Solution build right-click on the Solution project and choose Build Project. In e&sup2; studio 2025-04.1 building Solutions by clicking the hammer icon is not available.</dd></dl>
+<div class="image">
+<img src="sd-multicore-solution-build.png" alt="sd-multicore-solution-build.png"/>
+<div class="caption">
+Solution Build</div></div>
+ <h2><a class="anchor" id="tutorial-multicore-launch-cfgs"></a>
+Information On Multicore Related Changes To Launch Configs</h2>
+<p>Although it is possible to start a debug session for CPU0 then manually start a second debug session for CPU1, it is easier to have e&sup2; studio do the two operations in one.</p>
+<p>To enable this, the multicore solutions project wizard will create a "Launch Group" inside the CPU1 project containing the two individual launch configurations, one for each of the CPUs. This launch group is what will then be used to start a multicore debug session rather than the launch configurations themselves being used directly.</p>
+<div class="image">
+<img src="sd-multicore-launch-group.png" alt="sd-multicore-launch-group.png"/>
+<div class="caption">
+Multicore Debug - Launch Group</div></div>
+<p> Note that the launch configuration generated inside the CPU0 project is generally not used when debugging the multicore application, as it simply connects to CPU0 and only programs the CPU0 image.</p>
+<h2><a class="anchor" id="tutorial-multicore-tz-boundaries"></a>
+Reset TrustZone Partition Boundaries</h2>
+<p><b>Important note: Currently the debug of multicore applications does not support the configuration of the TrustZone partition boundaries inside the MCU.</b> Therefore before carrying out debug of a multicore application for the first time, it is necessary to use either RFP or RDPM to do an initialize operation of your MCU to ensure that the whole Code ROM (Flash/MRAM) area is marked as Secure. RDPM can be accessed from within e&sup2; studio by going to Run &gt;&gt; Renesas Debug Tools &gt;&gt; Renesas Device Partition Manager <b>while a non-Solution project is selected</b>. If this is not done, the download of your images and debug startup may not work correctly. This will be improved in a future release of FSP and e&sup2; studio.</p>
+<p>The image below shows the RDPM settings to initialize an EK-RA8P1. Note that "Initialize device" is selected and the Connection Type was changed to "SWD". It is recommended to power cycle the board after using RDPM and before debugging.</p>
+<div class="image">
+<img src="sd-multicore-rdpm.png" alt="sd-multicore-rdpm.png"/>
+<div class="caption">
+Multicore Debug - RDPM</div></div>
+ <h2><a class="anchor" id="tutorial-multicore-start-debugging"></a>
+Start Debugging</h2>
+<p>The first time you start debugging your multicore application, you will need to open the Debug Configurations dialog:</p>
+<div class="image">
+<img src="sd-multicore-debug-cfg.png" alt="sd-multicore-debug-cfg.png"/>
+<div class="caption">
+Multicore Debug - Debug Configuration</div></div>
+<p> You will see the launch group that has been created. Select the Multicore Launch Group, then click the Debug button to start the debug session.</p>
+<div class="image">
+<img src="sd-multicore-start-launch-group.png" alt="sd-multicore-start-launch-group.png"/>
+<div class="caption">
+Multicore Debug - Start Launch Group</div></div>
+<p> You should see the CPU0 project debug session start up and connect, followed by the CPU1 project. CPU1 will be shown in the Debug tree but will still be held in reset.</p>
+<div class="image">
+<img src="sd-multicore-debug-reset.png" alt="sd-multicore-debug-reset.png"/>
+<div class="caption">
+Multicore Debug - Reset</div></div>
+<p> With the <code><a class="el" href="group___b_s_p___m_c_u.html#gae7ee340978f5c25f52f0cad1457c6616">Reset_Handler()</a></code> of the CPU0 elf file highlighted, if you now resume, CPU0 will start running. Once you pass <code>main()</code>, one of the LEDs on your board will begin to blink.</p>
+<p>Once the call to <code><a class="el" href="group___b_s_p___m_c_u.html#gae832f27e31e0508d5cc762620dc2ca27">R_BSP_SecondaryCoreStart()</a></code> has been made from the CPU0 code, the CPU1 debug connection will also become fully active. At this point you can control CPU1 as you would CPU0.</p>
+<div class="image">
+<img src="sd-multicore-cpu1-running.png" alt="sd-multicore-cpu1-running.png"/>
+<div class="caption">
+Multicore Debug - CPU1 Running</div></div>
+<p> In the above screenshot, the <code><a class="el" href="group___b_s_p___m_c_u.html#gae7ee340978f5c25f52f0cad1457c6616">Reset_Handler()</a></code> of the CPU1 project is highlighted. Clicking Resume will start running code on CPU1. Once execution of <code>main()</code> on CPU1 has started, the 2nd LED on your board will also begin to blink.</p>
+<h2><a class="anchor" id="tutorial-multicore-debugging-control"></a>
+Multicore Debugging Control</h2>
+<p>Once connected to both cores, the currently active debug connection (as highlighted in the Debug view) is the one that will be controlled by the usual debug controls (step, resume, suspend, etc).</p>
+<p>However it is possible to have these buttons control both debug connections in parallel, by selecting both connections at once in the Debug View (using the control key to multi-select):</p>
+<div class="image">
+<img src="sd-multicore-suspend-both-cores.png" alt="sd-multicore-suspend-both-cores.png"/>
+<div class="caption">
+Multicore Debug - Suspend Both Cores</div></div>
+<p> Note that the synchronization of operations here is being done at the software level within the GUI (cycling through each debug connection in turn, carrying out the requested operation). Although not fully lockstepped at the MCU hardware level, the functionality this provides is still useful in many circumstances.</p>
+<p>With regard to other views such as Registers, Memory, and Breakpoints, these will show the MCU state as seen by the currently selected core. However it is possible to pin each of these to a particular core, and also to clone the views so that you can have one pin to each core.</p>
+<div class="image">
+<img src="sd-multicore-pin-view.png" alt="sd-multicore-pin-view.png"/>
+<div class="caption">
+Multicore Debug - Pin View</div></div>
+ <h2><a class="anchor" id="tutorial-multicore-debug-terminate"></a>
+Terminating a Multicore Debugging Session</h2>
+<div class="image">
+<img src="sd-multicore-debug-terminate.png" alt="sd-multicore-debug-terminate.png"/>
+<div class="caption">
+Multicore Debug - Terminate</div></div>
+ <h2><a class="anchor" id="tutorial-multicore-debug-start-again"></a>
+Starting Future Debug Sessions</h2>
+<p>Once you have carried out your first multicore debug session, you can start further debug sessions simply using the appropriate Launch Group option which will then appear on the drop down menu:</p>
+<div class="image">
+<img src="sd-multicore-debug-starting-again.png" alt="sd-multicore-debug-starting-again.png"/>
+<div class="caption">
+Multicore Debug - Starting Again</div></div>
+ <h1><a class="anchor" id="tutorial-using-hal-drivers-programming-the-wdt"></a>
 Tutorial: Using HAL Drivers - Programming the WDT</h1>
 <h2><a class="anchor" id="application-wdt"></a>
 Application WDT</h2>
-<p>This tutorial illustrates the creation of a simple application that uses the Watchdog Timer module to monitor program operation. The tutorial shows each step in the development process and in particular identifies the auto-generated files and project structure created when using FSP and its GUI based configurator. The level of detail provided here is more than is normally needed during development but can be helpful in explaining how FSP works behind the scenes to simplify your work.</p>
+<p>This tutorial illustrates the creation of a simple application that uses the Watchdog Timer module to monitor program operation. The tutorial shows each step in the development process and in particular identifies the auto-generated files and project structure created when using FSP and its GUI based configurator. The level of detail provided here is more than is normally needed during development but can be helpful in explaining how FSP works behind the scenes to simply your work.</p>
 <p>This application makes use of the following FSP modules:</p>
 <ul>
 <li><a class="el" href="group___b_s_p___m_c_u.html">MCU Board Support Package</a></li>
@@ -1542,7 +1678,7 @@ WDT main.c</h3>
 WDT hal_entry.c</h3>
 <p>This file contains the function <code>hal_entry()</code> called from <code>main()</code>. User developed code should be placed in this file and function.</p>
 <p>For the WDT project edit the contents of this file to contain the code below. This code implements the flowchart in overview section of this document.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;hal_data.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;bsp_pin_cfg.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;r_ioport.h&quot;</span></div><div class="line"><span class="preprocessor">#define RED_LED_NO_OF_FLASHES    30</span></div><div class="line"><span class="preprocessor">#define RED_LED_PIN              BSP_IO_PORT_01_PIN_00</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_PIN            BSP_IO_PORT_04_PIN_00</span></div><div class="line"><span class="preprocessor">#define RED_LED_DELAY_MS         125</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_DELAY_MS       250</span></div><div class="line"><span class="keyword">volatile</span> uint32_t delay_counter;</div><div class="line"><span class="keyword">volatile</span> uint16_t loop_counter;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event);</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> hal_entry (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Allow the WDT to run when the debugger is connected */</span></div><div class="line">    R_DEBUG-&gt;DBGSTOPCR_b.DBGSTOP_WDT = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Flash the red LED and feed the WDT for a few seconds */</span></div><div class="line">    <span class="keywordflow">for</span> (loop_counter = 0; loop_counter &lt; RED_LED_NO_OF_FLASHES; loop_counter++)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn red LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(RED_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(RED_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Flash green LED but STOP feeding the WDT. WDT should reset the</span></div><div class="line"><span class="comment">     * device */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn green LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(GREEN_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Turn green off */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#ga04da4b0c795fdf43432869f4a87065fe">R_BSP_SoftwareDelay</a>(GREEN_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a> (<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a682d5dad980652c1acbc5b04531f6da2">BSP_WARM_START_RESET</a> == event)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if BSP_FEATURE_FLASH_LP_VERSION != 0</span></div><div class="line"></div><div class="line">        <span class="comment">/* Enable reading from data flash. */</span></div><div class="line">        R_FACI_LP-&gt;DFLCTL = 1U;</div><div class="line"></div><div class="line">        <span class="comment">/* Would normally have to wait for tDSTOP(6us) for data flash recovery. Placing the enable here, before clock and</span></div><div class="line"><span class="comment">         * C runtime initialization, should negate the need for a delay since the initialization will typically take more than 6us. */</span></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811">BSP_WARM_START_POST_C</a> == event)</div><div class="line">    {</div><div class="line">        <span class="comment">/* C runtime environment and system clocks are setup. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Configure pins. */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;IOPORT_CFG_CTRL, &amp;IOPORT_CFG_NAME);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The WDT HAL driver API functions are defined in <code>r_wdt.h</code>. The WDT HAL driver is opened through the open API call using the instance structure defined in <code>r_wdt_api.h</code>:</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;hal_data.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;bsp_pin_cfg.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;r_ioport.h&quot;</span></div><div class="line"><span class="preprocessor">#define RED_LED_NO_OF_FLASHES    30</span></div><div class="line"><span class="preprocessor">#define RED_LED_PIN              BSP_IO_PORT_01_PIN_00</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_PIN            BSP_IO_PORT_04_PIN_00</span></div><div class="line"><span class="preprocessor">#define RED_LED_DELAY_MS         125</span></div><div class="line"><span class="preprocessor">#define GREEN_LED_DELAY_MS       250</span></div><div class="line"><span class="keyword">volatile</span> uint32_t delay_counter;</div><div class="line"><span class="keyword">volatile</span> uint16_t loop_counter;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a>(<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event);</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> hal_entry (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Allow the WDT to run when the debugger is connected */</span></div><div class="line">    R_DEBUG-&gt;DBGSTOPCR_b.DBGSTOP_WDT = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Flash the red LED and feed the WDT for a few seconds */</span></div><div class="line">    <span class="keywordflow">for</span> (loop_counter = 0; loop_counter &lt; RED_LED_NO_OF_FLASHES; loop_counter++)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn red LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(RED_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, RED_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(RED_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Refresh WDT */</span></div><div class="line">        <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Flash green LED but STOP feeding the WDT. WDT should reset the</span></div><div class="line"><span class="comment">     * device */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Turn green LED on */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0abb31064742440cdbdd638330a1cf7a9f">BSP_IO_LEVEL_LOW</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(GREEN_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Turn green off */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga1b17ca2e38acde207881e7e4ba2a7e28">R_IOPORT_PinWrite</a>(&amp;g_ioport_ctrl, GREEN_LED_PIN, <a class="code" href="group___b_s_p___i_o.html#ggab4ef0cc3fce421d48310f23c614aadc0acf9a28559b5a18ed9b8af4c2a7df10ef">BSP_IO_LEVEL_HIGH</a>);</div><div class="line"></div><div class="line">        <span class="comment">/* Delay */</span></div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(GREEN_LED_DELAY_MS, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/*******************************************************************************************************************/</span></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="group___b_s_p___m_c_u.html#ga662624feaff3850ffbe7fb118ab140d7">R_BSP_WarmStart</a> (<a class="code" href="group___b_s_p___m_c_u.html#ga6fe6dc3c0813eeae8665430a31c005b4">bsp_warm_start_event_t</a> event)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4a682d5dad980652c1acbc5b04531f6da2">BSP_WARM_START_RESET</a> == event)</div><div class="line">    {</div><div class="line"><span class="preprocessor">#if BSP_FEATURE_FLASH_LP_VERSION != 0</span></div><div class="line"></div><div class="line">        <span class="comment">/* Enable reading from data flash. */</span></div><div class="line">        R_FACI_LP-&gt;DFLCTL = 1U;</div><div class="line"></div><div class="line">        <span class="comment">/* Would normally have to wait for tDSTOP(6us) for data flash recovery. Placing the enable here, before clock and</span></div><div class="line"><span class="comment">         * C runtime initialization, should negate the need for a delay since the initialization will typically take more than 6us. */</span></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___b_s_p___m_c_u.html#gga6fe6dc3c0813eeae8665430a31c005b4af322ff0740a8d31f831b98ff042f0811">BSP_WARM_START_POST_C</a> == event)</div><div class="line">    {</div><div class="line">        <span class="comment">/* C runtime environment and system clocks are setup. */</span></div><div class="line"></div><div class="line">        <span class="comment">/* Configure pins. */</span></div><div class="line">        <a class="code" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open</a>(&amp;IOPORT_CFG_CTRL, &amp;IOPORT_CFG_NAME);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The WDT HAL driver API functions are defined in <code>r_wdt.h</code>. The WDT HAL driver is opened through the open API call using the instance structure defined in <code>r_wdt_api.h</code>:</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Open the WDT */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gad64d0778fd0ceccb13a7287bb0d1fca8">R_WDT_Open</a>(&amp;g_wdt0_ctrl, &amp;g_wdt0_cfg);</div><div class="line"></div></div><!-- fragment --><p> The first passed parameter is the pointer to the control structure <code>g_wdt0_ctrl</code> instantiated in <code>hal_data.c</code>. The second parameter is the pointer to the configuration data <code>g_wdto_cfg</code> instantiated in the same <code>hal_data.c</code> file.</p>
 <p>The WDT is started and refreshed through the API call:</p>
 <div class="fragment"><div class="line"></div><div class="line">    <span class="comment">/* Start the WDT by refreshing it */</span></div><div class="line">    <a class="code" href="group___w_d_t.html#gaff080d0dcc993cfbe7e99771396feffb">R_WDT_Refresh</a>(&amp;g_wdt0_ctrl);</div><div class="line"></div></div><!-- fragment --><p> Again the first (and only in this case) parameter passed to this API is the pointer to the control structure of this instance of the driver.</p>
@@ -1564,7 +1700,7 @@ Debug configuration</div></div>
 <img src="sd-extracting-ra-debug.png" alt="sd-extracting-ra-debug.png"/>
 </div>
 </li>
-<li>The code should run the <code><a class="el" href="group___b_s_p___m_c_u.html#ga4fd935a08e0d5096d1fdf2ff39379887">Reset_Handler()</a></code> function.</li>
+<li>The code should run the <code><a class="el" href="group___b_s_p___m_c_u.html#gae7ee340978f5c25f52f0cad1457c6616">Reset_Handler()</a></code> function.</li>
 <li>Resume execution via <b>Run &gt; Resume</b>. Execution will stop in <code>main()</code> at the call to <code>hal_entry()</code>.</li>
 <li>Resume execution again.</li>
 </ol>
@@ -1584,7 +1720,7 @@ Target Device</h2>
 <tr>
 <th>MCU Groups with TrustZone and DLM </th><th>MCU Groups with TrustZone and no DLM </th><th>MCU Groups with TrustZone and Alternate DLM  </th></tr>
 <tr>
-<td>RA4E1, RA4M2, RA4M3, RA6E1, RA6M4, RA6M5, RA6T2 </td><td>RA4E2, RA4T1, RA6E2, RA6T3 </td><td>RA8M1 </td></tr>
+<td>RA4E1, RA4M2, RA4M3, RA6E1, RA6M4, RA6M5, RA6T2 </td><td>RA4E2, RA4T1, RA6E2, RA6T3 </td><td>RA8M1, RA8D1, RA8T1 </td></tr>
 </table>
 <h2><a class="anchor" id="renesas-implementation-of-arm-trustzone-technology"></a>
 Renesas Implementation of Arm TrustZone Technology</h2>
@@ -1888,7 +2024,7 @@ Lifecycle Stages and Debug Levels</div></div>
 <li>AL0: The debugger connection is not allowed</li>
 </ul>
 <p>State transitions can be performed using the Renesas Flash Programmer (RFP, see section below) or using the Renesas Device Partition Manager (limited number of states possible). It is possible to secure transitions between states using authentication keys. For more information on DLM states and transitions (device specific), please refer to device user manual.</p>
-<p>In addition to having different DLM States, these devices also handle memory partitioning differently. Code Flash and Data Flash partitions are divided into secure and non-secure regions using SCI or USB boot mode commands. All other memory regions are set in IDAU and SAU registers in the secure application during the BSP startup procedure. All memory regions and peripherals that are configured as non-secure must be accessed using an aliased non-secure address. This non-secure address is calcualted by setting bit 28 in the address.</p>
+<p>In addition to having different DLM States, these devices also handle memory partitioning differently. Code Flash and Data Flash partitions are divided into secure and non-secure regions using SCI or USB boot mode commands. All other memory regions are set in IDAU and SAU registers in the secure application during the BSP startup procedure. All memory regions and peripherals that are configured as non-secure must be accessed using an aliased non-secure address. This non-secure address is calculated by setting bit 28 in the address.</p>
 <h3><a class="anchor" id="non-dlm-devices"></a>
 Devices without DLM</h3>
 <p>For devices that do not have DLM, the IDAU registers are programmed by secure application code at startup. Devices without DLM do not support IDAU register programming using boot mode commands.</p>
@@ -2166,7 +2302,7 @@ Notes and Restrictions</h3>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

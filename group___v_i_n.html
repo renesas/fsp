@@ -1,0 +1,1125 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Display Serial Interface (r_vin)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.0.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___v_i_n.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Display Serial Interface (r_vin)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___g_r_a_p_h_i_c_s___m_o_d_u_l_e_s.html">Graphics</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga489c36c9eadf8d707010b6d1b8fc7cf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga489c36c9eadf8d707010b6d1b8fc7cf2">R_VIN_Open</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga489c36c9eadf8d707010b6d1b8fc7cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ab441d71c94ba6a2ff7327081dbbde8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga7ab441d71c94ba6a2ff7327081dbbde8">R_VIN_Close</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:ga7ab441d71c94ba6a2ff7327081dbbde8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8296022460a2cc6f6cd5a5e58f490cda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga8296022460a2cc6f6cd5a5e58f490cda">R_VIN_CaptureStart</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_api_ctrl, uint8_t *const p_buffer)</td></tr>
+<tr class="separator:ga8296022460a2cc6f6cd5a5e58f490cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e58595d8be00f65f6da67e554c609dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga5e58595d8be00f65f6da67e554c609dd">R_VIN_StatusGet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *p_status)</td></tr>
+<tr class="separator:ga5e58595d8be00f65f6da67e554c609dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the VIN peripheral on RA MCUs. This module implements the <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html">CAPTURE Interface</a>. </p>
+<h1><a class="anchor" id="r-vin-overview"></a>
+Overview</h1>
+<p>The VIN peripheral relies on the use of a Camera Serial Interface (CSI-2) Host, physical layer (D-PHY), and supporting sub-systems. Together, these form a high-speed graphics serial bus that formats and writes image data to memory according to the MIPI_CSI and R_VIN configurations.</p>
+<h2><a class="anchor" id="r-vin-features"></a>
+Features</h2>
+<p><a class="anchor" id="um_vin_video_input"></a> The module has one video channel that can control the capture of data into a capture area of up to 4096 × 4096 pixels when scaling is off (2048 × 2048 pixels when scaling is on). It can also provide vertical and horizontal scaling of the data by up to three and two times, respectively.</p>
+<p>For captured video data, the VIN provides a color space conversion function from YCbCr-422 to RGB or RGB to YCbCr-422 and a format conversion function from RGB to ARGB.</p>
+<p>As the VIN internally generates a field signal, it can capture progressive data.</p>
+<p>Supported Data Types:</p>
+<table class="doxtable">
+<tr>
+<th>Image Format </th><th>Input Camera Format (MIPI CSI) </th><th>Output Memory Format  </th></tr>
+<tr>
+<td>YCbCr-422 8-bit </td><td>Supported </td><td>Supported </td></tr>
+<tr>
+<td>YCbCr-422 10-bit </td><td>Supported </td><td>Supported </td></tr>
+<tr>
+<td>RGB-565 </td><td></td><td>Supported </td></tr>
+<tr>
+<td>ARGB-1555 </td><td></td><td>Supported </td></tr>
+<tr>
+<td>RGB-888 </td><td>Supported </td><td></td></tr>
+<tr>
+<td>ARGB-8888 </td><td></td><td>Supported </td></tr>
+<tr>
+<td>RAW8 </td><td>Supported </td><td>Supported </td></tr>
+</table>
+<h1><a class="anchor" id="r-vin-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_vin</h2>
+The following build time configurations are defined in fsp_cfg/r_vin_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-vin-clock-configuration"></a>
+Clock Configuration</h2>
+<p>AXI bus clock (aclk) runs on ICLK and is the main clock for VIN, processing one pixel per clock cycle. In the case of CSI-2, VIN processes the following depths with aclk, so select a clock that is higher than the transfer rate.</p>
+<ul>
+<li>RGB 888: depth = 24 bit</li>
+<li>YCbCr8bit: depth = 16 bit</li>
+<li>YCbCr10bit: depth = 20 bit</li>
+<li>RAW8: depth = 16 bit Example: When setting up for a 720 Mbps 2 lane MIPI CSI transfer rate, with YCbCr 8bit scaling bypass, aclk must be set to a frequency of 720*2/16 = 90 MHz or higher.</li>
+</ul>
+<h2><a class="anchor" id="r-vin-pin-configuration"></a>
+Pin Configuration</h2>
+<p><a class="anchor" id="um_vin_data_lanes"></a>VIN does not require pin configuration.</p>
+<h1><a class="anchor" id="r-vin-usage_notes"></a>
+Usage Notes</h1>
+<h2>Color Space Conversion</h2>
+<p>VIN may (optionally) be configured to convert between RGB and YCbCr data.</p>
+<h3>RGB to YCbCr Conversion</h3>
+<p>Formulas are below for the conversion of RGB to YCbCr formats Y = ((C_RtoY × R + C_GtoY × G + C_BtoY × B) × 2 ^ YCLSFT) + Y_Addition Cb = ((C_RtoCb × R + C_GtoCb × G + C_BtoCb × B) × 2 ^ CBCLSFT) + Cb_Addition Cr = ((C_RtoCr × R + C_GtoCr × G + C_BtoCr × B) × 2 ^ CRCLSFT) + Cr_Addition</p>
+<dl class="section note"><dt>Note</dt><dd>: YCLSFT, CBCLSFT, and CRCLSFT values are all fixed to 10.</dd></dl>
+<h3>YCbCr to RGB Conversion</h3>
+<p>When enabled, YCbCr to RGB conversion is carried out according to the configured matrix coefficients. The color conversion input is extended to 12 bits by the data extension selection. See User Manual for additional information.</p>
+<h1><a class="anchor" id="r-vin-examples"></a>
+Examples</h1>
+<h2><a class="anchor" id="r-vin-examples-minimal"></a>
+Basic Example</h2>
+<p>This is a basic example showing the minimum code required to initialize and start the VIN module.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> vin_minimal_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___v_i_n.html#ga489c36c9eadf8d707010b6d1b8fc7cf2">R_VIN_Open</a>(&amp;g_vin0_ctrl, &amp;g_vin0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    USER_CODE_camera_open();           <span class="comment">// Prepare camera for capture</span></div><div class="line"></div><div class="line">    err = <a class="code" href="group___v_i_n.html#ga8296022460a2cc6f6cd5a5e58f490cda">R_VIN_CaptureStart</a>(&amp;g_vin0_ctrl, NULL);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    USER_CODE_camera_stream_on();      <span class="comment">// Camera begin outputting image data</span></div><div class="line"></div><div class="line"></div><div class="line">    <a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> capture_status;</div><div class="line">    err = <a class="code" href="group___v_i_n.html#ga5e58595d8be00f65f6da67e554c609dd">R_VIN_StatusGet</a>(&amp;g_vin0_ctrl, &amp;capture_status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___v_i_n.html#ga7ab441d71c94ba6a2ff7327081dbbde8">R_VIN_Close</a>(&amp;g_vin0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> vin0_callback (<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <a class="code" href="group___v_i_n.html#gaad2862921623532cab658624a3f0415b">vin_event_t</a>            <span class="keyword">event</span>            = (<a class="code" href="group___v_i_n.html#gaad2862921623532cab658624a3f0415b">vin_event_t</a>) p_args-&gt;<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#ae6ef34b8317e856d0d84b45231fc52db">event</a>;</div><div class="line">    <a class="code" href="group___v_i_n.html#unionvin__module__status__t">vin_module_status_t</a>    module_status    = (<a class="code" href="group___v_i_n.html#unionvin__module__status__t">vin_module_status_t</a>) p_args-&gt;<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#a9b1607a933434566692dd53313f39a35">event_status</a>;</div><div class="line">    <a class="code" href="group___v_i_n.html#unionvin__interrupt__status__t">vin_interrupt_status_t</a> interrupt_status = (<a class="code" href="group___v_i_n.html#unionvin__interrupt__status__t">vin_interrupt_status_t</a>) p_args-&gt;<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#a20ad513a32282103d98d1c0e6ae69f20">interrupt_status</a>;</div><div class="line"></div><div class="line">    switch (event)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___v_i_n.html#ggaad2862921623532cab658624a3f0415ba325d866276fca2b0fc73822bb29bc7c7">VIN_EVENT_NOTIFY</a>:</div><div class="line">        {</div><div class="line">            USER_CODE_vin_process_notify(module_status, interrupt_status);</div><div class="line">            <span class="keywordflow">if</span> (interrupt_status.bits.frame_complete)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Capture Complete - Process data buffer pointer and index */</span></div><div class="line">                USER_CODE_vin_process_completed_frame(p_args-&gt;<a class="code" href="group___c_a_p_t_u_r_e___a_p_i.html#aa110c0d1f3a306148fdc89938cee6460">p_buffer</a>, module_status.bits.latest_buffer);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___v_i_n.html#ggaad2862921623532cab658624a3f0415bafe4ddea3d246cf9bfac6f6f34e2a10e0">VIN_EVENT_ERROR</a>:</div><div class="line">        {</div><div class="line">            <span class="comment">// Process Error based on interrupt and module status;</span></div><div class="line">            USER_CODE_vin_process_error(module_status, interrupt_status);</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do nothing */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> USER_CODE_camera_open (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">// Pre-transmission Camera Configuration</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> USER_CODE_camera_stream_on (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">// Begin Streaming Image Data</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> USER_CODE_vin_process_error (<a class="code" href="group___v_i_n.html#unionvin__module__status__t">vin_module_status_t</a> module_status, <a class="code" href="group___v_i_n.html#unionvin__interrupt__status__t">vin_interrupt_status_t</a> interrupt_status)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(module_status);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(interrupt_status);</div><div class="line"></div><div class="line">    <span class="comment">// Process Error</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> USER_CODE_vin_process_notify (<a class="code" href="group___v_i_n.html#unionvin__module__status__t">vin_module_status_t</a> module_status, <a class="code" href="group___v_i_n.html#unionvin__interrupt__status__t">vin_interrupt_status_t</a> interrupt_status)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(module_status);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(interrupt_status);</div><div class="line"></div><div class="line">    <span class="comment">// Process Status Notification</span></div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> USER_CODE_vin_process_completed_frame (uint8_t * p_complete_frame, uint8_t frame_idx)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(p_complete_frame);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(frame_idx);</div><div class="line"></div><div class="line">    <span class="comment">// Process Frame Data</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structvin__input__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__input__ctrl__t">vin_input_ctrl_t</a></td></tr>
+<tr class="separator:structvin__input__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structvin__output__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__output__ctrl__t">vin_output_ctrl_t</a></td></tr>
+<tr class="separator:structvin__output__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structvin__conversion__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__conversion__ctrl__t">vin_conversion_ctrl_t</a></td></tr>
+<tr class="separator:structvin__conversion__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structvin__conversion__data__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__conversion__data__t">vin_conversion_data_t</a></td></tr>
+<tr class="separator:structvin__conversion__data__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unionvin__module__status__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#unionvin__module__status__t">vin_module_status_t</a></td></tr>
+<tr class="separator:unionvin__module__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unionvin__interrupt__status__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#unionvin__interrupt__status__t">vin_interrupt_status_t</a></td></tr>
+<tr class="separator:unionvin__interrupt__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structvin__irq__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__irq__cfg__t">vin_irq_cfg_t</a></td></tr>
+<tr class="separator:structvin__irq__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structvin__interrupt__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__interrupt__cfg__t">vin_interrupt_cfg_t</a></td></tr>
+<tr class="separator:structvin__interrupt__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structvin__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__instance__ctrl__t">vin_instance_ctrl_t</a></td></tr>
+<tr class="separator:structvin__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structvin__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#structvin__extended__cfg__t">vin_extended_cfg_t</a></td></tr>
+<tr class="separator:structvin__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga775071de084930e0671b7d81a290f8be"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga775071de084930e0671b7d81a290f8be">vin_interlace_mode_t</a> </td></tr>
+<tr class="separator:ga775071de084930e0671b7d81a290f8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga031de147253e4e64df876e34175d0075"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga031de147253e4e64df876e34175d0075">vin_dithering_mode_t</a> </td></tr>
+<tr class="separator:ga031de147253e4e64df876e34175d0075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81fe1ec88d9b14caa51c41383e8c2757"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga81fe1ec88d9b14caa51c41383e8c2757">vin_input_format_t</a> </td></tr>
+<tr class="separator:ga81fe1ec88d9b14caa51c41383e8c2757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba75150f127a7aecab8f0d8b1d66f00a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#gaba75150f127a7aecab8f0d8b1d66f00a">vin_data_type_t</a> </td></tr>
+<tr class="separator:gaba75150f127a7aecab8f0d8b1d66f00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9a9dd958e4b157ab81191cbed50a765"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#gae9a9dd958e4b157ab81191cbed50a765">vin_yuv444_conversion_mode_t</a> </td></tr>
+<tr class="separator:gae9a9dd958e4b157ab81191cbed50a765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2030e8c9f9d3c12ffa3625a5dde9e57c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga2030e8c9f9d3c12ffa3625a5dde9e57c">vin_pixel_data_clipping_t</a> </td></tr>
+<tr class="separator:ga2030e8c9f9d3c12ffa3625a5dde9e57c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b903e9450c3e30fe210cb896416d377"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga4b903e9450c3e30fe210cb896416d377">vin_conversion_mode_t</a> </td></tr>
+<tr class="separator:ga4b903e9450c3e30fe210cb896416d377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95e6b7891501ae0ab3a1a3b2d26ede05"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga95e6b7891501ae0ab3a1a3b2d26ede05">vin_yc_transform_mode_t</a> </td></tr>
+<tr class="separator:ga95e6b7891501ae0ab3a1a3b2d26ede05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga079448a8e9cf0cfafd1c562e92eddbd4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ga079448a8e9cf0cfafd1c562e92eddbd4">vin_interpolation_mode_t</a> </td></tr>
+<tr class="separator:ga079448a8e9cf0cfafd1c562e92eddbd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad2862921623532cab658624a3f0415b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#gaad2862921623532cab658624a3f0415b">vin_event_t</a> </td></tr>
+<tr class="separator:gaad2862921623532cab658624a3f0415b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structvin__input__ctrl__t" id="structvin__input__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__input__ctrl__t">&#9670;&nbsp;</a></span>vin_input_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_input_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN Input Control Structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae40e5e9e0b2b9e24c486cd31b69777e2"></a>union <a class="el" href="group___v_i_n.html#unionvin__input__ctrl__t_8____unnamed____">vin_input_ctrl_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a5f72d2e17343bc8af154948ba03bd95b"></a>struct <a class="el" href="group___v_i_n.html#structvin__input__ctrl__t_8preclip">vin_input_ctrl_t</a></td>
+<td class="fieldname">
+preclip</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a65f94801b8af52e9173cc7c5f4c98c8f"></a>union <a class="el" href="group___v_i_n.html#unionvin__input__ctrl__t_8____unnamed____">vin_input_ctrl_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0526158598755de32a3fabf1c4cb222b"></a>union <a class="el" href="group___v_i_n.html#unionvin__input__ctrl__t_8____unnamed____">vin_input_ctrl_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ad13856480fe7a2f087eb94a7eb671c43"></a>uint16_t</td>
+<td class="fieldname">
+image_stride</td>
+<td class="fielddoc">
+Image Stride (Setting Unit: pixel) </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structvin__output__ctrl__t" id="structvin__output__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__output__ctrl__t">&#9670;&nbsp;</a></span>vin_output_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_output_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN Output Control Structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a158bc58ad9c4b9cb493a6792c0bb3d04"></a>uint8_t *</td>
+<td class="fieldname">
+image_buffer[3]</td>
+<td class="fielddoc">
+Pointer to Image Buffer Memory Base (64-byte aligned) </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structvin__conversion__ctrl__t" id="structvin__conversion__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__conversion__ctrl__t">&#9670;&nbsp;</a></span>vin_conversion_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_conversion_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN Conversion Control Structure </p>
+</div>
+</div>
+</div>
+<a name="structvin__conversion__data__t" id="structvin__conversion__data__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__conversion__data__t">&#9670;&nbsp;</a></span>vin_conversion_data_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_conversion_data_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN Conversion Data Structure </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7aa586847316c2f2bc45a75f43adb930"></a>uint32_t *</td>
+<td class="fieldname">
+uv_address</td>
+<td class="fielddoc">
+Address for YC separation of YCbCr-422 UV data. (64-byte aligned) </td></tr>
+<tr><td class="fieldtype">
+<a id="a3bc55e88a36fe81ce86da639d671d779"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a26352c15274d9851119045dab3bcdaaa"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab2ca22c1f65fefe684d529bea4e24485"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab01426e73a72abd119ae4ff2bd412802"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a2386586396ffe3fbaaa7b4b0568c123b"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac8d5f76c3231cf95b449585d27a44ee8"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a009e75febb281cbaf23136a510c27bf3"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa74d93cf437dc596e2176ba37aff9df7"></a>union <a class="el" href="group___v_i_n.html#unionvin__conversion__data__t_8____unnamed____">vin_conversion_data_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a43536ae8d6f4ed78aa9d75acdd223b7a"></a>struct <a class="el" href="group___v_i_n.html#structvin__conversion__data__t_8rgb__to__yuv__conversion__settings">vin_conversion_data_t</a></td>
+<td class="fieldname">
+rgb_to_yuv_conversion_settings[3]</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="unionvin__module__status__t" id="unionvin__module__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#unionvin__module__status__t">&#9670;&nbsp;</a></span>vin_module_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union vin_module_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN Module Status </p>
+</div>
+</div>
+</div>
+<a name="unionvin__interrupt__status__t" id="unionvin__interrupt__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#unionvin__interrupt__status__t">&#9670;&nbsp;</a></span>vin_interrupt_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union vin_interrupt_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN Interrupt Status </p>
+</div>
+</div>
+</div>
+<a name="structvin__irq__cfg__t" id="structvin__irq__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__irq__cfg__t">&#9670;&nbsp;</a></span>vin_irq_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_irq_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN IRQ Configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a6ee2227e7bbf05bd170c16a0e94d4f77"></a>uint8_t</td>
+<td class="fieldname">
+ipl</td>
+<td class="fielddoc">
+Interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2cb0b36e10ecad531a8e76a95ed9ff88"></a>IRQn_Type</td>
+<td class="fieldname">
+irq</td>
+<td class="fielddoc">
+Interrupt vector number. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structvin__interrupt__cfg__t" id="structvin__interrupt__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__interrupt__cfg__t">&#9670;&nbsp;</a></span>vin_interrupt_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_interrupt_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN Interrupt Control </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a73f2c56eee19786fe5fff61942b45e1c"></a><a class="el" href="group___v_i_n.html#structvin__irq__cfg__t">vin_irq_cfg_t</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a06c6b9364a9b55cb570b868c64d5c723"></a><a class="el" href="group___v_i_n.html#structvin__irq__cfg__t">vin_irq_cfg_t</a></td>
+<td class="fieldname">
+error</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac5f3bdea4ec2a6b2589e4752ee3e616c"></a>union <a class="el" href="group___v_i_n.html#unionvin__interrupt__cfg__t_8____unnamed____">vin_interrupt_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab17fc0c64aee60369fdc0c436217c4f3"></a>uint16_t</td>
+<td class="fieldname">
+scanline_compare_value</td>
+<td class="fielddoc">
+12-bit value to be compared with the received line count and trigger interrupt (0: disabled) </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structvin__instance__ctrl__t" id="structvin__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__instance__ctrl__t">&#9670;&nbsp;</a></span>vin_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>VIN instance control block. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:af18186cf5d423e353a3463173419d8ed"><td class="memItemLeft" align="right" valign="top"><a id="af18186cf5d423e353a3463173419d8ed"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#af18186cf5d423e353a3463173419d8ed">open</a></td></tr>
+<tr class="memdesc:af18186cf5d423e353a3463173419d8ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface is open. <br /></td></tr>
+<tr class="separator:af18186cf5d423e353a3463173419d8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95180da02879f25a5be6aa4cd4296ed4"><td class="memItemLeft" align="right" valign="top"><a id="a95180da02879f25a5be6aa4cd4296ed4"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#a95180da02879f25a5be6aa4cd4296ed4">p_callback</a> )(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *)</td></tr>
+<tr class="memdesc:a95180da02879f25a5be6aa4cd4296ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called when an adc_event_t occurs. <br /></td></tr>
+<tr class="separator:a95180da02879f25a5be6aa4cd4296ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a662119f9415da73f102cbb669418bb25"><td class="memItemLeft" align="right" valign="top"><a id="a662119f9415da73f102cbb669418bb25"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#a662119f9415da73f102cbb669418bb25">p_context</a></td></tr>
+<tr class="memdesc:a662119f9415da73f102cbb669418bb25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context to be passed into callback function. <br /></td></tr>
+<tr class="separator:a662119f9415da73f102cbb669418bb25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0c49fa9a2eeae2de44a1727bd5badfe"><td class="memItemLeft" align="right" valign="top"><a id="ab0c49fa9a2eeae2de44a1727bd5badfe"></a>
+<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_i_n.html#ab0c49fa9a2eeae2de44a1727bd5badfe">p_callback_memory</a></td></tr>
+<tr class="memdesc:ab0c49fa9a2eeae2de44a1727bd5badfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory. <br /></td></tr>
+<tr class="separator:ab0c49fa9a2eeae2de44a1727bd5badfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structvin__extended__cfg__t" id="structvin__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structvin__extended__cfg__t">&#9670;&nbsp;</a></span>vin_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct vin_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration structure for VIN. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ac2bcf01c1c25f09d234a93180ddf3a1d"></a>mipi_csi_instance_t const  *</td>
+<td class="fieldname">
+p_mipi_csi_instance</td>
+<td class="fielddoc">
+Pointer to mipi physical layer instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2ff1bcb0252e7c16fad962cb83df2093"></a><a class="el" href="group___v_i_n.html#structvin__input__ctrl__t">vin_input_ctrl_t</a></td>
+<td class="fieldname">
+input_ctrl</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a1cd0d249c0da921d227cc4e1cb8b8ff6"></a><a class="el" href="group___v_i_n.html#structvin__output__ctrl__t">vin_output_ctrl_t</a></td>
+<td class="fieldname">
+output_ctrl</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab80b4ed0e4a6b09f92037c18bea94266"></a><a class="el" href="group___v_i_n.html#structvin__conversion__ctrl__t">vin_conversion_ctrl_t</a></td>
+<td class="fieldname">
+conversion_ctrl</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a03ae8bae80a6de24c213f2bef69e2ff6"></a><a class="el" href="group___v_i_n.html#structvin__conversion__data__t">vin_conversion_data_t</a></td>
+<td class="fieldname">
+conversion_data</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a65f84032712a5e59620f863c5e6ff065"></a><a class="el" href="group___v_i_n.html#structvin__interrupt__cfg__t">vin_interrupt_cfg_t</a></td>
+<td class="fieldname">
+interrupt_cfg</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga775071de084930e0671b7d81a290f8be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga775071de084930e0671b7d81a290f8be">&#9670;&nbsp;</a></span>vin_interlace_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#ga775071de084930e0671b7d81a290f8be">vin_interlace_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Interface Mode Type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga775071de084930e0671b7d81a290f8beab26d6053d1610e71d6acf93e52891a0b"></a>VIN_INTERLACE_MODE_ODD_FIELD_CAPTURE&#160;</td><td class="fielddoc"><p>Odd-field (field 1) Capture Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga775071de084930e0671b7d81a290f8beab22f45c4cee511085f54e0f0bfd283d9"></a>VIN_INTERLACE_MODE_ODD_EVEN_FIELD_CAPTURE&#160;</td><td class="fielddoc"><p>Odd/Even-field Capture Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga775071de084930e0671b7d81a290f8beaf32c475be2baada4b37021c73067ce17"></a>VIN_INTERLACE_MODE_EVEN_FEILD_CAPTURE&#160;</td><td class="fielddoc"><p>Even-field Cature Mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga031de147253e4e64df876e34175d0075"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga031de147253e4e64df876e34175d0075">&#9670;&nbsp;</a></span>vin_dithering_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#ga031de147253e4e64df876e34175d0075">vin_dithering_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Dithering Mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga031de147253e4e64df876e34175d0075ab0c13fca3b7abb4c6a02a1510b90279f"></a>VIN_DITHERING_MODE_WITH_ADDITION&#160;</td><td class="fielddoc"><p>Dithereing with Cumulative Addition. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga031de147253e4e64df876e34175d0075a2d47b90d5044f915bb11df54d83888d5"></a>VIN_DITHERING_MODE_ORDERED_1&#160;</td><td class="fielddoc"><p>Ordered Dithering 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga031de147253e4e64df876e34175d0075abc5fe4ea18e43ee3ae08b53161ca5b2e"></a>VIN_DITHERING_MODE_ORDERED_2&#160;</td><td class="fielddoc"><p>Ordered Dithering 2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga81fe1ec88d9b14caa51c41383e8c2757"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga81fe1ec88d9b14caa51c41383e8c2757">&#9670;&nbsp;</a></span>vin_input_format_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#ga81fe1ec88d9b14caa51c41383e8c2757">vin_input_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Input format </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga81fe1ec88d9b14caa51c41383e8c2757a15618cbd0551530d04c82d887cb87d39"></a>VIN_INPUT_FORMAT_YCBCR422_8_BIT&#160;</td><td class="fielddoc"><p>Input Format 8-Bit YCbCr-422. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga81fe1ec88d9b14caa51c41383e8c2757a986286dc09453ff68f8dcd0c90c12fd4"></a>VIN_INPUT_FORMAT_YCBCR422_10_BIT&#160;</td><td class="fielddoc"><p>Input Format 10-Bit YCbCr-42. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga81fe1ec88d9b14caa51c41383e8c2757a8269030243375c3b012823c6398d3e78"></a>VIN_INPUT_FORMAT_RAW8&#160;</td><td class="fielddoc"><p>Input Format RAW8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga81fe1ec88d9b14caa51c41383e8c2757a133f7f96b6d45c882ecc31b8bf4add41"></a>VIN_INPUT_FORMAT_RGB888_24_BIT&#160;</td><td class="fielddoc"><p>Input Format 24-Bit RGB888. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaba75150f127a7aecab8f0d8b1d66f00a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaba75150f127a7aecab8f0d8b1d66f00a">&#9670;&nbsp;</a></span>vin_data_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#gaba75150f127a7aecab8f0d8b1d66f00a">vin_data_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Data Type Select </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaba75150f127a7aecab8f0d8b1d66f00aa82c4fcfc02bc6e7229771817a7b550a9"></a>VIN_DATA_TYPE_YUV422_8_BIT&#160;</td><td class="fielddoc"><p>Data Type YUV422 8-bit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaba75150f127a7aecab8f0d8b1d66f00aaedcfc94c2e33ed86ad722b715a2a2bdc"></a>VIN_DATA_TYPE_YUV422_10_BIT&#160;</td><td class="fielddoc"><p>Data Type YUV422 10-bit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaba75150f127a7aecab8f0d8b1d66f00aa8fa135c4d0416831ac63de8b32ca2fb0"></a>VIN_DATA_TYPE_RGB888_BIT&#160;</td><td class="fielddoc"><p>Data Type RGB888. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaba75150f127a7aecab8f0d8b1d66f00aa7a12f568d6147689a13824802bbd6c3f"></a>VIN_DATA_TYPE_RAW8_BIT&#160;</td><td class="fielddoc"><p>Data Type RAW8. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae9a9dd958e4b157ab81191cbed50a765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae9a9dd958e4b157ab81191cbed50a765">&#9670;&nbsp;</a></span>vin_yuv444_conversion_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#gae9a9dd958e4b157ab81191cbed50a765">vin_yuv444_conversion_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Input YUV444 Conversion Mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae9a9dd958e4b157ab81191cbed50a765ab2c1878e01b738ea2256ac16d21a04b4"></a>VIN_YUV444_CONVERSION_MODE_DATA_EXTEND&#160;</td><td class="fielddoc"><p>The data of CbCr to be interpolated holds the data one pixel before. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae9a9dd958e4b157ab81191cbed50a765a86e0c2a56cef775f384c36e5d4275d06"></a>VIN_YUV444_CONVERSION_MODE_INTERPOLATE&#160;</td><td class="fielddoc"><p>Generates CbCr data to be interpolated. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga2030e8c9f9d3c12ffa3625a5dde9e57c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2030e8c9f9d3c12ffa3625a5dde9e57c">&#9670;&nbsp;</a></span>vin_pixel_data_clipping_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#ga2030e8c9f9d3c12ffa3625a5dde9e57c">vin_pixel_data_clipping_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Pixel Data Clipping </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2030e8c9f9d3c12ffa3625a5dde9e57ca94316430c3ae5fe71ff65abfcb2382f4"></a>VIN_PIXEL_DATA_CLIPPING_DEFAULT&#160;</td><td class="fielddoc"><p>Default clipping mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2030e8c9f9d3c12ffa3625a5dde9e57caee5923bb0c7cbb16ad4cb7f68dfedb4d"></a>VIN_PIXEL_DATA_CLIPPING_NIBBLE&#160;</td><td class="fielddoc"><p>Lower 4-bits clipping mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2030e8c9f9d3c12ffa3625a5dde9e57caadf07f5fdbebf82ea622a2fbc4695aa7"></a>VIN_PIXEL_DATA_CLIPPING_DISABLED&#160;</td><td class="fielddoc"><p>Clipping mode disabled. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga4b903e9450c3e30fe210cb896416d377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4b903e9450c3e30fe210cb896416d377">&#9670;&nbsp;</a></span>vin_conversion_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#ga4b903e9450c3e30fe210cb896416d377">vin_conversion_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Conversion Mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga4b903e9450c3e30fe210cb896416d377a0895f2f03fbdd6bd6fcfc72fa5d4fb81"></a>VIN_CONVERSION_MODE_NONE&#160;</td><td class="fielddoc"><p>Data is not converted before output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4b903e9450c3e30fe210cb896416d377a7e09d8c7a45b1e132c824fe138f66b24"></a>VIN_CONVERSION_MODE_RGB_TO_ARGB&#160;</td><td class="fielddoc"><p>RGB input Data is converted to ARGB before output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4b903e9450c3e30fe210cb896416d377aa0637477612c646e0130fcb7026a3278"></a>VIN_CONVERSION_MODE_YC_SEPARATED&#160;</td><td class="fielddoc"><p>Y and CbCr data are separated before output. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga95e6b7891501ae0ab3a1a3b2d26ede05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga95e6b7891501ae0ab3a1a3b2d26ede05">&#9670;&nbsp;</a></span>vin_yc_transform_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#ga95e6b7891501ae0ab3a1a3b2d26ede05">vin_yc_transform_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN YC Transform Mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga95e6b7891501ae0ab3a1a3b2d26ede05a1437b2f78175f7a7a5b5a51fb563776a"></a>VIN_YC_TRANSFORM_MODE_Y_CBCR&#160;</td><td class="fielddoc"><p>Y and CbCr data are transferred to memory. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga95e6b7891501ae0ab3a1a3b2d26ede05a5b424667a77652e876b172bdb66645a9"></a>VIN_YC_TRANSFORM_MODE_Y&#160;</td><td class="fielddoc"><p>Y data is transferred to memory as 8-bit data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga95e6b7891501ae0ab3a1a3b2d26ede05a41d82268ba453679218b01956aab837a"></a>VIN_YC_TRANSFORM_MODE_Y10_CBCR&#160;</td><td class="fielddoc"><p>10-bit Y data and 8-bit CbCr data are transferred to memory </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga95e6b7891501ae0ab3a1a3b2d26ede05a8f214cb7e886c39c9ce2c22318810d9b"></a>VIN_YC_TRANSFORM_MODE_Y10&#160;</td><td class="fielddoc"><p>10-bit Y data is transferred to memory </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga079448a8e9cf0cfafd1c562e92eddbd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga079448a8e9cf0cfafd1c562e92eddbd4">&#9670;&nbsp;</a></span>vin_interpolation_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#ga079448a8e9cf0cfafd1c562e92eddbd4">vin_interpolation_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN Interpolation Mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga079448a8e9cf0cfafd1c562e92eddbd4a7925ab6c420e7016d0f7195dcd1ca40a"></a>VIN_INTERPOLATION_MODE_BILINEAR&#160;</td><td class="fielddoc"><p>Y and CbCr data are transferred to memory. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga079448a8e9cf0cfafd1c562e92eddbd4aeaef8bc0f62c81f637de6aa639b28d6c"></a>VIN_INTERPOLATION_MODE_NEIGHBOR&#160;</td><td class="fielddoc"><p>Y data is transferred to memory as 8-bit data. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaad2862921623532cab658624a3f0415b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad2862921623532cab658624a3f0415b">&#9670;&nbsp;</a></span>vin_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___v_i_n.html#gaad2862921623532cab658624a3f0415b">vin_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIN instance control block. Implements </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaad2862921623532cab658624a3f0415ba03577eb0e2f369158d40757e5d7ef023"></a>VIN_EVENT_NONE&#160;</td><td class="fielddoc"><p>No Event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaad2862921623532cab658624a3f0415ba325d866276fca2b0fc73822bb29bc7c7"></a>VIN_EVENT_NOTIFY&#160;</td><td class="fielddoc"><p>Notification Event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaad2862921623532cab658624a3f0415bafe4ddea3d246cf9bfac6f6f34e2a10e0"></a>VIN_EVENT_ERROR&#160;</td><td class="fielddoc"><p>Error Event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga489c36c9eadf8d707010b6d1b8fc7cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga489c36c9eadf8d707010b6d1b8fc7cf2">&#9670;&nbsp;</a></span>R_VIN_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_VIN_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__cfg__t">capture_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize the VIN peripheral.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The channel was successfully opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>One or both of the parameters was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The instance is already opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7ab441d71c94ba6a2ff7327081dbbde8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7ab441d71c94ba6a2ff7327081dbbde8">&#9670;&nbsp;</a></span>R_VIN_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_VIN_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close VIN and display data instances, disable interrupts, and power-off the module.</p><ul>
+<li>NOTE: Application shall issue stop command to the peripheral and wait at least one full frame before calling CSI_Stop, after ensuring MIPI CSI reception is no longer active by checking data returned by MIPI_CSI GetStatus()</li>
+</ul>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>The channel is successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8296022460a2cc6f6cd5a5e58f490cda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8296022460a2cc6f6cd5a5e58f490cda">&#9670;&nbsp;</a></span>R_VIN_CaptureStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_VIN_CaptureStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start video capture.</p><ul>
+<li>NOTE: For best results, camera should not be transmitting data until after VIN capture start has been called.</li>
+</ul>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Data is successfully written to the D/A Converter. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IN_USE</td><td>The physical interface is currently in use. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>VIN is already in video mode. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>p_buffer parameter is not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5e58595d8be00f65f6da67e554c609dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5e58595d8be00f65f6da67e554c609dd">&#9670;&nbsp;</a></span>R_VIN_StatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_VIN_StatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_api_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provide information about current VIN status.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Information read successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_api_ctrl is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

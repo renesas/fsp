@@ -5,7 +5,7 @@ var group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i =
       [ "s2_position_degree", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a6035e50490314ca1781a2c65c5dfecf4", null ]
     ] ],
     [ "motor_position_cfg_t", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__cfg__t", [
-      [ "p_context", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a4c6ee682a4add1fcaecf789b2debb870", null ]
+      [ "p_context", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#acd25d060609a2a2519d42f41d4bfce34", null ]
     ] ],
     [ "motor_position_api_t", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#structmotor__position__api__t", [
       [ "open", "group___m_o_t_o_r___p_o_s_i_t_i_o_n___a_p_i.html#a423c1db54ffe74c41558f18dbb1806b0", null ],

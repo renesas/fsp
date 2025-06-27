@@ -62,6 +62,6 @@ var group___u_l_p_t =
     [ "R_ULPT_CompareMatchSet", "group___u_l_p_t.html#ga991965f2eb5945896a38ace9bba7efe8", null ],
     [ "R_ULPT_InfoGet", "group___u_l_p_t.html#gaed1557d7fff129b98fd9af8ad4a1ed90", null ],
     [ "R_ULPT_StatusGet", "group___u_l_p_t.html#ga57af3d98a41dc385ed4eddf4a5d8f80b", null ],
-    [ "R_ULPT_CallbackSet", "group___u_l_p_t.html#gabd57fe29dfba2b9629677b65fc9560f7", null ],
+    [ "R_ULPT_CallbackSet", "group___u_l_p_t.html#gaa15c7ae696b7985bcaba015e0de29f70", null ],
     [ "R_ULPT_Close", "group___u_l_p_t.html#ga9632599cec9e7313e9c40c1bfe3366ed", null ]
 ];

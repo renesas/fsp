@@ -20,7 +20,7 @@ var group___r_m___r_r_h62000 =
       [ "init_process_params", "group___r_m___r_r_h62000.html#a5cebeb351ab68b023a0776d0f34c60a6", null ],
       [ "p_cfg", "group___r_m___r_r_h62000.html#a2fd875bf8a365629ff554f54439384a4", null ],
       [ "p_comms_i2c_instance", "group___r_m___r_r_h62000.html#a815e938f91111f4d7a442461bc7aaaa9", null ],
-      [ "p_context", "group___r_m___r_r_h62000.html#a1d30746d78c221b05094fad643806e8f", null ],
+      [ "p_context", "group___r_m___r_r_h62000.html#ad7315d4d389919a1597de2c63cfb9031", null ],
       [ "p_comms_callback", "group___r_m___r_r_h62000.html#a8d4f513d2f3698554598104af56a1c3c", null ]
     ] ],
     [ "RM_RRH62000_Open", "group___r_m___r_r_h62000.html#gacbda28cb120152138f09964c02da6233", null ],

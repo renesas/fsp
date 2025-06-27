@@ -2,7 +2,7 @@ var group___r_t_c___a_p_i =
 [
     [ "rtc_callback_args_t", "group___r_t_c___a_p_i.html#structrtc__callback__args__t", [
       [ "event", "group___r_t_c___a_p_i.html#ad37b36597532fc87e610ceeb849cad4d", null ],
-      [ "p_context", "group___r_t_c___a_p_i.html#a2a07242a217b804f8dc04fb078d4a6a1", null ]
+      [ "p_context", "group___r_t_c___a_p_i.html#a60e82b313df5aa5a3bad059f12193fdf", null ]
     ] ],
     [ "rtc_error_adjustment_cfg_t", "group___r_t_c___a_p_i.html#structrtc__error__adjustment__cfg__t", [
       [ "adjustment_mode", "group___r_t_c___a_p_i.html#a16c0bd22c4022b133fc1eee5333086a9", null ],
@@ -51,7 +51,7 @@ var group___r_t_c___a_p_i =
       [ "carry_ipl", "group___r_t_c___a_p_i.html#a4d9b154cadb980b95d1153a8f1b6c7e2", null ],
       [ "carry_irq", "group___r_t_c___a_p_i.html#add77caaa41f0376590df0a6312a16053", null ],
       [ "p_callback", "group___r_t_c___a_p_i.html#acb6915cb2c55dd196d4c35cbf805bab2", null ],
-      [ "p_context", "group___r_t_c___a_p_i.html#a84d9e4ba135ac56c779ca525660d5c2a", null ],
+      [ "p_context", "group___r_t_c___a_p_i.html#aaa81683ab4cab723f61c534033d8c75c", null ],
       [ "p_extend", "group___r_t_c___a_p_i.html#a66dc93f732aa8ec1b07d036602974cb0", null ]
     ] ],
     [ "rtc_api_t", "group___r_t_c___a_p_i.html#structrtc__api__t", [
@@ -64,7 +64,7 @@ var group___r_t_c___a_p_i =
       [ "calendarAlarmGet", "group___r_t_c___a_p_i.html#aaad6019c8b72db02966fc040676810b4", null ],
       [ "periodicIrqRateSet", "group___r_t_c___a_p_i.html#a5a13e1acf6e07bfd87dc81bf65272951", null ],
       [ "errorAdjustmentSet", "group___r_t_c___a_p_i.html#ae1635364719444ad65541ce00953983e", null ],
-      [ "callbackSet", "group___r_t_c___a_p_i.html#a63a958dd039662f8d13d38a64da9b61e", null ],
+      [ "callbackSet", "group___r_t_c___a_p_i.html#a2c6272e4eed17eec052e49218fe650b2", null ],
       [ "infoGet", "group___r_t_c___a_p_i.html#a7a6c940847c6f730a5c5df3355dca1eb", null ],
       [ "timeCaptureSet", "group___r_t_c___a_p_i.html#ad94675c314c58dc82d170e37fe88c176", null ],
       [ "timeCaptureGet", "group___r_t_c___a_p_i.html#a8d7348b2c176659c6453b75f2d4d66b9", null ]

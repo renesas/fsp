@@ -8,8 +8,12 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "phy_lsi_type", "group___e_t_h_e_r___p_h_y___a_p_i.html#aeb2cc4713df83f97adfc3097eda687dd", null ],
       [ "flow_control", "group___e_t_h_e_r___p_h_y___a_p_i.html#add4cd8ca627a9498f55650280392c7f0", null ],
       [ "mii_type", "group___e_t_h_e_r___p_h_y___a_p_i.html#a339809c3abd9e0aef94670716425d5b9", null ],
-      [ "p_context", "group___e_t_h_e_r___p_h_y___a_p_i.html#aef0526eeba00bb22b7062c58f5bc1e5e", null ],
+      [ "p_context", "group___e_t_h_e_r___p_h_y___a_p_i.html#a0d61d816bed01d4a5a6eaa027c5bea07", null ],
       [ "p_extend", "group___e_t_h_e_r___p_h_y___a_p_i.html#a53025f3bbf4ba6d1e5666eb6b2a390e7", null ]
+    ] ],
+    [ "ether_phy_lsi_cfg_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__lsi__cfg__t", [
+      [ "address", "group___e_t_h_e_r___p_h_y___a_p_i.html#a7730e23635c5c9eb9470b94cc68ca5fc", null ],
+      [ "type", "group___e_t_h_e_r___p_h_y___a_p_i.html#a199fb48c0853971581d7156958e881b8", null ]
     ] ],
     [ "ether_phy_api_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__api__t", [
       [ "open", "group___e_t_h_e_r___p_h_y___a_p_i.html#aa566d14c1e722f4b1abdd65bae92393e", null ],

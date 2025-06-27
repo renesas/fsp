@@ -67,7 +67,7 @@ var group___p_t_p___a_p_i =
       [ "p_tlv_data", "group___p_t_p___a_p_i.html#a3ec8cd6fa9f6536a0366e74dc2b6bc40", null ],
       [ "tlv_data_size", "group___p_t_p___a_p_i.html#a4479e95a75cf12039d631ff58c7e6b65", null ],
       [ "pulse_timer_channel", "group___p_t_p___a_p_i.html#adbbab3647453c2c5471f7f418c299bc1", null ],
-      [ "p_context", "group___p_t_p___a_p_i.html#ad2fb4c68980e6c859def8d15c47dc1e5", null ]
+      [ "p_context", "group___p_t_p___a_p_i.html#a56d5ccc8e56e6d0be7185d861ba9a1bb", null ]
     ] ],
     [ "ptp_pulse_timer_common_cfg_t", "group___p_t_p___a_p_i.html#structptp__pulse__timer__common__cfg__t", [
       [ "ipls_rising_irq", "group___p_t_p___a_p_i.html#a383fc5e11165b3450ec796105cc77084", null ],
@@ -103,8 +103,8 @@ var group___p_t_p___a_p_i =
       [ "clock_properties", "group___p_t_p___a_p_i.html#a61b7009af3a05be4961d55f5c7fc40a1", null ],
       [ "timesource", "group___p_t_p___a_p_i.html#abb8328bc2ec847755c59d9508152c455", null ],
       [ "p_multicast_addr_filter", "group___p_t_p___a_p_i.html#a80d387b424e8e014e168acbfccad06e4", null ],
-      [ "ether", "group___p_t_p___a_p_i.html#af01e5a70ea5dd99c65072028ac9100fe", null ],
-      [ "ipv4", "group___p_t_p___a_p_i.html#a2e66bcd0d65303cbefa3e8ebc32d833f", null ]
+      [ "ether", "group___p_t_p___a_p_i.html#ad1282df469b1c55d324aaf3e198e4ac4", null ],
+      [ "ipv4", "group___p_t_p___a_p_i.html#ab143825a988420eeb2ee5d87952fb731", null ]
     ] ],
     [ "ptp_synfp_cfg_t.ether", "group___p_t_p___a_p_i.html#structptp__synfp__cfg__t_8ether", [
       [ "p_primary_mac_addr", "group___p_t_p___a_p_i.html#a0f927a373824bd7c043a987878931431", null ],

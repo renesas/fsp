@@ -69,6 +69,13 @@ var group___s_c_i___b___l_i_n =
       [ "SCI_B_LIN_NOISE_CANCELLATION_DISABLE", "group___s_c_i___b___l_i_n.html#ggad382945aec8de4cc06de19835090038ea0cdec8b2ddbb61bc94700eeacacd1208", null ],
       [ "SCI_B_LIN_NOISE_CANCELLATION_ENABLE", "group___s_c_i___b___l_i_n.html#ggad382945aec8de4cc06de19835090038ea413838960ad185f2bf48e267e747f792", null ]
     ] ],
+    [ "sci_b_lin_noise_cancellation_clock_t", "group___s_c_i___b___l_i_n.html#gafb3d777dabeb4f83e9ad1b250cf1d348", [
+      [ "SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BASE_CLOCK_DIV_1", "group___s_c_i___b___l_i_n.html#ggafb3d777dabeb4f83e9ad1b250cf1d348a18de509780bf4b9a14920f8439843607", null ],
+      [ "SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_1", "group___s_c_i___b___l_i_n.html#ggafb3d777dabeb4f83e9ad1b250cf1d348afcebd87d44de51ce97d82a4bbc48d653", null ],
+      [ "SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_2", "group___s_c_i___b___l_i_n.html#ggafb3d777dabeb4f83e9ad1b250cf1d348a593bb92d0a5df26563b4bdfac2f28923", null ],
+      [ "SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_4", "group___s_c_i___b___l_i_n.html#ggafb3d777dabeb4f83e9ad1b250cf1d348a7a32840bfd861bcc9d59fee1647697cb", null ],
+      [ "SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_8", "group___s_c_i___b___l_i_n.html#ggafb3d777dabeb4f83e9ad1b250cf1d348a7611b9bf9630fdf0315a8341f0548749", null ]
+    ] ],
     [ "e_sci_b_lin_bus_conflict_detection_t", "group___s_c_i___b___l_i_n.html#ga664ff05c84c6b04136da98e1ff002cb5", [
       [ "SCI_B_LIN_BUS_CONFLICT_DETECTION_DISABLE", "group___s_c_i___b___l_i_n.html#gga664ff05c84c6b04136da98e1ff002cb5a838861b9170d40983513ae6d15dbf9d9", null ],
       [ "SCI_B_LIN_BUS_CONFLICT_DETECTION_ENABLE", "group___s_c_i___b___l_i_n.html#gga664ff05c84c6b04136da98e1ff002cb5ad47f45e5589b892b84e886b73e50e74d", null ]
@@ -78,17 +85,24 @@ var group___s_c_i___b___l_i_n =
       [ "SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_2", "group___s_c_i___b___l_i_n.html#gga009a0e1cdeb3af467427df5bad12c8ffa0ee167878dc2283051264f847f7fdd92", null ],
       [ "SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_4", "group___s_c_i___b___l_i_n.html#gga009a0e1cdeb3af467427df5bad12c8ffa2b0deed715e1819dfb18395ffe38ca7e", null ]
     ] ],
+    [ "sci_b_lin_base_clock_t", "group___s_c_i___b___l_i_n.html#gad3bb6e54dc2837b01610d5a412e1ff6e", [
+      [ "SCI_B_LIN_BASE_CLOCK_16_CYCLES_PER_BIT", "group___s_c_i___b___l_i_n.html#ggad3bb6e54dc2837b01610d5a412e1ff6ea55a313bfaf10f6dd94fc8677dd63560c", null ],
+      [ "SCI_B_LIN_BASE_CLOCK_8_CYCLES_PER_BIT", "group___s_c_i___b___l_i_n.html#ggad3bb6e54dc2837b01610d5a412e1ff6ea54652b03b6e39de75cc2c6b04b82c2ab", null ],
+      [ "SCI_B_LIN_BASE_CLOCK_AUTO_CYCLES_PER_BIT", "group___s_c_i___b___l_i_n.html#ggad3bb6e54dc2837b01610d5a412e1ff6eaf33789256b74c99aa05e04677d7d4330", null ]
+    ] ],
     [ "R_SCI_B_LIN_Open", "group___s_c_i___b___l_i_n.html#gaa75358cefce98ad90bc771b36cdc259d", null ],
-    [ "R_SCI_B_LIN_StartFrameWrite", "group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e", null ],
-    [ "R_SCI_B_LIN_InformationFrameWrite", "group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa", null ],
-    [ "R_SCI_B_LIN_InformationFrameRead", "group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda", null ],
+    [ "R_SCI_B_LIN_Write", "group___s_c_i___b___l_i_n.html#ga6efd824293f8fb48aa448bc35d2da060", null ],
+    [ "R_SCI_B_LIN_Read", "group___s_c_i___b___l_i_n.html#ga092acd39ca8d8e5ce0872491236e6c34", null ],
     [ "R_SCI_B_LIN_CommunicationAbort", "group___s_c_i___b___l_i_n.html#ga848db61b12a7178213637819835b1248", null ],
-    [ "R_SCI_B_LIN_CallbackSet", "group___s_c_i___b___l_i_n.html#ga19d40c60780f7af15a6ec52038e7df61", null ],
+    [ "R_SCI_B_LIN_CallbackSet", "group___s_c_i___b___l_i_n.html#ga64521088a13a5c7b6aa704a88c25d0ad", null ],
     [ "R_SCI_B_LIN_BaudCalculate", "group___s_c_i___b___l_i_n.html#ga870b00cee0bf5c018d5e4384e25d793f", null ],
     [ "R_SCI_B_LIN_IdFilterSet", "group___s_c_i___b___l_i_n.html#gaf970991953cfe55dad17aaaa98b4e90d", null ],
     [ "R_SCI_B_LIN_IdFilterGet", "group___s_c_i___b___l_i_n.html#ga0e89579495524bd1f953345bac148b4f", null ],
     [ "R_SCI_B_LIN_WakeupSend", "group___s_c_i___b___l_i_n.html#gaff00cde4d8a70b9ccdde84cffdfe0d03", null ],
     [ "R_SCI_B_LIN_SleepEnter", "group___s_c_i___b___l_i_n.html#gadbb41543b7164dc434208698d4a01514", null ],
     [ "R_SCI_B_LIN_SleepExit", "group___s_c_i___b___l_i_n.html#gaefad753e01a2e1261f1eb4876d616f37", null ],
-    [ "R_SCI_B_LIN_Close", "group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58", null ]
+    [ "R_SCI_B_LIN_Close", "group___s_c_i___b___l_i_n.html#ga570356c73be7b0898520fa52cd127c58", null ],
+    [ "R_SCI_B_LIN_InformationFrameRead", "group___s_c_i___b___l_i_n.html#ga1231f2072e85988ef6c1d118cd17edda", null ],
+    [ "R_SCI_B_LIN_StartFrameWrite", "group___s_c_i___b___l_i_n.html#gacaa0649108cc7f7728e622ecdcf37a3e", null ],
+    [ "R_SCI_B_LIN_InformationFrameWrite", "group___s_c_i___b___l_i_n.html#ga335ad22f31235e8b15440faddf169afa", null ]
 ];

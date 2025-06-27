@@ -24,13 +24,15 @@ var group___s_a_u___l_i_n =
       [ "SAU_LIN_AUTO_SYNCHRONIZATION_ENABLE", "group___s_a_u___l_i_n.html#gga4f490953100146e66f21885f551f178aaa3c4d648fcfc968c16aa2515401706e1", null ]
     ] ],
     [ "R_SAU_LIN_Open", "group___s_a_u___l_i_n.html#gaca7e704241f77ad837f89a47398695d1", null ],
-    [ "R_SAU_LIN_StartFrameWrite", "group___s_a_u___l_i_n.html#ga75356a9ad5af7b22454acaedb547e34d", null ],
-    [ "R_SAU_LIN_InformationFrameWrite", "group___s_a_u___l_i_n.html#ga3f0f8bce1cfe412107ea8080692d2cb5", null ],
-    [ "R_SAU_LIN_InformationFrameRead", "group___s_a_u___l_i_n.html#ga3a10159732e6ffacb2c1e4c455f61fe8", null ],
+    [ "R_SAU_LIN_Write", "group___s_a_u___l_i_n.html#ga2b1245bf77fd435ccd41bed248445893", null ],
+    [ "R_SAU_LIN_Read", "group___s_a_u___l_i_n.html#ga9077d2408e565b19d4dfaaaba6b3ed70", null ],
     [ "R_SAU_LIN_CommunicationAbort", "group___s_a_u___l_i_n.html#ga13de6a3f9ab7521661d8a9983f4d81f5", null ],
-    [ "R_SAU_LIN_CallbackSet", "group___s_a_u___l_i_n.html#ga4846fd095737edd917c99a2e830abc23", null ],
+    [ "R_SAU_LIN_CallbackSet", "group___s_a_u___l_i_n.html#gaae3ddcde0f32e40721474da2b2d820df", null ],
     [ "R_SAU_LIN_WakeupSend", "group___s_a_u___l_i_n.html#ga3f50f130ead27a36e62c5fd579ad3ab2", null ],
     [ "R_SAU_LIN_SleepEnter", "group___s_a_u___l_i_n.html#ga2b4544bdd8d83ee09caa79faad8657a3", null ],
     [ "R_SAU_LIN_SleepExit", "group___s_a_u___l_i_n.html#ga44465efe4baf3208c4c31cf291100bec", null ],
-    [ "R_SAU_LIN_Close", "group___s_a_u___l_i_n.html#ga7bfa7f9c0848a0c336f97fc431a04869", null ]
+    [ "R_SAU_LIN_Close", "group___s_a_u___l_i_n.html#ga7bfa7f9c0848a0c336f97fc431a04869", null ],
+    [ "R_SAU_LIN_InformationFrameRead", "group___s_a_u___l_i_n.html#ga3a10159732e6ffacb2c1e4c455f61fe8", null ],
+    [ "R_SAU_LIN_StartFrameWrite", "group___s_a_u___l_i_n.html#ga75356a9ad5af7b22454acaedb547e34d", null ],
+    [ "R_SAU_LIN_InformationFrameWrite", "group___s_a_u___l_i_n.html#ga3f0f8bce1cfe412107ea8080692d2cb5", null ]
 ];

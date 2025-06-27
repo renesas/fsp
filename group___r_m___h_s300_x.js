@@ -10,7 +10,7 @@ var group___r_m___h_s300_x =
       [ "open", "group___r_m___h_s300_x.html#a5031dbec8375c4b2be896166fa3457b4", null ],
       [ "p_cfg", "group___r_m___h_s300_x.html#a60925699b63829347739382ba48b1d13", null ],
       [ "p_comms_i2c_instance", "group___r_m___h_s300_x.html#a36c21d0366384c0913491c536e81c280", null ],
-      [ "p_context", "group___r_m___h_s300_x.html#a36436afd1ed74c2bbf34eab8e5af34bc", null ],
+      [ "p_context", "group___r_m___h_s300_x.html#ade6400c5a3f7655e24ac8260dd75f456", null ],
       [ "programming_mode", "group___r_m___h_s300_x.html#a25114349d2d5b03b5062ef4c4af8bde9", null ],
       [ "buf", "group___r_m___h_s300_x.html#a486df3e0ed2af6c8c038e1357572da53", null ]
     ] ],

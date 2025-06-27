@@ -1,7 +1,7 @@
 var group___k_e_y_m_a_t_r_i_x___a_p_i =
 [
     [ "keymatrix_callback_args_t", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__callback__args__t", [
-      [ "p_context", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#ad4d2825f0417d86ac50c5998bfd4f54e", null ],
+      [ "p_context", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a3df8b422896c88ca9fe10ea9665cf79c", null ],
       [ "channel_mask", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a4994759c01af15cc15cbc45bee71a0e5", null ]
     ] ],
     [ "keymatrix_cfg_t", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__cfg__t", [
@@ -10,7 +10,7 @@ var group___k_e_y_m_a_t_r_i_x___a_p_i =
       [ "ipl", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#ae44b04bc6b608643f1d6c86d5da801a2", null ],
       [ "irq", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#add3b662eb3a50487d75ec3a9b137839d", null ],
       [ "p_callback", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#afb2714f11f48d15257b9d6e385a52a3e", null ],
-      [ "p_context", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a783dbc74df8dd68896ef229ed8b034b8", null ],
+      [ "p_context", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a116b4f3ab8ef4263d0d85ae91de4ad20", null ],
       [ "p_extend", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#a4c2239723dd05be106e876aff59a585a", null ]
     ] ],
     [ "keymatrix_api_t", "group___k_e_y_m_a_t_r_i_x___a_p_i.html#structkeymatrix__api__t", [

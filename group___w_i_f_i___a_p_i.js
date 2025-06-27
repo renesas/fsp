@@ -232,7 +232,6 @@ var group___w_i_f_i___a_p_i =
     [ "WIFI_GetRSSI", "group___w_i_f_i___a_p_i.html#gafad987e5ffcec6807ce51e57c64d0df4", null ],
     [ "WIFI_GetStationList", "group___w_i_f_i___a_p_i.html#ga70718e46187a0aa1f566eff1ad7d80b2", null ],
     [ "WIFI_StartDisconnectStation", "group___w_i_f_i___a_p_i.html#gad7a2781f77890983d8c7181a37020723", null ],
-    [ "WIFI_SetMAC", "group___w_i_f_i___a_p_i.html#gaf0883f2b15f71a1723c599baa06eb954", null ],
     [ "WIFI_SetSpoofingMAC", "group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df", null ],
     [ "WIFI_SetCountryCode", "group___w_i_f_i___a_p_i.html#ga4831b6c97863f20e5fd26220d2579f32", null ],
     [ "WIFI_GetCountryCode", "group___w_i_f_i___a_p_i.html#ga0354ae5a681d93420ccb61ee785b1bdb", null ],

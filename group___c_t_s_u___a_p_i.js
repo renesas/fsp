@@ -2,7 +2,7 @@ var group___c_t_s_u___a_p_i =
 [
     [ "ctsu_callback_args_t", "group___c_t_s_u___a_p_i.html#structctsu__callback__args__t", [
       [ "event", "group___c_t_s_u___a_p_i.html#a40ee54221ab1d85ee5d2ce7a5cdd289a", null ],
-      [ "p_context", "group___c_t_s_u___a_p_i.html#a05fc4dbd779debbd12835663a072e9a3", null ]
+      [ "p_context", "group___c_t_s_u___a_p_i.html#a811ca159a68b6c0bdda732ff86dcdaa0", null ]
     ] ],
     [ "ctsu_element_cfg_t", "group___c_t_s_u___a_p_i.html#structctsu__element__cfg__t", [
       [ "ssdiv", "group___c_t_s_u___a_p_i.html#aa25b998513bdfbfc7b015582bd7a5202", null ],
@@ -57,7 +57,7 @@ var group___c_t_s_u___a_p_i =
       [ "write_irq", "group___c_t_s_u___a_p_i.html#a26b582b9ee181bcb054a96700416a686", null ],
       [ "read_irq", "group___c_t_s_u___a_p_i.html#a4f81a30050a0161004f2c82b94de3e48", null ],
       [ "end_irq", "group___c_t_s_u___a_p_i.html#adfdb692d8d85db036f69dd700d5c65c1", null ],
-      [ "p_context", "group___c_t_s_u___a_p_i.html#ab481d8aeac9d6abd4fe4e551cf0d3adb", null ],
+      [ "p_context", "group___c_t_s_u___a_p_i.html#a4249ab79394438ff347b40b2689fdb14", null ],
       [ "p_extend", "group___c_t_s_u___a_p_i.html#ac7449580617af95b04736b986fa00a35", null ],
       [ "tuning_self_target_value", "group___c_t_s_u___a_p_i.html#a836ea53db692e0e454ee7c5110d97c57", null ],
       [ "tuning_mutual_target_value", "group___c_t_s_u___a_p_i.html#a10bc37159fc5adae72cae6b34fb69882", null ],
@@ -70,7 +70,7 @@ var group___c_t_s_u___a_p_i =
       [ "dataGet", "group___c_t_s_u___a_p_i.html#aadcc6930b4e9d0ad86b6f607e86c28f5", null ],
       [ "scanStop", "group___c_t_s_u___a_p_i.html#ac21a98eaa673d72b7da701ba90093f59", null ],
       [ "diagnosis", "group___c_t_s_u___a_p_i.html#a42a81fef42f2bf61bde59cba4796cc0e", null ],
-      [ "callbackSet", "group___c_t_s_u___a_p_i.html#a82efcf3288a27b4cb60a1c9d4dceb48d", null ],
+      [ "callbackSet", "group___c_t_s_u___a_p_i.html#a95464ec2211af496368b86116be8991a", null ],
       [ "close", "group___c_t_s_u___a_p_i.html#aeb44bb4a59bad9025f0897cee306a395", null ],
       [ "specificDataGet", "group___c_t_s_u___a_p_i.html#adf2f74b741c739e9e21b1ce544292872", null ],
       [ "dataInsert", "group___c_t_s_u___a_p_i.html#a84dfd5dd2ab6b16465cc5c06953c6a9f", null ],

@@ -23,7 +23,7 @@ var group___r_m___c_o_m_m_s___s_m_b_u_s =
     ] ],
     [ "RM_COMMS_SMBUS_Open", "group___r_m___c_o_m_m_s___s_m_b_u_s.html#gaf9ced26b68b4215c43adf5bf098db764", null ],
     [ "RM_COMMS_SMBUS_Close", "group___r_m___c_o_m_m_s___s_m_b_u_s.html#ga9481f08f7783b1d8a0b1e5a57e238571", null ],
-    [ "RM_COMMS_SMBUS_CallbackSet", "group___r_m___c_o_m_m_s___s_m_b_u_s.html#ga5413feffc0840b8796272b44bc996a33", null ],
+    [ "RM_COMMS_SMBUS_CallbackSet", "group___r_m___c_o_m_m_s___s_m_b_u_s.html#ga81a85f95af2863c348262141902c8a9c", null ],
     [ "RM_COMMS_SMBUS_Read", "group___r_m___c_o_m_m_s___s_m_b_u_s.html#ga90ebe0354ea8366e1b886754aae83b01", null ],
     [ "RM_COMMS_SMBUS_Write", "group___r_m___c_o_m_m_s___s_m_b_u_s.html#gabad4305aece44cb597c3002f4f680c9a", null ],
     [ "RM_COMMS_SMBUS_WriteRead", "group___r_m___c_o_m_m_s___s_m_b_u_s.html#gafd1e1c3320d5e854e05af7a0f70affbe", null ],

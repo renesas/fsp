@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___c_e_c___a_p_i.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___c_e_c___a_p_i.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___c_e_c___a_p_i.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -301,7 +301,7 @@ Enumerations</h2></td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a058a3d41709a4776f83a729684016b23"></a>struct <a class="el" href="group___c_e_c___a_p_i.html#structcec__message__t_8____unnamed____">cec_message_t</a></td>
+<a id="a99269914a7829c884e2c30c65784ba1c"></a>struct <a class="el" href="group___c_e_c___a_p_i.html#structcec__message__t_8____unnamed____">cec_message_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -337,7 +337,7 @@ event</td>
 <td class="fielddoc">
 Event code. </td></tr>
 <tr><td class="fieldtype">
-<a id="aab14b7491c29608c8d289407b8e3588d"></a>void const  *</td>
+<a id="a85c0728cd04f986abfe2420ae6bafe70"></a>void *</td>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
@@ -400,10 +400,10 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c___a_p_i.html#a2248f3add9c2b52839fe13808fb69347">p_callback</a> )(<a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:a2248f3add9c2b52839fe13808fb69347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function. <br /></td></tr>
 <tr class="separator:a2248f3add9c2b52839fe13808fb69347"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ea2ffa10bf4736c4f5161ae5cc0695a"><td class="memItemLeft" align="right" valign="top"><a id="a1ea2ffa10bf4736c4f5161ae5cc0695a"></a>
-void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c___a_p_i.html#a1ea2ffa10bf4736c4f5161ae5cc0695a">p_context</a></td></tr>
-<tr class="memdesc:a1ea2ffa10bf4736c4f5161ae5cc0695a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined callback context. <br /></td></tr>
-<tr class="separator:a1ea2ffa10bf4736c4f5161ae5cc0695a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c4e06dff3424b80fcb0f6a4c69aa6d1"><td class="memItemLeft" align="right" valign="top"><a id="a9c4e06dff3424b80fcb0f6a4c69aa6d1"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c___a_p_i.html#a9c4e06dff3424b80fcb0f6a4c69aa6d1">p_context</a></td></tr>
+<tr class="memdesc:a9c4e06dff3424b80fcb0f6a4c69aa6d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defined callback context. <br /></td></tr>
+<tr class="separator:a9c4e06dff3424b80fcb0f6a4c69aa6d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a701648d32fc9bab56c0b55d467c5a583"><td class="memItemLeft" align="right" valign="top"><a id="a701648d32fc9bab56c0b55d467c5a583"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c___a_p_i.html#a701648d32fc9bab56c0b55d467c5a583">ipl</a></td></tr>
 <tr class="memdesc:a701648d32fc9bab56c0b55d467c5a583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error/Data/Message interrupt priority level. <br /></td></tr>
@@ -452,8 +452,8 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <tr class="separator:a2d2811eb9acc7f489913e90c96f0c6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9fc6c0ccb77e343feadabe1bca77d7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c___a_p_i.html#ae9fc6c0ccb77e343feadabe1bca77d7c">statusGet</a> )(<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, cec_status_t *const p_status)</td></tr>
 <tr class="separator:ae9fc6c0ccb77e343feadabe1bca77d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15d4a68068e36ccd9b49d82069d819dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c___a_p_i.html#a15d4a68068e36ccd9b49d82069d819dc">callbackSet</a> )(<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:a15d4a68068e36ccd9b49d82069d819dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d3e31252d9eca74a04121a7f48685d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_c___a_p_i.html#a15d3e31252d9eca74a04121a7f48685d">callbackSet</a> )(<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a15d3e31252d9eca74a04121a7f48685d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a3c11f48185d78a0260aa7c95f41b6c35"></a>
@@ -567,14 +567,14 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
-<a id="a15d4a68068e36ccd9b49d82069d819dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15d4a68068e36ccd9b49d82069d819dc">&#9670;&nbsp;</a></span>callbackSet</h2>
+<a id="a15d3e31252d9eca74a04121a7f48685d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d3e31252d9eca74a04121a7f48685d">&#9670;&nbsp;</a></span>callbackSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cec_api_t::callbackSet) (<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *const p_callback_memory)</td>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  cec_api_t::callbackSet) (<a class="el" href="group___c_e_c___a_p_i.html#gafcf66d2112cc7793726d7869c5a938cf">cec_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_e_c___a_p_i.html#structcec__callback__args__t">cec_callback_args_t</a> *const p_callback_memory)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -664,7 +664,7 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaee839bc3eb51afc189efbb1da7684ce7a409601cbc96c55c73df9db7041292853"></a>CEC_ADDR_RECORDING_DEVICE_1&#160;</td><td class="fielddoc"><p>CEC Address for Recording Device 1. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaee839bc3eb51afc189efbb1da7684ce7a49fb645373973dd1baa422addf59a66d"></a>CEC_ADDR_RECORDING_DEVICE_2&#160;</td><td class="fielddoc"><p>CEC Address for Recording Devide 2. </p>
+<tr><td class="fieldname"><a id="ggaee839bc3eb51afc189efbb1da7684ce7a49fb645373973dd1baa422addf59a66d"></a>CEC_ADDR_RECORDING_DEVICE_2&#160;</td><td class="fielddoc"><p>CEC Address for Recording Device 2. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaee839bc3eb51afc189efbb1da7684ce7a2812df943711d1e3152f2011bb51b606"></a>CEC_ADDR_TUNER_1&#160;</td><td class="fielddoc"><p>CEC Address for Tuner 1. </p>
 </td></tr>
@@ -822,7 +822,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

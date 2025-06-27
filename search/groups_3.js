@@ -1,6 +1,7 @@
 var searchData=
 [
   ['comparator_2c_20high_2dspeed_20_28r_5facmphs_29',['Comparator, High-Speed (r_acmphs)',['../group___a_c_m_p_h_s.html',1,'']]],
+  ['comparator_2c_20high_2dspeed_20_28r_5facmphs_5fb_29',['Comparator, High-Speed (r_acmphs_b)',['../group___a_c_m_p_h_s___b.html',1,'']]],
   ['comparator_2c_20low_2dpower_20_28r_5facmplp_29',['Comparator, Low-Power (r_acmplp)',['../group___a_c_m_p_l_p.html',1,'']]],
   ['clock_20accuracy_20circuit_20_28r_5fcac_29',['Clock Accuracy Circuit (r_cac)',['../group___c_a_c.html',1,'']]],
   ['cac_20interface',['CAC Interface',['../group___c_a_c___a_p_i.html',1,'']]],
@@ -25,5 +26,5 @@ var searchData=
   ['common_20error_20codes',['Common Error Codes',['../group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html',1,'']]],
   ['cellular_20comm_20interface_20on_20uart_20_28rm_5fcellular_5fcomm_5fuart_5faws_29',['Cellular Comm Interface on UART (rm_cellular_comm_uart_aws)',['../group___r_m___c_e_l_l_u_l_a_r___c_o_m_m___u_a_r_t___a_w_s.html',1,'']]],
   ['cmsis_20dsp_20h_2fw_20acceleration_20_28rm_5fcmsis_5fdsp_29',['CMSIS DSP H/W Acceleration (rm_cmsis_dsp)',['../group___r_m___c_m_s_i_s___d_s_p.html',1,'']]],
-  ['communicatons_20middleware_20interface',['Communicatons Middleware Interface',['../group___r_m___c_o_m_m_s___a_p_i.html',1,'']]]
+  ['communications_20middleware_20interface',['Communications Middleware Interface',['../group___r_m___c_o_m_m_s___a_p_i.html',1,'']]]
 ];

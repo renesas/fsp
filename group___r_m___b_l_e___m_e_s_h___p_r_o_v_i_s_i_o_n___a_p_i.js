@@ -45,7 +45,7 @@ var group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i =
       [ "p_capabilities", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a10ee8a6eb588ced0d0f46a0e6caf0641", null ],
       [ "p_mesh_instance", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a6ad579b03f8784eb824932265880b17f", null ],
       [ "p_callback", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a062138af7ccec4217c7cabea2b3ef11c", null ],
-      [ "p_context", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ae48c79d74d162eb6be570fd187098f8e", null ],
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#ac62a49e54b1a1c6468dd6c4c60e58084", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a0d8143e22fa881d2660e5fb8488be204", null ]
     ] ],
     [ "rm_ble_mesh_provision_api_t", "group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#structrm__ble__mesh__provision__api__t", [

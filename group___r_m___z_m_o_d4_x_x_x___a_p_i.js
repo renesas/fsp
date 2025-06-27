@@ -1,7 +1,7 @@
 var group___r_m___z_m_o_d4_x_x_x___a_p_i =
 [
     [ "rm_zmod4xxx_callback_args_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__callback__args__t", [
-      [ "p_context", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#afc7de35bee2acf74068852746ce4cbdd", null ],
+      [ "p_context", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ae29ae87c526a6d533d5a804cb64d09dd", null ],
       [ "event", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aff3af2ef87941d7baa5f8ff96bde910c", null ]
     ] ],
     [ "rm_zmod4xxx_raw_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__raw__data__t", [
@@ -27,18 +27,10 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "sample_id", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a301975673d086d61f79953b78f17ffd8", null ],
       [ "rel_iaq", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a644a799721cb181736a85b2fb1d48a0c", null ]
     ] ],
-    [ "rm_zmod4xxx_odor_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__odor__data__t", [
-      [ "control_signal", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#aa95d3545e0fcfe3070532d2b1e4923b0", null ],
-      [ "odor", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a107e482f18f60935d5454a87539565b2", null ]
-    ] ],
     [ "rm_zmod4xxx_sulfur_odor_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__sulfur__odor__data__t", [
       [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a7b78eb5d21388e5e0c8cd7f0f72b39a9", null ],
       [ "intensity", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ab2709d5696a54a4d979adb8c85d8610c", null ],
       [ "odor", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a026e4a40776c79cd6cf745c8446b4bfd", null ]
-    ] ],
-    [ "rm_zmod4xxx_oaq_1st_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__1st__data__t", [
-      [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a322cc10b5fcff9b42f07c575c48da56f", null ],
-      [ "aiq", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abcdbe1de7b8f7c882f5f7bdbb60a2274", null ]
     ] ],
     [ "rm_zmod4xxx_oaq_2nd_data_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__oaq__2nd__data__t", [
       [ "rmox", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a32901d3e447bf2fc0642b3c54be98d9a", null ],
@@ -79,7 +71,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
     [ "rm_zmod4xxx_cfg_t", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#structrm__zmod4xxx__cfg__t", [
       [ "p_comms_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8cce7b013ebccc3b0b0aed0e9436e922", null ],
       [ "p_irq_instance", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a692f0a4eaad2c9e8e8cdbb0a2e792dd9", null ],
-      [ "p_context", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#abc68dcd903ac59de8c478b0d22d25bfa", null ],
+      [ "p_context", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a4422da4c3756c35a3bfeb2389bc776c8", null ],
       [ "p_extend", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af76dfeb408164a58e2571d56bcb40101", null ],
       [ "p_comms_callback", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a8f25d9bf4ff36c9dcf976a029ef49c10", null ],
       [ "p_irq_callback", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a2ef43c9ece4e53557648b8a77ec406f5", null ]
@@ -92,9 +84,7 @@ var group___r_m___z_m_o_d4_x_x_x___a_p_i =
       [ "read", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a25a326294be7c8d65f6918ba532fb09f", null ],
       [ "iaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a84760f27fa7ca93259cf43597772c781", null ],
       [ "iaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a88ffe068c172b8719782357b16cbe937", null ],
-      [ "odorDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a92c5b2fd0fba637202780d8423b170dc", null ],
       [ "sulfurOdorDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#af8d15ec491a454d5d120f21aa41e8f9f", null ],
-      [ "oaq1stGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a49bdc7ca88b2859fd18b3d33890d32bd", null ],
       [ "oaq2ndGenDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#ae56592403602103a28a5d1e13d6dec03", null ],
       [ "raqDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a557c09febce20b7bd5e1e7418d760f9a", null ],
       [ "relIaqDataCalculate", "group___r_m___z_m_o_d4_x_x_x___a_p_i.html#a417eb9005c2cabc805e5176bd409b838", null ],

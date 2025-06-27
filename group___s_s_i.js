@@ -32,5 +32,5 @@ var group___s_s_i =
     [ "R_SSI_Mute", "group___s_s_i.html#gacd323f1e3ef5f11745645b8297889b9b", null ],
     [ "R_SSI_StatusGet", "group___s_s_i.html#gaff322c2f867c9c0518da4a3d47d10242", null ],
     [ "R_SSI_Close", "group___s_s_i.html#ga377334858b5b5c7757c0bdce3bcacbf0", null ],
-    [ "R_SSI_CallbackSet", "group___s_s_i.html#ga487b2317d289066a0a27e0e5a9124463", null ]
+    [ "R_SSI_CallbackSet", "group___s_s_i.html#ga550a872be2ef73bef0e4e8e471a48d6e", null ]
 ];

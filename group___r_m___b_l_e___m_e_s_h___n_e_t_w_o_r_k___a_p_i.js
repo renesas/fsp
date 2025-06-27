@@ -28,14 +28,14 @@ var group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i =
       [ "subnet_handle", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a7960214bd760bc6455052f08be26056c", null ],
       [ "p_network_interface", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#aaf0851189396d924aa149d0aa1bd0694", null ],
       [ "event_data", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#ac2725d985751e703ee079cb625fc43a0", null ],
-      [ "p_context", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a85792cea5a321637d44eab15ed60ff58", null ]
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#aaf6e65647039f7a326ac7d26e147c96f", null ]
     ] ],
     [ "rm_ble_mesh_network_cfg_t", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#structrm__ble__mesh__network__cfg__t", [
       [ "channel", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#ae6c33192f8b0e409dfbf2974cf323b8c", null ],
       [ "p_mesh_bearer_instance", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a1276d71b4f4e13912fb0d1f89ddc2265", null ],
       [ "p_mesh_provision_instance", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a0e1582bf4f2c36adc4baf671faf6ab20", null ],
       [ "p_callback", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#aac1246d225d000dbf490294e70c6cc2c", null ],
-      [ "p_context", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a09bf31b1148736746301565e1e1fe148", null ],
+      [ "p_context", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#acbdc4595d6ca35dc249824c82c384fb3", null ],
       [ "p_extend", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#a30ce8c3276d5413615a6a9ee2c15e092", null ]
     ] ],
     [ "rm_ble_mesh_network_api_t", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#structrm__ble__mesh__network__api__t", [
@@ -111,7 +111,7 @@ var group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i =
       [ "RM_BLE_MESH_NETWORK_EVENT_PROXY_UP", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gga8522d95c55fe5ca77557704e3d612ecca57145d4d3575c17213eca405029725e3", null ],
       [ "RM_BLE_MESH_NETWORK_EVENT_PROXY_DOWN", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gga8522d95c55fe5ca77557704e3d612ecca1e24b8703cea002bb118e4a02534db49", null ],
       [ "RM_BLE_MESH_NETWORK_EVENT_PROXY_STATUS", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gga8522d95c55fe5ca77557704e3d612ecca6b77df1c3eed734007533198f3a02d71", null ],
-      [ "RM_BLE_MESH_NETWORK_EVENT_RECIEVE", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gga8522d95c55fe5ca77557704e3d612eccae6e42dbb363440d34c7d71b55625229a", null ],
+      [ "RM_BLE_MESH_NETWORK_EVENT_RECEIVE", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gga8522d95c55fe5ca77557704e3d612ecca05995da48eb6dcb982061613febed07a", null ],
       [ "RM_BLE_MESH_NETWORK_EVENT_TX_QUEUE_EMPTY", "group___r_m___b_l_e___m_e_s_h___n_e_t_w_o_r_k___a_p_i.html#gga8522d95c55fe5ca77557704e3d612ecca3f2b60f4a91230f6634f2110705f9693", null ]
     ] ]
 ];

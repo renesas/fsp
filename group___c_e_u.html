@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___c_e_u.html','');});
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___c_e_u.html','');});
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___c_e_u.html','');});
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -253,8 +253,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga4395a4040b13c2a49a4140c31063997a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa6e10ee7af8822bca330a5dd729c287d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_u.html#gaa6e10ee7af8822bca330a5dd729c287d">R_CEU_CaptureStart</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, uint8_t *const p_buffer)</td></tr>
 <tr class="separator:gaa6e10ee7af8822bca330a5dd729c287d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab5f5bcf69d3f54bdb4f4c3b6c276cce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_u.html#gaab5f5bcf69d3f54bdb4f4c3b6c276cce">R_CEU_CallbackSet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *), void const *const p_context, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const p_callback_memory)</td></tr>
-<tr class="separator:gaab5f5bcf69d3f54bdb4f4c3b6c276cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ec5a9760feedf64db5dd573d6e0d8a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_u.html#ga6ec5a9760feedf64db5dd573d6e0d8a1">R_CEU_CallbackSet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *), void *const p_context, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__callback__args__t">capture_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga6ec5a9760feedf64db5dd573d6e0d8a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga56c6d254842e002d2a1f5d0d66f55c4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_u.html#ga56c6d254842e002d2a1f5d0d66f55c4d">R_CEU_StatusGet</a> (<a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ga88f5da2d588dd739a6e0017384812211">capture_ctrl_t</a> *const p_ctrl, <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#structcapture__status__t">capture_status_t</a> *p_status)</td></tr>
 <tr class="separator:ga56c6d254842e002d2a1f5d0d66f55c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -262,7 +262,7 @@ Functions</h2></td></tr>
 <p>Driver for the CEU peripheral on RA MCUs. This module implements the <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html">CAPTURE Interface</a>. </p>
 <h1><a class="anchor" id="r-ceu-overview"></a>
 Overview</h1>
-<p>The CEU peripheral supports interfacing with external cameras by accepting timing and data signals in order to capture incoming data. A callback is invoked for each V-Sync event, frame of data accepted, or when certain errors occurr.</p>
+<p>The CEU peripheral supports interfacing with external cameras by accepting timing and data signals in order to capture incoming data. A callback is invoked for each V-Sync event, frame of data accepted, or when certain errors occur.</p>
 <h2><a class="anchor" id="r-ceu-features"></a>
 Features</h2>
 <ul>
@@ -486,14 +486,14 @@ Pin Configuration</h2>
 <dl class="section note"><dt>Note</dt><dd>Camera control and serial communication pins must be configured separately and are not controlled by this module.</dd></dl>
 <h2>Capture Resolution</h2>
 <ul>
-<li>For Data Synchronous Fetch mode, caputure size is calculated using the configured Horizontal Resolution, Vertical Resolution, and Bytes Per Pixel.</li>
-<li>For Data Enable Fetch mode, the capture size is controlled by the external module and is defined as a period from a VD rising edge to the VD falling edge. For this mode Horizontal Resolution and Vertical Resolution are not used. However, the maximum capture size is configured using the 'Data Enable Buffer Size' option, which is uesd to configure the maximum write 'Firewall Address' location.</li>
+<li>For Data Synchronous Fetch mode, capture size is calculated using the configured Horizontal Resolution, Vertical Resolution, and Bytes Per Pixel.</li>
+<li>For Data Enable Fetch mode, the capture size is controlled by the external module and is defined as a period from a VD rising edge to the VD falling edge. For this mode Horizontal Resolution and Vertical Resolution are not used. However, the maximum capture size is configured using the 'Data Enable Buffer Size' option, which is used to configure the maximum write 'Firewall Address' location.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>For Data Enable Fetch mode, the external module must transmit data in 4-byte units.</dd></dl>
 <h2>Capture Offset</h2>
 <p><a class="anchor" id="um_ceu_capture_offset"></a>The blanking period from a horizontal or vertical sync signal differs among external modules. Therefore, the capture start location must be specified in terms of external cycles from the sync signal so that an image can be captured from the valid image area. Some external modules output a horizontal sync signal as a data enable signal. In this case, there is no blanking period so the configured offsets must be cleared to 0.</p>
 <ul>
-<li>The horizontal capture start location must be specified in terms of the number of pixels from a hoizontal sync signal.</li>
+<li>The horizontal capture start location must be specified in terms of the number of pixels from a horizontal sync signal.</li>
 <li>The vertical capture start location must be specified in terms of the number of H-cycles from a vertical sync signal.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Capture offset is not used when Data Enable Fetch mode is configured.</dd></dl>
@@ -980,7 +980,7 @@ PDC IRQ number. </td></tr>
 </div><div class="memdoc">
 <p>Starts a capture.</p>
 <p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ac4bb5bd99af525a14f75fb1422d92ae9">capture_api_t::captureStart</a>.</p>
-<p>Sets up the interface to transfer data from the CEU into the specifiec buffer. Configures the CEU settings as previously set by the <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a> API. When a capture is complete the callback registered during <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a> API call or by <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a4cd5ee5ded7aaf45445f6c594c98081e">capture_api_t::callbackSet</a> API will be called.</p>
+<p>Sets up the interface to transfer data from the CEU into the specifiec buffer. Configures the CEU settings as previously set by the <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a> API. When a capture is complete the callback registered during <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad9446bd1d2cdd092c2467fead2d436d4">capture_api_t::open</a> API call or by <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad7733eb50e6cd25714a266ff5961e1e3">capture_api_t::callbackSet</a> API will be called.</p>
 <p>Example: </p><div class="fragment"><div class="line">    err = <a class="code" href="group___c_e_u.html#gaa6e10ee7af8822bca330a5dd729c287d">R_CEU_CaptureStart</a>(&amp;g_ceu0_ctrl, g_user_buffer);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div></div><!-- fragment --> <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful. </td></tr>
@@ -996,8 +996,8 @@ PDC IRQ number. </td></tr>
 
 </div>
 </div>
-<a id="gaab5f5bcf69d3f54bdb4f4c3b6c276cce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaab5f5bcf69d3f54bdb4f4c3b6c276cce">&#9670;&nbsp;</a></span>R_CEU_CallbackSet()</h2>
+<a id="ga6ec5a9760feedf64db5dd573d6e0d8a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6ec5a9760feedf64db5dd573d6e0d8a1">&#9670;&nbsp;</a></span>R_CEU_CallbackSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1017,7 +1017,7 @@ PDC IRQ number. </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramtype">void *const&#160;</td>
           <td class="paramname"><em>p_context</em>, </td>
         </tr>
         <tr>
@@ -1034,7 +1034,7 @@ PDC IRQ number. </td></tr>
       </table>
 </div><div class="memdoc">
 <p>Updates the user callback and has option of providing memory for callback structure.</p>
-<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#a4cd5ee5ded7aaf45445f6c594c98081e">capture_api_t::callbackSet</a>.</p>
+<p>Implements <a class="el" href="group___c_a_p_t_u_r_e___a_p_i.html#ad7733eb50e6cd25714a266ff5961e1e3">capture_api_t::callbackSet</a>.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Initialization was successful. </td></tr>
@@ -1091,7 +1091,7 @@ PDC IRQ number. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

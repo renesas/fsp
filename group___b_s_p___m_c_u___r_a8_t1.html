@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('group___b_s_p___m_c_u___r_a8_t1.html',
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('group___b_s_p___m_c_u___r_a8_t1.html',
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('group___b_s_p___m_c_u___r_a8_t1.html',
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -526,16 +526,6 @@ Secure State</li>
 <br />
 This setting is only valid when building projects with TrustZone. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Flash Bank Select Accessibility</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Both Secure and Non-Secure State</li>
-<li>
-Secure State</li>
-</ul>
-</td><td>Both Secure and Non-Secure State </td><td>Defines whether the BANKSEL register is write accessible for the Non-secure application.<br />
-<br />
-This setting is only valid when building projects with TrustZone. </td></tr>
-<tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Uninitialized Non-Secure Application Fallback</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enable Uninitialized Non-Secure Application Fallback</li>
@@ -543,362 +533,6 @@ Enable Uninitialized Non-Secure Application Fallback</li>
 Disable Uninitialized Non-Secure Application Fallback</li>
 </ul>
 </td><td>Enable Uninitialized Non-Secure Application Fallback </td><td>If enabled, the secure application checks if the non-secure application has been programmed in non-secure flash before branching. If the non-secure application has not been programmed, then the secure application branches to an infinite loop in non-secure RAM. This prevents an issue where the debugger may not connect if the MCU is configured in the NSECSD lifecycle state. </td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings  </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings &gt; Independent WDT  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Start Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-IWDT is stopped after a reset (Register-start mode)</li>
-<li>
-IWDT is automatically activated after a reset (Autostart mode)</li>
-</ul>
-</td><td>IWDT is stopped after a reset (Register-start mode) </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-128 cycles</li>
-<li>
-512 cycles</li>
-<li>
-1024 cycles</li>
-<li>
-2048 cycles</li>
-</ul>
-</td><td>2048 cycles </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Dedicated Clock Frequency Divisor</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-1</li>
-<li>
-16</li>
-<li>
-32</li>
-<li>
-64</li>
-<li>
-128</li>
-<li>
-256</li>
-</ul>
-</td><td>128 </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-75%</li>
-<li>
-50%</li>
-<li>
-25%</li>
-<li>
-0% (no window end position)</li>
-</ul>
-</td><td>0% (no window end position) </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-25%</li>
-<li>
-50%</li>
-<li>
-75%</li>
-<li>
-100% (no window start position)</li>
-</ul>
-</td><td>100% (no window start position) </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Reset Interrupt Request Select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-NMI request or interrupt request is enabled</li>
-<li>
-Reset is enabled</li>
-</ul>
-</td><td>Reset is enabled </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Counting continues (Note: Device will not enter Deep Standby Mode when selected. Device will enter Software Standby Mode)</li>
-<li>
-Stop counting when in Sleep, Deep Sleep, or Software Standby</li>
-</ul>
-</td><td>Stop counting when in Sleep, Deep Sleep, or Software Standby </td><td></td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> OFS0 register settings &gt; WDT0  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Start Mode Select</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Automatically activate WDT after a reset (auto-start mode)</li>
-<li>
-Stop WDT after a reset (register-start mode)</li>
-</ul>
-</td><td>Stop WDT after a reset (register-start mode) </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Timeout Period</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-1024 cycles</li>
-<li>
-4096 cycles</li>
-<li>
-8192 cycles</li>
-<li>
-16384 cycles</li>
-</ul>
-</td><td>16384 cycles </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Clock Frequency Division Ratio</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-4</li>
-<li>
-64</li>
-<li>
-128</li>
-<li>
-512</li>
-<li>
-2048</li>
-<li>
-8192</li>
-</ul>
-</td><td>128 </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Window End Position</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-75%</li>
-<li>
-50%</li>
-<li>
-25%</li>
-<li>
-0% (no window end position)</li>
-</ul>
-</td><td>0% (no window end position) </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Window Start Position</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-25%</li>
-<li>
-50%</li>
-<li>
-75%</li>
-<li>
-100% (no window start position)</li>
-</ul>
-</td><td>100% (no window start position) </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Reset Interrupt Request</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-NMI</li>
-<li>
-Reset</li>
-</ul>
-</td><td>Reset </td><td></td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Stop Control</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Counting continues</li>
-<li>
-Stop counting when entering Sleep mode</li>
-</ul>
-</td><td>Stop counting when entering Sleep mode </td><td></td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS1_SEL register settings  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Voltage Detection 0 Level Security Attribution</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-VDSEL setting loads from OFS1_SEC</li>
-<li>
-VDSEL setting loads from OFS1</li>
-</ul>
-</td><td>VDSEL setting loads from OFS1_SEC </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Voltage Detection 0 Circuit Start Security Attribution</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-PVDAS setting loads from OFS1_SEC</li>
-<li>
-PVDAS setting loads from OFS1</li>
-</ul>
-</td><td>PVDAS setting loads from OFS1_SEC </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Voltage Detection 0 Low Power Consumption Security Attribution</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-PVDLPSEL setting loads from OFS1_SEC</li>
-<li>
-PVDLPSEL setting loads from OFS1</li>
-</ul>
-</td><td>PVDLPSEL setting loads from OFS1_SEC </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">WDT/IWDT Software Debug Control Security Attribution</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-SWDBG setting loads from OFS1_SEC</li>
-<li>
-SWDBG setting loads from OFS1</li>
-</ul>
-</td><td>SWDBG setting loads from OFS1_SEC </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Tightly Coupled Memory (TCM)/Cache ECC Security Attribution</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-INITECCEN setting loads from OFS1_SEC</li>
-<li>
-INITECCEN setting loads from OFS1</li>
-</ul>
-</td><td>INITECCEN setting loads from OFS1_SEC </td><td></td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS1 register settings  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Voltage Detection 0 Circuit Start</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Voltage monitor 0 reset is enabled after reset</li>
-<li>
-Voltage monitor 0 reset is disabled after reset</li>
-</ul>
-</td><td>Voltage monitor 0 reset is disabled after reset </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Voltage Detection 0 Level</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-2.85 V</li>
-<li>
-2.58 V</li>
-<li>
-2.15 V</li>
-<li>
-2.00 V</li>
-<li>
-1.90 V</li>
-<li>
-1.80 V</li>
-<li>
-1.70 V</li>
-<li>
-1.60 V</li>
-</ul>
-</td><td>1.60 V </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Voltage Detection 0 Low Power Consumption</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Voltage monitor 0 Low Power Consumption Enabled</li>
-<li>
-Voltage monitor 0 Low Power Consumption Disabled</li>
-</ul>
-</td><td>Voltage monitor 0 Low Power Consumption Disabled </td><td>Enable or disable the low power consumption function of LVD0 during Deep Software Standby 1 and Deep Software Standby 2. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">HOCO Oscillation Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-HOCO oscillation is enabled after reset</li>
-<li>
-HOCO oscillation is disabled after reset</li>
-</ul>
-</td><td>HOCO oscillation is disabled after reset </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">WDT/IWDT Software Debug Control</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled (WDT and IWDT operation is halted when the CPU is in the debug state)</li>
-<li>
-Disabled (WDT and IWDT continue operating while the CPU is in the debug state)</li>
-</ul>
-</td><td>Disabled (WDT and IWDT continue operating while the CPU is in the debug state) </td><td></td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Tightly Coupled Memory (TCM)/Cache ECC</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enable ECC function for TCM and Cache</li>
-<li>
-Disable ECC function for TCM and Cache</li>
-</ul>
-</td><td>Disable ECC function for TCM and Cache </td><td></td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OFS2 register settings  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">DCDC</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>Enabled </td><td></td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Block Protection Settings (BPS)  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">BPS0</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Block Protection Register 0 </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">BPS1</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Block Protection Register 1 </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">BPS2</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Block Protection Register 2 </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">BPS3</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Block Protection Register 3 </td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Permanent Block Protection Settings (PBPS)  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PBPS0</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Permanent Block Protection Register 0 </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PBPS1</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Permanent Block Protection Register 1 </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PBPS2</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Permanent Block Protection Register 2 </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">PBPS3</td><td>Refer to the RA Configuration tool for available options.</td><td>0U </td><td>Configure Permanent Block Protection Register 3 </td></tr>
-<tr class="tree_lvl_1">
-<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> First Stage Bootloader (FSBL)  </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> First Stage Bootloader (FSBL) &gt; FSBL Control 0 (FSBLCTRL0)  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">FSBLEN</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>FSBL enable </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">FSBLSKIPSW</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>FSBL skip enable for software reset </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">FSBLSKIPDS</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>FSBL skip enable for deep software standby reset </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">FSBLCLK</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-120 MHz</li>
-<li>
-240 MHz</li>
-</ul>
-</td><td>240 MHz </td><td>Clock frequency selection during FSBL execution. </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> First Stage Bootloader (FSBL) &gt; FSBL Control 1 (FSBLCTRL1)  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">FSBLEXMD</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-CRC boot without report</li>
-<li>
-CRC boot with report measurement</li>
-<li>
-Secure boot without report</li>
-<li>
-Secure boot with report measurement</li>
-</ul>
-</td><td>Secure boot with report measurement </td><td>FSBL execution mode </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> First Stage Bootloader (FSBL) &gt; FSBL Control 2 (FSBLCTRL2)  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">PORTPN</td><td>Refer to the RA Configuration tool for available options.</td><td>PORTn15 </td><td>FSBL error notification port pin number </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">PORTGN</td><td>Refer to the RA Configuration tool for available options.</td><td>None </td><td>FSBL error notification port group name </td></tr>
-<tr class="tree_lvl_2">
-<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> First Stage Bootloader (FSBL) &gt; Code Certificates (SACCn)  </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">SACC0</td><td>Must be an integer between 0 and 0xFFFFFFFF.</td><td>0xFFFFFFFF </td><td>Start address of code certificate 0 </td></tr>
-<tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">SACC1</td><td>Must be an integer between 0 and 0xFFFFFFFF.</td><td>0xFFFFFFFF </td><td>Start address of code certificate 1 </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">FSBL Measurement Report Address (SAMR)</td><td>Must be an integer between 0 and 0xFFFFFFFF.</td><td>0xFFFFFFFF </td><td>Start address of measurement report </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Clocks  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -966,14 +600,6 @@ Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Using static inline functions will slightly increase code size, but will slightly decrease cycles taken in ISRs in return. </td></tr>
 <tr class="tree_none">
-<td>Dual Bank Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Enabled</li>
-<li>
-Disabled</li>
-</ul>
-</td><td>Disabled </td><td>Enabling dual bank mode splits the flash into two banks that can be swapped by programming the BANKSEL non-volatile register. When enabled, one bank will start at address 0x0 and the other will start at 0x200000. Each bank contains exactly half the capacity of the entire code flash. When Dual Bank mode is enabled, Startup Program Protection and Block Swap functions cannot be used. </td></tr>
-<tr class="tree_none">
 <td>Main Oscillator Wait Time</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 3 cycles</li>
@@ -997,6 +623,8 @@ Disabled</li>
 8163 cycles</li>
 </ul>
 </td><td>8163 cycles </td><td>Number of cycles to wait for the main oscillator clock to stabilize. </td></tr>
+<tr class="tree_none">
+<td></td><td>Enabled </td><td>Hidden Property - Force D-Cache to use write-through for all cacheable writes. </td></tr>
 </table>
  </p>
 <table class="memberdecls">
@@ -1065,7 +693,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

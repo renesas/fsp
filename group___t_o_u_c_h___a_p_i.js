@@ -40,7 +40,7 @@ var group___t_o_u_c_h___a_p_i =
       [ "number", "group___t_o_u_c_h___a_p_i.html#a49677f83aabedc934446bf9ee56e90b8", null ],
       [ "p_ctsu_instance", "group___t_o_u_c_h___a_p_i.html#ac2cb2fac0073113ab9eaed7adeffcd66", null ],
       [ "p_uart_instance", "group___t_o_u_c_h___a_p_i.html#afa3a16ed62e957daf8fa92e0cef12b14", null ],
-      [ "p_context", "group___t_o_u_c_h___a_p_i.html#a6009a627f9ad02ff149252e40221ba04", null ],
+      [ "p_context", "group___t_o_u_c_h___a_p_i.html#a4593bce3b8328edd5f0d173e4aa982b9", null ],
       [ "p_extend", "group___t_o_u_c_h___a_p_i.html#a1f3837c539e0aa61d4c5599548b64028", null ]
     ] ],
     [ "touch_sensitivity_info_t", "group___t_o_u_c_h___a_p_i.html#structtouch__sensitivity__info__t", [
@@ -55,7 +55,7 @@ var group___t_o_u_c_h___a_p_i =
       [ "dataGet", "group___t_o_u_c_h___a_p_i.html#a275464ffc43790ae8a787e7f2f3544d0", null ],
       [ "scanStop", "group___t_o_u_c_h___a_p_i.html#ade680c82b506312e6d81580424f61d14", null ],
       [ "padDataGet", "group___t_o_u_c_h___a_p_i.html#a6b3e8ea61183b1546611b46c2f6200e3", null ],
-      [ "callbackSet", "group___t_o_u_c_h___a_p_i.html#a2b1d317102754c252e82bc3ee7762d00", null ],
+      [ "callbackSet", "group___t_o_u_c_h___a_p_i.html#a40af91e0c720ff76ecfbd8760ee32221", null ],
       [ "close", "group___t_o_u_c_h___a_p_i.html#ad36949e5d56501bb67dd06a47b4049c0", null ],
       [ "sensitivityRatioGet", "group___t_o_u_c_h___a_p_i.html#a57dde5098486678e08ee43e053788f99", null ],
       [ "thresholdAdjust", "group___t_o_u_c_h___a_p_i.html#a376608281395fb8733761e54e1682c03", null ],

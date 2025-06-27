@@ -38,25 +38,25 @@
         $("tr.tree_lvl_1").click(function() {
 		    var lvl_1_is_open = $(this).data("expanded");
 		    if (lvl_1_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed"); 
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_2").click(function() {
 		    var lvl_2_is_open = $(this).data("expanded");
 		    if (lvl_2_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
@@ -66,13 +66,13 @@
 		$("tr.tree_lvl_3").click(function() {
 		    var lvl_3_is_open = $(this).data("expanded");
 		    if (lvl_3_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
                 $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
-				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");				
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
@@ -80,30 +80,30 @@
 		$("tr.tree_lvl_4").click(function() {
 		    var lvl_4_is_open = $(this).data("expanded");
 		    if (lvl_4_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
 			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
-                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");	
-				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");				
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
+        });
 		$("tr.tree_lvl_5").click(function() {
 		    var lvl_5_is_open = $(this).data("expanded");
 		    if (lvl_5_is_open == "0") {
-                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show(); 
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
                 $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
 				$(this).data("expanded","1");
 			} else {
-			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();                
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
 				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
 				$(this).data("expanded","0");
 			    }
-        }); 
-     }); 
+        });
+     });
 </script>
 </head>
 <body>
@@ -115,19 +115,19 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v5.9.0</span>
+   &#160;<span id="projectnumber">Release v6.0.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
- 
+
     <form id="lunrSearchForm" name="lunrSearchForm">
       <span class="left" >
           <img id="MSearchSelect" src="search/mag_sel.png"
                alt=""/>
-         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text"> 
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
       </span>
       <span class="right">
-          &nbsp; 
+          &nbsp;
       </span>
         <!--<input type="submit" value="Search">-->
     </form>
@@ -159,13 +159,13 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 
 <script src="search/mark.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { 
+  $(document).ready(function() {
     var options = {         // allows highlighting across element boundaries.
       "acrossElements": true
     };
-    var bodyText = $("div.contents").text(); // try contents instead of body. 
+    var bodyText = $("div.contents").text(); // try contents instead of body.
     // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
-    // If using div.contents - works 
+    // If using div.contents - works
     var fullURL = $(location).attr('href');
     var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
     if (splitURL.length > 1) {          // If any content after "?"
@@ -183,18 +183,18 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
             len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
             term = bodyText.substr(start,len);
             if (termArray.includes(term) == false) {     // List all unique terms
-                termArray.push(bodyText.substr(start,len)); 
+                termArray.push(bodyText.substr(start,len));
             }
-          } 
+          }
     //      console.log(termArray);
           var context = document.querySelector("div.contents");
           var instance = new Mark(context);
           for(i=0;i<termArray.length; i+=1) {
             instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
-            }    
+            }
           var firstMark = document.querySelector("mark");
           firstMark.scrollIntoView(true);
-          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element. 
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
         }
             }
     }
@@ -223,7 +223,7 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <div id="lunrResultBox" style="
         position: fixed;
         border: 1px solid black;
-        background-color: WhiteSmoke;  
+        background-color: WhiteSmoke;
         padding: 10px;
         width: 500px;
         height: 500px;
@@ -265,12 +265,16 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <li><p class="startli">RSA with <code>"#define OCRYPTO_NO_CACHE"</code></p>
 <p class="startli">The RSA exponentiation uses a table of small exponents of the argument. Without caches, this may pose no problems, but see the initial remark on table-based algorithms (chapter 1).</p>
 </li>
-<li><p class="startli">Remark on SRP</p>
+<li><p class="startli">SRP</p>
 <p class="startli">The SRP calculations are not perfectly constant-time, because some hash values are taken on a compact representation of some critical values. In the worst case, this can reveal the number of leading zero bytes in these values, including the premaster secret. This cannot be avoided and is considered a design error in the SRP specification.</p>
+</li>
+<li><p class="startli">ML-DSA and ML-KEM</p>
+<p class="startli">ML-DSA and ML-KEM are not constant-time because of <code>rejection sampling</code> in several places. However, the timing can only disclose information on values that are not used.</p>
+<p class="startli">ML-DSA is not table-free because the <code>SampleInBall</code> algorithm permutes array elements with pseudo-randomly derived indices. However, the seed of the resulting polynomial is part of the signature and thus public anyway.</p>
 </li>
 </ul>
 <h2>5) List of ocrypto functions</h2>
-<p>This is the list of functions supported by <em>ocrypto</em>.</p>
+<p>This is the list of functions supported by <em>ocrypto</em>. Note that your specific distribution of <em>ocrypto</em> may contain just a subset of these functions.</p>
 <p>All algorithms except for Ed25519/Ed25519ph/Ed448/Ed448ph are implemented in a PC-secure way (i.e., always the same sequence of instructions is executed).</p>
 <table class="doxtable">
 <tr>
@@ -284,6 +288,8 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <tr>
 <td align="left">SHAKE / cSHAKE (128, 256) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
+<td align="left">Ascon-Hash256 </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
 <td align="left">HMAC (SHA1, SHA256, SHA512) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">AES-CMAC </td><td align="left">yes </td><td align="left">safe </td></tr>
@@ -292,11 +298,17 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <tr>
 <td align="left">ChaCha20 </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
+<td align="left">XChaCha20 </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
 <td align="left">AES (CTR, ECB, CBC) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">AES (CCM, GCM, EAX) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">ChaCha20-Poly1305 </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
+<td align="left">XChaCha20-Poly1305 </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
+<td align="left">Ascon-AEAD128 </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">HKDF (SHA1, SHA256, SHA512) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
@@ -306,11 +318,23 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <tr>
 <td align="left">RSA (PKCS1, PSS) </td><td align="left">yes </td><td align="left">* </td></tr>
 <tr>
+<td align="left">ECDSA (P-224, P-256, P-384, P-521) </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
+<td align="left">ECDSA secp256k1 </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
 <td align="left">EdDSA / EdDSAph (Ed25519, Ed448) </td><td align="left">* </td><td align="left">* </td></tr>
+<tr>
+<td align="left">LMS/HSS verify (SHA256/SHAKE256) </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
+<td align="left">XMSS/XMSS^MT verify (SHA256/SHAKE256) </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
+<td align="left">ML-DSA (44, 56, 87) </td><td align="left">* </td><td align="left">* </td></tr>
 <tr>
 <td align="left">RSA (PKCS1, OAEP) </td><td align="left">yes </td><td align="left">* </td></tr>
 <tr>
 <td align="left">ECDH (P-224, P-256, P-384, P-521) </td><td align="left">yes </td><td align="left">safe </td></tr>
+<tr>
+<td align="left">ECDH secp256k1 </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">ECDH (X25519, X448) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
@@ -319,15 +343,18 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <td align="left">SPAKE2+ (P-256, HMAC) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">SRP-6 (SHA512) </td><td align="left">* </td><td align="left">safe </td></tr>
+<tr>
+<td align="left">ML-KEM (512, 768, 1024) </td><td align="left">* </td><td align="left">safe </td></tr>
 </table>
-<p><b>*</b> See comments in chapter 4. </p>
+<p><b>*</b> See comments in chapter 4.</p>
+<p><em>Note: If you build for the pure C <code>Generic</code> platform, make sure that your compiler issues constant-time multiply operations.</em> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v5.9.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

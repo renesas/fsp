@@ -4,6 +4,7 @@ var searchData=
   ['da16xxx_5fsocket_5frw',['da16xxx_socket_rw',['../group___w_i_f_i___d_a16_x_x_x.html#ga0edb598a2cfd85804897594c1f0d0f6f',1,'rm_wifi_da16xxx.h']]],
   ['da16xxx_5fsocket_5fstatus_5ft',['da16xxx_socket_status_t',['../group___w_i_f_i___d_a16_x_x_x.html#ga34e060980f680dd540ea8df82e0f2059',1,'rm_wifi_da16xxx.h']]],
   ['dac8_5fmode_5ft',['dac8_mode_t',['../group___d_a_c8.html#gaad896095c341ce32b42f85eee23d9c7f',1,'r_dac8.h']]],
+  ['dac_5fb_5fvrefh_5ft',['dac_b_vrefh_t',['../group___d_a_c___b.html#gaab471864207ed901266c39c3f337035b',1,'r_dac_b.h']]],
   ['dac_5fdata_5fformat_5ft',['dac_data_format_t',['../group___d_a_c___a_p_i.html#gac447d1d0850297aefbec6e8be8b55591',1,'r_dac_api.h']]],
   ['dac_5fref_5fvolt_5fsel_5ft',['dac_ref_volt_sel_t',['../group___d_a_c.html#ga151b6056fe8dfc1d877265675872e8fc',1,'r_dac.h']]],
   ['display_5fcolor_5fkeying_5ft',['display_color_keying_t',['../group___d_i_s_p_l_a_y___a_p_i.html#ga79899f7bd76e6206e3d6ac2b5cf387a8',1,'r_display_api.h']]],

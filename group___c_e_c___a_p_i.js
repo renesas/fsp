@@ -5,7 +5,7 @@ var group___c_e_c___a_p_i =
     ] ],
     [ "cec_callback_args_t", "group___c_e_c___a_p_i.html#structcec__callback__args__t", [
       [ "event", "group___c_e_c___a_p_i.html#a42b0fbe7afb86ea286aaa310e05f2848", null ],
-      [ "p_context", "group___c_e_c___a_p_i.html#aab14b7491c29608c8d289407b8e3588d", null ],
+      [ "p_context", "group___c_e_c___a_p_i.html#a85c0728cd04f986abfe2420ae6bafe70", null ],
       [ "addr_match", "group___c_e_c___a_p_i.html#ad02b5aee547527b5ce9c9760efe255a7", null ],
       [ "data_byte", "group___c_e_c___a_p_i.html#a161c01bc14aa8f9e878ad874eed142ce", null ],
       [ "status", "group___c_e_c___a_p_i.html#a9a4956c90b2e8eb68616e01267b80677", null ],
@@ -16,7 +16,7 @@ var group___c_e_c___a_p_i =
       [ "rx_data_sample_time", "group___c_e_c___a_p_i.html#ac3a0ef321b06b8c31805f8d8f2a93ef6", null ],
       [ "rx_data_bit_reference_width", "group___c_e_c___a_p_i.html#a7774c17186c6cb826fc767da25b0cf14", null ],
       [ "p_callback", "group___c_e_c___a_p_i.html#a2248f3add9c2b52839fe13808fb69347", null ],
-      [ "p_context", "group___c_e_c___a_p_i.html#a1ea2ffa10bf4736c4f5161ae5cc0695a", null ],
+      [ "p_context", "group___c_e_c___a_p_i.html#a9c4e06dff3424b80fcb0f6a4c69aa6d1", null ],
       [ "ipl", "group___c_e_c___a_p_i.html#a701648d32fc9bab56c0b55d467c5a583", null ],
       [ "error_irq", "group___c_e_c___a_p_i.html#a73ebd2c8d0738a1db09509376239c017", null ],
       [ "data_irq", "group___c_e_c___a_p_i.html#abb8460c44b0dbdde1fd77c69eb00580f", null ],
@@ -29,7 +29,7 @@ var group___c_e_c___a_p_i =
       [ "write", "group___c_e_c___a_p_i.html#afa5c48672bb638db3c8f8dd6414afe2b", null ],
       [ "close", "group___c_e_c___a_p_i.html#a2d2811eb9acc7f489913e90c96f0c6c0", null ],
       [ "statusGet", "group___c_e_c___a_p_i.html#ae9fc6c0ccb77e343feadabe1bca77d7c", null ],
-      [ "callbackSet", "group___c_e_c___a_p_i.html#a15d4a68068e36ccd9b49d82069d819dc", null ]
+      [ "callbackSet", "group___c_e_c___a_p_i.html#a15d3e31252d9eca74a04121a7f48685d", null ]
     ] ],
     [ "cec_instance_t", "group___c_e_c___a_p_i.html#structcec__instance__t", [
       [ "p_ctrl", "group___c_e_c___a_p_i.html#ac5b27c8e9a04c591e9becae4aa10a934", null ],

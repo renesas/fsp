@@ -11,7 +11,7 @@ var group___s_a_u___s_p_i =
     [ "R_SAU_SPI_Read", "group___s_a_u___s_p_i.html#ga4b7b3ba7e709efe0f23cef126a252a60", null ],
     [ "R_SAU_SPI_Write", "group___s_a_u___s_p_i.html#ga6fdec7c51d6405960065dd1ae24c271f", null ],
     [ "R_SAU_SPI_WriteRead", "group___s_a_u___s_p_i.html#ga3af9d95bec7ea82f8c86737c016642f3", null ],
-    [ "R_SAU_SPI_CallbackSet", "group___s_a_u___s_p_i.html#ga912d7f20c909ff0448985a35b43f91b6", null ],
+    [ "R_SAU_SPI_CallbackSet", "group___s_a_u___s_p_i.html#ga512e7491943d058199e248771d3f90d9", null ],
     [ "R_SAU_SPI_Close", "group___s_a_u___s_p_i.html#gadcf2aeb0190d5982df8ef5ab20f50932", null ],
     [ "R_SAU_SPI_CalculateBitrate", "group___s_a_u___s_p_i.html#ga3c76702b7ca8108142d0b641759e0c8f", null ]
 ];
