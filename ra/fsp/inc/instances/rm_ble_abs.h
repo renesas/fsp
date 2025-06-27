@@ -32,18 +32,6 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-/* BLE_ABS_EVENT_NOTIFY_XXX_POS is DEPRECATED. Use BLE_EVENT_NOTIFY_XXX_POS macro defined in r_ble_api.h */
-#define BLE_ABS_EVENT_NOTIFY_CONNECTION_START_POS     (0)
-#define BLE_ABS_EVENT_NOTIFY_ADVERTISING_POS          (1)
-#define BLE_ABS_EVENT_NOTIFY_SCANNING_POS             (2)
-#define BLE_ABS_EVENT_NOTIFY_INITIATING_START_POS     (3)
-#define BLE_ABS_EVENT_NOTIFY_CONNECTION_CLOSE_POS     (4)
-#define BLE_ABS_EVENT_NOTIFY_ADVERTISING_CLOSE_POS    (5)
-#define BLE_ABS_EVENT_NOTIFY_SCANNING_CLOSE_POS       (6)
-#define BLE_ABS_EVENT_NOTIFY_INITIATING_CLOSE_POS     (7)
-#define BLE_ABS_EVENT_NOTIFY_DEEP_SLEEP_START_POS     (8)
-#define BLE_ABS_EVENT_NOTIFY_DEEP_SLEEP_WAKEUP_POS    (9)
-
 /** The timer type. */
 typedef enum
 {
@@ -116,8 +104,8 @@ typedef struct st_ble_abs_identity_address_info
 /** BLE ABS private control block. DO NOT MODIFY. Initialization occurs when RM_BLE_ABS_Open() is called. */
 typedef struct st_ble_abs_instance_ctrl
 {
-    uint32_t     open;                                                              ///< Indicates whether the open() API has been successfully called.
-    void const * p_context;                                                         ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    uint32_t open;                                                                  ///< Indicates whether the open() API has been successfully called.
+    void   * p_context;                                                             ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     ble_gap_application_callback_t             abs_gap_callback;                    ///< GAP callback function
     ble_vendor_specific_application_callback_t abs_vendor_specific_callback;        ///< Vendor specific callback function
     ble_abs_delete_bond_application_callback_t abs_delete_bond_callback;            ///< Delete bond information callback function

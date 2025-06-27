@@ -61,7 +61,7 @@ typedef struct st_rm_block_media_usb_instance_ctrl
     rm_block_media_callback_args_t * p_callback_memory;
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } rm_block_media_usb_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -94,7 +94,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase(rm_block_media_ctrl_t * const p_ctrl,
 fsp_err_t RM_BLOCK_MEDIA_USB_CallbackSet(rm_block_media_ctrl_t * const p_api_ctrl,
                                          void (                      * p_callback)(
                                              rm_block_media_callback_args_t *),
-                                         void const * const                     p_context,
+                                         void * const                           p_context,
                                          rm_block_media_callback_args_t * const p_callback_memory);
 fsp_err_t RM_BLOCK_MEDIA_USB_StatusGet(rm_block_media_ctrl_t * const   p_api_ctrl,
                                        rm_block_media_status_t * const p_status);

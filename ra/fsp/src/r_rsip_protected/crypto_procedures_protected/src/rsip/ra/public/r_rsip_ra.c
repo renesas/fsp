@@ -11,7 +11,7 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_wrapper.h"
 #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
-#include "r_sb_api.h"
+ #include "r_sb_api.h"
 #endif
 
 /***********************************************************************************************************************
@@ -101,11 +101,11 @@ fsp_err_t R_RSIP_FSBL_OEM_BL_Digest_Generate (rsip_ctrl_t * const   p_ctrl,
 #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
-#if RSIP_CFG_PARAM_CHECKING_ENABLE
+ #if RSIP_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ASSERT(p_mac);
     FSP_ERROR_RETURN(RSIP_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
+ #endif
 
     /* Check state */
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
@@ -240,6 +240,7 @@ fsp_err_t R_RSIP_FSBL_OEM_BL_Digest_Generate (rsip_ctrl_t * const   p_ctrl,
             err = (fsp_err_t) FSP_ERR_SB_INTERNAL_FAIL;
         }
     }
+
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
     FSP_PARAMETER_NOT_USED(p_key_cert);

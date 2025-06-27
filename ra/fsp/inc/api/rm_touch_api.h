@@ -103,8 +103,8 @@ typedef struct st_touch_cfg
     uint8_t                 number;          ///< Configuration number for QE monitor.
     ctsu_instance_t const * p_ctsu_instance; ///< Pointer to CTSU instance.
     uart_instance_t const * p_uart_instance; ///< Pointer to UART instance.
-    void const            * p_context;       ///< User defined context passed into callback function.
-    void const            * p_extend;        ///< Pointer to extended configuration by instance of interface.
+    void       * p_context;                  ///< User defined context passed into callback function.
+    void const * p_extend;                   ///< Pointer to extended configuration by instance of interface.
 } touch_cfg_t;
 
 /** Configuration of each touch sensitivity information */
@@ -167,7 +167,7 @@ typedef struct st_touch_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(touch_ctrl_t * const p_ctrl, void (* p_callback)(touch_callback_args_t *),
-                              void const * const p_context, touch_callback_args_t * const p_callback_memory);
+                              void * const p_context, touch_callback_args_t * const p_callback_memory);
 
     /** Close driver.
      *

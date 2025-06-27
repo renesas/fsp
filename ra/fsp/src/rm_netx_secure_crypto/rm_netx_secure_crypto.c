@@ -66,7 +66,7 @@ void srand (unsigned int seed)
 
 /***********************************************************************************************************************
  * ECC Key Generate helper function for ECDSA and ECDH APIs.
- * @note This fucntion must not be called directly by the user application.
+ * @note This function must not be called directly by the user application.
  * Output: (Wrapped private key || Uncompressed public key) where Uncompressed public key starts with 0x04.
  * @retval NX_CRYPTO_SUCCESS              Key generation was successful.
  * @retval NX_CRYPTO_NOT_SUCCESSFUL       Key Generation was not successful.
@@ -110,14 +110,20 @@ uint32_t rm_netx_secure_crypto_ecc_key_pair_generate (uint32_t   curve_id,
                                                            (uint32_t *) &public_key.plain_value,
                                                            (uint32_t *) wrapped_key,
                                                            (uint32_t *) &public_key.plain_value);
-
+ #if (0 == BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED) && (0 == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) && \
+        (0 == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
         NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.value.key_q, curve_size);
         NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], &public_key.value.key_q[curve_size], curve_size);
+ #else
+
+        /* RSIP-E11A, RSIP-E31A, RSIP-E51A use plain public key */
+        NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], &public_key.plain_value, curve_size << 1);
+ #endif
     }
     else if (curve_id == NX_CRYPTO_EC_SECP256R1)
     {
- #if (0 == BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED) && (0 == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED)
         sce_ecc_public_key_index_t public_key = {0};
         uint32_t indata_key_type              = 0;
         err =
@@ -129,34 +135,16 @@ uint32_t rm_netx_secure_crypto_ecc_key_pair_generate (uint32_t   curve_id,
                                                        (uint32_t *) &public_key.plain_value,
                                                        (uint32_t *) wrapped_key,
                                                        (uint32_t *) &public_key.plain_value);
+ #if (0 == BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED) && (0 == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) && \
+        (0 == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
         NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.value.key_q, curve_size);
         NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + curve_size], &public_key.value.key_q[curve_size], curve_size);
  #else
-        sce_ecc_public_key_index_t public_key  = {0};
-        sce_ecc_public_key_index_t private_key = {0};
-        uint32_t indata_key_type               = 0;
-        uint32_t adjust_privatekey_address     = 3;
-        err =
-            HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(&curve_type,
-                                                       &cmd,
-                                                       &indata_key_type,
-                                                       &DomainParam_NIST_P256[0],
-                                                       (uint32_t *) &public_key.value,
-                                                       (uint32_t *) &public_key.plain_value.key,
-                                                       (uint32_t *) wrapped_key,
-                                                       (uint32_t *) &private_key.plain_value.key);
 
+        /* RSIP-E11A, RSIP-E31A, RSIP-E51A use plain public key */
         NX_CRYPTO_MEMCPY(output, wrapped_key, wrapped_key_length);
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], public_key.plain_value.key, curve_size << 1U);
-
-        /* 0x4 is added to first byte in public key value array. So the last byte of public key
-         * and 3 bytes of private key will is same memory address after convert from uint8_t to uint32_t.
-         * Add 3 memory address to separate the last byte of public_key and 3 bytes of private_key after
-         * convert uint8_t to uint32_t.  */
-        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1 + (curve_size << 1U) + adjust_privatekey_address],
-                         private_key.plain_value.key,
-                         curve_size);
+        NX_CRYPTO_MEMCPY(&output[wrapped_key_length + 1], &public_key.plain_value, curve_size << 1);
  #endif
     }
     else if (curve_id == NX_CRYPTO_EC_SECP224R1)

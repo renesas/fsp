@@ -452,6 +452,9 @@ void usb_hcdc_detach (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
     g_p_usb_hcdc_device_table[ptr->ip]    = 0;
     g_p_usb_hcdc_config_table[ptr->ip]    = 0;
     g_p_usb_hcdc_interface_table[ptr->ip] = 0;
+    g_usb_hcdc_bulk_in_pipe[ptr->ip]      = 0;
+    g_usb_hcdc_bulk_out_pipe[ptr->ip]     = 0;
+    g_usb_hcdc_int_in_pipe[ptr->ip]       = 0;
 }
 
 /******************************************************************************
@@ -473,9 +476,14 @@ void usb_hcdc_read_complete (usb_utr_t * mess, uint16_t devadr, uint16_t data2)
     (void) devadr;
     (void) data2;
 
-    ctrl.module_number = mess->ip;                            /* Module number setting */
-    ctrl.pipe          = (uint8_t) mess->keyword;             /* Pipe number setting */
-    if ((USB_CFG_HCDC_BULK_IN == ctrl.pipe) || (USB_CFG_HCDC_BULK_IN2 == ctrl.pipe))
+    ctrl.module_number = mess->ip;                /* Module number setting */
+    ctrl.pipe          = (uint8_t) mess->keyword; /* Pipe number setting */
+#if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+    if ((g_usb_hcdc_bulk_in_pipe[ctrl.module_number] == ctrl.pipe) ||
+        (g_usb_hcdc2_bulk_in_pipe[ctrl.module_number] == ctrl.pipe))
+#else
+    if (g_usb_hcdc_bulk_in_pipe[ctrl.module_number] == ctrl.pipe)
+#endif
     {
         ctrl.type = USB_CLASS_HCDC;                           /* CDC Data class  */
     }

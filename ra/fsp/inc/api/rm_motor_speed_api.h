@@ -51,7 +51,7 @@ typedef enum e_motor_speed_event
 /** Callback function parameter data */
 typedef struct st_rm_motor_speed_callback_args
 {
-    void const        * p_context;     ///< Placeholder for user data.
+    void              * p_context;     ///< Placeholder for user data.
     motor_speed_event_t event;
 } motor_speed_callback_args_t;
 
@@ -130,7 +130,7 @@ typedef struct st_motor_speed_cfg
 
     /* Callback function to perform at cyclic timer interrupt */
     void (* p_callback)(motor_speed_callback_args_t * p_args);
-    void const * p_context;                                ///< Placeholder for user data.
+    void * p_context;                                      ///< Placeholder for user data.
 
     void const * p_extend;
 } motor_speed_cfg_t;
@@ -166,7 +166,7 @@ typedef struct st_motor_speed_api
     /** Set (Input) speed reference into the motor speed module.
      *
      * @param[in]  p_ctrl              Pointer to control structure.
-     * @param[in]  speed_refernce_rpm  Speed reference [rpm]
+     * @param[in]  speed_reference_rpm  Speed reference [rpm]
      */
     fsp_err_t (* speedReferenceSet)(motor_speed_ctrl_t * const p_ctrl, float const speed_reference_rpm);
 

@@ -5,7 +5,7 @@
 */
 
 /*******************************************************************************************************************//**
- * @addtogroup NFC_READER_PTX
+ * @addtogroup RM_NFC_READER_PTX
  * @{
  **********************************************************************************************************************/
 
@@ -16,10 +16,12 @@
  * Includes
  **********************************************************************************************************************/
 #include "ptx_IOT_READER.h"
+#include "ptxNDEF.h"
 #include "ptxPLAT_GPIO.h"
 #include "ptxPLAT_SPI.h"
 #include "ptxPLAT_TIMER.h"
 #include "ptxPERIPH_APPTIMER.h"
+#include "rm_nfc_reader_ptx_cfg.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -32,8 +34,15 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+/** NFC NDEF data exchange flags */
+typedef enum e_nfc_reader_ptx_ndef_read_write
+{
+    NFC_READER_PTX_NDEF_WRITE = 0x01,  ///< Write flag for NDEF data exchange
+    NFC_READER_PTX_NDEF_READ  = 0x02,  ///< Read flag for NDEF data exchange
+} nfc_reader_ptx_ndef_read_write_t;
+
 /** NFC state machine status */
-typedef enum nfc_reader_ptx_state
+typedef enum e_nfc_reader_ptx_state
 {
     NFC_READER_PTX_IDLE       = 0x01,  ///< Idle state before starting discovery
     NFC_READER_PTX_POLLING    = 0x02,  ///< Polling state for discovering tags
@@ -83,15 +92,18 @@ typedef struct st_nfc_reader_ptx_cfg
     external_irq_instance_t * p_irq_context;         ///< Pointer to the NFC module's SPI external interrupt instance.
     timer_instance_t        * p_timer_context;       ///< Pointer to the NFC module's sleep timer instance.
     timer_instance_t        * p_app_timer;           ///< Pointer to the NFC module's Transparent Data Channel (TDC) timer instance.
+    ptxNDEF_t               * p_ndef_context;        ///< Pointer to the optional NDEF API context.
 } nfc_reader_ptx_cfg_t;
 
 /** NFC_READER_PTX private control block. DO NOT MODIFY. */
 typedef struct st_nfc_reader_ptx_instance_ctrl
 {
-    uint32_t               open;        ///< Flag to indicate if NFC has been opened.
-    nfc_reader_ptx_state_t state_flag;  ///< Flag to track Idle/discovered/activated.
+    uint8_t                ndef_work_buf[NFC_READER_PTX_NDEF_WORK_BUF_SIZE]; ///< Buffer for NDEF internal data exchange.
+    uint32_t               open;                                             ///< Flag to indicate if NFC has been opened.
+    uint32_t               ndef_open;                                        ///< Flag to indicate if NFC NDEF has been initialized.
+    nfc_reader_ptx_state_t state_flag;                                       ///< Flag to track Idle/discovered/activated.
 
-    nfc_reader_ptx_cfg_t const * p_cfg; ///< Pointer to p_cfg for NFC.
+    nfc_reader_ptx_cfg_t const * p_cfg;                                      ///< Pointer to p_cfg for NFC.
 } nfc_reader_ptx_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -120,6 +132,14 @@ fsp_err_t RM_NFC_READER_PTX_DataExchange(nfc_reader_ptx_instance_ctrl_t * const 
                                          nfc_reader_ptx_data_info_t * const     p_data_info);
 fsp_err_t RM_NFC_READER_PTX_ReaderDeactivation(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
                                                nfc_reader_ptx_return_state_t          return_state);
+fsp_err_t RM_NFC_READER_PTX_NDEF_Init(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
+                                      nfc_reader_ptx_data_info_t * const     p_data_info);
+fsp_err_t RM_NFC_READER_PTX_NDEF_DataExchange(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
+                                              uint8_t                              * p_ndef_message,
+                                              uint32_t                               message_length,
+                                              nfc_reader_ptx_ndef_read_write_t       ndef_read_write_flag);
+fsp_err_t RM_NFC_READER_PTX_NDEF_Lock(nfc_reader_ptx_instance_ctrl_t * const p_ctrl);
+
 fsp_err_t RM_NFC_READER_PTX_Close(nfc_reader_ptx_instance_ctrl_t * const p_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

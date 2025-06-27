@@ -70,12 +70,6 @@ FSP_HEADER
  */
 #define BLE_LIB_COMPACT        (0x02)
 
-/* DEPRECATED @def BLE_LIB_ALL_FEATS
- * BLE Protocol Stack Library Extend Features type.
- * This configuration is left for backward compatibility.
- */
-#define BLE_LIB_ALL_FEATS      (0x00)
-
 /* =============================================== Spec Error Group ID ============================================== */
 #define BLE_ERR_GROUP_HC       (0x1000)
 #define BLE_ERR_GROUP_GAP      (0x2000)
@@ -2010,7 +2004,7 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_err_rsp_evt_t
      */
-    BLE_GATTC_EVENT_ERROR_RSP = 0x4001,                 //!< BLE_GATTC_EVENT_ERROR_RSP
+    BLE_GATTC_EVENT_ERROR_RSP = 0x4001,             //!< BLE_GATTC_EVENT_ERROR_RSP
 
     /**
      *  @brief  This event notifies the application layer that a MTU Exchange Response PDU has been received
@@ -2037,7 +2031,7 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_ex_mtu_rsp_evt_t
      */
-    BLE_GATTC_EVENT_EX_MTU_RSP = 0x4003,                //!< BLE_GATTC_EVENT_EX_MTU_RSP
+    BLE_GATTC_EVENT_EX_MTU_RSP = 0x4003,            //!< BLE_GATTC_EVENT_EX_MTU_RSP
 
     /**
      *  @brief  When the read of Characteristic specified by UUID has been completed,
@@ -2064,7 +2058,7 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_rd_char_evt_t
      */
-    BLE_GATTC_EVENT_CHAR_READ_BY_UUID_RSP = 0x4009,     //!< BLE_GATTC_EVENT_CHAR_READ_BY_UUID_RSP
+    BLE_GATTC_EVENT_CHAR_READ_BY_UUID_RSP = 0x4009, //!< BLE_GATTC_EVENT_CHAR_READ_BY_UUID_RSP
 
     /**
      *  @brief  When the read of Characteristic/Characteristic Descriptor has been completed,
@@ -2092,7 +2086,7 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_rd_char_evt_t
      */
-    BLE_GATTC_EVENT_CHAR_READ_RSP = 0x400B,             //!< BLE_GATTC_EVENT_CHAR_READ_RSP
+    BLE_GATTC_EVENT_CHAR_READ_RSP = 0x400B,         //!< BLE_GATTC_EVENT_CHAR_READ_RSP
 
     /**
      *  @brief  After calling R_BLE_GATTC_ReadLongChar(), this event notifies the application layer
@@ -2120,7 +2114,7 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_rd_char_evt_t
      */
-    BLE_GATTC_EVENT_CHAR_PART_READ_RSP = 0x400D,        //!< BLE_GATTC_EVENT_CHAR_PART_READ_RSP
+    BLE_GATTC_EVENT_CHAR_PART_READ_RSP = 0x400D,    //!< BLE_GATTC_EVENT_CHAR_PART_READ_RSP
 
     /**
      *  @brief  This event notifies the application layer that
@@ -2147,7 +2141,7 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_rd_multi_char_evt_t
      */
-    BLE_GATTC_EVENT_MULTI_CHAR_READ_RSP = 0x400F,       //!< BLE_GATTC_EVENT_MULTI_CHAR_READ_RSP
+    BLE_GATTC_EVENT_MULTI_CHAR_READ_RSP = 0x400F,   //!< BLE_GATTC_EVENT_MULTI_CHAR_READ_RSP
 
     /**
      *  @brief  This event notifies the application layer that the write of
@@ -2174,7 +2168,34 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_wr_char_evt_t
      */
-    BLE_GATTC_EVENT_CHAR_WRITE_RSP = 0x4013,            //!< BLE_GATTC_EVENT_CHAR_WRITE_RSP
+    BLE_GATTC_EVENT_CHAR_WRITE_RSP = 0x4013,        //!< BLE_GATTC_EVENT_CHAR_WRITE_RSP
+
+    /**
+     *  @brief  This event notifies the application layer that the write without response of
+     *          Characteristic/Characteristic Descriptor has been completed.
+     *
+     * ## Event Code: 0x4014
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *              <tr>
+     *                  <td class="paramname">BLE_ERR_RSP_TIMEOUT(0x0011)</td>
+     *                  <td>30 seconds or more have passed without receiving a write response
+     *                      since GATT Client sent a request for write by R_BLE_GTL_GATTC_WriteCharWithoutRsp() to the GATT Server.
+     *                  </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  st_ble_gattc_wr_char_evt_t
+     */
+    BLE_GATTC_EVENT_CHAR_WRITE_WITHOUT_RSP = 0x4014,
 
     /**
      *  @brief  This event notifies the application layer of the one of the following.
@@ -2251,6 +2272,32 @@ typedef enum
      *  st_ble_gattc_ind_evt_t
      */
     BLE_GATTC_EVENT_HDL_VAL_IND = 0x401D,               //!< BLE_GATTC_EVENT_HDL_VAL_IND
+
+    /**
+     *  @brief  This event notifies the application layer that a service changed indication has been received from a GATT Server.
+     *  @details When the GATT Client has received a Indication from a Service Changed characteristic.
+     *
+     * ## Event Code: 0x401E
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *              <tr>
+     *                  <td class="paramname">BLE_ERR_MEM_ALLOC_FAILED(0x000C)</td>
+     *                  <td>Insufficient resource is needed to generate the confirmation packet. </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  st_ble_gattc_svc_chng_evt_t
+     */
+
+    BLE_GATTC_EVENT_HDL_VAL_SVC_CHNG = 0x401E,          //!< BLE_GATTC_EVENT_HDL_VAL_SVC_CHNG
 
     /**
      *  @brief  This event notifies the application layer that the link with the GATT Server has been established.
@@ -2728,8 +2775,7 @@ typedef enum
      *              <tr>
      *                  <td class="paramname">BLE_ERR_RSP_TIMEOUT(0x0011)</td>
      *                  <td>30 seconds or more have passed without receiving a response since GATT Client sent a
-     *                      request for execute write by R_BLE_GATTC_ReliableWrites() or
-     *                      R_BLE_GATTC_ExecWrite() to the GATT Server.
+     *                      request for execute write by R_BLE_GATTC_ReliableWrites() to the GATT Server.
      *                  </td>
      *              </tr>
      *          </table>
@@ -2739,6 +2785,46 @@ typedef enum
      *  st_ble_gattc_reliable_writes_comp_evt_t
      */
     BLE_GATTC_EVENT_RELIABLE_WRITES_COMP = 0x40F4,      //!< BLE_GATTC_EVENT_RELIABLE_WRITES_COMP
+
+/**
+ *  @brief  This event notifies the application layer that the Execute Write Command has been completed.
+ *
+ * ## Event Code: 0x40F5
+ *
+ *  ## result:
+ *  <dl class="retval"><dt><dd>
+ *          <table class="retval">
+ *              <tr>
+ *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+ *                  <td>Success </td>
+ *              </tr>
+ *          </table>
+ *  </dd></dt></dl>
+ *
+ *  ## Event Data:
+ *  st_ble_gattc_reliable_writes_comp_evt_t
+ */
+    BLE_GATTC_EVENT_EXECUTE_WRITE_COMP = 0x40F5,        //!< BLE_GATTC_EVENT_RELIABLE_WRITES_COMP
+
+/**
+ *  @brief  This event notifies the application layer that an Information Request Indication has been received.
+ *
+ * ## Event Code: 0x40F6
+ *
+ *  ## result:
+ *  <dl class="retval"><dt><dd>
+ *          <table class="retval">
+ *              <tr>
+ *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+ *                  <td>Success </td>
+ *              </tr>
+ *          </table>
+ *  </dd></dt></dl>
+ *
+ *  ## Event Data:
+ *  st_ble_gattc_reliable_writes_comp_evt_t
+ */
+    BLE_GATTC_EVENT_ATT_INFO_REQ_IND = 0x40F6,          //!< BLE_GATTC_EVENT_ATT_INFO_REQ_IND
 
     /**
      *  @brief  Invalid GATT Client Event.
@@ -3003,6 +3089,42 @@ typedef enum
  * @brief  It means that the number of buffer has reached the Low Water Mark from flow on state.
  */
 #define BLE_VS_TX_FLOW_CTL_OFF          (0x01)
+
+/**
+ * @def BLE_VS_SLEEP_OFF
+ * @brief  Disable sleep mode in DA1453x
+ */
+#define BLE_VS_SLEEP_OFF                (0x00)
+
+/**
+ * @def BLE_VS_EXTENDED_SLEEP
+ * @brief  Set DA1453x in Extended Sleep mode
+ */
+#define BLE_VS_EXTENDED_SLEEP           (0x01)
+
+/**
+ * @def BLE_VS_DEEP_SLEEP
+ * @brief  Set DA1453x in Deep Sleep mode
+ */
+#define BLE_VS_DEEP_SLEEP               (0x02)
+
+/**
+ * @def BLE_VS_HIBERNATION
+ * @brief  Set DA1453x in Hibernation  mode
+ */
+#define BLE_VS_HIBERNATION              (0x03)
+
+/**
+ * @def BLE_VS_RAM_POWER_ON
+ * @brief  Set DA1453x RAM is retained in Deep/Hibernation modes
+ */
+#define BLE_VS_RAM_POWER_ON             (0x00)
+
+/**
+ * @def BLE_VS_RAM_POWER_OFF
+ * @brief  Set DA1453x is not retained in Deep/Hibernation modes
+ */
+#define BLE_VS_RAM_POWER_OFF            (0x01)
 
 /*@}*/
 
@@ -11019,6 +11141,18 @@ typedef struct BLE_PACKED_OPTION
 } st_ble_gattc_ind_evt_t;
 
 /******************************************************************************************************************//**
+ *  @struct st_ble_gattc_svc_chng_evt_t
+ *  @brief  This structure notifies that a service changed PDU has been received from a GATT Server.
+ **********************************************************************************************************************/
+typedef struct BLE_PACKED_OPTION
+{
+    /**
+     *  @brief    Client Characteristic Configuration Descriptor value.
+     */
+    uint16_t ind_cfg;
+} st_ble_gattc_svc_chng_evt_t;
+
+/******************************************************************************************************************//**
  *  @struct st_ble_gattc_rd_char_evt_t
  *  @brief  This structure notifies that read response to R_BLE_GATTC_ReadChar() or R_BLE_GATTC_ReadCharUsingUuid()
  *          has been received from a GATT Server.
@@ -11042,6 +11176,31 @@ typedef struct BLE_PACKED_OPTION
      */
     uint16_t value_hdl;
 } st_ble_gattc_wr_char_evt_t;
+
+/******************************************************************************************************************//**
+ *  @struct st_ble_gattc_att_info_req_ind_evt_t
+ *  @brief  This structure notifies that an att_info_req_ind event has arrived
+ **********************************************************************************************************************/
+typedef struct BLE_PACKED_OPTION
+{
+    /**
+     *  @brief   Value Handle of the Characteristic/Characteristic Descriptor that information is required.
+     */
+    uint16_t value_hdl;
+} st_ble_gattc_att_info_req_ind_evt_t;
+
+/******************************************************************************************************************//**
+ *  @struct st_ble_gattc_wr_char_without_rsp_evt_t
+ *  @brief  This structure notifies that write response to R_BLE_GATTC_WriteCharWithoutRsp()
+ *  has been received from a GATT Server.
+ **********************************************************************************************************************/
+typedef struct BLE_PACKED_OPTION
+{
+    /**
+     *  @brief   Value Handle of the Characteristic/Characteristic Descriptor that has been written.
+     */
+    uint16_t value_hdl;
+} st_ble_gattc_wr_char_without_rsp_evt_t;
 
 /******************************************************************************************************************//**
  *  @struct st_ble_gattc_rd_multi_char_evt_t
@@ -11099,6 +11258,8 @@ typedef struct BLE_PACKED_OPTION
 
 /* RBLE GATT Client Command Parameters */
 
+#ifndef BSP_OVERRIDE_BLE_GATTC_RD_MULTI_REQ_PARAM_T
+
 /******************************************************************************************************************//**
  *  @struct st_ble_gattc_rd_multi_req_param_t
  *  @brief  This is used in R_BLE_GATTC_ReadMultiChar() to specify multiple Characteristics to be read.
@@ -11111,10 +11272,16 @@ typedef struct BLE_PACKED_OPTION
     uint16_t * p_hdl_list;
 
     /**
+     *  @brief   List of Value Length that point the Characteristics to be read.
+     */
+    uint16_t * p_len_list;
+
+    /**
      *  @brief   The number of Value Handles included in the hdl_list parameter.
      */
     uint16_t list_count;
 } st_ble_gattc_rd_multi_req_param_t;
+#endif
 
 /******************************************************************************************************************//**
  *  @struct st_ble_gattc_evt_data_t
@@ -15721,6 +15888,43 @@ ble_status_t R_BLE_VS_RestartModule(void);
  * @retval    BLE_ERR_UNSUPPORTED  This API does not support
  **********************************************************************************************************************/
 ble_status_t R_BLE_VS_UpdateModuleFirmware(uint8_t const * const p_firmware_image, uint32_t firmware_image_size);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_SetSleepMode(void)
+ * @brief   This function puts the DA1453x in any of the three sleep modes.
+ * @details When DA1453x goes into sleep deasserts its RTS. If RA CPU wishes to wake it up, it should toggle its RTS for
+ *          5 milliseconds (assert-deassert-assert). When DA1453x exits sleep it asserts its RTS, the RA CTS should
+ *          be able to catch this by setting the flow control mode to Hardware CTS.
+ * @param[in] sleep_mode
+ *        | macro                       |   description     |
+ *        |:----------------------------|:------------------|
+ *        | BLE_VS_SLEEP_OFF(0x00)      | Always active     |
+ *        | BLE_VS_EXTENDED_SLEEP(0x01) | Extended Sleep    |
+ *        | BLE_VS_DEEP_SLEEP(0x02)     | Deep Sleep        |
+ *        | BLE_VS_HIBERNATION(0x03)    | Hibernation mode  |
+ * @param[in] ram_retention, used only for deep sleep/hibernation modes
+ *        | macro                       |   description     |
+ *        |:----------------------------|:------------------|
+ *        | BLE_VS_RAM_POWER_ON(0x00)   | RAM retained      |
+ *        | BLE_VS_RAM_POWER_OFF(0x01)  | RAM not retained  |
+ * @param[in] pin_selection  0-11  for port 0(P00..P011). Used only for deep sleep/hibernation modes
+ * @retval    BLE_SUCCESS(0x0000)  Success
+ * @retval    BLE_ERR_RSP_TIMEOUT  A command did not receive a response
+ * @retval    BLE_ERR_INVALID_ARG  An input parameter was invalid
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_SetSleepMode(uint8_t sleep_mode, uint8_t ram_retention, uint8_t pin_selection);
+
+/******************************************************************************************************************//**
+ * @fn ble_status_t R_BLE_VS_SetPublicBdAddress(void)
+ * @brief   This function sets a public BD address
+ * @param[in] p_addr The BD address
+ * @retval    BLE_SUCCESS(0x0000)  Success
+ * @retval    BLE_ERR_INVALID_ARG  An input parameter was invalid
+ * @retval    BLE_ERR_RSP_TIMEOUT  A command did not receive a response
+ * @retval    BLE_ERR_INVALID_MODE A command was sent from an invalid mode
+ * @retval    BLE_ERR_UNSUPPORTED  This API does not support
+ **********************************************************************************************************************/
+ble_status_t R_BLE_VS_SetPublicBdAddress(st_ble_dev_addr_t * p_addr);
 
 /*@}*/
 

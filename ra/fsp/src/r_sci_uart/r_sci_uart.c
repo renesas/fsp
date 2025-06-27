@@ -273,6 +273,8 @@ const uart_api_t g_uart_on_sci =
     .communicationAbort = R_SCI_UART_Abort,
     .callbackSet        = R_SCI_UART_CallbackSet,
     .readStop           = R_SCI_UART_ReadStop,
+    .receiveSuspend     = R_SCI_UART_ReceiveSuspend,
+    .receiveResume      = R_SCI_UART_ReceiveResume,
 };
 
 /*******************************************************************************************************************//**
@@ -721,7 +723,7 @@ fsp_err_t R_SCI_UART_Write (uart_ctrl_t * const p_api_ctrl, uint8_t const * cons
  **********************************************************************************************************************/
 fsp_err_t R_SCI_UART_CallbackSet (uart_ctrl_t * const          p_api_ctrl,
                                   void (                     * p_callback)(uart_callback_args_t *),
-                                  void const * const           p_context,
+                                  void * const                 p_context,
                                   uart_callback_args_t * const p_callback_memory)
 {
     sci_uart_instance_ctrl_t * p_ctrl = (sci_uart_instance_ctrl_t *) p_api_ctrl;
@@ -1037,8 +1039,8 @@ fsp_err_t R_SCI_UART_BaudCalculate (uint32_t               baudrate,
     {
         for (uint32_t i = 0U; i < SCI_UART_NUM_DIVISORS_ASYNC; i++)
         {
-            /* if select_16_base_clk_cycles == true:  Skip this calculation for divisors that are not acheivable with 16 base clk cycles per bit.
-             *  if select_16_base_clk_cycles == false: Skip this calculation for divisors that are only acheivable without 16 base clk cycles per bit.
+            /* if select_16_base_clk_cycles == true:  Skip this calculation for divisors that are not achievable with 16 base clk cycles per bit.
+             *  if select_16_base_clk_cycles == false: Skip this calculation for divisors that are only achievable without 16 base clk cycles per bit.
              */
             if (((uint8_t) select_16_base_clk_cycles) ^ (g_async_baud[i].abcs | g_async_baud[i].abcse))
             {
@@ -1140,6 +1142,30 @@ fsp_err_t R_SCI_UART_BaudCalculate (uint32_t               baudrate,
     FSP_ERROR_RETURN((hit_bit_err <= (int32_t) baud_rate_error_x_1000), FSP_ERR_INVALID_ARGUMENT);
 
     return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Suspend Reception
+ *
+ * @retval     FSP_ERR_UNSUPPORTED       Functionality not supported by this driver instance
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_UART_ReceiveSuspend (uart_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Resume Reception
+ *
+ * @retval     FSP_ERR_UNSUPPORTED       Functionality not supported by this driver instance
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_UART_ReceiveResume (uart_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**

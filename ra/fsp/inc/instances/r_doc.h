@@ -34,7 +34,7 @@ typedef struct st_doc_instance_ctrl
     /* Pointer to callback and optional working memory */
     void (* p_callback)(doc_callback_args_t *);
     doc_callback_args_t * p_callback_memory;
-    void const          * p_context;   ///< User defined context passed into callback function
+    void                * p_context;   ///< User defined context passed into callback function
 } doc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -56,7 +56,7 @@ fsp_err_t R_DOC_Read(doc_ctrl_t * const p_api_ctrl, uint32_t * p_result);
 fsp_err_t R_DOC_Write(doc_ctrl_t * const p_api_ctrl, uint32_t data);
 fsp_err_t R_DOC_CallbackSet(doc_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(doc_callback_args_t *),
-                            void const * const          p_context,
+                            void * const                p_context,
                             doc_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

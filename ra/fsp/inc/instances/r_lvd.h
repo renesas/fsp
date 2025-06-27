@@ -40,7 +40,7 @@ typedef struct st_lvd_instance_ctrl
     lvd_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } lvd_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -62,7 +62,7 @@ fsp_err_t R_LVD_StatusGet(lvd_ctrl_t * const p_api_ctrl, lvd_status_t * p_lvd_st
 fsp_err_t R_LVD_StatusClear(lvd_ctrl_t * const p_api_ctrl);
 fsp_err_t R_LVD_CallbackSet(lvd_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(lvd_callback_args_t *),
-                            void const * const          p_context,
+                            void * const                p_context,
                             lvd_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

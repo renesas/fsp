@@ -29,7 +29,7 @@
 #include "r_flash_api.h"
 #include "lfs.h"
 
-/* Common macro for SSP header files. There is also a corresponding SSP_FOOTER macro at the end of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
 /**********************************************************************************************************************

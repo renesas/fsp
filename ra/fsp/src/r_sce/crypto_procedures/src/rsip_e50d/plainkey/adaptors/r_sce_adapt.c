@@ -180,6 +180,17 @@ fsp_err_t HW_SCE_Aes128EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMo
     return HW_SCE_Aes128EncryptDecryptInitSub(InData_KeyMode, InData_Cmd, InData_KeyIndex, InData_IV);
 }
 
+fsp_err_t HW_SCE_Aes192EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMode[],
+                                                     const uint32_t InData_Cmd[],
+                                                     const uint32_t InData_KeyIndex[],
+                                                     const uint32_t InData_Key[],
+                                                     const uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Aes192EncryptDecryptInitSub(InData_Cmd, InData_KeyIndex, InData_IV);
+}
+
 fsp_err_t HW_SCE_Aes256EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMode[],
                                               const uint32_t InData_Cmd[],
                                               const uint32_t InData_KeyIndex[],
@@ -544,33 +555,50 @@ fsp_err_t HW_SCE_EcdsaP521SignatureGenerateSubAdaptor(const uint32_t InData_Curv
     return (HW_SCE_EcdsaP521SignatureGenerateSub(InData_KeyIndex, InData_MsgDgst, InData_DomainParam, OutData_Signature));
 }
 
-fsp_err_t HW_SCE_EcdsaSignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
-                                                  const uint32_t InData_Cmd[],
-                                                  const uint32_t InData_KeyIndex[],
-                                                  const uint32_t InData_MsgDgst[],
-                                                  const uint32_t InData_Signature[],
-                                                  const uint32_t InData_DomainParam[])
+fsp_err_t HW_SCE_EcdsaSignatureVerificationSubAdaptor (const uint32_t InData_CurveType[],
+                                                       const uint32_t InData_Cmd[],
+                                                       const uint32_t InData_KeyIndex[],
+                                                       const uint32_t InData_Key[],
+                                                       const uint32_t InData_MsgDgst[],
+                                                       const uint32_t InData_Signature[],
+                                                       const uint32_t InData_DomainParam[])
 {
-    return (HW_SCE_EcdsaSignatureVerificationSub(InData_CurveType, InData_Cmd, InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_EcdsaSignatureVerificationSub(InData_CurveType,
+                                                InData_Cmd,
+                                                InData_KeyIndex,
+                                                InData_MsgDgst,
+                                                InData_Signature,
+                                                InData_DomainParam);
+}
+fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSubAdaptor (const uint32_t InData_CurveType[],
+                                                           const uint32_t InData_KeyIndex[],
+                                                           const uint32_t InData_Key[],
+                                                           const uint32_t InData_MsgDgst[],
+                                                           const uint32_t InData_Signature[],
+                                                           const uint32_t InData_DomainParam[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_EcdsaP384SignatureVerificationSub(InData_CurveType,
+                                                    InData_KeyIndex,
+                                                    InData_MsgDgst,
+                                                    InData_Signature,
+                                                    InData_DomainParam);
 }
 
-fsp_err_t HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
-                                                          const uint32_t InData_KeyIndex[],
-                                                          const uint32_t InData_MsgDgst[],
-                                                          const uint32_t InData_Signature[],
-                                                          const uint32_t InData_DomainParam[])
-{
-    return (HW_SCE_EcdsaP384SignatureVerificationSub(InData_CurveType, InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
-}
-
-fsp_err_t HW_SCE_EcdsaP521SignatureVerificationSubAdaptor(const uint32_t InData_CurveType[],
-                                                          const uint32_t InData_KeyIndex[],
-                                                          const uint32_t InData_MsgDgst[],
-                                                          const uint32_t InData_Signature[],
-                                                          const uint32_t InData_DomainParam[])
+fsp_err_t HW_SCE_EcdsaP521SignatureVerificationSubAdaptor (const uint32_t InData_CurveType[],
+                                                           const uint32_t InData_KeyIndex[],
+                                                           const uint32_t InData_Key[],
+                                                           const uint32_t InData_MsgDgst[],
+                                                           const uint32_t InData_Signature[],
+                                                           const uint32_t InData_DomainParam[])
 {
     FSP_PARAMETER_NOT_USED(InData_CurveType);
-    return (HW_SCE_EcdsaP521SignatureVerificationSub(InData_KeyIndex, InData_MsgDgst, InData_Signature, InData_DomainParam));
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_EcdsaP521SignatureVerificationSub(InData_KeyIndex,
+                                                    InData_MsgDgst,
+                                                    InData_Signature,
+                                                    InData_DomainParam);
 }
 
 fsp_err_t HW_SCE_GenerateEccRandomKeyIndexSubAdaptor(const uint32_t *InData_CurveType,
@@ -618,29 +646,221 @@ fsp_err_t HW_SCE_GenerateRsa2048RandomKeyIndexSub(uint32_t MAX_CNT,
     return (HW_SCE_RSA2048_KeyPairGenerateSub(MAX_CNT, OutData_PubKeyIndex, OutData_PrivKeyIndex));
 }
 
-fsp_err_t HW_SCE_Aes128OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+fsp_err_t HW_SCE_Aes128OutputKeyForDotfSubAdaptor (const uint32_t InData_Cmd[], uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
 {
     uint32_t indata_key_mode[1] = {0};
-    uint32_t indata_cmd[1]      = {0};
     uint32_t indata_key[4]      = {0};
 
-    return HW_SCE_Aes128OutputKeyForDotfSub(indata_key_mode, indata_cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
+    return HW_SCE_Aes128OutputKeyForDotfSub(indata_key_mode, InData_Cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
 }
 
-fsp_err_t HW_SCE_Aes192OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+fsp_err_t HW_SCE_Aes192OutputKeyForDotfSubAdaptor (const uint32_t InData_Cmd[], uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
 {
     uint32_t indata_key_mode[1] = {0};
-    uint32_t indata_cmd[1]      = {0};
     uint32_t indata_key[8]      = {0};
 
-    return HW_SCE_Aes192OutputKeyForDotfSub(indata_key_mode, indata_cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
+    return HW_SCE_Aes192OutputKeyForDotfSub(indata_key_mode, InData_Cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
 }
 
-fsp_err_t HW_SCE_Aes256OutputKeyForDotfSubAdaptor (uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
+fsp_err_t HW_SCE_Aes256OutputKeyForDotfSubAdaptor (const uint32_t InData_Cmd[], uint32_t InData_KeyIndex[], uint32_t InData_DOTFSEED[])
 {
     uint32_t indata_key_mode[1] = {0};
-    uint32_t indata_cmd[1]      = {0};
     uint32_t indata_key[8]      = {0};
 
-    return HW_SCE_Aes256OutputKeyForDotfSub(indata_key_mode, indata_cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
+    return HW_SCE_Aes256OutputKeyForDotfSub(indata_key_mode, InData_Cmd, InData_KeyIndex, indata_key, InData_DOTFSEED);
 }
+
+fsp_err_t HW_SCE_ShaGenerateMessageDigestSubGeneral(const uint32_t InData_HashType[],
+                                                    const uint32_t InData_Cmd[],
+                                                    const uint32_t InData_Msg[],
+                                                    const uint32_t InData_MsgLen[],
+                                                    const uint32_t InData_State[],
+                                                    uint32_t OutData_MsgDigest[],
+                                                    uint32_t OutData_State[],
+                                                    const uint32_t MAX_CNT,
+                                                    const uint32_t InData_InitVal[])
+{
+    FSP_PARAMETER_NOT_USED(InData_InitVal);
+    switch (InData_Cmd[0])
+    {
+    case SCE_OEM_CMD_HASH_ONESHOT:
+        if (FSP_SUCCESS != HW_SCE_ShaGenerateMessageDigestInitSub(InData_HashType, InData_MsgLen))
+        {
+            return FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+        return (HW_SCE_ShaGenerateMessageDigestFinalSub(InData_Msg, OutData_MsgDigest, MAX_CNT));
+        break;
+    case SCE_OEM_CMD_HASH_INIT_TO_SUSPEND:
+        if (FSP_SUCCESS != HW_SCE_ShaGenerateMessageDigestInitSub(InData_HashType, InData_MsgLen))
+        {
+            return FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+        if (FSP_SUCCESS != HW_SCE_ShaGenerateMessageDigestUpdateSub(InData_Msg, MAX_CNT))
+        {
+            return FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+        return (HW_SCE_ShaGenerateMessageDigestSuspendSub(OutData_State));
+        break;
+    case SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND:
+        if (FSP_SUCCESS != HW_SCE_ShaGenerateMessageDigestResumeSub(InData_HashType, InData_State))
+        {
+            return FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+        if (FSP_SUCCESS != HW_SCE_ShaGenerateMessageDigestUpdateSub(InData_Msg, MAX_CNT))
+        {
+            return FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+        return (HW_SCE_ShaGenerateMessageDigestSuspendSub(OutData_State));
+        break;
+    case SCE_OEM_CMD_HASH_RESUME_TO_FINAL:
+        if (FSP_SUCCESS != HW_SCE_ShaGenerateMessageDigestResumeSub(InData_HashType, InData_State))
+        {
+            return FSP_ERR_CRYPTO_RSIP_FAIL;
+        }
+        return (HW_SCE_ShaGenerateMessageDigestFinalSub(InData_Msg, OutData_MsgDigest, MAX_CNT));
+        break;
+    default:
+        return FSP_ERR_CRYPTO_RSIP_FAIL;
+        break;
+    }
+}
+
+fsp_err_t HW_SCE_Sha3GenerateMessageDigestSubAdaptor (const uint32_t InData_HashType[],
+    const uint32_t InData_Cmd[],
+    const uint32_t InData_Msg[], 
+    const uint32_t InData_MsgLen[], 
+    const uint32_t InData_State[], 
+    uint32_t OutData_MsgDigest[], 
+    uint32_t OutData_State[], 
+    const uint32_t MAX_CNT)
+{
+    switch (InData_Cmd[0])
+    {
+        case SCE_OEM_CMD_HASH_ONESHOT:
+            if (FSP_SUCCESS != HW_SCE_Sha3GenerateMessageDigestInitSub (InData_HashType, InData_MsgLen))
+            {
+                return FSP_ERR_CRYPTO_RSIP_FAIL;
+            }
+            return (HW_SCE_Sha3GenerateMessageDigestFinalSub (InData_Msg, OutData_MsgDigest, MAX_CNT));
+            break;
+        case SCE_OEM_CMD_HASH_INIT_TO_SUSPEND:
+            if (FSP_SUCCESS != HW_SCE_Sha3GenerateMessageDigestInitSub(InData_HashType, InData_MsgLen))
+            {
+                return FSP_ERR_CRYPTO_RSIP_FAIL;
+            }
+            if (FSP_SUCCESS != HW_SCE_Sha3GenerateMessageDigestUpdateSub(InData_Msg, MAX_CNT))
+            {
+                return FSP_ERR_CRYPTO_RSIP_FAIL;
+            }
+            return (HW_SCE_Sha3GenerateMessageDigestSuspendSub (OutData_State));
+            break;
+        case SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND:
+            if (FSP_SUCCESS != HW_SCE_Sha3GenerateMessageDigestResumeSub (InData_HashType, InData_State))
+            {
+                return FSP_ERR_CRYPTO_RSIP_FAIL;
+            }
+            if (FSP_SUCCESS != HW_SCE_Sha3GenerateMessageDigestUpdateSub(InData_Msg, MAX_CNT))
+            {
+                return FSP_ERR_CRYPTO_RSIP_FAIL;
+            }
+            return (HW_SCE_Sha3GenerateMessageDigestSuspendSub(OutData_State));
+            break;
+        case SCE_OEM_CMD_HASH_RESUME_TO_FINAL:
+            if (FSP_SUCCESS != HW_SCE_Sha3GenerateMessageDigestResumeSub(InData_HashType, InData_State))
+            {
+                return FSP_ERR_CRYPTO_RSIP_FAIL;
+            }
+            return (HW_SCE_Sha3GenerateMessageDigestFinalSub(InData_Msg, OutData_MsgDigest, MAX_CNT));
+            break;
+        default:
+            return FSP_ERR_CRYPTO_RSIP_FAIL;
+            break;
+    }
+}
+
+fsp_err_t HW_SCE_GenerateRsa3072RandomKeyIndexSub(const uint32_t InData_KeyMode[],
+                                                  const uint32_t MAX_CNT,
+                                                  uint32_t OutData_PubKeyIndex[],
+                                                  uint32_t OutData_PubKey[],
+                                                  uint32_t OutData_PrivKeyIndex[],
+                                                  uint32_t OutData_PrivKey[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(OutData_PubKey);
+    FSP_PARAMETER_NOT_USED(OutData_PrivKey);
+    return HW_SCE_RSA3072_KeyPairGenerateSub(MAX_CNT, OutData_PubKeyIndex, OutData_PrivKeyIndex);
+}
+
+fsp_err_t HW_SCE_GenerateEccP521RandomKeyIndexSubAdaptor (const uint32_t InData_KeyMode[],
+                                                          const uint32_t InData_DomainParam[],
+                                                          uint32_t       OutData_PubKey[],
+                                                          uint32_t       OutData_PrivKeyIndex[],
+                                                          uint32_t       OutData_PrivKey[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(OutData_PrivKey);
+    return HW_SCE_GenerateEccP521RandomKeyIndexSub(InData_DomainParam,
+                                                   OutData_PubKey,
+                                                   OutData_PrivKeyIndex);
+}
+
+fsp_err_t HW_SCE_Rsa2048ModularExponentDecryptSubAdaptor(const uint32_t InData_KeyMode[],
+                                                         const uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa2048ModularExponentDecryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
+fsp_err_t HW_SCE_Rsa3072ModularExponentDecryptSubAdaptor (const uint32_t InData_KeyMode[],
+                                                          const uint32_t InData_KeyIndex[],
+                                                          const uint32_t InData_Key[],
+                                                          const uint32_t InData_Text[],
+                                                          uint32_t       OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa3072ModularExponentDecryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
+fsp_err_t HW_SCE_Rsa4096ModularExponentDecryptSubAdaptor (const uint32_t InData_KeyMode[],
+                                                          const uint32_t InData_KeyIndex[],
+                                                          const uint32_t InData_Key[],
+                                                          const uint32_t InData_Text[],
+                                                          uint32_t       OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa4096ModularExponentDecryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
+fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa2048ModularExponentEncryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
+fsp_err_t HW_SCE_Rsa3072ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa3072ModularExponentEncryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
+fsp_err_t HW_SCE_Rsa4096ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa4096ModularExponentEncryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+

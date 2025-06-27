@@ -34,7 +34,7 @@ FSP_HEADER
 /** Max number of transfers per block in TRANSFER_MODE_BLOCK */
 #define DMAC_MAX_BLOCK_TRANSFER_LENGTH     (0x400)
 
-/** Max configurable number of repeats to trasnfer in TRANSFER_MODE_REPEAT */
+/** Max configurable number of repeats to transfer in TRANSFER_MODE_REPEAT */
 #define DMAC_MAX_REPEAT_COUNT              (0x10000)
 
 /** Max configurable number of blocks to transfer in TRANSFER_MODE_BLOCK */
@@ -58,7 +58,7 @@ typedef struct st_dmac_instance_ctrl
 
     void (* p_callback)(dmac_callback_args_t *); // Pointer to callback
     dmac_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
-    void const           * p_context;            // Pointer to context to be passed into callback function
+    void                 * p_context;            // Pointer to context to be passed into callback function
 } dmac_instance_ctrl_t;
 
 /** DMAC transfer configuration extension. This extension is required. */
@@ -82,7 +82,7 @@ typedef struct st_dmac_extended_cfg
     dmac_callback_args_t * p_callback_memory;
 
     /** Placeholder for user data.  Passed to the user p_callback in ::transfer_callback_args_t. */
-    void const * p_context;
+    void * p_context;
 } dmac_extended_cfg_t;
 
 /**********************************************************************************************************************
@@ -122,7 +122,7 @@ fsp_err_t R_DMAC_BlockReset(transfer_ctrl_t * const p_ctrl,
                             uint16_t const          num_transfers);
 fsp_err_t R_DMAC_CallbackSet(transfer_ctrl_t * const      p_api_ctrl,
                              void (                     * p_callback)(dmac_callback_args_t *),
-                             void const * const           p_context,
+                             void * const                 p_context,
                              dmac_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

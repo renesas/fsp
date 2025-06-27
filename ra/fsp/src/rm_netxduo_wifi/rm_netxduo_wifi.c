@@ -1062,7 +1062,7 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
                 rm_wifi_onchip_silex_socket_disconnect(nx_driver_sockets[i].socket_id);
 
                 /* Reset socket to free this entry.  */
-                nx_driver_sockets[i].socket_ptr  = NX_NULL;
+                nx_driver_sockets[i].socket_ptr = NX_NULL;
 
                 return NX_NOT_SUCCESSFUL;
             }
@@ -1076,7 +1076,7 @@ static UINT _nx_driver_tcpip_handler (struct NX_IP_STRUCT        * ip_ptr,
                 rm_wifi_onchip_silex_socket_disconnect(nx_driver_sockets[i].socket_id);
 
                 /* Reset socket to free this entry.  */
-                nx_driver_sockets[i].socket_ptr  = NX_NULL;
+                nx_driver_sockets[i].socket_ptr = NX_NULL;
 
                 return NX_NOT_SUCCESSFUL;
             }

@@ -48,12 +48,10 @@ typedef enum e_rm_zmod4xxx_lib_type
     RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_LOW_POWER,
     RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN,
     RM_ZMOD4410_LIB_TYPE_IAQ_2ND_GEN_ULP,
-    RM_ZMOD4410_LIB_TYPE_ODOR,
     RM_ZMOD4410_LIB_TYPE_SULFUR_ODOR,
     RM_ZMOD4410_LIB_TYPE_REL_IAQ,
     RM_ZMOD4410_LIB_TYPE_REL_IAQ_ULP,
     RM_ZMOD4410_LIB_TYPE_PBAQ,
-    RM_ZMOD4510_LIB_TYPE_OAQ_1ST_GEN,
     RM_ZMOD4510_LIB_TYPE_OAQ_2ND_GEN,
     RM_ZMOD4510_LIB_TYPE_NO2_O3,
     RM_ZMOD4450_LIB_TYPE_RAQ,
@@ -115,7 +113,7 @@ typedef struct st_rm_zmod4xxx_instance_ctrl
     void const             * p_zmod4510_device;                      ///< Pointer of ZMOD4510 device
     rm_zmod4xxx_raw_data_t * p_zmod4510_raw_data;                    ///< Raw data of ZMOD4510 device for calculating compensation data
     void const             * p_irq_instance;                         ///< Pointer to IRQ instance.
-    void const             * p_context;                              ///< Pointer to the user-provided context
+    void * p_context;                                                ///< Pointer to the user-provided context
 
     /* Pointer to callback and optional working memory */
     void (* p_comms_callback)(rm_zmod4xxx_callback_args_t * p_args); ///< I2C Communications callback
@@ -151,15 +149,9 @@ fsp_err_t RM_ZMOD4XXX_Iaq1stGenDataCalculate(rm_zmod4xxx_ctrl_t * const         
 fsp_err_t RM_ZMOD4XXX_Iaq2ndGenDataCalculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                              rm_zmod4xxx_iaq_2nd_data_t * const p_zmod4xxx_data);
-fsp_err_t RM_ZMOD4XXX_OdorDataCalculate(rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
-                                        rm_zmod4xxx_raw_data_t * const  p_raw_data,
-                                        rm_zmod4xxx_odor_data_t * const p_zmod4xxx_data);
 fsp_err_t RM_ZMOD4XXX_SulfurOdorDataCalculate(rm_zmod4xxx_ctrl_t * const             p_api_ctrl,
                                               rm_zmod4xxx_raw_data_t * const         p_raw_data,
                                               rm_zmod4xxx_sulfur_odor_data_t * const p_zmod4xxx_data);
-fsp_err_t RM_ZMOD4XXX_Oaq1stGenDataCalculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                             rm_zmod4xxx_raw_data_t * const     p_raw_data,
-                                             rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data);
 fsp_err_t RM_ZMOD4XXX_Oaq2ndGenDataCalculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                              rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data);

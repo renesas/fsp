@@ -50,7 +50,7 @@ typedef struct st_usb_typec_instance_ctrl
     void (* p_callback)(usb_typec_callback_args_t *);
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 
     /* Variable to store the interrupt number. */
     IRQn_Type irq_typec_cci;           ///< USBCC_CCI interrupt number storage variable.
@@ -80,7 +80,7 @@ fsp_err_t R_USB_TYPEC_Close(usb_typec_ctrl_t * const p_ctrl);
 
 fsp_err_t R_USB_TYPEC_InfoGet(usb_typec_ctrl_t * const p_ctrl, usb_typec_info_t * p_info);
 
-fsp_err_t R_USB_TYPEC_LowPowerModeSet (usb_typec_ctrl_t * const p_ctrl, usb_typec_ccs_status_t status);
+fsp_err_t R_USB_TYPEC_LowPowerModeSet(usb_typec_ctrl_t * const p_ctrl, usb_typec_ccs_status_t status);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup USB_TYPEC)

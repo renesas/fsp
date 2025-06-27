@@ -39,6 +39,8 @@ extern "C" {
 
   #define USB_NUM_USBIP                         (2U)
 
+  #define USB_USBMCLK_HZ                        BSP_CFG_XTAL_HZ
+
  #endif
 
  #if (BSP_FEATURE_USB_HAS_USBFS == 1) && (BSP_FEATURE_USB_HAS_USBHS == 0)
@@ -337,6 +339,10 @@ extern "C" {
  #define USB_ISO_PIPE_END                       (2U)
  #define USB_MAXPIPE_ISO                        (2U)
 
+/*Max position pipe for USB class */
+ #define USB_MAX_PIPE_POS_PERI                  (18U)
+ #define USB_MAX_PIPE_POS_HOST                  (24U)
+
 /* SPEED mode */
  #define USB_HS_DISABLE                         ((uint16_t) 0U)
  #define USB_HS_ENABLE                          ((uint16_t) 1U)
@@ -373,6 +379,11 @@ extern "C" {
  #define USB_CFG_OTHER                          (2)
  #define USB_CFG_12MHZ                          (3)
  #define USB_CFG_48MHZ                          (4)
+
+ #define USB_CLK_24MHZ                          (24000000)
+ #define USB_CLK_20MHZ                          (20000000)
+ #define USB_CLK_12MHZ                          (12000000)
+ #define USB_CLK_48MHZ                          (48000000)
 
 /* Channel Number */
  #define USB_CFG_CH0                            (0U)

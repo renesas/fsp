@@ -235,7 +235,7 @@ fsp_err_t R_CAC_Read (cac_ctrl_t * const p_ctrl, uint32_t * const p_counter)
  **********************************************************************************************************************/
 fsp_err_t R_CAC_CallbackSet (cac_ctrl_t * const          p_ctrl,
                              void (                    * p_callback)(cac_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              cac_callback_args_t * const p_callback_memory)
 {
     cac_instance_ctrl_t * p_instance_ctrl = (cac_instance_ctrl_t *) p_ctrl;
@@ -459,7 +459,7 @@ static void r_cac_isr_handler (cac_event_t event, uint32_t clear_mask)
 
     /* Depending on MPU and cache settings, the register may need to be read back to ensure the write happens before
      * clearing the IRQ in the ICU. */
-    R_CAC->CAICR;
+    FSP_REGISTER_READ(R_CAC->CAICR);
 
     R_BSP_IrqStatusClear(irq);
 }

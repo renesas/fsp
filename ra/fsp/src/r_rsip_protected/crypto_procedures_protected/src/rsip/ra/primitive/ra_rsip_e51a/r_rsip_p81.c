@@ -73,6 +73,7 @@ rsip_ret_t r_rsip_p81 (void)
         if (CHCK_STS(REG_142CH, 13, 0))
         {
             WR1_PROG(REG_14BCH, 0x00000020U);
+
             return RSIP_RET_FAIL;
         }
         else
@@ -89,4 +90,3 @@ rsip_ret_t r_rsip_p81 (void)
         }
     }
 }
-

@@ -371,7 +371,7 @@ typedef struct st_ctsu_instance_ctrl
     uint8_t                interrupt_reverse_flag; ///< Flag in which read interrupt and end interrupt are reversed.
     ctsu_event_t           error_status;           ///< error status variable to send to QE for serial tuning.
     ctsu_callback_args_t * p_callback_memory;      ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
-    void const           * p_context;              ///< Placeholder for user data.
+    void                 * p_context;              ///< Placeholder for user data.
     bool     serial_tuning_enable;                 ///< Flag of serial tuning status.
     uint16_t serial_tuning_mutual_cnt;             ///< Word index into ctsuwr register array.
     uint16_t tuning_self_target_value;             ///< Target self value for initial offset tuning.
@@ -401,7 +401,7 @@ fsp_err_t R_CTSU_AutoJudgementDataGet(ctsu_ctrl_t * const p_ctrl, uint64_t * p_b
 fsp_err_t R_CTSU_ScanStop(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_CallbackSet(ctsu_ctrl_t * const          p_api_ctrl,
                              void (                     * p_callback)(ctsu_callback_args_t *),
-                             void const * const           p_context,
+                             void * const                 p_context,
                              ctsu_callback_args_t * const p_callback_memory);
 fsp_err_t R_CTSU_Diagnosis(ctsu_ctrl_t * const p_ctrl);
 fsp_err_t R_CTSU_Close(ctsu_ctrl_t * const p_ctrl);

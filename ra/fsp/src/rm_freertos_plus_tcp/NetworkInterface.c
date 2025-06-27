@@ -236,7 +236,7 @@ void vEtherISRCallback (ether_callback_args_t * p_args) {
 
     /* If EDMAC FR (Frame Receive Event) or FDE (Receive Descriptor Empty Event)
      * interrupt occurs, wake up xRxHanderTask. */
-    if (p_args->event & ETHER_EVENT_RX_COMPLETE || p_args->event & ETHER_EVENT_RX_MESSAGE_LOST)
+    if ((p_args->event == ETHER_EVENT_RX_COMPLETE) || (p_args->event == ETHER_EVENT_RX_MESSAGE_LOST))
     {
         if (xRxHanderTaskHandle != NULL)
         {
@@ -248,6 +248,16 @@ void vEtherISRCallback (ether_callback_args_t * p_args) {
          * priority task.  The macro used for this purpose is dependent on the port in
          * use and may be called portEND_SWITCHING_ISR(). */
         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+    }
+    else if (p_args->event == ETHER_EVENT_GET_NIC_INFO)
+    {
+#if (ipconfigIPv4_BACKWARD_COMPATIBLE == 1) && (ipconfigUSE_IPv4 != 0)
+        FreeRTOS_UpdateMACAddress(p_args->p_nic_info->p_mac_address);
+#endif
+    }
+    else
+    {
+        /* Do nothing. */
     }
 }
 
@@ -420,7 +430,7 @@ __attribute__((weak)) BaseType_t xApplicationGetRandomNumber (uint32_t * pulNumb
 {
     /* example of a 32-bit random number generator.
      * rand() in returns a 16-bit number. so create 32 bit Random number using 16 bit rand().
-     * In this case just a psuedo random number is used so THIS IS NOT RECOMMENDED FOR PRODUCTION SYSTEMS.
+     * In this case just a pseudo random number is used so THIS IS NOT RECOMMENDED FOR PRODUCTION SYSTEMS.
      */
     uint32_t ulRandomValue = 0;
 
@@ -439,7 +449,7 @@ BSP_WEAK_REFERENCE uint32_t ulApplicationGetNextSequenceNumber (uint32_t ulSourc
 {
     /*
      * Callback that provides the inputs necessary to generate a randomized TCP
-     * Initial Sequence Number per RFC 6528.  In this case just a psuedo random
+     * Initial Sequence Number per RFC 6528.  In this case just a pseudo random
      * number is used so THIS IS NOT RECOMMENDED FOR PRODUCTION SYSTEMS.
      */
     FSP_PARAMETER_NOT_USED(ulSourceAddress);

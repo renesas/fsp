@@ -70,9 +70,9 @@ typedef struct st_sau_lin_instance_ctrl
     lin_cfg_t const * p_cfg;                    // Pointer to the configuration structure
     uint32_t          open;                     // Used to determine if the channel is configured
     void (* p_callback)(lin_callback_args_t *); // Pointer to callback
-    void const        * p_context;              // Pointer to context to be passed into callback function
-    uint8_t           * p_information;          // Information frame buffer pointer (used for both transmission and reception)
-    uint8_t             rx_bytes_expected;      // Tracks number of frame bytes expected in the transfer (including checksum)
+    void              * p_context;              // Pointer to context to be passed into callback function
+    uint8_t           * p_data;                 // Data frame buffer pointer (used for both transmission and reception)
+    uint8_t             count;                  // Tracks number of data bytes expected in the transfer (used for both transmission and reception).
     lin_checksum_type_t checksum_type;          // Checksum type to use for checksum generation
     uint8_t             checksum;               // Transmission: stores the computed checksum for transmitted data. Reception: upon receiving the checksum byte, stores the received checksum.
     uint8_t             validate_checksum;      // Indicates whether checksum should be validated by driver
@@ -98,15 +98,17 @@ extern lin_api_t const g_lin_on_sau_lin;
  * Public APIs
  **********************************************************************************************************************/
 fsp_err_t R_SAU_LIN_Open(lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const p_cfg);
-fsp_err_t R_SAU_LIN_StartFrameWrite(lin_ctrl_t * const p_api_ctrl, uint8_t const id);
+fsp_err_t R_SAU_LIN_Write(lin_ctrl_t * const p_api_ctrl, const lin_transfer_params_t * const p_transfer_params);
+fsp_err_t R_SAU_LIN_StartFrameWrite(lin_ctrl_t * const p_api_ctrl, uint8_t const id);             // [DEPRECATED]
 fsp_err_t R_SAU_LIN_InformationFrameWrite(lin_ctrl_t * const                  p_api_ctrl,
-                                          const lin_transfer_params_t * const p_transfer_params);
+                                          const lin_transfer_params_t * const p_transfer_params); // [DEPRECATED]
 fsp_err_t R_SAU_LIN_InformationFrameRead(lin_ctrl_t * const            p_api_ctrl,
-                                         lin_transfer_params_t * const p_transfer_params);
+                                         lin_transfer_params_t * const p_transfer_params);        // [DEPRECATED]
+fsp_err_t R_SAU_LIN_Read(lin_ctrl_t * const p_api_ctrl, lin_transfer_params_t * const p_transfer_params);
 fsp_err_t R_SAU_LIN_CommunicationAbort(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SAU_LIN_CallbackSet(lin_ctrl_t * const          p_api_ctrl,
                                 void (                    * p_callback)(lin_callback_args_t *),
-                                void const * const          p_context,
+                                void * const                p_context,
                                 lin_callback_args_t * const p_callback_memory);
 fsp_err_t R_SAU_LIN_WakeupSend(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SAU_LIN_SleepEnter(lin_ctrl_t * const p_api_ctrl);

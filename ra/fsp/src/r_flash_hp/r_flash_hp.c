@@ -751,6 +751,8 @@ fsp_err_t R_FLASH_HP_BlankCheck (flash_ctrl_t * const p_api_ctrl,
     /* Check parameters. If failure return error */
     err = r_flash_hp_write_bc_parameter_checking(p_ctrl, address & ~BSP_FEATURE_TZ_NS_OFFSET, num_bytes, false);
     FSP_ERROR_RETURN((err == FSP_SUCCESS), err);
+
+    FSP_ASSERT(NULL != p_blank_check_result);
 #endif
 
 #if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
@@ -1235,7 +1237,7 @@ fsp_err_t R_FLASH_HP_Close (flash_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_FLASH_HP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
                                   void (                      * p_callback)(flash_callback_args_t *),
-                                  void const * const            p_context,
+                                  void * const                  p_context,
                                   flash_callback_args_t * const p_callback_memory)
 {
     flash_hp_instance_ctrl_t * p_ctrl = (flash_hp_instance_ctrl_t *) p_api_ctrl;
@@ -1348,9 +1350,9 @@ fsp_err_t R_FLASH_HP_AntiRollbackCounterIncrement (flash_ctrl_t * const p_api_ct
 
 /*******************************************************************************************************************//**
  * Refreshes the selected anti-rollback counter flash area to ensure the flash is in a valid state even if an error
- * occured during counter increment processing.
+ * occurred during counter increment processing.
  *
- * This function must be called if errors or power failure occured during counter increment.
+ * This function must be called if errors or power failure occurred during counter increment.
  *
  * Power failure can be detected by the application code by management of user-defined non-voltile flags during
  * counter increment.
@@ -1499,7 +1501,7 @@ fsp_err_t R_FLASH_HP_UserLockableAreaWrite (flash_ctrl_t * const p_api_ctrl,
  * @param[in]  write_size          The write size
  * @param[in]  timeout             The timeout
  *
- * @retval     FSP_SUCCESS         Write completed succesfully
+ * @retval     FSP_SUCCESS         Write completed successfully
  * @retval     FSP_ERR_TIMEOUT     Flash timed out during write operation.
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, uint32_t write_size, uint32_t timeout)
@@ -1597,7 +1599,7 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
  * @param[in]  error_bits          The error bits
  * @param[in]  return_error        The return error
  *
- * @retval     FSP_SUCCESS         Command completed succesfully
+ * @retval     FSP_SUCCESS         Command completed successfully
  * @retval     FSP_ERR_CMD_LOCKED  Flash entered command locked state
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_check_errors (fsp_err_t previous_error, uint32_t error_bits, fsp_err_t return_error)
@@ -2224,7 +2226,7 @@ static fsp_err_t flash_hp_arc_cmd_execute (flash_hp_instance_ctrl_t * const p_ct
 /*******************************************************************************************************************//**
  * This function will initialize the FCU and set the FCU Clock based on the current FCLK frequency.
  * @param      p_ctrl        Pointer to the instance control block
- * @retval     FSP_SUCCESS   Clock and timeouts configured succesfully.
+ * @retval     FSP_SUCCESS   Clock and timeouts configured successfully.
  * @retval     FSP_ERR_FCLK  FCLK is not within the acceptable range.
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
@@ -2257,7 +2259,8 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
     {
         R_FACI_LP->DFLCTL = 1U;
 
-        /* Wait for (tDSTOP) before reading from data flash. MREF_INTERNAL_014 */
+        /* Wait for (tDSTOP) before reading from data flash.
+         * Refer to the "Data flash STOP recovery time" in the "Data flash characteristics" table from the relevant hardware manual */
         r_flash_hp_delay_ns(FLASH_HP_WAIT_TDSTOP, system_clock_freq_mhz);
     }
 #endif

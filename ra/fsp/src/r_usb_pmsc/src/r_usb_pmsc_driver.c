@@ -578,12 +578,18 @@ static void usb_pmsc_check_cbw (uint8_t module_number)
                 if (1 == g_usb_pmsc_cbw.bmcbw_flags.cbw_dir)
                 {
                     /* IN Stall & CSW(NG) transfer*/
-                    usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_IN, &usb_pmsc_err_csw_ng, &utr);
+                    usb_pstd_change_device_state(USB_DO_STALL,
+                                                 g_usb_pmsc_bulk_in_pipe[utr.ip],
+                                                 &usb_pmsc_err_csw_ng,
+                                                 &utr);
                 }
                 else
                 {
                     /* OUT Stall & CSW(NG) transfer */
-                    usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_OUT, &usb_pmsc_err_csw_ng, &utr);
+                    usb_pstd_change_device_state(USB_DO_STALL,
+                                                 g_usb_pmsc_bulk_out_pipe[utr.ip],
+                                                 &usb_pmsc_err_csw_ng,
+                                                 &utr);
                 }
             }
 
@@ -595,7 +601,7 @@ static void usb_pmsc_check_cbw (uint8_t module_number)
             USB_PRINTF0("### ERROR1 \n");
 
             /* IN Stall & CSW(NG) transfer*/
-            usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_IN, &usb_pmsc_err_csw_ng, &utr);
+            usb_pstd_change_device_state(USB_DO_STALL, g_usb_pmsc_bulk_in_pipe[utr.ip], &usb_pmsc_err_csw_ng, &utr);
 
             break;
         }
@@ -605,7 +611,7 @@ static void usb_pmsc_check_cbw (uint8_t module_number)
             USB_PRINTF0("### ERROR2 \n");
 
             /* OUT Stall & CSW(NG) transfer */
-            usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_OUT, &usb_pmsc_err_csw_ng, &utr);
+            usb_pstd_change_device_state(USB_DO_STALL, g_usb_pmsc_bulk_out_pipe[utr.ip], &usb_pmsc_err_csw_ng, &utr);
 
             break;
         }
@@ -614,7 +620,10 @@ static void usb_pmsc_check_cbw (uint8_t module_number)
         {
             USB_PRINTF0("### ERROR3 \n");
             g_usb_pmsc_dtl = 0x00UL;
-            usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_IN, (usb_cb_t) &usb_pmsc_err_phase_err, &utr);
+            usb_pstd_change_device_state(USB_DO_STALL,
+                                         g_usb_pmsc_bulk_in_pipe[utr.ip],
+                                         (usb_cb_t) &usb_pmsc_err_phase_err,
+                                         &utr);
 
             break;
         }
@@ -623,7 +632,10 @@ static void usb_pmsc_check_cbw (uint8_t module_number)
         {
             USB_PRINTF0("### ERROR4 \n");
             g_usb_pmsc_dtl = 0x00UL;
-            usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_OUT, (usb_cb_t) &usb_pmsc_err_phase_err, &utr);
+            usb_pstd_change_device_state(USB_DO_STALL,
+                                         g_usb_pmsc_bulk_out_pipe[utr.ip],
+                                         (usb_cb_t) &usb_pmsc_err_phase_err,
+                                         &utr);
 
             break;
         }
@@ -662,7 +674,7 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
     }
     else if (0 != g_usb_pmsc_cbw.bmcbw_flags.cbw_dir)
     {
-        (*uc_case) |= (uint8_t) USB_MSC_XXHI; /* Host Recieved(IN) Data */
+        (*uc_case) |= (uint8_t) USB_MSC_XXHI; /* Host Received(IN) Data */
     }
     else
     {
@@ -679,7 +691,7 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
             break;
         }
 
-        case USB_MSC_DNHI:             /* Device No Data & Host Recieved(IN) Data */
+        case USB_MSC_DNHI:             /* Device No Data & Host Received(IN) Data */
         {
             result = USB_MSC_CASE04;
 
@@ -700,7 +712,7 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
             break;
         }
 
-        case USB_MSC_DIHI:             /* Device Send(IN) Data & Host Recieved(IN) Data */
+        case USB_MSC_DIHI:             /* Device Send(IN) Data & Host Received(IN) Data */
         {
             if (g_usb_pmsc_dtl > ul_size)
             {
@@ -728,21 +740,21 @@ static uint8_t usb_pmsc_check_case13 (uint32_t ul_size, uint8_t * uc_case)
             break;
         }
 
-        case USB_MSC_DOHN:             /* Device Recieved(OUT) Data & Host No Data */
+        case USB_MSC_DOHN:             /* Device Received(OUT) Data & Host No Data */
         {
             result = USB_MSC_CASE03;
 
             break;
         }
 
-        case USB_MSC_DOHI:             /* Device Recieved(OUT) Data & Host Recieved(IN) Data */
+        case USB_MSC_DOHI:             /* Device Received(OUT) Data & Host Received(IN) Data */
         {
             result = USB_MSC_CASE08;
 
             break;
         }
 
-        case USB_MSC_DOHO:             /* Device Recieved(OUT) Data & Host Send(OUT) Data */
+        case USB_MSC_DOHO:             /* Device Received(OUT) Data & Host Send(OUT) Data */
         {
             if (g_usb_pmsc_dtl > ul_size)
             {
@@ -864,7 +876,7 @@ static uint8_t usb_pmsc_transfer_matrix (uint8_t uc_case)
 static void usb_pmsc_csw_transfer (usb_utr_t * p_utr, uint8_t csw_status) {
     usb_pmsc_setcsw(csw_status);
 
-    p_utr->keyword   = USB_CFG_PMSC_BULK_IN;
+    p_utr->keyword   = g_usb_pmsc_bulk_in_pipe[p_utr->ip];
     p_utr->p_tranadr = (uint8_t *) &g_usb_pmsc_csw;
     p_utr->tranlen   = USB_MSC_CSW_LENGTH;
     usb_pmsc_transfer_start(p_utr);
@@ -915,7 +927,7 @@ static void usb_pmsc_data_transfer (usb_utr_t * mess, uint16_t data1, uint16_t d
         case USB_PMSC_CMD_SHT_COMPLETE: /* Command Execute -> Pass! */
         {
             /* CSW(OK) transfer */
-            usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_IN, &usb_pmsc_err_csw_ok, mess);
+            usb_pstd_change_device_state(USB_DO_STALL, g_usb_pmsc_bulk_in_pipe[mess->ip], &usb_pmsc_err_csw_ok, mess);
 
             break;
         }
@@ -925,7 +937,8 @@ static void usb_pmsc_data_transfer (usb_utr_t * mess, uint16_t data1, uint16_t d
             if (0UL != g_usb_pmsc_dtl)
             {
                 /* Zero or short packet */
-                usb_pstd_change_device_state(USB_DO_STALL, USB_CFG_PMSC_BULK_IN, &usb_pmsc_err_csw_ng, mess);
+                usb_pstd_change_device_state(USB_DO_STALL, g_usb_pmsc_bulk_in_pipe[mess->ip], &usb_pmsc_err_csw_ng,
+                                             mess);
             }
             else
             {
@@ -943,7 +956,7 @@ static void usb_pmsc_data_transfer (usb_utr_t * mess, uint16_t data1, uint16_t d
                 case USB_PMSC_DATARCV: /* OUT Data */
                 {
                     /* Data receive start */
-                    mess->keyword = USB_CFG_PMSC_BULK_OUT;
+                    mess->keyword = g_usb_pmsc_bulk_out_pipe[mess->ip];
                     usb_pmsc_transfer_start(mess);
 
                     break;
@@ -952,7 +965,7 @@ static void usb_pmsc_data_transfer (usb_utr_t * mess, uint16_t data1, uint16_t d
                 case USB_PMSC_DATASND: /* IN Data */
                 {
                     /* Data transfer start */
-                    mess->keyword = USB_CFG_PMSC_BULK_IN;
+                    mess->keyword = g_usb_pmsc_bulk_in_pipe[mess->ip];
                     usb_pmsc_transfer_start(mess);
 
                     break;
@@ -1052,7 +1065,7 @@ void usb_pmsc_receive_cbw (usb_utr_t * p_utr)
 {
     g_usb_pmsc_dtl = 0x00UL;
 
-    p_utr->keyword   = USB_CFG_PMSC_BULK_OUT;
+    p_utr->keyword   = g_usb_pmsc_bulk_out_pipe[p_utr->ip];
     p_utr->p_tranadr = (uint8_t *) &g_usb_pmsc_cbw;
     p_utr->tranlen   = USB_MSC_CBWLENGTH;
     usb_pmsc_transfer_start(p_utr);

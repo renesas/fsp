@@ -698,7 +698,7 @@ static void r_sdadc_scan_configure (sdadc_b_instance_ctrl_t * p_instance_ctrl, s
 
     /* Reset SDADC_B and apply new settings */
     R_SDADC_B->SDADRR = 1;
-    FSP_REGISTER_READ(R_SDADC_B->SDADRR); // Read register to prevent optmization from removing reset
+    FSP_REGISTER_READ(R_SDADC_B->SDADRR); // Read register to prevent optimization from removing reset
     R_SDADC_B->SDADRR = 0;
 }
 

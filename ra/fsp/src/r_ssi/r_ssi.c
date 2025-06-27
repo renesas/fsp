@@ -609,7 +609,7 @@ fsp_err_t R_SSI_Close (i2s_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_SSI_CallbackSet (i2s_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(i2s_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              i2s_callback_args_t * const p_callback_memory)
 {
     ssi_instance_ctrl_t * p_ctrl = (ssi_instance_ctrl_t *) p_api_ctrl;

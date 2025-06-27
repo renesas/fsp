@@ -31,7 +31,7 @@ int tc_ctr_mode (uint8_t             * out,
     bool      src_unaligned = !TC_32BIT_ALIGNED((uint32_t) &in[0]);
     bool      dst_unaligned = !TC_32BIT_ALIGNED((uint32_t) &out[0]);
 
-    uint32_t indata_cmd      = change_endian_long((uint32_t)SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION);
+    uint32_t indata_cmd      = change_endian_long((uint32_t) SCE_AES_IN_DATA_CMD_CTR_ENCRYPTION_DECRYPTION);
     uint32_t indata_key_type = 0;
 
 #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE

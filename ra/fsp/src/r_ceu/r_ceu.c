@@ -295,7 +295,7 @@ fsp_err_t R_CEU_CaptureStart (capture_ctrl_t * const p_ctrl, uint8_t * const p_b
  **************************************************************************************************************************/
 fsp_err_t R_CEU_CallbackSet (capture_ctrl_t * const          p_ctrl,
                              void (                        * p_callback)(capture_callback_args_t *),
-                             void const * const              p_context,
+                             void * const                    p_context,
                              capture_callback_args_t * const p_callback_memory)
 {
     ceu_instance_ctrl_t * p_instance_ctrl = (ceu_instance_ctrl_t *) p_ctrl;
@@ -473,9 +473,11 @@ extern void ceu_isr (void)
     if (NULL != p_instance_ctrl->p_callback)
     {
         capture_callback_args_t args;
-        args.event     = (capture_event_t) (events & p_instance_ctrl->interrupts_enabled);
-        args.p_buffer  = p_instance_ctrl->p_buffer;
-        args.p_context = p_instance_ctrl->p_context;
+        args.event            = (capture_event_t) (events & p_instance_ctrl->interrupts_enabled);
+        args.event_status     = 0;     // Unused
+        args.interrupt_status = 0;     // Unused
+        args.p_buffer         = p_instance_ctrl->p_buffer;
+        args.p_context        = p_instance_ctrl->p_context;
         ceu_call_callback(p_instance_ctrl, &args);
     }
 

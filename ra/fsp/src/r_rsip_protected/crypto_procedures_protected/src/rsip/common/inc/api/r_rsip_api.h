@@ -24,7 +24,6 @@
 
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
-#include "r_rsip_cfg.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -33,67 +32,72 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
-/* Calculate key type value and size */
-#define RSIP_PRV_KEY_TYPE(alg, subtype)                       (((alg) << 8) + (subtype))
-#define RSIP_PRV_KEY_PAIR_TYPE(pub_alg, priv_alg, subtype)    (((pub_alg) << 16) + ((priv_alg) << 8) + (subtype))
-#define RSIP_PRV_KEY_SIZE(key_value_size)                     (4U + (key_value_size))
+/* Internal macro (calculation of key type values) */
+#define RSIP_PRV_KEY_TYPE_VAL(plain_words, alg, subtype)    (((alg) << 24) | ((subtype) << 16) | (plain_words))
+#define RSIP_PRV_KEY_TYPE_VAL_ALG(key_type_val)             ((uint8_t) \
+                                                             (((uint32_t) (key_type_val) & 0xff000000U) >> 24))
+#define RSIP_PRV_KEY_TYPE_VAL_SUBTYPE(key_type_val)         ((uint8_t) \
+                                                             (((uint32_t) (key_type_val) & 0x00ff0000U) >> 16))
+#define RSIP_PRV_KEY_TYPE_VAL_PLAIN_WORDS(key_type_val)     (((uint32_t) (key_type_val) & 0x0000ffffU) >> 0)
 
 /* Internal algorithm ID */
-#define RSIP_ALG_INVALID                (0x00)
-#define RSIP_ALG_AES                    (0x10)
-#define RSIP_ALG_XTS_AES                (0x11)
-#define RSIP_ALG_CHACHA                 (0x12)
-#define RSIP_ALG_ECC_PUBLIC             (0x20)
-#define RSIP_ALG_ECC_PRIVATE            (0x21)
-#define RSIP_ALG_RSA_PUBLIC             (0x22)
-#define RSIP_ALG_RSA_PRIVATE            (0x23)
-#define RSIP_ALG_HMAC                   (0x30)
-#define RSIP_ALG_KDF_HMAC               (0x31)
+#define RSIP_PRV_ALG_INVALID                        (0x00)
+#define RSIP_PRV_ALG_AES                            (0x01)
+#define RSIP_PRV_ALG_XTS_AES                        (0x02)
+#define RSIP_PRV_ALG_CHACHA                         (0x03)
+#define RSIP_PRV_ALG_ECC_PUBLIC                     (0x04)
+#define RSIP_PRV_ALG_ECC_PRIVATE                    (0x05)
+#define RSIP_PRV_ALG_RSA_PUBLIC                     (0x06)
+#define RSIP_PRV_ALG_RSA_PRIVATE                    (0x07)
+#define RSIP_PRV_ALG_HMAC                           (0x08)
+#define RSIP_PRV_ALG_KDF_HMAC                       (0x09)
+#define RSIP_PRV_ALG_MISC                           (0xff)
 
-/* Internal key ID */
-#define RSIP_KEY_INVALID                (0x00)
-#define RSIP_KEY_AES_128                (0x00)
-#define RSIP_KEY_AES_192                (0x01)
-#define RSIP_KEY_AES_256                (0x02)
-#define RSIP_KEY_AES_NUM                (0x03)
-#define RSIP_KEY_CHACHA_CHACHA20        (0x00)
-#define RSIP_KEY_CHACHA_NUM             (0x01)
-#define RSIP_KEY_ECC_SECP256R1          (0x02)
-#define RSIP_KEY_ECC_SECP384R1          (0x03)
-#define RSIP_KEY_ECC_SECP521R1          (0x04)
-#define RSIP_KEY_ECC_SECP256K1          (0x07)
-#define RSIP_KEY_ECC_BRAINPOOLP256R1    (0x0a)
-#define RSIP_KEY_ECC_BRAINPOOLP384R1    (0x0c)
-#define RSIP_KEY_ECC_BRAINPOOLP512R1    (0x0d)
-#define RSIP_KEY_ECC_EDWARDS25519       (0x0e)
-#define RSIP_KEY_ECC_NUM                (0x0f)
-#define RSIP_KEY_RSA_1024               (0x00)
-#define RSIP_KEY_RSA_2048               (0x01)
-#define RSIP_KEY_RSA_3072               (0x02)
-#define RSIP_KEY_RSA_4096               (0x03)
-#define RSIP_KEY_RSA_NUM                (0x04)
-#define RSIP_KEY_HMAC_SHA1              (0x00)
-#define RSIP_KEY_HMAC_SHA224            (0x01)
-#define RSIP_KEY_HMAC_SHA256            (0x02)
-#define RSIP_KEY_HMAC_SHA384            (0x03)
-#define RSIP_KEY_HMAC_SHA512            (0x04)
-#define RSIP_KEY_HMAC_NUM               (0x05)
-#define RSIP_KEY_KDF_HMAC_SHA256        (0x00)
-#define RSIP_KEY_KDF_HMAC_SHA384        (0x01)
-#define RSIP_KEY_KDF_HMAC_SHA512        (0x02)
-#define RSIP_KEY_KDF_HMAC_NUM           (0x03)
+/* Internal key subtype ID */
+#define RSIP_PRV_KEY_SUBTYPE_INVALID                (0x0)
+#define RSIP_PRV_KEY_SUBTYPE_AES_128                (0x0)
+#define RSIP_PRV_KEY_SUBTYPE_AES_192                (0x1)
+#define RSIP_PRV_KEY_SUBTYPE_AES_256                (0x2)
+#define RSIP_PRV_KEY_SUBTYPE_AES_NUM                (0x3)
+#define RSIP_PRV_KEY_SUBTYPE_CHACHA_CHACHA20        (0x0)
+#define RSIP_PRV_KEY_SUBTYPE_CHACHA_NUM             (0x1)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_SECP256R1          (0x0)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_SECP384R1          (0x1)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_SECP521R1          (0x2)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_SECP256K1          (0x3)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP256R1    (0x4)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP384R1    (0x5)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP512R1    (0x6)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_EDWARDS25519       (0x7)
+#define RSIP_PRV_KEY_SUBTYPE_ECC_NUM                (0x8)
+#define RSIP_PRV_KEY_SUBTYPE_RSA_1024               (0x0)
+#define RSIP_PRV_KEY_SUBTYPE_RSA_2048               (0x1)
+#define RSIP_PRV_KEY_SUBTYPE_RSA_3072               (0x2)
+#define RSIP_PRV_KEY_SUBTYPE_RSA_4096               (0x3)
+#define RSIP_PRV_KEY_SUBTYPE_RSA_NUM                (0x4)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA1              (0x0)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA224            (0x1)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256            (0x2)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA384            (0x3)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512            (0x4)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_NUM               (0x5)
+#define RSIP_PRV_KEY_SUBTYPE_MISC_KUK               (0x0)
+#define RSIP_PRV_KEY_SUBTYPE_MISC_NUM               (0x1)
 
 /* Internal DKM algorithm ID */
-#define RSIP_DKM_ALG_SHA                (0x00)
-#define RSIP_DKM_ALG_HMAC               (0x01)
+#define RSIP_PRV_DKM_ALG_INVALID                    (0x0)
+#define RSIP_PRV_DKM_ALG_SHA                        (0x1)
+#define RSIP_PRV_DKM_ALG_HMAC                       (0x2)
 
 /* Internal DKM subtype ID */
-#define RSIP_DKM_SUBTYPE_SHA_256        (0x00)
-#define RSIP_DKM_SUBTYPE_SHA_NUM        (0x01)
-#define RSIP_DKM_SUBTYPE_HMAC_SHA256    (0x00)
-#define RSIP_DKM_SUBTYPE_HMAC_SHA384    (0x01)
-#define RSIP_DKM_SUBTYPE_HMAC_SHA512    (0x02)
-#define RSIP_DKM_SUBTYPE_HMAC_NUM       (0x03)
+#define RSIP_PRV_DKM_SUBTYPE_INVALID                (0x0)
+#define RSIP_PRV_DKM_SUBTYPE_SHA_256                (0x0)
+#define RSIP_PRV_DKM_SUBTYPE_SHA_384                (0x1)
+#define RSIP_PRV_DKM_SUBTYPE_SHA_NUM                (0x2)
+#define RSIP_PRV_DKM_SUBTYPE_HMAC_SHA256            (0x0)
+#define RSIP_PRV_DKM_SUBTYPE_HMAC_SHA384            (0x1)
+#define RSIP_PRV_DKM_SUBTYPE_HMAC_SHA512            (0x2)
+#define RSIP_PRV_DKM_SUBTYPE_HMAC_NUM               (0x3)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -102,240 +106,87 @@ FSP_HEADER
 /** Key types */
 typedef enum e_rsip_key_type
 {
-    RSIP_KEY_TYPE_INVALID                     = RSIP_PRV_KEY_TYPE(RSIP_ALG_INVALID, RSIP_KEY_INVALID),                 ///< Invalid key
-    RSIP_KEY_TYPE_AES_128                     = RSIP_PRV_KEY_TYPE(RSIP_ALG_AES, RSIP_KEY_AES_128),                     ///< AES-128
-    RSIP_KEY_TYPE_AES_192                     = RSIP_PRV_KEY_TYPE(RSIP_ALG_AES, RSIP_KEY_AES_192),                     ///< AES-192
-    RSIP_KEY_TYPE_AES_256                     = RSIP_PRV_KEY_TYPE(RSIP_ALG_AES, RSIP_KEY_AES_256),                     ///< AES-256
-    RSIP_KEY_TYPE_XTS_AES_128                 = RSIP_PRV_KEY_TYPE(RSIP_ALG_XTS_AES, RSIP_KEY_AES_128),                 ///< XTS-AES-128
-    RSIP_KEY_TYPE_XTS_AES_256                 = RSIP_PRV_KEY_TYPE(RSIP_ALG_XTS_AES, RSIP_KEY_AES_256),                 ///< XTS-AES-256
-    RSIP_KEY_TYPE_CHACHA20                    = RSIP_PRV_KEY_TYPE(RSIP_ALG_CHACHA, RSIP_KEY_CHACHA_CHACHA20),          ///< ChaCha20
-    RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC        = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_SECP256R1),        ///< secp256r1 public key (also known as NIST P-256, prime256v1)
-    RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC        = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_SECP384R1),        ///< secp384r1 public key (also known as NIST P-384)
-    RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC        = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_SECP521R1),        ///< secp521r1 public key (also known as NIST P-521)
-    RSIP_KEY_TYPE_ECC_SECP256K1_PUBLIC        = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_SECP256K1),        ///< secp256k1 public key
-    RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC  = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_BRAINPOOLP256R1),  ///< brainpoolP256r1 public key
-    RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC  = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_BRAINPOOLP384R1),  ///< brainpoolP384r1 public key
-    RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PUBLIC  = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_BRAINPOOLP512R1),  ///< brainpoolP512r1 public key
-    RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC     = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_KEY_ECC_EDWARDS25519),     ///< edwards25519 public key
-    RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE       = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP256R1),       ///< secp256r1 private key (also known as NIST P-256, prime256v1)
-    RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE       = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP384R1),       ///< secp384r1 private key (also known as NIST P-384)
-    RSIP_KEY_TYPE_ECC_SECP521R1_PRIVATE       = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP521R1),       ///< secp521r1 private key (also known as NIST P-521)
-    RSIP_KEY_TYPE_ECC_SECP256K1_PRIVATE       = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP256K1),       ///< secp256k1 private key
-    RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PRIVATE = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_BRAINPOOLP256R1), ///< brainpoolP256r1 private key
-    RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_BRAINPOOLP384R1), ///< brainpoolP384r1 private key
-    RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PRIVATE = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_BRAINPOOLP512R1), ///< brainpoolP512r1 private key
-    RSIP_KEY_TYPE_ECC_EDWARDS25519_PRIVATE    = RSIP_PRV_KEY_TYPE(RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_EDWARDS25519),    ///< edwards25519 private key
-    RSIP_KEY_TYPE_RSA_1024_PUBLIC             = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_KEY_RSA_1024),             ///< RSA-1024 public key
-    RSIP_KEY_TYPE_RSA_2048_PUBLIC             = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_KEY_RSA_2048),             ///< RSA-2048 public key
-    RSIP_KEY_TYPE_RSA_3072_PUBLIC             = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_KEY_RSA_3072),             ///< RSA-3072 public key
-    RSIP_KEY_TYPE_RSA_4096_PUBLIC             = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_KEY_RSA_4096),             ///< RSA-4096 public key
-    RSIP_KEY_TYPE_RSA_1024_PRIVATE            = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_1024),            ///< RSA-1024 private key
-    RSIP_KEY_TYPE_RSA_2048_PRIVATE            = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_2048),            ///< RSA-2048 private key
-    RSIP_KEY_TYPE_RSA_3072_PRIVATE            = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_3072),            ///< RSA-3072 private key
-    RSIP_KEY_TYPE_RSA_4096_PRIVATE            = RSIP_PRV_KEY_TYPE(RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_4096),            ///< RSA-4096 private key
-    RSIP_KEY_TYPE_HMAC_SHA1                   = RSIP_PRV_KEY_TYPE(RSIP_ALG_HMAC, RSIP_KEY_HMAC_SHA1),                  ///< HMAC-SHA1
-    RSIP_KEY_TYPE_HMAC_SHA224                 = RSIP_PRV_KEY_TYPE(RSIP_ALG_HMAC, RSIP_KEY_HMAC_SHA224),                ///< HMAC-SHA224
-    RSIP_KEY_TYPE_HMAC_SHA256                 = RSIP_PRV_KEY_TYPE(RSIP_ALG_HMAC, RSIP_KEY_HMAC_SHA256),                ///< HMAC-SHA256
-    RSIP_KEY_TYPE_HMAC_SHA384                 = RSIP_PRV_KEY_TYPE(RSIP_ALG_HMAC, RSIP_KEY_HMAC_SHA384),                ///< HMAC-SHA384
-    RSIP_KEY_TYPE_HMAC_SHA512                 = RSIP_PRV_KEY_TYPE(RSIP_ALG_HMAC, RSIP_KEY_HMAC_SHA512),                ///< HMAC-SHA512
+    RSIP_KEY_TYPE_INVALID =
+        RSIP_PRV_KEY_TYPE_VAL(0, RSIP_PRV_ALG_INVALID, RSIP_PRV_KEY_SUBTYPE_INVALID),                  ///< Invalid key
+    RSIP_KEY_TYPE_AES_128 =
+        RSIP_PRV_KEY_TYPE_VAL(4, RSIP_PRV_ALG_AES, RSIP_PRV_KEY_SUBTYPE_AES_128),                      ///< AES-128
+    RSIP_KEY_TYPE_AES_192 =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_AES, RSIP_PRV_KEY_SUBTYPE_AES_192),                      ///< AES-192
+    RSIP_KEY_TYPE_AES_256 =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_AES, RSIP_PRV_KEY_SUBTYPE_AES_256),                      ///< AES-256
+    RSIP_KEY_TYPE_XTS_AES_128 =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_XTS_AES, RSIP_PRV_KEY_SUBTYPE_AES_128),                  ///< XTS-AES-128
+    RSIP_KEY_TYPE_XTS_AES_256 =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_XTS_AES, RSIP_PRV_KEY_SUBTYPE_AES_256),                 ///< XTS-AES-256
+    RSIP_KEY_TYPE_CHACHA20 =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_CHACHA, RSIP_PRV_KEY_SUBTYPE_CHACHA_CHACHA20),           ///< ChaCha20
+    RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_SECP256R1),        ///< secp256r1 public key (also known as NIST P-256, prime256v1)
+    RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(24, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_SECP384R1),        ///< secp384r1 public key (also known as NIST P-384)
+    RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(40, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_SECP521R1),        ///< secp521r1 public key (also known as NIST P-521)
+    RSIP_KEY_TYPE_ECC_SECP256K1_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_SECP256K1),        ///< secp256k1 public key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP256R1),  ///< brainpoolP256r1 public key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(24, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP384R1),  ///< brainpoolP384r1 public key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(32, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP512R1),  ///< brainpoolP512r1 public key
+    RSIP_KEY_TYPE_ECC_EDWARDS25519_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_ECC_PUBLIC, RSIP_PRV_KEY_SUBTYPE_ECC_EDWARDS25519),      ///< edwards25519 public key
+    RSIP_KEY_TYPE_ECC_SECP256R1_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_SECP256R1),        ///< secp256r1 private key (also known as NIST P-256, prime256v1)
+    RSIP_KEY_TYPE_ECC_SECP384R1_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(12, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_SECP384R1),       ///< secp384r1 private key (also known as NIST P-384)
+    RSIP_KEY_TYPE_ECC_SECP521R1_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(20, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_SECP521R1),       ///< secp521r1 private key (also known as NIST P-521)
+    RSIP_KEY_TYPE_ECC_SECP256K1_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_SECP256K1),        ///< secp256k1 private key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP256R1),  ///< brainpoolP256r1 private key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(12, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP384R1), ///< brainpoolP384r1 private key
+    RSIP_KEY_TYPE_ECC_BRAINPOOLP512R1_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP512R1), ///< brainpoolP512r1 private key
+    RSIP_KEY_TYPE_ECC_EDWARDS25519_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_ECC_PRIVATE, RSIP_PRV_KEY_SUBTYPE_ECC_EDWARDS25519),     ///< edwards25519 private key
+    RSIP_KEY_TYPE_RSA_1024_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(36, RSIP_PRV_ALG_RSA_PUBLIC, RSIP_PRV_KEY_SUBTYPE_RSA_1024),             ///< RSA-1024 public key
+    RSIP_KEY_TYPE_RSA_2048_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(68, RSIP_PRV_ALG_RSA_PUBLIC, RSIP_PRV_KEY_SUBTYPE_RSA_2048),             ///< RSA-2048 public key
+    RSIP_KEY_TYPE_RSA_3072_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(100, RSIP_PRV_ALG_RSA_PUBLIC, RSIP_PRV_KEY_SUBTYPE_RSA_3072),            ///< RSA-3072 public key
+    RSIP_KEY_TYPE_RSA_4096_PUBLIC =
+        RSIP_PRV_KEY_TYPE_VAL(132, RSIP_PRV_ALG_RSA_PUBLIC, RSIP_PRV_KEY_SUBTYPE_RSA_4096),            ///< RSA-4096 public key
+    RSIP_KEY_TYPE_RSA_1024_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(64, RSIP_PRV_ALG_RSA_PRIVATE, RSIP_PRV_KEY_SUBTYPE_RSA_1024),            ///< RSA-1024 private key
+    RSIP_KEY_TYPE_RSA_2048_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(128, RSIP_PRV_ALG_RSA_PRIVATE, RSIP_PRV_KEY_SUBTYPE_RSA_2048),           ///< RSA-2048 private key
+    RSIP_KEY_TYPE_RSA_3072_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(192, RSIP_PRV_ALG_RSA_PRIVATE, RSIP_PRV_KEY_SUBTYPE_RSA_3072),           ///< RSA-3072 private key
+    RSIP_KEY_TYPE_RSA_4096_PRIVATE =
+        RSIP_PRV_KEY_TYPE_VAL(256, RSIP_PRV_ALG_RSA_PRIVATE, RSIP_PRV_KEY_SUBTYPE_RSA_4096),           ///< RSA-4096 private key
+    RSIP_KEY_TYPE_HMAC_SHA1 =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA1),                   ///< HMAC-SHA1
+    RSIP_KEY_TYPE_HMAC_SHA224 =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA224),                 ///< HMAC-SHA224
+    RSIP_KEY_TYPE_HMAC_SHA256 =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256),                 ///< HMAC-SHA256
+    RSIP_KEY_TYPE_HMAC_SHA384 =
+        RSIP_PRV_KEY_TYPE_VAL(12, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA384),                ///< HMAC-SHA384
+    RSIP_KEY_TYPE_HMAC_SHA512 =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512),                ///< HMAC-SHA512
+    RSIP_KEY_TYPE_KDF_HMAC_SHA256 =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_KDF_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256),            ///< HMAC-SHA256
+    RSIP_KEY_TYPE_KDF_HMAC_SHA384 =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_KDF_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA384),            ///< HMAC-SHA384
+    RSIP_KEY_TYPE_KDF_HMAC_SHA512 =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_KDF_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512),            ///< HMAC-SHA512
+    RSIP_KEY_TYPE_KUK =
+        RSIP_PRV_KEY_TYPE_VAL(8, RSIP_PRV_ALG_MISC, RSIP_PRV_KEY_SUBTYPE_MISC_KUK),                    ///< Key Update Key (KUK)
 } rsip_key_type_t;
-
-/** Key pair types */
-typedef enum e_rsip_key_pair_type
-{
-    RSIP_KEY_PAIR_TYPE_INVALID,                                                                          ///< Invalid key pair type
-    RSIP_KEY_PAIR_TYPE_ECC_SECP256R1 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP256R1),       ///< secp256r1 key pair (also known as NIST P-256, prime256v1)
-    RSIP_KEY_PAIR_TYPE_ECC_SECP384R1 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP384R1),       ///< secp384r1 key pair (also known as NIST P-384)
-    RSIP_KEY_PAIR_TYPE_ECC_SECP521R1 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP521R1),       ///< secp521r1 key pair (also known as NIST P-521)
-    RSIP_KEY_PAIR_TYPE_ECC_SECP256K1 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_SECP256K1),       ///< secp256k1 key pair
-    RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP256R1 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_BRAINPOOLP256R1), ///< brainpoolP256r1 key pair
-    RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP384R1 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_BRAINPOOLP384R1), ///< brainpoolP384r1 key pair
-    RSIP_KEY_PAIR_TYPE_ECC_BRAINPOOLP512R1 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_BRAINPOOLP512R1), ///< brainpoolP512r1 key pair
-    RSIP_KEY_PAIR_TYPE_ECC_EDWARDS25519 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_ECC_PUBLIC, RSIP_ALG_ECC_PRIVATE, RSIP_KEY_ECC_EDWARDS25519),    ///< edwards25519 key pair
-    RSIP_KEY_PAIR_TYPE_RSA_1024 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_1024),            ///< RSA-1024 key pair
-    RSIP_KEY_PAIR_TYPE_RSA_2048 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_2048),            ///< RSA-2048 key pair
-    RSIP_KEY_PAIR_TYPE_RSA_3072 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_3072),            ///< RSA-3072 key pair
-    RSIP_KEY_PAIR_TYPE_RSA_4096 =
-        RSIP_PRV_KEY_PAIR_TYPE(RSIP_ALG_RSA_PUBLIC, RSIP_ALG_RSA_PRIVATE, RSIP_KEY_RSA_4096),            ///< RSA-4096 key pair
-} rsip_key_pair_type_t;
-
-/**
- * Byte size of wrapped key
- */
-typedef enum e_rsip_byte_size_wrapped_key
-{
-    RSIP_BYTE_SIZE_WRAPPED_KEY_AES_128 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_128),                     ///< AES-128
-    RSIP_BYTE_SIZE_WRAPPED_KEY_AES_192 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_192),                     ///< AES-192
-    RSIP_BYTE_SIZE_WRAPPED_KEY_AES_256 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_256),                     ///< AES-256
-    RSIP_BYTE_SIZE_WRAPPED_KEY_XTS_AES_128 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_XTS_AES_128),                 ///< XTS-AES-128
-    RSIP_BYTE_SIZE_WRAPPED_KEY_XTS_AES_256 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_XTS_AES_256),                 ///< XTS-AES-256
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256R1_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256R1_PUBLIC),        ///< secp256r1 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP384R1_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP384R1_PUBLIC),        ///< secp384r1 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP521R1_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP521R1_PUBLIC),        ///< secp521r1 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256K1_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256K1_PUBLIC),        ///< secp256k1 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP256R1_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP256R1_PUBLIC),  ///< brainpoolP256r1 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP384R1_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP384R1_PUBLIC),  ///< brainpoolP384r1 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP512R1_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP512R1_PUBLIC),  ///< brainpoolP512r1 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_EDWARDS25519_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_EDWARDS25519_PUBLIC),     ///< edwards25519 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256R1_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256R1_PRIVATE),       ///< secp256r1 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP384R1_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP384R1_PRIVATE),       ///< secp384r1 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP521R1_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP521R1_PRIVATE),       ///< secp521r1 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_SECP256K1_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256K1_PRIVATE),       ///< secp256k1 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP256R1_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP256R1_PRIVATE), ///< brainpoolP256r1 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP384R1_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP384R1_PRIVATE), ///< brainpoolP384r1 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_BRAINPOOLP512R1_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP512R1_PRIVATE), ///< brainpoolP512r1 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_ECC_EDWARDS25519_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_EDWARDS25519_PRIVATE),    ///< edwards25519 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_1024_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_1024_PUBLIC),             ///< RSA-1024 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_2048_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_2048_PUBLIC),             ///< RSA-2048 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_3072_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_3072_PUBLIC),             ///< RSA-3072 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PUBLIC =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_4096_PUBLIC),             ///< RSA-4096 public key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_1024_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_1024_PRIVATE),            ///< RSA-1024 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_2048_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_2048_PRIVATE),            ///< RSA-2048 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_3072_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_3072_PRIVATE),            ///< RSA-3072 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PRIVATE =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_4096_PRIVATE),            ///< RSA-4096 private key
-    RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA1 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA1),                   ///< HMAC-SHA1
-    RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA224 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA224),                 ///< HMAC-SHA224
-    RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA256 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA256),                 ///< HMAC-SHA256
-    RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA384 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA384),                 ///< HMAC-SHA384
-    RSIP_BYTE_SIZE_WRAPPED_KEY_HMAC_SHA512 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA512),                 ///< HMAC-SHA512
-    RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA256 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_KDF_HMAC_SHA256),             ///< KDF HMAC-SHA256
-    RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA384 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_KDF_HMAC_SHA384),             ///< KDF HMAC-SHA384
-    RSIP_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_SHA512 =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_KDF_HMAC_SHA512),             ///< KDF HMAC-SHA512
-    RSIP_BYTE_SIZE_WRAPPED_KEY_TLS12_PREMASTER_SECRET =
-        RSIP_PRV_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_TLS12_PREMASTER_SECRET),      ///< TLS1.2 premaster secret
-} rsip_byte_size_wrapped_key_t;
-
-/**
- * Byte size of encrypted key
- */
-typedef enum e_rsip_byte_size_encrypted_key
-{
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_AES_128 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_128),                     ///< AES-128
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_AES_192 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_192),                     ///< AES-192
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_AES_256 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_256),                     ///< AES-256
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_XTS_AES_128 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_XTS_AES_128),                 ///< XTS-AES-128
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_XTS_AES_256 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_XTS_AES_256),                 ///< XTS-AES-256
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP256R1_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256R1_PUBLIC),        ///< secp256r1 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP384R1_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP384R1_PUBLIC),        ///< secp384r1 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP521R1_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP521R1_PUBLIC),        ///< secp521r1 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP256K1_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256K1_PUBLIC),        ///< secp256k1 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_BRAINPOOLP256R1_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP256R1_PUBLIC),  ///< brainpoolP256r1 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_BRAINPOOLP384R1_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP384R1_PUBLIC),  ///< brainpoolP384r1 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_BRAINPOOLP512R1_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP512R1_PUBLIC),  ///< brainpoolP512r1 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_EDWARDS25519_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_EDWARDS25519_PUBLIC),     ///< edwards25519 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP256R1_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256R1_PRIVATE),       ///< secp256r1 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP384R1_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP384R1_PRIVATE),       ///< secp384r1 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP521R1_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP521R1_PRIVATE),       ///< secp521r1 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_SECP256K1_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_SECP256K1_PRIVATE),       ///< secp256k1 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_BRAINPOOLP256R1_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP256R1_PRIVATE), ///< brainpoolP256r1 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_BRAINPOOLP384R1_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP384R1_PRIVATE), ///< brainpoolP384r1 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_BRAINPOOLP512R1_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_BRAINPOOLP512R1_PRIVATE), ///< brainpoolP512r1 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_ECC_EDWARDS25519_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_ECC_EDWARDS25519_PRIVATE),    ///< edwards25519 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_1024_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_1024_PUBLIC),             ///< RSA-1024 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_2048_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_2048_PUBLIC),             ///< RSA-2048 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_3072_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_3072_PUBLIC),             ///< RSA-3072 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_4096_PUBLIC =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_4096_PUBLIC),             ///< RSA-4096 public key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_1024_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_1024_PRIVATE),            ///< RSA-1024 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_2048_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_2048_PRIVATE),            ///< RSA-2048 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_3072_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_3072_PRIVATE),            ///< RSA-3072 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_RSA_4096_PRIVATE =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_RSA_4096_PRIVATE),            ///< RSA-4096 private key
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA1 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA1),                   ///< HMAC-SHA1
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA224 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA224),                 ///< HMAC-SHA224
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA256 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA256),                 ///< HMAC-SHA256
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA384 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA384),                 ///< HMAC-SHA384
-    RSIP_BYTE_SIZE_ENCRYPTED_KEY_HMAC_SHA512 =
-        RSIP_CFG_ENC_KEY_SIZE(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA512),                 ///< HMAC-SHA512
-} rsip_byte_size_encrypted_key_t;
-
-/** Byte size of wrapped key */
-typedef enum e_rsip_byte_size_wrapped_mac
-{
-    RSIP_BYTE_SIZE_WRAPPED_MAC_HEADER      = 12U,                                       ///< Header
-    RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA256 = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA256, ///< A block of HMAC-SHA256
-    RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA384 = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA384, ///< A block of HMAC-SHA384
-    RSIP_BYTE_SIZE_WRAPPED_MAC_HMAC_SHA512 = RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MAC_SHA512, ///< A block of HMAC-SHA512
-} rsip_byte_size_wrapped_mac_t;
 
 /** Block cipher modes of operation for AES */
 typedef enum e_rsip_aes_cipher_mode
@@ -414,129 +265,58 @@ typedef enum e_rsip_user_handle_state
 /** IV data types */
 typedef enum e_rsip_initial_vector_type
 {
-    RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE    = 0, ///< Wrapped AES initial vector (unprocessed)
-    RSIP_INITIAL_VECTOR_TYPE_AES_TLS12_CBC  = 0, ///< Wrapped AES initial vector (TLS1.2 AES-CBC)
-    RSIP_INITIAL_VECTOR_TYPE_AES_TLS12_AEAD = 1, ///< Wrapped AES nonce (TLS1.2 AES AEAD)
-    RSIP_INITIAL_VECTOR_TYPE_AES_TLS13_AEAD = 2, ///< Wrapped AES nonce (TLS1.3 AES AEAD)
+    RSIP_INITIAL_VECTOR_TYPE_AES_16_BYTE,    ///< Wrapped AES initial vector (unprocessed)
+    RSIP_INITIAL_VECTOR_TYPE_AES_TLS12_AEAD, ///< Wrapped AES nonce (TLS1.2 AES AEAD)
+    RSIP_INITIAL_VECTOR_TYPE_AES_TLS13_AEAD, ///< Wrapped AES nonce (TLS1.3 AES AEAD)
 } rsip_initial_vector_type_t;
 
-/** Channel number of on-the-fly decryption module. */
+/** Channel number of on-the-fly decryption/encryption module. */
 typedef enum e_rsip_otf_channel
 {
     RSIP_OTF_CHANNEL_0,                ///< Channel 0
     RSIP_OTF_CHANNEL_1,                ///< Channel 1
+    RSIP_OTF_CHANNEL_2,                ///< Channel 2
     RSIP_OTF_CHANNEL_NUM               // Number of channels
 } rsip_otf_channel_t;
 
-/** Wrapped key structure for all supported algorithms. The struct length of each algorithm is defined in @ref rsip_byte_size_wrapped_key_t. */
+/** Wrapped key structure for all supported algorithms. */
 typedef struct st_rsip_wrapped_key
 {
-    uint8_t alg;                       // Internal algorithm ID
-    uint8_t subtype;                   // Internal key type ID
-    uint8_t info[2];                   // Reserved area
-
-    uint8_t value[];                   // Variable length array to store the key value
+    rsip_key_type_t type;              ///< Key type
+    void          * p_value;           ///< Key value
 } rsip_wrapped_key_t;
 
-/** Wrapped MAC structure for KDF APIs. */
-typedef struct st_rsip_wrapped_mac
+/** Wrapped Derived Keying Material (DKM) structure for KDF APIs. */
+typedef struct st_rsip_wrapped_dkm
 {
     uint8_t  alg;                      // Internal algorithm ID
     uint8_t  subtype;                  // Internal key type ID
     uint8_t  info[2];                  // Reserved area
-    uint32_t block_length;             // MAC block length
-    uint32_t blocks;                   // Number of MAC blocks
+    uint32_t block_length;             // DKM block length
+    uint32_t blocks;                   // Number of DKM blocks
 
     uint8_t value[];                   // Variable length array to store the data value
-} rsip_wrapped_mac_t;
+} rsip_wrapped_dkm_t;
 
-/** Wrapped DKM structure for KDF APIs. */
-typedef rsip_wrapped_mac_t rsip_wrapped_dkm_t;
+/** Allocate an instance specific handle to pass into the API calls. */
+typedef void rsip_sha_handle_abstractor_t;
 
-/** Wrapped ECDH secret structure for ECDH and KDF APIs. */
-typedef struct st_rsip_wrapped_secret
-{
-    uint8_t type;                                              // Internal key type ID
-    uint8_t info[3];                                           // Reserved area
-    uint8_t value[RSIP_CFG_BYTE_SIZE_ECDH_WRAPPED_SECRET_MAX]; // Wrapped secret
-} rsip_wrapped_secret_t;
+/** Allocate an instance specific handle to pass into the API calls. */
+typedef void rsip_hmac_handle_abstractor_t;
 
-/** Key Update Key (KUK) */
-typedef struct st_rsip_key_update_key
-{
-    uint8_t value[RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_KEY_UPDATE_KEY];
-} rsip_key_update_key_t;
+/** Allocate an instance specific handle to pass into the API calls. */
+typedef void rsip_kdf_sha_handle_abstractor_t;
 
-/** Working area for SHA functions. DO NOT MODIFY. */
-typedef struct st_rsip_sha_handle
-{
-    rsip_hash_type_t         type;                                                      // Hash type
-    uint8_t                  buffer[RSIP_CFG_BYTE_SIZE_SHA_BLOCK_MAX];                  // Stored message
-    uint32_t                 buffered_length;                                           // Buffered message length
-    uint32_t                 total_length;                                              // Total message length input to primitive
-    uint32_t                 block_size;                                                // Block size
-    uint32_t                 internal_state[RSIP_CFG_WORD_SIZE_SHA_INTERNAL_STATE_MAX]; // Internal state
-    rsip_user_handle_state_t handle_state;                                              // Handle state
-} rsip_sha_handle_t;
+/** Allocate an instance specific handle to pass into the API calls. */
+typedef void rsip_kdf_hmac_handle_abstractor_t;
 
-/** Working area for HMAC functions. DO NOT MODIFY. */
-typedef struct st_rsip_hmac_handle
-{
-    const void             * p_func;                                                     // Pointer to primitive functions
-    uint8_t                  wrapped_key[RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_HMAC_MAX];       // Stored wrapped key
-    uint8_t                  buffer[RSIP_CFG_BYTE_SIZE_HMAC_BLOCK_MAX];                  // Stored message
-    uint32_t                 buffered_length;                                            // Buffered message length
-    uint32_t                 total_length;                                               // Total message length input to primitive
-    uint32_t                 block_size;                                                 // Block size
-    uint32_t                 internal_state[RSIP_CFG_WORD_SIZE_HMAC_INTERNAL_STATE_MAX]; // Internal state
-    rsip_user_handle_state_t handle_state;                                               // Handle state
-} rsip_hmac_handle_t;
+/** Allocate an instance specific handle to pass into the API calls. */
+typedef void rsip_wrapped_secret_abstractor_t;
 
-/** Working area for KDF SHA functions. DO NOT MODIFY. */
-typedef struct st_rsip_kdf_sha_handle
-{
-    rsip_hash_type_t         type;                                                      // Hash type
-    uint8_t                  buffer1[RSIP_CFG_BYTE_SIZE_KDF_SHA_PLAIN_MSG1_MAX];        // Stored message1
-    uint32_t                 buffered_length1;                                          // Buffered message length1
-    uint8_t                  buffer2[RSIP_CFG_BYTE_SIZE_KDF_SHA_PLAIN_MSG2_MAX];        // Stored message2
-    uint32_t                 buffered_length2;                                          // Buffered message length2
-    uint32_t                 total_length;                                              // Total message length input to primitive
-    uint32_t                 block_size;                                                // Block size
-    uint32_t                 internal_state[RSIP_CFG_WORD_SIZE_SHA_INTERNAL_STATE_MAX]; // Internal state
-    rsip_user_handle_state_t handle_state;                                              // Handle state
+/** Allocate an instance specific handle to pass into the API calls. */
+typedef void rsip_verified_cert_info_abstractor_t;
 
-    uint8_t  wrapped_msg[RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MSG_MAX];                       // Wrapped message
-    uint32_t wrapped_msg_length;                                                        // Wrapped message length
-    uint32_t actual_wrapped_msg_length;                                                 // Actual wrapped message length
-} rsip_kdf_sha_handle_t;
-
-/** Working area for KDF HMAC functions. DO NOT MODIFY. */
-typedef struct st_rsip_kdf_hmac_handle
-{
-    const void             * p_func;                                                     // Pointer to primitive functions
-    uint8_t                  wrapped_key[RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_KDF_HMAC_MAX];   // Stored wrapped key
-    uint8_t                  buffer[RSIP_CFG_BYTE_SIZE_HMAC_BLOCK_MAX];                  // Stored message
-    uint32_t                 buffered_length;                                            // Buffered message length
-    uint32_t                 total_length;                                               // Total message length input to primitive
-    uint32_t                 block_size;                                                 // Block size
-    uint32_t                 internal_state[RSIP_CFG_WORD_SIZE_HMAC_INTERNAL_STATE_MAX]; // Internal state
-    rsip_user_handle_state_t handle_state;                                               // Handle state
-
-    uint8_t  wrapped_msg[RSIP_CFG_BYTE_SIZE_KDF_WRAPPED_MSG_MAX];                        // Wrapped message
-    uint32_t wrapped_msg_length;                                                         // Wrapped message length
-    uint32_t actual_wrapped_msg_length;                                                  // Actual wrapped message length
-} rsip_kdf_hmac_handle_t;
-
-/** Verified certificate information */
-typedef struct st_rsip_verified_cert_info
-{
-    uint8_t value[RSIP_CFG_BYTE_SIZE_PKI_ENC_CERT_INFO];
-} rsip_verified_cert_info_t;
-
-/** RSIP Control block. Allocate an instance specific control block to pass into the API calls.
- * @par Implemented as
- * - rsip_instance_ctrl_t
- */
+/** RSIP Control block. Allocate an instance specific control block to pass into the API calls. */
 typedef void rsip_ctrl_t;
 
 /** User configuration structure, used in open function */
@@ -577,23 +357,19 @@ typedef struct st_rsip_api
      * By encrypting data using the wrapped key is output by this API, dead copying of data can be prevented.
      *
      * @param[in,out] p_ctrl        Pointer to control block.
-     * @param[in]     key_type      Outputs key type.
-     * @param[out]    p_wrapped_key Pointer to destination of wrapped key. The length depends on key type. Refer "Key Size Table".
+     * @param[in,out] p_wrapped_key Pointer to destination of wrapped key. The length depends on key type. Refer "Key Size Table".
      */
-    fsp_err_t (* keyGenerate)(rsip_ctrl_t * const p_ctrl, rsip_key_type_t const key_type,
-                              rsip_wrapped_key_t * const p_wrapped_key);
+    fsp_err_t (* keyGenerate)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t * const p_wrapped_key);
 
     /**
      * Generate a wrapped asymmetric key pair from a random number. In this API, user key input is unnecessary.
      * By encrypting data using the wrapped key is output by this API, dead copying of data can be prevented.
      *
      * @param[in,out] p_ctrl                Pointer to control block.
-     * @param[in]     key_pair_type         Output key pair type.
-     * @param[out]    p_wrapped_public_key  Key index for Public Key. The length depends on the key type. Refer "Key Size Table".
-     * @param[out]    p_wrapped_private_key Key index for Private Key. The length depends on the key type. Refer "Key Size Table".
+     * @param[in,out] p_wrapped_public_key  Key index for Public Key. The length depends on the key type. Refer "Key Size Table".
+     * @param[in,out] p_wrapped_private_key Key index for Private Key. The length depends on the key type. Refer "Key Size Table".
      */
-    fsp_err_t (* keyPairGenerate)(rsip_ctrl_t * const p_ctrl, rsip_key_pair_type_t const key_pair_type,
-                                  rsip_wrapped_key_t * const p_wrapped_public_key,
+    fsp_err_t (* keyPairGenerate)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t * const p_wrapped_public_key,
                                   rsip_wrapped_key_t * const p_wrapped_private_key);
 
     /**
@@ -603,13 +379,11 @@ typedef struct st_rsip_api
      * @param[in]     p_key_update_key Pointer to Key Update Key.
      * @param[in]     p_initial_vector Initialization vector when generating encrypted_key.
      *                                 The length is 16 bytes.
-     * @param[in]     key_type         Inputs/Outputs key type.
      * @param[in]     p_encrypted_key  Encrypted user key. The length depends on the key type. Refer "Key Size Table".
-     * @param[out]    p_wrapped_key    Pointer to destination of wrapped key. The length depends on key type. Refer "Key Size Table".
+     * @param[in,out] p_wrapped_key    Pointer to destination of wrapped key. The length depends on key type. Refer "Key Size Table".
      */
-    fsp_err_t (* encryptedKeyWrap)(rsip_ctrl_t * const p_ctrl, rsip_key_update_key_t const * const p_key_update_key,
-                                   uint8_t const * const p_initial_vector, rsip_key_type_t const key_type,
-                                   uint8_t const * const p_encrypted_key,
+    fsp_err_t (* encryptedKeyWrap)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_key_update_key,
+                                   void const * const p_initial_vector, void const * const p_encrypted_key,
                                    rsip_wrapped_key_t * const p_wrapped_key);
 
     /**
@@ -631,26 +405,12 @@ typedef struct st_rsip_api
      *
      * @param[in,out] p_ctrl                       Pointer to control block.
      * @param[in]     p_wrapped_kek                Pointer to wrapped key-encryption-key used to RFC3394-unwrap the target key.
-     * @param[in]     key_type                     Key type of p_rfc3394_wrapped_target_key.
      * @param[in]     p_rfc3394_wrapped_target_key Pointer to AES-wrapped target key to be RFC3394-unwrapped.
-     * @param[out]    p_wrapped_target_key         Pointer to destination of RFC3394-unwrapped target key.
+     * @param[in,out] p_wrapped_target_key         Pointer to destination of RFC3394-unwrapped target key.
      */
     fsp_err_t (* rfc3394_KeyUnwrap)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_kek,
-                                    rsip_key_type_t const key_type, uint8_t const * const p_rfc3394_wrapped_target_key,
+                                    uint8_t const * const p_rfc3394_wrapped_target_key,
                                     rsip_wrapped_key_t * const p_wrapped_target_key);
-
-    /**
-     * This function provides the ability to construct structure data "rsip_wrapped_key_t" from injected key data.
-     * The value of injected key is not validated in this API. Refer "Key Size Table" for supported key types.
-     *
-     * @param[in]  key_type                  Key type of p_injected_key.
-     * @param[in]  p_injected_key            Pointer to key to be injected.
-     * @param[out] p_wrapped_key             Pointer to destination of wrapped key.
-     * @param[in]  wrapped_key_buffer_length Length of p_wrapped_key destination.
-     *                                       It must be equal to or greater than actual wrapped key.
-     */
-    fsp_err_t (* injectedKeyImport)(rsip_key_type_t const key_type, uint8_t const * const p_injected_key,
-                                    rsip_wrapped_key_t * const p_wrapped_key, uint32_t const wrapped_key_buffer_length);
 
     /**
      * Exports public key parameters from a wrapped key.
@@ -877,7 +637,7 @@ typedef struct st_rsip_api
      */
     fsp_err_t (* ecdhKeyAgree)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_private_key,
                                rsip_wrapped_key_t const * const p_wrapped_public_key,
-                               rsip_wrapped_secret_t * const p_wrapped_secret);
+                               rsip_wrapped_secret_abstractor_t * const p_wrapped_secret);
 
     /**
      * Computes ECDH secret with wrapped private key and plain public key.
@@ -889,7 +649,7 @@ typedef struct st_rsip_api
      */
     fsp_err_t (* ecdhPlainKeyAgree)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_private_key,
                                     uint8_t const * const p_plain_public_key,
-                                    rsip_wrapped_secret_t * const p_wrapped_secret);
+                                    rsip_wrapped_secret_abstractor_t * const p_wrapped_secret);
 
     /**
      * Encrypts plaintext with raw RSA.
@@ -1085,7 +845,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[out]    p_handle Pointer to destination of SHA control block.
      */
-    fsp_err_t (* shaSuspend)(rsip_ctrl_t * const p_ctrl, rsip_sha_handle_t * const p_handle);
+    fsp_err_t (* shaSuspend)(rsip_ctrl_t * const p_ctrl, rsip_sha_handle_abstractor_t * const p_handle);
 
     /**
      * Resume SHA generation.
@@ -1094,7 +854,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[in]     p_handle Pointer to SHA control block.
      */
-    fsp_err_t (* shaResume)(rsip_ctrl_t * const p_ctrl, rsip_sha_handle_t const * const p_handle);
+    fsp_err_t (* shaResume)(rsip_ctrl_t * const p_ctrl, rsip_sha_handle_abstractor_t const * const p_handle);
 
     /**
      * Generates HMAC.
@@ -1165,7 +925,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[out]    p_handle Pointer to destination of HMAC control block.
      */
-    fsp_err_t (* hmacSuspend)(rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t * const p_handle);
+    fsp_err_t (* hmacSuspend)(rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_abstractor_t * const p_handle);
 
     /**
      * Resume HMAC generation.
@@ -1174,7 +934,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[in]     p_handle Pointer to HMAC control block.
      */
-    fsp_err_t (* hmacResume)(rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_t const * const p_handle);
+    fsp_err_t (* hmacResume)(rsip_ctrl_t * const p_ctrl, rsip_hmac_handle_abstractor_t const * const p_handle);
 
     /**
      * Verifies a public key certificate with ECDSA.
@@ -1182,7 +942,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl               Pointer to control block.
      * @param[in]     p_wrapped_public_key Pointer to wrapped key of ECC public key.
      * @param[in]     p_hash               Pointer to hash value. The length is as same as the key length.
-     * @param[in]     p_signature HMAC     Pointer to signature (r, s). The length is twice as long as the key length.
+     * @param[in]     p_signature          Pointer to signature (r, s). The length is twice as long as the key length.
      */
     fsp_err_t (* pkiEcdsaCertVerify)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_public_key,
                                      uint8_t const * const p_hash, uint8_t const * const p_signature);
@@ -1193,8 +953,8 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl               Pointer to control block.
      * @param[out]    p_verified_cert_info Pointer to certificate to be signed
      */
-    fsp_err_t (* pkiVerifiedCertInfoExport)(rsip_ctrl_t * const               p_ctrl,
-                                            rsip_verified_cert_info_t * const p_verified_cert_info);
+    fsp_err_t (* pkiVerifiedCertInfoExport)(rsip_ctrl_t * const                          p_ctrl,
+                                            rsip_verified_cert_info_abstractor_t * const p_verified_cert_info);
 
     /**
      * Imports verified certificate information.
@@ -1202,8 +962,8 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl               Pointer to control block.
      * @param[in]     p_verified_cert_info Pointer to certificate to be signed
      */
-    fsp_err_t (* pkiVerifiedCertInfoImport)(rsip_ctrl_t * const                     p_ctrl,
-                                            rsip_verified_cert_info_t const * const p_verified_cert_info);
+    fsp_err_t (* pkiVerifiedCertInfoImport)(rsip_ctrl_t * const                                p_ctrl,
+                                            rsip_verified_cert_info_abstractor_t const * const p_verified_cert_info);
 
     /**
      * Wraps the public key in the verified public key certificate.
@@ -1211,7 +971,6 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl               Pointer to control block.
      * @param[in]     p_cert               Pointer to certificate.
      * @param[in]     cert_length          Certificate length.
-     * @param[in]     key_type             Key type of the public key in certificate.
      * @param[in]     p_key_param1         Pointer to start address of the public key parameter in certificate.
      *                                     - [ECC] Qx
      * @param[in]     key_param1_length    Length of key_param1 stored in the certificate.
@@ -1219,13 +978,12 @@ typedef struct st_rsip_api
      *                                     - [ECC] Qy
      * @param[in]     key_param2_length    Length of key_param2 stored in the certificate.
      * @param[in]     hash_function        The hash function used when verifying certificate signature.
-     * @param[out]    p_wrapped_public_key Pointer to wrapped key of public key in the certificate.
+     * @param[in,out] p_wrapped_public_key Pointer to wrapped key of public key in the certificate.
      */
     fsp_err_t (* pkiCertKeyImport)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_cert, uint32_t const cert_length,
-                                   rsip_key_type_t const key_type, uint8_t const * const p_key_param1,
-                                   uint32_t const key_param1_length,
-                                   uint8_t const * const p_key_param2, uint32_t const key_param2_length,
-                                   rsip_hash_type_t const hash_function,
+                                   uint8_t const * const p_key_param1, uint32_t const key_param1_length,
+                                   uint8_t const * const p_key_param2,
+                                   uint32_t const key_param2_length, rsip_hash_type_t const hash_function,
                                    rsip_wrapped_key_t * const p_wrapped_public_key);
 
     /**
@@ -1234,7 +992,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl    Pointer to control block.
      * @param[in]     hash_type Generating hash type.
      */
-    fsp_err_t (* kdfshaInit)(rsip_ctrl_t * const p_ctrl, rsip_hash_type_t const hash_type);
+    fsp_err_t (* kdfShaInit)(rsip_ctrl_t * const p_ctrl, rsip_hash_type_t const hash_type);
 
     /**
      * Inputs wrapped ECDH secret as a message.
@@ -1242,8 +1000,8 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl           Pointer to control block.
      * @param[in]     p_wrapped_secret Pointer to wrapped secret.
      */
-    fsp_err_t (* kdfshaEcdhSecretUpdate)(rsip_ctrl_t * const                 p_ctrl,
-                                         rsip_wrapped_secret_t const * const p_wrapped_secret);
+    fsp_err_t (* kdfShaEcdhSecretUpdate)(rsip_ctrl_t * const                            p_ctrl,
+                                         rsip_wrapped_secret_abstractor_t const * const p_wrapped_secret);
 
     /**
      * Inputs message.
@@ -1252,7 +1010,7 @@ typedef struct st_rsip_api
      * @param[in]     p_message      Pointer to message. The length is message_length.
      * @param[in]     message_length Byte length of message (0 or more bytes).
      */
-    fsp_err_t (* kdfshaUpdate)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_message,
+    fsp_err_t (* kdfShaUpdate)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_message,
                                uint32_t const message_length);
 
     /**
@@ -1261,7 +1019,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl        Pointer to control block.
      * @param[out]    p_wrapped_dkm Pointer to destination of wrapped DKM.
      */
-    fsp_err_t (* kdfshaFinish)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t * const p_wrapped_dkm);
+    fsp_err_t (* kdfShaFinish)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t * const p_wrapped_dkm);
 
     /**
      * Suspend SHA generation.
@@ -1269,7 +1027,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[out]    p_handle Pointer to destination of KDF SHA control block.
      */
-    fsp_err_t (* kdfshaSuspend)(rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_t * const p_handle);
+    fsp_err_t (* kdfShaSuspend)(rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_abstractor_t * const p_handle);
 
     /**
      * Resume SHA generation.
@@ -1277,72 +1035,29 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[in]     p_handle Pointer to KDF SHA control block.
      */
-    fsp_err_t (* kdfshaResume)(rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_t const * const p_handle);
+    fsp_err_t (* kdfShaResume)(rsip_ctrl_t * const p_ctrl, rsip_kdf_sha_handle_abstractor_t const * const p_handle);
 
     /**
-     * Concatenates two wrapped DKMs.
-     *
-     * @param[in,out] p_wrapped_dkm1             Pointer to first DKM (DKM1).
-     * @param[in]     p_wrapped_dkm2             Pointer to second DKM (DKM2).
-     * @param[in]     wrapped_dkm1_buffer_length Length of wrapped_dkm1 buffer.
-     *                                           It must be equal to or greater than DKM1 || DKM2.
-     */
-    fsp_err_t (* kdfshaDkmConcatenate)(rsip_wrapped_dkm_t * const       p_wrapped_dkm1,
-                                       rsip_wrapped_dkm_t const * const p_wrapped_dkm2,
-                                       uint32_t const                   wrapped_dkm1_buffer_length);
-
-    /**
-     * Outputs a wrapped key from DKM information.
+     * Converts wrapped Derived Keying Material (DKM) to HMAC key for KDF.
      *
      * @param[in,out] p_ctrl        Pointer to control block.
-     * @param[in]     p_wrapped_dkm Pointer to wrapped data of concatenated DKM.
-     * @param[in]     key_type      Output key type.
-     * @param[in]     position      Start position of output key value in concatenated DKM.
-     * @param[out]    p_wrapped_key Pointer to destination of wrapped key.
+     * @param[in]     p_wrapped_dkm Pointer to wrapped DKM.
+     * @param[in]     key_length    Length of HMAC key to be extracted from DKM.
+     * @param[in,out] p_wrapped_key Pointer to destination wrapped HMAC key for KDF.
      */
-    fsp_err_t (* kdfshaDerivedKeyImport)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t const * const p_wrapped_dkm,
-                                         rsip_key_type_t const key_type, uint32_t const position,
-                                         rsip_wrapped_key_t * const p_wrapped_key);
-
-    /**
-     * Outputs a initial vector from DKM information.
-     *
-     * @param[in,out] p_ctrl                   Pointer to control block.
-     * @param[in]     p_wrapped_dkm            Pointer to wrapped data of concatenated DKM.
-     * @param[in]     initial_vector_type      Initial vector type.
-     * @param[in]     position                 Start position of output data value in concatenated DKM.
-     * @param[in]     p_tls_sequence_num       TLS sequence number. This argument is valid only for TLS-related data type.
-     * @param[out]    p_wrapped_initial_vector Pointer to destination of wrapped initial vector.
-     */
-    fsp_err_t (* kdfshaDerivedIvWrap)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t const * const p_wrapped_dkm,
-                                      rsip_initial_vector_type_t const initial_vector_type, uint32_t const position,
-                                      uint8_t const * const p_tls_sequence_num,
-                                      uint8_t * const p_wrapped_initial_vector);
-
-    /**
-     * Converts wrapped data to wrapped HMAC key for KDF.
-     *
-     * @param[in,out] p_ctrl          Pointer to control block.
-     * @param[in]     key_type        Output HMAC key type for KDF.
-     * @param[in]     p_wrapped_mac   Pointer to wrapped MAC.
-     * @param[in]     kdf_data_length Length of HMAC key to be extracted from MAC.
-     * @param[out]    p_wrapped_key   Pointer to destination wrapped HMAC key for KDF.
-     */
-    fsp_err_t (* kdfMacKeyImport)(rsip_ctrl_t * const p_ctrl, rsip_key_type_t const key_type,
-                                  rsip_wrapped_mac_t const * const p_wrapped_mac, uint32_t const kdf_data_length,
-                                  rsip_wrapped_key_t * const p_wrapped_key);
+    fsp_err_t (* kdfHmacDkmKeyImport)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t const * const p_wrapped_dkm,
+                                      uint32_t const key_length, rsip_wrapped_key_t * const p_wrapped_key);
 
     /**
      * Converts wrapped ECDH secret to wrapped HMAC key for KDF.
      *
      * @param[in,out] p_ctrl           Pointer to control block.
-     * @param[in]     key_type         Output HMAC key type for KDF.
      * @param[in]     p_wrapped_secret Pointer to wrapped secret.
-     * @param[out]    p_wrapped_key    Pointer to destination wrapped HMAC key for KDF.
+     * @param[in,out] p_wrapped_key    Pointer to destination wrapped HMAC key for KDF.
      */
-    fsp_err_t (* kdfEcdhSecretKeyImport)(rsip_ctrl_t * const p_ctrl, rsip_key_type_t const key_type,
-                                         rsip_wrapped_secret_t const * const p_wrapped_secret,
-                                         rsip_wrapped_key_t * const p_wrapped_key);
+    fsp_err_t (* kdfHmacEcdhSecretKeyImport)(rsip_ctrl_t * const                            p_ctrl,
+                                             rsip_wrapped_secret_abstractor_t const * const p_wrapped_secret,
+                                             rsip_wrapped_key_t * const                     p_wrapped_key);
 
     /**
      * Prepares a HMAC generation.
@@ -1350,15 +1065,15 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl        Pointer to control block.
      * @param[in]     p_wrapped_key Pointer to wrapped key of HMAC key.
      */
-    fsp_err_t (* kdfhmacInit)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_key);
+    fsp_err_t (* kdfHmacInit)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_key);
 
     /**
-     * Inputs wrapped MAC as a message.
+     * Inputs wrapped Derived Keying Material (DKM) as a message.
      *
      * @param[in,out] p_ctrl         Pointer to control block.
-     * @param[in]     p_wrapped_mac  Pointer to wrapped MAC.
+     * @param[in]     p_wrapped_dkm  Pointer to wrapped DKM.
      */
-    fsp_err_t (* kdfhmacMacUpdate)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_mac_t const * const p_wrapped_mac);
+    fsp_err_t (* kdfHmacDkmUpdate)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t const * const p_wrapped_dkm);
 
     /**
      * Inputs wrapped ECDH secret as a message.
@@ -1366,8 +1081,8 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl           Pointer to control block.
      * @param[in]     p_wrapped_secret Pointer to wrapped secret.
      */
-    fsp_err_t (* kdfhmacEcdhSecretUpdate)(rsip_ctrl_t * const                 p_ctrl,
-                                          rsip_wrapped_secret_t const * const p_wrapped_secret);
+    fsp_err_t (* kdfHmacEcdhSecretUpdate)(rsip_ctrl_t * const                            p_ctrl,
+                                          rsip_wrapped_secret_abstractor_t const * const p_wrapped_secret);
 
     /**
      * Inputs message.
@@ -1376,16 +1091,16 @@ typedef struct st_rsip_api
      * @param[in]     p_message      Pointer to message. The length is message_length.
      * @param[in]     message_length Byte length of message (0 or more bytes).
      */
-    fsp_err_t (* kdfhmacUpdate)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_message,
+    fsp_err_t (* kdfHmacUpdate)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_message,
                                 uint32_t const message_length);
 
     /**
      * Finalizes a HMAC generation.
      *
      * @param[in,out] p_ctrl Pointer to control block.
-     * @param[out]    p_wrapped_mac  Pointer to destination of wrapped MAC.
+     * @param[out]    p_wrapped_dkm  Pointer to destination of wrapped Derived Keying Material (DKM).
      */
-    fsp_err_t (* kdfhmacSignFinish)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_mac_t * const p_wrapped_mac);
+    fsp_err_t (* kdfHmacSignFinish)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t * const p_wrapped_dkm);
 
     /**
      * Suspends HMAC operation.
@@ -1393,7 +1108,7 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[out]    p_handle Pointer to destination of KDF HMAC control block.
      */
-    fsp_err_t (* kdfhmacSuspend)(rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_handle_t * const p_handle);
+    fsp_err_t (* kdfHmacSuspend)(rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_handle_abstractor_t * const p_handle);
 
     /**
      * Resumes HMAC operation suspended by R_RSIP_KDF_HMAC_Suspend().
@@ -1401,44 +1116,42 @@ typedef struct st_rsip_api
      * @param[in,out] p_ctrl   Pointer to control block.
      * @param[in]     p_handle Pointer to KDF HMAC control block.
      */
-    fsp_err_t (* kdfhmacResume)(rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_handle_t const * const p_handle);
+    fsp_err_t (* kdfHmacResume)(rsip_ctrl_t * const p_ctrl, rsip_kdf_hmac_handle_abstractor_t const * const p_handle);
 
     /**
-     * Concatenates two wrapped MACs.
+     * Concatenates two wrapped derived keying materials (DKMs).
      *
-     * @param[in,out] p_wrapped_mac1             Pointer to first MAC (MAC1).
-     * @param[in]     p_wrapped_mac2             Pointer to second MAC (MAC2).
-     * @param[in]     wrapped_mac1_buffer_length Length of wrapped_mac1 buffer.
-     *                                           It must be equal to or greater than MAC1 || MAC2.
+     * @param[in,out] p_wrapped_dkm1             Pointer to first DKM (DKM1).
+     * @param[in]     p_wrapped_dkm2             Pointer to second DKM (DKM2).
+     * @param[in]     wrapped_dkm1_buffer_length Length of wrapped_dkm1 buffer.
+     *                                           It must be equal to or greater than DKM1 || DKM2.
      */
-    fsp_err_t (* kdfMacConcatenate)(rsip_wrapped_mac_t * const       p_wrapped_mac1,
-                                    rsip_wrapped_mac_t const * const p_wrapped_mac2,
-                                    uint32_t const                   wrapped_mac1_buffer_length);
+    fsp_err_t (* kdfDkmConcatenate)(rsip_wrapped_dkm_t * const       p_wrapped_dkm1,
+                                    rsip_wrapped_dkm_t const * const p_wrapped_dkm2,
+                                    uint32_t const                   wrapped_dkm1_buffer_length);
 
     /**
-     * Outputs a wrapped key from KDF output.
+     * Outputs a wrapped key from Derived Keying Material (DKM).
      *
      * @param[in,out] p_ctrl        Pointer to control block.
-     * @param[in]     p_wrapped_mac Pointer to wrapped data of concatenated MAC.
-     * @param[in]     key_type      Output key type.
-     * @param[in]     position      Start position of output key value in concatenated MAC.
-     * @param[out]    p_wrapped_key Pointer to destination of wrapped key.
+     * @param[in]     p_wrapped_dkm Pointer to wrapped DKM.
+     * @param[in]     position      Start position of output key value in the DKM.
+     * @param[in,out] p_wrapped_key Pointer to destination of wrapped key.
      */
-    fsp_err_t (* kdfDerivedKeyImport)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_mac_t const * const p_wrapped_mac,
-                                      rsip_key_type_t const key_type, uint32_t const position,
-                                      rsip_wrapped_key_t * const p_wrapped_key);
+    fsp_err_t (* kdfDerivedKeyImport)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t const * const p_wrapped_dkm,
+                                      uint32_t const position, rsip_wrapped_key_t * const p_wrapped_key);
 
     /**
-     * Outputs a initial vector from KDF output.
+     * Outputs a initial vector from Derived Keying Material (DKM).
      *
      * @param[in,out] p_ctrl                   Pointer to control block.
-     * @param[in]     p_wrapped_mac            Pointer to wrapped data of concatenated MAC.
+     * @param[in]     p_wrapped_dkm            Pointer to wrapped DKM.
      * @param[in]     initial_vector_type      Initial vector type.
-     * @param[in]     position                 Start position of output data value in concatenated MAC.
+     * @param[in]     position                 Start position of output data value in the DKM.
      * @param[in]     p_tls_sequence_num       TLS sequence number. This argument is valid only for TLS-related data type.
      * @param[out]    p_wrapped_initial_vector Pointer to destination of wrapped initial vector.
      */
-    fsp_err_t (* kdfDerivedIvWrap)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_mac_t const * const p_wrapped_mac,
+    fsp_err_t (* kdfDerivedIvWrap)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_dkm_t const * const p_wrapped_dkm,
                                    rsip_initial_vector_type_t const initial_vector_type, uint32_t const position,
                                    uint8_t const * const p_tls_sequence_num, uint8_t * const p_wrapped_initial_vector);
 

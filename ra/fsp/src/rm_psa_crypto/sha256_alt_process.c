@@ -45,12 +45,8 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
     uint32_t   out_data[HW_SCE_SHA256_HASH_STATE_BUFFER_SIZE] = {0};
     uint32_t * outbuff_digest_ptr = out_data;
     uint32_t   sce_hash_type[1];
-  #if BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
-    uint32_t sce_hash_cmd[1] = {(uint32_t) ctx->sce_operation_state};
-  #else
-    uint32_t sce_hash_cmd[1] = {change_endian_long((uint32_t) ctx->sce_operation_state)};
-  #endif
-    uint32_t InData_MsgLen[2];
+    uint32_t   sce_hash_cmd[1] = {(uint32_t) ctx->sce_operation_state};
+    uint32_t   InData_MsgLen[2];
 
     if (1 == ctx->is224)
     {
@@ -70,10 +66,10 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
         ctx->rsip_internal_state[19] = change_endian_long((uint32_t) HW_SCE_LARGE_DATA_VALUE_1);
 
         if (FSP_SUCCESS !=
-            HW_SCE_ShaGenerateMessageDigestSub(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0],
-                                               &ctx->rsip_internal_state[18], &ctx->rsip_internal_state[0],
-                                               outbuff_digest_ptr, &ctx->rsip_internal_state[0],
-                                               BYTES_TO_WORDS(len)))
+            HW_SCE_ShaGenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0],
+                                                      &ctx->rsip_internal_state[18], &ctx->rsip_internal_state[0],
+                                                      outbuff_digest_ptr, &ctx->rsip_internal_state[0],
+                                                      BYTES_TO_WORDS(len), NULL))
         {
             return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
         }
@@ -81,56 +77,42 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
     else if (SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND == ctx->sce_operation_state)
     {
         if (FSP_SUCCESS !=
-            HW_SCE_ShaGenerateMessageDigestSub(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
-                                               &ctx->rsip_internal_state[0], outbuff_digest_ptr,
-                                               &ctx->rsip_internal_state[0], BYTES_TO_WORDS(len)))
+            HW_SCE_ShaGenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
+                                                      &ctx->rsip_internal_state[0], outbuff_digest_ptr,
+                                                      &ctx->rsip_internal_state[0], BYTES_TO_WORDS(len), NULL))
         {
             return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
         }
     }
     else if (SCE_OEM_CMD_HASH_RESUME_TO_FINAL == ctx->sce_operation_state)
     {
-   #if BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
-        InData_MsgLen[0]             = r_sce_byte_to_bit_convert_upper(ctx->total[0]);
-        InData_MsgLen[1]             = r_sce_byte_to_bit_convert_lower(ctx->total[0]);
-        ctx->rsip_internal_state[18] = r_sce_byte_to_bit_convert_upper(len);
-        ctx->rsip_internal_state[19] = r_sce_byte_to_bit_convert_lower(len);
-        ctx->sce_operation_state     = SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND;
-        if (FSP_SUCCESS !=
-            HW_SCE_ShaGenerateMessageDigestSub(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], InData_MsgLen,
-                                               &ctx->rsip_internal_state[0], outbuff_digest_ptr,
-                                               &ctx->rsip_internal_state[0], BYTES_TO_WORDS(len)))
-        {
-            return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-        }
-
-        memcpy(&ctx->state[0], out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
-   #else
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
         ctx->rsip_internal_state[16] = r_sce_byte_to_bit_convert_lower(ctx->total[0]);
+   #endif
         ctx->rsip_internal_state[17] = r_sce_byte_to_bit_convert_upper(ctx->total[0]);
         ctx->rsip_internal_state[18] = r_sce_byte_to_bit_convert_upper(len);
         ctx->rsip_internal_state[19] = r_sce_byte_to_bit_convert_lower(len);
 
         if (FSP_SUCCESS !=
-            HW_SCE_ShaGenerateMessageDigestSub(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
-                                               &ctx->rsip_internal_state[0], outbuff_digest_ptr,
-                                               &ctx->rsip_internal_state[0], BYTES_TO_WORDS(len)))
+            HW_SCE_ShaGenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
+                                                      &ctx->rsip_internal_state[0], outbuff_digest_ptr,
+                                                      &ctx->rsip_internal_state[0], BYTES_TO_WORDS(len), NULL))
         {
             return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
         }
+
         memcpy(&ctx->state[0], out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
-   #endif
     }
     else
     {
         /* One-shot case. */
         InData_MsgLen[0] = r_sce_byte_to_bit_convert_upper(ctx->total[0]);
         InData_MsgLen[1] = r_sce_byte_to_bit_convert_lower(ctx->total[0]);
-
         if (FSP_SUCCESS !=
-            HW_SCE_ShaGenerateMessageDigestSub(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], InData_MsgLen,
-                                               &ctx->rsip_internal_state[0], outbuff_digest_ptr,
-                                               &ctx->rsip_internal_state[0], BYTES_TO_WORDS(len)))
+            HW_SCE_ShaGenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], InData_MsgLen,
+                                                      &ctx->rsip_internal_state[0], outbuff_digest_ptr,
+                                                      &ctx->rsip_internal_state[0], BYTES_TO_WORDS(len),
+                                                      &ctx->state[0]))
         {
             return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
         }
@@ -138,23 +120,11 @@ int mbedtls_internal_sha256_process_ext (mbedtls_sha256_context * ctx,
         memcpy(&ctx->state[0], out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
     }
 
-  #elif BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
-    InData_MsgLen[0] = BYTES_TO_WORDS(len);
-    FSP_PARAMETER_NOT_USED(sce_hash_cmd);
-    FSP_PARAMETER_NOT_USED(sce_hash_type);
-
-    if (FSP_SUCCESS !=
-        HW_SCE_ShaGenerateMessageDigestSub(&ctx->state[0], (uint32_t *) &data[0], outbuff_digest_ptr, InData_MsgLen[0]))
-    {
-        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
-    }
-
-    memcpy(&ctx->state[0], out_data, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
   #else
     InData_MsgLen[0] = BYTES_TO_WORDS(len);
     if (FSP_SUCCESS !=
-        HW_SCE_ShaGenerateMessageDigestSub(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], InData_MsgLen,
-                                           &ctx->state[0], outbuff_digest_ptr, NULL, InData_MsgLen[0]))
+        HW_SCE_ShaGenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], InData_MsgLen,
+                                                  NULL, outbuff_digest_ptr, NULL, BYTES_TO_WORDS(len), &ctx->state[0]))
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }

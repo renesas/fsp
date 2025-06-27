@@ -118,7 +118,7 @@ typedef struct st_jpeg_callback_args
 {
     jpeg_status_t status;              ///< JPEG status
     uint32_t      image_size;          ///< JPEG image size
-    void const  * p_context;           ///< Pointer to user-provided context
+    void        * p_context;           ///< Pointer to user-provided context
 } jpeg_callback_args_t;
 
 /** User configuration structure, used in open function. */
@@ -142,7 +142,7 @@ typedef struct st_jpeg_cfg
     jpeg_decode_pixel_format_t pixel_format;                   ///< Pixel format
     uint8_t alpha_value;                                       ///< Alpha value to be applied to decoded pixel data. Only valid for ARGB8888 format.
     void (* p_decode_callback)(jpeg_callback_args_t * p_args); ///< User-supplied callback functions.
-    void const * p_decode_context;                             ///< Placeholder for user data.  Passed to user callback in ::jpeg_callback_args_t.
+    void * p_decode_context;                                   ///< Placeholder for user data.  Passed to user callback in ::jpeg_callback_args_t.
 #endif
 
 #if JPEG_CFG_ENCODE_ENABLE
@@ -161,7 +161,7 @@ typedef struct st_jpeg_cfg
     uint8_t const   * p_huffman_chroma_ac_table;               ///< Huffman AC table for chroma
     uint8_t const   * p_huffman_chroma_dc_table;               ///< Huffman DC table for chroma
     void (* p_encode_callback)(jpeg_callback_args_t * p_args); ///< User-supplied callback functions.
-    void const * p_encode_context;                             ///< Placeholder for user data.  Passed to user callback in ::jpeg_callback_args_t.
+    void * p_encode_context;                                   ///< Placeholder for user data.  Passed to user callback in ::jpeg_callback_args_t.
 #endif
 } jpeg_cfg_t;
 

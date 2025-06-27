@@ -26,6 +26,7 @@
 | [emWin](https://www.renesas.com/us/en/software-tool/segger-emwin-gui-library-renesas-ra-products#overview), AppWizard | SEGGER-Renesas | Renesas Sub-license Agreement                   |
 | TES Dave2D                                            | TES Electronics Solutions GmBH     | [Renesas Open License v1.0](#renesas-open-license-v10)                                      |
 | [TinyCrypt](https://github.com/intel/tinycrypt/)      | Intel Corporation                  | BSD-3-Clause and BSD-2-Clause. See [LICENSE](https://github.com/intel/tinycrypt/blob/master/LICENSE)|
+| [LVGL](https://github.com/lvgl/lvgl)                  | LVGL Kft                           | MIT and [Other](https://github.com/lvgl/lvgl/blob/master/COPYRIGHTS.md). [Built-In Fonts](https://github.com/lvgl/lvgl/tree/master/scripts/built_in_font/font_license)|
 
 ## BSD 3-Clause License
 

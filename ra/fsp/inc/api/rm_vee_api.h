@@ -91,7 +91,7 @@ typedef enum e_rm_vee_state
 typedef struct st_rm_vee_callback_args
 {
     rm_vee_state_t state;              ///< State of the Virtual EEPROM
-    void const   * p_context;          ///< Placeholder for user data. Set in @ref rm_vee_api_t::open function in::rm_vee_cfg_t.
+    void         * p_context;          ///< Placeholder for user data. Set in @ref rm_vee_api_t::open function in::rm_vee_cfg_t.
 } rm_vee_callback_args_t;
 
 /** User configuration structure, used in open function */
@@ -104,7 +104,7 @@ typedef struct st_rm_vee_cfg
     uint32_t   record_max_id;                             ///< Maximum record ID that can be used
     uint16_t * rec_offset;                                ///< Pointer to buffer used for record offset caching
     void (* p_callback)(rm_vee_callback_args_t * p_args); ///< Callback provided when a Virtual EEPROM event occurs.
-    void const * p_context;                               ///< Placeholder for user data.
+    void       * p_context;                               ///< Placeholder for user data.
     void const * p_extend;                                ///< Pointer to hardware dependent configuration
 } rm_vee_cfg_t;
 
@@ -193,7 +193,7 @@ typedef struct st_rm_vee_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(rm_vee_ctrl_t * const p_ctrl, void (* p_callback)(rm_vee_callback_args_t *),
-                              void const * const p_context, rm_vee_callback_args_t * const p_callback_memory);
+                              void * const p_context, rm_vee_callback_args_t * const p_callback_memory);
 
     /** Closes the module and lower level storage device.
      *

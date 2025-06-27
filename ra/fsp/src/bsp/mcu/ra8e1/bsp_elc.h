@@ -105,7 +105,6 @@ typedef enum e_elc_event_ra8e1
     ELC_EVENT_SSI0_TXI                      = (0x073), // Transmit data empty
     ELC_EVENT_SSI0_RXI                      = (0x074), // Receive data full
     ELC_EVENT_SSI0_INT                      = (0x076), // Error interrupt
-    ELC_EVENT_SSI1_TXI_RXI                  = (0x079), // DEPRECATED, do not use
     ELC_EVENT_SSI1_TXI                      = (0x079), // Receive data full/Transmit data empty
     ELC_EVENT_SSI1_RXI                      = (0x079), // Receive data full/Transmit data empty
     ELC_EVENT_SSI1_INT                      = (0x07A), // Error interrupt

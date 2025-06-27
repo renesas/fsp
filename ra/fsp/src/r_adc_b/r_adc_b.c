@@ -41,6 +41,9 @@
 #define R_ADC_B_ADCALSTR_GAIN_OFFSET_1_CAL_Msk    (0x200UL)
 #define R_ADC_B_ADCALSTR_SAMPLE_HOLD_1_CAL_Msk    (0x400UL)
 
+#define R_ADC_B_ADGSPCR_GRP_PRI_CTRL_123_Msk      (0x7)
+#define R_ADC_B_ADGSPCR_GRP_PRI_CTRL_4_Msk        (0x8)
+
 #define ADC_B_PCR_PRKEY                           (0xA500U)
 
 /***********************************************************************************************************************
@@ -154,6 +157,7 @@ const adc_api_t g_adc_on_adc_b =
 fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
 {
     adc_b_instance_ctrl_t * p_instance_ctrl = (adc_b_instance_ctrl_t *) p_ctrl;
+    uint32_t                adgspcr_value   = 0;
 #if ADC_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_cfg);
@@ -197,8 +201,22 @@ fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
 #endif
     R_ADC_B->ADMDR = p_extend->adc_b_mode;
 
-    /* Disable Group Scan Priority */
-    R_ADC_B->ADGSPCR = 0;
+    /* Configure Group Scan Priority for units 0 and 1 */
+    for (uint8_t i = 0; i < 2; i++)
+    {
+        if (ADC_B_CONVERSION_METHOD_SAR == p_extend->adc_b_converter_mode[i].method)
+        {
+            /* PGS, RSCN and LGRRS bit are set 1 in SAR mode. */
+            adgspcr_value |= (uint32_t) R_ADC_B_ADGSPCR_GRP_PRI_CTRL_123_Msk << (i * 8);
+            if (ADC_B_CONVERTER_MODE_CONTINUOUS_SCAN == p_extend->adc_b_converter_mode[i].mode)
+            {
+                /* GRP bit is set 1 in Continuous Scan mode. */
+                adgspcr_value |= (uint32_t) R_ADC_B_ADGSPCR_GRP_PRI_CTRL_4_Msk << (i * 8);
+            }
+        }
+    }
+
+    R_ADC_B->ADGSPCR = adgspcr_value;
 
     /* Configure A/D conversion state */
     R_ADC_B->ADCNVSTR = p_extend->conversion_state;
@@ -536,7 +554,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
  **********************************************************************************************************************/
 fsp_err_t R_ADC_B_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
                                void (                    * p_callback)(adc_callback_args_t *),
-                               void const * const          p_context,
+                               void * const                p_context,
                                adc_callback_args_t * const p_callback_memory)
 {
     adc_b_instance_ctrl_t * p_ctrl = (adc_b_instance_ctrl_t *) p_api_ctrl;
@@ -579,7 +597,7 @@ fsp_err_t R_ADC_B_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
  * Enables the hardware trigger for a scan depending on how the triggers were configured in the R_ADC_B_ScanCfg call.
  * If the unit was configured for ELC, GPT, or external hardware triggering, then this function allows the trigger
  * signal to get to the ADC unit. The function is not able to control the generation of the trigger itself.
- * If the unit was configured for software triggering, This function was added to this ADC version for compatability
+ * If the unit was configured for software triggering, This function was added to this ADC version for compatibility
  * with r_adc driver. For additional flexibility, it is recommended to use R_ADC_B_ScanGroupStart.
  *
  * @pre Call R_ADC_B_ScanCfg after R_ADC_B_Open before starting a scan.
@@ -2040,7 +2058,7 @@ void adc_b_fiforeq5678_isr (void)
     /* Save context if RTOS is used */
     FSP_CONTEXT_SAVE
 
-    /* Get groups with less data availabe than threshold */
+    /* Get groups with less data available than threshold */
     adc_group_mask_t group = (adc_group_mask_t) (ADC_B_GROUP_MASK_5678 & R_ADC_B->ADFIFOERSR_b.FIFOFLFn);
     IRQn_Type        irq   = adc_b_isr_handler(ADC_EVENT_FIFO_READ_REQUEST,
                                                group,

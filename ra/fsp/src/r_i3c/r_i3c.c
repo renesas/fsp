@@ -1798,7 +1798,7 @@ void i3c_resp_isr (void)
                 }
                 else
                 {
-                    /* If the command was not successfull, re-enable the IBI Write Buffer Empty/Full IRQ. */
+                    /* If the command was not successful, re-enable the IBI Write Buffer Empty/Full IRQ. */
                     p_ctrl->p_reg->NTIE_b.IBIQEFIE = 1;
                 }
             }
@@ -1986,7 +1986,7 @@ void i3c_rcv_isr (void)
             callback_args.transfer_size = data_length;
             callback_args.event         = I3C_EVENT_READ_COMPLETE;
 
-            /* Reset ther state for read transfers. */
+            /* Reset there state for read transfers. */
             p_ctrl->read_buffer_descriptor = (i3c_read_buffer_descriptor_t) {
                 0
             };
@@ -2077,7 +2077,7 @@ void i3c_rcv_isr (void)
                     /*
                      * In slave mode the IBI Queue Empty/Full flag indicates that the queue is empty. After transitioning to
                      * master mode, this bit indicates if there is status information in the queue. If the IBI queue was empty
-                     * before tranistioning to master mode, then it will be set and the status should be cleared.
+                     * before transitioning to master mode, then it will be set and the status should be cleared.
                      */
                     p_ctrl->p_reg->NTST_b.IBIQEFF = 0;
                 }

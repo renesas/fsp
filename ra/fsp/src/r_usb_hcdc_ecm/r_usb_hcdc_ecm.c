@@ -7,53 +7,55 @@
 /***********************************************************************************************************************
  * Includes   <System Includes> , "Project Includes"
  ***********************************************************************************************************************/
-#include "r_usb_hcdc_ecm.h"
+
 #include "r_usb_basic.h"
 #include "r_usb_hcdc.h"
 #include "r_usb_extern.h"
 #include "r_usb_hcdc_driver.h"
 #include "r_ether_api.h"
 #include <stdlib.h>
+#include "r_usb_hcdc_ecm.h"
 
 /***********************************************************************************************************************
  * Macro definitions
  ***********************************************************************************************************************/
-#define USB_HCDC_ECM_MAXIMUM_ETHERNET_FRAME_SIZE        (1514U)
+#define USB_HCDC_ECM_MAXIMUM_ETHERNET_FRAME_SIZE          (1514U)
 
-#define USB_HCDC_ECM_INT_IN_RCV_BUF_SIZE                (64)
-#define USB_HCDC_ECM_DISCRIPTOR_BUF_SIZE                (512)
+#define USB_HCDC_ECM_INT_IN_RCV_BUF_SIZE                  (64)
+#define USB_HCDC_ECM_DISCRIPTOR_BUF_SIZE                  (512)
 
-#define USB_HCDC_ECM_USB_MAX_PACKET_SIZE_FS             (64)
-#define USB_HCDC_ECM_USB_MAX_PACKET_SIZE_HS             (512)
-#define USB_HCDC_ECM_USB_CALLBACK_QUEUE_SIZE            (10)
-#define USB_HCDC_ECM_USB_WRITE_COMPLETE_QUEUE_SIZE      (1)
-#define USB_HCDC_ECM_USB_EVENT_PROCESS_TASK_PRIORITY    configMAX_PRIORITIES - 3
+#define USB_HCDC_ECM_USB_MAX_PACKET_SIZE_FS               (64)
+#define USB_HCDC_ECM_USB_MAX_PACKET_SIZE_HS               (512)
+#define USB_HCDC_ECM_USB_CALLBACK_QUEUE_SIZE              (10)
+#define USB_HCDC_ECM_USB_WRITE_COMPLETE_QUEUE_SIZE        (1)
+#define USB_HCDC_ECM_USB_EVENT_PROCESS_TASK_STACK_SIZE    (1024)
+#define USB_HCDC_ECM_USB_EVENT_PROCESS_TASK_PRIORITY      configMAX_PRIORITIES - 3
 
-#define USB_HCDC_ECM_CDC_SUB_CLASS_ACM                  (0x02)
-#define USB_HCDC_ECM_CDC_SUB_CLASS_ECM                  (0x06)
-#define USB_HCDC_ECM_CDC_READ_DATA_LEN                  USB_HCDC_ECM_MAXIMUM_ETHERNET_FRAME_SIZE * 2
-#define USB_HCDC_ECM_CDC_INTERRUPT_READ_DATA_LEN        (16)
+#define USB_HCDC_ECM_CDC_SUB_CLASS_ACM                    (0x02)
+#define USB_HCDC_ECM_CDC_SUB_CLASS_ECM                    (0x06)
+#define USB_HCDC_ECM_CDC_READ_DATA_LEN                    USB_HCDC_ECM_MAXIMUM_ETHERNET_FRAME_SIZE * 2
+#define USB_HCDC_ECM_CDC_INTERRUPT_READ_DATA_LEN          (16)
 
-#define USB_HCDC_ECM_LANG_ID_USA                        (0x0409)
-#define USB_HCDC_ECM_DESCRITOR_TYPE_CS_INTERFACE        (0x24)
-#define USB_HCDC_ECM_DESCRITOR_SUBTYPE_NETWORKING       (0x0F)
-#define USB_HCDC_ECM_DESCRITOR_SUBTYPE_INDEX            (2)
-#define USB_HCDC_ECM_DESCRITOR_IMACADDRESS_INDEX        (3)
-#define USB_HCDC_ECM_NUM_OF_MACADDRESS_BYTES            (6)
-#define USB_HCDC_ECM_SET_ETHERNET_PACKET_FILTER         (0x4300)
+#define USB_HCDC_ECM_LANG_ID_USA                          (0x0409)
+#define USB_HCDC_ECM_DESCRITOR_TYPE_CS_INTERFACE          (0x24)
+#define USB_HCDC_ECM_DESCRITOR_SUBTYPE_NETWORKING         (0x0F)
+#define USB_HCDC_ECM_DESCRITOR_SUBTYPE_INDEX              (2)
+#define USB_HCDC_ECM_DESCRITOR_IMACADDRESS_INDEX          (3)
+#define USB_HCDC_ECM_NUM_OF_MACADDRESS_BYTES              (6)
+#define USB_HCDC_ECM_SET_ETHERNET_PACKET_FILTER           (0x4300)
 
-#define USB_HCDC_ECM_VALUE_9                            (9)
-#define USB_HCDC_ECM_VALUE_0001H                        (0x0001)
-#define USB_HCDC_ECM_VALUE_0002H                        (0x0002)
-#define USB_HCDC_ECM_VALUE_0003H                        (0x0003)
-#define USB_HCDC_ECM_VALUE_0012H                        (0x0012)
-#define USB_HCDC_ECM_VALUE_001FH                        (0x001F)
-#define USB_HCDC_ECM_VALUE_00FFH                        (0x00FF)
+#define USB_HCDC_ECM_VALUE_9                              (9)
+#define USB_HCDC_ECM_VALUE_0001H                          (0x0001)
+#define USB_HCDC_ECM_VALUE_0002H                          (0x0002)
+#define USB_HCDC_ECM_VALUE_0003H                          (0x0003)
+#define USB_HCDC_ECM_VALUE_0012H                          (0x0012)
+#define USB_HCDC_ECM_VALUE_001FH                          (0x001F)
+#define USB_HCDC_ECM_VALUE_00FFH                          (0x00FF)
 
-#define USB_HCDC_ECM_NO_WAIT_TIME                       (0)
-#define USB_HCDC_ECM_VALUE_ZERO                         (0)
+#define USB_HCDC_ECM_NO_WAIT_TIME                         (0)
+#define USB_HCDC_ECM_VALUE_ZERO                           (0)
 
-#define USB_HCDC_ECM_OPEN                               (('U' << 24U) | ('H' << 16U) | ('C' << 8U) | ('E' << 0U))
+#define USB_HCDC_ECM_OPEN                                 (('U' << 24U) | ('H' << 16U) | ('C' << 8U) | ('E' << 0U))
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -119,11 +121,12 @@ typedef struct st_usb_ecm_target_process_item
     uint8_t    start_of_sequence_number;
 } usb_ecm_target_process_item_t;
 
-static TaskHandle_t  xUsbEventProcessTaskHandle = NULL;
-static QueueHandle_t g_usb_write_complete_queue;
-static QueueHandle_t g_usb_callback_queue;
-static uint16_t      g_i_mac_address;
-static uint8_t       g_mac_address[6] = {0};
+static TaskHandle_t     xUsbEventProcessTaskHandle = NULL;
+static QueueHandle_t    g_usb_write_complete_queue;
+static QueueHandle_t    g_usb_callback_queue;
+static uint16_t         g_i_mac_address;
+static uint8_t          g_mac_address[6] = {0};
+static ether_nic_info_t g_nic_info;
 
 static usb_ecm_target_process_item_t g_target_info = {pdFALSE, NULL, NULL, 0};
 #if (USB_CFG_DMA == USB_CFG_ENABLE)
@@ -143,19 +146,19 @@ static uint8_t g_string_disc_buf[USB_HCDC_ECM_DISCRIPTOR_BUF_SIZE] BSP_ALIGN_VAR
  **********************************************************************************************************************/
 static void prvUsbEventProcessTask(void * const pvParameters);
 
-static void usb_hcdc_ecm_device_activation(usb_hcdc_ecm_instance_ctrl_t const * const p_hcdc_ecm_ctrl,
-                                           usb_ctrl_t * const                         p_usb_ctrl,
-                                           uint8_t                                    device_address,
-                                           usb_ecm_target_process_item_t * const      p_target_process_info);
+static void usb_hcdc_ecm_device_activation(usb_hcdc_ecm_instance_ctrl_t * const  p_hcdc_ecm_ctrl,
+                                           usb_ctrl_t * const                    p_usb_ctrl,
+                                           uint8_t                               device_address,
+                                           usb_ecm_target_process_item_t * const p_target_process_info);
 static void usb_hcdc_ecm_get_mac_address(uint8_t const * const table, uint8_t * const mac_address);
 static void usb_hcdc_ecm_set_configuration(usb_instance_ctrl_t * const p_ctrl,
                                            uint8_t                     device_address,
                                            uint16_t                    config_value);
 static void usb_hcdc_ecm_get_device_descriptor(usb_instance_ctrl_t * const p_ctrl, const uint8_t device_address);
-static void usb_hcdc_ecm_get_configration_descriptor(usb_instance_ctrl_t * const p_ctrl,
-                                                     uint8_t                     device_address,
-                                                     uint16_t                    length,
-                                                     uint16_t                    config_index);
+static void usb_hcdc_ecm_get_configuration_descriptor(usb_instance_ctrl_t * const p_ctrl,
+                                                      uint8_t                     device_address,
+                                                      uint16_t                    length,
+                                                      uint16_t                    config_index);
 static void usb_hcdc_ecm_set_interface(usb_instance_ctrl_t * const p_ctrl, uint8_t device_address);
 static void usb_hcdc_ecm_set_ethernet_packet_filter(usb_instance_ctrl_t * const p_ctrl, uint8_t device_address);
 static void usb_hcdc_ecm_get_string_descriptor(usb_instance_ctrl_t * const p_ctrl,
@@ -200,6 +203,10 @@ fsp_err_t R_USB_HCDC_ECM_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * 
 
     p_hcdc_ecm_ctrl->p_cfg = (ether_cfg_t *) p_cfg;
 
+    p_hcdc_ecm_ctrl->p_callback        = p_cfg->p_callback;
+    p_hcdc_ecm_ctrl->p_context         = p_cfg->p_context;
+    p_hcdc_ecm_ctrl->p_callback_memory = NULL;
+
     p_extended_cfg = (usb_hcdc_ecm_extended_cfg_t *) p_hcdc_ecm_ctrl->p_cfg->p_extend;
 
     p_usb_ctrl = (usb_instance_ctrl_t *) p_extended_cfg->p_usb->p_ctrl;
@@ -217,7 +224,7 @@ fsp_err_t R_USB_HCDC_ECM_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * 
 
     xReturn = xTaskCreate(prvUsbEventProcessTask,
                           "UsbEventProcessTask",
-                          configMINIMAL_STACK_SIZE,
+                          USB_HCDC_ECM_USB_EVENT_PROCESS_TASK_STACK_SIZE,
                           (void *) p_hcdc_ecm_ctrl,
                           USB_HCDC_ECM_USB_EVENT_PROCESS_TASK_PRIORITY,
                           &xUsbEventProcessTaskHandle);
@@ -371,7 +378,7 @@ fsp_err_t R_USB_HCDC_ECM_Read (ether_ctrl_t * const p_ctrl, void * const p_buffe
 
     FSP_ERROR_RETURN((FSP_ERR_USB_FAILED != p_hcdc_ecm_ctrl->receive_status), FSP_ERR_INVALID_STATE);
 
-    /* Setting of Recieved data and data length */
+    /* Setting of Received data and data length */
     memcpy(p_buffer, p_hcdc_ecm_ctrl->read_buffer, p_hcdc_ecm_ctrl->receive_size);
     *p_length_bytes = p_hcdc_ecm_ctrl->receive_size;
 
@@ -481,7 +488,7 @@ fsp_err_t R_USB_HCDC_ECM_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const 
  **********************************************************************************************************************/
 fsp_err_t R_USB_HCDC_ECM_CallbackSet (ether_ctrl_t * const          p_api_ctrl,
                                       void (                      * p_callback)(ether_callback_args_t *),
-                                      void const * const            p_context,
+                                      void * const                  p_context,
                                       ether_callback_args_t * const p_callback_memory)
 {
     usb_hcdc_ecm_instance_ctrl_t * p_ctrl = (usb_hcdc_ecm_instance_ctrl_t *) p_api_ctrl;
@@ -536,7 +543,6 @@ static void prvUsbEventProcessTask (void * const pvParameters)
     uint16_t             * vendor_table;
     uint16_t               vendor_id;
     uint16_t               product_id;
-    TaskHandle_t           task_handle = NULL;
 
     usb_hcdc_ecm_instance_ctrl_t * p_hcdc_ecm_ctrl = (usb_hcdc_ecm_instance_ctrl_t *) pvParameters;
     usb_hcdc_ecm_extended_cfg_t  * p_extended_cfg;
@@ -547,6 +553,8 @@ static void prvUsbEventProcessTask (void * const pvParameters)
     usb_utr_t          utr;
 
     uint8_t * p_config_descriptor;
+
+    ether_callback_args_t arg;
 
     p_extended_cfg = (usb_hcdc_ecm_extended_cfg_t *) p_hcdc_ecm_ctrl->p_cfg->p_extend;
     p_usb_ctrl     = (usb_instance_ctrl_t *) p_extended_cfg->p_usb->p_ctrl;
@@ -631,7 +639,10 @@ static void prvUsbEventProcessTask (void * const pvParameters)
                         p_hcdc_ecm_ctrl->receive_size   = p_event_info->data_size;
                         p_hcdc_ecm_ctrl->receive_status = p_event_info->status;
                         p_hcdc_ecm_ctrl->device_address = p_event_info->device_address;
-                        xTaskNotifyGive(task_handle);
+
+                        arg.event      = ETHER_EVENT_RX_COMPLETE;
+                        arg.p_nic_info = NULL;
+                        usb_hcdc_ecm_call_callback(p_hcdc_ecm_ctrl, &arg);
                     }
                     else
                     {
@@ -660,8 +671,6 @@ static void prvUsbEventProcessTask (void * const pvParameters)
                                        p_hcdc_ecm_ctrl->read_buffer,
                                        USB_HCDC_ECM_CDC_READ_DATA_LEN,
                                        p_event_info->device_address);
-
-                            task_handle = xTaskGetHandle("RXHandlerTask");
                         }
                     }
                     else if (0 ==
@@ -823,17 +832,17 @@ uint16_t usb_hcdc_ecm_check_config (uint8_t * table, uint16_t length)
     return result_code;
 }                                      /* End of function usb_hcdc_ecm_check_config */
 
-static void usb_hcdc_ecm_device_activation (usb_hcdc_ecm_instance_ctrl_t const * const p_hcdc_ecm_ctrl,
-                                            usb_ctrl_t * const                         p_usb_ctrl,
-                                            uint8_t                                    device_address,
-                                            usb_ecm_target_process_item_t * const      p_target_process_info)
+static void usb_hcdc_ecm_device_activation (usb_hcdc_ecm_instance_ctrl_t * const  p_hcdc_ecm_ctrl,
+                                            usb_ctrl_t * const                    p_usb_ctrl,
+                                            uint8_t                               device_address,
+                                            usb_ecm_target_process_item_t * const p_target_process_info)
 {
-    static uint8_t               sequence_number   = 0;
-    static uint8_t               num_configuration = 0;
-    static uint8_t               idx_configuration = 0;
-    static uint8_t               configuration_value;
-    static ether_callback_args_t ether_args;
-    uint16_t get_ecm_config_no;
+    static uint8_t        sequence_number   = 0;
+    static uint8_t        num_configuration = 0;
+    static uint8_t        idx_configuration = 0;
+    static uint8_t        configuration_value;
+    uint16_t              get_ecm_config_no;
+    ether_callback_args_t arg;
 
     if ((0 == sequence_number) && (0 != p_target_process_info->start_of_sequence_number))
     {
@@ -857,10 +866,10 @@ static void usb_hcdc_ecm_device_activation (usb_hcdc_ecm_instance_ctrl_t const *
             idx_configuration = 0;
 
             /* Get Configuration Descrptor (9 byte) */
-            usb_hcdc_ecm_get_configration_descriptor(p_usb_ctrl,
-                                                     device_address,
-                                                     (uint16_t) USB_HCDC_ECM_VALUE_9,
-                                                     idx_configuration);
+            usb_hcdc_ecm_get_configuration_descriptor(p_usb_ctrl,
+                                                      device_address,
+                                                      (uint16_t) USB_HCDC_ECM_VALUE_9,
+                                                      idx_configuration);
             sequence_number++;
             break;
         }
@@ -871,11 +880,11 @@ static void usb_hcdc_ecm_device_activation (usb_hcdc_ecm_instance_ctrl_t const *
             configuration_value = g_disc_buf[USB_DEV_B_CONFIGURATION_VALUE];
 
             /* Get Configuration Descrptor (all byte) */
-            usb_hcdc_ecm_get_configration_descriptor(p_usb_ctrl,
-                                                     device_address,
-                                                     (uint16_t) (((uint16_t) g_disc_buf[3] << 8) +
-                                                                 (uint16_t) g_disc_buf[2]),
-                                                     idx_configuration);
+            usb_hcdc_ecm_get_configuration_descriptor(p_usb_ctrl,
+                                                      device_address,
+                                                      (uint16_t) (((uint16_t) g_disc_buf[3] << 8) +
+                                                                  (uint16_t) g_disc_buf[2]),
+                                                      idx_configuration);
             sequence_number++;
             break;
         }
@@ -901,10 +910,10 @@ static void usb_hcdc_ecm_device_activation (usb_hcdc_ecm_instance_ctrl_t const *
                 if (idx_configuration < num_configuration)
                 {
                     /* Get Configuration Descrptor (9 byte) */
-                    usb_hcdc_ecm_get_configration_descriptor(p_usb_ctrl,
-                                                             device_address,
-                                                             (uint16_t) USB_HCDC_ECM_VALUE_9,
-                                                             idx_configuration);
+                    usb_hcdc_ecm_get_configuration_descriptor(p_usb_ctrl,
+                                                              device_address,
+                                                              (uint16_t) USB_HCDC_ECM_VALUE_9,
+                                                              idx_configuration);
                     sequence_number--;
                 }
                 else
@@ -933,12 +942,14 @@ static void usb_hcdc_ecm_device_activation (usb_hcdc_ecm_instance_ctrl_t const *
 
         case 6:
         {
-            /* Create MAC address information for callback. */
+            /* Create MAC address information for callback which update MAC address. */
             usb_hcdc_ecm_get_mac_address(g_string_disc_buf, g_mac_address);
-            ether_args.p_context = (void const *) g_mac_address;
 
-            /* Callback to application to notify MAC address. */
-            p_hcdc_ecm_ctrl->p_callback(&ether_args);
+            /* Callback to "rm_freertos_plus_tcp" to notify MAC address. */
+            arg.event                     = ETHER_EVENT_GET_NIC_INFO;
+            arg.p_nic_info                = &g_nic_info;
+            arg.p_nic_info->p_mac_address = g_mac_address;
+            usb_hcdc_ecm_call_callback(p_hcdc_ecm_ctrl, &arg);
 
             /* Set Ethernet Packet Filter (No filtering)*/
             usb_hcdc_ecm_set_ethernet_packet_filter(p_usb_ctrl, device_address);
@@ -1023,10 +1034,10 @@ static void usb_hcdc_ecm_get_device_descriptor (usb_instance_ctrl_t * const p_ct
     R_USB_HostControlTransfer(p_ctrl, &setup, &g_disc_buf[0], device_address);
 }                                      /* End of function usb_hcdc_ecm_get_device_descriptor */
 
-static void usb_hcdc_ecm_get_configration_descriptor (usb_instance_ctrl_t * const p_ctrl,
-                                                      uint8_t                     device_address,
-                                                      uint16_t                    length,
-                                                      uint16_t                    config_index)
+static void usb_hcdc_ecm_get_configuration_descriptor (usb_instance_ctrl_t * const p_ctrl,
+                                                       uint8_t                     device_address,
+                                                       uint16_t                    length,
+                                                       uint16_t                    config_index)
 {
     usb_setup_t setup;
     setup.request_type   = USB_GET_DESCRIPTOR | USB_DEV_TO_HOST | USB_STANDARD | USB_DEVICE;
@@ -1036,7 +1047,7 @@ static void usb_hcdc_ecm_get_configration_descriptor (usb_instance_ctrl_t * cons
 
     /* Request Control transfer */
     R_USB_HostControlTransfer(p_ctrl, &setup, &g_disc_buf[0], device_address);
-}                                      /* End of function usb_hcdc_ecm_get_configration_descriptor */
+}                                      /* End of function usb_hcdc_ecm_get_configuration_descriptor */
 
 static void usb_hcdc_ecm_set_interface (usb_instance_ctrl_t * const p_ctrl, uint8_t device_address)
 {
@@ -1100,7 +1111,13 @@ void usb_hcdc_ecm_call_callback (usb_hcdc_ecm_instance_ctrl_t * p_instance_ctrl,
         args = *p_args;
     }
 
-    p_args->event     = p_callback_args->event;
+    p_args->event = p_callback_args->event;
+
+    if (NULL != p_callback_args->p_nic_info)
+    {
+        p_args->p_nic_info = p_callback_args->p_nic_info;
+    }
+
     p_args->p_context = p_instance_ctrl->p_context;
 
 #if BSP_TZ_SECURE_BUILD

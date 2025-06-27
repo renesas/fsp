@@ -16,7 +16,7 @@ FSP_HEADER
 
 typedef struct st_rm_lwip_ether_ctrl
 {
-    /* lwIP Netwrok interface. */
+    /* lwIP Network interface. */
     struct netif * p_netif;
 
     /* Whether the input thread is alive or not. */
@@ -55,7 +55,7 @@ typedef struct st_rm_lwip_ether_cfg
     /* Priority for input thread. */
     int32_t input_thread_priority;
 
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;
 } rm_lwip_ether_cfg_t;
 

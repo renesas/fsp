@@ -64,7 +64,7 @@ typedef struct st_sau_i2c_instance_ctrl
     void (* p_callback)(i2c_master_callback_args_t *);
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } sau_i2c_instance_ctrl_t;
 
 /** SAU I2C extended configuration */
@@ -104,7 +104,7 @@ fsp_err_t R_SAU_I2C_SlaveAddressSet(i2c_master_ctrl_t * const    p_api_ctrl,
                                     i2c_master_addr_mode_t const addr_mode);
 fsp_err_t R_SAU_I2C_CallbackSet(i2c_master_ctrl_t * const          p_api_ctrl,
                                 void (                           * p_callback)(i2c_master_callback_args_t *),
-                                void const * const                 p_context,
+                                void * const                       p_context,
                                 i2c_master_callback_args_t * const p_callback_memory);
 fsp_err_t R_SAU_I2C_StatusGet(i2c_master_ctrl_t * const p_api_ctrl, i2c_master_status_t * p_status);
 fsp_err_t R_SAU_I2C_Start(sau_i2c_instance_ctrl_t * const p_ctrl);

@@ -35,7 +35,7 @@ FSP_HEADER
 typedef enum e_motor_driver_select_adc_instance
 {
     MOTOR_DRIVER_SELECT_ADC_INSTANCE_FIRST = 0, ///< Use first ADC instance
-    MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND,    ///< Use second ADC instanse
+    MOTOR_DRIVER_SELECT_ADC_INSTANCE_SECOND,    ///< Use second ADC instance
 } motor_driver_select_adc_instance_t;
 
 /* Modulation type selection */
@@ -67,9 +67,9 @@ typedef struct st_motor_driver_modulation
 /** For multiple motor */
 typedef struct st_motor_driver_shared_instance_ctrl
 {
-    uint32_t     open;
-    uint8_t      registered_motor_count; ///< Registered motor counts
-    void const * p_context[MOTOR_DRIVER_CFG_SUPPORT_MOTOR_NUM];
+    uint32_t open;
+    uint8_t  registered_motor_count;   ///< Registered motor counts
+    void   * p_context[MOTOR_DRIVER_CFG_SUPPORT_MOTOR_NUM];
 } motor_driver_shared_instance_ctrl_t;
 
 /** For multiple motor */
@@ -84,8 +84,7 @@ typedef struct st_motor_driver_extended_shared_cfg
 typedef struct st_motor_driver_extended_cfg
 {
     uint16_t u2_pwm_timer_freq;                               ///< PWM timer frequency [MHz]
-    float u2_pwm_carrier_freq;                                ///< PWM carrier frequency [kHz] [DEPRECATED]
-    float pwm_carrier_freq;                                   ///< PWM carrier frequency [kHz]
+    float    pwm_carrier_freq;                                ///< PWM carrier frequency [kHz]
     uint16_t u2_deadtime;                                     ///< PWM deadtime [usec]
 
     float f_current_range;                                    ///< A/D current measure range (max current) [A]

@@ -392,7 +392,7 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
 
     if ((NULL != p_advertising_parameter->p_advertising_data) && (0 < p_advertising_parameter->advertising_data_length))
     {
-        /* Configure the GAP Advertisment Payload. */
+        /* Configure the GAP Advertisement Payload. */
         st_ble_gap_adv_data_t advertising_data = {0};
         advertising_data.data_type   = (uint8_t) (BLE_GAP_ADV_DATA_MODE);
         advertising_data.data_length = p_advertising_parameter->advertising_data_length;
@@ -411,10 +411,10 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
         FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_SetAdvSresData(&advertising_data), FSP_ERR_INVALID_ARGUMENT);
     }
 
-    /* Start Legacy Advertisment. */
+    /* Start Legacy Advertisement. */
     FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_StartAdv(0, 0, 0), FSP_ERR_INVALID_ARGUMENT);
 
-    /* Set the internal status flags to indicate the advertisment mode. */
+    /* Set the internal status flags to indicate the advertisement mode. */
     uint32_t status =
         p_advertising_parameter->fast_advertising_period ? BLE_ABS_ADV_STATUS_PARAM_FAST : BLE_ABS_ADV_STATUS_PARAM_SLOW;
     ble_abs_set_advertising_status(p_instance_ctrl, advertising_handle, status, 0);
@@ -996,7 +996,7 @@ static fsp_err_t ble_abs_advertising_report_handler (ble_abs_instance_ctrl_t * c
             while (pos < len)
             {
                 /* Each advertising structure have following constructs.
-                 * - Lenght: 1 byte (The length of AD type + AD data)
+                 * - Length: 1 byte (The length of AD type + AD data)
                  * - AD type: 1 byte
                  * - AD data: variable
                  */

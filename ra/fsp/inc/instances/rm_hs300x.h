@@ -48,12 +48,12 @@ typedef struct st_rm_hs300x_programmnig_mode_params
 /** HS300x Control Block */
 typedef struct rm_hs300x_instance_ctrl
 {
-    uint32_t                            open;                 ///< Open flag
-    rm_hs300x_cfg_t const             * p_cfg;                ///< Pointer to HS300X Configuration
-    rm_comms_instance_t const         * p_comms_i2c_instance; ///< Pointer of I2C Communications Middleware instance structure
-    void const                        * p_context;            ///< Pointer to the user-provided context
-    rm_hs300x_programmnig_mode_params_t programming_mode;     ///< Programming mode flag
-    uint8_t buf[3];                                           ///< Buffer for I2C communications
+    uint32_t                    open;                     ///< Open flag
+    rm_hs300x_cfg_t const     * p_cfg;                    ///< Pointer to HS300X Configuration
+    rm_comms_instance_t const * p_comms_i2c_instance;     ///< Pointer of I2C Communications Middleware instance structure
+    void * p_context;                                     ///< Pointer to the user-provided context
+    rm_hs300x_programmnig_mode_params_t programming_mode; ///< Programming mode flag
+    uint8_t buf[3];                                       ///< Buffer for I2C communications
 
     /* Pointer to callback and optional working memory */
     void (* p_callback)(rm_hs300x_callback_args_t * p_args);

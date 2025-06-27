@@ -36,7 +36,7 @@ int ecp_gen_key_vendor (mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair * key)
 
     ret = mbedtls_ecp_gen_privkey(&key->grp, &key->d, NULL, NULL);
 
-     if (!ret)
+    if (!ret)
     {
         ret = mbedtls_ecp_mul(&key->grp, &key->Q, &key->d, &key->grp.G, NULL, NULL);
     }
@@ -54,7 +54,7 @@ psa_status_t psa_import_ec_private_key_vendor (psa_ecc_family_t       curve,
 {
     psa_status_t          status = PSA_ERROR_CORRUPTION_DETECTED;
     mbedtls_ecp_keypair * ecp    = NULL;
-    size_t curve_bits;
+    size_t                curve_bits;
 
     curve_bits = PSA_BYTES_TO_BITS(PSA_ECC_BYTES_VENDOR_RAW(data_length));
     mbedtls_ecp_group_id grp_id =

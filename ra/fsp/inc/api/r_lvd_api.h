@@ -174,7 +174,7 @@ typedef struct st_lvd_callback_args
 {
     uint32_t            monitor_number; ///< Monitor number
     lvd_current_state_t current_state;  ///< Current state of the voltage monitor
-    void const        * p_context;      ///< Placeholder for user data
+    void              * p_context;      ///< Placeholder for user data
 } lvd_callback_args_t;
 
 /** LVD configuration structure */
@@ -208,7 +208,7 @@ typedef struct st_lvd_cfg
     void (* p_callback)(lvd_callback_args_t * p_args);
 
     /** Placeholder for user data. Passed to the user callback in  */
-    void const * p_context;
+    void * p_context;
 
     /** Extension parameter for hardware specific settings */
     void const * p_extend;
@@ -252,7 +252,7 @@ typedef struct st_lvd_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(lvd_ctrl_t * const p_ctrl, void (* p_callback)(lvd_callback_args_t *),
-                              void const * const p_context, lvd_callback_args_t * const p_callback_memory);
+                              void * const p_context, lvd_callback_args_t * const p_callback_memory);
 
     /** Disables the LVD peripheral.
      * Closes the driver instance.

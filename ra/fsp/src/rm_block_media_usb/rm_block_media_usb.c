@@ -169,7 +169,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
     FSP_ASSERT(NULL != p_extended_cfg->p_usb);
 #endif
 
-    p_instance_ctrl->device_address = USB_DEVICEADDR; /* Temporary proccessing for TrustZone. */
+    p_instance_ctrl->device_address = USB_DEVICEADDR; /* Temporary processing for TrustZone. */
 
     usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
     fsp_err_t        err   = R_USB_HMSC_StorageCommand(p_usb->p_ctrl,
@@ -503,7 +503,7 @@ fsp_err_t RM_BLOCK_MEDIA_USB_Erase (rm_block_media_ctrl_t * const p_ctrl,
 fsp_err_t RM_BLOCK_MEDIA_USB_CallbackSet (rm_block_media_ctrl_t * const p_api_ctrl,
                                           void (                      * p_callback)(
                                               rm_block_media_callback_args_t *),
-                                          void const * const                     p_context,
+                                          void * const                           p_context,
                                           rm_block_media_callback_args_t * const p_callback_memory)
 {
     rm_block_media_usb_instance_ctrl_t * p_ctrl = (rm_block_media_usb_instance_ctrl_t *) p_api_ctrl;

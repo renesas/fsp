@@ -164,11 +164,8 @@ typedef enum e_elc_event_ra2a2
     ELC_EVENT_ICU_IRQ11                     = (0x0AD), // External pin interrupt 11
     ELC_EVENT_CGC_SOSC_STOP                 = (0x0AF), // Sub oscillation stop
     ELC_EVENT_CGC_MOSTD_STOP                = (0x0B0), // Main Clock oscillation stop
-    ELC_EVENT_LVD_VBAT                      = (0x0B1), // DEPRECATED, do not use
     ELC_EVENT_LVD_LVD3                      = (0x0B1), // EXLVDVBAT monitor interrupt
-    ELC_EVENT_LVD_VRTC                      = (0x0B2), // DEPRECATED, do not use
     ELC_EVENT_LVD_LVD4                      = (0x0B2), // RTC monitor interrupt
-    ELC_EVENT_LVD_EXLVD                     = (0x0B3), // DEPRECATED, do not use
     ELC_EVENT_LVD_LVD5                      = (0x0B3), // EXLVD monitor interrupt
     ELC_EVENT_RTC_ALARM_1                   = (0x0B4), // Alarm 1 interrupt
     ELC_EVENT_AGT0_INT                      = (0x0B5), // AGT interrupt
@@ -377,11 +374,8 @@ typedef enum e_icu_event_ra2a2
     ICU_EVENT_LVD_LVD1_FIXED                = (0x00), // IELSR49
     ICU_EVENT_LVD_LVD2_GROUP1               = (0x02), // group1 (IELSR[1, 9, 17, 25])
     ICU_EVENT_LVD_LVD2_GROUP5               = (0x02), // group5 (IELSR[5, 13, 21, 29])
-    ICU_EVENT_LVD_VBAT_FIXED                = (0x00), // DEPRECATED, do not use
     ICU_EVENT_LVD_LVD3_FIXED                = (0x00), // IELSR46
-    ICU_EVENT_LVD_VRTC_FIXED                = (0x00), // DEPRECATED, do not use
     ICU_EVENT_LVD_LVD4_FIXED                = (0x00), // IELSR47
-    ICU_EVENT_LVD_EXLVD_FIXED               = (0x00), // DEPRECATED, do not use
     ICU_EVENT_LVD_LVD5_FIXED                = (0x00), // IELSR48
     ICU_EVENT_MACL_OVERFLOW_FIXED           = (0x00), // IELSR61
     ICU_EVENT_POEG0_EVENT_GROUP2            = (0x0B), // group2 (IELSR[2, 10, 18, 26])

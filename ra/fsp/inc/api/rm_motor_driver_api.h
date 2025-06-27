@@ -60,7 +60,7 @@ typedef enum e_motor_driver_shunt_type
 typedef struct st_motor_driver_callback_args
 {
     motor_driver_event_t event;        ///< Event trigger
-    void const         * p_context;    ///< Placeholder for user data.
+    void               * p_context;    ///< Placeholder for user data.
 } motor_driver_callback_args_t;
 
 /** Current Data Get Structure */
@@ -102,7 +102,7 @@ typedef struct st_motor_driver_cfg
     three_phase_instance_t const * p_three_phase_instance;
 
     void (* p_callback)(motor_driver_callback_args_t * p_args);
-    void const * p_context;            ///< Placeholder for user data.
+    void * p_context;                  ///< Placeholder for user data.
 
     void const * p_extend;
 } motor_driver_cfg_t;

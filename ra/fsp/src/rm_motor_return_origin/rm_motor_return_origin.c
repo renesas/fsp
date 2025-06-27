@@ -39,7 +39,7 @@ static void  rm_motor_return_origin_initialize(motor_return_origin_instance_ctrl
 static void  rm_motor_return_origin_speed_cyclic(motor_return_origin_instance_ctrl_t * const p_ctrl);
 static float rm_motor_return_origin_push(motor_return_origin_instance_ctrl_t * const p_ctrl);
 static float rm_motor_return_origin_calculate_search_speed_accel(motor_return_origin_instance_ctrl_t * p_ctrl);
-static float rm_motor_return_origin_calculate_search_speed_decleration(motor_return_origin_instance_ctrl_t * p_ctrl);
+static float rm_motor_return_origin_calculate_search_speed_deceleration(motor_return_origin_instance_ctrl_t * p_ctrl);
 static float rm_motor_return_origin_calc_decele_rad(float f4_move_pos, float f4_speed, float f4_acc);
 
 /***********************************************************************************************************************
@@ -569,7 +569,7 @@ static float rm_motor_return_origin_push (motor_return_origin_instance_ctrl_t * 
         case MOTOR_RETURN_ORIGIN_STATE_DECELERATE:
         {
             f_calculated_ref_position -=
-                (float) p_ctrl->s1_direction * rm_motor_return_origin_calculate_search_speed_decleration(p_ctrl) *
+                (float) p_ctrl->s1_direction * rm_motor_return_origin_calculate_search_speed_deceleration(p_ctrl) *
                 MOTOR_RETURN_ORIGIN_RAD_TO_DEGREE;
             if ((p_ctrl->f_current_speed > 0.0F) || (p_ctrl->f_current_speed < 0.0F))
             {
@@ -607,12 +607,12 @@ static float rm_motor_return_origin_calculate_search_speed_accel (motor_return_o
 }                                      /* End of function rm_motor_return_origin_calculate_search_speed_accel */
 
 /***********************************************************************************************************************
- * Function Name: rm_motor_return_origin_calculate_search_speed_decleration
+ * Function Name: rm_motor_return_origin_calculate_search_speed_deceleration
  * Description  : Speed calculation during deceleration
  * Arguments    : p_ctrl - pointer of module data
  * Return Value : speed[rad / sample time] ,absolute value.
  ***********************************************************************************************************************/
-static float rm_motor_return_origin_calculate_search_speed_decleration (motor_return_origin_instance_ctrl_t * p_ctrl)
+static float rm_motor_return_origin_calculate_search_speed_deceleration (motor_return_origin_instance_ctrl_t * p_ctrl)
 {
     p_ctrl->f_current_speed -= p_ctrl->f_accel_speed;
     if (p_ctrl->f_current_speed <= 0.0F)
@@ -621,7 +621,7 @@ static float rm_motor_return_origin_calculate_search_speed_decleration (motor_re
     }
 
     return p_ctrl->f_current_speed;
-}                                      /* End of function rm_motor_return_origin_calculate_search_speed_decleration */
+}                                      /* End of function rm_motor_return_origin_calculate_search_speed_deceleration */
 
 /***********************************************************************************************************************
  * Function Name: rm_motor_return_origin_calc_decele_rad

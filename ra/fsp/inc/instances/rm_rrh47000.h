@@ -66,7 +66,7 @@ typedef struct st_rm_rrh47000_instance_ctrl
     rm_rrh47000_init_process_params_t init_process_params;             ///< For the initialization process.
     rm_air_sensor_cfg_t const       * p_cfg;                           ///< Pointer of configuration block
     rm_comms_instance_t const       * p_comms_i2c_instance;            ///< Pointer of I2C Communications Middleware instance structure
-    void const                      * p_context;                       ///< Pointer to the user-provided context
+    void * p_context;                                                  ///< Pointer to the user-provided context
 
     /* Pointer to callback and optional working memory */
     void (* p_comms_callback)(rm_air_sensor_callback_args_t * p_args); ///< I2C Communications callback

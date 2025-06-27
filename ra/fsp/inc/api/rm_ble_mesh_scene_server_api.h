@@ -60,7 +60,7 @@ typedef enum e_rm_ble_mesh_scene_srv_event
 /** Mesh model scene server callback parameter definition */
 typedef struct st_rm_ble_mesh_scene_server_callback_args
 {
-    void const * p_context;                         ///< Placeholder for user data.
+    void * p_context;                               ///< Placeholder for user data.
     rm_ble_mesh_access_model_handle_t * p_handle;   ///< Access Model handle.
     rm_ble_mesh_scene_srv_event_t       event_type; ///< Scene event types.
     uint8_t * p_event_data;                         ///< Pointer to event data.
@@ -79,7 +79,7 @@ typedef struct st_rm_ble_mesh_scene_server_callback_args
  */
 typedef struct st_rm_ble_mesh_scene_server_timeout_callback_args
 {
-    void const * p_context;                       ///< Placeholder for user data.
+    void * p_context;                             ///< Placeholder for user data.
     rm_ble_mesh_access_model_handle_t * p_handle; ///< Access Model handle.
     void * p_blob;                                ///< Binary Large Object.
 } rm_ble_mesh_scene_server_timeout_callback_args_t;
@@ -99,7 +99,7 @@ typedef struct st_rm_ble_mesh_scene_server_cfg
     /* Pointer to callback and optional working memory */
     void (* p_callback)(rm_ble_mesh_scene_server_callback_args_t * p_args);                 ///< Mesh model scene server callback.
     void (* p_timeout_callback)(rm_ble_mesh_scene_server_timeout_callback_args_t * p_args); ///< Mesh model scene server publication timeout callback.
-    void const * p_context;                                                                 ///< Placeholder for user data.
+    void       * p_context;                                                                 ///< Placeholder for user data.
     void const * p_extend;                                                                  ///< Placeholder for user extension.
 } rm_ble_mesh_scene_server_cfg_t;
 

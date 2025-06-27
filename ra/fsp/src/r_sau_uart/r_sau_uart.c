@@ -144,6 +144,8 @@ const uart_api_t g_uart_on_sau =
     .communicationAbort = R_SAU_UART_Abort,
     .callbackSet        = R_SAU_UART_CallbackSet,
     .readStop           = R_SAU_UART_ReadStop,
+    .receiveSuspend     = R_SAU_UART_ReceiveSuspend,
+    .receiveResume      = R_SAU_UART_ReceiveResume,
 };
 
 /***********************************************************************************************************************
@@ -725,7 +727,7 @@ fsp_err_t R_SAU_UART_BaudSet (uart_ctrl_t * const p_api_ctrl, void const * const
  **********************************************************************************************************************/
 fsp_err_t R_SAU_UART_CallbackSet (uart_ctrl_t * const          p_api_ctrl,
                                   void (                     * p_callback)(uart_callback_args_t *),
-                                  void const * const           p_context,
+                                  void * const                 p_context,
                                   uart_callback_args_t * const p_callback_memory)
 {
     sau_uart_instance_ctrl_t * p_ctrl = (sau_uart_instance_ctrl_t *) p_api_ctrl;
@@ -992,6 +994,30 @@ fsp_err_t R_SAU_UART_BaudCalculate (sau_uart_instance_ctrl_t * const    p_ctrl,
     /* Return an error if no valid STCLK setting was found */
     return FSP_ERR_INVALID_ARGUMENT;
 #endif
+}
+
+/*******************************************************************************************************************//**
+ * Suspend Reception
+ *
+ * @retval     FSP_ERR_UNSUPPORTED       Functionality not supported by this driver instance
+ **********************************************************************************************************************/
+fsp_err_t R_SAU_UART_ReceiveSuspend (uart_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+}
+
+/*******************************************************************************************************************//**
+ * Resume Reception
+ *
+ * @retval     FSP_ERR_UNSUPPORTED       Functionality not supported by this driver instance
+ **********************************************************************************************************************/
+fsp_err_t R_SAU_UART_ReceiveResume (uart_ctrl_t * const p_api_ctrl)
+{
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
 }
 
 /*******************************************************************************************************************//**

@@ -49,6 +49,7 @@ typedef enum e_rm_freertos_plus_fat_event
     RM_FREERTOS_PLUS_FAT_EVENT_MEDIA_RESUME   = RM_BLOCK_MEDIA_EVENT_MEDIA_RESUME,   ///< Media resumed event.
 } rm_freertos_plus_fat_event_t;
 
+/** FAT filesystem types. */
 typedef enum e_rm_freertos_plus_fat_type
 {
     RM_FREERTOS_PLUS_FAT_TYPE_FAT32 = FF_T_FAT32, ///< FAT32 disk
@@ -59,8 +60,8 @@ typedef enum e_rm_freertos_plus_fat_type
 /** Callback function parameter data */
 typedef struct st_rm_freertos_plus_fat_callback_args
 {
-    rm_freertos_plus_fat_event_t event;     ///< The event can be used to identify what caused the callback.
-    void const                 * p_context; ///< Placeholder for user data.
+    rm_freertos_plus_fat_event_t event; ///< The event can be used to identify what caused the callback.
+    void * p_context;                   ///< Placeholder for user data.
 } rm_freertos_plus_fat_callback_args_t;
 
 /** Information obtained from the media device. */
@@ -70,6 +71,7 @@ typedef struct st_rm_freertos_plus_fat_device
     uint32_t sector_size_bytes;        ///< Sector size in bytes
 } rm_freertos_plus_fat_device_t;
 
+/** Basic information about a FAT volume. */
 typedef struct st_rm_freertos_plus_fat_info
 {
     uint32_t  sector_size;             ///< Sector size
@@ -81,22 +83,24 @@ typedef struct st_rm_freertos_plus_fat_info
     uint8_t partition_number;          ///< Partition number for this disk
 } rm_freertos_plus_fat_info_t;
 
+/** FreeRTOS+FAT configuration structure. */
 typedef struct st_rm_freertos_plus_fat_cfg
 {
     rm_block_media_instance_t const * p_block_media;
     void (* p_callback)(rm_freertos_plus_fat_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                                             ///< User defined context passed into callback function
+    void * p_context;                                                   ///< User defined context passed into callback function
 
     /** The busy callback function is called when the device is busy with a write or erase operation.  It can be used
      * to pend the current thread while waiting for the operation to complete and to manage timeouts if required.
      * Set to NULL if pending the thread is not required and the thread will block waiting for the device busy status
      * to clear.  If this function returns an error (anything except FSP_SUCCESS), the upper layer function returns
      * FF_ERR_IOMAN_DRIVER_FATAL_ERROR. */
-    fsp_err_t (* p_busy_callback)(void const * p_busy_context);
-    void const * p_busy_context;                                        ///< User defined context passed into busy callback function
+    fsp_err_t (* p_busy_callback)(void * p_busy_context);
+    void       * p_busy_context;                                        ///< User defined context passed into busy callback function
     void const * p_extend;                                              ///< Extension parameter for hardware specific settings.
 } rm_freertos_plus_fat_cfg_t;
 
+/** Initializing a FAT disk. */
 typedef struct st_rm_freertos_plus_fat_disk_cfg
 {
     rm_freertos_plus_fat_device_t device; ///< Device sector data
@@ -105,9 +109,10 @@ typedef struct st_rm_freertos_plus_fat_disk_cfg
     uint8_t   partition_number;           ///< Partition number for this disk
 } rm_freertos_plus_fat_disk_cfg_t;
 
+/** FreeRTOS+FAT control structure */
 typedef void rm_freertos_plus_fat_ctrl_t;
 
-/** FreeRTOS plus Fat functions implemented at the HAL layer will follow this API. */
+/** FreeRTOS+FAT functions implemented at the HAL layer will follow this API. */
 typedef struct st_rm_freertos_plus_fat_api
 {
     /** Open media device.

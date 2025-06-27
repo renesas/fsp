@@ -36,7 +36,7 @@ typedef struct st_glcdc_instance_ctrl
 
     /* Parameters to Event processing for display devices */
     void (* p_callback)(display_callback_args_t * p_args); // Pointer to callback function
-    void const          * p_context;                       // Pointer to the higher level device context
+    void                * p_context;                       // Pointer to the higher level device context
     const display_cfg_t * p_cfg;                           // Pointer to initial configurations
 } glcdc_instance_ctrl_t;
 
@@ -76,7 +76,7 @@ typedef enum e_glcdc_tcon_pin
 } glcdc_tcon_pin_t;
 
 /** Bus Arbitration setting */
-typedef enum e_glcdc_bus_arbitraion
+typedef enum e_glcdc_bus_arbitration
 {
     GLCDC_BUS_ARBITRATION_ROUNDROBIN,  ///< Round robin
     GLCDC_BUS_ARBITRATION_FIX_PRIORITY ///< Fixed

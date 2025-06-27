@@ -60,15 +60,11 @@ fsp_err_t rm_zmod4xxx_irq_open (rm_zmod4xxx_ctrl_t * const p_api_ctrl)
     external_irq_instance_t     * p_irq_instance = (external_irq_instance_t *) p_ctrl->p_irq_instance;
 
     /* Open IRQ driver */
-    err = p_irq_instance->p_api->open(p_irq_instance->p_ctrl,
-                                      p_irq_instance->p_cfg);
+    err = p_irq_instance->p_api->open(p_irq_instance->p_ctrl, p_irq_instance->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Set callback */
-    err = p_irq_instance->p_api->callbackSet(p_irq_instance->p_ctrl,
-                                             rm_zmod4xxx_irq_callback,
-                                             p_ctrl,
-                                             NULL);
+    err = p_irq_instance->p_api->callbackSet(p_irq_instance->p_ctrl, rm_zmod4xxx_irq_callback, p_ctrl, NULL);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Enable callback */

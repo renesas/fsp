@@ -450,7 +450,7 @@ fsp_err_t R_ULPT_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * const 
  **********************************************************************************************************************/
 fsp_err_t R_ULPT_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
                               void (                      * p_callback)(timer_callback_args_t *),
-                              void const * const            p_context,
+                              void * const                  p_context,
                               timer_callback_args_t * const p_callback_memory)
 {
     ulpt_instance_ctrl_t * p_ctrl = (ulpt_instance_ctrl_t *) p_api_ctrl;
@@ -890,7 +890,7 @@ void ulpt_int_isr (void)
             *p_instance_ctrl->p_callback_memory = callback_args;
         }
 
-        /* Retreive AGTCR in case it was modified in the callback. */
+        /* Retrieve AGTCR in case it was modified in the callback. */
         ulptcr = p_instance_ctrl->p_reg->ULPTCR;
     }
 

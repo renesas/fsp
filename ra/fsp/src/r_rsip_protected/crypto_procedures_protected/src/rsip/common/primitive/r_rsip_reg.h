@@ -51,6 +51,21 @@
         WR1_ADDR((reg), (&(addr)[6])); \
         WR1_ADDR((reg), (&(addr)[7])); \
     }
+#define WR12_ADDR(reg, addr)            \
+    {                                   \
+        WR1_ADDR((reg), (&(addr)[0]));  \
+        WR1_ADDR((reg), (&(addr)[1]));  \
+        WR1_ADDR((reg), (&(addr)[2]));  \
+        WR1_ADDR((reg), (&(addr)[3]));  \
+        WR1_ADDR((reg), (&(addr)[4]));  \
+        WR1_ADDR((reg), (&(addr)[5]));  \
+        WR1_ADDR((reg), (&(addr)[6]));  \
+        WR1_ADDR((reg), (&(addr)[7]));  \
+        WR1_ADDR((reg), (&(addr)[8]));  \
+        WR1_ADDR((reg), (&(addr)[9]));  \
+        WR1_ADDR((reg), (&(addr)[10])); \
+        WR1_ADDR((reg), (&(addr)[11])); \
+    }
 #define WR16_ADDR(reg, addr)            \
     {                                   \
         WR1_ADDR((reg), (&(addr)[0]));  \
@@ -2628,13 +2643,13 @@
  **********************************************************************************************************************/
 
 #if defined(__GNUC__)
-extern uint32_t const gs_rsip_addr_0000h;
-extern uint32_t const gs_rsip_addr_1000h;
-extern uint32_t const gs_rsip_addr_2000h;
+extern uintptr_t const gs_rsip_addr_0000h;
+extern uintptr_t const gs_rsip_addr_1000h;
+extern uintptr_t const gs_rsip_addr_2000h;
 
-extern uint32_t const gs_rsip_addr_1420h;
-extern uint32_t const gs_rsip_addr_1440h;
-extern uint32_t const gs_rsip_addr_1600h;
+extern uintptr_t const gs_rsip_addr_1420h;
+extern uintptr_t const gs_rsip_addr_1440h;
+extern uintptr_t const gs_rsip_addr_1600h;
 #endif                                 /* defined(__GNUC__) */
 
 /**********************************************************************************************************************

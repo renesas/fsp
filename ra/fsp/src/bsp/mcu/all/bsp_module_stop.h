@@ -131,7 +131,7 @@ FSP_HEADER
    #define BSP_MSTP_REG_FSP_IP_AGT(channel)             R_MSTP->MSTPCRD
    #define BSP_MSTP_BIT_FSP_IP_AGT(channel)             (1U << (3U - channel));
    #define BSP_MSTP_REG_TYPE_FSP_IP_AGT(channel)        uint32_t
-  #elif BSP_MCU_GROUP_NEPTUNE
+  #elif BSP_MCU_GROUP_RA8_GEN2
    #define BSP_MSTP_REG_FSP_IP_GPT(channel)             R_MSTP->MSTPCRE
    #define BSP_MSTP_BIT_FSP_IP_GPT(channel)             (1U << \
                                                          (31 - ((channel >= 4U && channel <= 9U) ? 4U : channel))) // GPT Channels 4-9 share stop bits on this MCU
@@ -184,11 +184,16 @@ FSP_HEADER
  #endif
 #endif
 
-#define BSP_MSTP_REG_FSP_IP_EXTRA(channel)              R_BSP_MSTPCRA
-#define BSP_MSTP_BIT_FSP_IP_EXTRA(channel)              (1U << (16U));
+#define BSP_MSTP_REG_FSP_IP_NPU(channel)                R_BSP_MSTPCRA
+#define BSP_MSTP_BIT_FSP_IP_NPU(channel)                (1U << (16U));
 
 #define BSP_MSTP_REG_FSP_IP_DMAC(channel)               R_BSP_MSTPCRA
-#define BSP_MSTP_BIT_FSP_IP_DMAC(channel)               (1U << (22U + channel));
+#if BSP_MCU_GROUP_RA8_GEN2 && (1U == BSP_CFG_CPU_CORE)
+ #define BSP_MSTP_BIT_FSP_IP_DMAC(channel)              (1U << (23U));
+#else
+ #define BSP_MSTP_BIT_FSP_IP_DMAC(channel)              (1U << (22U));
+#endif
+
 #define BSP_MSTP_REG_TYPE_FSP_IP_DMAC(channel)          uint32_t
 
 #if BSP_FEATURE_CGC_REGISTER_SET_B
@@ -299,12 +304,18 @@ FSP_HEADER
 #define BSP_MSTP_REG_FSP_IP_CEU(channel)                R_MSTP->MSTPCRC
 #define BSP_MSTP_REG_TYPE_FSP_IP_CEU(channel)           uint32_t
 #define BSP_MSTP_BIT_FSP_IP_CEU(channel)                (1U << (16U - channel));
+#define BSP_MSTP_REG_FSP_IP_MIPI_CSI(channel)           R_MSTP->MSTPCRC
+#define BSP_MSTP_BIT_FSP_IP_MIPI_CSI(channel)           (1U << (17U - channel));
+#define BSP_MSTP_REG_TYPE_FSP_IP_MIPI_CSI(channel)      uint32_t
 #define BSP_MSTP_REG_FSP_IP_TFU(channel)                R_MSTP->MSTPCRC
 #define BSP_MSTP_BIT_FSP_IP_TFU(channel)                (1U << (20U - channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_TFU(channel)           uint32_t
 #define BSP_MSTP_REG_FSP_IP_IIRFA(channel)              R_MSTP->MSTPCRC
 #define BSP_MSTP_BIT_FSP_IP_IIRFA(channel)              (1U << (21U - channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_IIRFA(channel)         uint32_t
+#define BSP_MSTP_REG_FSP_IP_PDM(channel)                R_MSTP->MSTPCRC
+#define BSP_MSTP_BIT_FSP_IP_PDM(channel)                (1U << (24U));
+#define BSP_MSTP_REG_TYPE_FSP_IP_PDM(channel)           uint32_t
 #define BSP_MSTP_REG_FSP_IP_CANFD(channel)              R_MSTP->MSTPCRC
 #define BSP_MSTP_BIT_FSP_IP_CANFD(channel)              (1U << (27U - channel));
 #define BSP_MSTP_REG_TYPE_FSP_IP_CANFD(channel)         uint32_t
@@ -324,7 +335,7 @@ FSP_HEADER
 #define BSP_MSTP_BIT_FSP_IP_TML(channel)                (1U << (4U));
 #define BSP_MSTP_REG_TYPE_FSP_IP_TML(channel)           uint32_t
 #define BSP_MSTP_REG_FSP_IP_ADC(channel)                R_MSTP->MSTPCRD
-#if BSP_MCU_GROUP_NEPTUNE
+#if BSP_MCU_GROUP_RA8_GEN2
  #define BSP_MSTP_BIT_FSP_IP_ADC(channel)               (1U << (21U - channel));
 #else
  #define BSP_MSTP_BIT_FSP_IP_ADC(channel)               (1U << (16U - channel));

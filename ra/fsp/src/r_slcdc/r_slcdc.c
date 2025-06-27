@@ -431,7 +431,8 @@ fsp_err_t R_SLCDC_Close (slcdc_ctrl_t * const p_ctrl)
 
 #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
 
-    /* Switch to external resistance method (MREF_INTERNAL_007)*/
+    /* Switch to external resistance method
+     * (refer to the "LCD Mode Register 1 (LCDM1)" register definition in the SLCDC section of the relevant hardware manual) */
     R_SLCDC->VLCD_b.MDSET2 = 0;
 #endif
 
@@ -514,7 +515,8 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
 
  #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2 & BSP_FEATURE_SLCDC_HAS_INTERNAL_VOLT_GEN
 
-    /* The below checks the configuration against the list of valid modes (MREF_INTERNAL_008) */
+    /* The below checks the configuration against the list of valid modes
+     * (refer to the "Combinations of display waveform, time slices, bias method, and frame frequency" table in the SLCDC section of the relevant hardware manual) */
 
     /* Check common compatibility modes */
     if ((bias_is_3 && (time_slice > SLCDC_SLICE_2) && !drive_is_invalid_external) ||

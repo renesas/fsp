@@ -74,7 +74,7 @@ typedef struct st_motor_return_origin_instance_ctrl
     float  f_current_speed;                      ///< Current speed
     float  f_origin_position_angle_degree;       ///< Searched origin position [degree]
     float  f_search_speed;                       ///< Speed to search origin position [rad / sampling time]
-    float  f_accel_speed;                        ///< Speed accelaration
+    float  f_accel_speed;                        ///< Speed acceleration
     float  f_position_reference_degree;          ///< Position reference [degree]
 
     motor_return_origin_pushing_t st_pushing;    ///< Variables for pushing

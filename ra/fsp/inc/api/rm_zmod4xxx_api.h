@@ -74,7 +74,7 @@ typedef enum e_rm_zmod4xxx_sulfur_odor
 /** ZMOD4XXX sensor API callback parameter definition */
 typedef struct st_rm_zmod4xxx_callback_args
 {
-    void const        * p_context;  ///< Pointer to data provided by the user.
+    void              * p_context;  ///< Pointer to data provided by the user.
     rm_zmod4xxx_event_t event;      ///< Callback event.
 } rm_zmod4xxx_callback_args_t;
 
@@ -110,13 +110,6 @@ typedef struct st_rm_zmod4xxx_iaq_2nd_data
     float   rel_iaq;                   ///< relative IAQ index.
 } rm_zmod4xxx_iaq_2nd_data_t;
 
-/** ZMOD4XXX Odor structure */
-typedef struct st_rm_zmod4xxx_odor_data
-{
-    bool  control_signal;              ///< Control signal input for odor lib.
-    float odor;                        ///< Concentration ratio for odor lib.
-} rm_zmod4xxx_odor_data_t;
-
 /** ZMOD4XXX Sulfur-Odor structure */
 typedef struct st_rm_zmod4xxx_sulfur_odor_data
 {
@@ -124,13 +117,6 @@ typedef struct st_rm_zmod4xxx_sulfur_odor_data
     float intensity;                   ///< odor intensity rating ranges from 0.0 to 5.0 for sulfur lib.
     rm_zmod4xxx_sulfur_odor_t odor;    ///< sulfur_odor classification for lib.
 } rm_zmod4xxx_sulfur_odor_data_t;
-
-/** ZMOD4XXX OAQ 1st gen data structure */
-typedef struct st_rm_zmod4xxx_oaq_1st_data
-{
-    float rmox[15];                    ///< MOx resistance.
-    float aiq;                         ///< Air Quality.
-} rm_zmod4xxx_oaq_1st_data_t;
 
 /** ZMOD4XXX OAQ 2nd gen data structure */
 typedef struct st_rm_zmod4xxx_oaq_2nd_data
@@ -188,8 +174,8 @@ typedef struct st_rm_zmod4xxx_cfg
 {
     rm_comms_instance_t const * p_comms_instance;                    ///< Pointer to Communications Middleware instance.
     void const                * p_irq_instance;                      ///< Pointer to IRQ instance.
-    void const                * p_context;                           ///< Pointer to the user-provided context.
-    void const                * p_extend;                            ///< Pointer to extended configuration by instance of interface.
+    void       * p_context;                                          ///< Pointer to the user-provided context.
+    void const * p_extend;                                           ///< Pointer to extended configuration by instance of interface.
     void (* p_comms_callback)(rm_zmod4xxx_callback_args_t * p_args); ///< I2C Communications callback.
     void (* p_irq_callback)(rm_zmod4xxx_callback_args_t * p_args);   ///< IRQ callback.
 } rm_zmod4xxx_cfg_t;
@@ -251,15 +237,6 @@ typedef struct st_rm_zmod4xxx_api
     fsp_err_t (* iaq2ndGenDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                          rm_zmod4xxx_iaq_2nd_data_t * const p_zmod4xxx_data);
 
-    /** Calculate Odor values from ADC data.
-     *
-     * @param[in]  p_ctrl               Pointer to control structure.
-     * @param[in]  p_raw_data           Pointer to raw data.
-     * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
-     */
-    fsp_err_t (* odorDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
-                                    rm_zmod4xxx_odor_data_t * const p_zmod4xxx_data);
-
     /** Calculate Sulfur Odor values from ADC data.
      *
      * @param[in]  p_ctrl               Pointer to control structure.
@@ -268,15 +245,6 @@ typedef struct st_rm_zmod4xxx_api
      */
     fsp_err_t (* sulfurOdorDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
                                           rm_zmod4xxx_sulfur_odor_data_t * const p_zmod4xxx_data);
-
-    /** Calculate OAQ 1st Gen. values from ADC data.
-     *
-     * @param[in]  p_ctrl               Pointer to control structure.
-     * @param[in]  p_raw_data           Pointer to raw data.
-     * @param[in]  p_zmod4xxx_data      Pointer to ZMOD4XXXX data structure.
-     */
-    fsp_err_t (* oaq1stGenDataCalculate)(rm_zmod4xxx_ctrl_t * const p_ctrl, rm_zmod4xxx_raw_data_t * const p_raw_data,
-                                         rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data);
 
     /** Calculate OAQ 2nd Gen. values from ADC data.
      *

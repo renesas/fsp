@@ -63,7 +63,7 @@ extern const uint8_t g_usb_pmsc_rootdir[];
 /* The R_USB_media_initialize() function initializes data structures and variables that are used by the target media device
  * to support its operation for the first time.
  */
-fsp_err_t r_usb_pmsc_media_initialize(void const * p_context);
+fsp_err_t r_usb_pmsc_media_initialize(void * p_context);
 
 /* The R_USB_media_close() function initializes the hardware registers for peripherals used by the media driver and leaves
  * the media device ready for communications.

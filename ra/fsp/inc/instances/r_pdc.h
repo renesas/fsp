@@ -94,8 +94,8 @@ typedef struct st_pdc_instance_ctrl
     uint32_t              open;                            // Indicates whether or not the driver is open called.
     uint16_t              num_blocks;                      // Number of blocks to be transferred using DMA
     uint8_t             * p_current_buffer;                // Pointer to buffer currently in use
-    bool         transfer_in_progress;                     // Indicates if a PDC transfer is already in progress
-    void const * p_context;                                // Placeholder for user data.  Passed to the user callback.
+    bool   transfer_in_progress;                           // Indicates if a PDC transfer is already in progress
+    void * p_context;                                      // Placeholder for user data.  Passed to the user callback.
     void (* p_callback)(capture_callback_args_t * p_args); // Callback provided when a PDC transfer ISR occurs.
 } pdc_instance_ctrl_t;
 
@@ -122,7 +122,7 @@ fsp_err_t R_PDC_StatusGet(capture_ctrl_t * const p_ctrl, capture_status_t * p_st
 
 fsp_err_t R_PDC_CallbackSet(capture_ctrl_t * const          p_ctrl,
                             void (                        * p_callback)(capture_callback_args_t *),
-                            void const * const              p_context,
+                            void * const                    p_context,
                             capture_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

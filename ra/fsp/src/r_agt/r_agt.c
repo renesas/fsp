@@ -592,7 +592,7 @@ fsp_err_t R_AGT_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * const p
  **********************************************************************************************************************/
 fsp_err_t R_AGT_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
                              void (                      * p_callback)(timer_callback_args_t *),
-                             void const * const            p_context,
+                             void * const                  p_context,
                              timer_callback_args_t * const p_callback_memory)
 {
     agt_instance_ctrl_t * p_ctrl = (agt_instance_ctrl_t *) p_api_ctrl;
@@ -1148,7 +1148,7 @@ void agt_int_isr (void)
             *p_instance_ctrl->p_callback_memory = callback_args;
         }
 
-        /* Retreive AGTCR in case it was modified in the callback. */
+        /* Retrieve AGTCR in case it was modified in the callback. */
         agtcr = p_reg_ctrl->AGTCR;
     }
 

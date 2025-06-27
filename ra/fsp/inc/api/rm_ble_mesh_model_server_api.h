@@ -285,7 +285,7 @@ typedef struct st_rm_ble_mesh_model_server_generic_prop_srv_ids_info
 /** Mesh model server callback parameter definition */
 typedef struct st_rm_ble_mesh_model_server_callback_args
 {
-    void const * p_context;
+    void * p_context;
     rm_ble_mesh_access_model_req_msg_context_t * p_msg_context;        ///< Context of the message.
     rm_ble_mesh_access_req_msg_raw_t           * p_msg_raw;            ///< Uninterpreted/raw received message for a specific model instance.
     rm_ble_mesh_access_model_req_msg_t         * p_req_type;           ///< Requested message type for a specific model instance.
@@ -304,7 +304,7 @@ typedef struct st_rm_ble_mesh_model_server_callback_args
  */
 typedef struct st_rm_ble_mesh_model_server_timeout_callback_args
 {
-    void const * p_context;                       ///< Placeholder for user data.
+    void * p_context;                             ///< Placeholder for user data.
     rm_ble_mesh_access_model_handle_t * p_handle; ///< Access Model handle.
     void * p_blob;
 } rm_ble_mesh_model_server_timeout_callback_args_t;
@@ -322,7 +322,7 @@ typedef struct st_rm_ble_mesh_model_server_cfg
     /* Pointer to callback and optional working memory */
     void (* p_callback)(rm_ble_mesh_model_server_callback_args_t * p_args);                 ///< Mesh model server callback.
     void (* p_timeout_callback)(rm_ble_mesh_model_server_timeout_callback_args_t * p_args); ///< Access Layer Model publication timeout callback.
-    void const * p_context;                                                                 ///< Placeholder for user data.
+    void       * p_context;                                                                 ///< Placeholder for user data.
     void const * p_extend;                                                                  ///< Placeholder for user extension.
 } rm_ble_mesh_model_server_cfg_t;
 

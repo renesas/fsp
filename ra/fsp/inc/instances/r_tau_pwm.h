@@ -126,7 +126,7 @@ typedef struct st_tau_pwm_instance_ctrl
     uint8_t             slave_channels_mask;      // Masked value of slave channels used
 
     void (* p_callback)(timer_callback_args_t *); // Pointer to callback that is called when a timer_event_t occurs.
-    void const * p_context;                       // Pointer to context to be passed into callback function
+    void * p_context;                             // Pointer to context to be passed into callback function
 } tau_pwm_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -158,7 +158,7 @@ fsp_err_t R_TAU_PWM_InfoGet(timer_ctrl_t * const p_ctrl, timer_info_t * const p_
 fsp_err_t R_TAU_PWM_StatusGet(timer_ctrl_t * const p_ctrl, timer_status_t * const p_status);
 fsp_err_t R_TAU_PWM_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                                 void (                      * p_callback)(timer_callback_args_t *),
-                                void const * const            p_context,
+                                void * const                  p_context,
                                 timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_TAU_PWM_Close(timer_ctrl_t * const p_ctrl);
 

@@ -96,27 +96,34 @@ typedef enum e_ether_event
     ETHER_EVENT_WAKEON_LAN,            ///< Magic packet detection event
     ETHER_EVENT_LINK_ON,               ///< Link up detection event
     ETHER_EVENT_LINK_OFF,              ///< Link down detection event
-    ETHER_EVENT_INTERRUPT,             ///< DEPRECATED Interrupt event
     ETHER_EVENT_RX_COMPLETE,           ///< Receive complete event.
     ETHER_EVENT_RX_MESSAGE_LOST,       ///< Receive FIFO overflow or Receive descriptor is full.
     ETHER_EVENT_TX_COMPLETE,           ///< Transmit complete event.
     ETHER_EVENT_TX_BUFFER_EMPTY,       ///< Transmit descriptor or FIFO is empty.
     ETHER_EVENT_TX_ABORTED,            ///< Transmit abort event.
     ETHER_EVENT_ERR_GLOBAL,            ///< Global error has occurred.
+    ETHER_EVENT_GET_NIC_INFO,          ///< Get NIC Info.
 } ether_event_t;
 #endif
+
+/** Network interface device infomation */
+typedef struct st_ether_nic_info
+{
+    uint8_t     * p_mac_address;        ///< MAC address
+} ether_nic_info_t;
 
 #ifndef BSP_OVERRIDE_ETHER_CALLBACK_ARGS_T
 
 /** Callback function parameter data */
 typedef struct st_ether_callback_args
 {
-    uint32_t      channel;             ///< Device channel number
-    ether_event_t event;               ///< Event code
-    uint32_t      status_ecsr;         ///< ETHERC status register for interrupt handler
-    uint32_t      status_eesr;         ///< ETHERC/EDMAC status register for interrupt handler
+    uint32_t            channel;        ///< Device channel number
+    ether_event_t       event;          ///< Event code
+    uint32_t            status_ecsr;    ///< ETHERC status register for interrupt handler
+    uint32_t            status_eesr;    ///< ETHERC/EDMAC status register for interrupt handler
+    ether_nic_info_t    * p_nic_info;   ///< Pointer of NIC info
 
-    void const * p_context;            ///< Placeholder for user data.  Set in @ref ether_api_t::open function in @ref ether_cfg_t.
+    void                * p_context;    ///< Placeholder for user data.  Set in @ref ether_api_t::open function in @ref ether_cfg_t.
 } ether_callback_args_t;
 #endif
 
@@ -152,7 +159,7 @@ typedef struct st_ether_cfg
     ether_phy_instance_t const * p_ether_phy_instance;   ///< Pointer to ETHER_PHY instance
 
     /** Placeholder for user data.  Passed to the user callback in ether_callback_args_t. */
-    void const * p_context;                              ///< Placeholder for user data.
+    void       * p_context;                              ///< Placeholder for user data.
     void const * p_extend;                               ///< Placeholder for user extension.
 } ether_cfg_t;
 
@@ -230,7 +237,7 @@ typedef struct st_ether_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(ether_ctrl_t * const p_ctrl, void (* p_callback)(ether_callback_args_t *),
-                              void const * const p_context, ether_callback_args_t * const p_callback_memory);
+                              void * const p_context, ether_callback_args_t * const p_callback_memory);
 } ether_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

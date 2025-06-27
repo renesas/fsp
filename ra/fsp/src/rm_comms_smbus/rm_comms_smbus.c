@@ -237,7 +237,7 @@ fsp_err_t RM_COMMS_SMBUS_Close (rm_comms_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 fsp_err_t RM_COMMS_SMBUS_CallbackSet (rm_comms_ctrl_t * const p_api_ctrl,
                                       void (                * p_callback)(rm_comms_callback_args_t *),
-                                      void const * const      p_context)
+                                      void * const            p_context)
 {
     rm_comms_smbus_instance_ctrl_t * p_ctrl = (rm_comms_smbus_instance_ctrl_t *) p_api_ctrl;
 
@@ -522,7 +522,7 @@ __STATIC_INLINE void rm_comms_smbus_pec_byte_calculate (uint8_t const * p_data, 
 /*******************************************************************************************************************//**
  * @brief Update MEXT count value.
  *
- * @retval FSP_SUCCESS Update value for MEXT succesfully.
+ * @retval FSP_SUCCESS Update value for MEXT successfully.
  *
  * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
  **********************************************************************************************************************/

@@ -115,7 +115,7 @@ typedef struct st_rm_comms_i2c_instance_ctrl
     /* Pointer to callback and optional working memory */
     void (* p_callback)(rm_comms_callback_args_t * p_args);
 
-    void const * p_context;            ///< Pointer to the user-provided context
+    void * p_context;                  ///< Pointer to the user-provided context
 } rm_comms_i2c_instance_ctrl_t;
 
 /**********************************************************************************************************************

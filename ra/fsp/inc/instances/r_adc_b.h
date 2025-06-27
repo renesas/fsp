@@ -342,7 +342,7 @@ typedef struct st_adc_b_virtual_channel_cfg
 
     union
     {
-        uint32_t channel_control_b;              ///< A/D converison data operation control b
+        uint32_t channel_control_b;              ///< A/D conversion data operation control b
         struct
         {
             uint32_t addition_average_mode  : 2; ///< Addition/Averaging mode selection
@@ -389,7 +389,7 @@ typedef struct st_adc_b_group_cfg
     adc_b_virtual_channel_cfg_t ** p_virtual_channels;     ///< Pointer to virtual channel configuration array of size virtual_channel_count
 } adc_b_group_cfg_t;
 
-/** ADC Scan Group configuraiton */
+/** ADC Scan Group configuration */
 typedef struct st_adc_b_scan_cfg
 {
 /* The ADC operates on scan groups.
@@ -610,7 +610,7 @@ typedef struct st_adc_b_instance_ctrl
     adc_cfg_t const * p_cfg;                             ///< Boolean to verify that the Unit has been initialized
     void (* p_callback)(adc_callback_args_t *);          ///< Pointer to callback that is called when an adc_b_event_t occurs.
     adc_callback_args_t * p_callback_memory;             ///< Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
-    void const          * p_context;                     ///< User defined context passed into callback function.
+    void                * p_context;                     ///< User defined context passed into callback function.
     uint32_t              initialized;                   ///< Initialized status of ADC_B.
     uint32_t              opened;                        ///< Open status of ADC_B.
 } adc_b_instance_ctrl_t;
@@ -643,7 +643,7 @@ fsp_err_t R_ADC_B_OffsetSet(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_i
 fsp_err_t R_ADC_B_Calibrate(adc_ctrl_t * const p_ctrl, void const * p_extend);
 fsp_err_t R_ADC_B_CallbackSet(adc_ctrl_t * const          p_api_ctrl,
                               void (                    * p_callback)(adc_callback_args_t *),
-                              void const * const          p_context,
+                              void * const                p_context,
                               adc_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**

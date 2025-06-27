@@ -194,7 +194,7 @@ fsp_err_t RM_COMMS_SPI_Close (rm_comms_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 fsp_err_t RM_COMMS_SPI_CallbackSet (rm_comms_ctrl_t * const p_api_ctrl,
                                     void (                * p_callback)(rm_comms_callback_args_t *),
-                                    void const * const      p_context)
+                                    void * const            p_context)
 {
     rm_comms_spi_instance_ctrl_t * p_ctrl = (rm_comms_spi_instance_ctrl_t *) p_api_ctrl;
 

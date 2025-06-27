@@ -173,7 +173,7 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
     p_ctrl->output_amplifier_enabled = p_extend->output_amplifier_enabled;
 #endif
 
-#if BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT
+#if BSP_FEATURE_DAC_HAS_DAASWCR_INTERNAL_OUTPUT_CONTROL
     p_ctrl->internal_output_enabled = p_extend->internal_output_enabled;
 #endif
 
@@ -325,7 +325,7 @@ fsp_err_t R_DAC_Start (dac_ctrl_t * p_api_ctrl)
 
         if (0U == p_ctrl->channel_index)
         {
-#if BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT
+#if BSP_FEATURE_DAC_HAS_DAASWCR_INTERNAL_OUTPUT_CONTROL
             p_ctrl->p_reg->DACR_b.DAOE0     = 0U;                              /* Disable channel 0 */
             p_ctrl->p_reg->DAASWCR_b.DAASW0 = p_ctrl->internal_output_enabled; /* Disable channel 0 internal output. */
 #endif
@@ -335,7 +335,7 @@ fsp_err_t R_DAC_Start (dac_ctrl_t * p_api_ctrl)
         }
         else
         {
-#if BSP_FEATURE_DAC_HAS_INTERNAL_OUTPUT
+#if BSP_FEATURE_DAC_HAS_DAASWCR_INTERNAL_OUTPUT_CONTROL
             p_ctrl->p_reg->DACR_b.DAOE1     = 0U;                              /* Disable channel 1 */
             p_ctrl->p_reg->DAASWCR_b.DAASW1 = p_ctrl->internal_output_enabled; /* Disable channel 1 internal output. */
 #endif

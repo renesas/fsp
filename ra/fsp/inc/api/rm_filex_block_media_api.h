@@ -47,7 +47,7 @@ typedef enum e_rm_filex_block_media_partition
 typedef struct st_rm_filex_block_media_callback_args
 {
     rm_block_media_event_t event;      ///< The event can be used to identify what caused the callback.
-    void const           * p_context;  ///< Placeholder for user data.
+    void                 * p_context;  ///< Placeholder for user data.
 } rm_filex_block_media_callback_args_t;
 
 /** Block media configuration structure */

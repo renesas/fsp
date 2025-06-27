@@ -45,7 +45,7 @@ typedef enum e_cec_addr
 {
     CEC_ADDR_TV                 = 0U,  ///< CEC Address for TV
     CEC_ADDR_RECORDING_DEVICE_1 = 1U,  ///< CEC Address for Recording Device 1
-    CEC_ADDR_RECORDING_DEVICE_2 = 2U,  ///< CEC Address for Recording Devide 2
+    CEC_ADDR_RECORDING_DEVICE_2 = 2U,  ///< CEC Address for Recording Device 2
     CEC_ADDR_TUNER_1            = 3U,  ///< CEC Address for Tuner 1
     CEC_ADDR_PLAYBACK_DEVICE_1  = 4U,  ///< CEC Address for Playback Device 1
     CEC_ADDR_AUDIO_SYSTEM       = 5U,  ///< CEC Address for Audio System
@@ -129,7 +129,7 @@ typedef union
 typedef struct st_cec_callback_args
 {
     cec_event_t  event;                ///< Event code
-    void const * p_context;            ///< Context provided to user during callback
+    void       * p_context;            ///< Context provided to user during callback
     bool         addr_match;           ///< Local addresss matches message destination
     uint8_t      data_byte;            ///< Received data byte (INTDA)
     cec_status_t status;               ///< CEC Module status data
@@ -163,7 +163,7 @@ typedef struct st_cec_cfg
     uint16_t             rx_data_bit_reference_width;  ///< Receive Data Bit Reference Width
 
     void (* p_callback)(cec_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                            ///< User defined callback context
+    void * p_context;                                  ///< User defined callback context
 
     uint8_t   ipl;                                     ///< Error/Data/Message interrupt priority level
     IRQn_Type error_irq;                               ///< Error IRQ number
@@ -226,7 +226,7 @@ typedef struct st_cec_api
      *                                  Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(cec_ctrl_t * const p_ctrl, void (* p_callback)(cec_callback_args_t *),
-                              void const * const p_context, cec_callback_args_t * const p_callback_memory);
+                              void * const p_context, cec_callback_args_t * const p_callback_memory);
 } cec_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

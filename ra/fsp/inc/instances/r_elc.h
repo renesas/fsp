@@ -33,8 +33,8 @@ FSP_HEADER
 /** ELC private control block. DO NOT MODIFY. Initialization occurs when R_ELC_Open() is called. */
 typedef struct st_elc_instance_ctrl
 {
-    uint32_t     open;
-    void const * p_context;
+    uint32_t open;
+    void   * p_context;
 } elc_instance_ctrl_t;
 
 /**********************************************************************************************************************

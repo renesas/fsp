@@ -55,15 +55,17 @@
 const lin_api_t g_lin_on_sau_lin =
 {
     .open                  = R_SAU_LIN_Open,
-    .startFrameWrite       = R_SAU_LIN_StartFrameWrite,
-    .informationFrameWrite = R_SAU_LIN_InformationFrameWrite,
-    .informationFrameRead  = R_SAU_LIN_InformationFrameRead,
+    .read                  = R_SAU_LIN_Read,
+    .write                 = R_SAU_LIN_Write,
     .communicationAbort    = R_SAU_LIN_CommunicationAbort,
     .callbackSet           = R_SAU_LIN_CallbackSet,
     .close                 = R_SAU_LIN_Close,
     .sleepEnter            = R_SAU_LIN_SleepEnter,
     .sleepExit             = R_SAU_LIN_SleepExit,
     .wakeupSend            = R_SAU_LIN_WakeupSend,
+    .informationFrameRead  = R_SAU_LIN_InformationFrameRead,  // [DEPRECATED]
+    .startFrameWrite       = R_SAU_LIN_StartFrameWrite,       // [DEPRECATED]
+    .informationFrameWrite = R_SAU_LIN_InformationFrameWrite, // [DEPRECATED]
 };
 
 /***********************************************************************************************************************
@@ -75,7 +77,7 @@ const lin_api_t g_lin_on_sau_lin =
 static uint8_t r_sau_lin_checksum_initialize(uint8_t id, lin_checksum_type_t checksum_type);
 static uint8_t r_sau_lin_checksum_add_byte_to_sum(uint8_t byte, uint8_t current_sum);
 static uint8_t r_sau_lin_checksum_calculate(uint8_t               id,
-                                            uint8_t const * const p_information,
+                                            uint8_t const * const p_data,
                                             uint8_t               num_bytes,
                                             lin_checksum_type_t   checksum_type);
 
@@ -83,18 +85,17 @@ static uint8_t r_sau_lin_checksum_calculate(uint8_t               id,
 
 #if (SAU_LIN_CFG_PARAM_CHECKING_ENABLE)
 static fsp_err_t r_sau_lin_common_parameter_checking(sau_lin_instance_ctrl_t const * const p_ctrl);
-static fsp_err_t r_sau_lin_information_read_write_param_check(sau_lin_instance_ctrl_t const * const p_ctrl,
-                                                              lin_transfer_params_t const * const   p_transfer_params);
+
+static fsp_err_t r_sau_lin_read_write_param_check(sau_lin_instance_ctrl_t const * const p_ctrl,
+                                                  lin_transfer_params_t const * const   p_transfer_params);
 
 #endif
 
 /* Transmission/reception helper functions */
-#if SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
-static fsp_err_t r_sau_lin_start_frame_write(sau_lin_instance_ctrl_t * const p_ctrl, uint8_t const id);
-
-#endif
 static fsp_err_t r_sau_lin_communication_abort(sau_lin_instance_ctrl_t * const p_ctrl);
-
+static fsp_err_t r_sau_lin_frame_write(sau_lin_instance_ctrl_t * const     p_ctrl,
+                                       const lin_transfer_params_t * const p_transfer_params,
+                                       uint8_t const                       send_header);
 static void r_sau_lin_call_callback(sau_lin_instance_ctrl_t * p_ctrl, lin_event_t event);
 
 #if SAU_LIN_CFG_SLAVE_SUPPORT_ENABLE
@@ -130,10 +131,10 @@ void r_sau_lin_uart_callback(uart_callback_args_t * p_args);
  * Private global variables
  **********************************************************************************************************************/
 
-/* 1 byte "buffer" used to transmit start frame sync word. */
+/* 1 byte "buffer" used to transmit header sync word. */
 #if SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
-static const uint8_t g_start_frame_sync_word        = SAU_LIN_SYNC;
-static const uint8_t g_start_frame_break_field_word = SAU_LIN_BREAK_FIELD;
+static const uint8_t g_header_sync_word        = SAU_LIN_SYNC;
+static const uint8_t g_header_break_field_word = SAU_LIN_BREAK_FIELD;
 #endif
 
 #if SAU_LIN_CFG_WAKEUP_SUPPORT_ENABLE
@@ -203,11 +204,11 @@ fsp_err_t R_SAU_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const
 #endif
 
     /* Initialize control block */
-    p_ctrl->p_cfg         = p_cfg;
-    p_ctrl->p_callback    = p_cfg->p_callback;
-    p_ctrl->p_context     = p_cfg->p_context;
-    p_ctrl->p_information = NULL;
-    p_ctrl->state         = SAU_LIN_STATE_NONE;
+    p_ctrl->p_cfg      = p_cfg;
+    p_ctrl->p_callback = p_cfg->p_callback;
+    p_ctrl->p_context  = p_cfg->p_context;
+    p_ctrl->p_data     = NULL;
+    p_ctrl->state      = SAU_LIN_STATE_NONE;
 
     /* Open the UART driver */
     const uart_instance_t * p_uart = p_extend->p_uart;
@@ -270,65 +271,21 @@ fsp_err_t R_SAU_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const
 }
 
 /*******************************************************************************************************************//**
- * Begins non-blocking transmission of a LIN start frame (break, sync and protected identifier).
+ * Begins non-blocking transmission of a LIN frame.
  *
- * On successful start frame transmission, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_START_FRAME_COMPLETE.
+ * In master mode, the LIN header (break, sync and protected identifier) is sent before the LIN data.
+ *  - To transmit the LIN header only, set p_transfer_params->p_data to NULL.
+ *  - To transmit both header and data, set p_transfer_params->p_data to the TX buffer to transmit.
  *
- * Implements @ref lin_api_t::startFrameWrite.
+ * The LIN header is not transmitted in slave mode. Set p_transfer_params->p_data to the TX buffer to transmit.
  *
- * Example:
- * @snippet R_SAU_LIN_example.c R_SAU_LIN_StartFrameWrite
+ * On successful header-only transmission completion, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_HEADER_COMPLETE.
+ * On successful data transmission or header+data transmission completion, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_DATA_COMPLETE.
  *
- * @retval  FSP_SUCCESS                  Start frame transmission started successfully.
- * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
- * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
- * @retval  FSP_ERR_INVALID_ARGUMENT     ID out of range (unprotected ID must be less than 64)
- * @retval  FSP_ERR_INVALID_MODE         Function called by slave node (not supported for slave nodes)
- * @retval  FSP_ERR_IN_USE               A transmission or reception is currently in progress. Call @ref R_SAU_LIN_CommunicationAbort
- *                                       to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
- * @retval  FSP_ERR_INVALID_STATE        Driver is in bus sleep state. Call @ref R_SAU_LIN_SleepExit to return to active state or wait for wakeup signal.
- *
- * @return                               See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
- *                                       return codes.
- **********************************************************************************************************************/
-fsp_err_t R_SAU_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t const id)
-{
-#if SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
-    sau_lin_instance_ctrl_t * p_ctrl = (sau_lin_instance_ctrl_t *) p_api_ctrl;
-    fsp_err_t                 status;
- #if SAU_LIN_CFG_PARAM_CHECKING_ENABLE
-    status = r_sau_lin_common_parameter_checking(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
-
-    /* Check ID is at most 6 bits */
-    FSP_ERROR_RETURN(0 == (id & 0xC0), FSP_ERR_INVALID_ARGUMENT);
-
-    /* Function only supported for master mode */
-    FSP_ERROR_RETURN(LIN_MODE_MASTER == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
-    FSP_ERROR_RETURN(NULL == p_ctrl->p_information, FSP_ERR_IN_USE);
- #endif
-
-    status = r_sau_lin_start_frame_write(p_ctrl, id);
-
-    return status;
-#else
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(id);
-
-    return FSP_ERR_INVALID_MODE;
-#endif
-}
-
-/*******************************************************************************************************************//**
- * Begins non-blocking transmission of a LIN information frame.
- *
- * On successful information frame transmission, the callback is called with event
- * @ref lin_event_t::LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE.
- *
- * Implements @ref lin_api_t::informationFrameWrite.
+ * Implements @ref lin_api_t::write.
  *
  * Example:
- * @snippet r_sau_lin_example.c R_SAU_LIN_InformationFrameWrite
+ * @snippet r_sau_lin_example.c R_SAU_LIN_Write
  *
  * @retval  FSP_SUCCESS              Data transmission started successfully.
  * @retval  FSP_ERR_NOT_OPEN         The control block has not been opened.
@@ -339,45 +296,39 @@ fsp_err_t R_SAU_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t cons
  * @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                                   return codes.
  **********************************************************************************************************************/
-fsp_err_t R_SAU_LIN_InformationFrameWrite (lin_ctrl_t * const                  p_api_ctrl,
-                                           const lin_transfer_params_t * const p_transfer_params)
+fsp_err_t R_SAU_LIN_Write (lin_ctrl_t * const p_api_ctrl, const lin_transfer_params_t * const p_transfer_params)
 {
     sau_lin_instance_ctrl_t * p_ctrl = (sau_lin_instance_ctrl_t *) p_api_ctrl;
     fsp_err_t                 status = FSP_SUCCESS;
 
 #if SAU_LIN_CFG_PARAM_CHECKING_ENABLE
-
-    /* Common parameter checking */
-    status = r_sau_lin_information_read_write_param_check(p_ctrl, p_transfer_params);
-    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+    FSP_ASSERT(NULL != p_transfer_params);
+    fsp_err_t err = r_sau_lin_read_write_param_check(p_ctrl, p_transfer_params);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
-#if SAU_LIN_CFG_CHECKSUM_SUPPORT_ENABLE
-    p_ctrl->validate_checksum = p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE;
+    uint8_t is_master_write = (LIN_MODE_MASTER == p_ctrl->p_cfg->mode);
 
-    if (p_ctrl->validate_checksum)
-    {
-        /* If checksum generation is enabled, calculate the checksum */
-        p_ctrl->checksum = r_sau_lin_checksum_calculate(p_transfer_params->id,
-                                                        p_transfer_params->p_information,
-                                                        p_transfer_params->num_bytes,
-                                                        p_transfer_params->checksum_type);
-    }
+#if SAU_LIN_CFG_PARAM_CHECKING_ENABLE && SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
+
+    /* Check ID is at most 6 bits (only for master header transmission) */
+    FSP_ERROR_RETURN((0 == (p_transfer_params->id & 0xC0)) || !is_master_write, FSP_ERR_INVALID_ARGUMENT);
 #endif
-    p_ctrl->p_information = p_transfer_params->p_information;
-    p_ctrl->state         = SAU_LIN_STATE_SENDING_DATA;
 
-    lin_cfg_t const * p_cfg = p_ctrl->p_cfg;
-    sau_lin_extended_cfg_t const * const p_extend = (sau_lin_extended_cfg_t *) p_cfg->p_extend;
+#if SAU_LIN_CFG_PARAM_CHECKING_ENABLE && SAU_LIN_CFG_SLAVE_SUPPORT_ENABLE
 
-    status = R_SAU_UART_Write(p_extend->p_uart->p_ctrl, p_transfer_params->p_information, p_transfer_params->num_bytes);
+    /* Check p_data is not null in slave mode */
+    FSP_ASSERT(NULL != p_transfer_params->p_data || is_master_write);
+#endif
+
+    status = r_sau_lin_frame_write(p_ctrl, p_transfer_params, is_master_write);
     FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
 
-    return status;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
- * Begins non-blocking information frame reception to receive user specified number of bytes into destination buffer pointer.
+ * Begins non-blocking data reception to receive user specified number of bytes into destination buffer pointer.
  *
  * The checksum type specifies the checksum type used for validation. If a non-standard algorithm is used,
  * or the application prefers to validate the checksum outside the driver, or the application prefers
@@ -388,12 +339,12 @@ fsp_err_t R_SAU_LIN_InformationFrameWrite (lin_ctrl_t * const                  p
  * if a non-standard checksum is used,  sufficient space must be allocated in the write buffer and accounted for
  * in the provided length.
  *
- * On successful information frame reception, the callback is called with event @ref lin_event_t::LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE.
+ * On successful data reception, the callback is called with event @ref lin_event_t::LIN_EVENT_RX_DATA_COMPLETE.
  *
- * Implements @ref lin_api_t::informationFrameRead.
+ * Implements @ref lin_api_t::read.
  *
  * Example:
- * @snippet r_sau_lin_example.c R_SAU_LIN_InformationFrameRead
+ * @snippet r_sau_lin_example.c R_SAU_LIN_Read
  *
  * @retval  FSP_SUCCESS              Data reception started successfully.
  * @retval  FSP_ERR_NOT_OPEN         The control block has not been opened.
@@ -401,20 +352,20 @@ fsp_err_t R_SAU_LIN_InformationFrameWrite (lin_ctrl_t * const                  p
  *                                   no header matching pid was received(only for slave mode).
  * @retval  FSP_ERR_IN_USE           A transmission or reception is currently in progress. Call @ref R_SAU_LIN_CommunicationAbort
  *                                   to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
+ *
  * @retval  FSP_ERR_INVALID_CALL     Data reception is not possible because a header frame has not been received yet (slave mode only).
  *
  * @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                                   return codes.
  **********************************************************************************************************************/
-fsp_err_t R_SAU_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ctrl,
-                                          lin_transfer_params_t * const p_transfer_params)
+fsp_err_t R_SAU_LIN_Read (lin_ctrl_t * const p_api_ctrl, lin_transfer_params_t * const p_transfer_params)
 {
     sau_lin_instance_ctrl_t * p_ctrl = (sau_lin_instance_ctrl_t *) p_api_ctrl;
-    fsp_err_t                 status = FSP_SUCCESS;
-
+    fsp_err_t                 status;
 #if SAU_LIN_CFG_PARAM_CHECKING_ENABLE
-    status = r_sau_lin_information_read_write_param_check(p_ctrl, p_transfer_params);
+    status = r_sau_lin_read_write_param_check(p_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+    FSP_ASSERT(NULL != p_transfer_params->p_data);
 
     /* In slave mode, check that data reception is possible (due to successful header reception) */
     FSP_ERROR_RETURN((LIN_MODE_MASTER == p_ctrl->p_cfg->mode) || (SAU_LIN_STATE_HEADER_RECEIVED == p_ctrl->state),
@@ -426,19 +377,20 @@ fsp_err_t R_SAU_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ct
     p_ctrl->checksum_type     = p_transfer_params->checksum_type;
     p_ctrl->validate_checksum = p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE;
 #endif
-    p_ctrl->rx_bytes_expected = p_transfer_params->num_bytes;
-    p_ctrl->p_information     = p_transfer_params->p_information;
-    p_ctrl->state             = SAU_LIN_STATE_AWAITING_DATA;
+    p_ctrl->count  = p_transfer_params->num_bytes;
+    p_ctrl->p_data = p_transfer_params->p_data;
+    p_ctrl->state  = SAU_LIN_STATE_AWAITING_DATA;
 
     sau_lin_extended_cfg_t const * const p_extend = (sau_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
-    status = R_SAU_UART_Read(p_extend->p_uart->p_ctrl, p_transfer_params->p_information, p_transfer_params->num_bytes);
+    status = R_SAU_UART_Read(p_extend->p_uart->p_ctrl, p_transfer_params->p_data, p_transfer_params->num_bytes);
+    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
 
-    return status;
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
- * Cancels in progress information frame read or write, or start frame read or write. Break field reception cannot be
- * cancelled. For slave nodes, reception of a new start frame reception is still enabled after a call to this function.
+ * Cancels in progress data read or write, or header read or write. Break field reception cannot be
+ * cancelled. For slave nodes, reception of a new header reception is still enabled after a call to this function.
  *
  * Implements @ref lin_api_t::communicationAbort.
  *
@@ -481,7 +433,7 @@ fsp_err_t R_SAU_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_SAU_LIN_CallbackSet (lin_ctrl_t * const          p_api_ctrl,
                                  void (                    * p_callback)(lin_callback_args_t *),
-                                 void const * const          p_context,
+                                 void * const                p_context,
                                  lin_callback_args_t * const p_callback_memory)
 {
     sau_lin_instance_ctrl_t * p_ctrl = (sau_lin_instance_ctrl_t *) p_api_ctrl;
@@ -556,7 +508,7 @@ fsp_err_t R_SAU_LIN_WakeupSend (lin_ctrl_t * const p_api_ctrl)
  * Example:
  * @snippet r_sau_lin_example.c R_SAU_LIN_SleepEnter
  *
- * @retval  FSP_SUCCESS            Bus successfully transitioned to active state.
+ * @retval  FSP_SUCCESS            Bus successfully transitioned to sleep state.
  * @retval  FSP_ERR_ASSERTION      Pointer to LIN control block is NULL.
  * @retval  FSP_ERR_NOT_OPEN       The control block has not been opened.
  * @retval  FSP_ERR_UNSUPPORTED    Unsupported when Wake-up Support build option is disabled.
@@ -701,6 +653,84 @@ fsp_err_t R_SAU_LIN_Close (lin_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
+ * DEPRECATED. Use @ref R_SAU_LIN_Read.
+ *
+ * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SAU_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ctrl,
+                                          lin_transfer_params_t * const p_transfer_params)
+{
+    return R_SAU_LIN_Read(p_api_ctrl, p_transfer_params);
+}
+
+/*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SAU_LIN_Write
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SAU_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t const id)
+{
+#if SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
+    lin_transfer_params_t params =
+    {
+        .id            = id,
+        .p_data        = NULL,
+        .num_bytes     = 0,
+        .checksum_type = LIN_CHECKSUM_TYPE_NONE,
+    };
+
+    sau_lin_instance_ctrl_t * p_ctrl = (sau_lin_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t                 status;
+ #if SAU_LIN_CFG_PARAM_CHECKING_ENABLE
+    status = r_sau_lin_common_parameter_checking(p_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+
+    /* Check ID is at most 6 bits */
+    FSP_ERROR_RETURN(0 == (id & 0xC0), FSP_ERR_INVALID_ARGUMENT);
+
+    /* Function only supported for master mode */
+    FSP_ERROR_RETURN(LIN_MODE_MASTER == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
+    FSP_ERROR_RETURN(SAU_LIN_STATE_NONE == p_ctrl->state, FSP_ERR_IN_USE);
+ #endif
+
+    status = r_sau_lin_frame_write(p_ctrl, &params, true);
+    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+
+    return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_api_ctrl);
+    FSP_PARAMETER_NOT_USED(id);
+
+    return FSP_ERR_INVALID_MODE;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SAU_LIN_Write
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SAU_LIN_InformationFrameWrite (lin_ctrl_t * const                  p_api_ctrl,
+                                           const lin_transfer_params_t * const p_transfer_params)
+{
+    sau_lin_instance_ctrl_t * p_ctrl = (sau_lin_instance_ctrl_t *) p_api_ctrl;
+    fsp_err_t                 status = FSP_SUCCESS;
+
+#if SAU_LIN_CFG_PARAM_CHECKING_ENABLE
+
+    /* Common parameter checking */
+    status = r_sau_lin_read_write_param_check(p_ctrl, p_transfer_params);
+    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+    FSP_ASSERT(NULL != p_transfer_params->p_data);
+#endif
+
+    status = r_sau_lin_frame_write(p_ctrl, p_transfer_params, false);
+    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup SAU_LIN)
  **********************************************************************************************************************/
 
@@ -731,10 +761,10 @@ static fsp_err_t r_sau_lin_common_parameter_checking (sau_lin_instance_ctrl_t co
 }
 
 /*******************************************************************************************************************//**
- * Parameter error check function for informationFrameWrite and informationFrameRead
+ * Parameter error check function for R_SAU_LIN_Write and R_SAU_LIN_Read
  *
- * @param[in] p_ctrl Pointer to the control block for the channel
- * @param[in] p_transfer_params  Pointer to the transfer parameters for the transfer
+ * @param[in] p_ctrl                 Pointer to the control block for the channel
+ * @param[in] p_transfer_params      Pointer to the transfer parameters for the transfer
  *
  * @retval  FSP_SUCCESS              No parameter error found
  * @retval  FSP_ERR_NOT_OPEN         The control block has not been opened
@@ -743,21 +773,25 @@ static fsp_err_t r_sau_lin_common_parameter_checking (sau_lin_instance_ctrl_t co
  * @retval  FSP_ERR_ASSERTION        Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided
  * @retval  FSP_ERR_INVALID_STATE    Driver is in bus sleep state. Call @ref R_SAU_LIN_SleepExit to return to active state or wait for wakeup signal.
  **********************************************************************************************************************/
-static fsp_err_t r_sau_lin_information_read_write_param_check (sau_lin_instance_ctrl_t const * const p_ctrl,
-                                                               lin_transfer_params_t const * const   p_transfer_params)
+static fsp_err_t r_sau_lin_read_write_param_check (sau_lin_instance_ctrl_t const * const p_ctrl,
+                                                   lin_transfer_params_t const * const   p_transfer_params)
 {
     fsp_err_t status = r_sau_lin_common_parameter_checking(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
-    FSP_ASSERT(NULL != p_transfer_params);
-    FSP_ASSERT(NULL != p_transfer_params->p_information);
-    FSP_ASSERT(0U != p_transfer_params->num_bytes);
 
-    if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
+    FSP_ASSERT(NULL != p_transfer_params);
+
+    /* Number of bytes and checksum parameters are only checked for data transfers */
+    if (NULL != p_transfer_params->p_data)
     {
-        FSP_ASSERT(p_transfer_params->num_bytes < UINT8_MAX);
+        FSP_ASSERT(p_transfer_params->num_bytes > 0);
+        FSP_ASSERT(((p_transfer_params->num_bytes < UINT8_MAX) ||
+                    (LIN_CHECKSUM_TYPE_NONE == p_transfer_params->checksum_type)));
     }
 
-    FSP_ERROR_RETURN(NULL == p_ctrl->p_information, FSP_ERR_IN_USE);
+    /* Cannot start read/write when another write is in progress */
+    FSP_ERROR_RETURN((SAU_LIN_STATE_NONE == p_ctrl->state) || (SAU_LIN_STATE_HEADER_RECEIVED == p_ctrl->state),
+                     FSP_ERR_IN_USE);
 
     return FSP_SUCCESS;
 }
@@ -842,18 +876,18 @@ static uint8_t r_sau_lin_checksum_initialize (uint8_t id, lin_checksum_type_t ch
 }
 
 /*******************************************************************************************************************//**
- * Calculates the LIN checksum on information frame data to be transmitted. For received frames,
- * the checksum is calculated at the end of the frame reception.
+ * Calculates the LIN checksum on data to be transmitted. For received frames,
+ * the checksum is calculated at the end of the reception.
  *
  * @param[in] id             LIN unprotected frame identifier.
- * @param[in] p_information  Pointer to information frame data.
- * @param[in] num_bytes      Information frame data length.
+ * @param[in] p_data         Pointer to frame data.
+ * @param[in] num_bytes      Frame data length.
  * @param[in] checksum_type  Checksum type (classic or enhanced). Frame ID 0x3C and 0x3D always use classic checksum.
  *
  * @retval                   LIN checksum result
  **********************************************************************************************************************/
 static uint8_t r_sau_lin_checksum_calculate (uint8_t               id,
-                                             uint8_t const * const p_information,
+                                             uint8_t const * const p_data,
                                              uint8_t               num_bytes,
                                              lin_checksum_type_t   checksum_type)
 {
@@ -861,45 +895,80 @@ static uint8_t r_sau_lin_checksum_calculate (uint8_t               id,
 
     for (uint8_t i = 0; i < num_bytes; i++)
     {
-        checksum = r_sau_lin_checksum_add_byte_to_sum(p_information[i], checksum);
+        checksum = r_sau_lin_checksum_add_byte_to_sum(p_data[i], checksum);
     }
 
     return (uint8_t) ~checksum;
 }
 
 #endif
-#if SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
- * Transmit the LIN start frame
+ * Transmit the LIN frame
  *
- * @param[in]  p_ctrl                    Pointer to driver control block
- * @param[in]  id                        Unprotected frame identifier
+ * @param[in]   p_ctrl                   Pointer to driver control block
+ * @param[in]  p_transfer_params         Pointer to the transfer parameters for the transfer
+ * @param[in]  send_header               Set to true if the LIN header should be transmitted before the data (master mode only)
  *
- * @retval     FSP_SUCCESS               Frame transmission started successfully
+ * @retval     FSP_SUCCESS               Transmission started successfully
  * @retval     FSP_ERR_ASSERTION         The new SDR register setting will exceed the register upper limit,
  *                                       please increase the baud rate or adjust the clock setting first.
  * **********************************************************************************************************************/
-static fsp_err_t r_sau_lin_start_frame_write (sau_lin_instance_ctrl_t * const p_ctrl, uint8_t const id)
+static fsp_err_t r_sau_lin_frame_write (sau_lin_instance_ctrl_t * const     p_ctrl,
+                                        const lin_transfer_params_t * const p_transfer_params,
+                                        uint8_t const                       send_header)
 {
+    fsp_err_t status    = FSP_SUCCESS;
+    uint8_t * p_data    = p_transfer_params->p_data;
+    uint8_t   num_bytes = p_transfer_params->num_bytes;
+
+#if SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
+    if (p_data)
+#endif
+    {
+#if SAU_LIN_CFG_CHECKSUM_SUPPORT_ENABLE
+        p_ctrl->validate_checksum = p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE;
+
+        if (p_ctrl->validate_checksum)
+        {
+            /* If checksum generation is enabled, calculate the checksum */
+            p_ctrl->checksum = r_sau_lin_checksum_calculate(p_transfer_params->id,
+                                                            p_data,
+                                                            num_bytes,
+                                                            p_transfer_params->checksum_type);
+        }
+#endif
+        p_ctrl->p_data = p_data;
+        p_ctrl->count  = num_bytes;
+        p_ctrl->state  = SAU_LIN_STATE_SENDING_DATA;
+    }
+
     sau_lin_extended_cfg_t const * const p_extend    = (sau_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     sau_uart_instance_ctrl_t           * p_uart_ctrl = (sau_uart_instance_ctrl_t *) p_extend->p_uart->p_ctrl;
 
-    /* Configure the baud rate for sending the break field */
-    fsp_err_t status = R_SAU_UART_BaudSet(p_uart_ctrl, p_extend->p_break_field_baudrate);
+#if SAU_LIN_CFG_MASTER_SUPPORT_ENABLE
+    if (send_header)
+    {
+        /* Configure the baud rate for sending the break field */
+        status = R_SAU_UART_BaudSet(p_uart_ctrl, p_extend->p_break_field_baudrate);
+        FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
 
-    FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
+        /* Calculation and set protected identifier */
+        p_ctrl->last_pid = r_sau_lin_pid_calculate(p_transfer_params->id);
 
-    /* Calculation and set protected identifier */
-    p_ctrl->last_pid = r_sau_lin_pid_calculate(id);
+        p_ctrl->state = SAU_LIN_STATE_SENDING_BREAK_FIELD;
+        p_data        = (uint8_t *) &g_header_break_field_word;
+        num_bytes     = 1;
+    }
 
-    p_ctrl->p_information = (uint8_t *) &g_start_frame_break_field_word;
-    p_ctrl->state         = SAU_LIN_STATE_SENDING_BREAK_FIELD;
-
-    return R_SAU_UART_Write(p_uart_ctrl, p_ctrl->p_information, 1);
-}
-
+#else
+    FSP_PARAMETER_NOT_USED(send_header);
 #endif
+
+    status = R_SAU_UART_Write(p_uart_ctrl, p_data, num_bytes);
+
+    return status;
+}
 
 #if SAU_LIN_CFG_WAKEUP_SUPPORT_ENABLE
 
@@ -908,7 +977,7 @@ static fsp_err_t r_sau_lin_start_frame_write (sau_lin_instance_ctrl_t * const p_
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
  *
- * @retval     FSP_SUCCESS               Frame transmission started successfully
+ * @retval     FSP_SUCCESS               Transmission started successfully
  **********************************************************************************************************************/
 static fsp_err_t r_sau_lin_set_state_active (sau_lin_instance_ctrl_t * const p_ctrl)
 {
@@ -937,8 +1006,9 @@ static fsp_err_t r_sau_lin_communication_abort (sau_lin_instance_ctrl_t * const 
     sau_lin_extended_cfg_t const * const p_extend = (sau_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     fsp_err_t status = R_SAU_UART_Abort(p_extend->p_uart->p_ctrl, UART_DIR_RX_TX);
     FSP_ERROR_RETURN(FSP_SUCCESS == status, status);
-    p_ctrl->p_information = NULL;
-    p_ctrl->state         = SAU_LIN_STATE_NONE;
+    p_ctrl->p_data = NULL;
+    p_ctrl->state  = SAU_LIN_STATE_NONE;
+    p_ctrl->count  = 0;
 
     return status;
 }
@@ -953,7 +1023,7 @@ static void r_sau_lin_call_callback (sau_lin_instance_ctrl_t * p_ctrl, lin_event
 {
     sau_lin_extended_cfg_t const * const p_extend    = (sau_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     sau_uart_instance_ctrl_t           * p_uart_ctrl = p_extend->p_uart->p_ctrl;
-    uint8_t received_bytes = (uint8_t) (p_ctrl->rx_bytes_expected - p_uart_ctrl->rx_count);
+    uint8_t received_bytes = (uint8_t) (p_ctrl->count - p_uart_ctrl->rx_count);
 
     lin_callback_args_t args;
 
@@ -1144,15 +1214,15 @@ static void r_sau_lin_rx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
         if (p_ctrl->validate_checksum)
         {
             uint8_t sum = r_sau_lin_checksum_calculate(p_ctrl->last_pid,
-                                                       p_ctrl->p_information,
-                                                       p_ctrl->rx_bytes_expected,
+                                                       p_ctrl->p_data,
+                                                       p_ctrl->count,
                                                        p_ctrl->checksum_type);
 
             /* Validate checksum. At this point, p_ctrl->checksum contains the checksum over the data bytes. */
             event =
-                (sum == p_ctrl->checksum) ? LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE : LIN_EVENT_ERR_INVALID_CHECKSUM;
-            p_ctrl->p_information = NULL;
-            p_ctrl->state         = SAU_LIN_STATE_NONE;
+                (sum == p_ctrl->checksum) ? LIN_EVENT_RX_DATA_COMPLETE : LIN_EVENT_ERR_INVALID_CHECKSUM;
+            p_ctrl->p_data = NULL;
+            p_ctrl->state  = SAU_LIN_STATE_NONE;
         }
 
 #else
@@ -1172,15 +1242,16 @@ static void r_sau_lin_rx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
             return;
         }
 #endif
-        event                 = LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE;
-        p_ctrl->p_information = NULL;
-        p_ctrl->state         = SAU_LIN_STATE_NONE;
+        event          = LIN_EVENT_RX_DATA_COMPLETE;
+        p_ctrl->p_data = NULL;
+        p_ctrl->state  = SAU_LIN_STATE_NONE;
     }
 
 #if SAU_LIN_CFG_SLAVE_SUPPORT_ENABLE
     else if (SAU_LIN_STATE_AWAITING_PID_SIGNAL == p_ctrl->state)
     {
         uint8_t pid = p_ctrl->last_pid;
+
         if (r_sau_lin_pid_calculate(pid) != pid)
         {
             p_ctrl->state = SAU_LIN_STATE_NONE;
@@ -1189,7 +1260,7 @@ static void r_sau_lin_rx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
         else
         {
             p_ctrl->state = SAU_LIN_STATE_HEADER_RECEIVED;
-            event         = LIN_EVENT_RX_START_FRAME_COMPLETE;
+            event         = LIN_EVENT_RX_HEADER_COMPLETE;
         }
     }
     else if (SAU_LIN_STATE_AWAITING_SYNC_SIGNAL == p_ctrl->state)
@@ -1242,7 +1313,7 @@ static void r_sau_lin_tx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
             R_SAU_UART_BaudSet(p_uart_ctrl, p_uart_extend->p_baudrate);
 
             p_ctrl->state = SAU_LIN_STATE_SENDING_SYNC;
-            R_SAU_UART_Write(p_uart_ctrl, &g_start_frame_sync_word, 1);
+            R_SAU_UART_Write(p_uart_ctrl, &g_header_sync_word, 1);
 
             break;
         }
@@ -1257,8 +1328,15 @@ static void r_sau_lin_tx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
 
         case SAU_LIN_STATE_SENDING_PID:
         {
-            p_ctrl->p_information = NULL;
-            event                 = LIN_EVENT_TX_START_FRAME_COMPLETE;
+            if (p_ctrl->p_data)
+            {
+                p_ctrl->state = SAU_LIN_STATE_SENDING_DATA;
+                R_SAU_UART_Write(p_uart_ctrl, p_ctrl->p_data, p_ctrl->count);
+            }
+            else
+            {
+                event = LIN_EVENT_TX_HEADER_COMPLETE;
+            }
 
             break;
         }
@@ -1276,9 +1354,8 @@ static void r_sau_lin_tx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
             }
 #endif
             FSP_PARAMETER_NOT_USED(p_uart_ctrl);
-            p_ctrl->state         = SAU_LIN_STATE_NONE;
-            p_ctrl->p_information = NULL;
-            event                 = LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE;
+            p_ctrl->p_data = NULL;
+            event          = LIN_EVENT_TX_DATA_COMPLETE;
 
             break;
         }
@@ -1291,6 +1368,9 @@ static void r_sau_lin_tx_complete (sau_lin_instance_ctrl_t * const p_ctrl, sau_u
 
     if (event)
     {
+        /* Reset state */
+        p_ctrl->state = SAU_LIN_STATE_NONE;
+
         /* Call user callback */
         r_sau_lin_call_callback(p_ctrl, event);
     }
@@ -1314,7 +1394,7 @@ static void r_sau_lin_err_complete (sau_lin_instance_ctrl_t * const p_ctrl, uart
     }
     else if (UART_EVENT_ERR_FRAMING == p_args->event)
     {
-        if ((p_ctrl->state <= SAU_LIN_STATE_AWAITING_SYNC_SIGNAL) || (NULL == p_ctrl->p_information))
+        if ((p_ctrl->state <= SAU_LIN_STATE_AWAITING_SYNC_SIGNAL) || (NULL == p_ctrl->p_data))
         {
 
             /* In the break field signal phase, LIN will have a frame error exception that does not require a callback call. */

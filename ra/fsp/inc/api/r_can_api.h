@@ -166,8 +166,8 @@ typedef struct st_can_callback_args
         uint32_t mailbox;              ///< Mailbox number of interrupt source.
         uint32_t buffer;               ///< Buffer number of interrupt source.
     };
-    void const * p_context;            ///< Context provided to user during callback.
-    can_frame_t  frame;                ///< Received frame data.
+    void      * p_context;             ///< Context provided to user during callback.
+    can_frame_t frame;                 ///< Received frame data.
 } can_callback_args_t;
 
 #endif
@@ -181,7 +181,7 @@ typedef struct st_can_cfg
 
     /* Configuration for CAN Event processing */
     void (* p_callback)(can_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                            ///< User defined callback context.
+    void * p_context;                                  ///< User defined callback context.
 
     /* Pointer to CAN peripheral specific configuration */
     void const * p_extend;                             ///< CAN hardware dependent configuration
@@ -249,7 +249,7 @@ typedef struct st_can_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(can_ctrl_t * const p_ctrl, void (* p_callback)(can_callback_args_t *),
-                              void const * const p_context, can_callback_args_t * const p_callback_memory);
+                              void * const p_context, can_callback_args_t * const p_callback_memory);
 } can_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

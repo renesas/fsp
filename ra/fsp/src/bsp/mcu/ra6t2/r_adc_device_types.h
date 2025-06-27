@@ -116,8 +116,8 @@ typedef enum e_adc_channel
     ADC_CHANNEL_27 = 27,                                     ///< ADC channel 27
     ADC_CHANNEL_28 = 28,                                     ///< ADC channel 28
 
-    /* Extended Channels, See implimentation for details */
-    /* Implimentation specific extended channels */
+    /* Extended Channels, See implementation for details */
+    /* Implementation specific extended channels */
     ADC_CHANNEL_SELF_DIAGNOSIS = (0x60),                     ///< Self-Diagnosis channel
     ADC_CHANNEL_TEMPERATURE    = (0x61),                     ///< Temperature sensor output
     ADC_CHANNEL_VOLT           = (0x62),                     ///< Internal reference voltage

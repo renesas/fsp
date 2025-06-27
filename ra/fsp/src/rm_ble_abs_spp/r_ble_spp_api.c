@@ -1056,7 +1056,7 @@ ble_status_t R_BLE_Execute (void)
                         g_spp_gatt_server_cb(BLE_GATTS_EVENT_WRITE_RSP_COMP, BLE_SUCCESS, (void *) &event_write_data);
                     }
 
-                    /* An attribute was writting using a write-without-response command. */
+                    /* An attribute was writing using a write-without-response command. */
                     if (BLE_MODULE_ATT_OP_WRITE_CMD == op_code)
                     {
                         st_ble_gatts_evt_data_t      event_write_no_response_data;

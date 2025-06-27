@@ -27,21 +27,13 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** IICA communication reservation parameter definition */
-typedef enum e_iica_master_comm_rez
-{
-    IICA_MASTER_COMM_REZ_ENABLED  = 0, // Enable communication reservation
-    IICA_MASTER_COMM_REZ_DISABLED = 1  // Disable communication reservation
-} iica_master_comm_rez_t;
-
 /** IICA clock settings */
 typedef struct iica_master_clock_settings
 {
-    uint8_t                cks_value;      // Internal reference clock select
-    uint8_t                iicwh_value;    // High-level period of SCL clock
-    uint8_t                iicwl_value;    // Low-level period of SCL clock
-    uint8_t                digital_filter; // Digital filter operation select
-    iica_master_comm_rez_t comm_rez;       // Setting for communication reservation select will be deprecated
+    uint8_t cks_value;                 // Internal reference clock select
+    uint8_t iicwh_value;               // High-level period of SCL clock
+    uint8_t iicwl_value;               // Low-level period of SCL clock
+    uint8_t digital_filter;            // Digital filter operation select
 } iica_master_clock_settings_t;
 
 /** Configuration settings for IICA pins */
@@ -81,7 +73,7 @@ typedef struct st_iica_master_instance_ctrl
     void (* p_callback)(i2c_master_callback_args_t *);
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } iica_master_instance_ctrl_t;
 
 /** R_IICA extended configuration */
@@ -122,7 +114,7 @@ fsp_err_t R_IICA_MASTER_SlaveAddressSet(i2c_master_ctrl_t * const    p_api_ctrl,
 fsp_err_t R_IICA_MASTER_Close(i2c_master_ctrl_t * const p_api_ctrl);
 fsp_err_t R_IICA_MASTER_CallbackSet(i2c_master_ctrl_t * const          p_api_ctrl,
                                     void (                           * p_callback)(i2c_master_callback_args_t *),
-                                    void const * const                 p_context,
+                                    void * const                       p_context,
                                     i2c_master_callback_args_t * const p_callback_memory);
 fsp_err_t R_IICA_MASTER_StatusGet(i2c_master_ctrl_t * const p_api_ctrl, i2c_master_status_t * p_status);
 

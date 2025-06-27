@@ -10,7 +10,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 
 ### Current Release
 
-[FSP v5.9.0](https://github.com/renesas/fsp/releases/tag/v5.9.0)
+[FSP v6.0.0](https://github.com/renesas/fsp/releases/tag/v6.0.0)
 
 ### Supported RA MCU Kits
 
@@ -25,6 +25,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 - FPB-RA2E1
 - FPB-RA2E2
 - FPB-RA2E3
+- FPB-RA2T1
 - FPB-RA4E1
 - FPB-RA4E2
 - FPB-RA4T1
@@ -39,6 +40,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 - EK-RA2L1
 - EK-RA2L2
 - EK-RA4E2
+- EK-RA4C1
 - EK-RA4L1
 - EK-RA4M1
 - EK-RA4M2
@@ -54,6 +56,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 - EK-RA8D1
 - EK-RA8E2
 - EK-RA8M1
+- EK-RA8P1
 - MCK-RA4T1
 - MCK-RA6T2
 - MCK-RA6T3
@@ -110,7 +113,8 @@ It is important to note that updates for Azure RTOS on these hardware will no lo
 - FSP versions of 5.5.0 and later require a minimum e² studio version of 2024-07.
 - FSP versions of 5.6.0 and later require a minimum e² studio version of 2024-10.
 - FSP versions of 5.8.0 and later require a minimum e² studio version of 2025-01.
-- FSP versions of 5.9.0 and later require a minimum e² studio version of 2025-04
+- FSP versions of 5.9.0 and later require a minimum e² studio version of 2025-04.
+- FSP versions of 6.0.0 and later require a minimum e² studio version of 2025-04.1.
 
 If you have already installed a previous FSP release that included e² studio then you can download the packs separately. These are available for download under the Assets section for each release. There is a zipped version, FSP_Packs_\<version\>.zip, that will work on any supported OS. There is also a self-extracting installer version, FSP_Packs_\<version\>.exe, that will work on Windows.
 
@@ -118,7 +122,7 @@ When using the zipped version of the packs the zip file should be extracted into
 
 #### For new users that are using FSP with e² studio
 
-1.	Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/fsp/releases/tag/v5.9.0).
+1.	Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/fsp/releases/tag/v6.0.0).
 2.	Run the installer. This will install the e² studio tool, FSP packs, chosen toolchains (GCC and/or LLVM) and other tools required to use this software. No additional installations are required.
 
 #### If using RA Smart Configurator (RASC) with IAR Embedded Workbench or Keil MDK ####

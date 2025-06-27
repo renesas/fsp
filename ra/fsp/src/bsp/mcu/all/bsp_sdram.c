@@ -22,7 +22,7 @@
  **********************************************************************************************************************/
 
 /* Due to hardware limitations of the SDRAM peripheral,
- * it is not expected any of these need to be changable by end user.
+ * it is not expected any of these need to be changeable by end user.
  * Only sequential, single access at a time is supported. */
 #define BSP_PRV_SDRAM_MR_WB_SINGLE_LOC_ACC    (1U) /* MR.M9                : Single Location Access */
 #define BSP_PRV_SDRAM_MR_OP_MODE              (0U) /* MR.M8:M7             : Standard Operation */

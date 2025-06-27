@@ -39,7 +39,7 @@ typedef struct st_rm_block_media_ram_instance_ctrl
 
     void (* p_callback)(rm_block_media_callback_args_t *); // Pointer to callback
     rm_block_media_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
-    void const * p_context;                                // Pointer to context to be passed into callback function
+    void * p_context;                                      // Pointer to context to be passed into callback function
 } rm_block_media_ram_instance_ctrl_t;
 
 /**********************************************************************************************************************

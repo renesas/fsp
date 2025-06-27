@@ -129,7 +129,7 @@ typedef struct st_tau_instance_ctrl
 
     void (* p_callback)(timer_callback_args_t *); // Pointer to callback that is called when a timer_event_t occurs.
 
-    void const * p_context;                       // Pointer to context to be passed into callback function
+    void * p_context;                             // Pointer to context to be passed into callback function
 } tau_instance_ctrl_t;
 
 /** Optional TAU extension data structure.*/
@@ -179,7 +179,7 @@ fsp_err_t R_TAU_InfoGet(timer_ctrl_t * const p_ctrl, timer_info_t * const p_info
 fsp_err_t R_TAU_StatusGet(timer_ctrl_t * const p_ctrl, timer_status_t * const p_status);
 fsp_err_t R_TAU_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                             void (                      * p_callback)(timer_callback_args_t *),
-                            void const * const            p_context,
+                            void * const                  p_context,
                             timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_TAU_Close(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_TAU_LinMeasurementFuncSwitch(timer_ctrl_t * const p_ctrl, tau_function_t func);

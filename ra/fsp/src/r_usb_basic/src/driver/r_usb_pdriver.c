@@ -1706,7 +1706,7 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
     p_tran_data->cur_task_hdl              = tx_thread_identify();
     g_usb_peri_usbx_is_fifo_error[pipenum] = USB_NO;
     #if defined(USB_CFG_PCDC_USE) && defined(USB_CFG_PMSC_USE)
-    if ((USB_CFG_PCDC_BULK_IN == pipenum) || (USB_CFG_PCDC_BULK_OUT == pipenum))
+    if ((g_usb_pcdc_bulk_in_pipe[ptr->ip] == pipenum) || (g_usb_pcdc_bulk_out_pipe[ptr->ip] == pipenum))
     {
         status = tx_semaphore_info_get(&g_usb_peri_usbx_sem[pipenum],
                                        &p_sem_name,
@@ -1769,7 +1769,7 @@ usb_er_t usb_pstd_transfer_start (usb_utr_t * ptr)
     if (0 != pipenum)
     {
     #if defined(USB_CFG_PCDC_USE) && defined(USB_CFG_PMSC_USE)
-        if ((USB_CFG_PCDC_BULK_IN == pipenum) || (USB_CFG_PCDC_BULK_OUT == pipenum))
+        if ((g_usb_pcdc_bulk_in_pipe[ptr->ip] == pipenum) || (g_usb_pcdc_bulk_out_pipe[ptr->ip] == pipenum))
         {
             UINT tx_err;
 

@@ -1,0 +1,26 @@
+/* ${REA_DISCLAIMER_PLACEHOLDER} */
+/******************************************************************************
+ Includes   <System Includes> , "Project Includes"
+ ******************************************************************************/
+
+#ifndef R_USB_PCDC_PVND_DESCRIPTOR_H_
+#define R_USB_PCDC_PVND_DESCRIPTOR_H_
+
+/******************************************************************************
+ Macro definitions
+ ******************************************************************************/
+#define USB_CDC_BULK_IN_EP       (USB_EP1)
+#define USB_CDC_BULK_OUT_EP      (USB_EP2)
+#define USB_CDC_INT_IN_EP        (USB_EP3)
+#define USB_VENDOR_BULK_IN_EP    (USB_EP4)
+#define USB_VENDOR_BULK_OUT_EP   (USB_EP5)
+#define USB_VENDOR_INT_IN_EP     (USB_EP6)
+#define USB_VENDOR_INT_OUT_EP    (USB_EP7)
+
+
+#endif /* R_USB_PCDC_PVND_DESCRIPTOR_H_ */
+
+
+/******************************************************************************
+ End  Of File
+ ******************************************************************************/

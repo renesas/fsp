@@ -150,7 +150,7 @@ typedef struct st_ether_instance_ctrl
     ether_callback_args_t * p_callback_memory;
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } ether_instance_ctrl_t;
 
 /*
@@ -238,7 +238,7 @@ fsp_err_t R_ETHER_TxStatusGet(ether_ctrl_t * const p_ctrl, void * const p_buffer
 
 fsp_err_t R_ETHER_CallbackSet(ether_ctrl_t * const          p_api_ctrl,
                               void (                      * p_callback)(ether_callback_args_t *),
-                              void const * const            p_context,
+                              void * const                  p_context,
                               ether_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**

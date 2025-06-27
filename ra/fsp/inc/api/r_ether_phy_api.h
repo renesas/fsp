@@ -94,19 +94,26 @@ typedef void ether_phy_ctrl_t;
 typedef struct st_ether_phy_cfg
 {
     uint8_t channel;                               ///< Channel
-    uint8_t phy_lsi_address;                       ///< Address of PHY-LSI
+    uint8_t phy_lsi_address;                       ///< DEPRECATED Address of PHY-LSI
 
     uint32_t             phy_reset_wait_time;      ///< Wait time for PHY-LSI reboot
     int32_t              mii_bit_access_wait_time; ///< Wait time for MII/RMII access
-    ether_phy_lsi_type_t phy_lsi_type;             ///< Phy LSI type
+    ether_phy_lsi_type_t phy_lsi_type;             ///< DEPRECATED Phy LSI type
 
     ether_phy_flow_control_t flow_control;         ///< Flow control functionally enable or disable
     ether_phy_mii_type_t     mii_type;             ///< Interface type is MII or RMII
 
     /** Placeholder for user data.  Passed to the user callback in ether_phy_callback_args_t. */
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;                         ///< Placeholder for user extension.
 } ether_phy_cfg_t;
+
+/** PHY LSI configuration. */
+typedef struct st_ether_phy_lsi_cfg
+{
+    uint8_t              address;      ///< Address of PHY-LSI
+    ether_phy_lsi_type_t type;         ///< Phy LSI type
+} ether_phy_lsi_cfg_t;
 
 /** Functions implemented at the HAL layer will follow this API. */
 typedef struct st_ether_phy_api

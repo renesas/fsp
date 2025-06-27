@@ -36,22 +36,46 @@
 #else                                  /* defined(USB_CFG_OTG_USE) */
  #if defined(USB_CFG_HCDC_USE)
   #include "r_usb_hcdc_cfg.h"
+uint8_t g_usb_hcdc_bulk_in_pipe[USB_NUM_USBIP]  = {0};
+uint8_t g_usb_hcdc_bulk_out_pipe[USB_NUM_USBIP] = {0};
+uint8_t g_usb_hcdc_int_in_pipe[USB_NUM_USBIP]   = {0};
+  #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+uint8_t g_usb_hcdc2_bulk_in_pipe[USB_NUM_USBIP]  = {0};
+uint8_t g_usb_hcdc2_bulk_out_pipe[USB_NUM_USBIP] = {0};
+uint8_t g_usb_hcdc2_int_in_pipe[USB_NUM_USBIP]   = {0};
+  #endif                               /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
  #endif                                /* defined(USB_CFG_HCDC_USE) */
  #if defined(USB_CFG_HHID_USE)
   #include "r_usb_hhid_cfg.h"
+uint8_t g_usb_hhid_int_in_pipe[USB_NUM_USBIP]  = {0};
+uint8_t g_usb_hhid_int_out_pipe[USB_NUM_USBIP] = {0};
+  #if (USB_CFG_HHID_MULTI == USB_CFG_ENABLE)
+uint8_t g_usb_hhid2_int_in_pipe[USB_NUM_USBIP] = {0};
+uint8_t g_usb_hhid3_int_in_pipe[USB_NUM_USBIP] = {0};
+  #endif
  #endif                                /* defined(USB_CFG_HHID_USE) */
 #endif                                 /* defined(USB_CFG_OTG_USE) */
 
 #if defined(USB_CFG_HPRN_USE)
  #include "r_usb_hprn_cfg.h"
+uint8_t g_usb_hprn_bulk_in_pipe[USB_NUM_USBIP]  = {0};
+uint8_t g_usb_hprn_bulk_out_pipe[USB_NUM_USBIP] = {0};
+ #if (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+uint8_t g_usb_hprn2_bulk_in_pipe[USB_NUM_USBIP]  = {0};
+uint8_t g_usb_hprn2_bulk_out_pipe[USB_NUM_USBIP] = {0};
+ #endif
 #endif                                 /* defined(USB_CFG_HPRN_USE) */
 
 #if defined(USB_CFG_HUVC_USE)
  #include "r_usb_huvc_cfg.h"
+uint8_t g_usb_huvc_iso_in_pipe[USB_NUM_USBIP]  = {0};
+uint8_t g_usb_huvc_iso_out_pipe[USB_NUM_USBIP] = {0};
 #endif                                 /* defined(USB_CFG_HPRN_USE) */
 
 #if defined(USB_CFG_HAUD_USE)
  #include "r_usb_haud_cfg.h"
+uint8_t g_usb_haud_iso_in_pipe[USB_NUM_USBIP]  = {0};
+uint8_t g_usb_haud_iso_out_pipe[USB_NUM_USBIP] = {0};
 #endif                                 /* defined(USB_CFG_HAUD_USE) */
 
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
@@ -897,7 +921,7 @@ uint16_t usb_hstd_read_data (usb_utr_t * ptr, uint16_t pipe, uint16_t pipemode)
     }
     else
     {
-        /* Continus Receive data */
+        /* Continues Receive data */
         count    = dtln;
         end_flag = USB_READING;
         if ((0 == count) || (0 != (count % mxps)))
@@ -1554,10 +1578,8 @@ void usb_hstd_set_pipe_reg (usb_utr_t * ptr, uint16_t pipe_no)
  ******************************************************************************/
 uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_class, uint8_t type, uint8_t dir)
 {
-    uint8_t pipe_no = USB_NULL;
- #if defined(USB_CFG_HVND_USE)
-    uint16_t pipe;
- #endif                                /* defined(USB_CFG_HVND_USE) */
+    uint8_t pipe = USB_NULL;
+    uint8_t idx  = USB_NULL;
  #if (BSP_CFG_RTOS != 1)
   #if defined(USB_CFG_HMSC_USE)
     uint16_t side;
@@ -1577,9 +1599,9 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                 {
                     if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
                     {
+
                         /* Check Free pipe */
-                        pipe_no = (uint8_t) pipe; /* Set Free pipe */
-                        break;
+                        return pipe;   /* Set Free pipe */
                     }
                 }
             }
@@ -1592,9 +1614,9 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                 {
                     if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
                     {
+
                         /* Check Free pipe */
-                        pipe_no = (uint8_t) pipe; /* Set Free pipe */
-                        break;
+                        return pipe;   /* Set Free pipe */
                     }
                 }
             }
@@ -1607,49 +1629,124 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
  #if defined(USB_CFG_HCDC_USE)
             if (USB_EP_BULK == type)
             {
+  #if (BSP_CFG_RTOS == 1)
                 if (USB_PIPE_DIR_IN == dir)
                 {
-                    switch (address)
+                    if (USB_NULL != (g_usb_hcdc_bulk_in_pipe[ip_no]))
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HCDC_BULK_IN;
-                            break;
-                        }
-
-                        case 3:        /* Hub downport device2 */
-                        {
-                            pipe_no = USB_CFG_HCDC_BULK_IN2;
-                            break;
-                        }
-
-                        default:
-                        {
-                            break;
+                            return g_usb_hcdc_bulk_in_pipe[ip_no];
                         }
                     }
+
+   #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+                    if (USB_NULL != (g_usb_hcdc2_bulk_in_pipe[ip_no]))
+                    {
+                        /* Hub downport device2 */
+                        if (USB_ADDRESS3 == address)
+                        {
+                            return g_usb_hcdc2_bulk_in_pipe[ip_no];
+                        }
+                    }
+   #endif                              /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
                 }
                 else
                 {
-                    switch (address)
+                    if (USB_NULL != (g_usb_hcdc_bulk_out_pipe[ip_no]))
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HCDC_BULK_OUT;
-                            break;
+                            return g_usb_hcdc_bulk_out_pipe[ip_no];
                         }
+                    }
 
-                        case 3:        /* Hub downport device2 */
+   #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+                    if (USB_NULL != (g_usb_hcdc2_bulk_out_pipe[ip_no]))
+                    {
+                        /* Hub downport device2 */
+                        if (USB_ADDRESS3 == address)
                         {
-                            pipe_no = USB_CFG_HCDC_BULK_OUT2;
-                            break;
+                            return g_usb_hcdc2_bulk_out_pipe[ip_no];
                         }
+                    }
+   #endif                              /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
+                }
+  #endif
 
-                        default:
+                /* BULK PIPE Loop */
+                /* WAIT_LOOP */
+                for (pipe = USB_BULK_PIPE_START; pipe < (USB_BULK_PIPE_END + 1); pipe++)
+                {
+                    if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
+                    {
+                        if (USB_PIPE_DIR_IN == dir)
                         {
-                            break;
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_hcdc_bulk_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hcdc_bulk_in_pipe[ip_no];
+                                break;
+                            }
+
+  #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+
+                            /* Hub downport device2 */
+                            else if (USB_ADDRESS3 == address)
+                            {
+                                g_usb_hcdc2_bulk_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hcdc2_bulk_in_pipe[ip_no];
+                                break;
+                            }
+                            else
+                            {
+                                /* Do nothing. */
+                            }
+  #endif                               /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
+                        }
+                        else
+                        {
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_hcdc_bulk_out_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hcdc_bulk_out_pipe[ip_no];
+                                break;
+                            }
+
+  #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+
+                            /* Hub downport device2 */
+                            else if (USB_ADDRESS3 == address)
+                            {
+                                g_usb_hcdc2_bulk_out_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hcdc2_bulk_out_pipe[ip_no];
+                                break;
+                            }
+                            else
+                            {
+                                /* Do nothing. */
+                            }
+  #endif                               /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
                         }
                     }
                 }
@@ -1659,24 +1756,65 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
             {
                 if (USB_PIPE_DIR_IN == dir)
                 {
-                    switch (address)
+  #if (BSP_CFG_RTOS == 1)
+                    if (USB_NULL != g_usb_hcdc_int_in_pipe[ip_no])
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HCDC_INT_IN;
-                            break;
+                            return g_usb_hcdc_int_in_pipe[ip_no];
                         }
+                    }
 
-                        case 3:        /* Hub downport device2 */
+   #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+                    if (USB_NULL != g_usb_hcdc2_int_in_pipe[ip_no])
+                    {
+                        /* Hub downport device2 */
+                        if (USB_ADDRESS3 == address)
                         {
-                            pipe_no = USB_CFG_HCDC_INT_IN2;
-                            break;
+                            return g_usb_hcdc2_int_in_pipe[ip_no];
                         }
+                    }
+   #endif                              /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
+  #endif
+                    usb_class = USB_CLASS_INTERNAL_HCDCC;
 
-                        default:
+                    /* Interrupt PIPE Loop */
+                    /* WAIT_LOOP */
+                    for (pipe = USB_INT_PIPE_START; pipe < (USB_INT_PIPE_END + 1); pipe++)
+                    {
+                        if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
                         {
-                            break;
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_hcdc_int_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hcdc_int_in_pipe[ip_no];
+                                break;
+                            }
+
+  #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+
+                            /* Hub downport device2 */
+                            else if (USB_ADDRESS3 == address)
+                            {
+                                g_usb_hcdc2_int_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hcdc2_int_in_pipe[ip_no];
+                                break;
+                            }
+                            else
+                            {
+                                /* Do nothing. */
+                            }
+  #endif                               /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
                         }
                     }
                 }
@@ -1692,39 +1830,109 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
             {
                 if (USB_PIPE_DIR_IN == dir)
                 {
-                    switch (address)
+                    if (USB_NULL != (g_usb_hhid_int_in_pipe[ip_no]))
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HHID_INT_IN;
-                            break;
-                        }
-
-                        case 3:        /* Hub downport device2 */
-                        {
-                            pipe_no = USB_CFG_HHID_INT_IN2;
-                            break;
-                        }
-
-                        case 4:        /* Hub downport device3 */
-                        {
-                            pipe_no = USB_CFG_HHID_INT_IN3;
-                            break;
-                        }
-
-                        default:
-                        {
-                            break;
+                            return g_usb_hhid_int_in_pipe[ip_no];
                         }
                     }
+
+  #if (USB_CFG_HHID_MULTI == USB_CFG_ENABLE)
+                    if (USB_NULL != (g_usb_hhid2_int_in_pipe[ip_no]))
+                    {
+                        /* Hub downport device2 */
+                        if (USB_ADDRESS3 == address)
+                        {
+                            return g_usb_hhid2_int_in_pipe[ip_no];
+                        }
+                    }
+
+                    if (USB_NULL != (g_usb_hhid3_int_in_pipe[ip_no]))
+                    {
+                        if (USB_ADDRESS4 == address)
+                        {
+                            return g_usb_hhid3_int_in_pipe[ip_no];
+                        }
+                    }
+  #endif                               /* (USB_CFG_HHID_MULTI == USB_CFG_ENABLE) */
                 }
                 else
                 {
-                    /* Check root port device1 or Hub downport device1 */
-                    if ((1 == address) || (2 == address))
+                    if (USB_NULL != (g_usb_hhid_int_out_pipe[ip_no]))
                     {
-                        pipe_no = USB_CFG_HHID_INT_OUT;
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                        {
+                            return g_usb_hhid_int_out_pipe[ip_no];
+                        }
+                    }
+                }
+
+                /* Interrupt PIPE Loop */
+                /* WAIT_LOOP */
+                for (pipe = USB_INT_PIPE_START; pipe < (USB_INT_PIPE_END + 1); pipe++)
+                {
+                    if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
+                    {
+                        if (USB_PIPE_DIR_IN == dir)
+                        {
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_hhid_int_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hhid_int_in_pipe[ip_no];
+                                break;
+                            }
+
+  #if (USB_CFG_HHID_MULTI == USB_CFG_ENABLE)
+
+                            /* Hub downport device2 */
+                            else if (USB_ADDRESS3 == address)
+                            {
+                                g_usb_hhid2_int_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hhid2_int_in_pipe[ip_no];
+                                break;
+                            }
+                            else if (USB_ADDRESS4 == address)
+                            {
+                                g_usb_hhid3_int_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hhid3_int_in_pipe[ip_no];
+                                break;
+                            }
+                            else
+                            {
+                                /* Do nothing. */
+                            }
+  #endif                               /* (USB_CFG_HHID_MULTI == USB_CFG_ENABLE) */
+                        }
+                        else
+                        {
+                            /* Check root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_hhid_int_out_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_hhid_int_out_pipe[ip_no];
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -1751,23 +1959,23 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                 /* Check Strage drive no. */
                 if (side < USB_MAXSTRAGE)
                 {
-   #if (USB_PIPE2 >= USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 >= USB_CFG_HCDC_BULK_OUT)
-
-                    /* Calculate the pipe number corresponding to the drive number */
-                    if ((USB_PIPE3 + side) <= USB_PIPE5)
+   #if defined(USB_CFG_HCDC_USE)
+                    if ((USB_PIPE2 >= g_usb_hcdc_bulk_in_pipe[ip_no]) &&
+                        (USB_PIPE2 >= g_usb_hcdc_bulk_out_pipe[ip_no]) &&
+                        ((USB_PIPE3 + side) <= USB_PIPE5))
                     {
-                        pipe_no = (uint8_t) (USB_PIPE3 + side);
+                        pipe = (uint8_t) (USB_PIPE3 + side);
                     }
-
-   #else                               /* (USB_PIPE2 >= USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 >= USB_CFG_HCDC_BULK_OUT) */
-                    /* Calculate the pipe number corresponding to the drive number */
-                    pipe_no = (uint8_t) (USB_PIPE1 + side);
-   #endif                              /* (USB_PIPE2 >= USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 >= USB_CFG_HCDC_BULK_OUT) */
+                    else
+   #endif                              /* defined(USB_CFG_HCDC_USE) */
+                    {
+                        pipe = (uint8_t) (USB_PIPE1 + side);
+                    }
                 }
 
   #else                                /* #if (BSP_CFG_RTOS != 1) */
-                pipe_no = USB_PIPE1;
-  #endif /* #if (BSP_CFG_RTOS != 1) */
+                pipe = USB_PIPE1;
+  #endif                               /* #if (BSP_CFG_RTOS != 1) */
             }
  #endif                                /* defined(USB_CFG_HMSC_USE) */
             break;
@@ -1778,49 +1986,104 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
  #if defined(USB_CFG_HPRN_USE)
             if (USB_EP_BULK == type)
             {
+  #if (BSP_CFG_RTOS == 1)
                 if (USB_PIPE_DIR_IN == dir)
                 {
-                    switch (address)
+                    if (USB_NULL != (g_usb_hprn_bulk_in_pipe[ip_no]))
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HPRN_BULK_IN;
-                            break;
-                        }
-
-                        case 3:        /* Hub downport device2 */
-                        {
-                            pipe_no = USB_CFG_HPRN_BULK_IN2;
-                            break;
-                        }
-
-                        default:
-                        {
-                            break;
+                            return g_usb_hprn_bulk_in_pipe[ip_no];
                         }
                     }
+
+   #if (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+                    if (USB_NULL != (g_usb_hprn2_bulk_in_pipe[ip_no]))
+                    {
+                        /* Hub downport device2 */
+                        if (USB_ADDRESS3 == address)
+                        {
+                            return g_usb_hprn2_bulk_in_pipe[ip_no];
+                        }
+                    }
+   #endif                              /* (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
                 }
                 else
                 {
-                    switch (address)
+                    if (USB_NULL != (g_usb_hprn_bulk_out_pipe[ip_no]))
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HPRN_BULK_OUT;
-                            break;
+                            return g_usb_hprn_bulk_out_pipe[ip_no];
                         }
+                    }
 
-                        case 3:        /* Hub downport device2 */
+   #if (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+                    if (USB_NULL != (g_usb_hprn2_bulk_out_pipe[ip_no]))
+                    {
+                        /* Hub downport device2 */
+                        if (USB_ADDRESS3 == address)
                         {
-                            pipe_no = USB_CFG_HPRN_BULK_OUT2;
-                            break;
+                            return g_usb_hprn2_bulk_out_pipe[ip_no];
                         }
+                    }
+   #endif                              /* (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
+                }
+  #endif
 
-                        default:
+                /* BULK PIPE Loop */
+                /* WAIT_LOOP */
+                for (pipe = USB_BULK_PIPE_START; pipe < (USB_BULK_PIPE_END + 1); pipe++)
+                {
+                    if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
+                    {
+                        if (USB_PIPE_DIR_IN == dir)
                         {
-                            break;
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_hprn_bulk_in_pipe[ip_no] = pipe;
+                                break;
+                            }
+
+  #if (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+
+                            /* Hub downport device2 */
+                            else if (USB_ADDRESS3 == address)
+                            {
+                                g_usb_hprn2_bulk_in_pipe[ip_no] = pipe;
+                                break;
+                            }
+                            else
+                            {
+                                /* Do nothing. */
+                            }
+  #endif                               /* (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
+                        }
+                        else
+                        {
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_hprn_bulk_out_pipe[ip_no] = pipe;
+                                break;
+                            }
+
+  #if (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+
+                            /* Hub downport device2 */
+                            else if (USB_ADDRESS3 == address)
+                            {
+                                g_usb_hprn2_bulk_out_pipe[ip_no] = pipe;
+                                break;
+                            }
+                            else
+                            {
+                                /* Do nothing. */
+                            }
+  #endif                               /* (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
                         }
                     }
                 }
@@ -1834,37 +2097,55 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
  #if defined(USB_CFG_HUVC_USE)
             if (USB_EP_ISO == type)
             {
+  #if (BSP_CFG_RTOS == 1)
                 if (USB_PIPE_DIR_IN == dir)
                 {
-                    switch (address)
+                    if (USB_NULL != g_usb_huvc_iso_in_pipe[ip_no])
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HUVC_ISO_IN;
-                            break;
-                        }
-
-                        default:
-                        {
-                            break;
+                            return g_usb_huvc_iso_in_pipe[ip_no];
                         }
                     }
                 }
                 else
                 {
-                    switch (address)
+                    if (USB_NULL != g_usb_huvc_iso_out_pipe[ip_no])
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HUVC_ISO_OUT;
-                            break;
+                            return g_usb_huvc_iso_out_pipe[ip_no];
                         }
+                    }
+                }
+  #endif                               /* (BSP_CFG_RTOS == 1) */
 
-                        default:
+                /* Isochronous PIPE Loop */
+                /* WAIT_LOOP */
+                for (pipe = USB_ISO_PIPE_START; pipe < (USB_ISO_PIPE_END + 1); pipe++)
+                {
+                    /* Check if the pipe is free */
+                    if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
+                    {
+                        if (USB_PIPE_DIR_IN == dir)
                         {
-                            break;
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_huvc_iso_in_pipe[ip_no] = pipe;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_huvc_iso_out_pipe[ip_no] = pipe;
+                                break;
+                            }
                         }
                     }
                 }
@@ -1878,37 +2159,55 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
  #if defined(USB_CFG_HAUD_USE)
             if (USB_EP_ISO == type)
             {
+  #if (BSP_CFG_RTOS == 1)
                 if (USB_PIPE_DIR_IN == dir)
                 {
-                    switch (address)
+                    if (USB_NULL != g_usb_haud_iso_in_pipe[ip_no])
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HAUD_ISO_IN;
-                            break;
-                        }
-
-                        default:
-                        {
-                            break;
+                            return g_usb_haud_iso_in_pipe[ip_no];
                         }
                     }
                 }
                 else
                 {
-                    switch (address)
+                    if (USB_NULL != g_usb_haud_iso_out_pipe[ip_no])
                     {
-                        case 1:        /* Root port device1 */
-                        case 2:        /* Hub downport device1 */
+                        /* Root port device1 or Hub downport device1 */
+                        if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                         {
-                            pipe_no = USB_CFG_HAUD_ISO_OUT;
-                            break;
+                            return g_usb_haud_iso_out_pipe[ip_no];
                         }
+                    }
+                }
+  #endif
 
-                        default:
+                /* Isochronous PIPE Loop */
+                /* WAIT_LOOP */
+                for (pipe = USB_ISO_PIPE_START; pipe < (USB_ISO_PIPE_END + 1); pipe++)
+                {
+                    /* Check if the pipe is free */
+                    if (USB_FALSE == g_usb_pipe_table[ip_no][pipe].use_flag)
+                    {
+                        if (USB_PIPE_DIR_IN == dir)
                         {
-                            break;
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_haud_iso_in_pipe[ip_no] = pipe;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            /* Root port device1 or Hub downport device1 */
+                            if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
+                            {
+                                g_usb_haud_iso_out_pipe[ip_no] = pipe;
+                                break;
+                            }
                         }
                     }
                 }
@@ -1919,7 +2218,7 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
 
         case USB_HUB:
         {
-            pipe_no = USB_HUB_PIPE;
+            pipe = USB_HUB_PIPE;
             break;
         }
 
@@ -1929,13 +2228,14 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
             (void) address;
             (void) type;
             (void) dir;
+            (void) idx;
 
             return USB_NULL;
             break;
         }
     }
 
-    return pipe_no;
+    return pipe;
 }                                      /* eof usb_hstd_get_pipe_no() */
 
 /******************************************************************************
@@ -2002,85 +2302,66 @@ uint16_t usb_hstd_get_pipe_peri_value (uint16_t speed, uint8_t binterval)
  ******************************************************************************/
 uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
 {
+    (void) pipe_no;
     uint16_t pipe_buf = 0;
 
-    switch (pipe_no)
-    {
   #if defined(USB_CFG_HCDC_USE)
-        case USB_CFG_HCDC_BULK_IN:
-        {
+    if (pipe_no == g_usb_hcdc_bulk_in_pipe[USB_IP1])
+    {
    #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
    #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
-            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
    #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
-            break;
-        }
-
-        case USB_CFG_HCDC_BULK_OUT:
-        {
+    }
+    else if (pipe_no == g_usb_hcdc_bulk_out_pipe[USB_IP1])
+    {
    #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
    #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
-            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
    #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
-            break;
-        }
+    }
 
-   #if (USB_NULL != USB_CFG_HCDC_BULK_IN2)
-        case USB_CFG_HCDC_BULK_IN2:
-        {
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(72U));
-            break;
-        }
-   #endif                              /* (USB_NULL != USB_CFG_HCDC_BULK_IN2) */
-
-   #if (USB_NULL != USB_CFG_HCDC_BULK_OUT2)
-        case USB_CFG_HCDC_BULK_OUT2:
-        {
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(104U));
-            break;
-        }
-   #endif                              /* (USB_NULL != USB_CFG_HCDC_BULK_OUT2) */
+   #if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+    else if (pipe_no == g_usb_hcdc2_bulk_in_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(72U));
+    }
+    else if (pipe_no == g_usb_hcdc2_bulk_out_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(104U));
+    }
+   #endif                              /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
+    else
+    {
+        /*Do nothing.*/
+    }
   #endif                               /* defined(USB_CFG_HCDC_USE) */
 
   #if defined(USB_CFG_HMSC_USE)
    #if defined(USB_CFG_HCDC_USE)
-    #if (USB_PIPE2 < USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 < USB_CFG_HCDC_BULK_OUT)
-        case USB_PIPE1:
-        case USB_PIPE2:
-    #else                              /* (USB_PIPE2 < USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 < USB_CFG_HCDC_BULK_OUT) */
-        case USB_PIPE3:
-        case USB_PIPE4:
-        case USB_PIPE5:
-    #endif                             /* (USB_PIPE2 < USB_CFG_HCDC_BULK_IN) && (USB_PIPE2 < USB_CFG_HCDC_BULK_OUT) */
-            {
+    if ((pipe_no != g_usb_hcdc_bulk_in_pipe[USB_IP1]) && (pipe_no != g_usb_hcdc_bulk_out_pipe[USB_IP1]))
+    {
     #if USB_CFG_DTC == USB_CFG_ENABLE
-                pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
     #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
-                pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
     #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */
-                break;
-            }
+    }
 
-   #else /* defined(USB_CFG_HCDC_USE) */
-        case USB_PIPE1:
-        case USB_PIPE2:
-        case USB_PIPE3:
-        case USB_PIPE4:
-        case USB_PIPE5:
-        {
+   #else                               /* defined(USB_CFG_HCDC_USE) */
     #if USB_CFG_DTC == USB_CFG_ENABLE
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+    pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
     #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
-            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+    pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
     #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */
-            break;
-        }
-   #endif /* defined(USB_CFG_HCDC_USE) */
-  #endif /* defined(USB_CFG_HMSC_USE) */
+   #endif                              /* defined(USB_CFG_HCDC_USE) */
+  #endif                               /* defined(USB_CFG_HMSC_USE) */
 
   #if defined(USB_CFG_HVND_USE)
+    switch (pipe_no)
+    {
         case USB_PIPE1:
         {
             pipe_buf = (USB_BUF_SIZE(512U) | USB_BUF_NUMB(8U));
@@ -2110,80 +2391,72 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
             pipe_buf = (USB_BUF_SIZE(512U) | USB_BUF_NUMB(72U));
             break;
         }
+    }
   #endif                               /* defined(USB_CFG_HVND_USE) */
 
   #if defined(USB_CFG_HPRN_USE)
-        case USB_CFG_HPRN_BULK_IN:
-        {
+    if (pipe_no == g_usb_hprn_bulk_in_pipe[USB_IP1])
+    {
    #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
    #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
-            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
    #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
-            break;
-        }
-
-        case USB_CFG_HPRN_BULK_OUT:
-        {
+    }
+    else if (pipe_no == g_usb_hprn_bulk_out_pipe[USB_IP1])
+    {
    #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
    #else                               /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
-            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
    #endif                              /* (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE) */
-            break;
-        }
+    }
 
-   #if (USB_NULL != USB_CFG_HPRN_BULK_IN2)
-        case USB_CFG_HPRN_BULK_IN2:
-        {
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(72U));
-            break;
-        }
-   #endif                              /* (USB_NULL != USB_CFG_HPRN_BULK_IN2) */
-
-   #if (USB_NULL != USB_CFG_HPRN_BULK_OUT2)
-        case USB_CFG_HPRN_BULK_OUT2:
-        {
-            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(104U));
-            break;
-        }
-   #endif                              /* (USB_NULL != USB_CFG_HPRN_BULK_OUT2) */
+   #if (USB_CFG_HPRN_MULTI == USB_CFG_ENABLE)
+    else if (pipe_no == g_usb_hprn2_bulk_in_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(72U));
+    }
+    else if (pipe_no == g_usb_hprn2_bulk_out_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(104U));
+    }
+   #endif                              /* (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE) */
+    else
+    {
+        /* Do nothing. */
+    }
   #endif                               /* defined(USB_CFG_HPRN_USE) */
 
   #if defined(USB_CFG_HUVC_USE)
-        case USB_CFG_HUVC_ISO_IN:
-        {
-            pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(8u));
-            break;
-        }
-
-        case USB_CFG_HUVC_ISO_OUT:
-        {
-            pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(72u));
-            break;
-        }
-  #endif                               /* defined(USB_CFG_PAUD_USE) */
+    if (pipe_no == g_usb_huvc_iso_in_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(8u));
+    }
+    else if (pipe_no == g_usb_huvc_iso_out_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(72u));
+    }
+    else
+    {
+        /* Do nothing. */
+    }
+  #endif                               /* defined(USB_CFG_HUVC_USE) */
 
   #if defined(USB_CFG_HAUD_USE)
-        case USB_CFG_HAUD_ISO_IN:
-        {
-            pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(8u));
-            break;
-        }
-
-        case USB_CFG_HAUD_ISO_OUT:
-        {
-            pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(72u));
-            break;
-        }
-  #endif                               /* defined(USB_CFG_HAUD_USE) */
-
-        default:
-        {
-            /* Error */
-            break;
-        }
+    if (pipe_no == g_usb_haud_iso_in_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(8u));
     }
+    else if (pipe_no == g_usb_haud_iso_out_pipe[USB_IP1])
+    {
+        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(72u));
+    }
+    else
+    {
+        /* Do nothing. */
+    }
+  #endif                               /* defined(USB_CFG_HAUD_USE) */
 
     return pipe_buf;
 }                                      /* End of function usb_hstd_get_pipe_buf_value() */

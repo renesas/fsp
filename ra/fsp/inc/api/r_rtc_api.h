@@ -62,8 +62,8 @@ typedef enum e_rtc_alarm_channel
 /** Callback function parameter data */
 typedef struct st_rtc_callback_args
 {
-    rtc_event_t  event;                ///< The event can be used to identify what caused the callback (compare match or error).
-    void const * p_context;            ///< Placeholder for user data.
+    rtc_event_t event;                 ///< The event can be used to identify what caused the callback (compare match or error).
+    void      * p_context;             ///< Placeholder for user data.
 } rtc_callback_args_t;
 
 /** Clock source for the RTC block */
@@ -224,7 +224,7 @@ typedef struct st_rtc_cfg
     uint8_t   carry_ipl;                                ///< Carry interrupt priority
     IRQn_Type carry_irq;                                ///< Carry interrupt vector
     void (* p_callback)(rtc_callback_args_t * p_args);  ///< Called from the ISR.
-    void const * p_context;                             ///< User defined context passed into callback function.
+    void       * p_context;                             ///< User defined context passed into callback function.
     void const * p_extend;                              ///< RTC hardware dependant configuration.
 } rtc_cfg_t;
 
@@ -306,7 +306,7 @@ typedef struct st_rtc_api
      * @param[in]   p_working_memory         Pointer to volatile memory where callback structure can be allocated
      */
     fsp_err_t (* callbackSet)(rtc_ctrl_t * const p_ctrl, void (* p_callback)(rtc_callback_args_t *),
-                              void const * const p_context, rtc_callback_args_t * const p_callback_memory);
+                              void * const p_context, rtc_callback_args_t * const p_callback_memory);
 
     /** Return the currently configure clock source for the RTC
      *

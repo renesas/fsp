@@ -90,7 +90,7 @@ typedef enum e_rm_hs400x_periodic_measurement_frequency
 /** HS400X callback parameter definition */
 typedef struct st_rm_hs400x_callback_args
 {
-    void const      * p_context;
+    void            * p_context;
     rm_hs400x_event_t event;
 } rm_hs400x_callback_args_t;
 
@@ -130,8 +130,8 @@ typedef struct st_rm_hs400x_cfg
     rm_hs400x_humidity_resolution_t const            humidity_resolution;    ///< Resolution for humidity
     rm_hs400x_periodic_measurement_frequency_t const frequency;              ///< Frequency for periodic measurement
     rm_comms_instance_t const * p_comms_instance;                            ///< Pointer to Communications Middleware instance.
-    void const                * p_context;                                   ///< Pointer to the user-provided context.
-    void const                * p_extend;                                    ///< Pointer to extended configuration by instance of interface.
+    void       * p_context;                                                  ///< Pointer to the user-provided context.
+    void const * p_extend;                                                   ///< Pointer to extended configuration by instance of interface.
     void (* p_comms_callback)(rm_hs400x_callback_args_t * p_args);           ///< I2C Communications callback
 } rm_hs400x_cfg_t;
 

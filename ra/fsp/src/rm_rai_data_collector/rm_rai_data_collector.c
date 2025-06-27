@@ -287,7 +287,7 @@ fsp_err_t RM_RAI_DATA_COLLECTOR_SnapshotStop (rai_data_collector_ctrl_t * const 
  *
  * Implements @ref rai_data_collector_api_t::channelBufferGet().
  *
- * @retval FSP_SUCCESS              Buffer avaialble.
+ * @retval FSP_SUCCESS              Buffer available.
  * @retval FSP_ERR_ASSERTION        An input parameter was invalid.
  * @retval FSP_ERR_NOT_OPEN         Module not open.
  *

@@ -194,7 +194,7 @@ typedef struct st_can_instance_ctrl
 
     void (* p_callback)(can_callback_args_t *); // Pointer to callback
     can_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
-    void const          * p_context;            // Pointer to context to be passed into callback function
+    void                * p_context;            // Pointer to context to be passed into callback function
 } can_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -220,7 +220,7 @@ fsp_err_t R_CAN_ModeTransition(can_ctrl_t * const   p_api_ctrl,
 fsp_err_t R_CAN_InfoGet(can_ctrl_t * const p_api_ctrl, can_info_t * const p_info);
 fsp_err_t R_CAN_CallbackSet(can_ctrl_t * const          p_api_ctrl,
                             void (                    * p_callback)(can_callback_args_t *),
-                            void const * const          p_context,
+                            void * const                p_context,
                             can_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**

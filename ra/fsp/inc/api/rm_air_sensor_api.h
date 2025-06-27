@@ -54,14 +54,14 @@ typedef enum e_rm_air_sensor_event
 /** Sign of sensor data */
 typedef enum e_rm_air_sensor_sign
 {
-    RM_AIR_SENSOR_SIGN_MINUS = -1,                ///< Minus sign
-    RM_AIR_SENSOR_SIGN_PLUS  = 1,                 ///< Plus sign
+    RM_AIR_SENSOR_SIGN_MINUS = -1,     ///< Minus sign
+    RM_AIR_SENSOR_SIGN_PLUS  = 1,      ///< Plus sign
 } rm_air_sensor_sign_t;
 
 /** AIR SENSOR API callback parameter definition */
 typedef struct st_rm_air_sensor_callback_args
 {
-    void const          * p_context;
+    void                * p_context;
     rm_air_sensor_event_t event;       ///< Event that triggered the callback.
 } rm_air_sensor_callback_args_t;
 
@@ -115,8 +115,8 @@ typedef struct st_rm_air_sensor_data
 typedef struct st_rm_air_sensor_cfg
 {
     rm_comms_instance_t const * p_comms_instance;                      ///< Pointer to Communications Middleware instance.
-    void const                * p_context;                             ///< Pointer to the user-provided context.
-    void const                * p_extend;                              ///< Pointer to extended configuration by instance of interface.
+    void       * p_context;                                            ///< Pointer to the user-provided context.
+    void const * p_extend;                                             ///< Pointer to extended configuration by instance of interface.
     void (* p_comms_callback)(rm_air_sensor_callback_args_t * p_args); ///< Communications callback
 } rm_air_sensor_cfg_t;
 

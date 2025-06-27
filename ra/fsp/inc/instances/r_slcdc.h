@@ -31,7 +31,7 @@ typedef struct st_slcdc_instance_ctrl
 {
     uint32_t            open;          // Status of SLCD module
     slcdc_cfg_t const * p_cfg;         // Pointer to SLCDC configuration
-    void const        * p_context;     // Pointer to the higher level device context
+    void              * p_context;     // Pointer to the higher level device context
 } slcdc_instance_ctrl_t;
 
 /**********************************************************************************************************************

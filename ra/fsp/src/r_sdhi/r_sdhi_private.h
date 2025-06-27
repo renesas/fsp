@@ -68,7 +68,7 @@ FSP_HEADER
      SDHI_PRV_OCR_VDD_3_1_V |                                                                            \
      SDHI_PRV_OCR_VDD_3_2_V | SDHI_PRV_OCR_VDD_3_3_V | SDHI_PRV_OCR_VDD_3_4_V | SDHI_PRV_OCR_VDD_3_5_V)
 
-/* SWITCH command argument's bit postion */
+/* SWITCH command argument's bit position */
 #define SDHI_PRV_SWITCH_ACCESS_SHIFT                    (24U)
 #define SDHI_PRV_SWITCH_INDEX_SHIFT                     (16U)
 #define SDHI_PRV_SWITCH_VALUE_SHIFT                     (8U)

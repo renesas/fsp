@@ -58,6 +58,9 @@
 
 typedef enum e_cmd
 {
+    CMD_AES_KEY_WRAP_AES128 = 0,
+    CMD_AES_KEY_WRAP_AES256 = 1,
+
     CMD_AES_MODE_ECB_ENCRYPT = 0,
     CMD_AES_MODE_ECB_DECRYPT = 1,
     CMD_AES_MODE_CBC_ENCRYPT = 2,
@@ -105,6 +108,9 @@ typedef enum e_cmd
 
     CMD_KDF_TLS12_PRF_VERIFY_DATA_CLIENT = 0,
     CMD_KDF_TLS12_PRF_VERIFY_DATA_SERVER = 1,
+
+    CMD_OTF_CHANNEL_0 = 0,
+    CMD_OTF_CHANNEL_1 = 1,
 
     CMD_AUTH_HASH_TYPE_JTAG_DEBUG_LEVEL1 = 0,
     CMD_AUTH_HASH_TYPE_JTAG_DEBUG_LEVEL2 = 1,
@@ -156,19 +162,9 @@ typedef enum e_rsip_oem_cmd
     RSIP_OEM_CMD_NUM
 } rsip_oem_cmd_t;
 
-typedef enum e_rsip_rfc3394_key_wrap_type
-{
-    RSIP_RFC3394_KEY_WRAP_TYPE_AES128,
-    RSIP_RFC3394_KEY_WRAP_TYPE_AES192,
-    RSIP_RFC3394_KEY_WRAP_TYPE_AES256
-} rsip_rfc3394_key_wrap_type_t;
-
 /***********************************************************************************************************************
  * Private function prototypes
  **********************************************************************************************************************/
-
-static rsip_ret_t select_rfc3394_key_wrap_mode(const rsip_key_type_t key_type, uint32_t WrappedKeyType[]);
-static rsip_ret_t select_hmac_key_index_size(const rsip_wrapped_key_t * p_wrapped_key);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -856,106 +852,82 @@ rsip_ret_t r_rsip_wrapper_p75i (const rsip_wrapped_key_t * p_wrapped_key,
                                 const uint32_t             InData_HashType[],
                                 const uint32_t             InData_MsgLen[])
 {
-    rsip_ret_t rsip_ret = select_hmac_key_index_size(p_wrapped_key);
-    if (RSIP_RET_PASS == rsip_ret)
-    {
-        rsip_ret = r_rsip_p75i((uint32_t *) p_wrapped_key->value, InData_HashType, InData_MsgLen);
-    }
-
-    return rsip_ret;
+    return r_rsip_p75i((uint32_t *) p_wrapped_key->p_value, InData_HashType, InData_MsgLen,
+                       r_rsip_byte_to_word_convert(RSIP_BYTE_SIZE_WRAPPED_KEY(p_wrapped_key->type)));
 }
 
 rsip_ret_t r_rsip_wrapper_p75r (const rsip_wrapped_key_t * p_wrapped_key,
                                 const uint32_t             InData_HashType[],
                                 const uint32_t             InData_State[])
 {
-    rsip_ret_t rsip_ret = select_hmac_key_index_size(p_wrapped_key);
-    if (RSIP_RET_PASS == rsip_ret)
-    {
-        rsip_ret = r_rsip_p75r((uint32_t *) p_wrapped_key->value, InData_HashType, InData_State);
-    }
-
-    return rsip_ret;
+    return r_rsip_p75r((uint32_t *) p_wrapped_key->p_value, InData_HashType, InData_State,
+                       r_rsip_byte_to_word_convert(RSIP_BYTE_SIZE_WRAPPED_KEY(p_wrapped_key->type)));
 }
 
-rsip_ret_t r_rsip_wrapper_p8f_aes128 (const uint32_t        InData_KeyIndex[],
-                                      const rsip_key_type_t key_type,
-                                      const uint32_t        InData_WrappedKeyIndex[],
-                                      uint32_t              OutData_Text[])
+rsip_ret_t r_rsip_wrapper_p8f_aes128 (const uint32_t InData_KeyIndex[],
+                                      const uint32_t InData_WrappedKeyType[],
+                                      const uint32_t InData_WrappedKeyIndex[],
+                                      uint32_t       OutData_Text[],
+                                      uint32_t       KEY_INDEX_SIZE,
+                                      uint32_t       WRAPPED_KEY_SIZE)
 {
-    uint32_t InData_Cmd[1] = {bswap_32big(0)};
-    uint32_t InData_WrappedKeyType[1];
-
-    rsip_ret_t rsip_ret = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
-    if (RSIP_RET_PASS == rsip_ret)
-    {
-        rsip_ret = r_rsip_p8f(InData_Cmd, InData_KeyIndex, InData_WrappedKeyType, InData_WrappedKeyIndex, OutData_Text);
-    }
-
-    return rsip_ret;
+    return r_rsip_p8f(&gs_cmd[CMD_AES_KEY_WRAP_AES128],
+                      InData_KeyIndex,
+                      InData_WrappedKeyType,
+                      InData_WrappedKeyIndex,
+                      OutData_Text,
+                      KEY_INDEX_SIZE,
+                      WRAPPED_KEY_SIZE);
 }
 
-rsip_ret_t r_rsip_wrapper_p8f_aes256 (const uint32_t        InData_KeyIndex[],
-                                      const rsip_key_type_t key_type,
-                                      const uint32_t        InData_WrappedKeyIndex[],
-                                      uint32_t              OutData_Text[])
+rsip_ret_t r_rsip_wrapper_p8f_aes256 (const uint32_t InData_KeyIndex[],
+                                      const uint32_t InData_WrappedKeyType[],
+                                      const uint32_t InData_WrappedKeyIndex[],
+                                      uint32_t       OutData_Text[],
+                                      uint32_t       KEY_INDEX_SIZE,
+                                      uint32_t       WRAPPED_KEY_SIZE)
 {
-    uint32_t InData_Cmd[1] = {bswap_32big(1)};
-    uint32_t InData_WrappedKeyType[1];
-
-    rsip_ret_t rsip_ret = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
-    if (RSIP_RET_PASS == rsip_ret)
-    {
-        rsip_ret = r_rsip_p8f(InData_Cmd, InData_KeyIndex, InData_WrappedKeyType, InData_WrappedKeyIndex, OutData_Text);
-    }
-
-    return rsip_ret;
+    return r_rsip_p8f(&gs_cmd[CMD_AES_KEY_WRAP_AES256],
+                      InData_KeyIndex,
+                      InData_WrappedKeyType,
+                      InData_WrappedKeyIndex,
+                      OutData_Text,
+                      KEY_INDEX_SIZE,
+                      WRAPPED_KEY_SIZE);
 }
 
-rsip_ret_t r_rsip_wrapper_p90_aes128 (const uint32_t        InData_KeyIndex[],
-                                      const rsip_key_type_t key_type,
-                                      const uint32_t        InData_Text[],
-                                      uint32_t              OutData_KeyIndex[])
+rsip_ret_t r_rsip_wrapper_p90_aes128 (const uint32_t InData_KeyIndex[],
+                                      const uint32_t InData_WrappedKeyType[],
+                                      const uint32_t InData_Text[],
+                                      uint32_t       OutData_KeyIndex[],
+                                      uint32_t       WRAPPED_KEY_SIZE,
+                                      uint32_t       KEY_INDEX_SIZE)
 {
-    uint32_t InData_KeyType[1] = {bswap_32big(0)};
-    uint32_t InData_Cmd[1]     = {bswap_32big(0)};
-    uint32_t InData_WrappedKeyType[1];
-
-    rsip_ret_t rsip_ret = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
-    if (RSIP_RET_PASS == rsip_ret)
-    {
-        rsip_ret = r_rsip_p90(InData_KeyType,
-                              InData_Cmd,
-                              InData_KeyIndex,
-                              InData_WrappedKeyType,
-                              InData_Text,
-                              OutData_KeyIndex);
-    }
-
-    return rsip_ret;
+    return r_rsip_p90(&gs_cmd[0],
+                      &gs_cmd[CMD_AES_KEY_WRAP_AES128],
+                      InData_KeyIndex,
+                      InData_WrappedKeyType,
+                      InData_Text,
+                      OutData_KeyIndex,
+                      WRAPPED_KEY_SIZE,
+                      KEY_INDEX_SIZE);
 }
 
-rsip_ret_t r_rsip_wrapper_p90_aes256 (const uint32_t        InData_KeyIndex[],
-                                      const rsip_key_type_t key_type,
-                                      const uint32_t        InData_Text[],
-                                      uint32_t              OutData_KeyIndex[])
+rsip_ret_t r_rsip_wrapper_p90_aes256 (const uint32_t InData_KeyIndex[],
+                                      const uint32_t InData_WrappedKeyType[],
+                                      const uint32_t InData_Text[],
+                                      uint32_t       OutData_KeyIndex[],
+                                      uint32_t       WRAPPED_KEY_SIZE,
+                                      uint32_t       KEY_INDEX_SIZE)
 {
-    uint32_t InData_KeyType[1] = {bswap_32big(0)};
-    uint32_t InData_Cmd[1]     = {bswap_32big(1)};
-    uint32_t InData_WrappedKeyType[1];
-
-    rsip_ret_t rsip_ret = select_rfc3394_key_wrap_mode(key_type, InData_WrappedKeyType);
-    if (RSIP_RET_PASS == rsip_ret)
-    {
-        rsip_ret = r_rsip_p90(InData_KeyType,
-                              InData_Cmd,
-                              InData_KeyIndex,
-                              InData_WrappedKeyType,
-                              InData_Text,
-                              OutData_KeyIndex);
-    }
-
-    return rsip_ret;
+    return r_rsip_p90(&gs_cmd[0],
+                      &gs_cmd[CMD_AES_KEY_WRAP_AES256],
+                      InData_KeyIndex,
+                      InData_WrappedKeyType,
+                      InData_Text,
+                      OutData_KeyIndex,
+                      WRAPPED_KEY_SIZE,
+                      KEY_INDEX_SIZE);
 }
 
 rsip_ret_t r_rsip_wrapper_p47i_ecb_enc (const uint32_t InData_KeyIndex[], const uint32_t InData_IV[])
@@ -1836,103 +1808,56 @@ rsip_ret_t r_rsip_wrapper_pe7_sha512_iv_aes (const uint32_t InData_KDFInfo[],
                       OutData_EncIV);
 }
 
+rsip_ret_t r_rsip_wrapper_p2c_ch0 (const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[])
+{
+#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+
+    return r_rsip_p2c(InData_KeyIndex, InData_DOTFSEED);
+#else
+
+    return r_rsip_p2c(&gs_cmd[CMD_OTF_CHANNEL_0], InData_KeyIndex, InData_DOTFSEED);
+#endif
+};
+
+rsip_ret_t r_rsip_wrapper_p2d_ch0 (const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[])
+{
+#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+
+    return r_rsip_p2d(InData_KeyIndex, InData_DOTFSEED);
+#else
+
+    return r_rsip_p2d(&gs_cmd[CMD_OTF_CHANNEL_0], InData_KeyIndex, InData_DOTFSEED);
+#endif
+};
+
+rsip_ret_t r_rsip_wrapper_p2e_ch0 (const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[])
+{
+#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+
+    return r_rsip_p2e(InData_KeyIndex, InData_DOTFSEED);
+#else
+
+    return r_rsip_p2e(&gs_cmd[CMD_OTF_CHANNEL_0], InData_KeyIndex, InData_DOTFSEED);
+#endif
+};
+
+#if BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+rsip_ret_t r_rsip_wrapper_p2c_ch1 (const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[])
+{
+    return r_rsip_p2c(&gs_cmd[CMD_OTF_CHANNEL_1], InData_KeyIndex, InData_DOTFSEED);
+};
+
+rsip_ret_t r_rsip_wrapper_p2d_ch1 (const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[])
+{
+    return r_rsip_p2d(&gs_cmd[CMD_OTF_CHANNEL_1], InData_KeyIndex, InData_DOTFSEED);
+};
+
+rsip_ret_t r_rsip_wrapper_p2e_ch1 (const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[])
+{
+    return r_rsip_p2e(&gs_cmd[CMD_OTF_CHANNEL_1], InData_KeyIndex, InData_DOTFSEED);
+};
+#endif
+
 /***********************************************************************************************************************
  * Private Functions
  **********************************************************************************************************************/
-
-static rsip_ret_t select_rfc3394_key_wrap_mode (const rsip_key_type_t key_type, uint32_t WrappedKeyType[])
-{
-    uint8_t  alg     = r_rsip_key_type_to_alg(key_type);
-    uint32_t subtype = r_rsip_key_type_to_subtype(key_type);
-
-    rsip_ret_t rsip_ret = RSIP_RET_PASS;
-    switch (alg)
-    {
-        case RSIP_ALG_AES:
-        {
-            switch (subtype)
-            {
-                case RSIP_KEY_AES_128:
-                {
-                    WrappedKeyType[0] = bswap_32big(RSIP_RFC3394_KEY_WRAP_TYPE_AES128);
-                    KEY_INDEX_SIZE    = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_128);
-                    WRAPPED_KEY_SIZE  = RSIP_PRV_WORD_SIZE_RFC3394_WRAPPED_KEY_AES_128;
-                    break;
-                }
-
-                case RSIP_KEY_AES_256:
-                {
-                    WrappedKeyType[0] = bswap_32big(RSIP_RFC3394_KEY_WRAP_TYPE_AES256);
-                    KEY_INDEX_SIZE    = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_AES_256);
-                    WRAPPED_KEY_SIZE  = RSIP_PRV_WORD_SIZE_RFC3394_WRAPPED_KEY_AES_256;
-                    break;
-                }
-
-                default:
-                {
-                    rsip_ret = RSIP_RET_KEY_FAIL;
-                }
-            }
-
-            break;
-        }
-
-        default:
-        {
-            rsip_ret = RSIP_RET_KEY_FAIL;
-        }
-    }
-
-    return rsip_ret;
-}
-
-static rsip_ret_t select_hmac_key_index_size (const rsip_wrapped_key_t * p_wrapped_key)
-{
-    rsip_ret_t rsip_ret = RSIP_RET_PASS;
-    switch (p_wrapped_key->alg)
-    {
-        case RSIP_ALG_HMAC:
-        {
-            switch (p_wrapped_key->subtype)
-            {
-                case RSIP_KEY_HMAC_SHA224:
-                {
-                    KEY_INDEX_SIZE = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA224);
-                    break;
-                }
-
-                case RSIP_KEY_HMAC_SHA256:
-                {
-                    KEY_INDEX_SIZE = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA256);
-                    break;
-                }
-
-                case RSIP_KEY_HMAC_SHA384:
-                {
-                    KEY_INDEX_SIZE = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA384);
-                    break;
-                }
-
-                case RSIP_KEY_HMAC_SHA512:
-                {
-                    KEY_INDEX_SIZE = r_rsip_byte_to_word_convert(RSIP_CFG_BYTE_SIZE_WRAPPED_KEY_VALUE_HMAC_SHA512);
-                    break;
-                }
-
-                default:
-                {
-                    rsip_ret = RSIP_RET_KEY_FAIL;
-                }
-            }
-
-            break;
-        }
-
-        default:
-        {
-            rsip_ret = RSIP_RET_KEY_FAIL;
-        }
-    }
-
-    return rsip_ret;
-}

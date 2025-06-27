@@ -65,7 +65,7 @@ typedef struct st_rm_comms_usb_pcdc_instance_ctrl
     usb_pcdc_linecoding_t    line_coding;                   ///< Line Coding to store COM port settings
 
     void (* p_callback)(rm_comms_callback_args_t * p_args); ///< Pointer to callback that is called when a usb_status_t occurs.
-    void const * p_context;                                 ///< Pointer to context passed into callback function
+    void * p_context;                                       ///< Pointer to context passed into callback function
 } rm_comms_usb_pcdc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -87,7 +87,7 @@ fsp_err_t RM_COMMS_USB_PCDC_WriteRead(rm_comms_ctrl_t * const            p_api_c
                                       rm_comms_write_read_params_t const write_read_params);
 fsp_err_t RM_COMMS_USB_PCDC_CallbackSet(rm_comms_ctrl_t * const p_api_ctrl,
                                         void (                * p_callback)(rm_comms_callback_args_t *),
-                                        void const * const      p_context);
+                                        void * const            p_context);
 
 void rm_comms_usb_pcdc_notify_application(rm_comms_usb_pcdc_instance_ctrl_t const * p_ctrl, rm_comms_event_t event);
 

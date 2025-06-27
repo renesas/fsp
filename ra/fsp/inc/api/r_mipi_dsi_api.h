@@ -24,6 +24,7 @@
 
 /* Includes board and MCU related header files. */
 #include "bsp_api.h"
+#include "r_mipi_cmd_types.h"
 #include "r_mipi_dsi_cfg.h"
 
 #include "r_mipi_phy.h"
@@ -39,7 +40,10 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
-/** MIPI DSI packet Data Type (commands) - See MIPI specification for additional information */
+/** DEPRECATED - MIPI DSI packet Data Type (commands) - See MIPI specification for additional information
+ *  - The use of mipi_dsi_cmd_id_t has been deprecated and will be fully relpaced with the use of
+ *    mipi_cmd_t in a future release.
+ */
 typedef enum e_mipi_dsi_cmd_id
 {
     MIPI_DSI_CMD_ID_V_SYNC_START = 0x01,                        ///< (Short) Sync Event, V Sync Start
@@ -355,7 +359,7 @@ typedef enum e_mipi_dsi_lane
 typedef struct st_mipi_dsi_cmd
 {
     uint8_t             channel;       ///< Virtual Channel ID
-    mipi_dsi_cmd_id_t   cmd_id;        ///< Message ID
+    mipi_cmd_id_t       cmd_id;        ///< Message ID
     mipi_dsi_cmd_flag_t flags;         ///< Flags controlling this message transition
     uint16_t            tx_len;        ///< Transmit buffer size
     const uint8_t     * p_tx_buffer;   ///< Transmit buffer pointer
@@ -385,17 +389,17 @@ typedef struct st_mipi_dsi_status_t
 /** MIPI DSI Result */
 typedef __PACKED_STRUCT st_mipi_dsi_result
 {
-    uint8_t           data[2];                  ///< Data of received packet header
-    mipi_dsi_cmd_id_t cmd_id               : 6; ///< Data type
-    uint8_t           virtual_channel_id   : 2; ///< Virtual channel ID
-    uint8_t           long_packet          : 1; ///< Sort packet (0) or Long packet (1)
-    uint8_t           rx_success           : 1; ///< Response packet or ack trigger received
-    uint8_t           timeout              : 1; ///< Fatal timeout error
-    uint8_t           rx_fail              : 1; ///< Expected receive not done
-    uint8_t           rx_data_fail         : 1; ///< Receive packet data fail
-    uint8_t           rx_correctable_error : 1; ///< Correctable error detected
-    uint8_t           rx_ack_err           : 1; ///< Rx acknowledge and error report packet received
-    uint8_t           info_overwrite       : 1; ///< This information was overwritten
+    uint8_t       data[2];                  ///< Data of received packet header
+    mipi_cmd_id_t cmd_id               : 6; ///< Data type
+    uint8_t       virtual_channel_id   : 2; ///< Virtual channel ID
+    uint8_t       long_packet          : 1; ///< Sort packet (0) or Long packet (1)
+    uint8_t       rx_success           : 1; ///< Response packet or ack trigger received
+    uint8_t       timeout              : 1; ///< Fatal timeout error
+    uint8_t       rx_fail              : 1; ///< Expected receive not done
+    uint8_t       rx_data_fail         : 1; ///< Receive packet data fail
+    uint8_t       rx_correctable_error : 1; ///< Correctable error detected
+    uint8_t       rx_ack_err           : 1; ///< Rx acknowledge and error report packet received
+    uint8_t       info_overwrite       : 1; ///< This information was overwritten
 } mipi_dsi_receive_result_t;
 
 /** MIPI DSI callback parameter definition */
@@ -411,7 +415,7 @@ typedef struct st_mipi_dsi_callback_args
         mipi_dsi_phy_status_t      phy_status;   ///< Phy Status
     };
     mipi_dsi_receive_result_t * p_result;        ///< Receive result pointer
-    void const                * p_context;       ///< Context provided to user during callback
+    void * p_context;                            ///< Context provided to user during callback
 } mipi_dsi_callback_args_t;
 
 /** MIPI DSI transition timing */
@@ -465,7 +469,7 @@ typedef struct st_mipi_dsi_cfg
 
     /** Callback configuration */
     void (* p_callback)(mipi_dsi_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                                 ///< User defined context passed into callback function
+    void * p_context;                                       ///< User defined context passed into callback function
 
     /** Pointer to display peripheral specific configuration */
     void const * p_extend;                                  ///< MIPI hardware dependent configuration

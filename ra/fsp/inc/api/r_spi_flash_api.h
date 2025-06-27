@@ -88,11 +88,10 @@ typedef enum e_spi_flash_protocol
 /** Number of bytes in the address. */
 typedef enum e_spi_flash_address_bytes
 {
-    SPI_FLASH_ADDRESS_BYTES_3 = 2,     ///< 3 address bytes
-
-    /** 4 address bytes with standard commands. If this option is selected, the application must issue the EN4B
-     * command using @ref spi_flash_api_t::directWrite() if required by the device. */
-    SPI_FLASH_ADDRESS_BYTES_4 = 3,
+    SPI_FLASH_ADDRESS_BYTES_1 = 0,     ///< 1-byte address phase
+    SPI_FLASH_ADDRESS_BYTES_2 = 1,     ///< 2-byte address phase
+    SPI_FLASH_ADDRESS_BYTES_3 = 2,     ///< 3-byte address phase
+    SPI_FLASH_ADDRESS_BYTES_4 = 3,     ///< 4-byte address phase
 
     /** 4 address bytes using standard 4-byte command set. */
     SPI_FLASH_ADDRESS_BYTES_4_4BYTE_READ_CODE = 0x13,

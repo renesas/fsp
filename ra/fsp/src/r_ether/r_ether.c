@@ -252,9 +252,6 @@ static const ether_pause_resolution_t pause_resolution[ETHER_PAUSE_TABLE_ENTRIES
     {ETHER_PAUSE_MASKF, ETHER_PAUSE_VALC, ETHER_PAUSE_XMIT_OFF, ETHER_PAUSE_RECV_OFF  },
     {ETHER_PAUSE_MASKF, ETHER_PAUSE_VALD, ETHER_PAUSE_XMIT_OFF, ETHER_PAUSE_RECV_ON   }
 };
-
-#if (!ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
-
 static const ether_event_mask_t ether_eesr_event_mask[ETHER_EESR_EVENT_NUM] =
 {
     {.event = ETHER_EVENT_RX_COMPLETE,     .mask           = ETHER_EESR_RX_COMPLETE_MASK    },
@@ -270,7 +267,6 @@ static const ether_event_mask_t ether_ecsr_event_mask[ETHER_ECSR_EVENT_NUM] =
     {.event = ETHER_EVENT_WAKEON_LAN, .mask = ETHER_ECSR_WAKEON_LAN_MASK},
     {.event = ETHER_EVENT_ERR_GLOBAL, .mask = ETHER_EESR_ERR_GLOBAL_MASK},
 };
-#endif
 
 /*******************************************************************************************************************//**
  * @addtogroup ETHER
@@ -1182,7 +1178,7 @@ fsp_err_t R_ETHER_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const p_buffe
  **********************************************************************************************************************/
 fsp_err_t R_ETHER_CallbackSet (ether_ctrl_t * const          p_api_ctrl,
                                void (                      * p_callback)(ether_callback_args_t *),
-                               void const * const            p_context,
+                               void * const                  p_context,
                                ether_callback_args_t * const p_callback_memory)
 {
     ether_instance_ctrl_t * p_ctrl = (ether_instance_ctrl_t *) p_api_ctrl;
@@ -1840,7 +1836,7 @@ static uint8_t ether_check_magic_packet_detection_bit (ether_instance_ctrl_t con
 }                                      /* End of function ether_check_magic_packet_detection_bit() */
 
 /*******************************************************************************************************************//**
- * @brief Verifies the Etherent link is up or not.
+ * @brief Verifies the Ethernet link is up or not.
  *
  * @param[in] p_instance_ctrl   Pointer to the control block for the channel
  *
@@ -1897,10 +1893,6 @@ static void ether_call_callback (ether_instance_ctrl_t * p_instance_ctrl, ether_
     p_args->event     = p_callback_args->event;
     p_args->channel   = p_instance_ctrl->p_ether_cfg->channel;
     p_args->p_context = p_instance_ctrl->p_context;
-#if (ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
-    p_args->status_ecsr = p_callback_args->status_ecsr;
-    p_args->status_eesr = p_callback_args->status_eesr;
-#endif
 
 #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_ETHER_SUPPORTS_TZ_SECURE
 
@@ -1949,10 +1941,8 @@ void ether_eint_isr (void)
     R_ETHERC_EDMAC_Type * p_reg_edmac;
 
     IRQn_Type irq = R_FSP_CurrentIrqGet();
-    ether_instance_ctrl_t * p_instance_ctrl = (ether_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
-#if (!ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
+    ether_instance_ctrl_t * p_instance_ctrl     = (ether_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     ether_extended_cfg_t * p_ether_extended_cfg = (ether_extended_cfg_t *) p_instance_ctrl->p_ether_cfg->p_extend;
-#endif
 
     p_reg_etherc = (R_ETHERC0_Type *) p_instance_ctrl->p_reg_etherc;
     p_reg_edmac  = (R_ETHERC_EDMAC_Type *) p_instance_ctrl->p_reg_edmac;
@@ -2006,12 +1996,6 @@ void ether_eint_isr (void)
     {
         callback_arg.channel   = p_instance_ctrl->p_ether_cfg->channel;
         callback_arg.p_context = p_instance_ctrl->p_ether_cfg->p_context;
-#if (ETHER_CFG_KEEP_INTERRUPT_EVENT_BACKWORD_COMPATIBILITY)
-        callback_arg.event       = ETHER_EVENT_INTERRUPT;
-        callback_arg.status_ecsr = status_ecsr;
-        callback_arg.status_eesr = status_eesr;
-        ether_call_callback(p_instance_ctrl, &callback_arg);
-#else
 
         /* Callbacks for events related to EESR. */
         for (int i = 0; i < ETHER_EESR_EVENT_NUM; i++)
@@ -2035,7 +2019,6 @@ void ether_eint_isr (void)
                 }
             }
         }
-#endif
     }
 
     /* Clear pending interrupt flag to make sure it doesn't fire again

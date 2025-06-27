@@ -488,7 +488,7 @@ fsp_err_t R_TAU_PWM_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * con
  **********************************************************************************************************************/
 fsp_err_t R_TAU_PWM_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
                                  void (                      * p_callback)(timer_callback_args_t *),
-                                 void const * const            p_context,
+                                 void * const                  p_context,
                                  timer_callback_args_t * const p_callback_memory)
 {
     tau_pwm_instance_ctrl_t * p_ctrl = (tau_pwm_instance_ctrl_t *) p_api_ctrl;

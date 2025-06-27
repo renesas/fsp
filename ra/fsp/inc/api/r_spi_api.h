@@ -140,9 +140,9 @@ typedef enum e_spi_event
 /** Common callback parameter definition */
 typedef struct st_spi_callback_args
 {
-    uint32_t     channel;              ///< Device channel number
-    spi_event_t  event;                ///< Event code
-    void const * p_context;            ///< Context provided to user during callback
+    uint32_t    channel;               ///< Device channel number
+    spi_event_t event;                 ///< Event code
+    void      * p_context;             ///< Context provided to user during callback
 } spi_callback_args_t;
 
 /** Non-secure arguments for write-read guard function */
@@ -175,7 +175,7 @@ typedef struct st_spi_cfg
     transfer_instance_t const * p_transfer_tx;         ///< To use SPI DTC/DMAC write transfer, link a transfer instance here.  Set to NULL if unused.
     transfer_instance_t const * p_transfer_rx;         ///< To use SPI DTC/DMAC read transfer, link a transfer instance here.  Set to NULL if unused.
     void (* p_callback)(spi_callback_args_t * p_args); ///< Pointer to user callback function
-    void const * p_context;                            ///< User defined context passed to callback function
+    void       * p_context;                            ///< User defined context passed to callback function
     void const * p_extend;                             ///< Extended SPI hardware dependent configuration
 } spi_cfg_t;
 
@@ -242,7 +242,7 @@ typedef struct st_spi_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(spi_ctrl_t * const p_ctrl, void (* p_callback)(spi_callback_args_t *),
-                              void const * const p_context, spi_callback_args_t * const p_callback_memory);
+                              void * const p_context, spi_callback_args_t * const p_callback_memory);
 
     /** Remove power to the SPI channel designated by the handle and disable the associated interrupts.
      *

@@ -326,7 +326,7 @@ fsp_err_t R_SCI_B_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
  **********************************************************************************************************************/
 fsp_err_t R_SCI_B_SPI_CallbackSet (spi_ctrl_t * const          p_api_ctrl,
                                    void (                    * p_callback)(spi_callback_args_t *),
-                                   void const * const          p_context,
+                                   void * const                p_context,
                                    spi_callback_args_t * const p_callback_memory)
 {
     sci_b_spi_instance_ctrl_t * p_ctrl = (sci_b_spi_instance_ctrl_t *) p_api_ctrl;
@@ -741,7 +741,7 @@ static fsp_err_t r_sci_b_spi_write_read_common (sci_b_spi_instance_ctrl_t * cons
 static void r_sci_b_spi_start_transfer (sci_b_spi_instance_ctrl_t * const p_ctrl)
 {
     /* TE must always be enabled even when receiving data. When RE is enabled without also enabling TE, the SCI will
-     * continue transfering data until the RE bit is cleared. At high bitrates, it is not possible to clear the RE bit
+     * continue transferring data until the RE bit is cleared. At high bitrates, it is not possible to clear the RE bit
      * fast enough and there will be additional clock pulses at the end of the transfer. */
     uint32_t interrupt_settings = R_SCI_B0_CCR0_TE_Msk;
 
@@ -865,7 +865,7 @@ static void r_sci_b_spi_call_callback (sci_b_spi_instance_ctrl_t * p_ctrl, spi_e
  * The Transmit Buffer Empty IRQ is enabled in the following conditions:
  *   - The transfer is started using R_SCI_B_SPI_Write API (There is no data to receive).
  *   - The rxi IRQ is serviced using a DTC instance.
- *   - The txi IRQ is serviced using a DTC instance (The interrupt will fire on the last byte transfered).
+ *   - The txi IRQ is serviced using a DTC instance (The interrupt will fire on the last byte transferred).
  *
  **********************************************************************************************************************/
 void sci_b_spi_txi_isr (void)
@@ -939,7 +939,7 @@ void sci_b_spi_rxi_isr (void)
 /*******************************************************************************************************************//**
  * This function is the ISR handler for R_SCI_SPI Transmit End IRQ.
  *
- * The Transmit End IRQ is enabled after the last byte of data has been transfered.
+ * The Transmit End IRQ is enabled after the last byte of data has been transferred.
  *
  **********************************************************************************************************************/
 void sci_b_spi_tei_isr (void)

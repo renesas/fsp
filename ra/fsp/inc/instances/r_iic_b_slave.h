@@ -70,7 +70,7 @@ typedef struct st_iic_b_slave_instance_ctrl
     i2c_slave_callback_args_t * p_callback_memory;
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } iic_b_slave_instance_ctrl_t;
 
 /** R_IIC_SLAVE extended configuration */
@@ -99,7 +99,7 @@ fsp_err_t R_IIC_B_SLAVE_Write(i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * con
 fsp_err_t R_IIC_B_SLAVE_Close(i2c_slave_ctrl_t * const p_api_ctrl);
 fsp_err_t R_IIC_B_SLAVE_CallbackSet(i2c_slave_ctrl_t * const          p_api_ctrl,
                                     void (                          * p_callback)(i2c_slave_callback_args_t *),
-                                    void const * const                p_context,
+                                    void * const                      p_context,
                                     i2c_slave_callback_args_t * const p_callback_memory);
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

@@ -9,4 +9,4 @@
 
 #include "rm_bl2_cfg.h"
 
-#endif /* TFM_COMMON_CONFIG_H */
+#endif                                 /* TFM_COMMON_CONFIG_H */

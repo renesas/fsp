@@ -189,7 +189,7 @@ void RM_FILEX_BLOCK_MEDIA_BlockDriver (FX_MEDIA * p_fx_media)
  * @retval     FSP_SUCCESS                 Driver request fulfilled.
  * @retval     FSP_ERR_MEDIA_OPEN_FAILED   Not a valid boot record or partition table
  * @retval     FSP_ERR_UNSUPPORTED         Requested FileX command is not supported
- * @retval     FSP_ERR_INTERNAL            An error has occured with the lower level block media driver
+ * @retval     FSP_ERR_INTERNAL            An error has occurred with the lower level block media driver
  *
  * @return See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
  *         This function calls:

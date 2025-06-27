@@ -85,9 +85,7 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4xxx =
     .read                      = RM_ZMOD4XXX_Read,
     .iaq1stGenDataCalculate    = RM_ZMOD4XXX_Iaq1stGenDataCalculate,
     .iaq2ndGenDataCalculate    = RM_ZMOD4XXX_Iaq2ndGenDataCalculate,
-    .odorDataCalculate         = RM_ZMOD4XXX_OdorDataCalculate,
     .sulfurOdorDataCalculate   = RM_ZMOD4XXX_SulfurOdorDataCalculate,
-    .oaq1stGenDataCalculate    = RM_ZMOD4XXX_Oaq1stGenDataCalculate,
     .oaq2ndGenDataCalculate    = RM_ZMOD4XXX_Oaq2ndGenDataCalculate,
     .raqDataCalculate          = RM_ZMOD4XXX_RaqDataCalculate,
     .relIaqDataCalculate       = RM_ZMOD4XXX_RelIaqDataCalculate,
@@ -441,40 +439,6 @@ fsp_err_t RM_ZMOD4XXX_Iaq2ndGenDataCalculate (rm_zmod4xxx_ctrl_t * const        
 /*******************************************************************************************************************//**
  * @brief  This function should be called when measurement finishes. To check measurement status either polling or
  * busy/interrupt pin can be used.
- * Implements @ref rm_zmod4xxx_api_t::odorDataCalculate
- *
- * @retval FSP_SUCCESS                            Successfully results are read.
- * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
- * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- **********************************************************************************************************************/
-fsp_err_t RM_ZMOD4XXX_OdorDataCalculate (rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
-                                         rm_zmod4xxx_raw_data_t * const  p_raw_data,
-                                         rm_zmod4xxx_odor_data_t * const p_zmod4xxx_data)
-{
-    fsp_err_t err = FSP_SUCCESS;
-    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
-    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
-
-#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_ctrl);
-    FSP_ASSERT(NULL != p_raw_data);
-    FSP_ASSERT(NULL != p_zmod4xxx_data);
-    FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
-
-    /* Set ZMOD4XXX library specific */
-    p_lib = p_ctrl->p_zmod4xxx_lib;
-
-    /* Calculate Odor data */
-    err = p_lib->p_api->odorDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * @brief  This function should be called when measurement finishes. To check measurement status either polling or
- * busy/interrupt pin can be used.
  * Implements @ref rm_zmod4xxx_api_t::sulfurOdorDataCalculate
  *
  * @retval FSP_SUCCESS                            Successfully results are read.
@@ -501,40 +465,6 @@ fsp_err_t RM_ZMOD4XXX_SulfurOdorDataCalculate (rm_zmod4xxx_ctrl_t * const       
 
     /* Calculate Sulfur Odor data */
     err = p_lib->p_api->sulfurOdorDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    return FSP_SUCCESS;
-}
-
-/*******************************************************************************************************************//**
- * @brief  This function should be called when measurement finishes. To check measurement status either polling or
- * busy/interrupt pin can be used.
- * Implements @ref rm_zmod4xxx_api_t::oaq1stGenDataCalculate
- *
- * @retval FSP_SUCCESS                            Successfully results are read.
- * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter.
- * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
- **********************************************************************************************************************/
-fsp_err_t RM_ZMOD4XXX_Oaq1stGenDataCalculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                              rm_zmod4xxx_raw_data_t * const     p_raw_data,
-                                              rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data)
-{
-    fsp_err_t err = FSP_SUCCESS;
-    rm_zmod4xxx_instance_ctrl_t    * p_ctrl = (rm_zmod4xxx_instance_ctrl_t *) p_api_ctrl;
-    rm_zmod4xxx_lib_extended_cfg_t * p_lib;
-
-#if RM_ZMOD4XXX_CFG_PARAM_CHECKING_ENABLE
-    FSP_ASSERT(NULL != p_ctrl);
-    FSP_ASSERT(NULL != p_raw_data);
-    FSP_ASSERT(NULL != p_zmod4xxx_data);
-    FSP_ERROR_RETURN(RM_ZMOD4XXX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif
-
-    /* Set ZMOD4XXX library specific */
-    p_lib = p_ctrl->p_zmod4xxx_lib;
-
-    /* Calculate OAQ 1st Gen. data */
-    err = p_lib->p_api->oaq1stGenDataCalculate(p_ctrl, p_raw_data, p_zmod4xxx_data);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     return FSP_SUCCESS;
@@ -682,7 +612,7 @@ fsp_err_t RM_ZMOD4XXX_PbaqDataCalculate (rm_zmod4xxx_ctrl_t * const      p_api_c
  * Implements @ref rm_zmod4xxx_api_t::no2O3DataCalculate
  *
  * @retval FSP_SUCCESS                            Successfully results are read.
- * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter or library internal error occured.
+ * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter or library internal error occurred.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
  * @retval FSP_ERR_SENSOR_IN_STABILIZATION        Module is stabilizing.
  * @retval FSP_ERR_SENSOR_INVALID_DATA            Sensor probably damaged. Algorithm results may be incorrect.
@@ -720,7 +650,7 @@ fsp_err_t RM_ZMOD4XXX_No2O3DataCalculate (rm_zmod4xxx_ctrl_t * const        p_ap
  * set the compensation info for the ZMOD4410 to begin calculating the compensation data.
  *
  * @retval FSP_SUCCESS                            Successfully compensation info are set.
- * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter or library internal error occured.
+ * @retval FSP_ERR_ASSERTION                      Null pointer passed as a parameter or library internal error occurred.
  * @retval FSP_ERR_NOT_OPEN                       Module is not opened configured.
  * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
@@ -864,7 +794,6 @@ void rm_zmod4xxx_comms_i2c_callback (rm_comms_callback_args_t * p_args)
         if ((true == p_ctrl->status.flag) && (RM_ZMOD4XXX_EVENT_SUCCESS == zmod4xxx_callback_args.event))
         {
             if ((RM_ZMOD4410_LIB_TYPE_IAQ_1ST_GEN_CONTINUOUS == p_lib->lib_type) ||
-                (RM_ZMOD4410_LIB_TYPE_ODOR == p_lib->lib_type) ||
                 (RM_ZMOD4450_LIB_TYPE_RAQ == p_lib->lib_type))
             {
                 status = (p_ctrl->status.value & RM_ZMOD4XXX_STATUS_LAST_SEQ_STEP_MASK);

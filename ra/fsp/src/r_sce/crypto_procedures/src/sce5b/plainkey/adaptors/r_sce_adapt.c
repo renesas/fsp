@@ -224,6 +224,17 @@ fsp_err_t HW_SCE_Aes192EncryptDecryptInitSub (const uint32_t * InData_Cmd,
     return FSP_ERR_UNSUPPORTED;
 }
 
+fsp_err_t HW_SCE_Aes192EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMode[],
+                                                     const uint32_t InData_Cmd[],
+                                                     const uint32_t InData_KeyIndex[],
+                                                     const uint32_t InData_Key[],
+                                                     const uint32_t InData_IV[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Aes192EncryptDecryptInitSub(InData_Cmd, InData_KeyIndex, InData_IV);
+}
+
 void HW_SCE_Aes192EncryptDecryptUpdateSub (const uint32_t * InData_Text, uint32_t * OutData_Text,
                                            const uint32_t MAX_CNT)
 {

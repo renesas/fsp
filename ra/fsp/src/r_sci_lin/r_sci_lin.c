@@ -38,8 +38,8 @@
 /* LIN Sync Word (Control Field 0) */
 #define SCI_LIN_SYNC                            (0x55U)
 
-/* Start frame data length */
-#define SCI_LIN_START_FRAME_NUM_BYTES           (2U)
+/* Header data length */
+#define SCI_LIN_HEADER_NUM_BYTES                (2U)
 
 /* SCI SCR register initial value */
 #define SCI_LIN_SCR_INITIAL_VALUE               (0U)
@@ -114,7 +114,7 @@ static uint8_t r_sci_lin_pid_calculate(uint8_t id);
 
 #if SCI_LIN_CHECKSUM_SUPPORT_ENABLE
 static uint8_t r_sci_lin_checksum_calculate(uint8_t               id,
-                                            uint8_t const * const p_information,
+                                            uint8_t const * const p_data,
                                             uint8_t               num_bytes,
                                             lin_checksum_type_t   checksum_type);
 static uint8_t r_sci_lin_checksum_initialize(uint8_t id, lin_checksum_type_t checksum_type);
@@ -136,13 +136,15 @@ static inline void r_sci_lin_irqs_enable_disable(sci_lin_instance_ctrl_t * const
 
 #if (SCI_LIN_CFG_PARAM_CHECKING_ENABLE)
 static fsp_err_t r_sci_lin_common_parameter_checking(sci_lin_instance_ctrl_t const * const p_ctrl);
-static fsp_err_t r_sci_lin_information_read_write_param_check(sci_lin_instance_ctrl_t const * const p_ctrl,
-                                                              lin_transfer_params_t const * const   p_transfer_params);
+static fsp_err_t r_sci_lin_read_write_parameter_checking(sci_lin_instance_ctrl_t const * const p_ctrl,
+                                                         lin_transfer_params_t const * const   p_transfer_params);
 
 #endif
 
 /* Transmission/reception helper functions */
-static fsp_err_t r_sci_lin_start_frame_write(sci_lin_instance_ctrl_t * const p_ctrl, uint8_t const id);
+static fsp_err_t r_sci_lin_write(sci_lin_instance_ctrl_t * const     p_ctrl,
+                                 const lin_transfer_params_t * const p_transfer_params,
+                                 uint8_t const                       send_header);
 
 static void        r_sci_lin_call_callback(sci_lin_instance_ctrl_t * p_ctrl, lin_event_t event);
 static lin_event_t r_sci_lin_rxi_handler(sci_lin_instance_ctrl_t * const p_ctrl);
@@ -178,13 +180,6 @@ void sci_lin_scix1_isr(void);
 void sci_lin_scix2_isr(void);
 
 /**********************************************************************************************************************
- * Private global variables
- *********************************************************************************************************************/
-
-/* 1 byte "buffer" used to transmit start frame sync word. */
-static const uint8_t g_start_frame_sync_word = SCI_LIN_SYNC;
-
-/**********************************************************************************************************************
  * Global variables
  *********************************************************************************************************************/
 
@@ -192,15 +187,17 @@ static const uint8_t g_start_frame_sync_word = SCI_LIN_SYNC;
 const lin_api_t g_lin_on_sci =
 {
     .open                  = R_SCI_LIN_Open,
-    .startFrameWrite       = R_SCI_LIN_StartFrameWrite,
-    .informationFrameWrite = R_SCI_LIN_InformationFrameWrite,
-    .informationFrameRead  = R_SCI_LIN_InformationFrameRead,
+    .write                 = R_SCI_LIN_Write,
+    .read                  = R_SCI_LIN_Read,
     .communicationAbort    = R_SCI_LIN_CommunicationAbort,
     .callbackSet           = R_SCI_LIN_CallbackSet,
     .close                 = R_SCI_LIN_Close,
     .sleepEnter            = R_SCI_LIN_SleepEnter,
     .sleepExit             = R_SCI_LIN_SleepExit,
     .wakeupSend            = R_SCI_LIN_WakeupSend,
+    .informationFrameRead  = R_SCI_LIN_InformationFrameRead,  // [DEPRECATED]
+    .startFrameWrite       = R_SCI_LIN_StartFrameWrite,       // [DEPRECATED]
+    .informationFrameWrite = R_SCI_LIN_InformationFrameWrite, // [DEPRECATED]
 };
 
 /******************************************************************************************************************//**
@@ -285,61 +282,22 @@ fsp_err_t R_SCI_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const
     return FSP_SUCCESS;
 }
 
-/******************************************************************************************************************//**
- * Begins non-blocking transmission of a LIN start frame (break, sync and protected identifier).
+/*******************************************************************************************************************//**
+ * Begins non-blocking transmission of a LIN frame.
  *
- * On successful start frame transmission, the callback is called with event
- * @ref lin_event_t::LIN_EVENT_TX_START_FRAME_COMPLETE.
+ * In master mode, the LIN header (break, sync and protected identifier) is sent before the LIN data.
+ *  - To transmit the LIN header only, set p_transfer_params->p_data to NULL.
+ *  - To transmit both header and data, set p_transfer_params->p_data to the TX buffer to transmit.
  *
- * Implements @ref lin_api_t::startFrameWrite.
+ * The LIN header is not transmitted in slave mode. Set p_transfer_params->p_data to the TX buffer to transmit.
  *
- * Example:
- * @snippet r_sci_lin_example.c R_SCI_LIN_StartFrameWrite
+ * On successful header-only transmission completion, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_HEADER_COMPLETE.
+ * On successful data transmission or header+data transmission completion, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_DATA_COMPLETE.
  *
- * @retval  FSP_SUCCESS                  Start frame transmission started successfully.
- * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
- * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
- * @retval  FSP_ERR_INVALID_ARGUMENT     ID out of range (unprotected ID must be less than 64)
- * @retval  FSP_ERR_INVALID_MODE         Function called by slave node (not supported for slave nodes)
- * @retval  FSP_ERR_IN_USE               A transmission or reception is currently in progress. Call
- *                                       R_SCI_LIN_CommunicationAbort to cancel it if desired, or wait for the current
- *                                       transfer operation to complete before starting a new one.
- *
- * @return                               See @ref RENESAS_ERROR_CODES or functions called by this function for other
- *                                       possible return codes.
- *********************************************************************************************************************/
-fsp_err_t R_SCI_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t const id)
-{
-    sci_lin_instance_ctrl_t * p_ctrl = (sci_lin_instance_ctrl_t *) p_api_ctrl;
-
-#if SCI_LIN_CFG_PARAM_CHECKING_ENABLE
-    fsp_err_t err = r_sci_lin_common_parameter_checking(p_ctrl);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Check ID is at most 6 bits */
-    FSP_ERROR_RETURN(0 == (id & 0xC0), FSP_ERR_INVALID_ARGUMENT);
-
-    /* Function only supported for master mode */
-    FSP_ERROR_RETURN(LIN_MODE_MASTER == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
-
-    /* If information buffer is still set, then a transmit/receive is already
-     * in progress and we don't want to overwrite the buffer pointer. */
-    FSP_ERROR_RETURN(NULL == p_ctrl->p_information, FSP_ERR_IN_USE);
-#endif
-
-    return r_sci_lin_start_frame_write(p_ctrl, id);
-}
-
-/******************************************************************************************************************//**
- * Begins non-blocking transmission of a LIN information frame.
- *
- * On successful information frame transmission, the callback is called with event
- * @ref lin_event_t::LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE.
- *
- * Implements @ref lin_api_t::informationFrameWrite.
+ * Implements @ref lin_api_t::write.
  *
  * Example:
- * @snippet r_sci_lin_example.c R_SCI_LIN_InformationFrameWrite
+ * @snippet r_sci_lin_example.c R_SCI_LIN_Write
  *
  * @retval  FSP_SUCCESS              Data transmission started successfully.
  * @retval  FSP_ERR_NOT_OPEN         The control block has not been opened.
@@ -352,60 +310,33 @@ fsp_err_t R_SCI_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t cons
  * @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                   possible return codes.
  *********************************************************************************************************************/
-fsp_err_t R_SCI_LIN_InformationFrameWrite (lin_ctrl_t * const                  p_api_ctrl,
-                                           const lin_transfer_params_t * const p_transfer_params)
+fsp_err_t R_SCI_LIN_Write (lin_ctrl_t * const p_api_ctrl, const lin_transfer_params_t * const p_transfer_params)
 {
     sci_lin_instance_ctrl_t * p_ctrl = (sci_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_LIN_CFG_PARAM_CHECKING_ENABLE
-
-    /* Common parameter checking */
-    fsp_err_t err = r_sci_lin_information_read_write_param_check(p_api_ctrl, p_transfer_params);
+    FSP_ASSERT(NULL != p_transfer_params);
+    fsp_err_t err = r_sci_lin_read_write_parameter_checking(p_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
-    R_SCI0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Disable transmit interrupts, transmission, and reception interrupts */
-    p_reg->SCR &=
-        (uint8_t) ~(R_SCI0_SCR_TIE_Msk | R_SCI0_SCR_TEIE_Msk | R_SCI0_SCR_RIE_Msk | R_SCI0_SCR_TE_Msk);
+    /* Send the header before the data in master mode only */
+    uint8_t send_header = LIN_MODE_MASTER == p_ctrl->p_cfg->mode;
 
-    /* Prepare the information frame transmission state. */
-    p_ctrl->p_information = p_transfer_params->p_information;
-    p_ctrl->tx_src_bytes  = p_transfer_params->num_bytes;
-    p_ctrl->event         = LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE;
+#if SCI_LIN_CFG_PARAM_CHECKING_ENABLE
 
-#if SCI_LIN_CHECKSUM_SUPPORT_ENABLE
-    if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
-    {
-        /* If checksum generation is enabled, calculate the checksum */
-        p_ctrl->last_tx_byte = r_sci_lin_checksum_calculate(p_transfer_params->id,
-                                                            p_transfer_params->p_information,
-                                                            p_transfer_params->num_bytes,
-                                                            p_transfer_params->checksum_type);
-        p_ctrl->tx_src_bytes++;
-    }
-    else
+    /* Check ID is at most 6 bits (only for master header transmission) */
+    FSP_ERROR_RETURN((0 == (p_transfer_params->id & 0xC0)) || !send_header, FSP_ERR_INVALID_ARGUMENT);
+
+    /* Check p_data is not null in slave mode */
+    FSP_ASSERT(NULL != p_transfer_params->p_data || send_header);
 #endif
-    {
-        /* User requested not to append checksum. Therefore either we are not using a checksum,
-         * or we are using a custom checksum. Copy last byte into 'tx_checksum' field.
-         * From txi_isr perspective, last byte is always read from tx_checksum, regardless of
-         * whether that byte represents a literal checksum. */
-        p_ctrl->last_tx_byte = p_transfer_params->p_information[p_transfer_params->num_bytes - 1];
-    }
 
-    /* Clear flags */
-    r_sci_lin_flags_clear(p_ctrl->p_reg, SCI_LIN_SSR_CLEAR_MASK, SCI_LIN_STCR_CLEAR_MASK);
-
-    /* Enable transmit interrupt to start transmission. Setting TE and TIE together causes a
-     * TXI interrupt which will kick of transmission of the first byte. */
-    p_reg->SCR |= (uint8_t) (R_SCI0_SCR_TE_Msk | R_SCI0_SCR_TIE_Msk);
-
-    return FSP_SUCCESS;
+    return r_sci_lin_write(p_ctrl, p_transfer_params, send_header);
 }
 
 /******************************************************************************************************************//**
- * Begins non-blocking information frame reception to receive user specified number of bytes into destination
+ * Begins non-blocking data reception to receive user specified number of bytes into destination
  * buffer pointer.
  *
  * The checksum type specifies the checksum type used for validation. If a non-standard algorithm is used,
@@ -417,13 +348,13 @@ fsp_err_t R_SCI_LIN_InformationFrameWrite (lin_ctrl_t * const                  p
  * if a non-standard checksum is used,  sufficient space must be allocated in the write buffer and accounted for
  * in the provided length.
  *
- * On successful information frame reception, the callback is called with event
- * @ref lin_event_t::LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE.
+ * On successful data reception completion, the callback is called with event
+ * @ref lin_event_t::LIN_EVENT_RX_DATA_COMPLETE.
  *
- * Implements @ref lin_api_t::informationFrameRead.
+ * Implements @ref lin_api_t::read.
  *
  * Example:
- * @snippet r_sci_lin_example.c R_SCI_LIN_InformationFrameRead
+ * @snippet r_sci_lin_example.c R_SCI_LIN_Read
  *
  * @retval  FSP_SUCCESS              Data reception started successfully.
  * @retval  FSP_ERR_NOT_OPEN         The control block has not been opened.
@@ -438,14 +369,15 @@ fsp_err_t R_SCI_LIN_InformationFrameWrite (lin_ctrl_t * const                  p
  * @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other
  *                                   possible return codes.
  *********************************************************************************************************************/
-fsp_err_t R_SCI_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ctrl,
-                                          lin_transfer_params_t * const p_transfer_params)
+fsp_err_t R_SCI_LIN_Read (lin_ctrl_t * const p_api_ctrl, lin_transfer_params_t * const p_transfer_params)
 {
     sci_lin_instance_ctrl_t * p_ctrl = (sci_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_LIN_CFG_PARAM_CHECKING_ENABLE
-    fsp_err_t err = r_sci_lin_information_read_write_param_check(p_api_ctrl, p_transfer_params);
+    fsp_err_t err = r_sci_lin_read_write_parameter_checking(p_api_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    FSP_ASSERT(NULL != p_transfer_params->p_data);
 #endif
 
     R_SCI0_Type * p_reg = p_ctrl->p_reg;
@@ -462,18 +394,19 @@ fsp_err_t R_SCI_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ct
     p_reg->SCR = scr & (uint8_t) ~R_SCI0_SCR_RIE_Msk;
 
     /* Prepare receive state */
-    p_ctrl->p_information     = p_transfer_params->p_information;
+    p_ctrl->p_data            = p_transfer_params->p_data;
     p_ctrl->rx_bytes_expected = p_transfer_params->num_bytes;
     p_ctrl->rx_bytes_received = 0;
+    p_ctrl->checksum          = 0;
+
 #if SCI_LIN_CHECKSUM_SUPPORT_ENABLE
-    p_ctrl->rx_checksum       = 0;
     p_ctrl->validate_checksum = p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE;
 
     /* Initialize checksum tracking fields */
     if (p_ctrl->validate_checksum)
     {
         p_ctrl->rx_bytes_expected++;
-        p_ctrl->rx_checksum = r_sci_lin_checksum_initialize(p_transfer_params->id, p_transfer_params->checksum_type);
+        p_ctrl->checksum = r_sci_lin_checksum_initialize(p_transfer_params->id, p_transfer_params->checksum_type);
     }
 #endif
 
@@ -485,8 +418,8 @@ fsp_err_t R_SCI_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ct
 }
 
 /******************************************************************************************************************//**
- * Cancels in progress information frame read or write, or start frame read or write. Break field reception cannot be
- * cancelled. For slave nodes, reception of a new start frame reception is still enabled after a call to this function.
+ * Cancels in progress frame data read or write, or header read or write. Break field reception cannot be
+ * cancelled. For slave nodes, reception of a new header is still enabled after a call to this function.
  *
  * Implements @ref lin_api_t::communicationAbort.
  *
@@ -535,7 +468,7 @@ fsp_err_t R_SCI_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
  *********************************************************************************************************************/
 fsp_err_t R_SCI_LIN_CallbackSet (lin_ctrl_t * const          p_api_ctrl,
                                  void (                    * p_callback)(lin_callback_args_t *),
-                                 void const * const          p_context,
+                                 void * const                p_context,
                                  lin_callback_args_t * const p_callback_memory)
 {
     sci_lin_instance_ctrl_t * p_ctrl = (sci_lin_instance_ctrl_t *) p_api_ctrl;
@@ -629,8 +562,8 @@ fsp_err_t R_SCI_LIN_BaudCalculate (sci_lin_baud_params_t const * const p_baud_pa
 /******************************************************************************************************************//**
  * Set the the ID filter settings for filtering control field 1 (PID byte).
  *
- * NOTE: Setting the ID filter will abort any in-progress LIN start frame reception, as the ID filter
- * settings cannot be changed during reception of the start frame. The next start frame will be received with the
+ * NOTE: Setting the ID filter will abort any in-progress LIN header reception, as the ID filter
+ * settings cannot be changed during reception of the header. The next header will be received with the
  * new settings.
  *
  * @snippet r_sci_lin_example.c R_SCI_LIN_IdFilterSet
@@ -823,6 +756,67 @@ fsp_err_t R_SCI_LIN_SleepExit (lin_ctrl_t * const p_api_ctrl)
     return FSP_ERR_UNSUPPORTED;
 }
 
+/*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SCI_LIN_Read.
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ctrl,
+                                          lin_transfer_params_t * const p_transfer_params)
+{
+    return R_SCI_LIN_Read(p_api_ctrl, p_transfer_params);
+}
+
+/*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SCI_LIN_Write
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t const id)
+{
+    lin_transfer_params_t params =
+    {
+        .id            = id,
+        .p_data        = NULL,
+        .num_bytes     = 0,
+        .checksum_type = LIN_CHECKSUM_TYPE_NONE
+    };
+
+#if SCI_LIN_CFG_PARAM_CHECKING_ENABLE
+    sci_lin_instance_ctrl_t * p_ctrl = (sci_lin_instance_ctrl_t *) p_api_ctrl;
+
+    fsp_err_t err = r_sci_lin_read_write_parameter_checking(p_ctrl, &params);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Check ID is at most 6 bits */
+    FSP_ERROR_RETURN(0 == (id & 0xC0), FSP_ERR_INVALID_ARGUMENT);
+
+    /* Function only supported for master mode */
+    FSP_ERROR_RETURN(LIN_MODE_MASTER == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
+#endif
+
+    return r_sci_lin_write(p_api_ctrl, &params, true);
+}
+
+/*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SCI_LIN_Write
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_LIN_InformationFrameWrite (lin_ctrl_t * const                  p_api_ctrl,
+                                           const lin_transfer_params_t * const p_transfer_params)
+{
+#if SCI_LIN_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err =
+        r_sci_lin_read_write_parameter_checking((sci_lin_instance_ctrl_t *) p_api_ctrl, p_transfer_params);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    FSP_ASSERT(NULL != p_transfer_params->p_data);
+#endif
+
+    return r_sci_lin_write(p_api_ctrl, p_transfer_params, false);
+}
+
 /******************************************************************************************************************//**
  * @} (end addtogroup SCI_LIN)
  *********************************************************************************************************************/
@@ -852,9 +846,9 @@ static fsp_err_t r_sci_lin_common_parameter_checking (sci_lin_instance_ctrl_t co
 }
 
 /******************************************************************************************************************//**
- * Parameter error check function for informationFrameWrite and informationFrameRead
+ * Parameter error check function for R_SCI_LIN_Write and R_SCI_LIN_Read
  *
- * @param[in] p_ctrl Pointer to the control block for the channel
+ * @param[in] p_ctrl             Pointer to the control block for the channel
  * @param[in] p_transfer_params  Pointer to the transfer parameters for the transfer
  *
  * @retval  FSP_SUCCESS              No parameter error found
@@ -865,23 +859,24 @@ static fsp_err_t r_sci_lin_common_parameter_checking (sci_lin_instance_ctrl_t co
  * @retval  FSP_ERR_ASSERTION        Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0
  *                                   bytes length provided
  *********************************************************************************************************************/
-static fsp_err_t r_sci_lin_information_read_write_param_check (sci_lin_instance_ctrl_t const * const p_ctrl,
-                                                               lin_transfer_params_t const * const   p_transfer_params)
+static fsp_err_t r_sci_lin_read_write_parameter_checking (sci_lin_instance_ctrl_t const * const p_ctrl,
+                                                          lin_transfer_params_t const * const   p_transfer_params)
 {
     fsp_err_t err = r_sci_lin_common_parameter_checking(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     FSP_ASSERT(NULL != p_transfer_params);
-    FSP_ASSERT(NULL != p_transfer_params->p_information);
-    FSP_ASSERT(0U != p_transfer_params->num_bytes);
 
-    if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
+    /* Number of bytes and checksum parameters are only checked for data transfers */
+    if (NULL != p_transfer_params->p_data)
     {
-        FSP_ASSERT(p_transfer_params->num_bytes < UINT8_MAX);
+        FSP_ASSERT(p_transfer_params->num_bytes > 0);
+        FSP_ASSERT(((p_transfer_params->num_bytes < UINT8_MAX) ||
+                    (LIN_CHECKSUM_TYPE_NONE == p_transfer_params->checksum_type)));
     }
 
-    /* If information buffer is still set, then a transmit/receive is already
-     * in progress and we don't want to overwrite the buffer pointer. */
-    FSP_ERROR_RETURN(NULL == p_ctrl->p_information, FSP_ERR_IN_USE);
+    /* Check that a header transmission, data transmission, or data reception is not currently in progress */
+    FSP_ERROR_RETURN((0 == p_ctrl->tx_header_bytes) && (0 == p_ctrl->tx_src_bytes) && (0 == p_ctrl->rx_bytes_expected),
+                     FSP_ERR_IN_USE);
 
     return FSP_SUCCESS;
 }
@@ -1075,19 +1070,19 @@ static uint8_t r_sci_lin_checksum_initialize (uint8_t id, lin_checksum_type_t ch
 
 #if SCI_LIN_CHECKSUM_SUPPORT_ENABLE
 
-/******************************************************************************************************************//**
- * Calculates the LIN checksum on information frame data to be transmitted. For received frames,
+/*******************************************************************************************************************//**
+ * Calculates the LIN checksum on data to be transmitted. For received frames,
  * the checksum is calculated incrementally with each byte.
  *
  * @param[in] id             LIN unprotected frame identifier.
- * @param[in] p_information  Pointer to information frame data.
- * @param[in] num_bytes      Information frame data length.
+ * @param[in] p_data         Pointer to data.
+ * @param[in] num_bytes      Data frame data length.
  * @param[in] checksum_type  Checksum type (classic or enhanced). Frame ID 0x3C and 0x3D always use classic checksum.
  *
  * @retval                   LIN checksum result
- *********************************************************************************************************************/
+ **********************************************************************************************************************/
 static uint8_t r_sci_lin_checksum_calculate (uint8_t               id,
-                                             uint8_t const * const p_information,
+                                             uint8_t const * const p_data,
                                              uint8_t               num_bytes,
                                              lin_checksum_type_t   checksum_type)
 {
@@ -1095,7 +1090,7 @@ static uint8_t r_sci_lin_checksum_calculate (uint8_t               id,
 
     for (uint8_t i = 0; i < num_bytes; i++)
     {
-        checksum = r_sci_lin_checksum_add_byte_to_sum(p_information[i], checksum);
+        checksum = r_sci_lin_checksum_add_byte_to_sum(p_data[i], checksum);
     }
 
     return (uint8_t) ~checksum;
@@ -1154,14 +1149,11 @@ static void r_sci_lin_hw_configure (sci_lin_instance_ctrl_t * const p_ctrl)
 
 #if SCI_LIN_BUS_CONFLICT_DETECTION_SUPPORT_ENABLE
 
-    /* Check whether or not bus conflict detection is enabled */
-    if (p_extend->scix2_irq >= 0)
-    {
-        /* Configure LIN bus collision */
-        cr2 = (uint8_t) (p_extend->bus_conflict_clock << R_SCI0_CR2_BCCS_Pos);
+    /* Configure bus conflict detection clock */
+    cr2 |= (uint8_t) (p_extend->bus_conflict_clock << R_SCI0_CR2_BCCS_Pos);
 
-        icr |= (uint8_t) R_SCI0_ICR_BCDIE_Msk;
-    }
+    /* Enable LIN bus collision interrupt if bus conflict detection support is enabled */
+    icr |= (p_extend->scix2_irq >= 0) << (uint8_t) R_SCI0_ICR_BCDIE_Pos;
 #endif
 
     /* Configure digital filter clock */
@@ -1324,45 +1316,89 @@ static inline void r_sci_lin_irqs_enable_disable (sci_lin_instance_ctrl_t * cons
 #endif
 }
 
-/******************************************************************************************************************//**
- * Transmit the LIN start frame
+/*******************************************************************************************************************//**
+ * Transmit the LIN frame
+ *
+ *  Header transmission is based on flow chart process in Figure 27.103
+ * "Example of Start Frame transmission" in RA4M2 manual R01UH0892EJ0130.
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
- * @param[in]  id                        Unprotected frame identifier
+ * @param[in]  p_transfer_params         Pointer to the transfer parameters for the transfer
+ * @param[in]  send_header               Set to true if the LIN header should be transmitted before the frame data (master mode only)
  *
- * @retval     FSP_SUCCESS               Frame transmission started successfully
- *********************************************************************************************************************/
-static fsp_err_t r_sci_lin_start_frame_write (sci_lin_instance_ctrl_t * const p_ctrl, uint8_t const id)
+ * @retval     FSP_SUCCESS               Transmission started successfully
+ **********************************************************************************************************************/
+static fsp_err_t r_sci_lin_write (sci_lin_instance_ctrl_t * const     p_ctrl,
+                                  const lin_transfer_params_t * const p_transfer_params,
+                                  uint8_t const                       send_header)
 {
     R_SCI0_Type * p_reg = p_ctrl->p_reg;
 
     /* Stop any in-progress break field transmission */
     p_reg->TCR = 0;
 
-    /* Begin start frame transmission according to flow chart process in Figure 27.103
-     * "Example of Start Frame transmission" in RA4M2 manual R01UH0892EJ0130. */
+    /* Disable transmit interrupts, transmission, and reception interrupts */
+    p_reg->SCR &=
+        (uint8_t) ~(R_SCI0_SCR_TIE_Msk | R_SCI0_SCR_TEIE_Msk | R_SCI0_SCR_RIE_Msk | R_SCI0_SCR_TE_Msk);
 
-    /* Set SCI common settings. Disable transmit interrupts before writing to transmission state */
-    p_reg->SCR &= (uint8_t) ~(R_SCI0_SCR_TIE_Msk | R_SCI0_SCR_TEIE_Msk);
+    /* Prepare the data transmission state. */
+    p_ctrl->p_data       = p_transfer_params->p_data;
+    p_ctrl->tx_src_bytes = 0;
+    p_ctrl->event        = LIN_EVENT_NONE;
+    p_ctrl->checksum     = 0;
 
-    /* Prepare the start frame transmission state */
-    p_ctrl->last_tx_byte  = r_sci_lin_pid_calculate(id);
-    p_ctrl->p_information = (uint8_t *) &g_start_frame_sync_word;
-    p_ctrl->event         = LIN_EVENT_TX_START_FRAME_COMPLETE;
-    p_ctrl->tx_src_bytes  = SCI_LIN_START_FRAME_NUM_BYTES;
+    if (p_transfer_params->p_data)
+    {
+        p_ctrl->tx_src_bytes = p_transfer_params->num_bytes;
 
-    /* Save the PID of the last attempted transmit */
-    p_ctrl->last_pid = p_ctrl->last_tx_byte;
+#if SCI_LIN_CHECKSUM_SUPPORT_ENABLE
+        if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
+        {
+            /* If checksum generation is enabled, calculate the checksum */
+            p_ctrl->checksum = r_sci_lin_checksum_calculate(p_transfer_params->id,
+                                                            p_transfer_params->p_data,
+                                                            p_transfer_params->num_bytes,
+                                                            p_transfer_params->checksum_type);
+            p_ctrl->tx_src_bytes++;
+        }
+        else
+#endif
+        {
+            /* User requested not to append checksum. Therefore either we are not using a checksum,
+             * or we are using a custom checksum. Copy last byte into 'checksum' field.
+             * From txi_isr perspective, last byte is always read from checksum, regardless of
+             * whether that byte represents a literal checksum. */
+            p_ctrl->checksum = p_transfer_params->p_data[p_transfer_params->num_bytes - 1];
+        }
+    }
 
-    /* Ensure transmission is enabled. Do not set SCR.TE and TIE to 1 at the same time to
-     * avoid SCIn_TXI output before the Break Field */
-    p_reg->SCR |= (uint8_t) (R_SCI0_SCR_TE_Msk);
+    if (send_header)
+    {
+        /* Set number of header bytes remaining to transmit */
+        p_ctrl->tx_header_bytes = SCI_LIN_HEADER_NUM_BYTES;
 
-    /* Clear flags */
-    r_sci_lin_flags_clear(p_reg, SCI_LIN_SSR_CLEAR_MASK, SCI_LIN_STCR_CLEAR_MASK);
+        /* Save the PID of the last attempted transmit */
+        p_ctrl->last_pid = r_sci_lin_pid_calculate(p_transfer_params->id);
 
-    /* Start outputting break field. */
-    p_reg->TCR = R_SCI0_TCR_TCST_Msk;
+        /* Ensure transmission is enabled. Do not set SCR.TE and TIE to 1 at the same time to
+         * avoid SCIn_TXI output before the Break Field */
+        p_reg->SCR |= (uint8_t) (R_SCI0_SCR_TE_Msk);
+
+        /* Clear flags */
+        r_sci_lin_flags_clear(p_reg, SCI_LIN_SSR_CLEAR_MASK, SCI_LIN_STCR_CLEAR_MASK);
+
+        /* Start outputting break field. */
+        p_reg->TCR = R_SCI0_TCR_TCST_Msk;
+    }
+    else
+    {
+        /* Clear flags */
+        r_sci_lin_flags_clear(p_ctrl->p_reg, SCI_LIN_SSR_CLEAR_MASK, SCI_LIN_STCR_CLEAR_MASK);
+
+        /* Enable transmit interrupt to start transmission. Setting TE and TIE together causes a
+         * TXI interrupt which will kick of transmission of the first byte. */
+        p_reg->SCR |= (uint8_t) (R_SCI0_SCR_TE_Msk | R_SCI0_SCR_TIE_Msk);
+    }
 
     return FSP_SUCCESS;
 }
@@ -1431,7 +1467,7 @@ lin_event_t r_sci_lin_rxi_handler (sci_lin_instance_ctrl_t * const p_ctrl)
     lin_event_t   event = LIN_EVENT_NONE;
     R_SCI0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Information frame byte */
+    /* Data byte */
     if (p_ctrl->rx_bytes_expected > p_ctrl->rx_bytes_received)
     {
         uint8_t bytes_remaining = p_ctrl->rx_bytes_expected - p_ctrl->rx_bytes_received;
@@ -1442,34 +1478,34 @@ lin_event_t r_sci_lin_rxi_handler (sci_lin_instance_ctrl_t * const p_ctrl)
         /* Check if this is the last byte in the transfer */
         if (1 == bytes_remaining)
         {
-            event = LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE;
+            event = LIN_EVENT_RX_DATA_COMPLETE;
 
 #if SCI_LIN_CHECKSUM_SUPPORT_ENABLE
 
             /* Perform checksum validation if requested */
             if (p_ctrl->validate_checksum)
             {
-                /* Validate checksum. At this point, p_ctrl->rx_checksum contains the checksum over the data bytes. */
-                if (((p_ctrl->rx_checksum + rx_byte)) != SCI_LIN_CHECKSUM_OK)
+                /* Validate checksum. At this point, p_ctrl->checksum contains the checksum over the data bytes. */
+                if (((p_ctrl->checksum + rx_byte)) != SCI_LIN_CHECKSUM_OK)
                 {
                     event = LIN_EVENT_ERR_INVALID_CHECKSUM;
                 }
 
                 /* Save the received checksum byte */
-                p_ctrl->rx_checksum = rx_byte;
+                p_ctrl->checksum = rx_byte;
             }
             else
 #endif
             {
                 /* Checksum validation skipped (nonstandard checksum or checksum not present).
                  * Store the received byte as data. */
-                *p_ctrl->p_information++ = rx_byte;
+                *p_ctrl->p_data++ = rx_byte;
                 p_ctrl->rx_bytes_received++;
             }
 
-            /* Information frame reception complete. Reset receive state and stop reception interrupts. */
+            /* Data reception complete. Reset receive state and stop reception interrupts. */
             p_ctrl->rx_bytes_expected = 0;
-            p_ctrl->p_information     = NULL;
+            p_ctrl->p_data            = NULL;
             p_reg->SCR_b.RIE          = 0;
 
             /* Reset break field detection in slave mode */
@@ -1483,12 +1519,12 @@ lin_event_t r_sci_lin_rxi_handler (sci_lin_instance_ctrl_t * const p_ctrl)
             /* Add the received byte to the running checksum */
             if (p_ctrl->validate_checksum)
             {
-                p_ctrl->rx_checksum = r_sci_lin_checksum_add_byte_to_sum(rx_byte, p_ctrl->rx_checksum);
+                p_ctrl->checksum = r_sci_lin_checksum_add_byte_to_sum(rx_byte, p_ctrl->checksum);
             }
 #endif
 
             /* Store the received byte */
-            *p_ctrl->p_information++ = rx_byte;
+            *p_ctrl->p_data++ = rx_byte;
             p_ctrl->rx_bytes_received++;
         }
     }
@@ -1518,31 +1554,39 @@ static void r_sci_lin_txi_handler (sci_lin_instance_ctrl_t * const p_ctrl)
 {
     R_SCI0_Type * p_reg = p_ctrl->p_reg;
 
-    if (p_ctrl->tx_src_bytes > 0U)
+    if (p_ctrl->tx_header_bytes || p_ctrl->tx_src_bytes)
     {
-        /* Check if there is only 1 byte remaining to transmit */
-        if (1 == p_ctrl->tx_src_bytes)
+        if (p_ctrl->tx_header_bytes)
         {
-            /* Write checksum byte (or PID byte, if this is a start frame) */
-            p_reg->TDR = p_ctrl->last_tx_byte;
+            /* Write the sync word if this is the first header byte. Otherwise, this is the second header byte (the PID). */
+            p_reg->TDR = (SCI_LIN_HEADER_NUM_BYTES == p_ctrl->tx_header_bytes) ?
+                         SCI_LIN_SYNC : p_ctrl->last_pid;
+
+            p_ctrl->event = LIN_EVENT_TX_HEADER_COMPLETE;
+            p_ctrl->tx_header_bytes--;
+        }
+        else if (1 < p_ctrl->tx_src_bytes)
+        {
+            /* Write next data byte */
+            p_reg->TDR = *p_ctrl->p_data++;
+            p_ctrl->tx_src_bytes--;
         }
         else
         {
-            /* Write next byte */
-            p_reg->TDR = *p_ctrl->p_information++;
+            /* Write checksum byte when there is only 1 data byte remaining to transmit */
+            p_reg->TDR           = p_ctrl->checksum;
+            p_ctrl->event        = LIN_EVENT_TX_DATA_COMPLETE;
+            p_ctrl->tx_src_bytes = 0;
         }
 
-        /* Update the driver state */
-        p_ctrl->tx_src_bytes--;
-
-        if (0U == p_ctrl->tx_src_bytes)
+        if ((0 == p_ctrl->tx_header_bytes) && (0 == p_ctrl->tx_src_bytes))
         {
             /* After all data has been transmitted, disable transmit interrupts and enable the transmit end interrupt. */
             uint8_t scr_temp = p_reg->SCR;
-            scr_temp             |= R_SCI0_SCR_TEIE_Msk;
-            scr_temp             &= (uint8_t) ~(R_SCI0_SCR_TIE_Msk);
-            p_reg->SCR            = scr_temp;
-            p_ctrl->p_information = NULL;
+            scr_temp      |= R_SCI0_SCR_TEIE_Msk;
+            scr_temp      &= (uint8_t) ~(R_SCI0_SCR_TIE_Msk);
+            p_reg->SCR     = scr_temp;
+            p_ctrl->p_data = NULL;
         }
     }
 }
@@ -1614,7 +1658,7 @@ lin_event_t r_sci_lin_scix1_handler (sci_lin_instance_ctrl_t * const p_ctrl)
     /* Check if control field 0 was received*/
     if (str & R_SCI0_STR_CF0MF_Msk)
     {
-        /* Discard received data and clear the CF0 received flag to advance start frame reception state */
+        /* Discard received data and clear the CF0 received flag to advance header reception state */
         r_sci_lin_flags_clear(p_reg, R_SCI0_SSR_RDRF_Msk, R_SCI0_STCR_CF0MCL_Msk);
     }
     else if (str & (R_SCI0_STR_PIBDF_Msk | R_SCI0_STR_CF1MF_Msk))
@@ -1626,7 +1670,7 @@ lin_event_t r_sci_lin_scix1_handler (sci_lin_instance_ctrl_t * const p_ctrl)
         uint8_t pid = p_reg->RDR;
 
         /* Set the event to notify the application (slave node only). */
-        event = LIN_EVENT_RX_START_FRAME_COMPLETE;
+        event = LIN_EVENT_RX_HEADER_COMPLETE;
 
         /* Check parity */
         if (r_sci_lin_pid_calculate(pid) != pid)
@@ -1642,7 +1686,7 @@ lin_event_t r_sci_lin_scix1_handler (sci_lin_instance_ctrl_t * const p_ctrl)
             p_ctrl->last_pid = pid;
         }
 
-        /* Enable reception interrupts to receive the information frame */
+        /* Enable reception interrupts to receive the data frame */
         p_reg->SCR |= R_SCI0_SCR_RIE_Msk;
     }
     else
@@ -1710,7 +1754,7 @@ static void r_sci_lin_call_callback (sci_lin_instance_ctrl_t * p_ctrl, lin_event
     p_args->pid            = p_ctrl->last_pid;
     p_args->p_context      = p_ctrl->p_context;
     p_args->bytes_received = p_ctrl->rx_bytes_received;
-    p_args->checksum       = p_ctrl->rx_checksum;
+    p_args->checksum       = p_ctrl->checksum;
 
 #if BSP_TZ_SECURE_BUILD
 
@@ -1752,7 +1796,7 @@ static void r_sci_lin_break_field_detection_reset (sci_lin_instance_ctrl_t * con
     {
         R_SCI0_Type * p_reg = p_ctrl->p_reg;
 
-        /* Enable timer in preparation to receive next start frame */
+        /* Enable timer in preparation to receive next header */
         p_reg->TCR = R_SCI0_TCR_TCST_Msk;
 
         /* Slave Start Frame Detection Start */
@@ -1771,7 +1815,8 @@ static void r_sci_lin_transfer_state_reset (sci_lin_instance_ctrl_t * const p_ct
     p_ctrl->rx_bytes_expected = 0;
     p_ctrl->rx_bytes_received = 0;
     p_ctrl->tx_src_bytes      = 0;
-    p_ctrl->p_information     = NULL;
+    p_ctrl->tx_header_bytes   = 0U;
+    p_ctrl->p_data            = NULL;
     p_ctrl->p_callback_memory = NULL;
     p_ctrl->event             = LIN_EVENT_NONE;
 }

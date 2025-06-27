@@ -33,6 +33,9 @@ FSP_HEADER
 #define R_RSIP_AES256_KEY_INDEX_WORD_SIZE             (13U)
 #define R_RSIP_AES256_XTS_KEY_INDEX_WORD_SIZE         (21U)
 
+/* For CHACHA operation. */
+#define R_RSIP_CHACHA20_KEY_INDEX_WORD_SIZE           (13U)
+
 /* For HMAC operation. */
 #define R_RSIP_HMAC_SHA224_KEY_INDEX_WORD_SIZE        (13U)
 #define R_RSIP_HMAC_SHA256_KEY_INDEX_WORD_SIZE        (13U)
@@ -42,17 +45,12 @@ FSP_HEADER
 #define R_RSIP_HMAC_SHA512_256_KEY_INDEX_WORD_SIZE    (21U)
 
 /* For RSA operation. */
-#define R_RSIP_RSA2048_PUBLIC_KEY_INDEX_WORD_SIZE     (73U)
-#define R_RSIP_RSA3072_PUBLIC_KEY_INDEX_WORD_SIZE     (105U)
-#define R_RSIP_RSA4096_PUBLIC_KEY_INDEX_WORD_SIZE     (137U)
 #define R_RSIP_RSA2048_PRIVATE_KEY_INDEX_WORD_SIZE    (133U)
 #define R_RSIP_RSA3072_PRIVATE_KEY_INDEX_WORD_SIZE    (197U)
 #define R_RSIP_RSA4096_PRIVATE_KEY_INDEX_WORD_SIZE    (261U)
 
 /* For ECC operation. */
-#define R_RSIP_ECCP384_PUBLIC_KEY_INDEX_WORD_SIZE     (29U)
 #define R_RSIP_ECCP384_PRIVATE_KEY_INDEX_WORD_SIZE    (17U)
-#define R_RSIP_ECCP521_PUBLIC_KEY_INDEX_WORD_SIZE     (45U)
 #define R_RSIP_ECCP521_PRIVATE_KEY_INDEX_WORD_SIZE    (25U)
 
 /**********************************************************************************************************************
@@ -73,26 +71,12 @@ typedef struct rsip_aes_wrapped_key
     uint32_t value[R_RSIP_AES256_XTS_KEY_INDEX_WORD_SIZE]; ///< Wrapped key value
 } rsip_aes_wrapped_key_t;
 
-/** RSA 2048bit public wrapped key data structure. DO NOT MODIFY. */
-typedef struct rsip_rsa2048_public_wrapped_key
+/** CHACHA20 wrapped key data structure. DO NOT MODIFY. */
+typedef struct rsip_chacha20_wrapped_key
 {
-    uint32_t type;                                             ///< Key type
-    uint32_t value[R_RSIP_RSA2048_PUBLIC_KEY_INDEX_WORD_SIZE]; ///< Wrapped key value
-} rsip_rsa2048_public_wrapped_key_t;
-
-/** RSA 3072bit public wrapped key data structure. DO NOT MODIFY. */
-typedef struct rsip_rsa3072_public_wrapped_key
-{
-    uint32_t type;                                             ///< Key type
-    uint32_t value[R_RSIP_RSA3072_PUBLIC_KEY_INDEX_WORD_SIZE]; ///< Wrapped key value
-} rsip_rsa3072_public_wrapped_key_t;
-
-/** RSA 4096bit public wrapped key data structure. DO NOT MODIFY. */
-typedef struct rsip_rsa4096_public_wrapped_key
-{
-    uint32_t type;                                             ///< Key type
-    uint32_t value[R_RSIP_RSA4096_PUBLIC_KEY_INDEX_WORD_SIZE]; ///< Wrapped key value
-} rsip_rsa4096_public_wrapped_key_t;
+    uint32_t type;                                       ///< Key type
+    uint32_t value[R_RSIP_CHACHA20_KEY_INDEX_WORD_SIZE]; ///< Wrapped key value
+} rsip_chacha20_wrapped_key_t;
 
 /** RSA 2048bit private wrapped key data structure. DO NOT MODIFY. */
 typedef struct rsip_rsa2048_private_wrapped_key
@@ -114,13 +98,6 @@ typedef struct rsip_rsa4096_private_wrapped_key
     uint32_t type;                                              ///< Key type
     uint32_t value[R_RSIP_RSA4096_PRIVATE_KEY_INDEX_WORD_SIZE]; ///< Wrapped key value
 } rsip_rsa4096_private_wrapped_key_t;
-
-/** ECC 256/384/512/521 public wrapped key data structure. DO NOT MODIFY. */
-typedef struct rsip_ecc_public_wrapped_key
-{
-    uint32_t type;                                             ///< Key type
-    uint32_t value[R_RSIP_ECCP521_PUBLIC_KEY_INDEX_WORD_SIZE]; ///< Wrapped key value
-} rsip_ecc_public_wrapped_key_t;
 
 /** ECC 256/384/512/521 private wrapped key data structure. DO NOT MODIFY. */
 typedef struct rsip_ecc_private_wrapped_key
@@ -195,9 +172,9 @@ typedef struct st_rsip_key_injection_api
      * @param[out] p_wrapped_key                           128-bit AES-XTS wrapped key
      */
     fsp_err_t (* AES128_XTS_InitialKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                        uint8_t const * const p_wrapped_user_factory_programming_key,
-                                        uint8_t const * const p_initial_vector,
-                                        uint8_t const * const p_user_key, rsip_aes_wrapped_key_t * const p_wrapped_key);
+                                            uint8_t const * const p_wrapped_user_factory_programming_key,
+                                            uint8_t const * const p_initial_vector,
+                                            uint8_t const * const p_user_key, rsip_aes_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit AES-XTS wrapped key.
      *
@@ -210,11 +187,11 @@ typedef struct st_rsip_key_injection_api
      * @param[out] p_wrapped_key                           256-bit AES-XTS wrapped key
      */
     fsp_err_t (* AES256_XTS_InitialKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                        uint8_t const * const p_wrapped_user_factory_programming_key,
-                                        uint8_t const * const p_initial_vector,
-                                        uint8_t const * const p_user_key, rsip_aes_wrapped_key_t * const p_wrapped_key);
+                                            uint8_t const * const p_wrapped_user_factory_programming_key,
+                                            uint8_t const * const p_initial_vector,
+                                            uint8_t const * const p_user_key, rsip_aes_wrapped_key_t * const p_wrapped_key);
 
-    /** This API outputs 2048-bit RSA wrapped public key.
+    /** This API outputs 256-bit ChaCha20 wrapped key.
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
      * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
@@ -222,14 +199,13 @@ typedef struct st_rsip_key_injection_api
      * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
      *                                                     When key injection type is plain, this is not required and any value can be specified.
      * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           2048-bit RSA wrapped public key
+     * @param[out] p_wrapped_key                           256-bit ChaCha20 wrapped key
      */
-    fsp_err_t (* RSA2048_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                               uint8_t const * const
-                                               p_wrapped_user_factory_programming_key,
-                                               uint8_t const * const                     p_initial_vector,
-                                               uint8_t const * const                     p_user_key,
-                                               rsip_rsa2048_public_wrapped_key_t * const p_wrapped_key);
+    fsp_err_t (* ChaCha20_InitialKeyWrap)(rsip_key_injection_type_t const     key_injection_type,
+                                          uint8_t const * const               p_wrapped_user_factory_programming_key,
+                                          uint8_t const * const               p_initial_vector,
+                                          uint8_t const * const               p_user_key,
+                                          rsip_chacha20_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 2048-bit RSA wrapped private key.
      *
@@ -248,23 +224,6 @@ typedef struct st_rsip_key_injection_api
                                                 uint8_t const * const                      p_user_key,
                                                 rsip_rsa2048_private_wrapped_key_t * const p_wrapped_key);
 
-    /** This API outputs 3072-bit RSA wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           3072-bit RSA wrapped public key
-     */
-    fsp_err_t (* RSA3072_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                               uint8_t const * const
-                                               p_wrapped_user_factory_programming_key,
-                                               uint8_t const * const                     p_initial_vector,
-                                               uint8_t const * const                     p_user_key,
-                                               rsip_rsa3072_public_wrapped_key_t * const p_wrapped_key);
-
     /** This API outputs 3072-bit RSA wrapped private key.
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
@@ -281,23 +240,6 @@ typedef struct st_rsip_key_injection_api
                                                 uint8_t const * const                      p_initial_vector,
                                                 uint8_t const * const                      p_user_key,
                                                 rsip_rsa3072_private_wrapped_key_t * const p_wrapped_key);
-
-    /** This API outputs 4096-bit RSA wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           4096-bit RSA wrapped public key
-     */
-    fsp_err_t (* RSA4096_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                               uint8_t const * const
-                                               p_wrapped_user_factory_programming_key,
-                                               uint8_t const * const                     p_initial_vector,
-                                               uint8_t const * const                     p_user_key,
-                                               rsip_rsa4096_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 4096-bit RSA wrapped private key.
      *
@@ -316,23 +258,6 @@ typedef struct st_rsip_key_injection_api
                                                 uint8_t const * const                      p_user_key,
                                                 rsip_rsa4096_private_wrapped_key_t * const p_wrapped_key);
 
-    /** This API outputs 256-bit ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           256-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_secp256r1_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                     uint8_t const * const
-                                                     p_wrapped_user_factory_programming_key,
-                                                     uint8_t const * const                 p_initial_vector,
-                                                     uint8_t const * const                 p_user_key,
-                                                     rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
-
     /** This API outputs 256-bit ECC wrapped private key.
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
@@ -349,23 +274,6 @@ typedef struct st_rsip_key_injection_api
                                                       uint8_t const * const                  p_initial_vector,
                                                       uint8_t const * const                  p_user_key,
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
-
-    /** This API outputs 384-bit ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           384-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_secp384r1_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                     uint8_t const * const
-                                                     p_wrapped_user_factory_programming_key,
-                                                     uint8_t const * const                 p_initial_vector,
-                                                     uint8_t const * const                 p_user_key,
-                                                     rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 384-bit ECC wrapped private key.
      *
@@ -384,23 +292,6 @@ typedef struct st_rsip_key_injection_api
                                                       uint8_t const * const                  p_user_key,
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
 
-    /** This API outputs 521-bit ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           521-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_secp521r1_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                     uint8_t const * const
-                                                     p_wrapped_user_factory_programming_key,
-                                                     uint8_t const * const                 p_initial_vector,
-                                                     uint8_t const * const                 p_user_key,
-                                                     rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
-
     /** This API outputs 521-bit ECC wrapped private key.
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
@@ -417,23 +308,6 @@ typedef struct st_rsip_key_injection_api
                                                       uint8_t const * const                  p_initial_vector,
                                                       uint8_t const * const                  p_user_key,
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
-
-    /** This API outputs 256-bit ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           256-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_secp256k1_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                     uint8_t const * const
-                                                     p_wrapped_user_factory_programming_key,
-                                                     uint8_t const * const                 p_initial_vector,
-                                                     uint8_t const * const                 p_user_key,
-                                                     rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit ECC wrapped private key.
      *
@@ -452,23 +326,6 @@ typedef struct st_rsip_key_injection_api
                                                       uint8_t const * const                  p_user_key,
                                                       rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
 
-    /** This API outputs 256-bit brainpool ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           256-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_brainpoolP256r1_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                           uint8_t const * const
-                                                           p_wrapped_user_factory_programming_key,
-                                                           uint8_t const * const                 p_initial_vector,
-                                                           uint8_t const * const                 p_user_key,
-                                                           rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
-
     /** This API outputs 256-bit brainpool ECC wrapped private key.
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
@@ -485,23 +342,6 @@ typedef struct st_rsip_key_injection_api
                                                             uint8_t const * const                  p_initial_vector,
                                                             uint8_t const * const                  p_user_key,
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
-
-    /** This API outputs 384-bit brainpool ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           384-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_brainpoolP384r1_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                           uint8_t const * const
-                                                           p_wrapped_user_factory_programming_key,
-                                                           uint8_t const * const                 p_initial_vector,
-                                                           uint8_t const * const                 p_user_key,
-                                                           rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 384-bit brainpool ECC wrapped private key.
      *
@@ -520,23 +360,6 @@ typedef struct st_rsip_key_injection_api
                                                             uint8_t const * const                  p_user_key,
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
 
-    /** This API outputs 512-bit brainpool ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           512-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_brainpoolP512r1_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                           uint8_t const * const
-                                                           p_wrapped_user_factory_programming_key,
-                                                           uint8_t const * const                 p_initial_vector,
-                                                           uint8_t const * const                 p_user_key,
-                                                           rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
-
     /** This API outputs 512-bit brainpool ECC wrapped private key.
      *
      * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
@@ -553,23 +376,6 @@ typedef struct st_rsip_key_injection_api
                                                             uint8_t const * const                  p_initial_vector,
                                                             uint8_t const * const                  p_user_key,
                                                             rsip_ecc_private_wrapped_key_t * const p_wrapped_key);
-
-    /** This API outputs 256-bit Edwards curve ECC wrapped public key.
-     *
-     * @param[in]  key_injection_type                      Selection key injection type when generating wrapped key
-     * @param[in]  p_wrapped_user_factory_programming_key  Wrapped user factory programming key by the Renesas Key Wrap Service.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_initial_vector                        Initialization vector when generating encrypted key.
-     *                                                     When key injection type is plain, this is not required and any value can be specified.
-     * @param[in]  p_user_key                              User key. If key injection type is not plain, it must be encrypted and have MAC appended.
-     * @param[out] p_wrapped_key                           256-bit ECC wrapped public key
-     */
-    fsp_err_t (* ECC_Ed25519_InitialPublicKeyWrap)(rsip_key_injection_type_t const key_injection_type,
-                                                   uint8_t const * const
-                                                   p_wrapped_user_factory_programming_key,
-                                                   uint8_t const * const                 p_initial_vector,
-                                                   uint8_t const * const                 p_user_key,
-                                                   rsip_ecc_public_wrapped_key_t * const p_wrapped_key);
 
     /** This API outputs 256-bit Edwards curve ECC wrapped private key.
      *

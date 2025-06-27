@@ -54,19 +54,19 @@ typedef enum
 {
     USB_MSC_DNXX = 0x10,               /* Device No Data */
     USB_MSC_DIXX = 0x20,               /* Device Send(IN) Data */
-    USB_MSC_DOXX = 0x30,               /* Device Recieved(OUT) Data */
+    USB_MSC_DOXX = 0x30,               /* Device Received(OUT) Data */
     USB_MSC_XXHN = 0x01,               /* Host No Data */
-    USB_MSC_XXHI = 0x02,               /* Host Recieved(IN) Data */
+    USB_MSC_XXHI = 0x02,               /* Host Received(IN) Data */
     USB_MSC_XXHO = 0x03,               /* Host Send(OUT) Data */
     USB_MSC_DNHN = 0x11,               /* Device No Data & Host No Data */
-    USB_MSC_DNHI = 0x12,               /* Device No Data & Host Recieved(IN) Data */
+    USB_MSC_DNHI = 0x12,               /* Device No Data & Host Received(IN) Data */
     USB_MSC_DNHO = 0x13,               /* Device No Data & Host Send(OUT) Data */
     USB_MSC_DIHN = 0x21,               /* Device Send(IN) Data & Host No Data */
-    USB_MSC_DIHI = 0x22,               /* Device Send(IN) Data & Host Recieved(IN) Data */
+    USB_MSC_DIHI = 0x22,               /* Device Send(IN) Data & Host Received(IN) Data */
     USB_MSC_DIHO = 0x23,               /* Device Send(IN) Data & Host Send(OUT) Data */
-    USB_MSC_DOHN = 0x31,               /* Device Recieved(OUT) Data & Host No Data */
-    USB_MSC_DOHI = 0x32,               /* Device Recieved(OUT) Data & Host Recieved(IN) Data */
-    USB_MSC_DOHO = 0x33,               /* Device Recieved(OUT) Data & Host Send(OUT) Data */
+    USB_MSC_DOHN = 0x31,               /* Device Received(OUT) Data & Host No Data */
+    USB_MSC_DOHI = 0x32,               /* Device Received(OUT) Data & Host Received(IN) Data */
+    USB_MSC_DOHO = 0x33,               /* Device Received(OUT) Data & Host Send(OUT) Data */
 } usb_gpmsc_case13check_t;
 
 /* USB Mass Storage Devie Class Lapper check. */

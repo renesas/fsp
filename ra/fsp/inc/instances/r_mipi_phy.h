@@ -34,8 +34,11 @@ typedef union
 {
     __PACKED_STRUCT
     {
-        uint8_t  div;                  ///< PHY PLL divisor
-        uint8_t  mul_frac;             ///< PHY PLL fractional multiplier (0, 1/3, 2/3, or 1/2)
+        uint8_t div;                   ///< PHY PLL input divisor
+        uint8_t mul_frac : 2;          ///< PHY PLL fractional multiplier (0, 1/3, 2/3, or 1/2)
+        uint8_t          : 2;
+        uint8_t pll_div  : 2;          ///< PHY PLL output divisor (1/1, 1/2, 1/4, 1/8)
+        uint8_t          : 2;
         uint16_t mul_int;              ///< PHY PLL integer multiplier (1-based)
     };
     uint32_t raw;
@@ -46,8 +49,29 @@ typedef struct st_mipi_phy_timing
 {
     uint32_t t_init : 19;              ///< Minimum duration of the TINIT state (Units: PCLKA cycles)
     uint32_t        : 13;              // Padding
-    uint8_t t_clk_prep;                ///< Duration of the clock lane LP-00 state (immediately before entry to the HS-0 state)
-    uint8_t t_hs_prep;                 ///< Duration of the data lane LP-00 state (immediately before entry to the HS-0 state)
+    union
+    {
+        __PACKED_STRUCT
+        {
+            uint32_t t_clk_prep   : 8; ///< Duration of the clock lane LP-00 state (immediately before entry to the HS-0 state)
+            uint32_t t_clk_settle : 8; ///< The period over which a transition to the HS state is to be ignored after the TCLK_PREPARE period has begun in the clock lane.
+            uint32_t t_clk_miss   : 8; ///< The period from detection of the absence of a clock until disabling of the HS-RX in the clock lane
+            uint32_t              : 8;
+        } dphytim2_b;
+        uint32_t dphytim2;
+    };
+
+    union
+    {
+        __PACKED_STRUCT
+        {
+            uint32_t t_hs_prep : 8;    ///< Duration of the data lane LP-00 state (immediately before entry to the HS-0 state)
+            uint32_t t_hs_sett : 8;    ///< The period over which a transition to the HS state is to be ignored after the TCLK_PREPARE period has begun in the clock lane.
+            uint32_t           : 16;
+        } dphytim3_b;
+        uint32_t dphytim3;
+    };
+
     union
     {
         __PACKED_STRUCT
@@ -79,6 +103,7 @@ typedef struct st_mipi_phy_cfg
     mipi_phy_pll_cfg_t        pll_settings;   ///< PHY PLL configuration (DPHYPLFCR)
     uint8_t                   lp_divisor : 5; ///< PHY PLL LP speed divisor setting (DPHYESCCR)
     mipi_phy_timing_t const * p_timing;       ///< Pointer to D-PHY HS/LP transition timing values
+    bool dsi_mode;                            ///< DSI Mode Enabled (CSI Mode Disabled)
 } mipi_phy_cfg_t;
 
 /** MIPI_PHY instance control block. */

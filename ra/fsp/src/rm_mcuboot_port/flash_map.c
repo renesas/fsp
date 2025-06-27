@@ -10,10 +10,15 @@
 #include "bootutil/bootutil_log.h"
 #include "sysflash/sysflash.h"
 #include "bsp_api.h"
-#if BSP_FEATURE_FLASH_HP_VERSION > 0
- #include "r_flash_hp.h"
+
+#if BSP_FEATURE_MRAM_IS_AVAILABLE
+ #include "r_mram.h"
 #else
- #include "r_flash_lp.h"
+ #if BSP_FEATURE_FLASH_HP_VERSION > 0
+  #include "r_flash_hp.h"
+ #else
+  #include "r_flash_lp.h"
+ #endif
 #endif
 
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
@@ -21,25 +26,35 @@
 #endif
 
 /* Definitions for different flash implementation. */
-#if BSP_FEATURE_FLASH_HP_VERSION > 0
- #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE)
- #define R_FLASH_Open                                  R_FLASH_HP_Open
- #define R_FLASH_Write                                 R_FLASH_HP_Write
- #define R_FLASH_Erase                                 R_FLASH_HP_Erase
- #define R_FLASH_Close                                 R_FLASH_HP_Close
+#if BSP_FEATURE_MRAM_IS_AVAILABLE
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN     (BSP_FEATURE_MRAM_PROGRAMMING_SIZE_BYTES)
+ #define R_FLASH_Open                                   R_MRAM_Open
+ #define R_FLASH_Write                                  R_MRAM_Write
+ #define R_FLASH_Erase                                  R_MRAM_Erase
+ #define R_FLASH_Close                                  R_MRAM_Close
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE      (0x8000)
+
 #else
- #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE)
- #define R_FLASH_Open                                  R_FLASH_LP_Open
- #define R_FLASH_Write                                 R_FLASH_LP_Write
- #define R_FLASH_Erase                                 R_FLASH_LP_Erase
- #define R_FLASH_Close                                 R_FLASH_LP_Close
+ #if BSP_FEATURE_FLASH_HP_VERSION > 0
+  #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE)
+  #define R_FLASH_Open                                  R_FLASH_HP_Open
+  #define R_FLASH_Write                                 R_FLASH_HP_Write
+  #define R_FLASH_Erase                                 R_FLASH_HP_Erase
+  #define R_FLASH_Close                                 R_FLASH_HP_Close
+ #else
+  #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE)
+  #define R_FLASH_Open                                  R_FLASH_LP_Open
+  #define R_FLASH_Write                                 R_FLASH_LP_Write
+  #define R_FLASH_Erase                                 R_FLASH_LP_Erase
+  #define R_FLASH_Close                                 R_FLASH_LP_Close
+ #endif
 #endif
 
 /* Write buffering is not required in overwrite only mode (it is needed for overwrite only fast). */
 #if defined(MCUBOOT_OVERWRITE_ONLY) && !defined(MCUBOOT_OVERWRITE_ONLY_FAST)
- #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE         (0)
+ #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE    (0)
 #else
- #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE         (1)
+ #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE    (1)
 #endif
 
 /* Instance structure to use this module. */
@@ -92,56 +107,8 @@ static rm_mcuboot_port_flush_buffer_t * gp_flush_buffer_lookup[2] =
 };
 #endif
 
-/* Flash device name must be specified by target */
-
-static const struct flash_area flash_map[] =
-{
-    {
-        .fa_id        = FLASH_AREA_0_ID,
-        .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
-        .fa_off       = FLASH_AREA_0_OFFSET,
-        .fa_size      = FLASH_AREA_0_SIZE,
-    },
-    {
-        .fa_id = FLASH_AREA_2_ID,
-#ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
-        .fa_device_id = FLASH_DEVICE_EXTERNAL_FLASH,
-#else
-        .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
-#endif
-        .fa_off  = FLASH_AREA_2_OFFSET,
-        .fa_size = FLASH_AREA_2_SIZE,
-    },
-#if (MCUBOOT_IMAGE_NUMBER == 2)
-    {
-        .fa_id        = FLASH_AREA_1_ID,
-        .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
-        .fa_off       = FLASH_AREA_1_OFFSET,
-        .fa_size      = FLASH_AREA_1_SIZE,
-    },
-    {
-        .fa_id = FLASH_AREA_3_ID,
- #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
-        .fa_device_id = FLASH_DEVICE_EXTERNAL_FLASH,
- #else
-        .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
- #endif
-        .fa_off  = FLASH_AREA_3_OFFSET,
-        .fa_size = FLASH_AREA_3_SIZE,
-    },
-#endif
-
-#if !defined(MCUBOOT_OVERWRITE_ONLY) && !defined(MCUBOOT_DIRECT_XIP)
-
-    /* Scratch region is only used in swap mode. */
-    {
-        .fa_id        = FLASH_AREA_SCRATCH_ID,
-        .fa_device_id = FLASH_DEVICE_INTERNAL_FLASH,
-        .fa_off       = FLASH_AREA_SCRATCH_OFFSET,
-        .fa_size      = FLASH_AREA_SCRATCH_SIZE,
-    },
-#endif
-};
+#define FLASH_MAP_C
+#include "bsp_linker_info.h"
 
 static const struct flash_area * prv_lookup_flash_area(int id);
 
@@ -428,7 +395,11 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
     /* Erase, accounting for block sizes. */
     if (FLASH_DEVICE_INTERNAL_FLASH == area->fa_device_id)
     {
-#if BSP_FEATURE_FLASH_HP_VERSION > 0
+#if BSP_FEATURE_MRAM_IS_AVAILABLE
+        sector_size      = RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE;
+        sectors_to_erase = len / sector_size;
+#else
+ #if BSP_FEATURE_FLASH_HP_VERSION > 0
         uint32_t deleted_len = 0;
         while (deleted_len < len)
         {
@@ -445,9 +416,10 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
             deleted_len += sector_size;
         }
 
-#else
+ #else
         sector_size      = BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE;
         sectors_to_erase = len / sector_size;
+ #endif
 #endif
 
         FSP_CRITICAL_SECTION_DEFINE;
@@ -532,10 +504,14 @@ int flash_area_get_sectors (int fa_id, uint32_t * count, struct flash_sector * s
     /* MCUBoot works only if both source and destination have the same sector size.
      * QSPI is only supported on Flash HP devices and the primary and seccondary images have to be located in
      * 32K flash blocks to be usable with QSPI. */
- #if BSP_FEATURE_FLASH_HP_VERSION > 0
-    const size_t sector_size = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE;
+ #if BSP_FEATURE_MRAM_IS_AVAILABLE
+    const size_t sector_size = RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE;
  #else
+  #if BSP_FEATURE_FLASH_HP_VERSION > 0
+    const size_t sector_size = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE;
+  #else
     const size_t sector_size = BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE;
+  #endif
  #endif
     int retval = -1;
     const struct flash_area * fa = prv_lookup_flash_area(fa_id);
@@ -654,12 +630,20 @@ int flash_on_chip_cleanup (void)
     if (g_internal_flash_driver_open)
     {
 #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
-        const struct flash_area * p_internal_flash_area = prv_lookup_flash_area(FLASH_AREA_0_ID);
-
-        /* Flush the write buffer. */
-        int ret = flash_on_chip_flush(p_internal_flash_area);
-        assert(0 == ret);
-        FSP_PARAMETER_NOT_USED(ret);
+        const struct flash_area * p_internal_flash_area;
+        uint32_t flash_area_index = 0;
+        for (flash_area_index = 0; flash_area_index < MCUBOOT_IMAGE_NUMBER; flash_area_index++)
+        {
+            p_internal_flash_area = &flash_map[flash_area_index];
+            if (p_internal_flash_area->fa_device_id == FLASH_DEVICE_INTERNAL_FLASH)
+            {
+                /* Flush the write buffer. */
+                int ret = flash_on_chip_flush(p_internal_flash_area);
+                assert(0 == ret);
+                FSP_PARAMETER_NOT_USED(ret);
+                break;
+            }
+        }
 #endif
 
         /* Close the flash driver. */
@@ -676,12 +660,20 @@ int flash_on_chip_cleanup (void)
     if (g_external_flash_driver_open)
     {
  #if RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE
-        const struct flash_area * p_external_flash_area = prv_lookup_flash_area(FLASH_AREA_2_ID);
-
-        /* Flush the write buffer. */
-        int ret = flash_on_chip_flush(p_external_flash_area);
-        assert(0 == ret);
-        FSP_PARAMETER_NOT_USED(ret);
+        const struct flash_area * p_external_flash_area;
+        uint32_t flash_area_index = 0;
+        for (flash_area_index = 0; flash_area_index < MCUBOOT_IMAGE_NUMBER; flash_area_index++)
+        {
+            p_external_flash_area = &flash_map[flash_area_index];
+            if (p_external_flash_area->fa_device_id == FLASH_DEVICE_EXTERNAL_FLASH)
+            {
+                /* Flush the write buffer. */
+                int ret = flash_on_chip_flush(p_external_flash_area);
+                assert(0 == ret);
+                FSP_PARAMETER_NOT_USED(ret);
+                break;
+            }
+        }
  #endif
 
         /* Close the flash driver. */
@@ -711,34 +703,6 @@ int flash_area_id_from_image_slot (int slot)
 }
 
 #if defined(__ARMCC_VERSION)
-
-/* Assign region addresses to pointers so that AC6 includes symbols that can be used to determine the
- * start addresses of Secure, Non-secure and Non-secure Callable regions. */
-uint32_t const __bl_FLASH_IMAGE_START BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_image_start") =
-    0;
-uint32_t const __bl_FLASH_IMAGE_END BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_image_end") =
-    0;
-uint32_t const __bl_XIP_SECONDARY_FLASH_IMAGE_START BSP_PLACE_IN_SECTION(
-    ".bl_boundary.bl_xip_secondary_flash_image_start") = 0;
-uint32_t const __bl_XIP_SECONDARY_FLASH_IMAGE_END BSP_PLACE_IN_SECTION(
-    ".bl_boundary.bl_xip_secondary_flash_image_end") = 0;
-
- #if RM_MCUBOOT_PORT_CFG_NS_PARTITION_SIZE > 0
-
-uint32_t const __bl_FLASH_NS_START       BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_ns_start")       = 0;
-uint32_t const __bl_FLASH_NSC_START      BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_nsc_start")      = 0;
-uint32_t const __bl_FLASH_NS_IMAGE_START BSP_PLACE_IN_SECTION(".bl_boundary.bl_flash_ns_image_start") = 0;
-uint32_t const __bl_RAM_NS_START         BSP_PLACE_IN_SECTION(".bl_boundary.bl_ram_ns_start")         = 0;
-uint32_t const __bl_RAM_NSC_START        BSP_PLACE_IN_SECTION(".bl_boundary.bl_ram_nsc_start")        = 0;
-
-  #if (MCUBOOT_IMAGE_NUMBER == 2)
-
-uint32_t const __bln_FLASH_IMAGE_START BSP_PLACE_IN_SECTION(".bl_boundary.bln_flash_image_start") = 0;
-uint32_t const __bln_FLASH_IMAGE_END   BSP_PLACE_IN_SECTION(".bl_boundary.bln_flash_image_end")   = 0;
-
-  #endif
-
- #endif
 
 /* Included to resolve a linker error. */
 BSP_WEAK_REFERENCE void exit (int x)

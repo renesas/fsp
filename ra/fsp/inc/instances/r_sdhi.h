@@ -54,7 +54,7 @@ typedef union
         uint32_t reserved_5         : 3;
         uint32_t card_dat3_removed  : 1; // < card removal detected by dat3 pin
         uint32_t card_dat3_inserted : 1; // < card inserion detected by dat3 pin
-        uint32_t reservered_10      : 6;
+        uint32_t reserved_10        : 6;
         uint32_t cmd_err            : 1; // < command error
         uint32_t crc_err            : 1; // < crc error
         uint32_t end_err            : 1; // < end bit error
@@ -90,7 +90,7 @@ typedef struct st_sdmmc_instance_ctrl
 
     void (* p_callback)(sdmmc_callback_args_t *); // Pointer to callback
     sdmmc_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
-    void const            * p_context;            // Pointer to context to be passed into callback function
+    void * p_context;                             // Pointer to context to be passed into callback function
 } sdhi_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -145,7 +145,7 @@ fsp_err_t R_SDHI_StatusGet(sdmmc_ctrl_t * const p_api_ctrl, sdmmc_status_t * con
 fsp_err_t R_SDHI_Erase(sdmmc_ctrl_t * const p_api_ctrl, uint32_t const start_sector, uint32_t const sector_count);
 fsp_err_t R_SDHI_CallbackSet(sdmmc_ctrl_t * const          p_api_ctrl,
                              void (                      * p_callback)(sdmmc_callback_args_t *),
-                             void const * const            p_context,
+                             void * const                  p_context,
                              sdmmc_callback_args_t * const p_callback_memory);
 fsp_err_t R_SDHI_Close(sdmmc_ctrl_t * const p_api_ctrl);
 

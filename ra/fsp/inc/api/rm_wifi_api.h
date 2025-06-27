@@ -410,7 +410,7 @@ WIFIReturnCode_t WIFI_Off(void);
  *
  * The Wi-Fi should stay connected when the same Access Point it is currently connected to
  * is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point
- * specified. If the new Access Point specifed has invalid parameters, then the Wi-Fi should be
+ * specified. If the new Access Point specified has invalid parameters, then the Wi-Fi should be
  * disconnected.
  *
  * @param[in] pxNetworkParams Configuration to join AP.
@@ -833,18 +833,21 @@ WIFIReturnCode_t WIFI_StartDisconnectStation(uint8_t * pucMac);
 /**
  * @brief Set Wi-Fi MAC addresses.
  *
- * The given MAC address will become the station MAC address. The AP MAC address
- * (i.e. BSSID) will be the same MAC address but with the local bit set.
+ * The given MAC address is for MAC SPOOFING. The original MAC address is not changed.
+ * This MAC address can be set only for Station. The AP MAC address (i.e. BSSID) will not be changed.
+ * If the original MAC address needs to be used, then MAC spoofing needs to be disabled.
  *
  * @param[in] pucMac - Station MAC address.
  *
  * @return eWiFiSuccess if MAC address was set successfully, failure code otherwise.
  *
+ * @note This function performs MAC SPOOFING, it does not change the “manufacturer” WIFI MAC address.
+ *
  * @note On some platforms the change of MAC address can only take effect after reboot.
  *
  * @deprecated This function is deprecated, please use WIFI_SetSpoofingMAC() instead.
  */
-WIFIReturnCode_t WIFI_SetMAC(uint8_t * pucMac);
+WIFIReturnCode_t WIFI_SetSpoofingMAC(uint8_t * pucMac);
 
 /**
  * @brief Set Wi-Fi MAC addresses.

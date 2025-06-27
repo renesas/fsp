@@ -755,7 +755,7 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx,
         ilen = ilen - (sha256_block_aligned_size_mod * SIZE_MBEDTLS_SHA256_PROCESS_BUFFER_BYTES);
 
         /* Check to see if there will be unaligned data to be buffered.
-        If there is no unaligned data to be buffered, then in case of the RSIP7,
+        If there is no unaligned data to be buffered, then in case of the RSIP-E51A,
         64 bytes (SHA256 block size) of data will be buffered and processed when the finish() is called. */
         /* If all the data is aligned, copy over the final 64 bytes for later processing. */
         if (ilen > 0)
@@ -912,7 +912,7 @@ int mbedtls_sha256_finish(mbedtls_sha256_context *ctx,
         }
         else
         {
-            ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_FINAL;;
+            ctx->sce_operation_state = SCE_OEM_CMD_HASH_RESUME_TO_FINAL;
         }
         if((ret = mbedtls_internal_sha256_process_ext(ctx, ctx->buffer, used)) != 0)
         {

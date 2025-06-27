@@ -134,9 +134,9 @@ typedef struct st_adc_d_instance_ctrl
 {
     adc_cfg_t const * p_cfg;                    // Setting the resolution of ADC_D.
     void (* p_callback)(adc_callback_args_t *); // Pointer to callback that is called when an adc_d_event_t occurs.
-    void const * p_context;                     // User defined context passed into callback function.
-    uint32_t     initialized;                   // Initialized status of ADC_D.
-    uint32_t     opened;                        // Open status of ADC_D.
+    void   * p_context;                         // User defined context passed into callback function.
+    uint32_t initialized;                       // Initialized status of ADC_D.
+    uint32_t opened;                            // Open status of ADC_D.
 } adc_d_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -166,7 +166,7 @@ fsp_err_t R_ADC_D_OffsetSet(adc_ctrl_t * const p_ctrl, adc_channel_t const reg_i
 fsp_err_t R_ADC_D_Calibrate(adc_ctrl_t * const p_ctrl, void const * p_extend);
 fsp_err_t R_ADC_D_CallbackSet(adc_ctrl_t * const          p_api_ctrl,
                               void (                    * p_callback)(adc_callback_args_t *),
-                              void const * const          p_context,
+                              void * const                p_context,
                               adc_callback_args_t * const p_callback_memory);
 
 fsp_err_t R_ADC_D_SnoozeModePrepare(adc_ctrl_t * const p_ctrl);

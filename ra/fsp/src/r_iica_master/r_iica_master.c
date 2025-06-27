@@ -284,7 +284,7 @@ fsp_err_t R_IICA_MASTER_SlaveAddressSet (i2c_master_ctrl_t * const    p_api_ctrl
  **********************************************************************************************************************/
 fsp_err_t R_IICA_MASTER_CallbackSet (i2c_master_ctrl_t * const          p_api_ctrl,
                                      void (                           * p_callback)(i2c_master_callback_args_t *),
-                                     void const * const                 p_context,
+                                     void * const                       p_context,
                                      i2c_master_callback_args_t * const p_callback_memory)
 {
     iica_master_instance_ctrl_t * p_ctrl = (iica_master_instance_ctrl_t *) p_api_ctrl;
@@ -468,8 +468,7 @@ static void r_iica_master_abort_seq_master (iica_master_instance_ctrl_t * const 
     if (false == iica_reset)
     {
         /* Enable generation of a start condition without detecting a stop condition */
-        /* Setting for IICRSV bit will be deprecated */
-        IICA_REG->IICF0 = (uint8_t) (pextend->clock_settings.comm_rez | R_IICA0_IICF0_STCEN_Msk);
+        IICA_REG->IICF0 = R_IICA0_IICF0_STCEN_Msk;
 
         /* IICCTL00 Register Settings:
          * 1. ACKE = 1：Enable acknowledgment. During the 9th clock period, the SDAA0 line is set to low level.
@@ -533,10 +532,8 @@ static void r_iica_master_open_hw_master (iica_master_instance_ctrl_t * const p_
 
     IICA_REG->IICCTL00_b.IICE = 0U;
 
-    /* Set communication reservation */
-    /* Make sure write to the IICRSV bit only when the operation is stopped (IICCTL00.IICE = 0) */
-    /* Setting for IICRSV bit will be deprecated */
-    IICA_REG->IICF0 = (uint8_t) (pextend->clock_settings.comm_rez | R_IICA0_IICF0_STCEN_Msk);
+    /* Enable generation of a start condition without detecting a stop condition */
+    IICA_REG->IICF0 = R_IICA0_IICF0_STCEN_Msk;
 
     /* IICCTL00 Register Settings:
      * 1. ACKE = 1：Enable acknowledgment. During the 9th clock period, the SDAA0 line is set to low level.

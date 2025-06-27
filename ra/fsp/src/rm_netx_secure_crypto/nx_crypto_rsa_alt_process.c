@@ -56,7 +56,8 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                   UINT          input_length,
                                   UCHAR       * output)
 {
-    fsp_err_t err = FSP_SUCCESS;
+    fsp_err_t err             = FSP_SUCCESS;
+    uint32_t  indata_key_type = 0;
 
     /* Check exponent length to determine key type and format */
     if (exponent_length <= RM_NETX_SECURE_CRYPTO_RSA_EXPONENT_LENGTH_BYTES)
@@ -103,6 +104,9 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                  (uint32_t *) padded_exponent,
                                  HW_SCE_RSA_4096_KEY_E_LENGTH_BYTE_SIZE);
 
+  #if (0U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+
+                /* RSA-4096 public key use plainkey on RSIP-E51A */
                 err =
                     HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
                                                       SCE_OEM_CMD_RSA4096_PUBLIC,
@@ -110,13 +114,15 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                                       NULL,
                                                       (const uint8_t *) &formatted_rsa_public_key_input,
                                                       (uint32_t *) &formatted_rsa_public_key_output.value);
-
+  #endif
                 if (FSP_SUCCESS == err)
                 {
                     err =
-                        HW_SCE_Rsa4096ModularExponentEncryptSub((uint32_t *) &formatted_rsa_public_key_output.value,
-                                                                (uint32_t *) aligned_work_buffer,
-                                                                (uint32_t *) aligned_work_buffer);
+                        HW_SCE_Rsa4096ModularExponentEncryptSubAdaptor(
+                            (uint32_t *) &formatted_rsa_public_key_output.value,
+                            (uint32_t *) &formatted_rsa_public_key_input,
+                            (uint32_t *) aligned_work_buffer,
+                            (uint32_t *) aligned_work_buffer);
                 }
                 NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif
@@ -139,6 +145,9 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                  (uint32_t *) padded_exponent,
                                  HW_SCE_RSA_3072_KEY_E_LENGTH_BYTE_SIZE);
 
+  #if (0U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+
+                /* RSA-3072 public key use plainkey format on RSIP-E51A */
                 err =
                     HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
                                                       SCE_OEM_CMD_RSA3072_PUBLIC,
@@ -146,13 +155,15 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                                       NULL,
                                                       (const uint8_t *) &formatted_rsa_public_key_input,
                                                       (uint32_t *) &formatted_rsa_public_key_output.value);
-
+  #endif
                 if (FSP_SUCCESS == err)
                 {
                     err =
-                        HW_SCE_Rsa3072ModularExponentEncryptSub((uint32_t *) &formatted_rsa_public_key_output.value,
-                                                                (uint32_t *) aligned_work_buffer,
-                                                                (uint32_t *) aligned_work_buffer);
+                        HW_SCE_Rsa3072ModularExponentEncryptSubAdaptor(
+                            (uint32_t *) &formatted_rsa_public_key_output.value,
+                            (uint32_t *) &formatted_rsa_public_key_input,
+                            (uint32_t *) aligned_work_buffer,
+                            (uint32_t *) aligned_work_buffer);
                 }
                 NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif
@@ -175,6 +186,9 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                  (uint32_t *) padded_exponent,
                                  HW_SCE_RSA_2048_KEY_E_LENGTH_BYTE_SIZE);
 
+  #if (0U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)
+
+                /* RSA-3072 public key use plainkey format on RSIP-E51A */
                 err =
                     HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
                                                       SCE_OEM_CMD_RSA2048_PUBLIC,
@@ -182,13 +196,15 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
                                                       NULL,
                                                       (const uint8_t *) &formatted_rsa_public_key_input,
                                                       (uint32_t *) &formatted_rsa_public_key_output.value);
-
+  #endif
                 if (FSP_SUCCESS == err)
                 {
                     err =
-                        HW_SCE_Rsa2048ModularExponentEncryptSub((uint32_t *) &formatted_rsa_public_key_output.value,
-                                                                (uint32_t *) aligned_work_buffer,
-                                                                (uint32_t *) aligned_work_buffer);
+                        HW_SCE_Rsa2048ModularExponentEncryptSubAdaptor(
+                            (uint32_t *) &formatted_rsa_public_key_output.value,
+                            (uint32_t *) &formatted_rsa_public_key_input,
+                            (uint32_t *) aligned_work_buffer,
+                            (uint32_t *) aligned_work_buffer);
                 }
                 NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
  #endif
@@ -296,9 +312,11 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
 
         if (FSP_SUCCESS == err)
         {
-            err = HW_SCE_Rsa2048ModularExponentDecryptSub((uint32_t *) &encrypted_rsa_key.value,
-                                                          (uint32_t *) aligned_work_buffer,
-                                                          (uint32_t *) aligned_work_buffer);
+            err = HW_SCE_Rsa2048ModularExponentDecryptSubAdaptor(&indata_key_type,
+                                                                 (uint32_t *) &encrypted_rsa_key.value,
+                                                                 NULL,
+                                                                 (uint32_t *) aligned_work_buffer,
+                                                                 (uint32_t *) aligned_work_buffer);
         }
 
         NX_CRYPTO_MEMCPY(output, aligned_work_buffer, sizeof(aligned_work_buffer));
@@ -321,7 +339,11 @@ UINT sce_nx_crypto_rsa_operation (const UCHAR * exponent,
         }
 
         /* Wrapped private key : This is a decryption operation. */
-        err = HW_SCE_Rsa2048ModularExponentDecryptSub((uint32_t *) exponent, (uint32_t *) input, (uint32_t *) output);
+        err = HW_SCE_Rsa2048ModularExponentDecryptSubAdaptor(&indata_key_type,
+                                                             (uint32_t *) exponent,
+                                                             NULL,
+                                                             (uint32_t *) input,
+                                                             (uint32_t *) output);
     }
  #endif
     else

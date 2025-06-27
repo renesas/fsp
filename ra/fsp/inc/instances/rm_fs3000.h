@@ -40,7 +40,7 @@ typedef struct rm_fs3000_instance_ctrl
     uint32_t                    open;                 ///< Open flag
     rm_fsxxxx_cfg_t const     * p_cfg;                ///< Pointer to FS3000 Configuration
     rm_comms_instance_t const * p_comms_i2c_instance; ///< Pointer of I2C Communications Middleware instance structure
-    void const                * p_context;            ///< Pointer to the user-provided context
+    void * p_context;                                 ///< Pointer to the user-provided context
 
     /* Pointer to callback and optional working memory */
     void (* p_callback)(rm_fsxxxx_callback_args_t * p_args);

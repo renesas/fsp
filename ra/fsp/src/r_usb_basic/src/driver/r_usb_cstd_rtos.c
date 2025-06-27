@@ -2166,7 +2166,7 @@ void usb_cstd_pipe0_msg_re_forward (uint16_t ip_no)
 
 /******************************************************************************
  * Function Name   : usb_cstd_pipe_msg_forward
- * Description     : Message foward to PIPE Transfer wait que.
+ * Description     : Message forward to PIPE Transfer wait que.
  * Arguments       : usb_utr_t *ptr       : Pointer to usb_utr_t structure.
  *               : uint16_t  pipe_no    : Pipe no.
  * Return          : none
@@ -2193,7 +2193,7 @@ void usb_cstd_pipe_msg_forward (usb_utr_t * ptr, uint16_t pipe_no)
 
 /******************************************************************************
  * Function Name   : usb_cstd_pipe0_msg_forward
- * Description     : Message foward to PIPE0 Transfer wait que.
+ * Description     : Message forward to PIPE0 Transfer wait que.
  * Arguments       : usb_utr_t *ptr       : Pointer to usb_utr_t structure.
  *               : uint16_t  dev_addr   : device address
  * Return          : none

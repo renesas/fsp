@@ -64,7 +64,7 @@ typedef struct st_sci_smci_instance_ctrl
     smci_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } sci_smci_instance_ctrl_t;
 
 /** Register settings to achieve a desired baud rate in Smart Card mode */
@@ -125,7 +125,7 @@ fsp_err_t R_SCI_SMCI_StatusGet(smci_ctrl_t * const p_api_ctrl, smci_status_t * c
 fsp_err_t R_SCI_SMCI_ClockControl(smci_ctrl_t * const p_api_ctrl, bool clock_enable);
 fsp_err_t R_SCI_SMCI_CallbackSet(smci_ctrl_t * const          p_api_ctrl,
                                  void (                     * p_callback)(smci_callback_args_t *),
-                                 void const * const           p_context,
+                                 void * const                 p_context,
                                  smci_callback_args_t * const p_callback_memory);
 fsp_err_t R_SCI_SMCI_Close(smci_ctrl_t * const p_api_ctrl);
 

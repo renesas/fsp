@@ -45,18 +45,18 @@ typedef enum e_rm_littlefs_spi_flash_event
 typedef struct st_rm_littlefs_spi_flash_callback_args
 {
     rm_littlefs_spi_flash_event_t event; ///< LevelX NOR driver callback event
-    void const * p_context;              ///< Placeholder for user data
+    void * p_context;                    ///< Placeholder for user data
 } rm_littlefs_spi_flash_callback_args_t;
 
 /** User configuration structure, used in open function */
 typedef struct st_rm_littlefs_spi_flash_cfg
 {
     spi_flash_instance_t const * p_lower_lvl;                            ///< Pointer to a spi flash instance
-    uint32_t     base_address;                                           ///< Base address of memory mapped region.
-    uint32_t     address_offset;                                         ///< Offset to use subset of available flash size if desired.
-    uint32_t     size;                                                   ///< Size of the partitioned region.
-    uint32_t     poll_status_count;                                      ///< Number of times to poll for operation complete status before returning an error.
-    void const * p_context;                                              ///< Placeholder for user data. Passed to the user callback.
+    uint32_t base_address;                                               ///< Base address of memory mapped region.
+    uint32_t address_offset;                                             ///< Offset to use subset of available flash size if desired.
+    uint32_t size;                                                       ///< Size of the partitioned region.
+    uint32_t poll_status_count;                                          ///< Number of times to poll for operation complete status before returning an error.
+    void   * p_context;                                                  ///< Placeholder for user data. Passed to the user callback.
     void (* p_callback)(rm_littlefs_spi_flash_callback_args_t * p_args); ///< Callback function
 } rm_littlefs_spi_flash_cfg_t;
 

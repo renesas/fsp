@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**
- * \addtogroup grp_ptx_api_plat_gpio PTX NSC Platform API GPIO
- *
- * @{
- */
-
 #ifndef COMPS_PLAT_PTXPLAT_GPIO_H_
  #define COMPS_PLAT_PTXPLAT_GPIO_H_
 
@@ -193,5 +187,3 @@ ptxStatus_t ptxPLAT_GPIO_WriteLevel(ptxPlatGpio_t * gpio, uint8_t value);
  #endif
 
 #endif                                 /* Guard */
-
-/** @} */

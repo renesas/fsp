@@ -41,7 +41,7 @@ typedef enum e_motor_sense_hall_signal_status
     MOTOR_SENSE_HALL_SIGNAL_STATUS_CAPTURED = 0, ///< Hall signal is captured.
 } motor_sense_hall_signal_status_t;
 
-/** This stucture is provided to receive speed information. */
+/** This structure is provided to receive speed information. */
 typedef struct st_motor_sense_hall_input
 {
     float f4_ref_speed_rad_ctrl;       ///< Speed Reference [rad/sec]
@@ -57,7 +57,7 @@ typedef struct st_motor_sense_hall_extended_cfg
     uint8_t u1_hall_pattern[MOTOR_SENSE_HALL_SPEED_COUNTS + 1]; ///< The order of hall signal pattern
 
     float f_pwm_carrier_freq;                                   ///< PWM carrier frequency (or Decimated frequency at decimation of current process)
-    float f_angle_correct;                                      ///< Coefficent to correct angle
+    float f_angle_correct;                                      ///< Coefficient to correct angle
 
     uint8_t  u1_trigger_hall_signal_count;                      ///< Rotation counts to wait the stability
     float    f4_target_pseudo_speed_rad;                        ///< Target value for pseudo speed estimates [radian/second]

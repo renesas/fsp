@@ -78,110 +78,56 @@ typedef void * rm_ble_mesh_timer_handle_t;
 /** BLE MESH error code. */
 typedef enum e_rm_ble_mesh_error_code
 {
-    /* DEPRECATED Success */
-    RM_BLE_MESH_SUCCESS = 0x0000,
-
     /** Success */
     RM_BLE_MESH_ERROR_CODE_SUCCESS = 0x0000,
-
-    /* DEPRECATED Invalid Address */
-    RM_BLE_MESH_INVALID_ADDRESS = 0x0001,
 
     /** Invalid Address */
     RM_BLE_MESH_ERROR_CODE_INVALID_ADDRESS = 0x0001,
 
-    /* DEPRECATED Invalid Model */
-    RM_BLE_MESH_INVALID_MODEL = 0x0002,
-
     /** Invalid Model */
     RM_BLE_MESH_ERROR_CODE_INVALID_MODEL = 0x0002,
-
-    /* DEPRECATED Invalid AppKey Index */
-    RM_BLE_MESH_INVALID_APPKEY_INDEX = 0x0003,
 
     /** Invalid AppKey Index */
     RM_BLE_MESH_ERROR_CODE_INVALID_APPKEY_INDEX = 0x0003,
 
-    /* DEPRECATED Invalid NetKey Index */
-    RM_BLE_MESH_INVALID_NETKEY_INDEX = 0x0004,
-
     /** Invalid NetKey Index */
     RM_BLE_MESH_ERROR_CODE_INVALID_NETKEY_INDEX = 0x0004,
-
-    /* DEPRECATED Insufficient Resources */
-    RM_BLE_MESH_INSUFFICIENT_RESOURCES = 0x0005,
 
     /** Insufficient Resources */
     RM_BLE_MESH_ERROR_CODE_INSUFFICIENT_RESOURCES = 0x0005,
 
-    /* DEPRECATED Key Index Already Stored */
-    RM_BLE_MESH_KEY_INDEX_ALREADY_STORED = 0x0006,
-
     /** Key Index Already Stored */
     RM_BLE_MESH_ERROR_CODE_KEY_INDEX_ALREADY_STORED = 0x0006,
-
-    /* DEPRECATED Invalid Publish Parameters */
-    RM_BLE_MESH_INVALID_PUBLISH_PARAMETER = 0x0007,
 
     /** Invalid Publish Parameters */
     RM_BLE_MESH_ERROR_CODE_INVALID_PUBLISH_PARAMETER = 0x0007,
 
-    /* DEPRECATED Not a Subscribe Model */
-    RM_BLE_MESH_NOT_A_SUBSCRIBE_MODEL = 0x0008,
-
     /** Not a Subscribe Model */
     RM_BLE_MESH_ERROR_CODE_NOT_A_SUBSCRIBE_MODEL = 0x0008,
-
-    /* DEPRECATED Storage Failure */
-    RM_BLE_MESH_STORAGE_FAILURE = 0x0009,
 
     /** Storage Failure */
     RM_BLE_MESH_ERROR_CODE_STORAGE_FAILURE = 0x0009,
 
-    /* DEPRECATED Feature Not Supported */
-    RM_BLE_MESH_FEATURE_NOT_SUPPORTED = 0x000A,
-
     /** Feature Not Supported */
     RM_BLE_MESH_ERROR_CODE_FEATURE_NOT_SUPPORTED = 0x000A,
-
-    /* DEPRECATED Cannot Update */
-    RM_BLE_MESH_CANNOT_UPDATE = 0x000B,
 
     /** Cannot Update */
     RM_BLE_MESH_ERROR_CODE_CANNOT_UPDATE = 0x000B,
 
-    /* DEPRECATED Cannot Remove */
-    RM_BLE_MESH_CANNOT_REMOVE = 0x000C,
-
     /** Cannot Remove */
     RM_BLE_MESH_ERROR_CODE_CANNOT_REMOVE = 0x000C,
-
-    /* DEPRECATED Cannot Bind */
-    RM_BLE_MESH_CANNOT_BIND = 0x000D,
 
     /** Cannot Bind */
     RM_BLE_MESH_ERROR_CODE_CANNOT_BIND = 0x000D,
 
-    /* DEPRECATED Temporarily Unable to Change State */
-    RM_BLE_MESH_TEMP_UNABLE_TO_CHANGE_STATE = 0x000E,
-
     /** Temporarily Unable to Change State */
     RM_BLE_MESH_ERROR_CODE_TEMP_UNABLE_TO_CHANGE_STATE = 0x000E,
-
-    /* DEPRECATED Cannot Set */
-    RM_BLE_MESH_CANNOT_SET = 0x000F,
 
     /** Cannot Set */
     RM_BLE_MESH_ERROR_CODE_CANNOT_SET = 0x000F,
 
-    /* DEPRECATED Unspecified Error */
-    RM_BLE_MESH_UNSPECIFIED_ERROR = 0x0010,
-
     /** Unspecified Error */
     RM_BLE_MESH_ERROR_CODE_UNSPECIFIED_ERROR = 0x0010,
-
-    /* DEPRECATED Invalid Binding */
-    RM_BLE_MESH_INVALID_BINDING = 0x0011,
 
     /** Invalid Binding */
     RM_BLE_MESH_ERROR_CODE_INVALID_BINDING = 0x0011,
@@ -799,7 +745,7 @@ typedef struct st_rm_ble_mesh_cfg
     /** Vendor ID */
     uint32_t default_vendor_id;
 
-    void const * p_context;            ///< Placeholder for user data.
+    void       * p_context;            ///< Placeholder for user data.
     void const * p_extend;             ///< Placeholder for user extension.
 } rm_ble_mesh_cfg_t;
 

@@ -328,7 +328,8 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
     NX_CRYPTO_MEMCPY(((uint8_t *) &sign[(padded_coordinate_size / 4U) + zero_padding_words]) + signature_s_repad_length,
                      signature_s,
                      s_size);
- #if (0 == BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED) && (0 == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) /*RSIP-E11A, RSIP-E31A use plain public key*/
+ #if (0 == BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED) && (0 == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) && \
+    (0 == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) /*RSIP-E11A, RSIP-E31A, RSIP-E51A use plain public key*/
     /* Install the plaintext public key to get the formatted public key */
     err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
                                             key_command,
@@ -353,6 +354,7 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
             err =
                 HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(&curve_type,
                                                                 formatted_public_key,
+                                                                pub_key,
                                                                 (uint32_t *) &digest[digest_offset],
                                                                 sign,
                                                                 &DomainParam_NIST_P384[0]);
@@ -365,23 +367,14 @@ UINT sce_nx_crypto_ecdsa_verify (NX_CRYPTO_EC * curve,
         /* digest - No 0 padding, skip the first 2 '0' words */
         case NX_CRYPTO_EC_SECP256R1:
         {
- #if (0 == BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED) && (0 == BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) /*RSIP-E11A , RSIP-E31A use plain public key*/
             err =
                 HW_SCE_EcdsaSignatureVerificationSubAdaptor(&curve_type,
                                                             &cmd,
                                                             formatted_public_key,
-                                                            (uint32_t *) &digest[digest_offset],
-                                                            sign,
-                                                            &DomainParam_NIST_P256[0]);
- #else
-            err =
-                HW_SCE_EcdsaSignatureVerificationSubAdaptor(&curve_type,
-                                                            &cmd,
                                                             pub_key,
                                                             (uint32_t *) &digest[digest_offset],
                                                             sign,
                                                             &DomainParam_NIST_P256[0]);
- #endif
             break;
         }
 

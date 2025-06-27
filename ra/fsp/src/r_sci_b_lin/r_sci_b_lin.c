@@ -37,8 +37,8 @@
 /* LIN Sync Word (Control Field 0) */
 #define SCI_B_LIN_SYNC                           (0x55U)
 
-/* Start frame data length */
-#define SCI_B_LIN_START_FRAME_NUM_BYTES          (2)
+/* Header frame length */
+#define SCI_B_LIN_HEADER_NUM_BYTES               (2)
 
 /* Macro to clear all Simple LIN related flags in CFCLR (Common Flag Clear Register). Flags are
  * listed in Figure 26.105 "Example of Start Frame Reception Flowchart" of the RA6T2 manual
@@ -76,9 +76,6 @@
         SCI_B_LIN_CCR3_SIMPLE_LIN_MODE | SCI_B_LIN_CCR3_8_BITS_DATA | SCI_B_LIN_CCR3_LSB_FIRST | \
         SCI_B_LIN_CCR3_START_BIT_EDGE_FALLING | SCI_B_LIN_CCR3_CPOL | SCI_B_LIN_CCR3_CPHA)
 
-/* SCI CCR1 register masks */
-#define SCI_B_LIN_CCR1_NOISE_FILTER_CLOCK        (0U << R_SCI_B0_CCR1_NFCS_Pos)
-
 /* SCI XCR0 register masks */
 #define SCI_B_LIN_XCR0_MASK_MASTER               (R_SCI_B0_XCR0_BFOIE_Msk)
 #define SCI_B_LIN_XCR0_MASK_SLAVE                (R_SCI_B0_XCR0_BFE_Msk | R_SCI_B0_XCR0_CF0RE_Msk | \
@@ -90,9 +87,8 @@
 
 /* SCI XCR2 register masks */
 #define SCI_B_LIN_XCR2_CF0D                      (SCI_B_LIN_SYNC << R_SCI_B0_XCR2_CF0D_Pos)
-#define SCI_B_LIN_XCR2_CF0CE                     (0xFFU << R_SCI_B0_XCR2_CF0CE_Pos) // check all bits of sync word during reception
 #define SCI_B_LIN_XCR2_MASK_MASTER               (0U)
-#define SCI_B_LIN_XCR2_MASK_SLAVE                (SCI_B_LIN_XCR2_CF0D | SCI_B_LIN_XCR2_CF0CE)
+#define SCI_B_LIN_XCR2_MASK_SLAVE                (SCI_B_LIN_XCR2_CF0D)
 
 /* SCI ERI mask helpers */
 #define SCI_B_LIN_ERI_CSR_EVENTS_MASK            (LIN_EVENT_ERR_PARITY | LIN_EVENT_ERR_FRAMING | \
@@ -128,15 +124,17 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile sci_b_lin_prv_ns_callback)(lin_c
 const lin_api_t g_lin_on_sci_b =
 {
     .open                  = R_SCI_B_LIN_Open,
-    .startFrameWrite       = R_SCI_B_LIN_StartFrameWrite,
-    .informationFrameWrite = R_SCI_B_LIN_InformationFrameWrite,
-    .informationFrameRead  = R_SCI_B_LIN_InformationFrameRead,
+    .read                  = R_SCI_B_LIN_Read,
+    .write                 = R_SCI_B_LIN_Write,
     .communicationAbort    = R_SCI_B_LIN_CommunicationAbort,
     .callbackSet           = R_SCI_B_LIN_CallbackSet,
     .close                 = R_SCI_B_LIN_Close,
     .sleepEnter            = R_SCI_B_LIN_SleepEnter,
     .sleepExit             = R_SCI_B_LIN_SleepExit,
     .wakeupSend            = R_SCI_B_LIN_WakeupSend,
+    .informationFrameRead  = R_SCI_B_LIN_InformationFrameRead,  // [DEPRECATED]
+    .startFrameWrite       = R_SCI_B_LIN_StartFrameWrite,       // [DEPRECATED]
+    .informationFrameWrite = R_SCI_B_LIN_InformationFrameWrite, // [DEPRECATED]
 };
 
 /***********************************************************************************************************************
@@ -148,7 +146,7 @@ static uint8_t r_sci_b_lin_pid_calculate(uint8_t id);
 
 #if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
 static uint8_t r_sci_b_lin_checksum_calculate(uint8_t               id,
-                                              uint8_t const * const p_information,
+                                              uint8_t const * const p_data,
                                               uint8_t               num_bytes,
                                               lin_checksum_type_t   checksum_type);
 static uint8_t r_sci_b_lin_checksum_initialize(uint8_t id, lin_checksum_type_t checksum_type);
@@ -172,13 +170,14 @@ static void r_sci_b_lin_filter_settings_configure(uint32_t * const              
 
 #if (SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE)
 static fsp_err_t r_sci_b_lin_common_parameter_checking(sci_b_lin_instance_ctrl_t const * const p_ctrl);
-static fsp_err_t r_sci_b_lin_information_read_write_param_check(sci_b_lin_instance_ctrl_t const * const p_ctrl,
-                                                                lin_transfer_params_t const * const     p_transfer_params);
+static fsp_err_t r_sci_b_lin_read_write_parameter_checking(sci_b_lin_instance_ctrl_t const * const p_ctrl,
+                                                           lin_transfer_params_t const * const     p_transfer_params);
 
 #endif
 
-/* Transmission/reception helper functions */
-static fsp_err_t r_sci_b_lin_start_frame_write(sci_b_lin_instance_ctrl_t * const p_ctrl, uint8_t const id);
+static fsp_err_t r_sci_b_lin_write(sci_b_lin_instance_ctrl_t * const   p_ctrl,
+                                   const lin_transfer_params_t * const p_transfer_params,
+                                   uint8_t const                       send_header);
 
 static void        r_sci_b_lin_call_callback(sci_b_lin_instance_ctrl_t * p_ctrl, lin_event_t event);
 static lin_event_t r_sci_b_lin_rxi_handler(sci_b_lin_instance_ctrl_t * const p_ctrl);
@@ -196,6 +195,8 @@ static uint32_t r_sci_b_lin_clock_freq_get(sci_b_lin_clock_source_t clock_source
 static uint32_t r_sci_b_lin_timer_freq_get(sci_b_lin_clock_source_t  clock_source,
                                            sci_b_lin_timer_divider_t lin_divider);
 static fsp_err_t r_sci_b_lin_baud_setting_calculate(sci_b_lin_baud_params_t const * const p_baud_params,
+                                                    sci_b_lin_base_clock_t                base_clock_cycles_per_bit,
+                                                    bool                                  check_bus_conflict_divider,
                                                     sci_b_lin_baud_setting_t * const      p_baud_setting);
 static fsp_err_t r_sci_b_lin_timer_setting_calculate(sci_b_lin_baud_params_t const * const p_baud_params,
                                                      sci_b_lin_timer_setting_t * const     p_timer_setting);
@@ -218,13 +219,6 @@ void sci_b_lin_txi_isr(void);
 void sci_b_lin_eri_isr(void);
 void sci_b_lin_aed_isr(void);
 void sci_b_lin_bfd_isr(void);
-
-/***********************************************************************************************************************
- * Private global variables
- **********************************************************************************************************************/
-
-/* 1 byte "buffer" used to transmit start frame sync word. */
-static const uint8_t g_start_frame_sync_word = SCI_B_LIN_SYNC;
 
 /*******************************************************************************************************************//**
  * @addtogroup SCI_B_LIN
@@ -309,9 +303,11 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
     p_ctrl->p_callback        = p_cfg->p_callback;
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
-    p_ctrl->p_information     = NULL;
+    p_ctrl->p_data            = NULL;
     p_ctrl->rx_bytes_expected = 0;
     p_ctrl->rx_bytes_received = 0;
+    p_ctrl->tx_src_bytes      = 0;
+    p_ctrl->tx_header_bytes   = 0;
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
  #if (0 == SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE)
@@ -340,162 +336,95 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
 }
 
 /*******************************************************************************************************************//**
- * Begins non-blocking transmission of a LIN start frame (break, sync and protected identifier).
+ * Begins non-blocking transmission of a LIN frame.
  *
- * On successful start frame transmission, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_START_FRAME_COMPLETE.
+ * In master mode, the LIN header (break, sync and protected identifier) is sent before the LIN data.
+ *  - To transmit the LIN header only, set p_transfer_params->p_data to NULL.
+ *  - To transmit both header and data, set p_transfer_params->p_data to the TX buffer to transmit.
  *
- * Implements @ref lin_api_t::startFrameWrite.
+ * The LIN header is not transmitted in slave mode. Set p_transfer_params->p_data to the TX buffer to transmit.
+ *
+ * On successful header-only transmission completion, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_HEADER_COMPLETE.
+ * On successful data transmission or header+data transmission completion, the callback is called with event @ref lin_event_t::LIN_EVENT_TX_DATA_COMPLETE.
+ *
+ * Implements @ref lin_api_t::write.
  *
  * Example:
- * @snippet r_sci_b_lin_example.c R_SCI_B_LIN_StartFrameWrite
+ * @snippet r_sci_b_lin_example.c R_SCI_B_LIN_Write
  *
- * @retval  FSP_SUCCESS                  Start frame transmission started successfully.
+ * @retval  FSP_SUCCESS                  Transmission started successfully.
  * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
  * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
- * @retval  FSP_ERR_INVALID_ARGUMENT     ID out of range (unprotected ID must be less than 64)
- * @retval  FSP_ERR_INVALID_MODE         Function called by slave node (not supported for slave nodes)
- * @retval  FSP_ERR_IN_USE               A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort
+ * @retval  FSP_ERR_INVALID_ARGUMENT     ID out of range (unprotected ID must be less than 64). Only applies in master mode. In slave mode, p_transfer_params->id is ignored.
+ * @retval  FSP_ERR_IN_USE               A transmission or reception is currently in progress. Call @ref R_SCI_B_LIN_CommunicationAbort
  *                                       to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
  *
  * @return                               See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                                       return codes.
  **********************************************************************************************************************/
-fsp_err_t R_SCI_B_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t const id)
+fsp_err_t R_SCI_B_LIN_Write (lin_ctrl_t * const p_api_ctrl, const lin_transfer_params_t * const p_transfer_params)
 {
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
-    fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
+    FSP_ASSERT(NULL != p_transfer_params);
+    fsp_err_t err = r_sci_b_lin_read_write_parameter_checking(p_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    /* Check ID is at most 6 bits */
-    FSP_ERROR_RETURN(0 == (id & 0xC0), FSP_ERR_INVALID_ARGUMENT);
-
-    /* Function only supported for master mode */
-    FSP_ERROR_RETURN(LIN_MODE_MASTER == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
-
-    /* If information buffer is still set, then a transmit/receive is already
-     * in progress and we don't want to overwrite the buffer pointer. */
-    FSP_ERROR_RETURN(NULL == p_ctrl->p_information, FSP_ERR_IN_USE);
 #endif
 
-    return r_sci_b_lin_start_frame_write(p_ctrl, id);
-}
-
-/*******************************************************************************************************************//**
- * Begins non-blocking transmission of a LIN information frame.
- *
- * On successful information frame transmission, the callback is called with event
- * @ref lin_event_t::LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE.
- *
- * Implements @ref lin_api_t::informationFrameWrite.
- *
- * Example:
- * @snippet r_sci_b_lin_example.c R_SCI_B_LIN_InformationFrameWrite
- *
- * @retval  FSP_SUCCESS              Data transmission started successfully.
- * @retval  FSP_ERR_NOT_OPEN         The control block has not been opened.
- * @retval  FSP_ERR_ASSERTION        Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided
- * @retval  FSP_ERR_IN_USE           A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort
- *                                   to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
- *
- * @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
- *                                   return codes.
- **********************************************************************************************************************/
-fsp_err_t R_SCI_B_LIN_InformationFrameWrite (lin_ctrl_t * const                  p_api_ctrl,
-                                             const lin_transfer_params_t * const p_transfer_params)
-{
-    sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
+    /* Send the header before the data in master mode only */
+    uint8_t send_header = LIN_MODE_MASTER == p_ctrl->p_cfg->mode;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
 
-    /* Common parameter checking */
-    fsp_err_t err = r_sci_b_lin_information_read_write_param_check(p_api_ctrl, p_transfer_params);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    /* Check ID is at most 6 bits (only for master header transmission) */
+    FSP_ERROR_RETURN((0 == (p_transfer_params->id & 0xC0)) || !send_header, FSP_ERR_INVALID_ARGUMENT);
+
+    /* Check p_data is not null in slave mode */
+    FSP_ASSERT(NULL != p_transfer_params->p_data || send_header);
 #endif
-    R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Disable transmit interrupts, reception interrupts, and transmission */
-    p_reg->CCR0 &=
-        (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_RIE_Msk | R_SCI_B0_CCR0_TE_Msk);
-
-    /* Wait until internal state of TE is 0 as it takes some time for the state to be reflected internally after
-     * rewriting the control register. Refer to "26.2.29 CESR : Communication Enable Status Register" description
-     * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
-    FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
-
-    /* Prepare the information frame transmission state. */
-    p_ctrl->p_information = p_transfer_params->p_information;
-    p_ctrl->tx_src_bytes  = p_transfer_params->num_bytes;
-    p_ctrl->event         = LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE;
-
-#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
-    if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
-    {
-        /* If checksum generation is enabled, calculate the checksum */
-        p_ctrl->last_tx_byte = r_sci_b_lin_checksum_calculate(p_transfer_params->id,
-                                                              p_transfer_params->p_information,
-                                                              p_transfer_params->num_bytes,
-                                                              p_transfer_params->checksum_type);
-        p_ctrl->tx_src_bytes++;
-    }
-    else
-#endif
-    {
-        /* User requested not to append checksum. Therefore either we are not using a checksum,
-         * or we are using a custom checksum. Copy last byte into 'tx_checksum' field.
-         * From txi_isr perspective, last byte is always read from tx_checksum, regardless of
-         * whether that byte represents a literal checksum. */
-        p_ctrl->last_tx_byte = p_transfer_params->p_information[p_transfer_params->num_bytes - 1];
-    }
-
-    /* Clear flags */
-    r_sci_b_lin_flags_clear(p_ctrl->p_reg, SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS, SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS);
-
-    /* Enable transmit interrupt to start transmission. Setting TE and TIE together causes a
-     * TXI interrupt which will kick of transmission of the first byte. */
-    p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk);
-
-    return FSP_SUCCESS;
+    return r_sci_b_lin_write(p_ctrl, p_transfer_params, send_header);
 }
 
 /*******************************************************************************************************************//**
- * Begins non-blocking information frame reception to receive user specified number of bytes into destination buffer pointer.
+ * Begins non-blocking data reception to receive user specified number of bytes into destination buffer pointer.
  *
  * The checksum type specifies the checksum type used for validation. If a non-standard algorithm is used,
  * or the application prefers to validate the checksum outside the driver, or the application prefers
  * to skip checksum validation, specify @ref lin_checksum_type_t::LIN_CHECKSUM_TYPE_NONE. If checksum
  * validation is skipped, the @ref lin_checksum_type_t::LIN_EVENT_ERR_INVALID_CHECKSUM event is not possible.
  * When  @ref lin_checksum_type_t::LIN_CHECKSUM_TYPE_NONE is used, the number of bytes specified in the receive
- * buffer length will be received  (the driver will not expect to receive an additional 1 checksum byte), so
- * if a non-standard checksum is used,  sufficient space must be allocated in the write buffer and accounted for
+ * buffer length will be received (the driver will not expect to receive an additional 1 checksum byte), so
+ * if a non-standard checksum is used, sufficient space must be allocated in the write buffer and accounted for
  * in the provided length.
  *
- * On successful information frame reception, the callback is called with event @ref lin_event_t::LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE.
+ * On successful data reception completion, the callback is called with event @ref lin_event_t::LIN_EVENT_RX_DATA_COMPLETE.
  *
- * Implements @ref lin_api_t::informationFrameRead.
+ * Implements @ref lin_api_t::read.
  *
  * Example:
- * @snippet r_sci_b_lin_example.c R_SCI_B_LIN_InformationFrameRead
+ * @snippet r_sci_b_lin_example.c R_SCI_B_LIN_Read
  *
  * @retval  FSP_SUCCESS              Data reception started successfully.
  * @retval  FSP_ERR_NOT_OPEN         The control block has not been opened.
  * @retval  FSP_ERR_ASSERTION        Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided
- * @retval  FSP_ERR_IN_USE           A transmission or reception is currently in progress. Call R_SCI_B_LIN_CommunicationAbort
+ * @retval  FSP_ERR_IN_USE           A transmission or reception is currently in progress. Call @ref R_SCI_B_LIN_CommunicationAbort
  *                                   to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
  * @retval  FSP_ERR_INVALID_CALL     Data reception is not possible because a header frame has not been received yet (slave mode only).
  *
  *  @return                           See @ref RENESAS_ERROR_CODES or functions called by this function for other possible
  *                                   return codes.
  **********************************************************************************************************************/
-fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ctrl,
-                                            lin_transfer_params_t * const p_transfer_params)
+fsp_err_t R_SCI_B_LIN_Read (lin_ctrl_t * const p_api_ctrl, lin_transfer_params_t * const p_transfer_params)
 {
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
 
 #if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
-    fsp_err_t err = r_sci_b_lin_information_read_write_param_check(p_api_ctrl, p_transfer_params);
+    fsp_err_t err = r_sci_b_lin_read_write_parameter_checking(p_api_ctrl, p_transfer_params);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    FSP_ASSERT(NULL != p_transfer_params->p_data);
 #endif
 
     R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
@@ -511,18 +440,19 @@ fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_
     p_reg->CCR0_b.RIE = 0;
 
     /* Prepare receive state */
-    p_ctrl->p_information     = p_transfer_params->p_information;
+    p_ctrl->p_data            = p_transfer_params->p_data;
     p_ctrl->rx_bytes_expected = p_transfer_params->num_bytes;
     p_ctrl->rx_bytes_received = 0;
+    p_ctrl->checksum          = 0;
+
 #if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
-    p_ctrl->rx_checksum       = 0;
     p_ctrl->validate_checksum = p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE;
 
     /* Initialize checksum tracking fields */
     if (p_ctrl->validate_checksum)
     {
         p_ctrl->rx_bytes_expected++;
-        p_ctrl->rx_checksum = r_sci_b_lin_checksum_initialize(p_transfer_params->id, p_transfer_params->checksum_type);
+        p_ctrl->checksum = r_sci_b_lin_checksum_initialize(p_transfer_params->id, p_transfer_params->checksum_type);
     }
 #endif
 
@@ -534,8 +464,8 @@ fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_
 }
 
 /*******************************************************************************************************************//**
- * Cancels in progress information frame read or write, or start frame read or write. Break field reception cannot be
- * cancelled. For slave nodes, reception of a new start frame reception is still enabled after a call to this function.
+ * Cancels in progress data read or write, or header read or write. Break field reception cannot be
+ * cancelled. For slave nodes, reception of a new header is still enabled after a call to this function.
  *
  * Implements @ref lin_api_t::communicationAbort.
  *
@@ -566,18 +496,19 @@ fsp_err_t R_SCI_B_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
      * for the MCU being used  */
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
-    /* Cancel information frame or start frame write */
-    p_ctrl->tx_src_bytes = 0U;
+    /* Cancel data or header write */
+    p_ctrl->tx_src_bytes    = 0U;
+    p_ctrl->tx_header_bytes = 0U;
 
-    /* Cancel information frame read */
+    /* Cancel data read */
     p_ctrl->rx_bytes_expected = 0U;
 
-    /* Reset information buffer pointer */
-    p_ctrl->p_information = NULL;
+    /* Reset data buffer pointer */
+    p_ctrl->p_data = NULL;
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
-    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    /* Reset bit rate measurement hardware state in preparation to receive next header (slave only) */
     r_sci_b_lin_aed_reset(p_ctrl);
 #endif
 
@@ -599,7 +530,7 @@ fsp_err_t R_SCI_B_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_SCI_B_LIN_CallbackSet (lin_ctrl_t * const          p_api_ctrl,
                                    void (                    * p_callback)(lin_callback_args_t *),
-                                   void const * const          p_context,
+                                   void * const                p_context,
                                    lin_callback_args_t * const p_callback_memory)
 {
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
@@ -652,6 +583,9 @@ fsp_err_t R_SCI_B_LIN_CallbackSet (lin_ctrl_t * const          p_api_ctrl,
  * The baud rate cannot be updated at runtime with this function. This function is provided to ease configuration of
  * the initial baud settings.
  *
+ * @note The parameter p_baud_setting->bus_conflict_clock is deprecated and is not used to determine
+ * the baud rate settings. See Usage Notes for a description of how to select the bus conflict clock divider.
+ *
  * @param[in]  p_baud_params         Parameters required to calculate the baud rate
  * @param[out] p_baud_setting        If calculation succeeds, contains computed values to achieve requested baud rate.
  *                                   If calculation fails, the input structure is not modified.
@@ -676,7 +610,11 @@ fsp_err_t R_SCI_B_LIN_BaudCalculate (sci_b_lin_baud_params_t const * const p_bau
     /* Use temp variable in order to not update output arg unless both baud and timer calculations succeed */
     sci_b_lin_baud_setting_t tmp_baud_setting;
 
-    err = r_sci_b_lin_baud_setting_calculate(p_baud_params, &tmp_baud_setting);
+    err =
+        r_sci_b_lin_baud_setting_calculate(p_baud_params,
+                                           SCI_B_LIN_BASE_CLOCK_AUTO_CYCLES_PER_BIT,
+                                           false,
+                                           &tmp_baud_setting);
 
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
@@ -692,8 +630,8 @@ fsp_err_t R_SCI_B_LIN_BaudCalculate (sci_b_lin_baud_params_t const * const p_bau
 /*******************************************************************************************************************//**
  * Set the the ID filter settings for filtering control field 1 (PID byte).
  *
- * NOTE: Setting the ID filter will abort any in-progress LIN start frame reception, as the ID filter
- * settings cannot be changed during reception of the start frame. The next start frame will be received with the
+ * NOTE: Setting the ID filter will abort any in-progress LIN header reception, as the ID filter
+ * settings cannot be changed during reception of the header. The next header will be received with the
  * new settings.
  *
  * @snippet r_sci_b_lin_example.c R_SCI_B_LIN_IdFilterSet
@@ -726,7 +664,7 @@ fsp_err_t R_SCI_B_LIN_IdFilterSet (lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_f
 
     R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Disable start frame reception. See Note 3 in "26.2.14 XCR0 : Simple LIN Control Register 0" R01UH0951EJ0130.
+    /* Disable header reception. See Note 3 in "26.2.14 XCR0 : Simple LIN Control Register 0" R01UH0951EJ0130.
      * XCR0.PIBS, XCR0.PIBE, and XCR0.CF1DS can be rewritten only when Start Frame reception or transmission is not
      * in progress (XCR1.SDST = 0 and XCR1.TCST = 0) */
     p_reg->XCR1 &= (uint32_t) ~(R_SCI_B0_XCR1_SDST_Msk | R_SCI_B0_XCR1_TCST_Msk);
@@ -743,7 +681,7 @@ fsp_err_t R_SCI_B_LIN_IdFilterSet (lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_f
     /* Apply new filter settings */
     r_sci_b_lin_filter_settings_configure(&xcr0, &xcr1, p_config);
 
-    /* Apply new settings and reenable start frame reception (TCST should never be set in slave mode) */
+    /* Apply new settings and reenable header reception (TCST should never be set in slave mode) */
     p_reg->XCR0 = xcr0;
     p_reg->XCR1 = xcr1 | R_SCI_B0_XCR1_SDST_Msk;
 
@@ -880,6 +818,66 @@ fsp_err_t R_SCI_B_LIN_Close (lin_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SCI_B_LIN_Read.
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_B_LIN_InformationFrameRead (lin_ctrl_t * const            p_api_ctrl,
+                                            lin_transfer_params_t * const p_transfer_params)
+{
+    return R_SCI_B_LIN_Read(p_api_ctrl, p_transfer_params);
+}
+
+/*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SCI_B_LIN_Write
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_B_LIN_StartFrameWrite (lin_ctrl_t * const p_api_ctrl, uint8_t const id)
+{
+    lin_transfer_params_t params =
+    {
+        .id            = id,
+        .p_data        = NULL,
+        .num_bytes     = 0,
+        .checksum_type = LIN_CHECKSUM_TYPE_NONE
+    };
+
+#if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
+    sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) p_api_ctrl;
+
+    fsp_err_t err = r_sci_b_lin_read_write_parameter_checking(p_ctrl, &params);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Check ID is at most 6 bits */
+    FSP_ERROR_RETURN(0 == (id & 0xC0), FSP_ERR_INVALID_ARGUMENT);
+
+    /* Function only supported for master mode */
+    FSP_ERROR_RETURN(LIN_MODE_MASTER == p_ctrl->p_cfg->mode, FSP_ERR_INVALID_MODE);
+#endif
+
+    return r_sci_b_lin_write(p_api_ctrl, &params, true);
+}
+
+/*******************************************************************************************************************//**
+ * [DEPRECATED] Use @ref R_SCI_B_LIN_Write
+ *
+ * @return      See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes.
+ **********************************************************************************************************************/
+fsp_err_t R_SCI_B_LIN_InformationFrameWrite (lin_ctrl_t * const                  p_api_ctrl,
+                                             const lin_transfer_params_t * const p_transfer_params)
+{
+#if SCI_B_LIN_CFG_PARAM_CHECKING_ENABLE
+    fsp_err_t err = r_sci_b_lin_read_write_parameter_checking((sci_b_lin_instance_ctrl_t *) p_api_ctrl,
+                                                              p_transfer_params);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+    FSP_ASSERT(NULL != p_transfer_params->p_data);
+#endif
+
+    return r_sci_b_lin_write(p_api_ctrl, p_transfer_params, false);
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup SCI_B_LIN)
  **********************************************************************************************************************/
 
@@ -908,9 +906,9 @@ static fsp_err_t r_sci_b_lin_common_parameter_checking (sci_b_lin_instance_ctrl_
 }
 
 /*******************************************************************************************************************//**
- * Parameter error check function for informationFrameWrite and informationFrameRead
+ * Parameter error check function for R_SCI_B_LIN_Write and R_SCI_B_LIN_Read
  *
- * @param[in] p_ctrl Pointer to the control block for the channel
+ * @param[in] p_ctrl             Pointer to the control block for the channel
  * @param[in] p_transfer_params  Pointer to the transfer parameters for the transfer
  *
  * @retval  FSP_SUCCESS              No parameter error found
@@ -919,23 +917,24 @@ static fsp_err_t r_sci_b_lin_common_parameter_checking (sci_b_lin_instance_ctrl_
  *                                   to cancel it if desired, or wait for the current transfer operation to complete before starting a new one.
  * @retval  FSP_ERR_ASSERTION        Pointer to LIN control block, transfer parameters, or tx/rx buffer is NULL, or 0 bytes length provided
  **********************************************************************************************************************/
-static fsp_err_t r_sci_b_lin_information_read_write_param_check (sci_b_lin_instance_ctrl_t const * const p_ctrl,
-                                                                 lin_transfer_params_t const * const     p_transfer_params)
+static fsp_err_t r_sci_b_lin_read_write_parameter_checking (sci_b_lin_instance_ctrl_t const * const p_ctrl,
+                                                            lin_transfer_params_t const * const     p_transfer_params)
 {
     fsp_err_t err = r_sci_b_lin_common_parameter_checking(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     FSP_ASSERT(NULL != p_transfer_params);
-    FSP_ASSERT(NULL != p_transfer_params->p_information);
-    FSP_ASSERT(0U != p_transfer_params->num_bytes);
 
-    if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
+    /* Number of bytes and checksum parameters are only checked for data transfers */
+    if (NULL != p_transfer_params->p_data)
     {
-        FSP_ASSERT(p_transfer_params->num_bytes < UINT8_MAX);
+        FSP_ASSERT(p_transfer_params->num_bytes > 0);
+        FSP_ASSERT(((p_transfer_params->num_bytes < UINT8_MAX) ||
+                    (LIN_CHECKSUM_TYPE_NONE == p_transfer_params->checksum_type)));
     }
 
-    /* If information buffer is still set, then a transmit/receive is already
-     * in progress and we don't want to overwrite the buffer pointer. */
-    FSP_ERROR_RETURN(NULL == p_ctrl->p_information, FSP_ERR_IN_USE);
+    /* Check that a header transmission, data transmission, or data reception is not currently in progress */
+    FSP_ERROR_RETURN((0 == p_ctrl->tx_header_bytes) && (0 == p_ctrl->tx_src_bytes) && (0 == p_ctrl->rx_bytes_expected),
+                     FSP_ERR_IN_USE);
 
     return FSP_SUCCESS;
 }
@@ -985,25 +984,49 @@ static uint32_t r_sci_b_lin_timer_freq_get (sci_b_lin_clock_source_t  clock_sour
 /*******************************************************************************************************************//**
  * Calculates the baud rate register settings
  *
- * @param[in] p_baud_params    Function inputs required to calculate the baud rate
- * @param[out] p_baud_setting  Baud rate calculation result
+ * @param[in]  p_baud_params                 Function inputs required to calculate the baud rate
+ * @param      base_clock_cycles_per_bit     Desired ABCS setting
+ * @param      check_bus_conflict_divider    True if the bus conflict divider should be checked before selecting ABCS settings,
+ *                                           since some combinations of bus conflict divider/ABCS are not allowed.
+ * @param[out] p_baud_setting                Baud rate calculation result
+ *
+ * @note   ABCS controls the SCI_B base clock frequency (BGDM/ABCSE are not used). This frequency is relevant when setting
+ *         bus conflict and noise cancellation dividers. When this function is called from R_SCI_B_LIN_BaudCalculate, all
+ *         ABCS values are checked, and the one that would produce a valid baud rate with the lowest error is selected.
+ *         When this function is called for runtime baudrate change during slave synchronization, ABCS may be fixed to
+ *         a specific value to avoid bus conflict/noise cancellation clock dividers being incorrect after the sync.
  *
  * @retval  FSP_SUCCESS                 Calculation succeeded
  * @retval  FSP_ERR_INVALID_ARGUMENT    Calculation failed/register settings not possible
  ***********************************************************************************************************************/
 static fsp_err_t r_sci_b_lin_baud_setting_calculate (sci_b_lin_baud_params_t const * const p_baud_params,
+                                                     sci_b_lin_base_clock_t                base_clock_cycles_per_bit,
+                                                     bool                                  check_bus_conflict_divider,
                                                      sci_b_lin_baud_setting_t * const      p_baud_setting)
 {
     uint32_t freq_hz = r_sci_b_lin_clock_freq_get(p_baud_params->clock_source);
     uint32_t divisor = 0;
     uint32_t divisor_shift;
-    uint32_t brr = 0;
-    int32_t  cks = -1;
     int32_t  abcs;
+    uint32_t brr      = 0;
+    int32_t  cks      = -1;
+    int32_t  abcs_min = (int32_t) base_clock_cycles_per_bit;
+    int32_t  abcs_max = (int32_t) base_clock_cycles_per_bit;
 
-    /* It is prohibited to set BCCS[1:0] = 1x when CCR2.ABCS = 1. Skip trying ABCS = 1 in this case. Initialize
-     * outside of loop to avoid checking this condition on every iteration of the inner loop. */
-    int32_t abcs_init = SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_4 != p_baud_params->bus_conflict_clock;
+    if (SCI_B_LIN_BASE_CLOCK_AUTO_CYCLES_PER_BIT == base_clock_cycles_per_bit)
+    {
+        /* If we are auto-selecting the best value, then the min value to check is 0 (16 cycles per bit)
+         * and the max value is 1 (8 cycles per bit). If we are using a fixed value, the min and max values
+         * to check are the fixed value itself. But it is prohibited to set BCCS[1:0] = 1x when CCR2.ABCS = 1 (8 cycles).
+         * This only needs to be checked in auto select mode for slave auto sync adjustment because it will already
+         * have been checked in open parameter checking for a fixed base clock cycles value */
+        bool bus_conflict_divider_restriction = check_bus_conflict_divider &&
+                                                (p_baud_params->bus_conflict_clock & 0x02);
+        abcs_min = SCI_B_LIN_BASE_CLOCK_16_CYCLES_PER_BIT;
+        abcs_max =
+            bus_conflict_divider_restriction ? SCI_B_LIN_BASE_CLOCK_16_CYCLES_PER_BIT :
+            SCI_B_LIN_BASE_CLOCK_8_CYCLES_PER_BIT;
+    }
 
     /* BRR is calculated by testing whether each divisor (combination of ABCS, CKS, and N) produces a valid BRR setting.
      * The divisors are checked in order, from smallest to largest. Since the smallest divisor always produces the lowest
@@ -1012,7 +1035,10 @@ static fsp_err_t r_sci_b_lin_baud_setting_calculate (sci_b_lin_baud_params_t con
     for (uint32_t i = 0; i <= SCI_B_LIN_CKS_MAX; i++)
     {
         cks++;
-        for (abcs = abcs_init; abcs >= 0; abcs--)
+
+        /* Count down from max because a higher abcs value produces
+         * a smaller divisor (and thus results in lower error) for a given cks. */
+        for (abcs = abcs_max; abcs >= abcs_min; abcs--)
         {
             divisor_shift = SCI_B_LIN_MIN_BAUD_DIVISOR_SHIFT + ((uint32_t) cks << 1U) - (uint32_t) abcs;
             divisor       = (1U << divisor_shift) * p_baud_params->baudrate;
@@ -1160,18 +1186,18 @@ static uint8_t r_sci_b_lin_checksum_initialize (uint8_t id, lin_checksum_type_t 
 #if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
- * Calculates the LIN checksum on information frame data to be transmitted. For received frames,
+ * Calculates the LIN checksum on data to be transmitted. For received frames,
  * the checksum is calculated incrementally with each byte.
  *
  * @param[in] id             LIN unprotected frame identifier.
- * @param[in] p_information  Pointer to information frame data.
- * @param[in] num_bytes      Information frame data length.
+ * @param[in] p_data         Pointer to data.
+ * @param[in] num_bytes      Data frame data length.
  * @param[in] checksum_type  Checksum type (classic or enhanced). Frame ID 0x3C and 0x3D always use classic checksum.
  *
  * @retval                   LIN checksum result
  **********************************************************************************************************************/
 static uint8_t r_sci_b_lin_checksum_calculate (uint8_t               id,
-                                               uint8_t const * const p_information,
+                                               uint8_t const * const p_data,
                                                uint8_t               num_bytes,
                                                lin_checksum_type_t   checksum_type)
 {
@@ -1179,7 +1205,7 @@ static uint8_t r_sci_b_lin_checksum_calculate (uint8_t               id,
 
     for (uint8_t i = 0; i < num_bytes; i++)
     {
-        checksum = r_sci_b_lin_checksum_add_byte_to_sum(p_information[i], checksum);
+        checksum = r_sci_b_lin_checksum_add_byte_to_sum(p_data[i], checksum);
     }
 
     return (uint8_t) ~checksum;
@@ -1217,7 +1243,12 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     {
         xcr0 = SCI_B_LIN_XCR0_MASK_SLAVE;
         xcr1 = SCI_B_LIN_XCR1_MASK_SLAVE;
-        xcr2 = SCI_B_LIN_XCR2_MASK_SLAVE;
+
+        /* Check all bits of CF0 when auto sync is disabled. When enabled, only check the bits received after synchronization. */
+        uint32_t cf0ce =
+            (UINT8_MAX << (p_extend->sci_b_settings_b.auto_synchronization * (uint8_t) SCI_B_LIN_SYNC_EDGES)) &
+            UINT8_MAX;
+        xcr2 = SCI_B_LIN_XCR2_MASK_SLAVE | (cf0ce << R_SCI_B0_XCR2_CF0CE_Pos);
     }
     else
     {
@@ -1258,8 +1289,8 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     uint32_t ccr2 = p_extend->baud_setting.baudrate_bits;
 
     /* Apply noise filter setting. */
-    uint32_t ccr1 = SCI_B_LIN_CCR1_NOISE_FILTER_CLOCK;
-    ccr1 |= ((uint32_t) p_extend->sci_b_settings_b.noise_cancel << R_SCI_B0_CCR1_NFEN_Pos);
+    uint32_t ccr1 = (uint32_t) p_extend->sci_b_settings_b.noise_cancel_clock << R_SCI_B0_CCR1_NFCS_Pos;
+    ccr1 |= (uint32_t) p_extend->sci_b_settings_b.noise_cancel << R_SCI_B0_CCR1_NFEN_Pos;
 
     /* Write the settings to the SCI. Do not write XCR1 settings yet, they
      * must be set only after initializing the SCI CCRn registers according
@@ -1288,9 +1319,9 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.RIST, 1U);
 
     /* Disable reception interrupts. Reception interrupts are re-enabled on break field detection or a call
-     * to R_SCI_B_LIN_InformationFrameRead. RE must remain enabled to keep the clock to the noise filter circuit
+     * to R_SCI_B_LIN_Read. RE must remain enabled to keep the clock to the noise filter circuit
      * enabled when the noise cancellation filter is used, as the noise filter circuit requires a clock for the SCI
-     * to be able to detect the break field at RXDn. */
+     * to be able to detect the break field at RXDn. RE also needs to be enabled for the bus collision detection function. */
     p_reg->CCR0_b.RIE = 0;
 
     /* XCR1 settings should be applied after the SCI core settings have been made. */
@@ -1430,56 +1461,102 @@ static void r_sci_b_lin_irqs_enable_disable (sci_b_lin_instance_ctrl_t * const p
 }
 
 /*******************************************************************************************************************//**
- * Transmit the LIN start frame
+ * Transmit the LIN frame
+ *
+ * Header frame transmission is based on flow chart process in Figure 26.101 "Start Frame Transmission Flowchart Example"
+ * in R01UH0951EJ0130 manual. Initial settings of XCR0 and XCR2 have already been made in open.
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
- * @param[in]  id                        Unprotected frame identifier
+ * @param[in]  p_transfer_params         Pointer to the transfer parameters for the transfer
+ * @param[in]  send_header               Set to true if the LIN header should be transmitted before the frame data (master mode only)
  *
- * @retval     FSP_SUCCESS               Frame transmission started successfully
+ * @retval     FSP_SUCCESS               Transmission started successfully
  **********************************************************************************************************************/
-static fsp_err_t r_sci_b_lin_start_frame_write (sci_b_lin_instance_ctrl_t * const p_ctrl, uint8_t const id)
+static fsp_err_t r_sci_b_lin_write (sci_b_lin_instance_ctrl_t * const   p_ctrl,
+                                    const lin_transfer_params_t * const p_transfer_params,
+                                    uint8_t const                       send_header)
 {
     R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
     /* Stop any in-progress break field transmission */
     p_reg->XCR1_b.TCST = 0;
 
-    /* Begin start frame transmission according to flow chart process in Figure 26.101
-     *"Start Frame Transmission Flowchart Example" in R01UH0951EJ0130 manual. Initial settings
-     * of XCR0 and XCR2 have already been made in open. */
-
-    /* Set SCI common settings. Disable transmit interrupts before writing to transmission state.
-     * Also disable reception interrupts. */
+    /* Disable transmit interrupts, reception interrupts, and transmission */
     p_reg->CCR0 &=
-        (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_RIE_Msk);
+        (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_RIE_Msk | R_SCI_B0_CCR0_TE_Msk);
 
-    /* Prepare the start frame transmission state */
-    p_ctrl->last_tx_byte  = r_sci_b_lin_pid_calculate(id);
-    p_ctrl->p_information = (uint8_t *) &g_start_frame_sync_word;
-    p_ctrl->event         = LIN_EVENT_TX_START_FRAME_COMPLETE;
-    p_ctrl->tx_src_bytes  = SCI_B_LIN_START_FRAME_NUM_BYTES;
+    /* Wait until internal state of TE is 0 as it takes some time for the state to be reflected internally after
+     * rewriting the control register. Refer to "26.2.29 CESR : Communication Enable Status Register" description
+     * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
+    FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
-    /* Save the PID of the last attempted transmit */
-    p_ctrl->last_pid = p_ctrl->last_tx_byte;
+    /* Prepare the data transmission state. */
+    p_ctrl->p_data       = p_transfer_params->p_data;
+    p_ctrl->tx_src_bytes = 0;
+    p_ctrl->event        = LIN_EVENT_NONE;
+    p_ctrl->checksum     = 0;
 
-    /* Ensure transmission is enabled. Do not set CCR0.TE and TIE to 1 at the same time to
-     * avoid SCIn_TXI output before the Break Field */
-    p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk);
+    if (p_transfer_params->p_data)
+    {
+        p_ctrl->tx_src_bytes = p_transfer_params->num_bytes;
 
-    /* Wait until internal state of TE is 1 as it takes some time for the state to be reflected
-     * internally after rewriting the control register. Refer to "26.2.29 CESR : Communication
-     * Enable Status Register" description in the RA6T2 manual R01UH0951EJ0100.  */
-    FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 1U);
+#if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
+        if (p_transfer_params->checksum_type != LIN_CHECKSUM_TYPE_NONE)
+        {
+            /* If checksum generation is enabled, calculate the checksum */
+            p_ctrl->checksum = r_sci_b_lin_checksum_calculate(p_transfer_params->id,
+                                                              p_transfer_params->p_data,
+                                                              p_transfer_params->num_bytes,
+                                                              p_transfer_params->checksum_type);
+            p_ctrl->tx_src_bytes++;
+        }
+        else
+#endif
+        {
+            /* User requested not to append checksum. Therefore either we are not using a checksum,
+             * or we are using a custom checksum. Copy last byte into 'checksum' field.
+             * From txi_isr perspective, last byte is always read from checksum, regardless of
+             * whether that byte represents a literal checksum. */
+            p_ctrl->checksum = p_transfer_params->p_data[p_transfer_params->num_bytes - 1];
+        }
+    }
 
-    /* Enable transmit interrupt. Because BFOIE was set during SCI initialization,
-     * a SCIn_TXI interrupt will be generated when break field output is complete */
-    p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TIE_Msk);
+    if (send_header)
+    {
+        /* Set number of header bytes remaining to transmit */
+        p_ctrl->tx_header_bytes = SCI_B_LIN_HEADER_NUM_BYTES;
 
-    /* Clear flags */
-    r_sci_b_lin_flags_clear(p_reg, SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS, SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS);
+        /* Save the PID of the last attempted transmit */
+        p_ctrl->last_pid = r_sci_b_lin_pid_calculate(p_transfer_params->id);
 
-    /* Start outputting break field. */
-    p_reg->XCR1_b.TCST = 1;
+        /* Ensure transmission is enabled. Do not set CCR0.TE and TIE to 1 at the same time to
+         * avoid SCIn_TXI output before the Break Field */
+        p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk);
+
+        /* Wait until internal state of TE is 1 as it takes some time for the state to be reflected
+         * internally after rewriting the control register. Refer to "26.2.29 CESR : Communication
+         * Enable Status Register" description in the RA6T2 manual R01UH0951EJ0100.  */
+        FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 1U);
+
+        /* Enable transmit interrupt. Because BFOIE was set during SCI initialization,
+         * a SCIn_TXI interrupt will be generated when break field output is complete */
+        p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TIE_Msk);
+
+        /* Clear flags */
+        r_sci_b_lin_flags_clear(p_reg, SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS, SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS);
+
+        /* Start outputting break field. */
+        p_reg->XCR1_b.TCST = 1;
+    }
+    else
+    {
+        /* Clear flags */
+        r_sci_b_lin_flags_clear(p_ctrl->p_reg, SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS, SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS);
+
+        /* Enable transmit interrupt to start transmission. Setting TE and TIE together causes a
+         * TXI interrupt which will kick of transmission of the first data byte. */
+        p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk);
+    }
 
     return FSP_SUCCESS;
 }
@@ -1506,15 +1583,17 @@ static void r_sci_b_lin_aed_synchronize (sci_b_lin_instance_ctrl_t * const p_ctr
     /* Calculate the baud rate from the measured bit time */
     uint32_t baudrate = (p_ctrl->timer_freq_hz * SCI_B_LIN_SYNC_EDGES) / p_ctrl->sync_bits_sum;
 
-    /* Compute new BFLW setting. TCSS cannot be updated during frame reception. */
+    /* Compute new BFLW setting. TCSS cannot be updated during reception. */
     uint32_t bflw_setting = (((p_ctrl->timer_freq_hz * (uint32_t) p_extend->break_bits) / baudrate) - 1UL);
     if (bflw_setting <= SCI_B_LIN_BFLW_MAX)
     {
         sci_b_lin_baud_params_t  baud_params = {baudrate, clock_source, bccs, p_extend->break_bits};
         sci_b_lin_baud_setting_t baud_setting;
+        sci_b_lin_base_clock_t   abcs = (sci_b_lin_base_clock_t) p_extend->sci_b_settings_b.base_clock_cycles_per_bit;
 
         /* Calculate new baud setting. Only update register settings if they are possible in the hardware */
-        if (FSP_SUCCESS == r_sci_b_lin_baud_setting_calculate(&baud_params, &baud_setting))
+        if (FSP_SUCCESS ==
+            r_sci_b_lin_baud_setting_calculate(&baud_params, abcs, false, &baud_setting))
         {
             /* Adjust new baud rate and BFLW setting.*/
             p_reg->XCR2_b.BFLW = (uint16_t) bflw_setting;
@@ -1575,7 +1654,7 @@ static lin_event_t r_sci_b_lin_eri_handler (sci_b_lin_instance_ctrl_t * const p_
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
-    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    /* Reset bit rate measurement hardware state in preparation to receive next header (slave only) */
     r_sci_b_lin_aed_reset(p_ctrl);
 #endif
 
@@ -1585,8 +1664,8 @@ static lin_event_t r_sci_b_lin_eri_handler (sci_b_lin_instance_ctrl_t * const p_
                                R_SCI_B0_CCR0_RIE_Msk);
 
     /* Determine cause of error. */
-    uint32_t    csr    = p_ctrl->p_reg->CSR;
     uint32_t    xsr    = p_ctrl->p_reg->XSR0;
+    uint32_t    csr    = p_ctrl->p_reg->CSR;
     lin_event_t events = (lin_event_t) ((csr & SCI_B_LIN_ERI_CSR_EVENTS_MASK) | (xsr & SCI_B_LIN_ERI_XSR_EVENTS_MASK));
 
     /* Clear error conditions and discard RDR data. */
@@ -1612,7 +1691,7 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
     /* Check if control field 0 was received*/
     if (xsr0 & R_SCI_B0_XSR0_CF0MF_Msk)
     {
-        /* Discard received data and clear the CF0 received flag to advance start frame reception state */
+        /* Discard received data and clear the CF0 received flag to advance header reception state */
         r_sci_b_lin_flags_clear(p_reg, R_SCI_B0_CFCLR_RDRFC_Msk, R_SCI_B0_XFCLR_CF0MC_Msk);
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
@@ -1627,14 +1706,14 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
     /* Check if control field 1 was received */
     else if (xsr0 & (R_SCI_B0_XSR0_CF1MF_Msk | R_SCI_B0_XSR0_PIBDF_Msk))
     {
-        /* Advance start frame reception state */
+        /* Advance header reception state */
         p_reg->XFCLR = R_SCI_B0_XFCLR_CF1MC_Msk | R_SCI_B0_XFCLR_PIBDC_Msk;
 
         /* Read the received data */
         uint8_t pid = p_reg->RDR_BY;
 
         /* Set the event to notify the application (slave node only). */
-        event = LIN_EVENT_RX_START_FRAME_COMPLETE;
+        event = LIN_EVENT_RX_HEADER_COMPLETE;
 
         /* Check parity */
         if (r_sci_b_lin_pid_calculate(pid) != pid)
@@ -1647,7 +1726,7 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
             p_ctrl->last_pid = pid;
         }
     }
-    /* Information frame byte */
+    /* Data frame byte */
     else if (p_ctrl->rx_bytes_expected > p_ctrl->rx_bytes_received)
     {
         uint8_t bytes_remaining = p_ctrl->rx_bytes_expected - p_ctrl->rx_bytes_received;
@@ -1658,39 +1737,39 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
         /* Check if this is the last byte in the transfer */
         if (1 == bytes_remaining)
         {
-            event = LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE;
+            event = LIN_EVENT_RX_DATA_COMPLETE;
 
 #if SCI_B_LIN_CHECKSUM_SUPPORT_ENABLE
 
             /* Perform checksum validation if requested */
             if (p_ctrl->validate_checksum)
             {
-                /* Validate checksum. At this point, p_ctrl->rx_checksum contains the checksum over the data bytes. */
-                if (((p_ctrl->rx_checksum + rx_byte)) != SCI_B_LIN_CHECKSUM_OK)
+                /* Validate checksum. At this point, p_ctrl->checksum contains the checksum over the data bytes. */
+                if (((p_ctrl->checksum + rx_byte)) != SCI_B_LIN_CHECKSUM_OK)
                 {
                     event = LIN_EVENT_ERR_INVALID_CHECKSUM;
                 }
 
                 /* Save the received checksum byte */
-                p_ctrl->rx_checksum = rx_byte;
+                p_ctrl->checksum = rx_byte;
             }
             else
 #endif
             {
                 /* Checksum validation skipped (nonstandard checksum or checksum not present).
                  * Store the received byte as data. */
-                *p_ctrl->p_information++ = rx_byte;
+                *p_ctrl->p_data++ = rx_byte;
                 p_ctrl->rx_bytes_received++;
             }
 
-            /* Information frame reception complete. Reset receive state and stop reception interrupts. */
+            /* Data reception complete. Reset receive state and stop reception interrupts. */
             p_ctrl->rx_bytes_expected = 0;
-            p_ctrl->p_information     = NULL;
+            p_ctrl->p_data            = NULL;
             p_reg->CCR0_b.RIE         = 0;
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
-            /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+            /* Reset bit rate measurement hardware state in preparation to receive next header (slave only) */
             r_sci_b_lin_aed_reset(p_ctrl);
 #endif
         }
@@ -1702,12 +1781,12 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
             /* Add the received byte to the running checksum */
             if (p_ctrl->validate_checksum)
             {
-                p_ctrl->rx_checksum = r_sci_b_lin_checksum_add_byte_to_sum(rx_byte, p_ctrl->rx_checksum);
+                p_ctrl->checksum = r_sci_b_lin_checksum_add_byte_to_sum(rx_byte, p_ctrl->checksum);
             }
 #endif
 
             /* Store the received byte */
-            *p_ctrl->p_information++ = rx_byte;
+            *p_ctrl->p_data++ = rx_byte;
             p_ctrl->rx_bytes_received++;
         }
     }
@@ -1723,7 +1802,7 @@ lin_event_t r_sci_b_lin_rxi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
-        /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+        /* Reset bit rate measurement hardware state in preparation to receive next header (slave only) */
         r_sci_b_lin_aed_reset(p_ctrl);
 #endif
     }
@@ -1748,33 +1827,52 @@ static void r_sci_b_lin_txi_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
          * while the Break Delimiter length is being counted, transmission  does not start until
          * the Break Delimiter length counting is completed.*/
         p_reg->XFCLR = R_SCI_B0_XFCLR_BFOC_Msk;
+
+        /* Clear framing error flag, as by definition, break field is a UART framing error */
+        r_sci_b_lin_flags_clear(p_reg, R_SCI_B0_CFCLR_FERC_Msk, 0);
     }
 
-    if (p_ctrl->tx_src_bytes > 0U)
+    if (p_ctrl->tx_header_bytes || p_ctrl->tx_src_bytes)
     {
-        /* Check if there is only 1 byte remaining to transmit */
-        if (1 == p_ctrl->tx_src_bytes)
+        /* Dummy read of RDR to prevent overrun errors during transmission. Although RIE is disabled
+         * and ERI will not fire for reception errors, if a bus collision error occurs, ERI will fire
+         * if BCDIE is set, and all current  errors will be reported (in addition to the bus collision).
+         * In this case, any reception flags caused by not servicing RDR are not meaningful, so read RDR
+         * to prevent these flags from getting set. */
+        (void) p_reg->RDR;
+
+        if (p_ctrl->tx_header_bytes)
         {
-            /* Write checksum byte (or PID byte, if this is a start frame) */
-            p_reg->TDR = p_ctrl->last_tx_byte;
+            /* Write the sync word if this is the first header byte. Otherwise, this is the second header byte (the PID). */
+            p_reg->TDR = (SCI_B_LIN_HEADER_NUM_BYTES == p_ctrl->tx_header_bytes) ?
+                         SCI_B_LIN_SYNC : p_ctrl->last_pid;
+
+            p_ctrl->event = LIN_EVENT_TX_HEADER_COMPLETE;
+            p_ctrl->tx_header_bytes--;
+        }
+        else if (1 < p_ctrl->tx_src_bytes)
+        {
+            /* Write next data byte */
+            p_reg->TDR = *p_ctrl->p_data++;
+            p_ctrl->tx_src_bytes--;
         }
         else
         {
-            /* Write next byte */
-            p_reg->TDR = *p_ctrl->p_information++;
+            /* Write checksum byte when there is only 1 data byte remaining to transmit */
+            p_reg->TDR           = p_ctrl->checksum;
+            p_ctrl->event        = LIN_EVENT_TX_DATA_COMPLETE;
+            p_ctrl->tx_src_bytes = 0;
         }
 
-        /* Update the driver state */
-        p_ctrl->tx_src_bytes--;
-    }
-    else
-    {
-        /* After all data has been transmitted, disable transmit interrupts and enable the transmit end interrupt. */
-        uint32_t ccr0_temp = p_reg->CCR0;
-        ccr0_temp            |= R_SCI_B0_CCR0_TEIE_Msk;
-        ccr0_temp            &= (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk);
-        p_reg->CCR0           = ccr0_temp;
-        p_ctrl->p_information = NULL;
+        if ((0 == p_ctrl->tx_header_bytes) && (0 == p_ctrl->tx_src_bytes))
+        {
+            /* After all data has been transmitted, disable transmit interrupts and enable the transmit end interrupt. */
+            uint32_t ccr0_temp = p_reg->CCR0;
+            ccr0_temp     |= R_SCI_B0_CCR0_TEIE_Msk;
+            ccr0_temp     &= (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk);
+            p_reg->CCR0    = ccr0_temp;
+            p_ctrl->p_data = NULL;
+        }
     }
 }
 
@@ -1821,7 +1919,7 @@ static void r_sci_b_lin_aed_reset (sci_b_lin_instance_ctrl_t * const p_ctrl)
         uint32_t xcr1_aed_stop   = xcr1 & (uint32_t) ~(R_SCI_B0_XCR1_SDST_Msk | R_SCI_B0_XCR1_BMEN_Msk);
         uint32_t xcr1_aed_resume = xcr1 | (R_SCI_B0_XCR1_SDST_Msk | R_SCI_B0_XCR1_BMEN_Msk);
 
-        /* Stop bit rate measurement and start frame reception */
+        /* Stop bit rate measurement and header reception */
         p_reg->XCR1 = xcr1_aed_stop;
 
         /* Reset bit rate measurement for next frame */
@@ -1889,10 +1987,10 @@ static void r_sci_b_lin_aed_handler (sci_b_lin_instance_ctrl_t * const p_ctrl)
          * measurement error. If there is a reception error, it will be caught and handled in
          * the ERI handler.
          *
-         * We do not set BMEN=0 here in case the measurement error is due to a new start frame
+         * We do not set BMEN=0 here in case the measurement error is due to a new header
          * started during the previous CF0 reception. The SCI supports detection of a new break
-         * field at any timing, including during reception of another start frame. Leaving BMEN
-         * enabled allows us to synchronize again with the new start frame in this scenario. In
+         * field at any timing, including during reception of another header. Leaving BMEN
+         * enabled allows us to synchronize again with the new header in this scenario. In
          * all other scenarios, BMEN will be set to 0 either in ERI (in case of error) or in RXI
          * (when CF0 is received) */
         p_ctrl->sync_bits_received = 0;
@@ -1931,7 +2029,7 @@ static void r_sci_b_lin_call_callback (sci_b_lin_instance_ctrl_t * p_ctrl, lin_e
     p_args->pid            = p_ctrl->last_pid;
     p_args->p_context      = p_ctrl->p_context;
     p_args->bytes_received = p_ctrl->rx_bytes_received;
-    p_args->checksum       = p_ctrl->rx_checksum;
+    p_args->checksum       = p_ctrl->checksum;
 
 #if BSP_TZ_SECURE_BUILD
 
@@ -2037,7 +2135,7 @@ void sci_b_lin_tei_isr (void)
 
 #if SCI_B_LIN_AUTO_SYNC_SUPPORT_ENABLE
 
-    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    /* Reset bit rate measurement hardware state in preparation to receive next header (slave only) */
     r_sci_b_lin_aed_reset(p_ctrl);
 #endif
 
@@ -2080,7 +2178,8 @@ void sci_b_lin_eri_isr (void)
     p_ctrl->rx_bytes_expected = 0;
     p_ctrl->rx_bytes_received = 0;
     p_ctrl->tx_src_bytes      = 0;
-    p_ctrl->p_information     = NULL;
+    p_ctrl->tx_header_bytes   = 0;
+    p_ctrl->p_data            = NULL;
     p_ctrl->event             = LIN_EVENT_NONE;
 
     /* Clear pending IRQ to make sure it doesn't fire again after exiting */

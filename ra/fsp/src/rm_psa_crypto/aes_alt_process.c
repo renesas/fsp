@@ -455,7 +455,7 @@ int mbedtls_internal_aes_encrypt (mbedtls_aes_context * ctx, const unsigned char
     BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     else if (ctx->nr == 12)
     {
-        err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, dummy_iv);
+        err = HW_SCE_Aes192EncryptDecryptInitSubAdaptor(&indata_key_type, &indata_cmd, ctx->buf, NULL, dummy_iv);
         if (err == FSP_SUCCESS)
         {
             HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
@@ -526,7 +526,12 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
+            err =
+                HW_SCE_Aes192EncryptDecryptInitSubAdaptor(&indata_key_type,
+                                                          &indata_cmd,
+                                                          ctx->buf,
+                                                          NULL,
+                                                          (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -725,7 +730,7 @@ int mbedtls_internal_aes_decrypt (mbedtls_aes_context * ctx, const unsigned char
     BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     else if (ctx->nr == 12)
     {
-        err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, dummy_iv);
+        err = HW_SCE_Aes192EncryptDecryptInitSubAdaptor(&indata_key_type, &indata_cmd, ctx->buf, NULL, dummy_iv);
         if (err == FSP_SUCCESS)
         {
             HW_SCE_Aes192EncryptDecryptUpdateSub((uint32_t *) &input[0], (uint32_t *) &output[0], SIZE_AES_BLOCK_WORDS);
@@ -797,7 +802,11 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes192EncryptDecryptInitSubAdaptor(&indata_key_type,
+                                                            &indata_cmd,
+                                                            ctx->buf,
+                                                            NULL,
+                                                            (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
@@ -991,7 +1000,11 @@ int mbedtls_internal_aes_encrypt_decrypt_ctr (mbedtls_aes_context * ctx,
     {
         if (SCE_MBEDTLS_CIPHER_OPERATION_STATE_INIT == ctx->state)
         {
-            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, ctx->buf, (uint32_t *) &iv[0]);
+            err = HW_SCE_Aes192EncryptDecryptInitSubAdaptor(&indata_key_type,
+                                                            &indata_cmd,
+                                                            ctx->buf,
+                                                            NULL,
+                                                            (uint32_t *) &iv[0]);
             if (FSP_SUCCESS != err)
             {
                 return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;

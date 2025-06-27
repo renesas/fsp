@@ -52,8 +52,8 @@ typedef enum e_rm_filex_levelx_nor_event
 /** Callback function parameter data */
 typedef struct st_rm_filex_levelx_nor_callback_args
 {
-    rm_filex_levelx_nor_event_t event;     ///< The event can be used to identify what caused the callback.
-    void const                * p_context; ///< Placeholder for user data
+    rm_filex_levelx_nor_event_t event; ///< The event can be used to identify what caused the callback.
+    void * p_context;                  ///< Placeholder for user data
 } rm_filex_levelx_nor_callback_args_t;
 
 /** FileX LevelX configuration */
@@ -64,7 +64,7 @@ typedef struct st_rm_filex_levelx_nor_cfg
     CHAR         * p_nor_flash_name;                                   ///< NOR Flash instance name
     fsp_err_t (* close)();                                             ///< Pointer to underlying driver close
     void (* p_callback)(rm_filex_levelx_nor_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                                            ///< Placeholder for user data
+    void * p_context;                                                  ///< Placeholder for user data
 } rm_filex_levelx_nor_cfg_t;
 
 /** FileX block media private control block. DO NOT MODIFY.  Initialization occurs when RM_FILEX_LEVELX_NOR_Open is called. */

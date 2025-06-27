@@ -253,7 +253,7 @@ typedef struct st_rm_mesh_sensor_cadence_status_info
 
     /**
      * APPLICATION NOTE:
-     * The Current Sensor Server Model implementation does not inherantly
+     * The Current Sensor Server Model implementation does not inherently
      * check for the time interval between two consecutive status messages.
      * The application layer which manages the data for the Sensor Server
      * Model holds the responsibility for interleaving consecutive status

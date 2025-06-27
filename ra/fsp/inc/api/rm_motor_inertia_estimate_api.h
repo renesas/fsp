@@ -72,7 +72,7 @@ typedef void motor_inertia_estimate_ctrl_t;
 /** Configuration parameters. */
 typedef struct st_motor_inertia_estimate_cfg
 {
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;             ///< Placeholder for user extension.
 } motor_inertia_estimate_cfg_t;
 

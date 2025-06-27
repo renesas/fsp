@@ -20,6 +20,7 @@
 #include "nx_crypto_ecdsa.h"
 #include "nx_crypto_ecdh.h"
 #include "nx_crypto_sha2.h"
+#include "nx_crypto_sha5.h"
 #include "nx_crypto_rsa.h"
 
 /*******************************************************************************************************************//**
@@ -85,6 +86,10 @@ UINT sce_nx_crypto_sha256_initialize(NX_CRYPTO_SHA256 * context, UINT algorithm)
 UINT sce_nx_crypto_sha256_update(NX_CRYPTO_SHA256 * context, UCHAR * input_ptr, UINT input_length);
 UINT sce_nx_crypto_sha256_digest_calculate(NX_CRYPTO_SHA256 * context, UCHAR * digest, UINT algorithm);
 
+UINT sce_nx_crypto_sha512_initialize(NX_CRYPTO_SHA512 * context, UINT algorithm);
+UINT sce_nx_crypto_sha512_update(NX_CRYPTO_SHA512 * context, UCHAR * input_ptr, UINT input_length);
+UINT sce_nx_crypto_sha512_digest_calculate(NX_CRYPTO_SHA512 * context, UCHAR * digest, UINT algorithm);
+
 /* AES */
 #define SCE_NX_CRYPTO_AES_KEY_SIZE_128_WRAPPED_WORDS    (9)
 #define SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS    (13)
@@ -135,22 +140,32 @@ UINT sce_nx_crypto_gcm_decrypt_update(NX_CRYPTO_AES * aes_ctx, UCHAR * input, UC
 UINT sce_nx_crypto_gcm_encrypt_calculate(NX_CRYPTO_AES * aes_ctx, UCHAR * bit_size, UINT icv_len, UCHAR * tag);
 UINT sce_nx_crypto_gcm_decrypt_calculate(NX_CRYPTO_AES * aes_ctx, UCHAR * bit_size, UINT icv_len, UCHAR * tag);
 
-UINT sce_nx_crypto_ccm_encrypt_init (NX_CRYPTO_AES * aes_ctx, 
-                                     VOID          * additional_data, 
-                                     UINT            additional_len,
-                                     UINT            length, 
-                                     UCHAR         * iv, 
-                                     USHORT          icv_len, 
-                                     USHORT          block_size);
-UINT sce_nx_crypto_ccm_encrypt_update (NX_CRYPTO_AES * aes_ctx, UCHAR * input, UCHAR * output, UINT length);
-UINT sce_nx_crypto_ccm_encrypt_final (NX_CRYPTO_AES * aes_ctx, UCHAR * output);
-UINT sce_nx_crypto_ccm_decrypt_init (NX_CRYPTO_AES * crypto_metadata, NX_CRYPTO_CCM * ccm_metadata,
-                                     VOID * additional_data, UINT additional_len,
-                                     UINT length, UCHAR * iv, USHORT icv_len, USHORT block_size);
-UINT sce_nx_crypto_ccm_decrypt_update (NX_CRYPTO_AES * crypto_metadata, UCHAR * input, UCHAR * output,
-                                       UINT length, UINT block_size);
-UINT sce_nx_crypto_ccm_decrypt_final (NX_CRYPTO_AES * crypto_metadata, NX_CRYPTO_CCM * ccm_metadata,
-                                      UCHAR * icv, UINT block_size);
+UINT sce_nx_crypto_ccm_encrypt_init(NX_CRYPTO_AES * aes_ctx,
+                                    VOID          * additional_data,
+                                    UINT            additional_len,
+                                    UINT            length,
+                                    UCHAR         * iv,
+                                    USHORT          icv_len,
+                                    USHORT          block_size);
+UINT sce_nx_crypto_ccm_encrypt_update(NX_CRYPTO_AES * aes_ctx, UCHAR * input, UCHAR * output, UINT length);
+UINT sce_nx_crypto_ccm_encrypt_final(NX_CRYPTO_AES * aes_ctx, UCHAR * output);
+UINT sce_nx_crypto_ccm_decrypt_init(NX_CRYPTO_AES * crypto_metadata,
+                                    NX_CRYPTO_CCM * ccm_metadata,
+                                    VOID          * additional_data,
+                                    UINT            additional_len,
+                                    UINT            length,
+                                    UCHAR         * iv,
+                                    USHORT          icv_len,
+                                    USHORT          block_size);
+UINT sce_nx_crypto_ccm_decrypt_update(NX_CRYPTO_AES * crypto_metadata,
+                                      UCHAR         * input,
+                                      UCHAR         * output,
+                                      UINT            length,
+                                      UINT            block_size);
+UINT sce_nx_crypto_ccm_decrypt_final(NX_CRYPTO_AES * crypto_metadata,
+                                     NX_CRYPTO_CCM * ccm_metadata,
+                                     UCHAR         * icv,
+                                     UINT            block_size);
 
 /* TRNG */
 int  rand(void);

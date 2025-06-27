@@ -126,7 +126,7 @@ typedef void flash_ctrl_t;
 typedef struct st_flash_user_cb_data
 {
     flash_event_t event;               ///< Event can be used to identify what caused the callback (flash ready or error).
-    void const  * p_context;           ///< Placeholder for user data.  Set in @ref flash_api_t::open function in::flash_cfg_t.
+    void        * p_context;           ///< Placeholder for user data.  Set in @ref flash_api_t::open function in::flash_cfg_t.
 } flash_callback_args_t;
 
 /** FLASH Configuration */
@@ -139,7 +139,7 @@ typedef struct st_flash_cfg
 
     /* Pointer to FLASH peripheral specific configuration */
     void const * p_extend;                               ///< FLASH hardware dependent configuration
-    void const * p_context;                              ///< Placeholder for user data.  Passed to user callback in @ref flash_callback_args_t.
+    void       * p_context;                              ///< Placeholder for user data.  Passed to user callback in @ref flash_callback_args_t.
     uint8_t      ipl;                                    ///< Flash ready interrupt priority
     IRQn_Type    irq;                                    ///< Flash ready interrupt number
     uint8_t      err_ipl;                                ///< Flash error interrupt priority (unused in r_flash_lp)
@@ -294,7 +294,7 @@ typedef struct st_flash_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(flash_ctrl_t * const p_ctrl, void (* p_callback)(flash_callback_args_t *),
-                              void const * const p_context, flash_callback_args_t * const p_callback_memory);
+                              void * const p_context, flash_callback_args_t * const p_callback_memory);
 
     /** Increment the selected anti-rollback counter.
      *

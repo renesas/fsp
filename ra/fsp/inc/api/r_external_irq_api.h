@@ -42,8 +42,8 @@ FSP_HEADER
 typedef struct st_external_irq_callback_args
 {
     /** Placeholder for user data. Set in @ref external_irq_api_t::open function in @ref external_irq_cfg_t. */
-    void const * p_context;
-    uint32_t     channel;              ///< The physical hardware channel that caused the interrupt.
+    void   * p_context;
+    uint32_t channel;                  ///< The physical hardware channel that caused the interrupt.
 } external_irq_callback_args_t;
 
 #ifndef BSP_OVERRIDE_EXTERNAL_IRQ_TRIGGER_T
@@ -76,18 +76,18 @@ typedef enum e_external_irq_clock_source_div
 /** User configuration structure, used in open function */
 typedef struct st_external_irq_cfg
 {
-    uint8_t                             channel;          ///< Hardware channel used.
-    uint8_t                             ipl;              ///< Interrupt priority
-    IRQn_Type                           irq;              ///< Interrupt number assigned to this instance
-    external_irq_trigger_t              trigger;          ///< Trigger setting.
-    external_irq_clock_source_div_t     clock_source_div; ///< Digital filter clock divisor setting.
-    bool                                filter_enable;    ///< Digital filter enable/disable selection.
+    uint8_t                         channel;          ///< Hardware channel used.
+    uint8_t                         ipl;              ///< Interrupt priority
+    IRQn_Type                       irq;              ///< Interrupt number assigned to this instance
+    external_irq_trigger_t          trigger;          ///< Trigger setting.
+    external_irq_clock_source_div_t clock_source_div; ///< Digital filter clock divisor setting.
+    bool filter_enable;                               ///< Digital filter enable/disable selection.
 
     /** Callback provided external input trigger occurs. */
     void (* p_callback)(external_irq_callback_args_t * p_args);
 
     /** Placeholder for user data.  Passed to the user callback in @ref external_irq_callback_args_t. */
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;             ///< External IRQ hardware dependent configuration.
 } external_irq_cfg_t;
 
@@ -127,7 +127,7 @@ typedef struct st_external_irq_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(external_irq_ctrl_t * const p_ctrl, void (* p_callback)(external_irq_callback_args_t *),
-                              void const * const p_context, external_irq_callback_args_t * const p_callback_memory);
+                              void * const p_context, external_irq_callback_args_t * const p_callback_memory);
 
     /** Allow driver to be reconfigured. May reduce power consumption.
      *

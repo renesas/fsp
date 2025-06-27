@@ -61,7 +61,7 @@ typedef void motor_position_ctrl_t;
 /** Configuration parameters. */
 typedef struct st_motor_position_cfg
 {
-    void const * p_context;            ///< Placeholder for user data.
+    void       * p_context;            ///< Placeholder for user data.
     void const * p_extend;
 } motor_position_cfg_t;
 
@@ -104,7 +104,7 @@ typedef struct st_motor_position_api
     /** Set (Input) Position reference into the Motor Position Module.
      *
      * @param[in]  p_ctrl                 Pointer to control structure.
-     * @param[in]  position_refernce_deg  Position reference [degree]
+     * @param[in]  position_reference_deg  Position reference [degree]
      */
     fsp_err_t (* positionReferenceSet)(motor_position_ctrl_t * const p_ctrl, int16_t const position_reference_deg);
 

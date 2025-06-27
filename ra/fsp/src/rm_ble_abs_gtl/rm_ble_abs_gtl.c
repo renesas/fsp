@@ -13,13 +13,30 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "fsp_common_api.h"
+#include "r_ble_gtl.h"
+#include "r_ble_gtl_security.h"
+#include "r_ble_gtl_storage.h"
 
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
 
 /* "BLE_ABS" in ASCII, used to determine if module is open. */
-#define BLE_ABS_OPEN    (0X00424C45ULL)
+#define BLE_ABS_OPEN                                 (0X00424C45ULL)
+
+/** add magic number value set */
+#define BLE_ABS_GAP_CONNECTION_CE_LENGTH             (0xFFFF)
+#define BLE_ABS_SET_PAIRING_MAXIMUM_LTK_SIZE         (0x10)
+#define BLE_ABS_SECURE_DATA_BOND_ADDRESS_FF          (0xFF)
+#define BLE_ABS_GAP_REMOTE_IRK_AA                    (0xAA)
+#define BLE_ABS_REMOTE_DEVICE_ADDRESS_55             (0x55)
+#define BLE_ABS_GAP_EVENT_CONNECTION_TIMEOUT_1000    (1000)
+
+/** scan interval for connection request with 1M & 2M PHY */
+#define BLE_ABS_CONN_SC_INTV_FAST                    (0x0060)
+
+/** scan window for connection request with 1M & 2M PHY */
+#define BLE_ABS_CONN_SC_WINDOW_FAST                  (0x0030)
 
 /* Advertising handles */
 typedef enum e_ble_abs_handle_type
@@ -45,6 +62,7 @@ typedef enum e_ble_abs_adv_status
 /* Scan status */
 typedef enum e_ble_abs_scan_status
 {
+    BLE_ABS_SCAN_STATUS_STOPPED    = 0x00000000, // Not Scanning
     BLE_ABS_SCAN_STATUS_FAST_START = 0x00000001, // Start fast scan
     BLE_ABS_SCAN_STATUS_SLOW_START = 0x00000002, // Start slow scan
 } ble_abs_scan_status_t;
@@ -69,6 +87,10 @@ typedef enum e_ble_abs_pv_status
 #define BLE_TIMER_INVALID_HDL          (0xFF)
 
 /***********************************************************************************************************************
+ * Extern variables
+ **********************************************************************************************************************/
+
+/***********************************************************************************************************************
  * Local Typedef definitions
  **********************************************************************************************************************/
 
@@ -83,6 +105,9 @@ static fsp_err_t ble_abs_advertising_report_handler(ble_abs_instance_ctrl_t * co
                                                     st_ble_evt_data_t             * p_event_data);
 
 static void ble_abs_gap_callback(uint16_t event_type, ble_status_t event_result, st_ble_evt_data_t * p_event_data);
+static void ble_abs_vendor_specific_callback(uint16_t               event_type,
+                                             ble_status_t           event_result,
+                                             st_ble_vs_evt_data_t * p_event_data);
 static void ble_abs_set_abs_callback(ble_abs_instance_ctrl_t * const            p_instance_ctrl,
                                      ble_gap_application_callback_t             gap_callback,
                                      ble_vendor_specific_application_callback_t vendor_specific_callback);
@@ -115,6 +140,10 @@ static void ble_abs_set_connection_advertising_interval(st_ble_gap_adv_param_t *
                                                         uint32_t                 fast_advertising_interval,
                                                         uint32_t                 slow_advertising_interval,
                                                         uint16_t                 fast_period);
+
+static void ble_abs_set_connection_parameter(ble_abs_connection_phy_parameter_t * p_abs_connection_parameter,
+                                             ble_gap_connection_phy_parameter_t * p_connection_phy_parameter,
+                                             ble_gap_connection_parameter_t     * p_connection_parameter);
 
 /* BLE ABS on BLE HAL API mapping for BLE ABS interface */
 const ble_abs_api_t g_ble_abs_on_ble =
@@ -181,6 +210,21 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
     p_instance_ctrl->p_cfg = p_cfg;
 
     ble_status = R_BLE_Open();
+    FSP_ERROR_RETURN(BLE_SUCCESS == ble_status, FSP_ERR_NOT_OPEN);
+
+    /* Set values from configuration */
+    st_ble_gap_pairing_param_t pairing_parameter;
+    pairing_parameter.iocap         = p_cfg->p_pairing_parameter->io_capabilitie_local_device;
+    pairing_parameter.mitm          = p_cfg->p_pairing_parameter->mitm_protection_policy;
+    pairing_parameter.bonding       = BLE_GAP_BONDING;
+    pairing_parameter.max_key_size  = BLE_ABS_SET_PAIRING_MAXIMUM_LTK_SIZE;
+    pairing_parameter.min_key_size  = p_cfg->p_pairing_parameter->maximum_key_size;
+    pairing_parameter.loc_key_dist  = p_cfg->p_pairing_parameter->local_key_distribute;
+    pairing_parameter.rem_key_dist  = p_cfg->p_pairing_parameter->remote_key_distribute;
+    pairing_parameter.key_notf      = BLE_GAP_SC_KEY_PRESS_NTF_NOT_SPRT;
+    pairing_parameter.sec_conn_only = p_cfg->p_pairing_parameter->secure_connection_only;
+
+    ble_status = R_BLE_GAP_SetPairingParams(&pairing_parameter);
     FSP_ERROR_RETURN(BLE_SUCCESS == ble_status, FSP_ERR_INVALID_MODE);
 
     ble_abs_set_abs_callback(p_instance_ctrl, p_cfg->gap_callback, p_cfg->vendor_specific_callback);
@@ -194,7 +238,7 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
 
     p_instance_ctrl->advertising_sets[0].advertising_status = 0;
 
-    p_instance_ctrl->abs_scan.scan_status    = 0;
+    p_instance_ctrl->abs_scan.scan_status    = BLE_ABS_SCAN_STATUS_STOPPED;
     p_instance_ctrl->connection_timer_handle = BLE_TIMER_INVALID_HDL;
     p_instance_ctrl->set_privacy_status      = 0;
 
@@ -243,6 +287,8 @@ fsp_err_t RM_BLE_ABS_Open (ble_abs_ctrl_t * const p_ctrl, ble_abs_cfg_t const * 
             }
         }
     }
+
+    FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_VS_Init(ble_abs_vendor_specific_callback), FSP_ERR_INVALID_ARGUMENT);
 
     p_instance_ctrl->open = BLE_ABS_OPEN;
 
@@ -374,7 +420,7 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
 
     if ((NULL != p_advertising_parameter->p_advertising_data) && (0 < p_advertising_parameter->advertising_data_length))
     {
-        /* Configure the GAP Advertisment Payload. */
+        /* Configure the GAP Advertisement Payload. */
         st_ble_gap_adv_data_t advertising_data = {0};
         advertising_data.data_type   = (uint8_t) (BLE_GAP_ADV_DATA_MODE);
         advertising_data.data_length = p_advertising_parameter->advertising_data_length;
@@ -393,10 +439,10 @@ fsp_err_t RM_BLE_ABS_StartLegacyAdvertising (ble_abs_ctrl_t * const             
         FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_SetAdvSresData(&advertising_data), FSP_ERR_INVALID_ARGUMENT);
     }
 
-    /* Start Legacy Advertisment. */
+    /* Start Legacy Advertisement. */
     FSP_ERROR_RETURN(BLE_SUCCESS == R_BLE_GAP_StartAdv(0, 0, 0), FSP_ERR_INVALID_ARGUMENT);
 
-    /* Set the internal status flags to indicate the advertisment mode. */
+    /* Set the internal status flags to indicate the advertisement mode. */
     uint32_t status =
         p_advertising_parameter->fast_advertising_period ? BLE_ABS_ADV_STATUS_PARAM_FAST : BLE_ABS_ADV_STATUS_PARAM_SLOW;
     ble_abs_set_advertising_status(p_instance_ctrl, advertising_handle, status, 0);
@@ -537,12 +583,54 @@ fsp_err_t RM_BLE_ABS_StartScanning (ble_abs_ctrl_t * const                 p_ctr
     FSP_ASSERT(p_instance_ctrl);
     FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(NULL != p_scan_parameter, FSP_ERR_INVALID_POINTER);
-#else
-    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
-    FSP_PARAMETER_NOT_USED(p_scan_parameter);
 #endif
 
-    return FSP_ERR_UNSUPPORTED;
+    /* Status check */
+    FSP_ERROR_RETURN(0 ==
+                     (p_instance_ctrl->abs_scan.scan_status &
+                      (BLE_ABS_SCAN_STATUS_FAST_START | BLE_ABS_SCAN_STATUS_SLOW_START)),
+                     FSP_ERR_INVALID_STATE);
+
+    fsp_err_t    ret_val;
+    ble_status_t ble_retval;
+
+    st_ble_gap_scan_on_t st_ble_gap_scan_on =
+    {
+        .proc_type   = BLE_GAP_SC_PROC_OBS,
+        .filter_dups = BLE_GAP_SCAN_FILT_DUPLIC_ENABLE,
+        .duration    = 0,
+        .period      = 0,
+    };
+
+    st_ble_gap_scan_phy_param_t st_ble_gap_scan_phy_param =
+    {
+        .scan_intv   = p_scan_parameter->p_phy_parameter_1M->slow_scan_interval,
+        .scan_type   = p_scan_parameter->p_phy_parameter_1M->scan_type,
+        .scan_window = p_scan_parameter->p_phy_parameter_1M->fast_scan_window
+    };
+    st_ble_gap_scan_param_t st_ble_gap_scan_param =
+    {
+        .filter_policy  = p_scan_parameter->device_scan_filter_policy,
+        .o_addr_type    = BLE_GAP_ADDR_PUBLIC,
+        .p_phy_param_1M = &st_ble_gap_scan_phy_param
+    };
+
+    p_instance_ctrl->abs_scan.scan_parameter.p_filter_data      = p_scan_parameter->p_filter_data;
+    p_instance_ctrl->abs_scan.scan_parameter.filter_data_length = p_scan_parameter->filter_data_length;
+    p_instance_ctrl->abs_scan.scan_parameter.filter_ad_type     = p_scan_parameter->filter_ad_type;
+
+    ble_retval = R_BLE_GAP_StartScan(&st_ble_gap_scan_param, &st_ble_gap_scan_on);
+    if (BLE_SUCCESS == ble_retval)
+    {
+        ret_val = FSP_SUCCESS;
+        p_instance_ctrl->abs_scan.scan_status = BLE_ABS_SCAN_STATUS_SLOW_START;
+    }
+    else
+    {
+        ret_val = FSP_ERR_OUT_OF_MEMORY;
+    }
+
+    return ret_val;
 }                                      /* End of function RM_BLE_ABS_StartScanning() */
 
 /*******************************************************************************************************************//**
@@ -604,6 +692,7 @@ fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                   
                                        ble_abs_connection_parameter_t const * const p_connection_parameter)
 {
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
+    fsp_err_t                 ble_retval      = FSP_ERR_ABORTED;
 
 #if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
 
@@ -617,7 +706,47 @@ fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                   
     FSP_PARAMETER_NOT_USED(p_connection_parameter);
 #endif
 
-    return FSP_ERR_UNSUPPORTED;
+    FSP_ERROR_RETURN(NULL != p_connection_parameter->p_connection_phy_parameter_1M, FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(NULL == p_connection_parameter->p_connection_phy_parameter_2M, FSP_ERR_UNSUPPORTED);
+    FSP_ERROR_RETURN(NULL == p_connection_parameter->p_connection_phy_parameter_coded, FSP_ERR_UNSUPPORTED);
+
+    st_ble_gap_create_conn_param_t st_ble_gap_create_conn_param;
+    st_ble_gap_create_conn_param.init_filter_policy = p_connection_parameter->filter_parameter & 0x0F;
+
+    // st_ble_gap_create_conn_param.own_addr_type = BLE_GAP_ADDR_PUBLIC;   /// TODO, cannot keep this fixed.
+
+    memcpy(st_ble_gap_create_conn_param.remote_bd_addr, p_connection_parameter->p_device_address->addr,
+           BLE_BD_ADDR_LEN);
+    st_ble_gap_create_conn_param.remote_bd_addr_type = p_connection_parameter->p_device_address->type;
+
+    /** set connection parameters for 1M */
+    ble_gap_connection_parameter_t     connection_parameter_1M; ///< connection parameter for 1M
+    ble_gap_connection_phy_parameter_t connection_phy_1M;       ///< connection phy for 1M
+
+    ble_abs_set_connection_parameter(p_connection_parameter->p_connection_phy_parameter_1M,
+                                     &connection_phy_1M,
+                                     &connection_parameter_1M); ///< select connection parameters for 1M
+
+    st_ble_gap_create_conn_param.p_conn_param_1M    = (st_ble_gap_conn_phy_param_t *) &connection_phy_1M;
+    st_ble_gap_create_conn_param.p_conn_param_2M    = NULL;
+    st_ble_gap_create_conn_param.p_conn_param_coded = NULL;
+
+    ble_status_t status = R_BLE_GAP_CreateConn(&st_ble_gap_create_conn_param); ///< create connection
+    if (status == BLE_SUCCESS)
+    {
+        ble_retval = FSP_SUCCESS;
+    }
+
+    if (0 != p_connection_parameter->connection_timeout)
+    {
+        /* Connection Timeout not supported, user can implement this functionality
+         *  in their application using R_BLE_GAP_CancelCreateConn()*/
+        ble_retval = FSP_ERR_UNSUPPORTED;
+    }
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == ble_retval, ble_retval);
+
+    return ble_retval;
 }                                      /* End of function RM_BLE_ABS_CreateConnection() */
 
 /*******************************************************************************************************************//**
@@ -638,6 +767,8 @@ fsp_err_t RM_BLE_ABS_CreateConnection (ble_abs_ctrl_t * const                   
 fsp_err_t RM_BLE_ABS_StartAuthentication (ble_abs_ctrl_t * const p_ctrl, uint16_t connection_handle)
 {
     FSP_PARAMETER_NOT_USED(connection_handle);
+    st_ble_gap_auth_info_t security_information;
+    ble_status_t           retval = FSP_SUCCESS;
 
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
 
@@ -650,7 +781,17 @@ fsp_err_t RM_BLE_ABS_StartAuthentication (ble_abs_ctrl_t * const p_ctrl, uint16_
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
 
-    return FSP_ERR_UNSUPPORTED;
+    retval = R_BLE_GAP_GetDevSecInfo(connection_handle, &security_information); ///< check security information
+    if (BLE_SUCCESS == retval)
+    {
+        retval = R_BLE_GAP_StartEnc(connection_handle);
+    }
+    else
+    {
+        retval = R_BLE_GAP_StartPairing(connection_handle);
+    }
+
+    return (fsp_err_t) retval;
 }                                      /* End of function RM_BLE_ABS_StartAuthentication() */
 
 /*******************************************************************************************************************//**
@@ -668,6 +809,7 @@ fsp_err_t RM_BLE_ABS_StartAuthentication (ble_abs_ctrl_t * const p_ctrl, uint16_
 fsp_err_t RM_BLE_ABS_DeleteBondInformation (ble_abs_ctrl_t * const                             p_ctrl,
                                             ble_abs_bond_information_parameter_t const * const p_bond_information_parameter)
 {
+    fsp_err_t                 err             = FSP_SUCCESS;
     ble_abs_instance_ctrl_t * p_instance_ctrl = (ble_abs_instance_ctrl_t *) p_ctrl;
 
 #if BLE_ABS_CFG_PARAM_CHECKING_ENABLE
@@ -678,10 +820,26 @@ fsp_err_t RM_BLE_ABS_DeleteBondInformation (ble_abs_ctrl_t * const              
     FSP_ERROR_RETURN(BLE_ABS_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
-    FSP_PARAMETER_NOT_USED(p_bond_information_parameter);
+#endif
+#ifdef ENABLE_STORAGE
+    if (BLE_ABS_REMOTE_BOND_INFORMATION_ALL == p_bond_information_parameter->remote_bond_information)
+    {
+        // Delete all remote keys
+        err = r_ble_gtl_sec_rem_all_bond_data();
+
+        return err;
+    }
+
+    if (BLE_ABS_REMOTE_BOND_INFORMATION_SPECIFIED == p_bond_information_parameter->remote_bond_information)
+    {
+        // Delete a specific remote address
+        err = r_ble_gtl_sec_rem_specific_bond_data(p_bond_information_parameter->p_address);
+
+        return err;
+    }
 #endif
 
-    return FSP_SUCCESS;
+    return err;
 }
 
 /************************************************
@@ -951,6 +1109,21 @@ static fsp_err_t ble_abs_advertising_report_handler (ble_abs_instance_ctrl_t * c
     {
         retval = FSP_SUCCESS;
     }
+    else if (p_instance_ctrl->abs_scan.scan_parameter.filter_ad_type == 0x17) // TODO FIX MAGIC
+    {
+        FSP_ERROR_RETURN((p_instance_ctrl->abs_scan.scan_parameter.filter_data_length == 6), FSP_ERR_INVALID_SIZE);
+        FSP_ERROR_RETURN((p_instance_ctrl->abs_scan.scan_parameter.p_filter_data != NULL), FSP_ERR_INVALID_POINTER);
+
+        /* The public address of the device */
+        p_advertising_report_parameter = (st_ble_gap_adv_rept_evt_t *) p_event_data->p_param;
+        int res = memcmp(p_instance_ctrl->abs_scan.scan_parameter.p_filter_data,
+                         p_advertising_report_parameter->param.p_adv_rpt->p_addr,
+                         6);
+        if (res == 0)
+        {
+            return FSP_SUCCESS;
+        }
+    }
     else
     {
         p_advertising_report_parameter = (st_ble_gap_adv_rept_evt_t *) p_event_data->p_param;
@@ -978,7 +1151,7 @@ static fsp_err_t ble_abs_advertising_report_handler (ble_abs_instance_ctrl_t * c
             while (pos < len)
             {
                 /* Each advertising structure have following constructs.
-                 * - Lenght: 1 byte (The length of AD type + AD data)
+                 * - Length: 1 byte (The length of AD type + AD data)
                  * - AD type: 1 byte
                  * - AD data: variable
                  */
@@ -1039,6 +1212,27 @@ static void ble_abs_set_connection_advertising_interval (st_ble_gap_adv_param_t 
         p_advertising_parameter->adv_intv_max = slow_advertising_interval;
     }
 }                                      /* End of function ble_abs_set_connection_advertising_interval() */
+
+/*******************************************************************************************************************//**
+ * Set Abstraction API connection parameters to GAP connection parameters.
+ **********************************************************************************************************************/
+static void ble_abs_set_connection_parameter (ble_abs_connection_phy_parameter_t * p_abs_connection_parameter,
+                                              ble_gap_connection_phy_parameter_t * p_connection_phy_parameter,
+                                              ble_gap_connection_parameter_t     * p_connection_parameter)
+{
+    if (NULL != p_abs_connection_parameter)
+    {
+        p_connection_parameter->conn_intv_min    = p_abs_connection_parameter->connection_interval;
+        p_connection_parameter->conn_intv_max    = p_abs_connection_parameter->connection_interval;
+        p_connection_parameter->conn_latency     = p_abs_connection_parameter->connection_slave_latency;
+        p_connection_parameter->sup_to           = p_abs_connection_parameter->supervision_timeout;
+        p_connection_parameter->min_ce_length    = BLE_ABS_GAP_CONNECTION_CE_LENGTH;
+        p_connection_parameter->max_ce_length    = BLE_ABS_GAP_CONNECTION_CE_LENGTH;
+        p_connection_phy_parameter->scan_intv    = BLE_ABS_CONN_SC_INTV_FAST;
+        p_connection_phy_parameter->scan_window  = BLE_ABS_CONN_SC_WINDOW_FAST;
+        p_connection_phy_parameter->p_conn_param = p_connection_parameter;
+    }
+}
 
 /*******************************************************************************************************************//**
  * Update advertising data status.
@@ -1185,16 +1379,20 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
     {
         case BLE_GAP_EVENT_STACK_ON:
         {
+            R_BLE_VS_GetBdAddr(BLE_VS_ADDR_AREA_REG, BLE_GAP_ADDR_RAND);
+
+            /* Clear the local DB */
+            r_ble_gtl_sec_clear_ram_db();
+#ifdef ENABLE_STORAGE
+
+            /* Read flash for bond info */
+            r_ble_gtl_storage_read_bond_data();
+#endif
+
             uint8_t              irk[BLE_GAP_IRK_SIZE];
             ble_device_address_t identity_address;
-
             R_BLE_GAP_SetLocIdInfo((st_ble_dev_addr_t *) (&identity_address), irk);
 
-            break;
-        }
-
-        case BLE_GAP_EVENT_DISCONN_IND:
-        {
             break;
         }
 
@@ -1202,9 +1400,15 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
         {
             if (FSP_SUCCESS != ble_abs_advertising_report_handler(gp_instance_ctrl, p_event_data))
             {
-                return;
+                // return; //
             }
 
+            break;
+        }
+
+        case BLE_GAP_EVENT_SCAN_OFF:
+        {
+            gp_instance_ctrl->abs_scan.scan_status = BLE_ABS_SCAN_STATUS_STOPPED;
             break;
         }
 
@@ -1222,10 +1426,263 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
 
         case BLE_GAP_EVENT_CONN_IND:
         {
+            sec_ble_gap_bond_info_t        * bond_info_loc_tmp    = {0};
+            st_ble_gap_conn_evt_t          * p_gap_conn_evt_param = (st_ble_gap_conn_evt_t *) p_event_data->p_param;
+            r_ble_gtl_gapm_addr_solved_ind_t addr_solved_rsp;
+            uint8_t db_index = INVALID_IDX;
+            uint8_t auth_val = 0;
             ble_abs_set_advertising_status(gp_instance_ctrl, BLE_ABS_LEGACY_HDL, 0,
                                            (BLE_ABS_ADV_STATUS_ADV_FAST_START | BLE_ABS_ADV_STATUS_ADV_SLOW_START));
 
             R_BLE_GAP_StopAdv(0);
+
+            if (p_gap_conn_evt_param->remote_addr_type == BLE_GAP_ADDR_RAND) // RANDOM ADDRESS
+            {
+                // Look for available IRKs in DB & send resolve cmd
+                db_index = r_ble_gtl_sec_resolve_rand_addr(p_gap_conn_evt_param->remote_addr, &addr_solved_rsp);
+                if (db_index != INVALID_IDX)
+                {
+                    auth_val = r_ble_gtl_sec_get_db_auth(db_index);
+
+                    /* Send the GAPC_CONNECTION_CFM cmd*/
+                    r_ble_gtl_connection_cfm_cmd(p_gap_conn_evt_param->conn_hdl, auth_val);
+
+                    // Update LUT using the resolved address, maybe moved to different conn handle.
+                    bond_info_loc_tmp = r_ble_gtl_sec_get_rem_bond_data(db_index);
+                    r_ble_gtl_sec_lut_table_info(UPDATE_ENTRY,
+                                                 &bond_info_loc_tmp->p_keys.p_keys_info.id_addr_info[1],
+                                                 p_gap_conn_evt_param->conn_hdl,
+                                                 p_gap_conn_evt_param->role);
+
+                    /* Update conn info in bond_info_loc*/
+                    memcpy(bond_info_loc_tmp->p_addr.addr, p_gap_conn_evt_param->remote_addr, BLE_BD_ADDR_LEN);
+                    bond_info_loc_tmp->p_addr.type = p_gap_conn_evt_param->remote_addr_type;
+
+                    /* Automaticaly try encryption */
+                    RM_BLE_ABS_StartAuthentication(NULL, p_gap_conn_evt_param->conn_hdl);
+                }
+                else
+                {
+                    /* Send the GAPC_CONNECTION_CFM cmd*/
+                    r_ble_gtl_connection_cfm_cmd(p_gap_conn_evt_param->conn_hdl, auth_val);
+
+                    /* Generate and register keys */
+                    r_ble_gtl_sec_gen_pairing_keys();
+
+                    /* New record, new LUT */
+                    r_ble_gtl_sec_lut_table_info(ADD_ENTRY,
+                                                 p_gap_conn_evt_param->remote_addr,
+                                                 p_gap_conn_evt_param->conn_hdl,
+                                                 p_gap_conn_evt_param->role);
+                    uint8_t bond_index =
+                        r_ble_gtl_sec_lut_table_info(GET_ENTRY, NULL, p_gap_conn_evt_param->conn_hdl, 0);
+                    bond_info_loc_tmp = r_ble_gtl_sec_get_rem_bond_data(bond_index);
+
+                    /* Add conn info in bond_info_loc*/
+                    memcpy(bond_info_loc_tmp->p_addr.addr, p_gap_conn_evt_param->remote_addr, BLE_BD_ADDR_LEN);
+                    bond_info_loc_tmp->p_addr.type = p_gap_conn_evt_param->remote_addr_type;
+                }
+            }
+            else                       // STATIC ADDRESS
+            {
+                db_index = r_ble_gtl_sec_find_static_addr(p_gap_conn_evt_param->remote_addr);
+                if (INVALID_IDX != db_index)
+                {
+                    auth_val = r_ble_gtl_sec_get_db_auth(db_index);
+
+                    /* Send the GAPC_CONNECTION_CFM cmd*/
+                    r_ble_gtl_connection_cfm_cmd(p_gap_conn_evt_param->conn_hdl, auth_val);
+
+                    /* UPDATE conn handle if changed */
+                    r_ble_gtl_sec_lut_table_info(UPDATE_ENTRY,
+                                                 p_gap_conn_evt_param->remote_addr,
+                                                 p_gap_conn_evt_param->conn_hdl,
+                                                 p_gap_conn_evt_param->role);
+
+                    /* Automaticaly try encryption */
+                    RM_BLE_ABS_StartAuthentication(NULL, p_gap_conn_evt_param->conn_hdl);
+                }
+                else
+                {
+                    /* Send the GAPC_CONNECTION_CFM cmd*/
+                    r_ble_gtl_connection_cfm_cmd(p_gap_conn_evt_param->conn_hdl, auth_val);
+
+                    /* Generate and register keys */
+                    r_ble_gtl_sec_gen_pairing_keys();
+
+                    /* New record, new LUT */
+                    db_index = r_ble_gtl_sec_lut_table_info(ADD_ENTRY,
+                                                            p_gap_conn_evt_param->remote_addr,
+                                                            p_gap_conn_evt_param->conn_hdl,
+                                                            p_gap_conn_evt_param->role);
+
+                    /* Add address information to DB, case IRK data is not exchanged. This applies to STATIC address */
+                    bond_info_loc_tmp = r_ble_gtl_sec_get_rem_bond_data(db_index);
+
+                    bond_info_loc_tmp->p_addr.type = p_gap_conn_evt_param->remote_addr_type;
+                    memcpy(bond_info_loc_tmp->p_addr.addr, p_gap_conn_evt_param->remote_addr, BLE_BD_ADDR_LEN);
+
+                    bond_info_loc_tmp->p_keys.p_keys_info.id_addr_info[0] = p_gap_conn_evt_param->remote_addr_type;
+                    memcpy(&bond_info_loc_tmp->p_keys.p_keys_info.id_addr_info[1],
+                           p_gap_conn_evt_param->remote_addr,
+                           BLE_BD_ADDR_LEN);
+                }
+            }
+
+            break;
+        }
+
+        case BLE_GAP_EVENT_DISCONN_IND:
+        {
+            st_ble_gap_disconn_evt_t * p_disconn_param = (st_ble_gap_disconn_evt_t *) p_event_data->p_param;
+
+            /* Free DB entry if empty */
+            r_ble_gtl_sec_lut_table_info(DELETE_DB_ENTRY, NULL, p_disconn_param->conn_hdl, 0);
+
+            /* Free LUT entry */
+            r_ble_gtl_sec_lut_table_info(DELETE_LUT_ENTRY, NULL, p_disconn_param->conn_hdl, 0);
+            break;
+        }
+
+        /* Pairing request from a remote device, reply with own parameters */
+        case BLE_GAP_EVENT_PAIRING_REQ:
+        {
+            /* Check if bonding slots available */
+            if (r_ble_gtl_sec_get_active_bond_entries() >= BLE_ABS_CFG_NUMBER_BONDING_LOC)
+            {
+                /* No free slots, reject pairing, no reject reason is available to pass on GTL msg */
+                st_ble_gap_pairing_req_evt_t * p_pair_req_param =
+                    (st_ble_gap_pairing_req_evt_t *) p_event_data->p_param;
+                R_BLE_GAP_ReplyPairing(p_pair_req_param->conn_hdl, BLE_GAP_PAIRING_REJECT);
+            }
+            else
+            {
+                /* Free slot available, accept pairing */
+                st_ble_gap_pairing_req_evt_t * p_pair_req_param =
+                    (st_ble_gap_pairing_req_evt_t *) p_event_data->p_param;
+                R_BLE_GAP_ReplyPairing(p_pair_req_param->conn_hdl, BLE_GAP_PAIRING_ACCEPT);
+            }
+
+            break;
+        }
+
+        /* Remote device distributes the keys */
+        case BLE_GAP_EVENT_PEER_KEY_INFO:
+        {
+            st_ble_gap_peer_key_info_evt_t * p_peer_key = (st_ble_gap_peer_key_info_evt_t *) p_event_data->p_param;
+            uint8_t bond_index = r_ble_gtl_sec_lut_table_info(GET_ENTRY, NULL, p_peer_key->conn_hdl, 0);
+            sec_ble_gap_bond_info_t * bond_info_loc_tmp = {0};
+            bond_info_loc_tmp = r_ble_gtl_sec_get_rem_bond_data(bond_index);
+
+            // Temporarily Store the keys shared from remote.
+            bond_info_loc_tmp->p_keys.keys = bond_info_loc_tmp->p_keys.keys | p_peer_key->key_ex_param.keys;
+            switch (p_peer_key->key_ex_param.keys)
+            {
+                case 1:                // LTK
+                {
+                    // Peripheral role. Save the LTK only in Secure Connections.
+                    if (r_ble_gtl_sec_get_sec_conn_var() == BLE_GAP_SC_STRICT)
+                    {
+                        memcpy(bond_info_loc_tmp->p_keys.p_keys_info.enc_info,
+                               p_peer_key->key_ex_param.p_keys_info->enc_info,
+                               BLE_GAP_LTK_SIZE);
+                    }
+
+                    // Central role, will receive and must store LTK + EDIV + RN in Legacy Pairing
+                    if ((r_ble_gtl_sec_get_dev_role(p_peer_key->conn_hdl) == R_BLE_GTL_CENTRAL_ROLE) &&
+                        (r_ble_gtl_sec_get_sec_conn_var() == BLE_GAP_SC_BEST_EFFORT))
+                    {
+                        memcpy(bond_info_loc_tmp->p_keys.p_keys_info.enc_info,
+                               p_peer_key->key_ex_param.p_keys_info->enc_info,
+                               BLE_GAP_LTK_SIZE);
+                        memcpy(bond_info_loc_tmp->p_keys.p_keys_info.mid_info,
+                               p_peer_key->key_ex_param.p_keys_info->mid_info,
+                               BLE_GAP_RAND_64_BIT_SIZE + BLE_GAP_EDIV_SIZE);
+                    }
+
+                    break;
+                }
+
+                case 2:                // IRK
+                {
+                    memcpy(bond_info_loc_tmp->p_keys.p_keys_info.id_info,
+                           p_peer_key->key_ex_param.p_keys_info->id_info,
+                           BLE_GAP_IRK_SIZE);
+
+                    /* Store Address here since BOND_IND is providing it. */
+                    if (p_peer_key->bd_addr.addr[5] != 0x00)
+                    {
+                        /* Save resolved remote address to Identity address */
+                        bond_info_loc_tmp->p_keys.p_keys_info.id_addr_info[0] = p_peer_key->bd_addr.type;
+                        memcpy(&bond_info_loc_tmp->p_keys.p_keys_info.id_addr_info[1],
+                               p_peer_key->bd_addr.addr,
+                               BLE_BD_ADDR_LEN);
+                    }
+
+                    break;
+                }
+
+                case 4:                // CSRK
+                {
+                    memcpy(bond_info_loc_tmp->p_keys.p_keys_info.sign_info,
+                           p_peer_key->key_ex_param.p_keys_info->sign_info,
+                           BLE_GAP_CSRK_SIZE);
+                    break;
+                }
+            }
+
+            break;
+        }
+
+        /* Local device is required to distribute the keys */
+        case BLE_GAP_EVENT_EX_KEY_REQ:
+        {
+            st_ble_gap_conn_hdl_evt_t * p_key_req = (st_ble_gap_conn_hdl_evt_t *) p_event_data->p_param;
+            R_BLE_GAP_ReplyExKeyInfoReq(p_key_req->conn_hdl);
+            break;
+        }
+
+        /* The Remote requires LTK from local */
+        case BLE_GAP_EVENT_LTK_REQ:
+        {
+            st_ble_gap_ltk_req_evt_t * p_pair_req_param = (st_ble_gap_ltk_req_evt_t *) p_event_data->p_param;
+            R_BLE_GAP_ReplyLtkReq(p_pair_req_param->conn_hdl,
+                                  p_pair_req_param->ediv,
+                                  p_pair_req_param->p_peer_rand,
+                                  BLE_GAP_LTK_REQ_DENY);
+            break;
+        }
+
+        /* Pairing is completed*/
+        case BLE_GAP_EVENT_PAIRING_COMP:
+        {
+            st_ble_gap_pairing_info_evt_t * p_param;
+            p_param = (st_ble_gap_pairing_info_evt_t *) p_event_data->p_param;
+
+            if (FSP_SUCCESS == event_result)
+            {
+                uint8_t bond_index = r_ble_gtl_sec_lut_table_info(GET_ENTRY, NULL, p_param->conn_hdl, 0);
+                sec_ble_gap_bond_info_t * bond_info_loc_tmp = {0};
+                bond_info_loc_tmp = r_ble_gtl_sec_get_rem_bond_data(bond_index);
+
+                /* Save authentication info */
+                bond_info_loc_tmp->p_auth_info.bonding   = p_param->auth_info.bonding;
+                bond_info_loc_tmp->p_auth_info.security  = p_param->auth_info.security;
+                bond_info_loc_tmp->p_auth_info.pair_mode = p_param->auth_info.pair_mode;
+                bond_info_loc_tmp->p_auth_info.ekey_size = p_param->auth_info.ekey_size;
+                bond_info_loc_tmp->bonded                = bond_index + 1;
+
+#ifdef ENABLE_STORAGE
+                if (r_ble_gtl_sec_get_bond_var() == BLE_GAP_BONDING)
+                {
+                    r_ble_gtl_storage_write_bond_data();
+                }
+#endif
+            }
+            else
+            {
+                r_ble_gtl_sec_lut_table_info(DELETE_DB_ENTRY, NULL, p_param->conn_hdl, 0);
+            }
 
             break;
         }
@@ -1237,4 +1694,42 @@ static void ble_abs_gap_callback (uint16_t event_type, ble_status_t event_result
     }
 
     gp_instance_ctrl->abs_gap_callback(event_type, event_result, p_event_data);
-}                                      /* End of function ble_abs_gap_callback() */                                  /* End of function ble_abs_random_handler() */
+}                                      /* End of function ble_abs_gap_callback() */ /* End of function ble_abs_random_handler() */
+
+/*******************************************************************************************************************//**
+ * Vendor Specific Event handler.
+ **********************************************************************************************************************/
+static void ble_abs_vendor_specific_callback (uint16_t               event_type,
+                                              ble_status_t           event_result,
+                                              st_ble_vs_evt_data_t * p_event_data)
+{
+    ble_abs_instance_ctrl_t          * p_instance_ctrl = gp_instance_ctrl;
+    st_ble_vs_get_bd_addr_comp_evt_t * p_get_addr;
+
+    switch (event_type)
+    {
+        case BLE_VS_EVENT_GET_RAND:
+        {
+            // ble_abs_random_handler(p_instance_ctrl, p_event_data);
+            break;
+        }
+
+        case BLE_VS_EVENT_GET_ADDR_COMP:
+        {
+            /* Set local device address to static variable. */
+            p_get_addr = (st_ble_vs_get_bd_addr_comp_evt_t *) p_event_data->p_param;
+            gp_instance_ctrl->loc_bd_addr = p_get_addr->addr;
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+
+    if (p_instance_ctrl->abs_vendor_specific_callback)
+    {
+        p_instance_ctrl->abs_vendor_specific_callback(event_type, event_result, p_event_data);
+    }
+}

@@ -87,7 +87,7 @@ typedef struct st_rm_comms_smbus_instance_ctrl
     rm_comms_i2c_instance_ctrl_t * p_comms_i2c_ctrl;            ///< Control block of rm_comms_i2c
     rm_comms_smbus_error_t       * p_smbus_error;               ///< SMBus specific error code
 
-    const void * p_context;
+    void * p_context;
 } rm_comms_smbus_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -106,7 +106,7 @@ fsp_err_t RM_COMMS_SMBUS_WriteRead(rm_comms_ctrl_t * const            p_api_ctrl
 
 fsp_err_t RM_COMMS_SMBUS_CallbackSet(rm_comms_ctrl_t * const p_api_ctrl,
                                      void (                * p_callback)(rm_comms_callback_args_t *),
-                                     void const * const      p_context);
+                                     void * const            p_context);
 
 void rm_comms_smbus_transmission_callback(i2c_master_callback_args_t * p_args);
 

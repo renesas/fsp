@@ -207,7 +207,7 @@ typedef struct st_adc_callback_args
 {
     uint16_t         unit;             ///< ADC device in use
     adc_event_t      event;            ///< ADC callback event
-    void const     * p_context;        ///< Placeholder for user data
+    void           * p_context;        ///< Placeholder for user data
     adc_channel_t    channel;          ///< Channel of conversion result
     uint64_t         channel_mask;     ///< Channel mask for conversion result. Only valid for r_adc_b and r_sdadc_b
     adc_group_mask_t group_mask;       ///< Group Mask
@@ -218,14 +218,16 @@ typedef struct st_adc_callback_args
 /** ADC Information Structure for Transfer Interface */
 typedef struct st_adc_info
 {
-    __I void * p_address;              ///< The address to start reading the data from
-    uint32_t   length;                 ///< The total number of transfers to read
+    __I void * p_address;                   ///< The address to start reading the data from
+    uint32_t   length;                      ///< The total number of transfers to read
 
-    transfer_size_t  transfer_size;    ///< The size of each transfer
-    elc_peripheral_t elc_peripheral;   ///< Name of the peripheral in the ELC list
-    elc_event_t      elc_event;        ///< Name of the ELC event for the peripheral
-    uint32_t         calibration_data; ///< Temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
-    int16_t          slope_microvolts; ///< Temperature sensor slope in microvolts/degrees C
+    transfer_size_t  transfer_size;         ///< The size of each transfer
+    elc_peripheral_t elc_peripheral;        ///< Name of the peripheral in the ELC list
+    elc_event_t      elc_event;             ///< Name of the ELC event for the peripheral
+    uint32_t         calibration_data;      ///< Temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
+    uint16_t         room_calibration_data; ///< Room temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
+    uint16_t         low_calibration_data;  ///< Low temperature sensor calibration data (0xFFFFFFFF if unsupported) for reference voltage
+    int16_t          slope_microvolts;      ///< Temperature sensor slope in microvolts/degrees C
 } adc_info_t;
 
 #endif
@@ -245,7 +247,7 @@ typedef struct st_adc_cfg
     uint8_t          scan_end_b_ipl;                   ///< Scan end group B interrupt priority
     uint8_t          scan_end_c_ipl;                   ///< Scan end group C interrupt priority
     void (* p_callback)(adc_callback_args_t * p_args); ///< Callback function; set to NULL for none
-    void const * p_context;                            ///< Placeholder for user data. Passed to the user callback in @ref adc_callback_args_t.
+    void       * p_context;                            ///< Placeholder for user data. Passed to the user callback in @ref adc_callback_args_t.
     void const * p_extend;                             ///< Extension parameter for hardware specific settings
 } adc_cfg_t;
 
@@ -342,7 +344,7 @@ typedef struct st_adc_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(adc_ctrl_t * const p_ctrl, void (* p_callback)(adc_callback_args_t *),
-                              void const * const p_context, adc_callback_args_t * const p_callback_memory);
+                              void * const p_context, adc_callback_args_t * const p_callback_memory);
 
     /** Close the specified ADC unit by ending any scan in progress, disabling interrupts, and removing power to the
      * specified A/D unit.

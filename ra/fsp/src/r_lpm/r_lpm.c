@@ -16,7 +16,7 @@
  **********************************************************************************************************************/
 
 #define LPM_LPSCR_SYSTEM_ACTIVE                  (0x0U)
-#if BSP_MCU_GROUP_NEPTUNE
+#if BSP_MCU_GROUP_RA8_GEN2
  #define LPM_LPSCR_SOFTWARE_STANDBY_MODE         (0x5U)
 #else
  #define LPM_LPSCR_SOFTWARE_STANDBY_MODE         (0x4U)
@@ -176,7 +176,7 @@ fsp_err_t R_LPM_Open (lpm_ctrl_t * const p_api_ctrl, lpm_cfg_t const * const p_c
  * NOTE: This function does not enter the low power mode, it only configures parameters of the mode. Execution of the
  * WFI instruction is what causes the low power mode to be entered.
  *
- * @retval     FSP_SUCCESS                   Low power mode successfuly applied
+ * @retval     FSP_SUCCESS                   Low power mode successfully applied
  * @retval     FSP_ERR_ASSERTION             Null Pointer
  * @retval     FSP_ERR_NOT_OPEN              LPM instance is not open
  * @retval     FSP_ERR_UNSUPPORTED           This MCU does not support Deep Software Standby
@@ -602,7 +602,8 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
  #if BSP_FEATURE_ICU_SBYEDCR_MASK > 0
 
             /* Set the source that can cause an exit from snooze to normal mode */
-            sbyedcr0 |= (uint32_t) p_cfg->snooze_cancel_sources & UINT32_MAX;;
+            sbyedcr0 |= (uint32_t) p_cfg->snooze_cancel_sources & UINT32_MAX;
+            sbyedcr1 |= (uint32_t) (p_cfg->snooze_cancel_sources >> LPM_SBYEDCR1_OFFSET) & UINT32_MAX;
  #endif
  #if BSP_FEATURE_LPM_SNZREQCR_MASK > 0
 
@@ -1031,6 +1032,10 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 #endif
 
 #if BSP_CFG_SLEEP_MODE_DELAY_ENABLE
+
+    /* Enable writing to CGC register. */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
+
     bool clock_slowed = bsp_prv_clock_prepare_pre_sleep();
 #endif
 
@@ -1042,6 +1047,9 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 
 #if BSP_CFG_SLEEP_MODE_DELAY_ENABLE
     bsp_prv_clock_prepare_post_sleep(clock_slowed);
+
+    /* Disable writing to CGC register. */
+    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 #endif
 
 #if BSP_FEATURE_LPM_RTC_REGISTER_CLOCK_DISABLE

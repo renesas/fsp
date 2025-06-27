@@ -40,8 +40,8 @@ typedef enum e_rm_levelx_nor_spi_event
 /** RM_LEVELX_NOR_SPI callback arguments definitions  */
 typedef struct st_rm_levelx_nor_spi_callback_args
 {
-    rm_levelx_nor_spi_event_t event;     ///< LevelX NOR driver callback event
-    void const              * p_context; ///< Placeholder for user data
+    rm_levelx_nor_spi_event_t event;   ///< LevelX NOR driver callback event
+    void * p_context;                  ///< Placeholder for user data
 } rm_levelx_nor_spi_callback_args_t;
 
 /** SF_EL_LX_NOR Config Block Type */
@@ -49,11 +49,11 @@ typedef struct st_rm_levelx_nor_spi_cfg
 {
     spi_flash_instance_t const * p_lower_lvl;                        ///< Lower level memory pointer
     LX_NOR_FLASH               * p_lx_nor_flash;                     ///< Pointer to the LevelX nor flash instance.
-    uint32_t     base_address;                                       ///< Base address of memory mapped region.
-    uint32_t     address_offset;                                     ///< Offset to use subset of available flash size if desired.
-    uint32_t     size;                                               ///< Size of the partitioned region.
-    uint32_t     poll_status_count;                                  ///< Number of times to poll for operation complete status before returning an error.
-    void const * p_context;                                          ///< Placeholder for user data. Passed to the user callback.
+    uint32_t base_address;                                           ///< Base address of memory mapped region.
+    uint32_t address_offset;                                         ///< Offset to use subset of available flash size if desired.
+    uint32_t size;                                                   ///< Size of the partitioned region.
+    uint32_t poll_status_count;                                      ///< Number of times to poll for operation complete status before returning an error.
+    void   * p_context;                                              ///< Placeholder for user data. Passed to the user callback.
     void (* p_callback)(rm_levelx_nor_spi_callback_args_t * p_args); ///< Callback function
 } rm_levelx_nor_spi_cfg_t;
 

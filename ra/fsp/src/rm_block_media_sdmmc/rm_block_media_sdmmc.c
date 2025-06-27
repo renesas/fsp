@@ -279,7 +279,7 @@ fsp_err_t RM_BLOCK_MEDIA_SDMMC_Erase (rm_block_media_ctrl_t * const p_ctrl,
 fsp_err_t RM_BLOCK_MEDIA_SDMMC_CallbackSet (rm_block_media_ctrl_t * const p_ctrl,
                                             void (                      * p_callback)(
                                                 rm_block_media_callback_args_t *),
-                                            void const * const                     p_context,
+                                            void * const                           p_context,
                                             rm_block_media_callback_args_t * const p_callback_memory)
 {
     rm_block_media_sdmmc_instance_ctrl_t * p_instance_ctrl = (rm_block_media_sdmmc_instance_ctrl_t *) p_ctrl;

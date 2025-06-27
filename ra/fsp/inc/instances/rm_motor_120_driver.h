@@ -36,15 +36,15 @@ FSP_HEADER
 typedef enum e_motor_120_driver_select_adc_instance
 {
     MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_1ST = 0, ///< Use 1st ADC instance
-    MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_2ND,     ///< Use 2nd ADC instanse
+    MOTOR_120_DRIVER_SELECT_ADC_INSTANCE_2ND,     ///< Use 2nd ADC instance
 } motor_120_driver_select_adc_instance_t;
 
 /** For multiple ADC module */
 typedef struct st_motor_120_driver_shared_instance_ctrl
 {
-    uint32_t     open;
-    uint8_t      registered_motor_count; ///< Registered motor counts
-    void const * p_context[MOTOR_120_DRIVER_CFG_SUPPORT_MOTOR_NUM];
+    uint32_t open;
+    uint8_t  registered_motor_count;   ///< Registered motor counts
+    void   * p_context[MOTOR_120_DRIVER_CFG_SUPPORT_MOTOR_NUM];
 } motor_120_driver_shared_instance_ctrl_t;
 
 typedef struct st_motor_120_driver_extended_shared_cfg
@@ -108,8 +108,7 @@ typedef struct st_motor_120_driver_extended_cfg
     bsp_io_port_pin_t port_wn;                                    ///< PWM output port WN
 
     uint32_t u4_pwm_timer_freq;                                   ///< PWM timer frequency (MHz)
-    float u4_pwm_carrier_freq;                                    ///< PWM carrier frequency (kHz) [DEPRECATED]
-    float pwm_carrier_freq;                                       ///< PWM carrier frequency (kHz)
+    float    pwm_carrier_freq;                                    ///< PWM carrier frequency (kHz)
     uint32_t u4_deadtime;                                         ///< PWM deadtime (usec)
 
     float f_current_range;                                        ///< A/D current measure range (max current) (A)
@@ -171,7 +170,7 @@ typedef struct st_motor_120_driver_instance_ctrl
     uint32_t u4_gtiocb_periheral_low_cfg;                    ///< I/O port "Low" config for gtioca periheral functions
     uint32_t u4_gtiocb_periheral_high_cfg;                   ///< I/O port "High" config for gtioca periheral functions
 
-    motor_120_driver_modulation_t  st_modulation;            ///< Modulation paramter
+    motor_120_driver_modulation_t  st_modulation;            ///< Modulation parameter
     motor_120_driver_cfg_t const * p_cfg;                    ///< Pointer of configuration structure
 
     /* For ADC callback */

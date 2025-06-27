@@ -391,6 +391,14 @@ typedef enum e_sce_hash_type
     SCE_OEM_CMD_HASH_TYPE_SHA512 = 6
 } sce_hash_type_t;
 
+typedef enum e_sce_sha3_hash_type
+{
+    SCE_OEM_CMD_HASH_TYPE_SHA3_224 = 0,
+    SCE_OEM_CMD_HASH_TYPE_SHA3_256 = 1,
+    SCE_OEM_CMD_HASH_TYPE_SHA3_384 = 2,
+    SCE_OEM_CMD_HASH_TYPE_SHA3_512 = 3,
+} sce_sha3_hash_type_t;
+
 typedef enum e_sce_hash_cmd
 {
     SCE_OEM_CMD_HASH_ONESHOT = 0,

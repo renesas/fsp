@@ -28,7 +28,13 @@
  * Exported global variables (to be accessed by other files)
  **********************************************************************************************************************/
 
+#if defined(__llvm__)
+void * sbrk(ptrdiff_t incr);
+
+#else
 caddr_t _sbrk(int incr);
+
+#endif
 
 /***********************************************************************************************************************
  * Private global variables and functions
@@ -51,28 +57,26 @@ caddr_t _sbrk(int incr);
  * @retval        Address of allocated area if successful, -1 otherwise.
  **********************************************************************************************************************/
 
+#if defined(__llvm__)
+void * sbrk (ptrdiff_t incr)
+#else
 caddr_t _sbrk (int incr)
+#endif
 {
-    extern char _Heap_Begin __asm("__HeapBase");  ///< Defined by the linker.
+#if (BSP_CFG_HEAP_BYTES > 0)
+    extern uint8_t g_heap[BSP_CFG_HEAP_BYTES];
 
-    extern char _Heap_Limit __asm("__HeapLimit"); ///< Defined by the linker.
+    uint32_t        bytes                = (uint32_t) incr;
+    static uint32_t current_block_offset = 0;
+    char          * current_block_address;
 
-    uint32_t      bytes            = (uint32_t) incr;
-    static char * current_heap_end = 0;
-    char        * current_block_address;
-
-    if (current_heap_end == 0)
-    {
-        current_heap_end = &_Heap_Begin;
-    }
-
-    current_block_address = current_heap_end;
+    current_block_address = (char *) &g_heap[current_block_offset];
 
     /* The returned address must be aligned to a word boundary to prevent hard faults on cores that do not support
      * unaligned access. We assume the heap starts on a word boundary and make sure all allocations are a multiple
      * of 4. */
     bytes = (bytes + 3U) & (~3U);
-    if (current_heap_end + bytes > &_Heap_Limit)
+    if (current_block_offset + bytes > BSP_CFG_HEAP_BYTES)
     {
         /** Heap has overflowed */
         errno = ENOMEM;
@@ -80,9 +84,17 @@ caddr_t _sbrk (int incr)
         return (caddr_t) -1;
     }
 
-    current_heap_end += bytes;
+    current_block_offset += bytes;
 
     return (caddr_t) current_block_address;
+#else
+    FSP_PARAMETER_NOT_USED(incr);
+
+    /** Heap not allocated!!! */
+    errno = ENOMEM;
+
+    return (caddr_t) -1;
+#endif
 }
 
 #endif

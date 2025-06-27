@@ -6,7 +6,7 @@
 
 /*******************************************************************************************************************//**
  * @ingroup RENESAS_CONNECTIVITY_INTERFACES
- * @defgroup RM_COMMS_API Communicatons Middleware Interface
+ * @defgroup RM_COMMS_API Communications Middleware Interface
  * @brief Interface for Communications Middleware functions.
  *
  * @section RM_COMMS_API_Summary Summary
@@ -70,7 +70,7 @@ typedef struct st_rm_comms_write_read_params
 /** Communications middleware callback parameter definition */
 typedef struct st_rm_comms_callback_args
 {
-    void const     * p_context;
+    void           * p_context;
     void           * p_instance_args;
     rm_comms_event_t event;
 } rm_comms_callback_args_t;
@@ -83,7 +83,7 @@ typedef struct st_rm_comms_cfg
     void const * p_extend;                                  ///< Pointer to extended configuration by instance of interface.
     void const * p_lower_level_cfg;                         ///< Pointer to lower level driver configuration structure.
 
-    void const * p_context;                                 ///< Pointer to the user-provided context
+    void * p_context;                                       ///< Pointer to the user-provided context
     void (* p_callback)(rm_comms_callback_args_t * p_args); ///< Pointer to callback function, mostly used if using non-blocking functionality.
 } rm_comms_cfg_t;
 
@@ -138,7 +138,7 @@ typedef struct st_rm_comms_api
      * @param[in]   p_context                Pointer to send to callback function
      */
     fsp_err_t (* callbackSet)(rm_comms_ctrl_t * const p_ctrl, void (* p_callback)(rm_comms_callback_args_t *),
-                              void const * const p_context);
+                              void * const p_context);
 } rm_comms_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

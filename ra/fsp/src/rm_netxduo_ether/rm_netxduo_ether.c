@@ -680,12 +680,11 @@ void rm_netxduo_ether_callback (ether_callback_args_t * p_args)
     /* Either the callback was called from an ISR or it was called from the linkProcess. */
     switch (p_args->event)
     {
-        case ETHER_EVENT_INTERRUPT:
+        /* Packet Transmitted. */
+        case ETHER_EVENT_TX_COMPLETE:
         {
-            /* Packet Transmitted. */
             uint32_t tx_packet_transmitted_index = p_netxduo_ether_instance->p_ctrl->tx_packet_transmitted_index;
-            if ((ETHER_ISR_EE_TC_MASK == (p_args->status_eesr & ETHER_ISR_EE_TC_MASK)) &&
-                (NULL != p_netxduo_ether_instance->p_cfg->p_tx_packets[tx_packet_transmitted_index]))
+            if (NULL != p_netxduo_ether_instance->p_cfg->p_tx_packets[tx_packet_transmitted_index])
             {
                 uint8_t * p_buffer_current = NULL;
                 uint8_t * p_buffer_last    = NULL;
@@ -740,12 +739,13 @@ void rm_netxduo_ether_callback (ether_callback_args_t * p_args)
                 p_netxduo_ether_instance->p_ctrl->tx_packet_transmitted_index = tx_packet_transmitted_index;
             }
 
-            /* Packet received. */
-            if (ETHER_ISR_EE_FR_MASK == (p_args->status_eesr & ETHER_ISR_EE_FR_MASK))
-            {
-                rm_netxduo_ether_receive_packet(p_netxduo_ether_instance);
-            }
+            break;
+        }
 
+        /* Packet received. */
+        case ETHER_EVENT_RX_COMPLETE:
+        {
+            rm_netxduo_ether_receive_packet(p_netxduo_ether_instance);
             break;
         }
 

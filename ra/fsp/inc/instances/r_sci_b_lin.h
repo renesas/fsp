@@ -137,6 +137,16 @@ typedef enum e_sci_b_lin_noise_cancellation
     SCI_B_LIN_NOISE_CANCELLATION_ENABLE  = 1U, ///< Enable noise cancellation
 } sci_b_lin_noise_cancellation_t;
 
+/** Noise cancellation clock configuration. */
+typedef enum e_sci_b_lin_noise_cancellation_clock
+{
+    SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BASE_CLOCK_DIV_1               = 0U, ///< Noise filter clock is the base clock/1
+    SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_1 = 1U, ///< Noise filter clock is on-chip baudrate generator source clock/1
+    SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_2 = 2U, ///< Noise filter clock is on-chip baudrate generator source clock/2
+    SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_4 = 3U, ///< Noise filter clock is on-chip baudrate generator source clock/3
+    SCI_B_LIN_NOISE_CANCELLATION_CLOCK_BAUDRATE_GENERATOR_CLOCK_DIV_8 = 4U, ///< Noise filter clock is on-chip baudrate generator source clock/4
+} sci_b_lin_noise_cancellation_clock_t;
+
 /**  Bus conflict detection enable. */
 typedef enum e_sci_b_lin_bus_conflict_detection
 {
@@ -154,12 +164,20 @@ typedef enum e_sci_b_lin_bus_conflict_clock
     SCI_B_LIN_BUS_CONFLICT_DETECTION_BASE_CLOCK_DIV_4 = 2U, ///< Bus conflict detection clock is base clock/4. Setting prohibited when CCR2.ABCS = 1.
 } sci_b_lin_bus_conflict_clock_t;
 
+/** Asynchronous Mode Base Clock Selection */
+typedef enum e_sci_b_lin_base_clock
+{
+    SCI_B_LIN_BASE_CLOCK_16_CYCLES_PER_BIT   = 0, ///< Select 16 base clock cycles for 1-bit period
+    SCI_B_LIN_BASE_CLOCK_8_CYCLES_PER_BIT    = 1, ///< Select 8 base clock cycles for 1-bit period
+    SCI_B_LIN_BASE_CLOCK_AUTO_CYCLES_PER_BIT = 2, ///< Automatic software selection of the base clock cycles (16 or 8) for 1-bit period
+} sci_b_lin_base_clock_t;
+
 /** Parameters for baud and timer setting calculation */
 typedef struct st_sci_b_lin_baud_params
 {
     uint32_t                       baudrate;           ///< Desired baudrate
     sci_b_lin_clock_source_t       clock_source;       ///< Peripheral clock source
-    sci_b_lin_bus_conflict_clock_t bus_conflict_clock; ///< Bus collision clock divider.
+    sci_b_lin_bus_conflict_clock_t bus_conflict_clock; ///< DEPRECATED, not used to set baudrate
     uint16_t                       break_bits;         ///< Master mode: Number of break field bits to transmit. Slave mode: Number of break field threshold bits.
 } sci_b_lin_baud_params_t;
 
@@ -169,17 +187,19 @@ typedef struct st_sci_b_lin_extended_cfg
     /* Boolean settings */
     union
     {
-        uint8_t sci_b_settings;
+        uint16_t sci_b_settings;
 
         struct
         {
-            uint8_t clock_source           : 1; ///< The source clock for the baud-rate generator.
-            uint8_t noise_cancel           : 1; ///< Noise cancellation setting. See @ref sci_b_lin_noise_cancellation_t
-            uint8_t break_delimiter        : 1; ///< Break delimeter length setting (1 or 2 bits recessive). See @ref sci_b_lin_break_delimiter_bits_t
-            uint8_t bus_conflict_detection : 1; ///< Bus conflict detection cancellation setting. See @ref e_sci_b_lin_bus_conflict_detection_t
-            uint8_t bus_conflict_clock     : 2; ///< Bus conflict detection clock setting. See @ref sci_b_lin_bus_conflict_clock_t
-            uint8_t auto_synchronization   : 1; ///< Auto synchronization setting. See @ref sci_b_lin_synchronization_t.
-            uint8_t                        : 1;
+            uint16_t clock_source              : 1; ///< The source clock for the baud-rate generator.
+            uint16_t noise_cancel              : 1; ///< Noise cancellation setting. See @ref sci_b_lin_noise_cancellation_t
+            uint16_t break_delimiter           : 1; ///< Break delimeter length setting (1 or 2 bits recessive). See @ref sci_b_lin_break_delimiter_bits_t
+            uint16_t bus_conflict_detection    : 1; ///< Bus conflict detection cancellation setting. See @ref e_sci_b_lin_bus_conflict_detection_t
+            uint16_t bus_conflict_clock        : 2; ///< Bus conflict detection clock setting. See @ref sci_b_lin_bus_conflict_clock_t
+            uint16_t auto_synchronization      : 1; ///< Auto synchronization setting. See @ref sci_b_lin_synchronization_t.
+            uint16_t noise_cancel_clock        : 3; ///< Noise cancellation filter clock setting
+            uint16_t base_clock_cycles_per_bit : 2; ///< Base clock cycles per bit setting. See @ref sci_b_lin_base_clock_t
+            uint16_t                           : 4;
         } sci_b_settings_b;
     };
 
@@ -211,16 +231,16 @@ typedef struct st_sci_b_lin_instance_ctrl
     R_SCI_B0_Type   * p_reg;                    // Base register for this channel
     void (* p_callback)(lin_callback_args_t *); // Pointer to callback
     lin_callback_args_t * p_callback_memory;    // Pointer to optional working memory
-    void const          * p_context;            // Pointer to context to be passed into callback function
-    lin_event_t           event;                // Used to distinguish between start frame and information frame transmission completion events
-    uint8_t             * p_information;        // Information frame buffer pointer (used for both transmission and reception)
+    void                * p_context;            // Pointer to context to be passed into callback function
+    lin_event_t           event;                // Used to distinguish between header and data transmission completion events
+    uint8_t             * p_data;               // Data frame buffer pointer (used for both transmission and reception)
     uint32_t              sync_bits_sum;        // Sum of sync bit durations when auto synchronization is used
     uint32_t              timer_freq_hz;        // LIN timer frequency (Hz) used for break field generation/reception and auto synchronization
-    uint8_t               tx_src_bytes;         // Transmit buffer length, in bytes
-    uint8_t               last_tx_byte;         // Last byte of data when transmitting. When transmitting start frame, contains PID. When transmitting information frame, contains the checksum.
+    uint8_t               tx_src_bytes;         // Tracks number of data bytes transmitted
+    uint8_t               tx_header_bytes;      // Tracks number of header bytes transmitted
     uint8_t               rx_bytes_expected;    // Tracks number of frame bytes expected in the transfer (including checksum)
-    uint8_t               rx_bytes_received;    // Tracks number of information frame bytes received in the transfer (excluding checksum)
-    uint8_t               rx_checksum;          // Stores computed checksum as bytes come in during reception. Once checksum byte is received, stores received checksum
+    uint8_t               rx_bytes_received;    // Tracks number of data bytes received in the transfer (excluding checksum)
+    uint8_t               checksum;             // Stores computed checksum as bytes come in during reception. Once checksum byte is received, stores received checksum. During transmission, stores transmit checksum.
     uint8_t               validate_checksum;    // Indicates whether checksum should be validated by driver
     uint8_t               last_pid;             // Last PID transmitted or received
     uint8_t               sync_bits_received;   // Number of sync bits successfully measured so far during auto synchronization
@@ -240,15 +260,12 @@ extern const lin_api_t g_lin_on_sci_b;
  * Public APIs
  **********************************************************************************************************************/
 fsp_err_t R_SCI_B_LIN_Open(lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const p_cfg);
-fsp_err_t R_SCI_B_LIN_StartFrameWrite(lin_ctrl_t * const p_api_ctrl, uint8_t const id);
-fsp_err_t R_SCI_B_LIN_InformationFrameWrite(lin_ctrl_t * const                  p_api_ctrl,
-                                            const lin_transfer_params_t * const p_transfer_params);
-fsp_err_t R_SCI_B_LIN_InformationFrameRead(lin_ctrl_t * const            p_api_ctrl,
-                                           lin_transfer_params_t * const p_transfer_params);
+fsp_err_t R_SCI_B_LIN_Write(lin_ctrl_t * const p_api_ctrl, const lin_transfer_params_t * const p_transfer_params);
+fsp_err_t R_SCI_B_LIN_Read(lin_ctrl_t * const p_api_ctrl, lin_transfer_params_t * const p_transfer_params);
 fsp_err_t R_SCI_B_LIN_CommunicationAbort(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_B_LIN_CallbackSet(lin_ctrl_t * const          p_api_ctrl,
                                   void (                    * p_callback)(lin_callback_args_t *),
-                                  void const * const          p_context,
+                                  void * const                p_context,
                                   lin_callback_args_t * const p_callback_memory);
 fsp_err_t R_SCI_B_LIN_BaudCalculate(sci_b_lin_baud_params_t const * const p_baud_params,
                                     sci_b_lin_baud_setting_t * const      p_baud_setting);
@@ -258,6 +275,11 @@ fsp_err_t R_SCI_B_LIN_WakeupSend(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_B_LIN_SleepEnter(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_B_LIN_SleepExit(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_B_LIN_Close(lin_ctrl_t * const p_api_ctrl);
+fsp_err_t R_SCI_B_LIN_StartFrameWrite(lin_ctrl_t * const p_api_ctrl, uint8_t const id);             // [DEPRECATED]
+fsp_err_t R_SCI_B_LIN_InformationFrameWrite(lin_ctrl_t * const                  p_api_ctrl,
+                                            const lin_transfer_params_t * const p_transfer_params); // [DEPRECATED]
+fsp_err_t R_SCI_B_LIN_InformationFrameRead(lin_ctrl_t * const            p_api_ctrl,
+                                           lin_transfer_params_t * const p_transfer_params);        // [DEPRECATED]
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup SCI_B_LIN)

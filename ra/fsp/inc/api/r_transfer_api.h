@@ -174,7 +174,7 @@ typedef enum e_transfer_irq
 /** Callback function parameter data. */
 typedef struct st_transfer_callback_args_t
 {
-    void const * p_context;            ///< Placeholder for user data.  Set in @ref transfer_api_t::open function in ::transfer_cfg_t.
+    void * p_context;                  ///< Placeholder for user data.  Set in @ref transfer_api_t::open function in ::transfer_cfg_t.
 } transfer_callback_args_t;
 
 #endif
@@ -368,7 +368,7 @@ typedef struct st_transfer_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(transfer_ctrl_t * const p_ctrl, void (* p_callback)(transfer_callback_args_t *),
-                              void const * const p_context, transfer_callback_args_t * const p_callback_memory);
+                              void * const p_context, transfer_callback_args_t * const p_callback_memory);
 } transfer_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

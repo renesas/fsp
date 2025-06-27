@@ -74,7 +74,7 @@ typedef enum e_at_transport_da16xxx_event
 /** DA16xxx middleware callback parameter definition */
 typedef struct st_at_transport_da16xxx_callback_args
 {
-    void const                 * p_context;
+    void * p_context;
     at_transport_da16xxx_event_t event;
     uint8_t data;
 } at_transport_da16xxx_callback_args_t;
@@ -83,7 +83,7 @@ typedef struct st_at_transport_da16xxx_callback_args
 typedef struct st_at_transport_da16xxx_cfg
 {
     void const * p_extend;                                              ///< Pointer to extended configuration by instance of interface.
-    void const * p_context;                                             ///< Pointer to the user-provided context
+    void       * p_context;                                             ///< Pointer to the user-provided context
     bool (* p_callback)(at_transport_da16xxx_callback_args_t * p_args); ///< Pointer to callback function.
 } at_transport_da16xxx_cfg_t;
 

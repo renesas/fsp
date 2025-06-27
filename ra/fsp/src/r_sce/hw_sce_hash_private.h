@@ -55,4 +55,14 @@ extern fsp_err_t HW_SCE_ShaGenerateMessageDigestSub(const uint32_t InData_HashTy
                                                     const uint32_t MAX_CNT);
 
 #endif
+extern fsp_err_t HW_SCE_ShaGenerateMessageDigestSubGeneral(const uint32_t InData_HashType[],
+                                                           const uint32_t InData_Cmd[],
+                                                           const uint32_t InData_Msg[],
+                                                           const uint32_t InData_MsgLen[],
+                                                           const uint32_t InData_State[],
+                                                           uint32_t       OutData_MsgDigest[],
+                                                           uint32_t       OutData_State[],
+                                                           const uint32_t MAX_CNT,
+                                                           const uint32_t InData_InitVal[]);
+
 #endif                                 /* HW_SCE_HASH_PRIVATE_H */

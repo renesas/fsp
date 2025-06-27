@@ -55,8 +55,8 @@ typedef enum e_cgc_event
 /** Callback function parameter data */
 typedef struct st_cgc_callback_args
 {
-    cgc_event_t  event;                ///< The event can be used to identify what caused the callback
-    void const * p_context;            ///< Placeholder for user data
+    cgc_event_t event;                 ///< The event can be used to identify what caused the callback
+    void      * p_context;             ///< Placeholder for user data
 } cgc_callback_args_t;
 
 #ifndef BSP_OVERRIDE_CGC_CLOCK_T
@@ -208,7 +208,7 @@ typedef void cgc_ctrl_t;
 typedef struct st_cgc_cfg
 {
     void (* p_callback)(cgc_callback_args_t * p_args);
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;             ///< Extension parameter for hardware specific settings.
 } cgc_cfg_t;
 
@@ -308,7 +308,7 @@ typedef struct
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(cgc_ctrl_t * const p_ctrl, void (* p_callback)(cgc_callback_args_t *),
-                              void const * const p_context, cgc_callback_args_t * const p_callback_memory);
+                              void * const p_context, cgc_callback_args_t * const p_callback_memory);
 
     /** Close the CGC driver.
      * @param[in]   p_ctrl          Pointer to instance control block

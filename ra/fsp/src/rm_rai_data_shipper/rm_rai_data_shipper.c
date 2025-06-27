@@ -98,7 +98,7 @@ fsp_err_t RM_RAI_DATA_SHIPPER_Open (rai_data_shipper_ctrl_t * const      p_api_c
         p_ctrl->tx_info[i].header.rssn[2]    = 'S';
         p_ctrl->tx_info[i].header.rssn[3]    = 'N';
         p_ctrl->tx_info[i].header.crc_enable = (p_cfg->p_crc != NULL) ? (uint8_t) p_cfg->p_crc->p_cfg->polynomial : 0;
-        p_ctrl->tx_info[i].header.version = RM_RAI_DATA_SHIPPER_HEADER_BUFFER_VERSION;
+        p_ctrl->tx_info[i].header.version    = RM_RAI_DATA_SHIPPER_HEADER_BUFFER_VERSION;
     }
 
     p_ctrl->index           = 0;

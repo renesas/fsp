@@ -191,14 +191,14 @@ typedef struct st_sci_lin_instance_ctrl
     R_SCI0_Type     * p_reg;                    // Base register for this channel
     void (* p_callback)(lin_callback_args_t *); // Pointer to callback
     lin_callback_args_t * p_callback_memory;    // Pointer to optional working memory
-    void const          * p_context;            // Pointer to context to be passed into callback function
-    lin_event_t           event;                // Used to distinguish between start frame and information frame transmission completion events
-    uint8_t             * p_information;        // Information frame buffer pointer (used for both transmission and reception)
+    void                * p_context;            // Pointer to context to be passed into callback function
+    lin_event_t           event;                // Used to distinguish between header and data transmission completion events
+    uint8_t             * p_data;               // Information frame buffer pointer (used for both transmission and reception)
     uint8_t               tx_src_bytes;         // Transmit buffer length, in bytes
-    uint8_t               last_tx_byte;         // Last byte of data when transmitting. When transmitting start frame, contains PID. When transmitting information frame, contains the checksum.
+    uint8_t               tx_header_bytes;      // Tracks number of header bytes transmitted
     uint8_t               rx_bytes_expected;    // Tracks number of frame bytes expected in the transfer (including checksum)
     uint8_t               rx_bytes_received;    // Tracks number of information frame bytes received in the transfer (excluding checksum)
-    uint8_t               rx_checksum;          // Stores computed checksum as bytes come in during reception. Once checksum byte is received, stores received checksum
+    uint8_t               checksum;             // Stores computed checksum as bytes come in during reception. Once checksum byte is received, stores received checksum
     uint8_t               validate_checksum;    // Indicates whether checksum should be validated by driver
     uint8_t               last_pid;             // Last PID transmitted or received
 } sci_lin_instance_ctrl_t;
@@ -217,15 +217,12 @@ extern const lin_api_t g_lin_on_sci;
  * Public APIs
  **********************************************************************************************************************/
 fsp_err_t R_SCI_LIN_Open(lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const p_cfg);
-fsp_err_t R_SCI_LIN_StartFrameWrite(lin_ctrl_t * const p_api_ctrl, uint8_t const id);
-fsp_err_t R_SCI_LIN_InformationFrameWrite(lin_ctrl_t * const                  p_api_ctrl,
-                                          const lin_transfer_params_t * const p_transfer_params);
-fsp_err_t R_SCI_LIN_InformationFrameRead(lin_ctrl_t * const            p_api_ctrl,
-                                         lin_transfer_params_t * const p_transfer_params);
+fsp_err_t R_SCI_LIN_Write(lin_ctrl_t * const p_api_ctrl, const lin_transfer_params_t * const p_transfer_params);
+fsp_err_t R_SCI_LIN_Read(lin_ctrl_t * const p_api_ctrl, lin_transfer_params_t * const p_transfer_params);
 fsp_err_t R_SCI_LIN_CommunicationAbort(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_LIN_CallbackSet(lin_ctrl_t * const          p_api_ctrl,
                                 void (                    * p_callback)(lin_callback_args_t *),
-                                void const * const          p_context,
+                                void * const                p_context,
                                 lin_callback_args_t * const p_callback_memory);
 fsp_err_t R_SCI_LIN_IdFilterSet(lin_ctrl_t * const p_api_ctrl, sci_lin_id_filter_setting_t const * const p_config);
 fsp_err_t R_SCI_LIN_IdFilterGet(lin_ctrl_t * const p_api_ctrl, sci_lin_id_filter_setting_t * const p_config);
@@ -235,6 +232,11 @@ fsp_err_t R_SCI_LIN_BaudCalculate(sci_lin_baud_params_t const * const p_baud_par
 fsp_err_t R_SCI_LIN_WakeupSend(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_LIN_SleepEnter(lin_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SCI_LIN_SleepExit(lin_ctrl_t * const p_api_ctrl);
+fsp_err_t R_SCI_LIN_StartFrameWrite(lin_ctrl_t * const p_api_ctrl, uint8_t const id);             // [DEPRECATED]
+fsp_err_t R_SCI_LIN_InformationFrameWrite(lin_ctrl_t * const                  p_api_ctrl,
+                                          const lin_transfer_params_t * const p_transfer_params); // [DEPRECATED]
+fsp_err_t R_SCI_LIN_InformationFrameRead(lin_ctrl_t * const            p_api_ctrl,
+                                         lin_transfer_params_t * const p_transfer_params);        // [DEPRECATED]
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup SCI_LIN)

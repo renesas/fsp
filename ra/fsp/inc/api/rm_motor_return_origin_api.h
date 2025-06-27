@@ -81,7 +81,7 @@ typedef struct st_motor_return_origin_cfg
 {
     motor_return_origin_mode_t mode;
 
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;             ///< Placeholder for user extension.
 } motor_return_origin_cfg_t;
 

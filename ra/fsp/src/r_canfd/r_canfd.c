@@ -940,7 +940,7 @@ fsp_err_t R_CANFD_InfoGet (can_ctrl_t * const p_api_ctrl, can_info_t * const p_i
  **********************************************************************************************************************/
 fsp_err_t R_CANFD_CallbackSet (can_ctrl_t * const          p_api_ctrl,
                                void (                    * p_callback)(can_callback_args_t *),
-                               void const * const          p_context,
+                               void * const                p_context,
                                can_callback_args_t * const p_callback_memory)
 {
     canfd_instance_ctrl_t * p_ctrl = (canfd_instance_ctrl_t *) p_api_ctrl;
@@ -1006,7 +1006,7 @@ static bool r_canfd_bit_timing_parameter_check (can_bit_timing_cfg_t * const p_b
     else
  #else
 
-    /* Data phase is only avaiable for FD mode. */
+    /* Data phase is only available for FD mode. */
     FSP_PARAMETER_NOT_USED(is_data_phase);
  #endif
     {
@@ -1210,7 +1210,7 @@ void canfd_error_isr (void)
     {
 #if BSP_FEATURE_CANFD_NUM_INSTANCES > 1
 
-        /* If there are seperate instances of CANFD, then loop over each instance to handle the source of the global
+        /* If there are separate instances of CANFD, then loop over each instance to handle the source of the global
          * error IRQ. */
         for (uint32_t i = 0; i < BSP_FEATURE_CANFD_NUM_INSTANCES; i++)
         {
@@ -1324,7 +1324,7 @@ void canfd_rx_fifo_isr (void)
 
 #if BSP_FEATURE_CANFD_NUM_INSTANCES > 1
 
-    /* If there are seperate instances of CANFD, then loop over each instance to handle the source of the global
+    /* If there are separate instances of CANFD, then loop over each instance to handle the source of the global
      * receive IRQ. */
     for (uint32_t i = 0; i < BSP_FEATURE_CANFD_NUM_INSTANCES; i++)
     {

@@ -78,7 +78,7 @@
 /* Wait Process definition */
 #define FLASH_LP_WAIT_TDIS                            (3U)
 #if (BSP_FEATURE_FLASH_LP_VERSION == 4)
- #define FLASH_LP_WAIT_TMS_HIGH                       (16U) // MREF_INTERNAL_009
+ #define FLASH_LP_WAIT_TMS_HIGH                       (16U) // "Flash memory mode transition wait time 2" in the "Code Flash Memory Characteristics" subsection of the hardware manual
 #else
  #define FLASH_LP_WAIT_TMS_HIGH                       (6U)  // tMS wait time on flash version 3
 #endif
@@ -1099,7 +1099,7 @@ fsp_err_t R_FLASH_LP_Close (flash_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_FLASH_LP_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
                                   void (                      * p_callback)(flash_callback_args_t *),
-                                  void const * const            p_context,
+                                  void * const                  p_context,
                                   flash_callback_args_t * const p_callback_memory)
 {
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
@@ -1227,7 +1227,7 @@ static fsp_err_t r_flash_lp_setup (flash_lp_instance_ctrl_t * p_ctrl)
  * @param      p_ctrl                   Pointer to the control block
  * @param[in]  flash_address            The flash address
  * @param[in]  num_bytes                The number bytes
- * @param[in]  check_write              Check paramters for writing.
+ * @param[in]  check_write              Check parameters for writing.
  *
  * @retval     FSP_SUCCESS              Parameter checking completed without error.
  * @retval     FSP_ERR_NOT_OPEN         The Flash API is not Open.
@@ -2637,7 +2637,7 @@ static fsp_err_t r_flash_lp_wait_for_ready (flash_lp_instance_ctrl_t * const p_c
 /*******************************************************************************************************************//**
  * Set the flash interface peripheral clock frequency
  * @param      p_ctrl           Pointer to the interface control block
- * @retval     FSP_SUCCESS      Flash interface clock frequency succesfully configured.
+ * @retval     FSP_SUCCESS      Flash interface clock frequency successfully configured.
  * @retval     FSP_ERR_TIMEOUT  Setting the flash interface clock frequency timed out.
  **********************************************************************************************************************/
 fsp_err_t r_flash_lp_set_fisr (flash_lp_instance_ctrl_t * const p_ctrl)
@@ -2684,7 +2684,7 @@ void r_flash_lp_memcpy (uint8_t * const dest, uint8_t * const src, uint32_t len)
  #if (BSP_FEATURE_FLASH_LP_SUPPORTS_DUAL_BANK == 1)
 
 /*******************************************************************************************************************//**
- * This function swaps which flash bank will be used to boot from after swapped and activated. MREF_INTERNAL_010
+ * This function swaps which flash bank will be used to boot from after swapped and activated.
  *
  * @param[in]   p_ctrl                  Flash control block.
  *
@@ -2699,7 +2699,7 @@ static fsp_err_t r_flash_lp_bank_swap (flash_lp_instance_ctrl_t * const p_ctrl)
     fsp_err_t err = FSP_SUCCESS;
     uint8_t   cur_bank;
 
-    /* MREF_INTERNAL_011 */
+    /* Refer to the "Example of startup bank selection flow" flowchart in the relevant hardware manual */
     cur_bank = R_FACI_LP->FCTLFR_b.BANKSWP;
 
     r_flash_lp_cf_enter_pe_mode(p_ctrl, false);

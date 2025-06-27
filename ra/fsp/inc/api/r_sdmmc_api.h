@@ -255,7 +255,7 @@ typedef struct st_sdmmc_callback_args
 {
     sdmmc_event_t    event;            ///< The event can be used to identify what caused the callback.
     sdmmc_response_t response;         ///< Response from card, only valid if SDMMC_EVENT_RESPONSE is set in event.
-    void const     * p_context;        ///< Placeholder for user data.
+    void           * p_context;        ///< Placeholder for user data.
 } sdmmc_callback_args_t;
 
 /** Non-secure arguments for writeIo guard function */
@@ -299,7 +299,7 @@ typedef struct st_sdmmc_cfg
 
     /* Configuration for SD/MMC Event processing */
     void (* p_callback)(sdmmc_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                              ///< User defined context passed into callback function
+    void * p_context;                                    ///< User defined context passed into callback function
 
     /* Pointer to SD/MMC peripheral specific configuration */
     void const * p_extend;                               ///< SD/MMC hardware dependent configuration
@@ -468,7 +468,7 @@ typedef struct st_sdmmc_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(sdmmc_ctrl_t * const p_ctrl, void (* p_callback)(sdmmc_callback_args_t *),
-                              void const * const p_context, sdmmc_callback_args_t * const p_callback_memory);
+                              void * const p_context, sdmmc_callback_args_t * const p_callback_memory);
 
     /** Close open SD/MMC device.
      *

@@ -56,7 +56,7 @@ typedef struct
 {
     acmphs_input_t     input_voltage;
     acmphs_reference_t reference_voltage;
-    uint32_t           maximum_status_retries; // Maximum number of status retries alowed
+    uint32_t           maximum_status_retries; // Maximum number of status retries allowed
 } r_acmphs_extended_cfg_t;
 
 /* Channel instance control block. DO NOT INITIALIZE.  Initialization occurs in @ref comparator_api_t::open. */
@@ -65,7 +65,7 @@ typedef struct st_acmphs_instance_ctrl
     uint32_t                 open;                   // Used to determine if channel control block is in use
     const comparator_cfg_t * p_cfg;                  // Pointer to initial configurations
     R_ACMPHS0_Type         * p_reg;                  // Pointer to register base address
-    uint32_t                 maximum_status_retries; // Maximum number of status retries alowed
+    uint32_t                 maximum_status_retries; // Maximum number of status retries allowed
 } acmphs_instance_ctrl_t;
 
 /***********************************************************************************************************************

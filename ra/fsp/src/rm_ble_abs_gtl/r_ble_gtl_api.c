@@ -178,12 +178,7 @@ ble_status_t R_BLE_GAP_SetPrivMode (st_ble_dev_addr_t * p_addr, uint8_t * p_priv
 
 ble_status_t R_BLE_GAP_ConfWhiteList (uint8_t op_code, st_ble_dev_addr_t * p_addr, uint8_t device_num)
 {
-    FSP_PARAMETER_NOT_USED(op_code);
-    FSP_PARAMETER_NOT_USED(p_addr);
-    FSP_PARAMETER_NOT_USED(device_num);
-
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    return R_BLE_GTL_GAP_ConfWhiteList(op_code, p_addr, device_num);
 }
 
 ble_status_t R_BLE_GAP_GetVerInfo (void)
@@ -317,17 +312,18 @@ ble_status_t R_BLE_GAP_RemoveAdvSet (uint8_t op_code, uint8_t adv_hdl)
 
 ble_status_t R_BLE_GAP_CreateConn (st_ble_gap_create_conn_param_t * p_param)
 {
-    FSP_PARAMETER_NOT_USED(p_param);
+    ble_status_t status;
+    status = R_BLE_GTL_GAP_CreateConn(p_param);
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    return status;
 }
 
 ble_status_t R_BLE_GAP_CancelCreateConn (void)
 {
+    ble_status_t status;
+    status = R_BLE_GTL_GAP_CancelConn();
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    return status;
 }
 
 ble_status_t R_BLE_GAP_SetChMap (uint8_t * p_channel_map)
@@ -340,18 +336,17 @@ ble_status_t R_BLE_GAP_SetChMap (uint8_t * p_channel_map)
 
 ble_status_t R_BLE_GAP_StartScan (st_ble_gap_scan_param_t * p_scan_param, st_ble_gap_scan_on_t * p_scan_enable)
 {
-    FSP_PARAMETER_NOT_USED(p_scan_param);
-    FSP_PARAMETER_NOT_USED(p_scan_enable);
+    ble_status_t status;
+    status = R_BLE_GTL_GAP_StartScan(p_scan_param, p_scan_enable);
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    return status;
 }
 
 ble_status_t R_BLE_GAP_StopScan (void)
 {
+    ble_status_t status = R_BLE_GTL_GAP_StopScan();
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    return status;
 }
 
 ble_status_t R_BLE_GAP_CreateSync (st_ble_dev_addr_t * p_addr, uint8_t adv_sid, uint16_t skip, uint16_t sync_to)
@@ -414,12 +409,6 @@ ble_status_t R_BLE_GAP_SetPairingParams (st_ble_gap_pairing_param_t * p_pair_par
 
     status = R_BLE_GTL_GAP_SetPairingParams(p_pair_param);
 
-    /* Generate and register keys */
-    if(status == BLE_SUCCESS)
-    {
-        status = r_ble_gtl_sec_generate_and_store_ltk_keys_req(BLE_GAP_EDIV_SIZE + BLE_GAP_RAND_64_BIT_SIZE + BLE_GAP_LTK_SIZE);
-    }
-
     return status;
 }
 
@@ -429,6 +418,8 @@ ble_status_t R_BLE_GAP_SetLocIdInfo (st_ble_dev_addr_t * p_lc_id_addr, uint8_t *
     FSP_PARAMETER_NOT_USED(p_lc_irk);
 
     /* Functionality not yet implemented */
+
+    /* Function registers local info to stack, not applicable to DA1453x attach */
     return BLE_ERR_UNSUPPORTED;
 }
 
@@ -443,9 +434,15 @@ ble_status_t R_BLE_GAP_SetLocCsrk (uint8_t * p_local_csrk)
 ble_status_t R_BLE_GAP_StartPairing (uint16_t conn_hdl)
 {
     ble_status_t status = BLE_ERR_UNSPECIFIED;
+    if (r_ble_gtl_sec_get_dev_role(conn_hdl) == R_BLE_GTL_CENTRAL_ROLE) // CENTRAL_ROLE
+    {
+        status = r_ble_gtl_send_bond_cmd(conn_hdl);
+    }
+    else
+    {
+        status = r_ble_gtl_security_cmd(conn_hdl);
+    }
 
-    status = r_ble_gtl_security_cmd (conn_hdl);
-    
     return status;
 }
 
@@ -461,9 +458,18 @@ ble_status_t R_BLE_GAP_ReplyPairing (uint16_t conn_hdl, uint8_t response)
 ble_status_t R_BLE_GAP_StartEnc (uint16_t conn_hdl)
 {
     FSP_PARAMETER_NOT_USED(conn_hdl);
+    ble_status_t status = BLE_ERR_UNSPECIFIED;
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    if (r_ble_gtl_sec_get_dev_role(conn_hdl) == R_BLE_GTL_CENTRAL_ROLE)
+    {
+        status = r_ble_gtl_send_enc_cmd(conn_hdl);
+    }
+    else
+    {
+        status = BLE_ERR_UNSUPPORTED;
+    }
+
+    return status;
 }
 
 ble_status_t R_BLE_GAP_ReplyPasskeyEntry (uint16_t conn_hdl, uint32_t passkey, uint8_t response)
@@ -495,28 +501,58 @@ ble_status_t R_BLE_GAP_NotifyKeyPress (uint16_t conn_hdl, uint8_t key_press)
 
 ble_status_t R_BLE_GAP_GetDevSecInfo (uint16_t conn_hdl, st_ble_gap_auth_info_t * p_sec_info)
 {
-    FSP_PARAMETER_NOT_USED(conn_hdl);
     FSP_PARAMETER_NOT_USED(p_sec_info);
+    sec_ble_gap_bond_info_t * bond_info_loc_tmp = {0};
+    ble_status_t              status            = BLE_ERR_NOT_FOUND;
 
-    /* Functionality not yet implemented */
-    return BLE_ERR_UNSUPPORTED;
+    uint8_t bond_index = r_ble_gtl_sec_lut_table_info(GET_ENTRY, NULL, conn_hdl, 0);
+    if (INVALID_IDX == bond_index)
+    {
+        // No bonding available
+        status = BLE_ERR_NOT_FOUND;
+    }
+    else
+    {
+        bond_info_loc_tmp = r_ble_gtl_sec_get_rem_bond_data(bond_index);
+        if (bond_info_loc_tmp->p_auth_info.bonding == true)
+        {
+            // Bonding available
+            status = BLE_SUCCESS;
+
+            p_sec_info->security  = bond_info_loc_tmp->p_auth_info.security;
+            p_sec_info->pair_mode = bond_info_loc_tmp->p_auth_info.pair_mode;
+            p_sec_info->bonding   = bond_info_loc_tmp->p_auth_info.bonding;
+            p_sec_info->ekey_size = bond_info_loc_tmp->p_auth_info.ekey_size;
+        }
+    }
+
+    return status;
 }
 
 ble_status_t R_BLE_GAP_ReplyExKeyInfoReq (uint16_t conn_hdl)
 {
-    ble_status_t status = BLE_ERR_UNSUPPORTED;
-    uint8_t loc_key_dist_var = r_ble_gtl_sec_get_loc_key_dist_var();
+    ble_status_t status           = BLE_ERR_UNSUPPORTED;
+    uint8_t      loc_key_dist_var = (uint8_t) (conn_hdl >> 8);
 
-    /* Verify the keys of local device distribution*/
-    if (loc_key_dist_var & BLE_GAP_KEY_DIST_ENCKEY)
+    /* Clear the top byte */
+    conn_hdl = conn_hdl & R_BLE_GTL_SRC_ID_MASK;
+
+    /* The command does not have the key as separate param,
+     * for this reason the key is hidden in the first byte of conn_hdl */
+    if (loc_key_dist_var == R_BLE_GTL_GAPC_LTK_EXCH)
     {
         status = r_ble_gtl_send_gapc_bond_cfm(conn_hdl, R_BLE_GTL_GAPC_LTK_EXCH, true, NULL_TK_VAL);
     }
-    else
+
+    if (loc_key_dist_var == R_BLE_GTL_GAPC_IRK_EXCH)
     {
-        /* Functionality not yet implemented */
-        status = BLE_ERR_UNSUPPORTED;
-    }   
+        status = r_ble_gtl_send_gapc_bond_cfm(conn_hdl, R_BLE_GTL_GAPC_IRK_EXCH, true, NULL_TK_VAL);
+    }
+
+    if (loc_key_dist_var == R_BLE_GTL_GAPC_CSRK_EXCH)
+    {
+        status = r_ble_gtl_send_gapc_bond_cfm(conn_hdl, R_BLE_GTL_GAPC_CSRK_EXCH, true, NULL_TK_VAL);
+    }
 
     return status;
 }
@@ -567,10 +603,10 @@ ble_status_t R_BLE_GAP_ReplyLtkReq (uint16_t conn_hdl, uint16_t ediv, uint8_t * 
 
     FSP_PARAMETER_NOT_USED(response);
 
-    if (get_security_requirements() != GAP_SEC1_SEC_PAIR_ENC)
+    if (r_ble_gtl_sec_get_sec_conn_var() != BLE_GAP_SC_STRICT)
     {
         /* Handle LEGACY PAIRING */
-        bool comp_resp = r_ble_gtl_sec_encryption_req_resp(ediv, p_peer_rand);
+        bool comp_resp = r_ble_gtl_sec_encryption_req_resp(conn_hdl, ediv, p_peer_rand);
 
         if (comp_resp)
         {
@@ -582,6 +618,7 @@ ble_status_t R_BLE_GAP_ReplyLtkReq (uint16_t conn_hdl, uint16_t ediv, uint8_t * 
             /* Values NOT found in db */
             status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_DENY);
         }
+
         /* Notify the application */
         if (status == BLE_SUCCESS)
         {
@@ -597,7 +634,6 @@ ble_status_t R_BLE_GAP_ReplyLtkReq (uint16_t conn_hdl, uint16_t ediv, uint8_t * 
             status = r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, true);
         }
     }
-
 
     return status;
 }
@@ -701,7 +737,7 @@ ble_status_t R_BLE_GATTC_ReqExMtu (uint16_t conn_hdl, uint16_t mtu)
 
 ble_status_t R_BLE_GATTC_DiscAllPrimServ (uint16_t conn_hdl)
 {
-    return R_BLE_GTL_GATTC_DiscAllPrimServ(conn_hdl);;
+    return R_BLE_GTL_GATTC_DiscAllPrimServ(conn_hdl);
 }
 
 ble_status_t R_BLE_GATTC_DiscPrimServ (uint16_t conn_hdl, uint8_t * p_uuid, uint8_t uuid_type)
@@ -755,7 +791,7 @@ ble_status_t R_BLE_GATTC_ReadCharUsingUuid (uint16_t                  conn_hdl,
 
 ble_status_t R_BLE_GATTC_ReadLongChar (uint16_t conn_hdl, uint16_t value_hdl, uint16_t offset)
 {
-    return R_BLE_GTL_GATTC_ReadLongChar(conn_hdl, value_hdl, offset);
+    return R_BLE_GTL_GATTC_ReadLongChar(conn_hdl, value_hdl, offset, 0);
 }
 
 ble_status_t R_BLE_GATTC_ReadMultiChar (uint16_t conn_hdl, st_ble_gattc_rd_multi_req_param_t * p_list)
@@ -770,7 +806,10 @@ ble_status_t R_BLE_GATTC_WriteCharWithoutRsp (uint16_t conn_hdl, st_ble_gatt_hdl
 
 ble_status_t R_BLE_GATTC_SignedWriteChar (uint16_t conn_hdl, st_ble_gatt_hdl_value_pair_t * p_write_data)
 {
-    return R_BLE_GTL_GATTC_SignedWriteChar(conn_hdl, p_write_data);
+    FSP_PARAMETER_NOT_USED(conn_hdl);
+    FSP_PARAMETER_NOT_USED(p_write_data);
+
+    return BLE_ERR_UNSUPPORTED;
 }
 
 ble_status_t R_BLE_GATTC_WriteChar (uint16_t conn_hdl, st_ble_gatt_hdl_value_pair_t * p_write_data)
@@ -788,27 +827,41 @@ ble_status_t R_BLE_GATTC_ReliableWrites (uint16_t                               
                                          uint8_t                                    pair_num,
                                          uint8_t                                    auto_flag)
 {
-    return R_BLE_GTL_GATTC_ReliableWrites(conn_hdl, p_char_pair, pair_num, auto_flag);
+    FSP_PARAMETER_NOT_USED(auto_flag);
+
+    return R_BLE_GTL_GATTC_ReliableWrites(conn_hdl, p_char_pair, pair_num, 0);
 }
 
 ble_status_t R_BLE_GATTC_ExecWrite (uint16_t conn_hdl, uint8_t exe_flag)
 {
-    return R_BLE_GTL_GATTC_ExecWrite(conn_hdl, exe_flag);;
+    return R_BLE_GTL_GATTC_ExecWrite(conn_hdl, exe_flag);
 }
 
 ble_status_t R_BLE_L2CAP_RegisterCfPsm (ble_l2cap_cf_app_cb_t cb, uint16_t psm, uint16_t lwm)
 {
-    return R_BLE_GTL_L2CAP_RegisterCfPsm(cb, psm, lwm);
+    FSP_PARAMETER_NOT_USED(cb);
+    FSP_PARAMETER_NOT_USED(psm);
+    FSP_PARAMETER_NOT_USED(lwm);
+
+    /* Functionality not yet implemented */
+    return BLE_ERR_UNSUPPORTED;
 }
 
 ble_status_t R_BLE_L2CAP_DeregisterCfPsm (uint16_t psm)
 {
-    return R_BLE_GTL_L2CAP_DeregisterCfPsm(psm);
+    FSP_PARAMETER_NOT_USED(psm);
+
+    /* Functionality not yet implemented */
+    return BLE_ERR_UNSUPPORTED;
 }
 
 ble_status_t R_BLE_L2CAP_ReqCfConn (uint16_t conn_hdl, st_ble_l2cap_conn_req_param_t * p_conn_req_param)
 {
-    return R_BLE_GTL_L2CAP_ReqCfConn(conn_hdl, p_conn_req_param);
+    FSP_PARAMETER_NOT_USED(conn_hdl);
+    FSP_PARAMETER_NOT_USED(p_conn_req_param);
+
+    /* Functionality not yet implemented */
+    return BLE_ERR_UNSUPPORTED;
 }
 
 ble_status_t R_BLE_L2CAP_RspCfConn (st_ble_l2cap_conn_rsp_param_t * p_conn_rsp_param)
@@ -821,17 +874,30 @@ ble_status_t R_BLE_L2CAP_RspCfConn (st_ble_l2cap_conn_rsp_param_t * p_conn_rsp_p
 
 ble_status_t R_BLE_L2CAP_DisconnectCf (uint16_t lcid)
 {
-    return R_BLE_GTL_L2CAP_DisconnectCf(lcid);
+    FSP_PARAMETER_NOT_USED(lcid);
+
+    /* Functionality not yet implemented */
+    return BLE_ERR_UNSUPPORTED;
 }
 
 ble_status_t R_BLE_L2CAP_SendCfCredit (uint16_t lcid, uint16_t credit)
 {
-    return R_BLE_GTL_L2CAP_SendCfCredit(lcid, credit);
+    FSP_PARAMETER_NOT_USED(lcid);
+    FSP_PARAMETER_NOT_USED(credit);
+
+    /* Functionality not yet implemented */
+    return BLE_ERR_UNSUPPORTED;
 }
 
 ble_status_t R_BLE_L2CAP_SendCfData (uint16_t conn_hdl, uint16_t lcid, uint16_t data_len, uint8_t * p_sdu)
 {
-    return R_BLE_GTL_L2CAP_SendCfData(conn_hdl, lcid, data_len, p_sdu);
+    FSP_PARAMETER_NOT_USED(conn_hdl);
+    FSP_PARAMETER_NOT_USED(lcid);
+    FSP_PARAMETER_NOT_USED(data_len);
+    FSP_PARAMETER_NOT_USED(p_sdu);
+
+    /* Functionality not yet implemented */
+    return BLE_ERR_UNSUPPORTED;
 }
 
 ble_status_t R_BLE_VS_Init (ble_vs_app_cb_t vs_cb)
@@ -897,19 +963,46 @@ ble_status_t R_BLE_VS_SetBdAddr (uint8_t area, st_ble_dev_addr_t * p_addr)
     {
         status = R_BLE_GTL_VS_SetBdAddr(p_addr);
     }
+    /* Save BD address in data flash */
+    else if (BLE_VS_ADDR_AREA_DATA_FLASH == area)
+    {
+#ifdef ENABLE_STORAGE
+        status = R_BLE_GTL_VS_SetBdAddr_dflash(p_addr);
+#endif
+    }
+    else
+    {
+        /* Invalid area */
+        status = BLE_ERR_INVALID_ARG;
+    }
 
     return status;
 }
 
 ble_status_t R_BLE_VS_GetBdAddr (uint8_t area, uint8_t addr_type)
 {
-    ble_status_t status = BLE_ERR_UNSUPPORTED;
+    ble_status_t      status = BLE_ERR_UNSUPPORTED;
+    st_ble_dev_addr_t ret_addr;
 
     /* GTL middleware only supports BD address storage in registers */
     if (BLE_VS_ADDR_AREA_REG == area)
     {
         status = R_BLE_GTL_VS_GetBdAddr(addr_type);
     }
+    /* Get BD address from data flash */
+    else if (BLE_VS_ADDR_AREA_DATA_FLASH == area)
+    {
+#ifdef ENABLE_STORAGE
+        status = R_BLE_GTL_VS_GetBdAddr_dflash(addr_type, &ret_addr);
+#endif
+    }
+    else
+    {
+        /* Invalid area */
+        status = BLE_ERR_INVALID_ARG;
+    }
+
+    FSP_PARAMETER_NOT_USED(ret_addr);
 
     return status;
 }
@@ -962,6 +1055,19 @@ ble_status_t R_BLE_VS_GetScanChMap (void)
 {
 
     /* Functionality not supported by DA1453x */
+    return BLE_ERR_UNSUPPORTED;
+}
+
+ble_status_t R_BLE_VS_SetSleepMode (uint8_t sleep_mode, uint8_t ram_retention, uint8_t pin_selection)
+{
+    return R_BLE_GTL_VS_SetSleepMode(sleep_mode, ram_retention, pin_selection);
+}
+
+ble_status_t R_BLE_VS_SetPublicBdAddress (st_ble_dev_addr_t * p_addr)
+{
+    FSP_PARAMETER_NOT_USED(p_addr);
+
+    /* Functionality not supported by DA1453x, superseded by R_BLE_VS_SetBdAddr()  */
     return BLE_ERR_UNSUPPORTED;
 }
 

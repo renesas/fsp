@@ -59,7 +59,7 @@ typedef struct st_rm_comms_spi_instance_ctrl
     rm_comms_spi_bus_extended_cfg_t    * p_bus;             ///< Pointer to extended configuration structure
     rm_comms_spi_device_extended_cfg_t * p_device;          ///< Pointer to device specific settings (lower level configuration structure)
     void (* p_callback)(rm_comms_callback_args_t * p_args); ///< Pointer to callback that is called when a spi_event_t occurs
-    void const * p_context;                                 ///< Pointer to context passed into callback function
+    void * p_context;                                       ///< Pointer to context passed into callback function
 } rm_comms_spi_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -81,7 +81,7 @@ fsp_err_t RM_COMMS_SPI_WriteRead(rm_comms_ctrl_t * const            p_api_ctrl,
                                  rm_comms_write_read_params_t const write_read_params);
 fsp_err_t RM_COMMS_SPI_CallbackSet(rm_comms_ctrl_t * const p_api_ctrl,
                                    void (                * p_callback)(rm_comms_callback_args_t *),
-                                   void const * const      p_context);
+                                   void * const            p_context);
 void rm_comms_spi_callback(spi_callback_args_t * p_args);
 
 FSP_FOOTER

@@ -54,7 +54,7 @@ typedef struct st_usb_hcdc_ecm_instance_ctrl
     ether_cfg_t           * p_cfg;
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 
     uint8_t device_address;
 } usb_hcdc_ecm_instance_ctrl_t;
@@ -88,7 +88,7 @@ fsp_err_t R_USB_HCDC_ECM_TxStatusGet(ether_ctrl_t * const p_ctrl, void * const p
 
 fsp_err_t R_USB_HCDC_ECM_CallbackSet(ether_ctrl_t * const          p_api_ctrl,
                                      void (                      * p_callback)(ether_callback_args_t *),
-                                     void const * const            p_context,
+                                     void * const                  p_context,
                                      ether_callback_args_t * const p_callback_memory);
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

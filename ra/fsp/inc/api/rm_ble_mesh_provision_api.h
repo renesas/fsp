@@ -423,7 +423,7 @@ typedef struct st_rm_ble_mesh_provision_callback_args
     rm_ble_mesh_provision_event_type_t event_type;   ///< Provisioning event type
     rm_ble_mesh_error_code_t           event_result; ///< BLE MESH error code
     rm_ble_mesh_buffer_t               event_data;   ///< Payload type
-    void const * p_context;
+    void * p_context;
 } rm_ble_mesh_provision_callback_args_t;
 
 /** BLE MESH PROVISION control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
@@ -438,7 +438,7 @@ typedef struct st_rm_ble_mesh_provision_cfg
     rm_ble_mesh_provision_capabilities_t * p_capabilities;               ///< Device capabilities used for Provisioning
     rm_ble_mesh_instance_t const         * p_mesh_instance;              ///< Instance structure of BLE Mesh
     void (* p_callback)(rm_ble_mesh_provision_callback_args_t * p_args); ///< Callback function.
-    void const * p_context;                                              ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                                              ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                               ///< Placeholder for user extension.
 } rm_ble_mesh_provision_cfg_t;
 

@@ -421,7 +421,7 @@ fsp_err_t R_PDC_StatusGet (capture_ctrl_t * const p_ctrl, capture_status_t * p_s
  **************************************************************************************************************************/
 fsp_err_t R_PDC_CallbackSet (capture_ctrl_t * const          p_ctrl,
                              void (                        * p_callback)(capture_callback_args_t *),
-                             void const * const              p_context,
+                             void * const                    p_context,
                              capture_callback_args_t * const p_callback_memory)
 {
     FSP_PARAMETER_NOT_USED(p_ctrl);
@@ -490,6 +490,8 @@ void r_pdc_transfer_callback (pdc_instance_ctrl_t * p_ctrl)
     p_ctrl->transfer_in_progress = false;
     pdc_args.p_context           = p_ctrl;
     pdc_args.event               = PDC_EVENT_TRANSFER_COMPLETE;
+    pdc_args.event_status        = 0;
+    pdc_args.interrupt_status    = 0;
     pdc_args.p_buffer            = p_ctrl->p_current_buffer;
     p_ctrl->p_callback(&pdc_args);
 }
@@ -559,8 +561,10 @@ static void r_pdc_error_handler (pdc_instance_ctrl_t * p_ctrl)
 
     /* Report all the errors at once */
     uint32_t event = R_PDC->PCSR;
-    R_PDC->PCSR        = ~event & PDC_PRV_PCSR_MASK;
-    pdc_args.event     = (pdc_event_t) event;
-    pdc_args.p_context = p_ctrl->p_context;
+    R_PDC->PCSR               = ~event & PDC_PRV_PCSR_MASK;
+    pdc_args.event            = (pdc_event_t) event;
+    pdc_args.event_status     = 0;
+    pdc_args.interrupt_status = 0;
+    pdc_args.p_context        = p_ctrl->p_context;
     p_ctrl->p_callback(&pdc_args);
 }

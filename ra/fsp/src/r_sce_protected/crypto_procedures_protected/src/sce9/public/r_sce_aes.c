@@ -134,6 +134,7 @@ fsp_err_t R_SCE_AES128ECB_EncryptInit (sce_aes_handle_t * handle, sce_aes_wrappe
  * @param[in,out] plain_length plaintext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -145,6 +146,9 @@ fsp_err_t R_SCE_AES128ECB_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -177,8 +181,9 @@ fsp_err_t R_SCE_AES128ECB_EncryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] cipher        ciphertext data area (nothing ever written here)
  * @param[in,out] cipher_length ciphertext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -187,6 +192,8 @@ fsp_err_t R_SCE_AES128ECB_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;

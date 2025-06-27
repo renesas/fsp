@@ -565,7 +565,7 @@ fsp_err_t R_RTC_C_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjus
  **********************************************************************************************************************/
 fsp_err_t R_RTC_C_CallbackSet (rtc_ctrl_t * const          p_ctrl,
                                void (                    * p_callback)(rtc_callback_args_t *),
-                               void const * const          p_context,
+                               void * const                p_context,
                                rtc_callback_args_t * const p_callback_memory)
 {
     rtc_c_instance_ctrl_t * p_instance_ctrl = (rtc_c_instance_ctrl_t *) p_ctrl;

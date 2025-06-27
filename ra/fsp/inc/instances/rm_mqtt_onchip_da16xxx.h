@@ -78,7 +78,7 @@ typedef struct st_mqtt_onchip_da16xxx_callback_args
     uint8_t    * p_data;               ///< Payload received from subscribed MQTT topic.
     const char * p_topic;              ///< Topic to which the message payload belongs to.
     uint32_t     data_length;          ///< Length of the MQTT payload.
-    void const * p_context;            ///< Placeholder for user data.
+    void       * p_context;            ///< Placeholder for user data.
 } mqtt_onchip_da16xxx_callback_args_t;
 
 /** MQTT Configuration */
@@ -90,7 +90,7 @@ typedef struct st_mqtt_onchip_da16xxx_cfg
     const uint16_t tx_timeout;                                                                           ///< MQTT Tx timeout in milliseconds.
 
     void (* p_callback)(mqtt_onchip_da16xxx_callback_args_t * p_args);                                   ///< Location of user callback.
-    void const * p_context;                                                                              ///< Placeholder for user data. Passed to the user callback in mqtt_onchip_da16xxx_callback_args_t.
+    void       * p_context;                                                                              ///< Placeholder for user data. Passed to the user callback in mqtt_onchip_da16xxx_callback_args_t.
     uint8_t      clean_session;                                                                          ///< Whether to establish a new, clean session or resume a previous session.
     uint8_t      alpn_count;                                                                             ///< ALPN Protocols count. Max value is 3.
     const char * p_alpns[MQTT_ONCHIP_DA16XXX_MAX_ALPN];                                                  ///< ALPN Protocols.
@@ -140,8 +140,7 @@ fsp_err_t RM_MQTT_DA16XXX_Subscribe(mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctr
                                     size_t                                 subscription_count);
 fsp_err_t RM_MQTT_DA16XXX_UnSubscribe(mqtt_onchip_da16xxx_instance_ctrl_t  * p_ctrl,
                                       mqtt_onchip_da16xxx_sub_info_t * const p_sub_info);
-fsp_err_t RM_MQTT_DA16XXX_Receive(mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
-                                  mqtt_onchip_da16xxx_cfg_t const * const p_cfg);
+fsp_err_t RM_MQTT_DA16XXX_Receive(mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl);
 fsp_err_t RM_MQTT_DA16XXX_Close(mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl);
 
 #endif                                 /* RM_MQTT_ONCHIP_DA16XXX_H_ */

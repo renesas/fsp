@@ -300,7 +300,7 @@ typedef struct st_display_layer
 typedef struct st_display_callback_args
 {
     display_event_t event;             ///< Event code
-    void const    * p_context;         ///< Context provided to user during callback
+    void          * p_context;         ///< Context provided to user during callback
 } display_callback_args_t;
 
 /** Display main configuration structure */
@@ -319,7 +319,7 @@ typedef struct st_display_cfg
 
     /** Configuration for display event processing */
     void (* p_callback)(display_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                                ///< User defined context passed into callback function
+    void * p_context;                                      ///< User defined context passed into callback function
 
     /** Pointer to display peripheral specific configuration */
     void const * p_extend;                                 ///< Display hardware dependent configuration

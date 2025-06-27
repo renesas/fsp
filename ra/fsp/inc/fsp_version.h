@@ -28,10 +28,10 @@ extern "C" {
  **********************************************************************************************************************/
 
 /** FSP pack major version. */
- #define FSP_VERSION_MAJOR (5U)
+ #define FSP_VERSION_MAJOR (6U)
 
 /** FSP pack minor version. */
- #define FSP_VERSION_MINOR (9U)
+ #define FSP_VERSION_MINOR (0U)
 
 /** FSP pack patch version. */
  #define FSP_VERSION_PATCH (0U)
@@ -40,10 +40,10 @@ extern "C" {
  #define FSP_VERSION_BUILD           (0U)
 
 /** Public FSP version name. */
- #define FSP_VERSION_STRING          ("5.9.0")
+ #define FSP_VERSION_STRING          ("6.0.0")
 
 /** Unique FSP version ID. */
- #define FSP_VERSION_BUILD_STRING    ("Built with Renesas Advanced Flexible Software Package version 5.9.0")
+ #define FSP_VERSION_BUILD_STRING    ("Built with Renesas Advanced Flexible Software Package version 6.0.0")
 
 /**********************************************************************************************************************
  * Typedef definitions

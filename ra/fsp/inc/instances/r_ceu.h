@@ -127,7 +127,7 @@ typedef struct st_ceu_instance_ctrl
     uint32_t              interrupts_enabled;       // Interrupts enabled bitmask
     void (* p_callback)(capture_callback_args_t *); // Pointer to callback that is called when an ceu_event_t occurs.
     capture_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
-    void const              * p_context;            // Pointer to context to be passed into callback function
+    void * p_context;                               // Pointer to context to be passed into callback function
 } ceu_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -151,7 +151,7 @@ fsp_err_t R_CEU_CaptureStart(capture_ctrl_t * const p_ctrl, uint8_t * const p_bu
 
 fsp_err_t R_CEU_CallbackSet(capture_ctrl_t * const          p_ctrl,
                             void (                        * p_callback)(capture_callback_args_t *),
-                            void const * const              p_context,
+                            void * const                    p_context,
                             capture_callback_args_t * const p_callback_memory);
 
 fsp_err_t R_CEU_StatusGet(capture_ctrl_t * const p_ctrl, capture_status_t * p_status);

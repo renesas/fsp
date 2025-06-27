@@ -59,6 +59,7 @@ static bool g_start_temperature_sensor_calibration = true;
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_ALREADY_OPEN     Module is already opened.
  * @retval FSP_ERR_INVALID_DATA     NFC SDK initialization data was incomplete.
  **********************************************************************************************************************/
 fsp_err_t RM_NFC_READER_PTX_Open (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
@@ -259,10 +260,11 @@ fsp_err_t RM_NFC_READER_PTX_StatusGet (nfc_reader_ptx_instance_ctrl_t * const p_
  *  Gets the internal card registry.
  *
  * @param[in]  p_ctrl               Pointer to NFC IoT Reader control structure.
- * @param[in]  pp_card_registry      Pointer to card registry for discovered cards.
+ * @param[in]  pp_card_registry     Pointer to card registry for discovered cards.
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
  * @retval FSP_ERR_INVALID_ARGUMENT Invalid input parameters to NFC registry function.
  **********************************************************************************************************************/
 fsp_err_t RM_NFC_READER_PTX_CardRegistryGet (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
@@ -286,13 +288,16 @@ fsp_err_t RM_NFC_READER_PTX_CardRegistryGet (nfc_reader_ptx_instance_ctrl_t * co
 
 /*******************************************************************************************************************//**
  *  Gets the details of the discovered card and connects to it.
+ *  Not required if only a single tag was discovered.
  *
  * @param[in]  p_ctrl               Pointer to NFC IoT Reader control structure.
- * @param[in]  p_card_params           Parameters of the card to be activated.
+ * @param[in]  p_card_params        Parameters of the card to be activated.
  * @param[in]  protocol             The NFC protocol of the card to be activated.
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
+ * @retval FSP_ERR_INVALID_STATE    NFC module is not in the discovered/selection state.
  **********************************************************************************************************************/
 fsp_err_t RM_NFC_READER_PTX_CardActivate (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
                                           ptxIoTRd_CardParams_t * const          p_card_params,
@@ -327,6 +332,9 @@ fsp_err_t RM_NFC_READER_PTX_CardActivate (nfc_reader_ptx_instance_ctrl_t * const
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
+ * @retval FSP_ERR_INVALID_STATE    NFC module is not in the activated state.
+ * @retval FSP_ERR_INVALID_ARGUMENT Issue with input parameters (buffers) leading to failed transmission.
  **********************************************************************************************************************/
 fsp_err_t RM_NFC_READER_PTX_DataExchange (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
                                           nfc_reader_ptx_data_info_t * const     p_data_info)
@@ -342,7 +350,7 @@ fsp_err_t RM_NFC_READER_PTX_DataExchange (nfc_reader_ptx_instance_ctrl_t * const
 
     nfc_reader_ptx_cfg_t const * p_cfg = p_ctrl->p_cfg;
 
-    /* Activate the card that was discovered */
+    /* Exchange data with the activated tag */
     FSP_ERROR_RETURN(ptxStatus_Success ==
                      ptxIoTRd_Data_Exchange(p_cfg->iot_reader_context, p_data_info->p_tx_buf, p_data_info->tx_length,
                                             p_data_info->p_rx_buf, &p_data_info->rx_length, NFC_READER_PTX_TIMEOUT_RAW),
@@ -359,6 +367,9 @@ fsp_err_t RM_NFC_READER_PTX_DataExchange (nfc_reader_ptx_instance_ctrl_t * const
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
+ * @retval FSP_ERR_INVALID_STATE    NFC module is not in the activated state.
+ * @retval FSP_ERR_INVALID_ARGUMENT Issue with input parameters or transmission.
  **********************************************************************************************************************/
 fsp_err_t RM_NFC_READER_PTX_ReaderDeactivation (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
                                                 nfc_reader_ptx_return_state_t          return_state)
@@ -417,6 +428,163 @@ fsp_err_t RM_NFC_READER_PTX_ReaderDeactivation (nfc_reader_ptx_instance_ctrl_t *
 }
 
 /*******************************************************************************************************************//**
+ *  Initializes the optional NDEF API add-on. Must be done after NFC stack is initialized.
+ *
+ * @param[in]  p_ctrl               Pointer to NFC IoT Reader control structure.
+ * @param[in]  p_data_info          Pointer to the NFC TX/RX data.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
+ * @retval FSP_ERR_ALREADY_OPEN     NDEF API add-on was already initialized.
+ * @retval FSP_ERR_UNSUPPORTED      NDEF API add-on was not included in project configuration.
+ **********************************************************************************************************************/
+fsp_err_t RM_NFC_READER_PTX_NDEF_Init (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
+                                       nfc_reader_ptx_data_info_t * const     p_data_info)
+{
+#if (1 == NFC_READER_PTX_CFG_PARAM_CHECKING_ENABLED)
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(NULL != p_data_info);
+    FSP_ERROR_RETURN(NFC_READER_PTX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(NFC_READER_PTX_OPEN != p_ctrl->ndef_open, FSP_ERR_ALREADY_OPEN);
+#endif
+
+#if (!RM_NFC_READER_NDEF_SUPPORT)
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_data_info);
+
+    return FSP_ERR_UNSUPPORTED;
+#else
+    nfc_reader_ptx_cfg_t const * p_cfg = p_ctrl->p_cfg;
+
+    /* Generic NDEF-OP Component (Tag-independent) */
+    ptxNDEF_InitParams_t nfc_reader_ndef_init_params;
+
+    /* initialize generic NDEF-OP component */
+    memset(&nfc_reader_ndef_init_params, NFC_READER_PTX_ZERO, sizeof(ptxNDEF_InitParams_t));
+
+    nfc_reader_ndef_init_params.IotRd          = p_cfg->iot_reader_context;
+    nfc_reader_ndef_init_params.TxBuffer       = &p_data_info->p_tx_buf[0];
+    nfc_reader_ndef_init_params.TxBufferSize   = p_data_info->tx_length;
+    nfc_reader_ndef_init_params.RxBuffer       = &p_data_info->p_rx_buf[0];
+    nfc_reader_ndef_init_params.RxBufferSize   = p_data_info->rx_length;
+    nfc_reader_ndef_init_params.WorkBuffer     = (uint8_t *) p_ctrl->ndef_work_buf;
+    nfc_reader_ndef_init_params.WorkBufferSize = NFC_READER_PTX_NDEF_WORK_BUF_SIZE;
+
+    /* Initialize NDEF API */
+    FSP_ERROR_RETURN(ptxStatus_Success == ptxNDEF_Open(p_cfg->p_ndef_context, &nfc_reader_ndef_init_params),
+                     FSP_ERR_INVALID_DATA);
+
+    p_ctrl->ndef_open = NFC_READER_PTX_OPEN;
+
+    return FSP_SUCCESS;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ *  Exchanges NDEF data with an NFC tag by reading from or writing to it.
+ *
+ * @param[in]  p_ctrl               Pointer to NFC IoT Reader control structure.
+ * @param[in]  p_ndef_message       Pointer to the buffer to transmit or receive a message.
+ * @param[in]  message_length       Length of the NDEF message buffer.
+ * @param[in]  ndef_read_write_flag Flag to control if the data exchange is a read or a write.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
+ * @retval FSP_ERR_NOT_INITIALIZED  NDEF add-on is not initialized yet.
+ * @retval FSP_ERR_INVALID_STATE    NFC module is not in the activated state.
+ * @retval FSP_ERR_INVALID_DATA     Problem with input parameters or data transmission.
+ * @retval FSP_ERR_UNSUPPORTED      NDEF API add-on was not included in project configuration.
+ **********************************************************************************************************************/
+fsp_err_t RM_NFC_READER_PTX_NDEF_DataExchange (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
+                                               uint8_t                              * p_ndef_message,
+                                               uint32_t                               message_length,
+                                               nfc_reader_ptx_ndef_read_write_t       ndef_read_write_flag)
+{
+#if (1 == NFC_READER_PTX_CFG_PARAM_CHECKING_ENABLED)
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ASSERT(NULL != p_ndef_message);
+    FSP_ASSERT(0 != message_length);
+    FSP_ERROR_RETURN(NFC_READER_PTX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(NFC_READER_PTX_OPEN == p_ctrl->ndef_open, FSP_ERR_NOT_INITIALIZED);
+
+    /* Check device is activated before exchanging data */
+    FSP_ERROR_RETURN(p_ctrl->state_flag == NFC_READER_PTX_ACTIVATED, FSP_ERR_INVALID_STATE);
+#endif
+
+#if (!RM_NFC_READER_NDEF_SUPPORT)
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_ndef_message);
+    FSP_PARAMETER_NOT_USED(message_length);
+    FSP_PARAMETER_NOT_USED(ndef_read_write_flag);
+
+    return FSP_ERR_UNSUPPORTED;
+#else
+    nfc_reader_ptx_cfg_t const * p_cfg = p_ctrl->p_cfg;
+
+    /* Check is required before all NDEF operations */
+    FSP_ERROR_RETURN(ptxStatus_Success == ptxNDEF_CheckMessage(p_cfg->p_ndef_context), FSP_ERR_INVALID_DATA);
+
+    /* Check if the NDEF exchange is read or write */
+    if (NFC_READER_PTX_NDEF_READ == ndef_read_write_flag)
+    {
+        FSP_ERROR_RETURN(ptxStatus_Success == ptxNDEF_ReadMessage(p_cfg->p_ndef_context, p_ndef_message,
+                                                                  &message_length),
+                         FSP_ERR_INVALID_DATA);
+    }
+    else
+    {
+        FSP_ERROR_RETURN(ptxStatus_Success == ptxNDEF_WriteMessage(p_cfg->p_ndef_context, p_ndef_message,
+                                                                   message_length),
+                         FSP_ERR_INVALID_DATA);
+    }
+    return FSP_SUCCESS;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ *  Locks an NFC tag to prevent writing to it, making it read-only.
+ *
+ * @param[in]  p_ctrl               Pointer to NFC IoT Reader control structure.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
+ * @retval FSP_ERR_NOT_INITIALIZED  NDEF add-on is not initialized yet.
+ * @retval FSP_ERR_INVALID_STATE    NFC module is not in the activated state.
+ * @retval FSP_ERR_INVALID_DATA     Problem with input parameters or data transmission.
+ * @retval FSP_ERR_UNSUPPORTED      NDEF API add-on was not included in project configuration.
+ **********************************************************************************************************************/
+fsp_err_t RM_NFC_READER_PTX_NDEF_Lock (nfc_reader_ptx_instance_ctrl_t * const p_ctrl)
+{
+#if (1 == NFC_READER_PTX_CFG_PARAM_CHECKING_ENABLED)
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(NFC_READER_PTX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(NFC_READER_PTX_OPEN == p_ctrl->ndef_open, FSP_ERR_NOT_INITIALIZED);
+
+    /* Check device is activated before exchanging data */
+    FSP_ERROR_RETURN(p_ctrl->state_flag == NFC_READER_PTX_ACTIVATED, FSP_ERR_INVALID_STATE);
+#endif
+
+#if (!RM_NFC_READER_NDEF_SUPPORT)
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+
+    return FSP_ERR_UNSUPPORTED;
+#else
+    nfc_reader_ptx_cfg_t const * p_cfg = p_ctrl->p_cfg;
+
+    /* Check is required before all NDEF operations */
+    FSP_ERROR_RETURN(ptxStatus_Success == ptxNDEF_CheckMessage(p_cfg->p_ndef_context), FSP_ERR_INVALID_DATA);
+
+    /* Lock the tag if it is supported */
+    FSP_ERROR_RETURN(ptxStatus_Success == ptxNDEF_LockTag(p_cfg->p_ndef_context), FSP_ERR_INVALID_DATA);
+
+    return FSP_SUCCESS;
+#endif
+}
+
+/*******************************************************************************************************************//**
  *  Closes the FSP NFC module and resets all variables.
  *
  * @param[in]  p_ctrl               Pointer to NFC IoT Reader control structure.
@@ -433,6 +601,16 @@ fsp_err_t RM_NFC_READER_PTX_Close (nfc_reader_ptx_instance_ctrl_t * const p_ctrl
 #endif
 
     nfc_reader_ptx_cfg_t const * p_cfg = p_ctrl->p_cfg;
+
+#if (RM_NFC_READER_NDEF_SUPPORT)
+    if (NFC_READER_PTX_OPEN == p_ctrl->ndef_open)
+    {
+        /* De-initialize NDEF add-on API and reset flag to initial state */
+        FSP_ERROR_RETURN(ptxStatus_Success == ptxNDEF_Close(p_cfg->p_ndef_context), FSP_ERR_INVALID_ARGUMENT);
+
+        p_ctrl->ndef_open = NFC_READER_PTX_CLOSED;
+    }
+#endif
 
     /* Reset values to initial state */
     p_ctrl->open       = NFC_READER_PTX_CLOSED;

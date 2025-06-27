@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**
- * \addtogroup grp_ptx_api_plat PTX NSC Platform API
- *
- * @{
- */
-
 #ifndef COMPS_PLAT_PTXPLAT_H_
  #define COMPS_PLAT_PTXPLAT_H_
 
@@ -438,5 +432,3 @@ ptxStatus_t ptxPLAT_GetReceivedMessage(struct ptxPlat * plat, uint8_t * rxMessag
  #endif
 
 #endif                                 /* Guard */
-
-/** @} */

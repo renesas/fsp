@@ -49,7 +49,7 @@ typedef struct st_cec_instance_ctrl
     uint8_t           cecctl0;                  // Cached CEC Registry data
     void (* p_callback)(cec_callback_args_t *); // Pointer to callback function
     cec_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
-    void const          * p_context;            // Pointer to context to be passed into callback function
+    void                * p_context;            // Pointer to context to be passed into callback function
 } cec_instance_ctrl_t;
 
 /* ACMPLP extended configuration */
@@ -83,7 +83,7 @@ fsp_err_t R_CEC_Write(cec_ctrl_t * const p_ctrl, cec_message_t const * const p_m
 fsp_err_t R_CEC_StatusGet(cec_ctrl_t * const p_ctrl, cec_status_t * const p_status);
 fsp_err_t R_CEC_CallbackSet(cec_ctrl_t * const          p_ctrl,
                             void (                    * p_callback)(cec_callback_args_t *),
-                            void const * const          p_context,
+                            void * const                p_context,
                             cec_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**

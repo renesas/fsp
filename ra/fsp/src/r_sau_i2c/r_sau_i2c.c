@@ -412,7 +412,7 @@ fsp_err_t R_SAU_I2C_SlaveAddressSet (i2c_master_ctrl_t * const    p_api_ctrl,
  **********************************************************************************************************************/
 fsp_err_t R_SAU_I2C_CallbackSet (i2c_master_ctrl_t * const          p_api_ctrl,
                                  void (                           * p_callback)(i2c_master_callback_args_t *),
-                                 void const * const                 p_context,
+                                 void * const                       p_context,
                                  i2c_master_callback_args_t * const p_callback_memory)
 {
     sau_i2c_instance_ctrl_t * p_ctrl = (sau_i2c_instance_ctrl_t *) p_api_ctrl;

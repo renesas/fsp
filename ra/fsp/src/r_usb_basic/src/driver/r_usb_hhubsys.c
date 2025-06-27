@@ -2653,7 +2653,7 @@ static uint16_t usb_hhub_request_result (uint16_t errcheck)
 
 /******************************************************************************
  * Function Name   : usb_hhub_trans_complete
- * Description     : Recieve complete Hub and Port Status Change Bitmap
+ * Description     : Receive complete Hub and Port Status Change Bitmap
  * Arguments       : usb_utr_t    *mess   : Pointer to usb_utr_t structure.
  *               : uint16_t     data1   : Not used.
  *               : uint16_t     data2   : Not used.

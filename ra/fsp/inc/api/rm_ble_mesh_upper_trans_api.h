@@ -272,7 +272,7 @@ typedef struct st_rm_ble_mesh_upper_trans_callback_args
     rm_ble_mesh_network_appkey_handle_t appkey_handle; ///< Associated AppKey Handle.
     rm_ble_mesh_error_code_t            result;        ///< Event result.
     rm_ble_mesh_buffer_t                event_data;
-    void const * p_context;                            ///< Context provided to user during callback.
+    void * p_context;                                  ///< Context provided to user during callback.
 } rm_ble_mesh_upper_trans_callback_args_t;
 
 /** BLE MESH control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
@@ -288,7 +288,7 @@ typedef struct st_rm_ble_mesh_upper_trans_cfg
     rm_ble_mesh_upper_trans_access_message_evnet_t  access_message_evnet;        ///< Whether to enable the access message event or not.
     rm_ble_mesh_lower_trans_instance_t const      * p_mesh_lower_trans_instance; ///< Instance structure of BLE Mesh Bearer
     void (* p_callback)(rm_ble_mesh_upper_trans_callback_args_t * p_args);       ///< Callback
-    void const * p_context;                                                      ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                                                      ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                                       ///< Placeholder for user extension.
 } rm_ble_mesh_upper_trans_cfg_t;
 

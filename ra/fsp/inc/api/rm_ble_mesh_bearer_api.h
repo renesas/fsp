@@ -278,7 +278,7 @@ typedef struct st_rm_ble_mesh_bearer_cfg
     /** the parameters for initialization. */
     uint32_t channel;                               ///< Select a channel corresponding to the channel number of the hardware.
     rm_ble_mesh_instance_t const * p_mesh_instance; ///< Instance structure of BLE Mesh
-    void const * p_context;                         ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                         ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                          ///< Placeholder for user extension.
 } rm_ble_mesh_bearer_cfg_t;
 

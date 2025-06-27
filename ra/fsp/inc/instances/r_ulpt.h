@@ -112,7 +112,7 @@ typedef struct st_ulpt_instance_ctrl
 
     void (* p_callback)(timer_callback_args_t *); // Pointer to callback that is called when a timer_event_t occurs.
     timer_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
-    void const            * p_context;            // Pointer to context to be passed into callback function
+    void * p_context;                             // Pointer to context to be passed into callback function
 } ulpt_instance_ctrl_t;
 
 /** Optional ULPT extension data structure. */
@@ -164,7 +164,7 @@ fsp_err_t R_ULPT_Stop(timer_ctrl_t * const p_ctrl);
 fsp_err_t R_ULPT_Open(timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg);
 fsp_err_t R_ULPT_CallbackSet(timer_ctrl_t * const          p_api_ctrl,
                              void (                      * p_callback)(timer_callback_args_t *),
-                             void const * const            p_context,
+                             void * const                  p_context,
                              timer_callback_args_t * const p_callback_memory);
 fsp_err_t R_ULPT_CompareMatchSet(timer_ctrl_t * const        p_ctrl,
                                  uint32_t const              compare_match_value,

@@ -53,15 +53,9 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_iaq_1st_gen_data_calculate(rm_zmod4xxx_
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_iaq_2nd_gen_data_calculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                                                     rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                                                     rm_zmod4xxx_iaq_2nd_data_t * const p_zmod4xxx_data);
-static fsp_err_t rm_zmod4510_oaq_2nd_gen_odor_data_calculate(rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
-                                                             rm_zmod4xxx_raw_data_t * const  p_raw_data,
-                                                             rm_zmod4xxx_odor_data_t * const p_zmod4xxx_data);
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_sulfur_odor_data_calculate(rm_zmod4xxx_ctrl_t * const             p_api_ctrl,
                                                                     rm_zmod4xxx_raw_data_t * const         p_raw_data,
                                                                     rm_zmod4xxx_sulfur_odor_data_t * const p_zmod4xxx_data);
-static fsp_err_t rm_zmod4510_oaq_2nd_gen_oaq_1st_gen_data_calculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                                                    rm_zmod4xxx_raw_data_t * const     p_raw_data,
-                                                                    rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data);
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_data_calculate(rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
                                                         rm_zmod4xxx_raw_data_t * const     p_raw_data,
                                                         rm_zmod4xxx_oaq_2nd_data_t * const p_zmod4xxx_data);
@@ -93,9 +87,7 @@ rm_zmod4xxx_api_t const g_zmod4xxx_on_zmod4510_oaq_2nd_gen =
     .read                      = rm_zmod4510_oaq_2nd_gen_read,
     .iaq1stGenDataCalculate    = rm_zmod4510_oaq_2nd_gen_iaq_1st_gen_data_calculate,
     .iaq2ndGenDataCalculate    = rm_zmod4510_oaq_2nd_gen_iaq_2nd_gen_data_calculate,
-    .odorDataCalculate         = rm_zmod4510_oaq_2nd_gen_odor_data_calculate,
     .sulfurOdorDataCalculate   = rm_zmod4510_oaq_2nd_gen_sulfur_odor_data_calculate,
-    .oaq1stGenDataCalculate    = rm_zmod4510_oaq_2nd_gen_oaq_1st_gen_data_calculate,
     .oaq2ndGenDataCalculate    = rm_zmod4510_oaq_2nd_gen_data_calculate,
     .raqDataCalculate          = rm_zmod4510_oaq_2nd_gen_raq_data_calculate,
     .relIaqDataCalculate       = rm_zmod4510_oaq_2nd_gen_rel_iaq_data_calculate,
@@ -161,7 +153,7 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_data_calculate (rm_zmod4xxx_ctrl_t * co
     int8_t               lib_err = 0;
     oaq_2nd_gen_inputs_t algorithm_input;
 
-    /* Calculate OAQ 1st Gen. data form ADC data */
+    /* Calculate OAQ 2nd Gen. data form ADC data */
     algorithm_input.adc_result       = &p_raw_data->adc_data[0];
     algorithm_input.humidity_pct     = p_lib->humidity;
     algorithm_input.temperature_degc = p_lib->temperature;
@@ -299,41 +291,9 @@ static fsp_err_t rm_zmod4510_oaq_2nd_gen_iaq_2nd_gen_data_calculate (rm_zmod4xxx
  *
  * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
  **********************************************************************************************************************/
-static fsp_err_t rm_zmod4510_oaq_2nd_gen_odor_data_calculate (rm_zmod4xxx_ctrl_t * const      p_api_ctrl,
-                                                              rm_zmod4xxx_raw_data_t * const  p_raw_data,
-                                                              rm_zmod4xxx_odor_data_t * const p_zmod4xxx_data)
-{
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-}
-
-/*******************************************************************************************************************//**
- * @brief  Unsupported API.
- *
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
- **********************************************************************************************************************/
 static fsp_err_t rm_zmod4510_oaq_2nd_gen_sulfur_odor_data_calculate (rm_zmod4xxx_ctrl_t * const             p_api_ctrl,
                                                                      rm_zmod4xxx_raw_data_t * const         p_raw_data,
                                                                      rm_zmod4xxx_sulfur_odor_data_t * const p_zmod4xxx_data)
-{
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_raw_data);
-    FSP_PARAMETER_NOT_USED(p_zmod4xxx_data);
-
-    return FSP_ERR_UNSUPPORTED;
-}
-
-/*******************************************************************************************************************//**
- * @brief  Unsupported API.
- *
- * @retval FSP_ERR_UNSUPPORTED                    Operation mode is not supported.
- **********************************************************************************************************************/
-static fsp_err_t rm_zmod4510_oaq_2nd_gen_oaq_1st_gen_data_calculate (rm_zmod4xxx_ctrl_t * const         p_api_ctrl,
-                                                                     rm_zmod4xxx_raw_data_t * const     p_raw_data,
-                                                                     rm_zmod4xxx_oaq_1st_data_t * const p_zmod4xxx_data)
 {
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
     FSP_PARAMETER_NOT_USED(p_raw_data);

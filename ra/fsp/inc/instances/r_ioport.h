@@ -39,8 +39,8 @@ FSP_HEADER
 /** IOPORT private control block. DO NOT MODIFY. Initialization occurs when R_IOPORT_Open() is called. */
 typedef struct st_ioport_instance_ctrl
 {
-    uint32_t     open;
-    void const * p_context;
+    uint32_t open;
+    void   * p_context;
 } ioport_instance_ctrl_t;
 
 /* This typedef is here temporarily. See SWFLEX-144 for details. */
@@ -467,7 +467,7 @@ typedef enum e_ioport_cfg_options
     IOPORT_CFG_PULLUP_ENABLE         = 0x00000010, ///< Enables the pin's internal pull-up
     IOPORT_CFG_PIM_TTL               = 0x00000020, ///< Enables the pin's input mode
     IOPORT_CFG_NMOS_ENABLE           = 0x00000040, ///< Enables the pin's NMOS open-drain output
-    IOPORT_CFG_PMOS_ENABLE           = 0x00000080, ///< Enables the pin's PMOS open-drain ouput
+    IOPORT_CFG_PMOS_ENABLE           = 0x00000080, ///< Enables the pin's PMOS open-drain output
     IOPORT_CFG_DRIVE_MID             = 0x00000400, ///< Sets pin drive output to medium
     IOPORT_CFG_DRIVE_HS_HIGH         = 0x00000800, ///< Sets pin drive output to high along with supporting high speed
     IOPORT_CFG_DRIVE_MID_IIC         = 0x00000800, ///< Sets pin to drive output needed for IIC on a 20mA port

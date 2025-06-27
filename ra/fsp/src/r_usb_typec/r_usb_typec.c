@@ -13,63 +13,63 @@
 /***********************************************************************************************************************
  * Macro definitions
  ***********************************************************************************************************************/
-#define USB_TYPEC_OPEN                         (('U' << 24U) | ('T' << 16U) | ('P' << 8U) | ('C' << 0U))
+#define USB_TYPEC_OPEN                           (('U' << 24U) | ('T' << 16U) | ('P' << 8U) | ('C' << 0U))
 
 /* TCC (Type C Control) Register */
-#define USB_TYPEC_TCC_ENB                      (0x00000001U) /* b0 : Connection State Machine Enable */
-#define USB_TYPEC_TCC_RESET                    (0x80000000U) /* b31: Type C Software Reset */
+#define USB_TYPEC_TCC_ENB                        (0x00000001U) /* b0 : Connection State Machine Enable */
+#define USB_TYPEC_TCC_RESET                      (0x80000000U) /* b31: Type C Software Reset */
 
 /* MEC (Mode Setting and State Control) Register */
-#define USB_TYPEC_MEC_MODE                     (0x00000001U) /* b0 : Connection State Machine Enable */
-#define USB_TYPEC_MEC_PMODE_MASK               (0x00000006U) /* b2-b1 : Source Current Detection Mode */
-#define USB_TYPEC_MEC_PMODE_DEFAULT            (0x00000000U) /* Detect Default USB Source */
-#define USB_TYPEC_MEC_PMODE_DEFAULT_1_5A       (0x00000002U) /* Detect Default USB Source and 1.5A Source */
-#define USB_TYPEC_MEC_PMODE_DEFAULT_1_5A_3_0A  (0x00000004U) /* Detect Default USB Source, 15A and 3.0A Source */
-#define USB_TYPEC_MEC_GD                       (0x00010000U) /* b16 : Direct Connection State to Disable State */
-#define USB_TYPEC_MEC_GUS                      (0x00020000U) /* b17 : Direct Connection State to Unattached_SNK */
+#define USB_TYPEC_MEC_MODE                       (0x00000001U) /* b0 : Connection State Machine Enable */
+#define USB_TYPEC_MEC_PMODE_MASK                 (0x00000006U) /* b2-b1 : Source Current Detection Mode */
+#define USB_TYPEC_MEC_PMODE_DEFAULT              (0x00000000U) /* Detect Default USB Source */
+#define USB_TYPEC_MEC_PMODE_DEFAULT_1_5A         (0x00000002U) /* Detect Default USB Source and 1.5A Source */
+#define USB_TYPEC_MEC_PMODE_DEFAULT_1_5A_3_0A    (0x00000004U) /* Detect Default USB Source, 15A and 3.0A Source */
+#define USB_TYPEC_MEC_GD                         (0x00010000U) /* b16 : Direct Connection State to Disable State */
+#define USB_TYPEC_MEC_GUS                        (0x00020000U) /* b17 : Direct Connection State to Unattached_SNK */
 
 /* CCC (CC-PHY Control) Register */
-#define USB_TYPEC_CCC_RD                       (0x00000001U) /* b0  : RD Control */
-#define USB_TYPEC_CCC_ZOPEN                    (0x00000002U) /* b1  : zOpen Control */
-#define USB_TYPEC_CCC_CCSEL                    (0x00000100U) /* b8  : Selection of CC */
-#define USB_TYPEC_CCC_VRAEN                    (0x00010000U) /* b16 : vRa Detection Circuit Enable */
-#define USB_TYPEC_CCC_VRD1_5EN                 (0x00020000U) /* b17 : vRd-1.5 Detection Circuit Enable */
-#define USB_TYPEC_CCC_VRD3_0EN                 (0x00040000U) /* b18 : vRd-3.0 Detection Circuit Enable */
-#define USB_TYPEC_CCC_PDOWN                    (0x80000000U) /* b31 : CC-PHY Power Down Control */
+#define USB_TYPEC_CCC_RD                         (0x00000001U) /* b0  : RD Control */
+#define USB_TYPEC_CCC_ZOPEN                      (0x00000002U) /* b1  : zOpen Control */
+#define USB_TYPEC_CCC_CCSEL                      (0x00000100U) /* b8  : Selection of CC */
+#define USB_TYPEC_CCC_VRAEN                      (0x00010000U) /* b16 : vRa Detection Circuit Enable */
+#define USB_TYPEC_CCC_VRD1_5EN                   (0x00020000U) /* b17 : vRd-1.5 Detection Circuit Enable */
+#define USB_TYPEC_CCC_VRD3_0EN                   (0x00040000U) /* b18 : vRd-3.0 Detection Circuit Enable */
+#define USB_TYPEC_CCC_PDOWN                      (0x80000000U) /* b31 : CC-PHY Power Down Control */
 
 /* IES (Interrupt Enable Control and Status) Register */
-#define USB_TYPEC_IES_ISCN                     (0x00000001U) /* b0  : Interrupt Status of Connection */
-#define USB_TYPEC_IES_ISCC                     (0x00000010U) /* b4  : Interrupt Status of CC */
-#define USB_TYPEC_IES_ISVBUS                   (0x00000020U) /* b5  : Interrupt Status of VBUS */
-#define USB_TYPEC_IES_ISVRA                    (0x00008000U) /* b15 : Interrupt Status of VRA */
-#define USB_TYPEC_IES_CIEN                     (0x00010000U) /* b16 : CC Interrupt Enable */
-#define USB_TYPEC_IES_CCIEN                    (0x00100000U) /* b20 : CC Interrupt Enable */
-#define USB_TYPEC_IES_VBUSIEN                  (0x00200000U) /* b21 : VBUS Interrupt Enable */
-#define USB_TYPEC_IES_VRAIEN                   (0x80000000U) /* b31 : VRA Interrupt Enable */
+#define USB_TYPEC_IES_ISCN                       (0x00000001U) /* b0  : Interrupt Status of Connection */
+#define USB_TYPEC_IES_ISCC                       (0x00000010U) /* b4  : Interrupt Status of CC */
+#define USB_TYPEC_IES_ISVBUS                     (0x00000020U) /* b5  : Interrupt Status of VBUS */
+#define USB_TYPEC_IES_ISVRA                      (0x00008000U) /* b15 : Interrupt Status of VRA */
+#define USB_TYPEC_IES_CIEN                       (0x00010000U) /* b16 : CC Interrupt Enable */
+#define USB_TYPEC_IES_CCIEN                      (0x00100000U) /* b20 : CC Interrupt Enable */
+#define USB_TYPEC_IES_VBUSIEN                    (0x00200000U) /* b21 : VBUS Interrupt Enable */
+#define USB_TYPEC_IES_VRAIEN                     (0x80000000U) /* b31 : VRA Interrupt Enable */
 
 /* TCS (Type-CC Connection State and Status) Register */
-#define USB_TYPEC_TCS_SRCD                     (0x00000001U) /* b0   : Interrupt Status of Connection */
-#define USB_TYPEC_TCS_VRD1_5D                  (0x00000002U) /* b1   : Interrupt Status of CC (Power1.5 Source is Detected) */
-#define USB_TYPEC_TCS_VRD3_0D                  (0x00000004U) /* b2   : Interrupt Status of CC (Power3.0 Source is Detected) */
-#define USB_TYPEC_TCS_PLUG                     (0x00000008U) /* b3   : Connection of Plug Orientation */
-#define USB_TYPEC_TCS_CNS_MASK                 (0x000000F0U) /* b7-b4: CC Interrupt Enable */
-#define USB_TYPEC_TCS_CNS_DEFAULT              (0x00000000U) /* Disabled */
-#define USB_TYPEC_TCS_CNS_UNATTACHED           (0x00000010U) /* Unattached.SNK */
-#define USB_TYPEC_TCS_CNS_ATTACHED_WAIT        (0x00000020U) /* AttachedWait.SNK */
-#define USB_TYPEC_TCS_CNS_ATTACHED_DEFAULT     (0x00000040U) /* Attache.SNK (PowerDefault.SNK) */
-#define USB_TYPEC_TCS_CNS_ATTACHED_1_5         (0x00000050U) /* Attache.SNK (Power1.5.SNK) */
-#define USB_TYPEC_TCS_CNS_ATTACHED_3_0         (0x00000060U) /* Attache.SNK (Power3.0.SNK) */
-#define USB_TYPEC_TCS_CC1S_MASK                (0x00000300U) /* b9-b8: Status of CC1 */
-#define USB_TYPEC_TCS_CC1S_OPEN                (0x00000000U) /* SNK.Open */
-#define USB_TYPEC_TCS_CC1S_DEFAULT             (0x00000100U) /* SNK.Default */
-#define USB_TYPEC_TCS_CC1S_1_5                 (0x00000200U) /* SNK.Power1.5 */
-#define USB_TYPEC_TCS_CC1S_3_0                 (0x00000300U) /* SNK.Power3.0 */
-#define USB_TYPEC_TCS_CC2S_MASK                (0x00000C00U) /* b11-b10: Status of CC2 */
-#define USB_TYPEC_TCS_CC2S_OPEN                (0x00000000U) /* b11-b10: Status of CC2 */
-#define USB_TYPEC_TCS_CC2S_DEFAULT             (0x00000400U) /* SNK.Default */
-#define USB_TYPEC_TCS_CC2S_1_5                 (0x00000800U) /* SNK.Power1.5 */
-#define USB_TYPEC_TCS_CC2S_3_0                 (0x00000C00U) /* SNK.Power3.0 */
-#define USB_TYPEC_TCS_VBUSS                    (0x00001000U) /* Status of VBUS */
+#define USB_TYPEC_TCS_SRCD                       (0x00000001U) /* b0   : Interrupt Status of Connection */
+#define USB_TYPEC_TCS_VRD1_5D                    (0x00000002U) /* b1   : Interrupt Status of CC (Power1.5 Source is Detected) */
+#define USB_TYPEC_TCS_VRD3_0D                    (0x00000004U) /* b2   : Interrupt Status of CC (Power3.0 Source is Detected) */
+#define USB_TYPEC_TCS_PLUG                       (0x00000008U) /* b3   : Connection of Plug Orientation */
+#define USB_TYPEC_TCS_CNS_MASK                   (0x000000F0U) /* b7-b4: CC Interrupt Enable */
+#define USB_TYPEC_TCS_CNS_DEFAULT                (0x00000000U) /* Disabled */
+#define USB_TYPEC_TCS_CNS_UNATTACHED             (0x00000010U) /* Unattached.SNK */
+#define USB_TYPEC_TCS_CNS_ATTACHED_WAIT          (0x00000020U) /* AttachedWait.SNK */
+#define USB_TYPEC_TCS_CNS_ATTACHED_DEFAULT       (0x00000040U) /* Attache.SNK (PowerDefault.SNK) */
+#define USB_TYPEC_TCS_CNS_ATTACHED_1_5           (0x00000050U) /* Attache.SNK (Power1.5.SNK) */
+#define USB_TYPEC_TCS_CNS_ATTACHED_3_0           (0x00000060U) /* Attache.SNK (Power3.0.SNK) */
+#define USB_TYPEC_TCS_CC1S_MASK                  (0x00000300U) /* b9-b8: Status of CC1 */
+#define USB_TYPEC_TCS_CC1S_OPEN                  (0x00000000U) /* SNK.Open */
+#define USB_TYPEC_TCS_CC1S_DEFAULT               (0x00000100U) /* SNK.Default */
+#define USB_TYPEC_TCS_CC1S_1_5                   (0x00000200U) /* SNK.Power1.5 */
+#define USB_TYPEC_TCS_CC1S_3_0                   (0x00000300U) /* SNK.Power3.0 */
+#define USB_TYPEC_TCS_CC2S_MASK                  (0x00000C00U) /* b11-b10: Status of CC2 */
+#define USB_TYPEC_TCS_CC2S_OPEN                  (0x00000000U) /* b11-b10: Status of CC2 */
+#define USB_TYPEC_TCS_CC2S_DEFAULT               (0x00000400U) /* SNK.Default */
+#define USB_TYPEC_TCS_CC2S_1_5                   (0x00000800U) /* SNK.Power1.5 */
+#define USB_TYPEC_TCS_CC2S_3_0                   (0x00000C00U) /* SNK.Power3.0 */
+#define USB_TYPEC_TCS_VBUSS                      (0x00001000U) /* Status of VBUS */
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -91,9 +91,9 @@ uint32_t g_usb_typec_reg_tcs;
  **********************************************************************************************************************/
 const usb_typec_api_t g_typec_on_typec =
 {
-    .open    = R_USB_TYPEC_Open,
-    .close   = R_USB_TYPEC_Close,
-    .infoGet = R_USB_TYPEC_InfoGet,
+    .open            = R_USB_TYPEC_Open,
+    .close           = R_USB_TYPEC_Close,
+    .infoGet         = R_USB_TYPEC_InfoGet,
     .lowPowerModeSet = R_USB_TYPEC_LowPowerModeSet,
 };
 
@@ -254,13 +254,14 @@ fsp_err_t R_USB_TYPEC_LowPowerModeSet (usb_typec_ctrl_t * const p_ctrl, usb_type
 #if (USB_TYPEC_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(p_typec_ctrl);
     FSP_ERROR_RETURN(USB_TYPEC_OPEN == p_typec_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(!((USB_TYPEC_CCS_STATUS_ON != status) && (USB_TYPEC_CCS_STATUS_OFF != status)), FSP_ERR_USB_PARAMETER)
+    FSP_ERROR_RETURN(!((USB_TYPEC_CCS_STATUS_ON != status) && (USB_TYPEC_CCS_STATUS_OFF != status)),
+                     FSP_ERR_USB_PARAMETER)
 #endif
 
     if (USB_TYPEC_CCS_STATUS_ON == status)
     {
         /* USBCC CCI disable */
-        R_BSP_IrqDisable (p_typec_ctrl->irq_typec_cci);
+        R_BSP_IrqDisable(p_typec_ctrl->irq_typec_cci);
 
         /* USBCC Status Change Interrupt Software Standby/Snooze */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
@@ -276,7 +277,7 @@ fsp_err_t R_USB_TYPEC_LowPowerModeSet (usb_typec_ctrl_t * const p_ctrl, usb_type
     else
     {
         /* USBCC CCS disable */
-        R_BSP_IrqDisable (p_typec_ctrl->irq_typec_ccs);
+        R_BSP_IrqDisable(p_typec_ctrl->irq_typec_ccs);
 
         /* USBCC Status Change Interrupt Software Standby/Snooze */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
@@ -289,6 +290,7 @@ fsp_err_t R_USB_TYPEC_LowPowerModeSet (usb_typec_ctrl_t * const p_ctrl, usb_type
             R_BSP_IrqCfgEnable(p_typec_ctrl->irq_typec_cci, p_typec_ctrl->ipl_typec_cci, (void *) p_typec_ctrl); /* USBCC CCI enable */
         }
     }
+
     return FSP_SUCCESS;
 }
 

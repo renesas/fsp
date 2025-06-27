@@ -16,19 +16,19 @@
 #include "hw_sce_ra_private.h"
 #include "rm_tinycrypt_port_cfg.h"
 
- #define MAC_SIZE_MIN_IN_BYTE      (4)
- #define MAC_SIZE_MAX_IN_BYTE      (16)
+#define MAC_SIZE_MIN_IN_BYTE      (4)
+#define MAC_SIZE_MAX_IN_BYTE      (16)
 
- #define NONCE_SIZE_MIN_IN_BYTE    (7)
- #define NONCE_SIZE_MAX_IN_BYTE    (13)
+#define NONCE_SIZE_MIN_IN_BYTE    (7)
+#define NONCE_SIZE_MAX_IN_BYTE    (13)
 
- #define TC_32BIT_ALIGNED(x)     (!((x) & 0x03))
- #define TC_NUMSIZE_IS_ODD(x)    ((x) & 0x1)
+#define TC_32BIT_ALIGNED(x)     (!((x) & 0x03))
+#define TC_NUMSIZE_IS_ODD(x)    ((x) & 0x1)
 
 int tc_ccm_config (TCCcmMode_t c, TCAesKeySched_t sched, uint8_t * nonce, unsigned int nlen, unsigned int mlen)
 {
     int tc_return = TC_CRYPTO_SUCCESS;
- #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
+#if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
     if ((c == NULL) || (sched == NULL) || (nonce == NULL))
     {
         tc_return = TC_CRYPTO_FAIL;
@@ -45,7 +45,7 @@ int tc_ccm_config (TCCcmMode_t c, TCAesKeySched_t sched, uint8_t * nonce, unsign
     {
         ;
     }
- #endif
+#endif
 
     if (TC_CRYPTO_SUCCESS == tc_return)
     {
@@ -66,7 +66,7 @@ int tc_ccm_generation_encryption (uint8_t       * out,
                                   unsigned int    plen,
                                   TCCcmMode_t     c)
 {
- #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
+#if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
     if ((out == NULL) ||
         (c == NULL) ||
         ((plen > 0) && (payload == NULL)) ||
@@ -78,9 +78,9 @@ int tc_ccm_generation_encryption (uint8_t       * out,
         return TC_CRYPTO_FAIL;
     }
 
- #else
+#else
     FSP_PARAMETER_NOT_USED(olen);
- #endif
+#endif
     fsp_err_t err = FSP_SUCCESS;
 
     const uint32_t   InData_KeyType[]  = {c->sched->key_size};
@@ -359,7 +359,7 @@ int tc_ccm_decryption_verification (uint8_t       * out,
                                     unsigned int    plen,
                                     TCCcmMode_t     c)
 {
- #if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
+#if RM_TINYCRYPT_PORT_CFG_PARAM_CHECKING_ENABLE
     if ((out == (uint8_t *) 0) ||
         (c == (TCCcmMode_t) 0) ||
         ((plen > 0) && (payload == (uint8_t *) 0)) ||
@@ -373,9 +373,9 @@ int tc_ccm_decryption_verification (uint8_t       * out,
         return TC_CRYPTO_FAIL;
     }
 
- #else
+#else
     FSP_PARAMETER_NOT_USED(olen);
- #endif
+#endif
     fsp_err_t err = FSP_SUCCESS;
 
     uint32_t         InData_DataType[]  = {0};

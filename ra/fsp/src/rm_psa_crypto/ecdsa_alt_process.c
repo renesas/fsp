@@ -108,7 +108,6 @@ fsp_err_t HW_SCE_ECC_256HrkGenerateSign (const uint32_t * InData_CurveType,
     return err;
 }
 
- #if (!BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED)
 fsp_err_t HW_SCE_ECC_384GenerateSign (const uint32_t * InData_CurveType,
                                       const uint32_t * InData_G,
                                       const uint32_t * InData_PrivKey,
@@ -210,7 +209,6 @@ fsp_err_t HW_SCE_ECC_384HrkGenerateSign (const uint32_t * InData_CurveType,
     return err;
 }
 
- #endif
  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
 fsp_err_t HW_SCE_ECC_521GenerateSign (const uint32_t * InData_CurveType,
                                       const uint32_t * InData_G,
@@ -314,9 +312,10 @@ fsp_err_t HW_SCE_ECC_256VerifySign (const uint32_t * InData_CurveType,
                                     const uint32_t * InData_S)
 {
     uint32_t signature[HW_SCE_ECDSA_DATA_BYTE_SIZE / 4U] = {0};
- #if (!BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) && (!BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
-    uint32_t formatted_public_key[ECC_256_FORMATTED_PUBLIC_KEY_LENGTH_WORDS];
- #endif
+
+    uint32_t formatted_public_key[ECC_256_FORMATTED_PUBLIC_KEY_LENGTH_WORDS] = {0};
+
+    fsp_err_t err = FSP_SUCCESS;
     memcpy(signature, InData_R, (HW_SCE_ECDSA_DATA_BYTE_SIZE / 2U));
     memcpy(&signature[(HW_SCE_ECDSA_DATA_BYTE_SIZE / 4U) / 2U], InData_S, (HW_SCE_ECDSA_DATA_BYTE_SIZE / 2U));
     sce_oem_cmd_t    key_command;
@@ -341,39 +340,35 @@ fsp_err_t HW_SCE_ECC_256VerifySign (const uint32_t * InData_CurveType,
         p_domain_param = DomainParam_Koblitz_secp256k1;
     }
 
- #if (BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) || (BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
-    FSP_PARAMETER_NOT_USED(key_command);
-    fsp_err_t err = HW_SCE_EcdsaSignatureVerificationSubAdaptor(InData_CurveType,
-                                                                InData_G,
-                                                                InData_PubKey,
-                                                                InData_MsgDgst,
-                                                                signature,
-                                                                p_domain_param);
- #else
+ #if (0U == (BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED || \
+             BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)) /*ECC-256 public key wrap unsupported on RSIP-E51A, RSIP-E11A and RSIP-E31A*/
 
     /* Install the plaintext public key to get the formatted public key */
-    fsp_err_t err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
-                                                      key_command,
-                                                      NULL,
-                                                      NULL,
-                                                      (const uint8_t *) InData_PubKey,
-                                                      formatted_public_key);
+    err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                            key_command,
+                                            NULL,
+                                            NULL,
+                                            (const uint8_t *) InData_PubKey,
+                                            formatted_public_key);
+ #else
+    FSP_PARAMETER_NOT_USED(key_command);
+ #endif
     if (FSP_SUCCESS == err)
     {
         /* InData_CurveType = curve type; InData_G = command */
-        err = HW_SCE_EcdsaSignatureVerificationSubAdaptor(InData_CurveType,
-                                                          InData_G,
-                                                          formatted_public_key,
-                                                          InData_MsgDgst,
-                                                          signature,
-                                                          p_domain_param);
+        err =
+            HW_SCE_EcdsaSignatureVerificationSubAdaptor(InData_CurveType,
+                                                        InData_G,
+                                                        formatted_public_key,
+                                                        InData_PubKey,
+                                                        InData_MsgDgst,
+                                                        signature,
+                                                        p_domain_param);
     }
- #endif
 
     return err;
 }
 
- #if (!BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED)
 fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_CurveType,
                                     const uint32_t * InData_G,
                                     const uint32_t * InData_PubKey,
@@ -382,8 +377,9 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_CurveType,
                                     const uint32_t * InData_S)
 {
     FSP_PARAMETER_NOT_USED(InData_G);
-    uint32_t signature[HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U] = {0};
-    uint32_t formatted_public_key[ECC_384_FORMATTED_PUBLIC_KEY_LENGTH_WORDS];
+    uint32_t  signature[HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U]                = {0};
+    uint32_t  formatted_public_key[ECC_384_FORMATTED_PUBLIC_KEY_LENGTH_WORDS] = {0};
+    fsp_err_t err = FSP_SUCCESS;
     memcpy(signature, InData_R, (HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 2U));
     memcpy(&signature[(HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 4U) / 2U], InData_S, (HW_SCE_ECDSA_P384_DATA_BYTE_SIZE / 2U));
 
@@ -408,37 +404,29 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_CurveType,
         return FSP_ERR_UNSUPPORTED;
     }
 
-  #if (BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED)
-    FSP_PARAMETER_NOT_USED(key_command);
-    FSP_PARAMETER_NOT_USED(formatted_public_key);
-    fsp_err_t err = HW_SCE_EcdsaP384SignatureVerificationSubAdaptor(InData_CurveType,
-                                                                    InData_PubKey,
-                                                                    InData_MsgDgst,
-                                                                    signature,
-                                                                    p_domain_param);
-  #else
-
+ #if (0U == (BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED)) /*ECC-384 public key wrap unsupported on RSIP-E51A and RSIP-E31A*/
     /* Install the plaintext public key to get the formatted public key */
-    fsp_err_t err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
-                                                      key_command,
-                                                      NULL,
-                                                      NULL,
-                                                      (const uint8_t *) InData_PubKey,
-                                                      formatted_public_key);
+    err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                            key_command,
+                                            NULL,
+                                            NULL,
+                                            (const uint8_t *) InData_PubKey,
+                                            formatted_public_key);
+ #endif
+    FSP_PARAMETER_NOT_USED(key_command);
     if (FSP_SUCCESS == err)
     {
-        err = HW_SCE_EcdsaP384SignatureVerificationSubAdaptor((uint32_t *) InData_CurveType,
-                                                              formatted_public_key,
-                                                              InData_MsgDgst,
-                                                              signature,
-                                                              p_domain_param);
+        err =
+            HW_SCE_EcdsaP384SignatureVerificationSubAdaptor((uint32_t *) InData_CurveType,
+                                                            formatted_public_key,
+                                                            InData_PubKey,
+                                                            InData_MsgDgst,
+                                                            signature,
+                                                            p_domain_param);
     }
-  #endif
 
     return err;
 }
-
- #endif
 
  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
 fsp_err_t HW_SCE_ECC_255GenerateSign (const uint32_t * InData_CurveType,
@@ -535,9 +523,10 @@ fsp_err_t HW_SCE_ECC_521VerifySign (const uint32_t * InData_CurveType,
                                     const uint32_t * InData_S)
 {
     FSP_PARAMETER_NOT_USED(InData_G);
-    uint8_t  signature[HW_SCE_ECDSA_P521_DATA_BYTE_SIZE] = {0};
-    uint32_t formatted_public_key[ECC_521_FORMATTED_PUBLIC_KEY_LENGTH_WORDS];
-    uint8_t  padding = 14U;
+    uint8_t   signature[HW_SCE_ECDSA_P521_DATA_BYTE_SIZE] = {0};
+    uint32_t  formatted_public_key[ECC_521_FORMATTED_PUBLIC_KEY_LENGTH_WORDS] = {0};
+    uint8_t   padding = 14U;
+    fsp_err_t err     = FSP_SUCCESS;
 
     memcpy(&signature[padding], InData_R, ((HW_SCE_ECDSA_P521_DATA_BYTE_SIZE / 2U) - padding));     /* 119bit 0 padding + R + 119bit 0 padding + S */
     memcpy(&signature[((HW_SCE_ECDSA_P521_DATA_BYTE_SIZE / 2U)) + padding], InData_S,
@@ -565,20 +554,26 @@ fsp_err_t HW_SCE_ECC_521VerifySign (const uint32_t * InData_CurveType,
         return FSP_ERR_UNSUPPORTED;
     }
 
+  #if (0U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) /*ECC-521 public key wrap unsupported on RSIP-E51A*/
     /* Install the plaintext public key to get the formatted public key */
-    fsp_err_t err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
-                                                      key_command,
-                                                      NULL,
-                                                      NULL,
-                                                      (const uint8_t *) Pubkey,
-                                                      formatted_public_key);
+    err = HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                            key_command,
+                                            NULL,
+                                            NULL,
+                                            (const uint8_t *) Pubkey,
+                                            formatted_public_key);
+  #else
+    FSP_PARAMETER_NOT_USED(key_command);
+  #endif
     if (FSP_SUCCESS == err)
     {
-        err = HW_SCE_EcdsaP521SignatureVerificationSubAdaptor((uint32_t *) InData_CurveType,
-                                                              formatted_public_key,
-                                                              InData_MsgDgst,
-                                                              (uint32_t *) signature,
-                                                              p_domain_param);
+        err =
+            HW_SCE_EcdsaP521SignatureVerificationSubAdaptor((uint32_t *) InData_CurveType,
+                                                            formatted_public_key,
+                                                            (uint32_t *) Pubkey,
+                                                            InData_MsgDgst,
+                                                            (uint32_t *) signature,
+                                                            p_domain_param);
     }
 
     return err;

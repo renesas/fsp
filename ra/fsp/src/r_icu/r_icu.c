@@ -283,7 +283,7 @@ fsp_err_t R_ICU_ExternalIrqDisable (external_irq_ctrl_t * const p_api_ctrl)
 fsp_err_t R_ICU_ExternalIrqCallbackSet (external_irq_ctrl_t * const p_api_ctrl,
                                         void (                    * p_callback)(
                                             external_irq_callback_args_t *),
-                                        void const * const                   p_context,
+                                        void * const                         p_context,
                                         external_irq_callback_args_t * const p_callback_memory)
 {
     icu_instance_ctrl_t * p_ctrl = p_api_ctrl;
@@ -403,7 +403,7 @@ void r_icu_isr (void)
             /* Save current state of p_callback_args so that it can be shared between interrupts. */
             args = *p_ctrl->p_callback_memory;
 
-            /* Set the callback args passed to the Non-secure calback. */
+            /* Set the callback args passed to the Non-secure callback. */
             p_ctrl->p_callback_memory->channel   = p_ctrl->channel;
             p_ctrl->p_callback_memory->p_context = p_ctrl->p_context;
 

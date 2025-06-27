@@ -62,14 +62,14 @@ typedef struct st_three_phase_duty_cycle
     /**
      * Duty cycle.
      * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
-     *       this value sets the duty cycle count that is transfered to GTCCRA/B at the trough.
+     *       this value sets the duty cycle count that is transferred to GTCCRA/B at the trough.
      */
     uint32_t duty[3];
 
     /**
      * Double-buffer for duty cycle values.
      * Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3,
-     *       this value sets the duty cycle count that is transfered to GTCCRA/B at the crest.
+     *       this value sets the duty cycle count that is transferred to GTCCRA/B at the crest.
      */
     uint32_t duty_buffer[3];
 } three_phase_duty_cycle_t;
@@ -90,7 +90,7 @@ typedef struct st_three_phase_cfg
     uint32_t channel_mask;                        ///< Bitmask of timer channels used by this module
 
     /** Placeholder for user data.  Passed to the user callback in @ref timer_callback_args_t. */
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;                        ///< Extension parameter for hardware specific settings.
 } three_phase_cfg_t;
 
@@ -140,7 +140,7 @@ typedef struct st_three_phase_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(three_phase_ctrl_t * const p_ctrl, void (* p_callback)(timer_callback_args_t *),
-                              void const * const p_context, timer_callback_args_t * const p_callback_memory);
+                              void * const p_context, timer_callback_args_t * const p_callback_memory);
 
     /** Allows driver to be reconfigured and may reduce power consumption.
      *

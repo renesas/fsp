@@ -84,7 +84,7 @@ typedef struct st_sau_uart_instance_ctrl
     void (* p_callback)(uart_callback_args_t *);
 
     /* Pointer to context to be passed into callback function. */
-    void const * p_context;
+    void * p_context;
 } sau_uart_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -106,12 +106,14 @@ fsp_err_t R_SAU_UART_Close(uart_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SAU_UART_Abort(uart_ctrl_t * const p_api_ctrl, uart_dir_t communication_to_abort);
 fsp_err_t R_SAU_UART_CallbackSet(uart_ctrl_t * const          p_api_ctrl,
                                  void (                     * p_callback)(uart_callback_args_t *),
-                                 void const * const           p_context,
+                                 void * const                 p_context,
                                  uart_callback_args_t * const p_callback_memory);
 fsp_err_t R_SAU_UART_ReadStop(uart_ctrl_t * const p_api_ctrl, uint32_t * remaining_bytes);
 fsp_err_t R_SAU_UART_BaudCalculate(sau_uart_instance_ctrl_t * const    p_ctrl,
                                    uint32_t                            baudrate,
                                    sau_uart_baudrate_setting_t * const p_baud_setting);
+fsp_err_t R_SAU_UART_ReceiveSuspend(uart_ctrl_t * const p_api_ctrl);
+fsp_err_t R_SAU_UART_ReceiveResume(uart_ctrl_t * const p_api_ctrl);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup SAU_UART)

@@ -237,6 +237,10 @@
 #define RSIP_PRV_FUNC_NAME_RSA_ENCRYPT_2048                                 r_rsip_p56
 #define RSIP_PRV_FUNC_NAME_RSA_DECRYPT_2048                                 r_rsip_p57
 
+#define RSIP_PRV_FUNC_NAME_PKI_RSA_VERIFY_INIT_2048                         NULL
+#define RSIP_PRV_FUNC_NAME_PKI_RSA_VERIFY_FINAL_2048                        NULL
+#define RSIP_PRV_FUNC_NAME_PKI_CERT_KEY_IMPORT_RSA_2048                     NULL
+
 #define RSIP_PRV_FUNC_NAME_KEY_PAIR_GENERATE_RSA_3072                       r_rsip_wrapper_p3a_rsa3072
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_RSA_3072_PUBLIC                     r_rsip_wrapper_p6f_rsa3072_pub
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_RSA_3072_PRIVATE                    r_rsip_wrapper_p6f_rsa3072_priv
@@ -268,39 +272,57 @@
 #define RSIP_PRV_FUNC_NAME_KDF_MAC_KEY_IMPORT_SHA256                        r_rsip_wrapper_pe6_sha256
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_AES_128            r_rsip_wrapper_pe7_sha256_aes128
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_AES_256            r_rsip_wrapper_pe7_sha256_aes256
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA1          NULL
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA256        r_rsip_wrapper_pe7_sha256_hmac_sha256
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA384        r_rsip_wrapper_pe7_sha256_hmac_sha384
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA256_HMAC_SHA512        r_rsip_wrapper_pe7_sha256_hmac_sha512
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA256_AES                   r_rsip_wrapper_pe7_sha256_iv_aes
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA256_TLS12                 NULL
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA256_TLS13                 NULL
 
 #define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_KEY_IMPORT_SHA384                r_rsip_wrapper_pe4_sha384
 #define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_MSG_WRAP_SHA384                  r_rsip_wrapper_pe3_sha384
 #define RSIP_PRV_FUNC_NAME_KDF_MAC_KEY_IMPORT_SHA384                        r_rsip_wrapper_pe6_sha384
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA384_AES_128            r_rsip_wrapper_pe7_sha384_aes128
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA384_AES_256            r_rsip_wrapper_pe7_sha384_aes256
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA384_HMAC_SHA1          NULL
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA384_HMAC_SHA256        r_rsip_wrapper_pe7_sha384_hmac_sha256
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA384_HMAC_SHA384        r_rsip_wrapper_pe7_sha384_hmac_sha384
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA384_HMAC_SHA512        r_rsip_wrapper_pe7_sha384_hmac_sha512
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA384_AES                   r_rsip_wrapper_pe7_sha384_iv_aes
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA384_TLS12                 NULL
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA384_TLS13                 NULL
 
 #define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_KEY_IMPORT_SHA512                r_rsip_wrapper_pe4_sha512
 #define RSIP_PRV_FUNC_NAME_KDF_ECDH_SECRET_MSG_WRAP_SHA512                  r_rsip_wrapper_pe3_sha512
 #define RSIP_PRV_FUNC_NAME_KDF_MAC_KEY_IMPORT_SHA512                        r_rsip_wrapper_pe6_sha512
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA512_AES_128            r_rsip_wrapper_pe7_sha512_aes128
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA512_AES_256            r_rsip_wrapper_pe7_sha512_aes256
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA512_HMAC_SHA1          NULL
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA512_HMAC_SHA256        r_rsip_wrapper_pe7_sha512_hmac_sha256
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA512_HMAC_SHA384        r_rsip_wrapper_pe7_sha512_hmac_sha384
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_KEY_IMPORT_SHA512_HMAC_SHA512        r_rsip_wrapper_pe7_sha512_hmac_sha512
 #define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA512_AES                   r_rsip_wrapper_pe7_sha512_iv_aes
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA512_TLS12                 NULL
+#define RSIP_PRV_FUNC_NAME_KDF_DERIVED_IV_WRAP_SHA512_TLS13                 NULL
 
 #define RSIP_PRV_FUNC_NAME_RFC3394_AES_128_KEY_WRAP                         r_rsip_wrapper_p8f_aes128
 #define RSIP_PRV_FUNC_NAME_RFC3394_AES_128_KEY_UNWRAP                       r_rsip_wrapper_p90_aes128
 #define RSIP_PRV_FUNC_NAME_RFC3394_AES_256_KEY_WRAP                         r_rsip_wrapper_p8f_aes256
 #define RSIP_PRV_FUNC_NAME_RFC3394_AES_256_KEY_UNWRAP                       r_rsip_wrapper_p90_aes256
 
-#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_128                            r_rsip_p2c
-#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_192                            r_rsip_p2d
-#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_256                            r_rsip_p2e
+#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_128                            r_rsip_wrapper_p2c_ch0
+#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_192                            r_rsip_wrapper_p2d_ch0
+#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_256                            r_rsip_wrapper_p2e_ch0
+#if BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+ #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_128                           r_rsip_wrapper_p2c_ch1
+ #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_192                           r_rsip_wrapper_p2d_ch1
+ #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_256                           r_rsip_wrapper_p2e_ch1
+#else
+ #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_128                           NULL
+ #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_192                           NULL
+ #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_256                           NULL
+#endif
 
 /* Key update inst data word */
 #define RSIP_OEM_KEY_SIZE_DUMMY_INST_DATA_WORD                              (0)
@@ -521,22 +543,30 @@ rsip_ret_t r_rsip_wrapper_p75i(const rsip_wrapped_key_t * p_wrapped_key,
 rsip_ret_t r_rsip_wrapper_p75r(const rsip_wrapped_key_t * p_wrapped_key,
                                const uint32_t             InData_HashType[],
                                const uint32_t             InData_State[]);
-rsip_ret_t r_rsip_wrapper_p8f_aes128(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_WrappedKeyIndex[],
-                                     uint32_t              OutData_Text[]);
-rsip_ret_t r_rsip_wrapper_p8f_aes256(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_WrappedKeyIndex[],
-                                     uint32_t              OutData_Text[]);
-rsip_ret_t r_rsip_wrapper_p90_aes128(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_Text[],
-                                     uint32_t              OutData_KeyIndex[]);
-rsip_ret_t r_rsip_wrapper_p90_aes256(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_Text[],
-                                     uint32_t              OutData_KeyIndex[]);
+rsip_ret_t r_rsip_wrapper_p8f_aes128(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_WrappedKeyIndex[],
+                                     uint32_t       OutData_Text[],
+                                     uint32_t       KEY_INDEX_SIZE,
+                                     uint32_t       WRAPPED_KEY_SIZE);
+rsip_ret_t r_rsip_wrapper_p8f_aes256(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_WrappedKeyIndex[],
+                                     uint32_t       OutData_Text[],
+                                     uint32_t       KEY_INDEX_SIZE,
+                                     uint32_t       WRAPPED_KEY_SIZE);
+rsip_ret_t r_rsip_wrapper_p90_aes128(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_Text[],
+                                     uint32_t       OutData_KeyIndex[],
+                                     uint32_t       WRAPPED_KEY_SIZE,
+                                     uint32_t       KEY_INDEX_SIZE);
+rsip_ret_t r_rsip_wrapper_p90_aes256(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_Text[],
+                                     uint32_t       OutData_KeyIndex[],
+                                     uint32_t       WRAPPED_KEY_SIZE,
+                                     uint32_t       KEY_INDEX_SIZE);
 
 /* AES-ECB/CBC/CTR */
 rsip_ret_t r_rsip_wrapper_p47i_ecb_enc(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);
@@ -804,5 +834,11 @@ rsip_ret_t r_rsip_wrapper_pe7_sha512_iv_aes(const uint32_t InData_KDFInfo[],
                                             const uint32_t InData_OutDataLocation[],
                                             const uint32_t InData_SeqNum[],
                                             uint32_t       OutData_EncIV[]);
+rsip_ret_t r_rsip_wrapper_p2c_ch0(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
+rsip_ret_t r_rsip_wrapper_p2d_ch0(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
+rsip_ret_t r_rsip_wrapper_p2e_ch0(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
+rsip_ret_t r_rsip_wrapper_p2c_ch1(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
+rsip_ret_t r_rsip_wrapper_p2d_ch1(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
+rsip_ret_t r_rsip_wrapper_p2e_ch1(const uint32_t InData_KeyIndex[], const uint32_t InData_DOTFSEED[]);
 
 #endif                                 /* R_RSIP_WRAPPER_H */

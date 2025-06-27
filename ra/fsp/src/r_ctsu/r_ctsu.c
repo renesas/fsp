@@ -179,7 +179,7 @@
   #define CTSU_DIAG_DELAY_MS            (5)      // delay time (ms)
   #define CTSU_DIAG_SUCLK0_REG1         (0xff00) // cco gain test SUCLK0
   #define CTSU_DIAG_SUCLK0_REG2         (0x20)   // cco gain test SUCLK0
-  #define CTSU_DIAG_STCLK_FREQ          (500)    // stclk freqency (Hz)
+  #define CTSU_DIAG_STCLK_FREQ          (500)    // stclk frequency (Hz)
   #define CTSU_DIAG_LVM_MASK            (0x400)  // LVmode mask
   #define CTSU_DIAG_CFC_SDPA_REG        (0x3F)   // cfc scan sdpa
   #define CTSU_DIAG_CHACA_TSMAX         (32)     // ts max chaca byte
@@ -1919,10 +1919,11 @@ fsp_err_t R_CTSU_ScanStop (ctsu_ctrl_t * const p_ctrl)
         R_CTSU->CTSUCR0 ^= 0x11;
 #endif
 
+#if (BSP_FEATURE_ICU_HAS_IELSR)
         R_BSP_IrqStatusClear(p_instance_ctrl->p_ctsu_cfg->write_irq);
         R_BSP_IrqStatusClear(p_instance_ctrl->p_ctsu_cfg->read_irq);
         R_BSP_IrqStatusClear(p_instance_ctrl->p_ctsu_cfg->end_irq);
-
+#endif
         p_instance_ctrl->state    = CTSU_STATE_IDLE;
         p_instance_ctrl->wr_index = 0;
         p_instance_ctrl->rd_index = 0;
@@ -1942,7 +1943,7 @@ fsp_err_t R_CTSU_ScanStop (ctsu_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_CTSU_CallbackSet (ctsu_ctrl_t * const          p_api_ctrl,
                               void (                     * p_callback)(ctsu_callback_args_t *),
-                              void const * const           p_context,
+                              void * const                 p_context,
                               ctsu_callback_args_t * const p_callback_memory)
 {
     ctsu_instance_ctrl_t * p_ctrl = (ctsu_instance_ctrl_t *) p_api_ctrl;
@@ -3403,16 +3404,19 @@ void ctsu_write_isr (void)
     FSP_CONTEXT_SAVE
 
 #if (CTSU_CFG_DTC_SUPPORT_ENABLE == 1)
+ #if (BSP_FEATURE_ICU_HAS_IELSR)
 
     /** Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
-
+ #endif
 #else
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+ #if (BSP_FEATURE_ICU_HAS_IELSR)
 
     /** Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+ #endif
 
     /* Write settings for current element */
     if (CTSU_CORRECTION_RUN == g_ctsu_correction_info.status)
@@ -3483,14 +3487,17 @@ void ctsu_read_isr (void)
 #if (CTSU_CFG_DTC_SUPPORT_ENABLE == 1)
 
     /** Clear the BSP IRQ Flag     */
+ #if (BSP_FEATURE_ICU_HAS_IELSR)
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
-
+ #endif
 #else
     IRQn_Type irq = R_FSP_CurrentIrqGet();
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+ #if (BSP_FEATURE_ICU_HAS_IELSR)
 
     /** Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+ #endif
 
     /* read current channel/element value */
     /* Store the reference counter for possible future use. Register must be read or scan will hang. */
@@ -3644,9 +3651,11 @@ void ctsu_end_isr (void)
     IRQn_Type              irq             = R_FSP_CurrentIrqGet();
     ctsu_instance_ctrl_t * p_instance_ctrl = (ctsu_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
     uint16_t               rd_index;
+#if (BSP_FEATURE_ICU_HAS_IELSR)
 
     /** Clear the BSP IRQ Flag     */
     R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+#endif
 
     /* In CTSU1 and CTSU2 self-capacity and current measurement mode and diagnostic mode, */
     /* rd_index has the same value as wr_index.                                           */
@@ -4479,7 +4488,10 @@ fsp_err_t ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_c
 
     err = p_adc->p_api->scanCfg(p_adc->p_ctrl, p_adc->p_channel_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+   #if (0 == BSP_FEATURE_ADC_D_IS_AVAILABLE)
     R_ADC0->ADSSTRL = CTSU_CALIB_ADSSTRL;
+   #endif
 
     /* Self single scan mode */
     R_CTSU->CTSUCRA_b.LOAD = 1;
@@ -4523,7 +4535,11 @@ fsp_err_t ctsu_correction_calib_rtrim (ctsu_instance_ctrl_t * const p_instance_c
             }
 
             /* Read A/D data then scan normal end */
+   #if (1 == BSP_FEATURE_ADC_D_IS_AVAILABLE)
+            err = p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_TSCAP_VOLT, &adctdr_result);
+   #else
             err = p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &adctdr_result);
+   #endif
             FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
             adctdr_sum += adctdr_result;
         }
@@ -6914,7 +6930,10 @@ static fsp_err_t ctsu_diag_output_voltage_scan_start (ctsu_instance_ctrl_t * con
 
     err = p_adc->p_api->scanCfg(p_adc->p_ctrl, p_adc->p_channel_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+  #if (0 == BSP_FEATURE_ADC_D_IS_AVAILABLE)
     R_ADC0->ADSSTRL = CTSU_DIAG_ADSSTRL;
+  #endif
 
     /* CTSU setting */
     R_CTSU->CTSUCRA_b.PUMPON = 1;
@@ -7050,7 +7069,12 @@ static fsp_err_t ctsu_diag_output_voltage_scan_start (ctsu_instance_ctrl_t * con
             FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
         }
 
+  #if (1 == BSP_FEATURE_ADC_D_IS_AVAILABLE)
+        err = p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_TSCAP_VOLT, &g_ctsu_diag_info.output_voltage_cnt[k]);
+  #else
         err = p_adc->p_api->read(p_adc->p_ctrl, ADC_CHANNEL_16, &g_ctsu_diag_info.output_voltage_cnt[k]);
+  #endif
+
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
     }
 

@@ -142,7 +142,7 @@ typedef enum e_ctsu_specific_data_type
 typedef struct st_ctsu_callback_args
 {
     ctsu_event_t event;                ///< The event can be used to identify what caused the callback.
-    void const * p_context;            ///< Placeholder for user data. Set in ctsu_api_t::open function in ::ctsu_cfg_t.
+    void       * p_context;            ///< Placeholder for user data. Set in ctsu_api_t::open function in ::ctsu_cfg_t.
 } ctsu_callback_args_t;
 
 /** CTSU Control block. Allocate an instance specific control block to pass into the API calls.
@@ -211,12 +211,12 @@ typedef struct st_ctsu_cfg
     IRQn_Type    write_irq;                             ///< CTSU_CTSUWR interrupt vector
     IRQn_Type    read_irq;                              ///< CTSU_CTSURD interrupt vector
     IRQn_Type    end_irq;                               ///< CTSU_CTSUFN interrupt vector
-    void const * p_context;                             ///< User defined context passed into callback function.
+    void       * p_context;                             ///< User defined context passed into callback function.
     void const * p_extend;                              ///< Pointer to extended configuration by instance of interface.
     uint16_t     tuning_self_target_value;              ///< Target self value for initial offset tuning
     uint16_t     tuning_mutual_target_value;            ///< Target mutual value for initial offset tuning
     ctsu_auto_button_cfg_t const * p_ctsu_auto_buttons; ///< Pointer to array of automatic judgement button configuration.
-    uint8_t      majority_mode;                         ///< Software majority mode selection
+    uint8_t majority_mode;                              ///< Software majority mode selection
 } ctsu_cfg_t;
 
 /** Functions implemented at the HAL layer will follow this API. */
@@ -263,7 +263,7 @@ typedef struct st_ctsu_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(ctsu_ctrl_t * const p_ctrl, void (* p_callback)(ctsu_callback_args_t *),
-                              void const * const p_context, ctsu_callback_args_t * const p_callback_memory);
+                              void * const p_context, ctsu_callback_args_t * const p_callback_memory);
 
     /** Close driver.
      *

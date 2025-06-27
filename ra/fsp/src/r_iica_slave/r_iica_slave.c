@@ -199,7 +199,7 @@ fsp_err_t R_IICA_SLAVE_Write (i2c_slave_ctrl_t * const p_api_ctrl, uint8_t * con
  **********************************************************************************************************************/
 fsp_err_t R_IICA_SLAVE_CallbackSet (i2c_slave_ctrl_t * const          p_api_ctrl,
                                     void (                          * p_callback)(i2c_slave_callback_args_t *),
-                                    void const * const                p_context,
+                                    void * const                      p_context,
                                     i2c_slave_callback_args_t * const p_callback_memory)
 {
     iica_slave_instance_ctrl_t * p_ctrl = (iica_slave_instance_ctrl_t *) p_api_ctrl;

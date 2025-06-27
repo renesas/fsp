@@ -321,7 +321,7 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Write (rm_block_media_ctrl_t * const p_ctrl,
 fsp_err_t RM_BLOCK_MEDIA_SPI_CallbackSet (rm_block_media_ctrl_t * const p_ctrl,
                                           void (                      * p_callback)(
                                               rm_block_media_callback_args_t *),
-                                          void const * const                     p_context,
+                                          void * const                           p_context,
                                           rm_block_media_callback_args_t * const p_callback_memory)
 {
     FSP_PARAMETER_NOT_USED(p_ctrl);
@@ -435,7 +435,7 @@ fsp_err_t RM_BLOCK_MEDIA_SPI_Erase (rm_block_media_ctrl_t * const p_ctrl,
         iteration--;
     }
 
-    /* Notify appication of completion */
+    /* Notify application of completion */
     p_instance_ctrl->erase_in_progress = false;
     rm_block_media_event_t event =
         (FSP_SUCCESS == err ? RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE : RM_BLOCK_MEDIA_EVENT_ERROR);
@@ -494,7 +494,7 @@ static fsp_err_t rm_block_media_spi_program (rm_block_media_spi_instance_ctrl_t 
         iteration--;
     }
 
-    /* Notify appication of completion */
+    /* Notify application of completion */
     p_instance_ctrl->write_in_progress = false;
     rm_block_media_event_t event =
         (FSP_SUCCESS == err ? RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE : RM_BLOCK_MEDIA_EVENT_ERROR);

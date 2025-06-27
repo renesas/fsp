@@ -34,6 +34,7 @@
 /***********************************************************************************************************************
  * Private global variables and functions
  **********************************************************************************************************************/
+
 /* Step size table(4-bit, 3-bit common use) */
 static const uint16_t g_adpcm_stepsizeTable[] =
 {
@@ -55,7 +56,7 @@ static const int8_t adpcm_idxT4[] =
     -1, -1, -1, -1, 2, 4, 6, 8
 };
 
-static void rm_adpcm_decoder_reset (adpcm_decoder_instance_ctrl_t * p_instance_ctrl);
+static void rm_adpcm_decoder_reset(adpcm_decoder_instance_ctrl_t * p_instance_ctrl);
 
 /***********************************************************************************************************************
  * Global Variables
@@ -92,6 +93,7 @@ fsp_err_t RM_ADPCM_DECODER_Open (adpcm_decoder_ctrl_t * p_ctrl, adpcm_decoder_cf
     fsp_err_t err = FSP_SUCCESS;
 
 #if RM_ADPCM_DECODER_CFG_PARAM_CHECKING_ENABLE
+
     /*  Perform parameter checking */
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ASSERT(NULL != p_cfg);
@@ -101,7 +103,7 @@ fsp_err_t RM_ADPCM_DECODER_Open (adpcm_decoder_ctrl_t * p_ctrl, adpcm_decoder_cf
 #endif
 
     /* Configuration Structure Not used */
-    FSP_PARAMETER_NOT_USED (p_cfg);
+    FSP_PARAMETER_NOT_USED(p_cfg);
 
     /* Reset the driver */
     rm_adpcm_decoder_reset(p_instance_ctrl);
@@ -123,7 +125,9 @@ fsp_err_t RM_ADPCM_DECODER_Open (adpcm_decoder_ctrl_t * p_ctrl, adpcm_decoder_cf
  * @retval FSP_ERR_NOT_OPEN            Unit is not open.
  **********************************************************************************************************************/
 fsp_err_t RM_ADPCM_DECODER_Decode (adpcm_decoder_ctrl_t * const p_ctrl,
-                                   void const * p_src, void * p_dest, uint32_t src_len_bytes)
+                                   void const                 * p_src,
+                                   void                       * p_dest,
+                                   uint32_t                     src_len_bytes)
 {
     adpcm_decoder_instance_ctrl_t * p_instance_ctrl = (adpcm_decoder_instance_ctrl_t *) p_ctrl;
 
@@ -146,11 +150,11 @@ fsp_err_t RM_ADPCM_DECODER_Decode (adpcm_decoder_ctrl_t * const p_ctrl,
     int16_t * p_output = (int16_t *) (p_dest);
 
     /* Set the number of actual ADPCM samples to be decoded */
-    uint32_t  num_samples = (uint32_t) (src_len_bytes * 2);
+    uint32_t num_samples = (uint32_t) (src_len_bytes * 2);
 
-    int16_t          vdif;
-    uint16_t step;
-    unsigned char  code;
+    int16_t       vdif;
+    uint16_t      step;
+    unsigned char code;
 
     /* Go through all samples and decode each sample to 16 bit PCM data */
     for (uint32_t i = 0; i < num_samples; i++)
@@ -291,7 +295,7 @@ fsp_err_t RM_ADPCM_DECODER_Close (adpcm_decoder_ctrl_t * p_ctrl)
  *
  * @retval void
  **********************************************************************************************************************/
-static void rm_adpcm_decoder_reset(adpcm_decoder_instance_ctrl_t * p_instance_ctrl)
+static void rm_adpcm_decoder_reset (adpcm_decoder_instance_ctrl_t * p_instance_ctrl)
 {
     /* Set Initial Value for previous sample value to 0 */
     p_instance_ctrl->vp = 0;
@@ -299,4 +303,3 @@ static void rm_adpcm_decoder_reset(adpcm_decoder_instance_ctrl_t * p_instance_ct
     /* Set initial index for stepsizeTable to 2 */
     p_instance_ctrl->id = (int8_t) RM_ADPCM_DECODER_MIN_INDEX4;
 }
-

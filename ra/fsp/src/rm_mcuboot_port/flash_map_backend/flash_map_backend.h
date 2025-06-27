@@ -183,7 +183,7 @@ int flash_area_id_to_image_slot(int area_id);
  */
 int flash_area_id_to_multi_image_slot(int image_index, int area_id);
 
-int rm_mcuboot_cleanup (void);
+int rm_mcuboot_cleanup(void);
 
 /*
  * Clean up on chip flash driver.

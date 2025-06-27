@@ -105,7 +105,7 @@ typedef struct st_sau_spi_instance_ctrl
     void (* p_callback)(spi_callback_args_t *);
 
     /* Pointer to context to be passed into callback function. */
-    void const * p_context;
+    void * p_context;
 } sau_spi_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -142,7 +142,7 @@ fsp_err_t R_SAU_SPI_CalculateBitrate(uint32_t                bitrate,
                                      uint8_t                 channel);
 fsp_err_t R_SAU_SPI_CallbackSet(spi_ctrl_t * const          p_api_ctrl,
                                 void (                    * p_callback)(spi_callback_args_t *),
-                                void const * const          p_context,
+                                void * const                p_context,
                                 spi_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

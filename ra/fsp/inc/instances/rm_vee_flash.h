@@ -147,7 +147,7 @@ typedef struct st_rm_vee_flash_instance_ctrl
 
     void (* p_callback)(rm_vee_callback_args_t *); // Pointer to callback
     rm_vee_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
-    void const             * p_context;            // Pointer to context to be passed into callback function
+    void * p_context;                              // Pointer to context to be passed into callback function
 } rm_vee_flash_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -179,7 +179,7 @@ fsp_err_t RM_VEE_FLASH_Refresh(rm_vee_ctrl_t * const p_api_ctrl);
 fsp_err_t RM_VEE_FLASH_Format(rm_vee_ctrl_t * const p_api_ctrl, uint8_t const * const p_ref_data);
 fsp_err_t RM_VEE_FLASH_CallbackSet(rm_vee_ctrl_t * const          p_api_ctrl,
                                    void (                       * p_callback)(rm_vee_callback_args_t *),
-                                   void const * const             p_context,
+                                   void * const                   p_context,
                                    rm_vee_callback_args_t * const p_callback_memory);
 fsp_err_t RM_VEE_FLASH_Close(rm_vee_ctrl_t * const p_api_ctrl);
 

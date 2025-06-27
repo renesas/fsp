@@ -51,9 +51,9 @@ typedef enum e_keymatrix_trigger
 } keymatrix_trigger_t;
 
 /** Callback function parameter data */
-typedef struct st_keymatrix_calback_args
+typedef struct st_keymatrix_callback_args
 {
-    void const * p_context;            ///< Holder for user data. Set in @ref keymatrix_api_t::open function in @ref keymatrix_cfg_t.
+    void * p_context;                  ///< Holder for user data. Set in @ref keymatrix_api_t::open function in @ref keymatrix_cfg_t.
 
     /** Bit vector representing the physical hardware channel(s) that caused the interrupt. */
     uint32_t channel_mask;
@@ -68,7 +68,7 @@ typedef struct st_keymatrix_cfg
     IRQn_Type           irq;                                 ///< NVIC IRQ number
 
     void (* p_callback)(keymatrix_callback_args_t * p_args); ///< Callback for key interrupt ISR.
-    void const * p_context;                                  ///< Holder for user data. Passed to callback in keymatrix_user_cb_data_t.
+    void       * p_context;                                  ///< Holder for user data. Passed to callback in keymatrix_user_cb_data_t.
     void const * p_extend;                                   ///< Extension parameter for hardware specific settings.
 } keymatrix_cfg_t;
 

@@ -15,11 +15,24 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define WDT_OPEN    (0X00574454ULL)
+#define WDT_OPEN                         (0X00574454ULL)
+
+/* On multi core MCU, core0 uses WDT0 settings on OFS0, and core1 uses WDT1 settings on OFS3*/
+#if 1 == BSP_CFG_CPU_CORE              // Core1
+ #ifdef BSP_CFG_OPTION_SETTING_OFS3_SEC
+  #define BSP_CFG_OPTION_SETTING_OFSX    BSP_CFG_OPTION_SETTING_OFS3_SEC
+ #else
+  #define BSP_CFG_OPTION_SETTING_OFSX    BSP_CFG_OPTION_SETTING_OFS3
+ #endif
+ #define R_WDTX                          R_WDT1
+#else
+ #define BSP_CFG_OPTION_SETTING_OFSX     BSP_CFG_OPTION_SETTING_OFS0
+ #define R_WDTX                          R_WDT
+#endif
 
 /* Lookup functions for WDT settings.  Using function like macro for stringification. */
-#define WDT_PRV_OFS0_SETTING_GET(setting)    (((uint32_t) BSP_CFG_ROM_REG_OFS0 >> \
-                                               WDT_PRV_OFS0_ ## setting ## _BIT) & WDT_PRV_OFS0_ ## setting ## _MASK);
+#define WDT_PRV_OFSX_SETTING_GET(setting)    (((uint32_t) BSP_CFG_OPTION_SETTING_OFSX >> \
+                                               WDT_PRV_OFSX_ ## setting ## _BIT) & WDT_PRV_OFSX_ ## setting ## _MASK);
 #define WDT_PRV_WDTCR_SETTING_GET(setting,                                                    \
                                   wdtcr)     (((wdtcr >> WDT_PRV_WDTCR_ ## setting ## _BIT) & \
                                                WDT_PRV_WDTCR_ ## setting ## _MASK));
@@ -27,24 +40,24 @@
                                   value)     ((value & WDT_PRV_WDTCR_ ## setting ## _MASK) << \
                                               WDT_PRV_WDTCR_ ## setting ## _BIT);
 
-/* OFS0 register settings. */
-#define WDT_PRV_OFS0_AUTO_START_BIT          (17)
-#define WDT_PRV_OFS0_TIMEOUT_BIT             (18)
-#define WDT_PRV_OFS0_CLOCK_DIVISION_BIT      (20)
-#define WDT_PRV_OFS0_WINDOW_END_BIT          (24)
-#define WDT_PRV_OFS0_WINDOW_START_BIT        (26)
-#define WDT_PRV_OFS0_NMI_REQUEST_BIT         (28)
-#define WDT_PRV_OFS0_RESET_CONTROL_BIT       (28)
-#define WDT_PRV_OFS0_STOP_CONTROL_BIT        (30)
+/* OFS0/OFS3 register settings. */
+#define WDT_PRV_OFSX_AUTO_START_BIT          (17)
+#define WDT_PRV_OFSX_TIMEOUT_BIT             (18)
+#define WDT_PRV_OFSX_CLOCK_DIVISION_BIT      (20)
+#define WDT_PRV_OFSX_WINDOW_END_BIT          (24)
+#define WDT_PRV_OFSX_WINDOW_START_BIT        (26)
+#define WDT_PRV_OFSX_NMI_REQUEST_BIT         (28)
+#define WDT_PRV_OFSX_RESET_CONTROL_BIT       (28)
+#define WDT_PRV_OFSX_STOP_CONTROL_BIT        (30)
 
-#define WDT_PRV_OFS0_AUTO_START_MASK         (0x1U) // Bit 17
-#define WDT_PRV_OFS0_TIMEOUT_MASK            (0x3U) // Bits 18-19
-#define WDT_PRV_OFS0_CLOCK_DIVISION_MASK     (0xFU) // Bits 20-23
-#define WDT_PRV_OFS0_WINDOW_END_MASK         (0x3U) // Bits 24-25
-#define WDT_PRV_OFS0_WINDOW_START_MASK       (0x3U) // Bits 26-27
-#define WDT_PRV_OFS0_NMI_REQUEST_MASK        (0x1U) // Bit 28
-#define WDT_PRV_OFS0_RESET_CONTROL_MASK      (0x1U) // Bit 28
-#define WDT_PRV_OFS0_STOP_CONTROL_MASK       (0x1U) // Bit 30
+#define WDT_PRV_OFSX_AUTO_START_MASK         (0x1U) // Bit 17
+#define WDT_PRV_OFSX_TIMEOUT_MASK            (0x3U) // Bits 18-19
+#define WDT_PRV_OFSX_CLOCK_DIVISION_MASK     (0xFU) // Bits 20-23
+#define WDT_PRV_OFSX_WINDOW_END_MASK         (0x3U) // Bits 24-25
+#define WDT_PRV_OFSX_WINDOW_START_MASK       (0x3U) // Bits 26-27
+#define WDT_PRV_OFSX_NMI_REQUEST_MASK        (0x1U) // Bit 28
+#define WDT_PRV_OFSX_RESET_CONTROL_MASK      (0x1U) // Bit 28
+#define WDT_PRV_OFSX_STOP_CONTROL_MASK       (0x1U) // Bit 30
 #define WDT_PRV_NMI_EN_MASK                  (0x2)
 
 /* WDT register settings. */
@@ -65,14 +78,14 @@
 #define WDT_PRV_WDTCR_WINDOW_START_MASK      (0x3U) // Bits 12-13
 
 /* Macros for start mode and NMI support. */
-#if (BSP_CFG_ROM_REG_OFS0 >> WDT_PRV_OFS0_AUTO_START_BIT) & WDT_PRV_OFS0_AUTO_START_MASK
+#if (BSP_CFG_OPTION_SETTING_OFSX >> WDT_PRV_OFSX_AUTO_START_BIT) & WDT_PRV_OFSX_AUTO_START_MASK
  #define WDT_PRV_REGISTER_START_MODE         (1)
  #define WDT_PRV_NMI_SUPPORTED               (WDT_CFG_REGISTER_START_NMI_SUPPORTED)
 #else
 
 /* Auto start mode */
  #define WDT_PRV_REGISTER_START_MODE         (0)
- #if (BSP_CFG_ROM_REG_OFS0 >> WDT_PRV_OFS0_NMI_REQUEST_BIT) & WDT_PRV_OFS0_NMI_REQUEST_MASK
+ #if (BSP_CFG_OPTION_SETTING_OFSX >> WDT_PRV_OFSX_NMI_REQUEST_BIT) & WDT_PRV_OFSX_NMI_REQUEST_MASK
   #define WDT_PRV_NMI_SUPPORTED              (0)
  #else
   #define WDT_PRV_NMI_SUPPORTED              (1)
@@ -222,15 +235,15 @@ fsp_err_t R_WDT_Open (wdt_ctrl_t * const p_ctrl, wdt_cfg_t const * const p_cfg)
  #endif
 
     /* Set the configuration registers in register start mode. */
-    R_WDT->WDTRCR = (uint8_t) (p_cfg->reset_control << WDT_PRV_WDTRCR_RESET_CONTROL_BIT);
+    R_WDTX->WDTRCR = (uint8_t) (p_cfg->reset_control << WDT_PRV_WDTRCR_RESET_CONTROL_BIT);
 
     uint32_t wdtcr = WDT_PRV_WDTCR_SETTING_SET(TIMEOUT, (uint16_t) g_wdtcr_timeout[p_cfg->timeout]);
     wdtcr |= WDT_PRV_WDTCR_SETTING_SET(CLOCK_DIVISION, (uint16_t) p_cfg->clock_division);
     wdtcr |= WDT_PRV_WDTCR_SETTING_SET(WINDOW_START, (uint16_t) p_cfg->window_start);
     wdtcr |= WDT_PRV_WDTCR_SETTING_SET(WINDOW_END, (uint16_t) p_cfg->window_end);
 
-    R_WDT->WDTCR    = (uint16_t) wdtcr;
-    R_WDT->WDTCSTPR = (uint8_t) (p_cfg->stop_control << WDT_PRV_WDTCSTPR_STOP_CONTROL_BIT);
+    R_WDTX->WDTCR    = (uint16_t) wdtcr;
+    R_WDTX->WDTCSTPR = (uint8_t) (p_cfg->stop_control << WDT_PRV_WDTCSTPR_STOP_CONTROL_BIT);
 #else
 
     /* Auto start mode. */
@@ -274,12 +287,12 @@ fsp_err_t R_WDT_TimeoutGet (wdt_ctrl_t * const p_ctrl, wdt_timeout_values_t * co
 #if WDT_PRV_REGISTER_START_MODE
 
     /* Read the configuration of the watchdog */
-    uint32_t wdtcr = R_WDT->WDTCR;
+    uint32_t wdtcr = R_WDTX->WDTCR;
     clock_division = (wdt_clock_division_t) WDT_PRV_WDTCR_SETTING_GET(CLOCK_DIVISION, wdtcr);
     timeout        = WDT_PRV_WDTCR_SETTING_GET(TIMEOUT, wdtcr);
 #else                                  /* Auto start mode */
-    clock_division = (wdt_clock_division_t) WDT_PRV_OFS0_SETTING_GET(CLOCK_DIVISION);
-    timeout        = WDT_PRV_OFS0_SETTING_GET(TIMEOUT);
+    clock_division = (wdt_clock_division_t) WDT_PRV_OFSX_SETTING_GET(CLOCK_DIVISION);
+    timeout        = WDT_PRV_OFSX_SETTING_GET(TIMEOUT);
 #endif
 
     /* Get timeout value from WDTCR register. */
@@ -325,8 +338,8 @@ fsp_err_t R_WDT_Refresh (wdt_ctrl_t * const p_ctrl)
     FSP_ERROR_RETURN(WDT_OPEN == p_instance_ctrl->wdt_open, FSP_ERR_NOT_OPEN);
 #endif
 
-    R_WDT->WDTRR = WDT_PRV_REFRESH_STEP_1;
-    R_WDT->WDTRR = WDT_PRV_REFRESH_STEP_2;
+    R_WDTX->WDTRR = WDT_PRV_REFRESH_STEP_1;
+    R_WDTX->WDTRR = WDT_PRV_REFRESH_STEP_2;
 
     return FSP_SUCCESS;
 }
@@ -361,7 +374,7 @@ fsp_err_t R_WDT_StatusGet (wdt_ctrl_t * const p_ctrl, wdt_status_t * const p_sta
  #endif
 
     /* Check for refresh or underflow errors. */
-    *p_status = (wdt_status_t) (R_WDT->WDTSR >> 14);
+    *p_status = (wdt_status_t) (R_WDTX->WDTSR >> 14);
 
     return FSP_SUCCESS;
 #else
@@ -413,8 +426,8 @@ fsp_err_t R_WDT_StatusClear (wdt_ctrl_t * const p_ctrl, const wdt_status_t statu
     /* Flags cannot be cleared until the clock cycle after they are set.  */
     do
     {
-        R_WDT->WDTSR = value;
-        read_value   = R_WDT->WDTSR;
+        R_WDTX->WDTSR = value;
+        read_value    = R_WDTX->WDTSR;
 
         /* Isolate flags to clear. */
         read_value &= (uint16_t) ((uint16_t) status << 14);
@@ -451,7 +464,7 @@ fsp_err_t R_WDT_CounterGet (wdt_ctrl_t * const p_ctrl, uint32_t * const p_count)
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    *p_count  = (uint32_t) R_WDT->WDTSR;
+    *p_count  = (uint32_t) R_WDTX->WDTSR;
     *p_count &= WDT_PRV_WDTSR_COUNTER_MASK;
 
     return FSP_SUCCESS;
@@ -468,7 +481,7 @@ fsp_err_t R_WDT_CounterGet (wdt_ctrl_t * const p_ctrl, uint32_t * const p_count)
  **********************************************************************************************************************/
 fsp_err_t R_WDT_CallbackSet (wdt_ctrl_t * const          p_ctrl,
                              void (                    * p_callback)(wdt_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              wdt_callback_args_t * const p_callback_memory)
 {
     wdt_instance_ctrl_t * p_instance_ctrl = (wdt_instance_ctrl_t *) p_ctrl;

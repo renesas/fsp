@@ -175,12 +175,12 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const * 
 
     /* Max = 256 bytes, i.e., Page size */
     R_OSPI->DWSCTSR = OSPI_PRV_SHIFT(p_instance_ctrl->p_cfg->page_size_bytes << R_OSPI_DWSCTSR_CTSN0_Pos,
-                                     p_instance_ctrl->channel);
+        p_instance_ctrl->channel);
 
     /* Read back to ensure value has been written */
     FSP_HARDWARE_REGISTER_WAIT(R_OSPI->DWSCTSR,
                                OSPI_PRV_SHIFT(p_instance_ctrl->p_cfg->page_size_bytes << R_OSPI_DWSCTSR_CTSN0_Pos,
-                                              p_instance_ctrl->channel));
+    p_instance_ctrl->channel));
 
     /* OctaRAM specific, Ignored by OctaFlash. */
     R_OSPI->DCSMXR =
@@ -392,7 +392,7 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t * const p_ctrl,
         err = p_transfer->p_api->softwareStart(p_transfer->p_ctrl, TRANSFER_START_MODE_SINGLE);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-        /* Wait for DMAC to complete to maintain deterministic processing and backward compatability */
+        /* Wait for DMAC to complete to maintain deterministic processing and backward compatibility */
         transfer_properties_t transfer_properties = {0U};
         err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, &transfer_properties);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);

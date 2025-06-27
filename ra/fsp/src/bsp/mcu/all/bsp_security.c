@@ -35,11 +35,77 @@
  #define BSP_PRV_SAU_NS_REGION_3_BASE_ADDRESS     (0x50000000U)
  #define BSP_PRV_SAU_NS_REGION_3_LIMIT_ADDRESS    (0xDFFFFFFFU)
 
-/* Protect DMAST from nonsecure write access. */
+/* Protect DMAST/DTCST from nonsecure write access. */
  #if (1U == BSP_CFG_CPU_CORE)
   #define DMACX_REGISTER_SHIFT                    (16)
+  #define DTCX_REGISTER_SHIFT                     (16)
  #else
   #define DMACX_REGISTER_SHIFT                    (0)
+  #define DTCX_REGISTER_SHIFT                     (0)
+ #endif
+
+/* Macros to align to next memory region for TZ (mainly to "find" NS locations) */
+ #if defined(BSP_PARTITION_FLASH_CPU0_S_START) && (0U == BSP_CFG_CPU_CORE)
+
+/* Use partition macros for primary core */
+  #define FLASH_NSC_START        ((uint32_t *) BSP_PARTITION_FLASH_CPU0_C_START)
+  #define FLASH_NSC_LIMIT        ((uint32_t) BSP_PARTITION_FLASH_CPU0_C_START + BSP_PARTITION_FLASH_CPU0_C_SIZE - 1)
+  #define FLASH_NS_START         ((uint32_t *) BSP_PARTITION_FLASH_CPU0_N_START)
+  #define RAM_NSC_START          ((uint32_t *) BSP_PARTITION_RAM_CPU0_C_START)
+  #define RAM_NSC_LIMIT          ((uint32_t) BSP_PARTITION_RAM_CPU0_C_START + BSP_PARTITION_RAM_CPU0_C_SIZE - 1)
+  #define RAM_NS_START           ((uint32_t *) BSP_PARTITION_RAM_CPU0_N_START)
+  #define DATA_FLASH_NS_START    ((uint32_t *) BSP_PARTITION_DATA_FLASH_CPU0_N_START)
+
+ #elif defined(BSP_PARTITION_FLASH_CPU1_S_START) && (1U == BSP_CFG_CPU_CORE)
+
+/* Use partition macros for secondary core */
+  #define FLASH_NSC_START        ((uint32_t *) BSP_PARTITION_FLASH_CPU1_C_START)
+  #define FLASH_NSC_LIMIT        ((uint32_t) BSP_PARTITION_FLASH_CPU1_C_START + BSP_PARTITION_FLASH_CPU1_C_SIZE - 1)
+  #define FLASH_NS_START         ((uint32_t *) BSP_PARTITION_FLASH_CPU1_N_START)
+  #define RAM_NSC_START          ((uint32_t *) BSP_PARTITION_RAM_CPU1_C_START)
+  #define RAM_NSC_LIMIT          ((uint32_t) BSP_PARTITION_RAM_CPU1_C_START + BSP_PARTITION_RAM_CPU1_C_SIZE - 1)
+  #define RAM_NS_START           ((uint32_t *) BSP_PARTITION_RAM_CPU1_N_START)
+  #define DATA_FLASH_NS_START    ((uint32_t *) BSP_PARTITION_DATA_FLASH_CPU1_N_START)
+
+ #else
+
+/* Use legacy tail-chaining to find NS */
+  #define FLASH_NS_START         ((uint32_t *) ((((uint32_t) gp_ddsc_FLASH_END + 0x8000 - 1) & \
+                                                 0xFFFF8000) | BSP_FEATURE_TZ_NS_OFFSET))
+  #define FLASH_NSC_START        ((uint32_t *) gp_ddsc_FLASH_NSC)
+  #define FLASH_NSC_LIMIT        (((uint32_t) FLASH_NS_START & ~BSP_FEATURE_TZ_NS_OFFSET) - 1U)
+  #define RAM_NS_START           ((uint32_t *) ((((uint32_t) gp_ddsc_RAM_END + 0x2000 - 1) & \
+                                                 0xFFFFE000) | BSP_FEATURE_TZ_NS_OFFSET))
+  #define RAM_NSC_START          ((uint32_t *) gp_ddsc_RAM_NSC)
+  #define RAM_NSC_LIMIT          (((uint32_t) RAM_NS_START & ~BSP_FEATURE_TZ_NS_OFFSET) - 1U)
+  #define DATA_FLASH_NS_START    ((uint32_t *) ((((uint32_t) gp_ddsc_DATA_FLASH_END + 0x400 - 1) & \
+                                                 0xFFFFFC00) | BSP_FEATURE_TZ_NS_OFFSET))
+
+ #endif
+
+ #define RAM_NS_START_S_ALIAS    ((uint32_t *) ((uint32_t) RAM_NS_START & ~BSP_FEATURE_TZ_NS_OFFSET))
+
+/* Operation after detection registers.
+ * RA8 devices have the registers under MSA/BUS while other devices have them under TZF. */
+ #ifdef R_TZF
+  #define BSP_PRV_OAD_REG        R_TZF->TZFOAD
+  #define BSP_PRV_OAD_PT_REG     R_TZF->TZFPT
+ #else
+  #define BSP_PRV_OAD_REG        R_BUS->OAD.MSAOAD
+  #define BSP_PRV_OAD_PT_REG     R_BUS->OAD.MSAPT
+ #endif
+
+ #if BSP_SECONDARY_CORE_BUILD
+
+/* For a secure secondary core the SAR has already been written so it
+ * only needs to modify the security attributes it is using:
+ * - Secure (0) will always stay Secure
+ * - Non-secure (1) will either stay non-secure or become secure
+ * This is the same as using a bitwise AND.
+ */
+  #define BSP_PRV_SAR_WRITE(register, value)    register &= value
+ #else
+  #define BSP_PRV_SAR_WRITE(register, value)    register = value
  #endif
 
 /***********************************************************************************************************************
@@ -63,232 +129,6 @@ typedef void (BSP_CMSE_NONSECURE_CALL * bsp_nonsecure_func_t)(void);
 typedef BSP_CMSE_NONSECURE_CALL void (*volatile bsp_nonsecure_func_t)(void);
  #endif
 
- #if   defined(__IAR_SYSTEMS_ICC__) && BSP_TZ_SECURE_BUILD
-
-extern const uint32_t FLASH_NS_IMAGE_START;
-  #pragma section=".tz_flash_ns_start"
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = (uint32_t *) __section_begin(".tz_flash_ns_start");
-  #pragma section="Veneer$$CMSE"
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_flash = (uint32_t *) __section_begin(
-    "Veneer$$CMSE");
-  #pragma section=".tz_ram_ns_start"
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ram = (uint32_t *) __section_begin(".tz_ram_ns_start");
-  #pragma section=".tz_ram_nsc_start"
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_ram = (uint32_t *) __section_begin(
-    ".tz_ram_nsc_start");
-  #pragma section=".tz_data_flash_ns_start"
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_data_flash = (uint32_t *) __section_begin(
-    ".tz_data_flash_ns_start");
-
-  #if BSP_FEATURE_BSP_HAS_ITCM
-extern const uint32_t __tz_ITCM_N;
-extern const uint32_t __tz_ITCM_S;
-  #endif
-
-  #if BSP_FEATURE_BSP_HAS_DTCM
-extern const uint32_t __tz_DTCM_N;
-extern const uint32_t __tz_DTCM_S;
-  #endif
-
-  #if BSP_FEATURE_BSP_HAS_ITCM
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_itcm = (uint32_t *) &__tz_ITCM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_itcm    = (uint32_t *) &__tz_ITCM_S;
-  #endif
-
-  #if BSP_FEATURE_BSP_HAS_DTCM
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_dtcm = (uint32_t *) &__tz_DTCM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_dtcm    = (uint32_t *) &__tz_DTCM_S;
-  #endif
-
- #elif defined(__ARMCC_VERSION)
-  #if BSP_FEATURE_BSP_HAS_ITCM
-extern const uint32_t Image$$__tz_ITCM_N$$Base;
-extern const uint32_t Image$$__tz_ITCM_S$$Base;
-  #endif
-  #if BSP_FEATURE_BSP_HAS_DTCM
-extern const uint32_t Image$$__tz_DTCM_N$$Base;
-extern const uint32_t Image$$__tz_DTCM_S$$Base;
-  #endif
-  #if BSP_FEATURE_BSP_HAS_STBRAMSABAR
-extern const uint32_t Image$$__tz_STANDBY_SRAM_N$$Base;
-extern const uint32_t Image$$__tz_STANDBY_SRAM_S$$Base;
-  #endif
-extern const uint32_t Image$$__tz_FLASH_N$$Base;
-  #if BSP_FEATURE_TZ_VERSION == 2
-extern const uint32_t Image$$__FLASH_NSC_START$$Base;
-  #else
-extern const uint32_t Image$$__tz_FLASH_C$$Base;
-  #endif
-extern const uint32_t Image$$__tz_FLASH_S$$Base;
-extern const uint32_t Image$$__tz_RAM_N$$Base;
-  #if BSP_FEATURE_TZ_VERSION == 2
-extern const uint32_t Image$$__RAM_NSC_START$$Base;
-  #else
-extern const uint32_t Image$$__tz_RAM_C$$Base;
-  #endif
-extern const uint32_t Image$$__tz_RAM_S$$Base;
-extern const uint32_t Image$$__tz_DATA_FLASH_N$$Base;
-extern const uint32_t Image$$__tz_DATA_FLASH_S$$Base;
-extern const uint32_t Image$$__tz_QSPI_FLASH_N$$Base;
-extern const uint32_t Image$$__tz_QSPI_FLASH_S$$Base;
-extern const uint32_t Image$$__tz_SDRAM_N$$Base;
-extern const uint32_t Image$$__tz_SDRAM_S$$Base;
-extern const uint32_t Image$$__tz_OSPI_DEVICE_0_N$$Base;
-extern const uint32_t Image$$__tz_OSPI_DEVICE_0_S$$Base;
-extern const uint32_t Image$$__tz_OSPI_DEVICE_1_N$$Base;
-extern const uint32_t Image$$__tz_OSPI_DEVICE_1_S$$Base;
-extern const uint32_t Image$$__tz_OPTION_SETTING_N$$Base;
-extern const uint32_t Image$$__tz_OPTION_SETTING_S$$Base;
-extern const uint32_t Image$$__tz_OPTION_SETTING_S_N$$Base;
-extern const uint32_t Image$$__tz_OPTION_SETTING_S_S$$Base;
-extern const uint32_t Image$$__tz_ID_CODE_N$$Base;
-extern const uint32_t Image$$__tz_ID_CODE_S$$Base;
-
-  #if BSP_FEATURE_BSP_HAS_ITCM
-   #define __tz_ITCM_N               Image$$__tz_ITCM_N$$Base
-   #define __tz_ITCM_S               Image$$__tz_ITCM_S$$Base
-  #endif
-  #if BSP_FEATURE_BSP_HAS_DTCM
-   #define __tz_DTCM_N               Image$$__tz_DTCM_N$$Base
-   #define __tz_DTCM_S               Image$$__tz_DTCM_S$$Base
-  #endif
-  #if BSP_FEATURE_BSP_HAS_STBRAMSABAR
-   #define __tz_STANDBY_SRAM_N       Image$$__tz_STANDBY_SRAM_N$$Base
-   #define __tz_STANDBY_SRAM_S       Image$$__tz_STANDBY_SRAM_S$$Base
-  #endif
-  #define __tz_FLASH_N               Image$$__tz_FLASH_N$$Base
-  #if BSP_FEATURE_TZ_VERSION == 2
-   #define __tz_FLASH_C              Image$$__FLASH_NSC_START$$Base;
-  #else
-   #define __tz_FLASH_C              Image$$__tz_FLASH_C$$Base
-  #endif
-  #define __tz_FLASH_S               Image$$__tz_FLASH_S$$Base
-  #define __tz_RAM_N                 Image$$__tz_RAM_N$$Base
-  #if BSP_FEATURE_TZ_VERSION == 2
-   #define __tz_RAM_C                Image$$__RAM_NSC_START$$Base
-  #else
-   #define __tz_RAM_C                Image$$__tz_RAM_C$$Base
-  #endif
-  #define __tz_RAM_S                 Image$$__tz_RAM_S$$Base
-  #define __tz_DATA_FLASH_N          Image$$__tz_DATA_FLASH_N$$Base
-  #define __tz_DATA_FLASH_S          Image$$__tz_DATA_FLASH_S$$Base
-  #define __tz_QSPI_FLASH_N          Image$$__tz_QSPI_FLASH_N$$Base
-  #define __tz_QSPI_FLASH_S          Image$$__tz_QSPI_FLASH_S$$Base
-  #define __tz_SDRAM_N               Image$$__tz_SDRAM_N$$Base
-  #define __tz_SDRAM_S               Image$$__tz_SDRAM_S$$Base
-  #define __tz_OSPI_DEVICE_0_N       Image$$__tz_OSPI_DEVICE_0_N$$Base
-  #define __tz_OSPI_DEVICE_0_S       Image$$__tz_OSPI_DEVICE_0_S$$Base
-  #define __tz_OSPI_DEVICE_1_N       Image$$__tz_OSPI_DEVICE_1_N$$Base
-  #define __tz_OSPI_DEVICE_1_S       Image$$__tz_OSPI_DEVICE_1_S$$Base
-  #define __tz_OPTION_SETTING_N      Image$$__tz_OPTION_SETTING_N$$Base
-  #define __tz_OPTION_SETTING_S      Image$$__tz_OPTION_SETTING_S$$Base
-  #define __tz_OPTION_SETTING_S_N    Image$$__tz_OPTION_SETTING_S_N$$Base
-  #define __tz_OPTION_SETTING_S_S    Image$$__tz_OPTION_SETTING_S_S$$Base
-  #define __tz_ID_CODE_N             Image$$__tz_ID_CODE_N$$Base
-  #define __tz_ID_CODE_S             Image$$__tz_ID_CODE_S$$Base
-
-/* Assign region addresses to pointers so that AC6 includes symbols that can be used to determine the
- * start addresses of Secure, Non-secure and Non-secure Callable regions. */
-  #if BSP_FEATURE_BSP_HAS_ITCM
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_itcm = &__tz_ITCM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_itcm    = &__tz_ITCM_S;
-  #endif
-  #if BSP_FEATURE_BSP_HAS_DTCM
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_dtcm = &__tz_DTCM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_dtcm    = &__tz_DTCM_S;
-  #endif
-  #if BSP_FEATURE_BSP_HAS_STBRAMSABAR
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_standby_sram = &__tz_STANDBY_SRAM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_standby_sram    = &__tz_STANDBY_SRAM_S;
-  #endif
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash          = &__tz_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_flash = &__tz_FLASH_C;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_flash             = &__tz_FLASH_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ram            = &__tz_RAM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_ram   = &__tz_RAM_C;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ram               = &__tz_RAM_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_data_flash     = &__tz_DATA_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_data_flash        = &__tz_DATA_FLASH_S;
-
-  #if BSP_TZ_SECURE_BUILD
-
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_qspi_flash       = &__tz_QSPI_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_qspi_flash          = &__tz_QSPI_FLASH_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_sdram            = &__tz_SDRAM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_sdram               = &__tz_SDRAM_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ospi_device_0    = &__tz_OSPI_DEVICE_0_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ospi_device_0       = &__tz_OSPI_DEVICE_0_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ospi_device_1    = &__tz_OSPI_DEVICE_1_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_ospi_device_1       = &__tz_OSPI_DEVICE_1_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_option_setting   = &__tz_OPTION_SETTING_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_option_setting      = &__tz_OPTION_SETTING_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_option_setting_s = &__tz_OPTION_SETTING_S_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_option_setting_s    = &__tz_OPTION_SETTING_S_S;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_id_code          = &__tz_ID_CODE_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_id_code             = &__tz_ID_CODE_S;
-
-  #endif
-
- #elif defined(__GNUC__)
-
-  #if defined(__llvm__) && !defined(__CLANG_TIDY__)
-extern const uint32_t __tz_FLASH_N;
-  #else
-extern const uint32_t FLASH_NS_IMAGE_START;
-  #endif
-  #if BSP_FEATURE_TZ_VERSION == 2
-extern const uint32_t __FLASH_NSC_START;
-  #else
-extern const uint32_t __tz_FLASH_C;
-  #endif
-extern const uint32_t __tz_DATA_FLASH_N;
-extern const uint32_t __tz_RAM_N;
-  #if BSP_FEATURE_TZ_VERSION == 2
-extern const uint32_t __RAM_NSC_START;
-  #else
-extern const uint32_t __tz_RAM_C;
-  #endif
-
-  #if BSP_FEATURE_BSP_HAS_ITCM
-extern const uint32_t __tz_ITCM_N;
-extern const uint32_t __tz_ITCM_S;
-  #endif
-
-  #if BSP_FEATURE_BSP_HAS_DTCM
-extern const uint32_t __tz_DTCM_N;
-extern const uint32_t __tz_DTCM_S;
-  #endif
-
-  #if defined(__llvm__) && !defined(__CLANG_TIDY__)
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = &__tz_FLASH_N;
-  #else
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_flash = &FLASH_NS_IMAGE_START;
-  #endif
-  #if BSP_FEATURE_TZ_VERSION == 2
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_flash = (uint32_t *) &__FLASH_NSC_START;
-  #else
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_flash = (uint32_t *) &__tz_FLASH_C;
-  #endif
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_data_flash = (uint32_t *) &__tz_DATA_FLASH_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_ram        = (uint32_t *) &__tz_RAM_N;
-  #if BSP_FEATURE_TZ_VERSION == 2
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_ram = (uint32_t *) &__RAM_NSC_START;
-  #else
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_callable_ram = (uint32_t *) &__tz_RAM_C;
-  #endif
-
-  #if BSP_FEATURE_BSP_HAS_ITCM
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_itcm = (uint32_t *) &__tz_ITCM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_itcm    = (uint32_t *) &__tz_ITCM_S;
-  #endif
-
-  #if BSP_FEATURE_BSP_HAS_DTCM
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_nonsecure_dtcm = (uint32_t *) &__tz_DTCM_N;
-BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_dtcm    = (uint32_t *) &__tz_DTCM_S;
-  #endif
-
- #endif
-
  #if BSP_TZ_SECURE_BUILD
 
 /*******************************************************************************************************************//**
@@ -306,8 +146,7 @@ BSP_DONT_REMOVE uint32_t const * const gp_start_of_secure_dtcm    = (uint32_t *)
 void R_BSP_NonSecureEnter (void)
 {
     /* The NS vector table is at the start of the NS section in flash */
-    uint32_t const * p_ns_vector_table =
-        (uint32_t *) ((uint32_t) gp_start_of_nonsecure_flash | BSP_FEATURE_TZ_NS_OFFSET);
+    uint32_t const * p_ns_vector_table = FLASH_NS_START;
 
     /* Set up the NS Reset_Handler to be called */
     uint32_t const     * p_ns_reset_address = (uint32_t const *) ((uint32_t) p_ns_vector_table + sizeof(uint32_t));
@@ -324,14 +163,14 @@ void R_BSP_NonSecureEnter (void)
      */
     if (UINT32_MAX == *p_ns_reset_address)
     {
-        p_ns_reset = (bsp_nonsecure_func_t) ((uint32_t) gp_start_of_nonsecure_ram | BSP_FEATURE_TZ_NS_OFFSET);
+        p_ns_reset = (bsp_nonsecure_func_t) ((uint32_t) RAM_NS_START);
 
-        /* Write an infinite loop into start of NS RAM (Branch T3 Instruction (b.n <gp_start_of_nonsecure_ram>)). */
-        uint16_t * infinite_loop = (uint16_t *) ((uint32_t) gp_start_of_nonsecure_ram | BSP_FEATURE_TZ_NS_OFFSET);
+        /* Write an infinite loop into start of NS RAM (Branch T3 Instruction (b.n <RAM_NS_START>)). */
+        uint16_t * infinite_loop = (uint16_t *) ((uint32_t) RAM_NS_START);
         *infinite_loop = BSP_PRV_INFINITE_LOOP;
 
         /* Set the NS stack pointer to a valid location in NS RAM. */
-        __TZ_set_MSP_NS((uint32_t) gp_start_of_nonsecure_ram + 0x20U + BSP_FEATURE_TZ_NS_OFFSET);
+        __TZ_set_MSP_NS((uint32_t) RAM_NS_START + 0x20U);
 
         /* Jump to the infinite loop. */
         p_ns_reset();
@@ -365,51 +204,82 @@ void R_BSP_SecurityInit (void)
   #if 0 == BSP_FEATURE_TZ_HAS_DLM
 
     /* If DLM is not implemented, then the TrustZone partitions must be set at run-time. */
-    R_PSCU->CFSAMONA = (uint32_t) gp_start_of_nonsecure_flash & R_PSCU_CFSAMONA_CFS2_Msk;
-    R_PSCU->CFSAMONB = (uint32_t) gp_start_of_nonsecure_callable_flash & R_PSCU_CFSAMONB_CFS1_Msk;
-    R_PSCU->DFSAMON  = (uint32_t) gp_start_of_nonsecure_data_flash & R_PSCU_DFSAMON_DFS_Msk;
-    R_PSCU->SSAMONA  = (uint32_t) gp_start_of_nonsecure_ram & R_PSCU_SSAMONA_SS2_Msk;
-    R_PSCU->SSAMONB  = (uint32_t) gp_start_of_nonsecure_callable_ram & R_PSCU_SSAMONB_SS1_Msk;
+    R_PSCU->CFSAMONA = (uint32_t) FLASH_NS_START & ~BSP_FEATURE_TZ_NS_OFFSET & R_PSCU_CFSAMONA_CFS2_Msk;
+    R_PSCU->CFSAMONB = (uint32_t) FLASH_NSC_START & R_PSCU_CFSAMONB_CFS1_Msk;
+    R_PSCU->DFSAMON  = (uint32_t) DATA_FLASH_NS_START & R_PSCU_DFSAMON_DFS_Msk;
+    R_PSCU->SSAMONA  = (uint32_t) RAM_NS_START_S_ALIAS & R_PSCU_SSAMONA_SS2_Msk;
+    R_PSCU->SSAMONB  = (uint32_t) RAM_NSC_START & R_PSCU_SSAMONB_SS1_Msk;
   #endif
 
-  #if BSP_FEATURE_BSP_HAS_ITCM == 1
+  #if (BSP_CFG_CPU_CORE == 0) && (BSP_FEATURE_BSP_HAS_ITCM)
 
     /* Total ITCM block size in bytes is equal to 2 ^ (BLKSZ + 5). */
-    uint32_t itcm_block_size = ((MEMSYSCTL->ITGU_CFG & MEMSYSCTL_ITGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_ITGU_CFG_BLKSZ_Pos) +
-                               5U;
+    uint32_t itcm_block_exponent =
+        ((MEMSYSCTL->ITGU_CFG & MEMSYSCTL_ITGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_ITGU_CFG_BLKSZ_Pos) +
+        5U;
+    uint32_t itcm_block_size = (1U << itcm_block_exponent);
 
     /* The number of secure ITCM blocks is equal to size of the secure region in bytes divided by the ITCM block size. */
-    uint32_t itcm_num_sec_blocks = ((uint32_t) gp_start_of_nonsecure_itcm - (uint32_t) gp_start_of_secure_itcm) >>
-                                   itcm_block_size;
+    uint32_t itcm_num_sec_blocks =
+        ((uint32_t) gp_ddsc_ITCM_END + itcm_block_size - 1 - (uint32_t) gp_ddsc_ITCM_START) >>
+        itcm_block_exponent;
 
     /* Set all secure blocks to '0' and all non-secure blocks to 1. */
     MEMSYSCTL->ITGU_LUT[0] = ~((1U << itcm_num_sec_blocks) - 1U);
   #endif
 
-  #if BSP_FEATURE_BSP_HAS_DTCM == 1
+  #if (BSP_CFG_CPU_CORE == 0) && (BSP_FEATURE_BSP_HAS_DTCM)
 
     /* Total DTCM block size in bytes is equal to 2 ^ (BLKSZ + 5). */
-    uint32_t dtcm_block_size = ((MEMSYSCTL->DTGU_CFG & MEMSYSCTL_DTGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_DTGU_CFG_BLKSZ_Pos) +
-                               5U;
+    uint32_t dtcm_block_exponent =
+        ((MEMSYSCTL->DTGU_CFG & MEMSYSCTL_DTGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_DTGU_CFG_BLKSZ_Pos) +
+        5U;
+    uint32_t dtcm_block_size = (1U << dtcm_block_exponent);
 
     /* The number of secure DTCM blocks is equal to size of the secure region in bytes divided by the DTCM block size. */
-    uint32_t dtcm_num_sec_blocks = ((uint32_t) gp_start_of_nonsecure_dtcm - (uint32_t) gp_start_of_secure_dtcm) >>
-                                   dtcm_block_size;
+    uint32_t dtcm_num_sec_blocks =
+        ((uint32_t) gp_ddsc_DTCM_END + dtcm_block_size - 1 - (uint32_t) gp_ddsc_DTCM_START) >>
+        dtcm_block_exponent;
 
     /* Set all secure blocks to '0' and all non-secure blocks to 1. */
     MEMSYSCTL->DTGU_LUT[0] = ~((1U << dtcm_num_sec_blocks) - 1U);
   #endif
 
+  #if (BSP_CFG_CPU_CORE == 1) && defined(R_TCM)
+   #ifdef BSP_PARTITION_CTCM_CPU1_S_START
+
+    /* Set boundary address for CTCM S/NS */
+    R_CPSCU->TCMSABARC = BSP_PARTITION_CTCM_CPU1_S_START + BSP_PARTITION_CTCM_CPU1_S_SIZE;
+   #endif
+   #ifdef BSP_PARTITION_STCM_CPU1_S_START
+
+    /* Set boundary address for STCM S/NS */
+    R_CPSCU->TCMSABARS = BSP_PARTITION_STCM_CPU1_S_START + BSP_PARTITION_STCM_CPU1_S_SIZE;
+   #endif
+  #endif
+
   #if __SAUREGION_PRESENT
+   #if !BSP_SECONDARY_CORE_BUILD
 
     /* Configure IDAU to divide SRAM region into NSC/NS. */
-    R_CPSCU->SRAMSABAR0 = (uint32_t) gp_start_of_nonsecure_ram & R_CPSCU_SRAMSABAR0_SRAMSABAR_Msk;
-    R_CPSCU->SRAMSABAR1 = (uint32_t) gp_start_of_nonsecure_ram & R_CPSCU_SRAMSABAR1_SRAMSABAR_Msk;
+    R_CPSCU->SRAMSABAR0 = (uint32_t) RAM_NS_START_S_ALIAS & R_CPSCU_SRAMSABAR0_SRAMSABAR_Msk;
+    R_CPSCU->SRAMSABAR1 = (uint32_t) RAM_NS_START_S_ALIAS & R_CPSCU_SRAMSABAR1_SRAMSABAR_Msk;
+    #if BSP_FEATURE_SRAM_HAS_EXTRA_SRAMSABAR
+    R_CPSCU->SRAMSABAR2 = (uint32_t) RAM_NS_START_S_ALIAS & R_CPSCU_SRAMSABAR2_SRAMSABAR_Msk;
+    R_CPSCU->SRAMSABAR3 = (uint32_t) RAM_NS_START_S_ALIAS & R_CPSCU_SRAMSABAR3_SRAMSABAR_Msk;
+    #endif
+
+    #ifdef BSP_TZ_CFG_SRAMESAR
+
+    /* Configure SRAM ECC Region as S/NS */
+    R_CPSCU->SRAMESAR = BSP_TZ_CFG_SRAMESAR;
+    #endif
+   #endif
 
     /* Configure SAU region used for Code Flash Non-secure callable. */
     SAU->RNR  = BSP_SAU_REGION_CODE_FLASH_NSC;
-    SAU->RBAR = (uint32_t) gp_start_of_nonsecure_callable_flash & SAU_RBAR_BADDR_Msk;
-    SAU->RLAR = (((uint32_t) gp_start_of_nonsecure_flash - 1U) & SAU_RLAR_LADDR_Msk) | SAU_RLAR_NSC_Msk |
+    SAU->RBAR = (uint32_t) FLASH_NSC_START & SAU_RBAR_BADDR_Msk;
+    SAU->RLAR = (FLASH_NSC_LIMIT & SAU_RLAR_LADDR_Msk) | SAU_RLAR_NSC_Msk |
                 SAU_RLAR_ENABLE_Msk;
 
     /* Configure SAU region used for Non-secure region 1:
@@ -424,8 +294,8 @@ void R_BSP_SecurityInit (void)
 
     /* Configure SAU region used for Non-secure callable SRAM. */
     SAU->RNR  = BSP_SAU_REGION_SRAM_NSC;
-    SAU->RBAR = (uint32_t) gp_start_of_nonsecure_callable_ram & SAU_RBAR_BADDR_Msk;
-    SAU->RLAR = (((uint32_t) gp_start_of_nonsecure_ram - 1U) & SAU_RLAR_LADDR_Msk) | SAU_RLAR_NSC_Msk |
+    SAU->RBAR = (uint32_t) RAM_NSC_START & SAU_RBAR_BADDR_Msk;
+    SAU->RLAR = (RAM_NSC_LIMIT & SAU_RLAR_LADDR_Msk) | SAU_RLAR_NSC_Msk |
                 SAU_RLAR_ENABLE_Msk;
 
     /* Configure SAU region used for Non-secure region 2:
@@ -452,10 +322,13 @@ void R_BSP_SecurityInit (void)
     /* Enable the SAU. */
     SAU->CTRL = SAU_CTRL_ENABLE_Msk;
 
+   #if __ICACHE_PRESENT == 1U
+
     /* Cache maintenance is required when changing security attribution of an address.
      * Barrier instructions are required to guarantee intended operation
      * (See Arm Cortex-M85 Technical Reference Manual Section 10.9.3). */
     SCB_InvalidateICache();
+   #endif
   #else
 
     /* Setting SAU_CTRL.ALLNS to 1 allows the security attribution of all addresses to be set by the IDAU in the
@@ -493,78 +366,113 @@ void R_BSP_SecurityInit (void)
                  ((FPU_FPCCR_CLRONRET_VAL << FPU_FPCCR_CLRONRET_Pos) & FPU_FPCCR_CLRONRET_Msk);
   #endif
 
-  #if BSP_FEATURE_BSP_HAS_TZFSAR
+  #if !BSP_SECONDARY_CORE_BUILD
+   #if BSP_FEATURE_BSP_HAS_TZFSAR
 
     /* Set TrustZone filter to Secure. */
     R_CPSCU->TZFSAR = ~R_CPSCU_TZFSAR_TZFSA0_Msk;
-  #endif
+   #endif
 
     /* Set TrustZone filter exception response. */
-    R_TZF->TZFPT  = BSP_PRV_TZ_REG_KEY + 1U;
-    R_TZF->TZFOAD = BSP_PRV_TZ_REG_KEY + BSP_TZ_CFG_EXCEPTION_RESPONSE;
-    R_TZF->TZFPT  = BSP_PRV_TZ_REG_KEY + 0U;
+    BSP_PRV_OAD_PT_REG = BSP_PRV_TZ_REG_KEY + 1U;
+    BSP_PRV_OAD_REG    = BSP_PRV_TZ_REG_KEY + BSP_TZ_CFG_EXCEPTION_RESPONSE;
+    BSP_PRV_OAD_PT_REG = BSP_PRV_TZ_REG_KEY + 0U;
+  #endif
 
     /* Initialize PSARs. */
-    R_PSCU->PSARB = BSP_TZ_CFG_PSARB;
-    R_PSCU->PSARC = BSP_TZ_CFG_PSARC;
-    R_PSCU->PSARD = BSP_TZ_CFG_PSARD;
-    R_PSCU->PSARE = BSP_TZ_CFG_PSARE;
+    BSP_PRV_SAR_WRITE(R_PSCU->PSARB, BSP_TZ_CFG_PSARB);
+    BSP_PRV_SAR_WRITE(R_PSCU->PSARC, BSP_TZ_CFG_PSARC);
+    BSP_PRV_SAR_WRITE(R_PSCU->PSARD, BSP_TZ_CFG_PSARD);
+    BSP_PRV_SAR_WRITE(R_PSCU->PSARE, BSP_TZ_CFG_PSARE);
+
+  #if !BSP_SECONDARY_CORE_BUILD
     R_PSCU->MSSAR = BSP_TZ_CFG_MSSAR;
+  #endif
 
     /* Initialize Type 2 SARs. */
   #ifdef BSP_TZ_CFG_CSAR
-    R_CPSCU->CSAR = BSP_TZ_CFG_CSAR;                                      /* Cache Security Attribution. */
+    R_CPSCU->CSAR = BSP_TZ_CFG_CSAR;                         /* Cache Security Attribution. */
   #endif
-    R_SYSTEM->RSTSAR = BSP_TZ_CFG_RSTSAR;                                 /* RSTSRn Security Attribution. */
-    R_SYSTEM->LVDSAR = BSP_TZ_CFG_LVDSAR;                                 /* LVD Security Attribution. */
-    R_SYSTEM->CGFSAR = BSP_TZ_CFG_CGFSAR;                                 /* CGC Security Attribution. */
-    R_SYSTEM->LPMSAR = BSP_TZ_CFG_LPMSAR;                                 /* LPM Security Attribution. */
-  #ifdef BSP_TZ_CFG_DPFSAR
-    R_SYSTEM->DPFSAR = BSP_TZ_CFG_DPFSAR;                                 /* Deep Standby Interrupt Factor Security Attribution. */
+  #ifdef BSP_TZ_CFG_CACHESAR
+    R_CPSCU->CACHESAR = BSP_TZ_CFG_CACHESAR;                 /* Cache Security Attribution. */
   #endif
-  #ifdef BSP_TZ_CFG_RSCSAR
-    R_SYSTEM->RSCSAR = BSP_TZ_CFG_RSCSAR;                                 /* RAM Standby Control Security Attribution. */
+  #if !BSP_SECONDARY_CORE_BUILD
+    R_SYSTEM->RSTSAR = BSP_TZ_CFG_RSTSAR;                    /* RSTSRn Security Attribution. */
   #endif
-  #ifdef BSP_TZ_CFG_PGCSAR
-    R_SYSTEM->PGCSAR = BSP_TZ_CFG_PGCSAR;                                 /* Power Gating Control Security Attribution. */
+    BSP_PRV_SAR_WRITE(R_SYSTEM->LVDSAR, BSP_TZ_CFG_LVDSAR);  /* LVD Security Attribution. */
+
+  #if !BSP_SECONDARY_CORE_BUILD
+    R_SYSTEM->CGFSAR = BSP_TZ_CFG_CGFSAR;                    /* CGC Security Attribution. */
+    R_SYSTEM->LPMSAR = BSP_TZ_CFG_LPMSAR;                    /* LPM Security Attribution. */
+   #ifdef BSP_TZ_CFG_DPFSAR
+    R_SYSTEM->DPFSAR = BSP_TZ_CFG_DPFSAR;                    /* Deep Standby Interrupt Factor Security Attribution. */
+   #endif
+   #ifdef BSP_TZ_CFG_RSCSAR
+    R_SYSTEM->RSCSAR = BSP_TZ_CFG_RSCSAR;                    /* RAM Standby Control Security Attribution. */
+   #endif
+   #ifdef BSP_TZ_CFG_PGCSAR
+    R_SYSTEM->PGCSAR = BSP_TZ_CFG_PGCSAR;                    /* Power Gating Control Security Attribution. */
+   #endif
+   #ifdef BSP_TZ_CFG_BBFSAR
+    R_SYSTEM->BBFSAR = BSP_TZ_CFG_BBFSAR;                    /* Battery Backup Security Attribution. */
+   #endif
+   #ifdef BSP_TZ_CFG_VBRSABAR
+    R_SYSTEM->VBRSABAR = BSP_TZ_CFG_VBRSABAR;                /* Battery Backup Security Attribution (VBTBKRn). */
+   #endif
   #endif
-  #ifdef BSP_TZ_CFG_BBFSAR
-    R_SYSTEM->BBFSAR = BSP_TZ_CFG_BBFSAR;                                 /* Battery Backup Security Attribution. */
+
+    BSP_PRV_SAR_WRITE(R_CPSCU->ICUSARA, BSP_TZ_CFG_ICUSARA); /* External IRQ Security Attribution. */
+
+  #if !BSP_SECONDARY_CORE_BUILD
+    R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;                   /* NMI Security Attribution. */
+   #ifdef BSP_TZ_CFG_ICUSARC
+    R_CPSCU->ICUSARC = BSP_TZ_CFG_ICUSARC;                   /* DMAC Channel Security Attribution. */
+   #endif
   #endif
-  #ifdef BSP_TZ_CFG_VBRSABAR
-    R_SYSTEM->VBRSABAR = BSP_TZ_CFG_VBRSABAR;                             /* Battery Backup Security Attribution (VBTBKRn). */
-  #endif
-    R_CPSCU->ICUSARA = BSP_TZ_CFG_ICUSARA;                                /* External IRQ Security Attribution. */
-    R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;                                /* NMI Security Attribution. */
-  #ifdef BSP_TZ_CFG_ICUSARC
-    R_CPSCU->ICUSARC = BSP_TZ_CFG_ICUSARC;                                /* DMAC Channel Security Attribution. */
-  #endif
+
   #ifdef BSP_TZ_CFG_DMACCHSAR
     R_CPSCU->DMACCHSAR |= (BSP_TZ_CFG_DMACCHSAR << DMACX_REGISTER_SHIFT); /* DMAC Channel Security Attribution. */
   #endif
-  #ifdef BSP_TZ_CFG_ICUSARD
-    R_CPSCU->ICUSARD = BSP_TZ_CFG_ICUSARD;                                /* SELSR0 Security Attribution. */
+
+  #if !BSP_SECONDARY_CORE_BUILD
+   #ifdef BSP_TZ_CFG_ICUSARD
+    R_CPSCU->ICUSARD = BSP_TZ_CFG_ICUSARD;                              /* SELSR0 Security Attribution. */
+   #endif
+    R_CPSCU->ICUSARE = BSP_TZ_CFG_ICUSARE;                              /* WUPEN0 Security Attribution. */
+   #ifdef BSP_TZ_CFG_ICUSARF
+    R_CPSCU->ICUSARF = BSP_TZ_CFG_ICUSARF;                              /* WUPEN1 Security Attribution. */
+   #endif
+   #ifdef BSP_TZ_CFG_TEVTRCR
+    R_CPSCU->TEVTRCR = BSP_TZ_CFG_TEVTRCR;                              /* Trusted Event Route Enable. */
+   #endif
+   #ifdef BSP_TZ_CFG_ELCSARA
+    R_ELC->ELCSARA = BSP_TZ_CFG_ELCSARA;                                /* ELCR, ELSEGR0, ELSEGR1 Security Attribution. */
+   #endif
+   #ifdef BSP_TZ_CFG_FSAR
+    R_FCACHE->FSAR = BSP_TZ_CFG_FSAR;                                   /* FLWT and FCKMHZ Security Attribution. */
+   #endif
+   #ifdef BSP_TZ_CFG_MSAR
+    R_MRMS->MSAR = BSP_TZ_CFG_MSAR;                                     /* MRAM Security Attribution. */
+   #endif
+
+    R_CPSCU->SRAMSAR = BSP_TZ_CFG_SRAMSAR;                              /* SRAM Security Attribution. */
+   #ifdef BSP_TZ_CFG_STBRAMSAR
+    R_CPSCU->STBRAMSAR = BSP_TZ_CFG_STBRAMSAR;                          /* Standby RAM Security Attribution. */
+   #endif
   #endif
-    R_CPSCU->ICUSARE = BSP_TZ_CFG_ICUSARE;                                /* WUPEN0 Security Attribution. */
-  #ifdef BSP_TZ_CFG_ICUSARF
-    R_CPSCU->ICUSARF = BSP_TZ_CFG_ICUSARF;                                /* WUPEN1 Security Attribution. */
+
+    R_CPSCU->MMPUSARA |= (BSP_TZ_CFG_MMPUSARA << DMACX_REGISTER_SHIFT); /* Security Attribution for the DMAC Bus Master MPU. */
+
+  #if !BSP_SECONDARY_CORE_BUILD
+    R_CPSCU->BUSSARA = BSP_TZ_CFG_BUSSARA;                              /* Security Attribution Register A for the BUS Control Registers. */
+    R_CPSCU->BUSSARB = BSP_TZ_CFG_BUSSARB;                              /* Security Attribution Register B for the BUS Control Registers. */
+   #ifdef BSP_TZ_CFG_BUSSARC
+    R_CPSCU->BUSSARC = BSP_TZ_CFG_BUSSARC;                              /* Security Attribution Register C for the BUS Control Registers. */
+   #endif
   #endif
-  #ifdef BSP_TZ_CFG_TEVTRCR
-    R_CPSCU->TEVTRCR = BSP_TZ_CFG_TEVTRCR;                                /* Trusted Event Route Enable. */
-  #endif
-  #ifdef BSP_TZ_CFG_ELCSARA
-    R_ELC->ELCSARA = BSP_TZ_CFG_ELCSARA;                                  /* ELCR, ELSEGR0, ELSEGR1 Security Attribution. */
-  #endif
-    R_FCACHE->FSAR   = BSP_TZ_CFG_FSAR;                                   /* FLWT and FCKMHZ Security Attribution. */
-    R_CPSCU->SRAMSAR = BSP_TZ_CFG_SRAMSAR;                                /* SRAM Security Attribution. */
-  #ifdef BSP_TZ_CFG_STBRAMSAR
-    R_CPSCU->STBRAMSAR = BSP_TZ_CFG_STBRAMSAR;                            /* Standby RAM Security Attribution. */
-  #endif
-    R_CPSCU->MMPUSARA = BSP_TZ_CFG_MMPUSARA;                              /* Security Attribution for the DMAC Bus Master MPU. */
-    R_CPSCU->BUSSARA  = BSP_TZ_CFG_BUSSARA;                               /* Security Attribution Register A for the BUS Control Registers. */
-    R_CPSCU->BUSSARB  = BSP_TZ_CFG_BUSSARB;                               /* Security Attribution Register B for the BUS Control Registers. */
-  #ifdef BSP_TZ_CFG_BUSSARC
-    R_CPSCU->BUSSARC = BSP_TZ_CFG_BUSSARC;                                /* Security Attribution Register C for the BUS Control Registers. */
+
+  #ifdef BSP_TZ_CFG_IPCSAR
+    BSP_PRV_SAR_WRITE(R_CPSCU->IPCSAR, BSP_TZ_CFG_IPCSAR); /* IPC Security Attribution */
   #endif
 
   #if (defined(BSP_TZ_CFG_ICUSARC) && (BSP_TZ_CFG_ICUSARC != UINT32_MAX)) || \
@@ -602,7 +510,7 @@ void R_BSP_SecurityInit (void)
 
     /* If the DTC is used by the secure program, disable nonsecure write access to DTCST
      * in order to prevent the nonsecure program from disabling all DTC transfers. */
-    R_CPSCU->DTCSAR = ~1U;
+    R_CPSCU->DTCSAR &= ~(1U << DTCX_REGISTER_SHIFT);
    #endif
 
     /* Ensure that DTCST is set so that the nonsecure program can use DTC. */
@@ -611,7 +519,7 @@ void R_BSP_SecurityInit (void)
 
     /* On MCUs with this implementation of trustzone, DTCST security attribution is set to secure after reset.
      * If the DTC is not used in the secure application,then configure DTCST security attribution to non-secure. */
-    R_CPSCU->DTCSAR = 1U;
+    R_CPSCU->DTCSAR |= (1U << DTCX_REGISTER_SHIFT);
   #endif
 
     /* Initialize security attribution registers for Pins. */

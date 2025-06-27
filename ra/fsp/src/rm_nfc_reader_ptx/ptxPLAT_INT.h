@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**
- * \addtogroup grp_ptx_api_plat_int PTX NSC Platform API Internal
- *
- * @{
- */
-
 #ifndef COMPS_PLAT_PTXPLAT_INT_H_
  #define COMPS_PLAT_PTXPLAT_INT_H_
 
@@ -65,5 +59,3 @@ typedef struct ptxPlat
  #endif
 
 #endif                                 /* Guard */
-
-/** @} */

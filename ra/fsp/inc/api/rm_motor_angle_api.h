@@ -44,7 +44,7 @@ typedef void motor_angle_ctrl_t;
 /** Configuration parameters. */
 typedef struct st_motor_angle_cfg
 {
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;
 } motor_angle_cfg_t;
 

@@ -75,10 +75,10 @@
 
 #define BSP_DELAY_US_PER_SECOND            (1000000)
 #define NOISE_FILTER_SET_NUMBER_DELAY      (3)
-#define NOISE_FILTER_CLOCK_DEVIDE_1        (1)
-#define NOISE_FILTER_CLOCK_DEVIDE_32       (32)
-#define NOISE_FILTER_CLOCK_DEVIDE_4096     (4096)
-#define NOISE_FILTER_CLOCK_DEVIDE_8192     (8192)
+#define NOISE_FILTER_CLOCK_DIVIDE_1        (1)
+#define NOISE_FILTER_CLOCK_DIVIDE_32       (32)
+#define NOISE_FILTER_CLOCK_DIVIDE_4096     (4096)
+#define NOISE_FILTER_CLOCK_DIVIDE_8192     (8192)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -149,7 +149,7 @@ static void r_rtc_call_callback(rtc_instance_ctrl_t * p_ctrl, rtc_event_t event)
 #if RTC_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_rtc_rfrl_validate(uint32_t value);
 
-static fsp_err_t r_rtc_err_adjustment_paramter_check(rtc_error_adjustment_cfg_t const * const err_adj_cfg);
+static fsp_err_t r_rtc_err_adjustment_parameter_check(rtc_error_adjustment_cfg_t const * const err_adj_cfg);
 
 static fsp_err_t r_rtc_time_and_date_validate(rtc_time_t * const p_time);
 
@@ -224,7 +224,7 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
     /* Validate the error adjustment parameters when using SubClock */
     else
     {
-        FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_paramter_check(p_instance_ctrl->p_cfg->p_err_cfg),
+        FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_parameter_check(p_instance_ctrl->p_cfg->p_err_cfg),
                          FSP_ERR_INVALID_ARGUMENT);
     }
 #endif
@@ -788,7 +788,7 @@ fsp_err_t R_RTC_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjustm
     }
 
     /* Verify the frequecy comparison valure for RFRL when using LOCO */
-    FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_paramter_check(err_adj_cfg), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(FSP_SUCCESS == r_rtc_err_adjustment_parameter_check(err_adj_cfg), FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
@@ -811,7 +811,7 @@ fsp_err_t R_RTC_ErrorAdjustmentSet (rtc_ctrl_t * const p_ctrl, rtc_error_adjustm
  **********************************************************************************************************************/
 fsp_err_t R_RTC_CallbackSet (rtc_ctrl_t * const          p_ctrl,
                              void (                    * p_callback)(rtc_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              rtc_callback_args_t * const p_callback_memory)
 {
     rtc_instance_ctrl_t * p_instance_ctrl = (rtc_instance_ctrl_t *) p_ctrl;
@@ -897,25 +897,25 @@ fsp_err_t R_RTC_TimeCaptureSet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * 
     {
         case RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_32:
         {
-            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_32 / BSP_SUBCLOCK_FREQ_HZ);
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DIVIDE_32 / BSP_SUBCLOCK_FREQ_HZ);
             break;
         }
 
         case RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_4096:
         {
-            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_4096 / BSP_SUBCLOCK_FREQ_HZ);
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DIVIDE_4096 / BSP_SUBCLOCK_FREQ_HZ);
             break;
         }
 
         case RTC_TIME_CAPTURE_NOISE_FILTER_ON_DIVIDER_8192:
         {
-            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_8192 / BSP_SUBCLOCK_FREQ_HZ);
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DIVIDE_8192 / BSP_SUBCLOCK_FREQ_HZ);
             break;
         }
 
         default:
         {
-            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DEVIDE_1 / BSP_SUBCLOCK_FREQ_HZ);
+            noise_filter_delay_us = BSP_DELAY_US_PER_SECOND * (NOISE_FILTER_CLOCK_DIVIDE_1 / BSP_SUBCLOCK_FREQ_HZ);
             break;
         }
     }
@@ -1235,7 +1235,7 @@ static void r_rtc_call_callback (rtc_instance_ctrl_t * p_ctrl, rtc_event_t event
 /*******************************************************************************************************************//**
  * Validate RFRL value for LOCO
  *
- * @param[in]  value                      Frequency Comparision Value
+ * @param[in]  value                      Frequency Comparison Value
  * @retval FSP_SUCCESS                    validation successful
  * @retval FSP_ERR_INVALID_ARGUMENT       invalid field in rtc_time_t structure
  **********************************************************************************************************************/
@@ -1262,7 +1262,7 @@ static fsp_err_t r_rtc_rfrl_validate (uint32_t value)
  * @retval FSP_SUCCESS                 Validation successful
  * @retval FSP_ERR_INVALID_ARGUMENT    Invalid error configuration
  **********************************************************************************************************************/
-static fsp_err_t r_rtc_err_adjustment_paramter_check (rtc_error_adjustment_cfg_t const * const err_adj_cfg)
+static fsp_err_t r_rtc_err_adjustment_parameter_check (rtc_error_adjustment_cfg_t const * const err_adj_cfg)
 {
     rtc_error_adjustment_mode_t   mode   = err_adj_cfg->adjustment_mode;
     rtc_error_adjustment_period_t period = err_adj_cfg->adjustment_period;

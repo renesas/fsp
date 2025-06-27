@@ -39,8 +39,6 @@ extern uint32_t const DomainParam_Brainpool_384r1[];
 extern uint32_t const DomainParam_Brainpool_512r1[];
 extern uint32_t const DomainParam_Koblitz_secp256k1[];
 extern uint32_t       INST_DATA_SIZE;
-extern uint32_t       KEY_INDEX_SIZE;
-extern uint32_t       WRAPPED_KEY_SIZE;
 
 /**********************************************************************************************************************
  * Public Function Prototypes
@@ -94,6 +92,7 @@ void r_rsip_func100(uint32_t ARG1, uint32_t ARG2, uint32_t ARG3, uint32_t ARG4);
 void r_rsip_func101(uint32_t ARG1, uint32_t ARG2, uint32_t ARG3, uint32_t ARG4);
 void r_rsip_func102(uint32_t ARG1, uint32_t ARG2, uint32_t ARG3, uint32_t ARG4);
 void r_rsip_func103(void);
+void r_rsip_func113(void);
 void r_rsip_func202(void);
 void r_rsip_func214(void);
 void r_rsip_func215(void);
@@ -412,9 +411,12 @@ rsip_ret_t r_rsip_p75(const uint32_t InData_KeyIndex[],
                       uint32_t       MAX_CNT);
 rsip_ret_t r_rsip_p75i(const uint32_t InData_KeyIndex[],
                        const uint32_t InData_HashType[],
-                       const uint32_t InData_MsgLen[]);
-rsip_ret_t r_rsip_p75r(const uint32_t InData_KeyIndex[], const uint32_t InData_HashType[],
-                       const uint32_t InData_State[]);
+                       const uint32_t InData_MsgLen[],
+                       uint32_t       KEY_INDEX_SIZE);
+rsip_ret_t r_rsip_p75r(const uint32_t InData_KeyIndex[],
+                       const uint32_t InData_HashType[],
+                       const uint32_t InData_State[],
+                       uint32_t       KEY_INDEX_SIZE);
 rsip_ret_t r_rsip_p75u(const uint32_t InData_Msg[], uint32_t MAX_CNT);
 rsip_ret_t r_rsip_p75s(uint32_t OutData_State[]);
 rsip_ret_t r_rsip_p75f(const uint32_t InData_Cmd[],
@@ -435,32 +437,21 @@ rsip_ret_t r_rsip_p2e(const uint32_t InData_KeyIndex[], const uint32_t InData_DO
 rsip_ret_t r_rsip_p3a(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 rsip_ret_t r_rsip_p3b(const uint32_t MAX_CNT, uint32_t OutData_PubKeyIndex[], uint32_t OutData_PrivKeyIndex[]);
 
-rsip_ret_t r_rsip_p73s(uint32_t OutData_State[]);
-rsip_ret_t r_rsip_p75i(const uint32_t InData_KeyIndex[],
-                       const uint32_t InData_HashType[],
-                       const uint32_t InData_MsgLen[]);
-rsip_ret_t r_rsip_p75r(const uint32_t InData_KeyIndex[], const uint32_t InData_HashType[],
-                       const uint32_t InData_State[]);
-rsip_ret_t r_rsip_p75u(const uint32_t InData_Msg[], uint32_t MAX_CNT);
-rsip_ret_t r_rsip_p75s(uint32_t OutData_State[]);
-rsip_ret_t r_rsip_p75f(const uint32_t InData_Cmd[],
-                       const uint32_t InData_Msg[],
-                       const uint32_t InData_MAC[],
-                       const uint32_t InData_length[],
-                       uint32_t       MAX_CNT,
-                       uint32_t       OutData_MAC[]);
-
 rsip_ret_t r_rsip_p8f(const uint32_t InData_Cmd[],
                       const uint32_t InData_KeyIndex[],
                       const uint32_t InData_WrappedKeyType[],
                       const uint32_t InData_WrappedKeyIndex[],
-                      uint32_t       OutData_Text[]);
+                      uint32_t       OutData_Text[],
+                      uint32_t       KEY_INDEX_SIZE,
+                      uint32_t       WRAPPED_KEY_SIZE);
 rsip_ret_t r_rsip_p90(const uint32_t InData_KeyType[],
                       const uint32_t InData_Cmd[],
                       const uint32_t InData_KeyIndex[],
                       const uint32_t InData_WrappedKeyType[],
                       const uint32_t InData_Text[],
-                      uint32_t       OutData_KeyIndex[]);
+                      uint32_t       OutData_KeyIndex[],
+                      uint32_t       WRAPPED_KEY_SIZE,
+                      uint32_t       KEY_INDEX_SIZE);
 
 rsip_ret_t r_rsip_pe1(const uint32_t InData_Sel_KeyType[],
                       const uint32_t InData_Certificate[],

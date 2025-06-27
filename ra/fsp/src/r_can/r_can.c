@@ -660,7 +660,7 @@ fsp_err_t R_CAN_InfoGet (can_ctrl_t * const p_api_ctrl, can_info_t * const p_inf
  **********************************************************************************************************************/
 fsp_err_t R_CAN_CallbackSet (can_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(can_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              can_callback_args_t * const p_callback_memory)
 {
     can_instance_ctrl_t * p_ctrl = (can_instance_ctrl_t *) p_api_ctrl;

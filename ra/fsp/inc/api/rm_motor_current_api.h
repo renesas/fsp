@@ -49,7 +49,7 @@ typedef enum e_motor_current_event
 
 typedef struct st_motor_current_callback_args
 {
-    void const          * p_context;
+    void                * p_context;
     motor_current_event_t event;
 } motor_current_callback_args_t;
 
@@ -133,7 +133,7 @@ typedef struct st_motor_current_cfg
 
     /* Callback function */
     void (* p_callback)(motor_current_callback_args_t * p_args);
-    void const * p_context;
+    void * p_context;
 
     void const * p_extend;
 } motor_current_cfg_t;

@@ -470,7 +470,7 @@ fsp_err_t R_SAU_SPI_WriteRead (spi_ctrl_t * const    p_api_ctrl,
  **********************************************************************************************************************/
 fsp_err_t R_SAU_SPI_CallbackSet (spi_ctrl_t * const          p_api_ctrl,
                                  void (                    * p_callback)(spi_callback_args_t *),
-                                 void const * const          p_context,
+                                 void * const                p_context,
                                  spi_callback_args_t * const p_callback_memory)
 {
     sau_spi_instance_ctrl_t * p_ctrl = (sau_spi_instance_ctrl_t *) p_api_ctrl;
@@ -1034,7 +1034,7 @@ static void r_sau_spi_call_callback (sau_spi_instance_ctrl_t * p_ctrl, spi_event
 /*******************************************************************************************************************//**
  * This function is the ISR handler for R_SAU_SPI Transmit End IRQ.
  *
- * The Transmit End IRQ is enabled after the last byte of data has been transfered.
+ * The Transmit End IRQ is enabled after the last byte of data has been transferred.
  *
  **********************************************************************************************************************/
 void sau_spi_txrxi_isr (void)

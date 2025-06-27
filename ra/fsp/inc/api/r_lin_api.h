@@ -47,8 +47,8 @@ typedef enum e_lin_mode
 /** LIN checksum type */
 typedef enum e_lin_checksum_type
 {
-    LIN_CHECKSUM_TYPE_CLASSIC  = 0U,   ///< 8 bit LIN classic checksum over information bytes only
-    LIN_CHECKSUM_TYPE_ENHANCED = 1U,   ///< 8 bit LIN enhanced checksum over information bytes and PID
+    LIN_CHECKSUM_TYPE_CLASSIC  = 0U,   ///< 8 bit LIN classic checksum over data bytes only
+    LIN_CHECKSUM_TYPE_ENHANCED = 1U,   ///< 8 bit LIN enhanced checksum over data bytes and PID
     LIN_CHECKSUM_TYPE_NONE     = 2U,   ///< Skip driver checksum generation/validation
 } lin_checksum_type_t;
 
@@ -56,27 +56,36 @@ typedef enum e_lin_checksum_type
 typedef enum e_lin_event
 {
     LIN_EVENT_NONE = (0),                                  ///< No event present
-    LIN_EVENT_RX_START_FRAME_COMPLETE       = (1UL << 1),  ///< Start frame received event.
-    LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE = (1UL << 2),  ///< Information frame received event.
-    LIN_EVENT_TX_START_FRAME_COMPLETE       = (1UL << 3),  ///< Start frame transmission complete event
-    LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE = (1UL << 4),  ///< Information transmission complete event
-    LIN_EVENT_ERR_INVALID_CHECKSUM          = (1UL << 5),  ///< Information frame received successfully, but checksum was invalid
+    LIN_EVENT_RX_START_FRAME_COMPLETE       = (1UL << 1),  ///< DEPRECATED, do not use
+    LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE = (1UL << 2),  ///< DEPRECATED, do not use
+    LIN_EVENT_TX_START_FRAME_COMPLETE       = (1UL << 3),  ///< DEPRECATED, do not use
+    LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE = (1UL << 4),  ///< DEPRECATED, do not use
+    LIN_EVENT_RX_HEADER_COMPLETE            = (1UL << 1),  ///< Header received event.
+    LIN_EVENT_RX_DATA_COMPLETE              = (1UL << 2),  ///< Data received event.
+    LIN_EVENT_TX_HEADER_COMPLETE            = (1UL << 3),  ///< Header transmission complete event
+    LIN_EVENT_TX_DATA_COMPLETE              = (1UL << 4),  ///< Data transmission complete event
+    LIN_EVENT_ERR_INVALID_CHECKSUM          = (1UL << 5),  ///< Data received successfully, but checksum was invalid
     LIN_EVENT_TX_WAKEUP_COMPLETE            = (1UL << 6),  ///< Transmit wake up complete event
     LIN_EVENT_RX_WAKEUP_COMPLETE            = (1UL << 7),  ///< Receive wake up complete event
     LIN_EVENT_ERR_BUS_COLLISION_DETECTED    = (1UL << 9),  ///< Bus collision detection event
     LIN_EVENT_ERR_COUNTER_OVERFLOW          = (1UL << 14), ///< Counter overflow event
     LIN_EVENT_ERR_OVERRUN                   = (1UL << 24), ///< Overrun error event
-    LIN_EVENT_ERR_PARITY                    = (1UL << 27), ///< Parity error event (start frame only, LIN information is sent without parity)
+    LIN_EVENT_ERR_PARITY                    = (1UL << 27), ///< Parity error event (header only, LIN data is sent without parity)
     LIN_EVENT_ERR_FRAMING                   = (1UL << 28), ///< Framing error event
 } lin_event_t;
 
 /** LIN Transfer Parameters */
 typedef struct st_lin_transfer_params
 {
-    uint8_t             id;            ///< The unprotected frame ID associated with the information frame transfer
-    uint8_t           * p_information; ///< Pointer to rx or tx buffer associated with the information frame transfer.
-    uint8_t             num_bytes;     ///< Length of buffer pointed to by p_information, in bytes
-    lin_checksum_type_t checksum_type; ///< Checksum type to use for checksum generation (when writing frame) or validation (when reading frame). See @ref lin_checksum_type_t
+    uint8_t id;                        ///< The unprotected frame ID associated with the data transfer
+    union
+    {
+        uint8_t * p_information;       ///< DEPRECATED, do not use
+        uint8_t * p_data;              ///< Pointer to rx or tx buffer associated with the data transfer.
+    };
+
+    uint8_t             num_bytes;     ///< Length of buffer pointed to by p_data, in bytes
+    lin_checksum_type_t checksum_type; ///< Checksum type to use for checksum generation (when writing data) or validation (when reading data). See @ref lin_checksum_type_t
 } lin_transfer_params_t;
 
 /** LIN Callback Arguments */
@@ -86,12 +95,12 @@ typedef struct st_lin_callback_arg
     lin_event_t event;                 ///< Event code
 
     /** Valid for the following events:
-     *    - LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE
+     *    - LIN_EVENT_RX_DATA_COMPLETE
      *    - LIN_EVENT_ERR_FRAMING
      *    - LIN_EVENT_ERR_INVALID_CHECKSUM
      *
-     * Contains the number of information bytes received for an
-     * information frame reception.
+     * Contains the number of data bytes received for a
+     * data reception.
      */
     uint8_t bytes_received;
 
@@ -101,12 +110,12 @@ typedef struct st_lin_callback_arg
     uint8_t pid;
 
     /** Received checksum. Valid for the following events:
-     *   - LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE
+     *   - LIN_EVENT_RX_DATA_COMPLETE
      *   - LIN_EVENT_ERR_INVALID_CHECKSUM.
      */
     uint8_t checksum;
 
-    void const * p_context;            ///< Context provided to user during callback
+    void * p_context;                  ///< Context provided to user during callback
 } lin_callback_args_t;
 
 /** LIN configuration block */
@@ -118,7 +127,7 @@ typedef struct st_lin_cfg
 
     /* Configuration for LIN Event processing */
     void (* p_callback)(lin_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                            ///< User defined context passed into callback function
+    void * p_context;                                  ///< User defined context passed into callback function
 
     /* Pointer to LIN peripheral specific configuration */
     void const * p_extend;                             ///< LIN hardware dependent configuration
@@ -139,37 +148,29 @@ typedef struct st_lin_api
      */
     fsp_err_t (* open)(lin_ctrl_t * const p_ctrl, lin_cfg_t const * const p_cfg);
 
-    /** Begin non-blocking transmission of the LIN start frame. The start frame consists of the break pattern,
-     *  sync word, and protected frame identifier (PID). The unprotected identifier should be supplied.
-     *  The driver will compute the PID.
+    /** Begin non-blocking transmission of a LIN frame.
      *
-     * When the start frame has been transmitted, the callback is called with event LIN_EVENT_TX_START_FRAME_COMPLETE.
+     * If the node is a LIN master, the LIN header is transmitted before data, if present.
      *
-     * @param[in,out]  p_ctrl     Pointer to the LIN control block.
-     * @param[in]      id         Unprotected frame identifier
-     */
-    fsp_err_t (* startFrameWrite)(lin_ctrl_t * const p_ctrl, uint8_t const id);
-
-    /** Begin non-blocking transmission of the LIN information frame.
+     * For header-only transmissions (master mode), when the header transmission completes successfully, the
+     * callback is called with the event LIN_EVENT_TX_HEADER_COMPLETE.
      *
-     * The write buffer is used until the write is complete.  When the write completes successfully
-     * (all bytes are fully transmitted on the wire) the callback is called with event
-     * LIN_EVENT_TX_INFORMATION_FRAME_COMPLETE.
+     * For header+data (master mode) or data-only transmission (slave mode), when the data transmission completes
+     * successfully, the callback is called with event LIN_EVENT_TX_DATA_COMPLETE.
      *
      * @param[in,out]   p_ctrl               Pointer to the LIN control block.
      * @param[in]       p_transfer_params    Pointer to parameters required for the write transaction.
      */
-    fsp_err_t (* informationFrameWrite)(lin_ctrl_t * const                  p_ctrl,
-                                        const lin_transfer_params_t * const p_transfer_params);
+    fsp_err_t (* write)(lin_ctrl_t * const p_ctrl, const lin_transfer_params_t * const p_transfer_params);
 
-    /** Begin non-blocking read of information frame bytes.
+    /** Begin non-blocking read of data bytes.
      *
-     * When a read completes successfully, the callback is called with event LIN_EVENT_RX_INFORMATION_FRAME_COMPLETE.
+     * When a read completes successfully, the callback is called with event LIN_EVENT_RX_DATA_COMPLETE.
      *
      * @param[in]   p_ctrl                   Pointer to the LIN control block for the channel.
      * @param[in]   p_transfer_params        Pointer to parameters required for the read transaction.
      */
-    fsp_err_t (* informationFrameRead)(lin_ctrl_t * const p_ctrl, lin_transfer_params_t * const p_transfer_params);
+    fsp_err_t (* read)(lin_ctrl_t * const p_ctrl, lin_transfer_params_t * const p_transfer_params);
 
     /** Abort ongoing transfer.
      *
@@ -186,7 +187,7 @@ typedef struct st_lin_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(lin_ctrl_t * const p_ctrl, void (* p_callback)(lin_callback_args_t *),
-                              void const * const p_context, lin_callback_args_t * const p_callback_memory);
+                              void * const p_context, lin_callback_args_t * const p_callback_memory);
 
     /** Send wakeup signal for LIN device.
      *
@@ -211,6 +212,19 @@ typedef struct st_lin_api
      * @param[in]   p_ctrl                  Pointer to the LIN control block.
      */
     fsp_err_t (* close)(lin_ctrl_t * const p_ctrl);
+
+    /** [DEPRECATED] Use @ref lin_api_t::read
+     */
+    fsp_err_t (* informationFrameRead)(lin_ctrl_t * const p_ctrl, lin_transfer_params_t * const p_transfer_params);
+
+    /** [DEPRECATED] Use @ref lin_api_t::write
+     */
+    fsp_err_t (* startFrameWrite)(lin_ctrl_t * const p_ctrl, uint8_t const id);
+
+    /** [DEPRECATED] Use @ref lin_api_t::write
+     */
+    fsp_err_t (* informationFrameWrite)(lin_ctrl_t * const                  p_ctrl,
+                                        const lin_transfer_params_t * const p_transfer_params);
 } lin_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

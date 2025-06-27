@@ -55,7 +55,7 @@ typedef struct st_icu_instance_ctrl
     void (* p_callback)(external_irq_callback_args_t * p_args); // Pointer to callback that is called when an edge is detected on the external irq pin.
 
     /** Placeholder for user data.  Passed to the user callback in ::external_irq_callback_args_t. */
-    void const * p_context;
+    void * p_context;
 } icu_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -79,7 +79,7 @@ fsp_err_t R_ICU_ExternalIrqDisable(external_irq_ctrl_t * const p_api_ctrl);
 
 fsp_err_t R_ICU_ExternalIrqCallbackSet(external_irq_ctrl_t * const          p_api_ctrl,
                                        void (                             * p_callback)(external_irq_callback_args_t *),
-                                       void const * const                   p_context,
+                                       void * const                         p_context,
                                        external_irq_callback_args_t * const p_callback_memory);
 
 fsp_err_t R_ICU_ExternalIrqClose(external_irq_ctrl_t * const p_api_ctrl);

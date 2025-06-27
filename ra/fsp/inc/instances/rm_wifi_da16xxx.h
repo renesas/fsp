@@ -108,7 +108,7 @@ typedef struct st_wifi_cfg
     const uint8_t * country_code;                                               ///< Country code defined in ISO3166-1 alpha-2 standard
     const uint8_t * sntp_server_ip;                                             ///< The SNTP server IP address string
     const int32_t   sntp_utc_offset_in_hours;                                   ///< Timezone offset in secs (-43200 - 43200)
-    void const    * p_context;                                                  ///< User defined context passed into callback function.
+    void          * p_context;                                                  ///< User defined context passed into callback function.
     void const    * p_extend;                                                   ///< Pointer to extended configuration by instance of interface.
 } wifi_da16xxx_cfg_t;
 

@@ -819,7 +819,7 @@ int mbedtls_sha512_update(mbedtls_sha512_context *ctx,
         ilen = ilen - (sha512_block_aligned_size_mod * SIZE_MBEDTLS_SHA512_PROCESS_BUFFER_BYTES);
 
         /* Check to see if there will be unaligned data to be buffered.
-         * If there is no unaligned data to be buffered, then in case of the RSIP7,
+         * If there is no unaligned data to be buffered, then in case of the RSIP-E51A,
          * 128 bytes (SHA512 block size) of data will be buffered and processed when the finish() is called. */
 
         /* If all the data is aligned, copy over the final 128 bytes for later processing. */

@@ -38,25 +38,8 @@
  #define TX_PORT_CFG_SYSTICK_IPL    TX_PORT_MAX_IPL
 #endif
 
-/* Define the location of the begining of the free RAM  */
-
-#if defined(__ARMCC_VERSION)           /* AC6 compiler */
-extern uint32_t Image$$RAM_END$$Limit;
- #define TX_FREE_MEMORY_START    &Image$$RAM_END$$Limit
-#elif   defined(__GNUC__)              /* GCC compiler */
-extern void * __RAM_segment_used_end__;
- #define TX_FREE_MEMORY_START    (&__RAM_segment_used_end__)
-#elif defined(__ICCARM__)              /* IAR compiler */
-extern void * __tx_free_memory_start;
- #define TX_FREE_MEMORY_START    (&__tx_free_memory_start)
-
-/* __tx_free_memory_start is placed at the end of RAM in fsp.icf. */
- #pragma section="FREE_MEM"
-__root void * __tx_free_memory_start @"FREE_MEM";
-#endif
-
-extern void * __Vectors[];
-#define TX_VECTOR_TABLE    __Vectors
+extern void * __VECTOR_TABLE[];
+#define TX_VECTOR_TABLE             __VECTOR_TABLE
 
 /**************************************************************************/
 /*                                                                        */
@@ -100,7 +83,7 @@ VOID _tx_initialize_low_level (VOID)
 #endif
 
     /* Set base of available memory to end of non-initialized RAM area.  */
-    _tx_initialize_unused_memory = TX_UCHAR_POINTER_ADD(TX_FREE_MEMORY_START, 4);
+    _tx_initialize_unused_memory = TX_NULL;
 
     /* Set system stack pointer from vector value.  */
     _tx_thread_system_stack_ptr = TX_VECTOR_TABLE[0];

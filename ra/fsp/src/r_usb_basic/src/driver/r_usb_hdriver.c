@@ -83,7 +83,7 @@
  * Macro definitions
  **********************************************************************************************************************/
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
-  #define USB_RESPONCE_COUNTER_VALUE    (6000U)
+  #define USB_RESPONSE_COUNTER_VALUE    (6000U)
  #endif                                /* USB_CFG_COMPLIANCE == USB_CFG_ENABLE */
 
  #if defined(USB_CFG_HVND_USE)
@@ -1126,7 +1126,7 @@ static void usb_hstd_interrupt (usb_utr_t * ptr)
         {
  #if USB_CFG_COMPLIANCE == USB_CFG_ENABLE
             g_usb_hstd_response_counter[ptr->ip]++;
-            if (USB_RESPONCE_COUNTER_VALUE == g_usb_hstd_response_counter[ptr->ip])
+            if (USB_RESPONSE_COUNTER_VALUE == g_usb_hstd_response_counter[ptr->ip])
             {
                 hw_usb_clear_enb_sofe(ptr);
                 disp_param.status = USB_COMPLIANCETEST_NORES;
@@ -2753,7 +2753,7 @@ void usb_hstd_suspend_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 
     if (USB_NULL != p_cfg)
     {
-        ctrl.p_context = (void *) p_cfg->p_context;
+        ctrl.p_context = p_cfg->p_context;
     }
 
     usb_set_event(USB_STATUS_SUSPEND, &ctrl);
@@ -2810,7 +2810,7 @@ void usb_hstd_resume_complete (usb_utr_t * ptr, uint16_t data1, uint16_t data2)
 
     if (USB_NULL != p_cfg)
     {
-        ctrl.p_context = (void *) p_cfg->p_context;
+        ctrl.p_context = p_cfg->p_context;
     }
 
     usb_set_event(USB_STATUS_RESUME, &ctrl);

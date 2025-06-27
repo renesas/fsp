@@ -49,20 +49,22 @@ typedef enum e_capture_state
 /** CAPTURE status */
 typedef struct e_capture_status
 {
-    capture_state_t state;             ///< Current state
+    capture_state_t state;             ///< Current capture state
     uint32_t      * p_buffer;          ///< Pointer to active buffer
     uint32_t        data_size;         ///< Size of data written to provided buffer
 } capture_status_t;
 
-/** CAPTURE callback event ID - see implimentation for details */
+/** CAPTURE callback event ID - see implementation for details */
 typedef uint32_t capture_event_t;
 
 /** CAPTURE callback function parameter data */
 typedef struct st_capture_callback_args
 {
-    capture_event_t event;             ///< Event causing the callback
-    uint8_t       * p_buffer;          ///< Pointer to buffer that contains captured data
-    void const    * p_context;         ///< Placeholder for user data.  Set in @ref capture_api_t::open function in @ref capture_cfg_t.
+    capture_event_t event;             ///< Event causing the callback - See instance header for details.
+    uint32_t        event_status;      ///< Capture status data corresponding to given event type - See instance header for details.
+    uint32_t        interrupt_status;  ///< Module interrupt status data corresponding to given event type - See instance header for details.
+    uint8_t       * p_buffer;          ///< Pointer to buffer that contains the most recently captured data
+    void          * p_context;         ///< Placeholder for user data.  Set in @ref capture_api_t::open function in @ref capture_cfg_t.
 } capture_callback_args_t;
 
 /** CAPTURE configuration parameters. */
@@ -74,7 +76,7 @@ typedef struct st_capture_cfg
     uint16_t y_capture_pixels;                             ///< Number of vertical lines/pixels to capture
     uint8_t  bytes_per_pixel;                              ///< Number of bytes per pixel
     void (* p_callback)(capture_callback_args_t * p_args); ///< Callback provided when a CAPTURE transfer ISR occurs
-    void const * p_context;                                ///< User defined context passed to callback function
+    void       * p_context;                                ///< User defined context passed to callback function
     void const * p_extend;                                 ///< Extension parameter for hardware specific settings
 } capture_cfg_t;
 
@@ -116,7 +118,7 @@ typedef struct st_capture_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(capture_ctrl_t * const p_ctrl, void (* p_callback)(capture_callback_args_t *),
-                              void const * const p_context, capture_callback_args_t * const p_callback_memory);
+                              void * const p_context, capture_callback_args_t * const p_callback_memory);
 
     /** Check scan status.
      *

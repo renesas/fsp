@@ -38,7 +38,7 @@ typedef struct st_poeg_instance_ctrl
 
     void (* p_callback)(poeg_callback_args_t *); // Pointer to callback
     poeg_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
-    void const           * p_context;            // Pointer to context to be passed into callback function
+    void                 * p_context;            // Pointer to context to be passed into callback function
 } poeg_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -58,7 +58,7 @@ fsp_err_t R_POEG_Open(poeg_ctrl_t * const p_ctrl, poeg_cfg_t const * const p_cfg
 fsp_err_t R_POEG_StatusGet(poeg_ctrl_t * const p_ctrl, poeg_status_t * const p_status);
 fsp_err_t R_POEG_CallbackSet(poeg_ctrl_t * const          p_ctrl,
                              void (                     * p_callback)(poeg_callback_args_t *),
-                             void const * const           p_context,
+                             void * const                 p_context,
                              poeg_callback_args_t * const p_callback_memory);
 fsp_err_t R_POEG_OutputDisable(poeg_ctrl_t * const p_ctrl);
 fsp_err_t R_POEG_Reset(poeg_ctrl_t * const p_ctrl);

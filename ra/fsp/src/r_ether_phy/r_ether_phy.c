@@ -199,10 +199,15 @@ fsp_err_t R_ETHER_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t con
     R_ETHERC0_Type            * p_reg_etherc;
 
 #if (ETHER_PHY_CFG_PARAM_CHECKING_ENABLE)
+    ether_phy_extended_cfg_t * p_extend;
+
     FSP_ASSERT(p_instance_ctrl);
     ETHER_PHY_ERROR_RETURN(NULL != p_cfg, FSP_ERR_INVALID_POINTER);
     ETHER_PHY_ERROR_RETURN((ETHER_PHY_OPEN != p_instance_ctrl->open), FSP_ERR_ALREADY_OPEN);
     ETHER_PHY_ERROR_RETURN((BSP_FEATURE_ETHER_MAX_CHANNELS > p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
+    p_extend = (ether_phy_extended_cfg_t *) p_cfg->p_extend;
+    ETHER_PHY_ERROR_RETURN(NULL != p_extend, FSP_ERR_INVALID_POINTER);
+    ETHER_PHY_ERROR_RETURN(NULL != p_extend->p_phy_lsi_cfg_list[0], FSP_ERR_INVALID_ARGUMENT);
 #endif
 
     /** Make sure this channel exists. */
@@ -653,26 +658,27 @@ static void ether_phy_reg_set (ether_phy_instance_ctrl_t * p_instance_ctrl, uint
 {
     int32_t  i;
     uint32_t data = 0;
+    ether_phy_extended_cfg_t * p_extend = (ether_phy_extended_cfg_t *) p_instance_ctrl->p_ether_phy_cfg->p_extend;
 
     /*
      * The processing of ST (start of frame),OP (operation code), PHYAD (PHY Address), and
      * REGAD (Register Address)  about the frame format of MII Management Interface which is
      * provided by "Table 22-12" of "22.2.4.5" of "IEEE 802.3-2008_section2".
      */
-    data = (ETHER_PHY_MII_ST << 14);                                             /* ST code    */
+    data = (ETHER_PHY_MII_ST << 14);                                    /* ST code    */
 
     if (ETHER_PHY_MII_READ == option)
     {
-        data |= (ETHER_PHY_MII_READ << 12);                                      /* OP code(RD)  */
+        data |= (ETHER_PHY_MII_READ << 12);                             /* OP code(RD)  */
     }
     else
     {
-        data |= (ETHER_PHY_MII_WRITE << 12);                                     /* OP code(WT)  */
+        data |= (ETHER_PHY_MII_WRITE << 12);                            /* OP code(WT)  */
     }
 
-    data |= (uint32_t) (p_instance_ctrl->p_ether_phy_cfg->phy_lsi_address << 7); /* PHY Address  */
+    data |= (uint32_t) (p_extend->p_phy_lsi_cfg_list[0]->address << 7); /* PHY Address  */
 
-    data |= (reg_addr << 2);                                                     /* Reg Address  */
+    data |= (reg_addr << 2);                                            /* Reg Address  */
 
     i = 14;
     while (i > 0)
@@ -968,7 +974,8 @@ static void ether_phy_mii_writez (ether_phy_instance_ctrl_t * p_instance_ctrl)
  ***********************************************************************************************************************/
 static void ether_phy_targets_initialize (ether_phy_instance_ctrl_t * p_instance_ctrl)
 {
-    switch (p_instance_ctrl->p_ether_phy_cfg->phy_lsi_type)
+    ether_phy_extended_cfg_t * p_extend = (ether_phy_extended_cfg_t *) p_instance_ctrl->p_ether_phy_cfg->p_extend;
+    switch (p_extend->p_phy_lsi_cfg_list[0]->type)
     {
         /* Use KSZ8091RNB */
 #if (ETHER_PHY_CFG_TARGET_KSZ8091RNB_ENABLE)
@@ -1044,8 +1051,9 @@ static bool ether_phy_targets_is_support_link_partner_ability (ether_phy_instanc
                                                                uint32_t                    line_speed_duplex)
 {
     bool result = false;
+    ether_phy_extended_cfg_t * p_extend = (ether_phy_extended_cfg_t *) p_instance_ctrl->p_ether_phy_cfg->p_extend;
     FSP_PARAMETER_NOT_USED(line_speed_duplex);
-    switch (p_instance_ctrl->p_ether_phy_cfg->phy_lsi_type)
+    switch (p_extend->p_phy_lsi_cfg_list[0]->type)
     {
         /* Use KSZ8091RNB */
 #if (ETHER_PHY_CFG_TARGET_KSZ8091RNB_ENABLE)

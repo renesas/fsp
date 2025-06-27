@@ -557,15 +557,13 @@ fsp_err_t RM_MQTT_DA16XXX_UnSubscribe (mqtt_onchip_da16xxx_instance_ctrl_t  * p_
  *  Receive data subscribed to on DA16XXX MQTT Client service.
  *
  * @param[in]  p_ctrl               Pointer to MQTT Client instance control structure.
- * @param[in]  p_cfg                Pointer to MQTT Client configuration structure.
  *
  * @retval FSP_SUCCESS              Function completed successfully.
  * @retval FSP_ERR_ASSERTION        The p_ctrl, p_textstring, p_ip_addr is NULL.
  * @retval FSP_ERR_NOT_OPEN         The instance has not been opened or the client is not connected.
  * @retval FSP_ERR_INVALID_DATA     Receive function did not receive valid publish data.
  **********************************************************************************************************************/
-fsp_err_t RM_MQTT_DA16XXX_Receive (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctrl,
-                                   mqtt_onchip_da16xxx_cfg_t const * const p_cfg)
+fsp_err_t RM_MQTT_DA16XXX_Receive (mqtt_onchip_da16xxx_instance_ctrl_t * p_ctrl)
 {
     at_transport_da16xxx_instance_t const * p_transport_instance =
         p_ctrl->p_cfg->p_transport_instance;
@@ -646,7 +644,7 @@ fsp_err_t RM_MQTT_DA16XXX_Receive (mqtt_onchip_da16xxx_instance_ctrl_t   * p_ctr
                     mqtt_data.data_length = (uint32_t) length;
 
                     /* Call the user callback with successful data */
-                    p_cfg->p_callback(&mqtt_data);
+                    p_ctrl->p_cfg->p_callback(&mqtt_data);
                 }
                 else
                 {

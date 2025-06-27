@@ -143,8 +143,13 @@ UINT sce_nx_crypto_gcm_encrypt_init (NX_CRYPTO_AES * aes_ctx,
        BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED) == 1)
     else if (SCE_NX_CRYPTO_AES_KEY_SIZE_192_WRAPPED_WORDS == aes_ctx->nx_crypto_aes_key_size)
     {
-        err = HW_SCE_Aes192GcmEncryptInitSub((uint32_t *) (aes_ctx->nx_crypto_aes_key_schedule),
-                                             (uint32_t *) hashed_ivec);
+        err =
+            HW_SCE_Aes192GcmEncryptInitSubGeneral(key_type,
+                                                  dummy_val,
+                                                  dummy_val,
+                                                  (uint32_t *) (aes_ctx->nx_crypto_aes_key_schedule),
+                                                  (uint32_t *) hashed_ivec,
+                                                  dummy_val);
         if (FSP_SUCCESS == err)
         {
             HW_SCE_Aes192GcmEncryptUpdateAADSub(aad, RM_NETX_SECURE_CRYPTO_BYTES_TO_WORDS(input_length));

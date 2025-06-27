@@ -30,6 +30,12 @@ FSP_HEADER
  * Macro definitions
  **********************************************************************************************************************/
 
+#ifndef OSPI_B_MAX_WRITE_ENABLE_POLLING_LOOPS
+
+/** Maximum number of status polling checks after enabling memory writes. */
+ #define OSPI_B_MAX_WRITE_ENABLE_POLLING_LOOPS    (5)
+#endif
+
 /***********************************************************************************************************************
  * Typedef definitions
  **********************************************************************************************************************/
@@ -83,6 +89,99 @@ typedef enum e_ospi_b_cs_pulldown_clocks
     OSPI_B_COMMAND_CS_PULLDOWN_CLOCKS_1,                 ///< CS negating Extend 1 cycle
 } ospi_b_command_cs_pulldown_clocks_t;
 
+/** OSPI data strobe delay. */
+typedef enum e_ospi_b_ds_timing_delay
+{
+    OSPI_B_DS_TIMING_DELAY_NONE = 0,   ///< Sample without delay.
+    OSPI_B_DS_TIMING_DELAY_1    = 1,   ///< Delay sampling by 1 clock cell.
+    OSPI_B_DS_TIMING_DELAY_2    = 2,   ///< Delay sampling by 2 clock cells.
+    OSPI_B_DS_TIMING_DELAY_3    = 3,   ///< Delay sampling by 3 clock cells.
+    OSPI_B_DS_TIMING_DELAY_4    = 4,   ///< Delay sampling by 4 clock cells.
+    OSPI_B_DS_TIMING_DELAY_5    = 5,   ///< Delay sampling by 5 clock cells.
+    OSPI_B_DS_TIMING_DELAY_6    = 6,   ///< Delay sampling by 6 clock cells.
+    OSPI_B_DS_TIMING_DELAY_7    = 7,   ///< Delay sampling by 7 clock cells.
+    OSPI_B_DS_TIMING_DELAY_8    = 8,   ///< Delay sampling by 8 clock cells.
+    OSPI_B_DS_TIMING_DELAY_9    = 9,   ///< Delay sampling by 9 clock cells.
+    OSPI_B_DS_TIMING_DELAY_10   = 10,  ///< Delay sampling by 10 clock cells.
+    OSPI_B_DS_TIMING_DELAY_11   = 11,  ///< Delay sampling by 11 clock cells.
+    OSPI_B_DS_TIMING_DELAY_12   = 12,  ///< Delay sampling by 12 clock cells.
+    OSPI_B_DS_TIMING_DELAY_13   = 13,  ///< Delay sampling by 13 clock cells.
+    OSPI_B_DS_TIMING_DELAY_14   = 14,  ///< Delay sampling by 14 clock cells.
+    OSPI_B_DS_TIMING_DELAY_15   = 15,  ///< Delay sampling by 15 clock cells.
+    OSPI_B_DS_TIMING_DELAY_16   = 16,  ///< Delay sampling by 16 clock cells.
+    OSPI_B_DS_TIMING_DELAY_17   = 17,  ///< Delay sampling by 17 clock cells.
+    OSPI_B_DS_TIMING_DELAY_18   = 18,  ///< Delay sampling by 18 clock cells.
+    OSPI_B_DS_TIMING_DELAY_19   = 19,  ///< Delay sampling by 19 clock cells.
+    OSPI_B_DS_TIMING_DELAY_20   = 20,  ///< Delay sampling by 20 clock cells.
+    OSPI_B_DS_TIMING_DELAY_21   = 21,  ///< Delay sampling by 21 clock cells.
+    OSPI_B_DS_TIMING_DELAY_22   = 22,  ///< Delay sampling by 22 clock cells.
+    OSPI_B_DS_TIMING_DELAY_23   = 23,  ///< Delay sampling by 23 clock cells.
+    OSPI_B_DS_TIMING_DELAY_24   = 24,  ///< Delay sampling by 24 clock cells.
+    OSPI_B_DS_TIMING_DELAY_25   = 25,  ///< Delay sampling by 25 clock cells.
+    OSPI_B_DS_TIMING_DELAY_26   = 26,  ///< Delay sampling by 26 clock cells.
+    OSPI_B_DS_TIMING_DELAY_27   = 27,  ///< Delay sampling by 27 clock cells.
+    OSPI_B_DS_TIMING_DELAY_28   = 28,  ///< Delay sampling by 28 clock cells.
+    OSPI_B_DS_TIMING_DELAY_29   = 29,  ///< Delay sampling by 29 clock cells.
+    OSPI_B_DS_TIMING_DELAY_30   = 30,  ///< Delay sampling by 30 clock cells.
+    OSPI_B_DS_TIMING_DELAY_31   = 31,  ///< Delay sampling by 31 clock cells.
+} ospi_b_ds_timing_delay_t;
+
+/** OSPI SDR signal drive timing. */
+typedef enum e_ospi_b_sdr_drive_timing
+{
+    OSPI_B_SDR_DRIVE_TIMING_BEFORE_CK = 0, ///< SDR is asserted 1/2 cycle before the rising-edge of CK.
+    OSPI_B_SDR_DRIVE_TIMING_AT_CK     = 1, ///< SDR is asserted at the rising-edge of CK.
+} ospi_b_sdr_drive_timing_t;
+
+/** Clock edge useed to sample data in SDR mode. */
+typedef enum e_ospi_b_ck_edge
+{
+    OSPI_B_CK_EDGE_FALLING = 0,        ///< Falling-edge of CK signal.
+    OSPI_B_CK_EDGE_RISING  = 1,        ///< Rising-edge of CK signal.
+} ospi_b_ck_edge_t;
+
+/** SDR sampling window delay. */
+typedef enum e_ospi_b_sdr_sampling_delay
+{
+    OSPI_B_SDR_SAMPLING_DELAY_NONE = 0, ///< No sampling delay.
+    OSPI_B_SDR_SAMPLING_DELAY_1    = 1, ///< Delay sampling by 1 cycle.
+    OSPI_B_SDR_SAMPLING_DELAY_2    = 2, ///< Delay sampling by 2 cycles.
+    OSPI_B_SDR_SAMPLING_DELAY_3    = 3, ///< Delay sampling by 3 cycles.
+    OSPI_B_SDR_SAMPLING_DELAY_4    = 4, ///< Delay sampling by 4 cycles.
+    OSPI_B_SDR_SAMPLING_DELAY_5    = 5, ///< Delay sampling by 5 cycles.
+    OSPI_B_SDR_SAMPLING_DELAY_6    = 6, ///< Delay sampling by 6 cycles.
+    OSPI_B_SDR_SAMPLING_DELAY_7    = 7, ///< Delay sampling by 7 cycles.
+} ospi_b_sdr_sampling_delay_t;
+
+/** DDR sampling window extension. */
+typedef enum e_ospi_b_ddr_sampling_extension
+{
+    OSPI_B_DDR_SAMPLING_EXTENSION_NONE = 0, ///< No sampling extension.
+    OSPI_B_DDR_SAMPLING_EXTENSION_1    = 1, ///< Sampling extended by 1 cycle.
+    OSPI_B_DDR_SAMPLING_EXTENSION_2    = 2, ///< Sampling extended by 2 cycles.
+    OSPI_B_DDR_SAMPLING_EXTENSION_3    = 3, ///< Sampling extended by 3 cycles.
+    OSPI_B_DDR_SAMPLING_EXTENSION_4    = 4, ///< Sampling extended by 4 cycles.
+    OSPI_B_DDR_SAMPLING_EXTENSION_5    = 5, ///< Sampling extended by 5 cycles.
+    OSPI_B_DDR_SAMPLING_EXTENSION_6    = 6, ///< Sampling extended by 6 cycles.
+    OSPI_B_DDR_SAMPLING_EXTENSION_7    = 7, ///< Sampling extended by 7 cycles.
+} ospi_b_ddr_sampling_extension_t;
+
+/** Format of data frames used for communicating with the target device. */
+typedef enum e_ospi_b_frame_format
+{
+    OSPI_B_FRAME_FORMAT_STANDARD                = 0x0, ///< Standard frame with command, address, and data phases.
+    OSPI_B_FRAME_FORMAT_XSPI_PROFILE_1          = 0x1, ///< JEDEC XSPI 8D-8D-8D Profile 1.0 frame.
+    OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2          = 0x2, ///< JEDEC XSPI 8D-8D-8D Profile 2.0 frame.
+    OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2_EXTENDED = 0x3, ///< JEDEC XSPI 8D-8D-8D Profile 2.0 extended 6-byte command-address frame, used with HyperRAM.
+} ospi_b_frame_format_t;
+
+/** Variable or fixed latency selection for flash devices which can notify the host of requiring additional time. */
+typedef enum e_ospi_b_latency_mode
+{
+    OSPI_B_LATENCY_MODE_FIXED = 0,     ///< Latency is fixed to the number of dummy cycles for the command.
+    OSPI_B_LATENCY_MODE_VARIABLE,      ///< The flash target signifies additional latency (2x dummy cycles) by asserting the DQS line during the address phase.
+} ospi_b_latency_mode_t;
+
 /** Prefetch function settings */
 typedef enum e_ospi_b_prefetch_function
 {
@@ -120,27 +219,47 @@ typedef struct st_ospi_b_table
     uint8_t length;                    ///< Number of entries in the table.
 } ospi_b_table_t;
 
-/** Memory mapped timing */
+/** Fixed timing configuration for bus signals. */
 typedef struct st_ospi_b_timing_setting
 {
     ospi_b_command_interval_clocks_t    command_to_command_interval; ///< Interval between 2 consecutive commands
     ospi_b_command_cs_pullup_clocks_t   cs_pullup_lag;               ///< Duration to de-assert CS line after the last command
     ospi_b_command_cs_pulldown_clocks_t cs_pulldown_lead;            ///< Duration to assert CS line before the first command
+    ospi_b_sdr_drive_timing_t           sdr_drive_timing;            ///< Data signal timing relative to the rising-edge of the CK signal.
+    ospi_b_ck_edge_t                sdr_sampling_edge;               ///< Selects the clock edge to sample the data signal.
+    ospi_b_sdr_sampling_delay_t     sdr_sampling_delay;              ///< Number of cycles to delay before sampling the data signal.
+    ospi_b_ddr_sampling_extension_t ddr_sampling_extension;          ///< Number of cycles to extending the data sampling window in DDR mode.
 } ospi_b_timing_setting_t;
 
-/** Command set used for a protocol mode other than normal (1S-1S-1S) SPI. */
+/** Command set used for a protocol mode. */
 typedef struct st_ospi_b_xspi_command_set
 {
-    spi_flash_protocol_t   protocol;             ///< Protocol mode associated with this command set.
-    ospi_b_command_bytes_t command_bytes;        ///< Number of command bytes for each command code.
-    uint16_t               read_command;         ///< Read command.
-    uint16_t               page_program_command; ///< Page program/write command.
-    uint16_t               write_enable_command; ///< Command to enable write or erase, set to 0x00 to ignore.
-    uint16_t               status_command;       ///< Command to read the write status, set to 0x00 to ignore.
-    uint8_t                read_dummy_cycles;    ///< Dummy cycles to be inserted for read commands.
-    uint8_t                program_dummy_cycles; ///< Dummy cycles to be inserted for page program commands.
-    uint8_t                status_dummy_cycles;  ///< Dummy cycles to be inserted for status read commands.
-    ospi_b_table_t const * p_erase_commands;     ///< List of all erase commands and associated sizes
+    spi_flash_protocol_t      protocol;             ///< Protocol mode associated with this command set.
+    ospi_b_frame_format_t     frame_format;         ///< Frame format to use for this command set.
+    ospi_b_latency_mode_t     latency_mode;         ///< Configurable or variable latency, only valid for OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2 and OSPI_B_FRAME_FORMAT_XSPI_PROFILE_2_EXTENDED.
+    ospi_b_command_bytes_t    command_bytes;        ///< Number of command bytes for each command code.
+    spi_flash_address_bytes_t address_bytes;        ///< Number of bytes used during the address phase.
+
+    uint16_t read_command;                          ///< Read command.
+    uint16_t program_command;                       ///< Memory program/write command.
+    uint16_t write_enable_command;                  ///< Command to enable write or erase, set to 0x00 to ignore.
+    uint16_t status_command;                        ///< Command to read the write status, set to 0x00 to ignore.
+    uint16_t row_load_command;                      ///< Load a page into the device's internal buffer, set to 0x00 to ignore.
+    uint16_t row_store_command;                     ///< Stores the device's internal buffer to the memory page, set to 0x00 to ignore.
+
+    uint8_t read_dummy_cycles;                      ///< Dummy cycles to be inserted for read commands.
+    uint8_t program_dummy_cycles;                   ///< Dummy cycles to be inserted for page program commands.
+    uint8_t status_dummy_cycles;                    ///< Dummy cycles to be inserted for status read commands.
+    uint8_t row_load_dummy_cycles;                  ///< Dummy cycles to be inserted for the page load command.
+    uint8_t row_store_dummy_cycles;                 ///< Dummy cycles to be inserted for the page store command.
+
+    uint8_t address_msb_mask;                       ///< Mask of bits to zero when using memory-mapped operations; only applies to the most-significant byte.
+
+    bool     status_needs_address;                  ///< Indicates that reading the status register requires an address stage.
+    uint32_t status_address;                        ///< Address to use for reading the status register with "busy" and "write-enable" flags.
+    spi_flash_address_bytes_t status_address_bytes; ///< Number of bytes used for status register addressing.
+
+    ospi_b_table_t const * p_erase_commands;        ///< List of all erase commands and associated sizes
 } ospi_b_xspi_command_set_t;
 
 /** OSPI DOTF AES Key Lengths. */
@@ -181,20 +300,20 @@ typedef struct st_ospi_b_dotf_cfg
 typedef struct st_ospi_b_extended_cfg
 {
     uint8_t                         ospi_b_unit;                             ///< The OSPI_B unit corresponding to the selected channel.
-    ospi_b_device_number_t          channel;                                 ///< Device number to be used for memory device
-    ospi_b_timing_setting_t const * p_timing_settings;                       ///< Memory-mapped timing settings.
+    ospi_b_device_number_t          channel;                                 ///< Device number to be used for memory device.
+    ospi_b_timing_setting_t const * p_timing_settings;                       ///< Fixed protocol timing settings.
     ospi_b_table_t const          * p_xspi_command_set;                      ///< Additional protocol command sets; if additional protocol commands set are not used set this to NULL.
+    ospi_b_ds_timing_delay_t        data_latch_delay_clocks;                 ///< Delay after assertion of the DS signal where data should be latched.
     uint8_t                       * p_autocalibration_preamble_pattern_addr; ///< OctaFlash memory address holding the preamble pattern
-    uint8_t                         data_latch_delay_clocks;                 ///< Specify delay between OM_DQS and OM_DQS Strobe. Set to 0 to auto-calibrate. Typical value is 0x80.
 #if OSPI_B_CFG_DMAC_SUPPORT_ENABLE
     transfer_instance_t const * p_lower_lvl_transfer;                        ///< DMA Transfer instance used for data transmission
 #endif
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
     ospi_b_dotf_cfg_t * p_dotf_cfg;                                          ///< DOTF Configuration
 #endif
-    uint8_t read_dummy_cycles;                                               ///< Dummy cycles to be inserted for read commands.
-    uint8_t program_dummy_cycles;                                            ///< Dummy cycles to be inserted for page program commands.
-    uint8_t status_dummy_cycles;                                             ///< Dummy cycles to be inserted for status read commands.
+#if OSPI_B_CFG_ROW_ADDRESSING_SUPPORT_ENABLE
+    spi_flash_address_bytes_t row_index_bytes;                               ///< Number of bytes used to index the memory rows.
+#endif
 } ospi_b_extended_cfg_t;
 
 /** Instance control block. DO NOT INITIALIZE.  Initialization occurs when @ref spi_flash_api_t::open is called */
@@ -204,6 +323,7 @@ typedef struct st_ospi_b_instance_ctrl
     uint32_t                          open;         ///< Whether or not driver is open.
     spi_flash_protocol_t              spi_protocol; ///< Current OSPI protocol selected.
     ospi_b_device_number_t            channel;      ///< Device number to be used for memory device.
+    uint8_t                           ospi_b_unit;  ///< OSPI_B instance number.
     ospi_b_xspi_command_set_t const * p_cmd_set;    ///< Command set for the active protocol mode.
     R_XSPI0_Type                    * p_reg;        ///< Address for the OSPI peripheral associated with this channel.
 } ospi_b_instance_ctrl_t;
@@ -241,6 +361,9 @@ fsp_err_t R_OSPI_B_BankSet(spi_flash_ctrl_t * const _ctrl, uint32_t bank);
 fsp_err_t R_OSPI_B_AutoCalibrate(spi_flash_ctrl_t * const p_ctrl);
 
 fsp_err_t R_OSPI_B_DOTF_Configure(spi_flash_ctrl_t * const p_ctrl, ospi_b_dotf_cfg_t * const p_dotf_cfg);
+
+fsp_err_t R_OSPI_B_RowLoad(spi_flash_ctrl_t * const p_ctrl, uint32_t row_index);
+fsp_err_t R_OSPI_B_RowStore(spi_flash_ctrl_t * const p_ctrl, uint32_t row_index);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

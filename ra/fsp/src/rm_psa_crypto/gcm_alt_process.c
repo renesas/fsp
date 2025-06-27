@@ -91,7 +91,7 @@ static fsp_err_t prepare_gcm_iv (uint8_t  * ivec,
   #ifndef MBEDTLS_AES_ONLY_128_BIT_KEY_LENGTH
         else if (key_index_word_size == 1U)
         {
-            err = HW_SCE_Aes192EncryptDecryptInitSub(&indata_cmd, key_index, dummy_iv);
+            err = HW_SCE_Aes192EncryptDecryptInitSubAdaptor(&indata_key_type, &indata_cmd, key_index, NULL, dummy_iv);
 
             if (err == FSP_SUCCESS)
             {

@@ -152,7 +152,7 @@ typedef struct st_ble_abs_callback_args
 {
     uint32_t       channel;            ///< Select a channel corresponding to the channel number of the hardware.
     ble_event_cb_t ble_abs_event;      ///< The event can be used to identify what caused the callback.
-    void const   * p_context;          ///< Placeholder for user data.  Set in ble_abs_api_t::open function in ::ble_abs_cfg_t.
+    void         * p_context;          ///< Placeholder for user data.  Set in ble_abs_api_t::open function in ::ble_abs_cfg_t.
 } ble_abs_callback_args_t;
 
 /** BLE ABS control block.  Allocate an instance specific control block to pass into the BLE ABS API calls.
@@ -786,7 +786,7 @@ typedef struct st_ble_abs_cfg
 #endif
 
     void (* p_callback)(ble_abs_callback_args_t * p_args);                  ///< Callback provided when a BLE ISR occurs.
-    void const * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                                  ///< Placeholder for user extension.
 } ble_abs_cfg_t;
 

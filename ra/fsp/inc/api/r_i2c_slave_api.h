@@ -72,7 +72,7 @@ typedef enum e_i2c_slave_event
 /** I2C callback parameter definition */
 typedef struct st_i2c_slave_callback_args
 {
-    void const      * p_context;       ///< Pointer to user-provided context
+    void            * p_context;       ///< Pointer to user-provided context
     uint32_t          bytes;           ///< Number of received/transmitted bytes in buffer
     i2c_slave_event_t event;           ///< Event code
 } i2c_slave_callback_args_t;
@@ -95,13 +95,13 @@ typedef struct st_i2c_slave_cfg
     uint8_t   eri_ipl;                                       ///< Interrupt priority level for error interrupt
     bool      clock_stretching_enable;                       ///< Low Hold SCL during reception for the period between the 9th and the 1st clock cycle
 
-    /** DTC support */
-    transfer_instance_t const * p_transfer_tx;               ///< DTC instance for I2C transmit.Set to NULL if unused.
-    transfer_instance_t const * p_transfer_rx;               ///< DTC instance for I2C receive. Set to NULL if unused.
+    /** Transfer API support */
+    transfer_instance_t const * p_transfer_tx;               ///< Transfer instance for I2C transmit. Set to NULL if unused.
+    transfer_instance_t const * p_transfer_rx;               ///< Transfer instance for I2C receive. Set to NULL if unused.
 
     /** Parameters to control software behavior */
     void (* p_callback)(i2c_slave_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                                  ///< Pointer to the user-provided context
+    void * p_context;                                        ///< Pointer to the user-provided context
 
     /** Implementation-specific configuration */
     void const * p_extend;                                   ///< Any configuration data needed by the hardware
@@ -147,7 +147,7 @@ typedef struct st_i2c_slave_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(i2c_slave_ctrl_t * const p_ctrl, void (* p_callback)(i2c_slave_callback_args_t *),
-                              void const * const p_context, i2c_slave_callback_args_t * const p_callback_memory);
+                              void * const p_context, i2c_slave_callback_args_t * const p_callback_memory);
 
     /** Closes the driver and releases the I2C Slave device.
      *

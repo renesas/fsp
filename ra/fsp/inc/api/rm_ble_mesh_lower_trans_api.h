@@ -98,7 +98,7 @@ typedef struct st_rm_ble_mesh_lower_trans_callback_args
     rm_ble_mesh_lower_trans_lpn_handle_t lpn_handle;   ///< LPM Size
     uint8_t              packet_type;                  ///< packet type
     rm_ble_mesh_buffer_t event_data;                   ///< Event data
-    void const         * p_context;                    ///< Context provided to user during callback.
+    void               * p_context;                    ///< Context provided to user during callback.
 } rm_ble_mesh_lower_trans_callback_args_t;
 
 /** BLE MESH control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
@@ -114,7 +114,7 @@ typedef struct st_rm_ble_mesh_lower_trans_cfg
     rm_ble_mesh_network_instance_t const * p_mesh_network_instance;        ///< Instance structure of BLE Mesh network
     void (* p_callback)(rm_ble_mesh_lower_trans_callback_args_t * p_args); ///< Callback function
 
-    void const * p_context;                                                ///< Placeholder for user data.
+    void       * p_context;                                                ///< Placeholder for user data.
     void const * p_extend;                                                 ///< Placeholder for extension data.
 } rm_ble_mesh_lower_trans_cfg_t;
 

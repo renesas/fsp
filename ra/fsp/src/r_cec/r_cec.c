@@ -340,7 +340,7 @@ fsp_err_t R_CEC_StatusGet (cec_ctrl_t * const p_ctrl, cec_status_t * const p_sta
  **********************************************************************************************************************/
 fsp_err_t R_CEC_CallbackSet (cec_ctrl_t * const          p_ctrl,
                              void (                    * p_callback)(cec_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              cec_callback_args_t * const p_callback_memory)
 {
     cec_instance_ctrl_t * p_instance_ctrl = (cec_instance_ctrl_t *) p_ctrl;

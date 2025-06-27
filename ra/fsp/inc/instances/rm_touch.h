@@ -173,7 +173,7 @@ fsp_err_t RM_TOUCH_PadDataGet(touch_ctrl_t * const p_ctrl,
 fsp_err_t RM_TOUCH_ScanStop(touch_ctrl_t * const p_ctrl);
 fsp_err_t RM_TOUCH_CallbackSet(touch_ctrl_t * const          p_api_ctrl,
                                void (                      * p_callback)(touch_callback_args_t *),
-                               void const * const            p_context,
+                               void * const                  p_context,
                                touch_callback_args_t * const p_callback_memory);
 fsp_err_t RM_TOUCH_Close(touch_ctrl_t * const p_ctrl);
 fsp_err_t RM_TOUCH_SensitivityRatioGet(touch_ctrl_t * const       p_ctrl,

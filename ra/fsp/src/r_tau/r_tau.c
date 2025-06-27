@@ -662,7 +662,7 @@ fsp_err_t R_TAU_StatusGet (timer_ctrl_t * const p_ctrl, timer_status_t * const p
  **********************************************************************************************************************/
 fsp_err_t R_TAU_CallbackSet (timer_ctrl_t * const          p_api_ctrl,
                              void (                      * p_callback)(timer_callback_args_t *),
-                             void const * const            p_context,
+                             void * const                  p_context,
                              timer_callback_args_t * const p_callback_memory)
 {
     FSP_PARAMETER_NOT_USED(p_callback_memory);

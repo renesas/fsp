@@ -160,7 +160,7 @@ typedef struct st_wifi_onchip_cfg
     const int32_t  sntp_timezone_offset_from_utc_hours;                                                ///< Timezone offset from UTC in (+/-) hours
     const uint32_t sntp_timezone_offset_from_utc_minutes;                                              ///< Timezone offset from UTC in minutes
     const wifi_onchip_silex_sntp_daylight_savings_enable_t sntp_timezone_use_daylight_savings;         ///< Enable/Disable use of daylight saving time.
-    void const * p_context;                                                                            ///< User defined context passed into callback function.
+    void       * p_context;                                                                            ///< User defined context passed into callback function.
     void const * p_extend;                                                                             ///< Pointer to extended configuration by instance of interface.
 } wifi_onchip_silex_cfg_t;
 
@@ -238,7 +238,7 @@ extern const char * g_wifi_onchip_silex_uart_cmd_baud;
  * Public Function Prototypes
  **********************************************************************************************************************/
 
-void      rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
+void rm_wifi_onchip_silex_uart_callback(uart_callback_args_t * p_args);
 
 #if (BSP_CFG_RTOS == 1)
 void rm_wifi_onchip_silex_initialize_packet_buffers(uint8_t * p_current_packet_buffer,
@@ -262,7 +262,7 @@ uint32_t  rm_wifi_onchip_silex_get_current_socket_index();
 /**********************************************************************************************************************
  * Public Function Prototypes
  **********************************************************************************************************************/
- 
+
 fsp_err_t rm_wifi_onchip_silex_open(wifi_onchip_silex_cfg_t const * const p_cfg);
 fsp_err_t rm_wifi_onchip_silex_close();
 fsp_err_t rm_wifi_onchip_silex_connect(const char * p_ssid, WIFISecurity_t security, const char * p_passphrase);

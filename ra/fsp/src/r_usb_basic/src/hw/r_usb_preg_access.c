@@ -248,49 +248,52 @@ void hw_usb_pmodule_init (uint8_t usb_ip)
  #if defined(USB_HIGH_SPEED_MODULE)
         USB_M1->PHYSET |= (USB_DIRPD | USB_CLKSEL);
 
-  #if USB_CFG_CLKSEL == USB_CFG_48MHZ
-        USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
-        USB_M1->PHYSET |= USB_CLKSEL_48;
-  #endif                               /* USB_CFG_CLKSEL == USB_CFG_48MHZ */
-
-  #if USB_CFG_CLKSEL == USB_CFG_20MHZ
-        USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
-        USB_M1->PHYSET |= USB_CLKSEL_20;
-  #endif                               /* USB_CFG_CLKSEL == USB_CFG_20MHZ */
-
-  #if USB_CFG_CLKSEL == USB_CFG_12MHZ
-        USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
-        USB_M1->PHYSET |= USB_CLKSEL_12;
-  #endif                                 /* USB_CFG_CLKSEL == USB_CFG_12MHZ */
-
   #if USB_CFG_CLKSEL == USB_CFG_OTHER
         USB_M1->PHYSET |= USB_HSEB;
-  #endif                                 /* USB_CFG_OTHER == USB_CFG_OTHER */
+  #else                                /* USB_CFG_CLKSEL == USB_CFG_OTHER */
+   #if USB_USBMCLK_HZ == USB_CLK_48MHZ
+        USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
+        USB_M1->PHYSET |= USB_CLKSEL_48;
+   #endif                              /* USB_USBMCLK_HZ == USB_CLK_48MHZ */
+
+   #if USB_USBMCLK_HZ == USB_CLK_24MHZ
+        USB_M1->PHYSET &= (uint16_t) ~USB_HSEB;
+   #endif                              /* USB_USBMCLK_HZ == USB_CLK_24MHZ */
+
+   #if USB_USBMCLK_HZ == USB_CLK_20MHZ
+        USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
+        USB_M1->PHYSET |= USB_CLKSEL_20;
+   #endif                              /* USB_USBMCLK_HZ == USB_CLK_20MHZ */
+
+   #if USB_USBMCLK_HZ == USB_CLK_12MHZ
+        USB_M1->PHYSET &= (uint16_t) ~USB_CLKSEL;
+        USB_M1->PHYSET |= USB_CLKSEL_12;
+   #endif                                /* USB_USBMCLK_HZ == USB_CLK_12MHZ */
+  #endif                                 /* USB_CFG_CLKSEL == USB_CFG_OTHER */
 
         usb_cpu_delay_1us((uint16_t) 1); /* wait 1usec */
 
         USB_M1->PHYSET = (uint16_t) (USB_M1->PHYSET & (~USB_DIRPD));
         usb_cpu_delay_xms(1);            /* wait 1msec */
 
-  #if ((USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || \
-        (USB_CFG_CLKSEL == USB_CFG_48MHZ))
+  #if USB_CFG_CLKSEL != USB_CFG_OTHER
         USB_M1->PHYSET = (uint16_t) (USB_M1->PHYSET & (~USB_PLLRESET));
-  #endif                               /* (USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || (USB_CFG_CLKSEL == USB_CFG_48MHZ) */
+  #endif                                 /* USB_CFG_CLKSEL != USB_CFG_OTHER */
+
         USB_M1->SYSCFG = (uint16_t) (USB_M1->SYSCFG & (~USB_DRPD));
 
         USB_M1->SYSCFG |= USB_USBE;
 
         USB_M1->LPSTS |= USB_SUSPENDM;
 
-  #if ((USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || \
-        (USB_CFG_CLKSEL == USB_CFG_48MHZ))
+  #if USB_CFG_CLKSEL != USB_CFG_OTHER
 
         /* WAIT_LOOP */
         while (USB_PLLLOCK != (USB_M1->PLLSTA & USB_PLLLOCK))
         {
             /* Wait for PLL Lock */
         }
-  #endif                               /* (USB_CFG_CLKSEL == USB_CFG_12MHZ) || (USB_CFG_CLKSEL == USB_CFG_20MHZ) || (USB_CFG_CLKSEL == USB_CFG_24MHZ) || (USB_CFG_CLKSEL == USB_CFG_48MHZ) */
+  #endif                               /* USB_CFG_CLKSEL != USB_CFG_OTHER */
 
         USB_M1->BUSWAIT = (USB_CFG_BUSWAIT | USB_BWAIT_B11_B8_WRITE);
 

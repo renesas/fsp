@@ -69,7 +69,7 @@ typedef enum e_i2c_master_event
 /** I2C callback parameter definition */
 typedef struct st_i2c_master_callback_args
 {
-    void const       * p_context;      ///< Pointer to user-provided context
+    void             * p_context;      ///< Pointer to user-provided context
     i2c_master_event_t event;          ///< Event code
 } i2c_master_callback_args_t;
 
@@ -99,7 +99,7 @@ typedef struct st_i2c_master_cfg
 
     /** Parameters to control software behavior */
     void (* p_callback)(i2c_master_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                                   ///< Pointer to the user-provided context
+    void * p_context;                                         ///< Pointer to the user-provided context
 
     /** Implementation-specific configuration */
     void const * p_extend;                                    ///< Any configuration data needed by the hardware
@@ -164,7 +164,7 @@ typedef struct st_i2c_master_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(i2c_master_ctrl_t * const p_ctrl, void (* p_callback)(i2c_master_callback_args_t *),
-                              void const * const p_context, i2c_master_callback_args_t * const p_callback_memory);
+                              void * const p_context, i2c_master_callback_args_t * const p_callback_memory);
 
     /** Gets the status of the configured I2C device.
      *

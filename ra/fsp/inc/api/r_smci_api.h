@@ -66,29 +66,29 @@ typedef enum e_smci_convention_type
     SMCI_CONVENTION_TYPE_INVERSE = 1U, ///< Inverse convention type (MSB First, Low=1)
 } smci_convention_type_t;
 
-/* This table matches Table 8 from ISO/IEC7816-3 Third edition 2006-11-01 */
+/* This table matches Table 7 from ISO/IEC7816-3 Third edition 2006-11-01 */
 typedef enum e_smci_clock_conversion_integer
 {
-    SMCI_CLOCK_CONVERSION_INTEGER_372_4         = 0U,  ///< 372 base cycles for 1-bit period, max freq = 4Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_372_5         = 1U,  ///< 372 base cycles for 1-bit period, max freq = 5Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_558_6         = 2U,  ///< 558 base cycles for 1-bit period, max freq = 6Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_744_8         = 3U,  ///< 744 base cycles for 1-bit period, max freq = 8Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_1116_12       = 4U,  ///< 1116 base cycles for 1-bit period, max freq = 12Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_1488_16       = 5U,  ///< 1488 base cycles for 1-bit period, max freq = 16Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_1860_20       = 6U,  ///< 1860 base cycles for 1-bit period, max freq = 20Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED7  = 7U,  ///< Unsupported Clock Cycles
-    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED8  = 8U,  ///< Unsupported Clock Cycles
-    SMCI_CLOCK_CONVERSION_INTEGER_512_5         = 9U,  ///< 512 base cycles for 1-bit period, max freq = 5Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_768_75        = 10U, ///< 768 base cycles for 1-bit period, max freq = 7.5Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_1024_10       = 11U, ///< 1024 base cycles for 1-bit period, max freq = 10Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_1536_15       = 12U, ///< 1536 base cycles for 1-bit period, max freq = 15Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_2048_20       = 13U, ///< 2048 base cycles for 1-bit period, max freq = 20Mhz
-    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED14 = 14U, ///< Unsupported Clock Cycles
-    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED15 = 15U, ///< Unsupported Clock Cycles
+    SMCI_CLOCK_CONVERSION_INTEGER_372_4         = 0U,  ///< Fi = 372, max freq = 4MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_372_5         = 1U,  ///< Fi = 372, max freq = 5MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_558_6         = 2U,  ///< Fi = 558, max freq = 6MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_744_8         = 3U,  ///< Fi = 744, max freq = 8MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_1116_12       = 4U,  ///< Fi = 1116, max freq = 12MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_1488_16       = 5U,  ///< Fi = 1488, max freq = 16MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_1860_20       = 6U,  ///< Fi = 1860, max freq = 20MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED7  = 7U,  ///< Unsupported
+    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED8  = 8U,  ///< Unsupported
+    SMCI_CLOCK_CONVERSION_INTEGER_512_5         = 9U,  ///< Fi = 512, max freq = 5MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_768_75        = 10U, ///< Fi = 768, max freq = 7.5MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_1024_10       = 11U, ///< Fi = 1024, max freq = 10MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_1536_15       = 12U, ///< Fi = 1536, max freq = 15MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_2048_20       = 13U, ///< Fi = 2048, max freq = 20MHz
+    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED14 = 14U, ///< Unsupported
+    SMCI_CLOCK_CONVERSION_INTEGER_UNSUPPORTED15 = 15U, ///< Unsupported
     SMCI_CLOCK_CONVERSION_INTEGER_MAX           = 16U
 } smci_clock_conversion_integer_t;
 
-/* This table matches Table 7 from ISO/IEC7816-3 Third edition 2006-11-01 */
+/* This table matches Table 8 from ISO/IEC7816-3 Third edition 2006-11-01 */
 typedef enum e_smci_baudrate_adjustment_integer
 {
     SMCI_BAUDRATE_ADJUSTMENT_INTEGER_RFU0  = 0U,  ///< RESERVED
@@ -120,7 +120,7 @@ typedef enum e_smci_protocol_type
 /** SMCI driver specific information */
 typedef struct st_smci_status
 {
-    smci_state_t smci_state;           ///< State ot the smci state machine
+    smci_state_t smci_state;           ///< State of the SMCI state machine
     uint32_t     bytes_recvd;          ///< Bytes read into receive buffer since read was called
 } smci_status_t;
 
@@ -137,7 +137,7 @@ typedef struct st_smci_speed_params
 {
     uint32_t baudrate;                     ///< Bits per second requested, 1/ETU
     smci_baudrate_adjustment_integer_t di; ///< Referred to as D in ISO spec (from Table 8 in ISO7816-3 3rd Edition)
-    smci_clock_conversion_integer_t    fi; ///< Index of in ISO spec (from Table 8 in ISO7816-3 3rd Edition)
+    smci_clock_conversion_integer_t    fi; ///< Index of F in ISO spec (from Table 7 in ISO7816-3 3rd Edition)
 } smci_speed_params_t;
 
 /** SMCI Callback parameter definition */
@@ -148,8 +148,8 @@ typedef struct st_smci_callback_args
 
     /** Contains the next character received for the events SMCI_EVENT_RX_CHAR, SMCI_EVENT_ERR_PARITY,
      * SMCI_EVENT_ERR_LOW_SIGNAL, or SMCI_EVENT_ERR_OVERRUN.  Otherwise unused. */
-    uint8_t      data;                 ///< Data Byte to process
-    void const * p_context;            ///< Context provided to user during callback
+    uint8_t data;                      ///< Data Byte to process
+    void  * p_context;                 ///< Context provided to user during callback
 } smci_callback_args_t;
 
 /** Configuration Structure for SMCI */
@@ -166,7 +166,7 @@ typedef struct st_smci_cfg
 
     /* Configuration for SMCI Event processing */
     void (* p_callback)(smci_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                             ///< User defined context passed into callback function
+    void * p_context;                                   ///< User defined context passed into callback function
 
     /* Pointer to SMCI peripheral specific configuration */
     void const * p_extend;                              ///< SMCI hardware dependent configuration
@@ -182,7 +182,7 @@ typedef struct st_smci_api
     /** Open Smart Card Interface Mode (SMCI)
      *
      * @param[in,out]  p_ctrl     Pointer to the SMCI control block. Must be declared by user. Value set here.
-     * @param[in]      smci_cfg_t Pointer to SMCI configuration structure. All elements of this structure must be set by
+     * @param[in]      p_cfg      Pointer to SMCI configuration structure. All elements of this structure must be set by
      *                            user.
      */
     fsp_err_t (* open)(smci_ctrl_t * const p_ctrl, smci_cfg_t const * const p_cfg);
@@ -209,7 +209,7 @@ typedef struct st_smci_api
 
     /** Change the peripheral settings based on provided transfer mode and data convention type
      *
-     * @param[in]   p_ctrl          Pointer to the SMCI control block.
+     * @param[in]   p_ctrl                    Pointer to the SMCI control block.
      * @param[in]   p_transfer_mode_params    Pointer to SMCI setting like protocol, convention, and gsm_mode
      */
     fsp_err_t (* transferModeSet)(smci_ctrl_t * const                p_ctrl,
@@ -246,11 +246,11 @@ typedef struct st_smci_api
      * @param[in]   p_ctrl                   Pointer to the SMCI control block.
      * @param[in]   p_callback               Callback function
      * @param[in]   p_context                Pointer to send to callback function
-     * @param[in]   p_callback_memory         Pointer to volatile memory where callback structure can be allocated.
+     * @param[in]   p_callback_memory        Pointer to volatile memory where callback structure can be allocated.
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(smci_ctrl_t * const p_ctrl, void (* p_callback)(smci_callback_args_t *),
-                              void const * const p_context, smci_callback_args_t * const p_callback_memory);
+                              void * const p_context, smci_callback_args_t * const p_callback_memory);
 
     /** Close SMCI device.
      *

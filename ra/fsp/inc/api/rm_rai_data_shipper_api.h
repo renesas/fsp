@@ -44,11 +44,11 @@ FSP_HEADER
 typedef struct st_rai_data_shipper_callback_args
 {
     rm_comms_event_t result;           ///< Whether data is sent successfully or not
-    void const     * p_context;        ///< Pointer to the user-provided context
+    void           * p_context;        ///< Pointer to the user-provided context
     uint8_t          instance;         ///< Data collector instance ID
 } rai_data_shipper_callback_args_t;
 
-/** Data Shipper write funciton parameter structure */
+/** Data Shipper write function parameter structure */
 typedef struct st_rai_data_shipper_write_params
 {
     uint16_t  events;                                   ///< Events
@@ -65,7 +65,7 @@ typedef struct st_rai_data_shipper_cfg
     crc_instance_t const      * p_crc;                              ///< Pointer to CRC instance
     rm_comms_instance_t const * p_comms;                            ///< Pointer to COMMS API instance
 
-    void const * p_context;                                         ///< Pointer to the user-provided context
+    void * p_context;                                               ///< Pointer to the user-provided context
     void (* p_callback)(rai_data_shipper_callback_args_t * p_args); ///< Pointer to the callback function on data sent or error
 } rai_data_shipper_cfg_t;
 

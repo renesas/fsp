@@ -2596,7 +2596,7 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
     ctrl.device_address = (uint8_t) addr;
     if (USB_NULL != p_cfg)
     {
-        ctrl.p_context = (void *) p_cfg->p_context;
+        ctrl.p_context = p_cfg->p_context;
     }
 
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
@@ -2636,7 +2636,7 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
     ctrl.device_address = (uint8_t) addr;
     if (USB_NULL != p_cfg)
     {
-        ctrl.p_context     = (void *) p_cfg->p_context;
+        ctrl.p_context     = p_cfg->p_context;
         ctrl.p_transfer_rx = p_cfg->p_transfer_rx;
         ctrl.p_transfer_rx = p_cfg->p_transfer_tx;
     }
@@ -2699,7 +2699,7 @@ void usb_hmsc_drive_complete (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
     ctrl.device_address = (uint8_t) addr;
     if (USB_NULL != p_cfg)
     {
-        ctrl.p_context = (void *) p_cfg->p_context;
+        ctrl.p_context = p_cfg->p_context;
     }
 
     usb_set_event(USB_STATUS_CONFIGURED, &ctrl); /* Set Event()  */
@@ -3529,7 +3529,7 @@ usb_er_t usb_hmsc_get_max_unit (usb_utr_t * ptr, uint16_t addr, uint8_t * buff, 
     get_max_lun_table.setup.request_length = 0x0001;
     get_max_lun_table.address              = addr;
 
-    /* Recieve MaxLUN */
+    /* Receive MaxLUN */
     g_usb_hmsc_class_control[ptr->ip].keyword   = USB_PIPE0;
     g_usb_hmsc_class_control[ptr->ip].p_tranadr = buff;
     g_usb_hmsc_class_control[ptr->ip].tranlen   = get_max_lun_table.setup.request_length;
@@ -3850,7 +3850,7 @@ uint16_t usb_hmsc_mode_select10 (usb_utr_t * ptr, uint16_t side, uint8_t * buff)
 /******************************************************************************
  * Function Name   : usb_hmsc_get_dev_sts
  * Description     : Responds to HMSCD operation state
- * Arugments       : uint16_t     side    : Drive number
+ * Arguments       : uint16_t     side    : Drive number
  * Return value    : uint16_t :
  ******************************************************************************/
 uint16_t usb_hmsc_get_dev_sts (uint16_t side)
@@ -3909,7 +3909,7 @@ uint16_t usb_hmsc_alloc_drvno (uint16_t devadr)
 /******************************************************************************
  * Function Name   : usb_hmsc_free_drvno
  * Description     : Release Drive no.
- * Arugments       : uint16_t     side    : Drive number
+ * Arguments       : uint16_t     side    : Drive number
  * Return value    : result
  ******************************************************************************/
 uint16_t usb_hmsc_free_drvno (uint16_t side)

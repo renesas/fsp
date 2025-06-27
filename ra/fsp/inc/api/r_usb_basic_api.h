@@ -397,7 +397,7 @@ typedef struct st_usb_cfg
     uint8_t                     hsipl_d0;           ///< Variable to store the interrupt priority of HS D0FIFO.
     uint8_t                     hsipl_d1;           ///< Variable to store the interrupt priority of HS D1FIFO.
     usb_callback_t            * p_usb_apl_callback; ///< Application Callback
-    void const                * p_context;          ///< Other Context
+    void                      * p_context;          ///< Other Context
     const transfer_instance_t * p_transfer_tx;      ///< Send context
     const transfer_instance_t * p_transfer_rx;      ///< Receive context
     void const                * p_extend;           ///< Pointer to extended configuration by instance of interface.
@@ -646,7 +646,6 @@ typedef struct st_usb_api
      * @param[in]  p_ctrl           USB control structure.
      */
     fsp_err_t (* otgSRP)(usb_ctrl_t * const p_ctrl);
-
 } usb_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

@@ -71,6 +71,7 @@ typedef enum e_wdt_clock_division
 #endif
 
 #ifndef BSP_OVERRIDE_WDT_WINDOW_START_END_T
+
 /** WDT refresh permitted period window start position. */
 typedef enum e_wdt_window_start
 {
@@ -117,7 +118,7 @@ typedef enum e_wdt_status
 /** Callback function parameter data */
 typedef struct st_wdt_callback_args
 {
-    void const * p_context;            ///< Placeholder for user data.  Set in @ref wdt_api_t::open function in @ref wdt_cfg_t.
+    void * p_context;                  ///< Placeholder for user data.  Set in @ref wdt_api_t::open function in @ref wdt_cfg_t.
 } wdt_callback_args_t;
 
 /** WDT timeout data. Used to return frequency of WDT clock and timeout period */
@@ -143,7 +144,7 @@ typedef struct st_wdt_cfg
     void (* p_callback)(wdt_callback_args_t * p_args); ///< Callback provided when a WDT ISR occurs.
 
     /** Placeholder for user data.  Passed to the user callback in wdt_callback_args_t. */
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;                             ///< Placeholder for user extension.
 } wdt_cfg_t;
 
@@ -201,7 +202,7 @@ typedef struct st_wdt_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(wdt_ctrl_t * const p_ctrl, void (* p_callback)(wdt_callback_args_t *),
-                              void const * const p_context, wdt_callback_args_t * const p_callback_memory);
+                              void * const p_context, wdt_callback_args_t * const p_callback_memory);
 } wdt_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

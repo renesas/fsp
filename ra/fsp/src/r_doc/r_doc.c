@@ -243,7 +243,7 @@ fsp_err_t R_DOC_Write (doc_ctrl_t * const p_api_ctrl, uint32_t data)
  **********************************************************************************************************************/
 fsp_err_t R_DOC_CallbackSet (doc_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(doc_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              doc_callback_args_t * const p_callback_memory)
 {
     doc_instance_ctrl_t * p_ctrl = (doc_instance_ctrl_t *) p_api_ctrl;

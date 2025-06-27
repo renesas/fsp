@@ -22,13 +22,13 @@
 #include "../../inc/api/fsp_common_api.h"
 #include "bsp_compiler_support.h"
 
-/* BSP TFU Includes. */
+/* BSP module includes */
 #include "../../src/bsp/mcu/all/bsp_tfu.h"
-
 #include "../../src/bsp/mcu/all/bsp_sdram.h"
-
-/* BSP MMF Includes. */
 #include "../../src/bsp/mcu/all/bsp_mmf.h"
+#include "../../src/bsp/mcu/all/bsp_ipc.h"
+
+#include "bsp_linker_info.h"
 
 #include "bsp_cfg.h"
 
@@ -202,6 +202,13 @@ FSP_HEADER
  #define BSP_SECTION_EARLY_INIT
 #endif
 
+/* Used to determine if this project is part of a multicore FSP Solution. */
+#if defined(BSP_PARTITION_FLASH_CPU1_S_START)
+ #define BSP_MULTICORE_PROJECT    (1)
+#else
+ #define BSP_MULTICORE_PROJECT    (0)
+#endif
+
 #if (BSP_TZ_SECURE_BUILD || BSP_TZ_NONSECURE_BUILD) && BSP_FEATURE_TZ_VERSION == 2
 BSP_CMSE_NONSECURE_ENTRY uint8_t  R_BSP_NSC_STYPE3_RegU8Read(uint8_t volatile const * p_reg);
 BSP_CMSE_NONSECURE_ENTRY uint16_t R_BSP_NSC_STYPE3_RegU16Read(uint16_t volatile const * p_reg);
@@ -299,6 +306,7 @@ typedef enum e_fsp_priv_clock
     FSP_PRIV_CLOCK_ICLK   = 24,
     FSP_PRIV_CLOCK_FCLK   = 28,
     FSP_PRIV_CLOCK_CPUCLK = 32,
+    FSP_PRIV_CLOCK_UNUSED = 255,       ///< Sentinel value for unused clock
 } fsp_priv_clock_t;
 
 /* Private enum used in R_FSP_SciSpiClockHzGe.  Maps clock name to base bit in SCISPICKCR. */
@@ -327,6 +335,15 @@ typedef struct st_bsp_unique_id
         uint8_t  unique_id_bytes[16];
     };
 } bsp_unique_id_t;
+
+typedef struct st_bsp_part_number
+{
+    union
+    {
+        uint32_t part_number_words[4];
+        uint8_t  part_number_bytes[16];
+    };
+} bsp_part_number_t;
 
 /***********************************************************************************************************************
  * Exported global variables
@@ -361,6 +378,12 @@ __STATIC_INLINE IRQn_Type R_FSP_CurrentIrqGet (void)
  **********************************************************************************************************************/
 __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
 {
+    /* Check if the provided clock is an unused clock. */
+    if (FSP_PRIV_CLOCK_UNUSED == clock)
+    {
+        return 0;
+    }
+
 #if !BSP_FEATURE_CGC_REGISTER_SET_B
     uint32_t sckdivcr  = FSP_STYPE3_REG32_READ(R_SYSTEM->SCKDIVCR, BSP_CFG_CLOCKS_SECURE);
     uint32_t clock_div = (sckdivcr >> clock) & FSP_PRV_SCKDIVCR_DIV_MASK;
@@ -372,7 +395,17 @@ __STATIC_INLINE uint32_t R_FSP_SystemClockHzGet (fsp_priv_clock_t clock)
     }
 
     /* Get CPUCLK divisor */
+  #if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS
+   #if (BSP_CFG_CPU_CORE == 1)
+    uint32_t cpuclk_div =
+        (FSP_STYPE3_REG16_READ(R_SYSTEM->SCKDIVCR2, BSP_CFG_CLOCKS_SECURE) & R_SYSTEM_SCKDIVCR2_CPUCK1_Msk) >>
+        R_SYSTEM_SCKDIVCR2_CPUCK1_Pos;
+   #else
+    uint32_t cpuclk_div = FSP_STYPE3_REG16_READ(R_SYSTEM->SCKDIVCR2, BSP_CFG_CLOCKS_SECURE) & FSP_PRV_SCKDIVCR_DIV_MASK;
+   #endif
+  #else
     uint32_t cpuclk_div = FSP_STYPE3_REG8_READ(R_SYSTEM->SCKDIVCR2, BSP_CFG_CLOCKS_SECURE) & FSP_PRV_SCKDIVCR_DIV_MASK;
+  #endif
 
     /* Determine if either divisor is a multiple of 3 */
     if ((cpuclk_div | clock_div) & 8U)
@@ -532,6 +565,63 @@ __STATIC_INLINE bsp_unique_id_t const * R_BSP_UniqueIdGet (void)
 }
 
 /*******************************************************************************************************************//**
+ * Get part number for this device.
+ *
+ * @param[out] p_part_number    Memory address to return MCU's part number to.
+ *
+ * @retval FSP_SUCCESS          Part number information stored.
+ * @retval FSP_ERR_ASSERTION    The parameter p_part_number is NULL.
+ * @retval FSP_ERR_NOT_FOUND    An error occurred when retrieving data from part number register.
+ **********************************************************************************************************************/
+__STATIC_INLINE fsp_err_t R_BSP_PartNumberGet (bsp_part_number_t * const p_part_number)
+{
+#if BSP_CFG_PARAM_CHECKING_ENABLE
+
+    /** Verify parameters are valid */
+    if (NULL == p_part_number)
+    {
+        return FSP_ERR_ASSERTION;
+    }
+#endif
+
+    /* Pointer to Part Numbering Register PNR */
+#if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
+    bsp_part_number_t * p_pnr = (bsp_part_number_t *) (BSP_FEATURE_BSP_PART_NUMBER_POINTER | BSP_FEATURE_TZ_NS_OFFSET);
+#else
+    bsp_part_number_t * p_pnr = (bsp_part_number_t *) BSP_FEATURE_BSP_PART_NUMBER_POINTER;
+#endif
+
+    /* In case part number is following the right order
+     * for example: R 7 F A 8 E 1 A F D C F B_ _ _ */
+    if (p_pnr->part_number_bytes[0] == 'R')
+    {
+        memcpy(p_part_number, p_pnr, sizeof(bsp_part_number_t));
+    }
+    /* In case part number is in reverse order, 'R' letter should be in position 12
+     * for example: K N C 3 7 0 1 E 0 A F 7 R _ _ _ */
+    else if (p_pnr->part_number_bytes[12] == 'R')
+    {
+        for (uint8_t i = 0; i < sizeof(bsp_part_number_t); i++)
+        {
+            if (i <= 12)
+            {
+                p_part_number->part_number_bytes[i] = p_pnr->part_number_bytes[12 - i];
+            }
+            else
+            {
+                p_part_number->part_number_bytes[i] = p_pnr->part_number_bytes[i];
+            }
+        }
+    }
+    else
+    {
+        return FSP_ERR_NOT_FOUND;
+    }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
  * Disables the flash cache.
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_FlashCacheDisable (void)
@@ -542,16 +632,29 @@ __STATIC_INLINE void R_BSP_FlashCacheDisable (void)
 
 #ifdef R_CACHE
  #if BSP_FEATURE_BSP_CODE_CACHE_VERSION == 2
+    uint32_t volatile * p_ccactl = &R_CACHE->CCACTL;
+    uint32_t volatile * p_ccawta = &R_CACHE->CCAWTA;
+
+  #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
+    if (1 == R_CPSCU->CACHESAR_b.CACHESA)
+    {
+        /* Access CCACTL using the non-secure alias. */
+        p_ccactl = (uint32_t volatile *) ((uint32_t) p_ccactl | BSP_FEATURE_TZ_NS_OFFSET);
+
+        /* Access CCAWTA using the non-secure alias. */
+        p_ccawta = (uint32_t volatile *) ((uint32_t) p_ccawta | BSP_FEATURE_TZ_NS_OFFSET);
+    }
+  #endif
 
     /* Writeback and flush cache when disabling
-     * MREF_INTERNAL_12 */
-    if (R_CACHE->CCAWTA_b.WT)
+     * Refer to the CCAFCT register description in the relevant hardware manual */
+    if (*p_ccawta & R_CACHE_CCAWTA_WT_Msk)
     {
-        R_CACHE->CCACTL = R_CACHE_CCACTL_FC_Msk;
+        *p_ccactl = R_CACHE_CCACTL_FC_Msk;
     }
     else
     {
-        R_CACHE->CCACTL = R_CACHE_CCACTL_FC_Msk | R_CACHE_CCACTL_WB_Msk;
+        *p_ccactl = R_CACHE_CCACTL_FC_Msk | R_CACHE_CCACTL_WB_Msk;
     }
 
     FSP_HARDWARE_REGISTER_WAIT(R_CACHE->CCAFCT, 0U);
@@ -584,17 +687,55 @@ __STATIC_INLINE void R_BSP_FlashCacheEnable (void)
 
     /* Configure the C-Cache line size. */
     R_CACHE->CCALCF = BSP_CFG_C_CACHE_LINE_SIZE;
- #else
-
-    /* Check that no flush or writeback are ongoing before enabling
-     * MREF_INTERNAL_13 */
-    FSP_HARDWARE_REGISTER_WAIT(R_CACHE->CCAFCT, 0U);
- #endif
 
     /* Enable the C-Cache. */
     R_CACHE->CCACTL = 1U;
+ #else
+    uint32_t volatile * p_ccactl = &R_CACHE->CCACTL;
+
+    /* Flush cache before enabling */
+    R_CACHE->CCAFCT_b.FC = 1;
+
+    /* Check that no flush or writeback are ongoing before enabling
+     * Refer to the CCAFCT register description in the relevant hardware manual */
+    FSP_HARDWARE_REGISTER_WAIT(R_CACHE->CCAFCT, 0U);
+
+  #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_VERSION == 2
+    if (1 == R_CPSCU->CACHESAR_b.CACHESA)
+    {
+        /* Access CCACTL using the non-secure alias. */
+        p_ccactl = (uint32_t volatile *) ((uint32_t) p_ccactl | BSP_FEATURE_TZ_NS_OFFSET);
+    }
+  #endif
+
+    /* Enable the C-Cache. */
+    *p_ccactl = 1U;
+ #endif
 #endif
 }
+
+#if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS && !BSP_SECONDARY_CORE_BUILD && defined(BSP_PARTITION_FLASH_CPU1_S_START)
+ #define BSP_CPU1ACTCSR_KEY_CODE    0xA5
+
+/*******************************************************************************************************************//**
+ * Sets the secondary core VTOR and activates the secondary core.
+ **********************************************************************************************************************/
+__STATIC_INLINE void R_BSP_SecondaryCoreStart (void)
+{
+    /* Setup secondary CPU vector table */
+    R_CPU_CTRL->CPU1INITVTOR = (uint32_t) BSP_PARTITION_FLASH_CPU1_S_START;
+
+    /* When debugging multicore projects, CPU1 may already be activated by the debugger with CPU1WAITCR set to 1.
+     * This allows the debugger to connect to CPU1 prior to it being started by CPU0.
+     * If this is the case, then the secondary core must be started by clearing CPU1WAITCR. */
+    R_CPU_CTRL->CPU1WAITCR = 0;
+
+    /* Activate secondary CPU by setting key code and activation request in CPU1ACTCSR */
+    R_CPU_CTRL->CPU1ACTCSR = (BSP_CPU1ACTCSR_KEY_CODE << R_CPU_CTRL_CPU1ACTCSR_KEY_Pos) |
+                             R_CPU_CTRL_CPU1ACTCSR_ACTREQ_Msk;
+}
+
+#endif
 
 /***********************************************************************************************************************
  * Exported global functions (to be accessed by other files)

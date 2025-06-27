@@ -170,6 +170,9 @@ typedef  enum e_rm_ble_mesh_network_event
     RM_BLE_MESH_NETWORK_EVENT_PROXY_STATUS = 0x02,
 
     /** GATT Proxy Event - Receive */
+    RM_BLE_MESH_NETWORK_EVENT_RECEIVE = 0x03,
+
+    /* DEPRECATED misspelling. Will be removed in FSP v7.0.0. */
     RM_BLE_MESH_NETWORK_EVENT_RECIEVE = 0x03,
 
     /** GATT Proxy Event - TX queue empty */
@@ -264,7 +267,7 @@ typedef struct st_rm_ble_mesh_network_callback_args
     rm_ble_mesh_network_subnet_handle_t      subnet_handle;       ///< Subnet handle.
     rm_ble_mesh_network_interface_handle_t * p_network_interface; ///< Network interface handle.
     rm_ble_mesh_buffer_t event_data;                              ///< Event data.
-    void const         * p_context;                               ///< Context provided to user during callback.
+    void               * p_context;                               ///< Context provided to user during callback.
 } rm_ble_mesh_network_callback_args_t;
 
 /** BLE MESH NETWORK control block.  Allocate an instance specific control block to pass into the BLE MESH API calls.
@@ -282,7 +285,7 @@ typedef struct st_rm_ble_mesh_network_cfg
     rm_ble_mesh_bearer_instance_t const      * p_mesh_bearer_instance;    ///< Instance structure of BLE Mesh Bearer
     rm_ble_mesh_provision_instance_t const   * p_mesh_provision_instance; ///< Instance structure of BLE Mesh Provision
     void (* p_callback)(rm_ble_mesh_network_callback_args_t * p_args);    ///< Callback function
-    void const * p_context;                                               ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                                               ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                                ///< Placeholder for user extension.
 } rm_ble_mesh_network_cfg_t;
 

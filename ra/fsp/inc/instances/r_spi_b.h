@@ -143,7 +143,7 @@ typedef struct st_spi_b_instance_ctrl
     spi_callback_args_t * p_callback_memory;
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } spi_b_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -182,7 +182,7 @@ fsp_err_t R_SPI_B_Close(spi_ctrl_t * const p_api_ctrl);
 fsp_err_t R_SPI_B_CalculateBitrate(uint32_t bitrate, spi_b_clock_source_t clock_source, rspck_div_setting_t * spck_div);
 fsp_err_t R_SPI_B_CallbackSet(spi_ctrl_t * const          p_api_ctrl,
                               void (                    * p_callback)(spi_callback_args_t *),
-                              void const * const          p_context,
+                              void * const                p_context,
                               spi_callback_args_t * const p_callback_memory);
 
 /*******************************************************************************************************************//**

@@ -134,6 +134,16 @@
 #define CGC_PRV_SCKDIVCR_UPPER_BIT            (BSP_PRV_SCKDIVCR_MASK & 0x44444444U)
 #define CGC_PRV_SCKDIVCR_DIV_3_BITS           (0x88888888U)
 
+#if BSP_FEATURE_CGC_HAS_CPUCLK
+ #if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS
+  #define CGC_PRV_SCKDIVCR2_DIV_3_BITS        (0x8888U)
+  #define CGC_PRV_SCKDIVCR2_NUM_CLOCKS        (4U)
+ #else
+  #define CGC_PRV_SCKDIVCR2_DIV_3_BITS        (0x8U)
+  #define CGC_PRV_SCKDIVCR2_NUM_CLOCKS        (1U)
+ #endif
+#endif
+
 /* Offset factor to convert PLL MUL values to register values. */
 #define CGC_PRV_PLLCCR_TYPE4_PLLMUL_OFFSET    (574U)
 
@@ -200,6 +210,11 @@ static void r_cgc_operating_mode_reduce(uint32_t sckdivcr);
 #if CGC_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_cgc_common_parameter_checking(cgc_instance_ctrl_t * p_instance_ctrl);
 static fsp_err_t r_cgc_check_config_dividers(cgc_divider_cfg_t const * const p_divider_cfg);
+
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
+static fsp_err_t r_cgc_divider_constraint_check(cgc_divider_cfg_t const * const p_divider_cfg);
+
+ #endif
 
  #if BSP_PRV_PLL_SUPPORTED
 static fsp_err_t r_cgc_pll_parameter_check(cgc_pll_cfg_t const * const p_pll_cfg, bool verify_source_stable);
@@ -420,12 +435,36 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
  #if 0 == BSP_FEATURE_CGC_EXECUTE_FROM_LOCO
     FSP_ASSERT(CGC_CLOCK_LOCO != p_clock_cfg->system_clock);
  #endif
-
-    /* Check dividers. */
-    err = r_cgc_check_config_dividers(&p_clock_cfg->divider_cfg);
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
+
+    cgc_divider_cfg_t divider_cfg;
+    divider_cfg = p_clock_cfg->divider_cfg;
+
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+ #if !BSP_FEATURE_CGC_HAS_CPUCLK
+    divider_cfg.sckdivcr2 = 0;
+ #endif
+
+ #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
+
+    /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
+    divider_cfg.sckdivcr_b.bclk_div = divider_cfg.sckdivcr_b.pclkb_div;
+ #endif
+
+ #if BSP_FEATURE_CGC_SCKDIVCR2_NPUCLK_MATCHES_MRICLK
+
+    /* Some MCUs require the bits normally used for NPUCLK to be set the same as MRICLK. */
+    divider_cfg.sckdivcr2_b.npuclk_div = divider_cfg.sckdivcr2_b.mriclk_div;
+ #endif
+#endif
+
+#if CGC_CFG_PARAM_CHECKING_ENABLE
+
+    /* Check dividers. */
+    err = r_cgc_check_config_dividers(&divider_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
 
     cgc_clock_t requested_system_clock = p_clock_cfg->system_clock;
@@ -663,21 +702,7 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
     }
 
 #if !BSP_FEATURE_CGC_REGISTER_SET_B
-
-    /* Set which clock to use for system clock and dividers for all system clocks. */
-    cgc_divider_cfg_t clock_cfg;
-    clock_cfg.sckdivcr_w = p_clock_cfg->divider_cfg.sckdivcr_w;
- #if BSP_FEATURE_CGC_HAS_CPUCLK
-    clock_cfg.sckdivcr2 = p_clock_cfg->divider_cfg.sckdivcr2;
- #else
-    clock_cfg.sckdivcr2 = 0;
- #endif
- #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
-
-    /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
-    clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
- #endif
-    bsp_prv_clock_set(requested_system_clock, clock_cfg.sckdivcr_w, clock_cfg.sckdivcr2);
+    bsp_prv_clock_set(requested_system_clock, divider_cfg.sckdivcr_w, divider_cfg.sckdivcr2);
 #else
  #if !BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE
     if ((requested_system_clock == CGC_CLOCK_MAIN_OSC) && (options[requested_system_clock] == CGC_CLOCK_CHANGE_START))
@@ -688,9 +713,9 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
  #endif
 
     /* Set which clock to use for system clock and dividers. */
-    uint8_t hoco_divider = (uint8_t) p_clock_cfg->divider_cfg.hoco_divider;
-    uint8_t moco_divider = (uint8_t) p_clock_cfg->divider_cfg.moco_divider;
-    uint8_t mosc_divider = (uint8_t) p_clock_cfg->divider_cfg.mosc_divider;
+    uint8_t hoco_divider = (uint8_t) divider_cfg.hoco_divider;
+    uint8_t moco_divider = (uint8_t) divider_cfg.moco_divider;
+    uint8_t mosc_divider = (uint8_t) divider_cfg.mosc_divider;
     bsp_prv_clock_set(requested_system_clock, hoco_divider, moco_divider, mosc_divider);
 #endif
 
@@ -979,16 +1004,52 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
  #if 0 == BSP_FEATURE_CGC_EXECUTE_FROM_LOCO
     FSP_ASSERT(CGC_CLOCK_LOCO != clock_source);
  #endif
+#else
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
+    cgc_divider_cfg_t divider_cfg;
+#if !BSP_FEATURE_CGC_REGISTER_SET_B
+    divider_cfg.sckdivcr_w = p_divider_cfg->sckdivcr_w;
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
+    divider_cfg.sckdivcr2 = p_divider_cfg->sckdivcr2;
+ #else
+    divider_cfg.sckdivcr2 = 0;
+ #endif
+#else
+    divider_cfg.hoco_divider = p_divider_cfg->hoco_divider;
+    divider_cfg.moco_divider = p_divider_cfg->moco_divider;
+    divider_cfg.mosc_divider = p_divider_cfg->mosc_divider;
+#endif
+
+#if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
+
+    /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
+    divider_cfg.sckdivcr_b.bclk_div = divider_cfg.sckdivcr_b.pclkb_div;
+#endif
+
+#if BSP_FEATURE_CGC_SCKDIVCR2_CPUCLK1_MATCHES_MRICLK
+
+    /* Some MCUs require the bits normally used for CPUCLK1 to be set the same as MRICLK. */
+    divider_cfg.sckdivcr2_b.cpuclk1_div = divider_cfg.sckdivcr2_b.mriclk_div;
+#endif
+
+#if BSP_FEATURE_CGC_SCKDIVCR2_NPUCLK_MATCHES_MRICLK
+
+    /* Some MCUs require the bits normally used for NPUCLK to be set the same as MRICLK. */
+    divider_cfg.sckdivcr2_b.npuclk_div = divider_cfg.sckdivcr2_b.mriclk_div;
+#endif
+
+#if CGC_CFG_PARAM_CHECKING_ENABLE
 
     /* Check divider constraints. */
-    err = r_cgc_check_config_dividers(p_divider_cfg);
+    err = r_cgc_check_config_dividers(&divider_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
  #if BSP_FEATURE_CGC_HAS_CPUCLK
     if (CGC_CLOCK_PLL == clock_source)
     {
         /* CPUCLK frequency must be less than threshold when XTAL is not the source for PLL. */
-        uint8_t  cpuclk_div         = p_divider_cfg->sckdivcr2_b.cpuclk_div;
+        uint8_t  cpuclk_div         = divider_cfg.sckdivcr2_b.cpuclk_div;
         uint32_t new_cpuclk_freq_hz = R_BSP_SourceClockHzGet(FSP_PRIV_CLOCK_PLL1P) /
                                       ((cpuclk_div & 8U) ? (3U << (cpuclk_div & 7U)) : (1U << cpuclk_div));
         FSP_ASSERT((0 == R_SYSTEM->PLLCCR_b.PLSRCSEL) ||
@@ -999,34 +1060,18 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
     /* Confirm the requested clock is stable. */
     err = r_cgc_clock_check(clock_source);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-#else
-    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 #endif
 
     /* Prerequisite to starting clocks or changing the system clock. */
     r_cgc_pre_change(CGC_PRV_CHANGE_LPM_CGC);
 
 #if BSP_FEATURE_CGC_REGISTER_SET_B
-    uint8_t hoco_divider = (uint8_t) p_divider_cfg->hoco_divider;
-    uint8_t moco_divider = (uint8_t) p_divider_cfg->moco_divider;
-    uint8_t mosc_divider = (uint8_t) p_divider_cfg->mosc_divider;
-    bsp_prv_clock_set(clock_source, hoco_divider, moco_divider, mosc_divider);
+    bsp_prv_clock_set(clock_source,
+                      (uint8_t) divider_cfg.hoco_divider,
+                      (uint8_t) divider_cfg.moco_divider,
+                      (uint8_t) divider_cfg.mosc_divider);
 #else
-    cgc_divider_cfg_t clock_cfg;
-    clock_cfg.sckdivcr_w = p_divider_cfg->sckdivcr_w;
- #if BSP_FEATURE_CGC_HAS_CPUCLK
-    clock_cfg.sckdivcr2 = p_divider_cfg->sckdivcr2;
- #else
-    clock_cfg.sckdivcr2 = 0;
- #endif
-
- #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
-
-    /* Some MCUs require the bits normally used for BCLK to be set the same as PCLKB. */
-    clock_cfg.sckdivcr_b.bclk_div = clock_cfg.sckdivcr_b.pclkb_div;
- #endif
-
-    bsp_prv_clock_set(clock_source, clock_cfg.sckdivcr_w, clock_cfg.sckdivcr2);
+    bsp_prv_clock_set(clock_source, divider_cfg.sckdivcr_w, divider_cfg.sckdivcr2);
 #endif
 
     /* Apply the optimal operating power mode and restore the cache to it's previous state. */
@@ -1404,7 +1449,7 @@ fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_CGC_CallbackSet (cgc_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(cgc_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              cgc_callback_args_t * const p_callback_memory)
 {
 #if !BSP_FEATURE_CGC_REGISTER_SET_B
@@ -1843,6 +1888,13 @@ static void r_cgc_clock_change (cgc_clock_t clock, cgc_clock_change_t state)
 static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_divider_cfg)
 {
     FSP_PARAMETER_NOT_USED(p_divider_cfg); // unused if FSP_ASSERT is compiled out
+
+ #if BSP_FEATURE_CGC_HAS_CPUCLK
+    fsp_err_t err = FSP_SUCCESS;
+    err = r_cgc_divider_constraint_check(p_divider_cfg);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+ #endif
+
  #if BSP_FEATURE_CGC_HAS_PCLKA
 
     /* Check dividers against hardware constraints (see footnotes of Table 9.2 "Specifications of the clock generation
@@ -1878,28 +1930,6 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
 
     /* ICLK frequency must be >= BCLK, so ICLK divider must be <= BCLK. */
     FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.bclk_div);
- #endif
-
- #if BSP_FEATURE_CGC_HAS_CPUCLK
-
-    /* CPUCLK divider must be less than or equal to ICLK divider. */
-    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.cpuclk_div <= p_divider_cfg->sckdivcr_b.iclk_div);
-
-    /* If any divider is using /3, /6, or /12, all must use /1, /3, /6, or /12. */
-    if ((0x8U == (p_divider_cfg->sckdivcr2 & 0x8U)) ||
-        (0U != (p_divider_cfg->sckdivcr_w & CGC_PRV_SCKDIVCR_DIV_3_BITS)))
-    {
-        FSP_ASSERT((0 == p_divider_cfg->sckdivcr2_b.cpuclk_div) ||
-                   (CGC_SYS_CLOCK_DIV_3 <= p_divider_cfg->sckdivcr2_b.cpuclk_div));
-        uint32_t tmp_sckdivcr = p_divider_cfg->sckdivcr_w;
-
-        /* Loop through all dividers and check they are 0 or one of the /3 options. */
-        for (uint32_t i = 0; i < 8; i++)
-        {
-            FSP_ASSERT((0 == (tmp_sckdivcr & 0xFU)) || (0x8U <= (tmp_sckdivcr & 0xFU)));
-            tmp_sckdivcr >>= 4U;
-        }
-    }
  #endif
 
  #if BSP_FEATURE_CGC_REGISTER_SET_B
@@ -1997,25 +2027,37 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
     /* PLLCCR clock source can only be main oscillator or HOCO. */
     FSP_ASSERT((CGC_CLOCK_MAIN_OSC == p_pll_cfg->source_clock) || (CGC_CLOCK_HOCO == p_pll_cfg->source_clock));
 
-    /* PLL Output dividers must be even for PLL*P and cannot be 16 for Q and R. */
+    /* PLL Output dividers cannot be 16 for PLLQ and PLLR */
+    FSP_ASSERT(CGC_PLL_OUT_DIV_16 != p_pll_cfg->out_div_q);
+    FSP_ASSERT(CGC_PLL_OUT_DIV_16 != p_pll_cfg->out_div_r);
+
+    /* PLL Output dividers must not be 1.5, 5 or 9 for PLL*P. */
+    FSP_ASSERT((CGC_PLL_OUT_DIV_5 != p_pll_cfg->out_div_p) && \
+               (CGC_PLL_OUT_DIV_9 != p_pll_cfg->out_div_p) && \
+               (CGC_PLL_OUT_DIV_1_5 != p_pll_cfg->out_div_p));
+
+   #if (3U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+
+    /* PLL Output dividers 1.5 is not supported on this MCU */
+    FSP_ASSERT(CGC_PLL_OUT_DIV_1_5 != p_pll_cfg->out_div_q);
+    FSP_ASSERT(CGC_PLL_OUT_DIV_1_5 != p_pll_cfg->out_div_r);
+
+    /* PLL Output dividers must be even for PLL*P. */
     FSP_ASSERT(0 == (1U & p_pll_cfg->out_div_p));
-    FSP_ASSERT(CGC_PLL_OUT_DIV_9 >= p_pll_cfg->out_div_q);
-    FSP_ASSERT(CGC_PLL_OUT_DIV_9 >= p_pll_cfg->out_div_r);
-
-   #if  (6U == BSP_FEATURE_CGC_PLLCCR_TYPE)
-
-    /* PLLCCR multiplier must be between 40.00 and 300.00. */
-    FSP_ASSERT(p_pll_cfg->multiplier >= CGC_PLL_MUL_40_0);
-    FSP_ASSERT(p_pll_cfg->multiplier <= CGC_PLL_MUL_300_0);
-   #else
 
     /* PLLCCR multiplier must be between 53.00 and 180.00. */
     FSP_ASSERT(p_pll_cfg->multiplier >= CGC_PLL_MUL_53_0);
     FSP_ASSERT(p_pll_cfg->multiplier <= CGC_PLL_MUL_180_0);
+   #else
+
+    /* PLLCCR multiplier must be between 40.00 and 300.00. */
+    FSP_ASSERT(p_pll_cfg->multiplier >= CGC_PLL_MUL_40_0);
+    FSP_ASSERT(p_pll_cfg->multiplier <= CGC_PLL_MUL_300_0);
    #endif
   #elif 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
 
-    /* Ensure PLL configuration is supported on this MCU (MREF_INTERNAL_006). */
+    /* Ensure PLL configuration is supported on this MCU.
+     * Refer to the "PLL Clock Control Register (PLLCCR)" register definition in CGC section of the relevant hardware manual. */
 
     /* PLLCCR clock source can only be the subclock. */
     FSP_ASSERT(CGC_CLOCK_SUBCLOCK == p_pll_cfg->source_clock);
@@ -2122,9 +2164,11 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
     uint32_t input_divider = p_pll_cfg->divider + 1U;
 
   #if CGC_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT((pll_src_freq_hz <= BSP_FEATURE_CGC_PLL_INPUT_PRE_DIV_MAX_HZ) &&
+               (pll_src_freq_hz >= BSP_FEATURE_CGC_PLL_INPUT_PRE_DIV_MIN_HZ));
     uint32_t reference_clock_hz = pll_src_freq_hz / input_divider;
-    FSP_ASSERT(BSP_FEATURE_CGC_PLL_REFERENCE_CLK_MAX_HZ >= reference_clock_hz);
-    FSP_ASSERT(BSP_FEATURE_CGC_PLL_REFERENCE_CLK_MIN_HZ <= reference_clock_hz);
+    FSP_ASSERT(BSP_FEATURE_CGC_PLL_INPUT_POST_DIV_MAX_HZ >= reference_clock_hz);
+    FSP_ASSERT(BSP_FEATURE_CGC_PLL_INPUT_POST_DIV_MIN_HZ <= reference_clock_hz);
   #endif
 
     /* The multiplier can have a fractional component of either 1/3, 2/3, or 1/2. All of
@@ -2135,7 +2179,7 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
     /* Convert the MULNF value to use a common multiple of 6. */
     if (fractional < 3U)
     {
-        /* Values for 1/3 and 2/3 are 1 and 2 respectivly therefore it only needs a coefficient of 2 applied. */
+        /* Values for 1/3 and 2/3 are 1 and 2 respectively therefore it only needs a coefficient of 2 applied. */
         fractional *= CGC_PRV_PLL_MUL_NF_COEFF;
     }
     else
@@ -2152,9 +2196,26 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
      */
     uint64_t vco_hz = ((uint64_t) pll_src_freq_hz * (uint64_t) multiplier) / CGC_PRV_PLL_MUL_FACTOR / input_divider;
 
+    uint32_t out_div_q   = p_pll_cfg->out_div_q;
+    uint32_t out_div_r   = p_pll_cfg->out_div_r;
+    uint32_t pllq_k_coff = 1U;
+    uint32_t pllr_k_coff = 1U;
+  #if (6U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+    if (CGC_PLL_OUT_DIV_1_5 == out_div_q)
+    {
+        pllq_k_coff = 2U;
+        out_div_q   = CGC_PLL_OUT_DIV_3;
+    }
+
+    if (CGC_PLL_OUT_DIV_1_5 == out_div_r)
+    {
+        pllr_k_coff = 2U;
+        out_div_r   = CGC_PLL_OUT_DIV_3;
+    }
+  #endif
     p_pll_hz[0] = (uint32_t) (vco_hz / p_pll_cfg->out_div_p);
-    p_pll_hz[1] = (uint32_t) (vco_hz / p_pll_cfg->out_div_q);
-    p_pll_hz[2] = (uint32_t) (vco_hz / p_pll_cfg->out_div_r);
+    p_pll_hz[1] = (uint32_t) ((pllq_k_coff * vco_hz) / out_div_q);
+    p_pll_hz[2] = (uint32_t) ((pllr_k_coff * vco_hz) / out_div_r);
 
   #if CGC_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(BSP_FEATURE_CGC_PLLCCR_VCO_MAX_HZ >= vco_hz);
@@ -2203,8 +2264,8 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
      *   - The maximum frequency after multiplication is 128 MHz.
      *   - The minimum frequency is 24 MHz.
      */
-    FSP_ASSERT(
-        (pll_src_freq_hz <= BSP_FEATURE_CGC_PLL_SRC_MAX_HZ) && (pll_src_freq_hz >= BSP_FEATURE_CGC_PLL_SRC_MIN_HZ));
+    FSP_ASSERT((pll_src_freq_hz <= BSP_FEATURE_CGC_PLL_INPUT_POST_DIV_MAX_HZ) &&
+               (pll_src_freq_hz >= BSP_FEATURE_CGC_PLL_INPUT_POST_DIV_MIN_HZ));
     FSP_ASSERT(clock_freq_multiplied <= (BSP_FEATURE_CGC_PLL_OUT_MAX_HZ * 2U));
     FSP_ASSERT(pll_hz >= BSP_FEATURE_CGC_PLL_OUT_MIN_HZ);
   #endif
@@ -2633,6 +2694,70 @@ void cgc_sostd_isr (void)
 {
     /* Call common isr handler. */
     r_cgc_ostd_common_isr(CGC_EVENT_OSC_STOP_DETECT_SUBCLOCK);
+}
+
+#endif
+
+#if CGC_CFG_PARAM_CHECKING_ENABLE && BSP_FEATURE_CGC_HAS_CPUCLK
+
+/*******************************************************************************************************************//**
+ * Check the requested division and ensure that new configuration will not violate the clock constraint.
+ *
+ * @param[in] p_divider_cfg     Pointer to new configuration struct.
+ *
+ * @retval FSP_ERR_ASSERTION    Requested division violates the clock constraint.
+ * @retval FSP_SUCCESS          Requested division is valid.
+ ***********************************************************************************************************************/
+static fsp_err_t r_cgc_divider_constraint_check (cgc_divider_cfg_t const * const p_divider_cfg)
+{
+    /* CPUCLK0 frequency must be >= ICLK, so CPUCLK0 divider must be <= ICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.cpuclk_div <= p_divider_cfg->sckdivcr_b.iclk_div);
+
+    /* If any divider is using /3, /6, /12 or /24, all must use /1, /3, /6, /12 or /24. */
+    if ((0U != (p_divider_cfg->sckdivcr2 & CGC_PRV_SCKDIVCR2_DIV_3_BITS)) ||
+        (0U != (p_divider_cfg->sckdivcr_w & CGC_PRV_SCKDIVCR_DIV_3_BITS)))
+    {
+        uint32_t tmp_divider = p_divider_cfg->sckdivcr_w;
+
+        /* Loop through SCKDIVCR and check the division value of each clock. */
+        for (uint8_t i = 0U; i < 8U; i++)
+        {
+            FSP_ASSERT((0U == (tmp_divider & 0xFU)) || (0x8U <= (tmp_divider & 0xFU)));
+            tmp_divider >>= 4U;
+        }
+
+        tmp_divider = p_divider_cfg->sckdivcr2;
+
+        /* Loop through SCKDIVCR2 and check the division value of each clock. */
+        for (uint8_t j = 0U; j < CGC_PRV_SCKDIVCR2_NUM_CLOCKS; j++)
+        {
+            FSP_ASSERT((0 == (tmp_divider & 0xFU)) || (0x8U <= (tmp_divider & 0xFU)));
+            tmp_divider >>= 4U;
+        }
+    }
+
+ #if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS
+
+    /* CPUCLK1 divider must be less than or equal to ICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.cpuclk1_div <= p_divider_cfg->sckdivcr_b.iclk_div);
+
+    /* NPUCLK divider must be less than or equal to ICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.npuclk_div <= p_divider_cfg->sckdivcr_b.iclk_div);
+
+    /* MRICLK divider must be less than or equal to ICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.mriclk_div <= p_divider_cfg->sckdivcr_b.iclk_div);
+
+    /* CPUCLK divider must be less than or equal to MRICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.cpuclk_div <= p_divider_cfg->sckdivcr2_b.mriclk_div);
+
+    /* CPUCLK1 divider must be less than or equal to MRICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.cpuclk1_div <= p_divider_cfg->sckdivcr2_b.mriclk_div);
+
+    /* NPUCLK divider must be less than or equal to MRICLK divider. */
+    FSP_ASSERT(p_divider_cfg->sckdivcr2_b.npuclk_div <= p_divider_cfg->sckdivcr2_b.mriclk_div);
+ #endif
+
+    return FSP_SUCCESS;
 }
 
 #endif

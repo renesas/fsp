@@ -154,6 +154,8 @@
 
 #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_128                        NULL
 #define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_0_AES_256                        NULL
+#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_128                        NULL
+#define RSIP_PRV_FUNC_NAME_OTF_CHANNEL_1_AES_256                        NULL
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -197,24 +199,30 @@ rsip_ret_t r_rsip_wrapper_p6f_hmacsha224(const uint32_t InData_IV[],
 rsip_ret_t r_rsip_wrapper_p6f_hmacsha256(const uint32_t InData_IV[],
                                          const uint32_t InData_InstData[],
                                          uint32_t       OutData_KeyIndex[]);
-rsip_ret_t r_rsip_wrapper_p76r(const rsip_wrapped_key_t * p_wrapped_key, const uint32_t InData_State[]);
-rsip_ret_t r_rsip_wrapper_p8f_aes128(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_WrappedKeyIndex[],
-                                     uint32_t              OutData_Text[]);
-rsip_ret_t r_rsip_wrapper_p8f_aes256(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_WrappedKeyIndex[],
-                                     uint32_t              OutData_Text[]);
-rsip_ret_t r_rsip_wrapper_p90_aes128(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_Text[],
-                                     uint32_t              OutData_KeyIndex[]);
-rsip_ret_t r_rsip_wrapper_p90_aes256(const uint32_t        InData_KeyIndex[],
-                                     const rsip_key_type_t key_type,
-                                     const uint32_t        InData_Text[],
-                                     uint32_t              OutData_KeyIndex[]);
-rsip_ret_t r_rsip_wrapper_pdcr(const rsip_wrapped_key_t * p_wrapped_key, const uint32_t InData_State[]);
+rsip_ret_t r_rsip_wrapper_p8f_aes128(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_WrappedKeyIndex[],
+                                     uint32_t       OutData_Text[],
+                                     uint32_t       KEY_INDEX_SIZE,
+                                     uint32_t       WRAPPED_KEY_SIZE);
+rsip_ret_t r_rsip_wrapper_p8f_aes256(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_WrappedKeyIndex[],
+                                     uint32_t       OutData_Text[],
+                                     uint32_t       KEY_INDEX_SIZE,
+                                     uint32_t       WRAPPED_KEY_SIZE);
+rsip_ret_t r_rsip_wrapper_p90_aes128(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_Text[],
+                                     uint32_t       OutData_KeyIndex[],
+                                     uint32_t       WRAPPED_KEY_SIZE,
+                                     uint32_t       KEY_INDEX_SIZE);
+rsip_ret_t r_rsip_wrapper_p90_aes256(const uint32_t InData_KeyIndex[],
+                                     const uint32_t InData_WrappedKeyType[],
+                                     const uint32_t InData_Text[],
+                                     uint32_t       OutData_KeyIndex[],
+                                     uint32_t       WRAPPED_KEY_SIZE,
+                                     uint32_t       KEY_INDEX_SIZE);
 
 /* AES-ECB/CBC/CTR */
 rsip_ret_t r_rsip_wrapper_p47i_ecb_enc(const uint32_t InData_KeyIndex[], const uint32_t InData_IV[]);

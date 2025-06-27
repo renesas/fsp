@@ -27,7 +27,7 @@
 /* Register definitions, common services and error codes. */
 #include "bsp_api.h"
 
-/* Common macro for SSP header files. There is also a corresponding SSP_FOOTER macro at the end of this file. */
+/* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
 /**********************************************************************************************************************
@@ -65,14 +65,14 @@ typedef struct st_rm_block_media_info
 typedef struct st_rm_block_media_callback_args
 {
     rm_block_media_event_t event;      ///< The event can be used to identify what caused the callback
-    void const           * p_context;  ///< Placeholder for user data
+    void                 * p_context;  ///< Placeholder for user data
 } rm_block_media_callback_args_t;
 
 /** User configuration structure, used in open function */
 typedef struct st_rm_block_media_cfg
 {
     void (* p_callback)(rm_block_media_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                                       ///< User defined context passed into callback function
+    void       * p_context;                                       ///< User defined context passed into callback function
     void const * p_extend;                                        ///< Extension parameter for hardware specific settings
 } rm_block_media_cfg_t;
 
@@ -145,7 +145,7 @@ typedef struct st_rm_block_media_api
      */
     fsp_err_t (* callbackSet)(rm_block_media_ctrl_t * const          p_ctrl,
                               void (                               * p_callback)(rm_block_media_callback_args_t *),
-                              void const * const                     p_context,
+                              void * const                           p_context,
                               rm_block_media_callback_args_t * const p_callback_memory);
 
     /** Get status of connected device.

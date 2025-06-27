@@ -25,17 +25,16 @@
  */
 
 #ifndef FLASH_MAP_UTIL_H
-#define FLASH_MAP_UTIL_H
+ #define FLASH_MAP_UTIL_H
 
-#ifdef __cplusplus
+ #ifdef __cplusplus
 extern "C" {
-#endif
+ #endif
 
-#include "../flash_map_backend/flash_map_backend.h"
+ #include "../flash_map_backend/flash_map_backend.h"
 
-
-#ifdef __cplusplus
+ #ifdef __cplusplus
 }
-#endif
+ #endif
 
-#endif /* FLASH_MAP_UTIL_H */
+#endif                                 /* FLASH_MAP_UTIL_H */

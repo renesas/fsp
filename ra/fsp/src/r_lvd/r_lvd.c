@@ -354,7 +354,7 @@ fsp_err_t R_LVD_StatusClear (lvd_ctrl_t * const p_api_ctrl)
  **********************************************************************************************************************/
 fsp_err_t R_LVD_CallbackSet (lvd_ctrl_t * const          p_api_ctrl,
                              void (                    * p_callback)(lvd_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              lvd_callback_args_t * const p_callback_memory)
 {
     lvd_instance_ctrl_t * p_ctrl = (lvd_instance_ctrl_t *) p_api_ctrl;
@@ -698,17 +698,15 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     FSP_CRITICAL_SECTION_EXIT;
  #else
 
-    /* Unlock control registers write for PVD4 and PVD5 this bit only need to write 0 once.
-     * Any subsequence write will set this register back to fixed lock state. */
+    /* Unlock control registers for PVD4 and PVD5.
+     * Any additional write to PVDLR will lock it to 1 until the next POR, Reset pin toggle, or PVD0 reset. */
   #if (3U == BSP_FEATURE_LVD_VERSION)
-    static uint8_t open_state = 0;
-    if (open_state == (uint8_t) 0)
+    if (R_SYSTEM->PVDLR != 0)
     {
         R_SYSTEM->PVDLR = 0;
-        open_state      = 1;
     }
 
-    /* Write value to lvd4,5cr0.bit6 should be 1. */
+    /* Write value to bit 6 in LVD4CR0 and LVD5CR0 should be 1. */
     if ((p_ctrl->p_cfg->monitor_number == 4) || (p_ctrl->p_cfg->monitor_number == 5))
     {
         lvdncr0 |= (uint8_t) (1 << R_SYSTEM_LVD4CR0_RI_Pos);
@@ -950,7 +948,7 @@ static fsp_err_t lvd_open_parameter_check (lvd_instance_ctrl_t * p_ctrl, lvd_cfg
 #endif
 
 /***********************************************************************************************************************
- * Private funtions configurate LVD of VBAT, RTC, EX
+ * Private funtions configure LVD of VBAT, RTC, EX
  *
  * @param[in] p_ctrl            Pointer to the control block structure for the driver instance
  *
@@ -995,7 +993,7 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
             current_rtclvl = (uint8_t) (*g_ext_lvdcr_lut[monitor_index] >> R_SYSTEM_VRTLVDCR_LVL_Pos) <=
                              LVD_THRESHOLD_LVDVRTC_LEVEL_1_99V ? 0 : 1;
 
-            /* If change from voltage_threshold > 2 back to voltage_threshold < 2 a intermidiate stage and 300us is required. */
+            /* If change from voltage_threshold > 2 back to voltage_threshold < 2 a intermediate stage and 300us is required. */
             if (new_rtclvl >= current_rtclvl)
             {
                 /* Direct change */
@@ -1004,7 +1002,7 @@ static void r_lvd_ext_hw_configure (lvd_instance_ctrl_t * p_ctrl)
             }
             else
             {
-                /* Change to (intermidiate stage) and wait 300us before change to desired voltage_threshold */
+                /* Change to (intermediate stage) and wait 300us before change to desired voltage_threshold */
                 *g_ext_lvdcr_lut[monitor_index] =
                     (uint8_t) (LVD_THRESHOLD_LVDVRTC_LEVEL_1_99V << R_SYSTEM_VRTLVDCR_LVL_Pos);
                 R_BSP_SoftwareDelay((uint32_t) BSP_FEATURE_LVD_VRTC_LVL_STABILIZATION_TIME_US,

@@ -164,7 +164,7 @@ extern uint32_t usb_peri_usbx_initialize(uint32_t dcd_io);
 extern uint32_t usb_peri_usbx_uninitialize(uint32_t dcd_io);
 
   #if defined(USB_CFG_PMSC_USE)
-extern fsp_err_t usb_peri_usbx_pmsc_media_initialize(void const * p_context);
+extern fsp_err_t usb_peri_usbx_pmsc_media_initialize(void * p_context);
 extern fsp_err_t usb_peri_usbx_media_close(void);
 
   #endif                               /* defined(USB_CFG_PMSC_USE) */
@@ -421,7 +421,7 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #endif                                 /* !defined (USB_CFG_OTG_USE)*/
     p_ctrl->module_number = p_cfg->module_number;
     p_ctrl->type          = (usb_class_t) (p_cfg->type & USB_VALUE_7FH);
-    p_ctrl->p_context     = (void *) p_cfg->p_context;
+    p_ctrl->p_context     = p_cfg->p_context;
 #if (BSP_CFG_RTOS == 1)
     g_usb_apl_callback[p_ctrl->module_number] = usb_cstd_usbx_callback;
 #else                                  /* #if (BSP_CFG_RTOS == 1) */
@@ -902,17 +902,17 @@ fsp_err_t R_USB_Open (usb_ctrl_t * const p_api_ctrl, usb_cfg_t const * const p_c
 #if defined(USB_CFG_PCDC_USE)
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDC);
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDCC);
- #if ((USB_CFG_PCDC_BULK_IN2 != USB_NULL) || (USB_CFG_PCDC_BULK_OUT2 != USB_NULL))
+ #if defined(USB_CFG_PCDC2_USE)
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDC2);
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PCDCC2);
- #endif                                /* ((USB_CFG_PCDC_BULK_IN2 != USB_NULL) || (USB_CFG_PCDC_BULK_OUT2 != USB_NULL)) */
+ #endif                                /* defined(USB_CFG_PCDC2_USE) */
 #endif                                 /* defined(USB_CFG_PCDC_USE) */
 
 #if defined(USB_CFG_PHID_USE)
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PHID);
- #if ((USB_CFG_PHID_INT_IN2 != USB_NULL) || (USB_CFG_PHID_INT_OUT2 != USB_NULL))
+ #if defined(USB_CFG_PHID2_USE)
             g_usb_open_class[p_ctrl->module_number] |= (1 << USB_CLASS_INTERNAL_PHID2);
- #endif                                /* ((USB_CFG_PHID_INT_IN2 != USB_NULL) || (USB_CFG_PHID_INT_OUT2 != USB_NULL)) */
+ #endif                                /* defined(USB_CFG_PHID2_USE) */
 #endif                                 /* defined(USB_CFG_PHID_USE) */
 
 #if defined(USB_CFG_PMSC_USE)
@@ -1426,7 +1426,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
             usb_rtos_delete(p_ctrl->module_number);
 
             /* Remove settings that prevent preemption. */
-            tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispath ti the other task */
+            tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispatch ti the other task */
    #else                                                                            /* (BSP_CFG_RTOS == 1) */
             usb_rtos_delete(p_ctrl->module_number);
    #endif  /* (BSP_CFG_RTOS == 1) */
@@ -1442,7 +1442,7 @@ fsp_err_t R_USB_Close (usb_ctrl_t * const p_api_ctrl)
         usb_rtos_delete(p_ctrl->module_number);
 
         /* Remove settings that prevent preemption. */
-        tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispath ti the other task */
+        tx_thread_preemption_change(now_thread, old_threshold, &old_threshold); /* Enable dispatch ti the other task */
    #else                                                                        /* (BSP_CFG_RTOS == 1) */
         usb_rtos_delete(p_ctrl->module_number);
    #endif  /* (BSP_CFG_RTOS == 1) */
@@ -2884,7 +2884,7 @@ fsp_err_t R_USB_PipeStop (usb_ctrl_t * const p_api_ctrl, uint8_t pipe_number)
 }
 
 /**************************************************************************//**
- * @brief Gets the selected pipe number (number of the pipe that has completed initalization) via bit map information.
+ * @brief Gets the selected pipe number (number of the pipe that has completed initialization) via bit map information.
  *
  * The bit map information is stored in the area specified in argument (p_pipe).
  * Based on the information (module member and address member) assigned to the usb_ctrl_t structure,

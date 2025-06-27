@@ -1350,7 +1350,7 @@ typedef struct st_rm_ble_mesh_access_device_entry
 /** Access Layer Application Asynchronous Notification Callback Arguments. */
 typedef struct st_rm_ble_mesh_access_model_callback_args
 {
-    void const * p_context;                                     ///< Placeholder for user data.
+    void * p_context;                                           ///< Placeholder for user data.
     rm_ble_mesh_access_model_req_msg_context_t * p_msg_context; ///< Context of message received for a specific model instance.
     rm_ble_mesh_access_req_msg_raw_t           * p_msg_raw;     ///< Uninterpreted/raw received message for a specific model instance.
 } rm_ble_mesh_access_model_callback_args_t;
@@ -1367,7 +1367,7 @@ typedef struct st_rm_ble_mesh_access_model_callback_args
  */
 typedef struct st_rm_ble_mesh_access_timeout_callback_args
 {
-    void const * p_context;                   ///< Placeholder for user data.
+    void * p_context;                         ///< Placeholder for user data.
     rm_ble_mesh_access_model_handle_t handle; ///< Model handle
     void * p_blob;                            ///< Blob if any or NULL.
 } rm_ble_mesh_access_timeout_callback_args_t;
@@ -1494,7 +1494,7 @@ typedef struct st_rm_ble_mesh_access_cfg
     rm_ble_mesh_upper_trans_instance_t const * p_mesh_upper_trans_instance; ///< Instance structure of upper trans
     rm_ble_mesh_access_element_handle_t        element_number;              ///< Element number
 
-    void const * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                                                 ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                                  ///< Placeholder for user extension.
 } rm_ble_mesh_access_cfg_t;
 

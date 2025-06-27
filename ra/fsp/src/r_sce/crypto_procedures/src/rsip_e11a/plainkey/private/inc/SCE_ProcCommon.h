@@ -92444,6 +92444,25 @@ typedef struct
     WR1_PROG(regName, value2);                             \
     WR1_PROG(regName, value3)
 
+// [R WR 16 B0 B1 B2 B3 B4 B5 B6 B7]
+#define  WR8_PROG(regName,      \
+                   value0,      \
+                   value1,      \
+                   value2,      \
+                   value3,      \
+                   value4,      \
+                   value5,      \
+                   value6,      \
+                   value7)      \
+    WR1_PROG(regName, value0);  \
+    WR1_PROG(regName, value1);  \
+    WR1_PROG(regName, value2);  \
+    WR1_PROG(regName, value3);  \
+    WR1_PROG(regName, value4);  \
+    WR1_PROG(regName, value5);  \
+    WR1_PROG(regName, value6);  \
+    WR1_PROG(regName, value7)
+
 // [R WR 16 B0 B1 B2 B3 B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 B14 B15]
 #define  WR16_PROG(regName,     \
                    value0,      \

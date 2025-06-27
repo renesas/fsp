@@ -303,7 +303,7 @@ fsp_err_t R_GPT_THREE_PHASE_DutyCycleSet (three_phase_ctrl_t * const       p_ctr
  **********************************************************************************************************************/
 fsp_err_t R_GPT_THREE_PHASE_CallbackSet (three_phase_ctrl_t * const    p_ctrl,
                                          void (                      * p_callback)(timer_callback_args_t *),
-                                         void const * const            p_context,
+                                         void * const                  p_context,
                                          timer_callback_args_t * const p_callback_memory)
 {
     gpt_three_phase_instance_ctrl_t * p_instance_ctrl = (gpt_three_phase_instance_ctrl_t *) p_ctrl;

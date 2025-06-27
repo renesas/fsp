@@ -72,6 +72,12 @@ fsp_err_t HW_SCE_Aes128EncryptDecryptInitSubAdaptor(const uint32_t InData_KeyMod
                                                     const uint32_t InData_Key[],
                                                     const uint32_t InData_IV[]);
 
+fsp_err_t HW_SCE_Aes192EncryptDecryptInitSubAdaptor(const uint32_t InData_KeyMode[],
+                                                    const uint32_t InData_Cmd[],
+                                                    const uint32_t InData_KeyIndex[],
+                                                    const uint32_t InData_Key[],
+                                                    const uint32_t InData_IV[]);
+
 fsp_err_t HW_SCE_Aes256EncryptDecryptInitSubAdaptor(const uint32_t InData_KeyMode[],
                                                     const uint32_t InData_Cmd[],
                                                     const uint32_t InData_KeyIndex[],

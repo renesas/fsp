@@ -113,8 +113,8 @@ typedef struct st_uart_callback_arg
 
     /** Contains the next character received for the events UART_EVENT_RX_CHAR, UART_EVENT_ERR_PARITY,
      * UART_EVENT_ERR_FRAMING, or UART_EVENT_ERR_OVERFLOW.  Otherwise unused. */
-    uint32_t     data;
-    void const * p_context;            ///< Context provided to user during callback
+    uint32_t data;
+    void   * p_context;                ///< Context provided to user during callback
 } uart_callback_args_t;
 
 /** UART Configuration */
@@ -144,7 +144,7 @@ typedef struct st_uart_cfg
 
     /* Configuration for UART Event processing */
     void (* p_callback)(uart_callback_args_t * p_args); ///< Pointer to callback function
-    void const * p_context;                             ///< User defined context passed into callback function
+    void * p_context;                                   ///< User defined context passed into callback function
 
     /* Pointer to UART peripheral specific configuration */
     void const * p_extend;                              ///< UART hardware dependent configuration
@@ -222,7 +222,7 @@ typedef struct st_uart_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(uart_ctrl_t * const p_ctrl, void (* p_callback)(uart_callback_args_t *),
-                              void const * const p_context, uart_callback_args_t * const p_callback_memory);
+                              void * const p_context, uart_callback_args_t * const p_callback_memory);
 
     /** Close UART device.
      *
@@ -236,6 +236,19 @@ typedef struct st_uart_api
      * @param[in,out]  remaining_bytes       Pointer to location to store remaining bytes for read.
      */
     fsp_err_t (* readStop)(uart_ctrl_t * const p_ctrl, uint32_t * remaining_bytes);
+
+    /** Suspend RX operations for UART device.
+     *
+     * @param[in]   p_ctrl     Pointer to the UART control block.
+     */
+    fsp_err_t (* receiveSuspend)(uart_ctrl_t * const p_ctrl);
+
+
+    /** Resume RX operations for UART device.
+     *
+     * @param[in]   p_ctrl     Pointer to the UART control block.
+     */
+    fsp_err_t (* receiveResume)(uart_ctrl_t * const p_ctrl);
 } uart_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

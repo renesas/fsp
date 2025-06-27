@@ -42,15 +42,31 @@ extern rsip_instance_t const * const gp_rsip_instance;
  * Mask of all channels for a given OSPI_B unit.
  * @param p_ext_cfg Pointer to a OSPI_B extended config struct with the unit to mask.
  */
-#define OSPI_B_PRV_UNIT_MASK(p_ext_cfg)    (OSPI_B_PRV_UNIT_CHANNELS_MASK << \
-                                            (((p_ext_cfg)->ospi_b_unit) * OSPI_B_PRV_UNIT_CHANNELS_SHIFT))
+#define OSPI_B_PRV_UNIT_MASK(p_ext_cfg)                 (OSPI_B_PRV_UNIT_CHANNELS_MASK << \
+                                                         (((p_ext_cfg)->ospi_b_unit) * OSPI_B_PRV_UNIT_CHANNELS_SHIFT))
 
 /**
  * Individual bit mask for a single channel on a given OSPI_B unit.
  * @param p_ext_cfg Pointer to a OSPI_B extended config struct with the unit and channel to mask.
  */
-#define OSPI_B_PRV_CH_MASK(p_ext_cfg)      ((1U << ((p_ext_cfg)->channel)) << \
-                                            (((p_ext_cfg)->ospi_b_unit) * OSPI_B_PRV_UNIT_CHANNELS_SHIFT))
+#define OSPI_B_PRV_CH_MASK(p_ext_cfg)                   ((1U << ((p_ext_cfg)->channel)) << \
+                                                         (((p_ext_cfg)->ospi_b_unit) * OSPI_B_PRV_UNIT_CHANNELS_SHIFT))
+
+/**
+ * Gets the extended configuration struct for this instance.
+ * @param p_ctrl Pointer to the instance control block.
+ */
+#define OSPI_B_PRV_EXTENDED_CFG(p_ctrl)                 ((ospi_b_extended_cfg_t *) \
+                                                         ((ospi_b_instance_ctrl_t *) (p_ctrl))->p_cfg->p_extend)
+
+/** Indicates the provided protocol mode requires the Data-Strobe signal. */
+#define OSPI_B_PRV_PROTOCOL_USES_DS_SIGNAL(protocol)    ((bool) (((uint32_t) (protocol)) & 0x200UL))
+
+/** Number of bytes combined into a single transaction for memory-mapped writes. */
+#define OSPI_B_PRV_COMBINATION_WRITE_LENGTH              (2U * ((uint8_t) OSPI_B_CFG_COMBINATION_FUNCTION + 1U))
+
+/** Converts @ref spi_flash_address_bytes_t to a register compatible length value. */
+#define OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(spi_flash_bytes)    ((uint8_t) ((spi_flash_bytes) + 1U))
 
 #define OSPI_B_PRV_BMCTL_DEFAULT_VALUE                   (0x0C)
 
@@ -141,13 +157,18 @@ static fsp_err_t r_ospi_b_automatic_calibration_seq(ospi_b_instance_ctrl_t * p_i
 
 #endif
 
+#if OSPI_B_CFG_ROW_ADDRESSING_SUPPORT_ENABLE
+static void r_ospi_b_row_load_store(ospi_b_instance_ctrl_t * const p_ctrl, uint32_t row_index, bool store_row);
+
+#endif
+
 #if OSPI_B_CFG_XIP_SUPPORT_ENABLE
 static void r_ospi_b_xip(ospi_b_instance_ctrl_t * p_instance_ctrl, bool is_entering);
 
 #endif
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
-static fsp_err_t r_ospi_b_dotf_setup(ospi_b_dotf_cfg_t * p_dotf_cfg);
+static fsp_err_t r_ospi_b_dotf_setup(uint8_t ospi_b_unit, ospi_b_dotf_cfg_t * p_dotf_cfg);
 
 #endif
 
@@ -210,7 +231,7 @@ fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const 
     FSP_ERROR_RETURN(OSPI_B_PRV_OPEN != p_instance_ctrl->open, FSP_ERR_ALREADY_OPEN);
 #endif
 
-    ospi_b_extended_cfg_t * p_cfg_extend = (ospi_b_extended_cfg_t *) p_cfg->p_extend;
+    const ospi_b_extended_cfg_t * const p_cfg_extend = (ospi_b_extended_cfg_t *) (p_cfg->p_extend);
 
 #if OSPI_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(BSP_PERIPHERAL_OSPI_B_CHANNEL_MASK & (1U << p_cfg_extend->ospi_b_unit));
@@ -228,11 +249,12 @@ fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const 
     p_instance_ctrl->p_reg        = p_reg;
     p_instance_ctrl->spi_protocol = p_cfg->spi_protocol;
     p_instance_ctrl->channel      = p_cfg_extend->channel;
+    p_instance_ctrl->ospi_b_unit  = p_cfg_extend->ospi_b_unit;
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
     if (NULL != p_cfg_extend->p_dotf_cfg)
     {
-        ret = r_ospi_b_dotf_setup(p_cfg_extend->p_dotf_cfg);
+        ret = r_ospi_b_dotf_setup(p_cfg_extend->ospi_b_unit, p_cfg_extend->p_dotf_cfg);
         FSP_ERROR_RETURN(FSP_SUCCESS == ret, ret);
     }
 #endif
@@ -288,6 +310,16 @@ fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const 
     /* Set CS releasing extension in cycles */
     liocfg |= ((uint32_t) p_cfg_extend->p_timing_settings->cs_pullup_lag << R_XSPI0_LIOCFGCS_CSNEGEX_Pos) &
               R_XSPI0_LIOCFGCS_CSNEGEX_Msk;
+
+    /* Set SDR and DDR timing. */
+    liocfg |= ((uint32_t) p_cfg_extend->p_timing_settings->sdr_drive_timing << R_XSPI0_LIOCFGCS_SDRDRV_Pos) &
+              R_XSPI0_LIOCFGCS_SDRDRV_Msk;
+    liocfg |= ((uint32_t) p_cfg_extend->p_timing_settings->sdr_sampling_edge << R_XSPI0_LIOCFGCS_SDRSMPMD_Pos) &
+              R_XSPI0_LIOCFGCS_SDRSMPMD_Msk;
+    liocfg |= ((uint32_t) p_cfg_extend->p_timing_settings->sdr_sampling_delay << R_XSPI0_LIOCFGCS_SDRSMPSFT_Pos) &
+              R_XSPI0_LIOCFGCS_SDRSMPSFT_Msk;
+    liocfg |= ((uint32_t) p_cfg_extend->p_timing_settings->ddr_sampling_extension << R_XSPI0_LIOCFGCS_DDRSMPEX_Pos) &
+              R_XSPI0_LIOCFGCS_DDRSMPEX_Msk;
 
     /* Set xSPI CSn signal timings. */
     p_reg->LIOCFGCS[p_cfg_extend->channel] = liocfg;
@@ -509,8 +541,7 @@ fsp_err_t R_OSPI_B_Write (spi_flash_ctrl_t    * p_ctrl,
                      FSP_ERR_DEVICE_BUSY);
 
 #if OSPI_B_CFG_DMAC_SUPPORT_ENABLE
-    spi_flash_cfg_t       * p_cfg        = (spi_flash_cfg_t *) p_instance_ctrl->p_cfg;
-    ospi_b_extended_cfg_t * p_cfg_extend = (ospi_b_extended_cfg_t *) p_cfg->p_extend;
+    ospi_b_extended_cfg_t * p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl);
 
     /* Setup and start DMAC transfer. */
     transfer_instance_t const * p_transfer = p_cfg_extend->p_lower_lvl_transfer;
@@ -535,7 +566,7 @@ fsp_err_t R_OSPI_B_Write (spi_flash_ctrl_t    * p_ctrl,
     err = p_transfer->p_api->softwareStart(p_transfer->p_ctrl, TRANSFER_START_MODE_REPEAT);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-    /* Wait for DMAC to complete to maintain deterministic processing and backward compatability */
+    /* Wait for DMAC to complete to maintain deterministic processing and backward compatibility */
     volatile transfer_properties_t transfer_properties = {0U};
     err = p_transfer->p_api->infoGet(p_transfer->p_ctrl, (transfer_properties_t *) &transfer_properties);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -609,7 +640,6 @@ fsp_err_t R_OSPI_B_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_ad
     FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    R_XSPI0_Type * const    p_reg             = p_instance_ctrl->p_reg;
     spi_flash_cfg_t const * p_cfg             = p_instance_ctrl->p_cfg;
     uint16_t                erase_command     = 0;
     const uint32_t          chip_address_base = p_instance_ctrl->channel ?
@@ -622,14 +652,9 @@ fsp_err_t R_OSPI_B_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_ad
 
     FSP_ERROR_RETURN(false == r_ospi_b_status_sub(p_instance_ctrl, p_cfg->write_status_bit), FSP_ERR_DEVICE_BUSY);
 
-    /* Select the erase commands from either the default SPI settings or the protocol settings if provided. */
-    spi_flash_erase_command_t const * p_erase_list =
-        ((NULL != p_cmd_set) && p_cmd_set->p_erase_commands) ?
-        ((spi_flash_erase_command_t *) p_cmd_set->p_erase_commands->p_table) : p_cfg->p_erase_command_list;
-
-    const uint8_t erase_list_length = ((NULL != p_cmd_set) && p_cmd_set->p_erase_commands) ?
-                                      p_cmd_set->p_erase_commands->length :
-                                      p_cfg->erase_command_list_length;
+    /* Select the appropriate erase command from the command set. */
+    spi_flash_erase_command_t const * p_erase_list = p_cmd_set->p_erase_commands->p_table;
+    const uint8_t erase_list_length                = p_cmd_set->p_erase_commands->length;
 
     for (uint32_t index = 0; index < erase_list_length; index++)
     {
@@ -654,17 +679,20 @@ fsp_err_t R_OSPI_B_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_ad
     fsp_err_t err = r_ospi_b_write_enable(p_instance_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-    spi_flash_direct_transfer_t direct_command = {0};
-    direct_command.command        = erase_command;
-    direct_command.address        = chip_address;
-    direct_command.address_length = (!send_address) ? 0U :
-                                    ((SPI_FLASH_ADDRESS_BYTES_3 == p_instance_ctrl->p_cfg->address_bytes) ? 3U : 4U);
-    direct_command.command_length = (NULL != p_cmd_set) ? (uint8_t) p_cmd_set->command_bytes : 1U;
+    spi_flash_direct_transfer_t direct_command =
+    {
+        .command        = erase_command,
+        .command_length = (uint8_t) p_cmd_set->command_bytes,
+        .address        = chip_address,
+        .address_length = (send_address) ? OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_cmd_set->address_bytes) : 0U,
+        .data_length    = 0,
+    };
 
     r_ospi_b_direct_transfer(p_instance_ctrl, &direct_command, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);
 
     /* If prefetch is enabled, make sure the banks aren't being used and flush the prefetch caches after an erase. */
 #if OSPI_B_CFG_PREFETCH_FUNCTION
+    R_XSPI0_Type * const p_reg = p_instance_ctrl->p_reg;
     FSP_HARDWARE_REGISTER_WAIT((p_reg->COMSTT & OSPI_B_PRV_COMSTT_MEMACCCH_MASK), 0);
     p_reg->BMCTL1 = OSPI_B_PRV_BMCTL1_CLEAR_PREFETCH_MASK;
 #endif
@@ -730,10 +758,21 @@ fsp_err_t R_OSPI_B_SpiProtocolSet (spi_flash_ctrl_t * p_ctrl, spi_flash_protocol
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
+
+    /* Save the old protocol in case of an undefined command set. */
+    spi_flash_protocol_t old_protocol = p_instance_ctrl->spi_protocol;
     p_instance_ctrl->spi_protocol = spi_protocol;
 
     /* Update the SPI protocol and its associated registers. */
-    return r_ospi_b_protocol_specific_settings(p_instance_ctrl);
+    fsp_err_t err = r_ospi_b_protocol_specific_settings(p_instance_ctrl);
+
+    if (FSP_ERR_INVALID_MODE == err)
+    {
+        /* Restore the original spi protocol. Nothing else has been changed in this case. */
+        p_instance_ctrl->spi_protocol = old_protocol;
+    }
+
+    return err;
 }
 
 /*******************************************************************************************************************//**
@@ -757,7 +796,7 @@ fsp_err_t R_OSPI_B_Close (spi_flash_ctrl_t * p_ctrl)
     FSP_ASSERT(NULL != p_instance_ctrl->p_cfg->p_extend);
 #endif
 
-    ospi_b_extended_cfg_t * p_cfg_extend = (ospi_b_extended_cfg_t *) (p_instance_ctrl->p_cfg->p_extend);
+    ospi_b_extended_cfg_t * p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl);
 
 #if OSPI_B_CFG_DMAC_SUPPORT_ENABLE
 
@@ -800,7 +839,7 @@ fsp_err_t R_OSPI_B_AutoCalibrate (spi_flash_ctrl_t * const p_ctrl)
  #endif
 
     /* Perform Automatic Calibration to appropriately update WRAPCFG DSSFTCSn field. */
-    if (0 != (OSPI_B_PRV_PROTOCOL_USES_DS_MASK & p_instance_ctrl->spi_protocol))
+    if (OSPI_B_PRV_PROTOCOL_USES_DS_SIGNAL(p_instance_ctrl->spi_protocol))
     {
         return r_ospi_b_automatic_calibration_seq(p_instance_ctrl);
     }
@@ -810,6 +849,76 @@ fsp_err_t R_OSPI_B_AutoCalibrate (spi_flash_ctrl_t * const p_ctrl)
     FSP_PARAMETER_NOT_USED(p_ctrl);
 
     return FSP_ERR_UNSUPPORTED;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * Loads a row into the page buffer on devices which support row addressing.
+ *
+ * @param[in] p_ctrl    Pointer to a driver handle.
+ * @param     row_index Index of the row in the OSPI device.
+ *
+ * @retval FSP_SUCCESS              Page transaction succeeded.
+ * @retval FSP_ERR_INVALID_ARGUMENT Invalid argument.
+ * @retval FSP_ERR_NOT_OPEN         Driver has not been opened.
+ * @retval FSP_ERR_UNSUPPORTED      Row addressing support is not enabled
+ * @retval FSP_ERR_DEVICE_BUSY      On going asynchronous operation or the device in in XiP mode.
+ **********************************************************************************************************************/
+fsp_err_t R_OSPI_B_RowLoad (spi_flash_ctrl_t * const p_ctrl, uint32_t row_index)
+{
+#if !OSPI_B_CFG_ROW_ADDRESSING_SUPPORT_ENABLE
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(row_index);
+
+    return FSP_ERR_UNSUPPORTED;
+#else
+ #if OSPI_B_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == ((ospi_b_instance_ctrl_t *) p_ctrl)->open, FSP_ERR_NOT_OPEN);
+
+    ospi_b_extended_cfg_t * const p_extend_cfg = OSPI_B_PRV_EXTENDED_CFG(p_ctrl);
+    FSP_ERROR_RETURN(row_index < (1ULL << (8U * OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_extend_cfg->row_index_bytes))),
+                     FSP_ERR_INVALID_ARGUMENT);
+ #endif
+
+    r_ospi_b_row_load_store((ospi_b_instance_ctrl_t *) p_ctrl, row_index, false);
+
+    return FSP_SUCCESS;
+#endif
+}
+
+/*******************************************************************************************************************//**
+ * Stores (programs) the page buffer to a row on devices which support row addressing.
+ *
+ * @param[in] p_ctrl    Pointer to a driver handle.
+ * @param     row_index Index of the row in the OSPI device.
+ *
+ * @retval FSP_SUCCESS              Page transaction succeeded.
+ * @retval FSP_ERR_INVALID_ARGUMENT Invalid argument.
+ * @retval FSP_ERR_NOT_OPEN         Driver has not been opened.
+ * @retval FSP_ERR_UNSUPPORTED      Row addressing support is not enabled
+ * @retval FSP_ERR_DEVICE_BUSY      On going asynchronous operation or the device in in XiP mode.
+ **********************************************************************************************************************/
+fsp_err_t R_OSPI_B_RowStore (spi_flash_ctrl_t * const p_ctrl, uint32_t row_index)
+{
+#if !OSPI_B_CFG_ROW_ADDRESSING_SUPPORT_ENABLE
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(row_index);
+
+    return FSP_ERR_UNSUPPORTED;
+#else
+ #if OSPI_B_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == ((ospi_b_instance_ctrl_t *) p_ctrl)->open, FSP_ERR_NOT_OPEN);
+
+    ospi_b_extended_cfg_t * const p_extend_cfg = OSPI_B_PRV_EXTENDED_CFG(p_ctrl);
+    FSP_ERROR_RETURN(row_index < (1ULL << (8U * OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_extend_cfg->row_index_bytes))),
+                     FSP_ERR_INVALID_ARGUMENT);
+ #endif
+
+    r_ospi_b_row_load_store((ospi_b_instance_ctrl_t *) p_ctrl, row_index, true);
+
+    return FSP_SUCCESS;
 #endif
 }
 
@@ -828,20 +937,19 @@ fsp_err_t R_OSPI_B_AutoCalibrate (spi_flash_ctrl_t * const p_ctrl)
 fsp_err_t R_OSPI_B_DOTF_Configure (spi_flash_ctrl_t * const p_ctrl, ospi_b_dotf_cfg_t * const p_dotf_cfg)
 {
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
-    fsp_err_t                ret             = FSP_SUCCESS;
-    ospi_b_instance_ctrl_t * p_instance_ctrl = (ospi_b_instance_ctrl_t *) p_ctrl;
+    fsp_err_t ret = FSP_SUCCESS;
 
  #if OSPI_B_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ASSERT(NULL != p_dotf_cfg);
-    FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == ((ospi_b_instance_ctrl_t *) p_ctrl)->open, FSP_ERR_NOT_OPEN);
  #endif
 
-    ospi_b_extended_cfg_t * p_cfg_extend = (ospi_b_extended_cfg_t *) (p_instance_ctrl->p_cfg->p_extend);
+    ospi_b_extended_cfg_t * p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_ctrl);
 
     if (NULL != p_dotf_cfg)
     {
-        ret = r_ospi_b_dotf_setup(p_dotf_cfg);
+        ret = r_ospi_b_dotf_setup(p_cfg_extend->ospi_b_unit, p_dotf_cfg);
         if (FSP_SUCCESS != ret)
         {
             /* If the DOTF initialization fails, stop the module if no other channels are active. */
@@ -875,38 +983,46 @@ fsp_err_t R_OSPI_B_DOTF_Configure (spi_flash_ctrl_t * const p_ctrl, ospi_b_dotf_
  **********************************************************************************************************************/
 static fsp_err_t r_ospi_b_protocol_specific_settings (ospi_b_instance_ctrl_t * p_instance_ctrl)
 {
-    R_XSPI0_Type * const          p_reg    = p_instance_ctrl->p_reg;
-    spi_flash_cfg_t const       * p_cfg    = p_instance_ctrl->p_cfg;
-    ospi_b_extended_cfg_t const * p_extend = (ospi_b_extended_cfg_t const *) p_cfg->p_extend;
-    fsp_err_t ret = FSP_SUCCESS;
+    R_XSPI0_Type * const p_reg = p_instance_ctrl->p_reg;
+    fsp_err_t            ret   = FSP_SUCCESS;
 
     /* Get the command set for the configured protocol and save it to the control struct. */
     ospi_b_xspi_command_set_t const * p_cmd_set = r_ospi_b_command_set_get(p_instance_ctrl);
+    FSP_ERROR_RETURN(NULL != p_cmd_set, FSP_ERR_INVALID_MODE);
+
     p_instance_ctrl->p_cmd_set = p_cmd_set;
 
-    /* Update the SPI protocol. */
-    p_reg->LIOCFGCS_b[p_instance_ctrl->channel].PRTMD = p_instance_ctrl->spi_protocol & R_XSPI0_LIOCFGCS_PRTMD_Msk;
+    /* Update the SPI protocol and latency mode. */
+    uint32_t liocfg = p_reg->LIOCFGCS[p_instance_ctrl->channel] &
+                      ~(R_XSPI0_LIOCFGCS_LATEMD_Msk | R_XSPI0_LIOCFGCS_PRTMD_Msk);
+    liocfg |= (((uint32_t) p_instance_ctrl->spi_protocol << R_XSPI0_LIOCFGCS_PRTMD_Pos) & R_XSPI0_LIOCFGCS_PRTMD_Msk);
+    liocfg |= (((uint32_t) p_cmd_set->latency_mode << R_XSPI0_LIOCFGCS_LATEMD_Pos) & R_XSPI0_LIOCFGCS_LATEMD_Msk);
+    p_reg->LIOCFGCS[p_instance_ctrl->channel] = liocfg;
 
     /* Specifies the read/write commands and Read dummy clocks for Device
      * (see Section 37.3.8.5 'Flow of Memory-mapping' of the RA8M1 manual R01UH0994EJ0100). */
-    uint32_t cmcfg0 = (OSPI_B_PRV_ADDRESS_REPLACE_ENABLE_BITS) |
-                      (((uint32_t) p_cfg->address_bytes << R_XSPI0_CMCFGCS_CMCFG0_ADDSIZE_Pos) &
+    uint32_t cmcfg0 = ((uint32_t) (p_cmd_set->address_msb_mask << R_XSPI0_CMCFGCS_CMCFG0_ADDRPEN_Pos)) |
+                      ((uint32_t) (p_cmd_set->frame_format << R_XSPI0_CMCFGCS_CMCFG0_FFMT_Pos)) |
+                      (((uint32_t) p_cmd_set->address_bytes << R_XSPI0_CMCFGCS_CMCFG0_ADDSIZE_Pos) &
                        R_XSPI0_CMCFGCS_CMCFG0_ADDSIZE_Msk);
 
-    /* Use profile 1.0 format always for 8D-8D-8D. */
-    if (SPI_FLASH_PROTOCOL_8D_8D_8D == p_instance_ctrl->spi_protocol)
+    /* When using 4-byte addressing, always mask off the most-significant nybble to remove the system bus offset from
+     * the transmitted addresses. Ex. CS1 starts at 0x9000_0000 so it needs to mask off bits [31:28]. */
+    if (p_cmd_set->address_bytes == SPI_FLASH_ADDRESS_BYTES_4)
     {
-        cmcfg0 |= (1U << R_XSPI0_CMCFGCS_CMCFG0_FFMT_Pos);
+        cmcfg0 |= OSPI_B_PRV_ADDRESS_REPLACE_ENABLE_BITS;
     }
 
+    /* Apply the frame format setting and update the register. */
+    cmcfg0 |= (uint32_t) (p_cmd_set->frame_format << R_XSPI0_CMCFGCS_CMCFG0_FFMT_Pos);
     p_reg->CMCFGCS[p_instance_ctrl->channel].CMCFG0 = cmcfg0;
 
-    /* Grab the appropriate command values. */
-    uint16_t read_command  = (NULL != p_cmd_set) ? p_cmd_set->read_command : p_cfg->read_command;
-    uint16_t write_command = (NULL != p_cmd_set) ? p_cmd_set->page_program_command : p_cfg->page_program_command;
+    /* Cache the appropriate command values for later use. */
+    uint16_t read_command  = p_cmd_set->read_command;
+    uint16_t write_command = p_cmd_set->program_command;
 
     /* If no length is specified or if the command byte length is 1, move the command to the upper byte. */
-    if ((p_cmd_set == NULL) || (OSPI_B_COMMAND_BYTES_1 == p_cmd_set->command_bytes))
+    if (OSPI_B_COMMAND_BYTES_1 == p_cmd_set->command_bytes)
     {
         read_command =
             (uint16_t) ((read_command & OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_MASK) << OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_SHIFT);
@@ -914,10 +1030,8 @@ static fsp_err_t r_ospi_b_protocol_specific_settings (ospi_b_instance_ctrl_t * p
             (uint16_t) ((write_command & OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_MASK) << OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_SHIFT);
     }
 
-    const uint8_t read_dummy_cycles = (NULL != p_cmd_set) ?
-                                      p_cmd_set->read_dummy_cycles : p_extend->read_dummy_cycles;
-    const uint8_t write_dummy_cycles = (NULL != p_cmd_set) ?
-                                       p_cmd_set->program_dummy_cycles : p_extend->program_dummy_cycles;
+    const uint8_t read_dummy_cycles  = p_cmd_set->read_dummy_cycles;
+    const uint8_t write_dummy_cycles = p_cmd_set->program_dummy_cycles;
 
     p_reg->CMCFGCS[p_instance_ctrl->channel].CMCFG1 =
         (uint32_t) (((uint32_t) (read_command) << R_XSPI0_CMCFGCS_CMCFG1_RDCMD_Pos) |
@@ -930,11 +1044,11 @@ static fsp_err_t r_ospi_b_protocol_specific_settings (ospi_b_instance_ctrl_t * p
                      R_XSPI0_CMCFGCS_CMCFG2_WRLATE_Msk));
 
 #if OSPI_B_CFG_AUTOCALIBRATION_SUPPORT_ENABLE
-    ospi_b_extended_cfg_t * p_cfg_extend = (ospi_b_extended_cfg_t *) p_cfg->p_extend;
+    ospi_b_extended_cfg_t * p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl);
 
     /* Perform Automatic Calibration to appropriately update WRAPCFG DSSFTCSn field. */
     if ((0 == p_cfg_extend->data_latch_delay_clocks) &&
-        (0 != (OSPI_B_PRV_PROTOCOL_USES_DS_MASK & p_instance_ctrl->spi_protocol)))
+        OSPI_B_PRV_PROTOCOL_USES_DS_SIGNAL(p_instance_ctrl->spi_protocol))
     {
         ret = r_ospi_b_automatic_calibration_seq(p_instance_ctrl);
     }
@@ -953,36 +1067,32 @@ static fsp_err_t r_ospi_b_protocol_specific_settings (ospi_b_instance_ctrl_t * p
  **********************************************************************************************************************/
 static bool r_ospi_b_status_sub (ospi_b_instance_ctrl_t * p_instance_ctrl, uint8_t bit_pos)
 {
-    spi_flash_cfg_t const           * p_cfg          = p_instance_ctrl->p_cfg;
-    spi_flash_direct_transfer_t       direct_command = {0};
-    ospi_b_xspi_command_set_t const * p_cmd_set      = p_instance_ctrl->p_cmd_set;
-
-    if (NULL == p_cmd_set)
-    {
-        direct_command.command        = p_cfg->status_command;
-        direct_command.command_length = 1U;
-        direct_command.dummy_cycles   = ((ospi_b_extended_cfg_t const *) p_cfg->p_extend)->status_dummy_cycles;
-    }
-    else
-    {
-        direct_command.command        = p_cmd_set->status_command;
-        direct_command.command_length = (uint8_t) p_cmd_set->command_bytes;
-        direct_command.dummy_cycles   = p_cmd_set->status_dummy_cycles;
-    }
+    ospi_b_xspi_command_set_t const * p_cmd_set = p_instance_ctrl->p_cmd_set;
 
     /* Skip status check if no command was specified. */
-    if (0 == direct_command.command)
+    if (0 == p_cmd_set->status_command)
     {
         return false;
     }
 
-    /* 8D-8D-8D mode requires an address for any kind of read. */
-    if (SPI_FLASH_PROTOCOL_8D_8D_8D == p_instance_ctrl->spi_protocol)
+    spi_flash_direct_transfer_t direct_command =
     {
-        direct_command.address_length = (p_cfg->address_bytes + 1U) & OSPI_B_PRV_DIRECT_ADDR_AND_DATA_MASK;
+        .command        = p_cmd_set->status_command,
+        .command_length = (uint8_t) p_cmd_set->command_bytes,
+        .address_length = (uint8_t) (p_cmd_set->status_needs_address ?
+                                     OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_cmd_set->status_address_bytes) : 0U),
+        .address      = (p_cmd_set->status_needs_address) ? p_cmd_set->status_address : 0U,
+        .data_length  = 1U,
+        .dummy_cycles = p_cmd_set->status_dummy_cycles,
+    };
+
+    /* 8D-8D-8D mode requires an address for any kind of read. If the address wasn't set by the configuration
+     * set it to the general address length. */
+    if ((direct_command.address_length != 0) && (SPI_FLASH_PROTOCOL_8D_8D_8D == p_instance_ctrl->spi_protocol))
+    {
+        direct_command.address_length = OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_cmd_set->address_bytes);
     }
 
-    direct_command.data_length = 1U;
     r_ospi_b_direct_transfer(p_instance_ctrl, &direct_command, SPI_FLASH_DIRECT_TRANSFER_DIR_READ);
 
     return (direct_command.data >> bit_pos) & 1U;
@@ -993,31 +1103,28 @@ static bool r_ospi_b_status_sub (ospi_b_instance_ctrl_t * p_instance_ctrl, uint8
  *
  * @param[in]   p_instance_ctrl    Pointer to OSPI specific control structure
  *
- * @retval      FSP_SUCCESS                Write operation completed.
- * @retval      FSP_ERR_WRITE_FAILED       Write operation failed.
+ * @retval      FSP_SUCCESS         Write enable operation completed.
+ * @retval      FSP_ERR_NOT_ENABLED Write enable failed.
  **********************************************************************************************************************/
 static fsp_err_t r_ospi_b_write_enable (ospi_b_instance_ctrl_t * p_instance_ctrl)
 {
-    spi_flash_direct_transfer_t       direct_command = {0};
-    spi_flash_cfg_t const           * p_cfg          = p_instance_ctrl->p_cfg;
-    ospi_b_xspi_command_set_t const * p_cmd_set      = p_instance_ctrl->p_cmd_set;
-
-    if (NULL == p_cmd_set)
-    {
-        direct_command.command        = p_cfg->write_enable_command;
-        direct_command.command_length = 1U;
-    }
-    else
-    {
-        direct_command.command        = p_cmd_set->write_enable_command;
-        direct_command.command_length = (uint8_t) p_cmd_set->command_bytes;
-    }
+    ospi_b_xspi_command_set_t const * const p_cmd_set = p_instance_ctrl->p_cmd_set;
 
     /* If the command is 0x00, then skip sending the write enable. */
-    if (0 == direct_command.command)
+    if (0 == p_cmd_set->write_enable_command)
     {
         return FSP_SUCCESS;
     }
+
+    spi_flash_direct_transfer_t direct_command =
+    {
+        .command        = p_cmd_set->write_enable_command,
+        .command_length = (uint8_t) p_cmd_set->command_bytes,
+        .address_length = 0,
+        .address        = 0,
+        .data_length    = 0,
+        .dummy_cycles   = 0,
+    };
 
     r_ospi_b_direct_transfer(p_instance_ctrl, &direct_command, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);
 
@@ -1037,7 +1144,7 @@ static fsp_err_t r_ospi_b_write_enable (ospi_b_instance_ctrl_t * p_instance_ctrl
     }
 #endif
 
-    FSP_ERROR_RETURN(write_enabled, FSP_ERR_WRITE_FAILED);
+    FSP_ERROR_RETURN(write_enabled, FSP_ERR_NOT_ENABLED);
 
     return FSP_SUCCESS;
 }
@@ -1051,13 +1158,13 @@ static fsp_err_t r_ospi_b_write_enable (ospi_b_instance_ctrl_t * p_instance_ctrl
  *
  * @retval      FSP_SUCCESS                Auto-Calibration completed successfully.
  * @retval      FSP_ERR_CALIBRATE_FAILED   Auto-Calibration failed.
+ * @retval      FSP_ERR_DEVICE_BUSY        Auto-Calibration is already running.
  **********************************************************************************************************************/
 static fsp_err_t r_ospi_b_automatic_calibration_seq (ospi_b_instance_ctrl_t * p_instance_ctrl)
 {
     R_XSPI0_Type * const    p_reg        = p_instance_ctrl->p_reg;
     fsp_err_t               ret          = FSP_SUCCESS;
-    spi_flash_cfg_t       * p_cfg        = (spi_flash_cfg_t *) p_instance_ctrl->p_cfg;
-    ospi_b_extended_cfg_t * p_cfg_extend = (ospi_b_extended_cfg_t *) p_cfg->p_extend;
+    ospi_b_extended_cfg_t * p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl);
 
     ospi_b_xspi_command_set_t const * p_cmd_set = p_instance_ctrl->p_cmd_set;
 
@@ -1066,80 +1173,78 @@ static fsp_err_t r_ospi_b_automatic_calibration_seq (ospi_b_instance_ctrl_t * p_
     /* Check that calibration is not in progress. */
     if (0 != p_reg->CCCTLCS[channel].CCCTL0_b.CAEN)
     {
+        return FSP_ERR_DEVICE_BUSY;
+    }
+
+    const uint8_t command_bytes     = (uint8_t) p_cmd_set->command_bytes;
+    uint16_t      read_command      = p_cmd_set->read_command;
+    const uint8_t read_dummy_cycles = p_cmd_set->read_dummy_cycles;
+    const uint8_t address_bytes     = OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_cmd_set->address_bytes);
+
+    /* If using 1 command byte, shift the read command over as the peripheral expects. */
+    if (1U == command_bytes)
+    {
+        read_command =
+            (uint16_t) ((read_command & OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_MASK) <<
+                        OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_SHIFT);
+    }
+
+    p_reg->CCCTLCS[channel].CCCTL1 =
+        (((uint32_t) command_bytes << R_XSPI0_CCCTLCS_CCCTL1_CACMDSIZE_Pos) &
+         R_XSPI0_CCCTLCS_CCCTL1_CACMDSIZE_Msk) |
+        (((uint32_t) address_bytes << R_XSPI0_CCCTLCS_CCCTL1_CAADDSIZE_Pos) &
+         R_XSPI0_CCCTLCS_CCCTL1_CAADDSIZE_Msk) |
+        (OSPI_B_PRV_AUTOCALIBRATION_DATA_SIZE << R_XSPI0_CCCTLCS_CCCTL1_CADATASIZE_Pos) |
+        (OSPI_B_PRV_AUTOCALIBRATION_LATENCY_CYCLES << R_XSPI0_CCCTLCS_CCCTL1_CAWRLATE_Pos) |
+        (((uint32_t) read_dummy_cycles << R_XSPI0_CCCTLCS_CCCTL1_CARDLATE_Pos) &
+         R_XSPI0_CCCTLCS_CCCTL1_CARDLATE_Msk);
+
+    p_reg->CCCTLCS[channel].CCCTL2 =
+        (((uint32_t) read_command << R_XSPI0_CCCTLCS_CCCTL2_CARDCMD_Pos) &
+         R_XSPI0_CCCTLCS_CCCTL2_CARDCMD_Msk);
+
+    p_reg->CCCTLCS[channel].CCCTL3 = (uint32_t) p_cfg_extend->p_autocalibration_preamble_pattern_addr &
+                                     OSPI_B_PRV_ADDRESS_REPLACE_MASK;
+    p_reg->CCCTLCS[channel].CCCTL4 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_0;
+    p_reg->CCCTLCS[channel].CCCTL5 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_1;
+    p_reg->CCCTLCS[channel].CCCTL6 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_2;
+    p_reg->CCCTLCS[channel].CCCTL7 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_3;
+
+    p_reg->CCCTLCS[channel].CCCTL0 =
+        (OSPI_B_PRV_AUTOCALIBRATION_NO_WRITE_CMD << R_XSPI0_CCCTLCS_CCCTL0_CANOWR_Pos) |
+        (OSPI_B_PRV_AUTOCALIBRATION_FRAME_INTERVAL <<
+            R_XSPI0_CCCTLCS_CCCTL0_CAITV_Pos) |
+        (OSPI_B_PRV_AUTOCALIBRATION_SHIFT_DS_END_VALUE <<
+            R_XSPI0_CCCTLCS_CCCTL0_CASFTEND_Pos);
+
+    /* Automatic Calibration Enable */
+    p_reg->CCCTLCS[channel].CCCTL0_b.CAEN = 1;
+
+    /* Check calibration success or failure. */
+    while ((0 == ((p_reg->INTS >> (R_XSPI0_INTS_CASUCCS_Pos + channel)) & 0x01)) &&
+           (0 == ((p_reg->INTS >> (R_XSPI0_INTS_CAFAILCS_Pos + channel)) & 0x01)))
+    {
+        /* Do nothing. */
+    }
+
+    /* Disable automatic calibration */
+    p_reg->CCCTLCS[channel].CCCTL0_b.CAEN = 0;
+
+    if (1 == ((p_reg->INTS >> (R_XSPI0_INTS_CASUCCS_Pos + channel)) & 0x01))
+    {
+        /* Clear automatic calibration success status */
+        p_reg->INTC = (uint32_t) 1 << (R_XSPI0_INTS_CASUCCS_Pos + channel);
+    }
+    else if (1 == ((p_reg->INTS >> (R_XSPI0_INTS_CAFAILCS_Pos + channel)) & 0x01))
+    {
         ret = FSP_ERR_CALIBRATE_FAILED;
+
+        /* Clear automatic calibration failure status */
+        p_reg->INTC = (uint32_t) 1 << (R_XSPI0_INTS_CAFAILCS_Pos + channel);
     }
     else
     {
-        const uint8_t command_bytes     = (NULL != p_cmd_set) ? (uint8_t) p_cmd_set->command_bytes : 1U;
-        uint16_t      read_command      = (NULL != p_cmd_set) ? p_cmd_set->read_command : p_cfg->read_command;
-        const uint8_t read_dummy_cycles = (NULL != p_cmd_set) ? p_cmd_set->read_dummy_cycles : 0U;
-        const uint8_t address_bytes     = (p_cfg->address_bytes == SPI_FLASH_ADDRESS_BYTES_3) ? 3U : 4U;
-
-        /* If using 1 command byte, shift the read command over as the peripheral expects. */
-        if (1U == command_bytes)
-        {
-            read_command =
-                (uint16_t) ((read_command & OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_MASK) <<
-                            OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_SHIFT);
-        }
-
-        p_reg->CCCTLCS[channel].CCCTL1 =
-            (((uint32_t) command_bytes << R_XSPI0_CCCTLCS_CCCTL1_CACMDSIZE_Pos) &
-             R_XSPI0_CCCTLCS_CCCTL1_CACMDSIZE_Msk) |
-            (((uint32_t) address_bytes << R_XSPI0_CCCTLCS_CCCTL1_CAADDSIZE_Pos) &
-             R_XSPI0_CCCTLCS_CCCTL1_CAADDSIZE_Msk) |
-            (OSPI_B_PRV_AUTOCALIBRATION_DATA_SIZE << R_XSPI0_CCCTLCS_CCCTL1_CADATASIZE_Pos) |
-            (OSPI_B_PRV_AUTOCALIBRATION_LATENCY_CYCLES << R_XSPI0_CCCTLCS_CCCTL1_CAWRLATE_Pos) |
-            (((uint32_t) read_dummy_cycles << R_XSPI0_CCCTLCS_CCCTL1_CARDLATE_Pos) &
-             R_XSPI0_CCCTLCS_CCCTL1_CARDLATE_Msk);
-
-        p_reg->CCCTLCS[channel].CCCTL2 =
-            (((uint32_t) read_command << R_XSPI0_CCCTLCS_CCCTL2_CARDCMD_Pos) &
-             R_XSPI0_CCCTLCS_CCCTL2_CARDCMD_Msk);
-
-        p_reg->CCCTLCS[channel].CCCTL3 = (uint32_t) p_cfg_extend->p_autocalibration_preamble_pattern_addr &
-                                         OSPI_B_PRV_ADDRESS_REPLACE_MASK;
-        p_reg->CCCTLCS[channel].CCCTL4 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_0;
-        p_reg->CCCTLCS[channel].CCCTL5 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_1;
-        p_reg->CCCTLCS[channel].CCCTL6 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_2;
-        p_reg->CCCTLCS[channel].CCCTL7 = OSPI_B_PRV_AUTOCALIBRATION_PREAMBLE_PATTERN_3;
-
-        p_reg->CCCTLCS[channel].CCCTL0 =
-            (OSPI_B_PRV_AUTOCALIBRATION_NO_WRITE_CMD << R_XSPI0_CCCTLCS_CCCTL0_CANOWR_Pos) |
-            (OSPI_B_PRV_AUTOCALIBRATION_FRAME_INTERVAL <<
-                R_XSPI0_CCCTLCS_CCCTL0_CAITV_Pos) |
-            (OSPI_B_PRV_AUTOCALIBRATION_SHIFT_DS_END_VALUE <<
-                R_XSPI0_CCCTLCS_CCCTL0_CASFTEND_Pos);
-
-        /* Automatic Calibration Enable */
-        p_reg->CCCTLCS[channel].CCCTL0_b.CAEN = 1;
-
-        /* Check calibration success or failure. */
-        while ((0 == ((p_reg->INTS >> (R_XSPI0_INTS_CASUCCS_Pos + channel)) & 0x01)) &&
-               (0 == ((p_reg->INTS >> (R_XSPI0_INTS_CAFAILCS_Pos + channel)) & 0x01)))
-        {
-            /* Do nothing. */
-        }
-
-        /* Disable automatic calibration */
-        p_reg->CCCTLCS[channel].CCCTL0_b.CAEN = 0;
-
-        if (1 == ((p_reg->INTS >> (R_XSPI0_INTS_CASUCCS_Pos + channel)) & 0x01))
-        {
-            /* Clear automatic calibration success status */
-            p_reg->INTC = (uint32_t) 1 << (R_XSPI0_INTS_CASUCCS_Pos + channel);
-        }
-        else if (1 == ((p_reg->INTS >> (R_XSPI0_INTS_CAFAILCS_Pos + channel)) & 0x01))
-        {
-            ret = FSP_ERR_CALIBRATE_FAILED;
-
-            /* Clear automatic calibration failure status */
-            p_reg->INTC = (uint32_t) 1 << (R_XSPI0_INTS_CAFAILCS_Pos + channel);
-        }
-        else
-        {
-            /* Do nothing. */
-        }
+        /* Do nothing. */
     }
 
     return ret;
@@ -1161,13 +1266,6 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
     R_XSPI0_Type * const         p_reg   = p_instance_ctrl->p_reg;
     const ospi_b_device_number_t channel = p_instance_ctrl->channel;
 
-    /* Setup the manual command control. Cancel any ongoing transactions, direct mode, set channel, 1 transaction. */
-    p_reg->CDCTL0 = ((((uint32_t) channel) << R_XSPI0_CDCTL0_CSSEL_Pos) & R_XSPI0_CDCTL0_CSSEL_Msk);
-
-    /* Direct Read/Write settings
-     * (see RA8M1 User's Manual section "Flow of Manual-command Procedure"). */
-    FSP_HARDWARE_REGISTER_WAIT(p_reg->CDCTL0_b.TRREQ, 0);
-
     uint32_t cdtbuf0 =
         (((uint32_t) p_transfer->command_length << R_XSPI0_CDBUF_CDT_CMDSIZE_Pos) & R_XSPI0_CDBUF_CDT_CMDSIZE_Msk) |
         (((uint32_t) p_transfer->address_length << R_XSPI0_CDBUF_CDT_ADDSIZE_Pos) & R_XSPI0_CDBUF_CDT_ADDSIZE_Msk) |
@@ -1179,8 +1277,14 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
                ((p_transfer->command & OSPI_B_PRV_CDTBUF_CMD_1B_VALUE_MASK) << OSPI_B_PRV_CDTBUF_CMD_UPPER_OFFSET) :
                ((p_transfer->command & OSPI_B_PRV_CDTBUF_CMD_2B_VALUE_MASK) << OSPI_B_PRV_CDTBUF_CMD_OFFSET);
 
-    p_reg->CDBUF[0].CDT = cdtbuf0;
+    /* Setup the manual command control. Cancel any ongoing transactions, direct mode, set channel, 1 transaction. */
+    p_reg->CDCTL0 = ((((uint32_t) channel) << R_XSPI0_CDCTL0_CSSEL_Pos) & R_XSPI0_CDCTL0_CSSEL_Msk);
 
+    /* Direct Read/Write settings
+     * (see RA8M1 User's Manual section "Flow of Manual-command Procedure"). */
+    FSP_HARDWARE_REGISTER_WAIT(p_reg->CDCTL0_b.TRREQ, 0);
+
+    p_reg->CDBUF[0].CDT = cdtbuf0;
     p_reg->CDBUF[0].CDA = p_transfer->address;
 
     if (SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE == direction)
@@ -1192,8 +1296,9 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
         }
     }
 
+    /* Start the transaction and wait for completion. */
     p_reg->CDCTL0_b.TRREQ = 1;
-    FSP_HARDWARE_REGISTER_WAIT(p_reg->INTS_b.CMDCMP, 1);
+    FSP_HARDWARE_REGISTER_WAIT(p_reg->CDCTL0_b.TRREQ, 0);
 
     if (SPI_FLASH_DIRECT_TRANSFER_DIR_READ == direction)
     {
@@ -1204,7 +1309,8 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
         }
     }
 
-    p_reg->INTC = 1 << R_XSPI0_INTC_CMDCMPC_Pos;
+    /* Clear interrupt flags. */
+    p_reg->INTC = p_reg->INTS;
 }
 
 #if OSPI_B_CFG_XIP_SUPPORT_ENABLE
@@ -1282,15 +1388,7 @@ static void r_ospi_b_xip (ospi_b_instance_ctrl_t * p_instance_ctrl, bool is_ente
  **********************************************************************************************************************/
 static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get (ospi_b_instance_ctrl_t * p_instance_ctrl)
 {
-    ospi_b_extended_cfg_t * p_cfg_extend = (ospi_b_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-
-    if ((SPI_FLASH_PROTOCOL_EXTENDED_SPI == p_instance_ctrl->spi_protocol) ||
-        (0 == p_cfg_extend->p_xspi_command_set->length))
-    {
-
-        /* Normal SPI and modes not defined fallback to the commands defined in the spi_flash_cfg_t struct. */
-        return NULL;
-    }
+    ospi_b_extended_cfg_t * p_cfg_extend = OSPI_B_PRV_EXTENDED_CFG(p_instance_ctrl);
 
     ospi_b_xspi_command_set_t * p_cmd_set;
     for (uint32_t i = 0; i < p_cfg_extend->p_xspi_command_set->length; i++)
@@ -1305,6 +1403,44 @@ static ospi_b_xspi_command_set_t const * r_ospi_b_command_set_get (ospi_b_instan
     /* If the protocol isn't found, return NULL. */
     return NULL;
 }
+
+#if OSPI_B_CFG_ROW_ADDRESSING_SUPPORT_ENABLE
+
+/*******************************************************************************************************************//**
+ * Handles row load/stores for row addressable OSPI devices.
+ * @param[in] p_ctrl    Pointer to the instance constrol struct.
+ * @param     row_index Index of the page in the OSPI device.
+ * @param     store_row Set to `true` to store the data buffer to a row, `false` to load a row into the buffer.
+ *
+ **********************************************************************************************************************/
+static void r_ospi_b_row_load_store (ospi_b_instance_ctrl_t * const p_ctrl, uint32_t row_index, bool store_row)
+{
+    ospi_b_extended_cfg_t * const           p_extend_cfg = (ospi_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    ospi_b_xspi_command_set_t const * const p_cmd_set    = p_ctrl->p_cmd_set;
+    spi_flash_direct_transfer_t             transfer     =
+    {
+        .command_length = (uint8_t) p_cmd_set->command_bytes,
+        .address        = 0U,
+        .address_length = 0U,
+        .data           = row_index,
+        .data_length    = OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_extend_cfg->row_index_bytes)
+    };
+
+    if (store_row)
+    {
+        transfer.command      = p_cmd_set->row_store_command;
+        transfer.dummy_cycles = p_cmd_set->row_store_dummy_cycles;
+    }
+    else
+    {
+        transfer.command      = p_cmd_set->row_load_command;
+        transfer.dummy_cycles = p_cmd_set->row_load_dummy_cycles;
+    }
+
+    r_ospi_b_direct_transfer(p_ctrl, &transfer, SPI_FLASH_DIRECT_TRANSFER_DIR_WRITE);
+}
+
+#endif
 
 #if OSPI_B_CFG_DOTF_SUPPORT_ENABLE
 
@@ -1339,30 +1475,32 @@ static fsp_err_t r_ospi_b_dotf_side_channal_seed_init (uint32_t p_seed[])
 /*******************************************************************************************************************//**
  * Configures the device for DOTF operation.
  *
+ * @param[in]   ospi_b_unit                       Which OSPI unit
  * @param[in]   p_dotf_cfg                        Pointer to the DOTF configuration struct.
  * @retval      FSP_SUCCESS                       DOTF configuration completed successfully.
  * @retval      FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL   Key initialization failed.
  * @retval      FSP_ERR_CRYPTO_SCE_FAIL           Key wrapping failed.
  * @retval      FSP_ERR_INVALID_ARGUMENT          Invalid key type argument.
  **********************************************************************************************************************/
-static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
+static fsp_err_t r_ospi_b_dotf_setup (uint8_t ospi_b_unit, ospi_b_dotf_cfg_t * p_dotf_cfg)
 {
     fsp_err_t sce_ret = FSP_SUCCESS;
     uint32_t  seed[2] = {0};
+    FSP_PARAMETER_NOT_USED(ospi_b_unit);
 
     if (OSPI_B_DOTF_KEY_FORMAT_WRAPPED != p_dotf_cfg->format)
     {
         return FSP_ERR_INVALID_ARGUMENT;
     }
 
-    static uint8_t       s_wrapped_key[RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PRIVATE];
-    rsip_wrapped_key_t * p_wrapped_key = (rsip_wrapped_key_t *) s_wrapped_key;
-    p_wrapped_key->alg = (uint8_t) RSIP_ALG_AES;
+    static uint8_t            wrapped_key_value[RSIP_BYTE_SIZE_WRAPPED_KEY_RSA_4096_PRIVATE];
+    static rsip_wrapped_key_t s_wrapped_key = {.p_value = wrapped_key_value};
+    rsip_wrapped_key_t      * p_wrapped_key = &s_wrapped_key;
 
     if (OSPI_B_DOTF_AES_KEY_TYPE_128 == p_dotf_cfg->key_type)
     {
-        p_wrapped_key->subtype = RSIP_KEY_AES_128;
-        memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_128);
+        p_wrapped_key->type = RSIP_KEY_TYPE_AES_128;
+        memcpy(p_wrapped_key->p_value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_128);
     }
     else if (OSPI_B_DOTF_AES_KEY_TYPE_192 == p_dotf_cfg->key_type)
     {
@@ -1370,8 +1508,8 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
     }
     else if (OSPI_B_DOTF_AES_KEY_TYPE_256 == p_dotf_cfg->key_type)
     {
-        p_wrapped_key->subtype = RSIP_KEY_AES_256;
-        memcpy(p_wrapped_key->value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_256);
+        p_wrapped_key->type = RSIP_KEY_TYPE_AES_256;
+        memcpy(p_wrapped_key->p_value, p_dotf_cfg->p_key, RSIP_BYTE_SIZE_WRAPPED_KEY_AES_256);
     }
     else
     {
@@ -1390,9 +1528,7 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
     }
 
     sce_ret =
-        gp_rsip_instance->p_api->otfInit(gp_rsip_instance->p_ctrl,
-                                         RSIP_OTF_CHANNEL_0,
-                                         p_wrapped_key,
+        gp_rsip_instance->p_api->otfInit(gp_rsip_instance->p_ctrl, RSIP_OTF_CHANNEL_0, p_wrapped_key,
                                          (uint8_t *) &seed[0]);
 
     if (FSP_SUCCESS != sce_ret)
@@ -1431,15 +1567,17 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
 /*******************************************************************************************************************//**
  * Configures the device for DOTF operation.
  *
+ * @param[in]   ospi_b_unit                       Which OSPI unit
  * @param[in]   p_dotf_cfg          Pointer to the DOTF configuration struct.
  * @retval      FSP_SUCCESS                       DOTF configuration completed successfully.
  * @retval      FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL   Key initialization failed.
  * @retval      FSP_ERR_CRYPTO_SCE_FAIL           Key wrapping failed.
  * @retval      FSP_ERR_INVALID_ARGUMENT          Invalid key type argument.
  **********************************************************************************************************************/
-static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
+static fsp_err_t r_ospi_b_dotf_setup (uint8_t ospi_b_unit, ospi_b_dotf_cfg_t * p_dotf_cfg)
 {
     fsp_err_t     sce_ret = FSP_SUCCESS;
+    uint32_t      unit    = ospi_b_unit;
     uint32_t      seed[2] = {0};
     uint32_t      wrapped_key[HW_SCE_AES256_KEY_INDEX_WORD_SIZE] = {0};
     sce_oem_cmd_t key_cmd = SCE_OEM_CMD_AES128;
@@ -1512,15 +1650,15 @@ static fsp_err_t r_ospi_b_dotf_setup (ospi_b_dotf_cfg_t * p_dotf_cfg)
     /* Use wrapped key with DOTF AES Engine. */
     if (SCE_OEM_CMD_AES128 == key_cmd)
     {
-        sce_ret = HW_SCE_Aes128OutputKeyForDotfSubAdaptor(wrapped_key, seed);
+        sce_ret = HW_SCE_Aes128OutputKeyForDotfSubAdaptor(&unit, wrapped_key, seed);
     }
     else if (SCE_OEM_CMD_AES192 == key_cmd)
     {
-        sce_ret = HW_SCE_Aes192OutputKeyForDotfSubAdaptor(wrapped_key, seed);
+        sce_ret = HW_SCE_Aes192OutputKeyForDotfSubAdaptor(&unit, wrapped_key, seed);
     }
     else
     {
-        sce_ret = HW_SCE_Aes256OutputKeyForDotfSubAdaptor(wrapped_key, seed);
+        sce_ret = HW_SCE_Aes256OutputKeyForDotfSubAdaptor(&unit, wrapped_key, seed);
     }
 
     if (sce_ret == FSP_SUCCESS)

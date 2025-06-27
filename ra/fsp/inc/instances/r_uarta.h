@@ -77,7 +77,7 @@ typedef enum e_uarta_alv_bit
     UARTA_ALV_BIT_NEGATIVE_LOGIC = 1U, ///< Negative logic (wait state = low level, start bit = high level, stop bit = low level)
 } uarta_alv_bit_t;
 
-/** Register settings to acheive a desired baud rate and modulation duty. */
+/** Register settings to achieve a desired baud rate and modulation duty. */
 typedef struct st_uarta_baud_setting
 {
     union
@@ -136,7 +136,7 @@ typedef struct st_uarta_instance_ctrl
     uart_callback_args_t * p_callback_memory;
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } uarta_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -162,9 +162,11 @@ fsp_err_t R_UARTA_BaudCalculate(uint32_t                     baudrate,
                                 uarta_baud_setting_t * const p_baud_setting);
 fsp_err_t R_UARTA_CallbackSet(uart_ctrl_t * const          p_api_ctrl,
                               void (                     * p_callback)(uart_callback_args_t *),
-                              void const * const           p_context,
+                              void * const                 p_context,
                               uart_callback_args_t * const p_callback_memory);
 fsp_err_t R_UARTA_ReadStop(uart_ctrl_t * const p_api_ctrl, uint32_t * p_remaining_bytes);
+fsp_err_t R_UARTA_ReceiveSuspend(uart_ctrl_t * const p_api_ctrl);
+fsp_err_t R_UARTA_ReceiveResume(uart_ctrl_t * const p_api_ctrl);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup UARTA)

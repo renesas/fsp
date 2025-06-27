@@ -225,7 +225,7 @@ fsp_err_t R_POEG_StatusGet (poeg_ctrl_t * const p_ctrl, poeg_status_t * const p_
  **********************************************************************************************************************/
 fsp_err_t R_POEG_CallbackSet (poeg_ctrl_t * const          p_ctrl,
                               void (                     * p_callback)(poeg_callback_args_t *),
-                              void const * const           p_context,
+                              void * const                 p_context,
                               poeg_callback_args_t * const p_callback_memory)
 {
     poeg_instance_ctrl_t * p_instance_ctrl = (poeg_instance_ctrl_t *) p_ctrl;

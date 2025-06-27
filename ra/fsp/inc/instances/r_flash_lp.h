@@ -31,12 +31,12 @@ FSP_HEADER
 /* If Code Flash programming is enabled, then code flash functions must execute out of RAM. */
 #if (FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1)
  #if defined(__ICCARM__)
-  #pragma section=".code_in_ram"
+  #pragma section=".ram_from_flash"
  #endif
  #if defined(__ARMCC_VERSION) || defined(__GNUC__)
-  #define PLACE_IN_RAM_SECTION    __attribute__((noinline)) BSP_PLACE_IN_SECTION(".code_in_ram")
+  #define PLACE_IN_RAM_SECTION    __attribute__((noinline)) BSP_PLACE_IN_SECTION(".ram_from_flash")
  #else
-  #define PLACE_IN_RAM_SECTION    BSP_PLACE_IN_SECTION(".code_in_ram")
+  #define PLACE_IN_RAM_SECTION    BSP_PLACE_IN_SECTION(".ram_from_flash")
  #endif
 #else
  #define PLACE_IN_RAM_SECTION
@@ -112,7 +112,7 @@ fsp_err_t R_FLASH_LP_StartUpAreaSelect(flash_ctrl_t * const      p_api_ctrl,
                                        bool                      is_temporary);
 fsp_err_t R_FLASH_LP_CallbackSet(flash_ctrl_t * const          p_api_ctrl,
                                  void (                      * p_callback)(flash_callback_args_t *),
-                                 void const * const            p_context,
+                                 void * const                  p_context,
                                  flash_callback_args_t * const p_callback_memory);
 
 #if FLASH_LP_CFG_DUAL_BANK_INSTANT_SWAP

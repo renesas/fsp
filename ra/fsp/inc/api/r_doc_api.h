@@ -47,7 +47,7 @@ typedef enum e_doc_event
     DOC_EVENT_COMPARISON_MISMATCH       = 0x00, ///< The data is not equal to the reference data setting.
     DOC_EVENT_ADDITION                  = 0x01, ///< Addition resulted in a value greater than the max for the configured bit width.
     DOC_EVENT_SUBTRACTION               = 0x02, ///< Subtraction resulted in a value less than 0.
-    DOC_EVENT_COMPARISON_MATCH          = 0x04, ///< The data is equal to the reference data settting.
+    DOC_EVENT_COMPARISON_MATCH          = 0x04, ///< The data is equal to the reference data setting.
     DOC_EVENT_COMPARISON_LOWER          = 0x08, ///< The data is less than the reference data setting.
     DOC_EVENT_COMPARISON_UPPER          = 0x0C, ///< The data is greater than the reference data setting.
     DOC_EVENT_COMPARISON_INSIDE_WINDOW  = 0x10, ///< The data is between the two reference data settings.
@@ -64,7 +64,7 @@ typedef enum e_doc_bit_width
 /** Callback function parameter data. */
 typedef struct st_doc_callback_args
 {
-    void const * p_context;            ///< Placeholder for user data.
+    void * p_context;                  ///< Placeholder for user data.
     ///< Set in @ref doc_api_t::open function in @ref doc_cfg_t.
 } doc_callback_args_t;
 
@@ -99,7 +99,7 @@ typedef struct st_doc_cfg
     void (* p_callback)(doc_callback_args_t * p_args);
 
     /** Placeholder for user data. Passed to the user callback in @ref doc_callback_args_t. */
-    void const * p_context;
+    void * p_context;
 } doc_cfg_t;
 
 /** Data Operation Circuit (DOC) API structure. DOC functions implemented at the HAL layer will follow this API. */
@@ -140,7 +140,7 @@ typedef struct st_doc_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(doc_ctrl_t * const p_ctrl, void (* p_callback)(doc_callback_args_t *),
-                              void const * const p_context, doc_callback_args_t * const p_callback_memory);
+                              void * const p_context, doc_callback_args_t * const p_callback_memory);
 } doc_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

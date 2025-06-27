@@ -82,7 +82,7 @@ typedef struct st_sci_b_uart_instance_ctrl
     uart_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 
     /* Pointer to context to be passed into callback function */
-    void const * p_context;
+    void * p_context;
 } sci_b_uart_instance_ctrl_t;
 
 /** Receive FIFO trigger configuration. */
@@ -133,7 +133,7 @@ typedef enum e_sci_b_uart_rs485_de_polarity
     SCI_B_UART_RS485_DE_POLARITY_LOW  = 1, ///< The DE signal is low when a write transfer is in progress.
 } sci_b_uart_rs485_de_polarity_t;
 
-/** Register settings to acheive a desired baud rate and modulation duty. */
+/** Register settings to achieve a desired baud rate and modulation duty. */
 typedef struct st_sci_b_baud_setting_t
 {
     union
@@ -203,9 +203,11 @@ fsp_err_t R_SCI_B_UART_BaudCalculate(uint32_t                     baudrate,
                                      sci_b_baud_setting_t * const p_baud_setting);
 fsp_err_t R_SCI_B_UART_CallbackSet(uart_ctrl_t * const          p_api_ctrl,
                                    void (                     * p_callback)(uart_callback_args_t *),
-                                   void const * const           p_context,
+                                   void * const                 p_context,
                                    uart_callback_args_t * const p_callback_memory);
 fsp_err_t R_SCI_B_UART_ReadStop(uart_ctrl_t * const p_api_ctrl, uint32_t * remaining_bytes);
+fsp_err_t R_SCI_B_UART_ReceiveSuspend(uart_ctrl_t * const p_api_ctrl);
+fsp_err_t R_SCI_B_UART_ReceiveResume(uart_ctrl_t * const p_api_ctrl);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup SCI_B_UART)

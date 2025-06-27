@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**
- * \addtogroup grp_ptx_api_peripherals_timer PTX Peripherals Application Timer API
- *
- * @{
- */
-
 #ifndef STACK_COMPS_PERIPHERALS_PTXPERIPH_APPTIMER_H_
  #define STACK_COMPS_PERIPHERALS_PTXPERIPH_APPTIMER_H_
 
@@ -78,4 +72,3 @@ ptxStatus_t ptxPERIPH_APPTIMER_Stop();
  #endif
 
 #endif                                 /* Guard */
-/** @} */

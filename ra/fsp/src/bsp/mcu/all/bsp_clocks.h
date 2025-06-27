@@ -154,7 +154,7 @@ FSP_HEADER
 #define BSP_PRV_PCLKE_DIV_VALUE                      BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_PCLKE_DIV)
 #define BSP_PRV_BCLK_DIV_VALUE                       BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_BCLK_DIV)
 #define BSP_PRV_FCLK_DIV_VALUE                       BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_FCLK_DIV)
-#define BSP_PRV_EXTRACLK3_DIV_VALUE                  BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_EXTRACLK3_DIV)
+#define BSP_PRV_MRICLK_DIV_VALUE                     BSP_PRV_SCKDIVCR_DIV_VALUE(BSP_CFG_MRICLK_DIV)
 
 /* Startup clock frequency of each system clock. These macros are only helpful if the system clock and dividers have
  * not changed since startup. These macros are not used in FSP modules except for the clock startup code. */
@@ -167,7 +167,7 @@ FSP_HEADER
 #define BSP_STARTUP_PCLKE_HZ                         (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_PCLKE_DIV_VALUE)
 #define BSP_STARTUP_BCLK_HZ                          (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_BCLK_DIV_VALUE)
 #define BSP_STARTUP_FCLK_HZ                          (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_FCLK_DIV_VALUE)
-#define BSP_STARTUP_EXTRACLK3_HZ                     (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_EXTRACLK3_DIV_VALUE)
+#define BSP_STARTUP_MRICLK_HZ                        (BSP_STARTUP_SOURCE_CLOCK_HZ / BSP_PRV_MRICLK_DIV_VALUE)
 
 /* System clock divider options. */
 #define BSP_CLOCKS_SYS_CLOCK_DIV_1                   (0)  // System clock divided by 1.
@@ -321,6 +321,54 @@ FSP_HEADER
 #define BSP_CLOCKS_ADC_CLOCK_DIV_16                  (8)  // Divide ADC source clock by 16
 #define BSP_CLOCKS_ADC_CLOCK_DIV_32                  (9)  // Divide ADC source clock by 32
 
+/* ESW clock divider options. */
+#define BSP_CLOCKS_ESW_CLOCK_DIV_1                   (0)  // Divide ESW source clock by 1
+#define BSP_CLOCKS_ESW_CLOCK_DIV_2                   (1)  // Divide ESW source clock by 2
+#define BSP_CLOCKS_ESW_CLOCK_DIV_3                   (5)  // Divide ESW source clock by 3
+#define BSP_CLOCKS_ESW_CLOCK_DIV_4                   (2)  // Divide ESW source clock by 4
+#define BSP_CLOCKS_ESW_CLOCK_DIV_5                   (6)  // Divide ESW source clock by 5
+#define BSP_CLOCKS_ESW_CLOCK_DIV_6                   (3)  // Divide ESW source clock by 6
+#define BSP_CLOCKS_ESW_CLOCK_DIV_8                   (4)  // Divide ESW source clock by 8
+#define BSP_CLOCKS_ESW_CLOCK_DIV_10                  (7)  // Divide ESW source clock by 10
+#define BSP_CLOCKS_ESW_CLOCK_DIV_16                  (8)  // Divide ESW source clock by 16
+#define BSP_CLOCKS_ESW_CLOCK_DIV_32                  (9)  // Divide ESW source clock by 32
+
+/* ESWPHY clock divider options. */
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_1                (0)  // Divide ESWPHY source clock by 1
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_2                (1)  // Divide ESWPHY source clock by 2
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_3                (5)  // Divide ESWPHY source clock by 3
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_4                (2)  // Divide ESWPHY source clock by 4
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_5                (6)  // Divide ESWPHY source clock by 5
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_6                (3)  // Divide ESWPHY source clock by 6
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_8                (4)  // Divide ESWPHY source clock by 8
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_10               (7)  // Divide ESWPHY source clock by 10
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_16               (8)  // Divide ESWPHY source clock by 16
+#define BSP_CLOCKS_ESWPHY_CLOCK_DIV_32               (9)  // Divide ESWPHY source clock by 32
+
+/* ETHPHY clock divider options. */
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_1                (0)  // Divide ETHPHY source clock by 1
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_2                (1)  // Divide ETHPHY source clock by 2
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_3                (5)  // Divide ETHPHY source clock by 3
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_4                (2)  // Divide ETHPHY source clock by 4
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_5                (6)  // Divide ETHPHY source clock by 5
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_6                (3)  // Divide ETHPHY source clock by 6
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_8                (4)  // Divide ETHPHY source clock by 8
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_10               (7)  // Divide ETHPHY source clock by 10
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_16               (8)  // Divide ETHPHY source clock by 16
+#define BSP_CLOCKS_ETHPHY_CLOCK_DIV_32               (9)  // Divide ETHPHY source clock by 32
+
+/* BCLKA clock divider options. */
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_1                 (0)  // Divide BCLKA source clock by 1
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_2                 (1)  // Divide BCLKA source clock by 2
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_3                 (5)  // Divide BCLKA source clock by 3
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_4                 (2)  // Divide BCLKA source clock by 4
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_5                 (6)  // Divide BCLKA source clock by 5
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_6                 (3)  // Divide BCLKA source clock by 6
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_8                 (4)  // Divide BCLKA source clock by 8
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_10                (7)  // Divide BCLKA source clock by 10
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_16                (8)  // Divide BCLKA source clock by 16
+#define BSP_CLOCKS_BCLKA_CLOCK_DIV_32                (9)  // Divide BCLKA source clock by 32
+
 /* SAU clock divider options. */
 #define BSP_CLOCKS_SAU_CLOCK_DIV_1                   (0)  // Divide SAU source clock by 1
 #define BSP_CLOCKS_SAU_CLOCK_DIV_2                   (1)  // Divide SAU source clock by 2
@@ -350,6 +398,18 @@ FSP_HEADER
 #define BSP_CLOCKS_EXTRA_PERIPHERAL0_CLOCK_DIV_10    (7)  // Divide extra peripheral 0 source clock by 10
 #define BSP_CLOCKS_EXTRA_PERIPHERAL0_CLOCK_DIV_16    (8)  // Divide extra peripheral 0 source clock by 16
 #define BSP_CLOCKS_EXTRA_PERIPHERAL0_CLOCK_DIV_32    (9)  // Divide extra peripheral 0 source clock by 32
+
+/* Extra peripheral 1 clock divider options. */
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_1     (0)  // Divide extra peripheral 1 source clock by 1
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_2     (1)  // Divide extra peripheral 1 source clock by 2
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_3     (5)  // Divide extra peripheral 1 source clock by 3
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_4     (2)  // Divide extra peripheral 1 source clock by 4
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_5     (6)  // Divide extra peripheral 1 source clock by 5
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_6     (3)  // Divide extra peripheral 1 source clock by 6
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_8     (4)  // Divide extra peripheral 1 source clock by 8
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_10    (7)  // Divide extra peripheral 1 source clock by 10
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_16    (8)  // Divide extra peripheral 1 source clock by 16
+#define BSP_CLOCKS_EXTRA_PERIPHERAL1_CLOCK_DIV_32    (9)  // Divide extra peripheral 1 source clock by 32
 
 /* PLL divider options. */
 #define BSP_CLOCKS_PLL_DIV_1                         (0)
@@ -393,7 +453,7 @@ FSP_HEADER
  * X=Integer portion of the multiplier.
  * Y=Fractional portion of the multiplier.
  */
- #define BSP_CLOCKS_PLL_MUL(X, Y)    ((((X) -1U) << 2U) | ((Y) == 50U ? 3U : ((Y) / 33U)))
+ #define BSP_CLOCKS_PLL_MUL(X, Y)    ((((X) -1U) << 2UL) | ((Y) == 50U ? 3U : ((Y) / 33UL)))
 
 #endif
 
@@ -1662,7 +1722,7 @@ typedef enum e_cgc_pll_mul
 /* Public functions defined in bsp.h */
 void bsp_clock_init(void);             // Used internally by BSP
 
-#if BSP_TZ_NONSECURE_BUILD || BSP_ALT_BUILD
+#if BSP_TZ_NONSECURE_BUILD || BSP_SECONDARY_CORE_BUILD
 void bsp_clock_freq_var_init(void);    // Used internally by BSP
 
 #endif
@@ -1718,6 +1778,12 @@ void bsp_prv_clock_prepare_post_sleep(bool cpuclk_slowed);
 #if BSP_FEATURE_RTC_IS_IRTC
 fsp_err_t R_BSP_SubclockStatusGet();
 fsp_err_t R_BSP_SubclockInitialize();
+
+#endif
+
+#if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS
+void bsp_prv_clear_pfb(void);
+void bsp_prv_set_pfb(void);
 
 #endif
 

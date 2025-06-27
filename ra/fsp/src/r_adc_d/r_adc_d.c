@@ -240,7 +240,7 @@ fsp_err_t R_ADC_D_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_channel_cfg
  **********************************************************************************************************************/
 fsp_err_t R_ADC_D_CallbackSet (adc_ctrl_t * const          p_api_ctrl,
                                void (                    * p_callback)(adc_callback_args_t *),
-                               void const * const          p_context,
+                               void * const                p_context,
                                adc_callback_args_t * const p_callback_memory)
 {
     adc_d_instance_ctrl_t * p_ctrl = (adc_d_instance_ctrl_t *) p_api_ctrl;
@@ -719,28 +719,36 @@ static fsp_err_t r_adc_d_scan_cfg_check (adc_d_instance_ctrl_t * const     p_ctr
 {
     adc_d_instance_ctrl_t * p_instance_ctrl = p_ctrl;
     adc_d_extended_cfg_t  * p_extend        = (adc_d_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    adc_channel_t           channel         = p_channel_cfg->channel_input;
 
-    /* Check if the channel mode is set to Select Mode or Scan Mode, the channel input is not disabled. */
+    /* Check if the channel input is valid. */
     if (ADC_D_CHANNEL_MODE_SELECT == p_extend->channel_mode)
     {
+        FSP_ERROR_RETURN((BSP_FEATURE_ADC_D_CHANNELS & (1U << (uint32_t) channel)) ||
+                         (ADC_CHANNEL_TEMPERATURE == channel) ||
+                         (ADC_CHANNEL_VOLT == channel) ||
+                         (ADC_CHANNEL_POSITIVE_SIDE_VREF == channel) ||
+                         (ADC_CHANNEL_NEGATIVE_SIDE_VREF == channel),
+                         FSP_ERR_INVALID_CHANNEL);
+
+        /* Ensure to rewrite the value of the ADISS bit while conversion is stopped. */
         if (1 == R_ADC_D->ADM0_b.ADCE)
         {
-            FSP_ERROR_RETURN((ADC_CHANNEL_TEMPERATURE != p_channel_cfg->channel_input) &&
-                             (ADC_CHANNEL_VOLT != p_channel_cfg->channel_input) &&
+            FSP_ERROR_RETURN((ADC_CHANNEL_TEMPERATURE != channel) &&
+                             (ADC_CHANNEL_VOLT != channel) &&
                              (ADC_CHANNEL_TEMPERATURE > R_ADC_D->ADS),
                              FSP_ERR_INVALID_STATE);
         }
     }
     else
     {
-        FSP_ERROR_RETURN((0 != (BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS >> p_channel_cfg->channel_input)),
-                         FSP_ERR_INVALID_CHANNEL);
+        FSP_ERROR_RETURN(((1U << (uint32_t) channel) & BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS), FSP_ERR_INVALID_CHANNEL);
     }
 
     /* Check invalid configuration when the channel input is internal reference voltage or temperature sensor. */
     if ((ADC_D_CHANNEL_MODE_SELECT == p_extend->channel_mode) &&
-        ((ADC_CHANNEL_TEMPERATURE == p_channel_cfg->channel_input) ||
-         (ADC_CHANNEL_VOLT == p_channel_cfg->channel_input)))
+        ((ADC_CHANNEL_TEMPERATURE == channel) ||
+         (ADC_CHANNEL_VOLT == channel)))
     {
         /* Use normal mode 2 when the internal reference voltage or temperature sensor output voltage is selected
          * as the target for A/D conversion. */

@@ -133,8 +133,8 @@ typedef struct st_cac_meas_clock_config
 /** Callback function parameter data */
 typedef struct st_cac_user_cb_data
 {
-    cac_event_t  event;                ///< The event can be used to identify what caused the callback.
-    void const * p_context;            ///< Value provided in configuration structure.
+    cac_event_t event;                 ///< The event can be used to identify what caused the callback.
+    void      * p_context;             ///< Value provided in configuration structure.
 } cac_callback_args_t;
 
 /** CAC Configuration */
@@ -154,7 +154,7 @@ typedef struct st_cac_cfg
     uint8_t ferri_ipl;                                 ///< Frequency error interrupt priority
 
     void (* p_callback)(cac_callback_args_t * p_args); ///< Callback provided when a CAC interrupt ISR occurs.
-    void const * p_context;                            ///< Passed to user callback in @ref cac_callback_args_t.
+    void * p_context;                                  ///< Passed to user callback in @ref cac_callback_args_t.
 
     void const * p_extend;                             ///< CAC hardware dependent configuration */
 } cac_cfg_t;
@@ -193,7 +193,7 @@ typedef struct st_cac_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(cac_ctrl_t * const p_ctrl, void (* p_callback)(cac_callback_args_t *),
-                              void const * const p_context, cac_callback_args_t * const p_callback_memory);
+                              void * const p_context, cac_callback_args_t * const p_callback_memory);
 
     /** Close function for CAC device.
      * @param[in]  p_ctrl        Pointer to CAC device control.

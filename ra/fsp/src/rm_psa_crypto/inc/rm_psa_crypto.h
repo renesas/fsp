@@ -21,8 +21,8 @@
  #define PSA_KEY_TYPE_IS_RSA_KEY_PAIR_WRAPPED(type)    (type == (PSA_KEY_TYPE_RSA_KEY_PAIR | PSA_KEY_TYPE_VENDOR_FLAG))
 
 /** Whether a key type is wrapped elliptic curve key pair. */
- #define PSA_KEY_TYPE_IS_ECC_KEY_PAIR_WRAPPED(type)    (((type) & ~PSA_KEY_TYPE_ECC_CURVE_MASK) ==  \
-		 	 	 	 	 	 	 	 	 	 	 	 	 PSA_KEY_TYPE_ECC_KEY_PAIR_BASE_WRAPPED)
+ #define PSA_KEY_TYPE_IS_ECC_KEY_PAIR_WRAPPED(type)    (((type) & ~PSA_KEY_TYPE_ECC_CURVE_MASK) == \
+                                                        PSA_KEY_TYPE_ECC_KEY_PAIR_BASE_WRAPPED)
 
  #if defined(MBEDTLS_PLATFORM_SETUP_TEARDOWN_ALT)
 
@@ -55,9 +55,10 @@ extern "C"
  * The dummy_setbuf function below was created to prevent build errors; since FSP uses LittleFS by default (where the usage of a buffer is mandatory) this function does not perform any action. Setting the cache since in LittleFS to the minimum supported by the Data Flash (4) can minimize but not remove the likelihood of key data leakage.
  * The dummy function can be replaced by defining a different value for MBEDTLS_PLATFORM_SETBUF_MACRO value in the FSP configurator.
  */
-#if defined(MBEDTLS_PLATFORM_SETBUF_MACRO)
-void dummy_setbuf( void *stream, char *buf );
-#endif /* MBEDTLS_PLATFORM_SETBUF_MACRO */
+ #if defined(MBEDTLS_PLATFORM_SETBUF_MACRO)
+void dummy_setbuf(void * stream, char * buf);
+
+ #endif                                /* MBEDTLS_PLATFORM_SETBUF_MACRO */
 
 /*******************************************************************************************************************/ /**
  * @} (end addtogroup PSA_CRYPTO)

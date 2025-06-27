@@ -113,8 +113,8 @@ typedef enum e_i2s_state
 typedef struct st_i2s_callback_args
 {
     /** Placeholder for user data.  Set in @ref i2s_api_t::open function in @ref i2s_cfg_t. */
-    void const * p_context;
-    i2s_event_t  event;                ///< The event can be used to identify what caused the callback (overflow or error).
+    void      * p_context;
+    i2s_event_t event;                 ///< The event can be used to identify what caused the callback (overflow or error).
 } i2s_callback_args_t;
 
 /** I2S control block.  Allocate an instance specific control block to pass into the I2S API calls.
@@ -147,7 +147,7 @@ typedef struct st_i2s_cfg
     void (* p_callback)(i2s_callback_args_t * p_args);
 
     /** Placeholder for user data.  Passed to the user callback in @ref i2s_callback_args_t. */
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;             ///< Extension parameter for hardware specific settings.
     uint8_t      rxi_ipl;              ///< Receive interrupt priority
     uint8_t      txi_ipl;              ///< Transmit interrupt priority
@@ -238,7 +238,7 @@ typedef struct st_i2s_api
      *                                       Callback arguments allocated here are only valid during the callback.
      */
     fsp_err_t (* callbackSet)(i2s_ctrl_t * const p_ctrl, void (* p_callback)(i2s_callback_args_t *),
-                              void const * const p_context, i2s_callback_args_t * const p_callback_memory);
+                              void * const p_context, i2s_callback_args_t * const p_callback_memory);
 } i2s_api_t;
 
 /** This structure encompasses everything that is needed to use an instance of this interface. */

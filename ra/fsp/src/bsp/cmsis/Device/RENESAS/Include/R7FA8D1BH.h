@@ -3451,207 +3451,6 @@ typedef struct
     __IM uint16_t RESERVED;
 } R_OFS_DATAFLASH_CFGDLOCK_Type;                    /*!< Size = 20 (0x14)                                                          */
 
-/**
- * @brief R_XSPI_CMCFGCS [CMCFGCS] (xSPI Command Map Configuration registers)
- */
-typedef struct
-{
-    union
-    {
-        __IOM uint32_t CMCFG0;          /*!< (@ 0x00000000) xSPI Command Map Configuration register 0                  */
-
-        struct
-        {
-            __IOM uint32_t FFMT    : 2; /*!< [1..0] Frame format                                                       */
-            __IOM uint32_t ADDSIZE : 2; /*!< [3..2] Address size                                                       */
-            __IOM uint32_t WPBSTMD : 1; /*!< [4..4] Wrapping burst mode                                                */
-            __IOM uint32_t ARYAMD  : 1; /*!< [5..5] Array address mode                                                 */
-            uint32_t               : 10;
-            __IOM uint32_t ADDRPEN : 8; /*!< [23..16] Address Replace Enable                                           */
-            __IOM uint32_t ADDRPCD : 8; /*!< [31..24] Address Replace Code                                             */
-        } CMCFG0_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CMCFG1;          /*!< (@ 0x00000004) xSPI Command Map Configuration register 1                  */
-
-        struct
-        {
-            __IOM uint32_t RDCMD  : 16; /*!< [15..0] Read command                                                      */
-            __IOM uint32_t RDLATE : 5;  /*!< [20..16] Read latency cycle                                               */
-            uint32_t              : 11;
-        } CMCFG1_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CMCFG2;          /*!< (@ 0x00000008) xSPI Command Map Configuration register 2                  */
-
-        struct
-        {
-            __IOM uint32_t WRCMD  : 16; /*!< [15..0] Write command                                                     */
-            __IOM uint32_t WRLATE : 5;  /*!< [20..16] Write latency cycle                                              */
-            uint32_t              : 11;
-        } CMCFG2_b;
-    };
-    __IM uint32_t RESERVED;
-} R_XSPI_CMCFGCS_Type;                 /*!< Size = 16 (0x10)                                                          */
-
-/**
- * @brief R_XSPI_CDBUF [CDBUF] (xSPI BUF register)
- */
-typedef struct
-{
-    union
-    {
-        __IOM uint32_t CDT;               /*!< (@ 0x00000000) xSPI Command Manual Type buf                               */
-
-        struct
-        {
-            __IOM uint32_t CMDSIZE  : 2;  /*!< [1..0] Command Size                                                       */
-            __IOM uint32_t ADDSIZE  : 3;  /*!< [4..2] Address size                                                       */
-            __IOM uint32_t DATASIZE : 4;  /*!< [8..5] Write/Read Data Size                                               */
-            __IOM uint32_t LATE     : 5;  /*!< [13..9] Latency cycle                                                     */
-            uint32_t                : 1;
-            __IOM uint32_t TRTYPE   : 1;  /*!< [15..15] Transaction Type                                                 */
-            __IOM uint32_t CMD      : 16; /*!< [31..16] Command (1-2byte)                                                */
-        } CDT_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CDA;            /*!< (@ 0x00000004) xSPI Command Manual Address buf                            */
-
-        struct
-        {
-            __IOM uint32_t ADD : 32;   /*!< [31..0] Address                                                           */
-        } CDA_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CDD0;           /*!< (@ 0x00000008) xSPI Command Manual Data 0 buf                             */
-
-        struct
-        {
-            __IOM uint32_t DATA : 32;  /*!< [31..0] Write/Read Data                                                   */
-        } CDD0_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CDD1;           /*!< (@ 0x0000000C) xSPI Command Manual Data 1 buf                             */
-
-        struct
-        {
-            __IOM uint32_t DATA : 32;  /*!< [31..0] Write/Read Data                                                   */
-        } CDD1_b;
-    };
-} R_XSPI_CDBUF_Type;                   /*!< Size = 16 (0x10)                                                          */
-
-/**
- * @brief R_XSPI_CCCTLCS [CCCTLCS] (xSPI CS register)
- */
-typedef struct
-{
-    union
-    {
-        __IOM uint32_t CCCTL0;           /*!< (@ 0x00000000) xSPI Command Calibration Control register 0                */
-
-        struct
-        {
-            __IOM uint32_t CAEN     : 1; /*!< [0..0] Automatic Calibration Enable                                       */
-            __IOM uint32_t CANOWR   : 1; /*!< [1..1] Calibration no write mode                                          */
-            uint32_t                : 6;
-            __IOM uint32_t CAITV    : 5; /*!< [12..8] Calibration interval                                              */
-            uint32_t                : 3;
-            __IOM uint32_t CASFTSTA : 5; /*!< [20..16] Calibration DS shift start value                                 */
-            uint32_t                : 3;
-            __IOM uint32_t CASFTEND : 5; /*!< [28..24] Calibration DS shift end value                                   */
-            uint32_t                : 3;
-        } CCCTL0_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CCCTL1;             /*!< (@ 0x00000004) xSPI Command Calibration Control register 1                */
-
-        struct
-        {
-            __IOM uint32_t CACMDSIZE  : 2; /*!< [1..0] Command Size                                                       */
-            __IOM uint32_t CAADDSIZE  : 3; /*!< [4..2] Address size                                                       */
-            __IOM uint32_t CADATASIZE : 4; /*!< [8..5] Write/Read Data Size                                               */
-            uint32_t                  : 7;
-            __IOM uint32_t CAWRLATE   : 5; /*!< [20..16] Write Latency cycle                                              */
-            uint32_t                  : 3;
-            __IOM uint32_t CARDLATE   : 5; /*!< [28..24] Read Latency cycle                                               */
-            uint32_t                  : 3;
-        } CCCTL1_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CCCTL2;           /*!< (@ 0x00000008) xSPI Command Calibration Control register 2                */
-
-        struct
-        {
-            __IOM uint32_t CAWRCMD : 16; /*!< [15..0] Calibration pattern write command                                 */
-            __IOM uint32_t CARDCMD : 16; /*!< [31..16] Calibration pattern read command                                 */
-        } CCCTL2_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CCCTL3;         /*!< (@ 0x0000000C) xSPI Command Calibration Control register 3                */
-
-        struct
-        {
-            __IOM uint32_t CAADD : 32; /*!< [31..0] Calibration pattern address                                       */
-        } CCCTL3_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CCCTL4;          /*!< (@ 0x00000010) xSPI Command Calibration Control register 4                */
-
-        struct
-        {
-            __IOM uint32_t CADATA : 32; /*!< [31..0] Calibration pattern data                                          */
-        } CCCTL4_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CCCTL5;          /*!< (@ 0x00000014) xSPI Command Calibration Control register 5                */
-
-        struct
-        {
-            __IOM uint32_t CADATA : 32; /*!< [31..0] Calibration pattern data                                          */
-        } CCCTL5_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CCCTL6;          /*!< (@ 0x00000018) xSPI Command Calibration Control register 6                */
-
-        struct
-        {
-            __IOM uint32_t CADATA : 32; /*!< [31..0] Calibration pattern data                                          */
-        } CCCTL6_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CCCTL7;          /*!< (@ 0x0000001C) xSPI Command Calibration Control register 7                */
-
-        struct
-        {
-            __IOM uint32_t CADATA : 32; /*!< [31..0] Calibration pattern data                                          */
-        } CCCTL7_b;
-    };
-} R_XSPI_CCCTLCS_Type;                  /*!< Size = 32 (0x20)                                                          */
-
 /** @} */ /* End of group Device_Peripheral_clusters */
 
 /* =========================================================================================================================== */
@@ -6714,9 +6513,9 @@ typedef struct                         /*!< (@ 0x4001B000) R_DEBUG Structure    
             uint32_t                     : 12;
             __IOM uint32_t DBGSTOP_TIM   : 1; /*!< [14..14] Mask bit for RTC, TAU reset/interrupt                            */
             __IOM uint32_t DBGSTOP_SIR   : 1; /*!< [15..15] Mask bit for SAU, IICA, PORT_IRQ0-5 reset/interrupt              */
-            __IOM uint32_t DBGSTOP_LVD0  : 1; /*!< [16..16] Mask bit for LVD reset/interupt                                  */
-            __IOM uint32_t DBGSTOP_LVD1  : 1; /*!< [17..17] Mask bit for LVD reset/interupt                                  */
-            __IOM uint32_t DBGSTOP_LVD2  : 1; /*!< [18..18] Mask bit for LVD reset/interupt                                  */
+            __IOM uint32_t DBGSTOP_LVD0  : 1; /*!< [16..16] Mask bit for LVD reset/interrupt                                 */
+            __IOM uint32_t DBGSTOP_LVD1  : 1; /*!< [17..17] Mask bit for LVD reset/interrupt                                 */
+            __IOM uint32_t DBGSTOP_LVD2  : 1; /*!< [18..18] Mask bit for LVD reset/interrupt                                 */
             uint32_t                     : 5;
             __IOM uint32_t DBGSTOP_RPER  : 1; /*!< [24..24] Mask bit for SRAM parity error                                   */
             __IOM uint32_t DBGSTOP_RECCR : 1; /*!< [25..25] Mask bit for SRAM ECC error                                      */
@@ -8001,15 +7800,15 @@ typedef struct                         /*!< (@ 0x40201000) R_ELC Structure      
 
     union
     {
-        __IOM uint32_t ELCPARA;         /*!< (@ 0x000000F0) Event Link Controller Priviledge Attribution
-                                         *                  Register A                                                 */
+        __IOM uint32_t ELCPARA;         /*!< (@ 0x000000F0) Event Link Controller Privilege Attribution Register
+                                         *                  A                                                          */
 
         struct
         {
-            __IOM uint32_t ELCR    : 1; /*!< [0..0] Event Link Controller Register Priviledge Attribution              */
-            __IOM uint32_t ELSEGR0 : 1; /*!< [1..1] Event Link Software Event Generation Register 0 Priviledge
+            __IOM uint32_t ELCR    : 1; /*!< [0..0] Event Link Controller Register Privilege Attribution               */
+            __IOM uint32_t ELSEGR0 : 1; /*!< [1..1] Event Link Software Event Generation Register 0 Privilege
                                          *   Attribution                                                               */
-            __IOM uint32_t ELSEGR1 : 1; /*!< [2..2] Event Link Software Event Generation Register 1 Priviledge
+            __IOM uint32_t ELSEGR1 : 1; /*!< [2..2] Event Link Software Event Generation Register 1 Privilege
                                          *   Attribution                                                               */
             uint32_t : 29;
         } ELCPARA_b;
@@ -8017,31 +7816,31 @@ typedef struct                         /*!< (@ 0x40201000) R_ELC Structure      
 
     union
     {
-        __IOM uint32_t ELCPARB;        /*!< (@ 0x000000F4) Event Link Controller Priviledge Attribution
-                                        *                  Register B                                                 */
+        __IOM uint32_t ELCPARB;        /*!< (@ 0x000000F4) Event Link Controller Privilege Attribution Register
+                                        *                  B                                                          */
 
         struct
         {
-            __IOM uint32_t ELSR0  : 1; /*!< [0..0] Event Link Setting Register 0 Priviledge Attribution               */
-            __IOM uint32_t ELSR1  : 1; /*!< [1..1] Event Link Setting Register 1 Priviledge Attribution               */
-            __IOM uint32_t ELSR2  : 1; /*!< [2..2] Event Link Setting Register 2 Priviledge Attribution               */
-            __IOM uint32_t ELSR3  : 1; /*!< [3..3] Event Link Setting Register 3 Priviledge Attribution               */
-            __IOM uint32_t ELSR4  : 1; /*!< [4..4] Event Link Setting Register 4 Priviledge Attribution               */
-            __IOM uint32_t ELSR5  : 1; /*!< [5..5] Event Link Setting Register 5 Priviledge Attribution               */
-            __IOM uint32_t ELSR6  : 1; /*!< [6..6] Event Link Setting Register 6 Priviledge Attribution               */
-            __IOM uint32_t ELSR7  : 1; /*!< [7..7] Event Link Setting Register 7 Priviledge Attribution               */
-            __IOM uint32_t ELSR8  : 1; /*!< [8..8] Event Link Setting Register 8 Priviledge Attribution               */
-            __IOM uint32_t ELSR9  : 1; /*!< [9..9] Event Link Setting Register 9 Priviledge Attribution               */
-            __IOM uint32_t ELSR10 : 1; /*!< [10..10] Event Link Setting Register 10 Priviledge Attribution            */
-            __IOM uint32_t ELSR11 : 1; /*!< [11..11] Event Link Setting Register 11 Priviledge Attribution            */
-            __IOM uint32_t ELSR12 : 1; /*!< [12..12] Event Link Setting Register 12 Priviledge Attribution            */
-            __IOM uint32_t ELSR13 : 1; /*!< [13..13] Event Link Setting Register 13 Priviledge Attribution            */
-            __IOM uint32_t ELSR14 : 1; /*!< [14..14] Event Link Setting Register 14 Priviledge Attribution            */
-            __IOM uint32_t ELSR15 : 1; /*!< [15..15] Event Link Setting Register 15 Priviledge Attribution            */
-            __IOM uint32_t ELSR16 : 1; /*!< [16..16] Event Link Setting Register 16 Priviledge Attribution            */
-            __IOM uint32_t ELSR17 : 1; /*!< [17..17] Event Link Setting Register 17 Priviledge Attribution            */
+            __IOM uint32_t ELSR0  : 1; /*!< [0..0] Event Link Setting Register 0 Privilege Attribution                */
+            __IOM uint32_t ELSR1  : 1; /*!< [1..1] Event Link Setting Register 1 Privilege Attribution                */
+            __IOM uint32_t ELSR2  : 1; /*!< [2..2] Event Link Setting Register 2 Privilege Attribution                */
+            __IOM uint32_t ELSR3  : 1; /*!< [3..3] Event Link Setting Register 3 Privilege Attribution                */
+            __IOM uint32_t ELSR4  : 1; /*!< [4..4] Event Link Setting Register 4 Privilege Attribution                */
+            __IOM uint32_t ELSR5  : 1; /*!< [5..5] Event Link Setting Register 5 Privilege Attribution                */
+            __IOM uint32_t ELSR6  : 1; /*!< [6..6] Event Link Setting Register 6 Privilege Attribution                */
+            __IOM uint32_t ELSR7  : 1; /*!< [7..7] Event Link Setting Register 7 Privilege Attribution                */
+            __IOM uint32_t ELSR8  : 1; /*!< [8..8] Event Link Setting Register 8 Privilege Attribution                */
+            __IOM uint32_t ELSR9  : 1; /*!< [9..9] Event Link Setting Register 9 Privilege Attribution                */
+            __IOM uint32_t ELSR10 : 1; /*!< [10..10] Event Link Setting Register 10 Privilege Attribution             */
+            __IOM uint32_t ELSR11 : 1; /*!< [11..11] Event Link Setting Register 11 Privilege Attribution             */
+            __IOM uint32_t ELSR12 : 1; /*!< [12..12] Event Link Setting Register 12 Privilege Attribution             */
+            __IOM uint32_t ELSR13 : 1; /*!< [13..13] Event Link Setting Register 13 Privilege Attribution             */
+            __IOM uint32_t ELSR14 : 1; /*!< [14..14] Event Link Setting Register 14 Privilege Attribution             */
+            __IOM uint32_t ELSR15 : 1; /*!< [15..15] Event Link Setting Register 15 Privilege Attribution             */
+            __IOM uint32_t ELSR16 : 1; /*!< [16..16] Event Link Setting Register 16 Privilege Attribution             */
+            __IOM uint32_t ELSR17 : 1; /*!< [17..17] Event Link Setting Register 17 Privilege Attribution             */
             uint32_t              : 12;
-            __IOM uint32_t ELSR30 : 1; /*!< [30..30] Event Link Setting Register 30 Priviledge Attribution            */
+            __IOM uint32_t ELSR30 : 1; /*!< [30..30] Event Link Setting Register 30 Privilege Attribution             */
             uint32_t              : 1;
         } ELCPARB_b;
     };
@@ -17381,7 +17180,7 @@ typedef struct                         /*!< (@ 0x4001E000) R_SYSTEM Structure   
 
     union
     {
-        __IOM uint32_t LVDSAR;          /*!< (@ 0x000003CC) Programable Voltage Detection Security Attribution
+        __IOM uint32_t LVDSAR;          /*!< (@ 0x000003CC) Programmable Voltage Detection Security Attribution
                                          *                  Register                                                   */
 
         struct
@@ -20813,44 +20612,6 @@ typedef struct                         /*!< (@ 0x40202600) R_WDT Structure      
 } R_WDT_Type;                          /*!< Size = 12 (0xc)                                                           */
 
 /* =========================================================================================================================== */
-/* ================                                           R_TZF                                           ================ */
-/* =========================================================================================================================== */
-
-/**
- * @brief TrustZone Filter (R_TZF)
- */
-
-typedef struct                         /*!< (@ 0x40004000) R_TZF Structure                                            */
-{
-    __IM uint16_t RESERVED[8];
-
-    union
-    {
-        __IOM uint16_t TZFOAD;         /*!< (@ 0x00000010) TrustZone Filter Operation After Detection register        */
-
-        struct
-        {
-            __IOM uint16_t OAD : 1;    /*!< [0..0] Operation after detection                                          */
-            uint16_t           : 7;
-            __OM uint16_t KEY  : 8;    /*!< [15..8] Key Code                                                          */
-        } TZFOAD_b;
-    };
-    __IM uint16_t RESERVED1;
-
-    union
-    {
-        __IOM uint16_t TZFPT;           /*!< (@ 0x00000014) TrustZone Filter Protect register                          */
-
-        struct
-        {
-            __IOM uint16_t PROTECT : 1; /*!< [0..0] Protection of register                                             */
-            uint16_t               : 7;
-            __OM uint16_t KEY      : 8; /*!< [15..8] Key Code                                                          */
-        } TZFPT_b;
-    };
-} R_TZF_Type;                           /*!< Size = 22 (0x16)                                                          */
-
-/* =========================================================================================================================== */
 /* ================                                          R_CPSCU                                          ================ */
 /* =========================================================================================================================== */
 
@@ -23603,6 +23364,190 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI0 Structure  
 } R_XSPI0_Type;                            /*!< Size = 412 (0x19c)                                                        */
 
 /* =========================================================================================================================== */
+/* ================                                        R_MIPI_PHY                                         ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief D-PHY Controller Top (R_MIPI_PHY)
+ */
+
+typedef struct                         /*!< (@ 0x40346C00) R_MIPI_PHY Structure                                       */
+{
+    union
+    {
+        __IOM uint32_t DPHYREFCR;      /*!< (@ 0x00000000) D-PHY Reference Clock Setting Register                     */
+
+        struct
+        {
+            __IOM uint32_t RFREQ : 8;  /*!< [7..0] Reference Clock Frequency Setting                                  */
+            uint32_t             : 24;
+        } DPHYREFCR_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYPLFCR;      /*!< (@ 0x00000004) D-PHY PLL Frequency Control Register                       */
+
+        struct
+        {
+            __IOM uint32_t IDIV  : 2;  /*!< [1..0] D-PHY PLL Input Frequency Division Ratio Select                    */
+            uint32_t             : 6;
+            __IOM uint32_t NFMUL : 2;  /*!< [9..8] D-PHY PLL Frequency Multiplication Factor Select (Fractional
+                                        *   Part)                                                                     */
+            uint32_t            : 2;
+            __IOM uint32_t PMUL : 2;   /*!< [13..12] D-PHY PLL Output Frequency Division Ratio Select                 */
+            uint32_t            : 2;
+            __IOM uint32_t NMUL : 9;   /*!< [24..16] D-PHY PLL Frequency Multiplication Factor Select (Integer
+                                        *   Part)                                                                     */
+            uint32_t : 7;
+        } DPHYPLFCR_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYPLOCR;      /*!< (@ 0x00000008) D-PHY PLL Operation Control Register                       */
+
+        struct
+        {
+            __IOM uint32_t PLLSTP : 1; /*!< [0..0] D-PHY PLL Operation Control                                        */
+            uint32_t              : 31;
+        } DPHYPLOCR_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYESCCR;      /*!< (@ 0x0000000C) D-PHY Escape Mode Clock Control Register                   */
+
+        struct
+        {
+            __IOM uint32_t ESCDIV : 5; /*!< [4..0] Escape Mode Transfer Clock Division Ratio                          */
+            uint32_t              : 27;
+        } DPHYESCCR_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYPWRCR;      /*!< (@ 0x00000010) D-PHY Power Supplying Control Register                     */
+
+        struct
+        {
+            __IOM uint32_t PWRSEN : 1; /*!< [0..0] D-PHY Power Supplying Control                                      */
+            uint32_t              : 31;
+        } DPHYPWRCR_b;
+    };
+    __IM uint32_t RESERVED[2];
+
+    union
+    {
+        __IM uint32_t DPHYSFR;         /*!< (@ 0x0000001C) D-PHY Status Flag Register                                 */
+
+        struct
+        {
+            __IM uint32_t PWRSF : 1;   /*!< [0..0] D-PHY LDO Power-on Status Flag                                     */
+            uint32_t            : 7;
+            __IM uint32_t PLLSF : 1;   /*!< [8..8] D-PHY PLL Oscillation Stabilization Flag                           */
+            uint32_t            : 23;
+        } DPHYSFR_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYOCR;        /*!< (@ 0x00000020) D-PHY Operation Control Register                           */
+
+        struct
+        {
+            __IOM uint32_t DPHYEN : 1; /*!< [0..0] D-PHY Operation Control                                            */
+            uint32_t              : 31;
+        } DPHYOCR_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYTIM1;       /*!< (@ 0x00000024) D-PHY Timing Control Register 1                            */
+
+        struct
+        {
+            __IOM uint32_t TINIT : 19; /*!< [18..0] D-PHY T_INIT Parameter Setting                                    */
+            uint32_t             : 13;
+        } DPHYTIM1_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYTIM2;         /*!< (@ 0x00000028) D-PHY Timing Control Register 2                            */
+
+        struct
+        {
+            __IOM uint32_t TCLKPREP : 8; /*!< [7..0] D-PHY T_CLK_PREPARE Parameter Setting                              */
+            __IOM uint32_t TCLKSETT : 8; /*!< [15..8] D-PHY T_CLK_SETTLE Parameter Setting                              */
+            __IOM uint32_t TCLKMISS : 8; /*!< [23..16] D-PHY T_CLK_MISS Parameter Setting                               */
+            uint32_t                : 8;
+        } DPHYTIM2_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYTIM3;        /*!< (@ 0x0000002C) D-PHY Timing Control Register 3                            */
+
+        struct
+        {
+            __IOM uint32_t THSPREP : 8; /*!< [7..0] D-PHY T_THS_PREPARE Parameter Setting                              */
+            __IOM uint32_t THSSETT : 8; /*!< [15..8] D-PHY T_THS_SETTLE Parameter Setting                              */
+            uint32_t               : 16;
+        } DPHYTIM3_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYTIM4;         /*!< (@ 0x00000030) D-PHY Timing Control Register 4                            */
+
+        struct
+        {
+            __IOM uint32_t TCLKZERO : 8; /*!< [7..0] D-PHY T_CLK_ZERO Parameter Setting                                 */
+            __IOM uint32_t TCLKPRE  : 8; /*!< [15..8] D-PHY T_TCLK_PRE Parameter Setting                                */
+            __IOM uint32_t TCLKPOST : 8; /*!< [23..16] D-PHY T_TCLK_POST Parameter Setting                              */
+            __IOM uint32_t TCLKTRL  : 8; /*!< [31..24] D-PHY T_TCLK_TRAIL Parameter Setting                             */
+        } DPHYTIM4_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYTIM5;        /*!< (@ 0x00000034) D-PHY Timing Control Register 5                            */
+
+        struct
+        {
+            __IOM uint32_t THSZERO : 8; /*!< [7..0] D-PHY T_THS_ZERO Parameter Setting                                 */
+            __IOM uint32_t THSTRL  : 8; /*!< [15..8] D-PHY T_THS_TRAIL Parameter Setting                               */
+            __IOM uint32_t THSEXIT : 8; /*!< [23..16] D-PHY T_THS_EXIT Parameter Setting                               */
+            uint32_t               : 8;
+        } DPHYTIM5_b;
+    };
+
+    union
+    {
+        __IOM uint32_t DPHYTIM6;       /*!< (@ 0x00000038) D-PHY Timing Control Register 6                            */
+
+        struct
+        {
+            __IOM uint32_t TLPX : 8;   /*!< [7..0] D-PHY T_TLPX Parameter Setting                                     */
+            uint32_t            : 24;
+        } DPHYTIM6_b;
+    };
+    __IM uint32_t RESERVED1[3];
+
+    union
+    {
+        __IOM uint32_t DPHYMDC;          /*!< (@ 0x00000048) D-PHY Mode Control Register                                */
+
+        struct
+        {
+            __IOM uint32_t MASTEREN : 1; /*!< [0..0] D-PHY Master/Slave Select                                          */
+            uint32_t                : 31;
+        } DPHYMDC_b;
+    };
+} R_MIPI_PHY_Type;                       /*!< Size = 76 (0x4c)                                                          */
+
+/* =========================================================================================================================== */
 /* ================                                           R_CEU                                           ================ */
 /* =========================================================================================================================== */
 
@@ -24742,198 +24687,112 @@ typedef struct                          /*!< (@ 0x40221000) R_AGTX0 Structure   
 } R_AGTX0_Type;                         /*!< Size = 20 (0x14)                                                          */
 
 /* =========================================================================================================================== */
-/* ================                                         R_DPHYCNT                                         ================ */
+/* ================                                         R_ECCMB0                                          ================ */
 /* =========================================================================================================================== */
 
 /**
- * @brief D-PHY Controller Top (R_DPHYCNT)
+ * @brief CANFD ECC (R_ECCMB0)
  */
 
-typedef struct                         /*!< (@ 0x40346C00) R_DPHYCNT Structure                                        */
+typedef struct                          /*!< (@ 0x4036F200) R_ECCMB0 Structure                                         */
 {
     union
     {
-        __IOM uint32_t DPHYREFCR;      /*!< (@ 0x00000000) D-PHY Reference Clock Setting Register                     */
+        __IOM uint32_t EC710CTL;        /*!< (@ 0x00000000) ECC Control Register                                       */
 
         struct
         {
-            __IOM uint32_t RFREQ : 8;  /*!< [7..0] Reference Clock Frequency Setting                                  */
-            uint32_t             : 24;
-        } DPHYREFCR_b;
+            __IM uint32_t  ECEMF   : 1; /*!< [0..0] ECC Error Message Flag                                             */
+            __IM uint32_t  ECER1F  : 1; /*!< [1..1] ECC Error Detection and Correction Flag                            */
+            __IM uint32_t  ECER2F  : 1; /*!< [2..2] 2-bit ECC Error Detection Flag                                     */
+            __IOM uint32_t EC1EDIC : 1; /*!< [3..3] ECC 1-bit Error Detection Interrupt Control                        */
+            __IOM uint32_t EC2EDIC : 1; /*!< [4..4] ECC 2-bit Error Detection Interrupt Control                        */
+            __IOM uint32_t EC1ECP  : 1; /*!< [5..5] ECC 1-bit Error Correction Permission                              */
+            __IOM uint32_t ECERVF  : 1; /*!< [6..6] ECC Error Judgment Enable Flag                                     */
+            uint32_t               : 2;
+            __IOM uint32_t ECER1C  : 1; /*!< [9..9] Accumulating ECC Error Detection and Correction Flag
+                                         *   Clear                                                                     */
+            __IOM uint32_t ECER2C  : 1; /*!< [10..10] 2-bit ECC Error Detection Flag Clear                             */
+            __IM uint32_t  ECOVFF  : 1; /*!< [11..11] ECC Overflow Detection Flag                                      */
+            uint32_t               : 2;
+            __IOM uint32_t EMCA    : 2; /*!< [15..14] Access Control to ECC Mode Select bit                            */
+            __IM uint32_t  ECSEDF0 : 1; /*!< [16..16] ECC Single bit Error Address Detection Flag                      */
+            __IM uint32_t  ECDEDF0 : 1; /*!< [17..17] ECC Dual Bit Error Address Detection Flag                        */
+            uint32_t               : 14;
+        } EC710CTL_b;
     };
 
     union
     {
-        __IOM uint32_t DPHYPLFCR;      /*!< (@ 0x00000004) D-PHY PLL Frequency Control Register                       */
+        __IOM uint16_t EC710TMC;       /*!< (@ 0x00000004) ECC Test Mode Control Register                             */
 
         struct
         {
-            __IOM uint32_t IDIV  : 2;  /*!< [1..0] D-PHY PLL Input Frequency Division Ratio Select                    */
-            uint32_t             : 6;
-            __IOM uint32_t NFMUL : 2;  /*!< [9..8] D-PHY PLL Frequency Multiplication Factor Select (Fractional
-                                        *   Part)                                                                     */
-            uint32_t            : 2;
-            __IOM uint32_t PMUL : 2;   /*!< [13..12] D-PHY PLL Output Frequency Division Ratio Select                 */
-            uint32_t            : 2;
-            __IOM uint32_t NMUL : 9;   /*!< [24..16] D-PHY PLL Frequency Multiplication Factor Select (Integer
-                                        *   Part)                                                                     */
-            uint32_t : 7;
-        } DPHYPLFCR_b;
+            uint16_t              : 1;
+            __IOM uint16_t ECDCS  : 1; /*!< [1..1] ECC Decode Input Select                                            */
+            uint16_t              : 5;
+            __IOM uint16_t ECTMCE : 1; /*!< [7..7] ECC Test Mode Control Enable                                       */
+            uint16_t              : 6;
+            __IOM uint16_t ETMA   : 2; /*!< [15..14] ECC Test Mode Bit Access Control                                 */
+        } EC710TMC_b;
+    };
+    __IM uint16_t RESERVED;
+    __IM uint32_t RESERVED1;
+
+    union
+    {
+        __IOM uint32_t EC710TED;       /*!< (@ 0x0000000C) ECC Test Substitute Data Register                          */
+
+        struct
+        {
+            __IOM uint32_t ECEDB : 32; /*!< [31..0] ECC Test Substitute Data                                          */
+        } EC710TED_b;
     };
 
     union
     {
-        __IOM uint32_t DPHYPLOCR;      /*!< (@ 0x00000008) D-PHY PLL Operation Control Register                       */
+        __IM uint32_t EC710EAD0;       /*!< (@ 0x00000010) ECC Error Address Register                                 */
 
         struct
         {
-            __IOM uint32_t PLLSTP : 1; /*!< [0..0] D-PHY PLL Operation Control                                        */
-            uint32_t              : 31;
-        } DPHYPLOCR_b;
+            __IM uint32_t ECEAD : 10;  /*!< [9..0] ECC Error Address                                                  */
+            uint32_t            : 22;
+        } EC710EAD0_b;
     };
-
-    union
-    {
-        __IOM uint32_t DPHYESCCR;      /*!< (@ 0x0000000C) D-PHY Escape Mode Clock Control Register                   */
-
-        struct
-        {
-            __IOM uint32_t ESCDIV : 5; /*!< [4..0] Escape Mode Transfer Clock Division Ratio                          */
-            uint32_t              : 27;
-        } DPHYESCCR_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYPWRCR;      /*!< (@ 0x00000010) D-PHY Power Supplying Control Register                     */
-
-        struct
-        {
-            __IOM uint32_t PWRSEN : 1; /*!< [0..0] D-PHY Power Supplying Control                                      */
-            uint32_t              : 31;
-        } DPHYPWRCR_b;
-    };
-    __IM uint32_t RESERVED[2];
-
-    union
-    {
-        __IM uint32_t DPHYSFR;         /*!< (@ 0x0000001C) D-PHY Status Flag Register                                 */
-
-        struct
-        {
-            __IM uint32_t PWRSF : 1;   /*!< [0..0] D-PHY LDO Power-on Status Flag                                     */
-            uint32_t            : 7;
-            __IM uint32_t PLLSF : 1;   /*!< [8..8] D-PHY PLL Oscillation Stabilization Flag                           */
-            uint32_t            : 23;
-        } DPHYSFR_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYOCR;        /*!< (@ 0x00000020) D-PHY Operation Control Register                           */
-
-        struct
-        {
-            __IOM uint32_t DPHYEN : 1; /*!< [0..0] D-PHY Operation Control                                            */
-            uint32_t              : 31;
-        } DPHYOCR_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYTIM1;       /*!< (@ 0x00000024) D-PHY Timing Control Register 1                            */
-
-        struct
-        {
-            __IOM uint32_t TINIT : 19; /*!< [18..0] D-PHY T_INIT Parameter Setting                                    */
-            uint32_t             : 13;
-        } DPHYTIM1_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYTIM2;         /*!< (@ 0x00000028) D-PHY Timing Control Register 2                            */
-
-        struct
-        {
-            __IOM uint32_t TCLKPREP : 8; /*!< [7..0] D-PHY T_CLK_PREPARE Parameter Setting                              */
-            __IOM uint32_t TCLKSETT : 8; /*!< [15..8] D-PHY T_CLK_SETTLE Parameter Setting                              */
-            __IOM uint32_t TCLKMISS : 8; /*!< [23..16] D-PHY T_CLK_MISS Parameter Setting                               */
-            uint32_t                : 8;
-        } DPHYTIM2_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYTIM3;        /*!< (@ 0x0000002C) D-PHY Timing Control Register 3                            */
-
-        struct
-        {
-            __IOM uint32_t THSPREP : 8; /*!< [7..0] D-PHY T_THS_PREPARE Parameter Setting                              */
-            __IOM uint32_t THSSETT : 8; /*!< [15..8] D-PHY T_THS_SETTLE Parameter Setting                              */
-            uint32_t               : 16;
-        } DPHYTIM3_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYTIM4;         /*!< (@ 0x00000030) D-PHY Timing Control Register 4                            */
-
-        struct
-        {
-            __IOM uint32_t TCLKZERO : 8; /*!< [7..0] D-PHY T_CLK_ZERO Parameter Setting                                 */
-            __IOM uint32_t TCLKPRE  : 8; /*!< [15..8] D-PHY T_TCLK_PRE Parameter Setting                                */
-            __IOM uint32_t TCLKPOST : 8; /*!< [23..16] D-PHY T_TCLK_POST Parameter Setting                              */
-            __IOM uint32_t TCLKTRL  : 8; /*!< [31..24] D-PHY T_TCLK_TRAIL Parameter Setting                             */
-        } DPHYTIM4_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYTIM5;        /*!< (@ 0x00000034) D-PHY Timing Control Register 5                            */
-
-        struct
-        {
-            __IOM uint32_t THSZERO : 8; /*!< [7..0] D-PHY T_THS_ZERO Parameter Setting                                 */
-            __IOM uint32_t THSTRL  : 8; /*!< [15..8] D-PHY T_THS_TRAIL Parameter Setting                               */
-            __IOM uint32_t THSEXIT : 8; /*!< [23..16] D-PHY T_THS_EXIT Parameter Setting                               */
-            uint32_t               : 8;
-        } DPHYTIM5_b;
-    };
-
-    union
-    {
-        __IOM uint32_t DPHYTIM6;       /*!< (@ 0x00000038) D-PHY Timing Control Register 6                            */
-
-        struct
-        {
-            __IOM uint32_t TLPX : 8;   /*!< [7..0] D-PHY T_TLPX Parameter Setting                                     */
-            uint32_t            : 24;
-        } DPHYTIM6_b;
-    };
-    __IM uint32_t RESERVED1[3];
-
-    union
-    {
-        __IOM uint32_t DPHYMDC;          /*!< (@ 0x00000048) D-PHY Mode Control Register                                */
-
-        struct
-        {
-            __IOM uint32_t MASTEREN : 1; /*!< [0..0] D-PHY Master/Slave Select                                          */
-            uint32_t                : 31;
-        } DPHYMDC_b;
-    };
-} R_DPHYCNT_Type;                        /*!< Size = 76 (0x4c)                                                          */
+} R_ECCMB0_Type;                       /*!< Size = 20 (0x14)                                                          */
 
 /* =========================================================================================================================== */
-/* ================                                         R_DSILINK                                         ================ */
+/* ================                                          R_FLAD                                           ================ */
 /* =========================================================================================================================== */
 
 /**
- * @brief DSI Link (R_DSILINK)
+ * @brief Data Flash (R_FLAD)
  */
 
-typedef struct                         /*!< (@ 0x40346000) R_DSILINK Structure                                        */
+typedef struct                         /*!< (@ 0x4011C000) R_FLAD Structure                                           */
+{
+    __IM uint8_t RESERVED[64];
+
+    union
+    {
+        __IOM uint8_t FCKMHZ;          /*!< (@ 0x00000040) Data Flash Access Frequency Register                       */
+
+        struct
+        {
+            __IOM uint8_t FCKMHZ : 8;  /*!< [7..0] Data Flash Access Frequency Register                               */
+        } FCKMHZ_b;
+    };
+} R_FLAD_Type;                         /*!< Size = 65 (0x41)                                                          */
+
+/* =========================================================================================================================== */
+/* ================                                        R_MIPI_DSI                                         ================ */
+/* =========================================================================================================================== */
+
+/**
+ * @brief DSI Link (R_MIPI_DSI)
+ */
+
+typedef struct                         /*!< (@ 0x40346000) R_MIPI_DSI Structure                                       */
 {
     union
     {
@@ -31012,105 +30871,7 @@ typedef struct                         /*!< (@ 0x40346000) R_DSILINK Structure  
             };
         };
     };
-} R_DSILINK_Type;                      /*!< Size = 2176 (0x880)                                                       */
-
-/* =========================================================================================================================== */
-/* ================                                         R_ECCMB0                                          ================ */
-/* =========================================================================================================================== */
-
-/**
- * @brief CANFD ECC (R_ECCMB0)
- */
-
-typedef struct                          /*!< (@ 0x4036F200) R_ECCMB0 Structure                                         */
-{
-    union
-    {
-        __IOM uint32_t EC710CTL;        /*!< (@ 0x00000000) ECC Control Register                                       */
-
-        struct
-        {
-            __IM uint32_t  ECEMF   : 1; /*!< [0..0] ECC Error Message Flag                                             */
-            __IM uint32_t  ECER1F  : 1; /*!< [1..1] ECC Error Detection and Correction Flag                            */
-            __IM uint32_t  ECER2F  : 1; /*!< [2..2] 2-bit ECC Error Detection Flag                                     */
-            __IOM uint32_t EC1EDIC : 1; /*!< [3..3] ECC 1-bit Error Detection Interrupt Control                        */
-            __IOM uint32_t EC2EDIC : 1; /*!< [4..4] ECC 2-bit Error Detection Interrupt Control                        */
-            __IOM uint32_t EC1ECP  : 1; /*!< [5..5] ECC 1-bit Error Correction Permission                              */
-            __IOM uint32_t ECERVF  : 1; /*!< [6..6] ECC Error Judgment Enable Flag                                     */
-            uint32_t               : 2;
-            __IOM uint32_t ECER1C  : 1; /*!< [9..9] Accumulating ECC Error Detection and Correction Flag
-                                         *   Clear                                                                     */
-            __IOM uint32_t ECER2C  : 1; /*!< [10..10] 2-bit ECC Error Detection Flag Clear                             */
-            __IM uint32_t  ECOVFF  : 1; /*!< [11..11] ECC Overflow Detection Flag                                      */
-            uint32_t               : 2;
-            __IOM uint32_t EMCA    : 2; /*!< [15..14] Access Control to ECC Mode Select bit                            */
-            __IM uint32_t  ECSEDF0 : 1; /*!< [16..16] ECC Single bit Error Address Detection Flag                      */
-            __IM uint32_t  ECDEDF0 : 1; /*!< [17..17] ECC Dual Bit Error Address Detection Flag                        */
-            uint32_t               : 14;
-        } EC710CTL_b;
-    };
-
-    union
-    {
-        __IOM uint16_t EC710TMC;       /*!< (@ 0x00000004) ECC Test Mode Control Register                             */
-
-        struct
-        {
-            uint16_t              : 1;
-            __IOM uint16_t ECDCS  : 1; /*!< [1..1] ECC Decode Input Select                                            */
-            uint16_t              : 5;
-            __IOM uint16_t ECTMCE : 1; /*!< [7..7] ECC Test Mode Control Enable                                       */
-            uint16_t              : 6;
-            __IOM uint16_t ETMA   : 2; /*!< [15..14] ECC Test Mode Bit Access Control                                 */
-        } EC710TMC_b;
-    };
-    __IM uint16_t RESERVED;
-    __IM uint32_t RESERVED1;
-
-    union
-    {
-        __IOM uint32_t EC710TED;       /*!< (@ 0x0000000C) ECC Test Substitute Data Register                          */
-
-        struct
-        {
-            __IOM uint32_t ECEDB : 32; /*!< [31..0] ECC Test Substitute Data                                          */
-        } EC710TED_b;
-    };
-
-    union
-    {
-        __IM uint32_t EC710EAD0;       /*!< (@ 0x00000010) ECC Error Address Register                                 */
-
-        struct
-        {
-            __IM uint32_t ECEAD : 10;  /*!< [9..0] ECC Error Address                                                  */
-            uint32_t            : 22;
-        } EC710EAD0_b;
-    };
-} R_ECCMB0_Type;                       /*!< Size = 20 (0x14)                                                          */
-
-/* =========================================================================================================================== */
-/* ================                                          R_FLAD                                           ================ */
-/* =========================================================================================================================== */
-
-/**
- * @brief Data Flash (R_FLAD)
- */
-
-typedef struct                         /*!< (@ 0x4011C000) R_FLAD Structure                                           */
-{
-    __IM uint8_t RESERVED[64];
-
-    union
-    {
-        __IOM uint8_t FCKMHZ;          /*!< (@ 0x00000040) Data Flash Access Frequency Register                       */
-
-        struct
-        {
-            __IOM uint8_t FCKMHZ : 8;  /*!< [7..0] Data Flash Access Frequency Register                               */
-        } FCKMHZ_b;
-    };
-} R_FLAD_Type;                         /*!< Size = 65 (0x41)                                                          */
+} R_MIPI_DSI_Type;                     /*!< Size = 2176 (0x880)                                                       */
 
 /* =========================================================================================================================== */
 /* ================                                      R_OFS_DATAFLASH                                      ================ */
@@ -31225,385 +30986,6 @@ typedef struct                         /*!< (@ 0x27030000) R_OFS_DATAFLASH Struc
         } ARC_OEMBL_b[2];
     };
 } R_OFS_DATAFLASH_Type;                    /*!< Size = 2176 (0x880)                                                       */
-
-/* =========================================================================================================================== */
-/* ================                                          R_XSPI                                           ================ */
-/* =========================================================================================================================== */
-
-/**
- * @brief eXpanded SPI (R_XSPI)
- */
-
-typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure                                           */
-{
-    union
-    {
-        __IOM uint32_t WRAPCFG;          /*!< (@ 0x00000000) xSPI Wrapper Configuration register                        */
-
-        struct
-        {
-            __IOM uint32_t CKSFTCS0 : 5; /*!< [4..0] CK shift for slave0                                                */
-            uint32_t                : 3;
-            __IOM uint32_t DSSFTCS0 : 5; /*!< [12..8] DS shift for slave0                                               */
-            uint32_t                : 3;
-            __IOM uint32_t CKSFTCS1 : 5; /*!< [20..16] CK shift for slave1                                              */
-            uint32_t                : 3;
-            __IOM uint32_t DSSFTCS1 : 5; /*!< [28..24] DS shift for slave1                                              */
-            uint32_t                : 3;
-        } WRAPCFG_b;
-    };
-
-    union
-    {
-        __IOM uint32_t COMCFG;              /*!< (@ 0x00000004) xSPI Common Configuration register                         */
-
-        struct
-        {
-            __IOM uint32_t ARBMD       : 2; /*!< [1..0] Channel arbitration mode                                           */
-            uint32_t                   : 2;
-            __IOM uint32_t ECSINTOUTEN : 2; /*!< [5..4] ECS/INT Output Enable                                              */
-            uint32_t                   : 10;
-            __IOM uint32_t OEASTEX     : 1; /*!< [16..16] Output Enable Asserting extension                                */
-            __IOM uint32_t OENEGEX     : 1; /*!< [17..17] Output Enable Negating extension                                 */
-            uint32_t                   : 14;
-        } COMCFG_b;
-    };
-
-    union
-    {
-        __IOM uint32_t BMCFGCH[2];        /*!< (@ 0x00000008) xSPI Bridge Map Configuration register                     */
-
-        struct
-        {
-            __IOM uint32_t WRMD    : 1;   /*!< [0..0] AHB Write Response mode                                            */
-            uint32_t               : 6;
-            __IOM uint32_t MWRCOMB : 1;   /*!< [7..7] Memory Write Combination mode                                      */
-            __IOM uint32_t MWRSIZE : 8;   /*!< [15..8] Memory Write Size                                                 */
-            __IOM uint32_t PREEN   : 1;   /*!< [16..16] Prefetch enable                                                  */
-            uint32_t               : 7;
-            __IOM uint32_t CMBTIM  : 8;   /*!< [31..24] Combination timer                                                */
-        } BMCFGCH_b[2];
-    };
-    __IOM R_XSPI_CMCFGCS_Type CMCFGCS[2]; /*!< (@ 0x00000010) xSPI Command Map Configuration registers                   */
-    __IM uint32_t             RESERVED[8];
-
-    union
-    {
-        __IOM uint32_t LIOCFGCS[2];        /*!< (@ 0x00000050) xSPI Link I/O Configuration register CS[0..1]              */
-
-        struct
-        {
-            __IOM uint32_t PRTMD     : 10; /*!< [9..0] Protocol mode                                                      */
-            __IOM uint32_t LATEMD    : 1;  /*!< [10..10] Latency mode                                                     */
-            __IOM uint32_t WRMSKMD   : 1;  /*!< [11..11] Write mask mode                                                  */
-            uint32_t                 : 4;
-            __IOM uint32_t CSMIN     : 4;  /*!< [19..16] CS minimum idle term                                             */
-            __IOM uint32_t CSASTEX   : 1;  /*!< [20..20] CS asserting extension                                           */
-            __IOM uint32_t CSNEGEX   : 1;  /*!< [21..21] CS negating extension                                            */
-            __IOM uint32_t SDRDRV    : 1;  /*!< [22..22] SDR driving timing                                               */
-            __IOM uint32_t SDRSMPMD  : 1;  /*!< [23..23] SDR Sampling mode                                                */
-            __IOM uint32_t SDRSMPSFT : 4;  /*!< [27..24] SDR Sampling window shift                                        */
-            __IOM uint32_t DDRSMPEX  : 4;  /*!< [31..28] DDR sampling window extend                                       */
-        } LIOCFGCS_b[2];
-    };
-
-    union
-    {
-        __IOM uint32_t ABMCFG;         /*!< (@ 0x00000058) xSPI AXI Bridge Map Config                                 */
-
-        struct
-        {
-            __IOM uint32_t ODRMD : 2;  /*!< [1..0] AXI Transfer Ordering Mode                                         */
-            uint32_t             : 14;
-            __IOM uint32_t CHSEL : 16; /*!< [31..16] AXI ID to Bridge Channel Select                                  */
-        } ABMCFG_b;
-    };
-    __IM uint32_t RESERVED1;
-
-    union
-    {
-        __IOM uint32_t BMCTL0;            /*!< (@ 0x00000060) xSPI Bridge Map Control register 0                         */
-
-        struct
-        {
-            __IOM uint32_t CH0CS0ACC : 2; /*!< [1..0] System bus ch0 to slave0 memory area access enable                 */
-            __IOM uint32_t CH0CS1ACC : 2; /*!< [3..2] System bus ch0 to slave1 memory area access enable                 */
-            __IOM uint32_t CH1CS0ACC : 2; /*!< [5..4] System bus ch1 to slave0 memory area access enable                 */
-            __IOM uint32_t CH1CS1ACC : 2; /*!< [7..6] System bus ch1 to slave1 memory area access enable                 */
-            uint32_t                 : 24;
-        } BMCTL0_b;
-    };
-
-    union
-    {
-        __OM uint32_t BMCTL1;          /*!< (@ 0x00000064) xSPI Bridge Map Control register 1                         */
-
-        struct
-        {
-            uint32_t                 : 8;
-            __OM uint32_t MWRPUSHCH0 : 1; /*!< [8..8] Memory Write Data Push for ch0                                     */
-            __OM uint32_t MWRPUSHCH1 : 1; /*!< [9..9] Memory Write Data Push for ch1                                     */
-            __OM uint32_t PBUFCLRCH0 : 1; /*!< [10..10] Prefetch Buffer clear for ch0                                    */
-            __OM uint32_t PBUFCLRCH1 : 1; /*!< [11..11] Prefetch Buffer clear for ch1                                    */
-            uint32_t                 : 20;
-        } BMCTL1_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CMCTLCH[2];        /*!< (@ 0x00000068) xSPI Command Map Control register                          */
-
-        struct
-        {
-            __IOM uint32_t XIPENCODE : 8; /*!< [7..0] XiP mode enter code                                                */
-            __IOM uint32_t XIPEXCODE : 8; /*!< [15..8] XiP mode exit code                                                */
-            __IOM uint32_t XIPEN     : 1; /*!< [16..16] XiP mode enable                                                  */
-            uint32_t                 : 15;
-        } CMCTLCH_b[2];
-    };
-
-    union
-    {
-        __IOM uint32_t CDCTL0;         /*!< (@ 0x00000070) xSPI Command Manual Control register 0                     */
-
-        struct
-        {
-            __IOM uint32_t TRREQ  : 1; /*!< [0..0] Transaction request                                                */
-            __IOM uint32_t PERMD  : 1; /*!< [1..1] Periodic mode                                                      */
-            uint32_t              : 1;
-            __IOM uint32_t CSSEL  : 1; /*!< [3..3] Chip select                                                        */
-            __IOM uint32_t TRNUM  : 2; /*!< [5..4] Transaction number                                                 */
-            uint32_t              : 10;
-            __IOM uint32_t PERITV : 5; /*!< [20..16] Periodic transaction interval                                    */
-            uint32_t              : 3;
-            __IOM uint32_t PERREP : 4; /*!< [27..24] Periodic transaction repeat                                      */
-            uint32_t              : 4;
-        } CDCTL0_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CDCTL1;          /*!< (@ 0x00000074) xSPI Command Manual Control register 1                     */
-
-        struct
-        {
-            __IOM uint32_t PEREXP : 32; /*!< [31..0] Periodic transaction expected value                               */
-        } CDCTL1_b;
-    };
-
-    union
-    {
-        __IOM uint32_t CDCTL2;          /*!< (@ 0x00000078) xSPI Command Manual Control register 2                     */
-
-        struct
-        {
-            __IOM uint32_t PERMSK : 32; /*!< [31..0] Periodic transaction masked value                                 */
-        } CDCTL2_b;
-    };
-    __IM uint32_t           RESERVED2;
-    __IOM R_XSPI_CDBUF_Type CDBUF[4];   /*!< (@ 0x00000080) xSPI BUF register                                          */
-    __IM uint32_t           RESERVED3[16];
-
-    union
-    {
-        __IOM uint32_t LPCTL0;         /*!< (@ 0x00000100) xSPI Link Pattern Control register 0                       */
-
-        struct
-        {
-            __IOM uint32_t PATREQ : 1; /*!< [0..0] Pattern request                                                    */
-            uint32_t              : 2;
-            __IOM uint32_t CSSEL  : 1; /*!< [3..3] Chip select                                                        */
-            __IOM uint32_t XDPIN  : 2; /*!< [5..4] XiP Disable pattern pin                                            */
-            uint32_t              : 10;
-            __IOM uint32_t XD1LEN : 5; /*!< [20..16] XiP Disable pattern 1st phase length                             */
-            uint32_t              : 2;
-            __IOM uint32_t XD1VAL : 1; /*!< [23..23] XiP Disable pattern 1st phase value                              */
-            __IOM uint32_t XD2LEN : 5; /*!< [28..24] XiP Disable pattern 2nd phase length                             */
-            uint32_t              : 2;
-            __IOM uint32_t XD2VAL : 1; /*!< [31..31] XiP Disable pattern 2nd phase value                              */
-        } LPCTL0_b;
-    };
-
-    union
-    {
-        __IOM uint32_t LPCTL1;         /*!< (@ 0x00000104) xSPI Link Pattern Control register 1                       */
-
-        struct
-        {
-            __IOM uint32_t PATREQ : 2; /*!< [1..0] Pattern request                                                    */
-            uint32_t              : 1;
-            __IOM uint32_t CSSEL  : 1; /*!< [3..3] Chip select                                                        */
-            __IOM uint32_t RSTREP : 2; /*!< [5..4] Reset pattern repeat                                               */
-            uint32_t              : 2;
-            __IOM uint32_t RSTWID : 3; /*!< [10..8] Reset pattern width                                               */
-            uint32_t              : 1;
-            __IOM uint32_t RSTSU  : 3; /*!< [14..12] Reset pattern data output setup time                             */
-            uint32_t              : 17;
-        } LPCTL1_b;
-    };
-
-    union
-    {
-        __IOM uint32_t LIOCTL;         /*!< (@ 0x00000108) xSPI Link I/O Control register                             */
-
-        struct
-        {
-            __IOM uint32_t WPCS0  : 1; /*!< [0..0] WP drive for slave 0                                               */
-            __IOM uint32_t WPCS1  : 1; /*!< [1..1] WP drive for slave 1                                               */
-            uint32_t              : 14;
-            __IOM uint32_t RSTCS0 : 1; /*!< [16..16] Reset drive for slave 0                                          */
-            __IOM uint32_t RSTCS1 : 1; /*!< [17..17] Reset drive for slave 1                                          */
-            uint32_t              : 14;
-        } LIOCTL_b;
-    };
-    __IM uint32_t             RESERVED4[9];
-    __IOM R_XSPI_CCCTLCS_Type CCCTLCS[2]; /*!< (@ 0x00000130) xSPI CS register                                           */
-    __IM uint32_t             RESERVED5[4];
-
-    union
-    {
-        __IM uint32_t VERSTT;          /*!< (@ 0x00000180) xSPI Version register                                      */
-
-        struct
-        {
-            __IM uint32_t VER : 32;    /*!< [31..0] Version                                                           */
-        } VERSTT_b;
-    };
-
-    union
-    {
-        __IM uint32_t COMSTT;             /*!< (@ 0x00000184) xSPI Common Status register                                */
-
-        struct
-        {
-            __IM uint32_t MEMACCCH0  : 1; /*!< [0..0] Memory access ongoing from ch0                                     */
-            __IM uint32_t MEMACCCH1  : 1; /*!< [1..1] Memory access ongoing from ch1                                     */
-            uint32_t                 : 2;
-            __IM uint32_t PBUFNECH0  : 1; /*!< [4..4] Prefetch Buffer Not Empty for ch0                                  */
-            __IM uint32_t PBUFNECH1  : 1; /*!< [5..5] Prefetch Buffer Not Empty for ch1                                  */
-            __IM uint32_t WRBUFNECH0 : 1; /*!< [6..6] Write Buffer Not Empty for ch0                                     */
-            __IM uint32_t WRBUFNECH1 : 1; /*!< [7..7] Write Buffer Not Empty for ch1                                     */
-            uint32_t                 : 8;
-            __IM uint32_t ECSCS0     : 1; /*!< [16..16] ECS monitor for slave0                                           */
-            __IM uint32_t INTCS0     : 1; /*!< [17..17] INT monitor for slave0                                           */
-            __IM uint32_t RSTOCS0    : 1; /*!< [18..18] RSTO monitor for slave0                                          */
-            uint32_t                 : 1;
-            __IM uint32_t ECSCS1     : 1; /*!< [20..20] ECS monitor for slave1                                           */
-            __IM uint32_t INTCS1     : 1; /*!< [21..21] INT monitor for slave1                                           */
-            __IM uint32_t RSTOCS1    : 1; /*!< [22..22] RSTO monitor for slave1                                          */
-            uint32_t                 : 9;
-        } COMSTT_b;
-    };
-
-    union
-    {
-        __IM uint32_t CASTTCS[2];      /*!< (@ 0x00000188) xSPI Calibration Status register                           */
-
-        struct
-        {
-            __IM uint32_t CASUC : 32;  /*!< [31..0] Calibration Success                                               */
-        } CASTTCS_b[2];
-    };
-
-    union
-    {
-        __IM uint32_t INTS;              /*!< (@ 0x00000190) xSPI Interrupt Status register                             */
-
-        struct
-        {
-            __IM uint32_t CMDCMP    : 1; /*!< [0..0] Command Completed                                                  */
-            __IM uint32_t PATCMP    : 1; /*!< [1..1] Pattern Completed                                                  */
-            __IM uint32_t INICMP    : 1; /*!< [2..2] Initial Sequence Completed                                         */
-            __IM uint32_t PERTO     : 1; /*!< [3..3] Periodic transaction timeout                                       */
-            __IM uint32_t DSTOCS0   : 1; /*!< [4..4] DS timeout for slave0                                              */
-            __IM uint32_t DSTOCS1   : 1; /*!< [5..5] DS timeout for slave1                                              */
-            uint32_t                : 2;
-            __IM uint32_t ECSCS0    : 1; /*!< [8..8] ECC error detection for slave0                                     */
-            __IM uint32_t ECSCS1    : 1; /*!< [9..9] ECC error detection for slave1                                     */
-            uint32_t                : 2;
-            __IM uint32_t INTCS0    : 1; /*!< [12..12] Interrupt detection for slave0                                   */
-            __IM uint32_t INTCS1    : 1; /*!< [13..13] Interrupt detection for slave1                                   */
-            uint32_t                : 2;
-            __IM uint32_t BRGOFCH0  : 1; /*!< [16..16] Bridge Buffer overflow for CH0                                   */
-            __IM uint32_t BRGOFCH1  : 1; /*!< [17..17] Bridge Buffer overflow for CH1                                   */
-            __IM uint32_t BRGUFCH0  : 1; /*!< [18..18] Bridge Buffer underflow for CH0                                  */
-            __IM uint32_t BRGUFCH1  : 1; /*!< [19..19] Bridge Buffer underflow for CH1                                  */
-            __IM uint32_t BUSERRCH0 : 1; /*!< [20..20] AHB bus error for CH0                                            */
-            __IM uint32_t BUSERRCH1 : 1; /*!< [21..21] AHB bus error for CH1                                            */
-            uint32_t                : 6;
-            __IM uint32_t CAFAILCS0 : 1; /*!< [28..28] Calibration failed for slave0                                    */
-            __IM uint32_t CAFAILCS1 : 1; /*!< [29..29] Calibration failed for slave1                                    */
-            __IM uint32_t CASUCCS0  : 1; /*!< [30..30] Calibration success for slave0                                   */
-            __IM uint32_t CASUCCS1  : 1; /*!< [31..31] Calibration success for slave1                                   */
-        } INTS_b;
-    };
-
-    union
-    {
-        __OM uint32_t INTC;               /*!< (@ 0x00000194) xSPI Interrupt Clear register                              */
-
-        struct
-        {
-            __OM uint32_t CMDCMPC    : 1; /*!< [0..0] Command Completed interrupt clear                                  */
-            __OM uint32_t PATCMPC    : 1; /*!< [1..1] Pattern Completed interrupt clear                                  */
-            __OM uint32_t INICMPC    : 1; /*!< [2..2] Initial Sequence Completed interrupt clear                         */
-            __OM uint32_t PERTOC     : 1; /*!< [3..3] Periodic transaction timeout interrupt clear                       */
-            __OM uint32_t DSTOCS0C   : 1; /*!< [4..4] DS timeout for slave0 interrupt clear                              */
-            __OM uint32_t DSTOCS1C   : 1; /*!< [5..5] DS timeout for slave1 interrupt clear                              */
-            uint32_t                 : 2;
-            __OM uint32_t ECSCS0C    : 1; /*!< [8..8] ECC error detection for slave0 interrupt clear                     */
-            __OM uint32_t ECSCS1C    : 1; /*!< [9..9] ECC error detection for slave1 interrupt clear                     */
-            uint32_t                 : 2;
-            __OM uint32_t INTCS0C    : 1; /*!< [12..12] Interrupt detection for slave0 interrupt clear                   */
-            __OM uint32_t INTCS1C    : 1; /*!< [13..13] Interrupt detection for slave1 interrupt clear                   */
-            uint32_t                 : 2;
-            __OM uint32_t BRGOFCH0C  : 1; /*!< [16..16] Bridge Buffer overflow for CH0 interrupt clear                   */
-            __OM uint32_t BRGOFCH1C  : 1; /*!< [17..17] Bridge Buffer overflow for CH1 interrupt clear                   */
-            __OM uint32_t BRGUFCH0C  : 1; /*!< [18..18] Bridge Buffer underflow for CH0 interrupt clear                  */
-            __OM uint32_t BRGUFCH1C  : 1; /*!< [19..19] Bridge Buffer underflow for CH1 interrupt clear                  */
-            __OM uint32_t BUSERRCH0C : 1; /*!< [20..20] AHB bus error for CH0 interrupt clear                            */
-            __OM uint32_t BUSERRCH1C : 1; /*!< [21..21] AHB bus error for CH1 interrupt clear                            */
-            uint32_t                 : 6;
-            __OM uint32_t CAFAILCS0C : 1; /*!< [28..28] Calibration failed for slave0 interrupt clear                    */
-            __OM uint32_t CAFAILCS1C : 1; /*!< [29..29] Calibration failed for slave1 interrupt clear                    */
-            __OM uint32_t CASUCCS0C  : 1; /*!< [30..30] Calibration success for slave0 interrupt clear                   */
-            __OM uint32_t CASUCCS1C  : 1; /*!< [31..31] Calibration success for slave1 interrupt clear                   */
-        } INTC_b;
-    };
-
-    union
-    {
-        __IOM uint32_t INTE;               /*!< (@ 0x00000198) xSPI Interrupt Enable register                             */
-
-        struct
-        {
-            __IOM uint32_t CMDCMPE    : 1; /*!< [0..0] Command Completed interrupt enable                                 */
-            __IOM uint32_t PATCMPE    : 1; /*!< [1..1] Pattern Completed interrupt enable                                 */
-            __IOM uint32_t INICMPE    : 1; /*!< [2..2] Initial Sequence Completed interrupt enable                        */
-            __IOM uint32_t PERTOE     : 1; /*!< [3..3] Periodic transaction timeout interrupt enable                      */
-            __IOM uint32_t DSTOCS0E   : 1; /*!< [4..4] DS timeout for slave0 interrupt enable                             */
-            __IOM uint32_t DSTOCS1E   : 1; /*!< [5..5] DS timeout for slave1 interrupt enable                             */
-            uint32_t                  : 2;
-            __IOM uint32_t ECSCS0E    : 1; /*!< [8..8] ECC error detection for slave0 interrupt enable                    */
-            __IOM uint32_t ECSCS1E    : 1; /*!< [9..9] ECC error detection for slave1 interrupt enable                    */
-            uint32_t                  : 2;
-            __IOM uint32_t INTCS0E    : 1; /*!< [12..12] Interrupt detection for slave0 interrupt enable                  */
-            __IOM uint32_t INTCS1E    : 1; /*!< [13..13] Interrupt detection for slave1 interrupt enable                  */
-            uint32_t                  : 2;
-            __IOM uint32_t BRGOFCH0E  : 1; /*!< [16..16] Bridge Buffer overflow for CH0 interrupt enable                  */
-            __IOM uint32_t BRGOFCH1E  : 1; /*!< [17..17] Bridge Buffer overflow for CH1 interrupt enable                  */
-            __IOM uint32_t BRGUFCH0E  : 1; /*!< [18..18] Bridge Buffer underflow for CH0 interrupt enable                 */
-            __IOM uint32_t BRGUFCH1E  : 1; /*!< [19..19] Bridge Buffer underflow for CH1 interrupt enable                 */
-            __IOM uint32_t BUSERRCH0E : 1; /*!< [20..20] AHB bus error for CH0 interrupt enable                           */
-            __IOM uint32_t BUSERRCH1E : 1; /*!< [21..21] AHB bus error for CH1 interrupt enable                           */
-            uint32_t                  : 6;
-            __IOM uint32_t CAFAILCS0E : 1; /*!< [28..28] Calibration failed for slave0 interrupt enable                   */
-            __IOM uint32_t CAFAILCS1E : 1; /*!< [29..29] Calibration failed for slave1 interrupt enable                   */
-            __IOM uint32_t CASUCCS0E  : 1; /*!< [30..30] Calibration success for slave0 interrupt enable                  */
-            __IOM uint32_t CASUCCS1E  : 1; /*!< [31..31] Calibration success for slave1 interrupt enable                  */
-        } INTE_b;
-    };
-} R_XSPI_Type;                             /*!< Size = 412 (0x19c)                                                        */
 
 /** @} */ /* End of group Device_Peripheral_peripherals */
 
@@ -31726,7 +31108,6 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_TSN_CTRL_BASE         (0x40235000UL + BASE_NS_OFFSET)
  #define R_USB_FS0_BASE          (0x40250000UL + BASE_NS_OFFSET)
  #define R_WDT_BASE              (0x40202600UL + BASE_NS_OFFSET)
- #define R_TZF_BASE              (0x40004000UL + BASE_NS_OFFSET)
  #define R_CPSCU_BASE            (0x40008000UL + BASE_NS_OFFSET)
  #define R_DOC_B_BASE            (0x40311000UL + BASE_NS_OFFSET)
  #define R_SCI_B0_BASE           (0x40358000UL + BASE_NS_OFFSET)
@@ -31740,6 +31121,7 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_USB_HS0_BASE          (0x40351000UL + BASE_NS_OFFSET)
  #define R_XSPI0_BASE            (0x40268000UL + BASE_NS_OFFSET)
  #define R_XSPI1_BASE            (0x40268400UL + BASE_NS_OFFSET)
+ #define R_MIPI_PHY_BASE         (0x40346C00UL + BASE_NS_OFFSET)
  #define R_CEU_BASE              (0x40348000UL + BASE_NS_OFFSET)
  #define R_ULPT0_BASE            (0x40220000UL + BASE_NS_OFFSET)
  #define R_ULPT1_BASE            (0x40220100UL + BASE_NS_OFFSET)
@@ -31756,18 +31138,16 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_AGTX8_BASE            (0x40221800UL + BASE_NS_OFFSET)
  #define R_AGTX9_BASE            (0x40221900UL + BASE_NS_OFFSET)
  #define R_DOTF1_BASE            (0x40268900UL + BASE_NS_OFFSET)
- #define R_DPHYCNT_BASE          (0x40346C00UL + BASE_NS_OFFSET)
- #define R_DSILINK_BASE          (0x40346000UL + BASE_NS_OFFSET)
  #define R_ECCMB0_BASE           (0x4036F200UL + BASE_NS_OFFSET)
  #define R_ECCMB1_BASE           (0x4036F300UL + BASE_NS_OFFSET)
  #define R_FLAD_BASE             (0x4011C000UL + BASE_NS_OFFSET)
+ #define R_MIPI_DSI_BASE         (0x40346000UL + BASE_NS_OFFSET)
  #define R_OFS_DATAFLASH_BASE    (0x27030000UL + BASE_NS_OFFSET)
  #define R_SCI_B5_BASE           (0x40358500UL + BASE_NS_OFFSET)
  #define R_SCI_B6_BASE           (0x40358600UL + BASE_NS_OFFSET)
  #define R_SCI_B7_BASE           (0x40358700UL + BASE_NS_OFFSET)
  #define R_SCI_B8_BASE           (0x40358800UL + BASE_NS_OFFSET)
  #define R_WDT1_BASE             (0x40044300UL + BASE_NS_OFFSET)
- #define R_XSPI_BASE             (0x40268000UL + BASE_NS_OFFSET)
 
 /** @} */ /* End of group Device_Peripheral_peripheralAddr */
 
@@ -31885,7 +31265,6 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_TSN_CTRL         ((R_TSN_CTRL_Type *) R_TSN_CTRL_BASE)
  #define R_USB_FS0          ((R_USB_FS0_Type *) R_USB_FS0_BASE)
  #define R_WDT              ((R_WDT_Type *) R_WDT_BASE)
- #define R_TZF              ((R_TZF_Type *) R_TZF_BASE)
  #define R_CPSCU            ((R_CPSCU_Type *) R_CPSCU_BASE)
  #define R_DOC_B            ((R_DOC_B_Type *) R_DOC_B_BASE)
  #define R_SCI_B0           ((R_SCI_B0_Type *) R_SCI_B0_BASE)
@@ -31899,6 +31278,7 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_USB_HS0          ((R_USB_HS0_Type *) R_USB_HS0_BASE)
  #define R_XSPI0            ((R_XSPI0_Type *) R_XSPI0_BASE)
  #define R_XSPI1            ((R_XSPI0_Type *) R_XSPI1_BASE)
+ #define R_MIPI_PHY         ((R_MIPI_PHY_Type *) R_MIPI_PHY_BASE)
  #define R_CEU              ((R_CEU_Type *) R_CEU_BASE)
  #define R_ULPT0            ((R_ULPT0_Type *) R_ULPT0_BASE)
  #define R_ULPT1            ((R_ULPT0_Type *) R_ULPT1_BASE)
@@ -31915,18 +31295,16 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_AGT8             ((R_AGTX0_Type *) R_AGTX8_BASE)
  #define R_AGT9             ((R_AGTX0_Type *) R_AGTX9_BASE)
  #define R_DOTF1            ((R_DOTF_Type *) R_DOTF1_BASE)
- #define R_DPHYCNT          ((R_DPHYCNT_Type *) R_DPHYCNT_BASE)
- #define R_DSILINK          ((R_DSILINK_Type *) R_DSILINK_BASE)
  #define R_ECCMB0           ((R_ECCMB0_Type *) R_ECCMB0_BASE)
  #define R_ECCMB1           ((R_ECCMB0_Type *) R_ECCMB1_BASE)
  #define R_FLAD             ((R_FLAD_Type *) R_FLAD_BASE)
+ #define R_MIPI_DSI         ((R_MIPI_DSI_Type *) R_MIPI_DSI_BASE)
  #define R_OFS_DATAFLASH    ((R_OFS_DATAFLASH_Type *) R_OFS_DATAFLASH_BASE)
  #define R_SCI_B5           ((R_SCI_B0_Type *) R_SCI_B5_BASE)
  #define R_SCI_B6           ((R_SCI_B0_Type *) R_SCI_B6_BASE)
  #define R_SCI_B7           ((R_SCI_B0_Type *) R_SCI_B7_BASE)
  #define R_SCI_B8           ((R_SCI_B0_Type *) R_SCI_B8_BASE)
  #define R_WDT1             ((R_WDT_Type *) R_WDT1_BASE)
- #define R_XSPI             ((R_XSPI_Type *) R_XSPI_BASE)
 
 /** @} */ /* End of group Device_Peripheral_declaration */
 
@@ -33438,108 +32816,6 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
 /* =========================================================  CFGD2  ========================================================= */
  #define R_OFS_DATAFLASH_CFGDLOCK_CFGD2_CDLK_Pos    (0UL)   /*!< CDLK (Bit 0)                                          */
  #define R_OFS_DATAFLASH_CFGDLOCK_CFGD2_CDLK_Msk    (0x1UL) /*!< CDLK (Bitfield-Mask: 0x01)                            */
-
-/* =========================================================================================================================== */
-/* ================                                          CMCFGCS                                          ================ */
-/* =========================================================================================================================== */
-
-/* ========================================================  CMCFG0  ========================================================= */
- #define R_XSPI_CMCFGCS_CMCFG0_FFMT_Pos       (0UL)          /*!< FFMT (Bit 0)                                          */
- #define R_XSPI_CMCFGCS_CMCFG0_FFMT_Msk       (0x3UL)        /*!< FFMT (Bitfield-Mask: 0x03)                            */
- #define R_XSPI_CMCFGCS_CMCFG0_ADDSIZE_Pos    (2UL)          /*!< ADDSIZE (Bit 2)                                       */
- #define R_XSPI_CMCFGCS_CMCFG0_ADDSIZE_Msk    (0xcUL)        /*!< ADDSIZE (Bitfield-Mask: 0x03)                         */
- #define R_XSPI_CMCFGCS_CMCFG0_WPBSTMD_Pos    (4UL)          /*!< WPBSTMD (Bit 4)                                       */
- #define R_XSPI_CMCFGCS_CMCFG0_WPBSTMD_Msk    (0x10UL)       /*!< WPBSTMD (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_CMCFGCS_CMCFG0_ARYAMD_Pos     (5UL)          /*!< ARYAMD (Bit 5)                                        */
- #define R_XSPI_CMCFGCS_CMCFG0_ARYAMD_Msk     (0x20UL)       /*!< ARYAMD (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_CMCFGCS_CMCFG0_ADDRPEN_Pos    (16UL)         /*!< ADDRPEN (Bit 16)                                      */
- #define R_XSPI_CMCFGCS_CMCFG0_ADDRPEN_Msk    (0xff0000UL)   /*!< ADDRPEN (Bitfield-Mask: 0xff)                         */
- #define R_XSPI_CMCFGCS_CMCFG0_ADDRPCD_Pos    (24UL)         /*!< ADDRPCD (Bit 24)                                      */
- #define R_XSPI_CMCFGCS_CMCFG0_ADDRPCD_Msk    (0xff000000UL) /*!< ADDRPCD (Bitfield-Mask: 0xff)                         */
-/* ========================================================  CMCFG1  ========================================================= */
- #define R_XSPI_CMCFGCS_CMCFG1_RDCMD_Pos      (0UL)          /*!< RDCMD (Bit 0)                                         */
- #define R_XSPI_CMCFGCS_CMCFG1_RDCMD_Msk      (0xffffUL)     /*!< RDCMD (Bitfield-Mask: 0xffff)                         */
- #define R_XSPI_CMCFGCS_CMCFG1_RDLATE_Pos     (16UL)         /*!< RDLATE (Bit 16)                                       */
- #define R_XSPI_CMCFGCS_CMCFG1_RDLATE_Msk     (0x1f0000UL)   /*!< RDLATE (Bitfield-Mask: 0x1f)                          */
-/* ========================================================  CMCFG2  ========================================================= */
- #define R_XSPI_CMCFGCS_CMCFG2_WRCMD_Pos      (0UL)          /*!< WRCMD (Bit 0)                                         */
- #define R_XSPI_CMCFGCS_CMCFG2_WRCMD_Msk      (0xffffUL)     /*!< WRCMD (Bitfield-Mask: 0xffff)                         */
- #define R_XSPI_CMCFGCS_CMCFG2_WRLATE_Pos     (16UL)         /*!< WRLATE (Bit 16)                                       */
- #define R_XSPI_CMCFGCS_CMCFG2_WRLATE_Msk     (0x1f0000UL)   /*!< WRLATE (Bitfield-Mask: 0x1f)                          */
-
-/* =========================================================================================================================== */
-/* ================                                           CDBUF                                           ================ */
-/* =========================================================================================================================== */
-
-/* ==========================================================  CDT  ========================================================== */
- #define R_XSPI_CDBUF_CDT_CMDSIZE_Pos     (0UL)          /*!< CMDSIZE (Bit 0)                                       */
- #define R_XSPI_CDBUF_CDT_CMDSIZE_Msk     (0x3UL)        /*!< CMDSIZE (Bitfield-Mask: 0x03)                         */
- #define R_XSPI_CDBUF_CDT_ADDSIZE_Pos     (2UL)          /*!< ADDSIZE (Bit 2)                                       */
- #define R_XSPI_CDBUF_CDT_ADDSIZE_Msk     (0x1cUL)       /*!< ADDSIZE (Bitfield-Mask: 0x07)                         */
- #define R_XSPI_CDBUF_CDT_DATASIZE_Pos    (5UL)          /*!< DATASIZE (Bit 5)                                      */
- #define R_XSPI_CDBUF_CDT_DATASIZE_Msk    (0x1e0UL)      /*!< DATASIZE (Bitfield-Mask: 0x0f)                        */
- #define R_XSPI_CDBUF_CDT_LATE_Pos        (9UL)          /*!< LATE (Bit 9)                                          */
- #define R_XSPI_CDBUF_CDT_LATE_Msk        (0x3e00UL)     /*!< LATE (Bitfield-Mask: 0x1f)                            */
- #define R_XSPI_CDBUF_CDT_TRTYPE_Pos      (15UL)         /*!< TRTYPE (Bit 15)                                       */
- #define R_XSPI_CDBUF_CDT_TRTYPE_Msk      (0x8000UL)     /*!< TRTYPE (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_CDBUF_CDT_CMD_Pos         (16UL)         /*!< CMD (Bit 16)                                          */
- #define R_XSPI_CDBUF_CDT_CMD_Msk         (0xffff0000UL) /*!< CMD (Bitfield-Mask: 0xffff)                           */
-/* ==========================================================  CDA  ========================================================== */
- #define R_XSPI_CDBUF_CDA_ADD_Pos         (0UL)          /*!< ADD (Bit 0)                                           */
- #define R_XSPI_CDBUF_CDA_ADD_Msk         (0xffffffffUL) /*!< ADD (Bitfield-Mask: 0xffffffff)                       */
-/* =========================================================  CDD0  ========================================================== */
- #define R_XSPI_CDBUF_CDD0_DATA_Pos       (0UL)          /*!< DATA (Bit 0)                                          */
- #define R_XSPI_CDBUF_CDD0_DATA_Msk       (0xffffffffUL) /*!< DATA (Bitfield-Mask: 0xffffffff)                      */
-/* =========================================================  CDD1  ========================================================== */
- #define R_XSPI_CDBUF_CDD1_DATA_Pos       (0UL)          /*!< DATA (Bit 0)                                          */
- #define R_XSPI_CDBUF_CDD1_DATA_Msk       (0xffffffffUL) /*!< DATA (Bitfield-Mask: 0xffffffff)                      */
-
-/* =========================================================================================================================== */
-/* ================                                          CCCTLCS                                          ================ */
-/* =========================================================================================================================== */
-
-/* ========================================================  CCCTL0  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL0_CAEN_Pos          (0UL)          /*!< CAEN (Bit 0)                                          */
- #define R_XSPI_CCCTLCS_CCCTL0_CAEN_Msk          (0x1UL)        /*!< CAEN (Bitfield-Mask: 0x01)                            */
- #define R_XSPI_CCCTLCS_CCCTL0_CANOWR_Pos        (1UL)          /*!< CANOWR (Bit 1)                                        */
- #define R_XSPI_CCCTLCS_CCCTL0_CANOWR_Msk        (0x2UL)        /*!< CANOWR (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_CCCTLCS_CCCTL0_CAITV_Pos         (8UL)          /*!< CAITV (Bit 8)                                         */
- #define R_XSPI_CCCTLCS_CCCTL0_CAITV_Msk         (0x1f00UL)     /*!< CAITV (Bitfield-Mask: 0x1f)                           */
- #define R_XSPI_CCCTLCS_CCCTL0_CASFTSTA_Pos      (16UL)         /*!< CASFTSTA (Bit 16)                                     */
- #define R_XSPI_CCCTLCS_CCCTL0_CASFTSTA_Msk      (0x1f0000UL)   /*!< CASFTSTA (Bitfield-Mask: 0x1f)                        */
- #define R_XSPI_CCCTLCS_CCCTL0_CASFTEND_Pos      (24UL)         /*!< CASFTEND (Bit 24)                                     */
- #define R_XSPI_CCCTLCS_CCCTL0_CASFTEND_Msk      (0x1f000000UL) /*!< CASFTEND (Bitfield-Mask: 0x1f)                        */
-/* ========================================================  CCCTL1  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL1_CACMDSIZE_Pos     (0UL)          /*!< CACMDSIZE (Bit 0)                                     */
- #define R_XSPI_CCCTLCS_CCCTL1_CACMDSIZE_Msk     (0x3UL)        /*!< CACMDSIZE (Bitfield-Mask: 0x03)                       */
- #define R_XSPI_CCCTLCS_CCCTL1_CAADDSIZE_Pos     (2UL)          /*!< CAADDSIZE (Bit 2)                                     */
- #define R_XSPI_CCCTLCS_CCCTL1_CAADDSIZE_Msk     (0x1cUL)       /*!< CAADDSIZE (Bitfield-Mask: 0x07)                       */
- #define R_XSPI_CCCTLCS_CCCTL1_CADATASIZE_Pos    (5UL)          /*!< CADATASIZE (Bit 5)                                    */
- #define R_XSPI_CCCTLCS_CCCTL1_CADATASIZE_Msk    (0x1e0UL)      /*!< CADATASIZE (Bitfield-Mask: 0x0f)                      */
- #define R_XSPI_CCCTLCS_CCCTL1_CAWRLATE_Pos      (16UL)         /*!< CAWRLATE (Bit 16)                                     */
- #define R_XSPI_CCCTLCS_CCCTL1_CAWRLATE_Msk      (0x1f0000UL)   /*!< CAWRLATE (Bitfield-Mask: 0x1f)                        */
- #define R_XSPI_CCCTLCS_CCCTL1_CARDLATE_Pos      (24UL)         /*!< CARDLATE (Bit 24)                                     */
- #define R_XSPI_CCCTLCS_CCCTL1_CARDLATE_Msk      (0x1f000000UL) /*!< CARDLATE (Bitfield-Mask: 0x1f)                        */
-/* ========================================================  CCCTL2  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL2_CAWRCMD_Pos       (0UL)          /*!< CAWRCMD (Bit 0)                                       */
- #define R_XSPI_CCCTLCS_CCCTL2_CAWRCMD_Msk       (0xffffUL)     /*!< CAWRCMD (Bitfield-Mask: 0xffff)                       */
- #define R_XSPI_CCCTLCS_CCCTL2_CARDCMD_Pos       (16UL)         /*!< CARDCMD (Bit 16)                                      */
- #define R_XSPI_CCCTLCS_CCCTL2_CARDCMD_Msk       (0xffff0000UL) /*!< CARDCMD (Bitfield-Mask: 0xffff)                       */
-/* ========================================================  CCCTL3  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL3_CAADD_Pos         (0UL)          /*!< CAADD (Bit 0)                                         */
- #define R_XSPI_CCCTLCS_CCCTL3_CAADD_Msk         (0xffffffffUL) /*!< CAADD (Bitfield-Mask: 0xffffffff)                     */
-/* ========================================================  CCCTL4  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL4_CADATA_Pos        (0UL)          /*!< CADATA (Bit 0)                                        */
- #define R_XSPI_CCCTLCS_CCCTL4_CADATA_Msk        (0xffffffffUL) /*!< CADATA (Bitfield-Mask: 0xffffffff)                    */
-/* ========================================================  CCCTL5  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL5_CADATA_Pos        (0UL)          /*!< CADATA (Bit 0)                                        */
- #define R_XSPI_CCCTLCS_CCCTL5_CADATA_Msk        (0xffffffffUL) /*!< CADATA (Bitfield-Mask: 0xffffffff)                    */
-/* ========================================================  CCCTL6  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL6_CADATA_Pos        (0UL)          /*!< CADATA (Bit 0)                                        */
- #define R_XSPI_CCCTLCS_CCCTL6_CADATA_Msk        (0xffffffffUL) /*!< CADATA (Bitfield-Mask: 0xffffffff)                    */
-/* ========================================================  CCCTL7  ========================================================= */
- #define R_XSPI_CCCTLCS_CCCTL7_CADATA_Pos        (0UL)          /*!< CADATA (Bit 0)                                        */
- #define R_XSPI_CCCTLCS_CCCTL7_CADATA_Msk        (0xffffffffUL) /*!< CADATA (Bitfield-Mask: 0xffffffff)                    */
 
 /** @} */ /* End of group PosMask_clusters */
 
@@ -41029,21 +40305,6 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_WDT_WDTCSTPR_SLCSTP_Msk    (0x80UL)   /*!< SLCSTP (Bitfield-Mask: 0x01)                          */
 
 /* =========================================================================================================================== */
-/* ================                                           R_TZF                                           ================ */
-/* =========================================================================================================================== */
-
-/* ========================================================  TZFOAD  ========================================================= */
- #define R_TZF_TZFOAD_OAD_Pos       (0UL)      /*!< OAD (Bit 0)                                           */
- #define R_TZF_TZFOAD_OAD_Msk       (0x1UL)    /*!< OAD (Bitfield-Mask: 0x01)                             */
- #define R_TZF_TZFOAD_KEY_Pos       (8UL)      /*!< KEY (Bit 8)                                           */
- #define R_TZF_TZFOAD_KEY_Msk       (0xff00UL) /*!< KEY (Bitfield-Mask: 0xff)                             */
-/* =========================================================  TZFPT  ========================================================= */
- #define R_TZF_TZFPT_PROTECT_Pos    (0UL)      /*!< PROTECT (Bit 0)                                       */
- #define R_TZF_TZFPT_PROTECT_Msk    (0x1UL)    /*!< PROTECT (Bitfield-Mask: 0x01)                         */
- #define R_TZF_TZFPT_KEY_Pos        (8UL)      /*!< KEY (Bit 8)                                           */
- #define R_TZF_TZFPT_KEY_Msk        (0xff00UL) /*!< KEY (Bitfield-Mask: 0xff)                             */
-
-/* =========================================================================================================================== */
 /* ================                                          R_CPSCU                                          ================ */
 /* =========================================================================================================================== */
 
@@ -42669,6 +41930,77 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_XSPI0_INTE_CASUCCSE_Msk         (0x40000000UL) /*!< CASUCCSE (Bitfield-Mask: 0x01)                        */
 
 /* =========================================================================================================================== */
+/* ================                                        R_MIPI_PHY                                         ================ */
+/* =========================================================================================================================== */
+
+/* =======================================================  DPHYREFCR  ======================================================= */
+ #define R_MIPI_PHY_DPHYREFCR_RFREQ_Pos      (0UL)          /*!< RFREQ (Bit 0)                                         */
+ #define R_MIPI_PHY_DPHYREFCR_RFREQ_Msk      (0xffUL)       /*!< RFREQ (Bitfield-Mask: 0xff)                           */
+/* =======================================================  DPHYPLFCR  ======================================================= */
+ #define R_MIPI_PHY_DPHYPLFCR_IDIV_Pos       (0UL)          /*!< IDIV (Bit 0)                                          */
+ #define R_MIPI_PHY_DPHYPLFCR_IDIV_Msk       (0x3UL)        /*!< IDIV (Bitfield-Mask: 0x03)                            */
+ #define R_MIPI_PHY_DPHYPLFCR_NFMUL_Pos      (8UL)          /*!< NFMUL (Bit 8)                                         */
+ #define R_MIPI_PHY_DPHYPLFCR_NFMUL_Msk      (0x300UL)      /*!< NFMUL (Bitfield-Mask: 0x03)                           */
+ #define R_MIPI_PHY_DPHYPLFCR_PMUL_Pos       (12UL)         /*!< PMUL (Bit 12)                                         */
+ #define R_MIPI_PHY_DPHYPLFCR_PMUL_Msk       (0x3000UL)     /*!< PMUL (Bitfield-Mask: 0x03)                            */
+ #define R_MIPI_PHY_DPHYPLFCR_NMUL_Pos       (16UL)         /*!< NMUL (Bit 16)                                         */
+ #define R_MIPI_PHY_DPHYPLFCR_NMUL_Msk       (0x1ff0000UL)  /*!< NMUL (Bitfield-Mask: 0x1ff)                           */
+/* =======================================================  DPHYPLOCR  ======================================================= */
+ #define R_MIPI_PHY_DPHYPLOCR_PLLSTP_Pos     (0UL)          /*!< PLLSTP (Bit 0)                                        */
+ #define R_MIPI_PHY_DPHYPLOCR_PLLSTP_Msk     (0x1UL)        /*!< PLLSTP (Bitfield-Mask: 0x01)                          */
+/* =======================================================  DPHYESCCR  ======================================================= */
+ #define R_MIPI_PHY_DPHYESCCR_ESCDIV_Pos     (0UL)          /*!< ESCDIV (Bit 0)                                        */
+ #define R_MIPI_PHY_DPHYESCCR_ESCDIV_Msk     (0x1fUL)       /*!< ESCDIV (Bitfield-Mask: 0x1f)                          */
+/* =======================================================  DPHYPWRCR  ======================================================= */
+ #define R_MIPI_PHY_DPHYPWRCR_PWRSEN_Pos     (0UL)          /*!< PWRSEN (Bit 0)                                        */
+ #define R_MIPI_PHY_DPHYPWRCR_PWRSEN_Msk     (0x1UL)        /*!< PWRSEN (Bitfield-Mask: 0x01)                          */
+/* ========================================================  DPHYSFR  ======================================================== */
+ #define R_MIPI_PHY_DPHYSFR_PWRSF_Pos        (0UL)          /*!< PWRSF (Bit 0)                                         */
+ #define R_MIPI_PHY_DPHYSFR_PWRSF_Msk        (0x1UL)        /*!< PWRSF (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_PHY_DPHYSFR_PLLSF_Pos        (8UL)          /*!< PLLSF (Bit 8)                                         */
+ #define R_MIPI_PHY_DPHYSFR_PLLSF_Msk        (0x100UL)      /*!< PLLSF (Bitfield-Mask: 0x01)                           */
+/* ========================================================  DPHYOCR  ======================================================== */
+ #define R_MIPI_PHY_DPHYOCR_DPHYEN_Pos       (0UL)          /*!< DPHYEN (Bit 0)                                        */
+ #define R_MIPI_PHY_DPHYOCR_DPHYEN_Msk       (0x1UL)        /*!< DPHYEN (Bitfield-Mask: 0x01)                          */
+/* =======================================================  DPHYTIM1  ======================================================== */
+ #define R_MIPI_PHY_DPHYTIM1_TINIT_Pos       (0UL)          /*!< TINIT (Bit 0)                                         */
+ #define R_MIPI_PHY_DPHYTIM1_TINIT_Msk       (0x7ffffUL)    /*!< TINIT (Bitfield-Mask: 0x7ffff)                        */
+/* =======================================================  DPHYTIM2  ======================================================== */
+ #define R_MIPI_PHY_DPHYTIM2_TCLKPREP_Pos    (0UL)          /*!< TCLKPREP (Bit 0)                                      */
+ #define R_MIPI_PHY_DPHYTIM2_TCLKPREP_Msk    (0xffUL)       /*!< TCLKPREP (Bitfield-Mask: 0xff)                        */
+ #define R_MIPI_PHY_DPHYTIM2_TCLKSETT_Pos    (8UL)          /*!< TCLKSETT (Bit 8)                                      */
+ #define R_MIPI_PHY_DPHYTIM2_TCLKSETT_Msk    (0xff00UL)     /*!< TCLKSETT (Bitfield-Mask: 0xff)                        */
+ #define R_MIPI_PHY_DPHYTIM2_TCLKMISS_Pos    (16UL)         /*!< TCLKMISS (Bit 16)                                     */
+ #define R_MIPI_PHY_DPHYTIM2_TCLKMISS_Msk    (0xff0000UL)   /*!< TCLKMISS (Bitfield-Mask: 0xff)                        */
+/* =======================================================  DPHYTIM3  ======================================================== */
+ #define R_MIPI_PHY_DPHYTIM3_THSPREP_Pos     (0UL)          /*!< THSPREP (Bit 0)                                       */
+ #define R_MIPI_PHY_DPHYTIM3_THSPREP_Msk     (0xffUL)       /*!< THSPREP (Bitfield-Mask: 0xff)                         */
+ #define R_MIPI_PHY_DPHYTIM3_THSSETT_Pos     (8UL)          /*!< THSSETT (Bit 8)                                       */
+ #define R_MIPI_PHY_DPHYTIM3_THSSETT_Msk     (0xff00UL)     /*!< THSSETT (Bitfield-Mask: 0xff)                         */
+/* =======================================================  DPHYTIM4  ======================================================== */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKZERO_Pos    (0UL)          /*!< TCLKZERO (Bit 0)                                      */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKZERO_Msk    (0xffUL)       /*!< TCLKZERO (Bitfield-Mask: 0xff)                        */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKPRE_Pos     (8UL)          /*!< TCLKPRE (Bit 8)                                       */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKPRE_Msk     (0xff00UL)     /*!< TCLKPRE (Bitfield-Mask: 0xff)                         */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKPOST_Pos    (16UL)         /*!< TCLKPOST (Bit 16)                                     */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKPOST_Msk    (0xff0000UL)   /*!< TCLKPOST (Bitfield-Mask: 0xff)                        */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKTRL_Pos     (24UL)         /*!< TCLKTRL (Bit 24)                                      */
+ #define R_MIPI_PHY_DPHYTIM4_TCLKTRL_Msk     (0xff000000UL) /*!< TCLKTRL (Bitfield-Mask: 0xff)                         */
+/* =======================================================  DPHYTIM5  ======================================================== */
+ #define R_MIPI_PHY_DPHYTIM5_THSZERO_Pos     (0UL)          /*!< THSZERO (Bit 0)                                       */
+ #define R_MIPI_PHY_DPHYTIM5_THSZERO_Msk     (0xffUL)       /*!< THSZERO (Bitfield-Mask: 0xff)                         */
+ #define R_MIPI_PHY_DPHYTIM5_THSTRL_Pos      (8UL)          /*!< THSTRL (Bit 8)                                        */
+ #define R_MIPI_PHY_DPHYTIM5_THSTRL_Msk      (0xff00UL)     /*!< THSTRL (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_PHY_DPHYTIM5_THSEXIT_Pos     (16UL)         /*!< THSEXIT (Bit 16)                                      */
+ #define R_MIPI_PHY_DPHYTIM5_THSEXIT_Msk     (0xff0000UL)   /*!< THSEXIT (Bitfield-Mask: 0xff)                         */
+/* =======================================================  DPHYTIM6  ======================================================== */
+ #define R_MIPI_PHY_DPHYTIM6_TLPX_Pos        (0UL)          /*!< TLPX (Bit 0)                                          */
+ #define R_MIPI_PHY_DPHYTIM6_TLPX_Msk        (0xffUL)       /*!< TLPX (Bitfield-Mask: 0xff)                            */
+/* ========================================================  DPHYMDC  ======================================================== */
+ #define R_MIPI_PHY_DPHYMDC_MASTEREN_Pos     (0UL)          /*!< MASTEREN (Bit 0)                                      */
+ #define R_MIPI_PHY_DPHYMDC_MASTEREN_Msk     (0x1UL)        /*!< MASTEREN (Bitfield-Mask: 0x01)                        */
+
+/* =========================================================================================================================== */
 /* ================                                           R_CEU                                           ================ */
 /* =========================================================================================================================== */
 
@@ -43131,2735 +42463,6 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
 /* =========================================================================================================================== */
 
 /* =========================================================================================================================== */
-/* ================                                         R_DPHYCNT                                         ================ */
-/* =========================================================================================================================== */
-
-/* =======================================================  DPHYREFCR  ======================================================= */
- #define R_DPHYCNT_DPHYREFCR_RFREQ_Pos      (0UL)          /*!< RFREQ (Bit 0)                                         */
- #define R_DPHYCNT_DPHYREFCR_RFREQ_Msk      (0xffUL)       /*!< RFREQ (Bitfield-Mask: 0xff)                           */
-/* =======================================================  DPHYPLFCR  ======================================================= */
- #define R_DPHYCNT_DPHYPLFCR_IDIV_Pos       (0UL)          /*!< IDIV (Bit 0)                                          */
- #define R_DPHYCNT_DPHYPLFCR_IDIV_Msk       (0x3UL)        /*!< IDIV (Bitfield-Mask: 0x03)                            */
- #define R_DPHYCNT_DPHYPLFCR_NFMUL_Pos      (8UL)          /*!< NFMUL (Bit 8)                                         */
- #define R_DPHYCNT_DPHYPLFCR_NFMUL_Msk      (0x300UL)      /*!< NFMUL (Bitfield-Mask: 0x03)                           */
- #define R_DPHYCNT_DPHYPLFCR_PMUL_Pos       (12UL)         /*!< PMUL (Bit 12)                                         */
- #define R_DPHYCNT_DPHYPLFCR_PMUL_Msk       (0x3000UL)     /*!< PMUL (Bitfield-Mask: 0x03)                            */
- #define R_DPHYCNT_DPHYPLFCR_NMUL_Pos       (16UL)         /*!< NMUL (Bit 16)                                         */
- #define R_DPHYCNT_DPHYPLFCR_NMUL_Msk       (0x1ff0000UL)  /*!< NMUL (Bitfield-Mask: 0x1ff)                           */
-/* =======================================================  DPHYPLOCR  ======================================================= */
- #define R_DPHYCNT_DPHYPLOCR_PLLSTP_Pos     (0UL)          /*!< PLLSTP (Bit 0)                                        */
- #define R_DPHYCNT_DPHYPLOCR_PLLSTP_Msk     (0x1UL)        /*!< PLLSTP (Bitfield-Mask: 0x01)                          */
-/* =======================================================  DPHYESCCR  ======================================================= */
- #define R_DPHYCNT_DPHYESCCR_ESCDIV_Pos     (0UL)          /*!< ESCDIV (Bit 0)                                        */
- #define R_DPHYCNT_DPHYESCCR_ESCDIV_Msk     (0x1fUL)       /*!< ESCDIV (Bitfield-Mask: 0x1f)                          */
-/* =======================================================  DPHYPWRCR  ======================================================= */
- #define R_DPHYCNT_DPHYPWRCR_PWRSEN_Pos     (0UL)          /*!< PWRSEN (Bit 0)                                        */
- #define R_DPHYCNT_DPHYPWRCR_PWRSEN_Msk     (0x1UL)        /*!< PWRSEN (Bitfield-Mask: 0x01)                          */
-/* ========================================================  DPHYSFR  ======================================================== */
- #define R_DPHYCNT_DPHYSFR_PWRSF_Pos        (0UL)          /*!< PWRSF (Bit 0)                                         */
- #define R_DPHYCNT_DPHYSFR_PWRSF_Msk        (0x1UL)        /*!< PWRSF (Bitfield-Mask: 0x01)                           */
- #define R_DPHYCNT_DPHYSFR_PLLSF_Pos        (8UL)          /*!< PLLSF (Bit 8)                                         */
- #define R_DPHYCNT_DPHYSFR_PLLSF_Msk        (0x100UL)      /*!< PLLSF (Bitfield-Mask: 0x01)                           */
-/* ========================================================  DPHYOCR  ======================================================== */
- #define R_DPHYCNT_DPHYOCR_DPHYEN_Pos       (0UL)          /*!< DPHYEN (Bit 0)                                        */
- #define R_DPHYCNT_DPHYOCR_DPHYEN_Msk       (0x1UL)        /*!< DPHYEN (Bitfield-Mask: 0x01)                          */
-/* =======================================================  DPHYTIM1  ======================================================== */
- #define R_DPHYCNT_DPHYTIM1_TINIT_Pos       (0UL)          /*!< TINIT (Bit 0)                                         */
- #define R_DPHYCNT_DPHYTIM1_TINIT_Msk       (0x7ffffUL)    /*!< TINIT (Bitfield-Mask: 0x7ffff)                        */
-/* =======================================================  DPHYTIM2  ======================================================== */
- #define R_DPHYCNT_DPHYTIM2_TCLKPREP_Pos    (0UL)          /*!< TCLKPREP (Bit 0)                                      */
- #define R_DPHYCNT_DPHYTIM2_TCLKPREP_Msk    (0xffUL)       /*!< TCLKPREP (Bitfield-Mask: 0xff)                        */
- #define R_DPHYCNT_DPHYTIM2_TCLKSETT_Pos    (8UL)          /*!< TCLKSETT (Bit 8)                                      */
- #define R_DPHYCNT_DPHYTIM2_TCLKSETT_Msk    (0xff00UL)     /*!< TCLKSETT (Bitfield-Mask: 0xff)                        */
- #define R_DPHYCNT_DPHYTIM2_TCLKMISS_Pos    (16UL)         /*!< TCLKMISS (Bit 16)                                     */
- #define R_DPHYCNT_DPHYTIM2_TCLKMISS_Msk    (0xff0000UL)   /*!< TCLKMISS (Bitfield-Mask: 0xff)                        */
-/* =======================================================  DPHYTIM3  ======================================================== */
- #define R_DPHYCNT_DPHYTIM3_THSPREP_Pos     (0UL)          /*!< THSPREP (Bit 0)                                       */
- #define R_DPHYCNT_DPHYTIM3_THSPREP_Msk     (0xffUL)       /*!< THSPREP (Bitfield-Mask: 0xff)                         */
- #define R_DPHYCNT_DPHYTIM3_THSSETT_Pos     (8UL)          /*!< THSSETT (Bit 8)                                       */
- #define R_DPHYCNT_DPHYTIM3_THSSETT_Msk     (0xff00UL)     /*!< THSSETT (Bitfield-Mask: 0xff)                         */
-/* =======================================================  DPHYTIM4  ======================================================== */
- #define R_DPHYCNT_DPHYTIM4_TCLKZERO_Pos    (0UL)          /*!< TCLKZERO (Bit 0)                                      */
- #define R_DPHYCNT_DPHYTIM4_TCLKZERO_Msk    (0xffUL)       /*!< TCLKZERO (Bitfield-Mask: 0xff)                        */
- #define R_DPHYCNT_DPHYTIM4_TCLKPRE_Pos     (8UL)          /*!< TCLKPRE (Bit 8)                                       */
- #define R_DPHYCNT_DPHYTIM4_TCLKPRE_Msk     (0xff00UL)     /*!< TCLKPRE (Bitfield-Mask: 0xff)                         */
- #define R_DPHYCNT_DPHYTIM4_TCLKPOST_Pos    (16UL)         /*!< TCLKPOST (Bit 16)                                     */
- #define R_DPHYCNT_DPHYTIM4_TCLKPOST_Msk    (0xff0000UL)   /*!< TCLKPOST (Bitfield-Mask: 0xff)                        */
- #define R_DPHYCNT_DPHYTIM4_TCLKTRL_Pos     (24UL)         /*!< TCLKTRL (Bit 24)                                      */
- #define R_DPHYCNT_DPHYTIM4_TCLKTRL_Msk     (0xff000000UL) /*!< TCLKTRL (Bitfield-Mask: 0xff)                         */
-/* =======================================================  DPHYTIM5  ======================================================== */
- #define R_DPHYCNT_DPHYTIM5_THSZERO_Pos     (0UL)          /*!< THSZERO (Bit 0)                                       */
- #define R_DPHYCNT_DPHYTIM5_THSZERO_Msk     (0xffUL)       /*!< THSZERO (Bitfield-Mask: 0xff)                         */
- #define R_DPHYCNT_DPHYTIM5_THSTRL_Pos      (8UL)          /*!< THSTRL (Bit 8)                                        */
- #define R_DPHYCNT_DPHYTIM5_THSTRL_Msk      (0xff00UL)     /*!< THSTRL (Bitfield-Mask: 0xff)                          */
- #define R_DPHYCNT_DPHYTIM5_THSEXIT_Pos     (16UL)         /*!< THSEXIT (Bit 16)                                      */
- #define R_DPHYCNT_DPHYTIM5_THSEXIT_Msk     (0xff0000UL)   /*!< THSEXIT (Bitfield-Mask: 0xff)                         */
-/* =======================================================  DPHYTIM6  ======================================================== */
- #define R_DPHYCNT_DPHYTIM6_TLPX_Pos        (0UL)          /*!< TLPX (Bit 0)                                          */
- #define R_DPHYCNT_DPHYTIM6_TLPX_Msk        (0xffUL)       /*!< TLPX (Bitfield-Mask: 0xff)                            */
-/* ========================================================  DPHYMDC  ======================================================== */
- #define R_DPHYCNT_DPHYMDC_MASTEREN_Pos     (0UL)          /*!< MASTEREN (Bit 0)                                      */
- #define R_DPHYCNT_DPHYMDC_MASTEREN_Msk     (0x1UL)        /*!< MASTEREN (Bitfield-Mask: 0x01)                        */
-
-/* =========================================================================================================================== */
-/* ================                                         R_DSILINK                                         ================ */
-/* =========================================================================================================================== */
-
-/* ==========================================================  ISR  ========================================================== */
- #define R_DSILINK_ISR_SQ0_Pos                   (0UL)          /*!< SQ0 (Bit 0)                                           */
- #define R_DSILINK_ISR_SQ0_Msk                   (0x1UL)        /*!< SQ0 (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_ISR_SQ1_Pos                   (4UL)          /*!< SQ1 (Bit 4)                                           */
- #define R_DSILINK_ISR_SQ1_Msk                   (0x10UL)       /*!< SQ1 (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_ISR_VM_Pos                    (8UL)          /*!< VM (Bit 8)                                            */
- #define R_DSILINK_ISR_VM_Msk                    (0x100UL)      /*!< VM (Bitfield-Mask: 0x01)                              */
- #define R_DSILINK_ISR_RCV_Pos                   (12UL)         /*!< RCV (Bit 12)                                          */
- #define R_DSILINK_ISR_RCV_Msk                   (0x1000UL)     /*!< RCV (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_ISR_FERR_Pos                  (16UL)         /*!< FERR (Bit 16)                                         */
- #define R_DSILINK_ISR_FERR_Msk                  (0x10000UL)    /*!< FERR (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_ISR_PPI_Pos                   (20UL)         /*!< PPI (Bit 20)                                          */
- #define R_DSILINK_ISR_PPI_Msk                   (0x100000UL)   /*!< PPI (Bitfield-Mask: 0x01)                             */
-/* ========================================================  LINKSR  ========================================================= */
- #define R_DSILINK_LINKSR_SQ0RUN_Pos             (0UL)          /*!< SQ0RUN (Bit 0)                                        */
- #define R_DSILINK_LINKSR_SQ0RUN_Msk             (0x1UL)        /*!< SQ0RUN (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_LINKSR_SQ1RUN_Pos             (4UL)          /*!< SQ1RUN (Bit 4)                                        */
- #define R_DSILINK_LINKSR_SQ1RUN_Msk             (0x10UL)       /*!< SQ1RUN (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_LINKSR_VRUN_Pos               (8UL)          /*!< VRUN (Bit 8)                                          */
- #define R_DSILINK_LINKSR_VRUN_Msk               (0x100UL)      /*!< VRUN (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_LINKSR_HSBUSY_Pos             (12UL)         /*!< HSBUSY (Bit 12)                                       */
- #define R_DSILINK_LINKSR_HSBUSY_Msk             (0x1000UL)     /*!< HSBUSY (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_LINKSR_LPBUSY_Pos             (13UL)         /*!< LPBUSY (Bit 13)                                       */
- #define R_DSILINK_LINKSR_LPBUSY_Msk             (0x2000UL)     /*!< LPBUSY (Bitfield-Mask: 0x01)                          */
-/* ========================================================  TXSETR  ========================================================= */
- #define R_DSILINK_TXSETR_NUMLANE_Pos            (0UL)          /*!< NUMLANE (Bit 0)                                       */
- #define R_DSILINK_TXSETR_NUMLANE_Msk            (0x3UL)        /*!< NUMLANE (Bitfield-Mask: 0x03)                         */
- #define R_DSILINK_TXSETR_CLEN_Pos               (8UL)          /*!< CLEN (Bit 8)                                          */
- #define R_DSILINK_TXSETR_CLEN_Msk               (0x100UL)      /*!< CLEN (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_TXSETR_DLEN_Pos               (9UL)          /*!< DLEN (Bit 9)                                          */
- #define R_DSILINK_TXSETR_DLEN_Msk               (0x200UL)      /*!< DLEN (Bitfield-Mask: 0x01)                            */
-/* =======================================================  HSCLKSETR  ======================================================= */
- #define R_DSILINK_HSCLKSETR_HSCLST_Pos          (0UL)          /*!< HSCLST (Bit 0)                                        */
- #define R_DSILINK_HSCLKSETR_HSCLST_Msk          (0x1UL)        /*!< HSCLST (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_HSCLKSETR_HSCLMD_Pos          (1UL)          /*!< HSCLMD (Bit 1)                                        */
- #define R_DSILINK_HSCLKSETR_HSCLMD_Msk          (0x2UL)        /*!< HSCLMD (Bitfield-Mask: 0x01)                          */
-/* =======================================================  ULPSSETR  ======================================================== */
- #define R_DSILINK_ULPSSETR_WKUP_Pos             (0UL)          /*!< WKUP (Bit 0)                                          */
- #define R_DSILINK_ULPSSETR_WKUP_Msk             (0xffUL)       /*!< WKUP (Bitfield-Mask: 0xff)                            */
-/* ========================================================  ULPSCR  ========================================================= */
- #define R_DSILINK_ULPSCR_CLENT_Pos              (24UL)         /*!< CLENT (Bit 24)                                        */
- #define R_DSILINK_ULPSCR_CLENT_Msk              (0x1000000UL)  /*!< CLENT (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_ULPSCR_CLEXIT_Pos             (25UL)         /*!< CLEXIT (Bit 25)                                       */
- #define R_DSILINK_ULPSCR_CLEXIT_Msk             (0x2000000UL)  /*!< CLEXIT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_ULPSCR_DLENT_Pos              (28UL)         /*!< DLENT (Bit 28)                                        */
- #define R_DSILINK_ULPSCR_DLENT_Msk              (0x10000000UL) /*!< DLENT (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_ULPSCR_DLEXIT_Pos             (29UL)         /*!< DLEXIT (Bit 29)                                       */
- #define R_DSILINK_ULPSCR_DLEXIT_Msk             (0x20000000UL) /*!< DLEXIT (Bitfield-Mask: 0x01)                          */
-/* =========================================================  RSTCR  ========================================================= */
- #define R_DSILINK_RSTCR_SWRST_Pos               (0UL)          /*!< SWRST (Bit 0)                                         */
- #define R_DSILINK_RSTCR_SWRST_Msk               (0x1UL)        /*!< SWRST (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RSTCR_FTXSTP_Pos              (16UL)         /*!< FTXSTP (Bit 16)                                       */
- #define R_DSILINK_RSTCR_FTXSTP_Msk              (0x10000UL)    /*!< FTXSTP (Bitfield-Mask: 0x01)                          */
-/* =========================================================  RSTSR  ========================================================= */
- #define R_DSILINK_RSTSR_RSTHS_Pos               (0UL)          /*!< RSTHS (Bit 0)                                         */
- #define R_DSILINK_RSTSR_RSTHS_Msk               (0x1UL)        /*!< RSTHS (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RSTSR_RSTLP_Pos               (1UL)          /*!< RSTLP (Bit 1)                                         */
- #define R_DSILINK_RSTSR_RSTLP_Msk               (0x2UL)        /*!< RSTLP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RSTSR_RSTAPB_Pos              (2UL)          /*!< RSTAPB (Bit 2)                                        */
- #define R_DSILINK_RSTSR_RSTAPB_Msk              (0x4UL)        /*!< RSTAPB (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RSTSR_RSTAXI_Pos              (3UL)          /*!< RSTAXI (Bit 3)                                        */
- #define R_DSILINK_RSTSR_RSTAXI_Msk              (0x8UL)        /*!< RSTAXI (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RSTSR_RSTV_Pos                (4UL)          /*!< RSTV (Bit 4)                                          */
- #define R_DSILINK_RSTSR_RSTV_Msk                (0x10UL)       /*!< RSTV (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_RSTSR_DL0STP_Pos              (8UL)          /*!< DL0STP (Bit 8)                                        */
- #define R_DSILINK_RSTSR_DL0STP_Msk              (0x100UL)      /*!< DL0STP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RSTSR_DL1STP_Pos              (9UL)          /*!< DL1STP (Bit 9)                                        */
- #define R_DSILINK_RSTSR_DL1STP_Msk              (0x200UL)      /*!< DL1STP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RSTSR_DL0DIR_Pos              (15UL)         /*!< DL0DIR (Bit 15)                                       */
- #define R_DSILINK_RSTSR_DL0DIR_Msk              (0x8000UL)     /*!< DL0DIR (Bitfield-Mask: 0x01)                          */
-/* ========================================================  DSISETR  ======================================================== */
- #define R_DSILINK_DSISETR_MRPSZ_Pos             (0UL)          /*!< MRPSZ (Bit 0)                                         */
- #define R_DSILINK_DSISETR_MRPSZ_Msk             (0xffffUL)     /*!< MRPSZ (Bitfield-Mask: 0xffff)                         */
- #define R_DSILINK_DSISETR_ECCEN_Pos             (16UL)         /*!< ECCEN (Bit 16)                                        */
- #define R_DSILINK_DSISETR_ECCEN_Msk             (0x10000UL)    /*!< ECCEN (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_DSISETR_VC0CRCEN_Pos          (20UL)         /*!< VC0CRCEN (Bit 20)                                     */
- #define R_DSILINK_DSISETR_VC0CRCEN_Msk          (0x100000UL)   /*!< VC0CRCEN (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_DSISETR_VC1CRCEN_Pos          (21UL)         /*!< VC1CRCEN (Bit 21)                                     */
- #define R_DSILINK_DSISETR_VC1CRCEN_Msk          (0x200000UL)   /*!< VC1CRCEN (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_DSISETR_VC2CRCEN_Pos          (22UL)         /*!< VC2CRCEN (Bit 22)                                     */
- #define R_DSILINK_DSISETR_VC2CRCEN_Msk          (0x400000UL)   /*!< VC2CRCEN (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_DSISETR_VC3CRCEN_Pos          (23UL)         /*!< VC3CRCEN (Bit 23)                                     */
- #define R_DSILINK_DSISETR_VC3CRCEN_Msk          (0x800000UL)   /*!< VC3CRCEN (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_DSISETR_SCREN_Pos             (29UL)         /*!< SCREN (Bit 29)                                        */
- #define R_DSILINK_DSISETR_SCREN_Msk             (0x20000000UL) /*!< SCREN (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_DSISETR_EXTEMD_Pos            (30UL)         /*!< EXTEMD (Bit 30)                                       */
- #define R_DSILINK_DSISETR_EXTEMD_Msk            (0x40000000UL) /*!< EXTEMD (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_DSISETR_EOTPEN_Pos            (31UL)         /*!< EOTPEN (Bit 31)                                       */
- #define R_DSILINK_DSISETR_EOTPEN_Msk            (0x80000000UL) /*!< EOTPEN (Bitfield-Mask: 0x01)                          */
-/* ========================================================  TXPPD0R  ======================================================== */
- #define R_DSILINK_TXPPD0R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_TXPPD0R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD0R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_TXPPD0R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD0R_DATA2_Pos             (16UL)         /*!< DATA2 (Bit 16)                                        */
- #define R_DSILINK_TXPPD0R_DATA2_Msk             (0xff0000UL)   /*!< DATA2 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD0R_DATA3_Pos             (24UL)         /*!< DATA3 (Bit 24)                                        */
- #define R_DSILINK_TXPPD0R_DATA3_Msk             (0xff000000UL) /*!< DATA3 (Bitfield-Mask: 0xff)                           */
-/* ========================================================  TXPPD1R  ======================================================== */
- #define R_DSILINK_TXPPD1R_DATA4_Pos             (0UL)          /*!< DATA4 (Bit 0)                                         */
- #define R_DSILINK_TXPPD1R_DATA4_Msk             (0xffUL)       /*!< DATA4 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD1R_DATA5_Pos             (8UL)          /*!< DATA5 (Bit 8)                                         */
- #define R_DSILINK_TXPPD1R_DATA5_Msk             (0xff00UL)     /*!< DATA5 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD1R_DATA6_Pos             (16UL)         /*!< DATA6 (Bit 16)                                        */
- #define R_DSILINK_TXPPD1R_DATA6_Msk             (0xff0000UL)   /*!< DATA6 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD1R_DATA7_Pos             (24UL)         /*!< DATA7 (Bit 24)                                        */
- #define R_DSILINK_TXPPD1R_DATA7_Msk             (0xff000000UL) /*!< DATA7 (Bitfield-Mask: 0xff)                           */
-/* ========================================================  TXPPD2R  ======================================================== */
- #define R_DSILINK_TXPPD2R_DATA8_Pos             (0UL)          /*!< DATA8 (Bit 0)                                         */
- #define R_DSILINK_TXPPD2R_DATA8_Msk             (0xffUL)       /*!< DATA8 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD2R_DATA9_Pos             (8UL)          /*!< DATA9 (Bit 8)                                         */
- #define R_DSILINK_TXPPD2R_DATA9_Msk             (0xff00UL)     /*!< DATA9 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_TXPPD2R_DATA10_Pos            (16UL)         /*!< DATA10 (Bit 16)                                       */
- #define R_DSILINK_TXPPD2R_DATA10_Msk            (0xff0000UL)   /*!< DATA10 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_TXPPD2R_DATA11_Pos            (24UL)         /*!< DATA11 (Bit 24)                                       */
- #define R_DSILINK_TXPPD2R_DATA11_Msk            (0xff000000UL) /*!< DATA11 (Bitfield-Mask: 0xff)                          */
-/* ========================================================  TXPPD3R  ======================================================== */
- #define R_DSILINK_TXPPD3R_DATA12_Pos            (0UL)          /*!< DATA12 (Bit 0)                                        */
- #define R_DSILINK_TXPPD3R_DATA12_Msk            (0xffUL)       /*!< DATA12 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_TXPPD3R_DATA13_Pos            (8UL)          /*!< DATA13 (Bit 8)                                        */
- #define R_DSILINK_TXPPD3R_DATA13_Msk            (0xff00UL)     /*!< DATA13 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_TXPPD3R_DATA14_Pos            (16UL)         /*!< DATA14 (Bit 16)                                       */
- #define R_DSILINK_TXPPD3R_DATA14_Msk            (0xff0000UL)   /*!< DATA14 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_TXPPD3R_DATA15_Pos            (24UL)         /*!< DATA15 (Bit 24)                                       */
- #define R_DSILINK_TXPPD3R_DATA15_Msk            (0xff000000UL) /*!< DATA15 (Bitfield-Mask: 0xff)                          */
-/* =========================================================  RXSR  ========================================================== */
- #define R_DSILINK_RXSR_BTAREND_Pos              (0UL)          /*!< BTAREND (Bit 0)                                       */
- #define R_DSILINK_RXSR_BTAREND_Msk              (0x1UL)        /*!< BTAREND (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSR_LRXHTO_Pos               (1UL)          /*!< LRXHTO (Bit 1)                                        */
- #define R_DSILINK_RXSR_LRXHTO_Msk               (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSR_TATO_Pos                 (2UL)          /*!< TATO (Bit 2)                                          */
- #define R_DSILINK_RXSR_TATO_Msk                 (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_RXSR_RXRESP_Pos               (8UL)          /*!< RXRESP (Bit 8)                                        */
- #define R_DSILINK_RXSR_RXRESP_Msk               (0x100UL)      /*!< RXRESP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSR_RXEOTP_Pos               (10UL)         /*!< RXEOTP (Bit 10)                                       */
- #define R_DSILINK_RXSR_RXEOTP_Msk               (0x400UL)      /*!< RXEOTP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSR_RXTE_Pos                 (13UL)         /*!< RXTE (Bit 13)                                         */
- #define R_DSILINK_RXSR_RXTE_Msk                 (0x2000UL)     /*!< RXTE (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_RXSR_RXACK_Pos                (14UL)         /*!< RXACK (Bit 14)                                        */
- #define R_DSILINK_RXSR_RXACK_Msk                (0x4000UL)     /*!< RXACK (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXSR_EXTEDET_Pos              (15UL)         /*!< EXTEDET (Bit 15)                                      */
- #define R_DSILINK_RXSR_EXTEDET_Msk              (0x8000UL)     /*!< EXTEDET (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSR_MLFERR_Pos               (16UL)         /*!< MLFERR (Bit 16)                                       */
- #define R_DSILINK_RXSR_MLFERR_Msk               (0x10000UL)    /*!< MLFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSR_ECCERRM_Pos              (17UL)         /*!< ECCERRM (Bit 17)                                      */
- #define R_DSILINK_RXSR_ECCERRM_Msk              (0x20000UL)    /*!< ECCERRM (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSR_UNEXERR_Pos              (18UL)         /*!< UNEXERR (Bit 18)                                      */
- #define R_DSILINK_RXSR_UNEXERR_Msk              (0x40000UL)    /*!< UNEXERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSR_WCERR_Pos                (20UL)         /*!< WCERR (Bit 20)                                        */
- #define R_DSILINK_RXSR_WCERR_Msk                (0x100000UL)   /*!< WCERR (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXSR_CRCERR_Pos               (21UL)         /*!< CRCERR (Bit 21)                                       */
- #define R_DSILINK_RXSR_CRCERR_Msk               (0x200000UL)   /*!< CRCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSR_IBERR_Pos                (22UL)         /*!< IBERR (Bit 22)                                        */
- #define R_DSILINK_RXSR_IBERR_Msk                (0x400000UL)   /*!< IBERR (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXSR_RXOVFERR_Pos             (23UL)         /*!< RXOVFERR (Bit 23)                                     */
- #define R_DSILINK_RXSR_RXOVFERR_Msk             (0x800000UL)   /*!< RXOVFERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXSR_PRTOERR_Pos              (24UL)         /*!< PRTOERR (Bit 24)                                      */
- #define R_DSILINK_RXSR_PRTOERR_Msk              (0x1000000UL)  /*!< PRTOERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSR_NORESERR_Pos             (25UL)         /*!< NORESERR (Bit 25)                                     */
- #define R_DSILINK_RXSR_NORESERR_Msk             (0x2000000UL)  /*!< NORESERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXSR_RSIZEERR_Pos             (26UL)         /*!< RSIZEERR (Bit 26)                                     */
- #define R_DSILINK_RXSR_RSIZEERR_Msk             (0x4000000UL)  /*!< RSIZEERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXSR_ECCERRS_Pos              (28UL)         /*!< ECCERRS (Bit 28)                                      */
- #define R_DSILINK_RXSR_ECCERRS_Msk              (0x10000000UL) /*!< ECCERRS (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSR_RXAKE_Pos                (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_RXSR_RXAKE_Msk                (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* =========================================================  RXSCR  ========================================================= */
- #define R_DSILINK_RXSCR_BTAREND_Pos             (0UL)          /*!< BTAREND (Bit 0)                                       */
- #define R_DSILINK_RXSCR_BTAREND_Msk             (0x1UL)        /*!< BTAREND (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSCR_LRXHTO_Pos              (1UL)          /*!< LRXHTO (Bit 1)                                        */
- #define R_DSILINK_RXSCR_LRXHTO_Msk              (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSCR_TATO_Pos                (2UL)          /*!< TATO (Bit 2)                                          */
- #define R_DSILINK_RXSCR_TATO_Msk                (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_RXSCR_RXRESP_Pos              (8UL)          /*!< RXRESP (Bit 8)                                        */
- #define R_DSILINK_RXSCR_RXRESP_Msk              (0x100UL)      /*!< RXRESP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSCR_RXEOTP_Pos              (10UL)         /*!< RXEOTP (Bit 10)                                       */
- #define R_DSILINK_RXSCR_RXEOTP_Msk              (0x400UL)      /*!< RXEOTP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSCR_RXTE_Pos                (13UL)         /*!< RXTE (Bit 13)                                         */
- #define R_DSILINK_RXSCR_RXTE_Msk                (0x2000UL)     /*!< RXTE (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_RXSCR_RXACK_Pos               (14UL)         /*!< RXACK (Bit 14)                                        */
- #define R_DSILINK_RXSCR_RXACK_Msk               (0x4000UL)     /*!< RXACK (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXSCR_EXTEDET_Pos             (15UL)         /*!< EXTEDET (Bit 15)                                      */
- #define R_DSILINK_RXSCR_EXTEDET_Msk             (0x8000UL)     /*!< EXTEDET (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSCR_MLFERR_Pos              (16UL)         /*!< MLFERR (Bit 16)                                       */
- #define R_DSILINK_RXSCR_MLFERR_Msk              (0x10000UL)    /*!< MLFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSCR_ECCERRM_Pos             (17UL)         /*!< ECCERRM (Bit 17)                                      */
- #define R_DSILINK_RXSCR_ECCERRM_Msk             (0x20000UL)    /*!< ECCERRM (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSCR_UNEXERR_Pos             (18UL)         /*!< UNEXERR (Bit 18)                                      */
- #define R_DSILINK_RXSCR_UNEXERR_Msk             (0x40000UL)    /*!< UNEXERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSCR_WCERR_Pos               (20UL)         /*!< WCERR (Bit 20)                                        */
- #define R_DSILINK_RXSCR_WCERR_Msk               (0x100000UL)   /*!< WCERR (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXSCR_CRCERR_Pos              (21UL)         /*!< CRCERR (Bit 21)                                       */
- #define R_DSILINK_RXSCR_CRCERR_Msk              (0x200000UL)   /*!< CRCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXSCR_IBERR_Pos               (22UL)         /*!< IBERR (Bit 22)                                        */
- #define R_DSILINK_RXSCR_IBERR_Msk               (0x400000UL)   /*!< IBERR (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXSCR_RXOVFERR_Pos            (23UL)         /*!< RXOVFERR (Bit 23)                                     */
- #define R_DSILINK_RXSCR_RXOVFERR_Msk            (0x800000UL)   /*!< RXOVFERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXSCR_PRTOERR_Pos             (24UL)         /*!< PRTOERR (Bit 24)                                      */
- #define R_DSILINK_RXSCR_PRTOERR_Msk             (0x1000000UL)  /*!< PRTOERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSCR_NORESERR_Pos            (25UL)         /*!< NORESERR (Bit 25)                                     */
- #define R_DSILINK_RXSCR_NORESERR_Msk            (0x2000000UL)  /*!< NORESERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXSCR_RSIZEERR_Pos            (26UL)         /*!< RSIZEERR (Bit 26)                                     */
- #define R_DSILINK_RXSCR_RSIZEERR_Msk            (0x4000000UL)  /*!< RSIZEERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXSCR_ECCERRS_Pos             (28UL)         /*!< ECCERRS (Bit 28)                                      */
- #define R_DSILINK_RXSCR_ECCERRS_Msk             (0x10000000UL) /*!< ECCERRS (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXSCR_RXAKE_Pos               (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_RXSCR_RXAKE_Msk               (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* =========================================================  RXIER  ========================================================= */
- #define R_DSILINK_RXIER_BTAREND_Pos             (0UL)          /*!< BTAREND (Bit 0)                                       */
- #define R_DSILINK_RXIER_BTAREND_Msk             (0x1UL)        /*!< BTAREND (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXIER_LRXHTO_Pos              (1UL)          /*!< LRXHTO (Bit 1)                                        */
- #define R_DSILINK_RXIER_LRXHTO_Msk              (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXIER_TATO_Pos                (2UL)          /*!< TATO (Bit 2)                                          */
- #define R_DSILINK_RXIER_TATO_Msk                (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_RXIER_RXRESP_Pos              (8UL)          /*!< RXRESP (Bit 8)                                        */
- #define R_DSILINK_RXIER_RXRESP_Msk              (0x100UL)      /*!< RXRESP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXIER_RXEOTP_Pos              (10UL)         /*!< RXEOTP (Bit 10)                                       */
- #define R_DSILINK_RXIER_RXEOTP_Msk              (0x400UL)      /*!< RXEOTP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXIER_RXTE_Pos                (13UL)         /*!< RXTE (Bit 13)                                         */
- #define R_DSILINK_RXIER_RXTE_Msk                (0x2000UL)     /*!< RXTE (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_RXIER_RXACK_Pos               (14UL)         /*!< RXACK (Bit 14)                                        */
- #define R_DSILINK_RXIER_RXACK_Msk               (0x4000UL)     /*!< RXACK (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXIER_EXTEDET_Pos             (15UL)         /*!< EXTEDET (Bit 15)                                      */
- #define R_DSILINK_RXIER_EXTEDET_Msk             (0x8000UL)     /*!< EXTEDET (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXIER_MLFERR_Pos              (16UL)         /*!< MLFERR (Bit 16)                                       */
- #define R_DSILINK_RXIER_MLFERR_Msk              (0x10000UL)    /*!< MLFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXIER_ECCERRM_Pos             (17UL)         /*!< ECCERRM (Bit 17)                                      */
- #define R_DSILINK_RXIER_ECCERRM_Msk             (0x20000UL)    /*!< ECCERRM (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXIER_UNEXERR_Pos             (18UL)         /*!< UNEXERR (Bit 18)                                      */
- #define R_DSILINK_RXIER_UNEXERR_Msk             (0x40000UL)    /*!< UNEXERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXIER_WCERR_Pos               (20UL)         /*!< WCERR (Bit 20)                                        */
- #define R_DSILINK_RXIER_WCERR_Msk               (0x100000UL)   /*!< WCERR (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXIER_CRCERR_Pos              (21UL)         /*!< CRCERR (Bit 21)                                       */
- #define R_DSILINK_RXIER_CRCERR_Msk              (0x200000UL)   /*!< CRCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXIER_IBERR_Pos               (22UL)         /*!< IBERR (Bit 22)                                        */
- #define R_DSILINK_RXIER_IBERR_Msk               (0x400000UL)   /*!< IBERR (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXIER_RXOVFERR_Pos            (23UL)         /*!< RXOVFERR (Bit 23)                                     */
- #define R_DSILINK_RXIER_RXOVFERR_Msk            (0x800000UL)   /*!< RXOVFERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXIER_PRTOERR_Pos             (24UL)         /*!< PRTOERR (Bit 24)                                      */
- #define R_DSILINK_RXIER_PRTOERR_Msk             (0x1000000UL)  /*!< PRTOERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXIER_NORESERR_Pos            (25UL)         /*!< NORESERR (Bit 25)                                     */
- #define R_DSILINK_RXIER_NORESERR_Msk            (0x2000000UL)  /*!< NORESERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXIER_RSIZEERR_Pos            (26UL)         /*!< RSIZEERR (Bit 26)                                     */
- #define R_DSILINK_RXIER_RSIZEERR_Msk            (0x4000000UL)  /*!< RSIZEERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_RXIER_ECCERRS_Pos             (28UL)         /*!< ECCERRS (Bit 28)                                      */
- #define R_DSILINK_RXIER_ECCERRS_Msk             (0x10000000UL) /*!< ECCERRS (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXIER_RXAKE_Pos               (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_RXIER_RXAKE_Msk               (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* ====================================================  PRESPTOBTASETR  ===================================================== */
- #define R_DSILINK_PRESPTOBTASETR_PRTBTA_Pos     (0UL)          /*!< PRTBTA (Bit 0)                                        */
- #define R_DSILINK_PRESPTOBTASETR_PRTBTA_Msk     (0xffffffffUL) /*!< PRTBTA (Bitfield-Mask: 0xffffffff)                    */
-/* =====================================================  PRESPTOLPSETR  ===================================================== */
- #define R_DSILINK_PRESPTOLPSETR_LPWTO_Pos       (0UL)          /*!< LPWTO (Bit 0)                                         */
- #define R_DSILINK_PRESPTOLPSETR_LPWTO_Msk       (0xffffUL)     /*!< LPWTO (Bitfield-Mask: 0xffff)                         */
- #define R_DSILINK_PRESPTOLPSETR_LPRTO_Pos       (16UL)         /*!< LPRTO (Bit 16)                                        */
- #define R_DSILINK_PRESPTOLPSETR_LPRTO_Msk       (0xffff0000UL) /*!< LPRTO (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  PRESPTOHSSETR  ===================================================== */
- #define R_DSILINK_PRESPTOHSSETR_HSWTO_Pos       (0UL)          /*!< HSWTO (Bit 0)                                         */
- #define R_DSILINK_PRESPTOHSSETR_HSWTO_Msk       (0xffffUL)     /*!< HSWTO (Bitfield-Mask: 0xffff)                         */
- #define R_DSILINK_PRESPTOHSSETR_HSRTO_Pos       (16UL)         /*!< HSRTO (Bit 16)                                        */
- #define R_DSILINK_PRESPTOHSSETR_HSRTO_Msk       (0xffff0000UL) /*!< HSRTO (Bitfield-Mask: 0xffff)                         */
-/* =======================================================  AKEPLATIR  ======================================================= */
- #define R_DSILINK_AKEPLATIR_EREP_Pos            (0UL)          /*!< EREP (Bit 0)                                          */
- #define R_DSILINK_AKEPLATIR_EREP_Msk            (0xffffUL)     /*!< EREP (Bitfield-Mask: 0xffff)                          */
- #define R_DSILINK_AKEPLATIR_VC_Pos              (16UL)         /*!< VC (Bit 16)                                           */
- #define R_DSILINK_AKEPLATIR_VC_Msk              (0xf0000UL)    /*!< VC (Bitfield-Mask: 0x0f)                              */
-/* =======================================================  AKEPACMSR  ======================================================= */
- #define R_DSILINK_AKEPACMSR_AEREP_Pos           (0UL)          /*!< AEREP (Bit 0)                                         */
- #define R_DSILINK_AKEPACMSR_AEREP_Msk           (0xffffUL)     /*!< AEREP (Bitfield-Mask: 0xffff)                         */
- #define R_DSILINK_AKEPACMSR_AVC_Pos             (16UL)         /*!< AVC (Bit 16)                                          */
- #define R_DSILINK_AKEPACMSR_AVC_Msk             (0xf0000UL)    /*!< AVC (Bitfield-Mask: 0x0f)                             */
-/* ========================================================  AKEPSCR  ======================================================== */
- #define R_DSILINK_AKEPSCR_AEREP_Pos             (0UL)          /*!< AEREP (Bit 0)                                         */
- #define R_DSILINK_AKEPSCR_AEREP_Msk             (0xffffUL)     /*!< AEREP (Bitfield-Mask: 0xffff)                         */
- #define R_DSILINK_AKEPSCR_AVC_Pos               (16UL)         /*!< AVC (Bit 16)                                          */
- #define R_DSILINK_AKEPSCR_AVC_Msk               (0xf0000UL)    /*!< AVC (Bitfield-Mask: 0x0f)                             */
-/* ========================================================  RXRSSR  ========================================================= */
- #define R_DSILINK_RXRSSR_SLT0VLD_Pos            (0UL)          /*!< SLT0VLD (Bit 0)                                       */
- #define R_DSILINK_RXRSSR_SLT0VLD_Msk            (0x1UL)        /*!< SLT0VLD (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSSR_SLT1VLD_Pos            (1UL)          /*!< SLT1VLD (Bit 1)                                       */
- #define R_DSILINK_RXRSSR_SLT1VLD_Msk            (0x2UL)        /*!< SLT1VLD (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSSR_SLT2VLD_Pos            (2UL)          /*!< SLT2VLD (Bit 2)                                       */
- #define R_DSILINK_RXRSSR_SLT2VLD_Msk            (0x4UL)        /*!< SLT2VLD (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSSR_SLT3VLD_Pos            (3UL)          /*!< SLT3VLD (Bit 3)                                       */
- #define R_DSILINK_RXRSSR_SLT3VLD_Msk            (0x8UL)        /*!< SLT3VLD (Bitfield-Mask: 0x01)                         */
-/* ========================================================  RXRSSCR  ======================================================== */
- #define R_DSILINK_RXRSSCR_SLT0VLD_Pos           (0UL)          /*!< SLT0VLD (Bit 0)                                       */
- #define R_DSILINK_RXRSSCR_SLT0VLD_Msk           (0x1UL)        /*!< SLT0VLD (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSSCR_SLT1VLD_Pos           (1UL)          /*!< SLT1VLD (Bit 1)                                       */
- #define R_DSILINK_RXRSSCR_SLT1VLD_Msk           (0x2UL)        /*!< SLT1VLD (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSSCR_SLT2VLD_Pos           (2UL)          /*!< SLT2VLD (Bit 2)                                       */
- #define R_DSILINK_RXRSSCR_SLT2VLD_Msk           (0x4UL)        /*!< SLT2VLD (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSSCR_SLT3VLD_Pos           (3UL)          /*!< SLT3VLD (Bit 3)                                       */
- #define R_DSILINK_RXRSSCR_SLT3VLD_Msk           (0x8UL)        /*!< SLT3VLD (Bitfield-Mask: 0x01)                         */
-/* ======================================================  RXRINFOOWSR  ====================================================== */
- #define R_DSILINK_RXRINFOOWSR_SL0OW_Pos         (0UL)          /*!< SL0OW (Bit 0)                                         */
- #define R_DSILINK_RXRINFOOWSR_SL0OW_Msk         (0x1UL)        /*!< SL0OW (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRINFOOWSR_SL1OW_Pos         (1UL)          /*!< SL1OW (Bit 1)                                         */
- #define R_DSILINK_RXRINFOOWSR_SL1OW_Msk         (0x2UL)        /*!< SL1OW (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRINFOOWSR_SL2OW_Pos         (2UL)          /*!< SL2OW (Bit 2)                                         */
- #define R_DSILINK_RXRINFOOWSR_SL2OW_Msk         (0x4UL)        /*!< SL2OW (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRINFOOWSR_SL3OW_Pos         (3UL)          /*!< SL3OW (Bit 3)                                         */
- #define R_DSILINK_RXRINFOOWSR_SL3OW_Msk         (0x8UL)        /*!< SL3OW (Bitfield-Mask: 0x01)                           */
-/* =====================================================  RXRINFOOWSCR  ====================================================== */
- #define R_DSILINK_RXRINFOOWSCR_SL0OW_Pos        (0UL)          /*!< SL0OW (Bit 0)                                         */
- #define R_DSILINK_RXRINFOOWSCR_SL0OW_Msk        (0x1UL)        /*!< SL0OW (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRINFOOWSCR_SL1OW_Pos        (1UL)          /*!< SL1OW (Bit 1)                                         */
- #define R_DSILINK_RXRINFOOWSCR_SL1OW_Msk        (0x2UL)        /*!< SL1OW (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRINFOOWSCR_SL2OW_Pos        (2UL)          /*!< SL2OW (Bit 2)                                         */
- #define R_DSILINK_RXRINFOOWSCR_SL2OW_Msk        (0x4UL)        /*!< SL2OW (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRINFOOWSCR_SL3OW_Pos        (3UL)          /*!< SL3OW (Bit 3)                                         */
- #define R_DSILINK_RXRINFOOWSCR_SL3OW_Msk        (0x8UL)        /*!< SL3OW (Bitfield-Mask: 0x01)                           */
-/* ========================================================  RXRSS0R  ======================================================== */
- #define R_DSILINK_RXRSS0R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS0R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS0R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS0R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS0R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_RXRSS0R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS0R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_RXRSS0R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS0R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_RXRSS0R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS0R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
- #define R_DSILINK_RXRSS0R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS0R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_RXRSS0R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_RXRSS0R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_RXRSS0R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS0R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
- #define R_DSILINK_RXRSS0R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_RXRSS0R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS0R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
- #define R_DSILINK_RXRSS0R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ========================================================  RXRSS1R  ======================================================== */
- #define R_DSILINK_RXRSS1R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS1R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS1R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS1R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS1R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_RXRSS1R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS1R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_RXRSS1R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS1R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_RXRSS1R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS1R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
- #define R_DSILINK_RXRSS1R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS1R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_RXRSS1R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_RXRSS1R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_RXRSS1R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS1R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
- #define R_DSILINK_RXRSS1R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_RXRSS1R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS1R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
- #define R_DSILINK_RXRSS1R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ========================================================  RXRSS2R  ======================================================== */
- #define R_DSILINK_RXRSS2R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS2R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS2R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS2R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS2R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_RXRSS2R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS2R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_RXRSS2R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS2R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_RXRSS2R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS2R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
- #define R_DSILINK_RXRSS2R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS2R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_RXRSS2R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_RXRSS2R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_RXRSS2R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS2R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
- #define R_DSILINK_RXRSS2R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_RXRSS2R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS2R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
- #define R_DSILINK_RXRSS2R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ========================================================  RXRSS3R  ======================================================== */
- #define R_DSILINK_RXRSS3R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS3R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS3R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS3R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS3R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_RXRSS3R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS3R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_RXRSS3R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS3R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_RXRSS3R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS3R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
- #define R_DSILINK_RXRSS3R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS3R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_RXRSS3R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_RXRSS3R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_RXRSS3R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS3R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
- #define R_DSILINK_RXRSS3R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_RXRSS3R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS3R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
- #define R_DSILINK_RXRSS3R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* =======================================================  RXRSS0R_L  ======================================================= */
- #define R_DSILINK_RXRSS0R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS0R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS0R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS0R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =======================================================  RXRSS1R_L  ======================================================= */
- #define R_DSILINK_RXRSS1R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS1R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS1R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS1R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =======================================================  RXRSS2R_L  ======================================================= */
- #define R_DSILINK_RXRSS2R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS2R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS2R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS2R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =======================================================  RXRSS3R_L  ======================================================= */
- #define R_DSILINK_RXRSS3R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS3R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXRSS3R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXRSS3R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS0R_LL  ======================================================= */
- #define R_DSILINK_RXRSS0R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS0R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS1R_LL  ======================================================= */
- #define R_DSILINK_RXRSS1R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS1R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS2R_LL  ======================================================= */
- #define R_DSILINK_RXRSS2R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS2R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS3R_LL  ======================================================= */
- #define R_DSILINK_RXRSS3R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXRSS3R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS0R_LH  ======================================================= */
- #define R_DSILINK_RXRSS0R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_RXRSS0R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS1R_LH  ======================================================= */
- #define R_DSILINK_RXRSS1R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_RXRSS1R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS2R_LH  ======================================================= */
- #define R_DSILINK_RXRSS2R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_RXRSS2R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ======================================================  RXRSS3R_LH  ======================================================= */
- #define R_DSILINK_RXRSS3R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_RXRSS3R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =======================================================  RXRSS0R_H  ======================================================= */
- #define R_DSILINK_RXRSS0R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS0R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS0R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS0R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS0R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_RXRSS0R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS0R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
- #define R_DSILINK_RXRSS0R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS0R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
- #define R_DSILINK_RXRSS0R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
- #define R_DSILINK_RXRSS0R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
- #define R_DSILINK_RXRSS0R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS0R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
- #define R_DSILINK_RXRSS0R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
- #define R_DSILINK_RXRSS0R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS0R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
- #define R_DSILINK_RXRSS0R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* =======================================================  RXRSS1R_H  ======================================================= */
- #define R_DSILINK_RXRSS1R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS1R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS1R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS1R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS1R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_RXRSS1R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS1R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
- #define R_DSILINK_RXRSS1R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS1R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
- #define R_DSILINK_RXRSS1R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
- #define R_DSILINK_RXRSS1R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
- #define R_DSILINK_RXRSS1R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS1R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
- #define R_DSILINK_RXRSS1R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
- #define R_DSILINK_RXRSS1R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS1R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
- #define R_DSILINK_RXRSS1R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* =======================================================  RXRSS2R_H  ======================================================= */
- #define R_DSILINK_RXRSS2R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS2R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS2R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS2R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS2R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_RXRSS2R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS2R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
- #define R_DSILINK_RXRSS2R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS2R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
- #define R_DSILINK_RXRSS2R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
- #define R_DSILINK_RXRSS2R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
- #define R_DSILINK_RXRSS2R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS2R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
- #define R_DSILINK_RXRSS2R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
- #define R_DSILINK_RXRSS2R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS2R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
- #define R_DSILINK_RXRSS2R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* =======================================================  RXRSS3R_H  ======================================================= */
- #define R_DSILINK_RXRSS3R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS3R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS3R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS3R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_RXRSS3R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_RXRSS3R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS3R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
- #define R_DSILINK_RXRSS3R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS3R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
- #define R_DSILINK_RXRSS3R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
- #define R_DSILINK_RXRSS3R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
- #define R_DSILINK_RXRSS3R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS3R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
- #define R_DSILINK_RXRSS3R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
- #define R_DSILINK_RXRSS3R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS3R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
- #define R_DSILINK_RXRSS3R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ======================================================  RXRSS0R_HL  ======================================================= */
- #define R_DSILINK_RXRSS0R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS0R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS0R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS0R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ======================================================  RXRSS1R_HL  ======================================================= */
- #define R_DSILINK_RXRSS1R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS1R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS1R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS1R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ======================================================  RXRSS2R_HL  ======================================================= */
- #define R_DSILINK_RXRSS2R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS2R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS2R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS2R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ======================================================  RXRSS3R_HL  ======================================================= */
- #define R_DSILINK_RXRSS3R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_RXRSS3R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_RXRSS3R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_RXRSS3R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ======================================================  RXRSS0R_HH  ======================================================= */
- #define R_DSILINK_RXRSS0R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_RXRSS0R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS0R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
- #define R_DSILINK_RXRSS0R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS0R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
- #define R_DSILINK_RXRSS0R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
- #define R_DSILINK_RXRSS0R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
- #define R_DSILINK_RXRSS0R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS0R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
- #define R_DSILINK_RXRSS0R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS0R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
- #define R_DSILINK_RXRSS0R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS0R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
- #define R_DSILINK_RXRSS0R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ======================================================  RXRSS1R_HH  ======================================================= */
- #define R_DSILINK_RXRSS1R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_RXRSS1R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS1R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
- #define R_DSILINK_RXRSS1R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS1R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
- #define R_DSILINK_RXRSS1R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
- #define R_DSILINK_RXRSS1R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
- #define R_DSILINK_RXRSS1R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS1R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
- #define R_DSILINK_RXRSS1R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS1R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
- #define R_DSILINK_RXRSS1R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS1R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
- #define R_DSILINK_RXRSS1R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ======================================================  RXRSS2R_HH  ======================================================= */
- #define R_DSILINK_RXRSS2R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_RXRSS2R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS2R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
- #define R_DSILINK_RXRSS2R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS2R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
- #define R_DSILINK_RXRSS2R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
- #define R_DSILINK_RXRSS2R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
- #define R_DSILINK_RXRSS2R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS2R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
- #define R_DSILINK_RXRSS2R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS2R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
- #define R_DSILINK_RXRSS2R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS2R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
- #define R_DSILINK_RXRSS2R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ======================================================  RXRSS3R_HH  ======================================================= */
- #define R_DSILINK_RXRSS3R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_RXRSS3R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_RXRSS3R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
- #define R_DSILINK_RXRSS3R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS3R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
- #define R_DSILINK_RXRSS3R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
- #define R_DSILINK_RXRSS3R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
- #define R_DSILINK_RXRSS3R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_RXRSS3R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
- #define R_DSILINK_RXRSS3R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_RXRSS3R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
- #define R_DSILINK_RXRSS3R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_RXRSS3R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
- #define R_DSILINK_RXRSS3R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
-/* ========================================================  RXPPD0R  ======================================================== */
- #define R_DSILINK_RXPPD0R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_RXPPD0R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD0R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_RXPPD0R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD0R_DATA2_Pos             (16UL)         /*!< DATA2 (Bit 16)                                        */
- #define R_DSILINK_RXPPD0R_DATA2_Msk             (0xff0000UL)   /*!< DATA2 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD0R_DATA3_Pos             (24UL)         /*!< DATA3 (Bit 24)                                        */
- #define R_DSILINK_RXPPD0R_DATA3_Msk             (0xff000000UL) /*!< DATA3 (Bitfield-Mask: 0xff)                           */
-/* ========================================================  RXPPD1R  ======================================================== */
- #define R_DSILINK_RXPPD1R_DATA4_Pos             (0UL)          /*!< DATA4 (Bit 0)                                         */
- #define R_DSILINK_RXPPD1R_DATA4_Msk             (0xffUL)       /*!< DATA4 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD1R_DATA5_Pos             (8UL)          /*!< DATA5 (Bit 8)                                         */
- #define R_DSILINK_RXPPD1R_DATA5_Msk             (0xff00UL)     /*!< DATA5 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD1R_DATA6_Pos             (16UL)         /*!< DATA6 (Bit 16)                                        */
- #define R_DSILINK_RXPPD1R_DATA6_Msk             (0xff0000UL)   /*!< DATA6 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD1R_DATA7_Pos             (24UL)         /*!< DATA7 (Bit 24)                                        */
- #define R_DSILINK_RXPPD1R_DATA7_Msk             (0xff000000UL) /*!< DATA7 (Bitfield-Mask: 0xff)                           */
-/* ========================================================  RXPPD2R  ======================================================== */
- #define R_DSILINK_RXPPD2R_DATA8_Pos             (0UL)          /*!< DATA8 (Bit 0)                                         */
- #define R_DSILINK_RXPPD2R_DATA8_Msk             (0xffUL)       /*!< DATA8 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD2R_DATA9_Pos             (8UL)          /*!< DATA9 (Bit 8)                                         */
- #define R_DSILINK_RXPPD2R_DATA9_Msk             (0xff00UL)     /*!< DATA9 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_RXPPD2R_DATA10_Pos            (16UL)         /*!< DATA10 (Bit 16)                                       */
- #define R_DSILINK_RXPPD2R_DATA10_Msk            (0xff0000UL)   /*!< DATA10 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_RXPPD2R_DATA11_Pos            (24UL)         /*!< DATA11 (Bit 24)                                       */
- #define R_DSILINK_RXPPD2R_DATA11_Msk            (0xff000000UL) /*!< DATA11 (Bitfield-Mask: 0xff)                          */
-/* ========================================================  RXPPD3R  ======================================================== */
- #define R_DSILINK_RXPPD3R_DATA12_Pos            (0UL)          /*!< DATA12 (Bit 0)                                        */
- #define R_DSILINK_RXPPD3R_DATA12_Msk            (0xffUL)       /*!< DATA12 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_RXPPD3R_DATA13_Pos            (8UL)          /*!< DATA13 (Bit 8)                                        */
- #define R_DSILINK_RXPPD3R_DATA13_Msk            (0xff00UL)     /*!< DATA13 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_RXPPD3R_DATA14_Pos            (16UL)         /*!< DATA14 (Bit 16)                                       */
- #define R_DSILINK_RXPPD3R_DATA14_Msk            (0xff0000UL)   /*!< DATA14 (Bitfield-Mask: 0xff)                          */
- #define R_DSILINK_RXPPD3R_DATA15_Pos            (24UL)         /*!< DATA15 (Bit 24)                                       */
- #define R_DSILINK_RXPPD3R_DATA15_Msk            (0xff000000UL) /*!< DATA15 (Bitfield-Mask: 0xff)                          */
-/* ======================================================  HSTXTOSETR  ======================================================= */
- #define R_DSILINK_HSTXTOSETR_HTXTO_Pos          (0UL)          /*!< HTXTO (Bit 0)                                         */
- #define R_DSILINK_HSTXTOSETR_HTXTO_Msk          (0xffffffffUL) /*!< HTXTO (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  LRXHTOSETR  ======================================================= */
- #define R_DSILINK_LRXHTOSETR_LRXHTO_Pos         (0UL)          /*!< LRXHTO (Bit 0)                                        */
- #define R_DSILINK_LRXHTOSETR_LRXHTO_Msk         (0xffffffffUL) /*!< LRXHTO (Bitfield-Mask: 0xffffffff)                    */
-/* =======================================================  TATOSETR  ======================================================== */
- #define R_DSILINK_TATOSETR_TATO_Pos             (0UL)          /*!< TATO (Bit 0)                                          */
- #define R_DSILINK_TATOSETR_TATO_Msk             (0xffffffffUL) /*!< TATO (Bitfield-Mask: 0xffffffff)                      */
-/* ========================================================  FERRSR  ========================================================= */
- #define R_DSILINK_FERRSR_HTXTO_Pos              (0UL)          /*!< HTXTO (Bit 0)                                         */
- #define R_DSILINK_FERRSR_HTXTO_Msk              (0x1UL)        /*!< HTXTO (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_FERRSR_LRXHTO_Pos             (1UL)          /*!< LRXHTO (Bit 1)                                        */
- #define R_DSILINK_FERRSR_LRXHTO_Msk             (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_FERRSR_TATO_Pos               (2UL)          /*!< TATO (Bit 2)                                          */
- #define R_DSILINK_FERRSR_TATO_Msk               (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRSR_ESCENT_Pos             (16UL)         /*!< ESCENT (Bit 16)                                       */
- #define R_DSILINK_FERRSR_ESCENT_Msk             (0x10000UL)    /*!< ESCENT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_FERRSR_SYNCESC_Pos            (17UL)         /*!< SYNCESC (Bit 17)                                      */
- #define R_DSILINK_FERRSR_SYNCESC_Msk            (0x20000UL)    /*!< SYNCESC (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_FERRSR_CTRL_Pos               (18UL)         /*!< CTRL (Bit 18)                                         */
- #define R_DSILINK_FERRSR_CTRL_Msk               (0x40000UL)    /*!< CTRL (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRSR_CLP0_Pos               (19UL)         /*!< CLP0 (Bit 19)                                         */
- #define R_DSILINK_FERRSR_CLP0_Msk               (0x80000UL)    /*!< CLP0 (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRSR_CLP1_Pos               (20UL)         /*!< CLP1 (Bit 20)                                         */
- #define R_DSILINK_FERRSR_CLP1_Msk               (0x100000UL)   /*!< CLP1 (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRSR_CLP0S_Pos              (27UL)         /*!< CLP0S (Bit 27)                                        */
- #define R_DSILINK_FERRSR_CLP0S_Msk              (0x8000000UL)  /*!< CLP0S (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_FERRSR_CLP1S_Pos              (28UL)         /*!< CLP1S (Bit 28)                                        */
- #define R_DSILINK_FERRSR_CLP1S_Msk              (0x10000000UL) /*!< CLP1S (Bitfield-Mask: 0x01)                           */
-/* ========================================================  FERRSCR  ======================================================== */
- #define R_DSILINK_FERRSCR_HTXTO_Pos             (0UL)          /*!< HTXTO (Bit 0)                                         */
- #define R_DSILINK_FERRSCR_HTXTO_Msk             (0x1UL)        /*!< HTXTO (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_FERRSCR_LRXHTO_Pos            (1UL)          /*!< LRXHTO (Bit 1)                                        */
- #define R_DSILINK_FERRSCR_LRXHTO_Msk            (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_FERRSCR_TATO_Pos              (2UL)          /*!< TATO (Bit 2)                                          */
- #define R_DSILINK_FERRSCR_TATO_Msk              (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRSCR_ESCENT_Pos            (16UL)         /*!< ESCENT (Bit 16)                                       */
- #define R_DSILINK_FERRSCR_ESCENT_Msk            (0x10000UL)    /*!< ESCENT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_FERRSCR_SYNCESC_Pos           (17UL)         /*!< SYNCESC (Bit 17)                                      */
- #define R_DSILINK_FERRSCR_SYNCESC_Msk           (0x20000UL)    /*!< SYNCESC (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_FERRSCR_CTRL_Pos              (18UL)         /*!< CTRL (Bit 18)                                         */
- #define R_DSILINK_FERRSCR_CTRL_Msk              (0x40000UL)    /*!< CTRL (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRSCR_CLP0_Pos              (19UL)         /*!< CLP0 (Bit 19)                                         */
- #define R_DSILINK_FERRSCR_CLP0_Msk              (0x80000UL)    /*!< CLP0 (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRSCR_CLP1_Pos              (20UL)         /*!< CLP1 (Bit 20)                                         */
- #define R_DSILINK_FERRSCR_CLP1_Msk              (0x100000UL)   /*!< CLP1 (Bitfield-Mask: 0x01)                            */
-/* ========================================================  FERRIER  ======================================================== */
- #define R_DSILINK_FERRIER_HTXTO_Pos             (0UL)          /*!< HTXTO (Bit 0)                                         */
- #define R_DSILINK_FERRIER_HTXTO_Msk             (0x1UL)        /*!< HTXTO (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_FERRIER_LRXHTO_Pos            (1UL)          /*!< LRXHTO (Bit 1)                                        */
- #define R_DSILINK_FERRIER_LRXHTO_Msk            (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_FERRIER_TATO_Pos              (2UL)          /*!< TATO (Bit 2)                                          */
- #define R_DSILINK_FERRIER_TATO_Msk              (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRIER_ESCENT_Pos            (16UL)         /*!< ESCENT (Bit 16)                                       */
- #define R_DSILINK_FERRIER_ESCENT_Msk            (0x10000UL)    /*!< ESCENT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_FERRIER_SYNCESC_Pos           (17UL)         /*!< SYNCESC (Bit 17)                                      */
- #define R_DSILINK_FERRIER_SYNCESC_Msk           (0x20000UL)    /*!< SYNCESC (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_FERRIER_CTRL_Pos              (18UL)         /*!< CTRL (Bit 18)                                         */
- #define R_DSILINK_FERRIER_CTRL_Msk              (0x40000UL)    /*!< CTRL (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRIER_CLP0_Pos              (19UL)         /*!< CLP0 (Bit 19)                                         */
- #define R_DSILINK_FERRIER_CLP0_Msk              (0x80000UL)    /*!< CLP0 (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_FERRIER_CLP1_Pos              (20UL)         /*!< CLP1 (Bit 20)                                         */
- #define R_DSILINK_FERRIER_CLP1_Msk              (0x100000UL)   /*!< CLP1 (Bitfield-Mask: 0x01)                            */
-/* ======================================================  CLSTPTSETR  ======================================================= */
- #define R_DSILINK_CLSTPTSETR_CLKSTPT_Pos        (2UL)          /*!< CLKSTPT (Bit 2)                                       */
- #define R_DSILINK_CLSTPTSETR_CLKSTPT_Msk        (0xffcUL)      /*!< CLKSTPT (Bitfield-Mask: 0x3ff)                        */
- #define R_DSILINK_CLSTPTSETR_CLKBFHT_Pos        (16UL)         /*!< CLKBFHT (Bit 16)                                      */
- #define R_DSILINK_CLSTPTSETR_CLKBFHT_Msk        (0xff0000UL)   /*!< CLKBFHT (Bitfield-Mask: 0xff)                         */
- #define R_DSILINK_CLSTPTSETR_CLKKPT_Pos         (24UL)         /*!< CLKKPT (Bit 24)                                       */
- #define R_DSILINK_CLSTPTSETR_CLKKPT_Msk         (0xff000000UL) /*!< CLKKPT (Bitfield-Mask: 0xff)                          */
-/* ======================================================  LPTRNSTSETR  ====================================================== */
- #define R_DSILINK_LPTRNSTSETR_GOLPBKT_Pos       (0UL)          /*!< GOLPBKT (Bit 0)                                       */
- #define R_DSILINK_LPTRNSTSETR_GOLPBKT_Msk       (0x3ffUL)      /*!< GOLPBKT (Bitfield-Mask: 0x3ff)                        */
-/* =========================================================  PLSR  ========================================================== */
- #define R_DSILINK_PLSR_CLUAN_Pos                (0UL)          /*!< CLUAN (Bit 0)                                         */
- #define R_DSILINK_PLSR_CLUAN_Msk                (0x1UL)        /*!< CLUAN (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_PLSR_CLSTP_Pos                (1UL)          /*!< CLSTP (Bit 1)                                         */
- #define R_DSILINK_PLSR_CLSTP_Msk                (0x2UL)        /*!< CLSTP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_PLSR_DL0RLE_Pos               (2UL)          /*!< DL0RLE (Bit 2)                                        */
- #define R_DSILINK_PLSR_DL0RLE_Msk               (0x4UL)        /*!< DL0RLE (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_PLSR_DL0RUE_Pos               (3UL)          /*!< DL0RUE (Bit 3)                                        */
- #define R_DSILINK_PLSR_DL0RUE_Msk               (0x8UL)        /*!< DL0RUE (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_PLSR_DL0UAN_Pos               (4UL)          /*!< DL0UAN (Bit 4)                                        */
- #define R_DSILINK_PLSR_DL0UAN_Msk               (0x10UL)       /*!< DL0UAN (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_PLSR_DL1UAN_Pos               (5UL)          /*!< DL1UAN (Bit 5)                                        */
- #define R_DSILINK_PLSR_DL1UAN_Msk               (0x20UL)       /*!< DL1UAN (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_PLSR_DL0STP_Pos               (8UL)          /*!< DL0STP (Bit 8)                                        */
- #define R_DSILINK_PLSR_DL0STP_Msk               (0x100UL)      /*!< DL0STP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_PLSR_DL1STP_Pos               (9UL)          /*!< DL1STP (Bit 9)                                        */
- #define R_DSILINK_PLSR_DL1STP_Msk               (0x200UL)      /*!< DL1STP (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_PLSR_DL0RX2TX_Pos             (12UL)         /*!< DL0RX2TX (Bit 12)                                     */
- #define R_DSILINK_PLSR_DL0RX2TX_Msk             (0x1000UL)     /*!< DL0RX2TX (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSR_DL0TX2RX_Pos             (13UL)         /*!< DL0TX2RX (Bit 13)                                     */
- #define R_DSILINK_PLSR_DL0TX2RX_Msk             (0x2000UL)     /*!< DL0TX2RX (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSR_DL0DIR_Pos               (15UL)         /*!< DL0DIR (Bit 15)                                       */
- #define R_DSILINK_PLSR_DL0DIR_Msk               (0x8000UL)     /*!< DL0DIR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_PLSR_CLULPENT_Pos             (24UL)         /*!< CLULPENT (Bit 24)                                     */
- #define R_DSILINK_PLSR_CLULPENT_Msk             (0x1000000UL)  /*!< CLULPENT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSR_CLULPEXT_Pos             (25UL)         /*!< CLULPEXT (Bit 25)                                     */
- #define R_DSILINK_PLSR_CLULPEXT_Msk             (0x2000000UL)  /*!< CLULPEXT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSR_CLLP2HS_Pos              (26UL)         /*!< CLLP2HS (Bit 26)                                      */
- #define R_DSILINK_PLSR_CLLP2HS_Msk              (0x4000000UL)  /*!< CLLP2HS (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_PLSR_CLHS2LP_Pos              (27UL)         /*!< CLHS2LP (Bit 27)                                      */
- #define R_DSILINK_PLSR_CLHS2LP_Msk              (0x8000000UL)  /*!< CLHS2LP (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_PLSR_DLULPENT_Pos             (28UL)         /*!< DLULPENT (Bit 28)                                     */
- #define R_DSILINK_PLSR_DLULPENT_Msk             (0x10000000UL) /*!< DLULPENT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSR_DLULPEXT_Pos             (29UL)         /*!< DLULPEXT (Bit 29)                                     */
- #define R_DSILINK_PLSR_DLULPEXT_Msk             (0x20000000UL) /*!< DLULPEXT (Bitfield-Mask: 0x01)                        */
-/* =========================================================  PLSCR  ========================================================= */
- #define R_DSILINK_PLSCR_DL0RX2TX_Pos            (12UL)         /*!< DL0RX2TX (Bit 12)                                     */
- #define R_DSILINK_PLSCR_DL0RX2TX_Msk            (0x1000UL)     /*!< DL0RX2TX (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSCR_DL0TX2RX_Pos            (13UL)         /*!< DL0TX2RX (Bit 13)                                     */
- #define R_DSILINK_PLSCR_DL0TX2RX_Msk            (0x2000UL)     /*!< DL0TX2RX (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSCR_CLULPENT_Pos            (24UL)         /*!< CLULPENT (Bit 24)                                     */
- #define R_DSILINK_PLSCR_CLULPENT_Msk            (0x1000000UL)  /*!< CLULPENT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSCR_CLULPEXT_Pos            (25UL)         /*!< CLULPEXT (Bit 25)                                     */
- #define R_DSILINK_PLSCR_CLULPEXT_Msk            (0x2000000UL)  /*!< CLULPEXT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSCR_CLLP2HS_Pos             (26UL)         /*!< CLLP2HS (Bit 26)                                      */
- #define R_DSILINK_PLSCR_CLLP2HS_Msk             (0x4000000UL)  /*!< CLLP2HS (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_PLSCR_CLHS2LP_Pos             (27UL)         /*!< CLHS2LP (Bit 27)                                      */
- #define R_DSILINK_PLSCR_CLHS2LP_Msk             (0x8000000UL)  /*!< CLHS2LP (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_PLSCR_DLULPENT_Pos            (28UL)         /*!< DLULPENT (Bit 28)                                     */
- #define R_DSILINK_PLSCR_DLULPENT_Msk            (0x10000000UL) /*!< DLULPENT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLSCR_DLULPEXT_Pos            (29UL)         /*!< DLULPEXT (Bit 29)                                     */
- #define R_DSILINK_PLSCR_DLULPEXT_Msk            (0x20000000UL) /*!< DLULPEXT (Bitfield-Mask: 0x01)                        */
-/* =========================================================  PLIER  ========================================================= */
- #define R_DSILINK_PLIER_DL0RX2TX_Pos            (12UL)         /*!< DL0RX2TX (Bit 12)                                     */
- #define R_DSILINK_PLIER_DL0RX2TX_Msk            (0x1000UL)     /*!< DL0RX2TX (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLIER_DL0TX2RX_Pos            (13UL)         /*!< DL0TX2RX (Bit 13)                                     */
- #define R_DSILINK_PLIER_DL0TX2RX_Msk            (0x2000UL)     /*!< DL0TX2RX (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLIER_CLULPENT_Pos            (24UL)         /*!< CLULPENT (Bit 24)                                     */
- #define R_DSILINK_PLIER_CLULPENT_Msk            (0x1000000UL)  /*!< CLULPENT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLIER_CLULPEXT_Pos            (25UL)         /*!< CLULPEXT (Bit 25)                                     */
- #define R_DSILINK_PLIER_CLULPEXT_Msk            (0x2000000UL)  /*!< CLULPEXT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLIER_CLLP2HS_Pos             (26UL)         /*!< CLLP2HS (Bit 26)                                      */
- #define R_DSILINK_PLIER_CLLP2HS_Msk             (0x4000000UL)  /*!< CLLP2HS (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_PLIER_CLHS2LP_Pos             (27UL)         /*!< CLHS2LP (Bit 27)                                      */
- #define R_DSILINK_PLIER_CLHS2LP_Msk             (0x8000000UL)  /*!< CLHS2LP (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_PLIER_DLULPENT_Pos            (28UL)         /*!< DLULPENT (Bit 28)                                     */
- #define R_DSILINK_PLIER_DLULPENT_Msk            (0x10000000UL) /*!< DLULPENT (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_PLIER_DLULPEXT_Pos            (29UL)         /*!< DLULPEXT (Bit 29)                                     */
- #define R_DSILINK_PLIER_DLULPEXT_Msk            (0x20000000UL) /*!< DLULPEXT (Bitfield-Mask: 0x01)                        */
-/* ========================================================  VMSET0R  ======================================================== */
- #define R_DSILINK_VMSET0R_VSTART_Pos            (0UL)          /*!< VSTART (Bit 0)                                        */
- #define R_DSILINK_VMSET0R_VSTART_Msk            (0x1UL)        /*!< VSTART (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_VMSET0R_VSTOP_Pos             (1UL)          /*!< VSTOP (Bit 1)                                         */
- #define R_DSILINK_VMSET0R_VSTOP_Msk             (0x2UL)        /*!< VSTOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMSET0R_HSANOLP_Pos           (8UL)          /*!< HSANOLP (Bit 8)                                       */
- #define R_DSILINK_VMSET0R_HSANOLP_Msk           (0x100UL)      /*!< HSANOLP (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_VMSET0R_HBPNOLP_Pos           (9UL)          /*!< HBPNOLP (Bit 9)                                       */
- #define R_DSILINK_VMSET0R_HBPNOLP_Msk           (0x200UL)      /*!< HBPNOLP (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_VMSET0R_HFPNOLP_Pos           (10UL)         /*!< HFPNOLP (Bit 10)                                      */
- #define R_DSILINK_VMSET0R_HFPNOLP_Msk           (0x400UL)      /*!< HFPNOLP (Bitfield-Mask: 0x01)                         */
-/* ========================================================  VMSET1R  ======================================================== */
- #define R_DSILINK_VMSET1R_DLY_Pos               (2UL)          /*!< DLY (Bit 2)                                           */
- #define R_DSILINK_VMSET1R_DLY_Msk               (0x3ffcUL)     /*!< DLY (Bitfield-Mask: 0xfff)                            */
-/* =========================================================  VMSR  ========================================================== */
- #define R_DSILINK_VMSR_START_Pos                (0UL)          /*!< START (Bit 0)                                         */
- #define R_DSILINK_VMSR_START_Msk                (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMSR_STOP_Pos                 (1UL)          /*!< STOP (Bit 1)                                          */
- #define R_DSILINK_VMSR_STOP_Msk                 (0x2UL)        /*!< STOP (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_VMSR_RUNNING_Pos              (2UL)          /*!< RUNNING (Bit 2)                                       */
- #define R_DSILINK_VMSR_RUNNING_Msk              (0x4UL)        /*!< RUNNING (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_VMSR_VIRDY_Pos                (3UL)          /*!< VIRDY (Bit 3)                                         */
- #define R_DSILINK_VMSR_VIRDY_Msk                (0x8UL)        /*!< VIRDY (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMSR_TIMERR_Pos               (20UL)         /*!< TIMERR (Bit 20)                                       */
- #define R_DSILINK_VMSR_TIMERR_Msk               (0x100000UL)   /*!< TIMERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_VMSR_VBUFUDF_Pos              (22UL)         /*!< VBUFUDF (Bit 22)                                      */
- #define R_DSILINK_VMSR_VBUFUDF_Msk              (0x400000UL)   /*!< VBUFUDF (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_VMSR_VBUFOVF_Pos              (23UL)         /*!< VBUFOVF (Bit 23)                                      */
- #define R_DSILINK_VMSR_VBUFOVF_Msk              (0x800000UL)   /*!< VBUFOVF (Bitfield-Mask: 0x01)                         */
-/* =========================================================  VMSCR  ========================================================= */
- #define R_DSILINK_VMSCR_START_Pos               (0UL)          /*!< START (Bit 0)                                         */
- #define R_DSILINK_VMSCR_START_Msk               (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMSCR_STOP_Pos                (1UL)          /*!< STOP (Bit 1)                                          */
- #define R_DSILINK_VMSCR_STOP_Msk                (0x2UL)        /*!< STOP (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_VMSCR_VIRDY_Pos               (3UL)          /*!< VIRDY (Bit 3)                                         */
- #define R_DSILINK_VMSCR_VIRDY_Msk               (0x8UL)        /*!< VIRDY (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMSCR_TIMERR_Pos              (20UL)         /*!< TIMERR (Bit 20)                                       */
- #define R_DSILINK_VMSCR_TIMERR_Msk              (0x100000UL)   /*!< TIMERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_VMSCR_VBUFUDF_Pos             (22UL)         /*!< VBUFUDF (Bit 22)                                      */
- #define R_DSILINK_VMSCR_VBUFUDF_Msk             (0x400000UL)   /*!< VBUFUDF (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_VMSCR_VBUFOVF_Pos             (23UL)         /*!< VBUFOVF (Bit 23)                                      */
- #define R_DSILINK_VMSCR_VBUFOVF_Msk             (0x800000UL)   /*!< VBUFOVF (Bitfield-Mask: 0x01)                         */
-/* =========================================================  VMIER  ========================================================= */
- #define R_DSILINK_VMIER_START_Pos               (0UL)          /*!< START (Bit 0)                                         */
- #define R_DSILINK_VMIER_START_Msk               (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMIER_STOP_Pos                (1UL)          /*!< STOP (Bit 1)                                          */
- #define R_DSILINK_VMIER_STOP_Msk                (0x2UL)        /*!< STOP (Bitfield-Mask: 0x01)                            */
- #define R_DSILINK_VMIER_VIRDY_Pos               (3UL)          /*!< VIRDY (Bit 3)                                         */
- #define R_DSILINK_VMIER_VIRDY_Msk               (0x8UL)        /*!< VIRDY (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMIER_TIMERR_Pos              (20UL)         /*!< TIMERR (Bit 20)                                       */
- #define R_DSILINK_VMIER_TIMERR_Msk              (0x100000UL)   /*!< TIMERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_VMIER_VBUFUDF_Pos             (22UL)         /*!< VBUFUDF (Bit 22)                                      */
- #define R_DSILINK_VMIER_VBUFUDF_Msk             (0x400000UL)   /*!< VBUFUDF (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_VMIER_VBUFOVF_Pos             (23UL)         /*!< VBUFOVF (Bit 23)                                      */
- #define R_DSILINK_VMIER_VBUFOVF_Msk             (0x800000UL)   /*!< VBUFOVF (Bitfield-Mask: 0x01)                         */
-/* =======================================================  VMPPSETR  ======================================================== */
- #define R_DSILINK_VMPPSETR_TXESYNC_Pos          (15UL)         /*!< TXESYNC (Bit 15)                                      */
- #define R_DSILINK_VMPPSETR_TXESYNC_Msk          (0x8000UL)     /*!< TXESYNC (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_VMPPSETR_DT_Pos               (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_VMPPSETR_DT_Msk               (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_VMPPSETR_VC_Pos               (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_VMPPSETR_VC_Msk               (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
-/* =======================================================  VMVSSETR  ======================================================== */
- #define R_DSILINK_VMVSSETR_VSA_Pos              (0UL)          /*!< VSA (Bit 0)                                           */
- #define R_DSILINK_VMVSSETR_VSA_Msk              (0xfffUL)      /*!< VSA (Bitfield-Mask: 0xfff)                            */
- #define R_DSILINK_VMVSSETR_VSPOL_Pos            (15UL)         /*!< VSPOL (Bit 15)                                        */
- #define R_DSILINK_VMVSSETR_VSPOL_Msk            (0x8000UL)     /*!< VSPOL (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMVSSETR_VACT_Pos             (16UL)         /*!< VACT (Bit 16)                                         */
- #define R_DSILINK_VMVSSETR_VACT_Msk             (0x7fff0000UL) /*!< VACT (Bitfield-Mask: 0x7fff)                          */
-/* =======================================================  VMVPSETR  ======================================================== */
- #define R_DSILINK_VMVPSETR_VBP_Pos              (0UL)          /*!< VBP (Bit 0)                                           */
- #define R_DSILINK_VMVPSETR_VBP_Msk              (0x1fffUL)     /*!< VBP (Bitfield-Mask: 0x1fff)                           */
- #define R_DSILINK_VMVPSETR_VFP_Pos              (16UL)         /*!< VFP (Bit 16)                                          */
- #define R_DSILINK_VMVPSETR_VFP_Msk              (0x1fff0000UL) /*!< VFP (Bitfield-Mask: 0x1fff)                           */
-/* =======================================================  VMHSSETR  ======================================================== */
- #define R_DSILINK_VMHSSETR_HSA_Pos              (0UL)          /*!< HSA (Bit 0)                                           */
- #define R_DSILINK_VMHSSETR_HSA_Msk              (0xfffUL)      /*!< HSA (Bitfield-Mask: 0xfff)                            */
- #define R_DSILINK_VMHSSETR_HSPOL_Pos            (15UL)         /*!< HSPOL (Bit 15)                                        */
- #define R_DSILINK_VMHSSETR_HSPOL_Msk            (0x8000UL)     /*!< HSPOL (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_VMHSSETR_HACT_Pos             (16UL)         /*!< HACT (Bit 16)                                         */
- #define R_DSILINK_VMHSSETR_HACT_Msk             (0x7fff0000UL) /*!< HACT (Bitfield-Mask: 0x7fff)                          */
-/* =======================================================  VMHPSETR  ======================================================== */
- #define R_DSILINK_VMHPSETR_HBP_Pos              (0UL)          /*!< HBP (Bit 0)                                           */
- #define R_DSILINK_VMHPSETR_HBP_Msk              (0x1fffUL)     /*!< HBP (Bitfield-Mask: 0x1fff)                           */
- #define R_DSILINK_VMHPSETR_HFP_Pos              (16UL)         /*!< HFP (Bit 16)                                          */
- #define R_DSILINK_VMHPSETR_HFP_Msk              (0x1fff0000UL) /*!< HFP (Bitfield-Mask: 0x1fff)                           */
-/* ======================================================  SQCH0SET0R  ======================================================= */
- #define R_DSILINK_SQCH0SET0R_START_Pos          (0UL)          /*!< START (Bit 0)                                         */
- #define R_DSILINK_SQCH0SET0R_START_Msk          (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
-/* ========================================================  SQCH0SR  ======================================================== */
- #define R_DSILINK_SQCH0SR_RUNNING_Pos           (2UL)          /*!< RUNNING (Bit 2)                                       */
- #define R_DSILINK_SQCH0SR_RUNNING_Msk           (0x4UL)        /*!< RUNNING (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SR_AACTFIN_Pos           (4UL)          /*!< AACTFIN (Bit 4)                                       */
- #define R_DSILINK_SQCH0SR_AACTFIN_Msk           (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SR_ADESFIN_Pos           (8UL)          /*!< ADESFIN (Bit 8)                                       */
- #define R_DSILINK_SQCH0SR_ADESFIN_Msk           (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SR_DABORT_Pos            (16UL)         /*!< DABORT (Bit 16)                                       */
- #define R_DSILINK_SQCH0SR_DABORT_Msk            (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0SR_SIZEERR_Pos           (19UL)         /*!< SIZEERR (Bit 19)                                      */
- #define R_DSILINK_SQCH0SR_SIZEERR_Msk           (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SR_TXIBERR_Pos           (24UL)         /*!< TXIBERR (Bit 24)                                      */
- #define R_DSILINK_SQCH0SR_TXIBERR_Msk           (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SR_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_SQCH0SR_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0SR_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_SQCH0SR_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0SR_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_SQCH0SR_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SR_RXCORERR_Pos          (29UL)         /*!< RXCORERR (Bit 29)                                     */
- #define R_DSILINK_SQCH0SR_RXCORERR_Msk          (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_SQCH0SR_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_SQCH0SR_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* =======================================================  SQCH0SCR  ======================================================== */
- #define R_DSILINK_SQCH0SCR_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
- #define R_DSILINK_SQCH0SCR_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SCR_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
- #define R_DSILINK_SQCH0SCR_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SCR_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
- #define R_DSILINK_SQCH0SCR_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0SCR_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
- #define R_DSILINK_SQCH0SCR_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SCR_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
- #define R_DSILINK_SQCH0SCR_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SCR_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_SQCH0SCR_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0SCR_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_SQCH0SCR_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0SCR_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_SQCH0SCR_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0SCR_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
- #define R_DSILINK_SQCH0SCR_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_SQCH0SCR_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_SQCH0SCR_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* =======================================================  SQCH0IER  ======================================================== */
- #define R_DSILINK_SQCH0IER_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
- #define R_DSILINK_SQCH0IER_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0IER_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
- #define R_DSILINK_SQCH0IER_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0IER_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
- #define R_DSILINK_SQCH0IER_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0IER_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
- #define R_DSILINK_SQCH0IER_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0IER_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
- #define R_DSILINK_SQCH0IER_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0IER_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_SQCH0IER_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0IER_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_SQCH0IER_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0IER_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_SQCH0IER_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH0IER_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
- #define R_DSILINK_SQCH0IER_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_SQCH0IER_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_SQCH0IER_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* ======================================================  SQCH1SET0R  ======================================================= */
- #define R_DSILINK_SQCH1SET0R_START_Pos          (0UL)          /*!< START (Bit 0)                                         */
- #define R_DSILINK_SQCH1SET0R_START_Msk          (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
-/* ========================================================  SQCH1SR  ======================================================== */
- #define R_DSILINK_SQCH1SR_RUNNING_Pos           (2UL)          /*!< RUNNING (Bit 2)                                       */
- #define R_DSILINK_SQCH1SR_RUNNING_Msk           (0x4UL)        /*!< RUNNING (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SR_AACTFIN_Pos           (4UL)          /*!< AACTFIN (Bit 4)                                       */
- #define R_DSILINK_SQCH1SR_AACTFIN_Msk           (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SR_ADESFIN_Pos           (8UL)          /*!< ADESFIN (Bit 8)                                       */
- #define R_DSILINK_SQCH1SR_ADESFIN_Msk           (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SR_DABORT_Pos            (16UL)         /*!< DABORT (Bit 16)                                       */
- #define R_DSILINK_SQCH1SR_DABORT_Msk            (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1SR_SIZEERR_Pos           (19UL)         /*!< SIZEERR (Bit 19)                                      */
- #define R_DSILINK_SQCH1SR_SIZEERR_Msk           (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SR_TXIBERR_Pos           (24UL)         /*!< TXIBERR (Bit 24)                                      */
- #define R_DSILINK_SQCH1SR_TXIBERR_Msk           (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SR_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_SQCH1SR_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1SR_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_SQCH1SR_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1SR_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_SQCH1SR_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SR_RXCORERR_Pos          (29UL)         /*!< RXCORERR (Bit 29)                                     */
- #define R_DSILINK_SQCH1SR_RXCORERR_Msk          (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_SQCH1SR_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_SQCH1SR_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* =======================================================  SQCH1SCR  ======================================================== */
- #define R_DSILINK_SQCH1SCR_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
- #define R_DSILINK_SQCH1SCR_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SCR_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
- #define R_DSILINK_SQCH1SCR_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SCR_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
- #define R_DSILINK_SQCH1SCR_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1SCR_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
- #define R_DSILINK_SQCH1SCR_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SCR_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
- #define R_DSILINK_SQCH1SCR_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SCR_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_SQCH1SCR_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1SCR_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_SQCH1SCR_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1SCR_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_SQCH1SCR_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1SCR_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
- #define R_DSILINK_SQCH1SCR_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_SQCH1SCR_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_SQCH1SCR_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* =======================================================  SQCH1IER  ======================================================== */
- #define R_DSILINK_SQCH1IER_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
- #define R_DSILINK_SQCH1IER_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1IER_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
- #define R_DSILINK_SQCH1IER_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1IER_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
- #define R_DSILINK_SQCH1IER_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1IER_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
- #define R_DSILINK_SQCH1IER_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1IER_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
- #define R_DSILINK_SQCH1IER_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1IER_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
- #define R_DSILINK_SQCH1IER_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1IER_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
- #define R_DSILINK_SQCH1IER_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1IER_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
- #define R_DSILINK_SQCH1IER_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
- #define R_DSILINK_SQCH1IER_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
- #define R_DSILINK_SQCH1IER_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
- #define R_DSILINK_SQCH1IER_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
- #define R_DSILINK_SQCH1IER_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
-/* ======================================================  SQCH0DSC0AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC0AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC0AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC0AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC0AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC0AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC0AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC0AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC0AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC0AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC0AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC0AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC0AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC0AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC0AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC0AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC1AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC1AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC1AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC1AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC1AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC1AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC1AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC1AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC1AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC1AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC1AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC1AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC1AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC1AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC1AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC1AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC2AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC2AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC2AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC2AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC2AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC2AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC2AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC2AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC2AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC2AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC2AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC2AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC2AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC2AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC2AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC2AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC3AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC3AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC3AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC3AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC3AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC3AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC3AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC3AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC3AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC3AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC3AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC3AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC3AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC3AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC3AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC3AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC4AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC4AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC4AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC4AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC4AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC4AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC4AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC4AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC4AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC4AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC4AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC4AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC4AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC4AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC4AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC4AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC5AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC5AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC5AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC5AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC5AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC5AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC5AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC5AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC5AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC5AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC5AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC5AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC5AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC5AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC5AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC5AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC6AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC6AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC6AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC6AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC6AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC6AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC6AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC6AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC6AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC6AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC6AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC6AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC6AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC6AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC6AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC6AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC7AR  ====================================================== */
- #define R_DSILINK_SQCH0DSC7AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC7AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC7AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC7AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH0DSC7AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC7AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH0DSC7AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC7AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH0DSC7AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC7AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH0DSC7AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC7AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH0DSC7AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC7AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH0DSC7AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC0AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC0AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC0AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC0AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC1AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC1AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC1AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC1AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC2AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC2AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC2AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC2AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC3AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC3AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC3AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC3AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC4AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC4AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC4AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC4AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC5AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC5AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC5AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC5AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC6AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC6AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC6AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC6AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC7AR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC7AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH0DSC7AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH0DSC7AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC0AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC0AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC1AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC1AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC2AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC2AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC3AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC3AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC4AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC4AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC5AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC5AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC6AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC6AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC7AR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC7AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC0AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC0AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC1AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC1AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC2AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC2AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC3AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC3AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC4AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC4AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC5AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC5AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC6AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC6AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC7AR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC7AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC0AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC0AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC0AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC0AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC0AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC0AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC0AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC0AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC0AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC0AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC0AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC0AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC0AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC1AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC1AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC1AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC1AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC1AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC1AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC1AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC1AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC1AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC1AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC1AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC1AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC1AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC2AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC2AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC2AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC2AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC2AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC2AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC2AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC2AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC2AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC2AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC2AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC2AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC2AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC3AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC3AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC3AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC3AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC3AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC3AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC3AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC3AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC3AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC3AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC3AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC3AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC3AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC4AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC4AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC4AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC4AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC4AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC4AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC4AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC4AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC4AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC4AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC4AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC4AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC4AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC5AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC5AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC5AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC5AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC5AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC5AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC5AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC5AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC5AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC5AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC5AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC5AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC5AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC6AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC6AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC6AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC6AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC6AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC6AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC6AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC6AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC6AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC6AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC6AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC6AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC6AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH0DSC7AR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC7AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC7AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC7AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC7AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH0DSC7AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH0DSC7AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC7AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH0DSC7AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC7AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH0DSC7AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC7AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH0DSC7AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC0AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC0AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC0AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC0AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC0AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC1AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC1AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC1AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC1AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC1AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC2AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC2AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC2AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC2AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC2AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC3AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC3AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC3AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC3AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC3AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC4AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC4AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC4AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC4AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC4AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC5AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC5AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC5AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC5AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC5AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC6AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC6AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC6AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC6AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC6AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC7AR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC7AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH0DSC7AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH0DSC7AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH0DSC7AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH0DSC0AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC0AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC0AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC0AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC0AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC0AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC0AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC0AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC0AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC1AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC1AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC1AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC1AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC1AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC1AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC1AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC1AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC1AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC2AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC2AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC2AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC2AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC2AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC2AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC2AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC2AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC2AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC3AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC3AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC3AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC3AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC3AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC3AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC3AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC3AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC3AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC4AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC4AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC4AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC4AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC4AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC4AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC4AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC4AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC4AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC5AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC5AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC5AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC5AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC5AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC5AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC5AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC5AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC5AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC6AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC6AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC6AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC6AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC6AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC6AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC6AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC6AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC6AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH0DSC7AR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC7AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH0DSC7AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC7AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH0DSC7AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH0DSC7AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH0DSC7AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH0DSC7AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH0DSC7AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC0BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC0BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC0BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC1BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC1BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC1BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC2BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC2BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC2BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC3BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC3BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC3BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC4BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC4BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC4BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC5BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC5BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC5BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC6BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC6BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC6BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC7BR  ====================================================== */
- #define R_DSILINK_SQCH0DSC7BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH0DSC7BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH0DSC0CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC0CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC0CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC0CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC0CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC0CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC0CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC1CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC1CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC1CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC1CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC1CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC1CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC1CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC2CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC2CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC2CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC2CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC2CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC2CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC2CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC3CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC3CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC3CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC3CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC3CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC3CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC3CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC4CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC4CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC4CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC4CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC4CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC4CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC4CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC5CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC5CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC5CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC5CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC5CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC5CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC5CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC6CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC6CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC6CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC6CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC6CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC6CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC6CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC7CR  ====================================================== */
- #define R_DSILINK_SQCH0DSC7CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC7CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH0DSC7CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH0DSC7CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC7CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH0DSC7CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC0CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC0CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC0CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC1CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC1CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC1CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC2CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC2CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC2CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC3CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC3CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC3CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC4CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC4CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC4CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC5CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC5CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC5CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC6CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC6CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC6CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC7CR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC7CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC7CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC0CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC0CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC0CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC1CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC1CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC1CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC2CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC2CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC2CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC3CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC3CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC3CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC4CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC4CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC4CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC5CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC5CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC5CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC6CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC6CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC6CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH0DSC7CR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC7CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH0DSC7CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH0DSC0CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC0CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC0CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC0CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC0CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC1CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC1CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC1CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC1CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC1CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC2CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC2CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC2CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC2CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC2CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC3CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC3CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC3CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC3CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC3CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC4CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC4CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC4CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC4CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC4CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC5CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC5CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC5CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC5CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC5CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC6CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC6CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC6CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC6CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC6CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH0DSC7CR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC7CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC7CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH0DSC7CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH0DSC7CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC0CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC0CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC0CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC1CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC1CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC1CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC2CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC2CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC2CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC3CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC3CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC3CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC4CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC4CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC4CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC5CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC5CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC5CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC6CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC6CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC6CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC7CR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC7CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH0DSC7CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH0DSC0CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC0CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC0CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC1CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC1CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC1CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC2CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC2CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC2CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC3CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC3CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC3CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC4CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC4CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC4CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC5CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC5CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC5CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC6CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC6CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC6CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH0DSC7CR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC7CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH0DSC7CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH0DSC0DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC0DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH0DSC1DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC1DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH0DSC2DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC2DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH0DSC3DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC3DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH0DSC4DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC4DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH0DSC5DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC5DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH0DSC6DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC6DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH0DSC7DR  ====================================================== */
- #define R_DSILINK_SQCH0DSC7DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* =====================================================  SQCH0DSC0DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC0DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC1DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC1DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC2DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC2DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC3DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC3DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC4DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC4DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC5DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC5DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC6DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC6DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC7DR_L  ===================================================== */
- #define R_DSILINK_SQCH0DSC7DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* ====================================================  SQCH0DSC0DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC0DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC1DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC1DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC2DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC2DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC3DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC3DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC4DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC4DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC5DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC5DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC6DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC6DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC7DR_LL  ===================================================== */
- #define R_DSILINK_SQCH0DSC7DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC0DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC0DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC1DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC1DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC2DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC2DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC3DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC3DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC4DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC4DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC5DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC5DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC6DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC6DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC7DR_LH  ===================================================== */
- #define R_DSILINK_SQCH0DSC7DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH0DSC0DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC0DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC1DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC1DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC2DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC2DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC3DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC3DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC4DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC4DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC5DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC5DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC6DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC6DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH0DSC7DR_H  ===================================================== */
- #define R_DSILINK_SQCH0DSC7DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* ====================================================  SQCH0DSC0DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC0DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC1DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC1DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC2DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC2DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC3DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC3DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC4DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC4DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC5DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC5DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC6DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC6DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC7DR_HL  ===================================================== */
- #define R_DSILINK_SQCH0DSC7DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC0DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC0DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC0DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC1DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC1DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC1DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC2DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC2DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC2DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC3DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC3DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC3DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC4DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC4DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC4DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC5DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC5DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC5DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC6DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC6DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC6DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH0DSC7DR_HH  ===================================================== */
- #define R_DSILINK_SQCH0DSC7DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH0DSC7DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ======================================================  SQCH1DSC0AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC0AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC0AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC0AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC0AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC0AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC0AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC0AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC0AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC0AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC0AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC0AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC0AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC0AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC0AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC0AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC1AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC1AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC1AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC1AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC1AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC1AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC1AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC1AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC1AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC1AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC1AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC1AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC1AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC1AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC1AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC1AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC2AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC2AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC2AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC2AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC2AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC2AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC2AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC2AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC2AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC2AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC2AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC2AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC2AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC2AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC2AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC2AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC3AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC3AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC3AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC3AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC3AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC3AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC3AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC3AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC3AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC3AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC3AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC3AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC3AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC3AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC3AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC3AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC4AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC4AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC4AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC4AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC4AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC4AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC4AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC4AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC4AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC4AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC4AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC4AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC4AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC4AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC4AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC4AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC5AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC5AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC5AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC5AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC5AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC5AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC5AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC5AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC5AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC5AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC5AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC5AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC5AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC5AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC5AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC5AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC6AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC6AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC6AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC6AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC6AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC6AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC6AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC6AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC6AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC6AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC6AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC6AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC6AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC6AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC6AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC6AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC7AR  ====================================================== */
- #define R_DSILINK_SQCH1DSC7AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC7AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC7AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC7AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
- #define R_DSILINK_SQCH1DSC7AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC7AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
- #define R_DSILINK_SQCH1DSC7AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC7AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
- #define R_DSILINK_SQCH1DSC7AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC7AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
- #define R_DSILINK_SQCH1DSC7AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC7AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
- #define R_DSILINK_SQCH1DSC7AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC7AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
- #define R_DSILINK_SQCH1DSC7AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC0AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC0AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC0AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC0AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC1AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC1AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC1AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC1AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC2AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC2AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC2AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC2AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC3AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC3AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC3AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC3AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC4AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC4AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC4AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC4AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC5AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC5AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC5AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC5AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC6AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC6AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC6AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC6AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC7AR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC7AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
- #define R_DSILINK_SQCH1DSC7AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
- #define R_DSILINK_SQCH1DSC7AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC0AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC0AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC1AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC1AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC2AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC2AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC3AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC3AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC4AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC4AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC5AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC5AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC6AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC6AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC7AR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC7AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC0AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC0AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC1AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC1AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC2AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC2AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC3AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC3AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC4AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC4AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC5AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC5AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC6AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC6AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC7AR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC7AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
-/* =====================================================  SQCH1DSC0AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC0AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC0AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC0AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC0AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC0AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC0AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC0AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC0AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC0AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC0AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC0AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC0AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC1AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC1AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC1AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC1AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC1AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC1AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC1AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC1AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC1AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC1AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC1AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC1AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC1AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC2AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC2AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC2AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC2AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC2AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC2AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC2AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC2AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC2AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC2AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC2AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC2AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC2AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC3AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC3AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC3AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC3AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC3AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC3AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC3AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC3AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC3AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC3AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC3AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC3AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC3AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC4AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC4AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC4AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC4AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC4AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC4AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC4AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC4AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC4AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC4AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC4AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC4AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC4AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC5AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC5AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC5AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC5AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC5AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC5AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC5AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC5AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC5AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC5AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC5AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC5AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC5AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC6AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC6AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC6AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC6AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC6AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC6AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC6AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC6AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC6AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC6AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC6AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC6AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC6AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* =====================================================  SQCH1DSC7AR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC7AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC7AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC7AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC7AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
- #define R_DSILINK_SQCH1DSC7AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
- #define R_DSILINK_SQCH1DSC7AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC7AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
- #define R_DSILINK_SQCH1DSC7AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC7AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
- #define R_DSILINK_SQCH1DSC7AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC7AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
- #define R_DSILINK_SQCH1DSC7AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC0AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC0AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC0AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC0AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC0AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC1AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC1AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC1AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC1AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC1AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC2AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC2AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC2AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC2AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC2AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC3AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC3AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC3AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC3AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC3AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC4AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC4AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC4AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC4AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC4AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC5AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC5AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC5AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC5AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC5AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC6AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC6AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC6AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC6AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC6AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC7AR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC7AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
- #define R_DSILINK_SQCH1DSC7AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
- #define R_DSILINK_SQCH1DSC7AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
- #define R_DSILINK_SQCH1DSC7AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
-/* ====================================================  SQCH1DSC0AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC0AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC0AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC0AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC0AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC0AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC0AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC0AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC0AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC1AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC1AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC1AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC1AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC1AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC1AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC1AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC1AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC1AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC2AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC2AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC2AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC2AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC2AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC2AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC2AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC2AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC2AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC3AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC3AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC3AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC3AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC3AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC3AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC3AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC3AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC3AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC4AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC4AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC4AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC4AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC4AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC4AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC4AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC4AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC4AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC5AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC5AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC5AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC5AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC5AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC5AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC5AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC5AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC5AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC6AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC6AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC6AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC6AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC6AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC6AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC6AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC6AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC6AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ====================================================  SQCH1DSC7AR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC7AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
- #define R_DSILINK_SQCH1DSC7AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC7AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
- #define R_DSILINK_SQCH1DSC7AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
- #define R_DSILINK_SQCH1DSC7AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
- #define R_DSILINK_SQCH1DSC7AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
- #define R_DSILINK_SQCH1DSC7AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
- #define R_DSILINK_SQCH1DSC7AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC0BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC0BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC0BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC1BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC1BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC1BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC2BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC2BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC2BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC3BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC3BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC3BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC4BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC4BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC4BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC5BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC5BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC5BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC6BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC6BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC6BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC7BR  ====================================================== */
- #define R_DSILINK_SQCH1DSC7BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
- #define R_DSILINK_SQCH1DSC7BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
-/* ======================================================  SQCH1DSC0CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC0CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC0CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC0CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC0CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC0CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC0CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC1CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC1CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC1CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC1CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC1CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC1CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC1CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC2CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC2CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC2CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC2CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC2CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC2CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC2CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC3CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC3CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC3CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC3CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC3CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC3CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC3CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC4CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC4CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC4CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC4CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC4CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC4CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC4CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC5CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC5CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC5CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC5CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC5CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC5CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC5CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC6CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC6CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC6CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC6CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC6CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC6CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC6CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC7CR  ====================================================== */
- #define R_DSILINK_SQCH1DSC7CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC7CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
- #define R_DSILINK_SQCH1DSC7CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
- #define R_DSILINK_SQCH1DSC7CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC7CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
- #define R_DSILINK_SQCH1DSC7CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC0CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC0CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC0CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC1CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC1CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC1CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC2CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC2CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC2CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC3CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC3CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC3CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC4CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC4CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC4CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC5CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC5CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC5CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC6CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC6CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC6CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC7CR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC7CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC7CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC0CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC0CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC0CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC1CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC1CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC1CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC2CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC2CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC2CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC3CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC3CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC3CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC4CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC4CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC4CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC5CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC5CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC5CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC6CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC6CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC6CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* ====================================================  SQCH1DSC7CR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC7CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
- #define R_DSILINK_SQCH1DSC7CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
-/* =====================================================  SQCH1DSC0CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC0CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC0CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC0CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC0CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC1CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC1CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC1CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC1CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC1CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC2CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC2CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC2CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC2CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC2CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC3CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC3CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC3CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC3CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC3CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC4CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC4CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC4CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC4CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC4CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC5CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC5CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC5CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC5CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC5CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC6CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC6CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC6CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC6CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC6CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* =====================================================  SQCH1DSC7CR_H  ===================================================== */
- #define R_DSILINK_SQCH1DSC7CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC7CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
- #define R_DSILINK_SQCH1DSC7CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
- #define R_DSILINK_SQCH1DSC7CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC0CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC0CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC0CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC1CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC1CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC1CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC2CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC2CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC2CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC3CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC3CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC3CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC4CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC4CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC4CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC5CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC5CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC5CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC6CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC6CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC6CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC7CR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC7CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
- #define R_DSILINK_SQCH1DSC7CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
-/* ====================================================  SQCH1DSC0CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC0CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC0CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC1CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC1CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC1CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC2CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC2CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC2CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC3CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC3CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC3CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC4CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC4CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC4CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC5CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC5CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC5CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC6CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC6CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC6CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ====================================================  SQCH1DSC7CR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC7CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
- #define R_DSILINK_SQCH1DSC7CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
-/* ======================================================  SQCH1DSC0DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC0DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH1DSC1DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC1DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH1DSC2DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC2DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH1DSC3DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC3DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH1DSC4DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC4DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH1DSC5DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC5DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH1DSC6DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC6DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* ======================================================  SQCH1DSC7DR  ====================================================== */
- #define R_DSILINK_SQCH1DSC7DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
-/* =====================================================  SQCH1DSC0DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC0DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH1DSC1DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC1DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH1DSC2DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC2DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH1DSC3DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC3DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH1DSC4DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC4DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH1DSC5DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC5DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH1DSC6DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC6DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* =====================================================  SQCH1DSC7DR_L  ===================================================== */
- #define R_DSILINK_SQCH1DSC7DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
-/* ====================================================  SQCH1DSC0DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC0DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC1DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC1DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC2DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC2DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC3DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC3DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC4DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC4DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC5DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC5DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC6DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC6DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC7DR_LL  ===================================================== */
- #define R_DSILINK_SQCH1DSC7DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC0DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC0DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC1DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC1DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC2DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC2DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC3DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC3DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC4DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC4DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC5DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC5DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC6DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC6DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC7DR_LH  ===================================================== */
- #define R_DSILINK_SQCH1DSC7DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC0DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC0DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC1DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC1DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC2DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC2DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC3DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC3DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC4DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC4DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC5DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC5DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC6DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC6DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC7DR_HL  ===================================================== */
- #define R_DSILINK_SQCH1DSC7DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC0DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC0DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC0DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC1DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC1DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC1DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC2DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC2DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC2DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC3DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC3DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC3DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC4DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC4DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC4DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC5DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC5DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC5DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC6DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC6DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC6DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-/* ====================================================  SQCH1DSC7DR_HH  ===================================================== */
- #define R_DSILINK_SQCH1DSC7DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
- #define R_DSILINK_SQCH1DSC7DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
-
-/* =========================================================================================================================== */
 /* ================                                         R_ECCMB0                                          ================ */
 /* =========================================================================================================================== */
 
@@ -45913,6 +42516,2664 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
  #define R_FLAD_FCKMHZ_FCKMHZ_Msk    (0xffUL) /*!< FCKMHZ (Bitfield-Mask: 0xff)                          */
 
 /* =========================================================================================================================== */
+/* ================                                        R_MIPI_DSI                                         ================ */
+/* =========================================================================================================================== */
+
+/* ==========================================================  ISR  ========================================================== */
+ #define R_MIPI_DSI_ISR_SQ0_Pos                   (0UL)          /*!< SQ0 (Bit 0)                                           */
+ #define R_MIPI_DSI_ISR_SQ0_Msk                   (0x1UL)        /*!< SQ0 (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_ISR_SQ1_Pos                   (4UL)          /*!< SQ1 (Bit 4)                                           */
+ #define R_MIPI_DSI_ISR_SQ1_Msk                   (0x10UL)       /*!< SQ1 (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_ISR_VM_Pos                    (8UL)          /*!< VM (Bit 8)                                            */
+ #define R_MIPI_DSI_ISR_VM_Msk                    (0x100UL)      /*!< VM (Bitfield-Mask: 0x01)                              */
+ #define R_MIPI_DSI_ISR_RCV_Pos                   (12UL)         /*!< RCV (Bit 12)                                          */
+ #define R_MIPI_DSI_ISR_RCV_Msk                   (0x1000UL)     /*!< RCV (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_ISR_FERR_Pos                  (16UL)         /*!< FERR (Bit 16)                                         */
+ #define R_MIPI_DSI_ISR_FERR_Msk                  (0x10000UL)    /*!< FERR (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_ISR_PPI_Pos                   (20UL)         /*!< PPI (Bit 20)                                          */
+ #define R_MIPI_DSI_ISR_PPI_Msk                   (0x100000UL)   /*!< PPI (Bitfield-Mask: 0x01)                             */
+/* ========================================================  LINKSR  ========================================================= */
+ #define R_MIPI_DSI_LINKSR_SQ0RUN_Pos             (0UL)          /*!< SQ0RUN (Bit 0)                                        */
+ #define R_MIPI_DSI_LINKSR_SQ0RUN_Msk             (0x1UL)        /*!< SQ0RUN (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_LINKSR_SQ1RUN_Pos             (4UL)          /*!< SQ1RUN (Bit 4)                                        */
+ #define R_MIPI_DSI_LINKSR_SQ1RUN_Msk             (0x10UL)       /*!< SQ1RUN (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_LINKSR_VRUN_Pos               (8UL)          /*!< VRUN (Bit 8)                                          */
+ #define R_MIPI_DSI_LINKSR_VRUN_Msk               (0x100UL)      /*!< VRUN (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_LINKSR_HSBUSY_Pos             (12UL)         /*!< HSBUSY (Bit 12)                                       */
+ #define R_MIPI_DSI_LINKSR_HSBUSY_Msk             (0x1000UL)     /*!< HSBUSY (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_LINKSR_LPBUSY_Pos             (13UL)         /*!< LPBUSY (Bit 13)                                       */
+ #define R_MIPI_DSI_LINKSR_LPBUSY_Msk             (0x2000UL)     /*!< LPBUSY (Bitfield-Mask: 0x01)                          */
+/* ========================================================  TXSETR  ========================================================= */
+ #define R_MIPI_DSI_TXSETR_NUMLANE_Pos            (0UL)          /*!< NUMLANE (Bit 0)                                       */
+ #define R_MIPI_DSI_TXSETR_NUMLANE_Msk            (0x3UL)        /*!< NUMLANE (Bitfield-Mask: 0x03)                         */
+ #define R_MIPI_DSI_TXSETR_CLEN_Pos               (8UL)          /*!< CLEN (Bit 8)                                          */
+ #define R_MIPI_DSI_TXSETR_CLEN_Msk               (0x100UL)      /*!< CLEN (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_TXSETR_DLEN_Pos               (9UL)          /*!< DLEN (Bit 9)                                          */
+ #define R_MIPI_DSI_TXSETR_DLEN_Msk               (0x200UL)      /*!< DLEN (Bitfield-Mask: 0x01)                            */
+/* =======================================================  HSCLKSETR  ======================================================= */
+ #define R_MIPI_DSI_HSCLKSETR_HSCLST_Pos          (0UL)          /*!< HSCLST (Bit 0)                                        */
+ #define R_MIPI_DSI_HSCLKSETR_HSCLST_Msk          (0x1UL)        /*!< HSCLST (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_HSCLKSETR_HSCLMD_Pos          (1UL)          /*!< HSCLMD (Bit 1)                                        */
+ #define R_MIPI_DSI_HSCLKSETR_HSCLMD_Msk          (0x2UL)        /*!< HSCLMD (Bitfield-Mask: 0x01)                          */
+/* =======================================================  ULPSSETR  ======================================================== */
+ #define R_MIPI_DSI_ULPSSETR_WKUP_Pos             (0UL)          /*!< WKUP (Bit 0)                                          */
+ #define R_MIPI_DSI_ULPSSETR_WKUP_Msk             (0xffUL)       /*!< WKUP (Bitfield-Mask: 0xff)                            */
+/* ========================================================  ULPSCR  ========================================================= */
+ #define R_MIPI_DSI_ULPSCR_CLENT_Pos              (24UL)         /*!< CLENT (Bit 24)                                        */
+ #define R_MIPI_DSI_ULPSCR_CLENT_Msk              (0x1000000UL)  /*!< CLENT (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_ULPSCR_CLEXIT_Pos             (25UL)         /*!< CLEXIT (Bit 25)                                       */
+ #define R_MIPI_DSI_ULPSCR_CLEXIT_Msk             (0x2000000UL)  /*!< CLEXIT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_ULPSCR_DLENT_Pos              (28UL)         /*!< DLENT (Bit 28)                                        */
+ #define R_MIPI_DSI_ULPSCR_DLENT_Msk              (0x10000000UL) /*!< DLENT (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_ULPSCR_DLEXIT_Pos             (29UL)         /*!< DLEXIT (Bit 29)                                       */
+ #define R_MIPI_DSI_ULPSCR_DLEXIT_Msk             (0x20000000UL) /*!< DLEXIT (Bitfield-Mask: 0x01)                          */
+/* =========================================================  RSTCR  ========================================================= */
+ #define R_MIPI_DSI_RSTCR_SWRST_Pos               (0UL)          /*!< SWRST (Bit 0)                                         */
+ #define R_MIPI_DSI_RSTCR_SWRST_Msk               (0x1UL)        /*!< SWRST (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RSTCR_FTXSTP_Pos              (16UL)         /*!< FTXSTP (Bit 16)                                       */
+ #define R_MIPI_DSI_RSTCR_FTXSTP_Msk              (0x10000UL)    /*!< FTXSTP (Bitfield-Mask: 0x01)                          */
+/* =========================================================  RSTSR  ========================================================= */
+ #define R_MIPI_DSI_RSTSR_RSTHS_Pos               (0UL)          /*!< RSTHS (Bit 0)                                         */
+ #define R_MIPI_DSI_RSTSR_RSTHS_Msk               (0x1UL)        /*!< RSTHS (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RSTSR_RSTLP_Pos               (1UL)          /*!< RSTLP (Bit 1)                                         */
+ #define R_MIPI_DSI_RSTSR_RSTLP_Msk               (0x2UL)        /*!< RSTLP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RSTSR_RSTAPB_Pos              (2UL)          /*!< RSTAPB (Bit 2)                                        */
+ #define R_MIPI_DSI_RSTSR_RSTAPB_Msk              (0x4UL)        /*!< RSTAPB (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RSTSR_RSTAXI_Pos              (3UL)          /*!< RSTAXI (Bit 3)                                        */
+ #define R_MIPI_DSI_RSTSR_RSTAXI_Msk              (0x8UL)        /*!< RSTAXI (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RSTSR_RSTV_Pos                (4UL)          /*!< RSTV (Bit 4)                                          */
+ #define R_MIPI_DSI_RSTSR_RSTV_Msk                (0x10UL)       /*!< RSTV (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_RSTSR_DL0STP_Pos              (8UL)          /*!< DL0STP (Bit 8)                                        */
+ #define R_MIPI_DSI_RSTSR_DL0STP_Msk              (0x100UL)      /*!< DL0STP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RSTSR_DL1STP_Pos              (9UL)          /*!< DL1STP (Bit 9)                                        */
+ #define R_MIPI_DSI_RSTSR_DL1STP_Msk              (0x200UL)      /*!< DL1STP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RSTSR_DL0DIR_Pos              (15UL)         /*!< DL0DIR (Bit 15)                                       */
+ #define R_MIPI_DSI_RSTSR_DL0DIR_Msk              (0x8000UL)     /*!< DL0DIR (Bitfield-Mask: 0x01)                          */
+/* ========================================================  DSISETR  ======================================================== */
+ #define R_MIPI_DSI_DSISETR_MRPSZ_Pos             (0UL)          /*!< MRPSZ (Bit 0)                                         */
+ #define R_MIPI_DSI_DSISETR_MRPSZ_Msk             (0xffffUL)     /*!< MRPSZ (Bitfield-Mask: 0xffff)                         */
+ #define R_MIPI_DSI_DSISETR_ECCEN_Pos             (16UL)         /*!< ECCEN (Bit 16)                                        */
+ #define R_MIPI_DSI_DSISETR_ECCEN_Msk             (0x10000UL)    /*!< ECCEN (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_DSISETR_VC0CRCEN_Pos          (20UL)         /*!< VC0CRCEN (Bit 20)                                     */
+ #define R_MIPI_DSI_DSISETR_VC0CRCEN_Msk          (0x100000UL)   /*!< VC0CRCEN (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_DSISETR_VC1CRCEN_Pos          (21UL)         /*!< VC1CRCEN (Bit 21)                                     */
+ #define R_MIPI_DSI_DSISETR_VC1CRCEN_Msk          (0x200000UL)   /*!< VC1CRCEN (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_DSISETR_VC2CRCEN_Pos          (22UL)         /*!< VC2CRCEN (Bit 22)                                     */
+ #define R_MIPI_DSI_DSISETR_VC2CRCEN_Msk          (0x400000UL)   /*!< VC2CRCEN (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_DSISETR_VC3CRCEN_Pos          (23UL)         /*!< VC3CRCEN (Bit 23)                                     */
+ #define R_MIPI_DSI_DSISETR_VC3CRCEN_Msk          (0x800000UL)   /*!< VC3CRCEN (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_DSISETR_SCREN_Pos             (29UL)         /*!< SCREN (Bit 29)                                        */
+ #define R_MIPI_DSI_DSISETR_SCREN_Msk             (0x20000000UL) /*!< SCREN (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_DSISETR_EXTEMD_Pos            (30UL)         /*!< EXTEMD (Bit 30)                                       */
+ #define R_MIPI_DSI_DSISETR_EXTEMD_Msk            (0x40000000UL) /*!< EXTEMD (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_DSISETR_EOTPEN_Pos            (31UL)         /*!< EOTPEN (Bit 31)                                       */
+ #define R_MIPI_DSI_DSISETR_EOTPEN_Msk            (0x80000000UL) /*!< EOTPEN (Bitfield-Mask: 0x01)                          */
+/* ========================================================  TXPPD0R  ======================================================== */
+ #define R_MIPI_DSI_TXPPD0R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_TXPPD0R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD0R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_TXPPD0R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD0R_DATA2_Pos             (16UL)         /*!< DATA2 (Bit 16)                                        */
+ #define R_MIPI_DSI_TXPPD0R_DATA2_Msk             (0xff0000UL)   /*!< DATA2 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD0R_DATA3_Pos             (24UL)         /*!< DATA3 (Bit 24)                                        */
+ #define R_MIPI_DSI_TXPPD0R_DATA3_Msk             (0xff000000UL) /*!< DATA3 (Bitfield-Mask: 0xff)                           */
+/* ========================================================  TXPPD1R  ======================================================== */
+ #define R_MIPI_DSI_TXPPD1R_DATA4_Pos             (0UL)          /*!< DATA4 (Bit 0)                                         */
+ #define R_MIPI_DSI_TXPPD1R_DATA4_Msk             (0xffUL)       /*!< DATA4 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD1R_DATA5_Pos             (8UL)          /*!< DATA5 (Bit 8)                                         */
+ #define R_MIPI_DSI_TXPPD1R_DATA5_Msk             (0xff00UL)     /*!< DATA5 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD1R_DATA6_Pos             (16UL)         /*!< DATA6 (Bit 16)                                        */
+ #define R_MIPI_DSI_TXPPD1R_DATA6_Msk             (0xff0000UL)   /*!< DATA6 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD1R_DATA7_Pos             (24UL)         /*!< DATA7 (Bit 24)                                        */
+ #define R_MIPI_DSI_TXPPD1R_DATA7_Msk             (0xff000000UL) /*!< DATA7 (Bitfield-Mask: 0xff)                           */
+/* ========================================================  TXPPD2R  ======================================================== */
+ #define R_MIPI_DSI_TXPPD2R_DATA8_Pos             (0UL)          /*!< DATA8 (Bit 0)                                         */
+ #define R_MIPI_DSI_TXPPD2R_DATA8_Msk             (0xffUL)       /*!< DATA8 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD2R_DATA9_Pos             (8UL)          /*!< DATA9 (Bit 8)                                         */
+ #define R_MIPI_DSI_TXPPD2R_DATA9_Msk             (0xff00UL)     /*!< DATA9 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_TXPPD2R_DATA10_Pos            (16UL)         /*!< DATA10 (Bit 16)                                       */
+ #define R_MIPI_DSI_TXPPD2R_DATA10_Msk            (0xff0000UL)   /*!< DATA10 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_TXPPD2R_DATA11_Pos            (24UL)         /*!< DATA11 (Bit 24)                                       */
+ #define R_MIPI_DSI_TXPPD2R_DATA11_Msk            (0xff000000UL) /*!< DATA11 (Bitfield-Mask: 0xff)                          */
+/* ========================================================  TXPPD3R  ======================================================== */
+ #define R_MIPI_DSI_TXPPD3R_DATA12_Pos            (0UL)          /*!< DATA12 (Bit 0)                                        */
+ #define R_MIPI_DSI_TXPPD3R_DATA12_Msk            (0xffUL)       /*!< DATA12 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_TXPPD3R_DATA13_Pos            (8UL)          /*!< DATA13 (Bit 8)                                        */
+ #define R_MIPI_DSI_TXPPD3R_DATA13_Msk            (0xff00UL)     /*!< DATA13 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_TXPPD3R_DATA14_Pos            (16UL)         /*!< DATA14 (Bit 16)                                       */
+ #define R_MIPI_DSI_TXPPD3R_DATA14_Msk            (0xff0000UL)   /*!< DATA14 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_TXPPD3R_DATA15_Pos            (24UL)         /*!< DATA15 (Bit 24)                                       */
+ #define R_MIPI_DSI_TXPPD3R_DATA15_Msk            (0xff000000UL) /*!< DATA15 (Bitfield-Mask: 0xff)                          */
+/* =========================================================  RXSR  ========================================================== */
+ #define R_MIPI_DSI_RXSR_BTAREND_Pos              (0UL)          /*!< BTAREND (Bit 0)                                       */
+ #define R_MIPI_DSI_RXSR_BTAREND_Msk              (0x1UL)        /*!< BTAREND (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSR_LRXHTO_Pos               (1UL)          /*!< LRXHTO (Bit 1)                                        */
+ #define R_MIPI_DSI_RXSR_LRXHTO_Msk               (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSR_TATO_Pos                 (2UL)          /*!< TATO (Bit 2)                                          */
+ #define R_MIPI_DSI_RXSR_TATO_Msk                 (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_RXSR_RXRESP_Pos               (8UL)          /*!< RXRESP (Bit 8)                                        */
+ #define R_MIPI_DSI_RXSR_RXRESP_Msk               (0x100UL)      /*!< RXRESP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSR_RXEOTP_Pos               (10UL)         /*!< RXEOTP (Bit 10)                                       */
+ #define R_MIPI_DSI_RXSR_RXEOTP_Msk               (0x400UL)      /*!< RXEOTP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSR_RXTE_Pos                 (13UL)         /*!< RXTE (Bit 13)                                         */
+ #define R_MIPI_DSI_RXSR_RXTE_Msk                 (0x2000UL)     /*!< RXTE (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_RXSR_RXACK_Pos                (14UL)         /*!< RXACK (Bit 14)                                        */
+ #define R_MIPI_DSI_RXSR_RXACK_Msk                (0x4000UL)     /*!< RXACK (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXSR_EXTEDET_Pos              (15UL)         /*!< EXTEDET (Bit 15)                                      */
+ #define R_MIPI_DSI_RXSR_EXTEDET_Msk              (0x8000UL)     /*!< EXTEDET (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSR_MLFERR_Pos               (16UL)         /*!< MLFERR (Bit 16)                                       */
+ #define R_MIPI_DSI_RXSR_MLFERR_Msk               (0x10000UL)    /*!< MLFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSR_ECCERRM_Pos              (17UL)         /*!< ECCERRM (Bit 17)                                      */
+ #define R_MIPI_DSI_RXSR_ECCERRM_Msk              (0x20000UL)    /*!< ECCERRM (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSR_UNEXERR_Pos              (18UL)         /*!< UNEXERR (Bit 18)                                      */
+ #define R_MIPI_DSI_RXSR_UNEXERR_Msk              (0x40000UL)    /*!< UNEXERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSR_WCERR_Pos                (20UL)         /*!< WCERR (Bit 20)                                        */
+ #define R_MIPI_DSI_RXSR_WCERR_Msk                (0x100000UL)   /*!< WCERR (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXSR_CRCERR_Pos               (21UL)         /*!< CRCERR (Bit 21)                                       */
+ #define R_MIPI_DSI_RXSR_CRCERR_Msk               (0x200000UL)   /*!< CRCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSR_IBERR_Pos                (22UL)         /*!< IBERR (Bit 22)                                        */
+ #define R_MIPI_DSI_RXSR_IBERR_Msk                (0x400000UL)   /*!< IBERR (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXSR_RXOVFERR_Pos             (23UL)         /*!< RXOVFERR (Bit 23)                                     */
+ #define R_MIPI_DSI_RXSR_RXOVFERR_Msk             (0x800000UL)   /*!< RXOVFERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXSR_PRTOERR_Pos              (24UL)         /*!< PRTOERR (Bit 24)                                      */
+ #define R_MIPI_DSI_RXSR_PRTOERR_Msk              (0x1000000UL)  /*!< PRTOERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSR_NORESERR_Pos             (25UL)         /*!< NORESERR (Bit 25)                                     */
+ #define R_MIPI_DSI_RXSR_NORESERR_Msk             (0x2000000UL)  /*!< NORESERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXSR_RSIZEERR_Pos             (26UL)         /*!< RSIZEERR (Bit 26)                                     */
+ #define R_MIPI_DSI_RXSR_RSIZEERR_Msk             (0x4000000UL)  /*!< RSIZEERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXSR_ECCERRS_Pos              (28UL)         /*!< ECCERRS (Bit 28)                                      */
+ #define R_MIPI_DSI_RXSR_ECCERRS_Msk              (0x10000000UL) /*!< ECCERRS (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSR_RXAKE_Pos                (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_RXSR_RXAKE_Msk                (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* =========================================================  RXSCR  ========================================================= */
+ #define R_MIPI_DSI_RXSCR_BTAREND_Pos             (0UL)          /*!< BTAREND (Bit 0)                                       */
+ #define R_MIPI_DSI_RXSCR_BTAREND_Msk             (0x1UL)        /*!< BTAREND (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSCR_LRXHTO_Pos              (1UL)          /*!< LRXHTO (Bit 1)                                        */
+ #define R_MIPI_DSI_RXSCR_LRXHTO_Msk              (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSCR_TATO_Pos                (2UL)          /*!< TATO (Bit 2)                                          */
+ #define R_MIPI_DSI_RXSCR_TATO_Msk                (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_RXSCR_RXRESP_Pos              (8UL)          /*!< RXRESP (Bit 8)                                        */
+ #define R_MIPI_DSI_RXSCR_RXRESP_Msk              (0x100UL)      /*!< RXRESP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSCR_RXEOTP_Pos              (10UL)         /*!< RXEOTP (Bit 10)                                       */
+ #define R_MIPI_DSI_RXSCR_RXEOTP_Msk              (0x400UL)      /*!< RXEOTP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSCR_RXTE_Pos                (13UL)         /*!< RXTE (Bit 13)                                         */
+ #define R_MIPI_DSI_RXSCR_RXTE_Msk                (0x2000UL)     /*!< RXTE (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_RXSCR_RXACK_Pos               (14UL)         /*!< RXACK (Bit 14)                                        */
+ #define R_MIPI_DSI_RXSCR_RXACK_Msk               (0x4000UL)     /*!< RXACK (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXSCR_EXTEDET_Pos             (15UL)         /*!< EXTEDET (Bit 15)                                      */
+ #define R_MIPI_DSI_RXSCR_EXTEDET_Msk             (0x8000UL)     /*!< EXTEDET (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSCR_MLFERR_Pos              (16UL)         /*!< MLFERR (Bit 16)                                       */
+ #define R_MIPI_DSI_RXSCR_MLFERR_Msk              (0x10000UL)    /*!< MLFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSCR_ECCERRM_Pos             (17UL)         /*!< ECCERRM (Bit 17)                                      */
+ #define R_MIPI_DSI_RXSCR_ECCERRM_Msk             (0x20000UL)    /*!< ECCERRM (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSCR_UNEXERR_Pos             (18UL)         /*!< UNEXERR (Bit 18)                                      */
+ #define R_MIPI_DSI_RXSCR_UNEXERR_Msk             (0x40000UL)    /*!< UNEXERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSCR_WCERR_Pos               (20UL)         /*!< WCERR (Bit 20)                                        */
+ #define R_MIPI_DSI_RXSCR_WCERR_Msk               (0x100000UL)   /*!< WCERR (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXSCR_CRCERR_Pos              (21UL)         /*!< CRCERR (Bit 21)                                       */
+ #define R_MIPI_DSI_RXSCR_CRCERR_Msk              (0x200000UL)   /*!< CRCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXSCR_IBERR_Pos               (22UL)         /*!< IBERR (Bit 22)                                        */
+ #define R_MIPI_DSI_RXSCR_IBERR_Msk               (0x400000UL)   /*!< IBERR (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXSCR_RXOVFERR_Pos            (23UL)         /*!< RXOVFERR (Bit 23)                                     */
+ #define R_MIPI_DSI_RXSCR_RXOVFERR_Msk            (0x800000UL)   /*!< RXOVFERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXSCR_PRTOERR_Pos             (24UL)         /*!< PRTOERR (Bit 24)                                      */
+ #define R_MIPI_DSI_RXSCR_PRTOERR_Msk             (0x1000000UL)  /*!< PRTOERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSCR_NORESERR_Pos            (25UL)         /*!< NORESERR (Bit 25)                                     */
+ #define R_MIPI_DSI_RXSCR_NORESERR_Msk            (0x2000000UL)  /*!< NORESERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXSCR_RSIZEERR_Pos            (26UL)         /*!< RSIZEERR (Bit 26)                                     */
+ #define R_MIPI_DSI_RXSCR_RSIZEERR_Msk            (0x4000000UL)  /*!< RSIZEERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXSCR_ECCERRS_Pos             (28UL)         /*!< ECCERRS (Bit 28)                                      */
+ #define R_MIPI_DSI_RXSCR_ECCERRS_Msk             (0x10000000UL) /*!< ECCERRS (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXSCR_RXAKE_Pos               (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_RXSCR_RXAKE_Msk               (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* =========================================================  RXIER  ========================================================= */
+ #define R_MIPI_DSI_RXIER_BTAREND_Pos             (0UL)          /*!< BTAREND (Bit 0)                                       */
+ #define R_MIPI_DSI_RXIER_BTAREND_Msk             (0x1UL)        /*!< BTAREND (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXIER_LRXHTO_Pos              (1UL)          /*!< LRXHTO (Bit 1)                                        */
+ #define R_MIPI_DSI_RXIER_LRXHTO_Msk              (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXIER_TATO_Pos                (2UL)          /*!< TATO (Bit 2)                                          */
+ #define R_MIPI_DSI_RXIER_TATO_Msk                (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_RXIER_RXRESP_Pos              (8UL)          /*!< RXRESP (Bit 8)                                        */
+ #define R_MIPI_DSI_RXIER_RXRESP_Msk              (0x100UL)      /*!< RXRESP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXIER_RXEOTP_Pos              (10UL)         /*!< RXEOTP (Bit 10)                                       */
+ #define R_MIPI_DSI_RXIER_RXEOTP_Msk              (0x400UL)      /*!< RXEOTP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXIER_RXTE_Pos                (13UL)         /*!< RXTE (Bit 13)                                         */
+ #define R_MIPI_DSI_RXIER_RXTE_Msk                (0x2000UL)     /*!< RXTE (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_RXIER_RXACK_Pos               (14UL)         /*!< RXACK (Bit 14)                                        */
+ #define R_MIPI_DSI_RXIER_RXACK_Msk               (0x4000UL)     /*!< RXACK (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXIER_EXTEDET_Pos             (15UL)         /*!< EXTEDET (Bit 15)                                      */
+ #define R_MIPI_DSI_RXIER_EXTEDET_Msk             (0x8000UL)     /*!< EXTEDET (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXIER_MLFERR_Pos              (16UL)         /*!< MLFERR (Bit 16)                                       */
+ #define R_MIPI_DSI_RXIER_MLFERR_Msk              (0x10000UL)    /*!< MLFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXIER_ECCERRM_Pos             (17UL)         /*!< ECCERRM (Bit 17)                                      */
+ #define R_MIPI_DSI_RXIER_ECCERRM_Msk             (0x20000UL)    /*!< ECCERRM (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXIER_UNEXERR_Pos             (18UL)         /*!< UNEXERR (Bit 18)                                      */
+ #define R_MIPI_DSI_RXIER_UNEXERR_Msk             (0x40000UL)    /*!< UNEXERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXIER_WCERR_Pos               (20UL)         /*!< WCERR (Bit 20)                                        */
+ #define R_MIPI_DSI_RXIER_WCERR_Msk               (0x100000UL)   /*!< WCERR (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXIER_CRCERR_Pos              (21UL)         /*!< CRCERR (Bit 21)                                       */
+ #define R_MIPI_DSI_RXIER_CRCERR_Msk              (0x200000UL)   /*!< CRCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXIER_IBERR_Pos               (22UL)         /*!< IBERR (Bit 22)                                        */
+ #define R_MIPI_DSI_RXIER_IBERR_Msk               (0x400000UL)   /*!< IBERR (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXIER_RXOVFERR_Pos            (23UL)         /*!< RXOVFERR (Bit 23)                                     */
+ #define R_MIPI_DSI_RXIER_RXOVFERR_Msk            (0x800000UL)   /*!< RXOVFERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXIER_PRTOERR_Pos             (24UL)         /*!< PRTOERR (Bit 24)                                      */
+ #define R_MIPI_DSI_RXIER_PRTOERR_Msk             (0x1000000UL)  /*!< PRTOERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXIER_NORESERR_Pos            (25UL)         /*!< NORESERR (Bit 25)                                     */
+ #define R_MIPI_DSI_RXIER_NORESERR_Msk            (0x2000000UL)  /*!< NORESERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXIER_RSIZEERR_Pos            (26UL)         /*!< RSIZEERR (Bit 26)                                     */
+ #define R_MIPI_DSI_RXIER_RSIZEERR_Msk            (0x4000000UL)  /*!< RSIZEERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_RXIER_ECCERRS_Pos             (28UL)         /*!< ECCERRS (Bit 28)                                      */
+ #define R_MIPI_DSI_RXIER_ECCERRS_Msk             (0x10000000UL) /*!< ECCERRS (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXIER_RXAKE_Pos               (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_RXIER_RXAKE_Msk               (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* ====================================================  PRESPTOBTASETR  ===================================================== */
+ #define R_MIPI_DSI_PRESPTOBTASETR_PRTBTA_Pos     (0UL)          /*!< PRTBTA (Bit 0)                                        */
+ #define R_MIPI_DSI_PRESPTOBTASETR_PRTBTA_Msk     (0xffffffffUL) /*!< PRTBTA (Bitfield-Mask: 0xffffffff)                    */
+/* =====================================================  PRESPTOLPSETR  ===================================================== */
+ #define R_MIPI_DSI_PRESPTOLPSETR_LPWTO_Pos       (0UL)          /*!< LPWTO (Bit 0)                                         */
+ #define R_MIPI_DSI_PRESPTOLPSETR_LPWTO_Msk       (0xffffUL)     /*!< LPWTO (Bitfield-Mask: 0xffff)                         */
+ #define R_MIPI_DSI_PRESPTOLPSETR_LPRTO_Pos       (16UL)         /*!< LPRTO (Bit 16)                                        */
+ #define R_MIPI_DSI_PRESPTOLPSETR_LPRTO_Msk       (0xffff0000UL) /*!< LPRTO (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  PRESPTOHSSETR  ===================================================== */
+ #define R_MIPI_DSI_PRESPTOHSSETR_HSWTO_Pos       (0UL)          /*!< HSWTO (Bit 0)                                         */
+ #define R_MIPI_DSI_PRESPTOHSSETR_HSWTO_Msk       (0xffffUL)     /*!< HSWTO (Bitfield-Mask: 0xffff)                         */
+ #define R_MIPI_DSI_PRESPTOHSSETR_HSRTO_Pos       (16UL)         /*!< HSRTO (Bit 16)                                        */
+ #define R_MIPI_DSI_PRESPTOHSSETR_HSRTO_Msk       (0xffff0000UL) /*!< HSRTO (Bitfield-Mask: 0xffff)                         */
+/* =======================================================  AKEPLATIR  ======================================================= */
+ #define R_MIPI_DSI_AKEPLATIR_EREP_Pos            (0UL)          /*!< EREP (Bit 0)                                          */
+ #define R_MIPI_DSI_AKEPLATIR_EREP_Msk            (0xffffUL)     /*!< EREP (Bitfield-Mask: 0xffff)                          */
+ #define R_MIPI_DSI_AKEPLATIR_VC_Pos              (16UL)         /*!< VC (Bit 16)                                           */
+ #define R_MIPI_DSI_AKEPLATIR_VC_Msk              (0xf0000UL)    /*!< VC (Bitfield-Mask: 0x0f)                              */
+/* =======================================================  AKEPACMSR  ======================================================= */
+ #define R_MIPI_DSI_AKEPACMSR_AEREP_Pos           (0UL)          /*!< AEREP (Bit 0)                                         */
+ #define R_MIPI_DSI_AKEPACMSR_AEREP_Msk           (0xffffUL)     /*!< AEREP (Bitfield-Mask: 0xffff)                         */
+ #define R_MIPI_DSI_AKEPACMSR_AVC_Pos             (16UL)         /*!< AVC (Bit 16)                                          */
+ #define R_MIPI_DSI_AKEPACMSR_AVC_Msk             (0xf0000UL)    /*!< AVC (Bitfield-Mask: 0x0f)                             */
+/* ========================================================  AKEPSCR  ======================================================== */
+ #define R_MIPI_DSI_AKEPSCR_AEREP_Pos             (0UL)          /*!< AEREP (Bit 0)                                         */
+ #define R_MIPI_DSI_AKEPSCR_AEREP_Msk             (0xffffUL)     /*!< AEREP (Bitfield-Mask: 0xffff)                         */
+ #define R_MIPI_DSI_AKEPSCR_AVC_Pos               (16UL)         /*!< AVC (Bit 16)                                          */
+ #define R_MIPI_DSI_AKEPSCR_AVC_Msk               (0xf0000UL)    /*!< AVC (Bitfield-Mask: 0x0f)                             */
+/* ========================================================  RXRSSR  ========================================================= */
+ #define R_MIPI_DSI_RXRSSR_SLT0VLD_Pos            (0UL)          /*!< SLT0VLD (Bit 0)                                       */
+ #define R_MIPI_DSI_RXRSSR_SLT0VLD_Msk            (0x1UL)        /*!< SLT0VLD (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSSR_SLT1VLD_Pos            (1UL)          /*!< SLT1VLD (Bit 1)                                       */
+ #define R_MIPI_DSI_RXRSSR_SLT1VLD_Msk            (0x2UL)        /*!< SLT1VLD (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSSR_SLT2VLD_Pos            (2UL)          /*!< SLT2VLD (Bit 2)                                       */
+ #define R_MIPI_DSI_RXRSSR_SLT2VLD_Msk            (0x4UL)        /*!< SLT2VLD (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSSR_SLT3VLD_Pos            (3UL)          /*!< SLT3VLD (Bit 3)                                       */
+ #define R_MIPI_DSI_RXRSSR_SLT3VLD_Msk            (0x8UL)        /*!< SLT3VLD (Bitfield-Mask: 0x01)                         */
+/* ========================================================  RXRSSCR  ======================================================== */
+ #define R_MIPI_DSI_RXRSSCR_SLT0VLD_Pos           (0UL)          /*!< SLT0VLD (Bit 0)                                       */
+ #define R_MIPI_DSI_RXRSSCR_SLT0VLD_Msk           (0x1UL)        /*!< SLT0VLD (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSSCR_SLT1VLD_Pos           (1UL)          /*!< SLT1VLD (Bit 1)                                       */
+ #define R_MIPI_DSI_RXRSSCR_SLT1VLD_Msk           (0x2UL)        /*!< SLT1VLD (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSSCR_SLT2VLD_Pos           (2UL)          /*!< SLT2VLD (Bit 2)                                       */
+ #define R_MIPI_DSI_RXRSSCR_SLT2VLD_Msk           (0x4UL)        /*!< SLT2VLD (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSSCR_SLT3VLD_Pos           (3UL)          /*!< SLT3VLD (Bit 3)                                       */
+ #define R_MIPI_DSI_RXRSSCR_SLT3VLD_Msk           (0x8UL)        /*!< SLT3VLD (Bitfield-Mask: 0x01)                         */
+/* ======================================================  RXRINFOOWSR  ====================================================== */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL0OW_Pos         (0UL)          /*!< SL0OW (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL0OW_Msk         (0x1UL)        /*!< SL0OW (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL1OW_Pos         (1UL)          /*!< SL1OW (Bit 1)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL1OW_Msk         (0x2UL)        /*!< SL1OW (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL2OW_Pos         (2UL)          /*!< SL2OW (Bit 2)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL2OW_Msk         (0x4UL)        /*!< SL2OW (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL3OW_Pos         (3UL)          /*!< SL3OW (Bit 3)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSR_SL3OW_Msk         (0x8UL)        /*!< SL3OW (Bitfield-Mask: 0x01)                           */
+/* =====================================================  RXRINFOOWSCR  ====================================================== */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL0OW_Pos        (0UL)          /*!< SL0OW (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL0OW_Msk        (0x1UL)        /*!< SL0OW (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL1OW_Pos        (1UL)          /*!< SL1OW (Bit 1)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL1OW_Msk        (0x2UL)        /*!< SL1OW (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL2OW_Pos        (2UL)          /*!< SL2OW (Bit 2)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL2OW_Msk        (0x4UL)        /*!< SL2OW (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL3OW_Pos        (3UL)          /*!< SL3OW (Bit 3)                                         */
+ #define R_MIPI_DSI_RXRINFOOWSCR_SL3OW_Msk        (0x8UL)        /*!< SL3OW (Bitfield-Mask: 0x01)                           */
+/* ========================================================  RXRSS0R  ======================================================== */
+ #define R_MIPI_DSI_RXRSS0R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS0R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS0R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS0R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS0R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_RXRSS0R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS0R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_RXRSS0R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS0R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_RXRSS0R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS0R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
+ #define R_MIPI_DSI_RXRSS0R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS0R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_RXRSS0R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_RXRSS0R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_RXRSS0R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS0R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
+ #define R_MIPI_DSI_RXRSS0R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_RXRSS0R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS0R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
+ #define R_MIPI_DSI_RXRSS0R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ========================================================  RXRSS1R  ======================================================== */
+ #define R_MIPI_DSI_RXRSS1R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS1R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS1R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS1R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS1R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_RXRSS1R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS1R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_RXRSS1R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS1R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_RXRSS1R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS1R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
+ #define R_MIPI_DSI_RXRSS1R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS1R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_RXRSS1R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_RXRSS1R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_RXRSS1R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS1R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
+ #define R_MIPI_DSI_RXRSS1R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_RXRSS1R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS1R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
+ #define R_MIPI_DSI_RXRSS1R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ========================================================  RXRSS2R  ======================================================== */
+ #define R_MIPI_DSI_RXRSS2R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS2R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS2R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS2R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS2R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_RXRSS2R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS2R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_RXRSS2R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS2R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_RXRSS2R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS2R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
+ #define R_MIPI_DSI_RXRSS2R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS2R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_RXRSS2R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_RXRSS2R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_RXRSS2R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS2R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
+ #define R_MIPI_DSI_RXRSS2R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_RXRSS2R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS2R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
+ #define R_MIPI_DSI_RXRSS2R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ========================================================  RXRSS3R  ======================================================== */
+ #define R_MIPI_DSI_RXRSS3R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS3R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS3R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS3R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS3R_DT_Pos                (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_RXRSS3R_DT_Msk                (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS3R_VC_Pos                (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_RXRSS3R_VC_Msk                (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS3R_FMT_Pos               (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_RXRSS3R_FMT_Msk               (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS3R_RXSUC_Pos             (25UL)         /*!< RXSUC (Bit 25)                                        */
+ #define R_MIPI_DSI_RXRSS3R_RXSUC_Msk             (0x2000000UL)  /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS3R_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_RXRSS3R_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_RXRSS3R_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_RXRSS3R_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS3R_RXCERR_Pos            (29UL)         /*!< RXCERR (Bit 29)                                       */
+ #define R_MIPI_DSI_RXRSS3R_RXCERR_Msk            (0x20000000UL) /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_RXRSS3R_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS3R_INFOOW_Pos            (31UL)         /*!< INFOOW (Bit 31)                                       */
+ #define R_MIPI_DSI_RXRSS3R_INFOOW_Msk            (0x80000000UL) /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* =======================================================  RXRSS0R_L  ======================================================= */
+ #define R_MIPI_DSI_RXRSS0R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS0R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS0R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS0R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =======================================================  RXRSS1R_L  ======================================================= */
+ #define R_MIPI_DSI_RXRSS1R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS1R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS1R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS1R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =======================================================  RXRSS2R_L  ======================================================= */
+ #define R_MIPI_DSI_RXRSS2R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS2R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS2R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS2R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =======================================================  RXRSS3R_L  ======================================================= */
+ #define R_MIPI_DSI_RXRSS3R_L_DATA0_Pos           (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS3R_L_DATA0_Msk           (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXRSS3R_L_DATA1_Pos           (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXRSS3R_L_DATA1_Msk           (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS0R_LL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS0R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS0R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS1R_LL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS1R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS1R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS2R_LL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS2R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS2R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS3R_LL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS3R_LL_DATA0_Pos          (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS3R_LL_DATA0_Msk          (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS0R_LH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS0R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS0R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS1R_LH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS1R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS1R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS2R_LH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS2R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS2R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ======================================================  RXRSS3R_LH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS3R_LH_DATA1_Pos          (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXRSS3R_LH_DATA1_Msk          (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =======================================================  RXRSS0R_H  ======================================================= */
+ #define R_MIPI_DSI_RXRSS0R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS0R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS0R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS0R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS0R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_RXRSS0R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS0R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
+ #define R_MIPI_DSI_RXRSS0R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS0R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
+ #define R_MIPI_DSI_RXRSS0R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
+ #define R_MIPI_DSI_RXRSS0R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
+ #define R_MIPI_DSI_RXRSS0R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS0R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
+ #define R_MIPI_DSI_RXRSS0R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
+ #define R_MIPI_DSI_RXRSS0R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS0R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
+ #define R_MIPI_DSI_RXRSS0R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* =======================================================  RXRSS1R_H  ======================================================= */
+ #define R_MIPI_DSI_RXRSS1R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS1R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS1R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS1R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS1R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_RXRSS1R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS1R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
+ #define R_MIPI_DSI_RXRSS1R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS1R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
+ #define R_MIPI_DSI_RXRSS1R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
+ #define R_MIPI_DSI_RXRSS1R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
+ #define R_MIPI_DSI_RXRSS1R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS1R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
+ #define R_MIPI_DSI_RXRSS1R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
+ #define R_MIPI_DSI_RXRSS1R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS1R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
+ #define R_MIPI_DSI_RXRSS1R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* =======================================================  RXRSS2R_H  ======================================================= */
+ #define R_MIPI_DSI_RXRSS2R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS2R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS2R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS2R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS2R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_RXRSS2R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS2R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
+ #define R_MIPI_DSI_RXRSS2R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS2R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
+ #define R_MIPI_DSI_RXRSS2R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
+ #define R_MIPI_DSI_RXRSS2R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
+ #define R_MIPI_DSI_RXRSS2R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS2R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
+ #define R_MIPI_DSI_RXRSS2R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
+ #define R_MIPI_DSI_RXRSS2R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS2R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
+ #define R_MIPI_DSI_RXRSS2R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* =======================================================  RXRSS3R_H  ======================================================= */
+ #define R_MIPI_DSI_RXRSS3R_H_DT_Pos              (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS3R_H_DT_Msk              (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS3R_H_VC_Pos              (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS3R_H_VC_Msk              (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_RXRSS3R_H_FMT_Pos             (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_RXRSS3R_H_FMT_Msk             (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS3R_H_RXSUC_Pos           (9UL)          /*!< RXSUC (Bit 9)                                         */
+ #define R_MIPI_DSI_RXRSS3R_H_RXSUC_Msk           (0x200UL)      /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS3R_H_RXFERR_Pos          (10UL)         /*!< RXFERR (Bit 10)                                       */
+ #define R_MIPI_DSI_RXRSS3R_H_RXFERR_Msk          (0x400UL)      /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_H_RXFAIL_Pos          (11UL)         /*!< RXFAIL (Bit 11)                                       */
+ #define R_MIPI_DSI_RXRSS3R_H_RXFAIL_Msk          (0x800UL)      /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_H_RXPFAIL_Pos         (12UL)         /*!< RXPFAIL (Bit 12)                                      */
+ #define R_MIPI_DSI_RXRSS3R_H_RXPFAIL_Msk         (0x1000UL)     /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS3R_H_RXCERR_Pos          (13UL)         /*!< RXCERR (Bit 13)                                       */
+ #define R_MIPI_DSI_RXRSS3R_H_RXCERR_Msk          (0x2000UL)     /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_H_RXAKE_Pos           (14UL)         /*!< RXAKE (Bit 14)                                        */
+ #define R_MIPI_DSI_RXRSS3R_H_RXAKE_Msk           (0x4000UL)     /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS3R_H_INFOOW_Pos          (15UL)         /*!< INFOOW (Bit 15)                                       */
+ #define R_MIPI_DSI_RXRSS3R_H_INFOOW_Msk          (0x8000UL)     /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ======================================================  RXRSS0R_HL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS0R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS0R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS0R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS0R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ======================================================  RXRSS1R_HL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS1R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS1R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS1R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS1R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ======================================================  RXRSS2R_HL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS2R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS2R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS2R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS2R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ======================================================  RXRSS3R_HL  ======================================================= */
+ #define R_MIPI_DSI_RXRSS3R_HL_DT_Pos             (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_RXRSS3R_HL_DT_Msk             (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_RXRSS3R_HL_VC_Pos             (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_RXRSS3R_HL_VC_Msk             (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ======================================================  RXRSS0R_HH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS0R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_RXRSS0R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
+ #define R_MIPI_DSI_RXRSS0R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS0R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
+ #define R_MIPI_DSI_RXRSS0R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ======================================================  RXRSS1R_HH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS1R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_RXRSS1R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
+ #define R_MIPI_DSI_RXRSS1R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS1R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
+ #define R_MIPI_DSI_RXRSS1R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ======================================================  RXRSS2R_HH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS2R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_RXRSS2R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
+ #define R_MIPI_DSI_RXRSS2R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS2R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
+ #define R_MIPI_DSI_RXRSS2R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ======================================================  RXRSS3R_HH  ======================================================= */
+ #define R_MIPI_DSI_RXRSS3R_HH_FMT_Pos            (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_RXRSS3R_HH_FMT_Msk            (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXSUC_Pos          (1UL)          /*!< RXSUC (Bit 1)                                         */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXSUC_Msk          (0x2UL)        /*!< RXSUC (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXFERR_Pos         (2UL)          /*!< RXFERR (Bit 2)                                        */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXFERR_Msk         (0x4UL)        /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXFAIL_Pos         (3UL)          /*!< RXFAIL (Bit 3)                                        */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXFAIL_Msk         (0x8UL)        /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXPFAIL_Pos        (4UL)          /*!< RXPFAIL (Bit 4)                                       */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXPFAIL_Msk        (0x10UL)       /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXCERR_Pos         (5UL)          /*!< RXCERR (Bit 5)                                        */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXCERR_Msk         (0x20UL)       /*!< RXCERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXAKE_Pos          (6UL)          /*!< RXAKE (Bit 6)                                         */
+ #define R_MIPI_DSI_RXRSS3R_HH_RXAKE_Msk          (0x40UL)       /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_RXRSS3R_HH_INFOOW_Pos         (7UL)          /*!< INFOOW (Bit 7)                                        */
+ #define R_MIPI_DSI_RXRSS3R_HH_INFOOW_Msk         (0x80UL)       /*!< INFOOW (Bitfield-Mask: 0x01)                          */
+/* ========================================================  RXPPD0R  ======================================================== */
+ #define R_MIPI_DSI_RXPPD0R_DATA0_Pos             (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXPPD0R_DATA0_Msk             (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD0R_DATA1_Pos             (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXPPD0R_DATA1_Msk             (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD0R_DATA2_Pos             (16UL)         /*!< DATA2 (Bit 16)                                        */
+ #define R_MIPI_DSI_RXPPD0R_DATA2_Msk             (0xff0000UL)   /*!< DATA2 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD0R_DATA3_Pos             (24UL)         /*!< DATA3 (Bit 24)                                        */
+ #define R_MIPI_DSI_RXPPD0R_DATA3_Msk             (0xff000000UL) /*!< DATA3 (Bitfield-Mask: 0xff)                           */
+/* ========================================================  RXPPD1R  ======================================================== */
+ #define R_MIPI_DSI_RXPPD1R_DATA4_Pos             (0UL)          /*!< DATA4 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXPPD1R_DATA4_Msk             (0xffUL)       /*!< DATA4 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD1R_DATA5_Pos             (8UL)          /*!< DATA5 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXPPD1R_DATA5_Msk             (0xff00UL)     /*!< DATA5 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD1R_DATA6_Pos             (16UL)         /*!< DATA6 (Bit 16)                                        */
+ #define R_MIPI_DSI_RXPPD1R_DATA6_Msk             (0xff0000UL)   /*!< DATA6 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD1R_DATA7_Pos             (24UL)         /*!< DATA7 (Bit 24)                                        */
+ #define R_MIPI_DSI_RXPPD1R_DATA7_Msk             (0xff000000UL) /*!< DATA7 (Bitfield-Mask: 0xff)                           */
+/* ========================================================  RXPPD2R  ======================================================== */
+ #define R_MIPI_DSI_RXPPD2R_DATA8_Pos             (0UL)          /*!< DATA8 (Bit 0)                                         */
+ #define R_MIPI_DSI_RXPPD2R_DATA8_Msk             (0xffUL)       /*!< DATA8 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD2R_DATA9_Pos             (8UL)          /*!< DATA9 (Bit 8)                                         */
+ #define R_MIPI_DSI_RXPPD2R_DATA9_Msk             (0xff00UL)     /*!< DATA9 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_RXPPD2R_DATA10_Pos            (16UL)         /*!< DATA10 (Bit 16)                                       */
+ #define R_MIPI_DSI_RXPPD2R_DATA10_Msk            (0xff0000UL)   /*!< DATA10 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_RXPPD2R_DATA11_Pos            (24UL)         /*!< DATA11 (Bit 24)                                       */
+ #define R_MIPI_DSI_RXPPD2R_DATA11_Msk            (0xff000000UL) /*!< DATA11 (Bitfield-Mask: 0xff)                          */
+/* ========================================================  RXPPD3R  ======================================================== */
+ #define R_MIPI_DSI_RXPPD3R_DATA12_Pos            (0UL)          /*!< DATA12 (Bit 0)                                        */
+ #define R_MIPI_DSI_RXPPD3R_DATA12_Msk            (0xffUL)       /*!< DATA12 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_RXPPD3R_DATA13_Pos            (8UL)          /*!< DATA13 (Bit 8)                                        */
+ #define R_MIPI_DSI_RXPPD3R_DATA13_Msk            (0xff00UL)     /*!< DATA13 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_RXPPD3R_DATA14_Pos            (16UL)         /*!< DATA14 (Bit 16)                                       */
+ #define R_MIPI_DSI_RXPPD3R_DATA14_Msk            (0xff0000UL)   /*!< DATA14 (Bitfield-Mask: 0xff)                          */
+ #define R_MIPI_DSI_RXPPD3R_DATA15_Pos            (24UL)         /*!< DATA15 (Bit 24)                                       */
+ #define R_MIPI_DSI_RXPPD3R_DATA15_Msk            (0xff000000UL) /*!< DATA15 (Bitfield-Mask: 0xff)                          */
+/* ======================================================  HSTXTOSETR  ======================================================= */
+ #define R_MIPI_DSI_HSTXTOSETR_HTXTO_Pos          (0UL)          /*!< HTXTO (Bit 0)                                         */
+ #define R_MIPI_DSI_HSTXTOSETR_HTXTO_Msk          (0xffffffffUL) /*!< HTXTO (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  LRXHTOSETR  ======================================================= */
+ #define R_MIPI_DSI_LRXHTOSETR_LRXHTO_Pos         (0UL)          /*!< LRXHTO (Bit 0)                                        */
+ #define R_MIPI_DSI_LRXHTOSETR_LRXHTO_Msk         (0xffffffffUL) /*!< LRXHTO (Bitfield-Mask: 0xffffffff)                    */
+/* =======================================================  TATOSETR  ======================================================== */
+ #define R_MIPI_DSI_TATOSETR_TATO_Pos             (0UL)          /*!< TATO (Bit 0)                                          */
+ #define R_MIPI_DSI_TATOSETR_TATO_Msk             (0xffffffffUL) /*!< TATO (Bitfield-Mask: 0xffffffff)                      */
+/* ========================================================  FERRSR  ========================================================= */
+ #define R_MIPI_DSI_FERRSR_HTXTO_Pos              (0UL)          /*!< HTXTO (Bit 0)                                         */
+ #define R_MIPI_DSI_FERRSR_HTXTO_Msk              (0x1UL)        /*!< HTXTO (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_FERRSR_LRXHTO_Pos             (1UL)          /*!< LRXHTO (Bit 1)                                        */
+ #define R_MIPI_DSI_FERRSR_LRXHTO_Msk             (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_FERRSR_TATO_Pos               (2UL)          /*!< TATO (Bit 2)                                          */
+ #define R_MIPI_DSI_FERRSR_TATO_Msk               (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRSR_ESCENT_Pos             (16UL)         /*!< ESCENT (Bit 16)                                       */
+ #define R_MIPI_DSI_FERRSR_ESCENT_Msk             (0x10000UL)    /*!< ESCENT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_FERRSR_SYNCESC_Pos            (17UL)         /*!< SYNCESC (Bit 17)                                      */
+ #define R_MIPI_DSI_FERRSR_SYNCESC_Msk            (0x20000UL)    /*!< SYNCESC (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_FERRSR_CTRL_Pos               (18UL)         /*!< CTRL (Bit 18)                                         */
+ #define R_MIPI_DSI_FERRSR_CTRL_Msk               (0x40000UL)    /*!< CTRL (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRSR_CLP0_Pos               (19UL)         /*!< CLP0 (Bit 19)                                         */
+ #define R_MIPI_DSI_FERRSR_CLP0_Msk               (0x80000UL)    /*!< CLP0 (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRSR_CLP1_Pos               (20UL)         /*!< CLP1 (Bit 20)                                         */
+ #define R_MIPI_DSI_FERRSR_CLP1_Msk               (0x100000UL)   /*!< CLP1 (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRSR_CLP0S_Pos              (27UL)         /*!< CLP0S (Bit 27)                                        */
+ #define R_MIPI_DSI_FERRSR_CLP0S_Msk              (0x8000000UL)  /*!< CLP0S (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_FERRSR_CLP1S_Pos              (28UL)         /*!< CLP1S (Bit 28)                                        */
+ #define R_MIPI_DSI_FERRSR_CLP1S_Msk              (0x10000000UL) /*!< CLP1S (Bitfield-Mask: 0x01)                           */
+/* ========================================================  FERRSCR  ======================================================== */
+ #define R_MIPI_DSI_FERRSCR_HTXTO_Pos             (0UL)          /*!< HTXTO (Bit 0)                                         */
+ #define R_MIPI_DSI_FERRSCR_HTXTO_Msk             (0x1UL)        /*!< HTXTO (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_FERRSCR_LRXHTO_Pos            (1UL)          /*!< LRXHTO (Bit 1)                                        */
+ #define R_MIPI_DSI_FERRSCR_LRXHTO_Msk            (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_FERRSCR_TATO_Pos              (2UL)          /*!< TATO (Bit 2)                                          */
+ #define R_MIPI_DSI_FERRSCR_TATO_Msk              (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRSCR_ESCENT_Pos            (16UL)         /*!< ESCENT (Bit 16)                                       */
+ #define R_MIPI_DSI_FERRSCR_ESCENT_Msk            (0x10000UL)    /*!< ESCENT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_FERRSCR_SYNCESC_Pos           (17UL)         /*!< SYNCESC (Bit 17)                                      */
+ #define R_MIPI_DSI_FERRSCR_SYNCESC_Msk           (0x20000UL)    /*!< SYNCESC (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_FERRSCR_CTRL_Pos              (18UL)         /*!< CTRL (Bit 18)                                         */
+ #define R_MIPI_DSI_FERRSCR_CTRL_Msk              (0x40000UL)    /*!< CTRL (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRSCR_CLP0_Pos              (19UL)         /*!< CLP0 (Bit 19)                                         */
+ #define R_MIPI_DSI_FERRSCR_CLP0_Msk              (0x80000UL)    /*!< CLP0 (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRSCR_CLP1_Pos              (20UL)         /*!< CLP1 (Bit 20)                                         */
+ #define R_MIPI_DSI_FERRSCR_CLP1_Msk              (0x100000UL)   /*!< CLP1 (Bitfield-Mask: 0x01)                            */
+/* ========================================================  FERRIER  ======================================================== */
+ #define R_MIPI_DSI_FERRIER_HTXTO_Pos             (0UL)          /*!< HTXTO (Bit 0)                                         */
+ #define R_MIPI_DSI_FERRIER_HTXTO_Msk             (0x1UL)        /*!< HTXTO (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_FERRIER_LRXHTO_Pos            (1UL)          /*!< LRXHTO (Bit 1)                                        */
+ #define R_MIPI_DSI_FERRIER_LRXHTO_Msk            (0x2UL)        /*!< LRXHTO (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_FERRIER_TATO_Pos              (2UL)          /*!< TATO (Bit 2)                                          */
+ #define R_MIPI_DSI_FERRIER_TATO_Msk              (0x4UL)        /*!< TATO (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRIER_ESCENT_Pos            (16UL)         /*!< ESCENT (Bit 16)                                       */
+ #define R_MIPI_DSI_FERRIER_ESCENT_Msk            (0x10000UL)    /*!< ESCENT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_FERRIER_SYNCESC_Pos           (17UL)         /*!< SYNCESC (Bit 17)                                      */
+ #define R_MIPI_DSI_FERRIER_SYNCESC_Msk           (0x20000UL)    /*!< SYNCESC (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_FERRIER_CTRL_Pos              (18UL)         /*!< CTRL (Bit 18)                                         */
+ #define R_MIPI_DSI_FERRIER_CTRL_Msk              (0x40000UL)    /*!< CTRL (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRIER_CLP0_Pos              (19UL)         /*!< CLP0 (Bit 19)                                         */
+ #define R_MIPI_DSI_FERRIER_CLP0_Msk              (0x80000UL)    /*!< CLP0 (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_FERRIER_CLP1_Pos              (20UL)         /*!< CLP1 (Bit 20)                                         */
+ #define R_MIPI_DSI_FERRIER_CLP1_Msk              (0x100000UL)   /*!< CLP1 (Bitfield-Mask: 0x01)                            */
+/* ======================================================  CLSTPTSETR  ======================================================= */
+ #define R_MIPI_DSI_CLSTPTSETR_CLKSTPT_Pos        (2UL)          /*!< CLKSTPT (Bit 2)                                       */
+ #define R_MIPI_DSI_CLSTPTSETR_CLKSTPT_Msk        (0xffcUL)      /*!< CLKSTPT (Bitfield-Mask: 0x3ff)                        */
+ #define R_MIPI_DSI_CLSTPTSETR_CLKBFHT_Pos        (16UL)         /*!< CLKBFHT (Bit 16)                                      */
+ #define R_MIPI_DSI_CLSTPTSETR_CLKBFHT_Msk        (0xff0000UL)   /*!< CLKBFHT (Bitfield-Mask: 0xff)                         */
+ #define R_MIPI_DSI_CLSTPTSETR_CLKKPT_Pos         (24UL)         /*!< CLKKPT (Bit 24)                                       */
+ #define R_MIPI_DSI_CLSTPTSETR_CLKKPT_Msk         (0xff000000UL) /*!< CLKKPT (Bitfield-Mask: 0xff)                          */
+/* ======================================================  LPTRNSTSETR  ====================================================== */
+ #define R_MIPI_DSI_LPTRNSTSETR_GOLPBKT_Pos       (0UL)          /*!< GOLPBKT (Bit 0)                                       */
+ #define R_MIPI_DSI_LPTRNSTSETR_GOLPBKT_Msk       (0x3ffUL)      /*!< GOLPBKT (Bitfield-Mask: 0x3ff)                        */
+/* =========================================================  PLSR  ========================================================== */
+ #define R_MIPI_DSI_PLSR_CLUAN_Pos                (0UL)          /*!< CLUAN (Bit 0)                                         */
+ #define R_MIPI_DSI_PLSR_CLUAN_Msk                (0x1UL)        /*!< CLUAN (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_PLSR_CLSTP_Pos                (1UL)          /*!< CLSTP (Bit 1)                                         */
+ #define R_MIPI_DSI_PLSR_CLSTP_Msk                (0x2UL)        /*!< CLSTP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_PLSR_DL0RLE_Pos               (2UL)          /*!< DL0RLE (Bit 2)                                        */
+ #define R_MIPI_DSI_PLSR_DL0RLE_Msk               (0x4UL)        /*!< DL0RLE (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_PLSR_DL0RUE_Pos               (3UL)          /*!< DL0RUE (Bit 3)                                        */
+ #define R_MIPI_DSI_PLSR_DL0RUE_Msk               (0x8UL)        /*!< DL0RUE (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_PLSR_DL0UAN_Pos               (4UL)          /*!< DL0UAN (Bit 4)                                        */
+ #define R_MIPI_DSI_PLSR_DL0UAN_Msk               (0x10UL)       /*!< DL0UAN (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_PLSR_DL1UAN_Pos               (5UL)          /*!< DL1UAN (Bit 5)                                        */
+ #define R_MIPI_DSI_PLSR_DL1UAN_Msk               (0x20UL)       /*!< DL1UAN (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_PLSR_DL0STP_Pos               (8UL)          /*!< DL0STP (Bit 8)                                        */
+ #define R_MIPI_DSI_PLSR_DL0STP_Msk               (0x100UL)      /*!< DL0STP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_PLSR_DL1STP_Pos               (9UL)          /*!< DL1STP (Bit 9)                                        */
+ #define R_MIPI_DSI_PLSR_DL1STP_Msk               (0x200UL)      /*!< DL1STP (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_PLSR_DL0RX2TX_Pos             (12UL)         /*!< DL0RX2TX (Bit 12)                                     */
+ #define R_MIPI_DSI_PLSR_DL0RX2TX_Msk             (0x1000UL)     /*!< DL0RX2TX (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSR_DL0TX2RX_Pos             (13UL)         /*!< DL0TX2RX (Bit 13)                                     */
+ #define R_MIPI_DSI_PLSR_DL0TX2RX_Msk             (0x2000UL)     /*!< DL0TX2RX (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSR_DL0DIR_Pos               (15UL)         /*!< DL0DIR (Bit 15)                                       */
+ #define R_MIPI_DSI_PLSR_DL0DIR_Msk               (0x8000UL)     /*!< DL0DIR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_PLSR_CLULPENT_Pos             (24UL)         /*!< CLULPENT (Bit 24)                                     */
+ #define R_MIPI_DSI_PLSR_CLULPENT_Msk             (0x1000000UL)  /*!< CLULPENT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSR_CLULPEXT_Pos             (25UL)         /*!< CLULPEXT (Bit 25)                                     */
+ #define R_MIPI_DSI_PLSR_CLULPEXT_Msk             (0x2000000UL)  /*!< CLULPEXT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSR_CLLP2HS_Pos              (26UL)         /*!< CLLP2HS (Bit 26)                                      */
+ #define R_MIPI_DSI_PLSR_CLLP2HS_Msk              (0x4000000UL)  /*!< CLLP2HS (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_PLSR_CLHS2LP_Pos              (27UL)         /*!< CLHS2LP (Bit 27)                                      */
+ #define R_MIPI_DSI_PLSR_CLHS2LP_Msk              (0x8000000UL)  /*!< CLHS2LP (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_PLSR_DLULPENT_Pos             (28UL)         /*!< DLULPENT (Bit 28)                                     */
+ #define R_MIPI_DSI_PLSR_DLULPENT_Msk             (0x10000000UL) /*!< DLULPENT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSR_DLULPEXT_Pos             (29UL)         /*!< DLULPEXT (Bit 29)                                     */
+ #define R_MIPI_DSI_PLSR_DLULPEXT_Msk             (0x20000000UL) /*!< DLULPEXT (Bitfield-Mask: 0x01)                        */
+/* =========================================================  PLSCR  ========================================================= */
+ #define R_MIPI_DSI_PLSCR_DL0RX2TX_Pos            (12UL)         /*!< DL0RX2TX (Bit 12)                                     */
+ #define R_MIPI_DSI_PLSCR_DL0RX2TX_Msk            (0x1000UL)     /*!< DL0RX2TX (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSCR_DL0TX2RX_Pos            (13UL)         /*!< DL0TX2RX (Bit 13)                                     */
+ #define R_MIPI_DSI_PLSCR_DL0TX2RX_Msk            (0x2000UL)     /*!< DL0TX2RX (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSCR_CLULPENT_Pos            (24UL)         /*!< CLULPENT (Bit 24)                                     */
+ #define R_MIPI_DSI_PLSCR_CLULPENT_Msk            (0x1000000UL)  /*!< CLULPENT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSCR_CLULPEXT_Pos            (25UL)         /*!< CLULPEXT (Bit 25)                                     */
+ #define R_MIPI_DSI_PLSCR_CLULPEXT_Msk            (0x2000000UL)  /*!< CLULPEXT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSCR_CLLP2HS_Pos             (26UL)         /*!< CLLP2HS (Bit 26)                                      */
+ #define R_MIPI_DSI_PLSCR_CLLP2HS_Msk             (0x4000000UL)  /*!< CLLP2HS (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_PLSCR_CLHS2LP_Pos             (27UL)         /*!< CLHS2LP (Bit 27)                                      */
+ #define R_MIPI_DSI_PLSCR_CLHS2LP_Msk             (0x8000000UL)  /*!< CLHS2LP (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_PLSCR_DLULPENT_Pos            (28UL)         /*!< DLULPENT (Bit 28)                                     */
+ #define R_MIPI_DSI_PLSCR_DLULPENT_Msk            (0x10000000UL) /*!< DLULPENT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLSCR_DLULPEXT_Pos            (29UL)         /*!< DLULPEXT (Bit 29)                                     */
+ #define R_MIPI_DSI_PLSCR_DLULPEXT_Msk            (0x20000000UL) /*!< DLULPEXT (Bitfield-Mask: 0x01)                        */
+/* =========================================================  PLIER  ========================================================= */
+ #define R_MIPI_DSI_PLIER_DL0RX2TX_Pos            (12UL)         /*!< DL0RX2TX (Bit 12)                                     */
+ #define R_MIPI_DSI_PLIER_DL0RX2TX_Msk            (0x1000UL)     /*!< DL0RX2TX (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLIER_DL0TX2RX_Pos            (13UL)         /*!< DL0TX2RX (Bit 13)                                     */
+ #define R_MIPI_DSI_PLIER_DL0TX2RX_Msk            (0x2000UL)     /*!< DL0TX2RX (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLIER_CLULPENT_Pos            (24UL)         /*!< CLULPENT (Bit 24)                                     */
+ #define R_MIPI_DSI_PLIER_CLULPENT_Msk            (0x1000000UL)  /*!< CLULPENT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLIER_CLULPEXT_Pos            (25UL)         /*!< CLULPEXT (Bit 25)                                     */
+ #define R_MIPI_DSI_PLIER_CLULPEXT_Msk            (0x2000000UL)  /*!< CLULPEXT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLIER_CLLP2HS_Pos             (26UL)         /*!< CLLP2HS (Bit 26)                                      */
+ #define R_MIPI_DSI_PLIER_CLLP2HS_Msk             (0x4000000UL)  /*!< CLLP2HS (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_PLIER_CLHS2LP_Pos             (27UL)         /*!< CLHS2LP (Bit 27)                                      */
+ #define R_MIPI_DSI_PLIER_CLHS2LP_Msk             (0x8000000UL)  /*!< CLHS2LP (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_PLIER_DLULPENT_Pos            (28UL)         /*!< DLULPENT (Bit 28)                                     */
+ #define R_MIPI_DSI_PLIER_DLULPENT_Msk            (0x10000000UL) /*!< DLULPENT (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_PLIER_DLULPEXT_Pos            (29UL)         /*!< DLULPEXT (Bit 29)                                     */
+ #define R_MIPI_DSI_PLIER_DLULPEXT_Msk            (0x20000000UL) /*!< DLULPEXT (Bitfield-Mask: 0x01)                        */
+/* ========================================================  VMSET0R  ======================================================== */
+ #define R_MIPI_DSI_VMSET0R_VSTART_Pos            (0UL)          /*!< VSTART (Bit 0)                                        */
+ #define R_MIPI_DSI_VMSET0R_VSTART_Msk            (0x1UL)        /*!< VSTART (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_VMSET0R_VSTOP_Pos             (1UL)          /*!< VSTOP (Bit 1)                                         */
+ #define R_MIPI_DSI_VMSET0R_VSTOP_Msk             (0x2UL)        /*!< VSTOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMSET0R_HSANOLP_Pos           (8UL)          /*!< HSANOLP (Bit 8)                                       */
+ #define R_MIPI_DSI_VMSET0R_HSANOLP_Msk           (0x100UL)      /*!< HSANOLP (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_VMSET0R_HBPNOLP_Pos           (9UL)          /*!< HBPNOLP (Bit 9)                                       */
+ #define R_MIPI_DSI_VMSET0R_HBPNOLP_Msk           (0x200UL)      /*!< HBPNOLP (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_VMSET0R_HFPNOLP_Pos           (10UL)         /*!< HFPNOLP (Bit 10)                                      */
+ #define R_MIPI_DSI_VMSET0R_HFPNOLP_Msk           (0x400UL)      /*!< HFPNOLP (Bitfield-Mask: 0x01)                         */
+/* ========================================================  VMSET1R  ======================================================== */
+ #define R_MIPI_DSI_VMSET1R_DLY_Pos               (2UL)          /*!< DLY (Bit 2)                                           */
+ #define R_MIPI_DSI_VMSET1R_DLY_Msk               (0x3ffcUL)     /*!< DLY (Bitfield-Mask: 0xfff)                            */
+/* =========================================================  VMSR  ========================================================== */
+ #define R_MIPI_DSI_VMSR_START_Pos                (0UL)          /*!< START (Bit 0)                                         */
+ #define R_MIPI_DSI_VMSR_START_Msk                (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMSR_STOP_Pos                 (1UL)          /*!< STOP (Bit 1)                                          */
+ #define R_MIPI_DSI_VMSR_STOP_Msk                 (0x2UL)        /*!< STOP (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_VMSR_RUNNING_Pos              (2UL)          /*!< RUNNING (Bit 2)                                       */
+ #define R_MIPI_DSI_VMSR_RUNNING_Msk              (0x4UL)        /*!< RUNNING (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_VMSR_VIRDY_Pos                (3UL)          /*!< VIRDY (Bit 3)                                         */
+ #define R_MIPI_DSI_VMSR_VIRDY_Msk                (0x8UL)        /*!< VIRDY (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMSR_TIMERR_Pos               (20UL)         /*!< TIMERR (Bit 20)                                       */
+ #define R_MIPI_DSI_VMSR_TIMERR_Msk               (0x100000UL)   /*!< TIMERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_VMSR_VBUFUDF_Pos              (22UL)         /*!< VBUFUDF (Bit 22)                                      */
+ #define R_MIPI_DSI_VMSR_VBUFUDF_Msk              (0x400000UL)   /*!< VBUFUDF (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_VMSR_VBUFOVF_Pos              (23UL)         /*!< VBUFOVF (Bit 23)                                      */
+ #define R_MIPI_DSI_VMSR_VBUFOVF_Msk              (0x800000UL)   /*!< VBUFOVF (Bitfield-Mask: 0x01)                         */
+/* =========================================================  VMSCR  ========================================================= */
+ #define R_MIPI_DSI_VMSCR_START_Pos               (0UL)          /*!< START (Bit 0)                                         */
+ #define R_MIPI_DSI_VMSCR_START_Msk               (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMSCR_STOP_Pos                (1UL)          /*!< STOP (Bit 1)                                          */
+ #define R_MIPI_DSI_VMSCR_STOP_Msk                (0x2UL)        /*!< STOP (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_VMSCR_VIRDY_Pos               (3UL)          /*!< VIRDY (Bit 3)                                         */
+ #define R_MIPI_DSI_VMSCR_VIRDY_Msk               (0x8UL)        /*!< VIRDY (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMSCR_TIMERR_Pos              (20UL)         /*!< TIMERR (Bit 20)                                       */
+ #define R_MIPI_DSI_VMSCR_TIMERR_Msk              (0x100000UL)   /*!< TIMERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_VMSCR_VBUFUDF_Pos             (22UL)         /*!< VBUFUDF (Bit 22)                                      */
+ #define R_MIPI_DSI_VMSCR_VBUFUDF_Msk             (0x400000UL)   /*!< VBUFUDF (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_VMSCR_VBUFOVF_Pos             (23UL)         /*!< VBUFOVF (Bit 23)                                      */
+ #define R_MIPI_DSI_VMSCR_VBUFOVF_Msk             (0x800000UL)   /*!< VBUFOVF (Bitfield-Mask: 0x01)                         */
+/* =========================================================  VMIER  ========================================================= */
+ #define R_MIPI_DSI_VMIER_START_Pos               (0UL)          /*!< START (Bit 0)                                         */
+ #define R_MIPI_DSI_VMIER_START_Msk               (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMIER_STOP_Pos                (1UL)          /*!< STOP (Bit 1)                                          */
+ #define R_MIPI_DSI_VMIER_STOP_Msk                (0x2UL)        /*!< STOP (Bitfield-Mask: 0x01)                            */
+ #define R_MIPI_DSI_VMIER_VIRDY_Pos               (3UL)          /*!< VIRDY (Bit 3)                                         */
+ #define R_MIPI_DSI_VMIER_VIRDY_Msk               (0x8UL)        /*!< VIRDY (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMIER_TIMERR_Pos              (20UL)         /*!< TIMERR (Bit 20)                                       */
+ #define R_MIPI_DSI_VMIER_TIMERR_Msk              (0x100000UL)   /*!< TIMERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_VMIER_VBUFUDF_Pos             (22UL)         /*!< VBUFUDF (Bit 22)                                      */
+ #define R_MIPI_DSI_VMIER_VBUFUDF_Msk             (0x400000UL)   /*!< VBUFUDF (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_VMIER_VBUFOVF_Pos             (23UL)         /*!< VBUFOVF (Bit 23)                                      */
+ #define R_MIPI_DSI_VMIER_VBUFOVF_Msk             (0x800000UL)   /*!< VBUFOVF (Bitfield-Mask: 0x01)                         */
+/* =======================================================  VMPPSETR  ======================================================== */
+ #define R_MIPI_DSI_VMPPSETR_TXESYNC_Pos          (15UL)         /*!< TXESYNC (Bit 15)                                      */
+ #define R_MIPI_DSI_VMPPSETR_TXESYNC_Msk          (0x8000UL)     /*!< TXESYNC (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_VMPPSETR_DT_Pos               (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_VMPPSETR_DT_Msk               (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_VMPPSETR_VC_Pos               (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_VMPPSETR_VC_Msk               (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+/* =======================================================  VMVSSETR  ======================================================== */
+ #define R_MIPI_DSI_VMVSSETR_VSA_Pos              (0UL)          /*!< VSA (Bit 0)                                           */
+ #define R_MIPI_DSI_VMVSSETR_VSA_Msk              (0xfffUL)      /*!< VSA (Bitfield-Mask: 0xfff)                            */
+ #define R_MIPI_DSI_VMVSSETR_VSPOL_Pos            (15UL)         /*!< VSPOL (Bit 15)                                        */
+ #define R_MIPI_DSI_VMVSSETR_VSPOL_Msk            (0x8000UL)     /*!< VSPOL (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMVSSETR_VACT_Pos             (16UL)         /*!< VACT (Bit 16)                                         */
+ #define R_MIPI_DSI_VMVSSETR_VACT_Msk             (0x7fff0000UL) /*!< VACT (Bitfield-Mask: 0x7fff)                          */
+/* =======================================================  VMVPSETR  ======================================================== */
+ #define R_MIPI_DSI_VMVPSETR_VBP_Pos              (0UL)          /*!< VBP (Bit 0)                                           */
+ #define R_MIPI_DSI_VMVPSETR_VBP_Msk              (0x1fffUL)     /*!< VBP (Bitfield-Mask: 0x1fff)                           */
+ #define R_MIPI_DSI_VMVPSETR_VFP_Pos              (16UL)         /*!< VFP (Bit 16)                                          */
+ #define R_MIPI_DSI_VMVPSETR_VFP_Msk              (0x1fff0000UL) /*!< VFP (Bitfield-Mask: 0x1fff)                           */
+/* =======================================================  VMHSSETR  ======================================================== */
+ #define R_MIPI_DSI_VMHSSETR_HSA_Pos              (0UL)          /*!< HSA (Bit 0)                                           */
+ #define R_MIPI_DSI_VMHSSETR_HSA_Msk              (0xfffUL)      /*!< HSA (Bitfield-Mask: 0xfff)                            */
+ #define R_MIPI_DSI_VMHSSETR_HSPOL_Pos            (15UL)         /*!< HSPOL (Bit 15)                                        */
+ #define R_MIPI_DSI_VMHSSETR_HSPOL_Msk            (0x8000UL)     /*!< HSPOL (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_VMHSSETR_HACT_Pos             (16UL)         /*!< HACT (Bit 16)                                         */
+ #define R_MIPI_DSI_VMHSSETR_HACT_Msk             (0x7fff0000UL) /*!< HACT (Bitfield-Mask: 0x7fff)                          */
+/* =======================================================  VMHPSETR  ======================================================== */
+ #define R_MIPI_DSI_VMHPSETR_HBP_Pos              (0UL)          /*!< HBP (Bit 0)                                           */
+ #define R_MIPI_DSI_VMHPSETR_HBP_Msk              (0x1fffUL)     /*!< HBP (Bitfield-Mask: 0x1fff)                           */
+ #define R_MIPI_DSI_VMHPSETR_HFP_Pos              (16UL)         /*!< HFP (Bit 16)                                          */
+ #define R_MIPI_DSI_VMHPSETR_HFP_Msk              (0x1fff0000UL) /*!< HFP (Bitfield-Mask: 0x1fff)                           */
+/* ======================================================  SQCH0SET0R  ======================================================= */
+ #define R_MIPI_DSI_SQCH0SET0R_START_Pos          (0UL)          /*!< START (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0SET0R_START_Msk          (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
+/* ========================================================  SQCH0SR  ======================================================== */
+ #define R_MIPI_DSI_SQCH0SR_RUNNING_Pos           (2UL)          /*!< RUNNING (Bit 2)                                       */
+ #define R_MIPI_DSI_SQCH0SR_RUNNING_Msk           (0x4UL)        /*!< RUNNING (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SR_AACTFIN_Pos           (4UL)          /*!< AACTFIN (Bit 4)                                       */
+ #define R_MIPI_DSI_SQCH0SR_AACTFIN_Msk           (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SR_ADESFIN_Pos           (8UL)          /*!< ADESFIN (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0SR_ADESFIN_Msk           (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SR_DABORT_Pos            (16UL)         /*!< DABORT (Bit 16)                                       */
+ #define R_MIPI_DSI_SQCH0SR_DABORT_Msk            (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0SR_SIZEERR_Pos           (19UL)         /*!< SIZEERR (Bit 19)                                      */
+ #define R_MIPI_DSI_SQCH0SR_SIZEERR_Msk           (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SR_TXIBERR_Pos           (24UL)         /*!< TXIBERR (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0SR_TXIBERR_Msk           (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SR_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_SQCH0SR_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0SR_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_SQCH0SR_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0SR_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_SQCH0SR_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SR_RXCORERR_Pos          (29UL)         /*!< RXCORERR (Bit 29)                                     */
+ #define R_MIPI_DSI_SQCH0SR_RXCORERR_Msk          (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_SQCH0SR_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_SQCH0SR_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* =======================================================  SQCH0SCR  ======================================================== */
+ #define R_MIPI_DSI_SQCH0SCR_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
+ #define R_MIPI_DSI_SQCH0SCR_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SCR_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0SCR_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SCR_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
+ #define R_MIPI_DSI_SQCH0SCR_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0SCR_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
+ #define R_MIPI_DSI_SQCH0SCR_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SCR_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0SCR_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SCR_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_SQCH0SCR_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0SCR_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_SQCH0SCR_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0SCR_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_SQCH0SCR_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0SCR_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
+ #define R_MIPI_DSI_SQCH0SCR_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_SQCH0SCR_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_SQCH0SCR_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* =======================================================  SQCH0IER  ======================================================== */
+ #define R_MIPI_DSI_SQCH0IER_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
+ #define R_MIPI_DSI_SQCH0IER_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0IER_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0IER_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0IER_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
+ #define R_MIPI_DSI_SQCH0IER_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0IER_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
+ #define R_MIPI_DSI_SQCH0IER_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0IER_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0IER_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0IER_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_SQCH0IER_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0IER_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_SQCH0IER_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0IER_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_SQCH0IER_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH0IER_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
+ #define R_MIPI_DSI_SQCH0IER_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_SQCH0IER_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_SQCH0IER_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* ======================================================  SQCH1SET0R  ======================================================= */
+ #define R_MIPI_DSI_SQCH1SET0R_START_Pos          (0UL)          /*!< START (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1SET0R_START_Msk          (0x1UL)        /*!< START (Bitfield-Mask: 0x01)                           */
+/* ========================================================  SQCH1SR  ======================================================== */
+ #define R_MIPI_DSI_SQCH1SR_RUNNING_Pos           (2UL)          /*!< RUNNING (Bit 2)                                       */
+ #define R_MIPI_DSI_SQCH1SR_RUNNING_Msk           (0x4UL)        /*!< RUNNING (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SR_AACTFIN_Pos           (4UL)          /*!< AACTFIN (Bit 4)                                       */
+ #define R_MIPI_DSI_SQCH1SR_AACTFIN_Msk           (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SR_ADESFIN_Pos           (8UL)          /*!< ADESFIN (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1SR_ADESFIN_Msk           (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SR_DABORT_Pos            (16UL)         /*!< DABORT (Bit 16)                                       */
+ #define R_MIPI_DSI_SQCH1SR_DABORT_Msk            (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1SR_SIZEERR_Pos           (19UL)         /*!< SIZEERR (Bit 19)                                      */
+ #define R_MIPI_DSI_SQCH1SR_SIZEERR_Msk           (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SR_TXIBERR_Pos           (24UL)         /*!< TXIBERR (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1SR_TXIBERR_Msk           (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SR_RXFERR_Pos            (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_SQCH1SR_RXFERR_Msk            (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1SR_RXFAIL_Pos            (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_SQCH1SR_RXFAIL_Msk            (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1SR_RXPFAIL_Pos           (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_SQCH1SR_RXPFAIL_Msk           (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SR_RXCORERR_Pos          (29UL)         /*!< RXCORERR (Bit 29)                                     */
+ #define R_MIPI_DSI_SQCH1SR_RXCORERR_Msk          (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_SQCH1SR_RXAKE_Pos             (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_SQCH1SR_RXAKE_Msk             (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* =======================================================  SQCH1SCR  ======================================================== */
+ #define R_MIPI_DSI_SQCH1SCR_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
+ #define R_MIPI_DSI_SQCH1SCR_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SCR_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1SCR_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SCR_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
+ #define R_MIPI_DSI_SQCH1SCR_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1SCR_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
+ #define R_MIPI_DSI_SQCH1SCR_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SCR_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1SCR_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SCR_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_SQCH1SCR_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1SCR_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_SQCH1SCR_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1SCR_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_SQCH1SCR_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1SCR_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
+ #define R_MIPI_DSI_SQCH1SCR_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_SQCH1SCR_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_SQCH1SCR_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* =======================================================  SQCH1IER  ======================================================== */
+ #define R_MIPI_DSI_SQCH1IER_AACTFIN_Pos          (4UL)          /*!< AACTFIN (Bit 4)                                       */
+ #define R_MIPI_DSI_SQCH1IER_AACTFIN_Msk          (0x10UL)       /*!< AACTFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1IER_ADESFIN_Pos          (8UL)          /*!< ADESFIN (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1IER_ADESFIN_Msk          (0x100UL)      /*!< ADESFIN (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1IER_DABORT_Pos           (16UL)         /*!< DABORT (Bit 16)                                       */
+ #define R_MIPI_DSI_SQCH1IER_DABORT_Msk           (0x10000UL)    /*!< DABORT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1IER_SIZEERR_Pos          (19UL)         /*!< SIZEERR (Bit 19)                                      */
+ #define R_MIPI_DSI_SQCH1IER_SIZEERR_Msk          (0x80000UL)    /*!< SIZEERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1IER_TXIBERR_Pos          (24UL)         /*!< TXIBERR (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1IER_TXIBERR_Msk          (0x1000000UL)  /*!< TXIBERR (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1IER_RXFERR_Pos           (26UL)         /*!< RXFERR (Bit 26)                                       */
+ #define R_MIPI_DSI_SQCH1IER_RXFERR_Msk           (0x4000000UL)  /*!< RXFERR (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1IER_RXFAIL_Pos           (27UL)         /*!< RXFAIL (Bit 27)                                       */
+ #define R_MIPI_DSI_SQCH1IER_RXFAIL_Msk           (0x8000000UL)  /*!< RXFAIL (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1IER_RXPFAIL_Pos          (28UL)         /*!< RXPFAIL (Bit 28)                                      */
+ #define R_MIPI_DSI_SQCH1IER_RXPFAIL_Msk          (0x10000000UL) /*!< RXPFAIL (Bitfield-Mask: 0x01)                         */
+ #define R_MIPI_DSI_SQCH1IER_RXCORERR_Pos         (29UL)         /*!< RXCORERR (Bit 29)                                     */
+ #define R_MIPI_DSI_SQCH1IER_RXCORERR_Msk         (0x20000000UL) /*!< RXCORERR (Bitfield-Mask: 0x01)                        */
+ #define R_MIPI_DSI_SQCH1IER_RXAKE_Pos            (30UL)         /*!< RXAKE (Bit 30)                                        */
+ #define R_MIPI_DSI_SQCH1IER_RXAKE_Msk            (0x40000000UL) /*!< RXAKE (Bitfield-Mask: 0x01)                           */
+/* ======================================================  SQCH0DSC0AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC0AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC0AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC0AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC0AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC0AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC0AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC1AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC1AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC1AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC1AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC1AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC1AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC1AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC2AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC2AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC2AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC2AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC2AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC2AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC2AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC3AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC3AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC3AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC3AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC3AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC3AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC3AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC4AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC4AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC4AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC4AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC4AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC4AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC4AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC5AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC5AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC5AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC5AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC5AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC5AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC5AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC6AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC6AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC6AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC6AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC6AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC6AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC6AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC7AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC7AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC7AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH0DSC7AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH0DSC7AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH0DSC7AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH0DSC7AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC0AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC1AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC2AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC3AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC4AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC5AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC6AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC7AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC0AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC1AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC2AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC3AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC4AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC5AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC6AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC7AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC0AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC1AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC2AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC3AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC4AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC5AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC6AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC7AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC0AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC0AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC1AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC1AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC2AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC2AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC3AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC3AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC4AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC4AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC5AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC5AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC6AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC6AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH0DSC7AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH0DSC7AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC0AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC1AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC2AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC3AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC4AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC5AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC6AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC7AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH0DSC0AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC1AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC2AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC3AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC4AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC5AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC6AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH0DSC7AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC0BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC0BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC1BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC1BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC2BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC2BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC3BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC3BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC4BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC4BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC5BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC5BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC6BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC6BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC7BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH0DSC7BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH0DSC0CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC0CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC0CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC0CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC0CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC0CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC1CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC1CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC1CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC1CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC1CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC1CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC2CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC2CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC2CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC2CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC2CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC2CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC3CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC3CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC3CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC3CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC3CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC3CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC4CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC4CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC4CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC4CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC4CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC4CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC5CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC5CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC5CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC5CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC5CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC5CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC6CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC6CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC6CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC6CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC6CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC6CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC7CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC7CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH0DSC7CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH0DSC7CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC7CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH0DSC7CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC0CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC0CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC1CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC1CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC2CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC2CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC3CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC3CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC4CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC4CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC5CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC5CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC6CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC6CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC7CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC7CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC0CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC0CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC1CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC1CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC2CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC2CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC3CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC3CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC4CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC4CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC5CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC5CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC6CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC6CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH0DSC7CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH0DSC7CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH0DSC0CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC0CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC0CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC1CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC1CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC1CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC2CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC2CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC2CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC3CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC3CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC3CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC4CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC4CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC4CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC5CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC5CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC5CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC6CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC6CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC6CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH0DSC7CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH0DSC7CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH0DSC7CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC0CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC1CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC2CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC3CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC4CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC5CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC6CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC7CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH0DSC0CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC0CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC1CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC1CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC2CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC2CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC3CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC3CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC4CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC4CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC5CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC5CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC6CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC6CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH0DSC7CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH0DSC7CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH0DSC0DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH0DSC1DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH0DSC2DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH0DSC3DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH0DSC4DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH0DSC5DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH0DSC6DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH0DSC7DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* =====================================================  SQCH0DSC0DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC1DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC2DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC3DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC4DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC5DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC6DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC7DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* ====================================================  SQCH0DSC0DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC1DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC2DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC3DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC4DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC5DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC6DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC7DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC0DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC1DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC2DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC3DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC4DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC5DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC6DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC7DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH0DSC0DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC1DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC2DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC3DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC4DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC5DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC6DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH0DSC7DR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7DR_H_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7DR_H_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* ====================================================  SQCH0DSC0DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC1DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC2DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC3DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC4DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC5DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC6DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC7DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC0DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC0DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC0DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC1DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC1DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC1DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC2DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC2DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC2DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC3DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC3DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC3DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC4DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC4DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC4DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC5DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC5DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC5DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC6DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC6DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC6DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH0DSC7DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH0DSC7DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH0DSC7DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ======================================================  SQCH1DSC0AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC0AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC0AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC0AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC0AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC0AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC0AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC1AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC1AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC1AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC1AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC1AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC1AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC1AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC2AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC2AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC2AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC2AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC2AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC2AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC2AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC3AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC3AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC3AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC3AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC3AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC3AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC3AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC4AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC4AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC4AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC4AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC4AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC4AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC4AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC5AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC5AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC5AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC5AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC5AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC5AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC5AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC6AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC6AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC6AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC6AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC6AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC6AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC6AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC7AR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7AR_DATA0_Pos         (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7AR_DATA0_Msk         (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_DATA1_Pos         (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7AR_DATA1_Msk         (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_DT_Pos            (16UL)         /*!< DT (Bit 16)                                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_DT_Msk            (0x3f0000UL)   /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC7AR_VC_Pos            (22UL)         /*!< VC (Bit 22)                                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_VC_Msk            (0xc00000UL)   /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC7AR_FMT_Pos           (24UL)         /*!< FMT (Bit 24)                                          */
+ #define R_MIPI_DSI_SQCH1DSC7AR_FMT_Msk           (0x1000000UL)  /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_SPD_Pos           (25UL)         /*!< SPD (Bit 25)                                          */
+ #define R_MIPI_DSI_SQCH1DSC7AR_SPD_Msk           (0x2000000UL)  /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_BTA_Pos           (26UL)         /*!< BTA (Bit 26)                                          */
+ #define R_MIPI_DSI_SQCH1DSC7AR_BTA_Msk           (0xc000000UL)  /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_NXACT_Pos         (28UL)         /*!< NXACT (Bit 28)                                        */
+ #define R_MIPI_DSI_SQCH1DSC7AR_NXACT_Msk         (0x30000000UL) /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC0AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC1AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC2AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC3AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC4AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC5AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC6AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC7AR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7AR_L_DATA0_Pos       (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7AR_L_DATA0_Msk       (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_L_DATA1_Pos       (8UL)          /*!< DATA1 (Bit 8)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7AR_L_DATA1_Msk       (0xff00UL)     /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC0AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC1AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC2AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC3AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC4AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC5AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC6AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC7AR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7AR_LL_DATA0_Pos      (0UL)          /*!< DATA0 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7AR_LL_DATA0_Msk      (0xffUL)       /*!< DATA0 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC0AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC1AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC2AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC3AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC4AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC5AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC6AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC7AR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7AR_LH_DATA1_Pos      (0UL)          /*!< DATA1 (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7AR_LH_DATA1_Msk      (0xffUL)       /*!< DATA1 (Bitfield-Mask: 0xff)                           */
+/* =====================================================  SQCH1DSC0AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC0AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC1AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC1AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC2AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC2AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC3AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC3AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC4AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC4AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC5AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC5AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC6AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC6AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* =====================================================  SQCH1DSC7AR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_DT_Pos          (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_DT_Msk          (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_VC_Pos          (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_VC_Msk          (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_FMT_Pos         (8UL)          /*!< FMT (Bit 8)                                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_FMT_Msk         (0x100UL)      /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_SPD_Pos         (9UL)          /*!< SPD (Bit 9)                                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_SPD_Msk         (0x200UL)      /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_BTA_Pos         (10UL)         /*!< BTA (Bit 10)                                          */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_BTA_Msk         (0xc00UL)      /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_NXACT_Pos       (12UL)         /*!< NXACT (Bit 12)                                        */
+ #define R_MIPI_DSI_SQCH1DSC7AR_H_NXACT_Msk       (0x3000UL)     /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC0AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC1AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC2AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC3AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC4AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC5AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC6AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC7AR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HL_DT_Pos         (0UL)          /*!< DT (Bit 0)                                            */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HL_DT_Msk         (0x3fUL)       /*!< DT (Bitfield-Mask: 0x3f)                              */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HL_VC_Pos         (6UL)          /*!< VC (Bit 6)                                            */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HL_VC_Msk         (0xc0UL)       /*!< VC (Bitfield-Mask: 0x03)                              */
+/* ====================================================  SQCH1DSC0AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC1AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC2AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC3AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC4AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC5AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC6AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ====================================================  SQCH1DSC7AR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_FMT_Pos        (0UL)          /*!< FMT (Bit 0)                                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_FMT_Msk        (0x1UL)        /*!< FMT (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_SPD_Pos        (1UL)          /*!< SPD (Bit 1)                                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_SPD_Msk        (0x2UL)        /*!< SPD (Bitfield-Mask: 0x01)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_BTA_Pos        (2UL)          /*!< BTA (Bit 2)                                           */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_BTA_Msk        (0xcUL)        /*!< BTA (Bitfield-Mask: 0x03)                             */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_NXACT_Pos      (4UL)          /*!< NXACT (Bit 4)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7AR_HH_NXACT_Msk      (0x30UL)       /*!< NXACT (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC0BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC0BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC1BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC1BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC2BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC2BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC3BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC3BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC4BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC4BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC5BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC5BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC6BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC6BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC7BR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7BR_DTSEL_Pos         (24UL)         /*!< DTSEL (Bit 24)                                        */
+ #define R_MIPI_DSI_SQCH1DSC7BR_DTSEL_Msk         (0x3000000UL)  /*!< DTSEL (Bitfield-Mask: 0x03)                           */
+/* ======================================================  SQCH1DSC0CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC0CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC0CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC0CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC0CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC0CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC1CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC1CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC1CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC1CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC1CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC1CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC2CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC2CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC2CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC2CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC2CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC2CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC3CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC3CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC3CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC3CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC3CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC3CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC4CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC4CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC4CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC4CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC4CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC4CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC5CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC5CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC5CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC5CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC5CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC5CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC6CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC6CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC6CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC6CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC6CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC6CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC7CR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7CR_FINACT_Pos        (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC7CR_FINACT_Msk        (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+ #define R_MIPI_DSI_SQCH1DSC7CR_AUXOP_Pos         (22UL)         /*!< AUXOP (Bit 22)                                        */
+ #define R_MIPI_DSI_SQCH1DSC7CR_AUXOP_Msk         (0x400000UL)   /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC7CR_ACTCODE_Pos       (24UL)         /*!< ACTCODE (Bit 24)                                      */
+ #define R_MIPI_DSI_SQCH1DSC7CR_ACTCODE_Msk       (0xff000000UL) /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC0CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC0CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC1CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC1CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC2CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC2CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC3CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC3CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC4CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC4CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC5CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC5CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC6CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC6CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC7CR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7CR_L_FINACT_Pos      (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC7CR_L_FINACT_Msk      (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC0CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC0CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC1CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC1CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC2CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC2CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC3CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC3CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC4CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC4CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC5CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC5CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC6CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC6CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* ====================================================  SQCH1DSC7CR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7CR_LL_FINACT_Pos     (0UL)          /*!< FINACT (Bit 0)                                        */
+ #define R_MIPI_DSI_SQCH1DSC7CR_LL_FINACT_Msk     (0x1UL)        /*!< FINACT (Bitfield-Mask: 0x01)                          */
+/* =====================================================  SQCH1DSC0CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC0CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC0CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC1CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC1CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC1CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC2CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC2CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC2CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC3CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC3CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC3CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC4CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC4CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC4CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC5CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC5CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC5CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC6CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC6CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC6CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* =====================================================  SQCH1DSC7CR_H  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7CR_H_AUXOP_Pos       (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7CR_H_AUXOP_Msk       (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+ #define R_MIPI_DSI_SQCH1DSC7CR_H_ACTCODE_Pos     (8UL)          /*!< ACTCODE (Bit 8)                                       */
+ #define R_MIPI_DSI_SQCH1DSC7CR_H_ACTCODE_Msk     (0xff00UL)     /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC0CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC1CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC2CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC3CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC4CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC5CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC6CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC7CR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7CR_HL_AUXOP_Pos      (6UL)          /*!< AUXOP (Bit 6)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7CR_HL_AUXOP_Msk      (0x40UL)       /*!< AUXOP (Bitfield-Mask: 0x01)                           */
+/* ====================================================  SQCH1DSC0CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC0CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC1CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC1CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC2CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC2CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC3CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC3CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC4CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC4CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC5CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC5CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC6CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC6CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ====================================================  SQCH1DSC7CR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7CR_HH_ACTCODE_Pos    (0UL)          /*!< ACTCODE (Bit 0)                                       */
+ #define R_MIPI_DSI_SQCH1DSC7CR_HH_ACTCODE_Msk    (0xffUL)       /*!< ACTCODE (Bitfield-Mask: 0xff)                         */
+/* ======================================================  SQCH1DSC0DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH1DSC1DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH1DSC2DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH1DSC3DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH1DSC4DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH1DSC5DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH1DSC6DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* ======================================================  SQCH1DSC7DR  ====================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7DR_LADDR_Pos         (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7DR_LADDR_Msk         (0xffffffffUL) /*!< LADDR (Bitfield-Mask: 0xffffffff)                     */
+/* =====================================================  SQCH1DSC0DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH1DSC1DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH1DSC2DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH1DSC3DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH1DSC4DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH1DSC5DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH1DSC6DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* =====================================================  SQCH1DSC7DR_L  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7DR_L_LADDR_Pos       (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7DR_L_LADDR_Msk       (0xffffUL)     /*!< LADDR (Bitfield-Mask: 0xffff)                         */
+/* ====================================================  SQCH1DSC0DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC1DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC2DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC3DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC4DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC5DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC6DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC7DR_LL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7DR_LL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7DR_LL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC0DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC1DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC2DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC3DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC4DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC5DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC6DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC7DR_LH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7DR_LH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7DR_LH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC0DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC1DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC2DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC3DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC4DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC5DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC6DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC7DR_HL  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7DR_HL_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7DR_HL_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC0DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC0DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC0DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC1DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC1DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC1DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC2DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC2DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC2DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC3DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC3DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC3DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC4DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC4DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC4DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC5DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC5DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC5DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC6DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC6DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC6DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+/* ====================================================  SQCH1DSC7DR_HH  ===================================================== */
+ #define R_MIPI_DSI_SQCH1DSC7DR_HH_LADDR_Pos      (0UL)          /*!< LADDR (Bit 0)                                         */
+ #define R_MIPI_DSI_SQCH1DSC7DR_HH_LADDR_Msk      (0xffUL)       /*!< LADDR (Bitfield-Mask: 0xff)                           */
+
+/* =========================================================================================================================== */
 /* ================                                      R_OFS_DATAFLASH                                      ================ */
 /* =========================================================================================================================== */
 
@@ -45956,231 +45217,6 @@ typedef struct                           /*!< (@ 0x40268000) R_XSPI Structure   
 /* =======================================================  ARC_OEMBL  ======================================================= */
  #define R_OFS_DATAFLASH_ARC_OEMBL_ARC_OEMBL_Pos    (0UL)          /*!< ARC_OEMBL (Bit 0)                                     */
  #define R_OFS_DATAFLASH_ARC_OEMBL_ARC_OEMBL_Msk    (0xffffffffUL) /*!< ARC_OEMBL (Bitfield-Mask: 0xffffffff)                 */
-
-/* =========================================================================================================================== */
-/* ================                                          R_XSPI                                           ================ */
-/* =========================================================================================================================== */
-
-/* ========================================================  WRAPCFG  ======================================================== */
- #define R_XSPI_WRAPCFG_CKSFTCS0_Pos      (0UL)          /*!< CKSFTCS0 (Bit 0)                                      */
- #define R_XSPI_WRAPCFG_CKSFTCS0_Msk      (0x1fUL)       /*!< CKSFTCS0 (Bitfield-Mask: 0x1f)                        */
- #define R_XSPI_WRAPCFG_DSSFTCS0_Pos      (8UL)          /*!< DSSFTCS0 (Bit 8)                                      */
- #define R_XSPI_WRAPCFG_DSSFTCS0_Msk      (0x1f00UL)     /*!< DSSFTCS0 (Bitfield-Mask: 0x1f)                        */
- #define R_XSPI_WRAPCFG_CKSFTCS1_Pos      (16UL)         /*!< CKSFTCS1 (Bit 16)                                     */
- #define R_XSPI_WRAPCFG_CKSFTCS1_Msk      (0x1f0000UL)   /*!< CKSFTCS1 (Bitfield-Mask: 0x1f)                        */
- #define R_XSPI_WRAPCFG_DSSFTCS1_Pos      (24UL)         /*!< DSSFTCS1 (Bit 24)                                     */
- #define R_XSPI_WRAPCFG_DSSFTCS1_Msk      (0x1f000000UL) /*!< DSSFTCS1 (Bitfield-Mask: 0x1f)                        */
-/* ========================================================  COMCFG  ========================================================= */
- #define R_XSPI_COMCFG_ARBMD_Pos          (0UL)          /*!< ARBMD (Bit 0)                                         */
- #define R_XSPI_COMCFG_ARBMD_Msk          (0x3UL)        /*!< ARBMD (Bitfield-Mask: 0x03)                           */
- #define R_XSPI_COMCFG_ECSINTOUTEN_Pos    (4UL)          /*!< ECSINTOUTEN (Bit 4)                                   */
- #define R_XSPI_COMCFG_ECSINTOUTEN_Msk    (0x30UL)       /*!< ECSINTOUTEN (Bitfield-Mask: 0x03)                     */
- #define R_XSPI_COMCFG_OEASTEX_Pos        (16UL)         /*!< OEASTEX (Bit 16)                                      */
- #define R_XSPI_COMCFG_OEASTEX_Msk        (0x10000UL)    /*!< OEASTEX (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_COMCFG_OENEGEX_Pos        (17UL)         /*!< OENEGEX (Bit 17)                                      */
- #define R_XSPI_COMCFG_OENEGEX_Msk        (0x20000UL)    /*!< OENEGEX (Bitfield-Mask: 0x01)                         */
-/* ========================================================  BMCFGCH  ======================================================== */
- #define R_XSPI_BMCFGCH_WRMD_Pos          (0UL)          /*!< WRMD (Bit 0)                                          */
- #define R_XSPI_BMCFGCH_WRMD_Msk          (0x1UL)        /*!< WRMD (Bitfield-Mask: 0x01)                            */
- #define R_XSPI_BMCFGCH_MWRCOMB_Pos       (7UL)          /*!< MWRCOMB (Bit 7)                                       */
- #define R_XSPI_BMCFGCH_MWRCOMB_Msk       (0x80UL)       /*!< MWRCOMB (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_BMCFGCH_MWRSIZE_Pos       (8UL)          /*!< MWRSIZE (Bit 8)                                       */
- #define R_XSPI_BMCFGCH_MWRSIZE_Msk       (0xff00UL)     /*!< MWRSIZE (Bitfield-Mask: 0xff)                         */
- #define R_XSPI_BMCFGCH_PREEN_Pos         (16UL)         /*!< PREEN (Bit 16)                                        */
- #define R_XSPI_BMCFGCH_PREEN_Msk         (0x10000UL)    /*!< PREEN (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_BMCFGCH_CMBTIM_Pos        (24UL)         /*!< CMBTIM (Bit 24)                                       */
- #define R_XSPI_BMCFGCH_CMBTIM_Msk        (0xff000000UL) /*!< CMBTIM (Bitfield-Mask: 0xff)                          */
-/* =======================================================  LIOCFGCS  ======================================================== */
- #define R_XSPI_LIOCFGCS_PRTMD_Pos        (0UL)          /*!< PRTMD (Bit 0)                                         */
- #define R_XSPI_LIOCFGCS_PRTMD_Msk        (0x3ffUL)      /*!< PRTMD (Bitfield-Mask: 0x3ff)                          */
- #define R_XSPI_LIOCFGCS_LATEMD_Pos       (10UL)         /*!< LATEMD (Bit 10)                                       */
- #define R_XSPI_LIOCFGCS_LATEMD_Msk       (0x400UL)      /*!< LATEMD (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_LIOCFGCS_WRMSKMD_Pos      (11UL)         /*!< WRMSKMD (Bit 11)                                      */
- #define R_XSPI_LIOCFGCS_WRMSKMD_Msk      (0x800UL)      /*!< WRMSKMD (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_LIOCFGCS_CSMIN_Pos        (16UL)         /*!< CSMIN (Bit 16)                                        */
- #define R_XSPI_LIOCFGCS_CSMIN_Msk        (0xf0000UL)    /*!< CSMIN (Bitfield-Mask: 0x0f)                           */
- #define R_XSPI_LIOCFGCS_CSASTEX_Pos      (20UL)         /*!< CSASTEX (Bit 20)                                      */
- #define R_XSPI_LIOCFGCS_CSASTEX_Msk      (0x100000UL)   /*!< CSASTEX (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_LIOCFGCS_CSNEGEX_Pos      (21UL)         /*!< CSNEGEX (Bit 21)                                      */
- #define R_XSPI_LIOCFGCS_CSNEGEX_Msk      (0x200000UL)   /*!< CSNEGEX (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_LIOCFGCS_SDRDRV_Pos       (22UL)         /*!< SDRDRV (Bit 22)                                       */
- #define R_XSPI_LIOCFGCS_SDRDRV_Msk       (0x400000UL)   /*!< SDRDRV (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_LIOCFGCS_SDRSMPMD_Pos     (23UL)         /*!< SDRSMPMD (Bit 23)                                     */
- #define R_XSPI_LIOCFGCS_SDRSMPMD_Msk     (0x800000UL)   /*!< SDRSMPMD (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_LIOCFGCS_SDRSMPSFT_Pos    (24UL)         /*!< SDRSMPSFT (Bit 24)                                    */
- #define R_XSPI_LIOCFGCS_SDRSMPSFT_Msk    (0xf000000UL)  /*!< SDRSMPSFT (Bitfield-Mask: 0x0f)                       */
- #define R_XSPI_LIOCFGCS_DDRSMPEX_Pos     (28UL)         /*!< DDRSMPEX (Bit 28)                                     */
- #define R_XSPI_LIOCFGCS_DDRSMPEX_Msk     (0xf0000000UL) /*!< DDRSMPEX (Bitfield-Mask: 0x0f)                        */
-/* ========================================================  ABMCFG  ========================================================= */
- #define R_XSPI_ABMCFG_ODRMD_Pos          (0UL)          /*!< ODRMD (Bit 0)                                         */
- #define R_XSPI_ABMCFG_ODRMD_Msk          (0x3UL)        /*!< ODRMD (Bitfield-Mask: 0x03)                           */
- #define R_XSPI_ABMCFG_CHSEL_Pos          (16UL)         /*!< CHSEL (Bit 16)                                        */
- #define R_XSPI_ABMCFG_CHSEL_Msk          (0xffff0000UL) /*!< CHSEL (Bitfield-Mask: 0xffff)                         */
-/* ========================================================  BMCTL0  ========================================================= */
- #define R_XSPI_BMCTL0_CH0CS0ACC_Pos      (0UL)          /*!< CH0CS0ACC (Bit 0)                                     */
- #define R_XSPI_BMCTL0_CH0CS0ACC_Msk      (0x3UL)        /*!< CH0CS0ACC (Bitfield-Mask: 0x03)                       */
- #define R_XSPI_BMCTL0_CH0CS1ACC_Pos      (2UL)          /*!< CH0CS1ACC (Bit 2)                                     */
- #define R_XSPI_BMCTL0_CH0CS1ACC_Msk      (0xcUL)        /*!< CH0CS1ACC (Bitfield-Mask: 0x03)                       */
- #define R_XSPI_BMCTL0_CH1CS0ACC_Pos      (4UL)          /*!< CH1CS0ACC (Bit 4)                                     */
- #define R_XSPI_BMCTL0_CH1CS0ACC_Msk      (0x30UL)       /*!< CH1CS0ACC (Bitfield-Mask: 0x03)                       */
- #define R_XSPI_BMCTL0_CH1CS1ACC_Pos      (6UL)          /*!< CH1CS1ACC (Bit 6)                                     */
- #define R_XSPI_BMCTL0_CH1CS1ACC_Msk      (0xc0UL)       /*!< CH1CS1ACC (Bitfield-Mask: 0x03)                       */
-/* ========================================================  BMCTL1  ========================================================= */
- #define R_XSPI_BMCTL1_MWRPUSHCH_Pos      (8UL)          /*!< MWRPUSHCH (Bit 8)                                     */
- #define R_XSPI_BMCTL1_MWRPUSHCH_Msk      (0x100UL)      /*!< MWRPUSHCH (Bitfield-Mask: 0x01)                       */
- #define R_XSPI_BMCTL1_PBUFCLRCH_Pos      (10UL)         /*!< PBUFCLRCH (Bit 10)                                    */
- #define R_XSPI_BMCTL1_PBUFCLRCH_Msk      (0x400UL)      /*!< PBUFCLRCH (Bitfield-Mask: 0x01)                       */
-/* ========================================================  CMCTLCH  ======================================================== */
- #define R_XSPI_CMCTLCH_XIPENCODE_Pos     (0UL)          /*!< XIPENCODE (Bit 0)                                     */
- #define R_XSPI_CMCTLCH_XIPENCODE_Msk     (0xffUL)       /*!< XIPENCODE (Bitfield-Mask: 0xff)                       */
- #define R_XSPI_CMCTLCH_XIPEXCODE_Pos     (8UL)          /*!< XIPEXCODE (Bit 8)                                     */
- #define R_XSPI_CMCTLCH_XIPEXCODE_Msk     (0xff00UL)     /*!< XIPEXCODE (Bitfield-Mask: 0xff)                       */
- #define R_XSPI_CMCTLCH_XIPEN_Pos         (16UL)         /*!< XIPEN (Bit 16)                                        */
- #define R_XSPI_CMCTLCH_XIPEN_Msk         (0x10000UL)    /*!< XIPEN (Bitfield-Mask: 0x01)                           */
-/* ========================================================  CDCTL0  ========================================================= */
- #define R_XSPI_CDCTL0_TRREQ_Pos          (0UL)          /*!< TRREQ (Bit 0)                                         */
- #define R_XSPI_CDCTL0_TRREQ_Msk          (0x1UL)        /*!< TRREQ (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_CDCTL0_PERMD_Pos          (1UL)          /*!< PERMD (Bit 1)                                         */
- #define R_XSPI_CDCTL0_PERMD_Msk          (0x2UL)        /*!< PERMD (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_CDCTL0_CSSEL_Pos          (3UL)          /*!< CSSEL (Bit 3)                                         */
- #define R_XSPI_CDCTL0_CSSEL_Msk          (0x8UL)        /*!< CSSEL (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_CDCTL0_TRNUM_Pos          (4UL)          /*!< TRNUM (Bit 4)                                         */
- #define R_XSPI_CDCTL0_TRNUM_Msk          (0x30UL)       /*!< TRNUM (Bitfield-Mask: 0x03)                           */
- #define R_XSPI_CDCTL0_PERITV_Pos         (16UL)         /*!< PERITV (Bit 16)                                       */
- #define R_XSPI_CDCTL0_PERITV_Msk         (0x1f0000UL)   /*!< PERITV (Bitfield-Mask: 0x1f)                          */
- #define R_XSPI_CDCTL0_PERREP_Pos         (24UL)         /*!< PERREP (Bit 24)                                       */
- #define R_XSPI_CDCTL0_PERREP_Msk         (0xf000000UL)  /*!< PERREP (Bitfield-Mask: 0x0f)                          */
-/* ========================================================  CDCTL1  ========================================================= */
- #define R_XSPI_CDCTL1_PEREXP_Pos         (0UL)          /*!< PEREXP (Bit 0)                                        */
- #define R_XSPI_CDCTL1_PEREXP_Msk         (0xffffffffUL) /*!< PEREXP (Bitfield-Mask: 0xffffffff)                    */
-/* ========================================================  CDCTL2  ========================================================= */
- #define R_XSPI_CDCTL2_PERMSK_Pos         (0UL)          /*!< PERMSK (Bit 0)                                        */
- #define R_XSPI_CDCTL2_PERMSK_Msk         (0xffffffffUL) /*!< PERMSK (Bitfield-Mask: 0xffffffff)                    */
-/* ========================================================  LPCTL0  ========================================================= */
- #define R_XSPI_LPCTL0_PATREQ_Pos         (0UL)          /*!< PATREQ (Bit 0)                                        */
- #define R_XSPI_LPCTL0_PATREQ_Msk         (0x1UL)        /*!< PATREQ (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_LPCTL0_CSSEL_Pos          (3UL)          /*!< CSSEL (Bit 3)                                         */
- #define R_XSPI_LPCTL0_CSSEL_Msk          (0x8UL)        /*!< CSSEL (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_LPCTL0_XDPIN_Pos          (4UL)          /*!< XDPIN (Bit 4)                                         */
- #define R_XSPI_LPCTL0_XDPIN_Msk          (0x30UL)       /*!< XDPIN (Bitfield-Mask: 0x03)                           */
- #define R_XSPI_LPCTL0_XD1LEN_Pos         (16UL)         /*!< XD1LEN (Bit 16)                                       */
- #define R_XSPI_LPCTL0_XD1LEN_Msk         (0x1f0000UL)   /*!< XD1LEN (Bitfield-Mask: 0x1f)                          */
- #define R_XSPI_LPCTL0_XD1VAL_Pos         (23UL)         /*!< XD1VAL (Bit 23)                                       */
- #define R_XSPI_LPCTL0_XD1VAL_Msk         (0x800000UL)   /*!< XD1VAL (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_LPCTL0_XD2LEN_Pos         (24UL)         /*!< XD2LEN (Bit 24)                                       */
- #define R_XSPI_LPCTL0_XD2LEN_Msk         (0x1f000000UL) /*!< XD2LEN (Bitfield-Mask: 0x1f)                          */
- #define R_XSPI_LPCTL0_XD2VAL_Pos         (31UL)         /*!< XD2VAL (Bit 31)                                       */
- #define R_XSPI_LPCTL0_XD2VAL_Msk         (0x80000000UL) /*!< XD2VAL (Bitfield-Mask: 0x01)                          */
-/* ========================================================  LPCTL1  ========================================================= */
- #define R_XSPI_LPCTL1_PATREQ_Pos         (0UL)          /*!< PATREQ (Bit 0)                                        */
- #define R_XSPI_LPCTL1_PATREQ_Msk         (0x3UL)        /*!< PATREQ (Bitfield-Mask: 0x03)                          */
- #define R_XSPI_LPCTL1_CSSEL_Pos          (3UL)          /*!< CSSEL (Bit 3)                                         */
- #define R_XSPI_LPCTL1_CSSEL_Msk          (0x8UL)        /*!< CSSEL (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_LPCTL1_RSTREP_Pos         (4UL)          /*!< RSTREP (Bit 4)                                        */
- #define R_XSPI_LPCTL1_RSTREP_Msk         (0x30UL)       /*!< RSTREP (Bitfield-Mask: 0x03)                          */
- #define R_XSPI_LPCTL1_RSTWID_Pos         (8UL)          /*!< RSTWID (Bit 8)                                        */
- #define R_XSPI_LPCTL1_RSTWID_Msk         (0x700UL)      /*!< RSTWID (Bitfield-Mask: 0x07)                          */
- #define R_XSPI_LPCTL1_RSTSU_Pos          (12UL)         /*!< RSTSU (Bit 12)                                        */
- #define R_XSPI_LPCTL1_RSTSU_Msk          (0x7000UL)     /*!< RSTSU (Bitfield-Mask: 0x07)                           */
-/* ========================================================  LIOCTL  ========================================================= */
- #define R_XSPI_LIOCTL_WPCS_Pos           (0UL)          /*!< WPCS (Bit 0)                                          */
- #define R_XSPI_LIOCTL_WPCS_Msk           (0x1UL)        /*!< WPCS (Bitfield-Mask: 0x01)                            */
- #define R_XSPI_LIOCTL_RSTCS_Pos          (16UL)         /*!< RSTCS (Bit 16)                                        */
- #define R_XSPI_LIOCTL_RSTCS_Msk          (0x10000UL)    /*!< RSTCS (Bitfield-Mask: 0x01)                           */
-/* ========================================================  VERSTT  ========================================================= */
- #define R_XSPI_VERSTT_VER_Pos            (0UL)          /*!< VER (Bit 0)                                           */
- #define R_XSPI_VERSTT_VER_Msk            (0xffffffffUL) /*!< VER (Bitfield-Mask: 0xffffffff)                       */
-/* ========================================================  COMSTT  ========================================================= */
- #define R_XSPI_COMSTT_MEMACCCH_Pos       (0UL)          /*!< MEMACCCH (Bit 0)                                      */
- #define R_XSPI_COMSTT_MEMACCCH_Msk       (0x1UL)        /*!< MEMACCCH (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_COMSTT_PBUFNECH_Pos       (4UL)          /*!< PBUFNECH (Bit 4)                                      */
- #define R_XSPI_COMSTT_PBUFNECH_Msk       (0x10UL)       /*!< PBUFNECH (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_COMSTT_WRBUFNECH_Pos      (6UL)          /*!< WRBUFNECH (Bit 6)                                     */
- #define R_XSPI_COMSTT_WRBUFNECH_Msk      (0x40UL)       /*!< WRBUFNECH (Bitfield-Mask: 0x01)                       */
- #define R_XSPI_COMSTT_ECSCS_Pos          (16UL)         /*!< ECSCS (Bit 16)                                        */
- #define R_XSPI_COMSTT_ECSCS_Msk          (0x10000UL)    /*!< ECSCS (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_COMSTT_INTCS_Pos          (17UL)         /*!< INTCS (Bit 17)                                        */
- #define R_XSPI_COMSTT_INTCS_Msk          (0x20000UL)    /*!< INTCS (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_COMSTT_RSTOCS_Pos         (18UL)         /*!< RSTOCS (Bit 18)                                       */
- #define R_XSPI_COMSTT_RSTOCS_Msk         (0x40000UL)    /*!< RSTOCS (Bitfield-Mask: 0x01)                          */
-/* ========================================================  CASTTCS  ======================================================== */
- #define R_XSPI_CASTTCS_CASUC_Pos         (0UL)          /*!< CASUC (Bit 0)                                         */
- #define R_XSPI_CASTTCS_CASUC_Msk         (0xffffffffUL) /*!< CASUC (Bitfield-Mask: 0xffffffff)                     */
-/* =========================================================  INTS  ========================================================== */
- #define R_XSPI_INTS_CMDCMP_Pos           (0UL)          /*!< CMDCMP (Bit 0)                                        */
- #define R_XSPI_INTS_CMDCMP_Msk           (0x1UL)        /*!< CMDCMP (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTS_PATCMP_Pos           (1UL)          /*!< PATCMP (Bit 1)                                        */
- #define R_XSPI_INTS_PATCMP_Msk           (0x2UL)        /*!< PATCMP (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTS_INICMP_Pos           (2UL)          /*!< INICMP (Bit 2)                                        */
- #define R_XSPI_INTS_INICMP_Msk           (0x4UL)        /*!< INICMP (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTS_PERTO_Pos            (3UL)          /*!< PERTO (Bit 3)                                         */
- #define R_XSPI_INTS_PERTO_Msk            (0x8UL)        /*!< PERTO (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_INTS_DSTOCS_Pos           (4UL)          /*!< DSTOCS (Bit 4)                                        */
- #define R_XSPI_INTS_DSTOCS_Msk           (0x10UL)       /*!< DSTOCS (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTS_ECSCS_Pos            (8UL)          /*!< ECSCS (Bit 8)                                         */
- #define R_XSPI_INTS_ECSCS_Msk            (0x100UL)      /*!< ECSCS (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_INTS_INTCS_Pos            (12UL)         /*!< INTCS (Bit 12)                                        */
- #define R_XSPI_INTS_INTCS_Msk            (0x1000UL)     /*!< INTCS (Bitfield-Mask: 0x01)                           */
- #define R_XSPI_INTS_BRGOFCH_Pos          (16UL)         /*!< BRGOFCH (Bit 16)                                      */
- #define R_XSPI_INTS_BRGOFCH_Msk          (0x10000UL)    /*!< BRGOFCH (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTS_BRGUFCH_Pos          (18UL)         /*!< BRGUFCH (Bit 18)                                      */
- #define R_XSPI_INTS_BRGUFCH_Msk          (0x40000UL)    /*!< BRGUFCH (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTS_BUSERRCH_Pos         (20UL)         /*!< BUSERRCH (Bit 20)                                     */
- #define R_XSPI_INTS_BUSERRCH_Msk         (0x100000UL)   /*!< BUSERRCH (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_INTS_CAFAILCS_Pos         (28UL)         /*!< CAFAILCS (Bit 28)                                     */
- #define R_XSPI_INTS_CAFAILCS_Msk         (0x10000000UL) /*!< CAFAILCS (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_INTS_CASUCCS_Pos          (30UL)         /*!< CASUCCS (Bit 30)                                      */
- #define R_XSPI_INTS_CASUCCS_Msk          (0x40000000UL) /*!< CASUCCS (Bitfield-Mask: 0x01)                         */
-/* =========================================================  INTC  ========================================================== */
- #define R_XSPI_INTC_CMDCMPC_Pos          (0UL)          /*!< CMDCMPC (Bit 0)                                       */
- #define R_XSPI_INTC_CMDCMPC_Msk          (0x1UL)        /*!< CMDCMPC (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTC_PATCMPC_Pos          (1UL)          /*!< PATCMPC (Bit 1)                                       */
- #define R_XSPI_INTC_PATCMPC_Msk          (0x2UL)        /*!< PATCMPC (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTC_INICMPC_Pos          (2UL)          /*!< INICMPC (Bit 2)                                       */
- #define R_XSPI_INTC_INICMPC_Msk          (0x4UL)        /*!< INICMPC (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTC_PERTOC_Pos           (3UL)          /*!< PERTOC (Bit 3)                                        */
- #define R_XSPI_INTC_PERTOC_Msk           (0x8UL)        /*!< PERTOC (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTC_DSTOCSC_Pos          (4UL)          /*!< DSTOCSC (Bit 4)                                       */
- #define R_XSPI_INTC_DSTOCSC_Msk          (0x10UL)       /*!< DSTOCSC (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTC_ECSCSC_Pos           (8UL)          /*!< ECSCSC (Bit 8)                                        */
- #define R_XSPI_INTC_ECSCSC_Msk           (0x100UL)      /*!< ECSCSC (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTC_INTCSC_Pos           (12UL)         /*!< INTCSC (Bit 12)                                       */
- #define R_XSPI_INTC_INTCSC_Msk           (0x1000UL)     /*!< INTCSC (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTC_BRGOFCHC_Pos         (16UL)         /*!< BRGOFCHC (Bit 16)                                     */
- #define R_XSPI_INTC_BRGOFCHC_Msk         (0x10000UL)    /*!< BRGOFCHC (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_INTC_BRGUFCHC_Pos         (18UL)         /*!< BRGUFCHC (Bit 18)                                     */
- #define R_XSPI_INTC_BRGUFCHC_Msk         (0x40000UL)    /*!< BRGUFCHC (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_INTC_BUSERRCHC_Pos        (20UL)         /*!< BUSERRCHC (Bit 20)                                    */
- #define R_XSPI_INTC_BUSERRCHC_Msk        (0x100000UL)   /*!< BUSERRCHC (Bitfield-Mask: 0x01)                       */
- #define R_XSPI_INTC_CAFAILCSC_Pos        (28UL)         /*!< CAFAILCSC (Bit 28)                                    */
- #define R_XSPI_INTC_CAFAILCSC_Msk        (0x10000000UL) /*!< CAFAILCSC (Bitfield-Mask: 0x01)                       */
- #define R_XSPI_INTC_CASUCCSC_Pos         (30UL)         /*!< CASUCCSC (Bit 30)                                     */
- #define R_XSPI_INTC_CASUCCSC_Msk         (0x40000000UL) /*!< CASUCCSC (Bitfield-Mask: 0x01)                        */
-/* =========================================================  INTE  ========================================================== */
- #define R_XSPI_INTE_CMDCMPE_Pos          (0UL)          /*!< CMDCMPE (Bit 0)                                       */
- #define R_XSPI_INTE_CMDCMPE_Msk          (0x1UL)        /*!< CMDCMPE (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTE_PATCMPE_Pos          (1UL)          /*!< PATCMPE (Bit 1)                                       */
- #define R_XSPI_INTE_PATCMPE_Msk          (0x2UL)        /*!< PATCMPE (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTE_INICMPE_Pos          (2UL)          /*!< INICMPE (Bit 2)                                       */
- #define R_XSPI_INTE_INICMPE_Msk          (0x4UL)        /*!< INICMPE (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTE_PERTOE_Pos           (3UL)          /*!< PERTOE (Bit 3)                                        */
- #define R_XSPI_INTE_PERTOE_Msk           (0x8UL)        /*!< PERTOE (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTE_DSTOCSE_Pos          (4UL)          /*!< DSTOCSE (Bit 4)                                       */
- #define R_XSPI_INTE_DSTOCSE_Msk          (0x10UL)       /*!< DSTOCSE (Bitfield-Mask: 0x01)                         */
- #define R_XSPI_INTE_ECSCSE_Pos           (8UL)          /*!< ECSCSE (Bit 8)                                        */
- #define R_XSPI_INTE_ECSCSE_Msk           (0x100UL)      /*!< ECSCSE (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTE_INTCSE_Pos           (12UL)         /*!< INTCSE (Bit 12)                                       */
- #define R_XSPI_INTE_INTCSE_Msk           (0x1000UL)     /*!< INTCSE (Bitfield-Mask: 0x01)                          */
- #define R_XSPI_INTE_BRGOFCHE_Pos         (16UL)         /*!< BRGOFCHE (Bit 16)                                     */
- #define R_XSPI_INTE_BRGOFCHE_Msk         (0x10000UL)    /*!< BRGOFCHE (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_INTE_BRGUFCHE_Pos         (18UL)         /*!< BRGUFCHE (Bit 18)                                     */
- #define R_XSPI_INTE_BRGUFCHE_Msk         (0x40000UL)    /*!< BRGUFCHE (Bitfield-Mask: 0x01)                        */
- #define R_XSPI_INTE_BUSERRCHE_Pos        (20UL)         /*!< BUSERRCHE (Bit 20)                                    */
- #define R_XSPI_INTE_BUSERRCHE_Msk        (0x100000UL)   /*!< BUSERRCHE (Bitfield-Mask: 0x01)                       */
- #define R_XSPI_INTE_CAFAILCSE_Pos        (28UL)         /*!< CAFAILCSE (Bit 28)                                    */
- #define R_XSPI_INTE_CAFAILCSE_Msk        (0x10000000UL) /*!< CAFAILCSE (Bitfield-Mask: 0x01)                       */
- #define R_XSPI_INTE_CASUCCSE_Pos         (30UL)         /*!< CASUCCSE (Bit 30)                                     */
- #define R_XSPI_INTE_CASUCCSE_Msk         (0x40000000UL) /*!< CASUCCSE (Bitfield-Mask: 0x01)                        */
 
 /** @} */ /* End of group PosMask_peripherals */
 

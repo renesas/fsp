@@ -230,7 +230,7 @@ fsp_err_t R_CRC_CalculatedValueGet (crc_ctrl_t * const p_ctrl, uint32_t * calcul
  * sent to the CRC calculator as if the value was explicitly written directly to the CRC calculator.
  *
  * @retval FSP_SUCCESS                  Snoop configured successfully.
- * @retval FSP_ERR_ASSERTION            Pointer to control stucture is NULL
+ * @retval FSP_ERR_ASSERTION            Pointer to control structure is NULL
  * @retval FSP_ERR_NOT_OPEN             The driver is not opened.
  * @retval FSP_ERR_UNSUPPORTED          SNOOP operation is not supported.
  *

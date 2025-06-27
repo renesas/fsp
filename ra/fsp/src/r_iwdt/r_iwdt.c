@@ -19,8 +19,8 @@
 #define IWDT_OPEN    (0X49574454ULL)
 
 /* Lookup functions for IWDT settings.  Using function like macro for stringification. */
-#define IWDT_PRV_OFS0_SETTING_GET(setting)     (((uint32_t) BSP_CFG_ROM_REG_OFS0 >>   \
-                                                 IWDT_PRV_OFS0_ ## setting ## _BIT) & \
+#define IWDT_PRV_OFS0_SETTING_GET(setting)     (((uint32_t) BSP_CFG_OPTION_SETTING_OFS0 >> \
+                                                 IWDT_PRV_OFS0_ ## setting ## _BIT) &      \
                                                 IWDT_PRV_OFS0_ ## setting ## _MASK);
 #define IWDT_PRV_IWDTCR_SETTING_GET(setting,                                                       \
                                     iwdtcr)    (((iwdtcr >> IWDT_PRV_IWDTCR_ ## setting ## _BIT) & \
@@ -64,7 +64,7 @@
 #define IWDT_PRV_REFRESH_STEP_2                (0xFFU)
 
 /* Macros for start mode and NMI support. */
-#if (BSP_CFG_ROM_REG_OFS0 & IWDT_PRV_OFS0_AUTO_START_MASK)
+#if (BSP_CFG_OPTION_SETTING_OFS0 & IWDT_PRV_OFS0_AUTO_START_MASK)
  #if (BSP_FEATURE_IWDT_SUPPORTS_REGISTER_START_MODE)
 
 /* Register start mode */
@@ -80,7 +80,7 @@
 /* Auto start mode */
  #define IWDT_PRV_AUTO_START_MODE         (1)
  #define IWDT_PRV_REGISTER_START_MODE     (0)
- #if (BSP_CFG_ROM_REG_OFS0 & IWDT_PRV_OFS0_NMI_REQUEST_MASK)
+ #if (BSP_CFG_OPTION_SETTING_OFS0 & IWDT_PRV_OFS0_NMI_REQUEST_MASK)
   #define IWDT_PRV_NMI_SUPPORTED          (0)
  #else
   #define IWDT_PRV_NMI_SUPPORTED          (1)
@@ -441,7 +441,7 @@ fsp_err_t R_IWDT_TimeoutGet (wdt_ctrl_t * const p_api_ctrl, wdt_timeout_values_t
  **********************************************************************************************************************/
 fsp_err_t R_IWDT_CallbackSet (wdt_ctrl_t * const          p_ctrl,
                               void (                    * p_callback)(wdt_callback_args_t *),
-                              void const * const          p_context,
+                              void * const                p_context,
                               wdt_callback_args_t * const p_callback_memory)
 {
     iwdt_instance_ctrl_t * p_instance_ctrl = (iwdt_instance_ctrl_t *) p_ctrl;

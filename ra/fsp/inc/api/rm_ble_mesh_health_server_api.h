@@ -55,7 +55,7 @@ typedef enum e_rm_ble_mesh_health_server_events
 /** Mesh model health server callback parameter definition */
 typedef struct st_rm_ble_mesh_model_health_callback_args
 {
-    void const * p_context;
+    void * p_context;
     rm_ble_mesh_access_model_handle_t * p_handle;   ///< Access model handle.
     rm_ble_mesh_health_server_events_t  event_type; ///< Application events defined for Health Server Model.
     uint8_t * p_event_data;                         ///< Event data.
@@ -94,7 +94,7 @@ typedef struct st_rm_ble_mesh_health_server_cfg
     uint32_t num_self_tests;                                   ///< Number of self test.
 
     void (* p_callback)(rm_ble_mesh_model_health_callback_args_t * p_args);
-    void const * p_context;                                    ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                                    ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                     ///< Placeholder for user extension.
 } rm_ble_mesh_health_server_cfg_t;
 

@@ -64,7 +64,7 @@ WIFIReturnCode_t WIFI_Off (void)
  *
  * The Wi-Fi should stay connected when the same Access Point it is currently connected to
  * is specified. Otherwise, the Wi-Fi should disconnect and connect to the new Access Point
- * specified. If the new Access Point specifed has invalid parameters, then the Wi-Fi should be
+ * specified. If the new Access Point specified has invalid parameters, then the Wi-Fi should be
  * disconnected.
  *
  * @param[in] pxNetworkParams Configuration to join AP.

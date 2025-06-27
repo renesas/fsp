@@ -46,10 +46,10 @@ typedef struct st_rm_hs400x_init_process_params
 /** HS400x Control Block */
 typedef struct rm_hs400x_instance_ctrl
 {
-    uint32_t                        open;                          ///< Open flag
-    rm_hs400x_cfg_t const         * p_cfg;                         ///< Pointer to HS400X Configuration
-    rm_comms_instance_t const     * p_comms_i2c_instance;          ///< Pointer of I2C Communications Middleware instance structure
-    void const                    * p_context;                     ///< Pointer to the user-provided context
+    uint32_t                    open;                              ///< Open flag
+    rm_hs400x_cfg_t const     * p_cfg;                             ///< Pointer to HS400X Configuration
+    rm_comms_instance_t const * p_comms_i2c_instance;              ///< Pointer of I2C Communications Middleware instance structure
+    void * p_context;                                              ///< Pointer to the user-provided context
     rm_hs400x_init_process_params_t init_process_params;           ///< For the initialization process.
     uint8_t       resolution_register;                             ///< Register for temperature and humidity measurement resolution settings
     uint8_t       periodic_measurement_register[2];                ///< Register for periodic measurement settings

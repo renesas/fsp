@@ -55,33 +55,44 @@ fsp_err_t r_mipi_phy_open (mipi_phy_ctrl_t * const p_api_ctrl, mipi_phy_cfg_t co
 {
     mipi_phy_ctrl_t * p_ctrl = p_api_ctrl;
 
+    /* Set DSI/CSI Mode setting */
+#if BSP_FEATURE_MIPI_CSI_IS_AVAILABLE
+    R_MIPI_PHY->DPHYMDC_b.MASTEREN = p_cfg->dsi_mode;
+#endif
+
     /* Set DPHYREFCR to match PCLKA */
     uint32_t pclka_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKA);
-    R_DPHYCNT->DPHYREFCR_b.RFREQ = (uint8_t) ((pclka_hz / MIPI_DSI_PRV_1MHZ) - 1);
+    R_MIPI_PHY->DPHYREFCR_b.RFREQ = (uint8_t) ((pclka_hz / MIPI_DSI_PRV_1MHZ) - 1);
 
     /* Start D-PHY LDO and wait for startup */
-    R_DPHYCNT->DPHYPWRCR_b.PWRSEN = 1;
-    FSP_HARDWARE_REGISTER_WAIT((R_DPHYCNT->DPHYSFR & R_DPHYCNT_DPHYSFR_PWRSF_Msk), R_DPHYCNT_DPHYSFR_PWRSF_Msk);
+    R_MIPI_PHY->DPHYPWRCR_b.PWRSEN = 1;
+    FSP_HARDWARE_REGISTER_WAIT((R_MIPI_PHY->DPHYSFR & R_MIPI_PHY_DPHYSFR_PWRSF_Msk), R_MIPI_PHY_DPHYSFR_PWRSF_Msk);
 
-    /* Configure D-PHY PLL and LP frequency divider */
-    R_DPHYCNT->DPHYPLFCR          = p_cfg->pll_settings.raw;
-    R_DPHYCNT->DPHYESCCR_b.ESCDIV = p_cfg->lp_divisor;
+    /* Do not enable PLL for MIPI CSI */
+#if BSP_FEATURE_MIPI_CSI_IS_AVAILABLE
+    if (p_cfg->dsi_mode)
+#endif
+    {
+        /* Configure D-PHY PLL and LP frequency divider */
+        R_MIPI_PHY->DPHYPLFCR          = p_cfg->pll_settings.raw;
+        R_MIPI_PHY->DPHYESCCR_b.ESCDIV = p_cfg->lp_divisor;
 
-    /* Start D-PHY PLL and wait for startup */
-    R_DPHYCNT->DPHYPLOCR_b.PLLSTP = 0;
-    FSP_HARDWARE_REGISTER_WAIT((R_DPHYCNT->DPHYSFR & R_DPHYCNT_DPHYSFR_PLLSF_Msk), R_DPHYCNT_DPHYSFR_PLLSF_Msk);
+        /* Start D-PHY PLL and wait for startup */
+        R_MIPI_PHY->DPHYPLOCR_b.PLLSTP = 0;
+        FSP_HARDWARE_REGISTER_WAIT((R_MIPI_PHY->DPHYSFR & R_MIPI_PHY_DPHYSFR_PLLSF_Msk), R_MIPI_PHY_DPHYSFR_PLLSF_Msk);
+    }
 
     /* Set D-PHY timing parameters */
     mipi_phy_timing_t const * p_timing = p_cfg->p_timing;
-    R_DPHYCNT->DPHYTIM1 = p_timing->t_init;
-    R_DPHYCNT->DPHYTIM2 = p_timing->t_clk_prep;
-    R_DPHYCNT->DPHYTIM3 = p_timing->t_hs_prep;
-    R_DPHYCNT->DPHYTIM4 = p_timing->dphytim4;
-    R_DPHYCNT->DPHYTIM5 = p_timing->dphytim5;
-    R_DPHYCNT->DPHYTIM6 = p_timing->t_lp_exit;
+    R_MIPI_PHY->DPHYTIM1 = p_timing->t_init;
+    R_MIPI_PHY->DPHYTIM2 = p_timing->dphytim2;
+    R_MIPI_PHY->DPHYTIM3 = p_timing->dphytim3;
+    R_MIPI_PHY->DPHYTIM4 = p_timing->dphytim4;
+    R_MIPI_PHY->DPHYTIM5 = p_timing->dphytim5;
+    R_MIPI_PHY->DPHYTIM6 = p_timing->t_lp_exit;
 
     /* Enable D-PHY */
-    R_DPHYCNT->DPHYOCR_b.DPHYEN = 1U;
+    R_MIPI_PHY->DPHYOCR_b.DPHYEN = 1U;
 
     /* Keep track of p_cfg struct */
     p_ctrl->p_cfg = p_cfg;
@@ -106,13 +117,13 @@ fsp_err_t r_mipi_phy_close (mipi_phy_ctrl_t * const p_api_ctrl)
     mipi_phy_ctrl_t * p_ctrl = p_api_ctrl;
 
     /* Disable D-PHY */
-    R_DPHYCNT->DPHYOCR_b.DPHYEN = 0;
+    R_MIPI_PHY->DPHYOCR_b.DPHYEN = 0;
 
     /* Disable D-PHY PLL */
-    R_DPHYCNT->DPHYPLOCR_b.PLLSTP = 1;
+    R_MIPI_PHY->DPHYPLOCR_b.PLLSTP = 1;
 
     /* Disable MIPI LDO */
-    R_DPHYCNT->DPHYPWRCR_b.PWRSEN = 0;
+    R_MIPI_PHY->DPHYPWRCR_b.PWRSEN = 0;
 
     /* Set control block to closed */
     p_ctrl->open = 0U;

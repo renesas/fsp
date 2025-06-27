@@ -71,36 +71,36 @@ typedef enum e_i3c_common_command_code
     I3C_CCC_BROADCAST_MLANE     = (0x2D), ///< Multi-Lane Data Transfer Control.
 
     /* Direct Common Command Codes */
-    I3C_CCC_DIRECT_ENEC      = (0x80),   ///< Enable Slave initiated events.
-    I3C_CCC_DIRECT_DISEC     = (0x81),   ///< Disable Slave initiated events.
-    I3C_CCC_DIRECT_ENTAS0    = (0x82),   ///< Enter Activity State 0.
-    I3C_CCC_DIRECT_ENTAS1    = (0x83),   ///< Enter Activity State 1.
-    I3C_CCC_DIRECT_ENTAS2    = (0x84),   ///< Enter Activity State 2.
-    I3C_CCC_DIRECT_ENTAS3    = (0x85),   ///< Enter Activity State 3.
-    I3C_CCC_DIRECT_RSTDAA    = (0x86),   ///< Reset Dynamic Address Assignment (DEPRECATED v1.0).
-    I3C_CCC_DIRECT_SETDASA   = (0x87),   ///< Set Dynamic Address from Static Address.
-    I3C_CCC_DIRECT_SETNEWDA  = (0x88),   ///< Set New Dynamic Address.
-    I3C_CCC_DIRECT_SETMWL    = (0x89),   ///< Set Max Write Length.
-    I3C_CCC_DIRECT_SETMRL    = (0x8A),   ///< Set Max Read Length.
-    I3C_CCC_DIRECT_GETMWL    = (0x8B),   ///< Get Max Write Length.
-    I3C_CCC_DIRECT_GETMRL    = (0x8C),   ///< Get Max Read Length.
-    I3C_CCC_DIRECT_GETPID    = (0x8D),   ///< Get Provisional ID.
-    I3C_CCC_DIRECT_GETBCR    = (0x8E),   ///< Get Bus Characteristic Register.
-    I3C_CCC_DIRECT_GETDCR    = (0x8F),   ///< Get Device Characteristic Register.
-    I3C_CCC_DIRECT_GETSTATUS = (0x90),   ///< Get Device Status.
-    I3C_CCC_DIRECT_GETACCMST = (0x91),   ///< Get Accept Mastership.
-    I3C_CCC_DIRECT_ENDXFER   = (0x92),   ///< Data Transfer Ending Procedure Control.
-    I3C_CCC_DIRECT_SETBRGTGT = (0x93),   ///< Set Bridge Targets.
-    I3C_CCC_DIRECT_GETMXDS   = (0x94),   ///< Get Max Data Speed.
-    I3C_CCC_DIRECT_GETHDRCAP = (0x95),   ///< Get HDR Capability.
-    I3C_CCC_DIRECT_SETROUTE  = (0x96),   ///< Set Route.
-    I3C_CCC_DIRECT_D2DXFER   = (0x97),   ///< Device to Device(s) Tunneling Control.
-    I3C_CCC_DIRECT_SETXTIME  = (0x98),   ///< Set Exchange Timing Information.
-    I3C_CCC_DIRECT_GETXTIME  = (0x99),   ///< Get Exchange Timing Information.
-    I3C_CCC_DIRECT_RSTACT    = (0x9A),   ///< Reset Slave Action.
-    I3C_CCC_DIRECT_SETGRPA   = (0x9B),   ///< Set Group Address.
-    I3C_CCC_DIRECT_RSTGRPA   = (0x9C),   ///< Reset Group Address.
-    I3C_CCC_DIRECT_MLANE     = (0x9D),   ///< Multi-Lane Data Transfer Control.
+    I3C_CCC_DIRECT_ENEC      = (0x80),    ///< Enable Slave initiated events.
+    I3C_CCC_DIRECT_DISEC     = (0x81),    ///< Disable Slave initiated events.
+    I3C_CCC_DIRECT_ENTAS0    = (0x82),    ///< Enter Activity State 0.
+    I3C_CCC_DIRECT_ENTAS1    = (0x83),    ///< Enter Activity State 1.
+    I3C_CCC_DIRECT_ENTAS2    = (0x84),    ///< Enter Activity State 2.
+    I3C_CCC_DIRECT_ENTAS3    = (0x85),    ///< Enter Activity State 3.
+    I3C_CCC_DIRECT_RSTDAA    = (0x86),    ///< Reset Dynamic Address Assignment (DEPRECATED v1.0).
+    I3C_CCC_DIRECT_SETDASA   = (0x87),    ///< Set Dynamic Address from Static Address.
+    I3C_CCC_DIRECT_SETNEWDA  = (0x88),    ///< Set New Dynamic Address.
+    I3C_CCC_DIRECT_SETMWL    = (0x89),    ///< Set Max Write Length.
+    I3C_CCC_DIRECT_SETMRL    = (0x8A),    ///< Set Max Read Length.
+    I3C_CCC_DIRECT_GETMWL    = (0x8B),    ///< Get Max Write Length.
+    I3C_CCC_DIRECT_GETMRL    = (0x8C),    ///< Get Max Read Length.
+    I3C_CCC_DIRECT_GETPID    = (0x8D),    ///< Get Provisional ID.
+    I3C_CCC_DIRECT_GETBCR    = (0x8E),    ///< Get Bus Characteristic Register.
+    I3C_CCC_DIRECT_GETDCR    = (0x8F),    ///< Get Device Characteristic Register.
+    I3C_CCC_DIRECT_GETSTATUS = (0x90),    ///< Get Device Status.
+    I3C_CCC_DIRECT_GETACCMST = (0x91),    ///< Get Accept Mastership.
+    I3C_CCC_DIRECT_ENDXFER   = (0x92),    ///< Data Transfer Ending Procedure Control.
+    I3C_CCC_DIRECT_SETBRGTGT = (0x93),    ///< Set Bridge Targets.
+    I3C_CCC_DIRECT_GETMXDS   = (0x94),    ///< Get Max Data Speed.
+    I3C_CCC_DIRECT_GETHDRCAP = (0x95),    ///< Get HDR Capability.
+    I3C_CCC_DIRECT_SETROUTE  = (0x96),    ///< Set Route.
+    I3C_CCC_DIRECT_D2DXFER   = (0x97),    ///< Device to Device(s) Tunneling Control.
+    I3C_CCC_DIRECT_SETXTIME  = (0x98),    ///< Set Exchange Timing Information.
+    I3C_CCC_DIRECT_GETXTIME  = (0x99),    ///< Get Exchange Timing Information.
+    I3C_CCC_DIRECT_RSTACT    = (0x9A),    ///< Reset Slave Action.
+    I3C_CCC_DIRECT_SETGRPA   = (0x9B),    ///< Set Group Address.
+    I3C_CCC_DIRECT_RSTGRPA   = (0x9C),    ///< Reset Group Address.
+    I3C_CCC_DIRECT_MLANE     = (0x9D),    ///< Multi-Lane Data Transfer Control.
 } i3c_common_command_code_t;
 
 /** I3C Events that result in a callback. */
@@ -313,7 +313,7 @@ typedef struct s_i3c_callback_args
     i3c_ibi_type_t ibi_type;                ///< The type of IBI that has been received.
     uint8_t        ibi_address;             ///< The address of the device that sent the IBI.
     uint8_t        command_code;            ///< The command code of the received command.
-    void const   * p_context;               ///< User defined context.
+    void         * p_context;               ///< User defined context.
 } i3c_callback_args_t;
 
 /** User configuration structure, used in open function */
@@ -326,13 +326,13 @@ typedef struct st_i3c_cfg
     i3c_device_type_t device_type;
 
     /** Transfer API support. */
-    transfer_instance_t const * p_transfer_tx;                ///< Transfer instance for I3C transmit. Set to NULL if unused.
-    transfer_instance_t const * p_transfer_rx;                ///< Transfer instance for I3C receive. Set to NULL if unused.
+    transfer_instance_t const * p_transfer_tx; ///< Transfer instance for I3C transmit. Set to NULL if unused.
+    transfer_instance_t const * p_transfer_rx; ///< Transfer instance for I3C receive. Set to NULL if unused.
 
     /** Pointer to the user callback. */
     void (* p_callback)(i3c_callback_args_t const * const p_args);
 
-    void const * p_context;            ///< Pointer to the user-provided context
+    void * p_context;                  ///< Pointer to the user-provided context
 
     /** Pointer to extended configuration. */
     void const * p_extend;
@@ -435,7 +435,7 @@ typedef struct st_i3c_api
     /**
      * In master mode: Start a write transfer. When the transfer is completed send a stop condition or a repeated-start.
      * In slave mode:  Set the write buffer and configure the number of bytes that will be transferred before the the transfer
-     *                 is ended by the slave via the 'T' bit or by the master issueing a stop condition.
+     *                 is ended by the slave via the 'T' bit or by the master issuing a stop condition.
      *
      *
      * @param[in]   p_ctrl     Control block set in @ref i3c_api_t::open call for this instance.

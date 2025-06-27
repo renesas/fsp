@@ -4,12 +4,6 @@
 * SPDX-License-Identifier: BSD-3-Clause
 */
 
-/**
- * \addtogroup grp_ptx_api_plat_timer PTX NSC Platform API Timer
- *
- * @{
- */
-
 #ifndef COMPS_PLAT_PTXPLAT_TIMER_H_
  #define COMPS_PLAT_PTXPLAT_TIMER_H_
 
@@ -139,5 +133,3 @@ ptxStatus_t ptxPLAT_TIMER_Deinit(ptxPlatTimer_t * timer);
  #endif
 
 #endif                                 /* Guard */
-
-/** @} */

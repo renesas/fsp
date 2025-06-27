@@ -89,124 +89,14 @@
 #if ((USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST)
 
 /* Pipe number of USB Host transfer.(Read pipe/Write pipe) */
-static const uint8_t g_usb_pipe_host[] =
-{
-    /* READ pipe *//* WRITE pipe */
-    /* IN pipe *//* OUT pipe */
- #if defined(USB_CFG_HCDC_USE)
-    USB_CFG_HCDC_BULK_IN,  USB_CFG_HCDC_BULK_OUT,  /* HCDC: Address 1 */
-    USB_CFG_HCDC_BULK_IN,  USB_CFG_HCDC_BULK_OUT,  /* HCDC: Address 2 using Hub */
-    USB_CFG_HCDC_BULK_IN2, USB_CFG_HCDC_BULK_OUT2, /* HCDC: Address 3 using Hub */
-    USB_NULL,              USB_NULL,
-    USB_CFG_HCDC_INT_IN,   USB_NULL,               /* HCDCC: Address 1 */
-    USB_CFG_HCDC_INT_IN,   USB_NULL,               /* HCDCC: Address 2 using Hub */
-    USB_CFG_HCDC_INT_IN2,  USB_NULL,               /* HCDCC: Address 3 using Hub */
-    USB_NULL,              USB_NULL,
- #else                                             /* defined(USB_CFG_HCDC_USE) */
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
- #endif                                          /* defined(USB_CFG_HCDC_USE) */
-
- #if defined(USB_CFG_HHID_USE)
-    USB_CFG_HHID_INT_IN,   USB_CFG_HHID_INT_OUT, /* HHID: Address 1 */
-    USB_CFG_HHID_INT_IN,   USB_CFG_HHID_INT_OUT, /* HHID: Address 2 using Hub */
-    USB_CFG_HHID_INT_IN2,  USB_NULL,             /* HHID: Address 3 using Hub */
-    USB_CFG_HHID_INT_IN3,  USB_NULL,             /* HHID: Address 4 using Hub */
- #else                                           /* defined(USB_CFG_HHID_USE) */
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
- #endif                                           /* defined(USB_CFG_HHID_USE) */
-
- #if defined(USB_CFG_HPRN_USE)
-    USB_CFG_HPRN_BULK_IN,  USB_CFG_HPRN_BULK_OUT, /* HPRN: Address 1 */
-    USB_CFG_HPRN_BULK_IN,  USB_CFG_HPRN_BULK_OUT, /* HPRN: Address 2 using Hub */
-    USB_NULL,              USB_NULL,              /* HPRN: Address 3 using Hub */
-    USB_NULL,              USB_NULL,              /* HPRN: Address 4 using Hub */
- #else                                            /* defined(USB_CFG_HPRN_USE) */
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
- #endif                                          /* defined(USB_CFG_HPRN_USE) */
-
- #if defined(USB_CFG_HUVC_USE)
-    USB_CFG_HUVC_ISO_IN,   USB_CFG_HUVC_ISO_OUT, /* HPRN: Address 1 */
-    USB_CFG_HUVC_ISO_IN,   USB_CFG_HUVC_ISO_OUT, /* HPRN: Address 2 using Hub */
-    USB_NULL,              USB_NULL,             /* HPRN: Address 3 using Hub */
-    USB_NULL,              USB_NULL,             /* HPRN: Address 4 using Hub */
- #else                                           /* defined(USB_CFG_HPRN_USE) */
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
- #endif                                          /* defined(USB_CFG_HPRN_USE) */
-
- #if defined(USB_CFG_HAUD_USE)
-    USB_CFG_HAUD_ISO_IN,   USB_CFG_HAUD_ISO_OUT, /* HAUD: Address 1 */
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
- #else                                           /* defined(USB_CFG_HAUD_USE) */
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
-    USB_NULL,              USB_NULL,
- #endif                                /* defined(USB_CFG_HAUD_USE) */
-};
-#endif  /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
+uint8_t g_usb_pipe_host[USB_MAX_PIPE_POS_HOST];
+#endif                                 /* (USB_CFG_MODE & USB_CFG_HOST) == USB_CFG_HOST */
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
-static const uint8_t g_usb_pipe_peri[] =
-{
-    /* OUT pipe */          /* IN pipe */
- #if defined(USB_CFG_PCDC_USE)
-    USB_CFG_PCDC_BULK_OUT,  USB_CFG_PCDC_BULK_IN,  /* USB_PCDC   (0) */
-    USB_NULL,               USB_CFG_PCDC_INT_IN,   /* USB_PCDCC  (1) */
-    USB_CFG_PCDC_BULK_OUT2, USB_CFG_PCDC_BULK_IN2, /* USB_PCDC2  (2) */
-    USB_NULL,               USB_CFG_PCDC_INT_IN2,  /* USB_PCDCC2 (3) */
- #else                                             /* defined(USB_CFG_PCDC_USE) */
-    USB_NULL,               USB_NULL,
-    USB_NULL,               USB_NULL,
-    USB_NULL,               USB_NULL,
-    USB_NULL,               USB_NULL,
- #endif                                           /* defined(USB_CFG_PCDC_USE) */
 
- #if defined(USB_CFG_PHID_USE)
-  #if (BSP_CFG_RTOS != 1)
-    USB_CFG_PHID_INT_OUT,   USB_CFG_PHID_INT_IN,  /* USB_PHID  (4) */
-    USB_CFG_PHID_INT_OUT2,  USB_CFG_PHID_INT_IN2, /* USB_PHID2 (5) */
-  #else /* #if (BSP_CFG_RTOS != 1) */
-    USB_CFG_PHID_INT_OUT,   USB_CFG_PHID_INT_IN,  /* USB_PHID  (4) */
-    USB_NULL,               USB_NULL,             /* USB_PHID2 (5) */
-  #endif /* #if (BSP_CFG_RTOS != 1) */
- #else                                            /* defined(USB_CFG_PHID_USE) */
-    USB_NULL,               USB_NULL,
-    USB_NULL,               USB_NULL,
- #endif                                           /* defined(USB_CFG_PHID_USE) */
-
- #if defined(USB_CFG_PAUD_USE)
-    USB_CFG_PAUD_ISO_OUT,   USB_CFG_PAUD_ISO_IN,  /* USB_PAUD (6) */
- #else                                            /* defined(USB_CFG_PAUD_USE) */
-    USB_NULL,               USB_NULL,
- #endif                                           /* defined(USB_CFG_PAUD_USE) */
-
- #if defined(USB_CFG_PPRN_USE)
-    USB_CFG_PPRN_BULK_OUT,  USB_CFG_PPRN_BULK_IN, /* USB_PPRN (7) */
- #else                                            /* defined(USB_CFG_PPRN_USE) */
-    USB_NULL,               USB_NULL,
- #endif                                           /* defined(USB_CFG_PPRN_USE) */
-
-    USB_NULL,               USB_NULL,             /* USB_DFU (8) */
-};
-#endif  /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
+/* Pipe number of USB Peri transfer.(Read pipe/Write pipe) */
+uint8_t g_usb_pipe_peri[USB_MAX_PIPE_POS_PERI];
+#endif                                 /* (USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI */
 
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -746,7 +636,7 @@ usb_er_t usb_data_write (usb_instance_ctrl_t * p_ctrl, uint8_t const * const buf
  #endif /* #if (BSP_CFG_RTOS != 0) */
 
  #if defined(USB_CFG_PCDC_USE)
-        if (USB_CFG_PCDC_INT_IN != pipe)
+        if (g_usb_pcdc_int_in_pipe[p_ctrl->module_number] != pipe)
         {
             p_tran_data->p_tranadr = buf;  /* Data address */
             p_tran_data->tranlen   = size; /* Data Size */

@@ -44,7 +44,7 @@ int32_t main(void);
 /*******************************************************************************************************************//**
  * MCU starts executing here out of reset. Main stack pointer is set up already.
  **********************************************************************************************************************/
-BSP_SECTION_FLASH_GAP void Reset_Handler (void)
+void Reset_Handler (void)
 {
     /* Initialize system using BSP. */
     SystemInit();
@@ -61,7 +61,7 @@ BSP_SECTION_FLASH_GAP void Reset_Handler (void)
 /*******************************************************************************************************************//**
  * Default exception handler.
  **********************************************************************************************************************/
-BSP_SECTION_FLASH_GAP void Default_Handler (void)
+void Default_Handler (void)
 {
     /** A error has occurred. The user will need to investigate the cause. Common problems are stack corruption
      *  or use of an invalid pointer. Use the Fault Status window in e2 studio or manually check the fault status
@@ -71,15 +71,10 @@ BSP_SECTION_FLASH_GAP void Default_Handler (void)
 }
 
 /* Main stack */
-static uint8_t g_main_stack[BSP_CFG_STACK_MAIN_BYTES + BSP_TZ_STACK_SEAL_SIZE] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT)
-BSP_PLACE_IN_SECTION(BSP_SECTION_STACK);
+uint8_t g_main_stack[BSP_CFG_STACK_MAIN_BYTES + BSP_TZ_STACK_SEAL_SIZE] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT);
 
 /* Heap */
-#if (BSP_CFG_HEAP_BYTES > 0)
-
-BSP_DONT_REMOVE static uint8_t g_heap[BSP_CFG_HEAP_BYTES] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT) \
-    BSP_PLACE_IN_SECTION(BSP_SECTION_HEAP);
-#endif
+BSP_DONT_REMOVE uint8_t g_heap[BSP_CFG_HEAP_BYTES] BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT);
 
 /* All system exceptions in the vector table are weak references to Default_Handler. If the user wishes to handle
  * these exceptions in their code they should define their own function with the same name.
@@ -113,7 +108,7 @@ void PendSV_Handler(void) WEAK_REF_ATTRIBUTE;
 void SysTick_Handler(void) WEAK_REF_ATTRIBUTE;
 
 /* Vector table. */
-BSP_DONT_REMOVE const exc_ptr_t __Vectors[BSP_CORTEX_VECTOR_TABLE_ENTRIES] BSP_PLACE_IN_SECTION(
+BSP_DONT_REMOVE const exc_ptr_t __VECTOR_TABLE[BSP_CORTEX_VECTOR_TABLE_ENTRIES] BSP_PLACE_IN_SECTION(
     BSP_SECTION_FIXED_VECTORS) =
 {
     (exc_ptr_t) (&g_main_stack[0] + BSP_CFG_STACK_MAIN_BYTES), /*      Initial Stack Pointer     */

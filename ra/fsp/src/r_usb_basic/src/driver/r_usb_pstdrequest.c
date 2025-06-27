@@ -1930,7 +1930,7 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
             (USB_PCDC_SET_CONTROL_LINE_STATE == (req->request_type & USB_BREQUEST)))
   #else
         if (USB_MASS_STORAGE_RESET == (req->request_type & USB_BREQUEST))
-  #endif                                /* (BSP_CFG_RTOS == 1) */
+  #endif                               /* (BSP_CFG_RTOS == 1) */
         {
   #if (BSP_CFG_RTOS == 1)
             usb_cstd_set_buf(p_utr, (uint16_t) USB_PIPE0);
@@ -1961,7 +1961,7 @@ void usb_peri_class_request_wnss (usb_setup_t * req, usb_utr_t * p_utr)
         (USB_PCDC_SET_CONTROL_LINE_STATE != (req->request_type & USB_BREQUEST)))
   #else
     if (USB_MASS_STORAGE_RESET != (req->request_type & USB_BREQUEST))
-  #endif                                /* (BSP_CFG_RTOS == 1) */
+  #endif                                                   /* (BSP_CFG_RTOS == 1) */
     {
         usb_pstd_ctrl_end((uint16_t) USB_CTRL_END, p_utr); /* End control transfer. */
     }

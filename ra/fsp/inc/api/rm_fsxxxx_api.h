@@ -61,7 +61,7 @@ typedef enum e_rm_fsxxxx_event
 /** FSXXXX callback parameter definition */
 typedef struct st_rm_fsxxxx_callback_args
 {
-    void const      * p_context;
+    void            * p_context;
     rm_fsxxxx_event_t event;
 } rm_fsxxxx_callback_args_t;
 
@@ -89,8 +89,8 @@ typedef struct st_rm_fsxxxx_data
 typedef struct st_rm_fsxxxx_cfg
 {
     rm_comms_instance_t const * p_instance;                  ///< Pointer to Communications Middleware instance.
-    void const                * p_context;                   ///< Pointer to the user-provided context.
-    void const                * p_extend;                    ///< Pointer to extended configuration by instance of interface.
+    void       * p_context;                                  ///< Pointer to the user-provided context.
+    void const * p_extend;                                   ///< Pointer to extended configuration by instance of interface.
     void (* p_callback)(rm_fsxxxx_callback_args_t * p_args); ///< Pointer to callback function.
 } rm_fsxxxx_cfg_t;
 

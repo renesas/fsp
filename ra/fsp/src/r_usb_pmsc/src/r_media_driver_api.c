@@ -58,11 +58,11 @@ rm_block_media_instance_t * gp_block_media_instance;
 /*******************************************************************************************************************//**
  * Function Name: r_usb_pmsc_media_initialize
  * @brief   This function initializes data structures and variables that are used by the media device to support its operation for the first time.
- * Arguments    : void const * p_context
+ * Arguments    : void * p_context
  * @retval FSP_SUCCESS        Success
  * @retval FSP_ERR_USB_FAILED The function could not be completed successfully.
  ***********************************************************************************************************************/
-fsp_err_t r_usb_pmsc_media_initialize (void const * p_context)
+fsp_err_t r_usb_pmsc_media_initialize (void * p_context)
 {
     fsp_err_t               err_code = FSP_ERR_USB_FAILED;
     rm_block_media_status_t status;

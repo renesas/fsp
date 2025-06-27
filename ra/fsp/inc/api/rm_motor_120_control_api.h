@@ -50,8 +50,8 @@ typedef enum e_motor_120_control_event
 /** Callback function parameter data */
 typedef struct st_motor_120_control_callback_args
 {
-    motor_120_control_event_t event;     ///< Event trigger
-    void const              * p_context; ///< Placeholder for user data.
+    motor_120_control_event_t event;   ///< Event trigger
+    void * p_context;                  ///< Placeholder for user data.
 } motor_120_control_callback_args_t;
 
 /** Motor parameter for motor 120 control */
@@ -157,7 +157,7 @@ typedef struct st_motor_120_control_cfg
     motor_120_control_motor_parameter_t motor_param;                 ///< Motor parameter
 
     void (* p_callback)(motor_120_control_callback_args_t * p_args); ///< Callback function
-    void const * p_context;                                          ///< Placeholder for user data.
+    void       * p_context;                                          ///< Placeholder for user data.
     void const * p_extend;                                           ///< Extended configurations
 } motor_120_control_cfg_t;
 

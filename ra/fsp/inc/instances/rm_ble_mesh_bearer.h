@@ -33,7 +33,7 @@ typedef struct st_rm_ble_mesh_bearer_instance_ctrl
 {
     uint32_t open;                          // Indicates whether the open() API has been successfully called.
     rm_ble_mesh_bearer_cfg_t const * p_cfg; // Pointer to initial configurations.
-    void const * p_context;                 // Placeholder for user data.
+    void * p_context;                       // Placeholder for user data.
 } rm_ble_mesh_bearer_instance_ctrl_t;
 
 /**********************************************************************************************************************

@@ -42,6 +42,8 @@
 #include "bootutil/bootutil_public.h"
 #include "sysflash/sysflash.h"
 
+#include "bsp_linker_info.h"
+
 #define RM_AWS_OTA_PAL_MCUBOOT_OPEN             (0x414F5441U)
 
 #ifndef RM_AWS_OTA_PAL_MCUBOOT_CFG_CALLBACK
@@ -53,7 +55,7 @@ uint8_t rm_aws_ota_pal_mcuboot_filepath_to_slot_id (uint8_t * file_path, uint16_
     FSP_PARAMETER_NOT_USED(file_path);
     FSP_PARAMETER_NOT_USED(max_file_path);
 
-    return FLASH_AREA_IMAGE_1;
+    return 2U;                         /* Default is FLASH_AREA_0S_ID */
 }
 
 #endif
@@ -198,6 +200,11 @@ OtaPalStatus_t otaPal_ActivateNewImage (OtaFileContext_t * const pFileContext)
     FSP_PARAMETER_NOT_USED(pFileContext);
 
     __NVIC_SystemReset();
+
+#if !defined(__ICCARM__)
+
+    return OtaPalActivateFailed;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -374,6 +381,11 @@ OtaPalStatus_t otaPal_ResetDevice (OtaFileContext_t * const pFileContext)
     FSP_PARAMETER_NOT_USED(pFileContext);
 
     __NVIC_SystemReset();
+
+#if !defined(__ICCARM__)
+
+    return OtaPalActivateFailed;
+#endif
 }
 
 /*******************************************************************************************************************//**

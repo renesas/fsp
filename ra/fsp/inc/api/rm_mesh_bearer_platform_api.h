@@ -79,7 +79,7 @@ typedef struct st_rm_mesh_bearer_platform_cfg_t
     uint32_t channel;                                                  ///< Select a channel corresponding to the channel number of the hardware.
     rm_mesh_bearer_platform_device_address_type_t device_address_type; ///< Device address type.
     rm_ble_mesh_bearer_instance_t const         * p_bearer_instance;   ///< Instance structure of BLE Mesh Bearer.
-    void const * p_context;                                            ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
+    void       * p_context;                                            ///< Placeholder for user data.  Passed to the user callback in ble_abs_callback_args_t.
     void const * p_extend;                                             ///< Placeholder for user extension.
 } rm_mesh_bearer_platform_cfg_t;
 

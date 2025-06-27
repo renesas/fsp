@@ -137,26 +137,24 @@ static const hw_sce_ecc_scalarmultiplication_t g_ecp_scalar_multiplication_looku
         HW_SCE_ECC_256WrappedScalarMultiplication,
    #endif
   #endif
-  #if !BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
-   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
-    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+  #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
+   #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
         HW_SCE_ECC_384WrappedScalarMultiplication,
-    #endif
-    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+   #endif
+   #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_384_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
         HW_SCE_ECC_384WrappedScalarMultiplication,
-    #endif
    #endif
-   #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
-    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+  #endif
+  #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
+   #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_521_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_PLAINTEXT] =
         HW_SCE_ECC_521WrappedScalarMultiplication,
-    #endif
-    #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
+   #endif
+   #if PSA_CRYPTO_IS_WRAPPED_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_ECC_FORMAT)
     [RM_PSA_CRYPTO_ECP_LOOKUP_INDEX(ECC_521_PRIVATE_KEY_LENGTH_BITS)][RM_PSA_CRYPTO_ECC_KEY_WRAPPED] =
         HW_SCE_ECC_521WrappedScalarMultiplication,
-    #endif
    #endif
   #endif
 };
@@ -335,8 +333,6 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
    #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits) &&
         (ECC_521_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_25519_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
-   #elif BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
-    if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
    #else
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
    #endif
@@ -402,8 +398,7 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
             }
         }
 
-  #if !BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED
-   #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
+  #if defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED) || defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
         else if (ECC_384_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         {
             sce_ecc384_public_key_index_t public_key = {0};
@@ -421,16 +416,17 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
                 memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
             }
         }
-   #endif
+  #endif
 
-   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
-    #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
+  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+   #if defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
         else if (ECC_521_PRIVATE_KEY_LENGTH_BITS == grp->pbits)
         {
             sce_ecc521_public_key_index_t public_key = {0};
             if (FSP_SUCCESS !=
-                HW_SCE_GenerateEccP521RandomKeyIndexSub(p_domain_param, (uint32_t *) &public_key.value,
-                                                        (uint32_t *) wrapped_key))
+                HW_SCE_GenerateEccP521RandomKeyIndexSubAdaptor(&indata_key_type, p_domain_param,
+                                                               (uint32_t *) &public_key.value, (uint32_t *) wrapped_key,
+                                                               NULL))
             {
                 ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
             }
@@ -439,8 +435,8 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
                 memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
             }
         }
-    #endif
-    #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+   #endif
+   #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
         else if (MBEDTLS_ECP_DP_CURVE25519 == grp->id)
         {
             sce_ecc25519_public_key_index_t public_key = {0};
@@ -456,7 +452,6 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
                 memcpy(p_private_key_buff_32, wrapped_key, private_key_size_words * 4U);
             }
         }
-    #endif
    #endif
   #endif
 
@@ -509,9 +504,6 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     uint32_t * p_point_result_buff_R_32;
     uint32_t * p_common_buff_32;
     uint8_t    padding = 0U;
-  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
-    uint32_t indata_key_type = 0;
-  #endif
 
     /* Fail cleanly on curves that HW doesn't support.
      * Fail if the point co-ordinates are in Jacobian format (only Affine is supported).
@@ -618,16 +610,9 @@ int mbedtls_ecp_mul_restartable (mbedtls_ecp_group * grp,
     {
         ret = MBEDTLS_ERR_ECP_ALLOC_FAILED;
     }
-
-  #if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
-    else if (FSP_SUCCESS !=
-             p_hw_sce_ecc_scalarmultiplication(&curve_type, &indata_key_type, p_integer_buff_m_wrapped_32,
-                                               p_point_buff_P_32, p_domain_param, p_point_result_buff_R_32))
-  #else
     else if (FSP_SUCCESS !=
              p_hw_sce_ecc_scalarmultiplication(&curve_type, &cmd, p_integer_buff_m_wrapped_32, p_point_buff_P_32,
                                                p_domain_param, p_point_result_buff_R_32))
-  #endif
     {
         ret = MBEDTLS_ERR_ECP_BAD_INPUT_DATA;
     }

@@ -51,7 +51,7 @@ typedef struct st_rm_comms_uart_instance_ctrl
     rm_comms_uart_extended_cfg_t const * p_extend;          ///< Pointer to extended configuration structure
 
     void (* p_callback)(rm_comms_callback_args_t * p_args); ///< Pointer to callback that is called when a uart_event_t occurs.
-    void const * p_context;                                 ///< Pointer to context passed into callback function
+    void * p_context;                                       ///< Pointer to context passed into callback function
 } rm_comms_uart_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -73,7 +73,7 @@ fsp_err_t RM_COMMS_UART_WriteRead(rm_comms_ctrl_t * const            p_api_ctrl,
                                   rm_comms_write_read_params_t const write_read_params);
 fsp_err_t RM_COMMS_UART_CallbackSet(rm_comms_ctrl_t * const p_api_ctrl,
                                     void (                * p_callback)(rm_comms_callback_args_t *),
-                                    void const * const      p_context);
+                                    void * const            p_context);
 
 FSP_FOOTER
 

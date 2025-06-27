@@ -56,7 +56,7 @@ typedef struct st_da16xxx_transport_instance_ctrl
 
     /* Pointer to callback and optional working memory */
     bool (* p_callback)(at_transport_da16xxx_callback_args_t * p_args);                            ///< Pointer to callback function.
-    void const * p_context;                                                                        ///< Pointer to the user-provided context
+    void * p_context;                                                                              ///< Pointer to the user-provided context
 } at_transport_da16xxx_instance_ctrl_t;
 
 extern const char * g_at_transport_da16xxx_uart_cmd_baud;

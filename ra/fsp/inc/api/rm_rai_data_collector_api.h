@@ -88,7 +88,7 @@ typedef struct st_rai_data_collector_callback_args
     uint8_t  instance_id;                                  ///< Instance id
     uint32_t frame_buf_len;                                ///< Frame buffers shall have the same amount of data sample
     rai_data_collector_frame_buffer_t const * p_frame_buf; ///< Array of frame buffers
-    void const * p_context;                                ///< Pointer to the user-provided context
+    void * p_context;                                      ///< Pointer to the user-provided context
 } rai_data_collector_callback_args_t;
 
 /** Snapshot mode configuration  */
@@ -122,7 +122,7 @@ typedef struct st_rai_data_collector_cfg
 
     void (* p_callback)(rai_data_collector_callback_args_t const * p_args);             ///< Pointer to the callback function when data is collected
     void (* p_error_callback)(rai_data_collector_error_callback_args_t const * p_args); ///< Pointer to the callback function when there is an error
-    void const * p_context;                                                             ///< Pointer to the user-provided context
+    void * p_context;                                                                   ///< Pointer to the user-provided context
 } rai_data_collector_cfg_t;
 
 /** Data Collector control block.  Allocate an instance specific control block to pass into the Data Collector API calls.

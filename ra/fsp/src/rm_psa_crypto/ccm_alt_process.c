@@ -196,7 +196,7 @@ static int ccm_authetication_block_format (mbedtls_ccm_context * ctx,
 
     header_size += HW_SCE_AES_BLOCK_BYTE_SIZE;
 
-    if(ctx->add_len > 0U)
+    if (ctx->add_len > 0U)
     {
         b_format_buffer[header_size] = (unsigned char) ((ctx->add_len >> 8) & 0xFF);
         header_size++;
@@ -252,10 +252,14 @@ int sce_ccm_crypt_and_tag (mbedtls_ccm_context * ctx,
     /* CCM expects non-empty tag.
      * CCM* allows empty tag. For CCM* without tag, ignore plaintext length.
      */
-    if (tag_len == 0) {
-        if (mode == MBEDTLS_CCM_STAR_ENCRYPT || mode == MBEDTLS_CCM_STAR_DECRYPT) {
-        	length = 0;
-        } else {
+    if (tag_len == 0)
+    {
+        if ((mode == MBEDTLS_CCM_STAR_ENCRYPT) || (mode == MBEDTLS_CCM_STAR_DECRYPT))
+        {
+            length = 0;
+        }
+        else
+        {
             return MBEDTLS_ERR_CCM_BAD_INPUT;
         }
     }

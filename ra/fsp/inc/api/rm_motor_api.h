@@ -87,7 +87,7 @@ typedef enum e_motor_function_select
 /** callback function parameter data */
 typedef struct st_rm_motor_callback_args
 {
-    void const           * p_context;  ///< Placeholder for user data.
+    void                 * p_context;  ///< Placeholder for user data.
     motor_callback_event_t event;
 } motor_callback_args_t;
 
@@ -103,7 +103,7 @@ typedef struct st_motor_cfg
 
     /** Placeholder for user data.  Passed to the user callback in motor_callback_args_t. */
     void (* p_callback)(motor_callback_args_t * p_args);
-    void const * p_context;
+    void       * p_context;
     void const * p_extend;             ///< Placeholder for user extension.
 } motor_cfg_t;
 
@@ -144,7 +144,7 @@ typedef struct st_motor_api
     /** Set Error Information.
      *
      * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[in]  error        Happend error code
+     * @param[in]  error        Happened error code
      */
     fsp_err_t (* errorSet)(motor_ctrl_t * const p_ctrl, motor_error_t const error);
 
@@ -193,7 +193,7 @@ typedef struct st_motor_api
     /** Check the error occurrence
      *
      * @param[in]  p_ctrl       Pointer to control structure.
-     * @param[out] p_error      Pointer to get occured error
+     * @param[out] p_error      Pointer to get occurred error
      */
     fsp_err_t (* errorCheck)(motor_ctrl_t * const p_ctrl, uint16_t * const p_error);
 

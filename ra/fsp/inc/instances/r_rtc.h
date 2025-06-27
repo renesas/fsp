@@ -50,7 +50,7 @@ typedef struct st_rtc_ctrl
     void (* p_callback)(rtc_callback_args_t *); // Pointer to callback that is called when a rtc_event_t occurs.
     rtc_callback_args_t * p_callback_memory;    // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
 
-    void const * p_context;                     // Pointer to context to be passed into callback function
+    void * p_context;                           // Pointer to context to be passed into callback function
 } rtc_instance_ctrl_t;
 
 /**********************************************************************************************************************
@@ -78,7 +78,7 @@ fsp_err_t R_RTC_ErrorAdjustmentSet(rtc_ctrl_t * const p_ctrl, rtc_error_adjustme
 fsp_err_t R_RTC_InfoGet(rtc_ctrl_t * const p_ctrl, rtc_info_t * const p_rtc_info);
 fsp_err_t R_RTC_CallbackSet(rtc_ctrl_t * const          p_ctrl,
                             void (                    * p_callback)(rtc_callback_args_t *),
-                            void const * const          p_context,
+                            void * const                p_context,
                             rtc_callback_args_t * const p_callback_memory);
 fsp_err_t R_RTC_TimeCaptureSet(rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * const p_time_capture);
 fsp_err_t R_RTC_TimeCaptureGet(rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * const p_time_capture);

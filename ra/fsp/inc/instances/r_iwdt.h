@@ -31,8 +31,8 @@ FSP_HEADER
 /** IWDT control block. DO NOT INITIALIZE.  Initialization occurs when @ref wdt_api_t::open is called. */
 typedef struct st_iwdt_instance_ctrl
 {
-    uint32_t     wdt_open;                             ///< Indicates whether the open() API has been successfully called.
-    void const * p_context;                            ///< Placeholder for user data.  Passed to the user callback in wdt_callback_args_t.
+    uint32_t wdt_open;                                 ///< Indicates whether the open() API has been successfully called.
+    void   * p_context;                                ///< Placeholder for user data.  Passed to the user callback in wdt_callback_args_t.
 
     void (* p_callback)(wdt_callback_args_t * p_args); ///< Callback provided when a WDT NMI ISR occurs.
     wdt_callback_args_t * p_callback_memory;           // Pointer to non-secure memory that can be used to pass arguments to a callback in non-secure memory.
@@ -61,7 +61,7 @@ fsp_err_t R_IWDT_TimeoutGet(wdt_ctrl_t * const p_api_ctrl, wdt_timeout_values_t 
 
 fsp_err_t R_IWDT_CallbackSet(wdt_ctrl_t * const          p_ctrl,
                              void (                    * p_callback)(wdt_callback_args_t *),
-                             void const * const          p_context,
+                             void * const                p_context,
                              wdt_callback_args_t * const p_callback_memory);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */

@@ -12,14 +12,18 @@
 #include "flash_map_backend/flash_map_backend.h"
 #include "sysflash/sysflash.h"
 
-#if RM_MCUBOOT_DUAL_BANK_ENABLED
- #if BSP_FEATURE_FLASH_HP_VERSION > 0
-  #include "r_flash_hp.h"
-  #define R_FLASH_BankSwap                 R_FLASH_HP_BankSwap
- #else
-  #include "r_flash_lp.h"
-  #include "r_flash_lp_cfg.h"
-  #define R_FLASH_BankSwap                 R_FLASH_LP_BankSwap
+#if BSP_FEATURE_MRAM_IS_AVAILABLE
+ #include "r_mram.h"
+#else
+ #if RM_MCUBOOT_DUAL_BANK_ENABLED
+  #if BSP_FEATURE_FLASH_HP_VERSION > 0
+   #include "r_flash_hp.h"
+   #define R_FLASH_BankSwap                R_FLASH_HP_BankSwap
+  #else
+   #include "r_flash_lp.h"
+   #include "r_flash_lp_cfg.h"
+   #define R_FLASH_BankSwap                R_FLASH_LP_BankSwap
+  #endif
  #endif
 #endif
 
