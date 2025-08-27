@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: inc Directory Reference</title>
+<title>RA Flexible Software Package Documentation: Minimp3 Library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dir_b67a5e40b1fa4362e328cbefe7501b81.html','');});
+$(document).ready(function(){initNavTree('group___m_i_n_i_m_p3___p_o_r_t.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -237,17 +237,73 @@ $(document).ready(function(){initNavTree('dir_b67a5e40b1fa4362e328cbefe7501b81.h
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">inc Directory Reference</div>  </div>
+<div class="title">Minimp3 Library<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_u_d_i_o___m_o_d_u_l_e_s.html">Audio</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<p>Minimalistic, single-header library for decoding MP3. </p>
+<h1><a class="anchor" id="rm-minimp3-port-overview"></a>
+Overview</h1>
+<p>Integration of minimp3 library with FSP RA.</p>
+<h1><a class="anchor" id="rm-minimp3-port-usage"></a>
+Usage</h1>
+<p>For detailed usage of minimp3, please visit <a href="https://github.com/lieff/minimp3">https://github.com/lieff/minimp3</a>.</p>
+<h2>ARM Helium Support</h2>
+<p>Helium (with SIMD support) can be enabled to accelerate the decoding process on devices that support it.</p>
+<h2>Limitations</h2>
+<p><b>minimp3</b> requires an MCU with a <b>FPU (Floating-Point Unit)</b> to function properly. Devices without FPU capability will not be supported by this library.</p>
+<h2>How to use</h2>
+<p>To use minimp3 library, follow the steps below:</p>
+<ul>
+<li>In e2studio, add minimp3 stack by selecting <b>New Stack -&gt; Audio -&gt; Minimp3 Library Source</b>.</li>
+<li>Fix stack constraints and choose <b>Generate Project Content</b>.</li>
+<li>In your source code, remember to include <b>minimp3.h</b> or <b>minimp3_ex.h</b>.</li>
+</ul>
+<h1><a class="anchor" id="rm-minimp3-port-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for Lib</h2>
+The following build time configurations are defined in fsp_cfg/minimp3/minimp3_config.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Float Output</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Output PCM as float instead of short </td></tr>
+<tr class="tree_none">
+<td>SIMD Optimization</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable SIMD optimization for MP3 decoding using Arm Helium (MVE). </td></tr>
+<tr class="tree_none">
+<td>Decode MP3 only</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable this option to skip MP1/MP2 and only support MP3 decoding. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="rm-minimp3-port-examples"></a>
+Examples</h1>
+<h2>Minimp3 Basic Example</h2>
+<p>This is a basic example demonstrating minimal usage of the minimp3 library implementation in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> minimp3_basic_example ()</div><div class="line">{</div><div class="line">    uint32_t            mp3_offset = 0;</div><div class="line">    uint32_t            pcm_offset = 0;</div><div class="line">    mp3dec_frame_info_t frame_info;</div><div class="line">    mp3dec_t            mp3dec;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize for decoding a new position */</span></div><div class="line">    mp3dec_init(&amp;mp3dec);</div><div class="line"></div><div class="line">    <span class="comment">/* Decode MP3 data frame by frame */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Decode a frame */</span></div><div class="line">        <span class="keywordtype">int</span> samples = mp3dec_decode_frame(&amp;mp3dec,</div><div class="line">                                          g_mp3_buf + mp3_offset,</div><div class="line">                                          (<span class="keywordtype">int</span>) (MP3_BUFFER_SIZE_BYTES - mp3_offset),</div><div class="line">                                          g_pcm_buf + pcm_offset,</div><div class="line">                                          &amp;frame_info);</div><div class="line"></div><div class="line">        <span class="comment">/* Update position offset of MP3 and PCM data */</span></div><div class="line">        mp3_offset += (uint32_t) (frame_info.frame_bytes);</div><div class="line">        pcm_offset += (uint32_t) (samples * frame_info.channels);</div><div class="line">    } <span class="keywordflow">while</span> (MP3_BUFFER_SIZE_BYTES != mp3_offset);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Minimp3 Streaming Example</h2>
+<p>This example demonstrates streaming usage of the minimp3 library implementation in an application.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> minimp3_streaming_example ()</div><div class="line">{</div><div class="line">    uint8_t           * p_mp3_feed_pos;</div><div class="line">    uint32_t            mp3_feed_size;</div><div class="line">    mp3d_sample_t       pcm_data[MINIMP3_MAX_SAMPLES_PER_FRAME];</div><div class="line">    mp3dec_frame_info_t frame_info;</div><div class="line">    mp3dec_t            mp3dec;</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize for decoding a new position */</span></div><div class="line">    mp3dec_init(&amp;mp3dec);</div><div class="line"></div><div class="line">    <span class="comment">/* Stream MP3 data frame by frame */</span></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Update MP3 data position and MP3 data size.</span></div><div class="line"><span class="comment">         * This is a user-defined function for providing continuous MP3 data for streaming. */</span></div><div class="line">        mp3_read(&amp;p_mp3_feed_pos, &amp;mp3_feed_size);</div><div class="line"></div><div class="line">        <span class="comment">/* Decode one frame */</span></div><div class="line">        <span class="keywordtype">int</span> samples = mp3dec_decode_frame(&amp;mp3dec, p_mp3_feed_pos, (<span class="keywordtype">int</span>) mp3_feed_size, pcm_data, &amp;frame_info);</div><div class="line"></div><div class="line">        <span class="comment">/* Get PCM data output size. */</span></div><div class="line">        uint32_t pcm_size = (uint32_t) (samples * frame_info.channels);</div><div class="line"></div><div class="line">        <span class="comment">/* Handle PCM data output.</span></div><div class="line"><span class="comment">         * This is a user-defined function for handling PCM data output after each frame is decoded. */</span></div><div class="line">        pcm_progress(pcm_data, pcm_size);</div><div class="line">    } <span class="keywordflow">while</span> (mp3_feed_size);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b18d2d13694890cc5ac49a5be67e3b2d.html">ra</a></li><li class="navelem"><a class="el" href="dir_d71e6481d15bd93e41670a57fe245af4.html">fsp</a></li><li class="navelem"><a class="el" href="dir_cc90537d9d9120754144c336f41d5945.html">src</a></li><li class="navelem"><a class="el" href="dir_1c9e69712f7188212c0d26391317ffaa.html">r_sce_protected_cavp</a></li><li class="navelem"><a class="el" href="dir_3af23e87d2b1c704eeab61cf56610efa.html">crypto_procedures_protected</a></li><li class="navelem"><a class="el" href="dir_9870dbdebbacf488e612fd2a683108f8.html">src</a></li><li class="navelem"><a class="el" href="dir_fc80ef57a911caba2d38b32c6649bcea.html">sce9</a></li><li class="navelem"><a class="el" href="dir_5611784fda98744bc3711c9e5fd9498c.html">private</a></li><li class="navelem"><a class="el" href="dir_b67a5e40b1fa4362e328cbefe7501b81.html">inc</a></li>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

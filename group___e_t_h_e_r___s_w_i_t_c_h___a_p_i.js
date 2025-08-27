@@ -29,6 +29,7 @@ var group___e_t_h_e_r___s_w_i_t_c_h___a_p_i =
       [ "ETHER_SWITCH_EVENT_RX_COMPLETE", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524aa0a0514df6bac40c835e4fcda32073b4", null ],
       [ "ETHER_SWITCH_EVENT_TX_COMPLETE", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a0487493c21c16952bd6586b0230c88d7", null ],
       [ "ETHER_SWITCH_EVENT_RX_QUEUE_FULL", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a200ad7f19a1e015a4212e6fc5a9f164f", null ],
-      [ "ETHER_SWITCH_EVENT_RX_MESSAGE_LOST", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e", null ]
+      [ "ETHER_SWITCH_EVENT_RX_MESSAGE_LOST", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e", null ],
+      [ "ETHER_SWITCH_EVENT_TAS_ERROR", "group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524ac49554d86f33aab93cc7d939089fca1f", null ]
     ] ]
 ];

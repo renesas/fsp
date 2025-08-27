@@ -1,6 +1,7 @@
 var searchData=
 [
   ['mcu_20board_20support_20package',['MCU Board Support Package',['../group___b_s_p___m_c_u.html',1,'']]],
+  ['minimp3_20library',['Minimp3 Library',['../group___m_i_n_i_m_p3___p_o_r_t.html',1,'']]],
   ['mipi_20cmd_20data_20types',['MIPI CMD Data Types',['../group___m_i_p_i___c_m_d___t_y_p_e_s.html',1,'']]],
   ['mipi_20display_20serial_20interface_20_28r_5fmipi_5fdsi_29',['MIPI Display Serial Interface (r_mipi_dsi)',['../group___m_i_p_i___d_s_i.html',1,'']]],
   ['mipi_20dsi_20interface',['MIPI DSI Interface',['../group___m_i_p_i___d_s_i___a_p_i.html',1,'']]],

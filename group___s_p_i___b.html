@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -461,7 +461,7 @@ Enable</li>
 <tr class="tree_none">
 <td>Clock Source</td><td>MCU Specific Options</td><td></td><td>Select the clock source for communication. </td></tr>
 <tr class="tree_none">
-<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>16000000 </td><td>Enter the desired bitrate, change the bitrate to a value supported by MCU. If the requested bitrate cannot be achieved, the settings with the largest possible value that is less than or equal to the requested bitrate is used. The theoretical bitrate is printed in a comment in the generated <a class="el" href="group___s_p_i.html#structspi__extended__cfg__t">spi_extended_cfg_t</a> structure. </td></tr>
+<td>Bitrate</td><td>Value must be an integer greater than 0</td><td>16000000 </td><td>Enter the desired bitrate, change the bitrate to a value supported by MCU. If the requested bitrate cannot be achieved, the settings with the largest possible value that is less than or equal to the requested bitrate is used. The actual bitrate is printed in a comment in the generated <a class="el" href="group___s_p_i.html#structspi__extended__cfg__t">spi_extended_cfg_t</a> structure. </td></tr>
 <tr class="tree_none">
 <td>Clock Delay</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -530,7 +530,7 @@ Clock Configuration</h2>
 <h2><a class="anchor" id="r-spi-b-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses MOSI, MISO, RSPCK, and SSL pins to communicate with on board devices.</p>
-<dl class="section note"><dt>Note</dt><dd>At high bitrates it may be necessary to configure the pins with IOPORT_CFG_DRIVE_HIGH to maintain signal integrity.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>It is recommended to configure the pins with high drive strength (or high-speed high if available) to maintain signal integrity, particularly at high bitrates. The drive strength can be set by opening the e2 studio pin configuration editor, selecting the pin, and configuring 'Drive Capacity'.</dd></dl>
 <h1><a class="anchor" id="r-spi-b-usage_notes"></a>
 Usage Notes</h1>
 <h2>Performance</h2>
@@ -1327,7 +1327,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

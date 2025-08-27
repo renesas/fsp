@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -520,14 +520,37 @@ Enable </li>
 </ul>
 </td><td>Disable </td><td>Possible optimisation for expert users - requires network driver support. It is is useful when there is high network traffic. If non-zero value then instead of passing received packets into the IP task one at a time the network interface can chain received packets together and pass them into the IP task in one go. If set to 0 then only one buffer will be sent at a time. </td></tr>
 </table>
+ <h2>Configurations for Networking &gt; FreeRTOS+TCP Wrapper to ethernet driver (rm_freertos_plus_tcp)</h2>
+<table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_freertos_plus_tcp0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>RX Handler Task Stack Size</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMINIMAL_STACK_SIZE </td><td>Stack size of RX handler task. </td></tr>
+<tr class="tree_none">
+<td>RX Handler Task Priority</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMAX_PRIORITIES - 1 </td><td>Priority of RX handler task. A higher priority ensures timely processing of network traffic or callbacks. </td></tr>
+<tr class="tree_none">
+<td>Check Link Status Task Stack Size</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMINIMAL_STACK_SIZE </td><td>Stack size of Check link status task. </td></tr>
+<tr class="tree_none">
+<td>Check Link Status Task Priority</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>configMAX_PRIORITIES - 1 </td><td>Priority of Check link status task. A low priority is recommended as this is an periodic task. </td></tr>
+<tr class="tree_none">
+<td>Link check interval</td><td>Only symbols, numbers and arithmetic operators are valid.</td><td>1000 </td><td>Interval for checking link status of the ethernet instance of the network interface. Low period will consume more processing time </td></tr>
+</table>
 </p>
 <h1><a class="anchor" id="rm-freertos-plus-tcp-usage-notes"></a>
 Usage Notes</h1>
 <p>In order to use the NetworkInterface implementation provided by Renesas for RA devices:</p>
+<p>1/ <b>In case of Common|Backward Compatible Mode =="NO" (FreeRTOS+TCP 4.0.0 onward)</b></p>
+<dl class="section note"><dt>Note</dt><dd>This mode use <code>IP_Init_Multi</code> to initialize the TCP/IP stack. </dd>
+<dd>
+Before calling this function, at least 1 interface and 1 end-point must have been added to the TCP/IP stack.</dd></dl>
+<p>2/ <b>In case of Common|Backward Compatible Mode =="YES" (FreeRTOS+TCP 4.0.0 backward)</b> </p><dl class="section note"><dt>Note</dt><dd>This mode use <code>IP_Init</code> to initialize stack. </dd>
+<dd>
+Only support 1 interface. </dd>
+<dd>
+Only one instance of the middle port layer should be generated.</dd></dl>
 <ul>
-<li>Configure an Ethernet instance and provide a pointer to the instance of the NetworkInterface as follows:</li>
-</ul>
-<div class="fragment"><div class="line"><span class="comment">/* Reference used by the NetworkInterface to access the ethernet instance. */</span></div><div class="line"><span class="keyword">extern</span> <a class="code" href="group___e_t_h_e_r___a_p_i.html#structether__instance__t">ether_instance_t</a> <span class="keyword">const</span> * gp_freertos_ether;</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="comment">/* Make it reference the configured ether instance. */</span></div><div class="line">ether_instance_t <span class="keyword">const</span> * gp_freertos_ether = &amp;g_ether_instance;</div></div><!-- fragment --><ul>
 <li>Some of the stack initialisation APIs have been deprecated as of FreeRTOS V4.0.0 onwards. Please refer to <a href="https://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/TCP_Networking_Tutorial_Initialising_TCP.updated.html">FreeRTOS+TCP Networking Tutorial: Initializing the TCP/IP Stack</a> for the new APIs supporting IPv6, Multiple Endpoints and Multiple interfaces. To use the deprecated APIs please set it to "Yes" for the stack property "Common|Backward Compatible Mode".</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>The MAC address passed to FreeRTOS_FillEndPoint must match the MAC address configured in the r_ether instance. </dd>
@@ -550,7 +573,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

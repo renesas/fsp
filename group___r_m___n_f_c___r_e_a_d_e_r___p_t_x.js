@@ -12,6 +12,7 @@ var group___r_m___n_f_c___r_e_a_d_e_r___p_t_x =
       [ "poll_type_f", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#a5cfdba7bf8e20008fa67275a9aafd028", null ],
       [ "poll_type_v", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#a5d3439d854c853a65bd1af9a51f40e32", null ],
       [ "device_limit", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#a56a4e62d97f153e2178ac5cc35076ca3", null ],
+      [ "discover_mode", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#a7cd31dbc093d15e837caf94f85acbcdf", null ],
       [ "idle_time_ms", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#a5197c7969621017e028edebd0c4ed56d", null ],
       [ "temp_sensor_calibrate", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#aff98a3625d07ee4813d4fe0101490a75", null ],
       [ "temp_sensor_shutdown", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ad01dc32103c21bf92e5b6c45d48def1d", null ],
@@ -36,6 +37,10 @@ var group___r_m___n_f_c___r_e_a_d_e_r___p_t_x =
       [ "NFC_READER_PTX_NDEF_WRITE", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gga7543ee9c7fe5c4f9de497c45dfc16e37a9de74ff6ec086123f4d05d7a9ce8f92b", null ],
       [ "NFC_READER_PTX_NDEF_READ", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gga7543ee9c7fe5c4f9de497c45dfc16e37a518d6030e41e8f55941c5965c669e688", null ]
     ] ],
+    [ "nfc_reader_ptx_power_mode_t", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gae06323a19c8cfb9f9a8c140358f473d0", [
+      [ "NFC_READER_PTX_ACTIVE_MODE", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ggae06323a19c8cfb9f9a8c140358f473d0a59a73d7ad183cca6b161407d480a5426", null ],
+      [ "NFC_READER_PTX_STANDBY_MODE", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ggae06323a19c8cfb9f9a8c140358f473d0adf8a57c0b25fde81d0ad7cd4070b7f18", null ]
+    ] ],
     [ "nfc_reader_ptx_state_t", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga90e6728b2176c384dbd8301b91df1c43", [
       [ "NFC_READER_PTX_IDLE", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gga90e6728b2176c384dbd8301b91df1c43aafa4ea588dddd39f66b620c1d05e7fdb", null ],
       [ "NFC_READER_PTX_POLLING", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gga90e6728b2176c384dbd8301b91df1c43ad2c7818e48c1ea047769e286f0045f87", null ],
@@ -58,6 +63,7 @@ var group___r_m___n_f_c___r_e_a_d_e_r___p_t_x =
     [ "RM_NFC_READER_PTX_CardActivate", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga715a36566a0552c3efe13f7be4c01533", null ],
     [ "RM_NFC_READER_PTX_DataExchange", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gaa55d17b7e0f381acedc1a4b860a5e12c", null ],
     [ "RM_NFC_READER_PTX_ReaderDeactivation", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5", null ],
+    [ "RM_NFC_READER_PTX_PowerModeSet", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga80d765251a113df4076c5d463d4837a6", null ],
     [ "RM_NFC_READER_PTX_NDEF_Init", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gadeec26b6494bf155b9ac5362b298d990", null ],
     [ "RM_NFC_READER_PTX_NDEF_DataExchange", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gacba638eb1084a00014350a0a3bafc815", null ],
     [ "RM_NFC_READER_PTX_NDEF_Lock", "group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga3ecd84e04fe391680b41448012a03ac2", null ],

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['u1_5fadjust_5fcount_5ffull',['u1_adjust_count_full',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a3c272518a04545f0736f810de1bf9232',1,'motor_angle_encoder_info_t::u1_adjust_count_full()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#abf01fec7f3bbef78f0a3585f0a18a2da',1,'motor_current_output_t::u1_adjust_count_full()']]],
+  ['u1_5fadjust_5fmode',['u1_adjust_mode',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a6c010aa323682ee866e6d6b6d9f35d4d',1,'motor_angle_encoder_info_t::u1_adjust_mode()'],['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a2071b0372f6829c54d14cf6fb198967e',1,'motor_current_output_t::u1_adjust_mode()']]],
   ['u1_5fadjust_5fstatus',['u1_adjust_status',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a6eb9c59db46057cc1006bc6758f696b9',1,'motor_current_output_t']]],
   ['u1_5fflag_5fget_5firef',['u1_flag_get_iref',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ae7614e22637a6ce6a8ad9c17483e9bea',1,'motor_current_output_t']]],
   ['u1_5fhall_5fpattern',['u1_hall_pattern',['../group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#a2cb9fb911f913ed6b39ebdc9112260e1',1,'motor_sense_hall_extended_cfg_t']]],

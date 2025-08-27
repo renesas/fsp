@@ -26,5 +26,13 @@ var _r_e_f__m_a_t_e_r_i_a_l_s =
       ] ],
       [ "References", "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-references", null ]
     ] ],
-    [ "Using Ocrypto", "_u_s_i_n_g__o_c_r_y_p_t_o.html", "_u_s_i_n_g__o_c_r_y_p_t_o" ]
+    [ "Using Ocrypto", "_u_s_i_n_g__o_c_r_y_p_t_o.html", "_u_s_i_n_g__o_c_r_y_p_t_o" ],
+    [ "Linker Section Naming Guide", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html", [
+      [ "Overview", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-overview", null ],
+      [ "Memory Class Dictionaries", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class", [
+        [ "RAM-Resident Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class-ram", null ],
+        [ "ROM-Resident Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class-rom", null ],
+        [ "Summary", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class-summary", null ]
+      ] ]
+    ] ]
 ];

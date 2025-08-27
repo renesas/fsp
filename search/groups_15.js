@@ -18,6 +18,8 @@ var searchData=
   ['usb_20hmsc_20_28r_5fusb_5fhmsc_29',['USB HMSC (r_usb_hmsc)',['../group___u_s_b___h_m_s_c.html',1,'']]],
   ['usb_20hmsc_20interface',['USB HMSC Interface',['../group___u_s_b___h_m_s_c___a_p_i.html',1,'']]],
   ['usb_20host_20vendor_20class_20_28r_5fusb_5fhvnd_29',['USB Host Vendor class (r_usb_hvnd)',['../group___u_s_b___h_v_n_d.html',1,'']]],
+  ['usb_20paud_20_28r_5fusb_5fpaud_29',['USB PAUD (r_usb_paud)',['../group___u_s_b___p_a_u_d.html',1,'']]],
+  ['usb_20paud_20interface',['USB PAUD Interface',['../group___u_s_b___p_a_u_d___a_p_i.html',1,'']]],
   ['usb_20pcdc_20_28r_5fusb_5fpcdc_29',['USB PCDC (r_usb_pcdc)',['../group___u_s_b___p_c_d_c.html',1,'']]],
   ['usb_20pcdc_20interface',['USB PCDC Interface',['../group___u_s_b___p_c_d_c___a_p_i.html',1,'']]],
   ['usb_20phid_20_28r_5fusb_5fphid_29',['USB PHID (r_usb_phid)',['../group___u_s_b___p_h_i_d.html',1,'']]],

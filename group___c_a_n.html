@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -1424,7 +1424,7 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-can-usage_notes"></a>
 Usage Notes</h1>
 <h2>Bit Rate Calculation</h2>
-<p>For convenience, the baudrate of the CAN peripheral is automatically set through the RA Configuration editor using a best effort approach. If the auto-generated baud settings cause deviation that is not tolerable by the application, the user can override the auto-generated settings and put in manually calculated values through RA Configuration editor. For more details on how the baudrate is set refer to section 37.4 "Data Transfer Rate Configuration" of the RA6M3 User's Manual (R01UH0886EJ0100).</p>
+<p>For convenience, the baudrate of the CAN peripheral is automatically set through the RA Configuration editor using a best effort approach. If the auto-generated baud settings cause deviation that is not tolerable by the application, the user can override the auto-generated settings and put in manually calculated values through RA Configuration editor. For more details on how the baudrate is set refer to section "Data Transfer Rate Configuration" in the CAN section of the relevant hardware manual.</p>
 <h2>FIFO Support</h2>
 <p>When FIFO Support is enabled, mailboxes 24-27 form a 4-stage transmit FIFO and mailboxes 28-31 form a 4-stage receive FIFO. The receive FIFO supports two independent ID/mask settings for acceptance filtering.</p>
 <dl class="section note"><dt>Note</dt><dd>Only the base mailbox of each FIFO may be accessed. When writing to the TX FIFO it is recommended to use <code>CAN_MAILBOX_ID_TX_FIFO</code>.</dd></dl>
@@ -2137,7 +2137,7 @@ Pointer to RX FIFO configuration. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

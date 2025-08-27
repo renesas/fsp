@@ -13,6 +13,7 @@ var group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i =
       [ "u1_flag_get_iref", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ae7614e22637a6ce6a8ad9c17483e9bea", null ],
       [ "u1_adjust_status", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a6eb9c59db46057cc1006bc6758f696b9", null ],
       [ "u1_adjust_count_full", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#abf01fec7f3bbef78f0a3585f0a18a2da", null ],
+      [ "u1_adjust_mode", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a2071b0372f6829c54d14cf6fb198967e", null ],
       [ "u1_openloop_status", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#ac8ced348d34cc2d4c8eb8d593b1fecd9", null ],
       [ "f_openloop_speed", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a60c5fd4a4a2a091cda930fc0d261f3aa", null ],
       [ "f_openloop_id_ref", "group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#afc3147981b08616a9d45eff685ad671e", null ]

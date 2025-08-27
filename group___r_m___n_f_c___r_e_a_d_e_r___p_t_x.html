@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -261,6 +261,8 @@ Functions</h2></td></tr>
 <tr class="separator:gaa55d17b7e0f381acedc1a4b860a5e12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5">RM_NFC_READER_PTX_ReaderDeactivation</a> (<a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga0e4be320b6d01c6d64a27b03d895b689">nfc_reader_ptx_return_state_t</a> return_state)</td></tr>
 <tr class="separator:ga5dd5fb3f8c4a5bc90d9efe1c4868bcc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80d765251a113df4076c5d463d4837a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga80d765251a113df4076c5d463d4837a6">RM_NFC_READER_PTX_PowerModeSet</a> (<a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gae06323a19c8cfb9f9a8c140358f473d0">nfc_reader_ptx_power_mode_t</a> power_mode)</td></tr>
+<tr class="separator:ga80d765251a113df4076c5d463d4837a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadeec26b6494bf155b9ac5362b298d990"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gadeec26b6494bf155b9ac5362b298d990">RM_NFC_READER_PTX_NDEF_Init</a> (<a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__data__info__t">nfc_reader_ptx_data_info_t</a> *const p_data_info)</td></tr>
 <tr class="separator:gadeec26b6494bf155b9ac5362b298d990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacba638eb1084a00014350a0a3bafc815"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gacba638eb1084a00014350a0a3bafc815">RM_NFC_READER_PTX_NDEF_DataExchange</a> (<a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const p_ctrl, uint8_t *p_ndef_message, uint32_t message_length, <a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga7543ee9c7fe5c4f9de497c45dfc16e37">nfc_reader_ptx_ndef_read_write_t</a> ndef_read_write_flag)</td></tr>
@@ -290,13 +292,14 @@ Features</h2>
 <li>Retrieves card details like technical/activation parameters</li>
 <li>Exchanges RF data and bitstreams</li>
 <li>Stops RF communication</li>
-<li>Controls various GPIO pins of the PTX chip</li>
+<li>NDEF add-on API for exchanging data using the NDEF (NFC Data Exchange Format) standard</li>
+<li>Discovery support for “Low-Power-Card-Detection”</li>
+<li>Optionally puts the PTX chip into and wake up from stand-by mode</li>
 </ul>
 <p>Future support is considered for the following features:</p>
 <ul>
-<li>Discovery support for “Low-Power-Card-Detection”</li>
 <li>Optionally updates RF and System configuration parameters at runtime</li>
-<li>Optionally puts the PTX chip into and wake up from stand-by mode</li>
+<li>Controls various GPIO pins of the PTX chip</li>
 <li>Plus several add-on features for additional operations and testing</li>
 </ul>
 <h1><a class="anchor" id="rm-nfc-reader-ptx-configuration"></a>
@@ -385,6 +388,8 @@ Enabled</li>
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_nfc_reader_ptx0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
+<td>Set Polling Mode</td><td>Must be an integer greater than or equal to 0 and less than 256</td><td>0 </td><td>Set polling mode, where 0 is Regular Polling, 1 is Low-power Card Detection (LPCD), and 2-255 is LPCD with every n-th cycle as Regular Polling </td></tr>
+<tr class="tree_none">
 <td>NFC Interrupt Port</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Specify the interrupt port/pin used by the NFC chip to signal for SPI communications. </td></tr>
 <tr class="tree_none">
 <td>NFC Interrupt Pin</td><td>Refer to the RA Configuration tool for available options.</td><td>module.driver.nfc_reader_ptx.pin_control_pin.PIN_DISABLE </td><td>Specify the interrupt port/pin used by the NFC chip to signal for SPI communications. </td></tr>
@@ -440,6 +445,8 @@ Data Structures</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga7543ee9c7fe5c4f9de497c45dfc16e37"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga7543ee9c7fe5c4f9de497c45dfc16e37">nfc_reader_ptx_ndef_read_write_t</a> </td></tr>
 <tr class="separator:ga7543ee9c7fe5c4f9de497c45dfc16e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae06323a19c8cfb9f9a8c140358f473d0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gae06323a19c8cfb9f9a8c140358f473d0">nfc_reader_ptx_power_mode_t</a> </td></tr>
+<tr class="separator:gae06323a19c8cfb9f9a8c140358f473d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga90e6728b2176c384dbd8301b91df1c43"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga90e6728b2176c384dbd8301b91df1c43">nfc_reader_ptx_state_t</a> </td></tr>
 <tr class="separator:ga90e6728b2176c384dbd8301b91df1c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0e4be320b6d01c6d64a27b03d895b689"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#ga0e4be320b6d01c6d64a27b03d895b689">nfc_reader_ptx_return_state_t</a> </td></tr>
@@ -532,6 +539,12 @@ Flag to indicate enabling discovery for Type-V tags. </td></tr>
 device_limit</td>
 <td class="fielddoc">
 Defines the maximum number of devices that can be connected at once. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7cd31dbc093d15e837caf94f85acbcdf"></a>uint8_t</td>
+<td class="fieldname">
+discover_mode</td>
+<td class="fielddoc">
+Set polling mode, where 0 = Regular Polling, 1 = Low-Power Card Detection (LPCD), 2-255 = LPCD with every n-th Cycle Regular Polling. </td></tr>
 <tr><td class="fieldtype">
 <a id="a5197c7969621017e028edebd0c4ed56d"></a>uint32_t</td>
 <td class="fieldname">
@@ -673,6 +686,27 @@ Pointer to p_cfg for NFC. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7543ee9c7fe5c4f9de497c45dfc16e37a9de74ff6ec086123f4d05d7a9ce8f92b"></a>NFC_READER_PTX_NDEF_WRITE&#160;</td><td class="fielddoc"><p>Write flag for NDEF data exchange. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7543ee9c7fe5c4f9de497c45dfc16e37a518d6030e41e8f55941c5965c669e688"></a>NFC_READER_PTX_NDEF_READ&#160;</td><td class="fielddoc"><p>Read flag for NDEF data exchange. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae06323a19c8cfb9f9a8c140358f473d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae06323a19c8cfb9f9a8c140358f473d0">&#9670;&nbsp;</a></span>nfc_reader_ptx_power_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gae06323a19c8cfb9f9a8c140358f473d0">nfc_reader_ptx_power_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>NFC power mode flags </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae06323a19c8cfb9f9a8c140358f473d0a59a73d7ad183cca6b161407d480a5426"></a>NFC_READER_PTX_ACTIVE_MODE&#160;</td><td class="fielddoc"><p>Active mode (default), all features enabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae06323a19c8cfb9f9a8c140358f473d0adf8a57c0b25fde81d0ad7cd4070b7f18"></a>NFC_READER_PTX_STANDBY_MODE&#160;</td><td class="fielddoc"><p>Stand-by mode, most features disabled for low power. </p>
 </td></tr>
 </table>
 
@@ -1057,6 +1091,52 @@ Pointer to p_cfg for NFC. </td></tr>
 
 </div>
 </div>
+<a id="ga80d765251a113df4076c5d463d4837a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga80d765251a113df4076c5d463d4837a6">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_PowerModeSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_NFC_READER_PTX_PowerModeSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#structnfc__reader__ptx__instance__ctrl__t">nfc_reader_ptx_instance_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#gae06323a19c8cfb9f9a8c140358f473d0">nfc_reader_ptx_power_mode_t</a>&#160;</td>
+          <td class="paramname"><em>power_mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts the device into either Active (all features) or Stand-by mode (most features off), to cut down energy consumption. RF communication is not possible from Stand-by mode, and Wake-up is possible only via communication interface. This function is only available exclusively before starting discovery.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to NFC IoT Reader control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">power_mode</td><td>Flag to indicate if setting to Active or Stand-by mode.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Function completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Assertion error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Module is not opened yet. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_STATE</td><td>NFC module is not in the idle/polling state. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Invalid input parameters to NFC Status function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="gadeec26b6494bf155b9ac5362b298d990"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadeec26b6494bf155b9ac5362b298d990">&#9670;&nbsp;</a></span>RM_NFC_READER_PTX_NDEF_Init()</h2>
 
@@ -1241,7 +1321,7 @@ Pointer to p_cfg for NFC. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

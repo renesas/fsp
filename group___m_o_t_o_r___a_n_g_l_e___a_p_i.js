@@ -16,6 +16,7 @@ var group___m_o_t_o_r___a_n_g_l_e___a_p_i =
     [ "motor_angle_encoder_info_t", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#structmotor__angle__encoder__info__t", [
       [ "e_adjust_status", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a73e470b5d97213689ecf2603e8fa68ce", null ],
       [ "u1_adjust_count_full", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a3c272518a04545f0736f810de1bf9232", null ],
+      [ "u1_adjust_mode", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a6c010aa323682ee866e6d6b6d9f35d4d", null ],
       [ "e_open_loop_status", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a23535b8ea560fe8dd3578d4cbf72fde7", null ],
       [ "f_openloop_speed", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#a61519ae0853c4b2f5639cf41430d0c99", null ],
       [ "f_openloop_id_ref", "group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#aa5beb05306be184c3690372f4ddabe89", null ]

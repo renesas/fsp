@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -296,6 +296,7 @@ Features</h2>
 <li>Read/write GPIO pins/ports</li>
 <li>Sets event output data</li>
 <li>Reads event input data</li>
+<li>Controlled Current Drive (CCD)</li>
 </ul>
 <h1><a class="anchor" id="r-ioport-configuration"></a>
 Configuration</h1>
@@ -316,6 +317,8 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>CCD Support</td><td>MCU Specific Options</td><td></td><td>Enable support for CCD (Controlled Current Drive) port pins. </td></tr>
 </table>
  <h2>Configurations for System &gt; I/O Port (r_ioport)</h2>
 This module can be added to the Stacks tab via New Stack &gt; System &gt; I/O Port (r_ioport).<br />
@@ -373,6 +376,8 @@ Examples</h1>
 Data Structures</h2></td></tr>
 <tr class="memitem:structioport__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t.html#structioport__instance__ctrl__t">ioport_instance_ctrl_t</a></td></tr>
 <tr class="separator:structioport__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structioport__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t.html#structioport__extended__cfg__t">ioport_extended_cfg_t</a></td></tr>
+<tr class="separator:structioport__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -382,6 +387,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaebbb969fda93422aaf1878d6f4ff8fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac617eebcb7c2c1e45fa8e04fc473e574"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t.html#gac617eebcb7c2c1e45fa8e04fc473e574">ioport_cfg_options_t</a> </td></tr>
 <tr class="separator:gac617eebcb7c2c1e45fa8e04fc473e574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6d7a183705f9303b9506c259a77fa79"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_o_p_o_r_t.html#gad6d7a183705f9303b9506c259a77fa79">ioport_output_current_t</a> </td></tr>
+<tr class="separator:gad6d7a183705f9303b9506c259a77fa79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structioport__instance__ctrl__t" id="structioport__instance__ctrl__t"></a>
@@ -397,6 +404,30 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"><p>IOPORT private control block. DO NOT MODIFY. Initialization occurs when <a class="el" href="group___i_o_p_o_r_t.html#ga24938047dccc62c4426ff543489454de">R_IOPORT_Open()</a> is called. </p>
 </div>
+</div>
+</div>
+<a name="structioport__extended__cfg__t" id="structioport__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structioport__extended__cfg__t">&#9670;&nbsp;</a></span>ioport_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ioport_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>R_IOPORT extended configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8577379522a39f59ed818a1209411e72"></a><a class="el" href="group___i_o_p_o_r_t.html#gad6d7a183705f9303b9506c259a77fa79">ioport_output_current_t</a> const</td>
+<td class="fieldname">
+ccd_pin_cfg_data[IOPORT_PRV_CCD_PIN_COUNT]</td>
+<td class="fielddoc">
+Low-level output current for the CCD pins. </td></tr>
+</table>
+
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -1066,6 +1097,100 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a131b2fe2c5b40032c04f1c8480bfaa86"></a>IOPORT_PERIPHERAL_GPT4&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a47ef2519e1ba6f5b2e0893de9cddeb49"></a>IOPORT_PERIPHERAL_ETHER_RMII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet RMMI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab8aa7fa82f2c3eb0ac80e20e8f918304"></a>IOPORT_PERIPHERAL_PDC&#160;</td><td class="fielddoc"><p>Pin will function as a PDC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a90c6c9da7046edfa46f22a16994d13f9"></a>IOPORT_PERIPHERAL_LCD_GRAPHICS&#160;</td><td class="fielddoc"><p>Pin will function as a graphics LCD peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8adfc4164cbbca202aff659966748d4dbf"></a>IOPORT_PERIPHERAL_CAC&#160;</td><td class="fielddoc"><p>Pin will function as a CAC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8aa104329a7773f8ffbed0f7fbad258e6d"></a>IOPORT_PERIPHERAL_TRACE&#160;</td><td class="fielddoc"><p>Pin will function as a debug trace peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a83951c39c247388f70f38287edd67a2d"></a>IOPORT_PERIPHERAL_OSPI&#160;</td><td class="fielddoc"><p>Pin will function as a OSPI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afd795256ce7d3bc9bd58d36d1f41e294"></a>IOPORT_PERIPHERAL_CEC&#160;</td><td class="fielddoc"><p>Pin will function as a CEC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ac44530278e8f5cd9db7c0aab1f434c18"></a>IOPORT_PERIPHERAL_PGAOUT0&#160;</td><td class="fielddoc"><p>Pin will function as a PGAOUT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8af931a6809462aee181fdb63ed0f7b405"></a>IOPORT_PERIPHERAL_PGAOUT1&#160;</td><td class="fielddoc"><p>Pin will function as a PGAOUT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad768e3b8c746f0f7b851e8605f1d37e0"></a>IOPORT_PERIPHERAL_ULPT&#160;</td><td class="fielddoc"><p>Pin will function as a ULPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a569ee3b30428745c75d109ece3cdd8b4"></a>IOPORT_PERIPHERAL_MIPI&#160;</td><td class="fielddoc"><p>Pin will function as a MIPI DSI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a18f2966de960ffb7b1e0ae87df427309"></a>IOPORT_PERIPHERAL_ETHER_RGMII&#160;</td><td class="fielddoc"><p>Pin will function as a RGMII peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a45d8a5eb2cf84e2ecb8496cb00fe8f51"></a>IOPORT_PERIPHERAL_ESC&#160;</td><td class="fielddoc"><p>Pin will function as a ETHERNET slave controller peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acf2f52f2df32000c7e25589e63b999b9"></a>IOPORT_PERIPHERAL_PDM&#160;</td><td class="fielddoc"><p>Pin will function as a PDM peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8add26ad9a68474906612567b15dd4b07e"></a>IOPORT_PERIPHERAL_DSMIF&#160;</td><td class="fielddoc"><p>Pin will function as a DSMIF peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a2f6455c416051e088f2339737b030b67"></a>IOPORT_PERIPHERAL_IO&#160;</td><td class="fielddoc"><p>Pin will functions as an IO pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a66b5b7838b3c4b965e06bd030e78878a"></a>IOPORT_PERIPHERAL_DEBUG&#160;</td><td class="fielddoc"><p>Pin will function as a DEBUG pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a64d1b8cceeda767076613c173c787cf9"></a>IOPORT_PERIPHERAL_AGT&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab524021406375820083226f41b14295a"></a>IOPORT_PERIPHERAL_AGTW&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a09128fc454daf266119a4f2515899c68"></a>IOPORT_PERIPHERAL_AGT1&#160;</td><td class="fielddoc"><p>Pin will function as an AGT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a85992fdc078e24d3dd245eba9e2794a0"></a>IOPORT_PERIPHERAL_GPT0&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acb7bd1929db899ee77ce971fd6c66a75"></a>IOPORT_PERIPHERAL_GPT1&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a565b54d88476fba903552efc818d06c5"></a>IOPORT_PERIPHERAL_SCI0_2_4_6_8&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a28760366d088db7869519e2bcc78de8e"></a>IOPORT_PERIPHERAL_SCI1_3_5_7_9&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acd94aa1c9a39bccb4329a4392bf8a860"></a>IOPORT_PERIPHERAL_SPI&#160;</td><td class="fielddoc"><p>Pin will function as a SPI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab770cd7374758858d40474812845564d"></a>IOPORT_PERIPHERAL_IIC&#160;</td><td class="fielddoc"><p>Pin will function as a IIC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a24f92451e2cb175211ecf3055816d3e9"></a>IOPORT_PERIPHERAL_KEY&#160;</td><td class="fielddoc"><p>Pin will function as a KEY peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a3eada69cccad3f6a386f62892ce16f7c"></a>IOPORT_PERIPHERAL_CLKOUT_COMP_RTC&#160;</td><td class="fielddoc"><p>Pin will function as a clock/comparator/RTC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a57bd915b4be73b08e72d9a059b1e8ac0"></a>IOPORT_PERIPHERAL_CAC_AD&#160;</td><td class="fielddoc"><p>Pin will function as a CAC/ADC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a50c4e60416f5c5909fa614b3089cf200"></a>IOPORT_PERIPHERAL_BUS&#160;</td><td class="fielddoc"><p>Pin will function as a BUS peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a4009808e34e8af6f5791f1469a7dc081"></a>IOPORT_PERIPHERAL_CTSU&#160;</td><td class="fielddoc"><p>Pin will function as a CTSU peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a749d8f405d2dc05308293c8eb53bd186"></a>IOPORT_PERIPHERAL_ACMPHS&#160;</td><td class="fielddoc"><p>Pin will function as a CMPHS peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a4d5e3c2e03c9f7ab7ae2493dbbc32ebf"></a>IOPORT_PERIPHERAL_LCDC&#160;</td><td class="fielddoc"><p>Pin will function as a segment LCD peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab80e34dc5a5ce362b478eac4cf2e3c9c"></a>IOPORT_PERIPHERAL_DE_SCI0_2_4_6_8&#160;</td><td class="fielddoc"><p>Pin will function as an SCI peripheral DEn pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ab81d0424499b239175c48d9f683f3fcb"></a>IOPORT_PERIPHERAL_DE_SCI1_3_5_7_9&#160;</td><td class="fielddoc"><p>Pin will function as an SCI DEn peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acc900c1e3372304244580adb42974a22"></a>IOPORT_PERIPHERAL_DALI&#160;</td><td class="fielddoc"><p>Pin will function as a DALI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8acd3f5c8ec6ad2a790dbda0ca6fe828df"></a>IOPORT_PERIPHERAL_CEU&#160;</td><td class="fielddoc"><p>Pin will function as a CEU peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a153635d8d01b41c463d29d89da0fe372"></a>IOPORT_PERIPHERAL_CAN&#160;</td><td class="fielddoc"><p>Pin will function as a CAN peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a9717b9d492c8f817c8c0fc7eae8f1434"></a>IOPORT_PERIPHERAL_QSPI&#160;</td><td class="fielddoc"><p>Pin will function as a QSPI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a0ab0d9fffa96813f7e78bcd7b3e42c8f"></a>IOPORT_PERIPHERAL_SSI&#160;</td><td class="fielddoc"><p>Pin will function as an SSI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8abf3bde65f7a1ecea24a313f04af7056b"></a>IOPORT_PERIPHERAL_USB_FS&#160;</td><td class="fielddoc"><p>Pin will function as a USB full speed peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afc5008644a2fa64bd99da0ca24aeb4dc"></a>IOPORT_PERIPHERAL_USB_HS&#160;</td><td class="fielddoc"><p>Pin will function as a USB high speed peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ae00c4cc7522a48fef213912e1f67ea04"></a>IOPORT_PERIPHERAL_GPT2&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ae9f418a61b3e072e2a6b46744a12c00d"></a>IOPORT_PERIPHERAL_SDHI_MMC&#160;</td><td class="fielddoc"><p>Pin will function as an SD/MMC peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad1185b58efcb7dc8c9852a1f18d91bc5"></a>IOPORT_PERIPHERAL_GPT3&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8afe4d1025a70ef6bf2954f9601fd3d54a"></a>IOPORT_PERIPHERAL_ETHER_MII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet MMI peripheral pin </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a131b2fe2c5b40032c04f1c8480bfaa86"></a>IOPORT_PERIPHERAL_GPT4&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8ad145d360f054370523490eab0dcaa963"></a>IOPORT_PERIPHERAL_GPT5&#160;</td><td class="fielddoc"><p>Pin will function as a GPT peripheral pin </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaebbb969fda93422aaf1878d6f4ff8fe8a47ef2519e1ba6f5b2e0893de9cddeb49"></a>IOPORT_PERIPHERAL_ETHER_RMII&#160;</td><td class="fielddoc"><p>Pin will function as an Ethernet RMMI peripheral pin </p>
@@ -1163,6 +1288,26 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff"></a>IOPORT_CFG_NMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's NMOS open-drain output. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aec28fadf6109ec5ea80a1b1046bd25e5"></a>IOPORT_CFG_IRQ_ENABLE&#160;</td><td class="fielddoc"><p>Sets pin as an IRQ pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d329786cc601ca9341427dd0bed8ad8"></a>IOPORT_CFG_ANALOG_ENABLE&#160;</td><td class="fielddoc"><p>Enables pin to operate as an analog pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a2066555437a19b9e6e721fb494c8f5c3"></a>IOPORT_CFG_PERIPHERAL_PIN&#160;</td><td class="fielddoc"><p>Enables pin to operate as a peripheral pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d597c18cc5d24abc1b70f2526f2b6cb"></a>IOPORT_CFG_PORT_DIRECTION_INPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to input (default) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574ab4d8c12714fab80d21b5b5a636f3cf97"></a>IOPORT_CFG_PORT_DIRECTION_OUTPUT&#160;</td><td class="fielddoc"><p>Sets the pin direction to output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a1913e3b0734a4be613eb2fba8ec888c5"></a>IOPORT_CFG_PORT_OUTPUT_LOW&#160;</td><td class="fielddoc"><p>Sets the pin level to low. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4b93b19150d018ab8ba5ef74e2852499"></a>IOPORT_CFG_PORT_OUTPUT_HIGH&#160;</td><td class="fielddoc"><p>Sets the pin level to high. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a925954d59fa1101a4784a0d64a64d133"></a>IOPORT_CFG_PULLUP_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's internal pull-up. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a619e7ce9643c81a165dd70aea63b7fe9"></a>IOPORT_CFG_PIM_TTL&#160;</td><td class="fielddoc"><p>Enables the pin's input mode. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a4ba9efb45585c37cdfd0b3d2a487b2ff"></a>IOPORT_CFG_NMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's NMOS open-drain output. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574aa6f841964b20d6d4bfc1a8f7b2040554"></a>IOPORT_CFG_PMOS_ENABLE&#160;</td><td class="fielddoc"><p>Enables the pin's PMOS open-drain output. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a3b65ecea77e425c0ec1a0c29324a042b"></a>IOPORT_CFG_DRIVE_MID&#160;</td><td class="fielddoc"><p>Sets pin drive output to medium. </p>
@@ -1184,6 +1329,35 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a8d329786cc601ca9341427dd0bed8ad8"></a>IOPORT_CFG_ANALOG_ENABLE&#160;</td><td class="fielddoc"><p>Enables pin to operate as an analog pin. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac617eebcb7c2c1e45fa8e04fc473e574a2066555437a19b9e6e721fb494c8f5c3"></a>IOPORT_CFG_PERIPHERAL_PIN&#160;</td><td class="fielddoc"><p>Enables pin to operate as a peripheral pin. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gad6d7a183705f9303b9506c259a77fa79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad6d7a183705f9303b9506c259a77fa79">&#9670;&nbsp;</a></span>ioport_output_current_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___i_o_p_o_r_t.html#gad6d7a183705f9303b9506c259a77fa79">ioport_output_current_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Output current settings for CCD pins </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad6d7a183705f9303b9506c259a77fa79a4f9273991f5ea70b962f5b3aa1aa7aae"></a>IOPORT_OUTPUT_CURRENT_HI_Z&#160;</td><td class="fielddoc"><p>High-impedance state. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6d7a183705f9303b9506c259a77fa79a56f982f349876dc5346969007d7b0979"></a>IOPORT_OUTPUT_CURRENT_2_MA&#160;</td><td class="fielddoc"><p>2 mA output current </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6d7a183705f9303b9506c259a77fa79a43022ca5b8b87a91ef3c64a6faeb5535"></a>IOPORT_OUTPUT_CURRENT_5_MA&#160;</td><td class="fielddoc"><p>5 mA output current </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6d7a183705f9303b9506c259a77fa79ad19d1d9e37f755083ba8a1b74c70e2e5"></a>IOPORT_OUTPUT_CURRENT_10_MA&#160;</td><td class="fielddoc"><p>10 mA output current </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6d7a183705f9303b9506c259a77fa79ac9ca7d0c4fbab114befb4557bb4dc013"></a>IOPORT_OUTPUT_CURRENT_15_MA&#160;</td><td class="fielddoc"><p>15 mA output current </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad6d7a183705f9303b9506c259a77fa79ad49edddf39a6a32641d1f0902285783f"></a>IOPORT_OUTPUT_CURRENT_DISABLE&#160;</td><td class="fielddoc"><p>Disables output current control. </p>
 </td></tr>
 </table>
 
@@ -1221,6 +1395,7 @@ Enumerations</h2></td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Pin configuration data written to PFS register(s) </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>NULL pointer </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Module is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Pin configurations is invalid. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1775,7 +1950,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -21,5 +21,20 @@ var searchData=
   ['display_5fstate_5ft',['display_state_t',['../group___d_i_s_p_l_a_y___a_p_i.html#ga04db5dee2c7091830c3e4f899e934f97',1,'r_display_api.h']]],
   ['display_5fsync_5fedge_5ft',['display_sync_edge_t',['../group___d_i_s_p_l_a_y___a_p_i.html#gad42f0f62fa80ea5432d2c19bde0e4675',1,'r_display_api.h']]],
   ['doc_5fbit_5fwidth_5ft',['doc_bit_width_t',['../group___d_o_c___a_p_i.html#ga6a05a5570c5dc2d79f92ac5ca1a4a691',1,'r_doc_api.h']]],
-  ['doc_5fevent_5ft',['doc_event_t',['../group___d_o_c___a_p_i.html#ga0ff188142746d68859b2acb3c3d0f2fe',1,'r_doc_api.h']]]
+  ['doc_5fevent_5ft',['doc_event_t',['../group___d_o_c___a_p_i.html#ga0ff188142746d68859b2acb3c3d0f2fe',1,'r_doc_api.h']]],
+  ['dsmif_5fcapture_5ftrigger_5ft',['dsmif_capture_trigger_t',['../group___d_s_m_i_f.html#ga619eba897ca0f8f822e4a17883f36875',1,'r_dsmif.h']]],
+  ['dsmif_5fchannel_5fsynchronization_5fmode_5ft',['dsmif_channel_synchronization_mode_t',['../group___d_s_m_i_f.html#gadb7b9785e4ab2c226e88fe4888075d87',1,'r_dsmif.h']]],
+  ['dsmif_5fclock_5fdirection_5ft',['dsmif_clock_direction_t',['../group___d_s_m_i_f.html#gaa0baf520d120524307e5393123029692',1,'r_dsmif.h']]],
+  ['dsmif_5fclock_5fedge_5ft',['dsmif_clock_edge_t',['../group___d_s_m_i_f.html#gad2aff173b01c7b1f26fa329bc95f2684',1,'r_dsmif.h']]],
+  ['dsmif_5fclock_5fselection_5ft',['dsmif_clock_selection_t',['../group___d_s_m_i_f.html#gaff589a59b9189876e4a4abe9a910da27',1,'r_dsmif.h']]],
+  ['dsmif_5fdata_5fshift_5ft',['dsmif_data_shift_t',['../group___d_s_m_i_f.html#ga2d483fc22c3c6b91de847dc78afcfd19',1,'r_dsmif.h']]],
+  ['dsmif_5ffilter_5finitialization_5ftrigger_5ft',['dsmif_filter_initialization_trigger_t',['../group___d_s_m_i_f.html#ga30fb9891faa1ffbac7355b1b6f9b7a43',1,'r_dsmif.h']]],
+  ['dsmif_5ffilter_5forder_5ft',['dsmif_filter_order_t',['../group___d_s_m_i_f.html#gaf4ba6e2cd34edf3e6623d313c381628a',1,'r_dsmif.h']]],
+  ['dsmif_5fovercurrent_5fstatus_5ft',['dsmif_overcurrent_status_t',['../group___d_s_m_i_f.html#ga29366f6b6ddacf9a86e1a1ffe44d4568',1,'r_dsmif.h']]],
+  ['dsmif_5fovercurrent_5fsum_5ferror_5fchannel_5ft',['dsmif_overcurrent_sum_error_channel_t',['../group___d_s_m_i_f.html#ga931e26a3ec1a9fc88699326e1ebe6ba7',1,'r_dsmif.h']]],
+  ['dsmif_5fovercurrent_5fsum_5fstatus_5ft',['dsmif_overcurrent_sum_status_t',['../group___d_s_m_i_f.html#ga8308422b91fbd62d0c348c194db083ef',1,'r_dsmif.h']]],
+  ['dsmif_5fovercurrent_5fwindow_5fnotification_5fmode3_5ft',['dsmif_overcurrent_window_notification_mode3_t',['../group___d_s_m_i_f.html#ga529016c0cf5729e8cf58103a8341669b',1,'r_dsmif.h']]],
+  ['dsmif_5fovercurrent_5fwindow_5fnotification_5fmode_5ft',['dsmif_overcurrent_window_notification_mode_t',['../group___d_s_m_i_f.html#gaade11539e445c4c54479f5326eaf920a',1,'r_dsmif.h']]],
+  ['dsmif_5fovercurrent_5fwindow_5fnotification_5fstatus_5ft',['dsmif_overcurrent_window_notification_status_t',['../group___d_s_m_i_f.html#gaa2e05c928cb028f5c465c87dd29de9a7',1,'r_dsmif.h']]],
+  ['dsmif_5fshort_5fcircuit_5fstatus_5ft',['dsmif_short_circuit_status_t',['../group___d_s_m_i_f.html#ga851f377472d174eec9c1e36abb4a455b',1,'r_dsmif.h']]]
 ];

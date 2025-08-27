@@ -1,0 +1,613 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: EtherCAT SSC Port (rm_ethercat_ssc_port)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">EtherCAT SSC Port (rm_ethercat_ssc_port)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga1a6b2a699f7e6b12b55be6e8fde1378a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#ga1a6b2a699f7e6b12b55be6e8fde1378a">RM_ETHERCAT_SSC_PORT_Open</a> (<a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga1a6b2a699f7e6b12b55be6e8fde1378a"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtherCAT Slave Controller is initialized with this function. This function includes PHY initialization and ESC EEPROM loading. Afterwards, EtherCAT communication begins. Also EtherCAT interrupts are permitted if the interrupts are used. In order to receive the EtherCAT, EtherCAT Sync0, EtherCAT Sync1 interrupt event, it's necessary to register a callback function. Implements <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a74d1af02bb1ec452b3fbc3bda4a77884">ethercat_ssc_port_api_t::open</a>.  <a href="#ga1a6b2a699f7e6b12b55be6e8fde1378a">More...</a><br /></td></tr>
+<tr class="separator:ga1a6b2a699f7e6b12b55be6e8fde1378a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga624cf5c5dc7585c5a90be0b24285ee9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#ga624cf5c5dc7585c5a90be0b24285ee9c">RM_ETHERCAT_SSC_PORT_Close</a> (<a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:ga624cf5c5dc7585c5a90be0b24285ee9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Middleware for EtherCAT Slave Stack Code (SSC) on RA microprocessors. This module implements the <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html">EtherCAT SSC Interface</a>. </p>
+<h1><a class="anchor" id="rm-ethercat_ssc_port-overview"></a>
+Overview</h1>
+<p>This module provides the hardware port layer for EtherCAT Slave Stack Code. The control target is the EtherCAT Slave Controller (ESC). This module uses the EtherCAT slave stack code generated by the SSC tools provided by Beckhoff Automation GmbH. Users must register as a member of the EtherCAT Technology Group (ETG) to obtain SSC tools.:<a href="https://www.ethercat.org/en/downloads/downloads_01DCC32A10294F2EA866F7E46FB0285F.htm">https://www.ethercat.org/en/downloads/downloads_01DCC32A10294F2EA866F7E46FB0285F.htm</a> After initializing this module, refer to the SSC API reference to use the EtherCAT slave stack. The hardware access layer API referenced from the stack are also implemented. Please include renesashw.h in the stack source file which has hardware access.</p>
+<h2><a class="anchor" id="rm-ethercat_ssc_port-features"></a>
+Features</h2>
+<p>The EtherCAT SSC port module supports the following features:</p><ul>
+<li>Number of EtherCAT ports: 2</li>
+<li>Interrupts: EtherCAT interrupt, Sync0 interrupt, Sync1 interrupt</li>
+<li>Hardware access layer specified by SSC (including timer)</li>
+<li>Initialize ESC and PHY to enable EtherCAT communication</li>
+</ul>
+<h1><a class="anchor" id="rm-ethercat-ssc-port-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for rm_ethercat_ssc_port</h2>
+The following build time configurations are defined in fsp_cfg/rm_ethercat_ssc_port_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Phy Link Polarity0</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Active High</li>
+<li>
+Active Low</li>
+</ul>
+</td><td>Active Low </td><td>Set the signal porality of CAT0_LINKSTA pin. </td></tr>
+<tr class="tree_none">
+<td>Phy Link Polarity1</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Active High</li>
+<li>
+Active Low</li>
+</ul>
+</td><td>Active High </td><td>Set the signal porality of CAT1_LINKSTA pin. </td></tr>
+</table>
+ <h2>Configurations for Networking &gt; EtherCAT SSC Port (rm_ethercat_ssc_port)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; EtherCAT SSC Port (rm_ethercat_ssc_port).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> PHY  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reset Signal Hold Time (ms)</td><td>Specify a value between 0x1 and 0xFFFFFFFF.</td><td>1 </td><td>Time to keep the PHY reset signal low. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Reset Wait Time (us)</td><td>Specify a value between 0x1 and 0xFFFFFFFF.</td><td>15000 </td><td>Wait time to access the PHY register after the PHY reset signal is released. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Offset Address</td><td>Specify a value between 0x0 and 0xFF.</td><td>0 </td><td>The offset address of PHY in case of using the EtherCAT. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Delay Time of TX Signal  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Port 0</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+0 ns</li>
+<li>
+10 ns</li>
+<li>
+20 ns</li>
+<li>
+30 ns</li>
+</ul>
+</td><td>0 ns </td><td>Set the amount of delay time for TX signal of the Port 0 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Port 1</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+0 ns</li>
+<li>
+10 ns</li>
+<li>
+20 ns</li>
+<li>
+30 ns</li>
+</ul>
+</td><td>0 ns </td><td>Set the amount of delay time for TX signal of the Port 1 </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EtherCAT Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the EtherCAT interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EtherCAT SYNC0 Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the EtherCAT SYNC0 interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">EtherCAT SYNC1 Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the EtherCAT SYNC1 interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs </td></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_ethercat_ssc_port0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>EEPROM Size</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Under 32Kbits</li>
+<li>
+Over 32Kbits</li>
+</ul>
+</td><td>Under 32Kbits </td><td>Specify whether to use Normal or Inverted. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="rm-ethercat-ssc-port-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The ESC uses the ESCCLK which is generated by the clock generation circuit and the ESCCLK divided by 4 as CLK100 and CLK25 of the ESC IP Core, respectively.</p>
+<p>Set the registers in the clock generation circuit so that the frequency of the ESCCLK becomes 100 MHz. Also, set the registers that the frequency of the ETHPHYCLK signal which is used as the operating clock of a PHY-LSI becomes 25 MHz.</p>
+<h2><a class="anchor" id="rm-ethercat-ssc-port-pin-configuration"></a>
+Pin Configuration</h2>
+<p>The RM_ETHERCAT_SSC_PORT module is used for configuring pins.</p>
+<h1><a class="anchor" id="rm-ethercat-ssc-port-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm-ethercat-ssc-port-limitations"></a>
+Limitations</h2>
+<p>Developers should be aware of the following limitations when using the RM_ETHERCAT_SSC_PORT:</p>
+<ul>
+<li>Port configuration is EtherCAT port only.</li>
+</ul>
+<h2>ETHERCAT SSC Port Basic Example</h2>
+<p>This is a basic example of minimal use of the ETHERCAT SSC Port in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ethercat_ssc_port_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module before using the EtherCAT Slave Stack. */</span></div><div class="line">    <span class="comment">/* The instance of EtherCAT SSC Port instance can be accessed as gp_ether_cat_ssc_port */</span></div><div class="line">    err = <a class="code" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#ga1a6b2a699f7e6b12b55be6e8fde1378a">RM_ETHERCAT_SSC_PORT_Open</a>(gp_ethercat_ssc_port-&gt;<a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#aaa601798c214a1d1dbf6c0a079c09173">p_ctrl</a>, gp_ethercat_ssc_port-&gt;<a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a5b5cd0ac1b3e5db3107c53c749c35cf9">p_cfg</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    handle_error(err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Close the module after using the EtherCAT Slave Stack. */</span></div><div class="line">    <a class="code" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#ga624cf5c5dc7585c5a90be0b24285ee9c">RM_ETHERCAT_SSC_PORT_Close</a>(gp_ethercat_ssc_port-&gt;<a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#aaa601798c214a1d1dbf6c0a079c09173">p_ctrl</a>);</div><div class="line"></div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">/* Example callback called when EtherCAT interrupt. */</span></div><div class="line"><span class="keywordtype">void</span> ethercat_ssc_port_callback (<a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__callback__args__t">ethercat_ssc_port_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a166b6ec3160cd9fde15fc765900db8cf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gga64505999c1c12637ff288e706880a7a4ae33cbf059059bd6baa4c54c1af613f4c">ETHERCAT_SSC_PORT_EVENT_ESC_CAT_INTERRUPT</a>:</div><div class="line">        {</div><div class="line"><span class="comment">/* ESC CAT Interrupt application */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gga64505999c1c12637ff288e706880a7a4a1dca66ff4bbda5a9addccfb293034156">ETHERCAT_SSC_PORT_EVENT_ESC_SYNC0_INTERRUPT</a>:</div><div class="line">        {</div><div class="line"><span class="comment">/* ESC SYNC0 Interrupt application */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gga64505999c1c12637ff288e706880a7a4a7ea1aeb862ca2e7e436bfb1c07ad1985">ETHERCAT_SSC_PORT_EVENT_ESC_SYNC1_INTERRUPT</a>:</div><div class="line">        {</div><div class="line"><span class="comment">/* ESC SYNC1 Interrupt application */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Do Nothing! */</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structethercat__ssc__port__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#structethercat__ssc__port__instance__ctrl__t">ethercat_ssc_port_instance_ctrl_t</a></td></tr>
+<tr class="separator:structethercat__ssc__port__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structethercat__ssc__port__extend__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#structethercat__ssc__port__extend__cfg__t">ethercat_ssc_port_extend_cfg_t</a></td></tr>
+<tr class="separator:structethercat__ssc__port__extend__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga4770edd29dda539aabd891f0ac20b6f7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#ga4770edd29dda539aabd891f0ac20b6f7">ethercat_ssc_port_eeprom_size_t</a> </td></tr>
+<tr class="separator:ga4770edd29dda539aabd891f0ac20b6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1a42087e31648ef12f7d323615664b7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#gad1a42087e31648ef12f7d323615664b7">ethercat_ssc_port_tx_signal_delay_t</a> </td></tr>
+<tr class="separator:gad1a42087e31648ef12f7d323615664b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structethercat__ssc__port__instance__ctrl__t" id="structethercat__ssc__port__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__ssc__port__instance__ctrl__t">&#9670;&nbsp;</a></span>ethercat_ssc_port_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_ssc_port_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>EtherCAT SSC port control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a74d1af02bb1ec452b3fbc3bda4a77884">ethercat_ssc_port_api_t::open</a> is called. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a79c2656deccbc2762f05047aab4dafe0"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Flag to indicate if EtherCAT SSC port instance has been initialized. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1200cfc6b4774b6945329de8d2b8470c"></a>uint16_t</td>
+<td class="fieldname">
+sys_time</td>
+<td class="fielddoc">
+System time of EtherCAT Slave Controller. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4c89faabbcbb11b8b5d8809050d89c3c"></a><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to initial configurations. </td></tr>
+<tr><td class="fieldtype">
+<a id="af32b2de959b4635826a15965bdcd8f59"></a>R_ESC_INI_Type *</td>
+<td class="fieldname">
+p_reg_esc_ini</td>
+<td class="fielddoc">
+Pointer to EtherCAT Initial Configuration registers. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae42e19c760f20678ae8e340c04e6536e"></a>R_ESC_Type *</td>
+<td class="fieldname">
+p_reg_esc</td>
+<td class="fielddoc">
+Pointer to EtherCAT Slave Controller registers. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structethercat__ssc__port__extend__cfg__t" id="structethercat__ssc__port__extend__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__ssc__port__extend__cfg__t">&#9670;&nbsp;</a></span>ethercat_ssc_port_extend_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_ssc_port_extend_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Extended configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acccadc7218ce2406d38f279dd01fb657"></a><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#ga4770edd29dda539aabd891f0ac20b6f7">ethercat_ssc_port_eeprom_size_t</a></td>
+<td class="fieldname">
+eeprom_size</td>
+<td class="fielddoc">
+EEPROM memory size. </td></tr>
+<tr><td class="fieldtype">
+<a id="af3b8c1840e13c5167ac0a718238de0f6"></a><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#gad1a42087e31648ef12f7d323615664b7">ethercat_ssc_port_tx_signal_delay_t</a></td>
+<td class="fieldname">
+tx_signal_delay_port0</td>
+<td class="fielddoc">
+Port 0 TX signal delay time. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae37814a193722c9f02bb4a7b024c9eba"></a><a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#gad1a42087e31648ef12f7d323615664b7">ethercat_ssc_port_tx_signal_delay_t</a></td>
+<td class="fieldname">
+tx_signal_delay_port1</td>
+<td class="fielddoc">
+Port 1 TX signal delay time. </td></tr>
+<tr><td class="fieldtype">
+<a id="a14c9f2ddd6bfbc076786c34c1d62f437"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__instance__t">ether_phy_instance_t</a> const  *</td>
+<td class="fieldname">
+p_ether_phy_instance[BSP_FEATURE_ESC_NUM_PORTS]</td>
+<td class="fielddoc">
+Pointer to ETHER_PHY instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga4770edd29dda539aabd891f0ac20b6f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4770edd29dda539aabd891f0ac20b6f7">&#9670;&nbsp;</a></span>ethercat_ssc_port_eeprom_size_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#ga4770edd29dda539aabd891f0ac20b6f7">ethercat_ssc_port_eeprom_size_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>EEPROM memory size of the EtherCAT </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga4770edd29dda539aabd891f0ac20b6f7a205ad752bfd271ac1b5833e6de52c531"></a>ETHERCAT_SSC_PORT_EEPROM_SIZE_UNDER_32KBIT&#160;</td><td class="fielddoc"><p>Up to 16KBit. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga4770edd29dda539aabd891f0ac20b6f7a076185a3d46bea1c83585531a160e2e7"></a>ETHERCAT_SSC_PORT_EEPROM_SIZE_OVER_32KBIT&#160;</td><td class="fielddoc"><p>32KBit to 4MBit </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gad1a42087e31648ef12f7d323615664b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1a42087e31648ef12f7d323615664b7">&#9670;&nbsp;</a></span>ethercat_ssc_port_tx_signal_delay_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_m___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t.html#gad1a42087e31648ef12f7d323615664b7">ethercat_ssc_port_tx_signal_delay_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Delay time of TX signal </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad1a42087e31648ef12f7d323615664b7a1e0654a7db309aa6d4fa5a216a17b6ca"></a>ETHERCAT_SSC_PORT_TX_SIGNAL_DELAY_00NS&#160;</td><td class="fielddoc"><p>0 ns </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad1a42087e31648ef12f7d323615664b7ac07101bfe0631f80eab954dcd3f1da80"></a>ETHERCAT_SSC_PORT_TX_SIGNAL_DELAY_10NS&#160;</td><td class="fielddoc"><p>10 ns </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad1a42087e31648ef12f7d323615664b7ab54b234b6369860422d4ff57866c869c"></a>ETHERCAT_SSC_PORT_TX_SIGNAL_DELAY_20NS&#160;</td><td class="fielddoc"><p>20 ns </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad1a42087e31648ef12f7d323615664b7a312c9be35f8363f23ed59a037947b569"></a>ETHERCAT_SSC_PORT_TX_SIGNAL_DELAY_30NS&#160;</td><td class="fielddoc"><p>30 ns </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga1a6b2a699f7e6b12b55be6e8fde1378a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1a6b2a699f7e6b12b55be6e8fde1378a">&#9670;&nbsp;</a></span>RM_ETHERCAT_SSC_PORT_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ETHERCAT_SSC_PORT_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>EtherCAT Slave Controller is initialized with this function. This function includes PHY initialization and ESC EEPROM loading. Afterwards, EtherCAT communication begins. Also EtherCAT interrupts are permitted if the interrupts are used. In order to receive the EtherCAT, EtherCAT Sync0, EtherCAT Sync1 interrupt event, it's necessary to register a callback function. Implements <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a74d1af02bb1ec452b3fbc3bda4a77884">ethercat_ssc_port_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Opened successfully </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required input pointer is NULL </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Irq number lower then 0. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_HW_CONDITION</td><td>ESC EEPROM loading error </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>ESC EEPROM loading timeout error </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga624cf5c5dc7585c5a90be0b24285ee9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga624cf5c5dc7585c5a90be0b24285ee9c">&#9670;&nbsp;</a></span>RM_ETHERCAT_SSC_PORT_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> RM_ETHERCAT_SSC_PORT_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables interrupts. Removes power and releases hardware lock. Implements <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a0d9a185b5c5448af57927f131fa5cb9b">ethercat_ssc_port_api_t::close</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to the control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

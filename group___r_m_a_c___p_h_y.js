@@ -15,7 +15,7 @@ var group___r_m_a_c___p_h_y =
       [ "mdc_clock_rate", "group___r_m_a_c___p_h_y.html#a6258c7a01fbcf6f88c4cd9ebdaaa6246", null ],
       [ "mdio_hold_time", "group___r_m_a_c___p_h_y.html#ab836117887ec4c442a66fade78d84a46", null ],
       [ "mdio_capture_time", "group___r_m_a_c___p_h_y.html#aec3916d9e5ae97104d29d7f6ff48f2b7", null ],
-      [ "p_phy_lsi_cfg_list", "group___r_m_a_c___p_h_y.html#a060ec7c150d8b5a760dfbfefc63cc1fa", null ],
+      [ "p_phy_lsi_cfg_list", "group___r_m_a_c___p_h_y.html#abf973c8d578696c4b6c0314e4c240ab5", null ],
       [ "default_phy_lsi_cfg_index", "group___r_m_a_c___p_h_y.html#a2ec5bc1df86d2588d5e9fb5aab9cc837", null ]
     ] ],
     [ "rmac_phy_interface_status_t", "group___r_m_a_c___p_h_y.html#gae18231839d7b5b411f8a100a8ff00c0a", [

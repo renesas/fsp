@@ -1,0 +1,2301 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Delta-Sigma Modulator Interface (r_dsmif)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___d_s_m_i_f.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Delta-Sigma Modulator Interface (r_dsmif)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s.html">Analog</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga74d4453017c0f52214f7624872dbb9b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga74d4453017c0f52214f7624872dbb9b4">R_DSMIF_Open</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__cfg__t">adc_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:ga74d4453017c0f52214f7624872dbb9b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ab813d5df678af4f9a4045393966674"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga6ab813d5df678af4f9a4045393966674">R_DSMIF_ScanCfg</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, void const *const p_extend)</td></tr>
+<tr class="separator:ga6ab813d5df678af4f9a4045393966674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1103d4ad1679f689179bafdda2aada04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga1103d4ad1679f689179bafdda2aada04">R_DSMIF_ScanStart</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga1103d4ad1679f689179bafdda2aada04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f217337a9da7e67a8192fa51ee86ab3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga5f217337a9da7e67a8192fa51ee86ab3">R_DSMIF_ScanGroupStart</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a> group_mask)</td></tr>
+<tr class="separator:ga5f217337a9da7e67a8192fa51ee86ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf03d6083c4c81193398f21a2f3978662"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaf03d6083c4c81193398f21a2f3978662">R_DSMIF_ScanStop</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:gaf03d6083c4c81193398f21a2f3978662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd05c0c487b24fa124d21fc02ff9ffda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gafd05c0c487b24fa124d21fc02ff9ffda">R_DSMIF_ScanStatusGet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> *p_status)</td></tr>
+<tr class="separator:gafd05c0c487b24fa124d21fc02ff9ffda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8eb4f41d746b40ac04e42efb67c3f55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gab8eb4f41d746b40ac04e42efb67c3f55">R_DSMIF_Read</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, uint16_t *const p_data)</td></tr>
+<tr class="separator:gab8eb4f41d746b40ac04e42efb67c3f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0c435ecd7419eb64f203d746002f172"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, uint32_t *const p_data)</td></tr>
+<tr class="separator:gad0c435ecd7419eb64f203d746002f172"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddcfcf600e52989c14a6ad785613a23e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaddcfcf600e52989c14a6ad785613a23e">R_DSMIF_Calibrate</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, void const *p_extend)</td></tr>
+<tr class="separator:gaddcfcf600e52989c14a6ad785613a23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c10bf412590828b93e732b12f8d1692"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga4c10bf412590828b93e732b12f8d1692">R_DSMIF_OffsetSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const reg_id, int32_t const offset)</td></tr>
+<tr class="separator:ga4c10bf412590828b93e732b12f8d1692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca1634611b5a4f83db9e959f7464f23e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaca1634611b5a4f83db9e959f7464f23e">R_DSMIF_CallbackSet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *), void *const p_context, <a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:gaca1634611b5a4f83db9e959f7464f23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0291812ebf08c4fba5cb2a96b9bb4736"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga0291812ebf08c4fba5cb2a96b9bb4736">R_DSMIF_Close</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:ga0291812ebf08c4fba5cb2a96b9bb4736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f03e6bf4903a0899fb834a23fbb3aa3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga7f03e6bf4903a0899fb834a23fbb3aa3">R_DSMIF_InfoGet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const p_ctrl, <a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *const p_adc_info)</td></tr>
+<tr class="separator:ga7f03e6bf4903a0899fb834a23fbb3aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4c92adf15725cac8dec286c364e410f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaf4c92adf15725cac8dec286c364e410f">R_DSMIF_ErrorDetectionEnable</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl)</td></tr>
+<tr class="separator:gaf4c92adf15725cac8dec286c364e410f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga229d95cef2677fd1aa53112287ee4638"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga229d95cef2677fd1aa53112287ee4638">R_DSMIF_ErrorStatusGet</a> (<a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *p_ctrl, <a class="el" href="group___d_s_m_i_f.html#structdsmif__error__status__t">dsmif_error_status_t</a> *p_error_status)</td></tr>
+<tr class="separator:ga229d95cef2677fd1aa53112287ee4638"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Driver for the DSMIF peripheral on RA MCUs. This module implements the <a class="el" href="group___a_d_c___a_p_i.html">ADC Interface</a>. </p>
+<h1><a class="anchor" id="r-dsmif-overview"></a>
+Overview</h1>
+<p>The Delta-Sigma Modulator interface (DSMIF) functions similarly to a normal ADC, however, instead of sampling an analog signal directly, DSMIF samples a PDM signal that is generated by an externally connected 1-bit Delta-Sigma Modulator.</p>
+<div class="image">
+<object type="image/svg+xml" data="dsmif-overview-light.drawio.svg">dsmif-overview-light.drawio.svg</object>
+<div class="caption">
+DSMIF Overview</div></div>
+<p> Every instance of the DSMIF peripheral has 3 separate channels that can sample independent PDM signals. Each channel has a pair of sinc filters. One sinc filter is used for normal measurements, and the other sinc filter is used for detecting error conditions. The sinc filter configuration will determine the sample resolution, and the final sample rate for each channel. There are three primary configuration settings for the sinc filters:</p><ul>
+<li>Sample Rate - The frequency that the PDM signal is sampled.</li>
+<li>Decimation Count - Number of samples that are removed between the integration stage and the differentiation stage of the sinc filter.</li>
+<li>Filter order - The filter order of the sinc filter: [1st, 2nd, 3rd] order.</li>
+</ul>
+<h2><a class="anchor" id="r-dsmif-features"></a>
+Features</h2>
+<p>The DSMIF module supports the following features:</p><ul>
+<li>Two independent units (3 channels per unit for a total of 6 channels)</li>
+<li><a class="anchor" id="um_dsmif_sinc_filter"></a>Configurable sinc filter (1<sup>st</sup>, 2<sup>nd</sup>, 3<sup>rd</sup> order)</li>
+<li>Configurable decimation count in the range (4,256)</li>
+<li>Support for master and slave modes</li>
+<li>Channel synchronization</li>
+<li><a class="anchor" id="um_dsmif_capture_data"></a>Trigger data capture via ELC events</li>
+<li>Trigger reset of decimation counter via ELC events</li>
+<li>Configurable error detection<ul>
+<li>Overcurrent error detection (Can trigger common error interrupt)</li>
+<li>Overcurrent sum error detection (Can trigger common error interrupt)</li>
+<li>Short-circuit detection (Can trigger common error interrupt)</li>
+<li><a class="anchor" id="um_dsmif_poeg"></a>Window notification error detection (Can trigger <a class="el" href="group___p_o_e_g.html">Port Output Enable for GPT (r_poeg)</a>)</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="r-dsmif-configuration"></a>
+Configuration</h1>
+<p><a class="anchor" id="um_dsmif_alignment"></a> <h2>Build Time Configurations for r_dsmif</h2>
+The following build time configurations are defined in fsp_cfg/r_dsmif_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Error Detection Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>If selected code for parameter checking is included in the build. </td></tr>
+</table>
+ <h2>Configurations for Analog &gt; DSMIF (r_dsmif)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Analog &gt; DSMIF (r_dsmif). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_dsmif0 </td><td>Module name </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock Selection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+PCLKA</li>
+<li>
+DSMIFCLK</li>
+<li>
+GPTCLK</li>
+</ul>
+</td><td>PCLKA </td><td>Select the DSMIF Core Clock. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Unit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Unit 0</li>
+<li>
+Unit 1</li>
+</ul>
+</td><td>Unit 0 </td><td>DSMIF unit number. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Alignment</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Left Justified</li>
+<li>
+Right Justified</li>
+</ul>
+</td><td>Right Justified </td><td>Select if the conversion result is aligned to the left or right of the channel data registers. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback for handling DSMIF interrupts. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Overcurrent Sum Error  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Overcurrent Sum Error &gt; Upper Limit  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent sum error upper limit detection. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Threshold</td><td>Must be an integer in the range [0,0x3FFFF].</td><td>0 </td><td>Overcurrent sum error detection upper limit. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Overcurrent Sum Error &gt; Lower Limit  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent sum error lower limit detection. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Threshold</td><td>Must be an integer in the range [0,0x3FFFF].</td><td>0 </td><td>Overcurrent sum error detection lower limit. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel Selection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Channels 0, 1 and 2</li>
+<li>
+Channels 0 and 1</li>
+<li>
+Channel 0</li>
+<li>
+Channel 1</li>
+<li>
+Channel 2</li>
+</ul>
+</td><td>Channels 0, 1 and 2 </td><td>Specify the channel(s) used for detecting overcurrent sum errors. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Channel Synchronization</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Channels are not synchronized</li>
+<li>
+Channels 0 and 1 are synchronized</li>
+<li>
+Channels 0, 1 and 2 are synchronized</li>
+</ul>
+</td><td>Channels are not synchronized </td><td>Select the channel synchronization mode. Two or three channels that share the same configuration may optionaly configure a common interrupts instead of channel specific interrupts. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Common Data Update Interrupt Priority (CDUPD_COM)</td><td>MCU Specific Options</td><td></td><td>The Common Data Update Interrupt occurs when a conversion is completed on all synchronized channels. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Common Capture A Data Update Interrupt Priority (CDACUPD_COM)</td><td>MCU Specific Options</td><td></td><td>The Common Capture A Interrupt occurs when a Capture A conversion is completed on all synchronized channels. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Common Capture B Data Update Interrupt Priority (CDBCUPD_COM)</td><td>MCU Specific Options</td><td></td><td>The Common Capture B Interrupt occurs when a Capture B conversion is completed on all synchronized channels. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Error Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>The Error Interrupt occurs when a short-cicuit, overcurrent, overcurrent sum, or window notification error occurs on any channel. </td></tr>
+</table>
+ <h2>Configurations for Analog &gt; DSMIF Channel Configuration (r_dsmif)</h2>
+<table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_dsmif_channel0 </td><td>Module name </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Clock  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock Direction</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Slave Mode</li>
+<li>
+Master Mode</li>
+</ul>
+</td><td>Slave Mode </td><td>Select the conversion clock mode for the DSMIF channel. In master mode the clock is output from the DSMIF channel. In slave mode the clock is input to the DSMIF channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Clock Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Negative Edge</li>
+<li>
+Positive Edge</li>
+</ul>
+</td><td>Negative Edge </td><td>Select the sampling edge of DSMCLKn for this channel. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">CKDIV Setting (Master Mode Only)</td><td>Must be an integer in the range [2,63].</td><td>2 </td><td>Set the A/D conversion clock division ratio. The clock division ratio is equal to 2 x (CKDIV + 1). This setting is only used in master mode. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">DSMCLK Frequency (Slave Mode Only)</td><td>Must be an integer in the range [0,25000000].</td><td>25000000 </td><td>If slave mode is selected, then manually enter the DSMCLK frequency. This setting is used to calculate the settling time of the DSMIF sinc filters. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Filter  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Filter Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+First Order</li>
+<li>
+Second Order</li>
+<li>
+Third Order</li>
+</ul>
+</td><td>Third Order </td><td>Select 1st, 2nd, or 3rd order sinc filter for current data. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Decimation Count</td><td>Must be an integer in the range [4,256].</td><td>256 </td><td>Decimation ratio of the current data sinc filter. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Trigger  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Trigger &gt; Filter Initialization  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Trigger</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No Trigger</li>
+<li>
+Trigger 0 (ELC_DSMIFm_CNT0)</li>
+<li>
+Trigger 1 (ELC_DSMIFm_CNT1)</li>
+<li>
+Trigger 2 (ELC_DSMIFm_CNT2)</li>
+</ul>
+</td><td>No Trigger </td><td>Select filter initialization trigger. The filter initialization trigger resets the sinc filter's decimation clock via ELC event. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Edge</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Negative</li>
+<li>
+Positive</li>
+</ul>
+</td><td>Positive </td><td>Select either a positive or negative edge for the filter initialization trigger. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture Trigger A</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No Trigger</li>
+<li>
+Trigger 0 (ELC_DSMIFm_CAP0)</li>
+<li>
+Trigger 1 (ELC_DSMIFm_CAP1)</li>
+<li>
+Trigger 2 (ELC_DSMIFm_CAP2)</li>
+<li>
+Trigger 3 (ELC_DSMIFm_CAP3)</li>
+<li>
+Trigger 4 (ELC_DSMIFm_CAP4)</li>
+<li>
+Trigger 5 (ELC_DSMIFm_CAP5)</li>
+</ul>
+</td><td>No Trigger </td><td>Current capture trigger A selection. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture Trigger B</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+No Trigger</li>
+<li>
+Trigger 0 (ELC_DSMIFm_CAP0)</li>
+<li>
+Trigger 1 (ELC_DSMIFm_CAP1)</li>
+<li>
+Trigger 2 (ELC_DSMIFm_CAP2)</li>
+<li>
+Trigger 3 (ELC_DSMIFm_CAP3)</li>
+<li>
+Trigger 4 (ELC_DSMIFm_CAP4)</li>
+<li>
+Trigger 5 (ELC_DSMIFm_CAP5)</li>
+</ul>
+</td><td>No Trigger </td><td>Current capture trigger B selection. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Error Detection  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Filter  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Filter Order</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+First Order</li>
+<li>
+Second Order</li>
+<li>
+Third Order</li>
+</ul>
+</td><td>Third Order </td><td>Select 1st, 2nd, or 3rd order sinc filter for overcurrent detection. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Decimation Count</td><td>Must be an integer in the range [4,256].</td><td>256 </td><td>Decimation ratio of the overcurrent detection filter. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 0  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 0 &gt; Upper Limit  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent 0 upper limit. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Threshold</td><td>Must be an integer in the range [0,65535].</td><td>0xFFFF </td><td>Configure the overcurrent 0 upper limit. Valid settings are in the range [0,65535]. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 0 &gt; Lower Limit  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent 0 lower limit. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Threshold</td><td>Must be an integer in the range [0,65535].</td><td>0 </td><td>Configure the overcurrent 0 lower limit. Valid settings are in the range [0,65535]. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 1  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 1 &gt; Upper Limit  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent 1 upper limit. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Threshold</td><td>Must be an integer in the range [0,65535].</td><td>0xFFFF </td><td>Configure the overcurrent 1 upper limit. Valid settings are in the range [0,65535]. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 1 &gt; Lower Limit  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent 1 lower limit. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Threshold</td><td>Must be an integer in the range [0,65535].</td><td>0 </td><td>Configure the overcurrent 1 lower limit. Valid settings are in the range [0,65535]. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 2  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 2 &gt; Upper Limit  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent 2 upper limit. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Threshold</td><td>Must be an integer in the range [0,65535].</td><td>0xFFFF </td><td>Configure the overcurrent 2 upper limit. Valid settings are in the range [0,65535]. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Detection 2 &gt; Lower Limit  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent 2 lower limit. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Threshold</td><td>Must be an integer in the range [0,65535].</td><td>0 </td><td>Configure the overcurrent 2 lower limit. Valid settings are in the range [0,65535]. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Window Notifcation 0  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Notification</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent window notification 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Overcurrent Data &lt; Lower Limit 0 or Upper Limit 0 &lt; Overcurrent Data</li>
+<li>
+Lower Limit 0 &lt;= Overcurrent Data &lt;= Upper Limit 0</li>
+</ul>
+</td><td>Overcurrent Data &lt; Lower Limit 0 or Upper Limit 0 &lt; Overcurrent Data </td><td>Select overcurrent window notification 0 mode. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Window Notifcation 1  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Notification</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent window notification 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Overcurrent Data &lt; Lower Limit 1 or Upper Limit 1 &lt; Overcurrent Data</li>
+<li>
+Lower Limit 1 &lt;= Overcurrent Data &lt;= Upper Limit 1</li>
+</ul>
+</td><td>Overcurrent Data &lt; Lower Limit 1 or Upper Limit 1 &lt; Overcurrent Data </td><td>Select overcurrent window notification 1 mode. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Window Notifcation 2  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Notification</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent window notification 2. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Overcurrent Data &lt; Lower Limit 2 or Upper Limit 2 &lt; Overcurrent Data</li>
+<li>
+Lower Limit 2 &lt;= Overcurrent Data &lt;= Upper Limit 2</li>
+</ul>
+</td><td>Overcurrent Data &lt; Lower Limit 2 or Upper Limit 2 &lt; Overcurrent Data </td><td>Select overcurrent window notification 2 mode. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Overcurrent Window Notifcation 3  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Notification</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable overcurrent window notification 3. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Mode</td><td>Refer to the RA Configuration tool for available options.</td><td>Window notification 0 </td><td>Select overcurrent window notification 3 mode. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Error Detection &gt; Short Circuit  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Detection</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable or disable short circuit detection. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Low Count</td><td>Must be an integer in the range [0,8191].</td><td>0 </td><td>Short circuit detection low count. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">High Count</td><td>Must be an integer in the range [0,8191].</td><td>0 </td><td>Short circuit detection high count. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Current Data Update Interrupt Priority (CDUPD)</td><td>MCU Specific Options</td><td></td><td>The Current Data Update Interrupt occurs when a conversion is completed. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture A Data Update Interrupt Priority (CDAUPD)</td><td>MCU Specific Options</td><td></td><td>The Capture A Data Update Interrupt occurs when a capture A conversion is completed. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Capture B Data Update Interrupt Priority (CDBUPD)</td><td>MCU Specific Options</td><td></td><td>The Capture B Data Update Interrupt occurs when a capture B conversion is completed. </td></tr>
+</table>
+</p>
+<h2><a class="anchor" id="r-dsmif-clock-configuration"></a>
+Clock Configuration</h2>
+<p>The DSMIF conversion rate is determined by the <b>DSMIF Core Clock</b>, <b>A/D Conversion Division Ratio (CKDIV)</b>, and the configured sinc filter's <b>decimation count</b>.</p>
+<p>The <b>DSMIF Core Clock</b> is common to all channels and may be configured to the following settings:</p><ul>
+<li>PCLKA - Peripheral Clock A</li>
+<li>DSMIFCLK - Dedicated DSMIF Clock</li>
+<li>GPTCLK - Dedicated GPT Clock</li>
+</ul>
+<p>The <b>A/D Conversion Division Ratio (CKDIV)</b> is a channel specific setting that further divides the core clock by the following formula: </p><div class="fragment"><div class="line">A/D Conversion Division Ratio = (2 x (CKDIV + 1))</div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>1. CKDIV is set in the range [2,63]. </dd>
+<dd>
+2. CKDIV is only valid in master mode.</dd></dl>
+<p>The <b>decimation count</b> is a channel specific sinc filter setting that will determine the final conversion rate of a DSMIF channel.</p>
+<dl class="section note"><dt>Note</dt><dd>1. The decimation count is set in the range [4,256].</dd></dl>
+<p><b>DSMIF Recommended Clock Configuration:</b> </p><table class="doxtable">
+<tr>
+<th>DSMIF Core Clock (Mhz) </th><th>CKDIV </th><th>DSMCLKn (Mhz)  </th></tr>
+<tr>
+<td>300 </td><td>0x05 </td><td>25 </td></tr>
+<tr>
+<td></td><td>0x08 </td><td>16.67 </td></tr>
+<tr>
+<td></td><td>0x09 </td><td>15 </td></tr>
+<tr>
+<td></td><td>0x0E </td><td>10 </td></tr>
+<tr>
+<td></td><td>0x1D </td><td>5 </td></tr>
+<tr>
+<td>200 </td><td>0x03 </td><td>25 </td></tr>
+<tr>
+<td></td><td>0x04 </td><td>20 </td></tr>
+<tr>
+<td></td><td>0x07 </td><td>12.5 </td></tr>
+<tr>
+<td></td><td>0x09 </td><td>10 </td></tr>
+<tr>
+<td></td><td>0x0F </td><td>6.25 </td></tr>
+<tr>
+<td></td><td>0x13 </td><td>5 </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>1. If settings other than the recommended are used, there is an additional clock constraint: <code>DSMIF Core Clock/5 ≤ PCLKA</code></dd></dl>
+<h2><a class="anchor" id="r-dsmif-pin-configuration"></a>
+Pin Configuration</h2>
+<p>Each DSMIF channel has two pins:</p><ul>
+<li>DSMmCLKn - DSMIF Clock Input/Output. In Master mode the clock pin is an output, in slave mode, the clock is an input.</li>
+<li>DSMmDATn - DSMIF Data Input.</li>
+</ul>
+<h1><a class="anchor" id="r-dsmif-usage_notes"></a>
+Usage Notes</h1>
+<h2>Channel Synchronization</h2>
+<p><a class="anchor" id="um_dsmif_common_interrupts"></a>Multiple channels may be optionally synchronized in order to generate common interrupts in response to the following events:</p><ul>
+<li><a class="el" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847aa3091bf90a88f96ed9b5a6ab499680bb">ADC_EVENT_CONVERSION_COMPLETE</a></li>
+<li><a class="el" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a745be33396b1b53bb5292cfc29aaf286">ADC_EVENT_CAPTURE_A</a></li>
+<li><a class="el" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a261363a2befcc3e6b25736d94cd5578f">ADC_EVENT_CAPTURE_B</a></li>
+</ul>
+<p>The following sets of channels may be synchronized:</p><ul>
+<li>Channel 0 and Channel 1</li>
+<li>Channel 0, Channel 1, and Channel 2</li>
+</ul>
+<p>When synchronizing channels, each channel must use the same 'Clock', 'Filter', and 'Trigger' configuration settings. For convenience, channel configurations can be reused between channels of a DSMIF instance instead of creating new channel configurations for each channel.</p>
+<dl class="section note"><dt>Note</dt><dd>1. Channel configurations cannot be reused between different DSMIF instances. </dd>
+<dd>
+2. Channel configurations can only be reused between channels that are synchronized.</dd></dl>
+<h2>Filter Settling Time</h2>
+<p>The filter settling time is the time required for the filter results to be valid after the DSMIF channels have been started. The settling time is determined by the DSMCLK period, Decimation Ratio, Filter Order, DSMIF Core Clock period, and Peripheral Clock period.</p>
+<p>The following macros are generated by the tooling in order to assist with determining the required settling time: </p><div class="fragment"><div class="line"><span class="comment">/* Calculated settling time required for DSMIF filters (See &quot;Settling Time&quot; section in the MCU user manual). */</span></div><div class="line"><span class="preprocessor">#define DSMIF0_FILTER_SETTLING_TIME_SYNCHRONOUS_US      (...)</span></div><div class="line"><span class="preprocessor">#define DSMIF0_FILTER_SETTLING_TIME_ASYNCHRONOUS_US     (...)</span></div><div class="line"><span class="preprocessor">#define DSMIF0_FILTER_SETTLING_TIME_GPT_SYNCHRONOUS_US  (...)</span></div><div class="line"><span class="preprocessor">#define DSMIF0_FILTER_SETTLING_TIME_GPT_ASYNCHRONOUS_US (...)</span></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>1. For more information on how to calculate the settling time refer to the MCU user manual.</dd></dl>
+<h2>Error Detection</h2>
+<p><a class="anchor" id="um_dsmif_error_detection"></a>There are four different types of error interrupts generated by the DSMIF peripheral:</p><ul>
+<li><b>Overcurrent error detection</b> - Triggered when a conversion result exceeds a configured upper/lower limit on a particular channel.</li>
+<li><b>Overcurrent sum error detection</b> - Triggered when the sum of conversion results from a set of channels exceeds a configured upper/lower limit.</li>
+<li><b>Window Notification error detection</b> - Triggered when a conversion result falls within a set of configurable ranges.</li>
+<li><b>Short-circuit detection</b> - Triggered when a configured number of consecutive '1's or '0's are input on a DSMmDATn pin.</li>
+</ul>
+<p>In order to enable error detection, the application must call <a class="el" href="group___d_s_m_i_f.html#gaf4c92adf15725cac8dec286c364e410f">R_DSMIF_ErrorDetectionEnable</a> after waiting for all DSMIF channel filters to stabilize. The amount of time required for a filter to stabilize is dependent on the filter parameters, and clock settings. Refer to the MCU user manual for determining the filter stabilization time.</p>
+<p>Once error detection is enabled, <a class="el" href="group___d_s_m_i_f.html#ga229d95cef2677fd1aa53112287ee4638">R_DSMIF_ErrorStatusGet</a> can be called to read the error status.</p>
+<p><a class="anchor" id="um_dsmif_scan_stop"></a></p><dl class="section note"><dt>Note</dt><dd>1. Error detection is disabled when channel operation is stopped via <a class="el" href="group___d_s_m_i_f.html#gaf03d6083c4c81193398f21a2f3978662">R_DSMIF_ScanStop</a>. When starting channel operation again, the same settling time is required before reenabling error detection.</dd></dl>
+<h3>Error Interrupt</h3>
+<p>If the error interrupt is enabled, the following configured error flags will generate an interrupt request:</p><ul>
+<li>Overcurrent error detection</li>
+<li>Overcurrent sum error detection</li>
+<li>Short-circuit detection</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>1. Since the error interrupt is a level interrupt, <a class="el" href="group___d_s_m_i_f.html#ga229d95cef2677fd1aa53112287ee4638">R_DSMIF_ErrorStatusGet</a> must be called from the user callback in order to clear the associated error status flags. </dd>
+<dd>
+2. Window Notification error detection does not generate an interrupt request.</dd></dl>
+<h2>Limitations</h2>
+<p>Developers should be aware of the following limitations when using DSMIF:</p>
+<ul>
+<li>The DSMIF peripheral must be stopped prior to entering software standby mode.</li>
+</ul>
+<h1><a class="anchor" id="r-dsmif-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the ADC in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> dsmif_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_s_m_i_f.html#ga74d4453017c0f52214f7624872dbb9b4">R_DSMIF_Open</a>(&amp;g_dsmif_ctrl, &amp;g_dsmif_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_s_m_i_f.html#ga1103d4ad1679f689179bafdda2aada04">R_DSMIF_ScanStart</a>(&amp;g_dsmif_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* The application must wait for the configured filters to stabilize. */</span></div><div class="line">    app_wait_for_filter_stabilization(DSMIF0_FILTER_SETTLING_TIME_SYNCHRONOUS_US);</div><div class="line"></div><div class="line">    err = <a class="code" href="group___d_s_m_i_f.html#gaf4c92adf15725cac8dec286c364e410f">R_DSMIF_ErrorDetectionEnable</a>(&amp;g_dsmif_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> dsmif_callback (<a class="code" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a7b1ea18a97eee3565ef6cfb084222453">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847aa3091bf90a88f96ed9b5a6ab499680bb">ADC_EVENT_CONVERSION_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            uint32_t  conversion;</div><div class="line">            <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a1e9351a3cb3ab91b4953b29cac73f5cc">channel</a>, &amp;conversion);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCEESS == err)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Application process the converted data. */</span></div><div class="line">                app_dsmif_data_process(p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a1e9351a3cb3ab91b4953b29cac73f5cc">channel</a>, conversion);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a745be33396b1b53bb5292cfc29aaf286">ADC_EVENT_CAPTURE_A</a>:</div><div class="line">        {</div><div class="line">            uint32_t  conversion;</div><div class="line">            <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a1e9351a3cb3ab91b4953b29cac73f5cc">channel</a>, &amp;conversion);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCEESS == err)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Application process the converted capture a data. */</span></div><div class="line">                app_dsmif_capture_a_data_process(p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a1e9351a3cb3ab91b4953b29cac73f5cc">channel</a>, conversion);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a261363a2befcc3e6b25736d94cd5578f">ADC_EVENT_CAPTURE_B</a>:</div><div class="line">        {</div><div class="line">            uint32_t  conversion;</div><div class="line">            <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a1e9351a3cb3ab91b4953b29cac73f5cc">channel</a>, &amp;conversion);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCEESS == err)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Application process the converted capture b data. */</span></div><div class="line">                app_dsmif_capture_b_data_process(p_args-&gt;<a class="code" href="group___a_d_c___a_p_i.html#a1e9351a3cb3ab91b4953b29cac73f5cc">channel</a>, conversion);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___a_d_c___a_p_i.html#ggae2177d6e5bf43e3749cc60f835456847a4d62358854590ae9bed21fc8c8c96e09">ADC_EVENT_CONVERSION_ERROR</a>:</div><div class="line">        {</div><div class="line">            <a class="code" href="group___d_s_m_i_f.html#structdsmif__error__status__t">dsmif_error_status_t</a> error_status;</div><div class="line">            <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>            err = <a class="code" href="group___d_s_m_i_f.html#ga229d95cef2677fd1aa53112287ee4638">R_DSMIF_ErrorStatusGet</a>(&amp;g_dsmif_ctrl, &amp;error_status);</div><div class="line">            <span class="keywordflow">if</span> (FSP_SUCCESS == err)</div><div class="line">            {</div><div class="line">                <span class="comment">/* Application process the error status. */</span></div><div class="line">                app_dsmif_error_process(&amp;error_status);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="comment">/* Invalid event. */</span></div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Reading Current/Overcurrent/Capture data</h2>
+<p>This is a basic example of how to read the following types of data by OR'ing the appropriate channel mask:</p><ul>
+<li>Current Data</li>
+<li>Capture A/B Data</li>
+<li>Overcurrent Data</li>
+<li>Overcurrent Capture Data</li>
+<li>Overcurrent Sum Capture Data</li>
+</ul>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> dsmif_channel_data_masks_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line">    uint16_t  conversion;</div><div class="line"></div><div class="line">    <span class="comment">/* Read normal current data from channel 0. */</span></div><div class="line">    err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a69dddf5b6edfe54ac25b653d8f62d104">ADC_CHANNEL_0</a>, &amp;conversion);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read capture current data from channel 0. */</span></div><div class="line">    err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814ac415f5803101260bc3bb49c5eac34e90">ADC_CHANNEL_0_CAPTURE_A</a>, &amp;conversion);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read overcurrent data from channel 0. */</span></div><div class="line">    err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a9f0bb99189c3ab50f1c1b552e7154ebf">ADC_CHANNEL_0_OVERCURRENT</a>, &amp;conversion);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read overcurrent capture data 0 from channel 0. */</span></div><div class="line">    err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a1dd48b4f262351fa5aaf521b39671111">ADC_CHANNEL_0_OVERCURRENT0_CAPTURE</a>, &amp;conversion);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Read overcurrent sum capture data from channel 0. */</span></div><div class="line">    err = <a class="code" href="group___d_s_m_i_f.html#gad0c435ecd7419eb64f203d746002f172">R_DSMIF_Read32</a>(&amp;g_dsmif_ctrl, <a class="code" href="group___a_d_c___a_p_i.html#ggaafc4060027875f8fe46242b0656d7814a0e9bd7bb90cf4ca1ca40d962dab6ee48">ADC_CHANNEL_0_OVERCURRENT_SUM_CAPTURE</a>, &amp;conversion);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structdsmif__clock__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__clock__cfg__t">dsmif_clock_cfg_t</a></td></tr>
+<tr class="separator:structdsmif__clock__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__filter__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__filter__cfg__t">dsmif_filter_cfg_t</a></td></tr>
+<tr class="separator:structdsmif__filter__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__trigger__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__trigger__cfg__t">dsmif_trigger_cfg_t</a></td></tr>
+<tr class="separator:structdsmif__trigger__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__interrupt__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__interrupt__cfg__t">dsmif_interrupt_cfg_t</a></td></tr>
+<tr class="separator:structdsmif__interrupt__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__error__detection__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__error__detection__cfg__t">dsmif_error_detection_cfg_t</a></td></tr>
+<tr class="separator:structdsmif__error__detection__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__error__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__error__status__t">dsmif_error_status_t</a></td></tr>
+<tr class="separator:structdsmif__error__status__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__channel__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__channel__cfg__t">dsmif_channel_cfg_t</a></td></tr>
+<tr class="separator:structdsmif__channel__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__extended__cfg__t">dsmif_extended_cfg_t</a></td></tr>
+<tr class="separator:structdsmif__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structdsmif__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#structdsmif__instance__ctrl__t">dsmif_instance_ctrl_t</a></td></tr>
+<tr class="separator:structdsmif__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaff589a59b9189876e4a4abe9a910da27"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaff589a59b9189876e4a4abe9a910da27">dsmif_clock_selection_t</a> </td></tr>
+<tr class="separator:gaff589a59b9189876e4a4abe9a910da27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga931e26a3ec1a9fc88699326e1ebe6ba7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga931e26a3ec1a9fc88699326e1ebe6ba7">dsmif_overcurrent_sum_error_channel_t</a> </td></tr>
+<tr class="separator:ga931e26a3ec1a9fc88699326e1ebe6ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb7b9785e4ab2c226e88fe4888075d87"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gadb7b9785e4ab2c226e88fe4888075d87">dsmif_channel_synchronization_mode_t</a> </td></tr>
+<tr class="separator:gadb7b9785e4ab2c226e88fe4888075d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0baf520d120524307e5393123029692"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaa0baf520d120524307e5393123029692">dsmif_clock_direction_t</a> </td></tr>
+<tr class="separator:gaa0baf520d120524307e5393123029692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2aff173b01c7b1f26fa329bc95f2684"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gad2aff173b01c7b1f26fa329bc95f2684">dsmif_clock_edge_t</a> </td></tr>
+<tr class="separator:gad2aff173b01c7b1f26fa329bc95f2684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4ba6e2cd34edf3e6623d313c381628a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaf4ba6e2cd34edf3e6623d313c381628a">dsmif_filter_order_t</a> </td></tr>
+<tr class="separator:gaf4ba6e2cd34edf3e6623d313c381628a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d483fc22c3c6b91de847dc78afcfd19"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga2d483fc22c3c6b91de847dc78afcfd19">dsmif_data_shift_t</a> </td></tr>
+<tr class="separator:ga2d483fc22c3c6b91de847dc78afcfd19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga619eba897ca0f8f822e4a17883f36875"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga619eba897ca0f8f822e4a17883f36875">dsmif_capture_trigger_t</a> </td></tr>
+<tr class="separator:ga619eba897ca0f8f822e4a17883f36875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30fb9891faa1ffbac7355b1b6f9b7a43"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga30fb9891faa1ffbac7355b1b6f9b7a43">dsmif_filter_initialization_trigger_t</a> </td></tr>
+<tr class="separator:ga30fb9891faa1ffbac7355b1b6f9b7a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaade11539e445c4c54479f5326eaf920a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaade11539e445c4c54479f5326eaf920a">dsmif_overcurrent_window_notification_mode_t</a> </td></tr>
+<tr class="separator:gaade11539e445c4c54479f5326eaf920a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga529016c0cf5729e8cf58103a8341669b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga529016c0cf5729e8cf58103a8341669b">dsmif_overcurrent_window_notification_mode3_t</a> </td></tr>
+<tr class="separator:ga529016c0cf5729e8cf58103a8341669b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29366f6b6ddacf9a86e1a1ffe44d4568"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga29366f6b6ddacf9a86e1a1ffe44d4568">dsmif_overcurrent_status_t</a> </td></tr>
+<tr class="separator:ga29366f6b6ddacf9a86e1a1ffe44d4568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga851f377472d174eec9c1e36abb4a455b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga851f377472d174eec9c1e36abb4a455b">dsmif_short_circuit_status_t</a> </td></tr>
+<tr class="separator:ga851f377472d174eec9c1e36abb4a455b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8308422b91fbd62d0c348c194db083ef"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#ga8308422b91fbd62d0c348c194db083ef">dsmif_overcurrent_sum_status_t</a> </td></tr>
+<tr class="separator:ga8308422b91fbd62d0c348c194db083ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa2e05c928cb028f5c465c87dd29de9a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_s_m_i_f.html#gaa2e05c928cb028f5c465c87dd29de9a7">dsmif_overcurrent_window_notification_status_t</a> </td></tr>
+<tr class="separator:gaa2e05c928cb028f5c465c87dd29de9a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structdsmif__clock__cfg__t" id="structdsmif__clock__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__clock__cfg__t">&#9670;&nbsp;</a></span>dsmif_clock_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_clock_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel clock configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a634fdef113d24fa0dc90a579e6240a63"></a><a class="el" href="group___d_s_m_i_f.html#gaa0baf520d120524307e5393123029692">dsmif_clock_direction_t</a></td>
+<td class="fieldname">
+direction</td>
+<td class="fielddoc">
+A/D conversion clock master/slave switching. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9308d1bfcb84366cab9828d9479fd98a"></a><a class="el" href="group___d_s_m_i_f.html#gad2aff173b01c7b1f26fa329bc95f2684">dsmif_clock_edge_t</a></td>
+<td class="fieldname">
+edge</td>
+<td class="fielddoc">
+Sampling edge selection. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6400331d066018053d064840f6a4dcfe"></a>uint8_t</td>
+<td class="fieldname">
+divider</td>
+<td class="fielddoc">
+A/D conversion clock division ratio. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__filter__cfg__t" id="structdsmif__filter__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__filter__cfg__t">&#9670;&nbsp;</a></span>dsmif_filter_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_filter_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Filter configuration </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae664dc28828bef370189f326af2d307b"></a><a class="el" href="group___d_s_m_i_f.html#gaf4ba6e2cd34edf3e6623d313c381628a">dsmif_filter_order_t</a></td>
+<td class="fieldname">
+filter_order</td>
+<td class="fielddoc">
+Sinc filter order (1st, 2nd, or 3rd) </td></tr>
+<tr><td class="fieldtype">
+<a id="a7c886f6211bd3264d900eda07b60548f"></a><a class="el" href="group___d_s_m_i_f.html#ga2d483fc22c3c6b91de847dc78afcfd19">dsmif_data_shift_t</a></td>
+<td class="fieldname">
+data_shift</td>
+<td class="fielddoc">
+Data shift setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="af5088d1066b775dfd766d3450c49d4ed"></a>uint8_t</td>
+<td class="fieldname">
+decimation_count</td>
+<td class="fielddoc">
+Decimation count [0,255]. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__trigger__cfg__t" id="structdsmif__trigger__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__trigger__cfg__t">&#9670;&nbsp;</a></span>dsmif_trigger_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_trigger_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Event trigger configuration. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a43f7929f7d1021713d2f9404f809246b"></a><a class="el" href="group___d_s_m_i_f.html#ga619eba897ca0f8f822e4a17883f36875">dsmif_capture_trigger_t</a></td>
+<td class="fieldname">
+capture_trigger_a</td>
+<td class="fielddoc">
+Current capture trigger A selection. </td></tr>
+<tr><td class="fieldtype">
+<a id="a151576d7b85b00efef807adbc4407fdb"></a><a class="el" href="group___d_s_m_i_f.html#ga619eba897ca0f8f822e4a17883f36875">dsmif_capture_trigger_t</a></td>
+<td class="fieldname">
+capture_trigger_b</td>
+<td class="fielddoc">
+Current capture trigger B selection. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1a4130b8d782074a5749ac25debf2904"></a><a class="el" href="group___d_s_m_i_f.html#ga30fb9891faa1ffbac7355b1b6f9b7a43">dsmif_filter_initialization_trigger_t</a></td>
+<td class="fieldname">
+filter_initialization_trigger</td>
+<td class="fielddoc">
+Current measurement filter initialization trigger selection. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad7a7a3686c1e1fd51b22cf89b548f9b4"></a><a class="el" href="group___d_s_m_i_f.html#gad2aff173b01c7b1f26fa329bc95f2684">dsmif_clock_edge_t</a></td>
+<td class="fieldname">
+filter_initialization_edge</td>
+<td class="fielddoc">
+Current measurement filter initialization trigger edge selection. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__interrupt__cfg__t" id="structdsmif__interrupt__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__interrupt__cfg__t">&#9670;&nbsp;</a></span>dsmif_interrupt_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_interrupt_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel interrupt configuration. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ad4b08b1ea7ef0f1c8ce0472adfe2bd5f"></a>IRQn_Type</td>
+<td class="fieldname">
+current_data_update_irq</td>
+<td class="fielddoc">
+Channel current data update interrupt request. </td></tr>
+<tr><td class="fieldtype">
+<a id="a822e9d773b443597262ebf11a776dcbe"></a>uint8_t</td>
+<td class="fieldname">
+current_data_update_ipl</td>
+<td class="fielddoc">
+Channel current data update interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a043065678a89534061b94c037a7f2578"></a>IRQn_Type</td>
+<td class="fieldname">
+capture_data_a_irq</td>
+<td class="fielddoc">
+Channel capture data a interrupt request. </td></tr>
+<tr><td class="fieldtype">
+<a id="a14a24e79fcfcf1037f006533a1ce69e8"></a>uint8_t</td>
+<td class="fieldname">
+capture_data_a_ipl</td>
+<td class="fielddoc">
+Channel capture data a interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a88a6783d028e57fa15847543f3d51c40"></a>IRQn_Type</td>
+<td class="fieldname">
+capture_data_b_irq</td>
+<td class="fielddoc">
+Channel capture data b interrupt request. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab52603900c959b811dd916cc4c54cbf2"></a>uint8_t</td>
+<td class="fieldname">
+capture_data_b_ipl</td>
+<td class="fielddoc">
+Channel capture data b interrupt priority. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__error__detection__cfg__t" id="structdsmif__error__detection__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__error__detection__cfg__t">&#9670;&nbsp;</a></span>dsmif_error_detection_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_error_detection_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel error configuration:</p><ul>
+<li>Overcurrent upper/lower limit error detection 0,1,2</li>
+<li>Overcurrent window notification 0,1,2,3</li>
+<li>Short circuit low/high detection </li>
+</ul>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a800da0b8c94612e6856fe4b3e89af94e"></a>union <a class="el" href="group___d_s_m_i_f.html#uniondsmif__error__detection__cfg__t_8____unnamed____">dsmif_error_detection_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="af211981ed83661f81c519e131d9ac1f7"></a>union <a class="el" href="group___d_s_m_i_f.html#uniondsmif__error__detection__cfg__t_8____unnamed____">dsmif_error_detection_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa15070430b0c8cf343247722d72a4eef"></a>union <a class="el" href="group___d_s_m_i_f.html#uniondsmif__error__detection__cfg__t_8____unnamed____">dsmif_error_detection_cfg_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a12be5f6b6c2872d2255b2108e412c151"></a>bool</td>
+<td class="fieldname">
+short_circuit_detection_enable</td>
+<td class="fielddoc">
+Enable short circuit detection. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1911778f40d2343c55bc4d59e94daa88"></a>uint32_t</td>
+<td class="fieldname">
+short_circuit_detection_low_count</td>
+<td class="fielddoc">
+Short circuit low count. </td></tr>
+<tr><td class="fieldtype">
+<a id="a420bae764f05c8a352851f601f01fcfb"></a>uint32_t</td>
+<td class="fieldname">
+short_circuit_detection_high_count</td>
+<td class="fielddoc">
+Short circuit high count. </td></tr>
+<tr><td class="fieldtype">
+<a id="aca5b3d226383a8e749e2c6ac6626be09"></a>uint32_t</td>
+<td class="fieldname">
+overcurrent_lower_limit[3]</td>
+<td class="fielddoc">
+Overcurrent lower limit settings. </td></tr>
+<tr><td class="fieldtype">
+<a id="a58b1e196aefc0c6522c6b9b77ddc03fd"></a>uint32_t</td>
+<td class="fieldname">
+overcurrent_upper_limit[3]</td>
+<td class="fielddoc">
+Overcurrent upper limit settings. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab59ba93ccc73aa8a42012e1a3fd64d6c"></a><a class="el" href="group___d_s_m_i_f.html#structdsmif__filter__cfg__t">dsmif_filter_cfg_t</a></td>
+<td class="fieldname">
+overcurrent_filter_cfg</td>
+<td class="fielddoc">
+Sinc filter configuration for overcurrent detection. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__error__status__t" id="structdsmif__error__status__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__error__status__t">&#9670;&nbsp;</a></span>dsmif_error_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_error_status_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Error status. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ac577e9570d333e25f3fa7bd8038b611f"></a><a class="el" href="group___d_s_m_i_f.html#ga29366f6b6ddacf9a86e1a1ffe44d4568">dsmif_overcurrent_status_t</a></td>
+<td class="fieldname">
+channel_overcurrent_status</td>
+<td class="fielddoc">
+Channel Overcurrent state. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0a605a047d489dd939a5f0c96d585871"></a><a class="el" href="group___d_s_m_i_f.html#ga851f377472d174eec9c1e36abb4a455b">dsmif_short_circuit_status_t</a></td>
+<td class="fieldname">
+channel_short_circuit_status</td>
+<td class="fielddoc">
+Channel Short circuit state. </td></tr>
+<tr><td class="fieldtype">
+<a id="a42bd9400f2c9c143c75b37ab08246747"></a><a class="el" href="group___d_s_m_i_f.html#ga8308422b91fbd62d0c348c194db083ef">dsmif_overcurrent_sum_status_t</a></td>
+<td class="fieldname">
+overcurrent_sum_status</td>
+<td class="fielddoc">
+Overcurrent Sum state. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9198a91b18fa6c307b2451c94a6b6bd6"></a><a class="el" href="group___d_s_m_i_f.html#gaa2e05c928cb028f5c465c87dd29de9a7">dsmif_overcurrent_window_notification_status_t</a></td>
+<td class="fieldname">
+channel_overcurrent_window_status</td>
+<td class="fielddoc">
+Channel Overcurrent Window State. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__channel__cfg__t" id="structdsmif__channel__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__channel__cfg__t">&#9670;&nbsp;</a></span>dsmif_channel_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_channel_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Channel configuration. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a5181a02557fdb9fad2e4af662cc9cffd"></a><a class="el" href="group___d_s_m_i_f.html#structdsmif__clock__cfg__t">dsmif_clock_cfg_t</a></td>
+<td class="fieldname">
+clock_cfg</td>
+<td class="fielddoc">
+Channel clock configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="afeb5edad039226067ed2af16dac7fab8"></a><a class="el" href="group___d_s_m_i_f.html#structdsmif__filter__cfg__t">dsmif_filter_cfg_t</a></td>
+<td class="fieldname">
+filter_cfg</td>
+<td class="fielddoc">
+Channel sinc filter configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7f6186b03f48bf1c4d5718d7aaefa08e"></a><a class="el" href="group___d_s_m_i_f.html#structdsmif__trigger__cfg__t">dsmif_trigger_cfg_t</a></td>
+<td class="fieldname">
+trigger_cfg</td>
+<td class="fielddoc">
+Channel event trigger configuration. </td></tr>
+<tr><td class="fieldtype">
+<a id="a599f65753c9feed0831aab5b323a6765"></a><a class="el" href="group___d_s_m_i_f.html#structdsmif__interrupt__cfg__t">dsmif_interrupt_cfg_t</a></td>
+<td class="fieldname">
+irq_cfg</td>
+<td class="fielddoc">
+Channel interrupt configuration. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__extended__cfg__t" id="structdsmif__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__extended__cfg__t">&#9670;&nbsp;</a></span>dsmif_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DSMIF configuration extension. This extension is required and must be provided in dsmif_cfg_t::p_extend. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a75324256fa15b6a3bbc194fdc80736af"></a><a class="el" href="group___d_s_m_i_f.html#gaff589a59b9189876e4a4abe9a910da27">dsmif_clock_selection_t</a></td>
+<td class="fieldname">
+clock_selection</td>
+<td class="fielddoc">
+DSMIF core clock selection. </td></tr>
+<tr><td class="fieldtype">
+<a id="a3a95cc2c5d8110757475a671493dab6b"></a>uint32_t</td>
+<td class="fieldname">
+channel_mask</td>
+<td class="fielddoc">
+Channel bitmask. </td></tr>
+<tr><td class="fieldtype">
+<a id="af7b9d006e0c43d12749ac7d342ae72e4"></a><a class="el" href="group___d_s_m_i_f.html#structdsmif__channel__cfg__t">dsmif_channel_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_channel_cfgs[DSMIF_MAX_NUM_CHANNELS]</td>
+<td class="fielddoc">
+Configuration for each channel, set to NULL if unused. </td></tr>
+<tr><td class="fieldtype">
+<a id="a52390f6aa5d03185d6a49cb4d2c20db1"></a><a class="el" href="group___d_s_m_i_f.html#gadb7b9785e4ab2c226e88fe4888075d87">dsmif_channel_synchronization_mode_t</a></td>
+<td class="fieldname">
+synchronization_mode</td>
+<td class="fielddoc">
+Channel synchronization mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a69ae7e27586d7b6c02a1c61c118ce147"></a>IRQn_Type</td>
+<td class="fieldname">
+common_current_data_irq</td>
+<td class="fielddoc">
+Common current data interrupt request. </td></tr>
+<tr><td class="fieldtype">
+<a id="a35c4cf787820b3ad8b10e1daa00e758d"></a>uint8_t</td>
+<td class="fieldname">
+common_current_data_ipl</td>
+<td class="fielddoc">
+Common current data interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a88a2d7e039c8f3064bf47e95f47168d5"></a>IRQn_Type</td>
+<td class="fieldname">
+common_capture_data_a_irq</td>
+<td class="fielddoc">
+Channel capture data a interrupt request. </td></tr>
+<tr><td class="fieldtype">
+<a id="a22fc25934b42215c93bb8b72608cb5d9"></a>uint8_t</td>
+<td class="fieldname">
+common_capture_data_a_ipl</td>
+<td class="fielddoc">
+Channel capture data a interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="afa7b2cc17bb106158fafdbc8fac44194"></a>IRQn_Type</td>
+<td class="fieldname">
+common_capture_data_b_irq</td>
+<td class="fielddoc">
+Channel capture data b interrupt request. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1674490c4c64a458aa0d18c5f77806c0"></a>uint8_t</td>
+<td class="fieldname">
+common_capture_data_b_ipl</td>
+<td class="fielddoc">
+Channel capture data b interrupt priority. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structdsmif__instance__ctrl__t" id="structdsmif__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structdsmif__instance__ctrl__t">&#9670;&nbsp;</a></span>dsmif_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct dsmif_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>DSMIF instance control block. DO NOT INITIALIZE. </p>
+</div>
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gaff589a59b9189876e4a4abe9a910da27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaff589a59b9189876e4a4abe9a910da27">&#9670;&nbsp;</a></span>dsmif_clock_selection_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#gaff589a59b9189876e4a4abe9a910da27">dsmif_clock_selection_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DSMIF clock selection. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaff589a59b9189876e4a4abe9a910da27a127cfdb6989a66cc1e3ead58b012848b"></a>DSMIF_CLOCK_SELECTION_PCLKA&#160;</td><td class="fielddoc"><p>Select PCLKA as the DSMIF clock. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaff589a59b9189876e4a4abe9a910da27ac256442643dff033b68d2eef78f8b3bb"></a>DSMIF_CLOCK_SELECTION_DSMIFCLK&#160;</td><td class="fielddoc"><p>Select DSMIFCLK as the DSMIF clock. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaff589a59b9189876e4a4abe9a910da27a63895bcf76b039e1ff1dcab75c349c89"></a>DSMIF_CLOCK_SELECTION_GPTCLK&#160;</td><td class="fielddoc"><p>Select GPTCLK as the DSMIF clock. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga931e26a3ec1a9fc88699326e1ebe6ba7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga931e26a3ec1a9fc88699326e1ebe6ba7">&#9670;&nbsp;</a></span>dsmif_overcurrent_sum_error_channel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga931e26a3ec1a9fc88699326e1ebe6ba7">dsmif_overcurrent_sum_error_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Select the channel(s) for overcurrent sum error detection. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga931e26a3ec1a9fc88699326e1ebe6ba7a3ba6b78f5bc9b1a925301457da8323c7"></a>DSMIF_OVERCURRENT_SUM_ERROR_CHANNEL_0_2&#160;</td><td class="fielddoc"><p>Detects error of sum value of overcurrent data of CH0, CH1, CH2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga931e26a3ec1a9fc88699326e1ebe6ba7a77d8581f4d8f283d3dbe165750bf5bbe"></a>DSMIF_OVERCURRENT_SUM_ERROR_CHANNEL_0_1&#160;</td><td class="fielddoc"><p>Detects error of sum value of overcurrent data of CH0, CH1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga931e26a3ec1a9fc88699326e1ebe6ba7a828bf66f169c880559067c3fb86d2f05"></a>DSMIF_OVERCURRENT_SUM_ERROR_CHANNEL_0&#160;</td><td class="fielddoc"><p>Detects error of overcurrent data of CH0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga931e26a3ec1a9fc88699326e1ebe6ba7a5990a21a9e7d68549cec3b4a298484fc"></a>DSMIF_OVERCURRENT_SUM_ERROR_CHANNEL_1&#160;</td><td class="fielddoc"><p>Detects error of overcurrent data of CH1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga931e26a3ec1a9fc88699326e1ebe6ba7a4bfd30530b8f95f8ed21680ace573551"></a>DSMIF_OVERCURRENT_SUM_ERROR_CHANNEL_2&#160;</td><td class="fielddoc"><p>Detects error of overcurrent data of CH2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gadb7b9785e4ab2c226e88fe4888075d87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb7b9785e4ab2c226e88fe4888075d87">&#9670;&nbsp;</a></span>dsmif_channel_synchronization_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#gadb7b9785e4ab2c226e88fe4888075d87">dsmif_channel_synchronization_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Select the channel(s) that are synchronized. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggadb7b9785e4ab2c226e88fe4888075d87a9a93fb36f049667bd27652b0d06e90a4"></a>DSMIF_CHANNEL_SYNCHRONIZATION_MODE_DISABLED&#160;</td><td class="fielddoc"><p>Channels are not synchronized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadb7b9785e4ab2c226e88fe4888075d87a2539c76a78fabac49eb443a88e4dc87a"></a>DSMIF_CHANNEL_SYNCHRONIZATION_MODE_CHANNEL_0_2&#160;</td><td class="fielddoc"><p>Channel 0 and Channel 1 and Channel 2 are synchronized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggadb7b9785e4ab2c226e88fe4888075d87a0d1f398a160c46d1a7284bae131abb4e"></a>DSMIF_CHANNEL_SYNCHRONIZATION_MODE_CHANNEL_0_1&#160;</td><td class="fielddoc"><p>Channel 0 and Channel 1 are synchronized. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaa0baf520d120524307e5393123029692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa0baf520d120524307e5393123029692">&#9670;&nbsp;</a></span>dsmif_clock_direction_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#gaa0baf520d120524307e5393123029692">dsmif_clock_direction_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa0baf520d120524307e5393123029692afc85db51294554056f469044cab09ecd"></a>DSMIF_CLOCK_DIRECTION_SLAVE&#160;</td><td class="fielddoc"><p>Clock signal is input (slave operation) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa0baf520d120524307e5393123029692a4dbf33bbe52211f10c2c69c63ac165a8"></a>DSMIF_CLOCK_DIRECTION_MASTER&#160;</td><td class="fielddoc"><p>Clock signal is output (master operation) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gad2aff173b01c7b1f26fa329bc95f2684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad2aff173b01c7b1f26fa329bc95f2684">&#9670;&nbsp;</a></span>dsmif_clock_edge_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#gad2aff173b01c7b1f26fa329bc95f2684">dsmif_clock_edge_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Select the clock edge for sampling DSMIF data. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad2aff173b01c7b1f26fa329bc95f2684a146df8aeb64b02dac1402e88d440cd40"></a>DSMIF_CLOCK_EDGE_NEGATIVE&#160;</td><td class="fielddoc"><p>Data is sampled on the negative edge of clock signal. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad2aff173b01c7b1f26fa329bc95f2684a7716ddb133a052e23154780b595e764b"></a>DSMIF_CLOCK_EDGE_POSITIVE&#160;</td><td class="fielddoc"><p>Data is sampled on the positive edge of clock signal. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaf4ba6e2cd34edf3e6623d313c381628a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf4ba6e2cd34edf3e6623d313c381628a">&#9670;&nbsp;</a></span>dsmif_filter_order_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#gaf4ba6e2cd34edf3e6623d313c381628a">dsmif_filter_order_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Select the DSMIF filter order. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf4ba6e2cd34edf3e6623d313c381628aa09e42a6299cb69c97bd693fab40a5fa7"></a>DSMIF_FILTER_ORDER_3RD&#160;</td><td class="fielddoc"><p>Filter order setting 3rd order. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf4ba6e2cd34edf3e6623d313c381628aad259c890b8887d2f816ba82e3973df26"></a>DSMIF_FILTER_ORDER_1ST&#160;</td><td class="fielddoc"><p>Filter order setting 1st order. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf4ba6e2cd34edf3e6623d313c381628aa64e57dd80622dd4f6379a74caa7bdf36"></a>DSMIF_FILTER_ORDER_2ND&#160;</td><td class="fielddoc"><p>Filter order setting 2nd order. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga2d483fc22c3c6b91de847dc78afcfd19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2d483fc22c3c6b91de847dc78afcfd19">&#9670;&nbsp;</a></span>dsmif_data_shift_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga2d483fc22c3c6b91de847dc78afcfd19">dsmif_data_shift_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Select the [MSB,LSB] that are copied from the filter output into the data register. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a72ada7f1017cd206f1a328e8e7cfd1f9"></a>DSMIF_DATA_SHIFT_23_8&#160;</td><td class="fielddoc"><p>Data shift setting [23:8]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a033ae0ed573b4cc03c9eff4edb9f7831"></a>DSMIF_DATA_SHIFT_22_7&#160;</td><td class="fielddoc"><p>Data shift setting [22:7]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a9f203dd4d6d835e4f07039deba944a41"></a>DSMIF_DATA_SHIFT_21_6&#160;</td><td class="fielddoc"><p>Data shift setting [21:6]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a3577fb20635087cabcd343dd20af0646"></a>DSMIF_DATA_SHIFT_20_5&#160;</td><td class="fielddoc"><p>Data shift setting [20:5]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a1be93243daa9910b7c462bc86f76e884"></a>DSMIF_DATA_SHIFT_19_4&#160;</td><td class="fielddoc"><p>Data shift setting [19:4]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a7d006f071c6965b4aef134210da2ae79"></a>DSMIF_DATA_SHIFT_18_3&#160;</td><td class="fielddoc"><p>Data shift setting [18:3]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a2a32ff0df35faf6f804178bdc414cf10"></a>DSMIF_DATA_SHIFT_17_2&#160;</td><td class="fielddoc"><p>Data shift setting [17:2]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a73d33b8f8c34dfad451efb6874adbef9"></a>DSMIF_DATA_SHIFT_16_1&#160;</td><td class="fielddoc"><p>Data shift setting [16:1]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a3a69913bdcd1c0d339dd8f87eff5f533"></a>DSMIF_DATA_SHIFT_15_0&#160;</td><td class="fielddoc"><p>Data shift setting [15:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a9a5308492813b04b892a06bcc4eea1b7"></a>DSMIF_DATA_SHIFT_14_0&#160;</td><td class="fielddoc"><p>Data shift setting [14:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19abc126d4902ff1cf81cdd9b0973825278"></a>DSMIF_DATA_SHIFT_13_0&#160;</td><td class="fielddoc"><p>Data shift setting [13:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a36a74ab4f161cdca023e8e44e84dd793"></a>DSMIF_DATA_SHIFT_12_0&#160;</td><td class="fielddoc"><p>Data shift setting [12:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19aa4ef9effc19874ea1f8b241c29718586"></a>DSMIF_DATA_SHIFT_11_0&#160;</td><td class="fielddoc"><p>Data shift setting [11:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19acaab2319def7003df14a1a3a0c33a6b2"></a>DSMIF_DATA_SHIFT_10_0&#160;</td><td class="fielddoc"><p>Data shift setting [10:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19afb82664cf14920c0879a207150649c3d"></a>DSMIF_DATA_SHIFT_9_0&#160;</td><td class="fielddoc"><p>Data shift setting [9:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19af70cdeae4171f05069173f7a7d46d613"></a>DSMIF_DATA_SHIFT_8_0&#160;</td><td class="fielddoc"><p>Data shift setting [8:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a7f6445317c4efa81b4de749f243e9bdd"></a>DSMIF_DATA_SHIFT_7_0&#160;</td><td class="fielddoc"><p>Data shift setting [7:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a0086478abbaa300c2a97ceb39ef1f789"></a>DSMIF_DATA_SHIFT_6_0&#160;</td><td class="fielddoc"><p>Data shift setting [6:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19a531a9c7ae79027fd6fe16fe9b8d907df"></a>DSMIF_DATA_SHIFT_5_0&#160;</td><td class="fielddoc"><p>Data shift setting [5:0]. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga2d483fc22c3c6b91de847dc78afcfd19aff5a69218f376840395444d4076e28ea"></a>DSMIF_DATA_SHIFT_4_0&#160;</td><td class="fielddoc"><p>Data shift setting [4:0]. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga619eba897ca0f8f822e4a17883f36875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga619eba897ca0f8f822e4a17883f36875">&#9670;&nbsp;</a></span>dsmif_capture_trigger_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga619eba897ca0f8f822e4a17883f36875">dsmif_capture_trigger_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga619eba897ca0f8f822e4a17883f36875a731649070dae5ad7fc80a0c9035c2bf3"></a>DSMIF_CAPTURE_TRIGGER_NONE&#160;</td><td class="fielddoc"><p>Do not capture. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga619eba897ca0f8f822e4a17883f36875a8b12f915dbd4a0f35db6439bee2939e6"></a>DSMIF_CAPTURE_TRIGGER_0&#160;</td><td class="fielddoc"><p>Select current data capture trigger 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga619eba897ca0f8f822e4a17883f36875a4c101a7c01914df69f4cb6b8ad1f23e8"></a>DSMIF_CAPTURE_TRIGGER_1&#160;</td><td class="fielddoc"><p>Select current data capture trigger 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga619eba897ca0f8f822e4a17883f36875a8a83539eb71f3bf577e18c0babd6786e"></a>DSMIF_CAPTURE_TRIGGER_2&#160;</td><td class="fielddoc"><p>Select current data capture trigger 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga619eba897ca0f8f822e4a17883f36875a7fe4744cede6edcf2ec3ddf9e7533bc4"></a>DSMIF_CAPTURE_TRIGGER_3&#160;</td><td class="fielddoc"><p>Select current data capture trigger 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga619eba897ca0f8f822e4a17883f36875a03e91937b584a84515308d16bb57229e"></a>DSMIF_CAPTURE_TRIGGER_4&#160;</td><td class="fielddoc"><p>Select current data capture trigger 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga619eba897ca0f8f822e4a17883f36875ad1ba77177573d0c3fc2a9070c10b4c48"></a>DSMIF_CAPTURE_TRIGGER_5&#160;</td><td class="fielddoc"><p>Select current data capture trigger 5. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga30fb9891faa1ffbac7355b1b6f9b7a43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga30fb9891faa1ffbac7355b1b6f9b7a43">&#9670;&nbsp;</a></span>dsmif_filter_initialization_trigger_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga30fb9891faa1ffbac7355b1b6f9b7a43">dsmif_filter_initialization_trigger_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga30fb9891faa1ffbac7355b1b6f9b7a43a45f6b91a7540fe1b049b6de6f6ba84f3"></a>DSMIF_FILTER_INITIALIZATION_TRIGGER_NONE&#160;</td><td class="fielddoc"><p>Do not initialize. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30fb9891faa1ffbac7355b1b6f9b7a43aa1eebac3659c38e9df72727b26e2efd5"></a>DSMIF_FILTER_INITIALIZATION_TRIGGER_0&#160;</td><td class="fielddoc"><p>Select decimation dividing counter initialization trigger 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30fb9891faa1ffbac7355b1b6f9b7a43a4fb0bc7579e066f1dc79d3f9a9056a9c"></a>DSMIF_FILTER_INITIALIZATION_TRIGGER_1&#160;</td><td class="fielddoc"><p>Select decimation dividing counter initialization trigger 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30fb9891faa1ffbac7355b1b6f9b7a43a8a98e216aad4485fd5c43647275cfd96"></a>DSMIF_FILTER_INITIALIZATION_TRIGGER_2&#160;</td><td class="fielddoc"><p>Select decimation dividing counter initialization trigger 2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaade11539e445c4c54479f5326eaf920a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaade11539e445c4c54479f5326eaf920a">&#9670;&nbsp;</a></span>dsmif_overcurrent_window_notification_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#gaade11539e445c4c54479f5326eaf920a">dsmif_overcurrent_window_notification_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Overcurrent window notification window mode setting [0,2]. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaade11539e445c4c54479f5326eaf920aa56761e9e90740888f3e1a39a2ba0d25f"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE_OUTSIDE&#160;</td><td class="fielddoc"><p>Overcurrent data &lt;= lower limit, upper limit &lt;= overcurrent data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaade11539e445c4c54479f5326eaf920aa1a399a5609516793b0cc1f2f3be2bf11"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE_INSIDE&#160;</td><td class="fielddoc"><p>lower limit &lt; overcurrent data &lt; upper limit. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga529016c0cf5729e8cf58103a8341669b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga529016c0cf5729e8cf58103a8341669b">&#9670;&nbsp;</a></span>dsmif_overcurrent_window_notification_mode3_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga529016c0cf5729e8cf58103a8341669b">dsmif_overcurrent_window_notification_mode3_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Overcurrent window detection window mode setting for window notification 3. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669ba94f6d368953ce42d291b674aec4fd058"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_0&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669bae1b8b69708250978f48d1f900d4530e8"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_1&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669baa415840cf43fb53c83473af7b50a7eb6"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_2&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669badc317679a71f9973d9b0237dbe8c4e1f"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_0_OR_1&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 0 OR 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669bac66e80f5250c5d28cda5833fb5297b9e"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_0_AND_1&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 0 AND 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669ba1272514db79ed0505c904e0ce504d886"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_0_OR_2&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 0 OR 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669ba1d5ee41698387aae7691c4c599fcf79f"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_0_AND_2&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 0 AND 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669ba3dca8b8682ef3a6da96c588995ad06ec"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_1_OR_2&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 1 OR 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669ba9b642fa11f25ac52bc5e52927b738214"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_1_AND_2&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 1 AND 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669bafc32a42512c64d05a3e5cd01aa16deb1"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_0_OR_1_OR_2&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 0 OR 1 OR 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga529016c0cf5729e8cf58103a8341669baf9414eee1d64bee58ffe6f107fc566a0"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_MODE3_0_AND_1_AND_2&#160;</td><td class="fielddoc"><p>Overcurrent detection window notification 0 AND 1 AND 2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga29366f6b6ddacf9a86e1a1ffe44d4568"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga29366f6b6ddacf9a86e1a1ffe44d4568">&#9670;&nbsp;</a></span>dsmif_overcurrent_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga29366f6b6ddacf9a86e1a1ffe44d4568">dsmif_overcurrent_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DSMIF Channel Overcurrent detect status. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a8ab2876286113e3ef4833c43a6f0bf9a"></a>DSMIF_OVERCURRENT_STATUS_CH0_LOWER_LIMIT_0&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent lower limit detection 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568afbe8bff6c96fe8d45f5420c7a46d698f"></a>DSMIF_OVERCURRENT_STATUS_CH1_LOWER_LIMIT_0&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent lower limit detection 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a49280afdacafd1ac9f61b8620b173d93"></a>DSMIF_OVERCURRENT_STATUS_CH2_LOWER_LIMIT_0&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent lower limit detection 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a79b71042d1def5222aeae6bbc27fae74"></a>DSMIF_OVERCURRENT_STATUS_CH0_UPPER_LIMIT_0&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent upper limit exceeded 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a050bd24cc1e19bff9b8543af03780e05"></a>DSMIF_OVERCURRENT_STATUS_CH1_UPPER_LIMIT_0&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent upper limit exceeded 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568aaedcc6d4e1c0eb547796a5e3b134cbe5"></a>DSMIF_OVERCURRENT_STATUS_CH2_UPPER_LIMIT_0&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent upper limit exceeded 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568adfac999e007b7b046b7e3b6c2959a707"></a>DSMIF_OVERCURRENT_STATUS_CH0_LOWER_LIMIT_1&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent lower limit detection 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568ab7799065516517b3c18777f21f0c8eac"></a>DSMIF_OVERCURRENT_STATUS_CH1_LOWER_LIMIT_1&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent lower limit detection 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568ad5a2a06529c322a36a8d23b014283381"></a>DSMIF_OVERCURRENT_STATUS_CH2_LOWER_LIMIT_1&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent lower limit detection 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568ac44246c01e3596f3189570525e54480d"></a>DSMIF_OVERCURRENT_STATUS_CH0_UPPER_LIMIT_1&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent upper limit exceeded 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a31acde2686e132ba3247f7bf4f1423b3"></a>DSMIF_OVERCURRENT_STATUS_CH1_UPPER_LIMIT_1&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent upper limit exceeded 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a6d01b5773177115d8afc4d8d793eafcf"></a>DSMIF_OVERCURRENT_STATUS_CH2_UPPER_LIMIT_1&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent upper limit exceeded 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a77bad21acb48e34318e607c1f15e3a09"></a>DSMIF_OVERCURRENT_STATUS_CH0_LOWER_LIMIT_2&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent lower limit detection 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568af8d90bae72a8eb2cc6eadd94f9280569"></a>DSMIF_OVERCURRENT_STATUS_CH1_LOWER_LIMIT_2&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent lower limit detection 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a7773eb80f1975c60431834b1f9539a53"></a>DSMIF_OVERCURRENT_STATUS_CH2_LOWER_LIMIT_2&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent lower limit detection 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a2e30f8b1fa354b78f9a3ca600f20d06b"></a>DSMIF_OVERCURRENT_STATUS_CH0_UPPER_LIMIT_2&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent upper limit exceeded 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568a53319c847b8c65d80b72f08efc84d339"></a>DSMIF_OVERCURRENT_STATUS_CH1_UPPER_LIMIT_2&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent upper limit exceeded 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga29366f6b6ddacf9a86e1a1ffe44d4568ac365193c05ae56c96317562bce0dbc65"></a>DSMIF_OVERCURRENT_STATUS_CH2_UPPER_LIMIT_2&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent upper limit exceeded 2 flag. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga851f377472d174eec9c1e36abb4a455b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga851f377472d174eec9c1e36abb4a455b">&#9670;&nbsp;</a></span>dsmif_short_circuit_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga851f377472d174eec9c1e36abb4a455b">dsmif_short_circuit_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DSMIF Channel Short circuit detect status. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga851f377472d174eec9c1e36abb4a455ba0cdbdf11ca7d4de0e8f7572f955c8554"></a>DSMIF_SHORT_CIRCUIT_STATUS_CH0&#160;</td><td class="fielddoc"><p>Channel 0 short circuit detection flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga851f377472d174eec9c1e36abb4a455ba5ba133b8a295292ea9131d2f1dcc922f"></a>DSMIF_SHORT_CIRCUIT_STATUS_CH1&#160;</td><td class="fielddoc"><p>Channel 1 short circuit detection flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga851f377472d174eec9c1e36abb4a455baadcc4ca7be9ff9c71241aab72a15b7d3"></a>DSMIF_SHORT_CIRCUIT_STATUS_CH2&#160;</td><td class="fielddoc"><p>Channel 2 short circuit detection flag. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga8308422b91fbd62d0c348c194db083ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8308422b91fbd62d0c348c194db083ef">&#9670;&nbsp;</a></span>dsmif_overcurrent_sum_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#ga8308422b91fbd62d0c348c194db083ef">dsmif_overcurrent_sum_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DSMIF Overcurrent Sum detect status. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8308422b91fbd62d0c348c194db083efa30e94fae76a3cac7f828b997cfb350be"></a>DSMIF_OVERCURRENT_SUM_STATUS_LOWER_LIMIT&#160;</td><td class="fielddoc"><p>Overcurrent sum error lower limit detection flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8308422b91fbd62d0c348c194db083efad697799607096569befdb959a5c3db60"></a>DSMIF_OVERCURRENT_SUM_STATUS_UPPER_LIMIT&#160;</td><td class="fielddoc"><p>Overcurrent sum error upper limit detection flag. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaa2e05c928cb028f5c465c87dd29de9a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa2e05c928cb028f5c465c87dd29de9a7">&#9670;&nbsp;</a></span>dsmif_overcurrent_window_notification_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___d_s_m_i_f.html#gaa2e05c928cb028f5c465c87dd29de9a7">dsmif_overcurrent_window_notification_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DSMIF Overcurrent Window detect status. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a6413e12fafc2dfded8a306da10903fb2"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH0_0&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent detection window notification 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a7375930ec3fefcb13e0b5ad3d4f413fc"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH1_0&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent detection window notification 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a0f5aa004157be8a8ab9f8dda6943263f"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH2_0&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent detection window notification 0 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a38acb16c2f62b53002baf7cc3cad6063"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH0_1&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent detection window notification 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a27ab37b2525a7b42420bf7d9f6d19a95"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH1_1&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent detection window notification 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a83fb8214cb5bb8b1a8852020d6e48786"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH2_1&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent detection window notification 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a16f05c3ef655a9847e4d86be0d53921f"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH0_2&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent detection window notification 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7af195ce9008f1f0785f40769f4b5664ea"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH1_2&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent detection window notification 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a16838e39572757d6f68e8078b589f9aa"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH2_2&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent detection window notification 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a0040499079ca3a555caf83e3e6f99fcb"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH0_3&#160;</td><td class="fielddoc"><p>Channel 0 overcurrent detection window notification 3 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7aedadcddb6b54237963e64c0302c3f26e"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH1_3&#160;</td><td class="fielddoc"><p>Channel 1 overcurrent detection window notification 3 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa2e05c928cb028f5c465c87dd29de9a7a7c6a2dfebe31d11a340bd7336157c790"></a>DSMIF_OVERCURRENT_WINDOW_NOTIFICATION_STATUS_CH2_3&#160;</td><td class="fielddoc"><p>Channel 2 overcurrent detection window notification 3 flag. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga74d4453017c0f52214f7624872dbb9b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga74d4453017c0f52214f7624872dbb9b4">&#9670;&nbsp;</a></span>R_DSMIF_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__cfg__t">adc_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Applies power to the DSMIF and initializes the hardware based on the user configuration. As part of this initialization, set interrupts, set DSMIF error interrupt registers, etc.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Configuration successful. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer is NULL or an input parameter is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block is already open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>A required interrupt is disabled </td></tr>
+    <tr><td class="paramname">FSP_ERR_IP_UNIT_NOT_PRESENT</td><td>The Unit requested in the p_cfg parameter is not available on this device. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6ab813d5df678af4f9a4045393966674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6ab813d5df678af4f9a4045393966674">&#9670;&nbsp;</a></span>R_DSMIF_ScanCfg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_ScanCfg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *const&#160;</td>
+          <td class="paramname"><em>p_extend</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#a44289d7822720544751eb22e3d7d38ea">adc_api_t::scanCfg</a> is not supported on DSMIF.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported by the DSMIF instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1103d4ad1679f689179bafdda2aada04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1103d4ad1679f689179bafdda2aada04">&#9670;&nbsp;</a></span>R_DSMIF_ScanStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_ScanStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts all configured DSMIF channels</p>
+<dl class="section note"><dt>Note</dt><dd>After executing R_DSMIF_ScanStart, it is necessary to wait until the filter result is output stably.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Scan started or hardware triggers enabled successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga5f217337a9da7e67a8192fa51ee86ab3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5f217337a9da7e67a8192fa51ee86ab3">&#9670;&nbsp;</a></span>R_DSMIF_ScanGroupStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_ScanGroupStart </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaee17c30275c1c9376cc485a62ea121eb">adc_group_mask_t</a>&#160;</td>
+          <td class="paramname"><em>group_mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#aeae126b8a09e1ec34e8e3afb4a3344ff">adc_api_t::scanGroupStart</a> is not supported on DSMIF.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported by the DSMIF instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf03d6083c4c81193398f21a2f3978662"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf03d6083c4c81193398f21a2f3978662">&#9670;&nbsp;</a></span>R_DSMIF_ScanStop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_ScanStop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops any in-progress scan started by software.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Scan stopped or hardware triggers disabled successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>Timeout error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafd05c0c487b24fa124d21fc02ff9ffda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafd05c0c487b24fa124d21fc02ff9ffda">&#9670;&nbsp;</a></span>R_DSMIF_ScanStatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_ScanStatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__status__t">adc_status_t</a> *&#160;</td>
+          <td class="paramname"><em>p_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the status of a scan started by software.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>No software scan is in progress. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab8eb4f41d746b40ac04e42efb67c3f55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab8eb4f41d746b40ac04e42efb67c3f55">&#9670;&nbsp;</a></span>R_DSMIF_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
+          <td class="paramname"><em>reg_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *const&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads the most recent result from a channel.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Result in p_data. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL or an input parameter was invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad0c435ecd7419eb64f203d746002f172"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad0c435ecd7419eb64f203d746002f172">&#9670;&nbsp;</a></span>R_DSMIF_Read32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_Read32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
+          <td class="paramname"><em>reg_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads the most recent conversion result from a single channel into a 32-bit result.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Result in p_data. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL or an input parameter was invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaddcfcf600e52989c14a6ad785613a23e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaddcfcf600e52989c14a6ad785613a23e">&#9670;&nbsp;</a></span>R_DSMIF_Calibrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_Calibrate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void const *&#160;</td>
+          <td class="paramname"><em>p_extend</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#a1020d90e58d3bf86cee2f46a62e62fc4">adc_api_t::calibrate</a> is not supported on DSMIF.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported by the DSMIF instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga4c10bf412590828b93e732b12f8d1692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4c10bf412590828b93e732b12f8d1692">&#9670;&nbsp;</a></span>R_DSMIF_OffsetSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_OffsetSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaafc4060027875f8fe46242b0656d7814">adc_channel_t</a> const&#160;</td>
+          <td class="paramname"><em>reg_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t const&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#a305b2c2466cd88fdddf6134db542dc7e">adc_api_t::offsetSet</a> is not supported on DSMIF.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported by the DSMIF instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaca1634611b5a4f83db9e959f7464f23e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaca1634611b5a4f83db9e959f7464f23e">&#9670;&nbsp;</a></span>R_DSMIF_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__callback__args__t">adc_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0291812ebf08c4fba5cb2a96b9bb4736"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0291812ebf08c4fba5cb2a96b9bb4736">&#9670;&nbsp;</a></span>R_DSMIF_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops any scan in progress, disables interrupts, and powers down the DSMIF peripheral.</p>
+<dl class="section note"><dt>Note</dt><dd>This function is delayed at least until the outage is complete, as required by the DSMIF outage procedure.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Instance control block closed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga7f03e6bf4903a0899fb834a23fbb3aa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f03e6bf4903a0899fb834a23fbb3aa3">&#9670;&nbsp;</a></span>R_DSMIF_InfoGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_InfoGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#structadc__info__t">adc_info_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_adc_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="group___a_d_c___a_p_i.html#acc68017ee284386b5d13c027bc10bf87">adc_api_t::infoGet</a> is not supported on DSMIF.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>This function is not supported by the DSMIF instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf4c92adf15725cac8dec286c364e410f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf4c92adf15725cac8dec286c364e410f">&#9670;&nbsp;</a></span>R_DSMIF_ErrorDetectionEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_ErrorDetectionEnable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable error detection.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Configuration setting successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga229d95cef2677fd1aa53112287ee4638"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga229d95cef2677fd1aa53112287ee4638">&#9670;&nbsp;</a></span>R_DSMIF_ErrorStatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_DSMIF_ErrorStatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_p_i.html#gaff9488cd90102a90e5c5cbd45394d426">adc_ctrl_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___d_s_m_i_f.html#structdsmif__error__status__t">dsmif_error_status_t</a> *&#160;</td>
+          <td class="paramname"><em>p_error_status</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the error status of a scan started by software.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>No software scan is in progress. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input pointer was NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>Instance control block is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

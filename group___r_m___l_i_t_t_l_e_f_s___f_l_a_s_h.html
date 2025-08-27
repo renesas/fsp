@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -284,6 +284,8 @@ Disabled</li>
 <tr class="tree_none">
 <td>Program Size</td><td>Must be a non-negative integer</td><td>4 </td><td>Minimum size of a block program. All program operations will be a multiple of this value. </td></tr>
 <tr class="tree_none">
+<td>Memory Start Address</td><td>Manual Entry</td><td>BSP_FEATURE_FLASH_DATA_FLASH_START </td><td>Start address of the memory allocated for the LittleFS Volume. </td></tr>
+<tr class="tree_none">
 <td>Block Size (bytes)</td><td>Must be a multiple of 64</td><td>128 </td><td>Size of an erasable block. This does not impact RAM consumption and may be larger than the physical erase size. However, non-inlined files take up at minimum one block. Must be a multiple of the read and program sizes. </td></tr>
 <tr class="tree_none">
 <td>Block Count</td><td>Manual Entry</td><td>(BSP_DATA_FLASH_SIZE_BYTES/128) </td><td>Number of erasable blocks on the device. </td></tr>
@@ -382,6 +384,8 @@ Disabled</li>
 </p>
 <h1><a class="anchor" id="rm-littlefs-flash-usage-notes"></a>
 Usage Notes</h1>
+<h2>Memory Address</h2>
+<p>LittleFS requrires a section of non volatile memory to store data. It is recommended to use Data Flash when available. In other cases, such as MRAM, a section of memory should be reserved in the Memories Tab using an RA Solution project. The address of this memory section must be entered in the rm_littlefs_flash configuration. If the memory is not reserved in the RA Solution it is possible unrelated data will be linked in this section and will cause conflicts at runtime.</p>
 <h2>Blocking Read/Write/Erase</h2>
 <p>The LittleFS port blocks on Read/Write/Erase calls until the operation has completed.</p>
 <h2>Memory Constraints</h2>
@@ -473,7 +477,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -336,7 +336,7 @@ Limitations</h2>
 <p>Developers should be aware of the following limitations when using the BLE_ABS:</p>
 <p>Following a power on reset, the R_BLE_VS_GetRand function always returns the same number. Subsequent calls to this function produce random numbers.</p>
 <p>Up to 3 concurrent connections are supported.</p>
-<p>For DA1453x Sleep mode CTSRTS0 (EK-RA6M4) should be set to P413. Flow Control CTS/RTS Selection should be set to Hardware CTS. If RA is required to wake-up from DA453x P413 and P414 should be shorted and P414 should be se to interrupt mode.</p>
+<p>For DA1453x Sleep mode CTSRTS0 (EK-RA6M4) should be set to P413. Flow Control CTS/RTS Selection should be set to Hardware CTS. If RA is required to wake-up from DA453x P413 and P414 should be shorted and P414 should be set to interrupt mode. R_BLE_GTL_VS_SetSleepMode() is unsupported, R_BLE_GTL_VS_SetSleepModeExt should be called directly instead.</p>
 <p>For bonded devices Client Characteristic Configuration (CCC) values are not saved to flash memory. They are kept to RAM as long as reset does not take place. If the user wishes to save the CCC values to non-volatile memory, he should handle it from the application layer by marking them as Read Indicated (RI, please find the description bellow).</p>
 <p>The CCC values are not kept per connection, the value of a CCC is the value of the last modification by a GATT Client. If the user wishes to keep CCC values per connection, he should handle it from the application layer by marking them as Read Indicated (RI, please find the description bellow).</p>
 <p>Maximum bonded devices are limited to seven (7). Application must delete an entry before bonding with a new device. Saving bond data is supported with devices that use HP_Flash and boards RA6M4_EK, RA6M5_EK, RA4M3_EK, RA4M2_EK.</p>
@@ -423,8 +423,6 @@ Limitations</h2>
 <li>R_BLE_VS_GetRand</li>
 <li>R_BLE_VS_SetTxPower</li>
 <li>R_BLE_VS_GetTxPower</li>
-<li>R_BLE_VS_SetSleepMode</li>
-<li>R_BLE_VS_SetPublicBdAddress</li>
 <li>R_BLE_GAP_SetPairingParams</li>
 <li>R_BLE_GAP_ReplyPairing</li>
 <li>R_BLE_GAP_ReplyLtkReq</li>
@@ -489,7 +487,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

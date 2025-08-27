@@ -1,0 +1,859 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: Ethercat (r_ethercat_phy)</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___e_t_h_e_r_c_a_t___p_h_y.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">Ethercat (r_ethercat_phy)<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga7d397755f54190b509818ae1f906c029"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga7d397755f54190b509818ae1f906c029">R_ETHERCAT_PHY_Open</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga7d397755f54190b509818ae1f906c029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets Ethercat PHY device. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#aa566d14c1e722f4b1abdd65bae92393e">ether_phy_api_t::open</a>.  <a href="#ga7d397755f54190b509818ae1f906c029">More...</a><br /></td></tr>
+<tr class="separator:ga7d397755f54190b509818ae1f906c029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga150fd53de165b69b21af76a94d60e53d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga150fd53de165b69b21af76a94d60e53d">R_ETHERCAT_PHY_Close</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga150fd53de165b69b21af76a94d60e53d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close Ethercat PHY device. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a2b473db67f11af9cfafc790727c0660a">ether_phy_api_t::close</a>.  <a href="#ga150fd53de165b69b21af76a94d60e53d">More...</a><br /></td></tr>
+<tr class="separator:ga150fd53de165b69b21af76a94d60e53d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f952f1852c0bbf4041ab9d5b97d69fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga0f952f1852c0bbf4041ab9d5b97d69fa">R_ETHERCAT_PHY_StartAutoNegotiate</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga0f952f1852c0bbf4041ab9d5b97d69fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts auto-negotiate. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ae7f449454459fc8ec9a3c14c0c6238ea">ether_phy_api_t::startAutoNegotiate</a>.  <a href="#ga0f952f1852c0bbf4041ab9d5b97d69fa">More...</a><br /></td></tr>
+<tr class="separator:ga0f952f1852c0bbf4041ab9d5b97d69fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6f3f21a56c5567eb798ca368a89e867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#gaf6f3f21a56c5567eb798ca368a89e867">R_ETHERCAT_PHY_LinkPartnerAbilityGet</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t *const p_line_speed_duplex, uint32_t *const p_local_pause, uint32_t *const p_partner_pause)</td></tr>
+<tr class="memdesc:gaf6f3f21a56c5567eb798ca368a89e867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reports the other side's physical capability. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a0dd6047b8aa7ad85139ec4f4e6abb3fc">ether_phy_api_t::linkPartnerAbilityGet</a>.  <a href="#gaf6f3f21a56c5567eb798ca368a89e867">More...</a><br /></td></tr>
+<tr class="separator:gaf6f3f21a56c5567eb798ca368a89e867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84e41d4b1a8548dfe0a9aaf0722995a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga84e41d4b1a8548dfe0a9aaf0722995a3">R_ETHERCAT_PHY_LinkStatusGet</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="memdesc:ga84e41d4b1a8548dfe0a9aaf0722995a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the status of the physical link. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ae2dabb88baba5326509f297e44b35f92">ether_phy_api_t::linkStatusGet</a>.  <a href="#ga84e41d4b1a8548dfe0a9aaf0722995a3">More...</a><br /></td></tr>
+<tr class="separator:ga84e41d4b1a8548dfe0a9aaf0722995a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19fdc4298e2440e47dd858b951750162"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga19fdc4298e2440e47dd858b951750162">R_ETHERCAT_PHY_ChipInit</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="memdesc:ga19fdc4298e2440e47dd858b951750162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize Ethercat PHY device. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a2b29375fbcbb38ee52182c41e2eef170">ether_phy_api_t::chipInit</a>.  <a href="#ga19fdc4298e2440e47dd858b951750162">More...</a><br /></td></tr>
+<tr class="separator:ga19fdc4298e2440e47dd858b951750162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae60afba7e4f1c66e4809909cc0f8680e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#gae60afba7e4f1c66e4809909cc0f8680e">R_ETHERCAT_PHY_Read</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t reg_addr, uint32_t *const p_data)</td></tr>
+<tr class="memdesc:gae60afba7e4f1c66e4809909cc0f8680e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from register of PHY-LSI . Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a3277c2961f534a7b8ae6c85fc4869e07">ether_phy_api_t::read</a>.  <a href="#gae60afba7e4f1c66e4809909cc0f8680e">More...</a><br /></td></tr>
+<tr class="separator:gae60afba7e4f1c66e4809909cc0f8680e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23e1a04f757ca550de15163d509d8b34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga23e1a04f757ca550de15163d509d8b34">R_ETHERCAT_PHY_Write</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint32_t reg_addr, uint32_t data)</td></tr>
+<tr class="memdesc:ga23e1a04f757ca550de15163d509d8b34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to register of PHY-LSI . Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a445821efa6ddb204376956458f0d04aa">ether_phy_api_t::write</a>.  <a href="#ga23e1a04f757ca550de15163d509d8b34">More...</a><br /></td></tr>
+<tr class="separator:ga23e1a04f757ca550de15163d509d8b34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>The Ethercat PHY module (r_ethercat_phy) provides an API for standard Ethercat PHY communications applications that use the ETHERC peripheral. It implements the <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html">Ethernet PHY Interface</a>. </p>
+<h1><a class="anchor" id="r-ethercat-phy-overview"></a>
+Overview</h1>
+<p>The Ethercat PHY module is used to setup and manage an external Ethercat PHY device for use with the on-chip Ethercat Slave Controller (ESC) peripheral. It performs auto-negotiation to determine the optimal connection parameters between link partners. Once initialized the connection between the external PHY and the onboard controller is automatically managed in hardware.</p>
+<h2><a class="anchor" id="r-ethercat-phy-features"></a>
+Features</h2>
+<p>The Ethercat PHY module supports the following features:</p><ul>
+<li>Auto negotiation support</li>
+<li>Flow control support</li>
+<li>Link status check support</li>
+</ul>
+<h1><a class="anchor" id="r-ethercat-phy-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_ethercat_phy</h2>
+The following build time configurations are defined in fsp_cfg/r_ethercat_phy_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Parameter Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (BSP)</li>
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>ICS1894 Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether to use ICS1894 Phy LSI or not. </td></tr>
+<tr class="tree_none">
+<td>User Own Target</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disabled</li>
+<li>
+Enabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether to use User own Phy LSI or not. </td></tr>
+</table>
+ <h2>Configurations for Networking &gt; Ethernet (r_ethercat_phy)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Ethernet (r_ethercat_phy). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_ethercat_phy0 </td><td>Module name. </td></tr>
+<tr class="tree_none">
+<td>Channel</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+0</li>
+<li>
+1</li>
+</ul>
+</td><td>0 </td><td>Select the Ethernet controller channel number. </td></tr>
+<tr class="tree_none">
+<td>PHY-LSI Address</td><td>Specify a value between 0 and 31.</td><td>0 </td><td>Specify the address of the PHY-LSI used. </td></tr>
+<tr class="tree_none">
+<td>PHY-LSI Reset Completion Timeout</td><td>Specify a value between 0x1 and 0xFFFFFFFF.</td><td>0x00020000 </td><td>Specify the number of times to read the PHY-LSI control register while waiting for reset completion. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
+<tr class="tree_none">
+<td>Select MII type</td><td>MII</td><td>module.driver.ether_phy.mii_type.rmii </td><td>Specify to use MII. </td></tr>
+<tr class="tree_none">
+<td>PHY-LSI Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Kit Component</li>
+<li>
+DEFAULT</li>
+<li>
+ICS1894</li>
+<li>
+User own PHY</li>
+</ul>
+</td><td>Kit Component </td><td>Select the Phy LSI target. Selecting 'Kit Component' will automatically choose the correct option when using a Renesas development board. </td></tr>
+<tr class="tree_none">
+<td>Target Init Function</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Set the initial function of the PHY-LSI, When using your own PHY-LSI. </td></tr>
+<tr class="tree_none">
+<td>Target Link Partner Ability Get Function</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Set the link partner ability get function of the PHY-LSI, When using your own PHY-LSI. </td></tr>
+<tr class="tree_none">
+<td>MII Register Access Wait-time</td><td>Specify a value between 0x1 and 0x7FFFFFFF.</td><td>8 </td><td>Specify the bit timing for MII register accesses during PHY initialization. This value should be adjusted experimentally based on the PHY-LSI used. </td></tr>
+<tr class="tree_none">
+<td>Flow Control</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Disable </td><td>Select whether to enable or disable flow control. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="r-ethercat-phy-usage_notes"></a>
+Usage Notes</h1>
+<dl class="section note"><dt>Note</dt><dd>See the <a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#r-ethercat-phy-examples">example</a> below for details on how to initialize the Ethercat PHY module.</dd></dl>
+<h2>Accessing the MII and RMII Registers</h2>
+<p>Use the PIR register to access the MII and RMII registers in the PHY-LSI. Serial data in the MII and RMII management frame format is transmitted and received through the ET0_MDC and ET0_MDIO pins controlled by software.</p>
+<h2>MII and RMII management frame format</h2>
+<p>The below table lists the MII and RMII management frame formats.</p>
+<table class="doxtable">
+<tr>
+<th colspan="2">Access type </th><th colspan="8">MII and RMII management frame  </th></tr>
+<tr>
+<td></td><td>Item </td><td>PRE </td><td>ST </td><td>OP </td><td>PHYAD </td><td>REGAD </td><td>TA </td><td>DATA </td><td>IDLE  </td></tr>
+<tr>
+<td></td><td>Number of bits </td><td>32 </td><td>2 </td><td>2 </td><td>5 </td><td>5 </td><td>2 </td><td>16 </td><td>1  </td></tr>
+<tr>
+<td colspan="2">Read </td><td>1...1 </td><td>01 </td><td>10 </td><td>00001 </td><td>RRRRR </td><td>Z0 </td><td>DDDDDDDDDDDDDDDD </td><td>Z  </td></tr>
+<tr>
+<td colspan="2">Write </td><td>1...1 </td><td>01 </td><td>01 </td><td>00001 </td><td>RRRRR </td><td>10 </td><td>DDDDDDDDDDDDDDDD </td><td>Z  </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>- PRE (preamble): Send 32 consecutive 1s. </dd>
+<dd>
+- ST (start of frame): Send 01b. </dd>
+<dd>
+- OP (operation code): Send 10b for read or 01b for write. </dd>
+<dd>
+- PHYAD (PHY address): Up to 32 PHY-LSIs can be connected to one MAC. PHY-LSIs are selected with these 5 bits. When the PHY-LSI address is 1, send 00001b. </dd>
+<dd>
+- REGAD (register address): One register is selected from up to 32 registers in the PHY-LSI. When the register address is 1, send 00001b. </dd>
+<dd>
+- TA (turnaround): Use 2-bit turnaround time to avoid contention between the register address and data during a read operation. </dd>
+<dd>
+Send 10b during a write operation. Release the bus for 1 bit during a read operation (Z is output). </dd>
+<dd>
+(This is indicated as Z0 because 0 is output from the PHY-LSI on the next clock cycle.) </dd>
+<dd>
+- DATA (data): 16-bit data. Sequentially send or receive starting from the MSB. </dd>
+<dd>
+- IDLE (IDLE condition): Wait time before inputting the next MII or RMII management format. Release the bus during a write </dd>
+<dd>
+operation (Z is output). No control is required, because a bus was already released during a read operation.</dd></dl>
+<h2><a class="anchor" id="r-ethercat-phy-limitations"></a>
+Limitations</h2>
+<ul>
+<li>The r_ethercat_phy module may need to be customized for PHY devices other than the ones currently supported. Use the existing code as a starting point for creating a custom implementation. Supported PHY devices are as follows.<ul>
+<li>ICS1894</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="r-ethercat-phy-examples"></a>
+Examples</h1>
+<h2>ETHERCAT PHY Basic Example</h2>
+<p>This is a basic example of minimal use of the ETHERCAT PHY in an application.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ethercat_phy_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    g_ethercat_phy0_ctrl.open   = 0U;</div><div class="line">    g_ethercat_phy0_cfg.channel = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga7d397755f54190b509818ae1f906c029">R_ETHERCAT_PHY_Open</a>(&amp;g_ethercat_phy0_ctrl, &amp;g_ethercat_phy0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga0f952f1852c0bbf4041ab9d5b97d69fa">R_ETHERCAT_PHY_StartAutoNegotiate</a>(&amp;g_ethercat_phy0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Polling until link is established. */</span></div><div class="line">    <span class="keywordflow">while</span> (FSP_SUCCESS != <a class="code" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga84e41d4b1a8548dfe0a9aaf0722995a3">R_ETHERCAT_PHY_LinkStatusGet</a>(&amp;g_ethercat_phy0_ctrl))</div><div class="line">    {</div><div class="line">        <span class="comment">/* Do nothing */</span></div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get link partner ability from phy interface. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r_c_a_t___p_h_y.html#gaf6f3f21a56c5567eb798ca368a89e867">R_ETHERCAT_PHY_LinkPartnerAbilityGet</a>(&amp;g_ethercat_phy0_ctrl,</div><div class="line">                                               &amp;g_ethercat_phy0_line_speed_duplex,</div><div class="line">                                               &amp;g_ethercat_phy0_local_pause,</div><div class="line">                                               &amp;g_ethercat_phy0_partner_pause);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Check current link status. */</span></div><div class="line">    err = <a class="code" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga84e41d4b1a8548dfe0a9aaf0722995a3">R_ETHERCAT_PHY_LinkStatusGet</a>(&amp;g_ethercat_phy0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structethercat__phy__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#structethercat__phy__instance__ctrl__t">ethercat_phy_instance_ctrl_t</a></td></tr>
+<tr class="separator:structethercat__phy__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structethercat__phy__extended__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#structethercat__phy__extended__cfg__t">ethercat_phy_extended_cfg_t</a></td></tr>
+<tr class="separator:structethercat__phy__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga652382098859294a22e87e530c2cf21d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga652382098859294a22e87e530c2cf21d">ethercat_phy_interface_status_t</a> </td></tr>
+<tr class="separator:ga652382098859294a22e87e530c2cf21d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structethercat__phy__instance__ctrl__t" id="structethercat__phy__instance__ctrl__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__phy__instance__ctrl__t">&#9670;&nbsp;</a></span>ethercat_phy_instance_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_phy_instance_ctrl_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ETHER PHY control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#aa566d14c1e722f4b1abdd65bae92393e">ether_phy_api_t::open</a> is called. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aeec7a52e8a2ff519b48f37674f1e615b"></a>uint32_t</td>
+<td class="fieldname">
+open</td>
+<td class="fielddoc">
+Used to determine if the channel is configured. </td></tr>
+<tr><td class="fieldtype">
+<a id="afc61695adadf6d890722d6cf76e7ece2"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_ether_phy_cfg</td>
+<td class="fielddoc">
+Pointer to initial configurations. </td></tr>
+<tr><td class="fieldtype">
+<a id="af9c7cab4e0312f5a066cf923379b5737"></a>uint32_t</td>
+<td class="fieldname">
+local_advertise</td>
+<td class="fielddoc">
+Capabilities bitmap for local advertising. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab33e27b5d44523227caf3b0165da0cee"></a><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga652382098859294a22e87e530c2cf21d">ethercat_phy_interface_status_t</a></td>
+<td class="fieldname">
+interface_status</td>
+<td class="fielddoc">
+Initialized status of ETHER PHY interface. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structethercat__phy__extended__cfg__t" id="structethercat__phy__extended__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__phy__extended__cfg__t">&#9670;&nbsp;</a></span>ethercat_phy_extended_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_phy_extended_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ETHERCAT PHY extended configuration. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:abce344ae7cba2cb5b04d84c74c5ed77f"><td class="memItemLeft" align="right" valign="top"><a id="abce344ae7cba2cb5b04d84c74c5ed77f"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#abce344ae7cba2cb5b04d84c74c5ed77f">p_target_init</a> )(<a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#structethercat__phy__instance__ctrl__t">ethercat_phy_instance_ctrl_t</a> *p_instance_ctrl)</td></tr>
+<tr class="memdesc:abce344ae7cba2cb5b04d84c74c5ed77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called to initialize the target. <br /></td></tr>
+<tr class="separator:abce344ae7cba2cb5b04d84c74c5ed77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ead4527c34c4fb942347d9978e8f625"><td class="memItemLeft" align="right" valign="top"><a id="a4ead4527c34c4fb942347d9978e8f625"></a>
+bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#a4ead4527c34c4fb942347d9978e8f625">p_target_link_partner_ability_get</a> )(<a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#structethercat__phy__instance__ctrl__t">ethercat_phy_instance_ctrl_t</a> *p_instance_ctrl, uint32_t line_speed_duplex)</td></tr>
+<tr class="memdesc:a4ead4527c34c4fb942347d9978e8f625"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback that is called to get the link partner ability. <br /></td></tr>
+<tr class="separator:a4ead4527c34c4fb942347d9978e8f625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga652382098859294a22e87e530c2cf21d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga652382098859294a22e87e530c2cf21d">&#9670;&nbsp;</a></span>ethercat_phy_interface_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___e_t_h_e_r_c_a_t___p_h_y.html#ga652382098859294a22e87e530c2cf21d">ethercat_phy_interface_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialization state for read/write </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga652382098859294a22e87e530c2cf21da3156305763da8fc64cc9bf4d8bedd927"></a>ETHERCAT_PHY_INTERFACE_STATUS_UNINITIALIZED&#160;</td><td class="fielddoc"><p>ETHER PHY interface is uninitialized. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga652382098859294a22e87e530c2cf21da55235e62dfbcc10db0388073d8f455c7"></a>ETHERCAT_PHY_INTERFACE_STATUS_INITIALIZED&#160;</td><td class="fielddoc"><p>ETHER PHY interface is initialized. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga7d397755f54190b509818ae1f906c029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7d397755f54190b509818ae1f906c029">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_Open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets Ethercat PHY device. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#aa566d14c1e722f4b1abdd65bae92393e">ether_phy_api_t::open</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel opened successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block or configuration structure is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>Control block has already been opened or channel is being used by another instance. Call close() then open() to reconfigure. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_CHANNEL</td><td>Invalid channel number is given. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to p_cfg is NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga150fd53de165b69b21af76a94d60e53d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga150fd53de165b69b21af76a94d60e53d">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_Close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_Close </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Close Ethercat PHY device. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a2b473db67f11af9cfafc790727c0660a">ether_phy_api_t::close</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Channel successfully closed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga0f952f1852c0bbf4041ab9d5b97d69fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f952f1852c0bbf4041ab9d5b97d69fa">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_StartAutoNegotiate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_StartAutoNegotiate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts auto-negotiate. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ae7f449454459fc8ec9a3c14c0c6238ea">ether_phy_api_t::startAutoNegotiate</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>ETHERCAT_PHY successfully starts auto-negotiate. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Register address is incorrect </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Command is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to read buffer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>The control block has not been initialized </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf6f3f21a56c5567eb798ca368a89e867"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf6f3f21a56c5567eb798ca368a89e867">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_LinkPartnerAbilityGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_LinkPartnerAbilityGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_line_speed_duplex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_local_pause</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_partner_pause</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reports the other side's physical capability. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a0dd6047b8aa7ad85139ec4f4e6abb3fc">ether_phy_api_t::linkPartnerAbilityGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>ETHERCAT_PHY successfully get link partner ability. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to arguments are NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>PHY-LSI is not link up. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_PHY_NOT_READY</td><td>The auto-negotiation isn't completed </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Status register address is incorrect </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Command is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>The control block has not been initialized </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga84e41d4b1a8548dfe0a9aaf0722995a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga84e41d4b1a8548dfe0a9aaf0722995a3">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_LinkStatusGet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_LinkStatusGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the status of the physical link. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ae2dabb88baba5326509f297e44b35f92">ether_phy_api_t::linkStatusGet</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>ETHERCAT_PHY successfully get link partner ability. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
+    <tr><td class="paramname">FSP_ERR_ETHER_PHY_ERROR_LINK</td><td>PHY-LSI is not link up. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Status register address is incorrect </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Command is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to read buffer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>The control block has not been initialized </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga19fdc4298e2440e47dd858b951750162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga19fdc4298e2440e47dd858b951750162">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_ChipInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_ChipInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize Ethercat PHY device. Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a2b29375fbcbb38ee52182c41e2eef170">ether_phy_api_t::chipInit</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>PHY device initialized successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block or configuration structure is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to p_cfg is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_TIMEOUT</td><td>PHY-LSI Reset wait timeout. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae60afba7e4f1c66e4809909cc0f8680e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae60afba7e4f1c66e4809909cc0f8680e">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_Read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_Read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>reg_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read data from register of PHY-LSI . Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a3277c2961f534a7b8ae6c85fc4869e07">ether_phy_api_t::read</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>ETHERCAT_PHY successfully read data. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to read buffer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Address is not a valid size </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Command is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>The control block has not been initialized </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga23e1a04f757ca550de15163d509d8b34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga23e1a04f757ca550de15163d509d8b34">&#9670;&nbsp;</a></span>R_ETHERCAT_PHY_Write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_ETHERCAT_PHY_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>reg_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write data to register of PHY-LSI . Implements <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#a445821efa6ddb204376956458f0d04aa">ether_phy_api_t::write</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>ETHERCAT_PHY successfully write data. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHERCAT_PHY control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Address or data is not a valid size </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Command is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_INITIALIZED</td><td>The control block has not been initialized </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

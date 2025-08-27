@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -289,6 +289,42 @@ Features</h2>
 <li>Checks for connected devices</li>
 <li>Data transfer to and from a CDC-ECM peripheral device</li>
 </ul>
+<h1><a class="anchor" id="r-usb-hcdc-ecm-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for r_usb_hcdc_ecm</h2>
+The following build time configurations are defined in fsp_cfg/r_usb_hcdc_cfg.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Target Peripheral Device Class ID</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+CDC class supported device</li>
+<li>
+Vendor class device</li>
+</ul>
+</td><td>CDC class supported device </td><td>Specify the device class ID of the CDC device to be connected. </td></tr>
+</table>
+ <h2>Configurations for Connectivity &gt; USB HCDC (r_usb_hcdc_ecm)</h2>
+This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; USB HCDC (r_usb_hcdc_ecm).<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function. If this callback function is provided, it is called from the interrupt service routine (ISR) each time a interrupt occurs. </td></tr>
+<tr class="tree_none">
+<td>Name</td><td>Name must be a valid C symbol</td><td>g_hcdc_ecm0 </td><td>Module name. </td></tr>
+</table>
+</p>
+<dl class="section note"><dt>Note</dt><dd>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module for hardware configuration options.</dd></dl>
+<h2><a class="anchor" id="r-usb-hcdc-ecm-clock-configuration"></a>
+Clock Configuration</h2>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
+<h2><a class="anchor" id="r-usb-hcdc-ecm-pin-configuration"></a>
+Pin Configuration</h2>
+<p>Refer to the <a class="el" href="group___u_s_b.html">USB (r_usb_basic)</a> module.</p>
 <h1><a class="anchor" id="r-usb-hcdc-ecm-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-usb-hcdc-ecm-basic_function"></a>
@@ -733,7 +769,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -8,5 +8,14 @@ var searchData=
   ['gpt_5fgtior_5fsetting_5ft',['gpt_gtior_setting_t',['../group___g_p_t.html#structgpt__gtior__setting__t',1,'']]],
   ['gpt_5finstance_5fctrl_5ft',['gpt_instance_ctrl_t',['../group___g_p_t.html#structgpt__instance__ctrl__t',1,'']]],
   ['gpt_5foutput_5fpin_5ft',['gpt_output_pin_t',['../group___g_p_t.html#structgpt__output__pin__t',1,'']]],
-  ['gpt_5fthree_5fphase_5finstance_5fctrl_5ft',['gpt_three_phase_instance_ctrl_t',['../group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#structgpt__three__phase__instance__ctrl__t',1,'']]]
+  ['gpt_5fthree_5fphase_5finstance_5fctrl_5ft',['gpt_three_phase_instance_ctrl_t',['../group___g_p_t___t_h_r_e_e___p_h_a_s_e.html#structgpt__three__phase__instance__ctrl__t',1,'']]],
+  ['gptp_5fapi_5ft',['gptp_api_t',['../group___g_p_t_p___a_p_i.html#structgptp__api__t',1,'']]],
+  ['gptp_5fcallback_5fargs_5ft',['gptp_callback_args_t',['../group___g_p_t_p___a_p_i.html#structgptp__callback__args__t',1,'']]],
+  ['gptp_5fcfg_5ft',['gptp_cfg_t',['../group___g_p_t_p___a_p_i.html#structgptp__cfg__t',1,'']]],
+  ['gptp_5finstance_5fctrl_5ft',['gptp_instance_ctrl_t',['../group___g_p_t_p.html#structgptp__instance__ctrl__t',1,'']]],
+  ['gptp_5finstance_5ft',['gptp_instance_t',['../group___g_p_t_p___a_p_i.html#structgptp__instance__t',1,'']]],
+  ['gptp_5fpulse_5fgenerator_5ft',['gptp_pulse_generator_t',['../group___g_p_t_p.html#structgptp__pulse__generator__t',1,'']]],
+  ['gptp_5fpulsed_5foutput_5fcfg_5ft',['gptp_pulsed_output_cfg_t',['../group___g_p_t_p.html#structgptp__pulsed__output__cfg__t',1,'']]],
+  ['gptp_5ftimer_5fcfg_5ft',['gptp_timer_cfg_t',['../group___g_p_t_p___a_p_i.html#structgptp__timer__cfg__t',1,'']]],
+  ['gptp_5ftimer_5fvalue_5ft',['gptp_timer_value_t',['../group___g_p_t_p___a_p_i.html#structgptp__timer__value__t',1,'']]]
 ];

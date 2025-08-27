@@ -1,0 +1,689 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: GPTP Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___g_p_t_p___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
+  <div class="headertitle">
+<div class="title">GPTP Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___i_n_t_e_r_f_a_c_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for gPTP timing. </p>
+<h1><a class="anchor" id="GPTP_API_Summary"></a>
+Summary</h1>
+<p>The gPTP API provides a generic interface for gPTP timer operation. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structgptp__timer__value__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__timer__value__t">gptp_timer_value_t</a></td></tr>
+<tr class="separator:structgptp__timer__value__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgptp__timer__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__timer__cfg__t">gptp_timer_cfg_t</a></td></tr>
+<tr class="separator:structgptp__timer__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgptp__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__callback__args__t">gptp_callback_args_t</a></td></tr>
+<tr class="separator:structgptp__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgptp__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__cfg__t">gptp_cfg_t</a></td></tr>
+<tr class="separator:structgptp__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgptp__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__api__t">gptp_api_t</a></td></tr>
+<tr class="separator:structgptp__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgptp__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__instance__t">gptp_instance_t</a></td></tr>
+<tr class="separator:structgptp__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gafc4635e6d1998af522c7ad043ce04126"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a></td></tr>
+<tr class="separator:gafc4635e6d1998af522c7ad043ce04126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structgptp__timer__value__t" id="structgptp__timer__value__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structgptp__timer__value__t">&#9670;&nbsp;</a></span>gptp_timer_value_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gptp_timer_value_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Timer value. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acd0e36a8917ed3b39c0d42a96fa51edb"></a>uint16_t</td>
+<td class="fieldname">
+time_sec_upper</td>
+<td class="fielddoc">
+Second(Upper 16 bit). </td></tr>
+<tr><td class="fieldtype">
+<a id="ae6043fc181d4c07308535e1000d2a65c"></a>uint32_t</td>
+<td class="fieldname">
+time_sec_lower</td>
+<td class="fielddoc">
+Second(Lower 32 bit). </td></tr>
+<tr><td class="fieldtype">
+<a id="a331f40c589324c685e44127f478d4c07"></a>uint32_t</td>
+<td class="fieldname">
+time_nsec</td>
+<td class="fielddoc">
+Nanosecond. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structgptp__timer__cfg__t" id="structgptp__timer__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structgptp__timer__cfg__t">&#9670;&nbsp;</a></span>gptp_timer_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gptp_timer_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of gPTP timer. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8cbceecf8886532224a8a63fde73f4d3"></a>uint8_t</td>
+<td class="fieldname">
+clock_period</td>
+<td class="fielddoc">
+Timer increment value. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structgptp__callback__args__t" id="structgptp__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structgptp__callback__args__t">&#9670;&nbsp;</a></span>gptp_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gptp_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>GPTP callback arguments definitions. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a49fb4978afacc33f6d0bfb3813b8fb53"></a>void *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. Set in <a class="el" href="group___g_p_t_p___a_p_i.html#a17ed328961e13a78c9c20dff8128e303">gptp_api_t::open</a> function in <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__cfg__t">gptp_cfg_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structgptp__cfg__t" id="structgptp__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structgptp__cfg__t">&#9670;&nbsp;</a></span>gptp_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gptp_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration parameters. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ae73fba79d154ee216c3e2aa6b7e3f22b"><td class="memItemLeft" align="right" valign="top"><a id="ae73fba79d154ee216c3e2aa6b7e3f22b"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#ae73fba79d154ee216c3e2aa6b7e3f22b">p_callback</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__callback__args__t">gptp_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:ae73fba79d154ee216c3e2aa6b7e3f22b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback function. <br /></td></tr>
+<tr class="separator:ae73fba79d154ee216c3e2aa6b7e3f22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0fb1fdf56062b7e267bc0b4c367a439"><td class="memItemLeft" align="right" valign="top"><a id="ab0fb1fdf56062b7e267bc0b4c367a439"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#ab0fb1fdf56062b7e267bc0b4c367a439">p_context</a></td></tr>
+<tr class="memdesc:ab0fb1fdf56062b7e267bc0b4c367a439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. Passed to the user callback in <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__callback__args__t">gptp_callback_args_t</a>. <br /></td></tr>
+<tr class="separator:ab0fb1fdf56062b7e267bc0b4c367a439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa25d6a61e75e0c0fbf953523d2306f91"><td class="memItemLeft" align="right" valign="top"><a id="aa25d6a61e75e0c0fbf953523d2306f91"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#aa25d6a61e75e0c0fbf953523d2306f91">p_extend</a></td></tr>
+<tr class="memdesc:aa25d6a61e75e0c0fbf953523d2306f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user extension. <br /></td></tr>
+<tr class="separator:aa25d6a61e75e0c0fbf953523d2306f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structgptp__api__t" id="structgptp__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structgptp__api__t">&#9670;&nbsp;</a></span>gptp_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gptp_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Functions implemented at the HAL layer will follow this API. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a17ed328961e13a78c9c20dff8128e303"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#a17ed328961e13a78c9c20dff8128e303">open</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__cfg__t">gptp_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a17ed328961e13a78c9c20dff8128e303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a592c363ddac9d6e23be43214553daf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#a7a592c363ddac9d6e23be43214553daf">close</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl)</td></tr>
+<tr class="separator:a7a592c363ddac9d6e23be43214553daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4ac1991651a09cbde5bdbe7eabf1502"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#aa4ac1991651a09cbde5bdbe7eabf1502">timerCfg</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__timer__cfg__t">gptp_timer_cfg_t</a> const *const p_timer_cfg)</td></tr>
+<tr class="separator:aa4ac1991651a09cbde5bdbe7eabf1502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a728aa7d21ee51c9147cfca9c4e849d40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#a728aa7d21ee51c9147cfca9c4e849d40">start</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer)</td></tr>
+<tr class="separator:a728aa7d21ee51c9147cfca9c4e849d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a203d05e6b11b4af88a063f82c2857932"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#a203d05e6b11b4af88a063f82c2857932">stop</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer)</td></tr>
+<tr class="separator:a203d05e6b11b4af88a063f82c2857932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f3b02f219c84db61a1c71cdaef77d9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#a2f3b02f219c84db61a1c71cdaef77d9b">timerValueGet</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__timer__value__t">gptp_timer_value_t</a> *const p_timer_value)</td></tr>
+<tr class="separator:a2f3b02f219c84db61a1c71cdaef77d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0042429c6e48f38bb5525fd3bae692ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#a0042429c6e48f38bb5525fd3bae692ac">timerOffsetSet</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, int64_t offset)</td></tr>
+<tr class="separator:a0042429c6e48f38bb5525fd3bae692ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af96f0ecc68ebe3652cb137817fe15314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#af96f0ecc68ebe3652cb137817fe15314">timerRateSet</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, uint32_t rate)</td></tr>
+<tr class="separator:af96f0ecc68ebe3652cb137817fe15314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35dccc1e10572307cccb4de75afaf181"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t_p___a_p_i.html#a35dccc1e10572307cccb4de75afaf181">callbackSet</a> )(<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__callback__args__t">gptp_callback_args_t</a> *), void *const p_context, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__callback__args__t">gptp_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:a35dccc1e10572307cccb4de75afaf181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a17ed328961e13a78c9c20dff8128e303"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17ed328961e13a78c9c20dff8128e303">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::open) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__cfg__t">gptp_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open driver.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to pin configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7a592c363ddac9d6e23be43214553daf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a592c363ddac9d6e23be43214553daf">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::close) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close driver.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa4ac1991651a09cbde5bdbe7eabf1502"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4ac1991651a09cbde5bdbe7eabf1502">&#9670;&nbsp;</a></span>timerCfg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::timerCfg) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__timer__cfg__t">gptp_timer_cfg_t</a> const *const p_timer_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure gptp timer parameters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer</td><td>Timer index. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_timer_cfg</td><td>Configuration of the timer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a728aa7d21ee51c9147cfca9c4e849d40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a728aa7d21ee51c9147cfca9c4e849d40">&#9670;&nbsp;</a></span>start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::start) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start gptp timer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer</td><td>Timer index. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a203d05e6b11b4af88a063f82c2857932"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a203d05e6b11b4af88a063f82c2857932">&#9670;&nbsp;</a></span>stop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::stop) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stop gptp timer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer</td><td>Timer index. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2f3b02f219c84db61a1c71cdaef77d9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f3b02f219c84db61a1c71cdaef77d9b">&#9670;&nbsp;</a></span>timerValueGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::timerValueGet) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__timer__value__t">gptp_timer_value_t</a> *const p_timer_value)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the current time value to gptp timer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer</td><td>Timer index. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_timer_value</td><td>Pointer to timer value structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0042429c6e48f38bb5525fd3bae692ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0042429c6e48f38bb5525fd3bae692ac">&#9670;&nbsp;</a></span>timerOffsetSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::timerOffsetSet) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, int64_t offset)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set time offset correction to gptp timer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer</td><td>Timer index. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Time offset value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af96f0ecc68ebe3652cb137817fe15314"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af96f0ecc68ebe3652cb137817fe15314">&#9670;&nbsp;</a></span>timerRateSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::timerRateSet) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, uint8_t timer, uint32_t rate)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set clock rate correction to gptp timer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer</td><td>Timer index. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rate</td><td>Clock rate value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a35dccc1e10572307cccb4de75afaf181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35dccc1e10572307cccb4de75afaf181">&#9670;&nbsp;</a></span>callbackSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  gptp_api_t::callbackSet) (<a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__callback__args__t">gptp_callback_args_t</a> *), void *const p_context, <a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__callback__args__t">gptp_callback_args_t</a> *const p_callback_memory)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specify callback function and optional context pointer and working memory pointer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structgptp__instance__t" id="structgptp__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structgptp__instance__t">&#9670;&nbsp;</a></span>gptp_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gptp_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a0aa84d7e3111657b030753a83e41c738"></a><a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a11550d8c5499b3b0963cf9e09e6e61b1"></a><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__cfg__t">gptp_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a87565dd76e1bc5094ffa252de03003ac"></a><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__api__t">gptp_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="gafc4635e6d1998af522c7ad043ce04126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafc4635e6d1998af522c7ad043ce04126">&#9670;&nbsp;</a></span>gptp_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___g_p_t_p___a_p_i.html#gafc4635e6d1998af522c7ad043ce04126">gptp_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Control block. Allocate an instance specific control block to pass into the API calls. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

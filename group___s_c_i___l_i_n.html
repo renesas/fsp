@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -299,7 +299,8 @@ Features</h2>
 <li>Digital filter<a class="anchor" id="um_sci_b_lin_noise_cancellation"></a></li>
 <li>Abort in-progress read/write operations<a class="anchor" id="um_lin_abort"></a></li>
 <li>Error notifications of parity error in protected identifier, framing error, overrun error, bus collision<a class="anchor" id="um_lin_parity_error"></a><a class="anchor" id="um_lin_framing_error"></a><a class="anchor" id="um_sci_b_lin_bus_collision"></a><a class="anchor" id="um_lin_overrun_error"></a></li>
-<li>Configuration of all available SCI channels with Simple LIN mode support<a class="anchor" id="um_lin_channels_support"></a> </li>
+<li>Configuration of all available SCI channels with Simple LIN mode support<a class="anchor" id="um_lin_channels_support"></a></li>
+<li>Auto synchronization is supported in slave mode<a class="anchor" id="um_sci_b_lin_auto_synchronization"></a> </li>
 </ul>
 <h1><a class="anchor" id="r-sci-lin-configuration"></a>
 Configuration</h1>
@@ -326,6 +327,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>When set to 'Disabled', code for checksum generation and validation is excluded from the build. This setting is applied globally to the project. Disable only when checksum generation and validation is not required for any LIN instance. </td></tr>
+<tr class="tree_none">
+<td>Auto Synchronization Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>When set to 'Disabled', code for auto synchronization is excluded from the build. This setting is applied globally to the project. Enable when at least one LIN slave instance is using auto synchronization. </td></tr>
 <tr class="tree_none">
 <td>Bus Conflict Detection Support</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -405,19 +414,19 @@ If the requested baud rate cannot be achieved, the settings with the smallest pe
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Compare Data Mask</td><td>Value must be an integer between 0 and 255.</td><td>0 </td><td>Select the bit mask to be applied before comparing the received PID to the selected compare data. This setting specifies which bits of the selected compare data must match. Set to 0 to disable the filter (allow all frame identifiers).  </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Priority Compare Data</td><td>Value must be an integer between 0 and 255.</td><td>0 </td><td>Select the priority compare filter data. </td></tr>
+<td class="tree_lvl_2_cell">Primary Compare Data</td><td>Value must be an integer between 0 and 255.</td><td>0 </td><td>Select the primary compare filter data. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Secondary Compare Data</td><td>Value must be an integer between 0 and 255.</td><td>0 </td><td>Select the secondary compare filter data. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Compare Data Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
-Priority</li>
+Primary</li>
 <li>
 Secondary</li>
 <li>
 Both</li>
 </ul>
-</td><td>Priority </td><td>Select the compare data to use. If 'both' is selected, the priority compare data is checked before the secondary compare data. </td></tr>
+</td><td>Primary </td><td>Select the compare data to use. If 'both' is selected, the primary compare data is checked before the secondary compare data. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Priority Interrupt Bit Enable</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -425,9 +434,9 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>Select whether to enable the Priority Interrupt Bit filter. When enabled, regardless of the Filter Data Select setting value, the bit specified by the Priority Interrupt Bit setting is compared with the corresponding bit in the Priority Compare Data Filter and if it matches, the identifier is allowed through the filter. </td></tr>
+</td><td>Disabled </td><td>Select whether to enable the Priority Interrupt Bit filter. When enabled, regardless of the Filter Data Select setting value, the bit specified by the Priority Interrupt Bit setting is compared with the corresponding bit in the Primary Compare Data Filter and if it matches, the identifier is allowed through the filter. </td></tr>
 <tr class="tree_lvl_2_item">
-<td class="tree_lvl_2_cell">Priority Interrupt Bit</td><td>Value must be an integer between bit 0 (LSb) and bit 7 (MSb).</td><td>0 </td><td>Select the priority interrupt bit (0-7) of the received PID to compare with the corresponding bit in the Priority Compare Data Filter.  </td></tr>
+<td class="tree_lvl_2_cell">Priority Interrupt Bit</td><td>Value must be an integer between bit 0 (LSb) and bit 7 (MSb).</td><td>0 </td><td>Select the priority interrupt bit (0-7) of the received PID to compare with the corresponding bit in the Primary Compare Data Filter.  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Break Field Bits/Break Detection Threshold (bits)</td><td>Value must be an integer.</td><td>13 </td><td>For master break field transmission, this configures the dominant period of the break field (in bits). For slave break field reception, this configures the break detection threshold in bits. Must be 13 bits or greater for master mode and 11 bits or greater for slave mode. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -470,6 +479,8 @@ Disabled</li>
 <td class="tree_lvl_1_cell">Control Field 0/1 Match Interrupt Priority (SCIX1)</td><td>MCU Specific Options</td><td></td><td>Select the Control field 0,1 and Priority bit detection interrupt priority. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Bus Collision Detection Interrupt Priority (SCIX2)</td><td>MCU Specific Options</td><td></td><td>Select the bus collision detection interrupt priority, or set to 'Disabled' to disable bus collision detection. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Valid Edge Detection Interrupt Priority (SCIX3)</td><td>MCU Specific Options</td><td></td><td>Select the valid edge detection interrupt priority to enable slave auto synchronization during the LIN sync byte, or set to 'Disabled' to disable auto synchronization. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r-sci-lin-clock-configuration"></a>
@@ -485,6 +496,7 @@ Interrupt Configuration</h2>
 <li>Receive data full (RXI), Transmit data empty (TXI), Transmit end (TEI), Error event (ERI), Break Field low width (SCIX0) interrupts for the selected channel used must be enabled in the properties of the selected device for both master and slave mode operation.</li>
 <li>Control field 0/1 match, priority interrupt bit detection (SCIX1) interrupt is only used in slave mode.</li>
 <li>Configuring the bus collision detection (SCIX2) interrupt is required to enable Bus Conflict Detection.</li>
+<li>Configuring the valid edge detection (SCIX3) interrupt is required to enable Auto Synchronization (slave mode only).</li>
 </ul>
 <h2><a class="anchor" id="r-sci-lin-break-configuration"></a>
 Break Field Length/Detection Threshold Configuration</h2>
@@ -542,6 +554,8 @@ ID Filter Configuration</h2>
 <p>The filter can be updated at runtime by using using <a class="el" href="group___s_c_i___l_i_n.html#ga90c4277d709f9db6b3a475bd22264886">R_SCI_LIN_IdFilterSet</a>. The current filter settings can be viewed with <a class="el" href="group___s_c_i___l_i_n.html#gafdb4e91d63d60ea70c13f7dea7f2155c">R_SCI_LIN_IdFilterGet</a>.</p>
 <h1><a class="anchor" id="r-sci-lin-usage_notes"></a>
 Usage Notes</h1>
+<h2>Bit Rate Calculation</h2>
+<p>For more details on how the baudrate is set refer to Table "Relationship between N setting in BRR and bit rate B" in the SCI section of the relevant hardware manual.</p>
 <h2><a class="anchor" id="r-sci-lin-tx-rx"></a>
 LIN Transmission and Reception</h2>
 <p>SCI data reception is disabled until a break field is detected (slave mode) or a call to <a class="el" href="group___s_c_i___l_i_n.html#ga004a26dbe22296814dc371e4426b0276">R_SCI_LIN_Read()</a> is made (master and slave mode).</p>
@@ -568,16 +582,23 @@ Checksum Generation and Validation</h2>
 <li>To skip driver checksum generation/validation, pass <a class="el" href="group___l_i_n___a_p_i.html#gga420925530265c35f3b2219649d7aad5ba26e93d617a43afc1ecd4470e0a959fb1">lin_transfer_params_t::LIN_CHECKSUM_TYPE_NONE</a> to the read/write functions. Instead the checksum can be included as part of the data buffer, or omitted entirely depending on the application's needs.</li>
 <li>The maximum number of data bytes that can be transmitted per frame is 255, including the checksum byte. Thus, when checksum generation/validation is requested in the transfer parameters, the maximum number of bytes that can be specified in transfer_params.num_bytes is 254. When checksum generation/validation is not requested in the transfer parameters, the maximum number of bytes that can be specified in transfer_params.num_bytes is 255.</li>
 </ul>
+<h2><a class="anchor" id="r-sci-lin-auto-synchronization"></a>
+Auto Synchronization</h2>
+<p>Auto synchronization is optional. When it is disabled, the baud rate and break field detection threshold set in open are never updated.</p>
+<p>This feature works in slave mode only.</p>
+<ul>
+<li>Auto synchronization is not the same as automatic baud rate detection. Auto synchronization is used for correcting small clock drift/difference in baud rate between nodes.</li>
+<li>Auto synchronization performs small automatic baud rate adjustments to synchronize with the master's clock by measuring the effective edges of the input signal from the RXDn pin during reception of the LIN sync byte.</li>
+<li>The sync byte is measured and the baud setting and break field detection threshold are re-adjusted for every LIN sync byte received.</li>
+<li>If reception of the sync byte fails, or the required register settings detected would not be possible in the hardware, the baud/timer settings are not updated, and auto synchronization will be re-attempted on the next received start frame.<a class="anchor" id="um_sci_b_lin_auto_synchronization_errors"></a> </li>
+</ul>
 <h2><a class="anchor" id="r-sci-lin-limitations"></a>
 Limitations</h2>
 <ul>
-<li>DTC/DMAC is not supported.</li>
-<li>Automatic baud rate detection is not supported.</li>
 <li>The SCI provides an interface to the LIN Physical layer and does not implement the LIN Transport Layer or LIN Application Layer. The application is responsible for handling the frame scheduling table and monitoring for Transport Layer timeouts.</li>
 <li>Selectable timing for the sampling data is not supported.</li>
 <li>A new header cannot be detected during active reception of control field 0, control field 1, or frame data.</li>
 <li>Two or more headers that are not followed by data (from any node) cannot be received consecutively unless <a class="el" href="group___s_c_i___l_i_n.html#ga97101c9805596795170ef016c3097935">R_SCI_LIN_CommunicationAbort</a> is called after receiving LIN_EVENT_HEADER_RX_COMPLETE to ignore the frame. If all headers are followed by data, no action is required to ignore a received header.</li>
-<li>Auto synchronization in slave mode is not currently supported.<a class="anchor" id="um_sci_b_lin_auto_synchronization"></a><a class="anchor" id="um_sci_b_lin_auto_synchronization_errors"></a> </li>
 </ul>
 <h1><a class="anchor" id="r-sci-lin-examples"></a>
 Examples</h1>
@@ -692,7 +713,7 @@ timer_setting</td>
 <td class="fielddoc">
 Break field timer settings associated with this baud rate. </td></tr>
 <tr><td class="fieldtype">
-<a id="a5745757d5ac377919d5a298d43c20308"></a>union <a class="el" href="group___s_c_i___l_i_n.html#unionsci__lin__baud__setting__t_8____unnamed____">sci_lin_baud_setting_t</a></td>
+<a id="ae104036f687b64712930b0f10f7002b9"></a>union <a class="el" href="group___s_c_i___l_i_n.html#unionsci__lin__baud__setting__t_8____unnamed____">sci_lin_baud_setting_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -860,9 +881,9 @@ delimiter_bits</td>
 <td class="fielddoc">
 Break delimeter length setting (at least 1 nominal bit time long). </td></tr>
 <tr><td class="fieldtype">
-<a id="aac4061ac23366d80ecaa78832b579968"></a><a class="el" href="group___s_c_i___l_i_n.html#structsci__lin__baud__setting__t">sci_lin_baud_setting_t</a></td>
+<a id="ad6e6ce71ec2c35a0551e438013820317"></a><a class="el" href="group___s_c_i___l_i_n.html#structsci__lin__baud__setting__t">sci_lin_baud_setting_t</a> *</td>
 <td class="fieldname">
-baud_setting</td>
+p_baud_setting</td>
 <td class="fielddoc">
 Register settings for a desired baud rate. </td></tr>
 <tr><td class="fieldtype">
@@ -889,6 +910,12 @@ Control field 0-1 match / Priority interrupt bit detect IRQ number. </td></tr>
 scix2_irq</td>
 <td class="fielddoc">
 Bus collision detect IRQ number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4150217875e7e0f83bd0875573af5edd"></a>IRQn_Type</td>
+<td class="fieldname">
+scix3_irq</td>
+<td class="fielddoc">
+Valid edge detect IRQ number. </td></tr>
 <tr><td class="fieldtype">
 <a id="a0c9296504639312a028ca273762f3409"></a>IRQn_Type</td>
 <td class="fieldname">
@@ -931,6 +958,12 @@ Control field 0-1 match / Priority interrupt bit detect interrupt priority. </td
 scix2_ipl</td>
 <td class="fielddoc">
 Bus collision detect interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="af8209ef3074214a28e381cfc78124b5d"></a>uint8_t</td>
+<td class="fieldname">
+scix3_ipl</td>
+<td class="fielddoc">
+Valid edge detect interrupt priority. </td></tr>
 <tr><td class="fieldtype">
 <a id="abf96e7ba56ad7db0bddc359cc72180f1"></a>uint8_t</td>
 <td class="fieldname">
@@ -1681,7 +1714,7 @@ Error interrupt priority. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

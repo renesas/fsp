@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -335,7 +335,7 @@ Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Disabled </td><td>Enable or Disable automatic judgment mode. This feature is only for RA4L1. </td></tr>
+</td><td>Disabled </td><td>Enable or Disable automatic judgment mode. This feature is only for RA4L1 and RA0L1. </td></tr>
 <tr class="tree_none">
 <td>Interrupt priority level</td><td>MCU Specific Options</td><td></td><td>Priority level of all CTSU interrupt (CSTU_WR,CTSU_RD,CTSU_FN)  </td></tr>
 </table>
@@ -362,12 +362,18 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-ctsu-usage_notes"></a>
 Usage Notes</h1>
 <p>The CTSU module is a CTSU driver for the Touch module. The CTSU module assumes the access from the Touch middleware layer, and it is also accessible from an user application.<br />
- CTSU, CTSU2 and CTSU2SLa are functionally different, so CTSU, CTSU2 and CTSU2SLa are described in this application note as below.<br />
+ The CTSU peripheral installed on RA family has three versions: CTSU, CTSU2, and CTSU2SLa. Each MCU devices are equipped with the following version of CTSU peripherals. <br />
+</p><ul>
+<li>CTSU2SLa : RA4L1, RA0L1</li>
+<li>CTSU2 : RA2E1, RA2L1</li>
+<li>CTSU : RA2A1, RA4M1, RA4M2, RA4M3, RA4W1, RA6M1, RA6M2, RA6M3, RA6M4, RA6M5,</li>
+</ul>
+<p>CTSU, CTSU2 and CTSU2SLa are functionally different, so CTSU, CTSU2 and CTSU2SLa are described in this application note as below.<br />
  Common description for CTSU and CTSU2 -&gt; CTSU<br />
  Description only for CTSU -&gt; CTSU1<br />
  Description only for CTSU2 and CTSU2SLa -&gt; CTSU2<br />
  Description only for CTSU2SLa -&gt; CTSU2SLa<br />
- Without mention, it means the common description for CTSU, CTSU2 and CTSU2SLa. Currently, RA4L1 only supports CTSU2SLa</p>
+ Without mention, it means the common description for CTSU, CTSU2 and CTSU2SLa.</p>
 <h2>Functions</h2>
 <p>The CTSU module supports the following functions.</p>
 <h3>Touch judgement Type</h3>
@@ -413,16 +419,17 @@ Data flow Comparison of JMM and VMM </div></div>
 </p>
 <table class="doxtable">
 <tr>
-<th>Mode</th><th>Default target value  </th></tr>
+<th>Mode</th><th>CTSU1 target value</th><th>CTSU2 target value  </th></tr>
 <tr>
-<td>Self-capacitance</td><td>15360 (37.5%) </td></tr>
+<td>Self-capacitance</td><td>15360 (37.5%)</td><td>11520 (37.5%) </td></tr>
 <tr>
-<td>Self-capacitance using active shield</td><td>6144 (15%) </td></tr>
+<td>Self-capacitance using active shield</td><td>-</td><td>4608 (15%) </td></tr>
 <tr>
-<td>Mutual-capacitance</td><td>10240 (20%) </td></tr>
+<td>Mutual-capacitance</td><td>10240 (25%)</td><td>7680 (25%) </td></tr>
 </table>
-<p>The percentage is for the CCO's input limit. 100% is the measured value 40960.<br />
- The default target value is based on 526us(CTSU1) or 256us(CTSU2).<br />
+<p>The percentage is based on 100% being the maximum input current applied to the CCO.<br />
+ CTSU1: 100% is the measured value 40960 when the measurement time is 526us(base time).<br />
+ CTSU2: 100% is the measured value 30720 when the measurement time is 256us(base time).<br />
  When the measurement time is changed, the target value is adjusted by the ratio with the base time.<br />
 </p>
 <p>Example of target value in combination of CTSUSNUM and CTSUSDPA.<br />
@@ -442,22 +449,20 @@ Data flow Comparison of JMM and VMM </div></div>
 <td>7680</td><td>0x3</td><td>0x3</td><td>263usec </td></tr>
 </table>
 <p>The measurement time changes depending on the combination of CTSUSNUM and CTSUSDPA.<br />
- In the above table, CTSUPRRTIO is the recommended value of 3, and CSTUPRMODE is the recommended value of 2.<br />
  When changing CTSUPRRATIO and CTSUPRMODE from the recommended values, follow the Hardware Manual for the measurement time.</p>
 <p>CTSU2 (Self-capacitance mode)</p>
 <table class="doxtable">
 <tr>
 <th>Target value</th><th>Target value (multi frequency)</th><th>CTSUSNUM</th><th>Measurement time  </th></tr>
 <tr>
-<td>7680</td><td>15360 (128us + 128us)</td><td>0x7</td><td>128usec </td></tr>
+<td>5760</td><td>11520 (128us + 128us)</td><td>0x7</td><td>128usec </td></tr>
 <tr>
-<td>15360</td><td>30720 (256us + 256us) </td><td>0xF</td><td>256usec </td></tr>
+<td>11520</td><td>23040 (256us + 256us) </td><td>0xF</td><td>256usec </td></tr>
 <tr>
-<td>3840</td><td>7680 (64us + 64us)</td><td>0x3</td><td>64usec </td></tr>
+<td>2880</td><td>5460 (64us + 64us)</td><td>0x3</td><td>64usec </td></tr>
 </table>
-<p>The measurement time changes depending on CTSUSNUM.<br />
- If STCLK cannot be set to 0.5MHz, it will not support the table above.<br />
- When setting STCLK to other than 0.5MHz because the CTSU clock is not an integer, follow the hardware manual for the measurement time.</p>
+<p>The measurement time changes depending on CTSUSNUM. If STCLK cannot be set to 0.5MHz, it will not support the table above. Regarding STCLK, refer to the hardware manual.<br />
+</p>
 <h3>Random Pulse Frequency Measurement (CTSU1)</h3>
 <p>The CTSU1 peripheral measures at one drive frequency.<br />
  The drive frequency determines the amperage to the electrode and generally uses the value tuned with QE for Capacitive Touch.<br />
@@ -1368,7 +1373,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>In the first Open, measurement for correction works, and it takes several tens of milliseconds. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>In the first Open, measurement for correction works, and it takes several tens of milliseconds.</li>
+<li>When the touch interface configuration is diagnosis mode, execute the <a class="el" href="group___c_t_s_u.html#ga4e625d8c9f3b301a46913c5827732682" title="Opens and configures the CTSU driver module. Implements ctsu_api_t::open. ">R_CTSU_Open()</a> of the other touch interface configuration first. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -1768,7 +1777,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

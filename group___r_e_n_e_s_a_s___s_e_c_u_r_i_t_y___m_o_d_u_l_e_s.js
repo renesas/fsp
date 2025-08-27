@@ -4,6 +4,7 @@ var group___r_e_n_e_s_a_s___s_e_c_u_r_i_t_y___m_o_d_u_l_e_s =
     [ "Azure RTOS NetX Crypto HW Acceleration (rm_netx_secure_crypto)", "group___r_m___n_e_t_x___s_e_c_u_r_e___c_r_y_p_t_o.html", null ],
     [ "Mbed Crypto H/W Acceleration (rm_psa_crypto)", "group___r_m___p_s_a___c_r_y_p_t_o.html", "group___r_m___p_s_a___c_r_y_p_t_o" ],
     [ "Ocrypto (rm_ocrypto_port)", "group___r_m___o_c_r_y_p_t_o___p_o_r_t.html", "group___r_m___o_c_r_y_p_t_o___p_o_r_t" ],
+    [ "Renesas Secure IP (r_rsip_e11a_protected_cavp)", "group___r_s_i_p___e11_a___p_r_o_t_e_c_t_e_d___c_a_v_p.html", null ],
     [ "Renesas Secure IP (r_rsip_e51a_protected_cavp)", "group___r_s_i_p___e51_a___p_r_o_t_e_c_t_e_d___c_a_v_p.html", null ],
     [ "Renesas Secure IP (r_rsip_protected)", "group___r_s_i_p___p_r_o_t_e_c_t_e_d.html", "group___r_s_i_p___p_r_o_t_e_c_t_e_d" ],
     [ "SCE Protected Mode", "group___s_c_e___p_r_o_t_e_c_t_e_d.html", "group___s_c_e___p_r_o_t_e_c_t_e_d" ],

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -316,7 +316,8 @@ Features</h2>
 <li>Supports setting the counter value while the timer is stopped.<a class="anchor" id="um_gpt_counter_set"></a></li>
 <li>Supports enabling and disabling output pins.<a class="anchor" id="um_gpt_output_disable"></a><a class="anchor" id="um_gpt_output_enable"></a></li>
 <li>Supports skipping up to seven overflow/underflow (crest/trough) interrupts at a time<a class="anchor" id="um_gpt_interrupt_skip"></a></li>
-<li>Supports generating custom PWM waveforms by configuring the pin's output level at each compare match and cycle end.<a class="anchor" id="um_gpt_custom_waveform"></a> </li>
+<li>Supports generating custom PWM waveforms by configuring the pin's output level at each compare match and cycle end.<a class="anchor" id="um_gpt_custom_waveform"></a></li>
+<li>Supports GTIOCnA and GTIOCnB input/output polarity control.<a class="anchor" id="um_gpt_GTIOC_polarity_control"></a> </li>
 </ul>
 <h2><a class="anchor" id="r-gpt-selecting-a-timer"></a>
 Selecting a Timer</h2>
@@ -632,6 +633,24 @@ Filter PCLKD / 64</li>
 </ul>
 </td><td>No Filter </td><td>Select the input filter for GTIOCB. </td></tr>
 <tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Pin Polarity  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCnA Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Normal</li>
+<li>
+Inverted</li>
+</ul>
+</td><td>Normal </td><td>Input/output polarity control for GTIOCnA pin. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">GTIOCnB Polarity</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Normal</li>
+<li>
+Inverted</li>
+</ul>
+</td><td>Normal </td><td>Input/output polarity control for GTIOCnB pin. </td></tr>
+<tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function can be specified here. If this callback function is provided, it will be called from the interrupt service routine (ISR) each time the timer period elapses </td></tr>
@@ -870,7 +889,7 @@ Examples</h1>
 <p>This is an example of a timer callback.</p>
 <p><a class="anchor" id="um_timer_user_notification_of_events"></a> </p><div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when timer expires. */</span></div><div class="line"><span class="keywordtype">void</span> timer_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* Add application code to be called periodically here. */</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>GPT Free Running Counter Example</h2>
 <p><a class="anchor" id="um_timer_reset"></a><a class="anchor" id="um_timer_start"></a><a class="anchor" id="um_timer_stop"></a><a class="anchor" id="um_timer_counter"></a> To use the GPT as a free running counter, select periodic mode and set the the Period to 0xFFFFFFFF for a 32-bit timer or 0xFFFF for a 16-bit timer.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) If event count mode is used to count edges on a GTETRG pin, POEG must be started to use GTETRG.</span></div><div class="line"><span class="comment">     * Reference Note 1 of Table 23.2 &quot;GPT functions&quot; in the RA6M3 manual R01UH0886EJ0100. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950acfc9bb8ff007a7b82cf4fd845dfce053">FSP_IP_POEG</a>, 0U);</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2">R_GPT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga2769f9fda49613246bc84dba41aa4863">R_GPT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga1e6af74d7faaf735f5847a34121eff71">R_GPT_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___g_p_t.html#gaa6234faf45320a83382d7ea1923a2c49">R_GPT_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>GPT Input Capture Example</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_counter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) If event count mode is used to count edges on a GTETRG pin, POEG must be started to use GTETRG.</span></div><div class="line"><span class="comment">     * Reference Note 1 of Table &quot;GPT functions&quot; in the relevant hardware manual. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf0a730b79b5bbe76759b6e8efafe2000">R_BSP_MODULE_START</a>(<a class="code" href="group___b_s_p___m_c_u.html#gga7880302f0edd7cc4290c037809975950acfc9bb8ff007a7b82cf4fd845dfce053">FSP_IP_POEG</a>, 0U);</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2">R_GPT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga2769f9fda49613246bc84dba41aa4863">R_GPT_Start</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Stop the timer. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga1e6af74d7faaf735f5847a34121eff71">R_GPT_Stop</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Read the current counter value. Counter value is in status.counter. */</span></div><div class="line">    <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__status__t">timer_status_t</a> status;</div><div class="line">    (void) <a class="code" href="group___g_p_t.html#gaa6234faf45320a83382d7ea1923a2c49">R_GPT_StatusGet</a>(&amp;g_timer0_ctrl, &amp;status);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>GPT Input Capture Example</h2>
 <p><a class="anchor" id="um_timer_capture_pulse_width"></a><a class="anchor" id="um_timer_capture_pulse_period"></a> This is an example of using the GPT to capture pulse width or pulse period measurements.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Example callback called when a capture occurs. */</span></div><div class="line">uint64_t g_captured_time     = 0U;</div><div class="line">uint32_t g_capture_overflows = 0U;</div><div class="line"><span class="keywordtype">void</span> timer_capture_callback (<a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__callback__args__t">timer_callback_args_t</a> * p_args)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> ((<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91eba4bc1252f63147f4a01f7b7ba88afac1d">TIMER_EVENT_CAPTURE_A</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>) || (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebab7b635fbf34ede5a3e2f55b5a60ac21b">TIMER_EVENT_CAPTURE_B</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>))</div><div class="line">    {</div><div class="line"></div><div class="line">        <span class="comment">/* (Optional) Get the current period if not known. */</span></div><div class="line">        <a class="code" href="group___t_i_m_e_r___a_p_i.html#structtimer__info__t">timer_info_t</a> info;</div><div class="line">        (void) <a class="code" href="group___g_p_t.html#gaca62ac33de2c05918b0fc359aeaebd97">R_GPT_InfoGet</a>(&amp;g_timer0_ctrl, &amp;info);</div><div class="line">        uint64_t period = info.<a class="code" href="group___t_i_m_e_r___a_p_i.html#a08b897cfbf2d0cefafe8d3abb1afc747">period_counts</a>;</div><div class="line"></div><div class="line">        <span class="comment">/* The maximum period is one more than the maximum 32-bit number, but will be reflected as 0 in</span></div><div class="line"><span class="comment">         * timer_info_t::period_counts. */</span></div><div class="line">        <span class="keywordflow">if</span> (0U == period)</div><div class="line">        {</div><div class="line">            period = UINT32_MAX + 1U;</div><div class="line">        }</div><div class="line"></div><div class="line"></div><div class="line">        g_captured_time     = (period * g_capture_overflows) + p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a8abd12cdf1a993cf8054be6ba9d96a6f">capture</a>;</div><div class="line">        g_capture_overflows = 0U;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___t_i_m_e_r___a_p_i.html#ggac3bee51f7c9078f794c5ac19522f91ebae310bef0d640f06765c01b4b91a5b84c">TIMER_EVENT_CYCLE_END</a> == p_args-&gt;<a class="code" href="group___t_i_m_e_r___a_p_i.html#a61b9aabfcafc5e362dce56af7ea36bcf">event</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">/* An overflow occurred during capture. This must be accounted for at the application layer. */</span></div><div class="line">        g_capture_overflows++;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gpt_capture_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = FSP_SUCCESS;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializes the module. */</span></div><div class="line">    err = <a class="code" href="group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2">R_GPT_Open</a>(&amp;g_timer0_ctrl, &amp;g_timer0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Enable captures. Captured values arrive in the interrupt. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga6e14d15c781e316e640c280b4983be28">R_GPT_Enable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* (Optional) Disable captures. */</span></div><div class="line">    (void) <a class="code" href="group___g_p_t.html#ga338dd3c38477ee40c90c13f3a4c9ecfd">R_GPT_Disable</a>(&amp;g_timer0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>GPT Period Update Example</h2>
 <p><a class="anchor" id="um_timer_period_set"></a><a class="anchor" id="um_timer_clock_frequency"></a> This an example of updating the period.</p>
@@ -928,6 +947,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga749be81f99469c5607a684976d9ae374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6a1389fe5c3bef2301d294b88263628e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga6a1389fe5c3bef2301d294b88263628e">gpt_pwm_output_delay_edge_t</a> </td></tr>
 <tr class="separator:ga6a1389fe5c3bef2301d294b88263628e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6382ba99cb9e28fd3580598dee92b6dd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_t.html#ga6382ba99cb9e28fd3580598dee92b6dd">gpt_gtioc_polarity_t</a> </td></tr>
+<tr class="separator:ga6382ba99cb9e28fd3580598dee92b6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structgpt__output__pin__t" id="structgpt__output__pin__t"></a>
@@ -1222,6 +1243,18 @@ Advanced PWM features, optional. </td></tr>
 gtior_setting</td>
 <td class="fielddoc">
 Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac74969a4dcc449fc1f94742f70754a5d"></a><a class="el" href="group___g_p_t.html#ga6382ba99cb9e28fd3580598dee92b6dd">gpt_gtioc_polarity_t</a></td>
+<td class="fieldname">
+gtioca_polarity</td>
+<td class="fielddoc">
+Polarity control for GTIOCxA input/output pin. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad169a7acd47a1cdaeab62ea659a0a4d3"></a><a class="el" href="group___g_p_t.html#ga6382ba99cb9e28fd3580598dee92b6dd">gpt_gtioc_polarity_t</a></td>
+<td class="fieldname">
+gtiocb_polarity</td>
+<td class="fielddoc">
+Polarity control for GTIOCxB input/output pin. </td></tr>
 </table>
 
 </div>
@@ -1697,6 +1730,27 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6a1389fe5c3bef2301d294b88263628ea51901797e055f1ec3e4dbe96bff03086"></a>GPT_PWM_OUTPUT_DELAY_EDGE_RISING&#160;</td><td class="fielddoc"><p>Configure the PWM Output Delay setting for rising edge. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6a1389fe5c3bef2301d294b88263628eab5c109cf3de710e61c90c3be2d72d9b7"></a>GPT_PWM_OUTPUT_DELAY_EDGE_FALLING&#160;</td><td class="fielddoc"><p>Configure the PWM Output Delay setting for falling edge. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga6382ba99cb9e28fd3580598dee92b6dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6382ba99cb9e28fd3580598dee92b6dd">&#9670;&nbsp;</a></span>gpt_gtioc_polarity_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___g_p_t.html#ga6382ba99cb9e28fd3580598dee92b6dd">gpt_gtioc_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Polarity inversion control for GTIOCnA/B pins. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6382ba99cb9e28fd3580598dee92b6ddaa4a8d9277f93ea8c88627b3849f48a61"></a>GPT_GTIOC_POLARITY_NORMAL&#160;</td><td class="fielddoc"><p>GPTIOCnA/B pin polarity is not changed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6382ba99cb9e28fd3580598dee92b6dda281d35e2524db218c1698497d0d0bafa"></a>GPT_GTIOC_POLARITY_INVERTED&#160;</td><td class="fielddoc"><p>GPTIOCnA/B pin polarity is inverted. </p>
 </td></tr>
 </table>
 
@@ -2413,7 +2467,7 @@ Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

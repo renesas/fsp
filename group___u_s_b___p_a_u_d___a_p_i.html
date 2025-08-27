@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: private Directory Reference</title>
+<title>RA Flexible Software Package Documentation: USB PAUD Interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dir_5611784fda98744bc3711c9e5fd9498c.html','');});
+$(document).ready(function(){initNavTree('group___u_s_b___p_a_u_d___a_p_i.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -236,22 +236,173 @@ $(document).ready(function(){initNavTree('dir_5611784fda98744bc3711c9e5fd9498c.h
     <div id="searchResults"></div>
 </div>
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">private Directory Reference</div>  </div>
+<div class="title">USB PAUD Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___c_o_n_n_e_c_t_i_v_i_t_y___i_n_t_e_r_f_a_c_e_s.html">Connectivity</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for USB PAUD functions. </p>
+<h1><a class="anchor" id="USB_PAUD_API_Summary"></a>
+Summary</h1>
+<p>The USB PAUD interface provides USB PAUD functionality. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="subdirs"></a>
-Directories</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structusb__paud__audio__control__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#structusb__paud__audio__control__t">usb_paud_audio_control_t</a></td></tr>
+<tr class="separator:structusb__paud__audio__control__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structusb__paud__audio__control__group__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#structusb__paud__audio__control__group__t">usb_paud_audio_control_group_t</a></td></tr>
+<tr class="separator:structusb__paud__audio__control__group__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaad110140ab7d61e055000efe29ce9ece"><td class="memItemLeft" align="right" valign="top"><a id="gaad110140ab7d61e055000efe29ce9ece"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#gaad110140ab7d61e055000efe29ce9ece">USB_PAUD_CUR</a></td></tr>
+<tr class="memdesc:gaad110140ab7d61e055000efe29ce9ece"><td class="mdescLeft">&#160;</td><td class="mdescRight">CUR Request. <br /></td></tr>
+<tr class="separator:gaad110140ab7d61e055000efe29ce9ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c466e9e476e028c0cc48a814f932217"><td class="memItemLeft" align="right" valign="top"><a id="ga8c466e9e476e028c0cc48a814f932217"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#ga8c466e9e476e028c0cc48a814f932217">USB_PAUD_RANGE</a></td></tr>
+<tr class="memdesc:ga8c466e9e476e028c0cc48a814f932217"><td class="mdescLeft">&#160;</td><td class="mdescRight">RANGE Request. <br /></td></tr>
+<tr class="separator:ga8c466e9e476e028c0cc48a814f932217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2cceb77a3f5f4ede4e04d6c7d4c2ec1c"><td class="memItemLeft" align="right" valign="top"><a id="ga2cceb77a3f5f4ede4e04d6c7d4c2ec1c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#ga2cceb77a3f5f4ede4e04d6c7d4c2ec1c">USB_PAUD_SET_CUR</a></td></tr>
+<tr class="memdesc:ga2cceb77a3f5f4ede4e04d6c7d4c2ec1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SET_CUR Request. <br /></td></tr>
+<tr class="separator:ga2cceb77a3f5f4ede4e04d6c7d4c2ec1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2752ce70c9de31902cd935524ffc0037"><td class="memItemLeft" align="right" valign="top"><a id="ga2752ce70c9de31902cd935524ffc0037"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#ga2752ce70c9de31902cd935524ffc0037">USB_PAUD_GET_CUR</a></td></tr>
+<tr class="memdesc:ga2752ce70c9de31902cd935524ffc0037"><td class="mdescLeft">&#160;</td><td class="mdescRight">GET_CUR Request. <br /></td></tr>
+<tr class="separator:ga2752ce70c9de31902cd935524ffc0037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafccaece5dc33f50b660fb188cbeaa86f"><td class="memItemLeft" align="right" valign="top"><a id="gafccaece5dc33f50b660fb188cbeaa86f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#gafccaece5dc33f50b660fb188cbeaa86f">USB_PAUD_GET_MIN</a></td></tr>
+<tr class="memdesc:gafccaece5dc33f50b660fb188cbeaa86f"><td class="mdescLeft">&#160;</td><td class="mdescRight">GET_MIN Request. <br /></td></tr>
+<tr class="separator:gafccaece5dc33f50b660fb188cbeaa86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9efe8cdfed9b3a64b4cdd937d5e12e3"><td class="memItemLeft" align="right" valign="top"><a id="gab9efe8cdfed9b3a64b4cdd937d5e12e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#gab9efe8cdfed9b3a64b4cdd937d5e12e3">USB_PAUD_GET_MAX</a></td></tr>
+<tr class="memdesc:gab9efe8cdfed9b3a64b4cdd937d5e12e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">GET_MAX Request. <br /></td></tr>
+<tr class="separator:gab9efe8cdfed9b3a64b4cdd937d5e12e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae7f2dfe6b487bbfb6d062140eed2efa"><td class="memItemLeft" align="right" valign="top"><a id="gaae7f2dfe6b487bbfb6d062140eed2efa"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#gaae7f2dfe6b487bbfb6d062140eed2efa">USB_PAUD_GET_RES</a></td></tr>
+<tr class="memdesc:gaae7f2dfe6b487bbfb6d062140eed2efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">GET_RES Request. <br /></td></tr>
+<tr class="separator:gaae7f2dfe6b487bbfb6d062140eed2efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga944dc3f078a6a4d1727cb2cca49276b5"><td class="memItemLeft" align="right" valign="top"><a id="ga944dc3f078a6a4d1727cb2cca49276b5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#ga944dc3f078a6a4d1727cb2cca49276b5">USB_PAUD_MUTE_CONTROL</a></td></tr>
+<tr class="memdesc:ga944dc3f078a6a4d1727cb2cca49276b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute Control in Feature Unit. <br /></td></tr>
+<tr class="separator:ga944dc3f078a6a4d1727cb2cca49276b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba2a4d3efa2f60db568014753cb43891"><td class="memItemLeft" align="right" valign="top"><a id="gaba2a4d3efa2f60db568014753cb43891"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#gaba2a4d3efa2f60db568014753cb43891">USB_PAUD_VOLUME_CONTROL</a></td></tr>
+<tr class="memdesc:gaba2a4d3efa2f60db568014753cb43891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Volume Control in Feature Unit. <br /></td></tr>
+<tr class="separator:gaba2a4d3efa2f60db568014753cb43891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fc8d1fadf160ce52798cba1d518cc2f"><td class="memItemLeft" align="right" valign="top"><a id="ga0fc8d1fadf160ce52798cba1d518cc2f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#ga0fc8d1fadf160ce52798cba1d518cc2f">USB_PAUD_CLOCK_FREQUENCY_CONTROL</a></td></tr>
+<tr class="memdesc:ga0fc8d1fadf160ce52798cba1d518cc2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock Frequency Control. <br /></td></tr>
+<tr class="separator:ga0fc8d1fadf160ce52798cba1d518cc2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structusb__paud__audio__control__t" id="structusb__paud__audio__control__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__paud__audio__control__t">&#9670;&nbsp;</a></span>usb_paud_audio_control_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_paud_audio_control_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Audio Control Settings </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aecbc2e83a602d7c550a731c8f49401cf"></a>union <a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#unionusb__paud__audio__control__t_8____unnamed____">usb_paud_audio_control_t</a></td>
+<td class="fieldname">
+__unnamed__</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a6de61eae83fb614c441ec754378af0f6"></a>uint32_t</td>
+<td class="fieldname">
+sam_freq</td>
+<td class="fielddoc">
+Sampling Frequency. </td></tr>
+<tr><td class="fieldtype">
+<a id="a951a940901c9a8003569f48936a8ad5f"></a>uint32_t</td>
+<td class="fieldname">
+fu_id</td>
+<td class="fielddoc">
+Feature Unit ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="a065535268258906b874d6359d8ec9121"></a>uint16_t</td>
+<td class="fieldname">
+mute</td>
+<td class="fielddoc">
+Mute Control. </td></tr>
+<tr><td class="fieldtype">
+<a id="a8b74a4b130763bbb2598b4d74dcb7777"></a>int16_t</td>
+<td class="fieldname">
+volume_min</td>
+<td class="fielddoc">
+Minimum (Attribute of Volume Control) </td></tr>
+<tr><td class="fieldtype">
+<a id="a0da79ab6da8653d2c3616c3804074c0c"></a>int16_t</td>
+<td class="fieldname">
+volume_max</td>
+<td class="fielddoc">
+Maximum (Attribute of Volume Control) </td></tr>
+<tr><td class="fieldtype">
+<a id="a22ecf1f93ee172eef5f0f9480abc02f6"></a>uint16_t</td>
+<td class="fieldname">
+volume_res</td>
+<td class="fielddoc">
+Resolution (Attribute of Volume Control) </td></tr>
+<tr><td class="fieldtype">
+<a id="af89e8ba058dbf2f8d581d5cc647af16c"></a>int16_t</td>
+<td class="fieldname">
+volume</td>
+<td class="fielddoc">
+Volume Control. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structusb__paud__audio__control__group__t" id="structusb__paud__audio__control__group__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusb__paud__audio__control__group__t">&#9670;&nbsp;</a></span>usb_paud_audio_control_group_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usb_paud_audio_control_group_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Audio Control Setting Group </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ac9c9dc351aa420f186960f463440f61d"></a>uint32_t</td>
+<td class="fieldname">
+controls_nb</td>
+<td class="fielddoc">
+Number of Audio Control Group. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5488f7d880ab839f5da1e4da8e54ff2e"></a><a class="el" href="group___u_s_b___p_a_u_d___a_p_i.html#structusb__paud__audio__control__t">usb_paud_audio_control_t</a> *</td>
+<td class="fieldname">
+p_controls</td>
+<td class="fielddoc">
+Pointer for access to Audio Control Settings. </td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b18d2d13694890cc5ac49a5be67e3b2d.html">ra</a></li><li class="navelem"><a class="el" href="dir_d71e6481d15bd93e41670a57fe245af4.html">fsp</a></li><li class="navelem"><a class="el" href="dir_cc90537d9d9120754144c336f41d5945.html">src</a></li><li class="navelem"><a class="el" href="dir_1c9e69712f7188212c0d26391317ffaa.html">r_sce_protected_cavp</a></li><li class="navelem"><a class="el" href="dir_3af23e87d2b1c704eeab61cf56610efa.html">crypto_procedures_protected</a></li><li class="navelem"><a class="el" href="dir_9870dbdebbacf488e612fd2a683108f8.html">src</a></li><li class="navelem"><a class="el" href="dir_fc80ef57a911caba2d38b32c6649bcea.html">sce9</a></li><li class="navelem"><a class="el" href="dir_5611784fda98744bc3711c9e5fd9498c.html">private</a></li>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

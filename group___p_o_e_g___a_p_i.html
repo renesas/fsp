@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -636,13 +636,29 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___p_o_e_g___a_p_i.html#ga6964e3b0b8b2d32d2428d86b32dfeef2">poeg_state_t</a></td>
+          <td class="memname">enum poeg_state_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>POEG states. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a929680a05ecd96bb24dd053fb6dcc8b5"></a>POEG_STATE_NO_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output is not disabled by POEG. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a965ed912f63e0044d9646693c909135b"></a>POEG_STATE_PIN_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output disabled due to GTETRG pin level. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a580261ea46ea6dc549e4fbfd99a8c31c"></a>POEG_STATE_GPT_OR_COMPARATOR_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output disabled due to high speed analog comparator or GPT. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a6c587d6eeb64a3823a355199778e6a18"></a>POEG_STATE_OSCILLATION_STOP_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output disabled due to main oscillator stop. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2ad3a9db10800397084958747e9cb2260a"></a>POEG_STATE_SOFTWARE_STOP_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output disabled due to <a class="el" href="group___p_o_e_g___a_p_i.html#afe1feb1a5288478eea8d339ffaa1c68e">poeg_api_t::outputDisable()</a> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a001aaf1661ba4f60fd7a4b25da4981ea"></a>POEG_STATE_DSMIF0_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output disabled due to DSMIF0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a6105b986374b38fd9705292d375901cc"></a>POEG_STATE_DSMIF1_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output disabled due to DSMIF1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a1f07ec79529092ff47798e894f315adf"></a>POEG_STATE_PIN_DISABLE_REQUEST_ACTIVE&#160;</td><td class="fielddoc"><p>GPT output disable request active from the GTETRG pin. If a filter is used, this flag represents the state of the filtered input. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a929680a05ecd96bb24dd053fb6dcc8b5"></a>POEG_STATE_NO_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output is not disabled by POEG. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6964e3b0b8b2d32d2428d86b32dfeef2a965ed912f63e0044d9646693c909135b"></a>POEG_STATE_PIN_DISABLE_REQUEST&#160;</td><td class="fielddoc"><p>GPT output disabled due to GTETRG pin level. </p>
 </td></tr>
@@ -665,13 +681,37 @@ Pointer to the API structure for this instance. </td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___p_o_e_g___a_p_i.html#gad3a55ae7d23b90cc2621a83116d2e7d9">poeg_trigger_t</a></td>
+          <td class="memname">enum poeg_trigger_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Triggers that will disable GPT output pins. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a5844408e52ce8a8d819d594d4134de0b"></a>POEG_TRIGGER_SOFTWARE&#160;</td><td class="fielddoc"><p>Software disable is always supported with POEG. Select this option if no other triggers are used. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a386ea44b929de5b16b1c459a37f866c3"></a>POEG_TRIGGER_PIN&#160;</td><td class="fielddoc"><p>Disable GPT output based on GTETRG input level. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9aedd4f2c94c2539026d15543c0f1457cc"></a>POEG_TRIGGER_GPT_OUTPUT_LEVEL&#160;</td><td class="fielddoc"><p>Disable GPT output based on GPT output pin levels. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a4840d0ad9f40a09c2785be816c7e2884"></a>POEG_TRIGGER_OSCILLATION_STOP&#160;</td><td class="fielddoc"><p>Disable GPT output based on main oscillator stop. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a22c1283422f02a8c1a9c8b3aeeb9f156"></a>POEG_TRIGGER_ACMPHS0&#160;</td><td class="fielddoc"><p>Disable GPT output based on ACMPHS0 comparator result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a4d37b4728c36a854139814813c4f1591"></a>POEG_TRIGGER_ACMPHS1&#160;</td><td class="fielddoc"><p>Disable GPT output based on ACMPHS1 comparator result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9aeeaef1204479de8858543006572c56f1"></a>POEG_TRIGGER_ACMPHS2&#160;</td><td class="fielddoc"><p>Disable GPT output based on ACMPHS2 comparator result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a23e020fd551b49c524d0f5ae343b6df4"></a>POEG_TRIGGER_ACMPHS3&#160;</td><td class="fielddoc"><p>Disable GPT output based on ACMPHS3 comparator result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a38cfaa9e507532303a483369539418ce"></a>POEG_TRIGGER_ACMPHS4&#160;</td><td class="fielddoc"><p>Disable GPT output based on ACMPHS4 comparator result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9aa4d56aee202d76e9efdf3bcfc181a12d"></a>POEG_TRIGGER_ACMPHS5&#160;</td><td class="fielddoc"><p>Disable GPT output based on ACMPHS5 comparator result. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9acf40e2aeb57898ab927e2156517db5a9"></a>POEG_TRIGGER_DSMIF0&#160;</td><td class="fielddoc"><p>Disable GPT output based on DSMIF0 overcurrent detection window notification. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a70f4cfc6b5d32279a7e783897aa6d3d8"></a>POEG_TRIGGER_DSMIF1&#160;</td><td class="fielddoc"><p>Disable GPT output based on DSMIF1 overcurrent detection window notification. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a5844408e52ce8a8d819d594d4134de0b"></a>POEG_TRIGGER_SOFTWARE&#160;</td><td class="fielddoc"><p>Software disable is always supported with POEG. Select this option if no other triggers are used. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad3a55ae7d23b90cc2621a83116d2e7d9a386ea44b929de5b16b1c459a37f866c3"></a>POEG_TRIGGER_PIN&#160;</td><td class="fielddoc"><p>Disable GPT output based on GTETRG input level. </p>
 </td></tr>
@@ -749,7 +789,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

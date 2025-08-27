@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Deprecated List</title>
+<title>RA Flexible Software Package Documentation: Linker Section Naming Guide</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('deprecated.html','');});
+$(document).ready(function(){initNavTree('_l_i_n_k_e_r__s_e_c_t_i_o_n.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -237,20 +237,93 @@ $(document).ready(function(){initNavTree('deprecated.html','');});
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">Deprecated List </div>  </div>
+<div class="title">Linker Section Naming Guide </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_deprecated000001"></a>Global <a class="el" href="group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df">WIFI_SetSpoofingMAC</a>  (uint8_t *pucMac)</dt>
-<dd>This function is deprecated, please use <a class="el" href="group___w_i_f_i___a_p_i.html#ga11d78c85d0621f36cf99c70fb915b2df" title="Set Wi-Fi MAC addresses. ">WIFI_SetSpoofingMAC()</a> instead. </dd>
-</dl>
+<div class="textblock"><h1><a class="anchor" id="linker_section-overview"></a>
+Overview</h1>
+<p>This guide documents the valid <code>linker_section</code> values that appear in the linker script and may be referenced from user code or configuration macros.</p>
+<p>Each section name is based on a <b>RAM or ROM class</b>, using a structured naming convention depending on the content type.</p>
+<h2>RAM Target Capability Matrix</h2>
+<table class="doxtable">
+<tr>
+<th>RAM Class </th><th>ROM Init </th><th></th><th>Zeroed </th><th></th><th>NoInit </th><th></th></tr>
+<tr>
+<td></td><td>Code </td><td>Data </td><td></td><td>NoCache </td><td></td><td>NoCache </td></tr>
+<tr>
+<td>RAM </td><td>✅ </td><td>✅ </td><td>✅ </td><td>✅ </td><td>✅ </td><td>✅ </td></tr>
+<tr>
+<td>TCM </td><td>✅ </td><td>✅ </td><td>✅ </td><td></td><td>✅ </td><td></td></tr>
+</table>
+<h2>ROM Target Capability Matrix</h2>
+<table class="doxtable">
+<tr>
+<th>ROM Class </th><th>Code </th><th>ReadOnly </th><th>NoInit  </th></tr>
+<tr>
+<td>ROM </td><td>✅ </td><td>✅ </td><td>✅ </td></tr>
+<tr>
+<td>FLASH (Gap) </td><td>✅ </td><td>✅ </td><td></td></tr>
+</table>
+<h1><a class="anchor" id="linker_section-memory-class"></a>
+Memory Class Dictionaries</h1>
+<p>These are the valid memory class identifiers used in <code>linker_section</code> names.</p>
+<div class="fragment"><div class="line">ram_class ::= &quot;ram&quot; | &quot;itcm&quot; | &quot;dtcm&quot; | &quot;stcm&quot; | &quot;ctcm&quot; | &quot;sdram&quot; | &quot;ospi0_cs0&quot;</div><div class="line">rom_class ::= &quot;flash&quot; | &quot;data_flash&quot; | &quot;qspi_flash&quot; | &quot;ospi0_cs1&quot; | &quot;ospi1_cs1&quot;</div></div><!-- fragment --><p><b>The available memory classes depend on the capabilities of your specific device. Not all devices support all RAM or ROM types.</b></p>
+<h2><a class="anchor" id="linker_section-memory-class-ram"></a>
+RAM-Resident Sections</h2>
+<h3>Zero-Initialized RAM</h3>
+<div class="fragment"><div class="line">.&lt;ram_class&gt;</div></div><!-- fragment --><p>Used for memory cleared to zero at startup.</p>
+<p>Examples:</p>
+<ul>
+<li><code>*(.ram)</code></li>
+<li><code>*(.sdram)</code></li>
+<li><code>*(.dtcm)</code></li>
+</ul>
+<h3>Uninitialized RAM</h3>
+<div class="fragment"><div class="line">.&lt;ram_class&gt;_noinit</div><div class="line">.&lt;ram_class&gt;_noinit_nocache</div></div><!-- fragment --><p>Used for reserved memory (e.g., heap/stack) that doesn't require initialization at startup. The <code>_nocache</code> variant is only available on devices with caching hardware.</p>
+<p>Examples:</p>
+<ul>
+<li><code>*(.ram_noinit)</code></li>
+<li><code>*(.sdram_noinit_nocache)</code></li>
+</ul>
+<h3>RAM Initialized from ROM</h3>
+<div class="fragment"><div class="line">.&lt;ram_class&gt;_code_from_&lt;rom_class&gt;</div><div class="line">.&lt;ram_class&gt;_from_&lt;rom_class&gt;</div></div><!-- fragment --><p>Used for RAM-resident code or data loaded from ROM.</p>
+<p>Examples:</p>
+<ul>
+<li><code>*(.ram_code_from_flash)</code></li>
+<li><code>*(.dtcm_from_data_flash)</code></li>
+<li><code>*(.tcm_code_from_qspi_flash)</code></li>
+</ul>
+<h2><a class="anchor" id="linker_section-memory-class-rom"></a>
+ROM-Resident Sections</h2>
+<h3>Standard ROM Sections</h3>
+<div class="fragment"><div class="line">.&lt;rom_class&gt;</div><div class="line">.&lt;rom_class&gt;_code</div><div class="line">.&lt;rom_class&gt;_noinit</div></div><!-- fragment --><ul>
+<li><code>.rom_class_code</code>: Executable code</li>
+<li><code>.rom_class</code>: Constants or read-only data</li>
+<li><code>.rom_class_noinit</code>: Reserved (e.g., alignment)</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><code>*(.flash_code)</code></li>
+<li><code>*(.data_flash)</code></li>
+<li><code>*(.qspi_flash_noinit)</code></li>
+</ul>
+<h3>Flash Gap Sections</h3>
+<div class="fragment"><div class="line">.flash_gap_code</div><div class="line">.flash_gap_readonly</div></div><!-- fragment --><p>Used only on devices with restricted flash regions (e.g., 0x400–0x43F). These sections support only code and constant data.</p>
+<h2><a class="anchor" id="linker_section-memory-class-summary"></a>
+Summary</h2>
+<ul>
+<li><code>linker_section</code> names follow consistent, structured patterns.</li>
+<li>RAM and ROM classes reflect physical memory categories and device-specific capabilities.</li>
+<li>Use <code>_nocache</code> suffixes only for memory that must not be cached (e.g., DMA regions).</li>
+<li>Flash gap sections are a special case for devices with non-contiguous flash address maps. </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

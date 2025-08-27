@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -247,10 +247,9 @@ Version</h1>
 <p>The version that appears on the Components tab of the FSP Configuration editor is v1.1.0+fsp.&lt;fsp_version&gt;. The &lt;fsp_version&gt; metadata reflects tooling support files only and does not indicate any changes to the CAVP certified code. See <a class="el" href="_f_s_p__a_r_c_h_i_t_e_c_t_u_r_e.html#module-versioning">Module Versioning</a> for more information about component versioning in FSP.</p>
 <h1><a class="anchor" id="r-sce-protected-cavp-functions"></a>
 Functions</h1>
-<p>The user documentation for the functions in this module.<br />
-</p><ul>
-<li><a class="el" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html">SCE Protected Mode</a></li>
-</ul>
+<p>The specifications of this module comply with the Secure Crypto Engine (r_sce_protected) of FSP v5.5.0.<br />
+For more information about the features of this module, see the "Renesas Flexible Software Package (FSP) v5.5.0 User's Manual." The documentation can be obtained from the following link:<br />
+</p><dl class="section see"><dt>See also</dt><dd><a href="https://www.renesas.com/en/software-tool/flexible-software-package-fsp">https://www.renesas.com/en/software-tool/flexible-software-package-fsp</a></dd></dl>
 <h1><a class="anchor" id="r-sce-protected-cavp-overview"></a>
 Overview</h1>
 <p>This module provides SCE CAVP Certified functions.</p>
@@ -345,8 +344,8 @@ Limitations</h2>
 Usage of R_SCE_ECDSA_secp384r1_SignatureGenerate/Verify</h2>
 <p>The SCE does not support SHA-384 in hardware, so the APIs listed below require the user to create a SHA-384 function for signature generation and verification. To use the APIs listed below, enable SCE_USER_SHA_384_ENABLED on RA Smart Configurator and prepare a function called SCE_USER_SHA_384_FUNCTION. The interface of SCE_USER_SHA_384_FUNCTION, which is called by the following APIs, is described below.</p>
 <ul>
-<li><a class="el" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#gacad1db941a25822fb5b3957bfb94ee19">R_SCE_ECDSA_secp384r1_SignatureGenerate()</a></li>
-<li><a class="el" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga94a07802075a3a115e0a2c4283ea9f89">R_SCE_ECDSA_secp384r1_SignatureVerify()</a></li>
+<li>R_SCE_ECDSA_secp384r1_SignatureGenerate()</li>
+<li>R_SCE_ECDSA_secp384r1_SignatureVerify()</li>
 </ul>
 <h3><a class="anchor" id="r-sce-protected-cavp-user-sha384"></a>
 SCE_USER_SHA_384_FUNCTION()</h3>
@@ -385,7 +384,7 @@ HASH Example</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

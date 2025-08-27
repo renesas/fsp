@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -2360,9 +2360,10 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key.</td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
+    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
   </table>
   </dd>
 </dl>
@@ -2427,26 +2428,6 @@ Data Structures</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State.</dd></dl>
-<p>The <a class="el" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga436ec5529027b9bf428b3efd0a211d6d">R_SCE_AES128ECB_EncryptUpdate()</a> function encrypts the second argument, plain, utilizing the key index stored in the handle specified in the first argument, handle, and writes the ongoing status to this first argument. In addition, it writes the encryption result to the third argument, cipher. After plaintext input is completed, call <a class="el" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga0ed45be38a1239a1673b249c7b6d0173">R_SCE_AES128ECB_EncryptFinal()</a>.</p>
-<p>Specify areas for plain and cipher that do not overlap. For plain and cipher, specify RAM addresses that are multiples of 4.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">handle</td><td>AES handler (work area) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">plain</td><td>plaintext data area </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">cipher</td><td>ciphertext data area </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">plain_length</td><td>plaintext data length (must be a multiple of 16)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
@@ -2501,25 +2482,6 @@ Data Structures</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State.</dd></dl>
-<p>Using the handle specified in the first argument, handle, the <a class="el" href="group___s_c_e___p_r_o_t_e_c_t_e_d.html#ga0ed45be38a1239a1673b249c7b6d0173">R_SCE_AES128ECB_EncryptFinal()</a> function writes the calculation result to the second argument, cipher, and writes the length of the calculation result to the third argument, cipher_length. The original intent was for a portion of the encryption result that was not a multiple of 16 bytes to be written to the second argument. However, as a result of the restriction that only multiples of 16 can be input to the Update function, nothing is ever written to cipher, and 0 is always written to cipher_length. The arguments cipher and cipher_length are provided for compatibility in anticipation of the time when this restriction is lifted.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">handle</td><td>AES handler (work area) </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">cipher</td><td>ciphertext data area (nothing ever written here) </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">cipher_length</td><td>ciphertext data length (0 always written here)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
-    <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section note"><dt>Note</dt><dd>The pre-run state is SCE Enabled State. After the function runs the state transitions to SCE Enabled State. </dd></dl>
 
 </div>
@@ -2560,6 +2522,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -2621,6 +2584,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -2673,6 +2637,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -2719,6 +2684,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -2780,6 +2746,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -2832,6 +2799,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -2878,6 +2846,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -2939,6 +2908,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -2991,6 +2961,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -3044,6 +3015,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -3105,6 +3077,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -3157,6 +3130,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -3210,6 +3184,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -3271,6 +3246,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -3323,6 +3299,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -3376,6 +3353,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -3437,6 +3415,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -3489,6 +3468,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -3542,6 +3522,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Input illegal wrapped key. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -3603,6 +3584,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -3655,6 +3637,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -3715,6 +3698,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
@@ -3791,6 +3775,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>After the data from plain was input, an invalid handle was input from aad. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -3850,6 +3835,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -3910,6 +3896,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
@@ -3985,6 +3972,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>After the data from plain was input, an invalid handle was input from aad. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -4051,6 +4039,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_AUTHENTICATION</td><td>Authentication failed </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
@@ -4112,6 +4101,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
@@ -4188,6 +4178,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>After the data from plain was input, an invalid handle was input from aad. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -4247,6 +4238,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
@@ -4307,6 +4299,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
@@ -4382,6 +4375,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>After the data from plain was input, an invalid handle was input from aad. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -4448,6 +4442,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_AUTHENTICATION</td><td>Authentication failed </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
@@ -4537,6 +4532,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
@@ -4598,6 +4594,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input.</td></tr>
   </table>
@@ -4664,6 +4661,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
@@ -4752,6 +4750,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
@@ -4813,6 +4812,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input.</td></tr>
   </table>
@@ -4879,6 +4879,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error, or authentication failed.</td></tr>
@@ -4967,6 +4968,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
@@ -5028,6 +5030,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input.</td></tr>
   </table>
@@ -5094,6 +5097,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
@@ -5182,6 +5186,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred.</td></tr>
@@ -5243,6 +5248,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input.</td></tr>
   </table>
@@ -5309,6 +5315,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>Input data is illegal. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error, or authentication failed.</td></tr>
@@ -5355,6 +5362,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -5408,6 +5416,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -5453,6 +5462,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
@@ -5500,6 +5510,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -5553,6 +5564,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -5605,6 +5617,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_AUTHENTICATION</td><td>Authentication failed </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
@@ -5652,6 +5665,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -5705,6 +5719,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -5750,6 +5765,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called. </td></tr>
@@ -5797,6 +5813,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT</td><td>A resource conflict occurred because a hardware resource needed by the processing routine was in use by another processing routine. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL</td><td>Invalid wrapped key was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>Internal error occurred.</td></tr>
@@ -5850,6 +5867,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION</td><td>An invalid function was called.</td></tr>
   </table>
@@ -5902,6 +5920,7 @@ Data Structures</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Normal termination </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required parameter is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_FAIL</td><td>An internal error occurred. </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_AUTHENTICATION</td><td>Authentication failed </td></tr>
     <tr><td class="paramname">FSP_ERR_CRYPTO_SCE_PARAMETER</td><td>An invalid handle was input. </td></tr>
@@ -8838,7 +8857,7 @@ Please note that this is slightly contrary to the protected mode policy as it om
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

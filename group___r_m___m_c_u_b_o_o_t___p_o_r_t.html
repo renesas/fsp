@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -432,6 +432,13 @@ FSP 6.0.0 and newer</h3>
 Bootloader region encoding in FSP 6.0.0</h4>
 <p>The header and image regions have to be named in the manner described below in the Solution project:</p>
 <ul>
+<li><code>FLASH_&lt;core&gt;_(B|S| )</code> - Indicates bootloader area or primary area. These are created by default and cannot be renamed.</li>
+<li>Examples:<ul>
+<li><code>FLASH_CM85_B</code>: CM85 Bootloader area.</li>
+<li><code>FLASH_CM85_S</code>: CM85 Primary area.</li>
+<li><code>FLASH_CM23</code> : CM23 Primary area.</li>
+</ul>
+</li>
 <li><code>__BL</code>: Indicates this is a bootloader symbol.</li>
 <li><code>_</code>: delimiter between fields.</li>
 <li><code>([0-9])|S</code>: Image definitions field.<ul>
@@ -456,6 +463,7 @@ Bootloader region encoding in FSP 6.0.0</h4>
 </li>
 <li>Examples:<ul>
 <li><code>__BL_0_P_H</code>: Image 0 Primary Header.</li>
+<li><code>__BL_0_S_H</code>: Image 0 Secondary Header.</li>
 <li><code>__BL_1_S_I</code>: Image 1 Secondary Image.</li>
 <li><code>__BL_S</code> : Scratch area.</li>
 </ul>
@@ -607,7 +615,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

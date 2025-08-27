@@ -57,6 +57,7 @@ var searchData=
   ['motor_5fsense_5fencoder_5fangle_5fadjust_5ft',['motor_sense_encoder_angle_adjust_t',['../group___m_o_t_o_r___a_n_g_l_e___a_p_i.html#ga2eb16cd62372fd50c5d7ad5048f693ce',1,'rm_motor_angle_api.h']]],
   ['motor_5fsense_5fencoder_5floop_5ft',['motor_sense_encoder_loop_t',['../group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga46301fa621305fbc5d6837a7952a2cc1',1,'rm_motor_sense_encoder.h']]],
   ['motor_5fsense_5fencoder_5fmode_5ft',['motor_sense_encoder_mode_t',['../group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga0cddb3bc3b5316771f6e4767651c3567',1,'rm_motor_sense_encoder.h']]],
+  ['motor_5fsense_5fencoder_5fspeed_5fdetect_5ftype_5ft',['motor_sense_encoder_speed_detect_type_t',['../group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaeef89660d16927c4f7cbecfedda50f8d',1,'rm_motor_sense_encoder.h']]],
   ['motor_5fsense_5fhall_5fdirection_5ft',['motor_sense_hall_direction_t',['../group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#ga9edccd7520f94005e49af13917dbd21f',1,'rm_motor_sense_hall.h']]],
   ['motor_5fsense_5fhall_5fsignal_5fstatus_5ft',['motor_sense_hall_signal_status_t',['../group___m_o_t_o_r___s_e_n_s_e___h_a_l_l.html#gac6a38ab091a40a8e30c730b7c2a4d9d0',1,'rm_motor_sense_hall.h']]],
   ['motor_5fsense_5finduction_5fcalibration_5ft',['motor_sense_induction_calibration_t',['../group___m_o_t_o_r___s_e_n_s_e___i_n_d_u_c_t_i_o_n.html#ga8c57087722fab6ede7088c53acd527cf',1,'rm_motor_sense_induction.h']]],

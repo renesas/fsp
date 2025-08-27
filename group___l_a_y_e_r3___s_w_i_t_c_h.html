@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -276,13 +276,22 @@ Functions</h2></td></tr>
 <tr class="separator:ga584a1c701442875d7e3f29f1360fdc7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7202ab557137d6fe7c540e3cbb45f59b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga7202ab557137d6fe7c540e3cbb45f59b">R_LAYER3_SWITCH_GetTable</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__t">layer3_switch_table_t</a> *const p_table)</td></tr>
 <tr class="separator:ga7202ab557137d6fe7c540e3cbb45f59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4be6fe5872b4fdf2fe7fc6f056fd0e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gac4be6fe5872b4fdf2fe7fc6f056fd0e4">R_LAYER3_SWITCH_ConfigureTAS</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint8_t port, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__cfg__t">layer3_switch_tas_cfg_t</a> *p_tas_cfg)</td></tr>
+<tr class="separator:gac4be6fe5872b4fdf2fe7fc6f056fd0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76739c8992c8227be3b585bca901e04f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f">R_LAYER3_SWITCH_EnableTAS</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint8_t port)</td></tr>
+<tr class="separator:ga76739c8992c8227be3b585bca901e04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The LAYER3 SWITCH module (r_layer3_switch) provides an API for standard Ethernet communications applications that use the ESWM peripheral. It implements the <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html">Ethernet Switch Interface</a>. </p>
 <h1><a class="anchor" id="r-layer3-switch-overview"></a>
 Overview</h1>
 <p>This module performs Ethernet frame transmission and reception using Ethernet Switch Module.</p>
-<h2><a class="anchor" id="r-layer3-switch-features"></a>
+<p>The following figure shows which IPs are used by the r_layer3_switch module.</p>
+<div class="image">
+<img src="r_layer3_switch_sw_and_hw_relation.png" alt="r_layer3_switch_sw_and_hw_relation.png"/>
+<div class="caption">
+ESWM block diagram</div></div>
+ <h2><a class="anchor" id="r-layer3-switch-features"></a>
 Features</h2>
 <p>The layer3 switch module supports the following features:</p><ul>
 <li>Transmit/receive data using a descriptor.</li>
@@ -308,6 +317,14 @@ Disabled</li>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
 <td>Available queue num</td><td>Value must be an integer between 1 and 64</td><td>4 </td><td>available queue num. </td></tr>
+<tr class="tree_none">
+<td>Time Aware Shaper</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Select whether or not to use the Time Aware Shaper function. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; Switch (r_layer3_switch)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Switch (r_layer3_switch). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -318,16 +335,142 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Sw
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the layer3_switch interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ETHA0 error interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the layer3_switch etha0 interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ETHA1 error interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the layer3_switch etha1 interrupt priority. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Ports  </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Port 0 Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 0 fowarding </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Port 1 Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 1 fowarding </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Port 0 MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 0. </td></tr>
-<tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">Port 1 MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 1. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Ports &gt; Port 0  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Ports &gt; Port 0 &gt; IPV queue depth  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 0</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue0 dept of port 0. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 1</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue1 dept of port 0. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 2</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue2 dept of port 0. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 3</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue3 dept of port 0. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 4</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue4 dept of port 0. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 5</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue5 dept of port 0. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 6</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue6 dept of port 0. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 7</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue7 dept of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 0 fowarding </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs for port0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Context</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Placeholder for user data. Passed to the user callback in <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> for port0.  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Ports &gt; Port 1  </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> Ports &gt; Port 1 &gt; IPV queue depth  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 0</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue0 dept of port 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 1</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue1 dept of port 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 2</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue2 dept of port 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 3</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue3 dept of port 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 4</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue4 dept of port 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 5</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue5 dept of port 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 6</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue6 dept of port 1. </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Queue 7</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue7 dept of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 1 fowarding </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs for port1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Context</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Placeholder for user data. Passed to the user callback in <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> for port1.  </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> CBS  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> CBS &gt; Port 0 Band width ( % )  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 0</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue0 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 1</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue1 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 2</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue2 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 3</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue3 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 4</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue4 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 5</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue5 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 6</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue6 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 7</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue7 Band width of port 0. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> CBS &gt; Port 1 Band width ( % )  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 0</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue0 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 1</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue1 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 2</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue2 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 3</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue3 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 4</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue4 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 5</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue5 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 6</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue6 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 7</td><td>Value must be an integer between 0 and 100</td><td>0 </td><td>queue7 Band width of port 1. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> CBS &gt; Port 0 Maximum burst frame number  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 0</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue0 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 1</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue1 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 2</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue2 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 3</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue3 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 4</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue4 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 5</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue5 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 6</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue6 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 7</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue7 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> CBS &gt; Port 1 Maximum burst frame number  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 0</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue0 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 1</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue1 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 2</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue2 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 3</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue3 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 4</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue4 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 5</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue5 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 6</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue6 maximum burst frame number of port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Queue 7</td><td>Value must be an integer between 0 and 255</td><td>0 </td><td>queue7 maximum burst frame number of port 0. </td></tr>
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_layer3_switch0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
@@ -342,14 +485,37 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Sw
 </p>
 <h1><a class="anchor" id="r-layer3-switch-usage_notes"></a>
 Usage Notes</h1>
+<h2>Time-Sensitive Network (TSN)</h2>
+<h3>Credit Based Shaper [802.1Qav]</h3>
+<p>Credit Based Shaper (CBS) is a standard defined in IEEE 802.1Qav that limits the throughput of Ethernet traffic. The figure below illustrates the operation of CBS when the bandwidth is set to 40Mbps. When the transmission throughput exceeds the bandwidth configured by CBS, frame transmission is restricted. The restricted frames are buffered in the queue and transmitted with delay.</p>
+<div class="image">
+<img src="r_layer3_switch_cbs.png" alt="r_layer3_switch_cbs.png"/>
+<div class="caption">
+CBS operation image</div></div>
+<p> In the r_layer3_switch module, CBS bandwidth can be configured for each Internal Priority Value (IPV) queue per transmission port. There are 8 IPV queues available for each port. On transmission ports where CBS is enabled, the throughput is limited to the configured bandwidth. CBS can be configured through stack properties or the ConfigurePort() API.</p>
+<dl class="section note"><dt>Note</dt><dd>The maximum number of frames that can be buffered by CBS is limited to the depth of each IPV queue. If many frames are buffered in high-priority queues, the common memory pool may be depleted, potentially limiting transmission from other queues.</dd></dl>
+<h3>Time-Aware Shaper [802.1Qbv]</h3>
+<p>Time-Aware Shaper (TAS) is a standard defined in IEEE 802.1Qbv that limits Ethernet traffic by controlling the time window when frames are transmitted. TAS controls transmission by changing gate states. Frames are transmitted while the gate is opened and when the gate is closed, frames cannot be transmitted and are delayed until the next open state. By opening each gate at different timings, it is possible to prevent frames of specific priorities from monopolizing the bandwidth. The figure below illustrates the operation of TAS. In this image, the gate cycle time is set to 10ms, Gate 0 is opened for 2.5 ms and closed for 7.5 ms, Gate 1 is closed for 1.0 + 5.0 ms and open for 4.0 ms.</p>
+<div class="image">
+<img src="r_layer3_switch_tas.png" alt="r_layer3_switch_tas.png"/>
+<div class="caption">
+TAS operation image</div></div>
+<p> In the r_layer3_switch module, TAS gates can be configured for each IPV queue of the transmission ports. Each gate learns entries that represent windows. An entry contains the window time and state. TAS feature is configured using the ConfigureTAS() API, and enabled using the EnableTAS() API.</p>
+<dl class="section note"><dt>Note</dt><dd>This TAS feature uses the gPTP timer.</dd></dl>
 <h2><a class="anchor" id="r-layer3-switch-limitations"></a>
 Limitations</h2>
+<p>Developers should be aware of the following limitations when using the r_layer3_switch:</p><ul>
+<li>CBS feature supports only 100 Mbps and 1 Gbps link speeds.</li>
+</ul>
 <h1><a class="anchor" id="r-layer3-switch-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>This is a basic example of transmission use of the LAYER3 SWITCH.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE            (8)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE              (1514)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER        ((uint8_t) ((LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE &amp; \</span></div><div class="line"><span class="preprocessor">                                                                           0xFF00) &gt;&gt; 8))</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER        ((uint8_t) LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE &amp; \</span></div><div class="line"><span class="preprocessor">                                                               0x00FF)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE    (60)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_SOURCE_MAC_ADDRESS              0x74, 0x90, 0x50, 0x00, 0x79, 0x01</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_DESTINATION_MAC_ADDRESS         0x74, 0x90, 0x50, 0x00, 0x79, 0x02</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_FRAME_TYPE                      0x00, 0x2E</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PAYLOAD                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \</span></div><div class="line"><span class="preprocessor">    0x00,                                                                                                           \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                     \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                     \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00</span></div><div class="line"></div><div class="line"><a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> gp_descriptor_pool[LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE];</div><div class="line">uint8_t gp_ether_buffer0[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer1[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer2[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer3[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer4[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer5[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer6[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer7[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line"></div><div class="line">uint8_t * gpp_ether_buffers[8] =</div><div class="line">{</div><div class="line">    &amp;gp_ether_buffer0[0],</div><div class="line">    &amp;gp_ether_buffer1[0],</div><div class="line">    &amp;gp_ether_buffer2[0],</div><div class="line">    &amp;gp_ether_buffer3[0],</div><div class="line">    &amp;gp_ether_buffer4[0],</div><div class="line">    &amp;gp_ether_buffer5[0],</div><div class="line">    &amp;gp_ether_buffer6[0],</div><div class="line">    &amp;gp_ether_buffer7[0],</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Transmit data buffer */</span></div><div class="line">uint8_t gp_send_data[LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">{</div><div class="line">    LAYER3_SWITCH_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_transmit_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err         = FSP_SUCCESS;</div><div class="line">    uint32_t  queue_index = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure transmission queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> transmission_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type               = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04af29cf0e59d9c0e555490c288acb0df9e">LAYER3_SWITCH_QUEUE_TYPE_TX</a>,</div><div class="line">        .write_back_mode    = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array = gp_descriptor_pool,</div><div class="line">        .array_length       = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports              = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Prepare data for transmission. */</span></div><div class="line">    memcpy(gpp_ether_buffers[0], gp_send_data, LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize transmission descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> transmission_descriptor = {0};</div><div class="line">    transmission_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    transmission_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    transmission_descriptor.basic.die    = 1;</div><div class="line">    transmission_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    transmission_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58a6da12aac07fab773f2ff28c2eb91251f">LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE</a>;</div><div class="line">    transmission_descriptor.info1_tx.fmt = 1;</div><div class="line">    transmission_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize PHY-LSI chip. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e">R_RMAC_PHY_ChipInit</a>(&amp;g_rmac_phy0_ctrl, &amp;g_rmac_phy0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#gac96ef5fa0c9eb9c86c89ab5aae7e20ea">R_RMAC_PHY_StartAutoNegotiate</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Get the Ethernet link status read from the PHY-LSI Basic Status registers until link-up. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga25794f823211f7b3de4605787738a22e">R_RMAC_PHY_LinkStatusGet</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;transmission_queue_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set descriptor to queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start transmission. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get descriptor status. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4d4d3d661e020ca06ddb863b16f756de">R_LAYER3_SWITCH_GetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if transmission is completed. */</span></div><div class="line">    assert(<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe">LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY</a> == transmission_descriptor.basic.dt);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the layer3 switch instance. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a>(&amp;g_layer3_switch0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> This is a basic example of reception use of the LAYER3 SWITCH.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH    (4)</span></div><div class="line"></div><div class="line"><span class="keywordtype">bool</span> g_complete_reception_flag;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_receive_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err         = FSP_SUCCESS;</div><div class="line">    uint32_t  queue_index = 1;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure reception queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> reception_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type               = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04aaca4e31e8b9e516e20c50be9c8408d7a">LAYER3_SWITCH_QUEUE_TYPE_RX</a>,</div><div class="line">        .write_back_mode    = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array = gp_descriptor_pool,</div><div class="line">        .array_length       = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports              = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize reception descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> reception_descriptor = {0};</div><div class="line">    reception_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    reception_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    reception_descriptor.basic.die    = 1;</div><div class="line">    reception_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    reception_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe">LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY</a>;</div><div class="line">    reception_descriptor.info1_tx.fmt = 1;</div><div class="line">    reception_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize PHY-LSI chip. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e">R_RMAC_PHY_ChipInit</a>(&amp;g_rmac_phy0_ctrl, &amp;g_rmac_phy0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#gac96ef5fa0c9eb9c86c89ab5aae7e20ea">R_RMAC_PHY_StartAutoNegotiate</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Get the Ethernet link status read from the PHY-LSI Basic Status registers until link-up. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga25794f823211f7b3de4605787738a22e">R_RMAC_PHY_LinkStatusGet</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;reception_queue_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Copy descriptor to queue. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH - 1; i++)</div><div class="line">    {</div><div class="line">        memset(gpp_ether_buffers[i], 0, LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE);</div><div class="line">        reception_descriptor.basic.ptr_l = (uintptr_t) gpp_ether_buffers[i];</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;reception_descriptor);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    g_complete_reception_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Start reception. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait to complete reception. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span> != g_complete_reception_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the layer3 switch instance. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a>(&amp;g_layer3_switch0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_example_callback (<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> * p_args) {</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a4fe5367c86c4967b3ab5b240536cfb8b">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524aa0a0514df6bac40c835e4fcda32073b4">ETHER_SWITCH_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_complete_reception_flag = <span class="keyword">true</span>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a0487493c21c16952bd6586b0230c88d7">ETHER_SWITCH_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a200ad7f19a1e015a4212e6fc5a9f164f">ETHER_SWITCH_EVENT_RX_QUEUE_FULL</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e">ETHER_SWITCH_EVENT_RX_MESSAGE_LOST</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH    (4)</span></div><div class="line"></div><div class="line"><span class="keywordtype">bool</span> g_complete_reception_flag;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_receive_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err         = FSP_SUCCESS;</div><div class="line">    uint32_t  queue_index = 1;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure reception queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> reception_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type               = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04aaca4e31e8b9e516e20c50be9c8408d7a">LAYER3_SWITCH_QUEUE_TYPE_RX</a>,</div><div class="line">        .write_back_mode    = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array = gp_descriptor_pool,</div><div class="line">        .array_length       = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports              = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize reception descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> reception_descriptor = {0};</div><div class="line">    reception_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    reception_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    reception_descriptor.basic.die    = 1;</div><div class="line">    reception_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    reception_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe">LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY</a>;</div><div class="line">    reception_descriptor.info1_tx.fmt = 1;</div><div class="line">    reception_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize PHY-LSI chip. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e">R_RMAC_PHY_ChipInit</a>(&amp;g_rmac_phy0_ctrl, &amp;g_rmac_phy0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#gac96ef5fa0c9eb9c86c89ab5aae7e20ea">R_RMAC_PHY_StartAutoNegotiate</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Get the Ethernet link status read from the PHY-LSI Basic Status registers until link-up. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga25794f823211f7b3de4605787738a22e">R_RMAC_PHY_LinkStatusGet</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;reception_queue_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Copy descriptor to queue. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH - 1; i++)</div><div class="line">    {</div><div class="line">        memset(gpp_ether_buffers[i], 0, LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE);</div><div class="line">        reception_descriptor.basic.ptr_l = (uintptr_t) gpp_ether_buffers[i];</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;reception_descriptor);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    g_complete_reception_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Start reception. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait to complete reception. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span> != g_complete_reception_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the layer3 switch instance. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a>(&amp;g_layer3_switch0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_example_callback (<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> * p_args) {</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a4fe5367c86c4967b3ab5b240536cfb8b">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524aa0a0514df6bac40c835e4fcda32073b4">ETHER_SWITCH_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_complete_reception_flag = <span class="keyword">true</span>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a0487493c21c16952bd6586b0230c88d7">ETHER_SWITCH_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a200ad7f19a1e015a4212e6fc5a9f164f">ETHER_SWITCH_EVENT_RX_QUEUE_FULL</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e">ETHER_SWITCH_EVENT_RX_MESSAGE_LOST</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TSN Example</h2>
+<p>The below is an example of forwarding frames with Credit Based Shaper (CBS).</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> layer3_switch_cbs_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                err              = FSP_SUCCESS;</div><div class="line">    uint8_t                  source_port      = 0;</div><div class="line">    uint8_t                  destination_port = 1;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a> port_cfg         = {0};</div><div class="line"></div><div class="line">    <span class="comment">/* Set bandwidth of queue 0 to 30 Mbps, queue 1 to 20 Mbps. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__cbs__cfg__t">layer3_switch_cbs_cfg_t</a> cbs_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a56b6c1cc343312b63f1dae8a343d6f8a">band_width_list</a>    = {30, 20, 0,  0,  0,  0,  0,  0   },</div><div class="line">        .max_burst_num_list = {10, 10, 10, 10, 10, 10, 10, 10  },</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Destination of forwarding target frames are 00:01:02:03:04:05 and 10:11:12:13:14:15*/</span></div><div class="line">    uint8_t p_mac_address_list[2][6] =</div><div class="line">    {</div><div class="line">        {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, },</div><div class="line">        {0x10, 0x11, 0x12, 0x13, 0x14, 0x15, },</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__cfg__t">layer3_switch_table_cfg_t</a> mac_table_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aafa99fb3fb46c7c884a079dbe63ee313">port_cfg_list</a>              = {{.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a3bfd9a3b5cc9fa61cc6bd4a7b3569122">mac_table_enable</a> = <span class="keyword">true</span>}, {.mac_table_enable = <span class="keyword">true</span>}},</div><div class="line">        .unsecure_entry_maximum_num = 2,</div><div class="line">    };</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a>    mac_entry_frame;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a> mac_entry_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (1 &lt;&lt; destination_port),</div><div class="line">        .source_ports                    = (1 &lt;&lt; source_port),</div><div class="line">        .internal_priority_update_enable = <span class="keyword">true</span>,</div><div class="line">        .entry_enable                    = <span class="keyword">true</span>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    mac_entry_frame.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66da313bda2569c67577a5fdc2faaccfa1d2">LAYER3_SWITCH_TABLE_ENTRY_TYPE_MAC</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Reset MAC table. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn destination MAC address of a forwarding frame. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_entry_frame.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>    = p_mac_address_list[i];</div><div class="line">        mac_entry_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl, &amp;mac_entry_frame, &amp;mac_entry_cfg);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Configure and enable CBS. */</span></div><div class="line">    port_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa434b97ae5a4ba8b57c861eeede897aa">p_cbs_cfg</a> = &amp;cbs_cfg;</div><div class="line">    err                = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga08a836e498d5995d4472630c294c15cb">R_LAYER3_SWITCH_ConfigurePort</a>(&amp;g_layer3_switch0_ctrl, destination_port, &amp;port_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The below is an example of forwarding frames with Credit Based Shaper (TAS).</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_GPTP_TIMER           (0)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_GPTP_CLOCK_PERIOD    (4)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_tas_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err              = FSP_SUCCESS;</div><div class="line">    uint8_t   source_port      = 0;</div><div class="line">    uint8_t   destination_port = 1;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a>  mac_table_entry;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__cfg__t">layer3_switch_tas_cfg_t</a>      tas_cfg;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__entry__t">layer3_switch_tas_entry_t</a>    closed_entry_list[1] = {{.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7b44825feefa57ed9b4a731ebb447519">state</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f">LAYER3_SWITCH_TAS_GATE_STATE_CLOSE</a>, .time = 0}};</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__gate__cfg__t">layer3_switch_tas_gate_cfg_t</a> tas_gate_closed      =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa8f8d33d9c699ac3eb1f697f13c9ace0">tas_entry_num</a>    = 1, .initial_gate_state = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f">LAYER3_SWITCH_TAS_GATE_STATE_CLOSE</a>,</div><div class="line">        .p_tas_entry_list = closed_entry_list</div><div class="line">    };</div><div class="line">    <a class="code" href="group___g_p_t_p___a_p_i.html#structgptp__instance__t">gptp_instance_t</a> <span class="keyword">const</span> * p_gptp_instance = g_layer3_switch0_extended_cfg.p_gptp_instance;</div><div class="line">    <a class="code" href="group___g_p_t_p___a_p_i.html#structgptp__timer__cfg__t">gptp_timer_cfg_t</a>        timer_cfg       = {.<a class="code" href="group___g_p_t_p___a_p_i.html#a8cbceecf8886532224a8a63fde73f4d3">clock_period</a> = LAYER3_SWITCH_EXAMPLE_GPTP_CLOCK_PERIOD};</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Gate 0 and 1 are repeat Open/Close. Other gates are alwayes closed. */</span></div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[0] = g_layer3_switch_example_tas_gate_0_cfg;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[1] = g_layer3_switch_example_tas_gate_1_cfg;</div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 2; i &lt; 8; i++)</div><div class="line">    {</div><div class="line">        tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[i] = tas_gate_closed;</div><div class="line">    }</div><div class="line"></div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#afed8f7a61f8dde01a66942143dbfad3b">gptp_timer_number</a>     = LAYER3_SWITCH_EXAMPLE_GPTP_TIMER;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7eab2df4ee1ea546363432b3aac84928">cycle_time_start_high</a> = LAYER3_SWITCH_EXAMPLE_CYCLE_START_TIME_UPPER_32BIT;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af22b5495960141edc45298452419400f">cycle_time_start_low</a>  = LAYER3_SWITCH_EXAMPLE_CYCLE_START_TIME_UPPER_32BIT;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a37233b0d0c92467f82dd352276071531">cycle_time</a>            = LAYER3_SWITCH_EXAMPLE_CYCLE_TIME;</div><div class="line"></div><div class="line">    <span class="comment">/* Start gPTP timer before enable TAS feature. */</span></div><div class="line">    p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a87565dd76e1bc5094ffa252de03003ac">p_api</a>-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#aa4ac1991651a09cbde5bdbe7eabf1502">timerCfg</a>(p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a0aa84d7e3111657b030753a83e41c738">p_ctrl</a>, LAYER3_SWITCH_EXAMPLE_GPTP_TIMER, &amp;timer_cfg);</div><div class="line">    p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a87565dd76e1bc5094ffa252de03003ac">p_api</a>-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a728aa7d21ee51c9147cfca9c4e849d40">start</a>(p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a0aa84d7e3111657b030753a83e41c738">p_ctrl</a>, LAYER3_SWITCH_EXAMPLE_GPTP_TIMER);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure and enable TAS. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gac4be6fe5872b4fdf2fe7fc6f056fd0e4">R_LAYER3_SWITCH_ConfigureTAS</a>(&amp;g_layer3_switch0_ctrl, destination_port, &amp;tas_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f">R_LAYER3_SWITCH_EnableTAS</a>(&amp;g_layer3_switch0_ctrl, destination_port);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch_example_mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn a MAC entry. */</span></div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a>                   = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66da313bda2569c67577a5fdc2faaccfa1d2">LAYER3_SWITCH_TABLE_ENTRY_TYPE_MAC</a>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#acbd5ea9cfb996323c9b54b79d91e8093">entry_enable</a>                    = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ab7c67b6a8af420660f048163476dc46e">security_enable</a>                 = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (uint32_t) (1 &lt;&lt; destination_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6fc334dfc9c9199ba78e5549473f5cf0">source_ports</a>                    = (1 &lt;&lt; source_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa2df8fe4f9d9e29adf04da8b02378011">internal_priority_update_enable</a> = <span class="keyword">true</span>;</div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>   = g_layer3_switch_example_mac_address_list[i];</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structlayer3__switch__basic__descriptor__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__basic__descriptor__t">layer3_switch_basic_descriptor_t</a></td></tr>
@@ -358,6 +524,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structlayer3__switch__descriptor__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlayer3__switch__descriptor__queue__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a></td></tr>
 <tr class="separator:structlayer3__switch__descriptor__queue__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__cbs__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__cbs__cfg__t">layer3_switch_cbs_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__cbs__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlayer3__switch__port__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a></td></tr>
 <tr class="separator:structlayer3__switch__port__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlayer3__switch__descriptor__queue__status__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__status__t">layer3_switch_descriptor_queue_status_t</a></td></tr>
@@ -388,6 +556,12 @@ Data Structures</h2></td></tr>
 <tr class="separator:structlayer3__switch__extended__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlayer3__switch__instance__ctrl__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__instance__ctrl__t">layer3_switch_instance_ctrl_t</a></td></tr>
 <tr class="separator:structlayer3__switch__instance__ctrl__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__tas__entry__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__entry__t">layer3_switch_tas_entry_t</a></td></tr>
+<tr class="separator:structlayer3__switch__tas__entry__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__tas__gate__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__gate__cfg__t">layer3_switch_tas_gate_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__tas__gate__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__tas__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__cfg__t">layer3_switch_tas_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__tas__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -425,6 +599,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga972628bbf4d3df0f61f064bac5e7e66d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8a4a3bd0d79183646aac764abdaea5a0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8a4a3bd0d79183646aac764abdaea5a0">layer3_switch_table_status_t</a> </td></tr>
 <tr class="separator:ga8a4a3bd0d79183646aac764abdaea5a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace3cf9b3a8666a95726fda9e6b14dd33"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gace3cf9b3a8666a95726fda9e6b14dd33">layer3_switch_tas_gate_state_t</a> </td></tr>
+<tr class="separator:gace3cf9b3a8666a95726fda9e6b14dd33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structlayer3__switch__basic__descriptor__t" id="structlayer3__switch__basic__descriptor__t"></a>
@@ -511,6 +687,36 @@ Bitmap of ports that use this queue. </td></tr>
 
 </div>
 </div>
+<a name="structlayer3__switch__cbs__cfg__t" id="structlayer3__switch__cbs__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__cbs__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_cbs_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_cbs_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of Credit Based Shaper. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a56b6c1cc343312b63f1dae8a343d6f8a"></a>uint8_t</td>
+<td class="fieldname">
+band_width_list[8]</td>
+<td class="fielddoc">
+CBS band width [%] of each queue. </td></tr>
+<tr><td class="fieldtype">
+<a id="a1c7cccf29fd44cf7e41f02d2888c925e"></a>uint8_t</td>
+<td class="fieldname">
+max_burst_num_list[8]</td>
+<td class="fielddoc">
+Maximum burst frame number of each queue. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structlayer3__switch__port__cfg__t" id="structlayer3__switch__port__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__port__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_port_cfg_t</h2>
 
@@ -533,6 +739,10 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ac29cf11b036c76601e05767b0a3313f0">forwarding_to_cpu_enable</a></td></tr>
 <tr class="memdesc:ac29cf11b036c76601e05767b0a3313f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable reception on CPU. <br /></td></tr>
 <tr class="separator:ac29cf11b036c76601e05767b0a3313f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa434b97ae5a4ba8b57c861eeede897aa"><td class="memItemLeft" align="right" valign="top"><a id="aa434b97ae5a4ba8b57c861eeede897aa"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__cbs__cfg__t">layer3_switch_cbs_cfg_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa434b97ae5a4ba8b57c861eeede897aa">p_cbs_cfg</a></td></tr>
+<tr class="memdesc:aa434b97ae5a4ba8b57c861eeede897aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to CBS configuration. <br /></td></tr>
+<tr class="separator:aa434b97ae5a4ba8b57c861eeede897aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa966970f88f620fb5e2865cc972b136f"><td class="memItemLeft" align="right" valign="top"><a id="aa966970f88f620fb5e2865cc972b136f"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa966970f88f620fb5e2865cc972b136f">p_callback</a> )(<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:aa966970f88f620fb5e2865cc972b136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when an ISR occurs. <br /></td></tr>
@@ -913,7 +1123,7 @@ internal_priority_update_value</td>
 <td class="fielddoc">
 Internal priority when updating is enabled. </td></tr>
 <tr><td class="fieldtype">
-<a id="a6584f9e8b66dc2465178d609ff1c303d"></a>union <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#unionlayer3__switch__table__entry__cfg__t_8____unnamed____">layer3_switch_table_entry_cfg_t</a></td>
+<a id="a07ad0ca397f81007c6adf61a88409bb1"></a>union <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#unionlayer3__switch__table__entry__cfg__t_8____unnamed____">layer3_switch_table_entry_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1129,9 +1339,9 @@ p_table</td>
 <td class="fielddoc">
 Pointer to forwarding table. </td></tr>
 <tr><td class="fieldtype">
-<a id="aeecfaeb2df35b87d6e5e44a69da40ab6"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__forwarding__port__cfg__t">layer3_switch_forwarding_port_cfg_t</a></td>
+<a id="aafa99fb3fb46c7c884a079dbe63ee313"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__forwarding__port__cfg__t">layer3_switch_forwarding_port_cfg_t</a></td>
 <td class="fieldname">
-port_cfg_list[BSP_FEATURE_ETHER_MAX_CHANNELS+1]</td>
+port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS+1]</td>
 <td class="fielddoc">
 Forwarding configuration of each port. </td></tr>
 <tr><td class="fieldtype">
@@ -1183,35 +1393,77 @@ Configuration of stream filter in Layer3 forwarding. </td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="af74fc96ef239b9e94c0626ba01ce266a"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__instance__t">ether_phy_instance_t</a> const  *</td>
+<a id="a115f29d9a0dba98d78c5d2f7ad0a5418"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__instance__t">ether_phy_instance_t</a> const  *</td>
 <td class="fieldname">
-p_ether_phy_instances[BSP_FEATURE_ETHER_MAX_CHANNELS]</td>
+p_ether_phy_instances[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
 <td class="fielddoc">
 List of pointers to ETHER_PHY instance. </td></tr>
 <tr><td class="fieldtype">
-<a id="a7c96b02f8d28d001a5a22701bba7b372"></a>uint32_t</td>
+<a id="acceba339796b50a217ff1d9f1b6fd75e"></a><a class="el" href="group___g_p_t_p___a_p_i.html#structgptp__instance__t">gptp_instance_t</a> const  *</td>
 <td class="fieldname">
-fowarding_target_port_masks[BSP_FEATURE_ETHER_MAX_CHANNELS]</td>
+p_gptp_instance</td>
+<td class="fielddoc">
+Pointer to a gPTP instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="afdfe4de0b2b55880bb33486afde41347"></a>uint32_t</td>
+<td class="fieldname">
+fowarding_target_port_masks[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
 <td class="fielddoc">
 List of ports to which incoming frames are forwarded. </td></tr>
 <tr><td class="fieldtype">
-<a id="ad2841eed7722a199fde200d93ccc932b"></a>uint8_t *</td>
+<a id="ae8158ee00330a79694c1c45d0198d918"></a>uint8_t *</td>
 <td class="fieldname">
-p_mac_addresses[BSP_FEATURE_ETHER_MAX_CHANNELS]</td>
+p_mac_addresses[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
 <td class="fielddoc">
-MAC address of each port. </td></tr>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0995618e1dac947a7d867a62f4058441"></a>uint32_t</td>
+<td class="fieldname">
+ipv_queue_depth_list[BSP_FEATURE_ETHER_NUM_CHANNELS][8]</td>
+<td class="fielddoc">
+List of IPV queue depth for each port. </td></tr>
 <tr><td class="fieldtype">
 <a id="af953b505c992bd5dc7ce07cdcc8ccb51"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__l3__filter__t">layer3_switch_l3_filter_t</a> *</td>
 <td class="fieldname">
 l3_filter_list</td>
 <td class="fielddoc">
-Filter list of Layer3 routing. </td></tr>
+Filter list of layer3 routing. </td></tr>
 <tr><td class="fieldtype">
 <a id="a008bae8da99e0dad1c77e6e55fc37dc9"></a>uint32_t</td>
 <td class="fieldname">
 l3_filter_list_length</td>
 <td class="fielddoc">
 Length of Layer3 filter list. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac5244924866e0ed746d3d1b3b2d7e99f"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a> *</td>
+<td class="fieldname">
+p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
+<td class="fielddoc">
+Configuration for each port. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4d7adf3c5d4676c2b444d19eeddf0168"></a>IRQn_Type</td>
+<td class="fieldname">
+etha_error_irq_port_0</td>
+<td class="fielddoc">
+ETHA error interrupt number for port 0. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa76ccc390c654ed65fb78e3db5ccb43e"></a>IRQn_Type</td>
+<td class="fieldname">
+etha_error_irq_port_1</td>
+<td class="fielddoc">
+ETHA error interrupt number for port 1. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa5bd626c191f80e4e2e2546c34e6037a"></a>uint8_t</td>
+<td class="fieldname">
+etha_error_ipl_port_0</td>
+<td class="fielddoc">
+ETHA error interrupt priorirty for port 0. </td></tr>
+<tr><td class="fieldtype">
+<a id="a22e478c02b9e0ba43a4750a6257c63f5"></a>uint8_t</td>
+<td class="fieldname">
+etha_error_ipl_port_1</td>
+<td class="fielddoc">
+ETHA error interrupt priorirty for port 1. </td></tr>
 </table>
 
 </div>
@@ -1254,10 +1506,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__status__t">layer3_switch_descriptor_queue_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aacc4db180865c99ce68006fde435eae0">p_queues_status</a> [LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM]</td></tr>
 <tr class="memdesc:aacc4db180865c99ce68006fde435eae0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status of each descriptor queues. <br /></td></tr>
 <tr class="separator:aacc4db180865c99ce68006fde435eae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1be9150a61d8b3d9695379b3ef635aaf"><td class="memItemLeft" align="right" valign="top"><a id="a1be9150a61d8b3d9695379b3ef635aaf"></a>
-<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a1be9150a61d8b3d9695379b3ef635aaf">p_port_cfg_list</a> [BSP_FEATURE_ETHER_MAX_CHANNELS]</td></tr>
-<tr class="memdesc:a1be9150a61d8b3d9695379b3ef635aaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for each port. <br /></td></tr>
-<tr class="separator:a1be9150a61d8b3d9695379b3ef635aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c3ff5bfebd75f633158622b84b9cf65"><td class="memItemLeft" align="right" valign="top"><a id="a3c3ff5bfebd75f633158622b84b9cf65"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a3c3ff5bfebd75f633158622b84b9cf65">p_port_cfg_list</a> [BSP_FEATURE_ETHER_NUM_CHANNELS]</td></tr>
+<tr class="memdesc:a3c3ff5bfebd75f633158622b84b9cf65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for each port. <br /></td></tr>
+<tr class="separator:a3c3ff5bfebd75f633158622b84b9cf65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ce17291fb9031efc375ac5c38b0357e"><td class="memItemLeft" align="right" valign="top"><a id="a6ce17291fb9031efc375ac5c38b0357e"></a>
 <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8a4a3bd0d79183646aac764abdaea5a0">layer3_switch_table_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6ce17291fb9031efc375ac5c38b0357e">table_status</a></td></tr>
 <tr class="memdesc:a6ce17291fb9031efc375ac5c38b0357e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwarding table is initialized or not. <br /></td></tr>
@@ -1286,6 +1538,120 @@ void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a28b4e51a85668041308a749383cbc976">p_context</a></td></tr>
 <tr class="memdesc:a28b4e51a85668041308a749383cbc976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to context to be passed into callback function. <br /></td></tr>
 <tr class="separator:a28b4e51a85668041308a749383cbc976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__tas__entry__t" id="structlayer3__switch__tas__entry__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__tas__entry__t">&#9670;&nbsp;</a></span>layer3_switch_tas_entry_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_tas_entry_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of the gate operation. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7b44825feefa57ed9b4a731ebb447519"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gace3cf9b3a8666a95726fda9e6b14dd33">layer3_switch_tas_gate_state_t</a></td>
+<td class="fieldname">
+state</td>
+<td class="fielddoc">
+Gate state. </td></tr>
+<tr><td class="fieldtype">
+<a id="aecb9cd1fd627ce141d540456243351cf"></a>uint32_t</td>
+<td class="fieldname">
+time</td>
+<td class="fielddoc">
+Time associated with the entry gate state [nsec]. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__tas__gate__cfg__t" id="structlayer3__switch__tas__gate__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__tas__gate__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_tas_gate_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_tas_gate_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of the gate. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aabfe2cb1214bf641e65e5134da4ae7fc"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gace3cf9b3a8666a95726fda9e6b14dd33">layer3_switch_tas_gate_state_t</a></td>
+<td class="fieldname">
+initial_gate_state</td>
+<td class="fielddoc">
+Initial gate state when the cycle starts. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa8f8d33d9c699ac3eb1f697f13c9ace0"></a>uint8_t</td>
+<td class="fieldname">
+tas_entry_num</td>
+<td class="fielddoc">
+Number of TAS entries included in this gate. </td></tr>
+<tr><td class="fieldtype">
+<a id="aeb02e7edf63c17e219f731db9d8e9b0d"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__entry__t">layer3_switch_tas_entry_t</a> *</td>
+<td class="fieldname">
+p_tas_entry_list</td>
+<td class="fielddoc">
+List of TAS entries included in this gate. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__tas__cfg__t" id="structlayer3__switch__tas__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__tas__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_tas_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_tas_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of the TAS. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="afed8f7a61f8dde01a66942143dbfad3b"></a>uint8_t</td>
+<td class="fieldname">
+gptp_timer_number</td>
+<td class="fielddoc">
+gPTP timer number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7eab2df4ee1ea546363432b3aac84928"></a>uint32_t</td>
+<td class="fieldname">
+cycle_time_start_high</td>
+<td class="fielddoc">
+Upper 32 bits of TAS cycle start time [nsec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="af22b5495960141edc45298452419400f"></a>uint32_t</td>
+<td class="fieldname">
+cycle_time_start_low</td>
+<td class="fielddoc">
+Lower 32 bits of TAS cycle start time [nsec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a37233b0d0c92467f82dd352276071531"></a>uint32_t</td>
+<td class="fieldname">
+cycle_time</td>
+<td class="fielddoc">
+TAS cycle time [nsec]. </td></tr>
+<tr><td class="fieldtype">
+<a id="a481418a4fbad572d35aca90fd53c7d57"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__gate__cfg__t">layer3_switch_tas_gate_cfg_t</a></td>
+<td class="fieldname">
+gate_cfg_list[8]</td>
+<td class="fielddoc">
+List of TAS gate configurations. </td></tr>
 </table>
 
 </div>
@@ -1727,6 +2093,27 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8a4a3bd0d79183646aac764abdaea5a0ab3232a747ea7661792050fe2798eed84"></a>LAYER3_SWITCH_TABLE_STATUS_UNINITIALIZED&#160;</td><td class="fielddoc"><p>Forwarding table is uninitialized. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8a4a3bd0d79183646aac764abdaea5a0ab9109a12eb1a95f8b3ed7c0832d4d904"></a>LAYER3_SWITCH_TABLE_STATUS_INITIALIZED&#160;</td><td class="fielddoc"><p>Forwarding table is initialized. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gace3cf9b3a8666a95726fda9e6b14dd33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gace3cf9b3a8666a95726fda9e6b14dd33">&#9670;&nbsp;</a></span>layer3_switch_tas_gate_state_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gace3cf9b3a8666a95726fda9e6b14dd33">layer3_switch_tas_gate_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TAS gate state. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f"></a>LAYER3_SWITCH_TAS_GATE_STATE_CLOSE&#160;</td><td class="fielddoc"><p>Gate is closed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggace3cf9b3a8666a95726fda9e6b14dd33a021cfd019a4e8477677578938ae3e811"></a>LAYER3_SWITCH_TAS_GATE_STATE_OPEN&#160;</td><td class="fielddoc"><p>Gate is opened. </p>
 </td></tr>
 </table>
 
@@ -2252,13 +2639,96 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
+<a id="gac4be6fe5872b4fdf2fe7fc6f056fd0e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac4be6fe5872b4fdf2fe7fc6f056fd0e4">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_ConfigureTAS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_ConfigureTAS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__cfg__t">layer3_switch_tas_cfg_t</a> *&#160;</td>
+          <td class="paramname"><em>p_tas_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Configure Time Aware Shaper feature.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>TAS configure successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Pointer to a argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Port number is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>TAS feature is not enabled in the configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga76739c8992c8227be3b585bca901e04f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga76739c8992c8227be3b585bca901e04f">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_EnableTAS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_EnableTAS </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable Time Aware Shaper feature.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>TAS enabled successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Port number is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>TAS feature is not enabled in the configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

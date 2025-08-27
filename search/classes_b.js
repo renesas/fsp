@@ -1,6 +1,7 @@
 var searchData=
 [
   ['layer3_5fswitch_5fbasic_5fdescriptor_5ft',['layer3_switch_basic_descriptor_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__basic__descriptor__t',1,'']]],
+  ['layer3_5fswitch_5fcbs_5fcfg_5ft',['layer3_switch_cbs_cfg_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__cbs__cfg__t',1,'']]],
   ['layer3_5fswitch_5fdescriptor_5fqueue_5fcfg_5ft',['layer3_switch_descriptor_queue_cfg_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t',1,'']]],
   ['layer3_5fswitch_5fdescriptor_5fqueue_5fstatus_5ft',['layer3_switch_descriptor_queue_status_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__status__t',1,'']]],
   ['layer3_5fswitch_5fdescriptor_5ft',['layer3_switch_descriptor_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t',1,'']]],
@@ -18,6 +19,9 @@ var searchData=
   ['layer3_5fswitch_5ftable_5fentry_5fcfg_5ft',['layer3_switch_table_entry_cfg_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t',1,'']]],
   ['layer3_5fswitch_5ftable_5fentry_5ft',['layer3_switch_table_entry_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t',1,'']]],
   ['layer3_5fswitch_5ftable_5ft',['layer3_switch_table_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__t',1,'']]],
+  ['layer3_5fswitch_5ftas_5fcfg_5ft',['layer3_switch_tas_cfg_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__cfg__t',1,'']]],
+  ['layer3_5fswitch_5ftas_5fentry_5ft',['layer3_switch_tas_entry_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__entry__t',1,'']]],
+  ['layer3_5fswitch_5ftas_5fgate_5fcfg_5ft',['layer3_switch_tas_gate_cfg_t',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__gate__cfg__t',1,'']]],
   ['lin_5fapi_5ft',['lin_api_t',['../group___l_i_n___a_p_i.html#structlin__api__t',1,'']]],
   ['lin_5fcallback_5fargs_5ft',['lin_callback_args_t',['../group___l_i_n___a_p_i.html#structlin__callback__args__t',1,'']]],
   ['lin_5fcfg_5ft',['lin_cfg_t',['../group___l_i_n___a_p_i.html#structlin__cfg__t',1,'']]],

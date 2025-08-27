@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -296,6 +296,14 @@ Disabled</li>
 <td>RAM Media Size</td><td>Please enter the RAM media size.</td><td>65536 </td><td>Enter a RAM media size of 20K bytes or more. </td></tr>
 <tr class="tree_none">
 <td>Memory Storage Section</td><td>Manual Entry</td><td>.bss </td><td>This is the section of memory that will be used for the backing storage. Must be a valid Linker section. ('.bss', '.sdram', '.OSPI_DEVICE_0_RAM', etc). For AC6 preface any section with '.bss' e.g. '.bss.sdram' </td></tr>
+<tr class="tree_none">
+<td>Format during mediaInit</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>If disabled RAM must be formatted with filex_media_format before calling filex_media_open. </td></tr>
 </table>
  <h2>Configurations for Storage &gt; Block Media RAM Implementation (rm_block_media_ram)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Storage &gt; Block Media RAM Implementation (rm_block_media_ram).<br />
@@ -317,7 +325,11 @@ Clock Configuration</h2>
 <h2><a class="anchor" id="rm-block-media-ram-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module does not use I/O pins.</p>
-<h2 class="groupheader">Function Documentation</h2>
+<h1><a class="anchor" id="rm-block-media-ram-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the RAM block media implementation in an application.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define RM_BLOCK_MEDIA_RAM_BLOCK_SIZE    (512U)</span></div><div class="line"></div><div class="line">uint8_t g_dest[RM_BLOCK_MEDIA_RAM_BLOCK_SIZE] BSP_ALIGN_VARIABLE(4);</div><div class="line">uint8_t g_src[RM_BLOCK_MEDIA_RAM_BLOCK_SIZE]  BSP_ALIGN_VARIABLE(4);</div><div class="line"></div><div class="line"><a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#structrm__block__media__status__t">rm_block_media_status_t</a> status;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rm_block_media_ram_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">/* Initialize g_src to known data */</span></div><div class="line">    <span class="keywordflow">for</span> (uint32_t i = 0; i &lt; RM_BLOCK_MEDIA_RAM_BLOCK_SIZE; i++)</div><div class="line">    {</div><div class="line">        g_src[i] = (uint8_t) (<span class="charliteral">&#39;A&#39;</span> + (i % 26));</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the RM_BLOCK_MEDIA_RAM driver. */</span></div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html#ga644acae40f6fce1a0057bf6de3281fac">RM_BLOCK_MEDIA_RAM_Open</a>(&amp;g_rm_block_media0_ctrl, &amp;g_rm_block_media0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* When enabled, format RAM as FAT file system. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html#ga1f45bf2b8468fa18aa5ea4b060816cad">RM_BLOCK_MEDIA_RAM_MediaInit</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get the RM_BLOCK_MEDIA_RAM driver status. */</span></div><div class="line">    err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html#ga76ca0cb604f4586b0539d66ea8aa1704">RM_BLOCK_MEDIA_RAM_StatusGet</a>(&amp;g_rm_block_media0_ctrl, &amp;status);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (<span class="keyword">true</span> == status.<a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___a_p_i.html#aca37bc956233e8fad915ae41ba9a960c">initialized</a>)</div><div class="line">    {</div><div class="line"></div><div class="line">        <span class="comment">/* Write a block of data to block 3 of the RAM memory. */</span></div><div class="line">        err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html#gafc88cf7865748ff378213d56cc891183">RM_BLOCK_MEDIA_RAM_Write</a>(&amp;g_rm_block_media0_ctrl, g_src, 3, 1);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">        <span class="comment">/* Read a block of data from block 3 of the RAM memory. */</span></div><div class="line">        err = <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html#ga44361bd67edacfba8c6ac02b3462178e">RM_BLOCK_MEDIA_RAM_Read</a>(&amp;g_rm_block_media0_ctrl, g_dest, 3, 1);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line"></div><div class="line">        <span class="comment">/* Close the RM_BLOCK_MEDIA_RAM driver. */</span></div><div class="line">        <a class="code" href="group___r_m___b_l_o_c_k___m_e_d_i_a___r_a_m.html#ga99e45bae89d549e96107c84cda7ed94b">RM_BLOCK_MEDIA_RAM_Close</a>(&amp;g_rm_block_media0_ctrl);</div><div class="line"></div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga644acae40f6fce1a0057bf6de3281fac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga644acae40f6fce1a0057bf6de3281fac">&#9670;&nbsp;</a></span>RM_BLOCK_MEDIA_RAM_Open()</h2>
 
@@ -649,7 +661,7 @@ Pin Configuration</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

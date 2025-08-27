@@ -9,6 +9,7 @@ var group___r_e_n_e_s_a_s___a_n_a_l_o_g___m_o_d_u_l_e_s =
     [ "DAC (r_dac)", "group___d_a_c.html", "group___d_a_c" ],
     [ "DAC8 (r_dac8)", "group___d_a_c8.html", "group___d_a_c8" ],
     [ "DAC_B (r_dac_b)", "group___d_a_c___b.html", "group___d_a_c___b" ],
+    [ "Delta-Sigma Modulator Interface (r_dsmif)", "group___d_s_m_i_f.html", "group___d_s_m_i_f" ],
     [ "Operational Amplifier (r_opamp)", "group___o_p_a_m_p.html", "group___o_p_a_m_p" ],
     [ "SDADC Channel Configuration (r_sdadc)", "group___s_d_a_d_c.html", "group___s_d_a_d_c" ],
     [ "SDADC_B Channel Configuration (r_sdadc_b)", "group___s_d_a_d_c___b.html", "group___s_d_a_d_c___b" ]

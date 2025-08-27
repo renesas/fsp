@@ -10,6 +10,7 @@ var searchData=
   ['waveform',['waveform',['../group___s_l_c_d_c___a_p_i.html#adda9ae477524da8bab1a09185795d709',1,'slcdc_cfg_t']]],
   ['wdt_5fopen',['wdt_open',['../group___i_w_d_t.html#ae07ff8e66ee64e231841e8a578b76eff',1,'iwdt_instance_ctrl_t']]],
   ['wednesday_5fmatch',['wednesday_match',['../group___r_t_c___a_p_i.html#a45c6bc225e92af21904eefe07614b611',1,'rtc_alarm_time_t']]],
+  ['wide',['wide',['../group___g_p_t_p.html#a9b87bafc1a28fa53066fed47eefaf735',1,'gptp_pulsed_output_cfg_t']]],
   ['will_5fqos_5flevel',['will_qos_level',['../group___m_q_t_t___o_n_c_h_i_p___d_a16_x_x_x.html#a70b8d4adab526aea4d44fc06a4fedd3b',1,'mqtt_onchip_da16xxx_cfg_t']]],
   ['window_5fa_5fipl',['window_a_ipl',['../group___a_d_c.html#af4d38f88e8e629e1bec67a46f65e62dc',1,'adc_extended_cfg_t']]],
   ['window_5fa_5firq',['window_a_irq',['../group___a_d_c.html#a9cdf0d84793db3e109d6795475bd5b22',1,'adc_extended_cfg_t']]],

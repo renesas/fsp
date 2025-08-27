@@ -1,0 +1,541 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: EtherCAT SSC Interface</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.1.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle">
+<div class="title">EtherCAT SSC Interface<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___i_n_t_e_r_f_a_c_e_s.html">Interfaces</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___i_n_t_e_r_f_a_c_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Interface for EtherCAT SSC functions. </p>
+<h1><a class="anchor" id="ETHERCAT_SSC_PORT_API_SUMMARY"></a>
+Summary</h1>
+<p>The EtherCAT SSC port module (rm_ethercat_ssc_port) provides an API for EtherCAT Slave Stack Code that use the EtherCAT Slave Controler peripheral. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:structethercat__ssc__port__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__callback__args__t">ethercat_ssc_port_callback_args_t</a></td></tr>
+<tr class="separator:structethercat__ssc__port__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structethercat__ssc__port__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a></td></tr>
+<tr class="separator:structethercat__ssc__port__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structethercat__ssc__port__api__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__api__t">ethercat_ssc_port_api_t</a></td></tr>
+<tr class="separator:structethercat__ssc__port__api__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structethercat__ssc__port__instance__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__instance__t">ethercat_ssc_port_instance_t</a></td></tr>
+<tr class="separator:structethercat__ssc__port__instance__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gad9c1a4615c687826529f44ea29f90798"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a></td></tr>
+<tr class="separator:gad9c1a4615c687826529f44ea29f90798"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga64505999c1c12637ff288e706880a7a4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#ga64505999c1c12637ff288e706880a7a4">ethercat_ssc_port_event_t</a> </td></tr>
+<tr class="separator:ga64505999c1c12637ff288e706880a7a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structethercat__ssc__port__callback__args__t" id="structethercat__ssc__port__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__ssc__port__callback__args__t">&#9670;&nbsp;</a></span>ethercat_ssc_port_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_ssc_port_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Callback function parameter data </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a166b6ec3160cd9fde15fc765900db8cf"></a><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#ga64505999c1c12637ff288e706880a7a4">ethercat_ssc_port_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Event code. </td></tr>
+<tr><td class="fieldtype">
+<a id="aba39d503c7be2fa9489cf5c74bfe6117"></a>void *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. Set in <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a74d1af02bb1ec452b3fbc3bda4a77884">ethercat_ssc_port_api_t::open</a> function in <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structethercat__ssc__port__cfg__t" id="structethercat__ssc__port__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__ssc__port__cfg__t">&#9670;&nbsp;</a></span>ethercat_ssc_port_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_ssc_port_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration parameters. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a362e6afa93b71922b7c7b56b522f32c4"><td class="memItemLeft" align="right" valign="top"><a id="a362e6afa93b71922b7c7b56b522f32c4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a362e6afa93b71922b7c7b56b522f32c4">reset_hold_time</a></td></tr>
+<tr class="memdesc:a362e6afa93b71922b7c7b56b522f32c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">PHY Reset signal hold time (ms) <br /></td></tr>
+<tr class="separator:a362e6afa93b71922b7c7b56b522f32c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc5d92b90415ac9f787f617e0964209"><td class="memItemLeft" align="right" valign="top"><a id="a4fc5d92b90415ac9f787f617e0964209"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a4fc5d92b90415ac9f787f617e0964209">reset_wait_time</a></td></tr>
+<tr class="memdesc:a4fc5d92b90415ac9f787f617e0964209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait time after PHY reset relase (us) <br /></td></tr>
+<tr class="separator:a4fc5d92b90415ac9f787f617e0964209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a475977f123aebde7112ed566e35e16b0"><td class="memItemLeft" align="right" valign="top"><a id="a475977f123aebde7112ed566e35e16b0"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a475977f123aebde7112ed566e35e16b0">address_offset</a></td></tr>
+<tr class="memdesc:a475977f123aebde7112ed566e35e16b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the PHY address. <br /></td></tr>
+<tr class="separator:a475977f123aebde7112ed566e35e16b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1d2ba740f0a2686c033b893a463bd85"><td class="memItemLeft" align="right" valign="top"><a id="ab1d2ba740f0a2686c033b893a463bd85"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#ab1d2ba740f0a2686c033b893a463bd85">common_irq</a></td></tr>
+<tr class="memdesc:ab1d2ba740f0a2686c033b893a463bd85"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtherCAT IRQ interrupt number. <br /></td></tr>
+<tr class="separator:ab1d2ba740f0a2686c033b893a463bd85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5615fa61252fc2a67af3409070af60ba"><td class="memItemLeft" align="right" valign="top"><a id="a5615fa61252fc2a67af3409070af60ba"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a5615fa61252fc2a67af3409070af60ba">common_ipl</a></td></tr>
+<tr class="memdesc:a5615fa61252fc2a67af3409070af60ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtherCAT interrupt priority. <br /></td></tr>
+<tr class="separator:a5615fa61252fc2a67af3409070af60ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a749ddd662b648bcfdeab2d695330cf72"><td class="memItemLeft" align="right" valign="top"><a id="a749ddd662b648bcfdeab2d695330cf72"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a749ddd662b648bcfdeab2d695330cf72">sync0_irq</a></td></tr>
+<tr class="memdesc:a749ddd662b648bcfdeab2d695330cf72"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtherCAT Sync0 IRQ interrupt number. <br /></td></tr>
+<tr class="separator:a749ddd662b648bcfdeab2d695330cf72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcefe2c64422e7fcf8a316946715a572"><td class="memItemLeft" align="right" valign="top"><a id="abcefe2c64422e7fcf8a316946715a572"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#abcefe2c64422e7fcf8a316946715a572">sync0_ipl</a></td></tr>
+<tr class="memdesc:abcefe2c64422e7fcf8a316946715a572"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtherCAT Sync0 interrupt priority. <br /></td></tr>
+<tr class="separator:abcefe2c64422e7fcf8a316946715a572"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24de9ab76d50333f4c78e9c28a279592"><td class="memItemLeft" align="right" valign="top"><a id="a24de9ab76d50333f4c78e9c28a279592"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a24de9ab76d50333f4c78e9c28a279592">sync1_irq</a></td></tr>
+<tr class="memdesc:a24de9ab76d50333f4c78e9c28a279592"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtherCAT Sync1 IRQ interrupt number. <br /></td></tr>
+<tr class="separator:a24de9ab76d50333f4c78e9c28a279592"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5672acdadb7fbad2b3a54f3df42cdde0"><td class="memItemLeft" align="right" valign="top"><a id="a5672acdadb7fbad2b3a54f3df42cdde0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a5672acdadb7fbad2b3a54f3df42cdde0">sync1_ipl</a></td></tr>
+<tr class="memdesc:a5672acdadb7fbad2b3a54f3df42cdde0"><td class="mdescLeft">&#160;</td><td class="mdescRight">EtherCAT Sync1 interrupt priority. <br /></td></tr>
+<tr class="separator:a5672acdadb7fbad2b3a54f3df42cdde0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dee44637e410aba40e928eb138a42f9"><td class="memItemLeft" align="right" valign="top"><a id="a7dee44637e410aba40e928eb138a42f9"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a7dee44637e410aba40e928eb138a42f9">p_callback</a> )(<a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__callback__args__t">ethercat_ssc_port_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a7dee44637e410aba40e928eb138a42f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when an ISR occurs. <br /></td></tr>
+<tr class="separator:a7dee44637e410aba40e928eb138a42f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b9c36141e33c19149210ae5bd21d421"><td class="memItemLeft" align="right" valign="top"><a id="a7b9c36141e33c19149210ae5bd21d421"></a>
+<a class="el" href="group___t_i_m_e_r___a_p_i.html#structtimer__instance__t">timer_instance_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a7b9c36141e33c19149210ae5bd21d421">p_timer_instance</a></td></tr>
+<tr class="memdesc:a7b9c36141e33c19149210ae5bd21d421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to Timer instance. <br /></td></tr>
+<tr class="separator:a7b9c36141e33c19149210ae5bd21d421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47e0492282f7f3ad7e7ca1ae51d7b575"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a47e0492282f7f3ad7e7ca1ae51d7b575">p_context</a></td></tr>
+<tr class="separator:a47e0492282f7f3ad7e7ca1ae51d7b575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8546811ffb030f218b8e68b997c314e"><td class="memItemLeft" align="right" valign="top"><a id="ae8546811ffb030f218b8e68b997c314e"></a>
+void const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#ae8546811ffb030f218b8e68b997c314e">p_extend</a></td></tr>
+<tr class="memdesc:ae8546811ffb030f218b8e68b997c314e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user extension. <br /></td></tr>
+<tr class="separator:ae8546811ffb030f218b8e68b997c314e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a47e0492282f7f3ad7e7ca1ae51d7b575"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47e0492282f7f3ad7e7ca1ae51d7b575">&#9670;&nbsp;</a></span>p_context</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* ethercat_ssc_port_cfg_t::p_context</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Placeholder for user data. Passed to the user callback in <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__callback__args__t">ethercat_ssc_port_callback_args_t</a>. </p>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structethercat__ssc__port__api__t" id="structethercat__ssc__port__api__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__ssc__port__api__t">&#9670;&nbsp;</a></span>ethercat_ssc_port_api_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_ssc_port_api_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Functions implemented at the HAL layer will follow this API. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a74d1af02bb1ec452b3fbc3bda4a77884"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a74d1af02bb1ec452b3fbc3bda4a77884">open</a> )(<a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a> const *const p_cfg)</td></tr>
+<tr class="separator:a74d1af02bb1ec452b3fbc3bda4a77884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d9a185b5c5448af57927f131fa5cb9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#a0d9a185b5c5448af57927f131fa5cb9b">close</a> )(<a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const p_api_ctrl)</td></tr>
+<tr class="separator:a0d9a185b5c5448af57927f131fa5cb9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a74d1af02bb1ec452b3fbc3bda4a77884"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74d1af02bb1ec452b3fbc3bda4a77884">&#9670;&nbsp;</a></span>open</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ethercat_ssc_port_api_t::open) (<a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const p_api_ctrl, <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a> const *const p_cfg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Open driver.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to EtherCAT SSC port configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0d9a185b5c5448af57927f131fa5cb9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d9a185b5c5448af57927f131fa5cb9b">&#9670;&nbsp;</a></span>close</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  ethercat_ssc_port_api_t::close) (<a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *const p_api_ctrl)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Close driver.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_api_ctrl</td><td>Pointer to control structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="structethercat__ssc__port__instance__t" id="structethercat__ssc__port__instance__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethercat__ssc__port__instance__t">&#9670;&nbsp;</a></span>ethercat_ssc_port_instance_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethercat_ssc_port_instance_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure encompasses everything that is needed to use an instance of this interface. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="aaa601798c214a1d1dbf6c0a079c09173"></a><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a> *</td>
+<td class="fieldname">
+p_ctrl</td>
+<td class="fielddoc">
+Pointer to the control structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5b5cd0ac1b3e5db3107c53c749c35cf9"></a><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__cfg__t">ethercat_ssc_port_cfg_t</a> const  *</td>
+<td class="fieldname">
+p_cfg</td>
+<td class="fielddoc">
+Pointer to the configuration structure for this instance. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5df3637dcf177566a93b5c4bca1bc38f"></a><a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#structethercat__ssc__port__api__t">ethercat_ssc_port_api_t</a> const  *</td>
+<td class="fieldname">
+p_api</td>
+<td class="fielddoc">
+Pointer to the API structure for this instance. </td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="gad9c1a4615c687826529f44ea29f90798"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad9c1a4615c687826529f44ea29f90798">&#9670;&nbsp;</a></span>ethercat_ssc_port_ctrl_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#gad9c1a4615c687826529f44ea29f90798">ethercat_ssc_port_ctrl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Control block. Allocate an instance specific control block to pass into the API calls. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga64505999c1c12637ff288e706880a7a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64505999c1c12637ff288e706880a7a4">&#9670;&nbsp;</a></span>ethercat_ssc_port_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___e_t_h_e_r_c_a_t___s_s_c___p_o_r_t___a_p_i.html#ga64505999c1c12637ff288e706880a7a4">ethercat_ssc_port_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event code of callback function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga64505999c1c12637ff288e706880a7a4ae33cbf059059bd6baa4c54c1af613f4c"></a>ETHERCAT_SSC_PORT_EVENT_ESC_CAT_INTERRUPT&#160;</td><td class="fielddoc"><p>EtherCAT Interrupt event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga64505999c1c12637ff288e706880a7a4a1dca66ff4bbda5a9addccfb293034156"></a>ETHERCAT_SSC_PORT_EVENT_ESC_SYNC0_INTERRUPT&#160;</td><td class="fielddoc"><p>EtherCAT Sync0 Interrupt event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga64505999c1c12637ff288e706880a7a4a7ea1aeb862ca2e7e436bfb1c07ad1985"></a>ETHERCAT_SSC_PORT_EVENT_ESC_SYNC1_INTERRUPT&#160;</td><td class="fielddoc"><p>EtherCAT Sync1 Interrupt event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

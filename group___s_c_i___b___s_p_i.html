@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -285,6 +285,7 @@ Features</h2>
 </li>
 <li>Configurable bit rate</li>
 <li>DTC Support</li>
+<li>DMAC Support</li>
 <li>Callback Events<ul>
 <li>Transfer Complete <a class="anchor" id="um_spi_api_rx_overflow_callback"></a></li>
 <li>RX Overflow Error (The SCI shift register is copied to the data register before previous data was read)</li>
@@ -309,13 +310,13 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
-<td>DTC Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Enable Support for using a Transfer API</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>If support for transferring data using the DTC will be compiled in. </td></tr>
+</td><td>Enabled </td><td>Select whether to include support for DMAC or DTC transfers in the build. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; SPI (r_sci_b_spi)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_sci_b_spi). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -387,7 +388,7 @@ SCISPICLK</li>
 <tr class="tree_none">
 <td>Bitrate</td><td>Value must be an integer greater than 0</td><td>8000000 </td><td>Enter the desired bitrate.<br />
 <br />
-If the requested bitrate cannot be achieved, the settings with the largest possible value that is less than or equal to the requested bitrate is used. The theoretical bitrate is printed in a comment in the generated <a class="el" href="structsci__spi__extended__cfg__t.html">sci_spi_extended_cfg_t</a> structure. </td></tr>
+If the requested bitrate cannot be achieved, the settings with the largest possible value that is less than or equal to the requested bitrate is used. The actual bitrate is printed in a comment in the generated <a class="el" href="structsci__spi__extended__cfg__t.html">sci_spi_extended_cfg_t</a> structure. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r_sci_b_spi-clock-configuration"></a>
@@ -410,22 +411,24 @@ Clock Configuration</h2>
 <td>RA8P1</td><td>PCLKA</td></tr>
 <tr>
 <td>RA8T1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA8T2</td><td>PCLKA</td></tr>
 </table>
 </p>
 <p>The SCI peripheral uses the SCISPICLK/SCICLK or PCLKA for communication and PCLKA for internal operations. Both can be configured via the <b>Clocks</b> tab of the RA Configuration editor or by using the CGC Interface at run-time.</p>
 <h2><a class="anchor" id="r_sci_b_spi-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses SCIn_MOSI, SCIn_MISO, SCIn_SPCK, and SCIn_SS pins to communicate with on board devices.</p>
-<dl class="section note"><dt>Note</dt><dd>At high bit rates, it might be necessary to configure the pins with IOPORT_CFG_DRIVE_HIGH.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>It is recommended to configure the pins with high drive strength (or high-speed high if available) to maintain signal integrity, particularly at high bitrates. The drive strength can be set by opening the e2 studio pin configuration editor, selecting the pin, and configuring 'Drive Capacity'.</dd></dl>
 <h1><a class="anchor" id="r_sci_b_spi-usage_notes"></a>
 Usage Notes</h1>
 <h2>Transfer Complete Event</h2>
 <p>The transfer complete event is triggered when all of the data has been transferred. In slave mode if the SS pin is de-asserted then no transfer complete event is generated until the SS pin is asserted and the remaining data is transferred.</p>
 <h2>Performance</h2>
 <p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in RX Overflow errors.</p>
-<p>In order to improve performance at high bit rates, it is recommended that the instance be configured to service transfers using the DTC.</p>
+<p>In order to improve performance at high bit rates, it is recommended that the instance be configured to service transfers using the DTC or DMAC.</p>
 <h3>Transmit From RXI Interrupt</h3>
-<p>After every byte, the SCI SPI peripheral generates a transmit buffer empty interrupt and a receive buffer full interrupt. Whenever possible, the SCI SPI module handles both interrupts in the receive buffer full interrupt. This improves performance when the DTC is not being used.</p>
+<p>After every byte, the SCI SPI peripheral generates a transmit buffer empty interrupt and a receive buffer full interrupt. Whenever possible, the SCI SPI module handles both interrupts in the receive buffer full interrupt. This improves performance when the DTC or DMAC is not being used.</p>
 <h2>Slave Select Pin</h2>
 <ul>
 <li>In master mode the slave select pin must be driven in software.</li>
@@ -575,7 +578,8 @@ Data Structures</h2></td></tr>
 <li>Pointer p_api_ctrl is NULL</li>
 <li>Bit width is not 8 bits</li>
 <li>Length is equal to 0</li>
-<li>Pointer to destination is NULL </li>
+<li>Pointer to destination is NULL</li>
+<li>Transfer length is larger than supported by the transfer instances. </li>
 </ul>
 </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
@@ -656,7 +660,8 @@ Data Structures</h2></td></tr>
 <li>Pointer p_api_ctrl is NULL</li>
 <li>Pointer to source is NULL</li>
 <li>Length is equal to 0</li>
-<li>Bit width is not equal to 8 bits </li>
+<li>Bit width is not equal to 8 bits</li>
+<li>Transfer length is larger than supported by the transfer instances. </li>
 </ul>
 </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
@@ -747,7 +752,8 @@ Data Structures</h2></td></tr>
 <li>Pointer to source is NULL</li>
 <li>Pointer to destination is NULL</li>
 <li>Length is equal to 0</li>
-<li>Bit width is not equal to 8 bits </li>
+<li>Bit width is not equal to 8 bits</li>
+<li>Transfer length is larger than supported by the transfer instances. </li>
 </ul>
 </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The channel has not been opened. Open the channel first. </td></tr>
@@ -903,7 +909,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

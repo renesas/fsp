@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -1037,7 +1037,7 @@ Pin Configuration</h2>
 <tr>
 <td>LCD_CLK </td><td>Dot clock output </td><td>The maximum output frequency is 54MHz (60MHz in serial RGB mode). </td></tr>
 <tr>
-<td>LCD_DATAn </td><td>Pixel data output lines </td><td>Pin assignment and color order is based on the output block configuration. See the RA6M3 User's Manual (R01UH0886EJ0100) section 58.1.4 "Output Control for Data Format" for details. </td></tr>
+<td>LCD_DATAn </td><td>Pixel data output lines </td><td>Pin assignment and color order is based on the output block configuration. See "Output Control for Data Format" in the GLCDC section of the relevant hardware manual for details. </td></tr>
 <tr>
 <td>LCD_TCONn </td><td>Panel timing signal output </td><td>These pins can be configured to output vertical and horizontal synchronization and data valid signals. </td></tr>
 </table>
@@ -1088,7 +1088,7 @@ Color Look-Up Table (CLUT) Modes</h3>
 Other Configuration Options</h2>
 <h3><a class="anchor" id="r-glcdc-gamma"></a>
 Gamma correction</h3>
-<p>Gamma correction is performed based on a gain curved defined in the RA Configuration editor. Each point on the curve is defined by a threshold and a gain value - each gain value represents a multiplier from 0x-2x (set as 0-2047) that sets the Y-value of the slope of the gain curve, while each threshold interval sets the X-value respectively. For a more detailed explanation refer to the RA6M3 User's Manual (R01UH0886EJ0100) Figure 58.12 "Calculation of gamma correction value" and the related description above it.</p>
+<p>Gamma correction is performed based on a gain curved defined in the RA Configuration editor. Each point on the curve is defined by a threshold and a gain value - each gain value represents a multiplier from 0x-2x (set as 0-2047) that sets the Y-value of the slope of the gain curve, while each threshold interval sets the X-value respectively. For a more detailed explanation refer to Figure "Calculation of gamma correction value" and the related description above it in the GLCDC section of the relevant hardware manual.</p>
 <p>When setting threshold values three rules must be followed:</p><ul>
 <li>Each threshold value must be greater than the previous value</li>
 <li>Threshold values must be greater than zero and less than 1024</li>
@@ -1097,7 +1097,7 @@ Gamma correction</h3>
 <dl class="section note"><dt>Note</dt><dd>Gamma correction can only be applied via <a class="el" href="group___g_l_c_d_c.html#ga61603db8684d31ac86b2960096c91f58">R_GLCDC_Open</a>.</dd></dl>
 <h3><a class="anchor" id="r-glcdc-dithering"></a>
 Dithering</h3>
-<p>Dithering is a method of pixel blending that allows for smoother transitions between colors when using a limited palette. A full description of dithering is outside the scope of this document. For more information on the pattern settings and how to configure them refer to the RA6M3 User's Manual (R01UH0886EJ0100) Figure 58.13 "Configuration of dither correction block" and Figure 58.14 "Addition value selection method for 2x2 pattern dither".</p>
+<p>Dithering is a method of pixel blending that allows for smoother transitions between colors when using a limited palette. A full description of dithering is outside the scope of this document. For more information on the pattern settings and how to configure them refer to the Figures "Configuration of dither correction block" and "Addition value selection method for 2x2 pattern dither" in the GLCDC section of the relevant hardware manual.</p>
 <h2><a class="anchor" id="r-glcdc-max-res"></a>
 Maximum Resolution</h2>
 <p>Though the GLCDC is capable of outputting resolutions in excess of HD, maximum clockspeeds and bus throughput limit what can be realistically achieved. Below is a table of maximum recommended widescreen resolutions at various input color depths <b>based on clock and bus limits at 60 FPS.</b></p>
@@ -2031,7 +2031,7 @@ Alternate PHY layer, such as MIPI DSI. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

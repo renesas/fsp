@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -344,7 +344,7 @@ Waveform B</li>
 <h2><a class="anchor" id="r-slcdc-valid-configs"></a>
 Valid Configurations</h2>
 <p>Though there are many setting combinations only a limited subset are supported by the SLCDC peripheral hardware:</p>
-<p>Boards have feature Select reference voltage mode (see User's Manual (r01uh1005ej0050) for details)</p>
+<p>Boards have feature Select reference voltage mode (see relevant hardware manual for details)</p>
 <table class="doxtable">
 <tr>
 <th>Waveform </th><th>Slices </th><th>Bias </th><th>External Resistance </th><th>Internal boosting VL1 </th><th>Internal boosting VL2 </th><th>Capacitor split VCC </th><th>Capacitor split VL4  </th></tr>
@@ -400,7 +400,7 @@ Valid Configurations</h2>
 </table>
 <h2><a class="anchor" id="r-slcdc-clock-configuration"></a>
 Clock Configuration</h2>
-<p><a class="anchor" id="um_slcdc_clock_settings"></a> User's Manual (r01uh1005ej0050): The SLCDC clock can be sourced from the main clock (MOSC), sub-clock (SOSC), HOCO, LOCO or MOCO. Dividers of 4 to 1024 are available for SOSC/LOCO and 256 to 1048576 are for MOSC/HOCO/MOCO. It is recommended to adjust the divisor such that the resulting clock provides a frame frequency of 32-128 Hz (some conditions have a frame frequency 24 to 128 Hz - see Table 36.10 in the User's Manual (r01uh1005ej0050) for details).</p>
+<p><a class="anchor" id="um_slcdc_clock_settings"></a> See relevant hardware manual: The SLCDC clock can be sourced from the main clock (MOSC), sub-clock (SOSC), HOCO, LOCO or MOCO. Dividers of 4 to 1024 are available for SOSC/LOCO and 256 to 1048576 are for MOSC/HOCO/MOCO. It is recommended to adjust the divisor such that the resulting clock provides a frame frequency of 32-128 Hz (some conditions have a frame frequency 24 to 128 Hz - see Table "Combinations of display waveform, time slices, bias method, and frame frequency" in the SLCDC section of the relevant hardware manual).</p>
 <p>Others: The SLCDC clock can be sourced from the main clock (MOSC), sub-clock (SOSC), HOCO or LOCO. Dividers of 4 to 1024 are available for SOSC/LOCO and 256 to 524288 for MOSC/HOCO. It is recommended to adjust the divisor such that the resulting clock provides a frame frequency of 32-128 Hz.</p>
 <dl class="section note"><dt>Note</dt><dd>Make sure your desired source clock is enabled and running before starting SLCDC output.</dd>
 <dd>
@@ -416,7 +416,7 @@ Pin Configuration</h2>
 <tr>
 <td>COMn </td><td>Common signal output </td><td>Connect these signals to the common pins of the LCD. </td></tr>
 <tr>
-<td>VLn </td><td>Voltage reference </td><td>These pins should be connected to passive components based on the selected drive method (see section 45.7 "Supplying LCD Drive Voltages VL1, VL2, VL3, and VL4" in the RA4M1 User's Manual (R01UH0887EJ0100)). </td></tr>
+<td>VLn </td><td>Voltage reference </td><td>These pins should be connected to passive components based on the selected drive method (see "Supplying LCD Drive Voltages VL1, VL2, VL3, and VL4" in the SLCDC section of the relevant hardware manual). </td></tr>
 <tr>
 <td>CAPH, CAPL </td><td>Drive voltage generator capacitor </td><td>Connect a nonpolar 0.47uF capacitor across these pins when using internal boost or capacitor split modes. This pin is not needed when using resistance division. </td></tr>
 </table>
@@ -438,7 +438,7 @@ Limitations</h2>
 Examples</h1>
 <h2>Basic Example</h2>
 <p>Below is a basic example of minimal use of the SLCDC in an application. The SLCDC driver is initialized, output is started and a pattern is written to the segment registers.</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> slcdc_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Open SLCDC driver */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gadd4a39981e57f232de59b94611936e22">R_SLCDC_Open</a>(&amp;g_slcdc_ctrl, &amp;g_slcdc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* When using internal boost mode this delay is required to allow the boost circuit to charge. See RA4M1 User&#39;s</span></div><div class="line"><span class="comment">     * Manual (R01UH0887EJ0100) 8.2.18 &quot;Segment LCD Source Clock Control Register (SLCDSCKCR)&quot; for details. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(5, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start SLCDC output */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gaf8e1565799e0c90a1a1b7e8599761559">R_SLCDC_Start</a>(&amp;g_slcdc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write pattern to display */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#ga80519e8ebeaddc2e62a25b1fdaebd35a">R_SLCDC_Write</a>(&amp;g_slcdc_ctrl, 0, segment_data, NUM_SEGMENTS);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>While the SLCDC is running, pattern data is constantly being output. No latching or buffering is required when writing or reading segment data.</dd></dl>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> slcdc_init (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Open SLCDC driver */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gadd4a39981e57f232de59b94611936e22">R_SLCDC_Open</a>(&amp;g_slcdc_ctrl, &amp;g_slcdc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* When using internal boost mode this delay is required to allow the boost circuit to charge. See</span></div><div class="line"><span class="comment">     * &quot;Segment LCD Source Clock Control Register (SLCDSCKCR)&quot; description in SLCDC section of the relevant</span></div><div class="line"><span class="comment">     * hardware manual for details. */</span></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(5, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line">    <span class="comment">/* Start SLCDC output */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gaf8e1565799e0c90a1a1b7e8599761559">R_SLCDC_Start</a>(&amp;g_slcdc_ctrl);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Write pattern to display */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#ga80519e8ebeaddc2e62a25b1fdaebd35a">R_SLCDC_Write</a>(&amp;g_slcdc_ctrl, 0, segment_data, NUM_SEGMENTS);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>While the SLCDC is running, pattern data is constantly being output. No latching or buffering is required when writing or reading segment data.</dd></dl>
 <h2>Blinking Output</h2>
 <p>This example demonstrates how to set up blinking output using the RTC periodic interrupt. In this example it is assumed that the SLCDC has already been started.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> slcdc_blink (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err;</div><div class="line"></div><div class="line">    <span class="comment">/* Open RTC and set time/date */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#gae6b2cd0b0827d0fdef1dd148ddc354bb">R_RTC_Open</a>(&amp;r_rtc_ctrl, &amp;r_rtc_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga3bf6329a0ea01943e385499fcac01e1e">R_RTC_CalendarTimeSet</a>(&amp;r_rtc_ctrl, &amp;g_rtc_time);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set RTC periodic interrupt to 2 Hz (display blink cycle will be 1 Hz) */</span></div><div class="line">    err = <a class="code" href="group___r_t_c.html#ga0fd1ee1e11ed683d7509f251bbd1f282">R_RTC_PeriodicIrqRateSet</a>(&amp;r_rtc_ctrl, <a class="code" href="group___r_t_c___a_p_i.html#ggacbf0a3d09430a65ca1b3179819183f01a5d684a2ff7ceabe98acb755095705f4e">RTC_PERIODIC_IRQ_SELECT_1_DIV_BY_2_SECOND</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set display to blink */</span></div><div class="line">    err = <a class="code" href="group___s_l_c_d_c.html#gaf1e62cb977cfab65f01ef81274a1bfff">R_SLCDC_SetDisplayArea</a>(&amp;g_slcdc_ctrl, <a class="code" href="group___s_l_c_d_c___a_p_i.html#gga78a7cb1be89b6b370513ef5eb0782a0fa753912d38a021436a17a80cdf7c29af4">SLCDC_DISP_BLINK</a>);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Display will now continuously blink */</span></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
@@ -682,8 +682,8 @@ Data Structures</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Sets contrast to the specified level. Implements <a class="el" href="group___s_l_c_d_c___a_p_i.html#ac6a6848af8883dadbf3facea277d8dbd">slcdc_api_t::setContrast</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>Contrast can be adjusted when the SLCDC is operating in internal boost mode only. The range of values is 0-5 when 1/4 bias setting is used and 0-15 otherwise. See RA4M1 User's Manual (R01UH0887EJ0100) section 45.2.4 "LCD
-      Boost Level Control Register (VLCD)" for voltage levels at each setting.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Contrast can be adjusted when the SLCDC is operating in internal boost mode only. The range of values is 0-5 when 1/4 bias setting is used and 0-15 otherwise. See "LCD
+      Boost Level Control Register (VLCD)" description in the SLCDC section of the relevant hardware manual for voltage levels at each setting.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Device was opened successfully. </td></tr>
@@ -767,7 +767,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

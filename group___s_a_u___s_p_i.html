@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -444,7 +444,7 @@ Clock Phase/Polarity Configuration</h2>
 <h2><a class="anchor" id="r_sau_spi-pin-configuration"></a>
 Pin Configuration</h2>
 <p>This module uses SCKmn, SOmn, and SImn pins to communicate with on board devices.</p>
-<dl class="section note"><dt>Note</dt><dd>At high bit rates, it might be necessary to configure the pins with IOPORT_CFG_DRIVE_HIGH.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>It is recommended to configure the pins with high drive strength (or high-speed high if available) to maintain signal integrity, particularly at high bitrates. The drive strength can be set by opening the e2 studio pin configuration editor, selecting the pin, and configuring 'Drive Capacity'.</dd></dl>
 <h2><a class="anchor" id="r-sau_spi-enabling-dtc"></a>
 Enabling DTC with the SAU SPI</h2>
 <ul>
@@ -1035,7 +1035,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

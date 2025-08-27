@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -473,7 +473,7 @@ Option-Setting Memory</h3>
 </ul>
 <h3><a class="anchor" id="id-code"></a>
 ID Codes</h3>
-<p><a class="anchor" id="um_bsp_id_codes"></a>The ID code is a 16-byte value that can be used to protect the MCU from being connected to a debugger or from connecting in Serial Boot Mode. There are different settings that can be set for the ID code; please refer to the hardware manual for your device for available options.</p>
+<p>The ID code is a 16-byte value that can be used to protect the MCU from being connected to a debugger or from connecting in Serial Boot Mode. There are different settings that can be set for the ID code; please refer to the hardware manual for your device for available options.</p>
 <p>On MCUs that support TrustZone, option-setting registers are placed in a different locations for Non-Secure projects than for Secure or Flat projects. This is handled automatically by the BSP and linker scripts.</p>
 <p>All *_SEL registers default to allowing both Secure and Non-Secure access unless otherwise noted here. If block protection is configured in a Secure project, the BSP sets the corresponding configuration to Secure access only by updating the corresponding *_SEL register. Similarly, the LVD related settings in the OFSn_SEL registers are automatically set to Secure if the corresponding LVD monitor is used in the Secure project.</p>
 <h3><a class="anchor" id="trustzone-security-attribution"></a>
@@ -720,6 +720,8 @@ Modules</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a0_e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a0_e2.html">RA0E2</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a0_l1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a0_l1.html">RA0L1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a2_a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_a1.html">RA2A1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a2_a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a2_a2.html">RA2A2</a></td></tr>
@@ -785,6 +787,8 @@ Modules</h2></td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a8_p1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_p1.html">RA8P1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a8_t1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_t1.html">RA8T1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a8_t2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_t2.html">RA8T2</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -1467,6 +1471,36 @@ Semaphore number, controls which IPCSEMn register is used. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abbc5b2f82e01b6a9f1a695a556365f2b"></a>BSP_GRP_IRQ_LOCKUP&#160;</td><td class="fielddoc"><p>LockUp Error. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a4b08e432eb15f525ffaff6618e486282"></a>BSP_GRP_IRQ_WDT_ERROR&#160;</td><td class="fielddoc"><p>WDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a73d715e6454b59d168076be06d10bdec"></a>BSP_GRP_IRQ_LVD1&#160;</td><td class="fielddoc"><p>Voltage monitoring 1 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a2143b0cbaf6c092a3b7ae0e068f01f2d"></a>BSP_GRP_IRQ_LVD2&#160;</td><td class="fielddoc"><p>Voltage monitoring 2 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2aeca488c03742581ac72a35dd0e60e334"></a>BSP_GRP_IRQ_SOSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Sub Oscillation stop is detected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6aa6c2d5336d3155c9351648f0d31261"></a>BSP_GRP_IRQ_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillation stop is detected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2afa4ac718dea042da5e98c84c8640a6aa"></a>BSP_GRP_IRQ_NMI_PIN&#160;</td><td class="fielddoc"><p>NMI Pin interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6b144cfec9387e8320632484e8e775da"></a>BSP_GRP_IRQ_MPU_BUS_TZF&#160;</td><td class="fielddoc"><p>MPU Bus or TrustZone Filter Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab255184fb96484f560129b75b4bfe90f"></a>BSP_GRP_IRQ_COMMON_MEMORY&#160;</td><td class="fielddoc"><p>SRAM ECC or SRAM Parity Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2af7582827c980365176133116b61e9064"></a>BSP_GRP_IRQ_LOCAL_MEMORY&#160;</td><td class="fielddoc"><p>Local Memory Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abbc5b2f82e01b6a9f1a695a556365f2b"></a>BSP_GRP_IRQ_LOCKUP&#160;</td><td class="fielddoc"><p>LockUp Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2acb58670824a0842ba755ad85dda33fc8"></a>BSP_GRP_IRQ_FPU&#160;</td><td class="fielddoc"><p>FPU Exception. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a3e995598c0c99c94ff4f778e6a1fd428"></a>BSP_GRP_IRQ_MRC&#160;</td><td class="fielddoc"><p>MRAM Code read error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a1f8c1eebd20d16b6273554dfb5c00d17"></a>BSP_GRP_IRQ_MRE&#160;</td><td class="fielddoc"><p>MRAM Extra read error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab4b12d9532fc1ebd76e2ab1de827ee81"></a>BSP_GRP_IRQ_IPC&#160;</td><td class="fielddoc"><p>IPC Interrupt. </p>
+</td></tr>
 </table>
 
 </div>
@@ -1506,6 +1540,8 @@ Semaphore number, controls which IPCSEMn register is used. </td></tr>
 <tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aa0d59a00dd2ad61700675b0516ae7a7a"></a>BSP_REG_PROTECT_LVD&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the LVD: LVCMPCR, LVDLVLR, LVD1CR0, LVD1CR1, LVD1SR, LVD2CR0, LVD2CR1, LVD2SR. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3aeb5f9f0105bb14618e461c354622b94a"></a>BSP_REG_PROTECT_SAR&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to the security function. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8f69caf459fd80173db15fdee8bc6fa3ad77ed9f3a967703d3d18beebb85ba551"></a>BSP_REG_PROTECT_RESET&#160;</td><td class="fielddoc"><p>Enables writing to the registers related to reset control. </p>
 </td></tr>
 </table>
 
@@ -2876,14 +2912,7 @@ Delays may be longer than expected when compiler optimization is turned off.</dd
 <p>This function is called at various points during the startup process. This function is declared as a weak symbol higher up in this file because it is meant to be overridden by a user implemented version. One of the main uses for this function is to call functional safety code during the startup process. To use this function just copy this function into your own code and modify it to meet your needs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Where the code currently is in the start up process</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function is called at various points during the startup process. This implementation uses the event that is called right before main() to set up the pins.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Where at in the start up process the code is currently at </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Where the code currently is in the start up process </td></tr>
   </table>
   </dd>
 </dl>
@@ -2912,7 +2941,7 @@ Delays may be longer than expected when compiler optimization is turned off.</dd
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -283,6 +283,7 @@ Usage Notes</h1>
 <li>ARP is handled directly by the WiFi module</li>
 <li>DHCP is always enabled on module by the rm_wifi_onchip_silex driver, thus the software DHCP stack is unsupported.</li>
 <li>The source port will not be used when binding a TCP or UDP socket. Applications should set the source port to <code>NX_ANY_PORT</code>.</li>
+<li>Use of the NetX Duo FTP addon is not recommended as certain FTP functions will return a <code>NX_NO_PACKET</code> due to how SX-ULPGN firmware handles bundling packet data.</li>
 </ul>
 <h2>On Module Alternatives</h2>
 <p>Instead of using NetX Duo Software Addons the following features can be performed directly on the WiFi module by calling the appropriate function instead if desired:</p>
@@ -312,7 +313,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -406,7 +406,7 @@ Support Device Class</h1>
 <tr>
 <td align="left"></td><td align="left">PPRN </td><td align="left">Yes </td><td align="left">Yes </td><td align="left">Yes </td></tr>
 <tr>
-<td align="left"></td><td align="left">PAUD </td><td align="left">&ndash; </td><td align="left">&ndash; </td><td align="left">Yes </td></tr>
+<td align="left"></td><td align="left">PAUD </td><td align="left">Yes </td><td align="left">Yes </td><td align="left">Yes </td></tr>
 <tr>
 <td align="left"></td><td align="left">DFU </td><td align="left">&ndash; </td><td align="left">&ndash; </td><td align="left">Yes </td></tr>
 <tr>
@@ -611,7 +611,6 @@ Usage Notes</h1>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the USB driver:</p>
 <ul>
-<li>The current USB driver does not support hub.</li>
 <li>In USB host mode, the module does not support suspend during data transfers. Execute suspend only after confirming that all transfers are complete.</li>
 <li>Multiconfigurations are not supported.</li>
 <li>This driver does not support CPU transfers using the D0FIFO/D1FIFO register.</li>
@@ -694,6 +693,36 @@ Add HMSC and HCDC Stack</div></div>
 <img src="USB_Host_composite_stack2.png" alt="USB_Host_composite_stack2.png"/>
 <div class="caption">
 Delete g_basic1 instance</div></div>
+ <h2>Using Hub</h2>
+<ul>
+<li>The user can use USB Hub when using the following device classes (Bare Metal + FreeRTOS):<ul>
+<li>Host Communication Device Class (HCDC)</li>
+<li>Host Human Interface Device Class (HHID)</li>
+<li>Host Mass Storage Class (HMSC)</li>
+</ul>
+</li>
+<li>When configuring single-class host hub, be sure to enable hub support property in each class stack: <div class="image">
+<img src="USB_hub_single_class_enable.png" alt="USB_hub_single_class_enable.png"/>
+<div class="caption">
+USB Hub CDC-CDC setting</div></div>
+ <h3>Note</h3>
+</li>
+</ul>
+<ul>
+<li>For USB Hub usage with Azure RTOS, please refer to <a class="el" href="group___u_s_b_x.html">Azure RTOS USBX Port (rm_usbx_port)</a>.</li>
+<li>The followings are the limitation when using USB Hub:<ul>
+<li>The current USB driver does not support for multi-class host hub and DMA transfer.</li>
+<li>The USB driver allocates USB PIPE9 for USB Hub.</li>
+<li>For HCDC, the user cannot connect more than 2 CDC devices to USB Hub.</li>
+<li>For HHID, the user cannot connect more than 3 HID devices to USB Hub.</li>
+<li>For HMSC, the user cannot connect more than 4 MSC devices to USB Hub.</li>
+</ul>
+</li>
+<li>Depending on the Hub used, it may be necessary to supply power to the Hub.</li>
+<li>For HHID Hub, do not connect two HID devices that support both Interrupt IN and Interrupt Out transfer.</li>
+<li>For HMSC Hub, HMSC driver may not work properly due to the combination of the Hub device and USB stick.</li>
+<li>HVND and HCDC-ECM do not support USB Hub.</li>
+</ul>
 <h2><a class="anchor" id="r-usb_basic-uclk_setting"></a>
 UCLK setting</h2>
 <p>Enable UCLK in "Clocks" tab on e&sup2; studio when using the following MCU.</p><ol type="1">
@@ -2233,7 +2262,7 @@ In the FreeRTOS, please specify one of the following to the 1st argument of this
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

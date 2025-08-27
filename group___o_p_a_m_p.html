@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -941,7 +941,7 @@ OPAMP2- connection. </td></tr>
 <p>Not supported on all MCUs. See hardware manual for details. Not supported if configured for low power mode (OPAMP_MODE_LOW_POWER).</p>
 <p>This function is not reentrant. Only one side of one op-amp can be trimmed at a time. Complete the procedure for one side of one channel before calling trim() with command OPAMP_TRIM_CMD_START again.</p>
 <p>Implements <a class="el" href="group___o_p_a_m_p___a_p_i.html#ac782f4e26e8e1f22cc47f2659dcf6989">opamp_api_t::trim</a>.</p>
-<p>Reference: Section 37.9 "User Offset Trimming" RA2A1 hardware manual R01UM0008EU0130. The trim procedure works as follows:</p><ul>
+<p>See "User Offset Trimming" in the OPAMP section of the relevant hardware manual. The trim procedure works as follows:</p><ul>
 <li>Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_START.</li>
 <li>Connect a fixed voltage to the Pch (+) input.</li>
 <li>Connect the Nch (-) input to the op-amp output to create a voltage follower.</li>
@@ -1027,7 +1027,7 @@ OPAMP2- connection. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

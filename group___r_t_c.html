@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -290,7 +290,7 @@ Features</h2>
 <ul>
 <li>An alarm interrupt generated on a match of any combination of year, month, day, day of the week, hour, minute or second</li>
 <li>A periodic interrupt generated every 2, 1, 1/2, 1/4, 1/8, 1/16, 1/32, 1/64, 1/128, or 1/256 second(s)</li>
-<li>A carry interrupt is used internally when reading time from the RTC calender to get accurant time readings. <dl class="section note"><dt>Note</dt><dd>See section "23.3.5 Reading 64-Hz Counter and Time" of the RA6M3 manual R01UH0886EJ0100 for more details.<br />
+<li>A carry interrupt is used internally when reading time from the RTC calender to get accurant time readings. <dl class="section note"><dt>Note</dt><dd>See "Reading 64-Hz Counter and Time" in the RTC section of the relevant hardware manual for more details.<br />
 </dd></dl>
 A user-defined callback function can be registered (in the <a class="el" href="group___r_t_c___a_p_i.html#aafcde8ffb1e01cccbfa0eb9d0506674a">rtc_api_t::open</a> API call) and will be called from the interrupt service routine (ISR) for alarm and periodic interrupt. When called, it is passed a pointer to a structure (<a class="el" href="group___r_t_c___a_p_i.html#structrtc__callback__args__t">rtc_callback_args_t</a>) that holds a user-defined context pointer and an indication of which type of interrupt was fired.</li>
 </ul>
@@ -302,8 +302,8 @@ A user-defined callback function can be registered (in the <a class="el" href="g
 <li>Adjustment by software</li>
 </ul>
 <p><a class="anchor" id="um_rtc_set_time_error_adjustment"></a> The error adjustment is reset every time RTC is reconfigured or time is set.</p>
-<dl class="section note"><dt>Note</dt><dd>RTC driver configurations do not do error adjustment internally while initiliazing the driver. Application must make calls to the error adjustment api's for desired adjustment. See section 26.3.8 "Time Error Adjustment
-       Function" of the RA6M3 manual R01UH0886EJ0100) for more details on this feature</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>RTC driver configurations do not do error adjustment internally while initiliazing the driver. Application must make calls to the error adjustment APIs for desired adjustment. See "Time Error Adjustment
+       Function" in the RTC section of the relevant hardware manual for more details on this feature.</dd></dl>
 <h1><a class="anchor" id="r-rtc-configuration"></a>
 Configuration</h1>
 <p><h2>Build Time Configurations for r_rtc</h2>
@@ -381,7 +381,7 @@ Subtraction</li>
 <td>Carry Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the carry interrupt priority. </td></tr>
 </table>
 </p>
-<dl class="section note"><dt>Note</dt><dd>See 23.2.20 Frequency Register (RFRH/RFRL) of the RA6M3 manual R01UH0886EJ0100) for more details</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>See "Frequency Register (RFRH/RFRL)" in the RTC section of the relevant hardware manual for more details</dd></dl>
 <h2><a class="anchor" id="r-rtc-interrupt-configuration"></a>
 Interrupt Configuration</h2>
 <p>To activate interrupts for the RTC module, the desired interrupts must be enabled, The underlying implementation will be expected to handle any interrupts it can support and notify higher layers via callback.</p>
@@ -1023,7 +1023,7 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

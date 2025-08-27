@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -1240,7 +1240,7 @@ Limitations</h2>
 </ul>
 </li>
 <li>The CANFD peripheral has a limited amount of buffer pool RAM available for allocating RX MBs and FIFO stages. See the <a class="el" href="group___c_a_n_f_d.html#r-canfd-buffer-pool">RX Buffer Pool</a> section above for more information.</li>
-<li>When switching modes with <a class="el" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a> a delay of up to several CAN frames may be incurred. Consult Section 32.3.4.2 "Timing of Channel Mode Change" in the RA6M5 User's Manual (R01UH0891EJ0100) for details.</li>
+<li>When switching modes with <a class="el" href="group___c_a_n_f_d.html#ga00c7557917ce6e78eb2969d7b5855890">R_CANFD_ModeTransition</a> a delay of up to several CAN frames may be incurred. Consult Section "Timing of Channel Mode Change" in the CANFD section of the relevant hardware manual for details.</li>
 <li>Only one channel will receive callbacks for Global Errors. If a different channel is opened first these error interrupts will be suppressed until the specified handler channel is opened.</li>
 <li>The CANFD driver does not currently support updating AFL entries in Operation mode (communication active). Please refer to the "Updating AFL entry during communication" section in your device's manual on how to use this feature (if available).</li>
 </ul>
@@ -1934,7 +1934,7 @@ Global configuration (global error callback channel only) </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

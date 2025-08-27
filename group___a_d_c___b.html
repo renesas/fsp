@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -392,9 +392,9 @@ Background Continuous Scan Mode</h3>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><a class="el" href="group___a_d_c___b.html#r-adc-b-background-scan-mode">Background Continuous Scan Mode</a> is only available for <a class="el" href="group___a_d_c___b.html#r-adc-b-hybrid-mode">Hybrid Mode</a></dd></dl>
 <h3>Synchronous-Scan Mode</h3>
-<p><a class="anchor" id="um_adc_api_synchronous_mode"></a> When synchronous operation is enabled all A/D conversions are guaranteed to begin and end based on a user-configured period. When both conversion units are selected for synchronous scan they run from the same period, allowing for consistent timing of simultaneous conversions. Consult section 36.3.17 "Synchronous Operation" in the RA6T2 User's Manual (R01UH0951EJ0100) for details.</p>
+<p><a class="anchor" id="um_adc_api_synchronous_mode"></a> When synchronous operation is enabled all A/D conversions are guaranteed to begin and end based on a user-configured period. When both conversion units are selected for synchronous scan they run from the same period, allowing for consistent timing of simultaneous conversions. Consult "Synchronous Operation" in the A/D Converter section of the relevant hardware manual.</p>
 <h2>ADC_B Conversion Methods</h2>
-<p><a class="anchor" id="um_adc_b_conversion_method"></a> </p><dl class="section note"><dt>Note</dt><dd>The ADC peripheral supports specific high-speed, high-precision, and normal-precision channels. See Table 46.34 "A/D conversion characteristics" in the RA6T2 User's Manual (R01UH0951EJ0100) for details about what conversion methods are supported by specific physical channels.</dd></dl>
+<p><a class="anchor" id="um_adc_b_conversion_method"></a> </p><dl class="section note"><dt>Note</dt><dd>The ADC peripheral supports specific high-speed, high-precision, and normal-precision channels. See Table "A/D conversion characteristics" in the A/D Converter section of the relevant hardware manual for details about what conversion methods are supported by specific physical channels.</dd></dl>
 <h3><a class="anchor" id="adc-b-sar-mode"></a>
 Successive Approximation Register (SAR) Mode</h3>
 <ul>
@@ -436,7 +436,7 @@ The digital filter must be enabled for ADC units configured to use <a class="el"
 <p><a class="anchor" id="um_adc_api_configuring_sample_and_hold"></a>Enabling sample-and-hold on one or more channels instructs the ADC to perform sampling on all channels as soon as a group scan is started. Internal circuitry holds the sampled voltages until the conversion unit is ready.</p>
 <dl class="section note"><dt>Note</dt><dd>Each sample-and-hold unit is connected to two analog channels (0/1, 2/3 etc). When this function is enabled on both members of a pair only one of the two may be scanned at a time.</dd>
 <dd>
-Enabling sample-and-hold functionality reduces maximum scan frequency because the sample hold time is added to each scan. Refer to the hardware manual for details on the sample-and-hold time. Consult section 46.4 "ADC Characteristics" in the RA6T2 User's Manual (R01UH0951EJ0100) for details.</dd>
+Enabling sample-and-hold functionality reduces maximum scan frequency because the sample hold time is added to each scan. Refer to the hardware manual for details on the sample-and-hold time. Consult section "ADC Characteristics" of the relevant hardware manual for details.</dd>
 <dd>
 If you use the channel-dedicated sample-and-hold circuits in Hybrid mode, the virtual channels and the scan groups are constrained. A dummy channel must be configured as last within the group. The A/D conversion data of the channel used as the dummy conversion channel is not guaranteed. See Operation in Hybrid Mode with Channel-dedicated Sample-and-hold Circuit section in the User Manual for more information.</dd></dl>
 <h2>Self-Diagnosis</h2>
@@ -1129,31 +1129,31 @@ pga_gain[4]</td>
 <td class="fielddoc">
 PGA Gain selection. </td></tr>
 <tr><td class="fieldtype">
-<a id="a0b0888d026315f6e91d0d73c09e16152"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a1fa7934f4afe39a54a9e728c3f3029bc"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a8b02e4d747bb7eef64d45d357645642c"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8adc__filter__selection">adc_b_extended_cfg_t</a></td>
+<a id="acd49d84c2eb45ac8aff2342fbae44e45"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8adc__filter__selection">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 adc_filter_selection[2]</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="af6f1702dd9367ef142093f54fee74007"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a04e12e57e83e696077279b9c42d58ba8"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a341dc209e88a6f74ac0c8c61af22d265"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a5529ac97349d496b115f9f588887c731"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a460d39ba668bc266faa299e375cd9e6e"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="acc1f34fb27d32570b94d113881b3df2e"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1165,13 +1165,13 @@ scan_group_enable</td>
 <td class="fielddoc">
 Scan Group enable register data. </td></tr>
 <tr><td class="fieldtype">
-<a id="a4b1fdd6d81419b05cb33870ee5d0e5ac"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a55f36b92bac64c91661fead68a13c261"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a459df8f2aa350e1fef4013d1e8de727b"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a3b0387a36beb402a533c0f84698e75ea"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1183,13 +1183,13 @@ fifo_interrupt_enable_mask</td>
 <td class="fielddoc">
 FIFO interrupt enable register data. </td></tr>
 <tr><td class="fieldtype">
-<a id="a04e12e57e83e696077279b9c42d58ba8"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a760fc0b8b2c09116e9f0fd10a6e0f738"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a5529ac97349d496b115f9f588887c731"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a59f8e61dfbd67c097bd3ac6b1e1e5b86"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -1213,7 +1213,7 @@ p_isr_cfg</td>
 <td class="fielddoc">
 Pointer to ISR configuration. </td></tr>
 <tr><td class="fieldtype">
-<a id="acc1f34fb27d32570b94d113881b3df2e"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
+<a id="a50633f7b6e206f3b2e078b1c2d93623d"></a>union <a class="el" href="group___a_d_c___b.html#unionadc__b__extended__cfg__t_8____unnamed____">adc_b_extended_cfg_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
@@ -2495,7 +2495,7 @@ The self-calibration process will disable hardware triggers that were previously
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

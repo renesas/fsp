@@ -39,7 +39,9 @@ var group___g_p_t =
       [ "compare_match_value", "group___g_p_t.html#a675417f6a403fed9258fe678ae934171", null ],
       [ "compare_match_status", "group___g_p_t.html#a9220b2bd52f1ae03647b04e48610b8ff", null ],
       [ "p_pwm_cfg", "group___g_p_t.html#a55e5f85f57b77fd7ee5a1de7ff39da27", null ],
-      [ "gtior_setting", "group___g_p_t.html#ad8b8b467339a151f016017d175df2f9c", null ]
+      [ "gtior_setting", "group___g_p_t.html#ad8b8b467339a151f016017d175df2f9c", null ],
+      [ "gtioca_polarity", "group___g_p_t.html#ac74969a4dcc449fc1f94742f70754a5d", null ],
+      [ "gtiocb_polarity", "group___g_p_t.html#ad169a7acd47a1cdaeab62ea659a0a4d3", null ]
     ] ],
     [ "gpt_io_pin_t", "group___g_p_t.html#gaabd4a03d16b1b4254cc44c7779f44c60", [
       [ "GPT_IO_PIN_GTIOCA", "group___g_p_t.html#ggaabd4a03d16b1b4254cc44c7779f44c60aec2d2c471241869efb57a9a48a5d0eda", null ],
@@ -180,6 +182,10 @@ var group___g_p_t =
     [ "gpt_pwm_output_delay_edge_t", "group___g_p_t.html#ga6a1389fe5c3bef2301d294b88263628e", [
       [ "GPT_PWM_OUTPUT_DELAY_EDGE_RISING", "group___g_p_t.html#gga6a1389fe5c3bef2301d294b88263628ea51901797e055f1ec3e4dbe96bff03086", null ],
       [ "GPT_PWM_OUTPUT_DELAY_EDGE_FALLING", "group___g_p_t.html#gga6a1389fe5c3bef2301d294b88263628eab5c109cf3de710e61c90c3be2d72d9b7", null ]
+    ] ],
+    [ "gpt_gtioc_polarity_t", "group___g_p_t.html#ga6382ba99cb9e28fd3580598dee92b6dd", [
+      [ "GPT_GTIOC_POLARITY_NORMAL", "group___g_p_t.html#gga6382ba99cb9e28fd3580598dee92b6ddaa4a8d9277f93ea8c88627b3849f48a61", null ],
+      [ "GPT_GTIOC_POLARITY_INVERTED", "group___g_p_t.html#gga6382ba99cb9e28fd3580598dee92b6dda281d35e2524db218c1698497d0d0bafa", null ]
     ] ],
     [ "R_GPT_Open", "group___g_p_t.html#ga97d0a9c1a8fb6b88d1c12756dd8ce2d2", null ],
     [ "R_GPT_Stop", "group___g_p_t.html#ga1e6af74d7faaf735f5847a34121eff71", null ],

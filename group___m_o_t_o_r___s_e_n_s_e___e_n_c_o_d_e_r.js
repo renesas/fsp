@@ -9,6 +9,10 @@ var group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r =
       [ "MOTOR_SENSE_ENCODER_MODE_BOOT", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gga0cddb3bc3b5316771f6e4767651c3567a980eecde1715a6bcde143dcf753cd454", null ],
       [ "MOTOR_SENSE_ENCODER_MODE_DRIVE", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gga0cddb3bc3b5316771f6e4767651c3567a8fec92f38407f8d0583bf73095a4f8f8", null ]
     ] ],
+    [ "motor_sense_encoder_speed_detect_type_t", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaeef89660d16927c4f7cbecfedda50f8d", [
+      [ "MOTOR_SENSE_ENCODER_SPEED_DETECT_WIDTH", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ggaeef89660d16927c4f7cbecfedda50f8da1d241f14ee7f261c04add911eed97712", null ],
+      [ "MOTOR_SENSE_ENCODER_SPEED_DETECT_CARRIER", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ggaeef89660d16927c4f7cbecfedda50f8dab6c821aede1e59bd2b1638a622981fd7", null ]
+    ] ],
     [ "RM_MOTOR_SENSE_ENCODER_Open", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga872e1083c53f27b82a0c1e6140b77916", null ],
     [ "RM_MOTOR_SENSE_ENCODER_Close", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaba0c9a99fae3a271c5a80e75a7acc747", null ],
     [ "RM_MOTOR_SENSE_ENCODER_Reset", "group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gadae598aac0a4cf1924e9abb98aa22340", null ],

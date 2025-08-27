@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.0.0</span>
+   &#160;<span id="projectnumber">Release v6.1.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -320,6 +320,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Support HALL sensor</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Support</li>
+<li>
+Unsupport</li>
+</ul>
+</td><td>Support </td><td></td></tr>
 </table>
  <h2>Configurations for Motor &gt; Motor Angle and Speed Calculation with encoder (rm_motor_sense_encoder)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor Angle and Speed Calculation with encoder (rm_motor_sense_encoder).<br />
@@ -330,6 +338,26 @@ This module can be added to the Stacks tab via New Stack &gt; Motor &gt; Motor A
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> General  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_motor_sense_encoder0 </td><td>Module name. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Hall sensor  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor input port U</td><td>Manual Entry</td><td>BSP_IO_PORT_09_PIN_07 </td><td>U-phase Hall sensor input port </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor input port V</td><td>Manual Entry</td><td>BSP_IO_PORT_09_PIN_05 </td><td>V-phase Hall sensor input port </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor input port W</td><td>Manual Entry</td><td>BSP_IO_PORT_09_PIN_06 </td><td>W-phase Hall sensor input port </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #1</td><td>Must be a valid integer</td><td>1 </td><td>Hall sensor pattern #1 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #2</td><td>Must be a valid integer</td><td>5 </td><td>Hall sensor pattern #2 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #3</td><td>Must be a valid integer</td><td>4 </td><td>Hall sensor pattern #3 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #4</td><td>Must be a valid integer</td><td>6 </td><td>Hall sensor pattern #4 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #5</td><td>Must be a valid integer</td><td>2 </td><td>Hall sensor pattern #5 </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">sensor pattern #6</td><td>Must be a valid integer</td><td>3 </td><td>Hall sensor pattern #6 </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Motor Parameter  </td></tr>
 <tr class="tree_lvl_1_item">
@@ -378,6 +406,14 @@ Position</li>
 <td>LPF parameter for Highspeed Filter</td><td>Must be a valid non-negative value</td><td>0.1F </td><td>Highspeed mode speed LPF parameter </td></tr>
 <tr class="tree_none">
 <td>Counts to change speed</td><td>Must be a valid positive integer.</td><td>8U </td><td>Counts for mode change of position speed calculation </td></tr>
+<tr class="tree_none">
+<td>Speed Detection Type</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Use capture width</li>
+<li>
+Use carrier interrupt</li>
+</ul>
+</td><td>Use capture width </td><td>Select Speed detection Type </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm-motor_sense_encoder-clock-configuration"></a>
@@ -400,6 +436,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga46301fa621305fbc5d6837a7952a2cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0cddb3bc3b5316771f6e4767651c3567"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#ga0cddb3bc3b5316771f6e4767651c3567">motor_sense_encoder_mode_t</a> </td></tr>
 <tr class="separator:ga0cddb3bc3b5316771f6e4767651c3567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeef89660d16927c4f7cbecfedda50f8d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaeef89660d16927c4f7cbecfedda50f8d">motor_sense_encoder_speed_detect_type_t</a> </td></tr>
+<tr class="separator:gaeef89660d16927c4f7cbecfedda50f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga46301fa621305fbc5d6837a7952a2cc1"></a>
@@ -439,6 +477,26 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="gga0cddb3bc3b5316771f6e4767651c3567a980eecde1715a6bcde143dcf753cd454"></a>MOTOR_SENSE_ENCODER_MODE_BOOT&#160;</td><td class="fielddoc"><p>Boot mode (Angle adjustment status) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga0cddb3bc3b5316771f6e4767651c3567a8fec92f38407f8d0583bf73095a4f8f8"></a>MOTOR_SENSE_ENCODER_MODE_DRIVE&#160;</td><td class="fielddoc"><p>Drive mode (Normal work status) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaeef89660d16927c4f7cbecfedda50f8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeef89660d16927c4f7cbecfedda50f8d">&#9670;&nbsp;</a></span>motor_sense_encoder_speed_detect_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___m_o_t_o_r___s_e_n_s_e___e_n_c_o_d_e_r.html#gaeef89660d16927c4f7cbecfedda50f8d">motor_sense_encoder_speed_detect_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaeef89660d16927c4f7cbecfedda50f8da1d241f14ee7f261c04add911eed97712"></a>MOTOR_SENSE_ENCODER_SPEED_DETECT_WIDTH&#160;</td><td class="fielddoc"><p>Use captured width. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaeef89660d16927c4f7cbecfedda50f8dab6c821aede1e59bd2b1638a622981fd7"></a>MOTOR_SENSE_ENCODER_SPEED_DETECT_CARRIER&#160;</td><td class="fielddoc"><p>Use carrier interrupt. </p>
 </td></tr>
 </table>
 
@@ -982,7 +1040,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.0.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>
