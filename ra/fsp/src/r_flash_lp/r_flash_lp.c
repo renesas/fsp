@@ -1586,7 +1586,8 @@ static fsp_err_t r_flash_lp_write (flash_lp_instance_ctrl_t * const p_ctrl)
 
 /*******************************************************************************************************************//**
  * Execute a single Write operation on the Low Power Data Flash data.
- * See Figure 37.21 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See "Flowchart for consecutive programming of the code flash" in the Flash Memory section of the relevant
+ * hardware manual
  *
  * @param[in]  p_ctrl                      Pointer to the Flash control block
  **********************************************************************************************************************/
@@ -1619,7 +1620,7 @@ static void r_flash_lp_df_write_operation (flash_lp_instance_ctrl_t * const p_ct
 
 /*******************************************************************************************************************//**
  * Execute a single Write operation on the Low Power Code Flash data.
- * See Figure 37.19 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See "Flowchart for programming of the code flash" in the Flash Memory section of the relevant hardware manual
  *
  * @param[in]  p_ctrl                      Pointer to the Flash control block
  **********************************************************************************************************************/
@@ -1799,7 +1800,9 @@ static fsp_err_t r_flash_lp_cf_blankcheck (flash_lp_instance_ctrl_t * const p_ct
 
 /*******************************************************************************************************************//**
  * Initiates a flash command.
- * See Figures 37.23, 37.24, 37.26 and 37.27 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See Figures "Flowchart for the code flash block erase procedure", "Flowchart for the data flash block erase procedure",
+ * "Flowchart for the data flash chip erase procedure", "Flowchart for the code flash blank check procedure"
+ * in the Flash Memory section of the relevant hardware manual.
  *
  * @param[in]  start_addr      Start address of the operation.
  * @param[in]  num_bytes       Number of bytes beginning at start_addr.
@@ -1826,7 +1829,9 @@ static void r_flash_lp_process_command (const uint32_t start_addr, uint32_t num_
 
 /*******************************************************************************************************************//**
  * This function switches the peripheral from P/E mode for Code Flash or Data Flash to Read mode.
- * See Figures 37.17 and 37.18 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See Figures "Procedure for changing from code flash P/E mode to read mode", "Procedure for changing from data
+ * flash P/E mode to read mode" in the Flash Memory section of the relevant hardware manual.
+ *
  *
  * @param[in]  p_ctrl                    Pointer to the Flash control block
  * @retval     FSP_SUCCESS               Successfully entered P/E mode.
@@ -1874,10 +1879,10 @@ static fsp_err_t r_flash_lp_pe_mode_exit (flash_lp_instance_ctrl_t * const p_ctr
 #if FLASH_LP_CFG_CODE_FLASH_PROGRAMMING_ENABLE
     if (flash_pe_mode == FLASH_LP_FENTRYR_CF_PE_MODE)
     {
- #if BSP_FEATURE_BSP_FLASH_CACHE
+ #if BSP_FEATURE_FLASH_CACHE
         R_BSP_FlashCacheEnable();
  #endif
- #if BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER
+ #if BSP_FEATURE_FLASH_PREFETCH_BUFFER
         R_FACI_LP->PFBER = 1;
  #endif
     }
@@ -1888,7 +1893,7 @@ static fsp_err_t r_flash_lp_pe_mode_exit (flash_lp_instance_ctrl_t * const p_ctr
 
 /*******************************************************************************************************************//**
  * This function resets the Flash sequencer.
- * See Figure 37.19 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See figure "Flowchart for programming of the code flash" in the Flash Memory section of the relevant hardware manual.
  *
  * @param[in]  p_ctrl          Pointer to the Flash control block
  **********************************************************************************************************************/
@@ -2064,8 +2069,8 @@ void r_flash_lp_df_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
 
     r_flash_lp_delay_us(FLASH_LP_WAIT_TDSTOP, p_ctrl->system_clock_frequency);
 
-    /* See "Procedure for changing from the read mode to the data flash P/E mode": Figure 37.16 in Section 37.13.3
-     * of the RA2L1 manual r01uh0853ej0100-ra2l1 */
+    /* See figure "Procedure for changing from the read mode to the data flash P/E mode" in the Flash Memory section
+     * of the relevant hardware manual. */
 #if BSP_FEATURE_FLASH_LP_VERSION == 3
 
     /* If the device is not in high speed mode enable LVPE mode as per the flash documentation. */
@@ -2101,7 +2106,7 @@ void r_flash_lp_df_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl)
  **********************************************************************************************************************/
 static void r_flash_lp_write_fpmcr (uint8_t value)
 {
-    /* The procedure for writing to FPMCR is documented in Section 37.3.4 of the RA2L1 manual r01uh0853ej0100-ra2l1 */
+    /* Procedure for writing to FPMCR is documented in "FPR : Protection Unlock Register" description in the Flash Memory section of the relevant hardware manual. */
     R_FACI_LP->FPR = FLASH_LP_FPR_UNLOCK;
 
     R_FACI_LP->FPMCR = value;
@@ -2171,7 +2176,8 @@ static fsp_err_t r_flash_lp_access_window_set (flash_lp_instance_ctrl_t * const 
 
 /*******************************************************************************************************************//**
  * Set the id code
- * See Figure 37.28 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See figure "Simple flowchart for the procedure for Startup Area Information and FSPR Program/Access
+ * Window Information Program/OCDID information Program" in the Flash Memory section of the relevant hardware manual.
  *
  * @param      p_ctrl                Pointer to the instance control block
  * @param      p_id_code             Pointer to the code to be written
@@ -2320,7 +2326,8 @@ static fsp_err_t r_flash_lp_set_startup_area_boot (flash_lp_instance_ctrl_t * co
 
 /*******************************************************************************************************************//**
  * Command processing for the extra area.
- * See Figure 37.28 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See figure "Simple flowchart for the procedure for Startup Area Information and FSPR Program/Access
+ * Window Information Program/OCDID information Program" in the Flash Memory section of the relevant hardware manual.
  *
  * @param[in]  start_addr_startup_value  Determines the Starting block for the Code Flash access window.
  * @param[in]  end_addr                  Determines the Ending block for the Code Flash access window.
@@ -2404,7 +2411,8 @@ static void r_flash_lp_extra_operation (const uint32_t    start_addr_startup_val
 /*******************************************************************************************************************//**
  * Wait for the current command to finish processing and clear the FCR register. If MF4 is used clear the processing
  * bit before clearing the rest of FCR.
- * See Figure 37.28 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See figure "Simple flowchart for the procedure for Startup Area Information and FSPR Program/Access
+ * Window Information Program/OCDID information Program" in the Flash Memory section of the relevant hardware manual.
  *
  * @param[in]  timeout         The timeout
  * @retval     FSP_SUCCESS     The command completed successfully.
@@ -2482,10 +2490,10 @@ static fsp_err_t r_flash_lp_extra_check (flash_lp_instance_ctrl_t * const p_ctrl
 void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl, bool bank_programming)
 {
     /* While the Flash API is in use we will disable the Flash Cache. */
- #if BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER
+ #if BSP_FEATURE_FLASH_PREFETCH_BUFFER
     R_FACI_LP->PFBER = 0;
  #endif
- #if BSP_FEATURE_BSP_FLASH_CACHE
+ #if BSP_FEATURE_FLASH_CACHE
     R_BSP_FlashCacheDisable();
  #endif
 
@@ -2514,8 +2522,8 @@ void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl, bool 
 
     FLASH_LP_PRV_FENTRYR = FLASH_LP_FENTRYR_CODEFLASH_PE_MODE;
 
-    /* See "Procedure for changing from read mode to code flash P/E mode": See Figure 37.15 in Section 37.13.3 of the
-     * RA2L1 manual r01uh0853ej0100-ra2l1 */
+    /* See figure "Procedure for changing from read mode to code flash P/E mode"
+     * in the Flash Memory section of the relevant hardware manual. */
  #if BSP_FEATURE_FLASH_LP_VERSION == 3
     r_flash_lp_write_fpmcr(FLASH_LP_DISCHARGE_1);
 
@@ -2564,7 +2572,7 @@ void r_flash_lp_cf_enter_pe_mode (flash_lp_instance_ctrl_t * const p_ctrl, bool 
 /*******************************************************************************************************************//**
  * Wait for the current command to finish processing and clear the FCR register. If MF4 is used clear the processing
  * bit before clearing the rest of FCR.
- * See Figure 37.19 in Section 37.13.3 of the RA2L1 manual r01uh0853ej0100-ra2l1
+ * See figure "Flowchart for programming of the code flash" in the Flash Memory section of the relevant hardware manual.
  *
  * @param[in]  timeout         The timeout
  * @retval     FSP_SUCCESS     The command completed successfully.
@@ -2647,8 +2655,8 @@ fsp_err_t r_flash_lp_set_fisr (flash_lp_instance_ctrl_t * const p_ctrl)
 
 #if BSP_FEATURE_FLASH_LP_VERSION == 4
 
-    /* If the flash clock is larger than 32 increment FISR_b.PCKA by 1 for every 2MHZ. (See Section 37.3.7 "Flash
-     * Internal Setting Register" of the RA2L1 manual r01uh0853ej0100-ra2l1 */
+    /* If the flash clock is larger than 32 increment FISR_b.PCKA by 1 for every 2MHZ. (See "Flash
+     * Internal Setting Register" description in the Flash Memory section of the relevant hardware manual.) */
     if (p_ctrl->flash_clock_frequency >= FLASH_LP_FISR_INCREASE_PCKA_EVERY_2MHZ)
     {
         R_FACI_LP->FISR_b.PCKA =
@@ -2724,8 +2732,8 @@ static fsp_err_t r_flash_lp_bank_swap (flash_lp_instance_ctrl_t * const p_ctrl)
   #if FLASH_LP_CFG_DUAL_BANK_INSTANT_SWAP
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-    /* See "Example of startup bank selection flow (2/4) (change the startup bank without reset)": Figure 35.14 in
-     * Section 35.6.4 of the RA2A2 manual r01uh1005ej0110-ra2a2 */
+    /* See figure "Example of startup bank selection flow (2/4) (change the startup bank without reset)"
+     * in the Flash Memory section of the relevant hardware manual. */
 
     /* Enable writing to FCTLFR. */
     R_FACI_LP->FBKSWCR = FLASH_LP_BANK_SWAP_UPDATE_ENABLE;

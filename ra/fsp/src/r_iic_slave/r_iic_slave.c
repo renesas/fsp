@@ -59,7 +59,7 @@
 #define ICSR2_NACKF_BIT                                    (0x10U)
 
 /* I2C Bus Control Register 1 Masks */
-#define IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN                   (0x1FU)
+#define IIC_SLAVE_ICCR1_SCL_SDA_OUTPUT_MASK                (0x1FU)
 #define IIC_SLAVE_ICCR1_ICE_BIT_MASK                       (0x80)
 #define IIC_SLAVE_ICCR1_IICRST_BIT_MASK                    (0x40)
 
@@ -76,7 +76,7 @@
 #define IIC_SLAVE_BUS_MODE_REGISTER_1_MASK                 (0x08U)
 
 /* I2C Bus Mode Register 2 Masks */
-#define IIC_SLAVE_BUS_MODE_REGISTER_2_MASK                 (0x02U)
+#define IIC_SLAVE_BUS_MODE_REGISTER_2_MASK                 (0x06U)
 #define IIC_SLAVE_INTERNAL_REF_CLOCK_SELECT_MAX            (0x07U)
 
 /* I2C Bus Status Register 2 Mask */
@@ -104,7 +104,7 @@
 
 /* Worst case ratio of (ICLK/PCLKB) = 64 bytes approximately.
  * 3 PCLKB cycles is the number of cycles to wait for IICn.
- * Refer "Table 3.2 Access cycles (1 of 2)" of the RA6M3 manual R01UH0886EJ0100)
+ * See Table "Access cycles" in the I/O Registers section of the relevant hardware manual.
  */
 #define IIC_SLAVE_PERIPHERAL_REG_MAX_WAIT    (0x40U * 0x03U)
 
@@ -223,7 +223,7 @@ fsp_err_t R_IIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t
     /* If rate is configured as Fast mode plus, check whether the channel supports it */
     if (I2C_SLAVE_RATE_FASTPLUS == p_cfg->rate)
     {
-        FSP_ASSERT((BSP_FEATURE_IIC_FAST_MODE_PLUS & (1U << p_cfg->channel)));
+        FSP_ASSERT((BSP_FEATURE_IIC_FAST_MODE_PLUS_CHANNELS_MASK & (1U << p_cfg->channel)));
     }
 #endif
 
@@ -244,8 +244,8 @@ fsp_err_t R_IIC_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_t
     /* Indicate that restart and stop condition detection yet to be enabled */
     p_ctrl->start_interrupt_enabled = false;
 
-    /* Open the hardware in slave mode. Performs IIC initialization as described in hardware manual (see Section 36.3.2
-     * 'Initial Settings' of the RA6M3 manual R01UH0886EJ0100). */
+    /* Open the hardware in slave mode. Performs IIC initialization as described in hardware manual (see
+     * "Initial Settings" in the IIC Operation section of the relevant hardware manual). */
     iic_open_hw_slave(p_ctrl);
 
 #if IIC_SLAVE_CFG_DTC_ENABLE
@@ -559,19 +559,18 @@ static void iic_slave_notify (iic_slave_instance_ctrl_t * const p_ctrl, i2c_slav
     /*
      * Since the transaction resulted in an error or is not completed at the master (this is a bus hang situation)
      * the slave must do an internal reset to release the bus.
-     * Refer the note in Section 36.2.1 'I2C Bus Control Register 1 (ICCR1)' under
-     * 'IICRST bit (IIC-Bus Interface Internal Reset)' description
-     * of the RA6M3 manual R01UH0886EJ0100
+     * See note "I2C Bus Control Register 1 (ICCR1)" under
+     * "IICRST bit (IIC-Bus Interface Internal Reset)" description
+     * in the IIC section of the relevant hardware manual.
      */
     else
     {
         /* Internal reset */
         p_ctrl->p_reg->ICCR1 =
-            (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_ICCR1_IICRST_BIT_MASK |
-                       IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN);
+            (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_ICCR1_IICRST_BIT_MASK);
 
         /* Release IIC from internal reset */
-        p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN);
+        p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_ICCR1_SCL_SDA_OUTPUT_MASK);
     }
 
     /* Save transaction count */
@@ -603,7 +602,7 @@ static void iic_slave_callback_request (iic_slave_instance_ctrl_t * const p_ctrl
      * The application must call MasterWriteSlaveRead API in the callback.*/
     r_iic_slave_call_callback(p_ctrl, slave_event, p_ctrl->transaction_count);
 
-    /* Allow timeouts to be generated on the low value of SCL using long count mode */
+    /* Allow timeouts to be generated on both high and low value of SCL using long count mode */
     p_ctrl->p_reg->ICMR2 = IIC_SLAVE_BUS_MODE_REGISTER_2_MASK;
 
     /* Enable timeout function */
@@ -611,8 +610,8 @@ static void iic_slave_callback_request (iic_slave_instance_ctrl_t * const p_ctrl
 }
 
 /******************************************************************************************************************//**
- * Performs the hardware initialization sequence when operating as a slave (see Section 36.3.2
- * 'Initial Settings' of the RA6M3 manual R01UH0886EJ0100).
+ * Performs the hardware initialization sequence when operating as a slave (see
+ * "Initial Settings" in the IIC Operation section of the relevant hardware manual).
  *
  * @param[in]       p_ctrl     Pointer to the control structure.
  *********************************************************************************************************************/
@@ -622,15 +621,19 @@ static void iic_open_hw_slave (iic_slave_instance_ctrl_t * const p_ctrl)
         (((iic_slave_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->clock_settings.digital_filter_stages);
 
     /* Perform IIC reset */
-    p_ctrl->p_reg->ICCR1 = (uint8_t) IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN;
+    /* S1. Set the ICCR1.ICE bit to 0 to set the SCLn and SDAn pins to the inactive state. */
+    p_ctrl->p_reg->ICCR1 = 0;
 
-    /* Reset */
-    p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_IICRST_BIT_MASK | IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN);
+    /* S2. Set the ICCR1.IICRST bit to 1 to initiate IIC reset. */
+    p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_IICRST_BIT_MASK);
 
-    /* Come out of IIC reset to internal reset */
-    p_ctrl->p_reg->ICCR1 =
-        (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_ICCR1_IICRST_BIT_MASK |
-                   IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN);
+    /* Wait for IICRST to be set. */
+    FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->ICCR1_b.IICRST, 1U);
+
+    /* S3. Set the ICCR1.ICE bit to 1 to initiate internal reset. */
+    p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_ICCR1_IICRST_BIT_MASK);
+
+    /* S4. Set other registers as required. */
 
     /* Set Slave address in SARLx and SARUx. and Set ICSER */
     /*7 bit mode selected, clear SARU and set SARL */
@@ -662,7 +665,7 @@ static void iic_open_hw_slave (iic_slave_instance_ctrl_t * const p_ctrl)
      * 6. Do not use the digital noise filter circuit.
      * 7. Use the SCL synchronous circuit.
      * 8. Enable FM+ slope circuit if fast mode plus is enabled.
-     * (see Section 36.2.6 'I2C Bus Function Enable Register' of the RA6M3 manual R01UH0886EJ0100 for more details)
+     * (see "I2C Bus Function Enable Register" in the IIC section of the relevant hardware manual).
      */
     p_ctrl->p_reg->ICFER =
         (uint8_t) (((uint8_t) (I2C_SLAVE_RATE_FASTPLUS == p_ctrl->p_cfg->rate) << 7U) |
@@ -688,9 +691,9 @@ static void iic_open_hw_slave (iic_slave_instance_ctrl_t * const p_ctrl)
     /* 1. Set the digital filter.
      * 2. ACKBT should be set to 0 after reset to send out an ACK upon slave address match.
      * 3. Set WAIT bit based on user config.
-     * Refer Section 36.2.5 ICMR3 : I2C Bus Mode Register 3 :
+     * See "ICMR3 : I2C Bus Mode Register 3" :
      * 'WAIT bit (WAIT)' and 'RDRFS bit (RDRF Flag Set Timing Select)'
-     * of the RA6M3 manual R01UH0886EJ0100.
+     * in the IIC section of the relevant hardware manual.
      * Since RDRFS = 0:
      * - SCLn line will *not* be held low at the falling edge of the 8th clock cycle.
      * - RDRF flag will be set at the rising edge of the 9th clock cycle. (Cause of iic_rxi_slave)
@@ -714,7 +717,7 @@ static void iic_open_hw_slave (iic_slave_instance_ctrl_t * const p_ctrl)
     p_ctrl->p_reg->ICIER = (uint8_t) ((uint8_t) IIC_RXI_EN_BIT | (uint8_t) IIC_TXI_EN_BIT);
 
     /* Release IIC from internal reset */
-    p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_PRV_SCL_SDA_NOT_DRIVEN);
+    p_ctrl->p_reg->ICCR1 = (uint8_t) (IIC_SLAVE_ICCR1_ICE_BIT_MASK | IIC_SLAVE_ICCR1_SCL_SDA_OUTPUT_MASK);
 }
 
 /*******************************************************************************************************************//**
@@ -1127,7 +1130,7 @@ static void iic_tei_slave (iic_slave_instance_ctrl_t * p_ctrl)
     p_ctrl->p_reg->ICIER_b.TEIE = 0U;
 
     /* Wait for the value to reflect at the peripheral.
-     * See 'Note' under Table 36.10 "Interrupt sources" of the RA6M3 manual R01UH0886EJ0100 */
+     * See 'Note' under table "Interrupt sources" in the IIC section of the relevant hardware manual. */
     IIC_SLAVE_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->ICIER_b.TEIE, 0U, timeout_count);
 }
 
@@ -1216,7 +1219,7 @@ static void iic_err_slave (iic_slave_instance_ctrl_t * p_ctrl)
     {
         /* NACK interrupt will be triggered on MasterReadSlaveWrite operation.
          * Do dummy read to release SCL
-         * Refer point number 5 under Section "36.3.5 Slave Transmit Operation" of the RA6M3 manual R01UH0886EJ0100
+         * Refer point #5 under Section "Slave Transmit Operation" in the IIC section of the relevant hardware manual.
          */
         volatile uint8_t dummy_read = p_ctrl->p_reg->ICDRR;
         FSP_PARAMETER_NOT_USED(dummy_read);

@@ -27,6 +27,7 @@
 | TES Dave2D                                            | TES Electronics Solutions GmBH     | [Renesas Open License v1.0](#renesas-open-license-v10)                                      |
 | [TinyCrypt](https://github.com/intel/tinycrypt/)      | Intel Corporation                  | BSD-3-Clause and BSD-2-Clause. See [LICENSE](https://github.com/intel/tinycrypt/blob/master/LICENSE)|
 | [LVGL](https://github.com/lvgl/lvgl)                  | LVGL Kft                           | MIT and [Other](https://github.com/lvgl/lvgl/blob/master/COPYRIGHTS.md). [Built-In Fonts](https://github.com/lvgl/lvgl/tree/master/scripts/built_in_font/font_license)|
+| [Minimp3](https://github.com/lieff/minimp3)           | Universal                          | [CC0 1.0](https://github.com/lieff/minimp3/blob/master/LICENSE)|
 
 ## BSD 3-Clause License
 

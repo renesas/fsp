@@ -230,15 +230,16 @@ fsp_err_t R_RSIP_KDF_SHA_ECDHSecretUpdate (rsip_ctrl_t * const                 p
             /* Set length */
             switch (p_wrapped_secret->type)
             {
-                /* ECC secp256r1 */
+                /* ECC secp256r1, brainpoolP256r1 */
                 case RSIP_PRV_KEY_SUBTYPE_ECC_SECP256R1:
+                case RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP256R1:
                 {
                     p_handle->wrapped_msg_length        = RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_256;
                     p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_256_PARAM;
                     break;
                 }
 
-                /* ECC secp384r1 */
+                /* ECC secp384r1, brainpoolP384r1 */
                 default:
                 {
                     p_handle->wrapped_msg_length        = RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_384;
@@ -1089,16 +1090,18 @@ fsp_err_t R_RSIP_KDF_HMAC_ECDHSecretUpdate (rsip_ctrl_t * const                 
             /* Set length */
             switch (p_wrapped_secret->type)
             {
-                /* ECC secp256r1 */
+                /* ECC secp256r1, brainpoolP256r1 */
                 case RSIP_PRV_KEY_SUBTYPE_ECC_SECP256R1:
+                case RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP256R1:
                 {
                     p_handle->wrapped_msg_length        = RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_256;
                     p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_256_PARAM;
                     break;
                 }
 
-                /* ECC secp384r1 */
+                /* ECC secp384r1, brainpoolP384r1 */
                 case RSIP_PRV_KEY_SUBTYPE_ECC_SECP384R1:
+                case RSIP_PRV_KEY_SUBTYPE_ECC_BRAINPOOLP384R1:
                 {
                     p_handle->wrapped_msg_length        = RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_384;
                     p_handle->actual_wrapped_msg_length = RSIP_PRV_BYTE_SIZE_ECC_384_PARAM;

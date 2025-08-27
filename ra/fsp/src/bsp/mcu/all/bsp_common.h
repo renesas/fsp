@@ -473,24 +473,26 @@ __STATIC_INLINE uint32_t R_FSP_ClockDividerGet (uint32_t ckdivcr)
     {
 
         /* Clock Divided by 5 */
-        return 5;
+        return 5U;
     }
     else if (7U == ckdivcr)
     {
 
         /* Clock Divided by 10 */
-        return 10;
+        return 10U;
     }
     else
     {
-        /* The remaining case is ckdivcr = 8 which divides the clock by 16. */
-    }
 
-    /* Clock Divided by 16 */
-    return 16U;
+        /* clock_div:
+         * - Clock Divided by 16: 8
+         * - Clock Divided by 32: 9
+         */
+        return 16U << (ckdivcr - 8U);
+    }
 }
 
-#if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
+#if BSP_FEATURE_SCI_HAS_SCISPI_CLOCK
 
 /*******************************************************************************************************************//**
  * Gets the frequency of a SCI/SPI clock.
@@ -507,7 +509,7 @@ __STATIC_INLINE uint32_t R_FSP_SciSpiClockHzGet (void)
 }
 
 #endif
-#if BSP_FEATURE_BSP_HAS_SPI_CLOCK
+#if BSP_FEATURE_SPI_HAS_CLOCK
 
 /*******************************************************************************************************************//**
  * Gets the frequency of a SPI clock.
@@ -527,7 +529,7 @@ __STATIC_INLINE uint32_t R_FSP_SpiClockHzGet (void)
 }
 
 #endif
-#if BSP_FEATURE_BSP_HAS_SCI_CLOCK
+#if BSP_FEATURE_SCI_HAS_CLOCK
 
 /*******************************************************************************************************************//**
  * Gets the frequency of a SCI clock.
@@ -626,12 +628,12 @@ __STATIC_INLINE fsp_err_t R_BSP_PartNumberGet (bsp_part_number_t * const p_part_
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_FlashCacheDisable (void)
 {
-#if BSP_FEATURE_BSP_FLASH_CACHE
+#if BSP_FEATURE_FLASH_CACHE
     R_FCACHE->FCACHEE = 0U;
 #endif
 
 #ifdef R_CACHE
- #if BSP_FEATURE_BSP_CODE_CACHE_VERSION == 2
+ #if BSP_FEATURE_FLASH_CODE_CACHE_VERSION == 2
     uint32_t volatile * p_ccactl = &R_CACHE->CCACTL;
     uint32_t volatile * p_ccawta = &R_CACHE->CCAWTA;
 
@@ -671,10 +673,10 @@ __STATIC_INLINE void R_BSP_FlashCacheDisable (void)
  **********************************************************************************************************************/
 __STATIC_INLINE void R_BSP_FlashCacheEnable (void)
 {
-#if BSP_FEATURE_BSP_FLASH_CACHE
+#if BSP_FEATURE_FLASH_CACHE
 
-    /* Invalidate the flash cache and wait until it is invalidated. (See section 55.3.2.2 "Operation" of the Flash Cache
-     * in the RA6M3 manual R01UH0878EJ0100). */
+    /* Invalidate the flash cache and wait until it is invalidated. (See "Operation" in the Flash Memory section
+     * of the relevant hardware manual). */
     R_FCACHE->FCACHEIV = 1U;
     FSP_HARDWARE_REGISTER_WAIT(R_FCACHE->FCACHEIV, 0U);
 
@@ -683,7 +685,7 @@ __STATIC_INLINE void R_BSP_FlashCacheEnable (void)
 #endif
 
 #ifdef R_CACHE
- #if BSP_FEATURE_BSP_CODE_CACHE_VERSION == 1
+ #if BSP_FEATURE_FLASH_CODE_CACHE_VERSION == 1
 
     /* Configure the C-Cache line size. */
     R_CACHE->CCALCF = BSP_CFG_C_CACHE_LINE_SIZE;

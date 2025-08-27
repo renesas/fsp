@@ -610,8 +610,34 @@ void usb_hid_detach (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
     ctrl.device_address = (uint8_t) devadr;
     ctrl.type           = USB_CLASS_HHID;
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
-    g_usb_hhid_int_in_pipe[ptr->ip]  = 0;
-    g_usb_hhid_int_out_pipe[ptr->ip] = 0;
+    switch (devadr)
+    {
+        case 1:
+        case 2:
+        {
+            g_usb_hhid_int_in_pipe[ptr->ip]  = 0;
+            g_usb_hhid_int_out_pipe[ptr->ip] = 0;
+            break;
+        }
+
+#if (USB_CFG_HHID_MULTI == USB_CFG_ENABLE)
+        case 3:
+        {
+            g_usb_hhid2_int_in_pipe[ptr->ip] = 0;
+            break;
+        }
+
+        case 4:
+        {
+            g_usb_hhid3_int_in_pipe[ptr->ip] = 0;
+            break;
+        }
+#endif
+        default:
+        {
+            break;
+        }
+    }
 }
 
 /******************************************************************************

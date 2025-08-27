@@ -587,7 +587,7 @@ void mbedtls_ecp_group_free(mbedtls_ecp_group *grp)
 #endif
     }
 
-#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
     if (grp->id == MBEDTLS_ECP_DP_CURVE25519)
     {
         mbedtls_mpi_free(&grp->P);

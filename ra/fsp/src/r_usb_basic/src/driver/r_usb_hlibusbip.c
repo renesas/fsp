@@ -2351,11 +2351,36 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
     }
 
    #else                               /* defined(USB_CFG_HCDC_USE) */
-    #if USB_CFG_DTC == USB_CFG_ENABLE
-    pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
-    #else                              /* USB_CFG_DTC == USB_CFG_ENABLE */
-    pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
-    #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE */
+    switch (pipe_no)
+    {
+        case USB_PIPE1:
+        {
+    #if (USB_CFG_DTC == USB_CFG_ENABLE) || (USB_CFG_HMSC_MULTI == USB_CFG_ENABLE)
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(8U));
+    #else                              /* USB_CFG_DTC == USB_CFG_ENABLE || USB_CFG_HMSC_MULTI == USB_CFG_ENABLE */
+            pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
+    #endif                             /* USB_CFG_DTC == USB_CFG_ENABLE || USB_CFG_HMSC_MULTI == USB_CFG_ENABLE */
+            break;
+        }
+
+        case USB_PIPE2:
+        {
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(40U));
+            break;
+        }
+
+        case USB_PIPE3:
+        {
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(72U));
+            break;
+        }
+
+        case USB_PIPE4:
+        {
+            pipe_buf = (USB_BUF_SIZE(1024U) | USB_BUF_NUMB(104U));
+            break;
+        }
+    }
    #endif                              /* defined(USB_CFG_HCDC_USE) */
   #endif                               /* defined(USB_CFG_HMSC_USE) */
 

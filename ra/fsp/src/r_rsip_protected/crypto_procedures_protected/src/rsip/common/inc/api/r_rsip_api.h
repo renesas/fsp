@@ -577,6 +577,39 @@ typedef struct st_rsip_api
                                      uint32_t const mac_length);
 
     /**
+     * Prepares a ChaCha20 function.
+     *
+     * @param[in,out] p_ctrl        Pointer to control block.
+     * @param[in]     p_wrapped_key Pointer to wrapped key of ChaCha20 key.
+     * @param[in]     p_nonce       Pointer to nonce. The length is 12 bytes.
+     * @param[in]     counter       32-bit initial counter. This is usually zero.
+     */
+    fsp_err_t (* chacha20Init)(rsip_ctrl_t * const p_ctrl, rsip_wrapped_key_t const * const p_wrapped_key,
+                               uint8_t const * const p_nonce, uint32_t const counter);
+
+    /**
+     * Encrypts plaintext or decrypts ciphertext.
+     *
+     * @param[in,out] p_ctrl          Pointer to control block.
+     * @param[in]     p_input         Pointer to input text. The length is input_length.
+     * @param[in]     input_length    Byte length of input text (0 or more bytes).
+     * @param[out]    p_output        Pointer to destination of output text. The length is p_output_length.
+     * @param[out]    p_output_length Pointer to destination of output text length.
+     */
+    fsp_err_t (* chacha20Update)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_input, uint32_t const input_length,
+                                 uint8_t * const p_output, uint32_t * const p_output_length);
+
+    /**
+     * Finalize ChaCha20 operation.
+     *
+     * @param[in,out] p_ctrl          Pointer to control block.
+     * @param[out]    p_output        Pointer to destination of output text. The fractional block is output.
+     * @param[out]    p_output_length Pointer to destination of output text length.
+     */
+    fsp_err_t (* chacha20Finish)(rsip_ctrl_t * const p_ctrl, uint8_t * const p_output,
+                                 uint32_t * const p_output_length);
+
+    /**
      * Signs a hashed message. The message hash should be generated in advance.
      *
      * @param[in,out] p_ctrl                Pointer to control block.

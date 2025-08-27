@@ -15,9 +15,9 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_120_CONTROL_SENSORLESS_OPEN               (0X3132534CL)
+#define     MOTOR_120_CONTROL_SENSORLESS_OPEN               (('1' << 24U) | ('2' << 16U) | ('S' << 8U) | ('L' << 0U))
 
-#define     MOTOR_120_CONTROL_SENSORLESS_TWOPI              (3.14159265358979F * 2.0F)
+#define     MOTOR_120_CONTROL_SENSORLESS_TWOPI              (2.0F * 3.1415926535F)
 
 /* To translate (rpm) => (rad/s) */
 #define     MOTOR_120_CONTROL_SENSORLESS_TWOPI_DIV_60       (MOTOR_120_CONTROL_SENSORLESS_TWOPI / 60.0F)
@@ -691,103 +691,108 @@ void rm_motor_120_control_sensorless_speed_cyclic (timer_callback_args_t * p_arg
 
     if (MOTOR_120_CONTROL_STATUS_ACTIVE == p_instance_ctrl->active)
     {
-        /* set reference */
-        switch (p_instance_ctrl->run_mode)
+        if (NULL != p_driver_instance)
         {
-            case MOTOR_120_CONTROL_RUN_MODE_INIT:
+            /* set reference */
+            switch (p_instance_ctrl->run_mode)
             {
-                p_driver_instance->p_api->flagCurrentOffsetGet(p_driver_instance->p_ctrl, &u1_temp_flag_offset);
-                if (MOTOR_120_DRIVER_FLAG_OFFSET_CALC_ALL_FINISH == u1_temp_flag_offset)
+                case MOTOR_120_CONTROL_RUN_MODE_INIT:
                 {
-                    p_instance_ctrl->run_mode     = MOTOR_120_CONTROL_RUN_MODE_BOOT;
-                    p_instance_ctrl->flag_draw_in = MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_1ST_TIME;
+                    p_driver_instance->p_api->flagCurrentOffsetGet(p_driver_instance->p_ctrl, &u1_temp_flag_offset);
+                    if (MOTOR_120_DRIVER_FLAG_OFFSET_CALC_ALL_FINISH == u1_temp_flag_offset)
+                    {
+                        p_instance_ctrl->run_mode     = MOTOR_120_CONTROL_RUN_MODE_BOOT;
+                        p_instance_ctrl->flag_draw_in = MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_1ST_TIME;
+                    }
+
+                    break;
                 }
 
-                break;
-            }
-
-            case MOTOR_120_CONTROL_RUN_MODE_BOOT:
-            {
-                rm_motor_120_control_sensorless_speed_ref_set(p_instance_ctrl);   /* set speed reference */
-                rm_motor_120_control_sensorless_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
-                if (MOTOR_120_CONTROL_VOLTAGE_REF_OPENLOOP == p_instance_ctrl->flag_voltage_ref)
+                case MOTOR_120_CONTROL_RUN_MODE_BOOT:
                 {
-                    p_instance_ctrl->u4_pwm_duty = 0;
-                    p_instance_ctrl->run_mode    = MOTOR_120_CONTROL_RUN_MODE_DRIVE;
-                }
+                    rm_motor_120_control_sensorless_speed_ref_set(p_instance_ctrl);   /* set speed reference */
+                    rm_motor_120_control_sensorless_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
+                    if (MOTOR_120_CONTROL_VOLTAGE_REF_OPENLOOP == p_instance_ctrl->flag_voltage_ref)
+                    {
+                        p_instance_ctrl->u4_pwm_duty = 0;
+                        p_instance_ctrl->run_mode    = MOTOR_120_CONTROL_RUN_MODE_DRIVE;
+                    }
 
-                p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
-                                                          p_instance_ctrl->f4_v_ref,
-                                                          p_instance_ctrl->f4_v_ref,
-                                                          p_instance_ctrl->f4_v_ref);
-
-                /* rotor phase draw-in */
-                if (MOTOR_120_CONTROL_ROTATION_DIRECTION_CW == p_instance_ctrl->direction)
-                {
-                    if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_1ST_TIME == p_instance_ctrl->flag_draw_in)
-                    {
-                        /* Set voltage pattern */
-                        rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
-                                                                    MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_W_U);
-                    }
-                    else if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_2ND_TIME == p_instance_ctrl->flag_draw_in)
-                    {
-                        /* Set voltage pattern */
-                        rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
-                                                                    MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_W_V);
-                    }
-                    else
-                    {
-                        /* Do nothing */
-                    }
-                }
-                else if (MOTOR_120_CONTROL_ROTATION_DIRECTION_CCW == p_instance_ctrl->direction)
-                {
-                    if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_1ST_TIME == p_instance_ctrl->flag_draw_in)
-                    {
-                        /* Set voltage pattern */
-                        rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
-                                                                    MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_V_W);
-                    }
-                    else if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_2ND_TIME == p_instance_ctrl->flag_draw_in)
-                    {
-                        /* Set voltage pattern */
-                        rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
-                                                                    MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_U_W);
-                    }
-                    else
-                    {
-                        /* Do nothing */
-                    }
-                }
-                else
-                {
-                    /* Do nothing */
-                }
-
-                break;
-            }
-
-            case MOTOR_120_CONTROL_RUN_MODE_DRIVE:
-            {
-                rm_motor_120_control_sensorless_speed_ref_set(p_instance_ctrl);   /* set speed reference */
-                rm_motor_120_control_sensorless_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
-                if (MOTOR_120_CONTROL_VOLTAGE_REF_PI_OUTPUT == p_instance_ctrl->flag_voltage_ref)
-                {
-                    /* duty calculate */
                     p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
                                                               p_instance_ctrl->f4_v_ref,
                                                               p_instance_ctrl->f4_v_ref,
                                                               p_instance_ctrl->f4_v_ref);
+
+                    /* rotor phase draw-in */
+                    if (MOTOR_120_CONTROL_ROTATION_DIRECTION_CW == p_instance_ctrl->direction)
+                    {
+                        if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_1ST_TIME == p_instance_ctrl->flag_draw_in)
+                        {
+                            /* Set voltage pattern */
+                            rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
+                                                                        MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_W_U);
+                        }
+                        else if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_2ND_TIME ==
+                                 p_instance_ctrl->flag_draw_in)
+                        {
+                            /* Set voltage pattern */
+                            rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
+                                                                        MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_W_V);
+                        }
+                        else
+                        {
+                            /* Do nothing */
+                        }
+                    }
+                    else if (MOTOR_120_CONTROL_ROTATION_DIRECTION_CCW == p_instance_ctrl->direction)
+                    {
+                        if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_1ST_TIME == p_instance_ctrl->flag_draw_in)
+                        {
+                            /* Set voltage pattern */
+                            rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
+                                                                        MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_V_W);
+                        }
+                        else if (MOTOR_120_CONTROL_SENSORLESS_DRAW_IN_POSITION_2ND_TIME ==
+                                 p_instance_ctrl->flag_draw_in)
+                        {
+                            /* Set voltage pattern */
+                            rm_motor_120_control_sensorless_pattern_set(p_instance_ctrl,
+                                                                        MOTOR_120_CONTROL_SENSORLESS_PATTERN_CW_U_W);
+                        }
+                        else
+                        {
+                            /* Do nothing */
+                        }
+                    }
+                    else
+                    {
+                        /* Do nothing */
+                    }
+
+                    break;
                 }
 
-                break;
-            }
+                case MOTOR_120_CONTROL_RUN_MODE_DRIVE:
+                {
+                    rm_motor_120_control_sensorless_speed_ref_set(p_instance_ctrl);   /* set speed reference */
+                    rm_motor_120_control_sensorless_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
+                    if (MOTOR_120_CONTROL_VOLTAGE_REF_PI_OUTPUT == p_instance_ctrl->flag_voltage_ref)
+                    {
+                        /* duty calculate */
+                        p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
+                                                                  p_instance_ctrl->f4_v_ref,
+                                                                  p_instance_ctrl->f4_v_ref,
+                                                                  p_instance_ctrl->f4_v_ref);
+                    }
 
-            default:
-            {
-                /* Do nothing */
-                break;
+                    break;
+                }
+
+                default:
+                {
+                    /* Do nothing */
+                    break;
+                }
             }
         }
     }
@@ -817,6 +822,9 @@ void rm_motor_120_control_sensorless_driver_callback (motor_120_driver_callback_
     motor_120_control_callback_args_t   temp_args_t;
 
     motor_120_driver_current_status_t temp_drv_crnt_status;
+    temp_drv_crnt_status.vu = 0;
+    temp_drv_crnt_status.vv = 0;
+    temp_drv_crnt_status.vw = 0;
 
     switch (p_args->event)
     {
@@ -834,8 +842,11 @@ void rm_motor_120_control_sensorless_driver_callback (motor_120_driver_callback_
 
         case MOTOR_120_DRIVER_EVENT_120_CONTROL:
         {
-            p_driver_instance->p_api->currentOffsetCalc(p_driver_instance->p_ctrl);
-            p_driver_instance->p_api->currentGet(p_driver_instance->p_ctrl, &temp_drv_crnt_status);
+            if (NULL != p_driver_instance)
+            {
+                p_driver_instance->p_api->currentOffsetCalc(p_driver_instance->p_ctrl);
+                p_driver_instance->p_api->currentGet(p_driver_instance->p_ctrl, &temp_drv_crnt_status);
+            }
 
             /* calculate neutral voltage */
             p_instance_ctrl->f4_vn_ad = (temp_drv_crnt_status.vu + temp_drv_crnt_status.vv + temp_drv_crnt_status.vw) /
@@ -973,11 +984,15 @@ static void rm_motor_120_control_sensorless_start_openloop (motor_120_control_se
     p_ctrl->u4_ol_pattern_set = (uint16_t) (p_ctrl->f4_ol_pattern_set_calc / p_ctrl->f4_ref_speed_rad_ctrl);
     if (p_ctrl->u4_cnt_ol_pattern_set++ > p_ctrl->u4_ol_pattern_set)
     {
-        /* PWM duty set and pattern change */
-        p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
-                                                  p_ctrl->f4_v_ref,
-                                                  p_ctrl->f4_v_ref,
-                                                  p_ctrl->f4_v_ref);
+        if (NULL != p_driver_instance)
+        {
+            /* PWM duty set and pattern change */
+            p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
+                                                      p_ctrl->f4_v_ref,
+                                                      p_ctrl->f4_v_ref,
+                                                      p_ctrl->f4_v_ref);
+        }
+
         rm_motor_120_control_sensorless_ol_signal_set(p_ctrl);
         rm_motor_120_control_sensorless_pattern_set(p_ctrl, p_ctrl->u4_ol_signal);
         p_ctrl->u4_cnt_ol_pattern_set = 0;
@@ -1011,55 +1026,58 @@ static void rm_motor_120_control_sensorless_ol_signal_set (motor_120_control_sen
 static void rm_motor_120_control_sensorless_speed_calc (motor_120_control_sensorless_instance_ctrl_t * p_ctrl)
 {
     motor_120_control_sensorless_extended_cfg_t const * p_extend_cfg = p_ctrl->p_cfg->p_extend;
-    uint32_t       u4_temp;
+    uint32_t       u4_temp = 0U;
     float          f4_temp_speed_rad;
     timer_status_t gpt_timer_status;
 
-    /* get value of timer counter */
-    p_extend_cfg->p_speed_calc_timer_instance->p_api->statusGet(p_extend_cfg->p_speed_calc_timer_instance->p_ctrl,
-                                                                &gpt_timer_status);
-    p_ctrl->u4_bemf_timer_cnt = gpt_timer_status.counter;
-
-    if (TIMER_DIRECTION_UP == p_ctrl->timer_direction)
+    if (NULL != p_extend_cfg->p_speed_calc_timer_instance)
     {
-        if (p_ctrl->u4_pre_bemf_timer_cnt != 0)
-        {
-            if (p_ctrl->u4_bemf_timer_cnt >= p_ctrl->u4_pre_bemf_timer_cnt)
-            {
-                u4_temp = (p_ctrl->u4_bemf_timer_cnt - p_ctrl->u4_pre_bemf_timer_cnt);
+        /* get value of timer counter */
+        p_extend_cfg->p_speed_calc_timer_instance->p_api->statusGet(p_extend_cfg->p_speed_calc_timer_instance->p_ctrl,
+                                                                    &gpt_timer_status);
+        p_ctrl->u4_bemf_timer_cnt = gpt_timer_status.counter;
 
-                /* calculate timer count in 60 degrees */
+        if (TIMER_DIRECTION_UP == p_ctrl->timer_direction)
+        {
+            if (p_ctrl->u4_pre_bemf_timer_cnt != 0)
+            {
+                if (p_ctrl->u4_bemf_timer_cnt >= p_ctrl->u4_pre_bemf_timer_cnt)
+                {
+                    u4_temp = (p_ctrl->u4_bemf_timer_cnt - p_ctrl->u4_pre_bemf_timer_cnt);
+
+                    /* calculate timer count in 60 degrees */
+                }
+                else
+                {
+                    u4_temp = ((p_extend_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
+                               p_ctrl->u4_pre_bemf_timer_cnt) + p_ctrl->u4_bemf_timer_cnt;
+                }
             }
             else
             {
-                u4_temp = ((p_extend_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
-                           p_ctrl->u4_pre_bemf_timer_cnt) + p_ctrl->u4_bemf_timer_cnt;
+                u4_temp = p_ctrl->u4_bemf_timer_cnt;
             }
         }
         else
         {
-            u4_temp = p_ctrl->u4_bemf_timer_cnt;
-        }
-    }
-    else
-    {
-        if (p_ctrl->u4_pre_bemf_timer_cnt != 0)
-        {
-            if (p_ctrl->u4_bemf_timer_cnt <= p_ctrl->u4_pre_bemf_timer_cnt)
+            if (p_ctrl->u4_pre_bemf_timer_cnt != 0)
             {
-                u4_temp = (p_ctrl->u4_pre_bemf_timer_cnt - p_ctrl->u4_bemf_timer_cnt);
+                if (p_ctrl->u4_bemf_timer_cnt <= p_ctrl->u4_pre_bemf_timer_cnt)
+                {
+                    u4_temp = (p_ctrl->u4_pre_bemf_timer_cnt - p_ctrl->u4_bemf_timer_cnt);
 
-                /* calculate timer count in 60 degrees */
+                    /* calculate timer count in 60 degrees */
+                }
+                else
+                {
+                    u4_temp = ((p_extend_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
+                               p_ctrl->u4_bemf_timer_cnt) + p_ctrl->u4_pre_bemf_timer_cnt;
+                }
             }
             else
             {
-                u4_temp = ((p_extend_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
-                           p_ctrl->u4_bemf_timer_cnt) + p_ctrl->u4_pre_bemf_timer_cnt;
+                u4_temp = p_ctrl->u4_bemf_timer_cnt;
             }
-        }
-        else
-        {
-            u4_temp = p_ctrl->u4_bemf_timer_cnt;
         }
     }
 
@@ -1255,7 +1273,10 @@ static void rm_motor_120_control_sensorless_pattern_set (motor_120_control_senso
 
     if (MOTOR_120_CONTROL_STATUS_ACTIVE == p_ctrl->active) /* check system mode */
     {
-        p_driver_instance->p_api->phasePatternSet(p_driver_instance->p_ctrl, p_ctrl->v_pattern);
+        if (NULL != p_driver_instance)
+        {
+            p_driver_instance->p_api->phasePatternSet(p_driver_instance->p_ctrl, p_ctrl->v_pattern);
+        }
     }
 }
 

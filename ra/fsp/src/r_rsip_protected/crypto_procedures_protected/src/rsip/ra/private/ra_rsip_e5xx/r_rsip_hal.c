@@ -74,6 +74,12 @@ static const uint32_t gs_sha_msg_len_multi[2] =
     RSIP_PRV_SHA_INIT_VAL1, RSIP_PRV_SHA_INIT_VAL2
 };
 
+static const uint32_t gs_kdf_sha_hash_type[] =
+{
+    [RSIP_HASH_TYPE_SHA256] = BSWAP_32BIG_C(0U),
+    [RSIP_HASH_TYPE_SHA384] = BSWAP_32BIG_C(1U),
+};
+
 static const uint32_t gs_kdf_hmac_hash_type[] =
 {
     [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256] = BSWAP_32BIG_C(0U),
@@ -554,38 +560,70 @@ rsip_ret_t r_rsip_kdf_sha_init_update (rsip_kdf_sha_handle_t * p_handle,
                                        const uint8_t         * p_message,
                                        uint64_t                message_length)
 {
-    FSP_PARAMETER_NOT_USED(p_handle);
-    FSP_PARAMETER_NOT_USED(p_message);
-    FSP_PARAMETER_NOT_USED(message_length);
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret = r_rsip_pefi(&gs_kdf_sha_hash_type[p_handle->type], gs_sha_msg_len_multi);
+    if (RSIP_RET_PASS == rsip_ret)
+    {
+        uint32_t msg1_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->buffered_length1))};
+        uint32_t enc_msg_len[1] = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->actual_wrapped_msg_length))};
+        uint32_t msg2_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert((uint32_t) message_length))};
 
-    return RSIP_RET_FAIL;
+        rsip_ret = r_rsip_pefu((const uint32_t *) p_handle->buffer1,
+                               msg1_len,
+                               (const uint32_t *) p_handle->wrapped_msg,
+                               enc_msg_len,
+                               (const uint32_t *) p_message,
+                               msg2_len);
+    }
+
+    return rsip_ret;
 }
 
 rsip_ret_t r_rsip_kdf_sha_resume_update (rsip_kdf_sha_handle_t * p_handle,
                                          const uint8_t         * p_message,
                                          uint64_t                message_length)
 {
-    FSP_PARAMETER_NOT_USED(p_handle);
-    FSP_PARAMETER_NOT_USED(p_message);
-    FSP_PARAMETER_NOT_USED(message_length);
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret = r_rsip_pefr(&gs_kdf_sha_hash_type[p_handle->type], p_handle->internal_state);
+    if (RSIP_RET_PASS == rsip_ret)
+    {
+        uint32_t msg1_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->buffered_length1))};
+        uint32_t enc_msg_len[1] = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->actual_wrapped_msg_length))};
+        uint32_t msg2_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert((uint32_t) message_length))};
 
-    return RSIP_RET_FAIL;
+        rsip_ret = r_rsip_pefu((const uint32_t *) p_handle->buffer1,
+                               msg1_len,
+                               (const uint32_t *) p_handle->wrapped_msg,
+                               enc_msg_len,
+                               (const uint32_t *) p_message,
+                               msg2_len);
+    }
+
+    return rsip_ret;
 }
 
 rsip_ret_t r_rsip_kdf_sha_update (rsip_kdf_sha_handle_t * p_handle, const uint8_t * p_message, uint64_t message_length)
 {
-    FSP_PARAMETER_NOT_USED(p_handle);
-    FSP_PARAMETER_NOT_USED(p_message);
-    FSP_PARAMETER_NOT_USED(message_length);
+    uint32_t msg1_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->buffered_length1))};
+    uint32_t enc_msg_len[1] = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->actual_wrapped_msg_length))};
+    uint32_t msg2_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert((uint32_t) message_length))};
 
-    return RSIP_RET_FAIL;
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret = r_rsip_pefu((const uint32_t *) p_handle->buffer1,
+                                      msg1_len,
+                                      (const uint32_t *) p_handle->wrapped_msg,
+                                      enc_msg_len,
+                                      (const uint32_t *) p_message,
+                                      msg2_len);
+
+    return rsip_ret;
 }
 
 rsip_ret_t r_rsip_kdf_sha_suspend (uint32_t * internal_state)
 {
-    FSP_PARAMETER_NOT_USED(internal_state);
 
-    return RSIP_RET_FAIL;
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    return r_rsip_pefs(internal_state);
 }
 
 rsip_ret_t r_rsip_kdf_sha_init_final (rsip_kdf_sha_handle_t * p_handle,
@@ -594,13 +632,34 @@ rsip_ret_t r_rsip_kdf_sha_init_final (rsip_kdf_sha_handle_t * p_handle,
                                       uint64_t                total_message_length,
                                       uint8_t               * p_digest)
 {
-    FSP_PARAMETER_NOT_USED(p_handle);
-    FSP_PARAMETER_NOT_USED(p_message);
-    FSP_PARAMETER_NOT_USED(message_length);
     FSP_PARAMETER_NOT_USED(total_message_length);
-    FSP_PARAMETER_NOT_USED(p_digest);
 
-    return RSIP_RET_FAIL;
+    uint32_t msg_len[2] =
+    {
+        r_rsip_byte_to_bit_convert_upper(
+            p_handle->buffered_length1 + p_handle->actual_wrapped_msg_length + message_length),
+        r_rsip_byte_to_bit_convert_lower(
+            p_handle->buffered_length1 + p_handle->actual_wrapped_msg_length + message_length)
+    };
+
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret = r_rsip_pefi(&gs_kdf_sha_hash_type[p_handle->type], msg_len);
+    if (RSIP_RET_PASS == rsip_ret)
+    {
+        uint32_t msg1_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->buffered_length1))};
+        uint32_t enc_msg_len[1] = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->actual_wrapped_msg_length))};
+        uint32_t msg2_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert((uint32_t) message_length))};
+
+        rsip_ret = r_rsip_peff((const uint32_t *) p_handle->buffer1,
+                               msg1_len,
+                               (const uint32_t *) p_handle->wrapped_msg,
+                               enc_msg_len,
+                               (const uint32_t *) p_message,
+                               msg2_len,
+                               (uint32_t *) p_digest);
+    }
+
+    return rsip_ret;
 }
 
 rsip_ret_t r_rsip_kdf_sha_resume_final (rsip_kdf_sha_handle_t * p_handle,
@@ -609,13 +668,30 @@ rsip_ret_t r_rsip_kdf_sha_resume_final (rsip_kdf_sha_handle_t * p_handle,
                                         uint64_t                total_message_length,
                                         uint8_t               * p_digest)
 {
-    FSP_PARAMETER_NOT_USED(p_handle);
-    FSP_PARAMETER_NOT_USED(p_message);
-    FSP_PARAMETER_NOT_USED(message_length);
-    FSP_PARAMETER_NOT_USED(total_message_length);
-    FSP_PARAMETER_NOT_USED(p_digest);
+    /* Overwrite internal state */
+    p_handle->internal_state[16] = r_rsip_byte_to_bit_convert_lower(total_message_length);
+    p_handle->internal_state[17] = r_rsip_byte_to_bit_convert_upper(total_message_length);
+    p_handle->internal_state[18] = r_rsip_byte_to_bit_convert_upper(message_length);
+    p_handle->internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
 
-    return RSIP_RET_FAIL;
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret = r_rsip_pefr(&gs_kdf_sha_hash_type[p_handle->type], p_handle->internal_state);
+    if (RSIP_RET_PASS == rsip_ret)
+    {
+        uint32_t msg1_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->buffered_length1))};
+        uint32_t enc_msg_len[1] = {bswap_32big(r_rsip_byte_to_word_convert(p_handle->actual_wrapped_msg_length))};
+        uint32_t msg2_len[1]    = {bswap_32big(r_rsip_byte_to_word_convert((uint32_t) message_length))};
+
+        rsip_ret = r_rsip_peff((const uint32_t *) p_handle->buffer1,
+                               msg1_len,
+                               (const uint32_t *) p_handle->wrapped_msg,
+                               enc_msg_len,
+                               (const uint32_t *) p_message,
+                               msg2_len,
+                               (uint32_t *) p_digest);
+    }
+
+    return rsip_ret;
 }
 
 rsip_ret_t r_rsip_kdf_sha_final (rsip_kdf_sha_handle_t * p_handle,
@@ -624,13 +700,14 @@ rsip_ret_t r_rsip_kdf_sha_final (rsip_kdf_sha_handle_t * p_handle,
                                  uint64_t                total_message_length,
                                  uint8_t               * p_digest)
 {
-    FSP_PARAMETER_NOT_USED(p_handle);
-    FSP_PARAMETER_NOT_USED(p_message);
-    FSP_PARAMETER_NOT_USED(message_length);
-    FSP_PARAMETER_NOT_USED(total_message_length);
-    FSP_PARAMETER_NOT_USED(p_digest);
+    /* Call primitive (cast to match the argument type with the primitive function) */
+    rsip_ret_t rsip_ret = r_rsip_pefs(p_handle->internal_state);
+    if (RSIP_RET_PASS == rsip_ret)
+    {
+        rsip_ret = r_rsip_kdf_sha_resume_final(p_handle, p_message, message_length, total_message_length, p_digest);
+    }
 
-    return RSIP_RET_FAIL;
+    return rsip_ret;
 }
 
 rsip_ret_t r_rsip_kdf_hmac_init_update (const rsip_wrapped_key_t * p_wrapped_key,

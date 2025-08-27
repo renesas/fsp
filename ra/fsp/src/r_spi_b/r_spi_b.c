@@ -136,7 +136,7 @@ fsp_err_t R_SPI_B_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_callback);
     FSP_ASSERT(NULL != p_cfg->p_extend);
-    FSP_ERROR_RETURN(BSP_FEATURE_SPI_MAX_CHANNEL > p_cfg->channel, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(BSP_FEATURE_SPI_NUM_CHANNELS > p_cfg->channel, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     FSP_ASSERT(p_cfg->rxi_irq >= 0);
     FSP_ASSERT(p_cfg->txi_irq >= 0);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
@@ -366,13 +366,13 @@ fsp_err_t R_SPI_B_CalculateBitrate (uint32_t bitrate, spi_b_clock_source_t clock
     uint32_t desired_divider;
     if (SPI_B_CLOCK_SOURCE_PCLK == clock_source)
     {
-        desired_divider = R_FSP_SystemClockHzGet(BSP_FEATURE_SPI_CLK);
+        desired_divider = R_FSP_SystemClockHzGet(BSP_FEATURE_SPI_CLOCK);
     }
     else
     {
-#if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
+#if BSP_FEATURE_SCI_HAS_SCISPI_CLOCK
         desired_divider = R_FSP_SciSpiClockHzGet();
-#elif BSP_FEATURE_BSP_HAS_SPI_CLOCK
+#elif BSP_FEATURE_SPI_HAS_CLOCK
         desired_divider = R_FSP_SpiClockHzGet();
 #endif
     }
@@ -623,7 +623,7 @@ static void r_spi_b_hw_config (spi_b_instance_ctrl_t * p_ctrl)
     p_ctrl->p_regs->SPCR = spcr & ~R_SPI_B0_SPCR_MSTR_Msk;
 
     /* Read back SPCR to ensure 1 TCLK has passed
-     * (see Figure 30.64 Note 1 in the RA6T2 User's Manual (R01UH0951EJ0100)) */
+     * (see Note 1 of figure "Transmission flow in master mode" in the SPI section of the relevant hardware manual) */
     p_ctrl->p_regs->SPCR;
 
     /* Include MSTR bit */
@@ -749,7 +749,7 @@ static fsp_err_t r_spi_b_write_read_common (spi_ctrl_t * const    p_api_ctrl,
 #endif
 
     /* Check to ensure SPE is cleared after the last transmission.
-     * (see RA6T2 User's Manual (R01UH0951EJ0100) Figure 30.64 "Transmission flow in master mode") */
+     * (see figure "Transmission flow in master mode" in the SPI section of the relevant hardware manual) */
     FSP_ERROR_RETURN(0 == p_ctrl->p_regs->SPPSR, FSP_ERR_IN_USE);
 
     p_ctrl->p_tx_data = p_src;
@@ -1071,7 +1071,7 @@ void spi_b_tei_isr (void)
         R_BSP_IrqDisable(irq);
 
         /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
-         * (See Section 38.2.1 SPI Control Register in the RA6T2 manual R01UH0886EJ0100). */
+         * (See "SPI Control Register (SPCR)" description in the relevant hardware manual). */
         R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
         /* Disable the SPI Transfer. */
@@ -1100,7 +1100,7 @@ void spi_b_eri_isr (void)
     spi_b_instance_ctrl_t * p_ctrl = (spi_b_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
-     * (See Section 38.2.1 SPI Control Register in the RA6T2 manual R01UH0886EJ0100). */
+     * (See "SPI Control Register (SPCR)" description in the relevant hardware manual). */
     R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
     /* Disable the SPI Transfer. */

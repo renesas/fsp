@@ -90,6 +90,7 @@ typedef struct st_motor_angle_encoder_info
 {
     motor_sense_encoder_angle_adjust_t e_adjust_status; ///< Encoder Adjustment Status
     uint8_t u1_adjust_count_full;                       ///< Adjustment count became full
+    uint8_t u1_adjust_mode;                             ///< Adjustment mode (only valid with ENCODER)
 
     /* For induction sensor */
     motor_angle_open_loop_t e_open_loop_status;         ///< Openloop status

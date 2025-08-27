@@ -14,53 +14,55 @@
  **********************************************************************************************************************/
 
 /** "CAC" in ASCII, used to determine if channel is open. */
-#define CAC_OPEN                        (0x00434143ULL)
+#define CAC_OPEN                          (0x00434143ULL)
 
 /* CAC Control Register 0 Bit Field Definitions */
-#define CAC_PRV_CACR0_CFME_OFFSET       (0U)
-#define CAC_PRV_CACR0_CFME_MASK         (1U << CAC_PRV_CACR0_CFME_OFFSET)
+#define CAC_PRV_CACR0_CFME_OFFSET         (0U)
+#define CAC_PRV_CACR0_CFME_MASK           (1U << CAC_PRV_CACR0_CFME_OFFSET)
 
 /* CAC Control Register 1 Bit Field Definitions */
-#define CAC_PRV_CACR1_CACREFE_OFFSET    (0U)
-#define CAC_PRV_CACR1_CACREFE_MASK      (1U << CAC_PRV_CACR1_CACREFE_OFFSET)
-#define CAC_PRV_CACR1_FMCS_OFFSET       (1U)
-#define CAC_PRV_CACR1_FMCS_MASK         (0x07U << CAC_PRV_CACR1_FMCS_OFFSET)
-#define CAC_PRV_CACR1_TCSS_OFFSET       (4U)
-#define CAC_PRV_CACR1_TCSS_MASK         (0x03U << CAC_PRV_CACR1_TCSS_OFFSET)
-#define CAC_PRV_CACR1_EDGES_OFFSET      (6U)
-#define CAC_PRV_CACR1_EDGES_MASK        (0x03U << CAC_PRV_CACR1_EDGES_OFFSET)
+#define CAC_PRV_CACR1_CACREFE_OFFSET      (0U)
+#define CAC_PRV_CACR1_CACREFE_MASK        (1U << CAC_PRV_CACR1_CACREFE_OFFSET)
+#define CAC_PRV_CACR1_FMCS_OFFSET         (1U)
+#define CAC_PRV_CACR1_FMCS_MASK           (0x07U << CAC_PRV_CACR1_FMCS_OFFSET)
+#define CAC_PRV_CACR1_TCSS_OFFSET         (4U)
+#define CAC_PRV_CACR1_TCSS_MASK           (0x03U << CAC_PRV_CACR1_TCSS_OFFSET)
+#define CAC_PRV_CACR1_EDGES_OFFSET        (6U)
+#define CAC_PRV_CACR1_EDGES_MASK          (0x03U << CAC_PRV_CACR1_EDGES_OFFSET)
 
 /* CAC Control Register 2 Bit Field Definitions */
-#define CAC_PRV_CACR2_RPS_OFFSET        (0U)
-#define CAC_PRV_CACR2_RPS_MASK          (1U << CAC_PRV_CACR2_RPS_OFFSET)
-#define CAC_PRV_CACR2_RSCS_OFFSET       (1U)
-#define CAC_PRV_CACR2_RCSC_MASK         (0x07U << CAC_PRV_CACR2_RSCS_OFFSET)
-#define CAC_PRV_CACR2_RCDS_OFFSET       (4U)
-#define CAC_PRV_CACR2_RCDS_MASK         (0x03U << CAC_PRV_CACR2_RCDS_OFFSET)
-#define CAC_PRV_CACR2_DFS_OFFSET        (6U)
-#define CAC_PRV_CACR2_DFS_MASK          (0x03U << CAC_PRV_CACR2_DFS_OFFSET)
+#define CAC_PRV_CACR2_RPS_OFFSET          (0U)
+#define CAC_PRV_CACR2_RPS_MASK            (1U << CAC_PRV_CACR2_RPS_OFFSET)
+#define CAC_PRV_CACR2_RSCS_OFFSET         (1U)
+#define CAC_PRV_CACR2_RCSC_MASK           (0x07U << CAC_PRV_CACR2_RSCS_OFFSET)
+#define CAC_PRV_CACR2_RCDS_OFFSET         (4U)
+#define CAC_PRV_CACR2_RCDS_MASK           (0x03U << CAC_PRV_CACR2_RCDS_OFFSET)
+#define CAC_PRV_CACR2_DFS_OFFSET          (6U)
+#define CAC_PRV_CACR2_DFS_MASK            (0x03U << CAC_PRV_CACR2_DFS_OFFSET)
 
 /* CAC Interrupt Control Register Bit Field Definitions */
-#define CAC_PRV_CAICR_FERRIE_OFFSET     (0U)
-#define CAC_PRV_CAICR_FERRIE_MASK       (1U << CAC_PRV_CAICR_FERRIE_OFFSET)
-#define CAC_PRV_CAICR_MENDIE_OFFSET     (1U)
-#define CAC_PRV_CAICR_MENDIE_MASK       (1U << CAC_PRV_CAICR_MENDIE_OFFSET)
-#define CAC_PRV_CAICR_OVFIE_OFFSET      (2U)
-#define CAC_PRV_CAICR_OVFIE_MASK        (1U << CAC_PRV_CAICR_OVFIE_OFFSET)
-#define CAC_PRV_CAICR_FERRFCL_OFFSET    (4U)
-#define CAC_PRV_CAICR_FERRFCL_MASK      (1U << CAC_PRV_CAICR_FERRFCL_OFFSET)
-#define CAC_PRV_CAICR_MENDFCL_OFFSET    (5U)
-#define CAC_PRV_CAICR_MENDFCL_MASK      (1U << CAC_PRV_CAICR_MENDFCL_OFFSET)
-#define CAC_PRV_CAICR_OVFFCL_OFFSET     (6U)
-#define CAC_PRV_CAICR_OVFFCL_MASK       (1U << CAC_PRV_CAICR_OVFFCL_OFFSET)
+#define CAC_PRV_CAICR_FERRIE_OFFSET       (0U)
+#define CAC_PRV_CAICR_FERRIE_MASK         (1U << CAC_PRV_CAICR_FERRIE_OFFSET)
+#define CAC_PRV_CAICR_MENDIE_OFFSET       (1U)
+#define CAC_PRV_CAICR_MENDIE_MASK         (1U << CAC_PRV_CAICR_MENDIE_OFFSET)
+#define CAC_PRV_CAICR_OVFIE_OFFSET        (2U)
+#define CAC_PRV_CAICR_OVFIE_MASK          (1U << CAC_PRV_CAICR_OVFIE_OFFSET)
+#define CAC_PRV_CAICR_FERRFCL_OFFSET      (4U)
+#define CAC_PRV_CAICR_FERRFCL_MASK        (1U << CAC_PRV_CAICR_FERRFCL_OFFSET)
+#define CAC_PRV_CAICR_MENDFCL_OFFSET      (5U)
+#define CAC_PRV_CAICR_MENDFCL_MASK        (1U << CAC_PRV_CAICR_MENDFCL_OFFSET)
+#define CAC_PRV_CAICR_OVFFCL_OFFSET       (6U)
+#define CAC_PRV_CAICR_OVFFCL_MASK         (1U << CAC_PRV_CAICR_OVFFCL_OFFSET)
+#define CAC_PRV_CAICR_FLAGS_CLEAR_MASK    (CAC_PRV_CAICR_FERRFCL_MASK | CAC_PRV_CAICR_MENDFCL_MASK | \
+                                           CAC_PRV_CAICR_OVFFCL_MASK)
 
 /* CAC Status Register Bit Field Definitions */
-#define CAC_PRV_CASTR_FERRF_OFFSET      (0U)
-#define CAC_PRV_CASTR_FERRF_MASK        (1U << CAC_PRV_CASTR_FERRF_OFFSET)
-#define CAC_PRV_CASTR_MENDF_OFFSET      (1U)
-#define CAC_PRV_CASTR_MENDF_MASK        (1U << CAC_PRV_CASTR_MENDF_OFFSET)
-#define CAC_PRV_CASTR_OVFF_OFFSET       (2U)
-#define CAC_PRV_CASTR_OVFF_MASK         (1U << CAC_PRV_CASTR_OVFF_OFFSET)
+#define CAC_PRV_CASTR_FERRF_OFFSET        (0U)
+#define CAC_PRV_CASTR_FERRF_MASK          (1U << CAC_PRV_CASTR_FERRF_OFFSET)
+#define CAC_PRV_CASTR_MENDF_OFFSET        (1U)
+#define CAC_PRV_CASTR_MENDF_MASK          (1U << CAC_PRV_CASTR_MENDF_OFFSET)
+#define CAC_PRV_CASTR_OVFF_OFFSET         (2U)
+#define CAC_PRV_CASTR_OVFF_MASK           (1U << CAC_PRV_CASTR_OVFF_OFFSET)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -155,19 +157,26 @@ fsp_err_t R_CAC_Open (cac_ctrl_t * const p_ctrl, cac_cfg_t const * const p_cfg)
  **********************************************************************************************************************/
 fsp_err_t R_CAC_StartMeasurement (cac_ctrl_t * const p_ctrl)
 {
-#if (CAC_CFG_PARAM_CHECKING_ENABLE == 1)
     cac_instance_ctrl_t * p_instance_ctrl = (cac_instance_ctrl_t *) p_ctrl;
+
+#if (CAC_CFG_PARAM_CHECKING_ENABLE == 1)
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN((CAC_OPEN == p_instance_ctrl->open), FSP_ERR_NOT_OPEN);
-#else
-    FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
+
+    cac_cfg_t const * const p_cfg = p_instance_ctrl->p_cfg;
+
+    /* Enable the CAC interrupts and clear the status flags */
+    R_CAC->CAICR = (uint8_t) (((p_cfg->mendi_irq >= 0) << CAC_PRV_CAICR_MENDIE_OFFSET) |
+                              ((p_cfg->ovfi_irq >= 0) << CAC_PRV_CAICR_OVFIE_OFFSET) |
+                              ((p_cfg->ferri_irq >= 0) << CAC_PRV_CAICR_FERRIE_OFFSET) |
+                              (uint8_t) CAC_PRV_CAICR_FLAGS_CLEAR_MASK);
 
     /* Start CAC measurement. */
     R_CAC->CACR0 = 1U;
 
-    /* Read CFME bit to confirm the bit value has changed. See section 10.2.1 CAC Control Register 0 of the RA6M3
-     * manual R01UH0886EJ0100. */
+    /* Read CFME bit to confirm the bit value has changed. See "CAC Control Register 0 (CACR0)" description of the
+     * relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(R_CAC->CACR0, 1U);
 
     return FSP_SUCCESS;
@@ -190,11 +199,14 @@ fsp_err_t R_CAC_StopMeasurement (cac_ctrl_t * const p_ctrl)
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
+    /* Disable the CAC interrupts */
+    R_CAC->CAICR = 0U;
+
     /* Disable measurements. */
     R_CAC->CACR0 = 0U;
 
-    /* Read CFME bit to confirm the bit value has changed. See section 10.2.1 CAC Control Register 0 of the RA6M3
-     * manual R01UH0886EJ0100. */
+    /* Read CFME bit to confirm the bit value has changed. See "CAC Control Register 0 (CACR0)" description of the relevant
+     * hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(R_CAC->CACR0, 0);
 
     return FSP_SUCCESS;
@@ -295,8 +307,7 @@ fsp_err_t R_CAC_Close (cac_ctrl_t * const p_ctrl)
     NVIC_DisableIRQ(p_instance_ctrl->p_cfg->mendi_irq);
     NVIC_DisableIRQ(p_instance_ctrl->p_cfg->ovfi_irq);
 
-    /* Read CFME bit to confirm the bit value has changed. See section 10.2.1 CAC Control Register 0 of the RA6M3
-     * manual R01UH0886EJ0100. */
+    /* Read CFME bit to confirm the bit value has changed. See "CAC Control Register 0 (CACR0)" description of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(R_CAC->CACR0, 0);
 
     /* Power down peripheral. */
@@ -325,7 +336,6 @@ static void r_cac_hw_configure (cac_instance_ctrl_t * const p_instance_ctrl)
 
     uint32_t cacr1 = 0;
     uint32_t cacr2 = 0;
-    uint32_t caicr = 0;
 
     /* Apply power to the peripheral */
     R_BSP_MODULE_START(FSP_IP_CAC, 0);
@@ -333,12 +343,12 @@ static void r_cac_hw_configure (cac_instance_ctrl_t * const p_instance_ctrl)
     /* Disable measurements. */
     R_CAC->CACR0 = 0;
 
-    /* Read CFME bit to confirm the bit value has changed. See section 10.2.1 CAC Control Register 0 of the RA6M3
-     * manual R01UH0886EJ0100. */
+    /* Read CFME bit to confirm the bit value has changed. See "CAC Control Register 0 (CACR0)" description
+     * of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(R_CAC->CACR0, 0);
 
-    /* Clear interrupt status flags. */
-    R_CAC->CAICR = CAC_PRV_CAICR_FERRFCL_MASK | CAC_PRV_CAICR_MENDFCL_MASK | CAC_PRV_CAICR_OVFFCL_MASK;
+    /* Clear interrupt status flags and disable CAC interrupts. */
+    R_CAC->CAICR = CAC_PRV_CAICR_FLAGS_CLEAR_MASK;
 
     /* Configure measurement clock divider. */
     cacr1 |= (uint32_t) (p_instance_ctrl->p_cfg->cac_meas_clock.divider << CAC_PRV_CACR1_TCSS_OFFSET);
@@ -371,27 +381,23 @@ static void r_cac_hw_configure (cac_instance_ctrl_t * const p_instance_ctrl)
     {
         /* Enable the measurement end interrupt. */
         R_BSP_IrqCfgEnable(p_cfg->mendi_irq, p_cfg->mendi_ipl, p_instance_ctrl);
-        caicr |= CAC_PRV_CAICR_MENDIE_MASK;
     }
 
-    if (p_instance_ctrl->p_cfg->ovfi_irq >= 0)
+    if (p_cfg->ovfi_irq >= 0)
     {
         /* Enable the measurement overflow interrupt. */
         R_BSP_IrqCfgEnable(p_cfg->ovfi_irq, p_cfg->ovfi_ipl, p_instance_ctrl);
-        caicr |= CAC_PRV_CAICR_OVFIE_MASK;
     }
 
     if (p_cfg->ferri_irq >= 0)
     {
         /* Enable the frequency error interrupt. */
         R_BSP_IrqCfgEnable(p_cfg->ferri_irq, p_cfg->ferri_ipl, p_instance_ctrl);
-        caicr |= CAC_PRV_CAICR_FERRIE_MASK;
     }
 
     /* Write settings to registers. */
     R_CAC->CACR1  = (uint8_t) cacr1;
     R_CAC->CACR2  = (uint8_t) cacr2;
-    R_CAC->CAICR  = (uint8_t) caicr;
     R_CAC->CAULVR = p_cfg->cac_upper_limit;
     R_CAC->CALLVR = p_cfg->cac_lower_limit;
 }
@@ -456,10 +462,6 @@ static void r_cac_isr_handler (cac_event_t event, uint32_t clear_mask)
 
     /* Clear the status flag. */
     R_CAC->CAICR |= (uint8_t) clear_mask;
-
-    /* Depending on MPU and cache settings, the register may need to be read back to ensure the write happens before
-     * clearing the IRQ in the ICU. */
-    FSP_REGISTER_READ(R_CAC->CAICR);
 
     R_BSP_IrqStatusClear(irq);
 }

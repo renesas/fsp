@@ -215,7 +215,8 @@ typedef enum e_elc_event_ra4m1
     ELC_EVENT_SPI1_TXI                      = (0x0B3), // Transmit buffer empty
     ELC_EVENT_SPI1_IDLE                     = (0x0B4), // Idle
     ELC_EVENT_SPI1_ERI                      = (0x0B5), // Error
-    ELC_EVENT_SPI1_TEI                      = (0x0B6)  // Transmission complete event
+    ELC_EVENT_SPI1_TEI                      = (0x0B6), // Transmission complete event
+    ELC_EVENT_SCE_TADI                      = (0x0DB)  // SCE Tamper Detection
 } elc_event_t;
 
 #define BSP_PRV_VECT_ENUM(event,group)  (ELC_ ## event)

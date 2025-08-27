@@ -442,7 +442,7 @@ fsp_err_t R_JPEG_InputBufferSet (jpeg_ctrl_t * const p_api_ctrl, void * p_data_b
             p_ctrl->status = JPEG_STATUS_RUNNING;
 
             /* Resume count mode
-             * (See RA6M3 User's Manual (R01UH0886EJ0100) Section 57.3.1.(2).(b) "Compression process") */
+             * (See "Compression process" in the JPEG section of the relevant hardware manual). */
             R_JPEG->JIFECNT_b.DINRCMD = 1;
         }
         else
@@ -1013,7 +1013,7 @@ static void r_jpeg_decode_init (jpeg_instance_ctrl_t * p_ctrl)
     R_JPEG->JINTS1 = 0;
 
     /* Clear interrupt request in JCCMD
-     * (See RA6M3 User's Manual (R01UH0886EJ0100) Section 57.2.15 "JPEG Interrupt Status Register 0 (JINTS0)" Note 1) */
+     * (See Note 1 of "JPEG Interrupt Status Register 0 (JINTS0)" description in the relevant hardware manual). */
     R_JPEG->JCCMD = R_JPEG_JCCMD_JEND_Msk;
 
     /* The following interrupts are enabled:
@@ -1076,7 +1076,7 @@ static fsp_err_t r_jpeg_decode_line_number_get (jpeg_instance_ctrl_t * const p_c
     }
 
     /* With 4:2:0 subsampling there are half the lines and in any mode the decode line count must be a multiple of 8
-     * (see RA6M3 User's Manual R01UH0886EJ0100 section 57.2.28 "JPEG Interface Decompression ... (JIFDDLC)") */
+     * (see "JPEG Interface Decompression Destination Line Count Register (JIFDDLC)" description in the relevant hardware manual) */
     if (JPEG_COLOR_SPACE_YCBCR420 == (jpeg_color_space_t) (R_JPEG->JCMOD_b.REDU))
     {
         lines_to_decode = lines_to_decode / 2U;
@@ -1271,8 +1271,8 @@ static void r_jpeg_encode_init (jpeg_instance_ctrl_t * p_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Function to correct output data when needed.  (See RA6M3 User's Manual (R01UH0886EJ0100) Section
- *              57.3.1.(2).(c) "Data correction")
+ * Function to correct output data when needed.  (See "Data correction"
+ * in the JPEG section of the relevant hardware manual)
  *
  * @param[in]   p_ctrl        Pointer to control block structure.
  * @param[in]   final_output  Number of bytes that may need to be corrected.

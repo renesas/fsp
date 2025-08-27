@@ -13,6 +13,8 @@
  #define RM_LITTLEFS_FLASH_DATA_BLOCK_SIZE      BSP_FEATURE_FLASH_LP_DF_BLOCK_SIZE
 #elif BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE != 0
  #define RM_LITTLEFS_FLASH_DATA_BLOCK_SIZE      BSP_FEATURE_FLASH_HP_DF_BLOCK_SIZE
+#elif BSP_FEATURE_MRAM_PROGRAMMING_SIZE_BYTES != 0
+ #define RM_LITTLEFS_FLASH_DATA_BLOCK_SIZE      BSP_FEATURE_MRAM_PROGRAMMING_SIZE_BYTES
 #else
  #error "Missing data flash block size as defined in bsp_feature.h"
 #endif
@@ -26,7 +28,7 @@
 #ifdef RM_LITTLEFS_FLASH_DATA_START
 static const uint32_t rm_littlefs_flash_data_start = RM_LITTLEFS_FLASH_DATA_START;
 #else
- #define rm_littlefs_flash_data_start    BSP_FEATURE_FLASH_DATA_FLASH_START
+ #define rm_littlefs_flash_data_start    p_extend->memory_address
 #endif
 
 /** "RLFS" in ASCII, used to determine if channel is open. */
@@ -79,7 +81,8 @@ fsp_err_t RM_LITTLEFS_FLASH_Open (rm_littlefs_ctrl_t * const p_ctrl, rm_littlefs
     FSP_ERROR_RETURN(p_cfg->p_lfs_cfg->block_size >= RM_LITTLEFS_FLASH_MINIMUM_BLOCK_SIZE, FSP_ERR_INVALID_SIZE);
     FSP_ERROR_RETURN((p_cfg->p_lfs_cfg->block_size % RM_LITTLEFS_FLASH_DATA_BLOCK_SIZE) == 0, FSP_ERR_INVALID_SIZE);
 
-    FSP_ERROR_RETURN((p_cfg->p_lfs_cfg->block_size * p_cfg->p_lfs_cfg->block_count) <= BSP_DATA_FLASH_SIZE_BYTES,
+    FSP_ERROR_RETURN((p_cfg->p_lfs_cfg->block_size * p_cfg->p_lfs_cfg->block_count) <= BSP_DATA_FLASH_SIZE_BYTES ||
+                     (BSP_FEATURE_FLASH_DATA_FLASH_START != rm_littlefs_flash_data_start),
                      FSP_ERR_INVALID_SIZE);
 #else
     rm_littlefs_flash_cfg_t const * p_extend = (rm_littlefs_flash_cfg_t *) p_cfg->p_extend;
@@ -169,6 +172,9 @@ int rm_littlefs_flash_read (const struct lfs_config * c,
     rm_littlefs_flash_instance_ctrl_t * p_instance_ctrl = (rm_littlefs_flash_instance_ctrl_t *) c->context;
 #if RM_LITTLEFS_FLASH_CFG_PARAM_CHECKING_ENABLE
     FSP_ERROR_RETURN(RM_LITTLEFS_FLASH_OPEN == p_instance_ctrl->open, LFS_ERR_IO);
+#endif
+#ifndef RM_LITTLEFS_FLASH_DATA_START
+    rm_littlefs_flash_cfg_t const * p_extend = (rm_littlefs_flash_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 #endif
 
     /* Read directly from the flash. */

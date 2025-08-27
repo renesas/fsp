@@ -121,19 +121,19 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
     /* PCDC, PCDCC */
 #if defined(USB_CFG_PCDC_USE)
  #if (BSP_CFG_RTOS == 1)
-    USB_NULL, USB_NULL,                              /* USB_PCDC  (0) */
-    USB_NULL, USB_NULL,                              /* USB_PCDCC (1) */
+    USB_NULL, USB_NULL,                              /* USB_PCDC   (0) */
+    USB_NULL, USB_NULL,                              /* USB_PCDCC  (1) */
     USB_NULL, USB_NULL,                              /* USB_PCDC2  (2) */
     USB_NULL, USB_NULL,                              /* USB_PCDCC2 (3) */
  #else  /* #if (BSP_CFG_RTOS == 1) */
-    usb_pcdc_read_complete, usb_pcdc_write_complete, /* USB_PCDC  (0) */
-    USB_NULL, usb_pcdc_write_complete,               /* USB_PCDCC (1) */
+    usb_pcdc_read_complete, usb_pcdc_write_complete, /* USB_PCDC   (0) */
+    USB_NULL, usb_pcdc_write_complete,               /* USB_PCDCC  (1) */
     usb_pcdc_read_complete, usb_pcdc_write_complete, /* USB_PCDC2  (2) */
     USB_NULL, usb_pcdc_write_complete,               /* USB_PCDCC2 (3) */
  #endif /* #if (BSP_CFG_RTOS == 1) */
 #else
-    USB_NULL, USB_NULL,                              /* USB_PCDC  (0) */
-    USB_NULL, USB_NULL,                              /* USB_PCDCC (1) */
+    USB_NULL, USB_NULL,                              /* USB_PCDC   (0) */
+    USB_NULL, USB_NULL,                              /* USB_PCDCC  (1) */
     USB_NULL, USB_NULL,                              /* USB_PCDC2  (2) */
     USB_NULL, USB_NULL,                              /* USB_PCDCC2 (3) */
 #endif
@@ -153,7 +153,15 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
 #endif
 
     /* PAUD */
+#if defined(USB_CFG_PAUD_USE)
+ #if (BSP_CFG_RTOS != 1)
+    usb_paud_read_complete, usb_paud_write_complete, /* USB_PAUD (6) */
+ #else /*  #if (BSP_CFG_RTOS != 1) */
     USB_NULL, USB_NULL,                              /* USB_PAUD (6) */
+ #endif /*  #if (BSP_CFG_RTOS != 1) */
+#else
+    USB_NULL, USB_NULL,                              /* USB_PAUD (6) */
+#endif
 
     /* PPRN */
 #if defined(USB_CFG_PPRN_USE)

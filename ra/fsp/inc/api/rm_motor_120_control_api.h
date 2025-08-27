@@ -91,7 +91,7 @@ typedef enum  e_motor_120_control_rotation_direction
 {
     MOTOR_120_CONTROL_ROTATION_DIRECTION_CW  = 0, ///< Clockwise
     MOTOR_120_CONTROL_ROTATION_DIRECTION_CCW = 1, ///< Counter clockwise
-    MOTOR_120_CONTROL_ROTATION_DIRECTION_MAX = 2, ///< Max value
+    MOTOR_120_CONTROL_ROTATION_DIRECTION_MAX = 2, ///< Maximum value
 } motor_120_control_rotation_direction_t;
 
 /** Flag for waiting for motor stop */
@@ -144,8 +144,8 @@ typedef struct st_motor_120_control_cfg
 {
     motor_120_conduction_type_t conduction_type;                     ///< 0:First 60 degree PWM, 1:Complementary first 60 degree PWM
     uint32_t u4_timeout_cnt;                                         ///< Undetected time
-    float    f4_max_drive_v;                                         ///< Max output voltage (V)
-    float    f4_min_drive_v;                                         ///< Min output voltage (V)
+    float    f4_max_drive_v;                                         ///< Maximum output voltage (V)
+    float    f4_min_drive_v;                                         ///< Minimum output voltage (V)
     uint32_t u4_speed_pi_decimation;                                 ///< Speed PI control decimation counter
     uint32_t u4_free_run_timer_freq;                                 ///< Speed calc free run timer frequency (MHz)
     float    f4_speed_lpf_k;                                         ///< Speed LPF parameter

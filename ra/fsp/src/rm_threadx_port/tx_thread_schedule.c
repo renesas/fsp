@@ -402,7 +402,7 @@ TX_PORT_NAKED_FUNCTION VOID PendSV_Handler (VOID)
 #endif
 
         // [r1, #TX_PORT_OFFSET_STACK_PTR] == _tx_thread_current_ptr->tx_thread_stack_ptr
-        "STR     r3, [r1, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_OFFSET_STACK_PTR) /* Save its stack pointer */
+        "STR     r3, [r1, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_OFFSET_STACK_PTR) /* Save its stack pointer */
         "]                                   \n"
 
 #ifdef TX_PORT_TRUSTZONE_NSC_ENABLE
@@ -444,7 +444,7 @@ TX_PORT_NAKED_FUNCTION VOID PendSV_Handler (VOID)
         /* Time-slice is active, save the current thread's time-slice and clear the global time-slice variable.  */
 
         // _tx_thread_current_ptr->tx_thread_time_slice = _tx_timer_time_slice;
-        "STR     r3, [r1, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_OFFSET_TIME_SLICE) /* Save current time-slice */
+        "STR     r3, [r1, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_OFFSET_TIME_SLICE) /* Save current time-slice */
         "]                                   \n"
 
         /* Clear the global time-slice.  */
@@ -499,16 +499,16 @@ TX_PORT_NAKED_FUNCTION VOID PendSV_Handler (VOID)
         /* Increment the thread run count.  */
 
         // _tx_thread_current_ptr->tx_thread_run_count++;
-        "LDR  r0, [r6, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_OFFSET_RUN_COUNT)
+        "LDR  r0, [r6, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_OFFSET_RUN_COUNT)
         "]                                   \n" // Pickup the current thread run count
         "ADDS r0, r0, #1                     \n" // Increment the thread run count
-        "STR  r0, [r6, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_OFFSET_RUN_COUNT)
+        "STR  r0, [r6, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_OFFSET_RUN_COUNT)
         "]                                   \n" // Store the new run count
 
         /* Setup global time-slice with thread's current time-slice.  */
 
         // _tx_timer_time_slice = _tx_thread_current_ptr->tx_thread_time_slice;
-        "LDR r0, [r6, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_OFFSET_TIME_SLICE)
+        "LDR r0, [r6, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_OFFSET_TIME_SLICE)
         "]                                   \n" // Pickup thread's current time-slice
         "STR r0, [r4]                        \n" // Setup global time-slice
 
@@ -553,9 +553,9 @@ TX_PORT_NAKED_FUNCTION VOID PendSV_Handler (VOID)
 #ifdef TX_PORT_PSPLIM_PRESENT
 
         /* Set PSPLIM to the beginning of the thread stack. */
-        "LDR     r1, [r6, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_OFFSET_STACK_START)
+        "LDR     r1, [r6, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_OFFSET_STACK_START)
         "]                                   \n"
-        "ADD     r1,  r1, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_SCHEDULER_STACK)
+        "ADD     r1,  r1, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_SCHEDULER_STACK)
         "                                    \n" // Update PSP to utilize the HW stack monitor with the amount of room required to save r4-r11
         "MSR     PSPLIM, r1                  \n"
 #endif
@@ -565,7 +565,7 @@ TX_PORT_NAKED_FUNCTION VOID PendSV_Handler (VOID)
         /* Get stack pointer for this thread. */
 
         // [r6, #TX_PORT_OFFSET_STACK_PTR] == _tx_thread_current_ptr->tx_thread_stack_ptr
-        "LDR     r3, [r6, #"TX_PORT_STRINGIFY_EXPANDED (TX_PORT_OFFSET_STACK_PTR)
+        "LDR     r3, [r6, #" TX_PORT_STRINGIFY_EXPANDED(TX_PORT_OFFSET_STACK_PTR)
         "]                                   \n"
 
 #if __FPU_USED

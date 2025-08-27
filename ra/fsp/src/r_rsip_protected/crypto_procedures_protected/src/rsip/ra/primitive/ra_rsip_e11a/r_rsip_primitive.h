@@ -23,6 +23,8 @@ extern uint32_t         S_RAM[RSIP_PRV_WORD_SIZE_S_RAM];
 extern uint32_t const * S_INST2;
 
 extern uint32_t const DomainParam_NIST_P256[];
+extern uint32_t const DomainParam_Brainpool_256r1[];
+extern uint32_t const DomainParam_Koblitz_secp256k1[];
 extern uint32_t       INST_DATA_SIZE;
 
 /**********************************************************************************************************************

@@ -279,10 +279,10 @@ fsp_err_t R_SSI_Open (i2s_ctrl_t * const p_ctrl, i2s_cfg_t const * const p_cfg)
     uint32_t tx_fifo_setting = (BSP_FEATURE_SSI_FIFO_NUM_STAGES / 2U) - 1U;
     uint32_t ssiscr          = (tx_fifo_setting << 8) | rx_fifo_setting;
 
-    /* Initialize the SSIE following the procedure in Figure 41.53 "Procedure to start communication (CPU operation
-     * procedure)" of the RA6M3 manual R01UH0886EJ0100. This function follows this procedure except for enabling
+    /* Initialize the SSIE following the procedure in Figure "Procedure to start communication (CPU operation
+     * procedure)" in the SSIE section of the relevant hardware manual
+     * This function follows this procedure except for enabling
      * interrupts and enabling communication, which are done before communication begins. */
-
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
     p_instance_ctrl->p_context         = p_cfg->p_context;
     p_instance_ctrl->p_callback_memory = NULL;
@@ -298,8 +298,8 @@ fsp_err_t R_SSI_Open (i2s_ctrl_t * const p_ctrl, i2s_cfg_t const * const p_cfg)
     p_instance_ctrl->p_reg->SSIFCR = ssifcr | (1U << SSI_PRV_SSIFCR_SSIRST_BIT);
     p_instance_ctrl->p_reg->SSIFCR = ssifcr;
 
-    /* Wait for SSIRST to clear before continuing.  Reference SSIRST in section 41.4.3 "FIFO Control Register (SSIFCR)"
-     * of the RA6M3 manual R01UH0886EJ0100. */
+    /* Wait for SSIRST to clear before continuing.  See SSIRST in "FIFO Control Register (SSIFCR)" description
+     * in the SSIE section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(p_instance_ctrl->p_reg->SSIFCR, ssifcr);
 
     p_instance_ctrl->p_reg->SSISCR = ssiscr;
@@ -704,8 +704,8 @@ static fsp_err_t r_ssi_dependent_drivers_configure (R_SSI0_Type           * p_re
     fsp_err_t err_transfer_tx = FSP_SUCCESS;
     fsp_err_t err_transfer_rx = FSP_SUCCESS;
 
-    /* Use block mode to fill or empty half the FIFO at a time. Reference Figure 41.53 "Procedure to start
-     * communication (CPU operation procedure)" in the RA6M3 manual R01UH0886EJ0100. */
+    /* Use block mode to fill or empty half the FIFO at a time. See Figure "Procedure to start
+     * communication (CPU operation procedure)" in the SSIE section of the relevant hardware manual. */
     uint32_t transfer_settings = (uint32_t) TRANSFER_MODE_BLOCK << TRANSFER_SETTINGS_MODE_BITS;
     transfer_settings |= (uint32_t) fifo_access_size << TRANSFER_SETTINGS_SIZE_BITS;
 
@@ -766,8 +766,8 @@ static fsp_err_t r_ssi_dependent_drivers_configure (R_SSI0_Type           * p_re
  **********************************************************************************************************************/
 static void r_ssi_stop_sub (ssi_instance_ctrl_t * const p_instance_ctrl)
 {
-    /* Stop communication following the procedure from Figure 41.56 "Procedure to halt communication (CPU operation
-     * procedure)" in the RA6M3 manual R01UH0886EJ0100. */
+    /* Stop communication following the procedure from Figure "Procedure to halt communication (CPU operation
+     * procedure)" in the SSIE section of the relevant hardware manual. */
 
     /* Disable transmission and reception and associated interrupts. Enable idle interrupt. */
     uint32_t ssicr = p_instance_ctrl->p_reg->SSICR;
@@ -917,7 +917,7 @@ static fsp_err_t r_ssi_start (ssi_instance_ctrl_t * const p_instance_ctrl, ssi_d
     if (desired_ssicr_ren_ten != (current_ssicr_ren_ten & desired_ssicr_ren_ten))
     {
         /* If the peripheral is in the wrong mode or not idle, return an error. The SSI must be idle before setting
-         * REN or TEN. Reference 41.11.3.4 "Switching transfer modes" in the RA6M3 manual R01UH0886EJ0100. */
+         * REN or TEN. Reference "Switching transfer modes" in the SSIE section of the relevant hardware manual. */
         FSP_ERROR_RETURN(0U == current_ssicr_ren_ten, FSP_ERR_IN_USE);
         FSP_ERROR_RETURN(1U == p_instance_ctrl->p_reg->SSISR_b.IIRQ, FSP_ERR_IN_USE);
 
@@ -927,8 +927,8 @@ static fsp_err_t r_ssi_start (ssi_instance_ctrl_t * const p_instance_ctrl, ssi_d
         p_instance_ctrl->p_reg->SSIFCR = ssifcr | SSI_PRV_SSIFCR_TFRST_RFRST_MASK;
         p_instance_ctrl->p_reg->SSIFCR = ssifcr;
 
-        /* Wait for TFRST and RFRST to clear before continuing.  Reference TFRST and RFRST in section 41.4.3 "FIFO
-         * Control Register (SSIFCR)" of the RA6M3 manual R01UH0886EJ0100. */
+        /* Wait for TFRST and RFRST to clear before continuing.  Reference TFRST and RFRST in section "FIFO
+         * Control Register (SSIFCR)" description in the SSIE section of the relevant hardware manual. */
         FSP_HARDWARE_REGISTER_WAIT(p_instance_ctrl->p_reg->SSIFCR, ssifcr);
 
         /* If starting transmission, enable transmit interrupts. */
@@ -1248,8 +1248,8 @@ void ssi_int_isr (void)
     /* Events that are being serviced are being cleared. During this time if another error occurs then this
      * interrupt will fire again */
 
-    /* Clear all flags in SSISR. These bits can only be cleared after reading them as 1.  Reference section 41.4.2
-     * "Status Register (SSISR)" of the RA6M3 manual R01UH0886EJ0100. */
+    /* Clear all flags in SSISR. These bits can only be cleared after reading them as 1. See
+     * "Status Register (SSISR)" description in the SSIE section of the relevant hardware manual. */
     uint32_t iirq_flag = p_instance_ctrl->p_reg->SSISR_b.IIRQ;
     p_instance_ctrl->p_reg->SSISR = 0U;
 
@@ -1269,8 +1269,8 @@ void ssi_int_isr (void)
             r_ssi_fifo_read(p_instance_ctrl);
         }
 
-        /* SSIE must go idle after a transmit or receive error. Reference section 41.11.3.1 "When an error interrupt
-         * is generated" in the RA6M3 manual R01UH0886EJ0100. */
+        /* SSIE must go idle after a transmit or receive error. See "When an error interrupt
+         * is generated" in the SSIE section of the relevant hardware manual. */
         r_ssi_stop_sub(p_instance_ctrl);
     }
 

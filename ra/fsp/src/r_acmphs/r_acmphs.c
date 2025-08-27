@@ -237,7 +237,7 @@ fsp_err_t R_ACMPHS_StatusGet (comparator_ctrl_t * const p_ctrl, comparator_statu
         if (COMPARATOR_FILTER_OFF == (comparator_filter_t) p_instance_ctrl->p_reg->CMPCTL_b.CDFS)
         {
             /* Software debounce of 2 consecutive reads is required by the hardware manual if the hardware debounce filter is off. */
-            /* See section "50.2.4 Comparator Output Monitor Register (CMPMON)" of the RA6M3 manual R01UH0886EJ0100) */
+            /* See "Comparator Output Monitor Register (CMPMON)" description in the ACMPHS section of the relevant hardware manual. */
             uint8_t state2 = p_instance_ctrl->p_reg->CMPMON;
 
             r_acmphs_extended_cfg_t * p_extend = ((r_acmphs_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend);
@@ -356,14 +356,14 @@ static void acmphs_hardware_initialize (acmphs_instance_ctrl_t * const p_instanc
     /* For ACMPHS modules 0 to 5, VREFEN exists only in ACMPHS0.CPIOC. When using the internal Vref in COMP0 to COMP5,
      * set the VREFEN bit in ACMPHS0.CPIOC to 1. Bit [7] in ACMPHS1.CPIOC to ACMPHS5.CPIOC should be 0 regardless of
      * whether or not the internal Vref is used
-     * See section "50.2.5 Comparator Output Control Register (CPIOC)" of the RA6M3 manual R01UH0886EJ0100) */
+     * See "Comparator Output Control Register (CPIOC)" description in the ACMPHS section of the relevant hardware manual. */
     if (BSP_FEATURE_ACMPHS_VREF == p_extend->reference_voltage)
     {
         R_MSTP->MSTPCRD_b.MSTPD28 = 0;
 
         /* Read back the register to ensure that the write has completed.
-         * See Note for readback in section "10.2.4 MSTPCRA: Module Stop Control Register A" in
-         *   the RA8M1 manual R01UH0994EJ0100. */
+         * See the read back Note of "Module Stop Control Register A (MSTPCRA)" in the LPM section of
+         * the relevant hardware manual. */
         FSP_REGISTER_READ(R_MSTP->MSTPCRD);
 
         /*Writes to VREFEN bit must be in critical sections to ensure the driver is reentrant for different channels.*/

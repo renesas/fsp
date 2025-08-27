@@ -181,6 +181,7 @@ typedef enum e_elc_event_ra4w1
     ELC_EVENT_SCI1_TEI                      = (0x0B4), // Transmit end
     ELC_EVENT_SCI1_ERI                      = (0x0B5), // Receive error
     ELC_EVENT_SCI1_AM                       = (0x0B6), // Address match event
+    ELC_EVENT_SCE_TADI                      = (0x0B8), // SCE Tamper Detection
     ELC_EVENT_SCI4_RXI                      = (0x0C1), // Receive data full
     ELC_EVENT_SCI4_TXI                      = (0x0C2), // Transmit data empty
     ELC_EVENT_SCI4_TEI                      = (0x0C3), // Transmit end

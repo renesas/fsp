@@ -397,10 +397,10 @@ fsp_err_t R_CGC_Open (cgc_ctrl_t * const p_ctrl, cgc_cfg_t const * const p_cfg)
  * The internal dividers (cgc_clocks_cfg_t::divider_cfg) are subject to constraints described in footnotes of the
  * hardware manual table detailing specifications for the clock generation circuit for the internal clocks for the MCU.
  * For example:
- *   - RA6M3: see footnotes of Table 9.2 "Specifications of the clock generation circuit for the internal clocks" in
- *     the RA6M3 manual R01UH0886EJ0100
- *   - RA2A1: see footnotes of Table 9.2 "Clock generation circuit specifications for the internal clocks" in the RA2A1
- *     manual R01UH0888EJ0100
+ *   - RA6M3: see footnotes of table "Specifications of the clock generation circuit for the internal clocks"
+ *     in the CGC section of the relevant hardware manual.
+ *   - RA2A1: see footnotes of table "Clock generation circuit specifications for the internal clocks"
+ *     in the CGC section of the relevant hardware manual.
  *
  * Do not attempt to stop the requested clock source or the source of a PLL if the PLL will be running after this
  * operation completes.
@@ -971,10 +971,10 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
  * The internal dividers (p_divider_cfg) are subject to constraints described in footnotes of the hardware manual table
  * detailing specifications for the clock generation circuit for the internal clocks for the MCU.
  * For example:
- *   - RA6M3: see footnotes of Table 9.2 "Specifications of the clock generation circuit for the internal clocks" in
- *     the RA6M3 manual R01UH0886EJ0100
- *   - RA2A1: see footnotes of Table 9.2 "Clock generation circuit specifications for the internal clocks" in the RA2A1
- *     manual R01UH0888EJ0100
+ *   - RA6M3: see footnotes "Specifications of the clock generation circuit for the internal clocks"
+ *     in the CGC section of the relevant hardware manual.
+ *   - RA2A1: see footnotes "Clock generation circuit specifications for the internal clocks"
+ *     in the CGC section of the relevant hardware manual.
  *
  * This function also updates the RAM and ROM wait states, the operating power control mode, and the SystemCoreClock
  * CMSIS global variable.
@@ -1421,12 +1421,12 @@ fsp_err_t R_CGC_OscStopStatusClear (cgc_ctrl_t * const p_ctrl)
         R_SYSTEM->OSTDSR = 0U;
         R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_CGC);
 
-        /* At least 3 ICLK cycles of wait time are required between writing 0 to OSTDF and reading it as 0 (see section
-         * 8.2.13 "Oscillation Stop Detection Status Register (OSTDSR)" of the RA6M3 manual. The call to enable register
+        /* At least 3 ICLK cycles of wait time are required between writing 0 to OSTDF and reading it as 0 (see
+         * "Oscillation Stop Detection Status Register (OSTDSR)" description in the CGC section of the relevant hardware manual.) The call to enable register
          * protection for CGC registers above takes more than 3 ICLK cycles. */
 
-        /* Verify the flag was cleared (see Figure 9.12 "Flow of recovery on detection of oscillator stop" of the RA6M3
-         * manual R01UH0886EJ0100). If not, return an error. */
+        /* Verify the flag was cleared (see figure "Flow of recovery on detection of oscillator stop"
+         * in the CGC section of the relevant hardware manual). If not, return an error. */
         FSP_ERROR_RETURN(0U == R_SYSTEM->OSTDSR, FSP_ERR_INVALID_HW_CONDITION);
     }
 
@@ -1567,7 +1567,7 @@ static fsp_err_t r_cgc_common_parameter_checking (cgc_instance_ctrl_t * p_instan
 static void r_cgc_pre_change (cgc_prv_change_t change)
 {
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
- #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
+ #if BSP_FEATURE_FLASH_CACHE_DISABLE_OPM
 
     /* Disable flash cache. */
     R_BSP_FlashCacheDisable();
@@ -1609,7 +1609,7 @@ static void r_cgc_post_change (cgc_prv_change_t change)
 
 #if !BSP_CFG_USE_LOW_VOLTAGE_MODE
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
- #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM && BSP_FEATURE_BSP_FLASH_CACHE
+ #if BSP_FEATURE_FLASH_CACHE_DISABLE_OPM && BSP_FEATURE_FLASH_CACHE
     R_BSP_FlashCacheEnable();
  #endif
 #endif
@@ -1868,7 +1868,7 @@ static void r_cgc_clock_change (cgc_clock_t clock, cgc_clock_change_t state)
 #if BSP_FEATURE_BSP_HAS_SYRACCR
     if (CGC_CLOCK_LOCO == clock)
     {
-        /* Wait for the BUSY flag to be cleared (See Section "8.2.4" in the RA8M1 manual R01UH0994EJ0100). */
+        /* Wait for the BUSY flag to be cleared (See "SYRACCR : System Register Access Control Register" description in the CGC section of the relevant hardware manual). */
         FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->SYRACCR, 0);
     }
 #endif
@@ -1897,8 +1897,8 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
 
  #if BSP_FEATURE_CGC_HAS_PCLKA
 
-    /* Check dividers against hardware constraints (see footnotes of Table 9.2 "Specifications of the clock generation
-     * circuit for the internal clocks" in the RA6M3 manual R01UH0886EJ0100). */
+    /* Check dividers against hardware constraints (see footnotes of table "Specifications of the clock generation
+     * circuit for the internal clocks" in the CGC section of the relevant hardware manual). */
 
     /* ICLK frequency must be >= PCLKA, so ICLK divider must be <= PCLKA. */
     FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.pclka_div);
@@ -1910,8 +1910,8 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
     FSP_ASSERT(p_divider_cfg->sckdivcr_b.pclkd_div <= p_divider_cfg->sckdivcr_b.pclka_div);
  #elif BSP_FEATURE_CGC_HAS_PCLKB
 
-    /* Check dividers against hardware constraints (see footnotes of Table 9.2 "Clock generation circuit specifications
-     * for the internal clocks" in the RA2A1 manual R01UH0888EJ0100). */
+    /* Check dividers against hardware constraints (see footnotes of table "Clock generation circuit specifications
+     * for the internal clocks" in the CGC section of the relevant hardware manual.). */
 
     /* ICLK frequency must be >= PCLKB, so ICLK divider must be <= PCLKB. */
     FSP_ASSERT(p_divider_cfg->sckdivcr_b.iclk_div <= p_divider_cfg->sckdivcr_b.pclkb_div);
@@ -1982,8 +1982,8 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
 {
   #if (1U == BSP_FEATURE_CGC_PLLCCR_TYPE) || (5U == BSP_FEATURE_CGC_PLLCCR_TYPE)
 
-    /* Ensure PLL configuration is supported on this MCU (see Section 9.2.4 "PLL Clock Control Register (PLLCCR)" in the
-     * RA6M3 manual R01UH0886EJ0100). */
+    /* Ensure PLL configuration is supported on this MCU (see "PLL Clock Control Register (PLLCCR)" description
+     * in the CGC section of the relevant hardware manual). */
 
     /* PLLCCR clock source can only be main oscillator or HOCO. */
     FSP_ASSERT((CGC_CLOCK_MAIN_OSC == p_pll_cfg->source_clock) || (CGC_CLOCK_HOCO == p_pll_cfg->source_clock));
@@ -2022,7 +2022,7 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
   #elif (3U == BSP_FEATURE_CGC_PLLCCR_TYPE) || (6U == BSP_FEATURE_CGC_PLLCCR_TYPE)
 
     /* Ensure PLL configuration is supported on this MCU,
-     * see Section 8.2.6 "PLL Clock Control Register (PLLCCR)" in the RA8M1 manual R01UH0994EJ0100 */
+     * see "PLL Clock Control Register (PLLCCR)" description in the CGC section of the relevant hardware manual. */
 
     /* PLLCCR clock source can only be main oscillator or HOCO. */
     FSP_ASSERT((CGC_CLOCK_MAIN_OSC == p_pll_cfg->source_clock) || (CGC_CLOCK_HOCO == p_pll_cfg->source_clock));
@@ -2069,8 +2069,8 @@ static fsp_err_t r_cgc_pll_parameter_check (cgc_pll_cfg_t const * const p_pll_cf
     FSP_ASSERT((p_pll_cfg->multiplier == CGC_PLL_MUL_732_0) || (p_pll_cfg->multiplier == CGC_PLL_MUL_781_0));
   #else
 
-    /* Ensure PLL configuration is supported on this MCU (see Section 8.2.3 "PLL Clock Control Register 2 (PLLCCR2)" in
-     * the RA4M1 manual R01UH0887EJ0100). */
+    /* Ensure PLL configuration is supported on this MCU (see "PLL Clock Control Register 2 (PLLCCR2)" description
+     * in the CGC section of the relevant hardware manual.). */
 
     /* PLLCCR2 clock source can only be main oscillator. */
     FSP_ASSERT(CGC_CLOCK_MAIN_OSC == p_pll_cfg->source_clock);
@@ -2258,8 +2258,8 @@ static fsp_err_t r_cgc_pll_hz_calculate (cgc_pll_cfg_t const * const p_pll_cfg,
 
   #if CGC_CFG_PARAM_CHECKING_ENABLE
 
-    /* The following restrictions apply to the PLL on this MCU (see Table 8.1 "Clock generation circuit specifications
-     * for the clock sources" in the RA4M1 manual R01UH0887EJ0100):
+    /* The following restrictions apply to the PLL on this MCU (see table "Clock generation circuit specifications
+     * for the clock sources" in the CGC section of the relevant hardware manual.):
      *   - The PLL input frequency must be between 4 MHz and 12.5 MHz.
      *   - The maximum frequency after multiplication is 128 MHz.
      *   - The minimum frequency is 24 MHz.
@@ -2532,7 +2532,7 @@ static void r_cgc_pll_cfg (cgc_pll_cfg_t const * const p_pll_cfg,
  #if BSP_FEATURE_CGC_PLLCCR_WAIT_US > 0
 
     /* This loop is provided to ensure at least 1 us passes between setting PLLMUL and clearing PLLSTP on some
-     * MCUs (see PLLSTP notes in Section 8.2.4 "PLL Control Register (PLLCR)" of the RA4M1 manual R01UH0887EJ0100).
+     * MCUs (see PLLSTP notes in "PLL Control Register (PLLCR)" description in the CGC section of the relevant hardware manual.)
      * Five loops are needed here to ensure the most efficient path takes at least 1 us from the setting of
      * PLLMUL to the clearing of PLLSTP. HOCO is the fastest clock we can be using here since PLL cannot be running
      * while setting PLLCCR. */

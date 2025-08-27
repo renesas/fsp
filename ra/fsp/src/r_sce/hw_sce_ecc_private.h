@@ -197,6 +197,8 @@ fsp_err_t HW_SCE_ECC_521WrappedScalarMultiplication(const uint32_t * InData_Curv
                                                     const uint32_t * Domain_Param,
                                                     uint32_t       * OutData_R);
 
+#endif
+#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
 fsp_err_t HW_SCE_ECC_255GenerateSign(const uint32_t * InData_CurveType,
                                      const uint32_t * InData_G,
                                      const uint32_t * InData_PrivKey,

@@ -261,7 +261,8 @@ typedef enum e_elc_event_ra4m2
     ELC_EVENT_SPI0_ERI                      = (0x1C7), // Error
     ELC_EVENT_SPI0_TEI                      = (0x1C8), // Transmission complete event
     ELC_EVENT_QSPI_INT                      = (0x1DA), // QSPI interrupt
-    ELC_EVENT_DOC_INT                       = (0x1DB)  // Data operation circuit interrupt
+    ELC_EVENT_DOC_INT                       = (0x1DB), // Data operation circuit interrupt
+    ELC_EVENT_SCE_TADI                      = (0x1E9)  // SCE Tamper Detection
 } elc_event_t;
 
 #define BSP_PRV_VECT_ENUM(event,group)  (ELC_ ## event)

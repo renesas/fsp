@@ -554,6 +554,9 @@ fsp_err_t r_lpm_configure (lpm_cfg_t const * const p_cfg)
  #if BSP_FEATURE_LPM_HAS_DPSBYCR_DPSBY
             dpsbycr |= R_SYSTEM_DPSBYCR_DPSBY_Msk;
  #endif
+ #if BSP_FEATURE_LPM_HAS_DPSBYCR_DCSSMODE
+            dpsbycr |= (uint8_t) (p_cfg->deep_standby_soft_start_mode << R_SYSTEM_DPSBYCR_DCSSMODE_Pos);
+ #endif
  #if BSP_FEATURE_LPM_HAS_DPSBYCR_DEEPCUT
             dpsbycr |= ((uint32_t) p_cfg->power_supply_state << R_SYSTEM_DPSBYCR_DEEPCUT_Pos) &
                        R_SYSTEM_DPSBYCR_DEEPCUT_Msk;
@@ -877,8 +880,8 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 #else
 
         /* Save the OPCCR and SOPCCR registers. When transitioning from Software Standby mode to Normal or Snooze mode
-         * these registers are overwritten. See Section 11.2.6 "Operating Power Control Register" in the RA6M3 manual
-         * R01UM0004EU0110 */
+         * these registers are overwritten. See "Operating Power Control Register" description
+         * in the LPM section of the relevant hardware manual. */
         saved_opccr = (*p_opccr & R_SYSTEM_OPCCR_OPCM_Msk) >> R_SYSTEM_OPCCR_OPCM_Pos;
  #if BSP_FEATURE_CGC_HAS_SOPCCR
         saved_sopccr = R_SYSTEM->SOPCCR_b.SOPCM;
@@ -898,8 +901,8 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
         {
  #if BSP_FEATURE_LPM_HAS_SNOOZE
 
-            /* Check Snooze configuration settings. Set HOCOWTCR based on current configuration. See Section 11.2.1
-             * "Standby Control Register" in the RA6M3 manual  R01UM0004EU0110 */
+            /* Check Snooze configuration settings. Set HOCOWTCR based on current configuration. See
+             * "Standby Control Register" description in the LPM section of the relevant hardware manual. */
             if (1U == R_SYSTEM->SNZCR_b.RXDREQEN)
             {
                 /* Verify clock settings. */
@@ -951,8 +954,8 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
             R_SYSTEM->SYOCDCR_b.DOCDF = 0U;
 
             /* Clear Deep Software Standby Interrupt Flag Registers. A dummy read is required before writing to DPSIFR.
-             * See Section 11.2.16 "Deep Software Standby Interrupt Flag Register 0" in the
-             * RA6M3 manual  R01UM0004EU0110 */
+             * See "Deep Software Standby Interrupt Flag Register 0" description in the
+             * LPM section of the relevant hardware manual */
             R_SYSTEM->DPSIFR0;
             R_SYSTEM->DPSIFR0 = 0U;
 
@@ -992,8 +995,8 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 #endif
 #if BSP_PRV_POWER_USE_DCDC
 
-        /* DCDC cannot be used in Software Standby, so switch back to LDO if needed (see RA2L1 User's Manual
-         * (R01UH0853EJ0100) Section 40.3 Usage Notes). */
+        /* DCDC cannot be used in Software Standby, so switch back to LDO if needed (see Usage Notes
+         * in the LPM section of the relevant hardware manual). */
         if (R_SYSTEM->DCDCCTL & R_SYSTEM_DCDCCTL_DCDCON_Msk)
         {
             power_mode = R_BSP_PowerModeSet(BSP_POWER_MODE_LDO_BOOST);
@@ -1007,7 +1010,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
  #ifdef R_SYSTEM_SNZCR_SNZE_Msk
 
         /* Enable Snooze mode (SNZCR.SNZE = 1) immediately before entering to Software Standby mode.
-         * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
+         * See "Canceling Snooze Mode" in the LPM section of the relevant hardware manual. */
         R_SYSTEM->SNZCR_b.SNZE = 1;
 
         /* Dummy read required.
@@ -1069,7 +1072,7 @@ fsp_err_t r_lpm_low_power_enter (lpm_instance_ctrl_t * const p_instance_ctrl)
 #ifdef R_SYSTEM_SNZCR_SNZE_Msk
 
     /* Disable Snooze mode (SNZCR.SNZE = 0) immediately after canceling Snooze mode.
-     * See Section 11.8.2 "Canceling Snooze Mode" in the RA6M3 manual  R01UM0004EU0110 */
+     * See "Canceling Snooze Mode" in the LPM section of the relevant hardware manual. */
     R_SYSTEM->SNZCR_b.SNZE = 0;
 #endif
 #if BSP_FEATURE_LPM_HAS_DEEP_STANDBY || (BSP_PRV_POWER_USE_DCDC)

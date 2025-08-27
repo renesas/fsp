@@ -16,7 +16,7 @@
 
 #define     MOTOR_SENSE_HALL_OPEN              (('M' << 24U) | ('T' << 16U) | ('S' << 8U) | ('H' << 0U))
 
-#define     MOTOR_SENSE_HALL_TWOPI             (3.14159265358979F * 2.0F)
+#define     MOTOR_SENSE_HALL_TWOPI             (2.0F * 3.1415926535F)
 #define     MOTOR_SENSE_HALL_30DEGREE          (MOTOR_SENSE_HALL_TWOPI / 12.0F)
 #define     MOTOR_SENSE_HALL_60DEGREE          (60.0F)
 #define     MOTOR_SENSE_HALL_360DEGREE         (360.0F)

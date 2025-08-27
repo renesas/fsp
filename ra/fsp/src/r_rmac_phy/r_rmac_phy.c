@@ -208,7 +208,7 @@ fsp_err_t R_RMAC_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t cons
     FSP_ASSERT(NULL != p_instance_ctrl);
     RMAC_PHY_ERROR_RETURN(NULL != p_cfg, FSP_ERR_INVALID_POINTER);
     RMAC_PHY_ERROR_RETURN((RMAC_PHY_OPEN != p_instance_ctrl->open), FSP_ERR_ALREADY_OPEN);
-    RMAC_PHY_ERROR_RETURN((BSP_FEATURE_ETHER_MAX_CHANNELS > p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
+    RMAC_PHY_ERROR_RETURN((BSP_FEATURE_ETHER_NUM_CHANNELS > p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
     p_extend = (rmac_phy_extended_cfg_t *) p_cfg->p_extend;
     RMAC_PHY_ERROR_RETURN(NULL != p_extend, FSP_ERR_INVALID_POINTER);
     RMAC_PHY_ERROR_RETURN(NULL != p_extend->p_phy_lsi_cfg_list[p_extend->default_phy_lsi_cfg_index],
@@ -674,7 +674,7 @@ fsp_err_t R_RMAC_PHY_ChipSelect (ether_phy_ctrl_t * const p_ctrl, uint8_t port)
 #if (RMAC_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(NULL != p_instance_ctrl);
     RMAC_PHY_ERROR_RETURN(RMAC_PHY_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    RMAC_PHY_ERROR_RETURN(BSP_FEATURE_ETHER_MAX_CHANNELS > port, FSP_ERR_INVALID_ARGUMENT);
+    RMAC_PHY_ERROR_RETURN(BSP_FEATURE_ETHER_NUM_CHANNELS > port, FSP_ERR_INVALID_ARGUMENT);
 #endif
     p_extend = (rmac_phy_extended_cfg_t *) p_instance_ctrl->p_ether_phy_cfg->p_extend;
     FSP_ERROR_RETURN(NULL != p_extend->p_phy_lsi_cfg_list[port], FSP_ERR_INVALID_ARGUMENT);

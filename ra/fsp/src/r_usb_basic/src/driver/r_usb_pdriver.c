@@ -2264,7 +2264,9 @@ void usb_peri_devdefault (usb_utr_t * ptr, uint16_t mode, uint16_t data2)
 }                                      /* End of function usb_peri_devdefault() */
 
  #define NUM_OF_INTERFACE    (8U)
+ #ifdef  USB_CFG_PAUD_USE
 uint8_t g_usb_paud_iso_pipe[NUM_OF_INTERFACE];
+ #endif
 
 /******************************************************************************
  * Function Name   : usb_peri_pipe_info

@@ -43,8 +43,7 @@
  */
 typedef struct NX_CRYPTO_SHA512_STRUCT_EXTEND
 {
-    uint32_t is384;                                                  /*!< Determines which function to use:
-                                                                      * 0: Use SHA-512, or 1: Use SHA-384. */
+    uint32_t       hash_type;                                        /*!< Determines which function to use */
     sce_hash_cmd_t sce_operation_state;
  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
     BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
@@ -96,7 +95,37 @@ UINT sce_nx_crypto_sha512_initialize (NX_CRYPTO_SHA512 * context, UINT algorithm
         context->nx_sha512_states[6] = 0x1f83d9abfb41bd6b; /* G H6 */
         context->nx_sha512_states[7] = 0x5be0cd19137e2179; /* H H7 */
 
-        rsip_context->is384 = 0;
+        rsip_context->hash_type = NX_CRYPTO_HASH_SHA512;
+    }
+    else if ((algorithm == NX_CRYPTO_AUTHENTICATION_HMAC_SHA2_512_224) ||
+             (algorithm == NX_CRYPTO_HASH_SHA512_224))
+    {
+        /* Initialize SHA-512/224 state. */
+        context->nx_sha512_states[0] = 0x8c3d37c819544da2; /* A H0 */
+        context->nx_sha512_states[1] = 0x73e1996689dcd4d6; /* B H1 */
+        context->nx_sha512_states[2] = 0x1dfab7ae32ff9c82; /* C H2 */
+        context->nx_sha512_states[3] = 0x679dd514582f9fcf; /* D H3 */
+        context->nx_sha512_states[4] = 0x0f6d2b697bd44da8; /* E H4 */
+        context->nx_sha512_states[5] = 0x77e36f7304c48942; /* F H5 */
+        context->nx_sha512_states[6] = 0x3f9d85a86a1d36c8; /* G H6 */
+        context->nx_sha512_states[7] = 0x1112e6ad91d692a1; /* H H7 */
+
+        rsip_context->hash_type = NX_CRYPTO_HASH_SHA512_224;
+    }
+    else if ((algorithm == NX_CRYPTO_AUTHENTICATION_HMAC_SHA2_512_256) ||
+             (algorithm == NX_CRYPTO_HASH_SHA512_256))
+    {
+        /* Initialize SHA-512/256 state. */
+        context->nx_sha512_states[0] = 0x22312194fc2bf72c; /* A H0 */
+        context->nx_sha512_states[1] = 0x9f555fa3c84c64c2; /* B H1 */
+        context->nx_sha512_states[2] = 0x2393b86b6f53b151; /* C H2 */
+        context->nx_sha512_states[3] = 0x963877195940eabd; /* D H3 */
+        context->nx_sha512_states[4] = 0x96283ee2a88effe3; /* E H4 */
+        context->nx_sha512_states[5] = 0xbe5e1e2553863992; /* F H5 */
+        context->nx_sha512_states[6] = 0x2b0199fc2c85b8aa; /* G H6 */
+        context->nx_sha512_states[7] = 0x0eb72ddc81c52ca2; /* H H7 */
+
+        rsip_context->hash_type = NX_CRYPTO_HASH_SHA512_256;
     }
     else
     {
@@ -110,7 +139,7 @@ UINT sce_nx_crypto_sha512_initialize (NX_CRYPTO_SHA512 * context, UINT algorithm
         context->nx_sha512_states[6] = 0xdb0c2e0d64f98fa7; /* G H6 */
         context->nx_sha512_states[7] = 0x47b5481dbefa4fa4; /* H H7 */
 
-        rsip_context->is384 = 1;
+        rsip_context->hash_type = NX_CRYPTO_HASH_SHA384;
     }
 
     rsip_context->sce_operation_state = SCE_OEM_CMD_HASH_INIT_TO_SUSPEND;
@@ -364,6 +393,16 @@ UINT sce_nx_crypto_sha512_digest_calculate (NX_CRYPTO_SHA512 * context, UCHAR * 
     {
         NX_CRYPTO_MEMCPY(digest, context->nx_sha512_states, HW_SCE_SHA512_HASH_LENGTH_BYTE_SIZE);
     }
+    else if ((algorithm == NX_CRYPTO_AUTHENTICATION_HMAC_SHA2_512_224) ||
+             (algorithm == NX_CRYPTO_HASH_SHA512_224))
+    {
+        NX_CRYPTO_MEMCPY(digest, context->nx_sha512_states, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
+    }
+    else if ((algorithm == NX_CRYPTO_AUTHENTICATION_HMAC_SHA2_512_256) ||
+             (algorithm == NX_CRYPTO_HASH_SHA512_256))
+    {
+        NX_CRYPTO_MEMCPY(digest, context->nx_sha512_states, HW_SCE_SHA256_HASH_LENGTH_BYTE_SIZE);
+    }
     else                               /* SHA384 */
     {
         NX_CRYPTO_MEMCPY(digest, context->nx_sha512_states, HW_SCE_SHA384_HASH_LENGTH_BYTE_SIZE);
@@ -391,13 +430,35 @@ static UINT sce_nx_crypto_internal_sha512_process_ext (NX_CRYPTO_SHA512  * conte
     uint32_t   sce_hash_cmd[1] = {(uint32_t) rsip_context->sce_operation_state};
     uint32_t   InData_MsgLen[2];
 
-    if (1 == rsip_context->is384)
+    switch (rsip_context->hash_type)
     {
-        sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA384);
-    }
-    else
-    {
-        sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA512);
+        case NX_CRYPTO_HASH_SHA512:
+        {
+            sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA512);
+            break;
+        }
+
+        case NX_CRYPTO_HASH_SHA512_224:
+        {
+            sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA512_224);
+            break;
+        }
+
+        case NX_CRYPTO_HASH_SHA512_256:
+        {
+            sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA512_256);
+            break;
+        }
+
+        case NX_CRYPTO_HASH_SHA384:
+        {
+            sce_hash_type[0] = change_endian_long((uint32_t) SCE_OEM_CMD_HASH_TYPE_SHA384);
+            break;
+        }
+
+        default:
+
+            return NX_CRYPTO_NOT_SUCCESSFUL;
     }
 
     if (SCE_OEM_CMD_HASH_INIT_TO_SUSPEND == rsip_context->sce_operation_state)

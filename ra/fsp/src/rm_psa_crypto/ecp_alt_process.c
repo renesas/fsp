@@ -330,7 +330,8 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
     }
 
   #if defined(MBEDTLS_CHECK_PARAMS)
-   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+    BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
     if ((ECC_256_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_384_PRIVATE_KEY_LENGTH_BITS != grp->pbits) &&
         (ECC_521_PRIVATE_KEY_LENGTH_BITS != grp->pbits) && (ECC_25519_PRIVATE_KEY_LENGTH_BITS != grp->pbits))
    #else
@@ -436,6 +437,9 @@ int mbedtls_ecp_gen_privkey (const mbedtls_ecp_group * grp,
             }
         }
    #endif
+  #endif
+  #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+        BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
    #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
         else if (MBEDTLS_ECP_DP_CURVE25519 == grp->id)
         {

@@ -62,7 +62,7 @@ extern "C" {
     "LDR     r0, ="RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_SPMON_BASE) /* R_SPMON base. */ \
     "                                    \n"                                                           \
     "LDR     r1, =0                      \n"                                       /* r1 = 0. */       \
-    "STR     r1, [r0, #"RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUCTL)          \
+    "STR     r1, [r0, #" RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUCTL)          \
     "]                                   \n"                                                           \
                                                                                                        \
     /* Setup start address  */                                                                         \
@@ -71,9 +71,9 @@ extern "C" {
      * on an 8 byte boundary. */                                                                \
                                                                                                 \
     /* R_MPU_SPMON->SP[1].SA = (uint32_t)_tx_thread_current_ptr->tx_thread_stack_start; */      \
-    "LDR     r1, [r6, #"RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_STACK_START) \
+    "LDR     r1, [r6, #" RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_STACK_START) \
     "]                                   \n"                                                    \
-    "STR     r1, [r0, #"RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUSA)    \
+    "STR     r1, [r0, #" RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUSA)    \
     "]                                   \n"                                                    \
                                                                                                 \
     /* Setup end address  */                                                                    \
@@ -82,9 +82,9 @@ extern "C" {
      * on an 8 byte boundary and a multiple of 8 bytes. */                                    \
                                                                                               \
     /* R_MPU_SPMON->SP[1].EA = (uint32_t)_tx_thread_current_ptr->tx_thread_stack_end; */      \
-    "LDR     r1, [r6, #"RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_STACK_END) \
+    "LDR     r1, [r6, #" RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_STACK_END) \
     "]                                   \n"                                                  \
-    "STR     r1, [r0, #"RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUEA)  \
+    "STR     r1, [r0, #" RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUEA)  \
     "]                                   \n"
 
  #define TX_PORT_VENDOR_ASM_STACK_MONITOR_ENABLE                                              \
@@ -93,7 +93,7 @@ extern "C" {
                                                                                               \
     /* R_MPU_SPMON->SP[1].CTL = 1; */                                                         \
     "LDR     r1, =1                      \n" /* r1 = 1. */                                    \
-    "STR     r1, [r0, #"RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUCTL) \
+    "STR     r1, [r0, #" RM_THREADX_PORT_STRINGIFY_EXPANDED (RM_THREADX_PORT_OFFSET_PSPMPUCTL) \
     "]                                   \n"
 #endif
 

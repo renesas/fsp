@@ -131,7 +131,8 @@ fsp_err_t R_MIPI_DSI_Open (mipi_dsi_ctrl_t * const p_api_ctrl, mipi_dsi_cfg_t co
     err = r_mipi_phy_open(p_cfg->p_mipi_phy_instance->p_ctrl, p_cfg->p_mipi_phy_instance->p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
-    /* Perform sequence steps 5 to 9 from section 58.3.2 in RA8D1 hardware manual R01UH0995EJ0060. */
+    /* Perform sequence steps 4 to 8 from "Software Reset" in MIPI DSI section of the
+     * relevant hardware hardware manual. */
     dsi_enter_reset();
     dsi_init_timing(p_cfg);
     dsi_exit_reset(p_cfg);
@@ -268,7 +269,8 @@ fsp_err_t R_MIPI_DSI_Close (mipi_dsi_ctrl_t * const p_api_ctrl)
 /******************************************************************************************************************//**
  * Start video output.
  * Initialize Video Output Registers
- * Perform sequence steps 3 to 5 from section 58.3.6.1 in RA8D1 hardware manual R01UH0995EJ0060.
+ * Perform sequence steps 3 to 5 from "Start of Video Mode Operation" in the MIPI DSI section of the relevant
+ * hardware manual.
  *
  * @retval   FSP_SUCCESS                Data is successfully written to the D/A Converter.
  * @retval   FSP_ERR_ASSERTION          p_api_ctrl is NULL.
@@ -447,7 +449,7 @@ fsp_err_t R_MIPI_DSI_Command (mipi_dsi_ctrl_t * const p_api_ctrl, mipi_dsi_cmd_t
         FSP_ERROR_RETURN(!(initial_skew || periodic_skew) || (sequence_channel == 1), FSP_ERR_INVALID_ARGUMENT); // Periodic and Initial skew must be HS
     }
 
-    FSP_ERROR_RETURN(!(lp && R_MIPI_DSI->LINKSR_b.VRUN), FSP_ERR_IN_USE);                                        // LP not allowed during video mode operation. See RA8D1 UM 58.2.61 (R01UH0995EJ0060)
+    FSP_ERROR_RETURN(!(lp && R_MIPI_DSI->LINKSR_b.VRUN), FSP_ERR_IN_USE);                                        // LP not allowed during video mode operation. See "Video mode Operation" in MIPI DSI section of the relevant hardware manual
 #else
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
 #endif
@@ -692,7 +694,7 @@ static void dsi_call_callback (mipi_dsi_instance_ctrl_t * p_ctrl, mipi_dsi_callb
 
 /*******************************************************************************************************************//**
  * Enter Reset
- * Perform sequence steps 1 to 3 from section 58.3.2 in RA8D1 hardware manual R01UH0995EJ0060.
+ * Perform sequence steps 1 and 2 from "Software Reset" in the MIPI DSI section of the relevant hardware manual.
  **********************************************************************************************************************/
 static void dsi_enter_reset ()
 {
@@ -708,7 +710,7 @@ static void dsi_enter_reset ()
 
 /*******************************************************************************************************************//**
  * Initialize timing registers from configuration data
- * - Perform sequence step 4 from section 58.3.2 in RA8D1 hardware manual R01UH0995EJ0060.
+ * - Perform sequence step 3 from "Software Reset" in the MIPI DSI section of the relevant hardware manual.
  *
  * @param[in]     p_cfg     Pointer to MIPI DSI configuration structure
  **********************************************************************************************************************/
@@ -754,7 +756,7 @@ static void dsi_init_timing (mipi_dsi_cfg_t const * const p_cfg)
 
 /*******************************************************************************************************************//**
  * Exit Reset
- * Perform sequence steps 5 to 9 from section 58.3.2 in RA8D1 hardware manual R01UH0995EJ0060.
+ * Perform sequence steps 4 to 8 from "Software Reset" in the MIPI DSI section of the relevant hardware manual.
  *
  * NOTE: Calling this function is prohibited without first calling dsi_enter_reset(), which sets RSTCR.SWRST to 1
  *
@@ -781,7 +783,7 @@ static void dsi_exit_reset (mipi_dsi_cfg_t const * const p_cfg)
 
 /*******************************************************************************************************************//**
  * Initialize High Speed Clock
- * Perform sequence steps from section 58.3.3 in RA8D1 hardware manual R01UH0995EJ0060.
+ * Perform sequence steps from "Start of HS Clock" in the MIPI DSI section of the relevant hardware manual.
  *
  * @param[in]     p_ctrl     Pointer to MIPI DSI instance control block
  **********************************************************************************************************************/
@@ -809,7 +811,7 @@ static void dsi_hs_clock_start (mipi_dsi_instance_ctrl_t * p_ctrl)
 
 /***********************************************************************************************************************
  * De-initialize High Speed Clock
- * Perform sequence steps from section 56.3.4 in RA8D1 hardware manual R01UH0995EJ0060.
+ * Perform sequence steps from "Stop of HS Clock" in the MIPI DSI section of the relevant hardware manual.
  *
  * @param[in]     p_ctrl     Pointer to MIPI DSI instance control block
  **********************************************************************************************************************/
@@ -831,7 +833,8 @@ static void dsi_hs_clock_stop (mipi_dsi_instance_ctrl_t * p_ctrl)
 
 /***********************************************************************************************************************
  * Initialize Video Output Registers
- * Perform sequence steps 1 and 2 from section 58.3.6.1 in RA8D1 hardware manual R01UH0995EJ0060.
+ * Perform sequence steps 1 and 2 from "Start of Video Mode Operation" in the MIPI DSI section of the relevant
+ * hardware manual.
  *
  * @param[in]     p_cfg     Pointer to MIPI DSI configuration structure
  **********************************************************************************************************************/
@@ -981,7 +984,7 @@ void mipi_dsi_vin1_isr (void) {
     args.p_context    = p_ctrl->p_context;
     dsi_call_callback(p_ctrl, &args);
 
-    /* Perform reset according to RA8D1 UM 58.3.8.6 (R01UH0995EJ0060) */
+    /* Perform reset according to "Software Reset" in the MIPI DSI section of the relevant hardware manual */
     if (vmsr_bits & (R_MIPI_DSI_VMSR_VBUFUDF_Msk | R_MIPI_DSI_VMSR_VBUFOVF_Msk))
     {
         dsi_enter_reset();

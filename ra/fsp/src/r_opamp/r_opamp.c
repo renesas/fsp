@@ -49,8 +49,7 @@
 static void r_opamp_hardware_init(opamp_instance_ctrl_t * const p_instance_ctrl);
 
 /** Lookup table to select the minimum stabilization wait time for respective power mode based on OPAMP Characteristics
- *  Chapter 47 of RA2A1 hardware manual R01UM0008EU0130 and
- *  Chapter 48 of RA4M1 hardware manual R01UM0007EU0110
+ *  See Chapter "Electrical Characteristics" in the relevant hardware manual
  */
 
 static const uint32_t g_opamp_stabilization_lookup[] =
@@ -313,7 +312,7 @@ fsp_err_t R_OPAMP_StatusGet (opamp_ctrl_t * const p_api_ctrl, opamp_status_t * c
  *
  * Implements @ref opamp_api_t::trim.
  *
- * Reference: Section 37.9 "User Offset Trimming" RA2A1 hardware manual R01UM0008EU0130.
+ * See "User Offset Trimming" in the OPAMP section of the relevant hardware manual.
  * The trim procedure works as follows:
  *  - Call trim() for the Pch (+) side input with command OPAMP_TRIM_CMD_START.
  *  - Connect a fixed voltage to the Pch (+) input.
@@ -485,10 +484,10 @@ static void r_opamp_hardware_init (opamp_instance_ctrl_t * const p_instance_ctrl
 
     /* Set PUMPnEN bit while the AMPnMS and AMPnPS registers are 00h (no connection).
      * Additionally, set the PUMP0EN bit when the AMP0OS register is 00h (no connection).
-     * Reference: Section 37.2.13 of the RA2A1 hardware manual R01UM0008EU0130. */
-
-    /* AVCC0 = VCC, enable charge pump for respective channel if AVCC0 < 2.7 V
-     * Reference: Section 37.2.13 and RA2A1 "Electrical characteristics"- section 47 of RA2A1 hardware manual R01UM0008EU0130 */
+     * See "Operational Amplifier Switch Charge Pump Control Register (AMPCPC)" description
+     * in the relevant hardware manual. *//* AVCC0 = VCC, enable charge pump for respective channel if AVCC0 < 2.7 V
+     * Reference: Section "Operational Amplifier Switch Charge Pump Control Register (AMPCPC)" and
+     * "Electrical characteristics" in the relevant hardware manual */
 
  #if BSP_CFG_MCU_VCC_MV < 2700
     uint8_t pump0_enable = 0U;

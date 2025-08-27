@@ -298,8 +298,9 @@ fsp_err_t R_SLCDC_Stop (slcdc_ctrl_t * const p_ctrl)
  * Sets contrast to the specified level. Implements slcdc_api_t::setContrast.
  *
  * @note Contrast can be adjusted when the SLCDC is operating in internal boost mode only. The range of values is 0-5
- *       when 1/4 bias setting is used and 0-15 otherwise. See RA4M1 User's Manual (R01UH0887EJ0100) section 45.2.4 "LCD
- *       Boost Level Control Register (VLCD)" for voltage levels at each setting.
+ *       when 1/4 bias setting is used and 0-15 otherwise. See "LCD
+ *       Boost Level Control Register (VLCD)" description in the SLCDC section of the relevant hardware manual
+ *       for voltage levels at each setting.
  *
  * @retval  FSP_SUCCESS                      Device was opened successfully.
  * @retval  FSP_ERR_ASSERTION                Pointer to the control block structure is NULL.
@@ -425,8 +426,8 @@ fsp_err_t R_SLCDC_Close (slcdc_ctrl_t * const p_ctrl)
  #endif
 #endif
 
-    /* Switch to external resistance method to reduce idle power consumption (per RA4M1 User's Manual (R01UH0887EJ0100)
-     * section 45.2.2 "LCD Mode Register 1 (LCDM1)" Note 2) */
+    /* Switch to external resistance method to reduce idle power consumption (See Notes section of
+     * "LCD Mode Register 1 (LCDM1)" description in the SLCDC section of the relevant hardware manual) */
     R_SLCDC->LCDM0_b.MDSET = 0;
 
 #if BSP_FEATURE_SLCDC_HAS_VLCD_MDSET2
@@ -465,8 +466,9 @@ fsp_err_t R_SLCDC_Close (slcdc_ctrl_t * const p_ctrl)
 #if SLCDC_CFG_PARAM_CHECKING_ENABLE
 
 /*******************************************************************************************************************//**
- * This function checks the display mode against the list of valid modes given in given in Table 45.6 of the RA4M1
- * User's Manual (R01UH0887EJ0100).
+ * This function checks the display mode against the list of valid modes given in Table
+ * "Combinations of display waveform, time slices, bias method, and frame frequency"
+ * in the SLCDC section of the relevant hardware manual
  *
  * @param[in]     p_cfg   Pointer to the configuration structure for slcdc interface
  *
@@ -537,7 +539,9 @@ static fsp_err_t r_slcdc_check_display_mode (slcdc_cfg_t const * const p_cfg)
     return FSP_ERR_UNSUPPORTED;
  #else
 
-    /* The below checks the configuration against the list of valid modes given in Table 45.6 of the RA4M1 User's Manual (R01UH0887EJ0100) */
+    /* The below checks the configuration against the list of valid modes given in Table
+     * "Combinations of display waveform, time slices, bias method, and frame frequency"
+     * in the SLCDC section of the relevant hardware manual*/
 
     /* Check common compatibility modes */
   #if BSP_FEATURE_SLCDC_HAS_8_TIME_SLICE

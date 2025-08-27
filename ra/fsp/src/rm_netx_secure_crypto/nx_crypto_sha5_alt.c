@@ -843,7 +843,9 @@ NX_CRYPTO_SHA512   *ctx;
     }
 
     if ((method -> nx_crypto_algorithm != NX_CRYPTO_HASH_SHA384) &&
-        (method -> nx_crypto_algorithm != NX_CRYPTO_HASH_SHA512))
+        (method -> nx_crypto_algorithm != NX_CRYPTO_HASH_SHA512) &&
+        (method -> nx_crypto_algorithm != NX_CRYPTO_HASH_SHA512_224) &&
+        (method -> nx_crypto_algorithm != NX_CRYPTO_HASH_SHA512_256))
     {
         /* Incorrect method. */
         return status;
@@ -861,7 +863,9 @@ NX_CRYPTO_SHA512   *ctx;
 
     case NX_CRYPTO_HASH_CALCULATE:
         if(((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA512) && (output_length_in_byte < 64)) ||
-           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA384) && (output_length_in_byte < 48)))
+           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA384) && (output_length_in_byte < 48)) ||
+           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA512_224) && (output_length_in_byte < 28)) ||
+           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA512_256) && (output_length_in_byte < 32)))
             return(NX_CRYPTO_INVALID_BUFFER_SIZE);
 
 
@@ -870,7 +874,9 @@ NX_CRYPTO_SHA512   *ctx;
 
     default:
         if(((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA512) && (output_length_in_byte < 64)) ||
-           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA384) && (output_length_in_byte < 48)))
+           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA384) && (output_length_in_byte < 48)) ||
+           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA512_224) && (output_length_in_byte < 28)) ||
+           ((method -> nx_crypto_algorithm == NX_CRYPTO_HASH_SHA512_256) && (output_length_in_byte < 32)))
             return(NX_CRYPTO_INVALID_BUFFER_SIZE);
         _nx_crypto_sha512_initialize(ctx, method -> nx_crypto_algorithm);
         _nx_crypto_sha512_update(ctx, input, input_length_in_byte);

@@ -179,6 +179,18 @@ typedef struct st_rsip_func_subset_aes_cmac
                                  const uint32_t * InData_DataTLen, const uint32_t all_msg_len);
 } rsip_func_subset_aes_cmac_t;
 
+/* ChaCha20 */
+typedef struct st_rsip_func_subset_chacha20
+{
+    rsip_ret_t (* p_init)(const uint32_t * InData_KeyIndex, const uint32_t * InData_Ctr, const uint32_t * InData_Nonce,
+                          const uint32_t * InData_TextLen);
+    void (* p_update)(const uint32_t * InData_Text, uint32_t * OutData_Text, uint32_t MAX_CNT);
+    rsip_ret_t (* p_final)(const uint32_t * InData_Text, uint32_t * OutData_Text, uint32_t MAX_CNT);
+    rsip_ret_t (* p_suspend)(uint32_t * OutData_State);
+    rsip_ret_t (* p_resume)(const uint32_t * InData_KeyIndex, const uint32_t * InData_Nonce,
+                            const uint32_t * InData_State);
+} rsip_func_subset_chacha20_t;
+
 /* PKI */
 typedef struct st_rsip_func_subset_pki_ecdsa_verify
 {
@@ -242,6 +254,8 @@ extern const rsip_func_subset_aes_gcm_t    gp_func_aes_gcm_dec[RSIP_PRV_KEY_SUBT
 extern const rsip_func_subset_aes_ccm_t    gp_func_aes_ccm_enc[RSIP_PRV_KEY_SUBTYPE_AES_NUM];
 extern const rsip_func_subset_aes_ccm_t    gp_func_aes_ccm_dec[RSIP_PRV_KEY_SUBTYPE_AES_NUM];
 extern const rsip_func_subset_aes_cmac_t   gp_func_aes_cmac[RSIP_PRV_KEY_SUBTYPE_AES_NUM];
+
+extern const rsip_func_subset_chacha20_t gp_func_chacha20[RSIP_PRV_KEY_SUBTYPE_CHACHA_NUM];
 
 extern const rsip_func_ecdsa_sign_t   gp_func_ecdsa_sign[RSIP_PRV_KEY_SUBTYPE_ECC_NUM];
 extern const rsip_func_ecdsa_verify_t gp_func_ecdsa_verify[RSIP_PRV_KEY_SUBTYPE_ECC_NUM];

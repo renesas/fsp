@@ -162,6 +162,7 @@ fsp_err_t RM_NFC_READER_PTX_DiscoveryStart (nfc_reader_ptx_instance_ctrl_t * con
     nfc_reader_disc_config.PollTypeBDeviceLimit = p_cfg->device_limit;
     nfc_reader_disc_config.PollTypeVDeviceLimit = p_cfg->device_limit;
     nfc_reader_disc_config.PollTypeFDeviceLimit = p_cfg->device_limit;
+    nfc_reader_disc_config.Discover_Mode        = p_cfg->discover_mode;
 
     /* Check that at least one poll type option was selected (e.g. Type-A) */
     FSP_ERROR_RETURN(
@@ -423,6 +424,43 @@ fsp_err_t RM_NFC_READER_PTX_ReaderDeactivation (nfc_reader_ptx_instance_ctrl_t *
             break;
         }
     }
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Puts the device into either Active (all features) or Stand-by mode (most features off), to cut down energy consumption.
+ * RF communication is not possible from Stand-by mode, and Wake-up is possible only via communication interface.
+ * This function is only available exclusively before starting discovery.
+ *
+ *
+ * @param[in]  p_ctrl               Pointer to NFC IoT Reader control structure.
+ * @param[in]  power_mode           Flag to indicate if setting to Active or Stand-by mode.
+ *
+ * @retval FSP_SUCCESS              Function completed successfully.
+ * @retval FSP_ERR_ASSERTION        Assertion error occurred.
+ * @retval FSP_ERR_NOT_OPEN         Module is not opened yet.
+ * @retval FSP_ERR_INVALID_STATE    NFC module is not in the idle/polling state.
+ * @retval FSP_ERR_INVALID_ARGUMENT Invalid input parameters to NFC Status function.
+ **********************************************************************************************************************/
+fsp_err_t RM_NFC_READER_PTX_PowerModeSet (nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
+                                          nfc_reader_ptx_power_mode_t            power_mode)
+{
+    /* Do parameter checking */
+#if (1 == NFC_READER_PTX_CFG_PARAM_CHECKING_ENABLED)
+    FSP_ASSERT(NULL != p_ctrl);
+    FSP_ERROR_RETURN(NFC_READER_PTX_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
+
+    /* Check device is idle before changing the power mode */
+    FSP_ERROR_RETURN((p_ctrl->state_flag == NFC_READER_PTX_IDLE), FSP_ERR_INVALID_STATE);
+#endif
+
+    nfc_reader_ptx_cfg_t const * p_cfg = p_ctrl->p_cfg;
+
+    /* Set the device to Active or Stand-by power mode */
+    FSP_ERROR_RETURN(ptxStatus_Success ==
+                     ptxIoTRd_Set_Power_Mode(p_cfg->iot_reader_context, (uint8_t) power_mode),
+                     FSP_ERR_INVALID_ARGUMENT);
 
     return FSP_SUCCESS;
 }

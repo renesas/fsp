@@ -250,7 +250,7 @@ fsp_err_t R_DTC_Reset (transfer_ctrl_t * const p_api_ctrl,
     r_dtc_wait_for_transfer_complete(p_ctrl);
 
     /* Disable read skip prior to modifying settings. It will be enabled later
-     * (See DTC Section 18.4.1 of the RA6M3 manual R01UH0886EJ0100). */
+     * (See "Transfer Information Read Skip Function" in the DTC section of the relevant hardware manual). */
 #if !BSP_TZ_NONSECURE_BUILD && BSP_FEATURE_TZ_HAS_TRUSTZONE
     R_DTC->DTCCR_SEC = DTC_PRV_RRS_DISABLE;
 #else
@@ -568,7 +568,7 @@ static void r_dtc_set_info (dtc_instance_ctrl_t * p_ctrl, transfer_info_t * p_in
     r_dtc_block_repeat_initialize(p_info);
 
     /* Disable read skip prior to modifying settings. It will be enabled later
-     * (See DTC Section 18.4.1 of the RA6M3 manual R01UH0886EJ0100). */
+     * (See "Transfer Information Read Skip Function" in the DTC section of the relevant hardware manual). */
 #if !BSP_TZ_NONSECURE_BUILD && BSP_FEATURE_TZ_HAS_TRUSTZONE
     R_DTC->DTCCR_SEC = DTC_PRV_RRS_DISABLE;
 #else

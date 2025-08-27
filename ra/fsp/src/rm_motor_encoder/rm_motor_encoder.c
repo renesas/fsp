@@ -12,13 +12,15 @@
 #include "rm_motor_encoder.h"
 #include "rm_motor_encoder_cfg.h"
 
+#include "rm_motor_sense_encoder.h"
+
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
 
-#define MOTOR_ENCODER_OPEN                                  (0x4D544543UL)
+#define MOTOR_ENCODER_OPEN                                  (('M' << 24U) | ('T' << 16U) | ('E' << 8U) | ('C' << 0U))
 
-#define MOTOR_ENCODER_RAD2RPM                               (30.0F / 3.14159265359F)
+#define MOTOR_ENCODER_RAD2RPM                               (30.0F / 3.1415926535F)
 
 #define MOTOR_ENCODER_FLAG_CLEAR                            (0)
 #define MOTOR_ENCODER_FLAG_SET                              (1)
@@ -195,13 +197,20 @@ fsp_err_t RM_MOTOR_ENCODER_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t const 
 
     p_instance_ctrl->p_cfg = p_cfg;
 
-    err = p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
-                                                       p_cfg->p_motor_current_instance->p_cfg);
+    if (NULL != p_cfg->p_motor_current_instance)
+    {
+        err = p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
+                                                           p_cfg->p_motor_current_instance->p_cfg);
+    }
 
     if (FSP_SUCCESS == err)
     {
-        err = p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
-                                                         p_cfg->p_motor_speed_instance->p_cfg);
+        if (NULL != p_cfg->p_motor_speed_instance)
+        {
+            err = p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
+                                                             p_cfg->p_motor_speed_instance->p_cfg);
+        }
+
         if (FSP_SUCCESS == err)
         {
             // Open Inertia estimate when supported
@@ -266,14 +275,20 @@ fsp_err_t RM_MOTOR_ENCODER_Close (motor_ctrl_t * const p_ctrl)
     FSP_ASSERT(NULL != p_extended_cfg);
 #endif
 
-    /* Close using modules */
-    err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(
-        p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    if (NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        /* Close using modules */
+        err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(
+            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
 
     if (FSP_SUCCESS == err)
     {
-        err = p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
-            p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        if (NULL != p_instance_ctrl->p_cfg->p_motor_current_instance)
+        {
+            err = p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
+                p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        }
 
         // Close Inertia estimate when supported
         if (p_extended_cfg->p_motor_inertia_estimate_instance != NULL)
@@ -453,9 +468,12 @@ fsp_err_t RM_MOTOR_ENCODER_SpeedSet (motor_ctrl_t * const p_ctrl, float const sp
     MOTOR_ENCODER_ERROR_RETURN(MOTOR_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->speedReferenceSet(
-        p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
-        speed_rpm);
+    if (NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->speedReferenceSet(
+            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
+            speed_rpm);
+    }
 
     return err;
 }
@@ -488,9 +506,12 @@ fsp_err_t RM_MOTOR_ENCODER_PositionSet (motor_ctrl_t * const                    
 
     if (MOTOR_FUNCTION_SELECT_NONE == p_instance_ctrl->e_function)
     {
-        err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
-            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
-            p_position);
+        if (NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance)
+        {
+            err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+                p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
+                p_position);
+        }
     }
 
     return err;
@@ -556,7 +577,10 @@ fsp_err_t RM_MOTOR_ENCODER_AngleGet (motor_ctrl_t * const p_ctrl, float * const 
     motor_current_instance_t const * p_current_instance =
         p_instance_ctrl->p_cfg->p_motor_current_instance;
 
-    err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    if (NULL != p_current_instance)
+    {
+        err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    }
 
     *p_angle_rad = temp_current_output.f_rotor_angle;
 
@@ -593,7 +617,10 @@ fsp_err_t RM_MOTOR_ENCODER_SpeedGet (motor_ctrl_t * const p_ctrl, float * const 
     motor_current_instance_t const * p_current_instance =
         p_instance_ctrl->p_cfg->p_motor_current_instance;
 
-    err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    if (NULL != p_current_instance)
+    {
+        err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    }
 
     *p_speed_rpm = temp_current_output.f_speed_rpm;
 
@@ -621,6 +648,8 @@ fsp_err_t RM_MOTOR_ENCODER_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t * c
     float temp_iv = 0.0F;
     float temp_iw = 0.0F;
     motor_driver_current_get_t temp_crnt_get;
+    temp_crnt_get.iu  = 0.0F;
+    temp_crnt_get.iw  = 0.0F;
     temp_crnt_get.vdc = 0.0F;
 
     fsp_err_t err = FSP_SUCCESS;
@@ -640,11 +669,17 @@ fsp_err_t RM_MOTOR_ENCODER_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t * c
     motor_current_instance_ctrl_t * p_current_instance_ctrl =
         (motor_current_instance_ctrl_t *) p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl;
 
-    err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    if (NULL != p_current_instance)
+    {
+        err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    }
 
     if (FSP_SUCCESS == err)
     {
-        err = p_driver_instance->p_api->currentGet(p_driver_instance->p_ctrl, &temp_crnt_get);
+        if (NULL != p_driver_instance)
+        {
+            err = p_driver_instance->p_api->currentGet(p_driver_instance->p_ctrl, &temp_crnt_get);
+        }
     }
 
     if (FSP_SUCCESS == err)
@@ -1003,6 +1038,7 @@ static void rm_motor_encoder_copy_current_speed (motor_current_output_t * p_outp
     p_input->f_position_rad       = p_output->f_position_rad;
     p_input->u1_adjust_status     = p_output->u1_adjust_status;
     p_input->u1_adjust_count_full = p_output->u1_adjust_count_full;
+    p_input->u1_adjust_mode       = p_output->u1_adjust_mode;
 }                                      /* End of function rm_motor_encoder_copy_current_speed() */
 
 /* For status transition */
@@ -1018,10 +1054,17 @@ static motor_encoder_action_return_t rm_motor_encoder_active (motor_encoder_inst
     fsp_err_t err = FSP_SUCCESS;
     motor_encoder_action_return_t ret = MOTOR_ENCODER_ACTION_RETURN_OK;
 
-    err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->run(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->run(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
     if (FSP_SUCCESS == err)
     {
-        err = p_ctrl->p_cfg->p_motor_current_instance->p_api->run(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+        {
+            err = p_ctrl->p_cfg->p_motor_current_instance->p_api->run(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        }
     }
 
     if (err != FSP_SUCCESS)
@@ -1043,10 +1086,18 @@ static motor_encoder_action_return_t rm_motor_encoder_inactive (motor_encoder_in
     fsp_err_t err = FSP_SUCCESS;
     motor_encoder_action_return_t ret = MOTOR_ENCODER_ACTION_RETURN_OK;
 
-    err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
     if (FSP_SUCCESS == err)
     {
-        err = p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+        {
+            err = p_ctrl->p_cfg->p_motor_current_instance->p_api
+                  ->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        }
     }
 
     if (err != FSP_SUCCESS)
@@ -1078,8 +1129,15 @@ static motor_encoder_action_return_t rm_motor_encoder_nowork (motor_encoder_inst
  **********************************************************************************************************************/
 static motor_encoder_action_return_t rm_motor_encoder_reset (motor_encoder_instance_ctrl_t * p_ctrl)
 {
-    p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
-    p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
+    if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+    {
+        p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    }
 
     return MOTOR_ENCODER_ACTION_RETURN_OK;
 }                                      /* End of function rm_motor_encoder_reset() */
@@ -1092,8 +1150,15 @@ static motor_encoder_action_return_t rm_motor_encoder_reset (motor_encoder_insta
  **********************************************************************************************************************/
 static motor_encoder_action_return_t rm_motor_encoder_error (motor_encoder_instance_ctrl_t * p_ctrl)
 {
-    p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
-    p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
+    if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+    {
+        p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    }
 
     /* If motor function is working, cancel it. */
     if (p_ctrl->e_function != MOTOR_FUNCTION_SELECT_NONE)
@@ -1139,6 +1204,22 @@ static uint32_t rm_motor_encoder_statemachine_event (motor_encoder_instance_ctrl
     motor_encoder_action_return_t action_ret;
 
     p_ctrl->st_statem.u2_error_status = MOTOR_ENCODER_STATEMACHINE_ERROR_NONE;
+
+    /* Check if accessing state transition table out of bound */
+    if (MOTOR_ENCODER_STATEMACHINE_SIZE_EVENT <= u1_event)
+    {
+        /* Event is out of bound */
+        u1_event = MOTOR_ENCODER_CTRL_EVENT_ERROR;
+        p_ctrl->st_statem.u2_error_status |= MOTOR_ENCODER_STATEMACHINE_ERROR_EVENTOUTBOUND;
+    }
+
+    if (MOTOR_ENCODER_STATEMACHINE_SIZE_STATE <= p_ctrl->st_statem.u1_status)
+    {
+        /* State is out of bound */
+        u1_event = MOTOR_ENCODER_CTRL_EVENT_ERROR;
+        p_ctrl->st_statem.u1_status        = MOTOR_ENCODER_CTRL_STOP;
+        p_ctrl->st_statem.u2_error_status |= MOTOR_ENCODER_STATEMACHINE_ERROR_STATEOUTBOUND;
+    }
 
     /*
      * u1_current_event : Event happening
@@ -1367,7 +1448,15 @@ static void rm_motor_encoder_inertia_estimate_current_process (motor_instance_t 
             p_ctrl->st_ie_set_data.f_iq = p_ctrl->st_current_output.f_iq;
             p_ctrl->st_ie_set_data.f_speed_radian_control = p_ctrl->st_current_input.f_ref_speed_rad_ctrl;
 
-            p_position->p_api->infoGet(p_position->p_ctrl, &temp_position_info);
+            if (NULL != p_position)
+            {
+                p_position->p_api->infoGet(p_position->p_ctrl, &temp_position_info);
+            }
+            else
+            {
+                temp_position_info.s2_position_degree        = 0;
+                temp_position_info.u1_state_position_profile = 0;
+            }
 
             p_ctrl->st_ie_set_data.s2_position_degree = temp_position_info.s2_position_degree;
             p_ctrl->st_ie_set_data.u1_position_state  = temp_position_info.u1_state_position_profile;
@@ -1404,9 +1493,12 @@ static void rm_motor_encoder_inertia_estimate_speed_process (motor_instance_t * 
                 p_ctrl->st_ie_get_data.s2_position_reference_degree;
 
             /* Set position reference */
-            p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
-                p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
-                &temp_position_data);
+            if (NULL != p_instance->p_cfg->p_motor_speed_instance)
+            {
+                p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+                    p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
+                    &temp_position_data);
+            }
         }
     }
 }                                      /* End of function rm_motor_encoder_inertia_estimate_speed_process() */
@@ -1423,7 +1515,7 @@ static void rm_motor_encoder_return_origin_speed_process (motor_instance_t * p_i
     motor_encoder_extended_cfg_t         * p_extended_cfg = (motor_encoder_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     motor_return_origin_instance_t const * p_ro_instance  = p_extended_cfg->p_motor_return_origin_instance;
     motor_speed_position_data_t            temp_position_data;
-    int16_t s2_temp_position;
+    int16_t s2_temp_position = 0;
 
     /* Return origin process */
     if (p_ro_instance != NULL)
@@ -1431,9 +1523,13 @@ static void rm_motor_encoder_return_origin_speed_process (motor_instance_t * p_i
         if (MOTOR_FUNCTION_SELECT_RETURN_ORIGIN == p_ctrl->e_function)
         {
             p_ctrl->st_ro_set_data.f_iq = p_ctrl->st_current_output.f_iq;
-            p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance->p_api->positionGet(
-                p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance->p_ctrl,
-                &s2_temp_position);
+            if (NULL != p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance)
+            {
+                p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance->p_api->positionGet(
+                    p_instance->p_cfg->p_motor_speed_instance->p_cfg->p_position_instance->p_ctrl,
+                    &s2_temp_position);
+            }
+
             p_ctrl->st_ro_set_data.f_position_degree = (float) s2_temp_position;
             p_ro_instance->p_api->dataSet(p_ro_instance->p_ctrl, &(p_ctrl->st_ro_set_data));
 
@@ -1446,9 +1542,12 @@ static void rm_motor_encoder_return_origin_speed_process (motor_instance_t * p_i
                 (int16_t) p_ctrl->st_ro_info.f_position_reference_degree;
 
             /* Set position reference */
-            p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
-                p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
-                &temp_position_data);
+            if (NULL != p_instance->p_cfg->p_motor_speed_instance)
+            {
+                p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+                    p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
+                    &temp_position_data);
+            }
         }
     }
 }                                      /* End of function rm_motor_encoder_return_origin_speed_process() */
@@ -1485,9 +1584,13 @@ void rm_motor_encoder_current_callback (motor_current_callback_args_t * p_args)
         case MOTOR_CURRENT_EVENT_DATA_SET:
         {
             rm_motor_encoder_copy_speed_current(&(p_ctrl->st_speed_output), &(p_ctrl->st_current_input));
-            p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterSet(
-                p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
-                &(p_ctrl->st_current_input));
+            if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+            {
+                p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterSet(
+                    p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
+                    &(p_ctrl->st_current_input));
+            }
+
             break;
         }
 
@@ -1530,9 +1633,29 @@ void rm_motor_encoder_speed_callback (motor_speed_callback_args_t * p_args)
         case MOTOR_SPEED_EVENT_FORWARD:
         {
             /* Get speed control input data from current control */
-            p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterGet(
-                p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
-                &(p_ctrl->st_current_output));
+            if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+            {
+                p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterGet(
+                    p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
+                    &(p_ctrl->st_current_output));
+            }
+
+            if (MOTOR_ENCODER_FLAG_SET == p_ctrl->st_current_output.u1_flag_get_iref)
+            {
+                motor_current_instance_t const * p_current_instance = p_ctrl->p_cfg->p_motor_current_instance;
+
+                if (NULL != p_current_instance)
+                {
+                    motor_current_instance_ctrl_t * p_current_ctrl =
+                        (motor_current_instance_ctrl_t *) p_current_instance->p_ctrl;
+                    motor_angle_instance_t const * p_angle_instance = p_current_ctrl->p_cfg->p_motor_angle_instance;
+                    if (NULL != p_angle_instance)
+                    {
+                        RM_MOTOR_SENSE_ENCODER_SpeedCyclicProcess(p_angle_instance->p_ctrl);
+                    }
+                }
+            }
+
             rm_motor_encoder_copy_current_speed(&(p_ctrl->st_current_output), &(p_ctrl->st_speed_input));
 
             /* Invoke the callback function if it is set. */

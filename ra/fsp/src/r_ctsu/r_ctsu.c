@@ -656,7 +656,9 @@ const ctsu_api_t g_ctsu_on_ctsu =
  * @retval FSP_ERR_ALREADY_OPEN     Module is already open.  This module can only be opened once.
  * @retval FSP_ERR_INVALID_ARGUMENT Configuration parameter error.
  *
- * @note In the first Open, measurement for correction works, and it takes several tens of milliseconds.
+ * @note
+ * - In the first Open, measurement for correction works, and it takes several tens of milliseconds.
+ * - When the touch interface configuration is diagnosis mode, execute the R_CTSU_Open() of the other touch interface configuration first.
  **********************************************************************************************************************/
 fsp_err_t R_CTSU_Open (ctsu_ctrl_t * const p_ctrl, ctsu_cfg_t const * const p_cfg)
 {

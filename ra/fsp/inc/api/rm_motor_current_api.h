@@ -74,6 +74,7 @@ typedef struct st_motor_current_output
     /* Encoder interface */
     uint8_t u1_adjust_status;          ///< Angle adjustment satatus
     uint8_t u1_adjust_count_full;      ///< Angle adjustment count full
+    uint8_t u1_adjust_mode;            ///< Angle adjustment mode (only valid with ENCODER)
 
     /* Induction sensor adjustment interface */
     uint8_t u1_openloop_status;        ///< Openloop status

@@ -17,38 +17,27 @@
  **********************************************************************************************************************/
 
 /* "PORT" in ASCII, used to determine if the module is open */
-#define IOPORT_OPEN                       (0x504F5254U)
-#define IOPORT_CLOSED                     (0x00000000U)
+#define IOPORT_OPEN                               (0x504F5254U)
+#define IOPORT_CLOSED                             (0x00000000U)
 
 /* Mask to get PSEL bitfield from PFS register. */
-#define BSP_PRV_PFS_PSEL_MASK             (R_PFS_PORT_PIN_PmnPFS_PSEL_Msk)
-
-/* Shift to get pin 0 on a package in extended data. */
-#define IOPORT_PRV_EXISTS_B0_SHIFT        (16UL)
-
-/* Mask to determine if any pins on port exist on this package. */
-#define IOPORT_PRV_PORT_EXISTS_MASK       (0xFFFF0000U)
+#define BSP_PRV_PFS_PSEL_MASK                     (R_PFS_PORT_PIN_PmnPFS_PSEL_Msk)
 
 /* Shift to get port in bsp_io_port_t and bsp_io_port_pin_t enums. */
-#define IOPORT_PRV_PORT_OFFSET            (8U)
+#define IOPORT_PRV_PORT_OFFSET                    (8U)
 
-#define IOPORT_PRV_PORT_BITS              (0xFF00U)
-#define IOPORT_PRV_PIN_BITS               (0x00FFU)
+#define IOPORT_PRV_PORT_BITS                      (0xFF00U)
+#define IOPORT_PRV_PIN_BITS                       (0x00FFU)
 
-#define IOPORT_PRV_PCNTR_OFFSET           0x00000020U
+#define IOPORT_PRV_PERIPHERAL_FUNCTION            (1U << 16)
 
-#define IOPORT_PRV_PERIPHERAL_FUNCTION    (1U << 16)
-#define IOPORT_PRV_CLEAR_BITS_MASK        (0x1F01FCD5U) ///< Zero bits in mask must be written as zero to PFS register
-
-#define IOPORT_PRV_8BIT_MASK              (0xFFU)
-#define IOPORT_PRV_16BIT_MASK             (0xFFFFU)
-#define IOPORT_PRV_UPPER_16BIT_MASK       (0xFFFF0000U)
-#define IOPORT_PRV_PFENET_MASK            (0x30U)
-
-#define IOPORT_PRV_SET_PWPR_PFSWE         (0x40U)
-#define IOPORT_PRV_SET_PWPR_BOWI          (0x80U)
+#define IOPORT_PRV_8BIT_MASK                      (0xFFU)
+#define IOPORT_PRV_16BIT_MASK                     (0xFFFFU)
 
 #define IOPORT_PRV_PORT_ADDRESS(port_number)    ((uint32_t) (R_PORT1 - R_PORT0) * (port_number) + R_PORT0)
+
+/* Stabilization time when output current control is enabled */
+#define IOPORT_PRV_CCDE_STABILIZATION_DELAY_US    (10U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -63,8 +52,13 @@ static void r_ioport_hw_pin_event_output_data_write(bsp_io_port_t port, ioport_s
 
 static void r_ioport_pfs_write(bsp_io_port_pin_t pin, uint32_t value);
 
-#if BSP_FEATURE_SYSC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
+#if BSP_FEATURE_RTC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
 static void bsp_vbatt_init(ioport_cfg_t const * const p_pin_cfg); // Used internally by BSP
+
+#endif
+
+#if IOPORT_CFG_CCD_SUPPORT_ENABLE
+static fsp_err_t r_ioport_ccd_pins_config(const ioport_extended_cfg_t * p_cfg_extend);
 
 #endif
 
@@ -94,7 +88,7 @@ const ioport_api_t g_ioport_on_ioport =
     .portWrite            = R_IOPORT_PortWrite,
 };
 
-#if BSP_FEATURE_SYSC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
+#if BSP_FEATURE_RTC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
 static const bsp_io_port_pin_t g_vbatt_pins_input[] =
 {
     BSP_IO_PORT_04_PIN_02,             ///< Associated with VBTICTLR->VCH0INEN
@@ -118,6 +112,7 @@ static const bsp_io_port_pin_t g_vbatt_pins_input[] =
  * @retval FSP_SUCCESS                  Pin configuration data written to PFS register(s)
  * @retval FSP_ERR_ASSERTION            NULL pointer
  * @retval FSP_ERR_ALREADY_OPEN         Module is already open.
+ * @retval FSP_ERR_INVALID_ARGUMENT     Pin configurations is invalid.
  **********************************************************************************************************************/
 fsp_err_t R_IOPORT_Open (ioport_ctrl_t * const p_ctrl, const ioport_cfg_t * p_cfg)
 {
@@ -134,6 +129,14 @@ fsp_err_t R_IOPORT_Open (ioport_ctrl_t * const p_ctrl, const ioport_cfg_t * p_cf
 
     /* Set driver status to open */
     p_instance_ctrl->open = IOPORT_OPEN;
+
+#if IOPORT_CFG_CCD_SUPPORT_ENABLE
+    if (NULL != p_cfg->p_extend)
+    {
+        FSP_ERROR_RETURN(FSP_SUCCESS == r_ioport_ccd_pins_config((ioport_extended_cfg_t *) p_cfg->p_extend),
+                         FSP_ERR_INVALID_ARGUMENT);
+    }
+#endif
 
     r_ioport_pins_config(p_cfg);
 
@@ -216,7 +219,7 @@ fsp_err_t R_IOPORT_PinCfg (ioport_ctrl_t * const p_ctrl, bsp_io_port_pin_t pin, 
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-#if BSP_FEATURE_SYSC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
+#if BSP_FEATURE_RTC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
 
     /* Create temporary structure for handling VBATT pins. */
     ioport_cfg_t     temp_cfg;
@@ -514,7 +517,7 @@ fsp_err_t R_IOPORT_PortEventInputRead (ioport_ctrl_t * const p_ctrl, bsp_io_port
     FSP_ERROR_RETURN(IOPORT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(NULL != p_event_data);
     uint32_t port_number = port >> IOPORT_PRV_PORT_OFFSET;
-    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS_MASK & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
  #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
  #endif
@@ -560,7 +563,7 @@ fsp_err_t R_IOPORT_PinEventInputRead (ioport_ctrl_t * const p_ctrl, bsp_io_port_
     FSP_ERROR_RETURN(IOPORT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(NULL != p_pin_event);
     uint32_t port_number = pin >> IOPORT_PRV_PORT_OFFSET;
-    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS_MASK & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
  #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
  #endif
@@ -627,7 +630,7 @@ fsp_err_t R_IOPORT_PortEventOutputWrite (ioport_ctrl_t * const p_ctrl,
     FSP_ERROR_RETURN(IOPORT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(mask_value > (ioport_size_t) 0, FSP_ERR_INVALID_ARGUMENT);
     uint32_t port_number = port >> IOPORT_PRV_PORT_OFFSET;
-    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS_MASK & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
@@ -675,7 +678,7 @@ fsp_err_t R_IOPORT_PinEventOutputWrite (ioport_ctrl_t * const p_ctrl, bsp_io_por
     FSP_ERROR_RETURN(IOPORT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN((pin_value == BSP_IO_LEVEL_HIGH) || (pin_value == BSP_IO_LEVEL_LOW), FSP_ERR_INVALID_ARGUMENT);
     uint32_t port_number = pin >> IOPORT_PRV_PORT_OFFSET;
-    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS_MASK & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
 #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
@@ -701,7 +704,7 @@ fsp_err_t R_IOPORT_PinEventOutputWrite (ioport_ctrl_t * const p_ctrl, bsp_io_por
  **********************************************************************************************************************/
 void r_ioport_pins_config (const ioport_cfg_t * p_cfg)
 {
-#if BSP_FEATURE_SYSC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
+#if BSP_FEATURE_RTC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
 
     /* Handle any VBATT domain pin configuration. */
     bsp_vbatt_init(p_cfg);
@@ -780,8 +783,8 @@ static void r_ioport_pfs_write (bsp_io_port_pin_t pin, uint32_t value)
 {
 #if (3U != BSP_FEATURE_IOPORT_VERSION)
 
-    /* PMR bits should be cleared before specifying PSEL. Reference section "20.7 Notes on the PmnPFS Register Setting"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* PMR bits should be cleared before specifying PSEL. See "Notes on the PmnPFS Register Setting"
+     * in the I/O Ports section of the relevant hardware manual. */
     if ((value & IOPORT_PRV_PERIPHERAL_FUNCTION) > 0)
     {
         /* Clear PMR */
@@ -802,7 +805,7 @@ static void r_ioport_pfs_write (bsp_io_port_pin_t pin, uint32_t value)
 #endif
 }
 
-#if BSP_FEATURE_SYSC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
+#if BSP_FEATURE_RTC_HAS_VBTICTLR || BSP_FEATURE_RTC_HAS_TCEN
 
 /*******************************************************************************************************************//**
  * @brief Initializes VBTICTLR register based on pin configuration.
@@ -817,7 +820,7 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
     uint32_t pin_index;
     uint32_t vbatt_index;
 
- #if BSP_FEATURE_SYSC_HAS_VBTICTLR
+ #if BSP_FEATURE_RTC_HAS_VBTICTLR
     R_SYSTEM_Type * p_system = R_SYSTEM;
  #endif
  #if BSP_FEATURE_RTC_HAS_TCEN
@@ -825,7 +828,7 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
  #endif
 
  #if BSP_TZ_SECURE_BUILD && BSP_FEATURE_TZ_NS_OFFSET > 0
-  #if BSP_FEATURE_SYSC_HAS_VBTICTLR
+  #if BSP_FEATURE_RTC_HAS_VBTICTLR
     if (1 == R_SYSTEM->BBFSAR_b.NONSEC2)
     {
         /* If security attribution of VBTICTLR is set to non-secure, then use the non-secure alias. */
@@ -863,7 +866,7 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
                 if ((IOPORT_PERIPHERAL_AGT == pfs_psel_value) || (IOPORT_PERIPHERAL_CLKOUT_COMP_RTC == pfs_psel_value))
                 {
                     /* Bit should be set to 1. */
- #if BSP_FEATURE_SYSC_HAS_VBTICTLR
+ #if BSP_FEATURE_RTC_HAS_VBTICTLR
   #if BSP_TZ_NONSECURE_BUILD
                     if (0 == R_SYSTEM->BBFSAR_b.NONSEC2)
                     {
@@ -910,7 +913,7 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
                 else
                 {
                     /* Bit should be cleared to 0. */
- #if BSP_FEATURE_SYSC_HAS_VBTICTLR
+ #if BSP_FEATURE_RTC_HAS_VBTICTLR
   #if BSP_TZ_NONSECURE_BUILD
                     if (0 == R_SYSTEM->BBFSAR_b.NONSEC2)
                     {
@@ -957,6 +960,48 @@ static void bsp_vbatt_init (ioport_cfg_t const * const p_pin_cfg)
             }
         }
     }
+}
+
+#endif
+
+#if IOPORT_CFG_CCD_SUPPORT_ENABLE
+
+/*******************************************************************************************************************//**
+ * @brief Initializes the low-level output current control settings for CCD pins.
+ *
+ * This internal function configures the low-level output current values for CCD pins based on the provided extended
+ * configuration. It updates the CCS registers with the specified current levels, modifies the CCDE register to enable
+ * the required CCD pins, and waits for stabilization.
+ *
+ * @retval FSP_SUCCESS                 CCD pins configured.
+ * @retval FSP_ERR_INVALID_ARGUMENT    CCD pin configurations are invalid.
+ *
+ **********************************************************************************************************************/
+static fsp_err_t r_ioport_ccd_pins_config (const ioport_extended_cfg_t * p_cfg_extend)
+{
+    uint8_t ccde_value = 0U;
+
+    for (uint8_t index = 0; index < IOPORT_PRV_CCD_PIN_COUNT; index++)
+    {
+        ioport_output_current_t ccd_cfg = p_cfg_extend->ccd_pin_cfg_data[index];
+ #if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
+
+        /* 15 mA is only for CCD4 to CCD7 */
+        FSP_ERROR_RETURN(((IOPORT_OUTPUT_CURRENT_15_MA != ccd_cfg) || (index > 3)), FSP_ERR_INVALID_ARGUMENT);
+ #endif
+        if ((BSP_FEATURE_IOPORT_CCD_PINS_MASK & (1U << index)) && (IOPORT_OUTPUT_CURRENT_DISABLE != ccd_cfg))
+        {
+            R_PORGA->CCS[index] = (uint8_t) ccd_cfg;
+            ccde_value         |= (1U << index);
+        }
+    }
+
+    R_PORGA->CCDE = ccde_value;
+
+    /* Wait for the stable time (10 us). See in hardware manual: IOPORT > Register Descriptions > CCDE */
+    R_BSP_SoftwareDelay(IOPORT_PRV_CCDE_STABILIZATION_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
+
+    return FSP_SUCCESS;
 }
 
 #endif

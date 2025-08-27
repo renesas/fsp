@@ -53,11 +53,13 @@ int rand (void)
 
 /***********************************************************************************************************************
  * Alternate implementation of Standard C Library 'srand' function.
- * Re-seeding is not supported by the HW. This function does nothing.
+ * Re-seeding is supported by HW by changing the TRNG seed.
  **********************************************************************************************************************/
 void srand (unsigned int seed)
 {
     FSP_PARAMETER_NOT_USED(seed);
+
+    HW_SCE_McuSpecificInit();
 }
 
 #endif

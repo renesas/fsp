@@ -39,6 +39,9 @@ typedef enum e_bsp_reg_protect
 
     /** Enables writing to the registers related to the security function. */
     BSP_REG_PROTECT_SAR,
+
+    /** Enables writing to the registers related to reset control. */
+    BSP_REG_PROTECT_RESET,
 } bsp_reg_protect_t;
 
 /** @} (end addtogroup BSP_MCU) */

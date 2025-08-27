@@ -252,8 +252,8 @@ fsp_err_t R_IWDT_Refresh (wdt_ctrl_t * const p_api_ctrl)
     FSP_PARAMETER_NOT_USED(p_api_ctrl);
 #endif
 
-    /* Described in hardware manual (see Section 26.3.2
-     * 'Refresh Operation' of the RA6M3 manual R01UH0886EJ0100). */
+    /* Described in hardware manual (see
+     * "Refresh Operation" in the IWDT section of the relevant hardware manual). */
     R_IWDT->IWDTRR = IWDT_PRV_REFRESH_STEP_1;
     R_IWDT->IWDTRR = IWDT_PRV_REFRESH_STEP_2;
 
@@ -338,8 +338,8 @@ fsp_err_t R_IWDT_StatusClear (wdt_ctrl_t * const p_api_ctrl, const wdt_status_t 
 
     /* Read back status flags until required flag(s) cleared.
      * Flags cannot be cleared until after the clock cycle after they are set.
-     * Described in hardware manual (see Section 26.2.2
-     * 'IWDT Status Register (IWDTSR)' of the RA6M3 manual R01UH0886EJ0100).
+     * Described in hardware manual (see
+     * "IWDT Status Register (IWDTSR)" description in the relevant hardware manual).
      */
     do
     {

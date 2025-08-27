@@ -116,7 +116,7 @@ typedef enum e_sdadc_b_zc_rising_edge_detection
     SDADC_B_ZC_RISING_EDGE_DETECTION_ENABLE  = 1, ///< Enabled
 } sdadc_b_zc_rising_edge_detection_t;
 
-/** HPF cut off. The enum value is to set to SDADHPFCR register. See Table 31.8 Cut-off frequency of HPF of the manual R01UH1005EJ0051 */
+/** HPF cut off. The enum value is to set to SDADHPFCR register. See table "Cut-off frequency of HPF" in the SDADC section of the relevant hardware manual */
 typedef enum e_sdadc_b_cutoff
 {
     SDADC_B_CUTOFF_00B = 0,            ///< Cut-off frequency 0

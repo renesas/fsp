@@ -83,7 +83,7 @@ fsp_err_t R_EDMAC_Open (edmac_instance_ctrl_t * const p_ctrl, edmac_cfg_t const 
 
     /*
      * TBL must be set to a value greater than or equal to 1
-     * (See section 31.3.1.1 of the RA6M3 manual R01UH0886EJ0100).
+     * (See "Transmit descriptor" in the EDMAC section of the relevant hardware manual).
      */
     for (uint32_t i = 0; i < p_cfg->num_tx_desc; i++)
     {
@@ -108,7 +108,7 @@ fsp_err_t R_EDMAC_Open (edmac_instance_ctrl_t * const p_ctrl, edmac_cfg_t const 
 
     /*
      * Set the fifo depth register according to the hardware manual
-     * (Reference section 31.2.13 FIFO Depth Register (FDR) in the RA6M3 manual R01UH0886EJ0100).
+     * (Reference "FIFO Depth Register (FDR)" in the EDMAC section of the relevant hardware manual).
      */
     p_ctrl->p_reg->FDR = EDMAC_FDR_VALUE;
 
@@ -260,7 +260,7 @@ void r_edmac_hw_reset (edmac_instance_ctrl_t * p_ctrl)
     uint32_t delay_microseconds = EDMAC_PCLKA_RESET_CYCLES * BSP_DELAY_UNITS_SECONDS / pclka_freq + 1U;
 
     /* Wait 64 cycles of PCLKA for the EDMAC peripheral to reset
-     * (See section 31.2.1 of the RA6M3 manual R01UH0886EJ0100). */
+     * (See section "EDMAC Mode Register (EDMR)" description of the relevant hardware manual). */
     R_BSP_SoftwareDelay(delay_microseconds, BSP_DELAY_UNITS_MICROSECONDS);
 }
 

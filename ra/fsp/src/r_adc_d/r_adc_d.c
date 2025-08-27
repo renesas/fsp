@@ -415,7 +415,7 @@ fsp_err_t R_ADC_D_Read (adc_ctrl_t * p_ctrl, adc_channel_t const reg_id, uint16_
     if ((reg_id >= ADC_CHANNEL_0) && ((uint32_t) reg_id <= 31U))
     {
         uint32_t requested_channel_mask = (1U << (uint32_t) reg_id);
-        FSP_ASSERT(0 != (requested_channel_mask & BSP_FEATURE_ADC_D_CHANNELS));
+        FSP_ASSERT(0 != (requested_channel_mask & BSP_FEATURE_ADC_D_CHANNELS_MASK));
         if (ADC_D_CHANNEL_MODE_SELECT == ((adc_d_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->channel_mode)
         {
             FSP_ASSERT(reg_id == adsbit);
@@ -724,7 +724,7 @@ static fsp_err_t r_adc_d_scan_cfg_check (adc_d_instance_ctrl_t * const     p_ctr
     /* Check if the channel input is valid. */
     if (ADC_D_CHANNEL_MODE_SELECT == p_extend->channel_mode)
     {
-        FSP_ERROR_RETURN((BSP_FEATURE_ADC_D_CHANNELS & (1U << (uint32_t) channel)) ||
+        FSP_ERROR_RETURN((BSP_FEATURE_ADC_D_CHANNELS_MASK & (1U << (uint32_t) channel)) ||
                          (ADC_CHANNEL_TEMPERATURE == channel) ||
                          (ADC_CHANNEL_VOLT == channel) ||
                          (ADC_CHANNEL_POSITIVE_SIDE_VREF == channel) ||
@@ -742,7 +742,8 @@ static fsp_err_t r_adc_d_scan_cfg_check (adc_d_instance_ctrl_t * const     p_ctr
     }
     else
     {
-        FSP_ERROR_RETURN(((1U << (uint32_t) channel) & BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS), FSP_ERR_INVALID_CHANNEL);
+        FSP_ERROR_RETURN(((1U << (uint32_t) channel) & BSP_FEATURE_ADC_D_SCAN_MODE_CHANNELS_MASK),
+                         FSP_ERR_INVALID_CHANNEL);
     }
 
     /* Check invalid configuration when the channel input is internal reference voltage or temperature sensor. */

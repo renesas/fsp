@@ -61,12 +61,12 @@ typedef struct st_motor_speed_input
     float f_id;                        ///< D-axis current [A]
     float f_iq;                        ///< Q-axis current [A]
     float f_vamax;
-    float f_speed_rad;                 ///< Speed value [rad/s]
+    float f_speed_rad;                 ///< Speed value [radian/s]
     float f_position_rad;              ///< Rotor position [radian]
 
     float f_ed;                        ///< Estimated d-axis component[V] of flux due to the permanent magnet
     float f_eq;                        ///< Estimated q-axis component[V] of flux due to the permanent magnet
-    float f_phase_err_rad;             ///< Phase error [rad]
+    float f_phase_err_rad;             ///< Phase error [radian]
 
     uint8_t u1_flag_get_iref;          ///< Flag to set d/q-axis current reference
 
@@ -87,7 +87,7 @@ typedef struct st_motor_speed_output
     float f_id_ref;                    ///< D-axis current reference [A] for calculation
     float f_iq_ref;                    ///< Q-axis current reference [A] for calculation
 
-    float f_ref_speed_rad_ctrl;        ///< Command speed value for speed PI control[rad/s]
+    float f_ref_speed_rad_ctrl;        ///< Command speed value for speed PI control[radian/s]
     float f_damp_comp_speed;           ///< The speed for open-loop damping
 
     uint8_t u1_flag_pi;                ///< PI output started flag

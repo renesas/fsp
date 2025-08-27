@@ -16,7 +16,7 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define MOTOR_120_DRIVER_OPEN                    (0x4D543144L)
+#define MOTOR_120_DRIVER_OPEN                    (('M' << 24U) | ('1' << 16U) | ('D' << 8U) | ('R' << 0U))
 #define MOTOR_120_DRIVER_SHARED_ADC_OPEN         (('M' << 24U) | ('1' << 16U) | ('S' << 8U) | ('A' << 0U))
 
 #define MOTOR_120_DRIVER_DEV_HALF                (0.5F)      /* 1/2 */
@@ -1755,25 +1755,22 @@ static void rm_motor_120_driver_shared_current_get (motor_120_driver_instance_ct
     p_temp_adc_instance[0] = p_shared_cfg->p_adc_instance_1st;
     p_temp_adc_instance[1] = p_shared_cfg->p_adc_instance_2nd;
 
-    /* Read A/D converted data */
-    p_temp_adc_instance[p_extend_cfg->iu_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->iu_ad_unit]->p_ctrl,
-                                                               p_extend_cfg->iu_ad_ch,
-                                                               &u2_addata[0]);
-    p_temp_adc_instance[p_extend_cfg->iw_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->iw_ad_unit]->p_ctrl,
-                                                               p_extend_cfg->iw_ad_ch,
-                                                               &u2_addata[1]);
-    p_temp_adc_instance[p_extend_cfg->vdc_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vdc_ad_unit]->p_ctrl,
-                                                                p_extend_cfg->vdc_ad_ch,
-                                                                &u2_addata[2]);
-    p_temp_adc_instance[p_extend_cfg->vu_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vu_ad_unit]->p_ctrl,
-                                                               p_extend_cfg->vu_ad_ch,
-                                                               &u2_addata[3]);
-    p_temp_adc_instance[p_extend_cfg->vv_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vv_ad_unit]->p_ctrl,
-                                                               p_extend_cfg->vv_ad_ch,
-                                                               &u2_addata[4]);
-    p_temp_adc_instance[p_extend_cfg->vw_ad_unit]->p_api->read(p_temp_adc_instance[p_extend_cfg->vw_ad_unit]->p_ctrl,
-                                                               p_extend_cfg->vw_ad_ch,
-                                                               &u2_addata[5]);
+    if ((NULL != p_temp_adc_instance[0]) && (NULL != p_temp_adc_instance[1]))
+    {
+        /* Read A/D converted data */
+        p_temp_adc_instance[p_extend_cfg->iu_ad_unit]
+        ->p_api->read(p_temp_adc_instance[p_extend_cfg->iu_ad_unit]->p_ctrl, p_extend_cfg->iu_ad_ch, &u2_addata[0]);
+        p_temp_adc_instance[p_extend_cfg->iw_ad_unit]
+        ->p_api->read(p_temp_adc_instance[p_extend_cfg->iw_ad_unit]->p_ctrl, p_extend_cfg->iw_ad_ch, &u2_addata[1]);
+        p_temp_adc_instance[p_extend_cfg->vdc_ad_unit]
+        ->p_api->read(p_temp_adc_instance[p_extend_cfg->vdc_ad_unit]->p_ctrl, p_extend_cfg->vdc_ad_ch, &u2_addata[2]);
+        p_temp_adc_instance[p_extend_cfg->vu_ad_unit]
+        ->p_api->read(p_temp_adc_instance[p_extend_cfg->vu_ad_unit]->p_ctrl, p_extend_cfg->vu_ad_ch, &u2_addata[3]);
+        p_temp_adc_instance[p_extend_cfg->vv_ad_unit]
+        ->p_api->read(p_temp_adc_instance[p_extend_cfg->vv_ad_unit]->p_ctrl, p_extend_cfg->vv_ad_ch, &u2_addata[4]);
+        p_temp_adc_instance[p_extend_cfg->vw_ad_unit]
+        ->p_api->read(p_temp_adc_instance[p_extend_cfg->vw_ad_unit]->p_ctrl, p_extend_cfg->vw_ad_ch, &u2_addata[5]);
+    }
 
     f_addata[0] = (float) u2_addata[0] - p_extend_cfg->f_ad_current_offset;
     f_addata[1] = (float) u2_addata[1] - p_extend_cfg->f_ad_current_offset;
@@ -1842,7 +1839,7 @@ void rm_motor_120_driver_adc_b_open (motor_120_driver_instance_ctrl_t   * p_inst
     else
     {
         /* Register driver module instance for callback */
-        p_instance_ctrl->p_shared_instance_ctrl->p_context[p_shared_ctrl->registered_motor_count] = p_instance_ctrl;
+        p_shared_ctrl->p_context[p_shared_ctrl->registered_motor_count] = p_instance_ctrl;
 
         /* count up the number of registered motor */
         (p_shared_ctrl->registered_motor_count)++;

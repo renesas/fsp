@@ -7,14 +7,16 @@
 /***********************************************************************************************************************
  * Includes
  **********************************************************************************************************************/
+#include "bsp_api.h"
 #include "rm_motor_sense_encoder.h"
 
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
 
-#define  MOTOR_SENSE_ENCODER_OPEN       (0X4D545345)
+#define  MOTOR_SENSE_ENCODER_OPEN       (('M' << 24U) | ('T' << 16U) | ('S' << 8U) | ('E' << 0U))
 
+#define  MOTOR_SENSE_ENCODER_HALF       (0.5F)
 #define  MOTOR_SENSE_ENCODER_QUARTER    (0.25F)
 
 #ifndef MOTOR_SENSE_ENCODER_ERROR_RETURN
@@ -22,46 +24,49 @@
  #define MOTOR_SENSE_ENCODER_ERROR_RETURN(a, err)    FSP_ERROR_RETURN((a), (err))
 #endif
 
-#define MOTOR_SENSE_ENCODER_FLAG_CLEAR              (0U)
-#define MOTOR_SENSE_ENCODER_FLAG_SET                (1U)
+#define MOTOR_SENSE_ENCODER_FLAG_CLEAR             (0U)
+#define MOTOR_SENSE_ENCODER_FLAG_SET               (1U)
 
-#define MOTOR_SENSE_ENCODER_CW                      (0)
-#define MOTOR_SENSE_ENCODER_CCW                     (1)
+#define MOTOR_SENSE_ENCODER_CW                     (0)
+#define MOTOR_SENSE_ENCODER_CCW                    (1)
 
-#define MOTOR_SENSE_ENCODER_TWOPI                   (3.14159265358979F * 2.0F)
+#define MOTOR_SENSE_ENCODER_PI                     (3.1415926535F)
+#define MOTOR_SENSE_ENCODER_TWOPI                  (2.0F * 3.1415926535F)
 
-#define MOTOR_SENSE_ENCODER_16BIT                   (0x10000U)
+#define MOTOR_SENSE_ENCODER_16BIT                  (0x10000U)
 
 /* position and speed calculation mode */
-#define MOTOR_SENSE_ENCODER_ENCD_INTERRUPT          (0)
-#define MOTOR_SENSE_ENCODER_CTRL_INTERRUPT          (1)
+#define MOTOR_SENSE_ENCODER_ENCD_INTERRUPT         (0)
+#define MOTOR_SENSE_ENCODER_CTRL_INTERRUPT         (1)
 
 /* encoder const definition */
-#define MOTOR_SENSE_ENCODER_CALCULATE_KHz           (1000.0F)
-#define MOTOR_SENSE_ENCODER_CALCULATE_60            (60.0F)
+#define MOTOR_SENSE_ENCODER_CALCULATE_KHz          (1000.0F)
+#define MOTOR_SENSE_ENCODER_CALCULATE_60           (60.0F)
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#define SPEED_DETECT_PULSE_WIDE_LIMIT              (0.15F) /* pulse width limit[sec] */
 
 /* For HALL Use */
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_CW           (1)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_CCW          (0)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_CW           (1)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_CCW          (0)
 
- #define MOTOR_SENSE_ENCODER_HALL_FLAG_SET          (1)
- #define MOTOR_SENSE_ENCODER_HALL_FLAG_CLEAR        (0)
+#define MOTOR_SENSE_ENCODER_HALL_FLAG_CLEAR        (0)
+#define MOTOR_SENSE_ENCODER_HALL_FLAG_ONCE         (1)
+#define MOTOR_SENSE_ENCODER_HALL_FLAG_INTR         (2)
 
- #define MOTOR_SENSE_ENCODER_HALL_TWOPI             (2.0F * 3.14159265359F)                   /* 2 * PI */
- #define MOTOR_SENSE_ENCODER_HALL_TWOPI_360         (MOTOR_SENSE_ENCODER_HALL_TWOPI / 360.0F) /* 2 * PI / 360 */
+#define MOTOR_SENSE_ENCODER_HALL_TWOPI             (2.0F * 3.1415926535F)                    /* 2 * PI */
+#define MOTOR_SENSE_ENCODER_HALL_TWOPI_360         (MOTOR_SENSE_ENCODER_HALL_TWOPI / 360.0F) /* 2 * PI / 360 */
 
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30     (30.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90     (90.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150    (150.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210    (210.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270    (270.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330    (330.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET       (30.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
- #define MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR        (1)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30     (30.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90     (90.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150    (150.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210    (210.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270    (270.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330    (330.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET       (30.0F * MOTOR_SENSE_ENCODER_HALL_TWOPI_360)
+#define MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR        (1)
 
-#endif                                 /* MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL */
+#define MOTOR_SENSE_ENCODER_HALL_U_SHIFT           (2)
+#define MOTOR_SENSE_ENCODER_HALL_V_SHIFT           (1)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -73,7 +78,7 @@
 static void rm_motor_sense_encoder_cyclic(motor_sense_encoder_instance_ctrl_t * p_instance_ctrl);
 void        rm_motor_sense_encoder_interrupt(timer_callback_args_t * p_args);
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
 void rm_motor_sense_encoder_hall_angle_interrupt(external_irq_callback_args_t * p_args);
 
 #endif
@@ -85,8 +90,13 @@ static void rm_motor_sense_encoder_highspeed_init(motor_sense_encoder_highspeed_
                                                   motor_sense_encoder_extended_cfg_t * p_extended_cfg);
 static void rm_motor_sense_encoder_highspeed_reset(motor_sense_encoder_highspeed_t * p_ehighspeed);
 static void rm_motor_sense_encoder_reset_count(motor_sense_encoder_instance_ctrl_t * p_ctrl);
+
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL != 1)
 static void rm_motor_sense_encoder_angle_adjust_excite(motor_sense_encoder_instance_ctrl_t * p_ctrl);
+
+#endif
 static void rm_motor_sense_encoder_calculate_count_difference(motor_sense_encoder_instance_ctrl_t * p_ctrl);
+
 static void rm_motor_sense_encoder_highspeed_calculate(motor_sense_encoder_instance_ctrl_t * p_ctrl,
                                                        float                                 f4_position_err,
                                                        float                                 f4_ctrl_period);
@@ -95,13 +105,17 @@ static void rm_motor_sense_encoder_switch_encoder_interrupt(motor_sense_encoder_
 static void rm_motor_sense_encoder_switch_carrier_interrupt(motor_sense_encoder_instance_ctrl_t * p_ctrl,
                                                             float                                 f4_speed_rad);
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
 static void  rm_motor_sense_encoder_hall_init(motor_sense_encoder_hall_t * p_hall);
 static float rm_motor_sense_encoder_hall_angle_adj_init(motor_sense_encoder_instance_ctrl_t * p_ctrl);
-static float rm_motor_sense_encoder_hall_angle_edge_set(uint8_t u1_hall_signal, uint8_t u1_pre_hall_signal);
-static float rm_motor_sense_encoder_hall_angle_set(uint8_t u1_hall_signal);
+static float rm_motor_sense_encoder_hall_angle_edge_set(motor_sense_encoder_instance_ctrl_t * p_ctrl);
+static float rm_motor_sense_encoder_hall_angle_set(motor_sense_encoder_instance_ctrl_t * p_ctrl);
+static void  rm_motor_sense_encoder_get_hall_signal(motor_sense_encoder_instance_ctrl_t * p_ctrl);
 
 #endif
+
+static void rm_motor_sense_encoder_interrupt_get_data(motor_sense_encoder_instance_ctrl_t * p_ctrl);
+static void rm_motor_sense_encoder_speed_calculate_by_pulse_width(motor_sense_encoder_instance_ctrl_t * p_ctrl);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -175,6 +189,9 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_Open (motor_angle_ctrl_t * const p_ctrl, motor_
         p_extended_cfg->p_timer_instance->p_api->open(p_extended_cfg->p_timer_instance->p_ctrl,
                                                       p_extended_cfg->p_timer_instance->p_cfg);
         p_instance_ctrl->p_timer = p_extended_cfg->p_timer_instance;
+
+        p_instance_ctrl->p_timer->p_api
+        ->infoGet(p_instance_ctrl->p_timer->p_ctrl, &p_instance_ctrl->freerun_timer_info);
     }
 
     if (p_extended_cfg->p_input_capture_instance != NULL)
@@ -185,41 +202,57 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_Open (motor_angle_ctrl_t * const p_ctrl, motor_
         p_extended_cfg->p_input_capture_instance->p_api->start(p_extended_cfg->p_input_capture_instance->p_ctrl);
 
         p_instance_ctrl->p_input_capture = p_extended_cfg->p_input_capture_instance;
+        p_instance_ctrl->p_input_capture->p_api
+        ->infoGet(p_instance_ctrl->p_input_capture->p_ctrl, &p_instance_ctrl->input_capture_info);
     }
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
     if ((p_extended_cfg->p_u_hall_irq_instance != NULL) &&
         (p_extended_cfg->p_v_hall_irq_instance != NULL) &&
         (p_extended_cfg->p_w_hall_irq_instance != NULL))
     {
-        if (MOTOR_SENSE_ENCODER_USE_HALL == p_extended_cfg->use_hall)
-        {
-            p_extended_cfg->p_u_hall_irq_instance->p_api->open(p_extended_cfg->p_u_hall_irq_instance->p_ctrl,
-                                                               p_extended_cfg->p_u_hall_irq_instance->p_cfg);
-            p_extended_cfg->p_v_hall_irq_instance->p_api->open(p_extended_cfg->p_v_hall_irq_instance->p_ctrl,
-                                                               p_extended_cfg->p_v_hall_irq_instance->p_cfg);
-            p_extended_cfg->p_w_hall_irq_instance->p_api->open(p_extended_cfg->p_w_hall_irq_instance->p_ctrl,
-                                                               p_extended_cfg->p_w_hall_irq_instance->p_cfg);
+        p_extended_cfg->p_u_hall_irq_instance->p_api->open(p_extended_cfg->p_u_hall_irq_instance->p_ctrl,
+                                                           p_extended_cfg->p_u_hall_irq_instance->p_cfg);
+        p_extended_cfg->p_v_hall_irq_instance->p_api->open(p_extended_cfg->p_v_hall_irq_instance->p_ctrl,
+                                                           p_extended_cfg->p_v_hall_irq_instance->p_cfg);
+        p_extended_cfg->p_w_hall_irq_instance->p_api->open(p_extended_cfg->p_w_hall_irq_instance->p_ctrl,
+                                                           p_extended_cfg->p_w_hall_irq_instance->p_cfg);
 
-            p_extended_cfg->p_u_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_u_hall_irq_instance->p_ctrl,
-                                                                      rm_motor_sense_encoder_hall_angle_interrupt,
-                                                                      p_instance_ctrl,
-                                                                      &(p_instance_ctrl->hall_interrupt_args));
-            p_extended_cfg->p_v_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_v_hall_irq_instance->p_ctrl,
-                                                                      rm_motor_sense_encoder_hall_angle_interrupt,
-                                                                      p_instance_ctrl,
-                                                                      &(p_instance_ctrl->hall_interrupt_args));
-            p_extended_cfg->p_w_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_w_hall_irq_instance->p_ctrl,
-                                                                      rm_motor_sense_encoder_hall_angle_interrupt,
-                                                                      p_instance_ctrl,
-                                                                      &(p_instance_ctrl->hall_interrupt_args));
+        p_extended_cfg->p_u_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_u_hall_irq_instance->p_ctrl,
+                                                                  rm_motor_sense_encoder_hall_angle_interrupt,
+                                                                  p_instance_ctrl,
+                                                                  &(p_instance_ctrl->hall_interrupt_args));
+        p_extended_cfg->p_v_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_v_hall_irq_instance->p_ctrl,
+                                                                  rm_motor_sense_encoder_hall_angle_interrupt,
+                                                                  p_instance_ctrl,
+                                                                  &(p_instance_ctrl->hall_interrupt_args));
+        p_extended_cfg->p_w_hall_irq_instance->p_api->callbackSet(p_extended_cfg->p_w_hall_irq_instance->p_ctrl,
+                                                                  rm_motor_sense_encoder_hall_angle_interrupt,
+                                                                  p_instance_ctrl,
+                                                                  &(p_instance_ctrl->hall_interrupt_args));
 
-            rm_motor_sense_encoder_hall_init(&(p_instance_ctrl->st_encoder_hall));
-        }
+        rm_motor_sense_encoder_hall_init(&(p_instance_ctrl->st_encoder_hall));
     }
 #endif
 
-    p_instance_ctrl->f_speed_rad = 0.0F;
+    p_instance_ctrl->f_speed_rad    = 0.0F;
+    p_instance_ctrl->f_angle_radian = 0.0F;
+    p_instance_ctrl->u4_last_encoder_interrupt_counts = 0U;
+    p_instance_ctrl->f_last_angle = 0.0F;
+
+    p_instance_ctrl->u2_maximum_carrier_pulse_width_count =
+        (uint16_t) (SPEED_DETECT_PULSE_WIDE_LIMIT / p_extended_cfg->f_speed_ctrl_period + MOTOR_SENSE_ENCODER_HALF);
+
+    p_instance_ctrl->f_input_capture_timer_frequency =
+        (float) p_instance_ctrl->input_capture_info.clock_frequency; /* timer frequency [Hz] */
+    p_instance_ctrl->u4_interrupt_time_correct =
+        (uint32_t) (p_instance_ctrl->f_input_capture_timer_frequency *
+                    (SPEED_DETECT_PULSE_WIDE_LIMIT + p_extended_cfg->f_speed_ctrl_period));
+
+    p_instance_ctrl->u1_interrupt_disable      = MOTOR_SENSE_ENCODER_FLAG_CLEAR;
+    p_instance_ctrl->s4_pulse_counts           = 0;
+    p_instance_ctrl->s2_speed_interrupt_counts = 0;
+
     p_instance_ctrl->e_loop_mode = p_extended_cfg->loop_mode;
 
     p_instance_ctrl->p_cfg        = p_cfg;
@@ -265,22 +298,30 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_Close (motor_angle_ctrl_t * const p_ctrl)
         p_extended_cfg->p_input_capture_instance->p_api->close(p_extended_cfg->p_input_capture_instance->p_ctrl);
     }
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
     if ((p_extended_cfg->p_u_hall_irq_instance != NULL) &&
         (p_extended_cfg->p_v_hall_irq_instance != NULL) &&
         (p_extended_cfg->p_w_hall_irq_instance != NULL))
     {
-        if (MOTOR_SENSE_ENCODER_USE_HALL == p_extended_cfg->use_hall)
-        {
-            p_extended_cfg->p_u_hall_irq_instance->p_api->close(p_extended_cfg->p_u_hall_irq_instance->p_ctrl);
-            p_extended_cfg->p_v_hall_irq_instance->p_api->close(p_extended_cfg->p_v_hall_irq_instance->p_ctrl);
-            p_extended_cfg->p_w_hall_irq_instance->p_api->close(p_extended_cfg->p_w_hall_irq_instance->p_ctrl);
-        }
+        rm_motor_sense_encoder_hall_init(&(p_instance_ctrl->st_encoder_hall));
+
+        p_extended_cfg->p_u_hall_irq_instance->p_api->close(p_extended_cfg->p_u_hall_irq_instance->p_ctrl);
+        p_extended_cfg->p_v_hall_irq_instance->p_api->close(p_extended_cfg->p_v_hall_irq_instance->p_ctrl);
+        p_extended_cfg->p_w_hall_irq_instance->p_api->close(p_extended_cfg->p_w_hall_irq_instance->p_ctrl);
     }
 #endif
 
-    p_instance_ctrl->f_speed_rad = 0.0F;
-    p_instance_ctrl->open        = 0U;
+    p_instance_ctrl->f_speed_rad    = 0.0F;
+    p_instance_ctrl->f_angle_radian = 0.0F;
+    p_instance_ctrl->u4_last_encoder_interrupt_counts = 0U;
+    p_instance_ctrl->f_last_angle = 0.0F;
+    p_instance_ctrl->f_input_capture_timer_frequency = 0.0F;
+    p_instance_ctrl->u4_interrupt_time_correct       = 0U;
+    p_instance_ctrl->u1_interrupt_disable            = MOTOR_SENSE_ENCODER_FLAG_CLEAR;
+    p_instance_ctrl->s4_pulse_counts                 = 0;
+    p_instance_ctrl->s2_speed_interrupt_counts       = 0;
+
+    p_instance_ctrl->open = 0U;
 
     return err;
 }
@@ -303,15 +344,21 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_Reset (motor_angle_ctrl_t * const p_ctrl)
 #endif
 
     motor_sense_encoder_extended_cfg_t const * p_extend = p_instance_ctrl->p_cfg->p_extend;
-    gpt_extended_cfg_t * p_gpt_exntend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
+    gpt_extended_cfg_t * p_gpt_extend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
 
     rm_motor_sense_encoder_reset(&(p_instance_ctrl->st_encoder_parameter));
     rm_motor_sense_encoder_highspeed_reset(&(p_instance_ctrl->st_encoder_highspeed));
-    R_BSP_IrqEnable(p_gpt_exntend->capture_a_irq);
+    R_BSP_IrqEnable(p_gpt_extend->capture_a_irq);
 
     rm_motor_sense_encoder_reset_count(p_instance_ctrl);
 
-    p_instance_ctrl->f_speed_rad = 0.0F;
+    p_instance_ctrl->f_speed_rad    = 0.0F;
+    p_instance_ctrl->f_angle_radian = 0.0F;
+    p_instance_ctrl->u4_last_encoder_interrupt_counts = 0U;
+    p_instance_ctrl->f_last_angle              = 0.0F;
+    p_instance_ctrl->u1_interrupt_disable      = MOTOR_SENSE_ENCODER_FLAG_CLEAR;
+    p_instance_ctrl->s4_pulse_counts           = 0;
+    p_instance_ctrl->s2_speed_interrupt_counts = 0;
 
     p_instance_ctrl->u1_direction = MOTOR_SENSE_ENCODER_CW;
 
@@ -321,7 +368,7 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_Reset (motor_angle_ctrl_t * const p_ctrl)
         p_instance_ctrl->p_timer->p_api->reset(p_instance_ctrl->p_timer->p_ctrl);
     }
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
     rm_motor_sense_encoder_hall_init(&(p_instance_ctrl->st_encoder_hall));
 #endif
 
@@ -356,7 +403,8 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_InternalCalculate (motor_angle_ctrl_t * const p
         p_instance_ctrl->u1_direction = MOTOR_SENSE_ENCODER_CCW;
     }
 
-    if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH == p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
+    if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH ==
+        p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
     {
         /* Angle & speed calculation */
         /* Integrate encoder counter difference */
@@ -395,9 +443,13 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_InternalCalculate (motor_angle_ctrl_t * const p
         f4_temp_pos_err +=
             p_instance_ctrl->st_encoder_highspeed.f4_encoder_highspeed_position_rad -
             p_instance_ctrl->st_encoder_highspeed.f4_encoder_highspeed_previous_rad;
-        rm_motor_sense_encoder_highspeed_calculate(p_instance_ctrl,
-                                                   f4_temp_pos_err,
-                                                   p_extended_cfg->f_current_ctrl_period);
+
+        if (MOTOR_SENSE_ENCODER_SPEED_DETECT_CARRIER == p_extended_cfg->e_speed_detect_type)
+        {
+            rm_motor_sense_encoder_highspeed_calculate(p_instance_ctrl,
+                                                       f4_temp_pos_err,
+                                                       p_extended_cfg->f_current_ctrl_period);
+        }
     }
 
     return err;
@@ -435,63 +487,71 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_AngleSpeedGet (motor_angle_ctrl_t * const p_ctr
     if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH !=
         p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
     {
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
-        if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_HALL == p_instance_ctrl->e_adjust_mode)
-        {
-            f4_angle_rad = p_instance_ctrl->st_encoder_hall.f4_hall_angle_rad;
-        }
-        else
-#endif
-        {
-            /* Speed must be zero while adjusting angle */
-            p_instance_ctrl->st_encoder_parameter.f4_encoder_speed_rad = 0.0F;
+        /* Speed must be zero while adjusting angle */
+        p_instance_ctrl->st_encoder_parameter.f4_encoder_speed_rad = 0.0F;
 
-            if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_90_DEGREE ==
-                p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
-            {
-                /* Set alignment angle to Pi/2[rad] */
-                f4_angle_rad = MOTOR_SENSE_ENCODER_TWOPI * MOTOR_SENSE_ENCODER_QUARTER;
-            }
+        if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_90_DEGREE ==
+            p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
+        {
+            /* Set alignment angle to Pi/2[rad] */
+            f4_angle_rad = MOTOR_SENSE_ENCODER_TWOPI * MOTOR_SENSE_ENCODER_QUARTER;
         }
     }
     else
     {
-        if (MOTOR_SENSE_ENCODER_CTRL_INTERRUPT ==
-            p_instance_ctrl->st_encoder_highspeed.u1_encoder_position_speed_calc_mode)
+        if (MOTOR_SENSE_ENCODER_SPEED_DETECT_CARRIER != p_extended_cfg->e_speed_detect_type)
         {
-            f4_temp_speed = p_instance_ctrl->st_encoder_highspeed.f4_encoder_highspeed_speed_rad *
-                            p_extended_cfg->st_motor_params.u2_mtr_pp;
-            *p_speed = f4_temp_speed;
-            p_instance_ctrl->f_speed_rad = f4_temp_speed;
+            motor_sense_encoder_highspeed_t * st_ehighspeed = &(p_instance_ctrl->st_encoder_highspeed);
+            st_ehighspeed->u1_encoder_position_speed_count++;
+            gpt_extended_cfg_t * p_gpt_extend =
+                (gpt_extended_cfg_t *) p_extended_cfg->p_input_capture_instance->p_cfg->p_extend;
 
-            /* Position Radian */
+            // Enable encoder interrupt
+            R_BSP_IrqEnable(p_gpt_extend->capture_a_irq);
+
+            // Return speed and position
+            *p_speed     = p_instance_ctrl->f_speed_rad;
             *p_phase_err = p_instance_ctrl->st_encoder_highspeed.f4_encoder_highspeed_position_rad;
-
-            rm_motor_sense_encoder_switch_encoder_interrupt(p_instance_ctrl, f4_temp_speed);
-        }
-        else if (MOTOR_SENSE_ENCODER_ENCD_INTERRUPT ==
-                 p_instance_ctrl->st_encoder_highspeed.u1_encoder_position_speed_calc_mode)
-        {
-            f4_temp_speed = p_instance_ctrl->st_encoder_parameter.f4_encoder_speed_rad *
-                            p_extended_cfg->st_motor_params.u2_mtr_pp;
-            *p_speed = f4_temp_speed;
-            p_instance_ctrl->f_speed_rad = f4_temp_speed;
-
-            /* Position Radian */
-            *p_phase_err = p_instance_ctrl->st_encoder_parameter.f4_encoder_position_rad;
-
-            rm_motor_sense_encoder_switch_carrier_interrupt(p_instance_ctrl, f4_temp_speed);
         }
         else
         {
-            /* Do nothing */
+            if (MOTOR_SENSE_ENCODER_CTRL_INTERRUPT ==
+                p_instance_ctrl->st_encoder_highspeed.u1_encoder_position_speed_calc_mode)
+            {
+                f4_temp_speed = p_instance_ctrl->st_encoder_highspeed.f4_encoder_highspeed_speed_rad *
+                                p_extended_cfg->st_motor_params.u2_mtr_pp;
+                *p_speed = f4_temp_speed;
+                p_instance_ctrl->f_speed_rad = f4_temp_speed;
+
+                /* Position Radian */
+                *p_phase_err = p_instance_ctrl->st_encoder_highspeed.f4_encoder_highspeed_position_rad;
+
+                rm_motor_sense_encoder_switch_encoder_interrupt(p_instance_ctrl, f4_temp_speed);
+            }
+            else if (MOTOR_SENSE_ENCODER_ENCD_INTERRUPT ==
+                     p_instance_ctrl->st_encoder_highspeed.u1_encoder_position_speed_calc_mode)
+            {
+                f4_temp_speed = p_instance_ctrl->st_encoder_parameter.f4_encoder_speed_rad *
+                                p_extended_cfg->st_motor_params.u2_mtr_pp;
+                *p_speed = f4_temp_speed;
+                p_instance_ctrl->f_speed_rad = f4_temp_speed;
+
+                /* Position Radian */
+                *p_phase_err = p_instance_ctrl->st_encoder_parameter.f4_encoder_position_rad;
+
+                rm_motor_sense_encoder_switch_carrier_interrupt(p_instance_ctrl, f4_temp_speed);
+            }
+            else
+            {
+                /* Do nothing */
+            }
         }
 
         /* Convert mechanical angle to electrical angle */
         d_temp       = (double) (*p_phase_err * p_extended_cfg->st_motor_params.u2_mtr_pp);
         f4_angle_rad = (float) (fmod(d_temp, (double) MOTOR_SENSE_ENCODER_TWOPI));
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
-        if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_HALL == p_instance_ctrl->e_adjust_mode)
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
+        if (MOTOR_SENSE_ENCODER_HALL_FLAG_CLEAR != p_instance_ctrl->st_encoder_hall.u1_hall_interrupt_flag)
         {
             f4_angle_rad += p_instance_ctrl->st_encoder_hall.f4_hall_angle_rad;
         }
@@ -533,7 +593,12 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_AngleAdjust (motor_angle_ctrl_t * const p_ctrl)
     MOTOR_SENSE_ENCODER_ERROR_RETURN(MOTOR_SENSE_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL != 1)
     rm_motor_sense_encoder_angle_adjust_excite(p_instance_ctrl);
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+#endif
 
     return err;
 }
@@ -577,7 +642,39 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_CyclicProcess (motor_angle_ctrl_t * const p_ctr
     MOTOR_SENSE_ENCODER_ERROR_RETURN(MOTOR_SENSE_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
+    if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH != p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
+    {
+        motor_sense_encoder_extended_cfg_t * p_extended =
+            (motor_sense_encoder_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+        if (MOTOR_SENSE_ENCODER_HALL_FLAG_CLEAR == p_instance_ctrl->st_encoder_hall.u1_hall_interrupt_flag)
+        {
+            p_instance_ctrl->st_encoder_hall.f4_hall_angle_rad =
+                rm_motor_sense_encoder_hall_angle_adj_init(p_instance_ctrl);
+
+            /* Reset encoder counter and timer */
+            timer_instance_t const * p_timer = p_instance_ctrl->p_timer;
+            rm_motor_sense_encoder_reset_count(p_instance_ctrl);
+            p_timer->p_api->start(p_timer->p_ctrl);
+
+            /* Enable hall interrupt */
+            if ((p_extended->p_u_hall_irq_instance != NULL) &&
+                (p_extended->p_v_hall_irq_instance != NULL) &&
+                (p_extended->p_w_hall_irq_instance != NULL))
+            {
+                p_extended->p_u_hall_irq_instance->p_api->enable(p_extended->p_u_hall_irq_instance->p_ctrl);
+                p_extended->p_v_hall_irq_instance->p_api->enable(p_extended->p_v_hall_irq_instance->p_ctrl);
+                p_extended->p_w_hall_irq_instance->p_api->enable(p_extended->p_w_hall_irq_instance->p_ctrl);
+            }
+
+            p_instance_ctrl->st_encoder_hall.u1_hall_interrupt_flag           = MOTOR_SENSE_ENCODER_HALL_FLAG_ONCE;
+            p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status = MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH;
+        }
+    }
+
+#else
     rm_motor_sense_encoder_cyclic(p_instance_ctrl);
+#endif
 
     return err;
 }
@@ -604,11 +701,17 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_InfoGet (motor_angle_ctrl_t * const p_ctrl, mot
 
     p_info->e_adjust_status = p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status;
 
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
+    temp_full              = 1U;
+    p_info->u1_adjust_mode = MOTOR_SENSE_ENCODER_FLAG_SET;
+#else
     if (p_instance_ctrl->st_encoder_parameter.u2_encoder_angle_adj_count >=
         p_instance_ctrl->st_encoder_parameter.u2_encoder_angle_adj_time)
     {
         temp_full = 1U;
     }
+    p_info->u1_adjust_mode = MOTOR_SENSE_ENCODER_FLAG_CLEAR;
+#endif
 
     p_info->u1_adjust_count_full = temp_full;
 
@@ -643,6 +746,9 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_ParameterUpdate (motor_angle_ctrl_t * const    
     rm_motor_sense_encoder_highspeed_init(&(p_instance_ctrl->st_encoder_highspeed), p_extended_cfg);
 
     p_instance_ctrl->p_cfg = p_cfg;
+
+    p_instance_ctrl->u2_maximum_carrier_pulse_width_count =
+        (uint16_t) (SPEED_DETECT_PULSE_WIDE_LIMIT / p_extended_cfg->f_speed_ctrl_period + MOTOR_SENSE_ENCODER_HALF);
 
     return err;
 }
@@ -734,6 +840,73 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_SensorDataSet (motor_angle_ctrl_t * const    p_
     return FSP_ERR_UNSUPPORTED;
 }
 
+/***********************************************************************************************************************
+ * @brief Process at speed cyclic interrupt. Implements @ref motor_angle_api_t::speedCyclicProcess
+ *
+ * @retval FSP_SUCCESS              Successfully process was performed
+ * @retval FSP_ERR_ASSERTION        Null pointer.
+ * @retval FSP_ERR_NOT_OPEN         Module is not open.
+ ***********************************************************************************************************************/
+fsp_err_t RM_MOTOR_SENSE_ENCODER_SpeedCyclicProcess (motor_angle_ctrl_t * const p_ctrl)
+{
+    fsp_err_t err = FSP_SUCCESS;
+    motor_sense_encoder_instance_ctrl_t * p_instance_ctrl = (motor_sense_encoder_instance_ctrl_t *) p_ctrl;
+
+#if (MOTOR_SENSE_ENCODER_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl != NULL);
+    MOTOR_SENSE_ENCODER_ERROR_RETURN(MOTOR_SENSE_ENCODER_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    motor_sense_encoder_extended_cfg_t const * p_extended_cfg = p_instance_ctrl->p_cfg->p_extend;
+
+    if (MOTOR_SENSE_ENCODER_SPEED_DETECT_CARRIER == p_extended_cfg->e_speed_detect_type)
+    {
+        // Do nothing
+    }
+    else
+    {
+        float temp_speed = 0.0F;
+        float f4_delta   = 0.0F;
+
+        if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH ==
+            p_instance_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
+        {
+            // Angle difference
+            f4_delta = p_instance_ctrl->f_angle_radian - p_instance_ctrl->f_last_angle;
+
+            // Compensation
+            if (f4_delta > MOTOR_SENSE_ENCODER_PI)
+            {
+                f4_delta -= MOTOR_SENSE_ENCODER_TWOPI;
+            }
+            else if (f4_delta < -MOTOR_SENSE_ENCODER_PI)
+            {
+                f4_delta += MOTOR_SENSE_ENCODER_TWOPI;
+            }
+            else
+            {
+                // Do nothing
+            }
+
+            // Calculate electric speed
+            temp_speed = f4_delta / p_extended_cfg->f_speed_ctrl_period;
+            p_instance_ctrl->st_encoder_highspeed.f4_encoder_highspeed_speed_rad = temp_speed;
+        }
+
+        p_instance_ctrl->f_last_angle = p_instance_ctrl->f_angle_radian;
+
+        /* Guard from other interrupt */
+        FSP_CRITICAL_SECTION_DEFINE;
+        FSP_CRITICAL_SECTION_ENTER;
+
+        rm_motor_sense_encoder_speed_calculate_by_pulse_width(p_instance_ctrl);
+
+        FSP_CRITICAL_SECTION_EXIT;
+    }
+
+    return err;
+}                                      /* End of function RM_MOTOR_SENSE_ENCODER_SpeedCyclicProcess */
+
 /*******************************************************************************************************************//**
  * @} (end addtogroup MOTOR_SENSE_ENCODER)
  **********************************************************************************************************************/
@@ -747,14 +920,14 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_SensorDataSet (motor_angle_ctrl_t * const    p_
 static void rm_motor_sense_encoder_cyclic (motor_sense_encoder_instance_ctrl_t * p_instance_ctrl)
 {
     timer_instance_t const * p_timer = p_instance_ctrl->p_timer;
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
     motor_sense_encoder_extended_cfg_t * p_extended =
         (motor_sense_encoder_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 #endif
 
     if (p_timer != NULL)
     {
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
         p_instance_ctrl->st_encoder_hall.f4_hall_angle_rad =
             rm_motor_sense_encoder_hall_angle_adj_init(p_instance_ctrl);
 #endif
@@ -763,7 +936,7 @@ static void rm_motor_sense_encoder_cyclic (motor_sense_encoder_instance_ctrl_t *
         rm_motor_sense_encoder_reset_count(p_instance_ctrl);
         p_timer->p_api->start(p_timer->p_ctrl);
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
         if ((p_extended->p_u_hall_irq_instance != NULL) &&
             (p_extended->p_v_hall_irq_instance != NULL) &&
             (p_extended->p_w_hall_irq_instance != NULL))
@@ -778,7 +951,7 @@ static void rm_motor_sense_encoder_cyclic (motor_sense_encoder_instance_ctrl_t *
     }
 }
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_sense_encoder_hall_angle_interrupt
@@ -794,7 +967,7 @@ void rm_motor_sense_encoder_hall_angle_interrupt (external_irq_callback_args_t *
     motor_sense_encoder_extended_cfg_t * p_extended_cfg =
         (motor_sense_encoder_extended_cfg_t *) st_encoder->p_cfg->p_extend;
 
-    if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH == st_encoder->st_encoder_parameter.u1_encoder_angle_adj_status)
+    if (MOTOR_SENSE_ENCODER_HALL_FLAG_ONCE == st_encoder->st_encoder_hall.u1_hall_interrupt_flag)
     {
         /* Integrate encoder counter difference */
         rm_motor_sense_encoder_calculate_count_difference(st_encoder);
@@ -805,12 +978,11 @@ void rm_motor_sense_encoder_hall_angle_interrupt (external_irq_callback_args_t *
         f4_temp = f4_temp * st_encoder->st_encoder_parameter.f4_encoder_cpr_inverse;
 
         /* Get hall signal */
-        st_encoder->st_encoder_hall.u1_hall_signal = rm_motor_sense_encoder_get_hall_signal(st_encoder);
+        rm_motor_sense_encoder_get_hall_signal(st_encoder);
 
         /* Hall edge angle set */
         st_encoder->st_encoder_hall.f4_hall_angle_rad =
-            rm_motor_sense_encoder_hall_angle_edge_set(st_encoder->st_encoder_hall.u1_hall_signal,
-                                                       st_encoder->st_encoder_hall.u1_hall_pre_signal);
+            rm_motor_sense_encoder_hall_angle_edge_set(st_encoder);
         if (MOTOR_SENSE_ENCODER_CW == st_encoder->u1_direction)
         {
             st_encoder->st_encoder_hall.f4_hall_angle_rad -=
@@ -822,9 +994,8 @@ void rm_motor_sense_encoder_hall_angle_interrupt (external_irq_callback_args_t *
                 ((MOTOR_SENSE_ENCODER_HALL_TWOPI - f4_temp) * p_extended_cfg->st_motor_params.u2_mtr_pp);
         }
 
-        st_encoder->st_encoder_hall.u1_hall_interrupt_flag = MOTOR_SENSE_ENCODER_HALL_FLAG_SET;
+        st_encoder->st_encoder_hall.u1_hall_interrupt_flag = MOTOR_SENSE_ENCODER_HALL_FLAG_INTR;
 
- #ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
         if ((p_extended_cfg->p_u_hall_irq_instance != NULL) &&
             (p_extended_cfg->p_v_hall_irq_instance != NULL) &&
             (p_extended_cfg->p_w_hall_irq_instance != NULL))
@@ -833,7 +1004,6 @@ void rm_motor_sense_encoder_hall_angle_interrupt (external_irq_callback_args_t *
             p_extended_cfg->p_v_hall_irq_instance->p_api->disable(p_extended_cfg->p_v_hall_irq_instance->p_ctrl);
             p_extended_cfg->p_w_hall_irq_instance->p_api->disable(p_extended_cfg->p_w_hall_irq_instance->p_ctrl);
         }
- #endif
     }
 }                                      /* End of function rm_motor_sense_encoder_hall_angle_interrupt */
 
@@ -847,174 +1017,206 @@ void rm_motor_sense_encoder_hall_angle_interrupt (external_irq_callback_args_t *
  **********************************************************************************************************************/
 void rm_motor_sense_encoder_interrupt (timer_callback_args_t * p_args)
 {
-    int32_t                               s4_encd_delta_tcnt    = 0;
-    float                                 f4_temp_speed_rad_avg = 0.0F;
-    unsigned short                        u2_temp               = 0U;
-    uint32_t                              u4_temp               = 0U;
-    int32_t                               s4_temp               = 0;
-    float                                 f4_temp0              = 0.0F;
-    motor_angle_instance_t              * p_angle               = (motor_angle_instance_t *) p_args->p_context;
-    motor_sense_encoder_instance_ctrl_t * st_encoder            =
+    motor_angle_instance_t              * p_angle    = (motor_angle_instance_t *) p_args->p_context;
+    motor_sense_encoder_instance_ctrl_t * st_encoder =
         (motor_sense_encoder_instance_ctrl_t *) p_angle->p_ctrl;
-    motor_sense_encoder_extended_cfg_t * extend_cfg =
+    motor_sense_encoder_extended_cfg_t * p_extend_cfg =
         (motor_sense_encoder_extended_cfg_t *) st_encoder->p_cfg->p_extend;
-    timer_instance_t const * p_timer         = st_encoder->p_timer;
-    timer_instance_t const * p_input_capture = st_encoder->p_input_capture;
-    timer_status_t           temp_status;
-    timer_info_t             temp_info;
 
-    if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH == st_encoder->st_encoder_parameter.u1_encoder_angle_adj_status)
+    if (MOTOR_SENSE_ENCODER_SPEED_DETECT_CARRIER != p_extend_cfg->e_speed_detect_type)
     {
-        /* Integrate encoder counter difference */
-        p_input_capture->p_api->statusGet(p_input_capture->p_ctrl, &temp_status);
-        p_input_capture->p_api->infoGet(p_input_capture->p_ctrl, &temp_info);
-        u4_temp = temp_status.counter;
+        rm_motor_sense_encoder_interrupt_get_data(st_encoder);
+    }
+    else
+    {
+        int32_t                  s4_encd_delta_tcnt    = 0;
+        float                    f4_temp_speed_rad_avg = 0.0F;
+        unsigned short           u2_temp               = 0U;
+        uint32_t                 u4_temp               = 0U;
+        int32_t                  s4_temp               = 0;
+        float                    f4_temp0              = 0.0F;
+        timer_instance_t const * p_timer               = st_encoder->p_timer;
+        timer_instance_t const * p_input_capture       = st_encoder->p_input_capture;
+        timer_status_t           temp_status;
+        timer_info_t             temp_info;
+        temp_info.period_counts   = 0;
+        temp_info.clock_frequency = 0;
 
-        if (MOTOR_SENSE_ENCODER_FLAG_SET == st_encoder->st_encoder_highspeed.u1_encoder_interrupt_on_flag)
+        if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH == st_encoder->st_encoder_parameter.u1_encoder_angle_adj_status)
         {
-            st_encoder->st_encoder_parameter.s4_encoder_angle_count =
-                st_encoder->st_encoder_highspeed.s4_encoder_highspeed_angle_count;
-            st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count =
-                st_encoder->st_encoder_highspeed.u2_encoder_highspeed_pre_phase_count;
-            st_encoder->st_encoder_highspeed.u1_encoder_interrupt_on_flag = MOTOR_SENSE_ENCODER_FLAG_CLEAR;
-        }
+            FSP_CRITICAL_SECTION_DEFINE;
+            FSP_CRITICAL_SECTION_ENTER;
 
-        if (temp_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
-        {
-            s4_encd_delta_tcnt = (int32_t) (u4_temp - st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count);
-        }
-        else
-        {
-            s4_encd_delta_tcnt =
-                (int16_t) ((uint16_t) u4_temp - (uint16_t) st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count);
-        }
-
-        /* Correction at counter boundary (max=>0 or 0=>max) */
-        if (s4_encd_delta_tcnt <= -(st_encoder->st_encoder_parameter.s2_encoder_cpr))
-        {
-            st_encoder->st_encoder_parameter.s4_encoder_angle_count = (int32_t) u4_temp;
-        }
-        else if (s4_encd_delta_tcnt >= st_encoder->st_encoder_parameter.s2_encoder_cpr)
-        {
-            st_encoder->st_encoder_parameter.s4_encoder_angle_count =
-                (int32_t) -(temp_info.period_counts - u4_temp);
-        }
-        else
-        {
-            st_encoder->st_encoder_parameter.s4_encoder_angle_count += s4_encd_delta_tcnt;
-        }
-
-        st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count = u4_temp;
-
-        /* Angle calculation */
-        if (MOTOR_SENSE_ENCODER_LOOP_SPEED == st_encoder->e_loop_mode)
-        {
-            /* Limit count value to counts of one rotation */
-            if (st_encoder->st_encoder_parameter.s4_encoder_angle_count >=
-                (int32_t) st_encoder->st_encoder_parameter.s2_encoder_cpr)
+            /* Integrate encoder counter difference */
+            if (NULL != p_input_capture)
             {
-                st_encoder->st_encoder_parameter.s4_encoder_angle_count -=
-                    (int32_t) st_encoder->st_encoder_parameter.s2_encoder_cpr;
-            }
-            else if (st_encoder->st_encoder_parameter.s4_encoder_angle_count < 0)
-            {
-                st_encoder->st_encoder_parameter.s4_encoder_angle_count +=
-                    (int32_t) st_encoder->st_encoder_parameter.s2_encoder_cpr;
+                p_input_capture->p_api->statusGet(p_input_capture->p_ctrl, &temp_status);
+                p_input_capture->p_api->infoGet(p_input_capture->p_ctrl, &temp_info);
             }
             else
             {
-                /* Do Nothing */
+                temp_status.counter = 0;
             }
-        }
 
-        /* Calculate angle (mechanical) */
-        st_encoder->st_encoder_parameter.f4_encoder_position_rad =
-            (MOTOR_SENSE_ENCODER_TWOPI * (float) (st_encoder->st_encoder_parameter.s4_encoder_angle_count)) *
-            st_encoder->st_encoder_parameter.f4_encoder_cpr_inverse;
+            u4_temp = temp_status.counter;
 
-        /* Pulse width calculation */
-        /* Calculate integrated pulse width */
-        p_timer->p_api->statusGet(p_timer->p_ctrl, &temp_status);
-        p_timer->p_api->infoGet(p_timer->p_ctrl, &temp_info);
-        st_encoder->st_encoder_parameter.u4_encoder_timer_capture = temp_status.counter;
-        if (temp_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
-        {
-            s4_temp =
-                (int32_t) (st_encoder->st_encoder_parameter.u4_encoder_timer_capture -
-                           st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture);
-        }
-        else
-        {
-            u2_temp =
-                ((uint16_t) st_encoder->st_encoder_parameter.u4_encoder_timer_capture -
-                 (uint16_t) st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture);
-            s4_temp = (int32_t) u2_temp;
-        }
-
-        st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff += s4_temp;
-        st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture =
-            st_encoder->st_encoder_parameter.u4_encoder_timer_capture;
-
-        /* Limit pulse width, prevent s4_encd_pulse_width_buff from overflow */
-        s4_temp = (int32_t) extend_cfg->encoder_config.u4_zero_speed_count;
-        if (st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff > s4_temp)
-        {
-            st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff = s4_temp;
-        }
-
-        /* Push last pulse width to buffer */
-        st_encoder->st_encoder_parameter.s4_encoder_pulse_width =
-            st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff;
-        st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff = 0U;
-        u2_temp = st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num;
-        s4_temp = st_encoder->st_encoder_parameter.s4_encoder_timer_count_buff[u2_temp];
-        st_encoder->st_encoder_parameter.s4_encoder_pulse_width_sum +=
-            (st_encoder->st_encoder_parameter.s4_encoder_pulse_width - s4_temp);
-        st_encoder->st_encoder_parameter.s4_encoder_timer_count_buff[u2_temp] =
-            st_encoder->st_encoder_parameter.s4_encoder_pulse_width;
-        st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num++;
-        if (st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num == MOTOR_SENSE_ENCODER_AVERAGE)
-        {
-            st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num = 0U;
-        }
-
-        /* Speed averaging */
-        if (st_encoder->st_encoder_parameter.s4_encoder_pulse_width_sum != 0)
-        {
-            /* calculate angle[rad] difference (MTR_ENCD_CNTAVG count of encoder) */
-            /* angle[rad] = 2Pi * (Count Difference) / (Count Per Rotation) */
-            /* divide angle[rad] by time[s] to calculate speed[rad/s] */
-            /* time[s] = pulse_width[count] / (GPT Frequency[Hz]) = pulse_width[count]/(PWM Frequency[Hz]) */
-            f4_temp0 = st_encoder->st_encoder_parameter.f4_encoder_angle_difference *
-                       (float) MOTOR_SENSE_ENCODER_AVERAGE * (float) temp_info.clock_frequency;
-            f4_temp_speed_rad_avg = f4_temp0 / (float) st_encoder->st_encoder_parameter.s4_encoder_pulse_width_sum;
-
-            /* Get speed direction from encoder position change */
-            if ((0 > s4_encd_delta_tcnt) &&
-                (s4_encd_delta_tcnt > -(st_encoder->st_encoder_parameter.s2_encoder_cpr)))
+            if (MOTOR_SENSE_ENCODER_FLAG_SET == st_encoder->st_encoder_highspeed.u1_encoder_interrupt_on_flag)
             {
-                f4_temp_speed_rad_avg = -f4_temp_speed_rad_avg;
+                st_encoder->st_encoder_parameter.s4_encoder_angle_count =
+                    st_encoder->st_encoder_highspeed.s4_encoder_highspeed_angle_count;
+                st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count =
+                    st_encoder->st_encoder_highspeed.u2_encoder_highspeed_pre_phase_count;
+                st_encoder->st_encoder_highspeed.u1_encoder_interrupt_on_flag = MOTOR_SENSE_ENCODER_FLAG_CLEAR;
             }
-            else if ((st_encoder->st_encoder_parameter.f4_encoder_speed_pre_rad < 0.0F) &&
-                     (s4_encd_delta_tcnt > (st_encoder->st_encoder_parameter.s2_encoder_cpr)))
+
+            if (temp_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
             {
-                f4_temp_speed_rad_avg = -f4_temp_speed_rad_avg;
+                s4_encd_delta_tcnt = (int32_t) (u4_temp - st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count);
             }
-            else if (0 == s4_encd_delta_tcnt)
+            else
             {
-                if (0.0F > st_encoder->st_encoder_parameter.f4_encoder_speed_pre_rad)
+                s4_encd_delta_tcnt =
+                    (int16_t) ((uint16_t) u4_temp -
+                               (uint16_t) st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count);
+            }
+
+            /* Correction at counter boundary (max=>0 or 0=>max) */
+            if (s4_encd_delta_tcnt <= -(st_encoder->st_encoder_parameter.s2_encoder_cpr))
+            {
+                st_encoder->st_encoder_parameter.s4_encoder_angle_count = (int32_t) u4_temp;
+            }
+            else if (s4_encd_delta_tcnt >= st_encoder->st_encoder_parameter.s2_encoder_cpr)
+            {
+                st_encoder->st_encoder_parameter.s4_encoder_angle_count =
+                    (int32_t) -(temp_info.period_counts - u4_temp);
+            }
+            else
+            {
+                st_encoder->st_encoder_parameter.s4_encoder_angle_count += s4_encd_delta_tcnt;
+            }
+
+            st_encoder->st_encoder_parameter.u2_encoder_pre_phase_count = u4_temp;
+
+            /* Angle calculation */
+            if (MOTOR_SENSE_ENCODER_LOOP_SPEED == st_encoder->e_loop_mode)
+            {
+                /* Limit count value to counts of one rotation */
+                if (st_encoder->st_encoder_parameter.s4_encoder_angle_count >=
+                    (int32_t) st_encoder->st_encoder_parameter.s2_encoder_cpr)
+                {
+                    st_encoder->st_encoder_parameter.s4_encoder_angle_count -=
+                        (int32_t) st_encoder->st_encoder_parameter.s2_encoder_cpr;
+                }
+                else if (st_encoder->st_encoder_parameter.s4_encoder_angle_count < 0)
+                {
+                    st_encoder->st_encoder_parameter.s4_encoder_angle_count +=
+                        (int32_t) st_encoder->st_encoder_parameter.s2_encoder_cpr;
+                }
+                else
+                {
+                    /* Do Nothing */
+                }
+            }
+
+            /* Calculate angle (mechanical) */
+            st_encoder->st_encoder_parameter.f4_encoder_position_rad =
+                (MOTOR_SENSE_ENCODER_TWOPI * (float) (st_encoder->st_encoder_parameter.s4_encoder_angle_count)) *
+                st_encoder->st_encoder_parameter.f4_encoder_cpr_inverse;
+
+            /* Pulse width calculation */
+            /* Calculate integrated pulse width */
+            if (NULL != p_timer)
+            {
+                p_timer->p_api->statusGet(p_timer->p_ctrl, &temp_status);
+                p_timer->p_api->infoGet(p_timer->p_ctrl, &temp_info);
+            }
+            else
+            {
+                temp_status.counter = 0;
+            }
+
+            st_encoder->st_encoder_parameter.u4_encoder_timer_capture = temp_status.counter;
+            if (temp_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
+            {
+                s4_temp =
+                    (int32_t) (st_encoder->st_encoder_parameter.u4_encoder_timer_capture -
+                               st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture);
+            }
+            else
+            {
+                u2_temp =
+                    ((uint16_t) st_encoder->st_encoder_parameter.u4_encoder_timer_capture -
+                     (uint16_t) st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture);
+                s4_temp = (int32_t) u2_temp;
+            }
+
+            st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff += s4_temp;
+            st_encoder->st_encoder_parameter.u4_encoder_timer_pre_capture =
+                st_encoder->st_encoder_parameter.u4_encoder_timer_capture;
+
+            /* Limit pulse width, prevent s4_encd_pulse_width_buffer from overflow */
+            s4_temp = (int32_t) p_extend_cfg->encoder_config.u4_zero_speed_count;
+            if (st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff > s4_temp)
+            {
+                st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff = s4_temp;
+            }
+
+            /* Push last pulse width to buffer */
+            st_encoder->st_encoder_parameter.s4_encoder_pulse_width =
+                st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff;
+            st_encoder->st_encoder_parameter.s4_encoder_pulse_width_buff = 0U;
+            u2_temp = st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num;
+            s4_temp = st_encoder->st_encoder_parameter.s4_encoder_timer_count_buff[u2_temp];
+            st_encoder->st_encoder_parameter.s4_encoder_pulse_width_sum +=
+                (st_encoder->st_encoder_parameter.s4_encoder_pulse_width - s4_temp);
+            st_encoder->st_encoder_parameter.s4_encoder_timer_count_buff[u2_temp] =
+                st_encoder->st_encoder_parameter.s4_encoder_pulse_width;
+            st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num++;
+            if (st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num == MOTOR_SENSE_ENCODER_AVERAGE)
+            {
+                st_encoder->st_encoder_parameter.u2_encoder_timer_cnt_num = 0U;
+            }
+
+            FSP_CRITICAL_SECTION_EXIT;
+
+            /* Speed averaging */
+            if (st_encoder->st_encoder_parameter.s4_encoder_pulse_width_sum != 0)
+            {
+                /* calculate angle[rad] difference (MTR_ENCD_CNTAVG count of encoder) */
+                /* angle[rad] = 2Pi * (Count Difference) / (Count Per Rotation) */
+                /* divide angle[rad] by time[s] to calculate speed[rad/s] */
+                /* time[s] = pulse_width[count] / (GPT Frequency[Hz]) = pulse_width[count]/(PWM Frequency[Hz]) */
+                f4_temp0 = st_encoder->st_encoder_parameter.f4_encoder_angle_difference *
+                           (float) MOTOR_SENSE_ENCODER_AVERAGE * (float) temp_info.clock_frequency;
+                f4_temp_speed_rad_avg = f4_temp0 / (float) st_encoder->st_encoder_parameter.s4_encoder_pulse_width_sum;
+
+                /* Get speed direction from encoder position change */
+                if ((0 > s4_encd_delta_tcnt) &&
+                    (s4_encd_delta_tcnt > -(st_encoder->st_encoder_parameter.s2_encoder_cpr)))
                 {
                     f4_temp_speed_rad_avg = -f4_temp_speed_rad_avg;
                 }
-            }
-            else
-            {
-                /* Do Nothing*/
-            }
+                else if ((st_encoder->st_encoder_parameter.f4_encoder_speed_pre_rad < 0.0F) &&
+                         (s4_encd_delta_tcnt > (st_encoder->st_encoder_parameter.s2_encoder_cpr)))
+                {
+                    f4_temp_speed_rad_avg = -f4_temp_speed_rad_avg;
+                }
+                else if (0 == s4_encd_delta_tcnt)
+                {
+                    if (0.0F > st_encoder->st_encoder_parameter.f4_encoder_speed_pre_rad)
+                    {
+                        f4_temp_speed_rad_avg = -f4_temp_speed_rad_avg;
+                    }
+                }
+                else
+                {
+                    /* Do Nothing*/
+                }
 
-            st_encoder->st_encoder_parameter.f4_encoder_speed_pre_rad =
-                st_encoder->st_encoder_parameter.f4_encoder_speed_rad;
-            st_encoder->st_encoder_parameter.f4_encoder_speed_rad = f4_temp_speed_rad_avg;
+                st_encoder->st_encoder_parameter.f4_encoder_speed_pre_rad =
+                    st_encoder->st_encoder_parameter.f4_encoder_speed_rad;
+                st_encoder->st_encoder_parameter.f4_encoder_speed_rad = f4_temp_speed_rad_avg;
+            }
         }
     }
 }                                      /* End of function rm_motor_sense_encoder_interrupt */
@@ -1078,7 +1280,6 @@ static void rm_motor_sense_encoder_highspeed_init (motor_sense_encoder_highspeed
 
     f_ctrl_period = ((float) (p_extended_cfg->encoder_config.u1_interrupt_decimation + 1) /
                      (p_extended_cfg->encoder_config.f_carrier_frequency * MOTOR_SENSE_ENCODER_CALCULATE_KHz));
-
     f_temp = (f_ctrl_period * p_extended_cfg->encoder_config.f_occupancy_time -
               p_extended_cfg->encoder_config.f_carrier_time) / p_extended_cfg->encoder_config.f_process_time;
     f_temp = (f_temp * MOTOR_SENSE_ENCODER_CALCULATE_60) / (f_ctrl_period * p_extended_cfg->encoder_config.u2_cpr);
@@ -1134,6 +1335,8 @@ static void rm_motor_sense_encoder_reset_count (motor_sense_encoder_instance_ctr
     }
 }                                      /* End of function rm_motor_sense_encoder_reset_count */
 
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL != 1)
+
 /***********************************************************************************************************************
  * Function Name : rm_motor_sense_encoder_angle_adjust_excite
  * Description   : Angle adjust with forced excitation
@@ -1183,6 +1386,8 @@ static void rm_motor_sense_encoder_angle_adjust_excite (motor_sense_encoder_inst
     }
 }                                      /* End of function rm_motor_sense_encoder_angle_adjust_excite */
 
+#endif
+
 /***********************************************************************************************************************
  * Function Name : rm_motor_sense_encoder_calculate_count_difference
  * Description   : Enncoder count difference calculation
@@ -1197,7 +1402,15 @@ static void rm_motor_sense_encoder_calculate_count_difference (motor_sense_encod
     unsigned short u2_temp;
     int16_t        s2_encd_delta_tcnt;
 
-    p_input_capture->p_api->statusGet(p_input_capture->p_ctrl, &temp_status);
+    if (NULL != p_input_capture)
+    {
+        p_input_capture->p_api->statusGet(p_input_capture->p_ctrl, &temp_status);
+    }
+    else
+    {
+        temp_status.counter = 0;
+    }
+
     u2_temp = (unsigned short) (temp_status.counter);
 
     s2_encd_delta_tcnt = (int16_t) -(st_ehighspeed->u2_encoder_highspeed_pre_phase_count - u2_temp);
@@ -1244,13 +1457,13 @@ static void rm_motor_sense_encoder_switch_encoder_interrupt (motor_sense_encoder
     motor_sense_encoder_highspeed_t          * st_ehighspeed = &(p_ctrl->st_encoder_highspeed);
     motor_sense_encoder_extended_cfg_t const * p_extend      = p_ctrl->p_cfg->p_extend;
 
-    gpt_extended_cfg_t * p_gpt_exntend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
+    gpt_extended_cfg_t * p_gpt_extend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
 
     f4_temp =
         st_ehighspeed->f4_encoder_highspeed_sw_speed_rad - st_ehighspeed->f4_encoder_highspeed_sw_speed_margin_rad;
     if (f4_temp > fabsf(f4_speed_rad))
     {
-        R_BSP_IrqEnable(p_gpt_exntend->capture_a_irq);
+        R_BSP_IrqEnable(p_gpt_extend->capture_a_irq);
         st_ehighspeed->u1_encoder_interrupt_on_flag = MOTOR_SENSE_ENCODER_FLAG_SET;
         st_ehighspeed->u1_encoder_position_speed_count++;
         if (st_ehighspeed->u1_encoder_position_speed_count >= p_extend->encoder_config.u1_position_speed_change_counts)
@@ -1261,7 +1474,7 @@ static void rm_motor_sense_encoder_switch_encoder_interrupt (motor_sense_encoder
     }
     else
     {
-        R_BSP_IrqDisable(p_gpt_exntend->capture_a_irq);
+        R_BSP_IrqDisable(p_gpt_extend->capture_a_irq);
     }
 }                                      /* End of function rm_motor_sense_encoder_switch_encoder_interrupt */
 
@@ -1277,7 +1490,7 @@ static void rm_motor_sense_encoder_switch_carrier_interrupt (motor_sense_encoder
 {
     motor_sense_encoder_extended_cfg_t const * p_extend = p_ctrl->p_cfg->p_extend;
 
-    gpt_extended_cfg_t * p_gpt_exntend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
+    gpt_extended_cfg_t * p_gpt_extend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
 
     motor_sense_encoder_highspeed_t * st_ehighspeed = &(p_ctrl->st_encoder_highspeed);
 
@@ -1286,11 +1499,11 @@ static void rm_motor_sense_encoder_switch_carrier_interrupt (motor_sense_encoder
         st_ehighspeed->u1_encoder_position_speed_calc_mode = MOTOR_SENSE_ENCODER_CTRL_INTERRUPT;
         st_ehighspeed->u1_encoder_position_speed_count     = 0U;
 
-        R_BSP_IrqDisable(p_gpt_exntend->capture_a_irq);
+        R_BSP_IrqDisable(p_gpt_extend->capture_a_irq);
     }
 }                                      /* End of function rm_motor_sense_encoder_switch_carrier_interrupt */
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
 
 /***********************************************************************************************************************
  * Function Name : rm_motor_sense_encoder_hall_init
@@ -1301,8 +1514,8 @@ static void rm_motor_sense_encoder_switch_carrier_interrupt (motor_sense_encoder
 static void rm_motor_sense_encoder_hall_init (motor_sense_encoder_hall_t * p_hall)
 {
     /* Initialize of hall variables */
-    p_hall->u1_hall_signal         = 0;
-    p_hall->u1_hall_pre_signal     = 0;
+    p_hall->u1_hall_signal         = 0U;
+    p_hall->u1_hall_pre_signal     = 0U;
     p_hall->u1_hall_interrupt_flag = MOTOR_SENSE_ENCODER_HALL_FLAG_CLEAR;
     p_hall->f4_hall_angle_rad      = 0.0F;
 }                                      /* End of function rm_motor_sense_encoder_hall_init */
@@ -1310,7 +1523,7 @@ static void rm_motor_sense_encoder_hall_init (motor_sense_encoder_hall_t * p_hal
 /***********************************************************************************************************************
  * Function Name : rm_motor_sense_encoder_hall_angle_adj_init
  * Description   : Initialize hall angle for angle adjust mode
- * Arguments     : p_ctrl   - encoder calculate structure (pointer)
+ * Arguments     : p_ctrl   - encoder variables structure (pointer)
  * Return Value  : Rotor angle of signal detected by hall sensor
  **********************************************************************************************************************/
 static float rm_motor_sense_encoder_hall_angle_adj_init (motor_sense_encoder_instance_ctrl_t * p_ctrl)
@@ -1318,11 +1531,11 @@ static float rm_motor_sense_encoder_hall_angle_adj_init (motor_sense_encoder_ins
     motor_sense_encoder_hall_t * st_hall = &(p_ctrl->st_encoder_hall);
 
     /* Get hall signal */
-    st_hall->u1_hall_signal     = rm_motor_sense_encoder_get_hall_signal(p_ctrl);
+    rm_motor_sense_encoder_get_hall_signal(p_ctrl);
     st_hall->u1_hall_pre_signal = st_hall->u1_hall_signal;
 
     /* Between the hall edge angle set */
-    st_hall->f4_hall_angle_rad = rm_motor_sense_encoder_hall_angle_set(st_hall->u1_hall_signal);
+    st_hall->f4_hall_angle_rad = rm_motor_sense_encoder_hall_angle_set(p_ctrl);
 
     return st_hall->f4_hall_angle_rad;
 }                                      /* End of function mtr_hall_angle_adj_init */
@@ -1330,129 +1543,108 @@ static float rm_motor_sense_encoder_hall_angle_adj_init (motor_sense_encoder_ins
 /***********************************************************************************************************************
  * Function Name : rm_motor_sense_encoder_hall_angle_edge_set
  * Description   : Process for hall edge angle set
- * Arguments     : u1_hall_signal - hall signal
- *                u1_pre_hall_signal - previous value of hall signal
+ * Arguments     : p_ctrl   - encoder variables structure (pointer)
  * Return Value  : Rotor angle of signal detected for hall sensor
  **********************************************************************************************************************/
-static float rm_motor_sense_encoder_hall_angle_edge_set (uint8_t u1_hall_signal, uint8_t u1_pre_hall_signal)
+static float rm_motor_sense_encoder_hall_angle_edge_set (motor_sense_encoder_instance_ctrl_t * p_ctrl)
 {
+    motor_sense_encoder_extended_cfg_t const * p_extend = p_ctrl->p_cfg->p_extend;
+    motor_sense_encoder_hall_t               * p_hall   = &(p_ctrl->st_encoder_hall);
     float f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
 
-    switch (u1_pre_hall_signal)
+    if (p_hall->u1_hall_pre_signal == p_extend->u1_hall_pattern[0])
     {
-        case MOTOR_SENSE_ENCODER_HALL_W:                            /* (1) */
+        if (p_extend->u1_hall_pattern[5] == p_hall->u1_hall_signal)
         {
-            if (MOTOR_SENSE_ENCODER_HALL_VW == u1_hall_signal)      /* (1 -> 3) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330;
-            }
-            else if (MOTOR_SENSE_ENCODER_HALL_UW == u1_hall_signal) /* (1 -> 5) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30;
-            }
-            else
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            }
-
-            break;
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330;
         }
-
-        case MOTOR_SENSE_ENCODER_HALL_UW:                          /* (5) */
+        else if (p_extend->u1_hall_pattern[1] == p_hall->u1_hall_signal)
         {
-            if (MOTOR_SENSE_ENCODER_HALL_W == u1_hall_signal)      /* (5 -> 1) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30;
-            }
-            else if (MOTOR_SENSE_ENCODER_HALL_U == u1_hall_signal) /* (5 -> 4) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90;
-            }
-            else
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            }
-
-            break;
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30;
         }
-
-        case MOTOR_SENSE_ENCODER_HALL_U:                            /* (4) */
-        {
-            if (MOTOR_SENSE_ENCODER_HALL_UW == u1_hall_signal)      /* (4 -> 5) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90;
-            }
-            else if (MOTOR_SENSE_ENCODER_HALL_UV == u1_hall_signal) /* (4 -> 6) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150;
-            }
-            else
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            }
-
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_UV:                          /* (6) */
-        {
-            if (MOTOR_SENSE_ENCODER_HALL_U == u1_hall_signal)      /* (6 -> 4) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150;
-            }
-            else if (MOTOR_SENSE_ENCODER_HALL_V == u1_hall_signal) /* (6 -> 2) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210;
-            }
-            else
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            }
-
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_V:                            /* (2) */
-        {
-            if (MOTOR_SENSE_ENCODER_HALL_UV == u1_hall_signal)      /* (2 -> 6) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210;
-            }
-            else if (MOTOR_SENSE_ENCODER_HALL_VW == u1_hall_signal) /* (2 -> 3) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270;
-            }
-            else
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            }
-
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_VW:                          /* (3) */
-        {
-            if (MOTOR_SENSE_ENCODER_HALL_V == u1_hall_signal)      /* (3 -> 2) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270;
-            }
-            else if (MOTOR_SENSE_ENCODER_HALL_W == u1_hall_signal) /* (3 -> 1) */
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330;
-            }
-            else
-            {
-                f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            }
-
-            break;
-        }
-
-        default:
+        else
         {
             f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            break;
         }
+    }
+    else if (p_hall->u1_hall_pre_signal == p_extend->u1_hall_pattern[1])
+    {
+        if (p_extend->u1_hall_pattern[0] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30;
+        }
+        else if (p_extend->u1_hall_pattern[2] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90;
+        }
+        else
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
+        }
+    }
+    else if (p_hall->u1_hall_pre_signal == p_extend->u1_hall_pattern[2])
+    {
+        if (p_extend->u1_hall_pattern[1] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90;
+        }
+        else if (p_extend->u1_hall_pattern[3] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150;
+        }
+        else
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
+        }
+    }
+    else if (p_hall->u1_hall_pre_signal == p_extend->u1_hall_pattern[3])
+    {
+        if (p_extend->u1_hall_pattern[2] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150;
+        }
+        else if (p_extend->u1_hall_pattern[4] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210;
+        }
+        else
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
+        }
+    }
+    else if (p_hall->u1_hall_pre_signal == p_extend->u1_hall_pattern[4])
+    {
+        if (p_extend->u1_hall_pattern[3] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210;
+        }
+        else if (p_extend->u1_hall_pattern[5] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270;
+        }
+        else
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
+        }
+    }
+    else if (p_hall->u1_hall_pre_signal == p_extend->u1_hall_pattern[5])
+    {
+        if (p_extend->u1_hall_pattern[4] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270;
+        }
+        else if (p_extend->u1_hall_pattern[0] == p_hall->u1_hall_signal)
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330;
+        }
+        else
+        {
+            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
+        }
+    }
+    else
+    {
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
     }
 
     return f4_hall_angle_rad;
@@ -1461,59 +1653,220 @@ static float rm_motor_sense_encoder_hall_angle_edge_set (uint8_t u1_hall_signal,
 /***********************************************************************************************************************
  * Function Name : rm_motor_sense_encoder_hall_angle_set
  * Description   : Process for hall sensor interrupt
- * Arguments     : u1_hall_signal - hall signal
+ * Arguments     : p_ctrl   - encoder variables structure (pointer)
  * Return Value  : Rotor angle of signal detected for hall sensor
  **********************************************************************************************************************/
-static float rm_motor_sense_encoder_hall_angle_set (uint8_t u1_hall_signal)
+static float rm_motor_sense_encoder_hall_angle_set (motor_sense_encoder_instance_ctrl_t * p_ctrl)
 {
+    motor_sense_encoder_extended_cfg_t const * p_extend = p_ctrl->p_cfg->p_extend;
+    motor_sense_encoder_hall_t               * p_hall   = &(p_ctrl->st_encoder_hall);
     float f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
 
-    switch (u1_hall_signal)
+    if (p_hall->u1_hall_signal == p_extend->u1_hall_pattern[0])
     {
-        case MOTOR_SENSE_ENCODER_HALL_W: /* (1) */
-        {
-            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_UW: /* (5) */
-        {
-            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_U: /* (4) */
-        {
-            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_UV: /* (6) */
-        {
-            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_V: /* (2) */
-        {
-            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
-            break;
-        }
-
-        case MOTOR_SENSE_ENCODER_HALL_VW: /* (3) */
-        {
-            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
-            break;
-        }
-
-        default:
-        {
-            f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
-            break;
-        }
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_30 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
+    }
+    else if (p_hall->u1_hall_signal == p_extend->u1_hall_pattern[1])
+    {
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_90 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
+    }
+    else if (p_hall->u1_hall_signal == p_extend->u1_hall_pattern[2])
+    {
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_150 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
+    }
+    else if (p_hall->u1_hall_signal == p_extend->u1_hall_pattern[3])
+    {
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_210 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
+    }
+    else if (p_hall->u1_hall_signal == p_extend->u1_hall_pattern[4])
+    {
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_270 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
+    }
+    else if (p_hall->u1_hall_signal == p_extend->u1_hall_pattern[5])
+    {
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ANGLE_330 - MOTOR_SENSE_ENCODER_HALL_EDGE_OFFSET;
+    }
+    else
+    {
+        f4_hall_angle_rad = MOTOR_SENSE_ENCODER_HALL_EDGE_ERROR;
     }
 
     return f4_hall_angle_rad;
 }                                      /* End of function rm_motor_sense_encoder_hall_angle_set */
 
-#endif /* MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL */
+/***********************************************************************************************************************
+ * Function Name : rm_motor_sense_encoder_get_hall_signal
+ * Description   : Get Hall signal pattern
+ * Arguments     : p_ctrl   - encoder variables structure (pointer)
+ * Return Value  : Hall signal pattern
+ **********************************************************************************************************************/
+static void rm_motor_sense_encoder_get_hall_signal (motor_sense_encoder_instance_ctrl_t * p_ctrl)
+{
+    motor_sense_encoder_extended_cfg_t * p_extended_cfg =
+        (motor_sense_encoder_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    uint8_t u1_temp_level = 0U;
+    u1_temp_level |= (uint8_t) (R_BSP_PinRead(p_extended_cfg->u_phase_port) << MOTOR_SENSE_ENCODER_HALL_U_SHIFT);
+    u1_temp_level |= (uint8_t) (R_BSP_PinRead(p_extended_cfg->v_phase_port) << MOTOR_SENSE_ENCODER_HALL_V_SHIFT);
+    u1_temp_level |= (uint8_t) R_BSP_PinRead(p_extended_cfg->w_phase_port);
+
+    p_ctrl->st_encoder_hall.u1_hall_signal = u1_temp_level;
+}
+
+#endif                                 /* MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_sense_encoder_speed_calculate_by_pulse_width
+ * Description   : Calculate motor speed by encoder pulse width
+ * Arguments     : p_ctrl - Pointer to motor sense encoder variable structure
+ * Return Value  : None
+ ***********************************************************************************************************************/
+static void rm_motor_sense_encoder_speed_calculate_by_pulse_width (motor_sense_encoder_instance_ctrl_t * p_ctrl)
+{
+    motor_sense_encoder_extended_cfg_t * p_ext_cfg =
+        (motor_sense_encoder_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    timer_status_t temp_status;        /* work buffer */
+
+    int32_t s4_delta_cnt   = 0;
+    int32_t s4_pulse_width = 0;
+    float   f_wtemp_speed  = 0.0F;
+
+    if (MOTOR_SENSE_ENCODER_ANGLE_ADJUST_FINISH == p_ctrl->st_encoder_parameter.u1_encoder_angle_adj_status)
+    {
+        /* Get encoder pulse width and counts of pulse */
+        p_ctrl->u1_interrupt_disable = MOTOR_SENSE_ENCODER_FLAG_SET;   /* Guard start */
+        s4_delta_cnt                 = p_ctrl->s4_pulse_counts;
+
+        s4_pulse_width               = p_ctrl->st_encoder_parameter.s4_encoder_pulse_width_sum;
+        p_ctrl->u1_interrupt_disable = MOTOR_SENSE_ENCODER_FLAG_CLEAR; /* Guard end */
+
+        /* Over half, pulse width is valid */
+        if (s4_pulse_width > (int32_t) (MOTOR_SENSE_ENCODER_16BIT * MOTOR_SENSE_ENCODER_HALF))
+        {
+            /* Clear summarized value to 0 */
+            p_ctrl->st_encoder_parameter.s4_encoder_pulse_width_sum = 0;
+
+            /* Calculate the motor speed */
+            float f4_pulse_width_inv = p_ctrl->f_input_capture_timer_frequency / (float) s4_pulse_width;
+            f_wtemp_speed = f4_pulse_width_inv * p_ctrl->st_encoder_parameter.f4_encoder_angle_difference;
+
+            if (s4_delta_cnt != 0)
+            {
+                f_wtemp_speed = f_wtemp_speed * (float) s4_delta_cnt;
+            }
+
+            /* Reset limitation counts */
+            p_ctrl->s2_speed_interrupt_counts = 0;
+        }
+        else
+        {
+            /* No encoder interrupt happened during speed cyclic */
+            /* Limit pulse width */
+            if (p_ctrl->s2_speed_interrupt_counts < p_ctrl->u2_maximum_carrier_pulse_width_count)
+            {
+                p_ctrl->s2_speed_interrupt_counts++;
+            }
+            /* Reach limitation */
+            else
+            {
+                timer_instance_t const * p_timer = p_ctrl->p_timer;
+                p_timer->p_api->statusGet(p_timer->p_ctrl, &temp_status);
+                p_ctrl->st_encoder_parameter.u2_encoder_pre_phase_count =
+                    (uint32_t) (temp_status.counter - p_ctrl->u4_interrupt_time_correct);
+            }
+        }
+    }
+
+    p_ctrl->f_speed_rad = f_wtemp_speed * p_ext_cfg->st_motor_params.u2_mtr_pp;
+}                                      /* End of function rm_motor_sense_encoder_speed_calculate_by_pulse_width */
+
+/***********************************************************************************************************************
+ * Function Name : rm_motor_sense_encoder_interrupt_get_data
+ * Description   : Get timer data at encoder interrupt
+ * Arguments     : p_ctrl - Pointer to motor sense encoder structure
+ * Return Value  : None
+ ***********************************************************************************************************************/
+static void rm_motor_sense_encoder_interrupt_get_data (motor_sense_encoder_instance_ctrl_t * p_ctrl)
+{
+    motor_sense_encoder_extended_cfg_t const * p_extend = p_ctrl->p_cfg->p_extend;
+    gpt_extended_cfg_t * p_gpt_extend = (gpt_extended_cfg_t *) p_extend->p_input_capture_instance->p_cfg->p_extend;
+
+    timer_instance_t const * p_timer         = p_ctrl->p_timer;         /* free run timer */
+    timer_instance_t const * p_input_capture = p_ctrl->p_input_capture; /* encoder pulse counter */
+    timer_status_t           temp_status;                               /* temporary buffer */
+    unsigned short           u2_temp = 0U;
+    int32_t s4_encd_delta_tcnt       = 0;
+
+    if (MOTOR_SENSE_ENCODER_FLAG_CLEAR == p_ctrl->u1_interrupt_disable)
+    {
+        /* Calculate encoder pulse count difference */
+        if (0 == p_ctrl->st_encoder_parameter.s4_encoder_pulse_width_sum)
+        {
+            /* Clear integrated value to 0. */
+            p_ctrl->s4_pulse_counts = 0;
+        }
+
+        /* Get input capture timer data */
+        if (NULL != p_input_capture)
+        {
+            p_input_capture->p_api->statusGet(p_input_capture->p_ctrl, &temp_status);
+        }
+        else
+        {
+            temp_status.counter = 0;
+        }
+
+        /* Calculate difference according to timer counter size */
+        if (p_ctrl->input_capture_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
+        {
+            s4_encd_delta_tcnt =
+                (int32_t) (temp_status.counter - p_ctrl->st_encoder_parameter.u4_encoder_timer_pre_capture);
+        }
+        else
+        {
+            s4_encd_delta_tcnt =
+                (int16_t) ((uint16_t) temp_status.counter -
+                           (uint16_t) p_ctrl->st_encoder_parameter.u4_encoder_timer_pre_capture);
+        }
+
+        /* Accumulate pulse count */
+        p_ctrl->s4_pulse_counts += s4_encd_delta_tcnt;
+
+        /* Keep current data to calculate difference */
+        p_ctrl->st_encoder_parameter.u4_encoder_timer_pre_capture = temp_status.counter;
+
+        /* Calculate pulse width */
+        /* Get freerun timer data */
+        if (NULL != p_timer)
+        {
+            p_timer->p_api->statusGet(p_timer->p_ctrl, &temp_status);
+        }
+        else
+        {
+            temp_status.counter = 0;
+        }
+
+        /* Calculate difference according to timer counter size */
+        if (p_ctrl->freerun_timer_info.period_counts > MOTOR_SENSE_ENCODER_16BIT)
+        {
+            s4_encd_delta_tcnt =
+                (int32_t) (temp_status.counter - p_ctrl->st_encoder_parameter.u2_encoder_pre_phase_count);
+        }
+        else
+        {
+            u2_temp = ((uint16_t) temp_status.counter -
+                       (uint16_t) p_ctrl->st_encoder_parameter.u2_encoder_pre_phase_count);
+            s4_encd_delta_tcnt = (int32_t) u2_temp;
+        }
+
+        /* Summarize difference */
+        p_ctrl->st_encoder_parameter.s4_encoder_pulse_width_sum += s4_encd_delta_tcnt;
+
+        /* Keep current data to calculate difference */
+        p_ctrl->st_encoder_parameter.u2_encoder_pre_phase_count = temp_status.counter;
+    }
+
+    /* Once disable encoder interrupt. Interrupt will be enabled at next current cyclic timing. */
+    R_BSP_IrqDisable(p_gpt_extend->capture_a_irq);
+}                                      /* End of function rm_motor_sense_encoder_interrupt_get_data */

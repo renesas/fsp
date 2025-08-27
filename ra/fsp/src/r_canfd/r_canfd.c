@@ -304,7 +304,7 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
     if (p_reg->CFDGSTS & R_CANFD_CFDGSTS_GRSTSTS_Msk)
 #endif
     {
-        /* Wait for RAM initialization (see RA6M5 User's Manual (R01UH0891EJ0100) section 32.3.4.1 Note 2) */
+        /* Wait for RAM initialization (see Note 2 of "Timing of Global Mode Change" in the CANFD section of the relevant hardware manual) */
         FSP_HARDWARE_REGISTER_WAIT((p_reg->CFDGSTS & R_CANFD_CFDGSTS_GRAMINIT_Msk), 0);
 
         /* Cancel Global Sleep and wait for transition to Global Reset */
@@ -343,7 +343,7 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
         for (uint32_t i = 0; i < R_CANFD_NUM_COMMON_FIFOS; i++)
         {
             /* Configure the Common FIFOs. Mask out the enable bit because it can only be set once operating.
-             * See Section 32.2.29 of the RA6M5 user manual (R01UH0891EJ0120) */
+             * See "CFDCFCCn : Common FIFO Configuration/Control Registers n (n = 0 to 5)" description in the CANFD section of the relevant hardware manual */
             p_reg->CFDCFCC[i] = p_global_cfg->common_fifo_config[i] & ~R_CANFD_CFDCFCC_CFE_Msk;
         }
     }
@@ -384,8 +384,8 @@ fsp_err_t R_CANFD_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p
     R_CANFD_CFDGAFL_Type * p_afl = (R_CANFD_CFDGAFL_Type *) p_extend->p_afl;
     for ( ; afl_entry < afl_max; afl_entry++)
     {
-        /* AFL register access is performed through a page window comprised of 16 entries. See Section 32.5.4 "Entering
-         * Entries in the AFL" in the RA6M5 User's Manual (R01UH0891EJ010) for more details. */
+        /* AFL register access is performed through a page window comprised of 16 entries. See "Entering
+         * Entries in the AFL" in the CANFD section of the relevant hardware manual. */
 
         /* Set AFL page */
         p_reg->CFDGAFLECTR = (afl_entry >> 4) | R_CANFD_CFDGAFLECTR_AFLDAE_Msk;
@@ -814,8 +814,8 @@ fsp_err_t R_CANFD_ModeTransition (can_ctrl_t * const   p_api_ctrl,
     FSP_ERROR_RETURN(CAN_TEST_MODE_INTERNAL_BUS != test_mode, FSP_ERR_INVALID_MODE);
  #endif
 
-    /* Check to ensure the current mode is Global Reset when transitioning into or out of Global Sleep (see Section
-     * 32.3.2 "Global Modes" in the RA6M5 User's Manual (R01UH0891EJ0100) for details) */
+    /* Check to ensure the current mode is Global Reset when transitioning into or out of Global Sleep (see
+     * "Global Modes" in the CANFD 'Modes Of Operation' section of the relevant hardware manual) */
     FSP_ERROR_RETURN(((cfdgsts & R_CANFD_CFDGSTS_GRSTSTS_Msk) && (CAN_OPERATION_MODE_RESET & operation_mode)) ||
                      (!(cfdgsts & R_CANFD_CFDGSTS_GSLPSTS_Msk) && (CAN_OPERATION_MODE_GLOBAL_SLEEP != operation_mode)),
                      FSP_ERR_INVALID_MODE);
@@ -836,8 +836,8 @@ fsp_err_t R_CANFD_ModeTransition (can_ctrl_t * const   p_api_ctrl,
     {
 #if !BSP_FEATURE_CANFD_LITE
 
-        /* Follow the procedure for switching to Internal Bus mode given in Section 32.9.2.2 "Internal CAN Bus
-         * Communication Test Mode" of the RA6M5 User's Manual (R01UH0891EJ0100) */
+        /* Follow the procedure for switching to Internal Bus mode given in "Internal CAN Bus
+         * Communication Test Mode" in the CANFD section of the relevant hardware manual, */
         if (CAN_TEST_MODE_INTERNAL_BUS == test_mode)
         {
             /* Disable channel test mode */
@@ -995,7 +995,7 @@ static bool r_canfd_bit_timing_parameter_check (can_bit_timing_cfg_t * const p_b
                      false);
 
     /* Check that TSEG1 > TSEG2 >= SJW for nominal bitrate and that TSEG1 >= TSEG2 >= SJW for data bitrate per section
-     * 32.4.1.1 "Bit Timing Conditions" in the RA6M5 User's Manual (R01UH0891EJ0100). */
+     * "Bit Timing Conditions" in the CANFD section of the relevant hardware manual. */
 
  #if BSP_FEATURE_CANFD_FD_SUPPORT
     if (is_data_phase)
@@ -1578,8 +1578,8 @@ static void r_canfd_mode_transition (canfd_instance_ctrl_t * p_ctrl, can_operati
         if (((cfdcnctr & R_CANFD_CFDC_CTR_CSLPR_Msk) && (!(CAN_OPERATION_MODE_RESET & operation_mode))) ||
             ((!(cfdcnctr & CANFD_PRV_CTR_RESET_BIT)) && (CAN_OPERATION_MODE_SLEEP == operation_mode)))
         {
-            /* Transition channel to Reset if a transition to/from Sleep is requested (see Section 32.3.3 "Channel
-             * Modes" in the RA6M5 User's Manual (R01UH0891EJ0100) for details) */
+            /* Transition channel to Reset if a transition to/from Sleep is requested (see "Channel
+             * Modes" in the CANFD section of the relevant hardware manual) */
             r_canfd_mode_ctr_set(&p_ctrl->p_reg->CFDC[interlaced_channel].CTR, CAN_OPERATION_MODE_RESET);
         }
 
@@ -1618,7 +1618,7 @@ static void r_canfd_mode_ctr_set (volatile uint32_t * p_ctr_reg, can_operation_m
 {
     volatile uint32_t * p_sts_reg = p_ctr_reg + 1;
 
-    /* See definitions for CFDCnCTR, CFDCnSTS, CFDGCTR and CFDGSTS in the RA6M5 User's Manual (R01UH0891EJ0100) */
+    /* See definitions for CFDCnCTR, CFDCnSTS, CFDGCTR and CFDGSTS in the CANFD section of the relevant hardware manual */
     *p_ctr_reg = (*p_ctr_reg & ~CANFD_PRV_CTR_MODE_MASK) | operation_mode;
     FSP_HARDWARE_REGISTER_WAIT((*p_sts_reg & CANFD_PRV_CTR_MODE_MASK), operation_mode);
 }

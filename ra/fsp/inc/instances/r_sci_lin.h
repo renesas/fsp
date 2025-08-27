@@ -163,13 +163,14 @@ typedef struct st_sci_lin_extended_cfg
     sci_lin_bus_conflict_clock_t   bus_conflict_clock;   ///< Bus conflict detection clock setting. See @ref sci_lin_bus_conflict_clock_t
     uint16_t                    break_bits;              ///< Master mode: Number of break field bits to transmit. Slave mode: Number of break field threshold bits.
     uint8_t                     delimiter_bits;          ///< Break delimeter length setting (at least 1 nominal bit time long).
-    sci_lin_baud_setting_t      baud_setting;            ///< Register settings for a desired baud rate.
+    sci_lin_baud_setting_t    * p_baud_setting;          ///< Register settings for a desired baud rate.
     sci_lin_id_filter_setting_t filter_setting;          ///< ID filter setting
 
     /* Interrupt settings */
     IRQn_Type scix0_irq;                                 ///< Break field low width IRQ number
     IRQn_Type scix1_irq;                                 ///< Control field 0-1 match / Priority interrupt bit detect IRQ number
     IRQn_Type scix2_irq;                                 ///< Bus collision detect IRQ number
+    IRQn_Type scix3_irq;                                 ///< Valid edge detect IRQ number
     IRQn_Type rxi_irq;                                   ///< Receive interrupt IRQ number
     IRQn_Type txi_irq;                                   ///< Transmit interrupt IRQ number
     IRQn_Type tei_irq;                                   ///< Transmit end interrupt IRQ number
@@ -177,6 +178,7 @@ typedef struct st_sci_lin_extended_cfg
     uint8_t   scix0_ipl;                                 ///< Break field low width interrupt priority
     uint8_t   scix1_ipl;                                 ///< Control field 0-1 match / Priority interrupt bit detect interrupt priority
     uint8_t   scix2_ipl;                                 ///< Bus collision detect interrupt priority
+    uint8_t   scix3_ipl;                                 ///< Valid edge detect interrupt priority
     uint8_t   rxi_ipl;                                   ///< Receive interrupt priority
     uint8_t   txi_ipl;                                   ///< Transmit interrupt priority
     uint8_t   tei_ipl;                                   ///< Transmit end interrupt priority
@@ -194,6 +196,8 @@ typedef struct st_sci_lin_instance_ctrl
     void                * p_context;            // Pointer to context to be passed into callback function
     lin_event_t           event;                // Used to distinguish between header and data transmission completion events
     uint8_t             * p_data;               // Information frame buffer pointer (used for both transmission and reception)
+    uint32_t              sync_bits_sum;        // Sum of sync bit durations when auto synchronization is used
+    uint32_t              timer_freq_hz;        // LIN timer frequency (Hz) used for break field generation/reception, break delimiter transmission, and auto synchronization
     uint8_t               tx_src_bytes;         // Transmit buffer length, in bytes
     uint8_t               tx_header_bytes;      // Tracks number of header bytes transmitted
     uint8_t               rx_bytes_expected;    // Tracks number of frame bytes expected in the transfer (including checksum)
@@ -201,6 +205,8 @@ typedef struct st_sci_lin_instance_ctrl
     uint8_t               checksum;             // Stores computed checksum as bytes come in during reception. Once checksum byte is received, stores received checksum
     uint8_t               validate_checksum;    // Indicates whether checksum should be validated by driver
     uint8_t               last_pid;             // Last PID transmitted or received
+    uint8_t               sync_bits_received;   // Number of sync bits successfully measured so far during auto synchronization
+    uint32_t              current_baudrate;     // Current baud rate during auto synchronization process.
 } sci_lin_instance_ctrl_t;
 
 /**********************************************************************************************************************

@@ -100,16 +100,19 @@ uint32_t        g_aes256ccmdec_private_id;
  * @param[in]     wrapped_key 128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
- *
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error occurred.
+ *
  * @note The pre-run state is SCE Enabled State.
  *       After the function runs the state transitions to SCE Enabled State.
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_EncryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -221,6 +224,7 @@ fsp_err_t R_SCE_AES128ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @param[in]     wrapped_key 128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
@@ -231,6 +235,8 @@ fsp_err_t R_SCE_AES128ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_DecryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -255,6 +261,7 @@ fsp_err_t R_SCE_AES128ECB_DecryptInit (sce_aes_handle_t * handle, sce_aes_wrappe
  * @param[in,out] cipher_length ciphertext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -266,6 +273,9 @@ fsp_err_t R_SCE_AES128ECB_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -298,8 +308,9 @@ fsp_err_t R_SCE_AES128ECB_DecryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] plain        plaintext data area (nothing ever written here)
  * @param[in,out] plain_length plaintext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -308,6 +319,8 @@ fsp_err_t R_SCE_AES128ECB_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -335,6 +348,7 @@ fsp_err_t R_SCE_AES128ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  * @param[in]     wrapped_key 128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
@@ -345,6 +359,8 @@ fsp_err_t R_SCE_AES128ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_EncryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -369,6 +385,7 @@ fsp_err_t R_SCE_AES256ECB_EncryptInit (sce_aes_handle_t * handle, sce_aes_wrappe
  * @param[in,out] plain_length plaintext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -380,6 +397,9 @@ fsp_err_t R_SCE_AES256ECB_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -412,8 +432,9 @@ fsp_err_t R_SCE_AES256ECB_EncryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] cipher        ciphertext data area (nothing ever written here)
  * @param[in,out] cipher_length ciphertext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -422,6 +443,8 @@ fsp_err_t R_SCE_AES256ECB_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -449,6 +472,7 @@ fsp_err_t R_SCE_AES256ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @param[in]     wrapped_key 128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
@@ -459,11 +483,14 @@ fsp_err_t R_SCE_AES256ECB_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_DecryptInit (sce_aes_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
     g_aes256ecbdec_private_id = g_private_id_counter;
     handle->id                = g_aes256ecbdec_private_id;
+
     return R_SCE_Aes256EcbDecryptInitPrivate(wrapped_key);
 }
 
@@ -482,6 +509,7 @@ fsp_err_t R_SCE_AES256ECB_DecryptInit (sce_aes_handle_t * handle, sce_aes_wrappe
  * @param[in,out] cipher_length ciphertext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -493,6 +521,9 @@ fsp_err_t R_SCE_AES256ECB_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -525,8 +556,9 @@ fsp_err_t R_SCE_AES256ECB_DecryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] plain        plaintext data area (nothing ever written here)
  * @param[in,out] plain_length plaintext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -535,6 +567,8 @@ fsp_err_t R_SCE_AES256ECB_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -563,6 +597,7 @@ fsp_err_t R_SCE_AES256ECB_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  * @param[in]     initial_vector initialization vector area (16byte)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
@@ -575,6 +610,8 @@ fsp_err_t R_SCE_AES128CBC_EncryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -601,6 +638,7 @@ fsp_err_t R_SCE_AES128CBC_EncryptInit (sce_aes_handle_t      * handle,
  * @param[in,out] plain_length plaintext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -612,6 +650,9 @@ fsp_err_t R_SCE_AES128CBC_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -649,8 +690,9 @@ fsp_err_t R_SCE_AES128CBC_EncryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] cipher        ciphertext data area (nothing ever written here)
  * @param[in,out] cipher_length ciphertext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -659,6 +701,8 @@ fsp_err_t R_SCE_AES128CBC_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -687,6 +731,7 @@ fsp_err_t R_SCE_AES128CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @param[in]     initial_vector initialization vector area (16byte)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
@@ -699,6 +744,8 @@ fsp_err_t R_SCE_AES128CBC_DecryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -725,6 +772,7 @@ fsp_err_t R_SCE_AES128CBC_DecryptInit (sce_aes_handle_t      * handle,
  * @param[in,out] cipher_length ciphertext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -736,6 +784,9 @@ fsp_err_t R_SCE_AES128CBC_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -773,8 +824,9 @@ fsp_err_t R_SCE_AES128CBC_DecryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] plain        plaintext data area (nothing ever written here)
  * @param[in,out] plain_length plaintext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -783,6 +835,8 @@ fsp_err_t R_SCE_AES128CBC_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CBC_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -811,6 +865,7 @@ fsp_err_t R_SCE_AES128CBC_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  * @param[in]     initial_vector initial vector area (16byte)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
@@ -823,6 +878,8 @@ fsp_err_t R_SCE_AES256CBC_EncryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -849,6 +906,7 @@ fsp_err_t R_SCE_AES256CBC_EncryptInit (sce_aes_handle_t      * handle,
  * @param[in,out] plain_length plaintext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -860,6 +918,9 @@ fsp_err_t R_SCE_AES256CBC_EncryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * cipher,
                                          uint32_t           plain_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(plain_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -897,8 +958,9 @@ fsp_err_t R_SCE_AES256CBC_EncryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] cipher        ciphertext data area (nothing ever written here)
  * @param[in,out] cipher_length ciphertext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -907,6 +969,8 @@ fsp_err_t R_SCE_AES256CBC_EncryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cipher, uint32_t * cipher_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -935,6 +999,7 @@ fsp_err_t R_SCE_AES256CBC_EncryptFinal (sce_aes_handle_t * handle, uint8_t * cip
  * @param[in]     initial_vector initialization vector area (16byte)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Input illegal wrapped key.
@@ -947,6 +1012,8 @@ fsp_err_t R_SCE_AES256CBC_DecryptInit (sce_aes_handle_t      * handle,
                                        sce_aes_wrapped_key_t * wrapped_key,
                                        uint8_t               * initial_vector)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_aes_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -973,6 +1040,7 @@ fsp_err_t R_SCE_AES256CBC_DecryptInit (sce_aes_handle_t      * handle,
  * @param[in,out] cipher_length ciphertext data length (must be a multiple of 16)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -984,6 +1052,9 @@ fsp_err_t R_SCE_AES256CBC_DecryptUpdate (sce_aes_handle_t * handle,
                                          uint8_t          * plain,
                                          uint32_t           cipher_length)
 {
+    FSP_ASSERT(handle);
+    FSP_ERROR_RETURN(!(cipher_length & 0xF), FSP_ERR_CRYPTO_SCE_PARAMETER);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -1021,8 +1092,9 @@ fsp_err_t R_SCE_AES256CBC_DecryptUpdate (sce_aes_handle_t * handle,
  * @param[in,out] plain        plaintext data area (nothing ever written here)
  * @param[in,out] plain_length plaintext data length (0 always written here)
  *
- * @retval FSP_SUCCESS             Normal termination
- * @retval FSP_ERR_CRYPTO_SCE_FAIL An internal error occurred.
+ * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
+ * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -1031,6 +1103,8 @@ fsp_err_t R_SCE_AES256CBC_DecryptUpdate (sce_aes_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CBC_DecryptFinal (sce_aes_handle_t * handle, uint8_t * plain, uint32_t * plain_length)
 {
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -1060,6 +1134,7 @@ fsp_err_t R_SCE_AES256CBC_DecryptFinal (sce_aes_handle_t * handle, uint8_t * pla
  * @param[in]     initial_vector_length initialization vector length (1 ore more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -1079,6 +1154,8 @@ fsp_err_t R_SCE_AES128GCM_EncryptInit (sce_gcm_handle_t      * handle,
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
+
+    FSP_ASSERT(handle);
 
     if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
@@ -1102,7 +1179,11 @@ fsp_err_t R_SCE_AES128GCM_EncryptInit (sce_gcm_handle_t      * handle,
     handle->id                = g_aes128gcmenc_private_id;
     if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
-        ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES128_KEY_INDEX_WORD_SIZE, hashed_ivec);
+        ercd = prepare_gcm_iv(initial_vector,
+                              initial_vector_length,
+                              wrapped_key,
+                              HW_SCE_AES128_KEY_INDEX_WORD_SIZE,
+                              hashed_ivec);
         if (FSP_SUCCESS != ercd)
         {
             memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -1142,6 +1223,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptInit (sce_gcm_handle_t      * handle,
  * @param[in]     aad_length        additional authentication data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         After the data from plain was input,
  *                                              an invalid handle was input from aad.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -1159,6 +1241,8 @@ fsp_err_t R_SCE_AES128GCM_EncryptUpdate (sce_gcm_handle_t * handle,
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1186,7 +1270,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptUpdate (sce_gcm_handle_t * handle,
 
             /* Casting uint32_t pointer is used for address. */
             ercd = R_SCE_Aes128GcmEncryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                           HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                          HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
             length_aad_rest = aad_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_aad_length);
             memset(handle->gcm_aad_buffer, 0, sizeof(handle->gcm_aad_buffer));
             if (length_aad_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
@@ -1222,7 +1306,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptUpdate (sce_gcm_handle_t * handle,
 
                 /* Casting uint32_t pointer is used for address. */
                 ercd = R_SCE_Aes128GcmEncryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                               HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                              HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
                 handle->buffering_aad_length = 0;
             }
 
@@ -1281,6 +1365,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptUpdate (sce_gcm_handle_t * handle,
  * @param[in,out] atag               authentication tag area
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -1302,6 +1387,8 @@ fsp_err_t R_SCE_AES128GCM_EncryptFinal (sce_gcm_handle_t * handle,
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1325,7 +1412,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptFinal (sce_gcm_handle_t * handle,
 
             /* Casting uint32_t pointer is used for address. */
             R_SCE_Aes128GcmEncryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                    HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                   HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
             handle->buffering_aad_length = 0;
         }
 
@@ -1368,6 +1455,7 @@ fsp_err_t R_SCE_AES128GCM_EncryptFinal (sce_gcm_handle_t * handle,
  * @param[in]     initial_vector_length initialization vector length (1 ore more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -1388,6 +1476,8 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
     };
     fsp_err_t ercd = FSP_SUCCESS;
 
+    FSP_ASSERT(handle);
+
     if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
         if (0 == initial_vector_length)
@@ -1397,8 +1487,8 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
     }
     else
     {
-        if ((SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != wrapped_key->type)
-        && (SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV != wrapped_key->type))
+        if ((SCE_KEY_INDEX_TYPE_AES128_FOR_TLS != wrapped_key->type) &&
+            (SCE_KEY_INDEX_TYPE_AES128_GCM_WITH_IV != wrapped_key->type))
         {
             return FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL;
         }
@@ -1411,7 +1501,11 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
     handle->id                = g_aes128gcmdec_private_id;
     if ((SCE_KEY_INDEX_TYPE_AES128 == wrapped_key->type) || (SCE_KEY_INDEX_TYPE_AES128_FOR_ECDH == wrapped_key->type))
     {
-        ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES128_KEY_INDEX_WORD_SIZE, hashed_ivec);
+        ercd = prepare_gcm_iv(initial_vector,
+                              initial_vector_length,
+                              wrapped_key,
+                              HW_SCE_AES128_KEY_INDEX_WORD_SIZE,
+                              hashed_ivec);
         if (FSP_SUCCESS != ercd)
         {
             memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -1450,6 +1544,7 @@ fsp_err_t R_SCE_AES128GCM_DecryptInit (sce_gcm_handle_t      * handle,
  * @param[in]     aad_length         additional authentication data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         After the data from plain was input,
  *                                              an invalid handle was input from aad.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -1467,6 +1562,8 @@ fsp_err_t R_SCE_AES128GCM_DecryptUpdate (sce_gcm_handle_t * handle,
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1494,7 +1591,7 @@ fsp_err_t R_SCE_AES128GCM_DecryptUpdate (sce_gcm_handle_t * handle,
 
             /* Casting uint32_t pointer is used for address. */
             ercd = R_SCE_Aes128GcmDecryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                           HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                          HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
             length_aad_rest = aad_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_aad_length);
             memset(handle->gcm_aad_buffer, 0, sizeof(handle->gcm_aad_buffer));
             if (length_aad_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
@@ -1530,7 +1627,7 @@ fsp_err_t R_SCE_AES128GCM_DecryptUpdate (sce_gcm_handle_t * handle,
 
                 /* Casting uint32_t pointer is used for address. */
                 ercd = R_SCE_Aes128GcmDecryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                               HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                              HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
                 handle->buffering_aad_length = 0;
             }
 
@@ -1593,6 +1690,7 @@ fsp_err_t R_SCE_AES128GCM_DecryptUpdate (sce_gcm_handle_t * handle,
  * @param[in]     atag_length        authentication tag length (4,8,12,13,14,15,16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_AUTHENTICATION    Authentication failed
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
@@ -1622,6 +1720,8 @@ fsp_err_t R_SCE_AES128GCM_DecryptFinal (sce_gcm_handle_t * handle,
     };
     fsp_err_t ercd = FSP_SUCCESS;
 
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -1649,7 +1749,7 @@ fsp_err_t R_SCE_AES128GCM_DecryptFinal (sce_gcm_handle_t * handle,
 
             /* Casting uint32_t pointer is used for address. */
             R_SCE_Aes128GcmDecryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                    HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                   HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
             handle->buffering_aad_length = 0;
         }
 
@@ -1698,6 +1798,7 @@ fsp_err_t R_SCE_AES128GCM_DecryptFinal (sce_gcm_handle_t * handle,
  * @param[in]     initial_vector_length initialization vector length (1 ore more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -1718,6 +1819,8 @@ fsp_err_t R_SCE_AES256GCM_EncryptInit (sce_gcm_handle_t      * handle,
     };
     fsp_err_t ercd = FSP_SUCCESS;
 
+    FSP_ASSERT(handle);
+
     if ((SCE_KEY_INDEX_TYPE_AES256 == wrapped_key->type) ||
         (SCE_KEY_INDEX_TYPE_AES256_GCM_FOR_DLMS_COSEM == wrapped_key->type))
     {
@@ -1732,7 +1835,11 @@ fsp_err_t R_SCE_AES256GCM_EncryptInit (sce_gcm_handle_t      * handle,
     g_private_id_counter++;
     g_aes256gcmenc_private_id = g_private_id_counter;
     handle->id                = g_aes256gcmenc_private_id;
-    ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES256_KEY_INDEX_WORD_SIZE, hashed_ivec);
+    ercd = prepare_gcm_iv(initial_vector,
+                          initial_vector_length,
+                          wrapped_key,
+                          HW_SCE_AES256_KEY_INDEX_WORD_SIZE,
+                          hashed_ivec);
     if (FSP_SUCCESS != ercd)
     {
         memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -1771,6 +1878,7 @@ fsp_err_t R_SCE_AES256GCM_EncryptInit (sce_gcm_handle_t      * handle,
  * @param[in]     aad_length        additional authentication data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         After the data from plain was input,
  *                                              an invalid handle was input from aad.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -1788,6 +1896,8 @@ fsp_err_t R_SCE_AES256GCM_EncryptUpdate (sce_gcm_handle_t * handle,
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1816,7 +1926,7 @@ fsp_err_t R_SCE_AES256GCM_EncryptUpdate (sce_gcm_handle_t * handle,
             /* Casting uint32_t pointer is used for address. */
             ercd =
                 R_SCE_Aes256GcmEncryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                        (HW_SCE_AES_BLOCK_BYTE_SIZE) >> 2);
+                                                       (HW_SCE_AES_BLOCK_BYTE_SIZE) >> 2);
             length_aad_rest = aad_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_aad_length);
             memset(handle->gcm_aad_buffer, 0, sizeof(handle->gcm_aad_buffer));
             if (length_aad_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
@@ -1852,7 +1962,7 @@ fsp_err_t R_SCE_AES256GCM_EncryptUpdate (sce_gcm_handle_t * handle,
 
                 /* Casting uint32_t pointer is used for address. */
                 ercd = R_SCE_Aes256GcmEncryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                               HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                              HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
                 handle->buffering_aad_length = 0;
             }
 
@@ -1911,6 +2021,7 @@ fsp_err_t R_SCE_AES256GCM_EncryptUpdate (sce_gcm_handle_t * handle,
  * @param[in,out] atag               authentication tag area
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -1932,6 +2043,8 @@ fsp_err_t R_SCE_AES256GCM_EncryptFinal (sce_gcm_handle_t * handle,
         0
     };
     fsp_err_t ercd = FSP_SUCCESS;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -1955,7 +2068,7 @@ fsp_err_t R_SCE_AES256GCM_EncryptFinal (sce_gcm_handle_t * handle,
 
             /* Casting uint32_t pointer is used for address. */
             R_SCE_Aes256GcmEncryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                    HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                   HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
             handle->buffering_aad_length = 0;
         }
 
@@ -1998,6 +2111,7 @@ fsp_err_t R_SCE_AES256GCM_EncryptFinal (sce_gcm_handle_t * handle,
  * @param[in]     initial_vector_length initialization vector length (1 ore more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -2018,6 +2132,8 @@ fsp_err_t R_SCE_AES256GCM_DecryptInit (sce_gcm_handle_t      * handle,
     };
     fsp_err_t ercd = FSP_SUCCESS;
 
+    FSP_ASSERT(handle);
+
     if (0 == initial_vector_length)
     {
         return FSP_ERR_CRYPTO_SCE_PARAMETER;
@@ -2029,7 +2145,11 @@ fsp_err_t R_SCE_AES256GCM_DecryptInit (sce_gcm_handle_t      * handle,
     g_aes256gcmdec_private_id = g_private_id_counter;
     handle->id                = g_aes256gcmdec_private_id;
     memcpy(handle->wrapped_key.value, wrapped_key->value, HW_SCE_AES256_KEY_INDEX_WORD_SIZE * 4);
-    ercd = prepare_gcm_iv(initial_vector, initial_vector_length, wrapped_key, HW_SCE_AES256_KEY_INDEX_WORD_SIZE, hashed_ivec);
+    ercd = prepare_gcm_iv(initial_vector,
+                          initial_vector_length,
+                          wrapped_key,
+                          HW_SCE_AES256_KEY_INDEX_WORD_SIZE,
+                          hashed_ivec);
     if (FSP_SUCCESS != ercd)
     {
         memset(handle, 0, sizeof(sce_gcm_handle_t));
@@ -2067,6 +2187,7 @@ fsp_err_t R_SCE_AES256GCM_DecryptInit (sce_gcm_handle_t      * handle,
  * @param[in]     aad_length         additional authentication data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         After the data from plain was input,
  *                                              an invalid handle was input from aad.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -2084,6 +2205,8 @@ fsp_err_t R_SCE_AES256GCM_DecryptUpdate (sce_gcm_handle_t * handle,
     fsp_err_t ercd            = FSP_SUCCESS;
     uint32_t  length_rest     = 0;
     uint32_t  length_aad_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2111,7 +2234,7 @@ fsp_err_t R_SCE_AES256GCM_DecryptUpdate (sce_gcm_handle_t * handle,
 
             /* Casting uint32_t pointer is used for address. */
             ercd = R_SCE_Aes256GcmDecryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                           HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                          HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
             length_aad_rest = aad_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_aad_length);
             memset(handle->gcm_aad_buffer, 0, sizeof(handle->gcm_aad_buffer));
             if (length_aad_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
@@ -2147,7 +2270,7 @@ fsp_err_t R_SCE_AES256GCM_DecryptUpdate (sce_gcm_handle_t * handle,
 
                 /* Casting uint32_t pointer is used for address. */
                 ercd = R_SCE_Aes256GcmDecryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                               HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                              HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
                 handle->buffering_aad_length = 0;
             }
 
@@ -2210,6 +2333,7 @@ fsp_err_t R_SCE_AES256GCM_DecryptUpdate (sce_gcm_handle_t * handle,
  * @param[in]     atag_length        authentication tag length (4,8,12,13,14,15,16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_AUTHENTICATION    Authentication failed
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
@@ -2239,6 +2363,8 @@ fsp_err_t R_SCE_AES256GCM_DecryptFinal (sce_gcm_handle_t * handle,
     };
     fsp_err_t ercd = FSP_SUCCESS;
 
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -2266,7 +2392,7 @@ fsp_err_t R_SCE_AES256GCM_DecryptFinal (sce_gcm_handle_t * handle,
 
             /* Casting uint32_t pointer is used for address. */
             R_SCE_Aes256GcmDecryptUpdateAadPrivate((uint32_t *) (handle->gcm_aad_buffer),
-                                                    HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                                   HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
             handle->buffering_aad_length = 0;
         }
 
@@ -2319,6 +2445,7 @@ fsp_err_t R_SCE_AES256GCM_DecryptFinal (sce_gcm_handle_t * handle,
  * @param[in]     mac_length     MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -2337,6 +2464,8 @@ fsp_err_t R_SCE_AES128CCM_EncryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                mac_length)
 {
     uint32_t formatted_length = 0;
+
+    FSP_ASSERT(handle);
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -2357,9 +2486,9 @@ fsp_err_t R_SCE_AES128CCM_EncryptInit (sce_ccm_handle_t      * handle,
 
     return R_SCE_Aes128CcmEncryptInitPrivate(wrapped_key,
                                        /* Casting uint32_t pointer is used for address. */
-                                              (uint32_t *) handle->counter,
-                                              (uint32_t *) handle->formatted_data,
-                                              formatted_length);
+                                             (uint32_t *) handle->counter,
+                                             (uint32_t *) handle->formatted_data,
+                                             formatted_length);
 }
 
 /*******************************************************************************************************************//**
@@ -2381,6 +2510,7 @@ fsp_err_t R_SCE_AES128CCM_EncryptInit (sce_ccm_handle_t      * handle,
  * @param[in]     plain_length plaintext data length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  *
@@ -2393,6 +2523,8 @@ fsp_err_t R_SCE_AES128CCM_EncryptUpdate (sce_ccm_handle_t * handle,
                                          uint32_t           plain_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2413,8 +2545,8 @@ fsp_err_t R_SCE_AES128CCM_EncryptUpdate (sce_ccm_handle_t * handle,
 
         /* Casting uint32_t pointer is used for address. */
         R_SCE_Aes128CcmEncryptUpdatePrivate((uint32_t *) handle->ccm_buffer,
-                                             (uint32_t *) cipher,
-                                             HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                            (uint32_t *) cipher,
+                                            HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
         length_rest = plain_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_length);
         if (length_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
         {
@@ -2455,6 +2587,7 @@ fsp_err_t R_SCE_AES128CCM_EncryptUpdate (sce_ccm_handle_t * handle,
  * @param[in]     mac_length    MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -2480,6 +2613,8 @@ fsp_err_t R_SCE_AES128CCM_EncryptFinal (sce_ccm_handle_t * handle,
         0
     };
 
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -2500,9 +2635,9 @@ fsp_err_t R_SCE_AES128CCM_EncryptFinal (sce_ccm_handle_t * handle,
     length_tmp = change_endian_long(handle->all_received_length);
     ercd       = R_SCE_Aes128CcmEncryptFinalPrivate(&length_tmp,
                                        /* Casting uint32_t pointer is used for address. */
-                                                     (uint32_t *) handle->ccm_buffer,
-                                                     (uint32_t *) cipher_tmp,
-                                                     (uint32_t *) mac_tmp);
+                                                    (uint32_t *) handle->ccm_buffer,
+                                                    (uint32_t *) cipher_tmp,
+                                                    (uint32_t *) mac_tmp);
     if (FSP_SUCCESS == ercd)
     {
         *cipher_length = handle->all_received_length;
@@ -2530,6 +2665,7 @@ fsp_err_t R_SCE_AES128CCM_EncryptFinal (sce_ccm_handle_t * handle,
  * @param[in]     mac_length     MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -2548,6 +2684,8 @@ fsp_err_t R_SCE_AES128CCM_DecryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                mac_length)
 {
     uint32_t formatted_length = 0;
+
+    FSP_ASSERT(handle);
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -2568,9 +2706,9 @@ fsp_err_t R_SCE_AES128CCM_DecryptInit (sce_ccm_handle_t      * handle,
 
     return R_SCE_Aes128CcmDecryptInitPrivate(wrapped_key,
                                        /* Casting uint32_t pointer is used for address. */
-                                              (uint32_t *) handle->counter,
-                                              (uint32_t *) handle->formatted_data,
-                                              formatted_length);
+                                             (uint32_t *) handle->counter,
+                                             (uint32_t *) handle->formatted_data,
+                                             formatted_length);
 }
 
 /*******************************************************************************************************************//**
@@ -2592,6 +2730,7 @@ fsp_err_t R_SCE_AES128CCM_DecryptInit (sce_ccm_handle_t      * handle,
  * @param[in]     cipher_length ciphertext data length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  *
@@ -2604,6 +2743,8 @@ fsp_err_t R_SCE_AES128CCM_DecryptUpdate (sce_ccm_handle_t * handle,
                                          uint32_t           cipher_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2624,8 +2765,8 @@ fsp_err_t R_SCE_AES128CCM_DecryptUpdate (sce_ccm_handle_t * handle,
 
         /* Casting uint32_t pointer is used for address. */
         R_SCE_Aes128CcmDecryptUpdatePrivate((uint32_t *) handle->ccm_buffer,
-                                             (uint32_t *) plain,
-                                             HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                            (uint32_t *) plain,
+                                            HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
         length_rest = cipher_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_length);
         if (length_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
         {
@@ -2669,6 +2810,7 @@ fsp_err_t R_SCE_AES128CCM_DecryptUpdate (sce_ccm_handle_t * handle,
  * @param[in]     mac_length   MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error, or authentication failed.
@@ -2693,6 +2835,8 @@ fsp_err_t R_SCE_AES128CCM_DecryptFinal (sce_ccm_handle_t * handle,
     {
         0
     };
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2747,6 +2891,7 @@ fsp_err_t R_SCE_AES128CCM_DecryptFinal (sce_ccm_handle_t * handle,
  * @param[in]     mac_length     MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -2765,6 +2910,8 @@ fsp_err_t R_SCE_AES256CCM_EncryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                mac_length)
 {
     uint32_t formatted_length = 0;
+
+    FSP_ASSERT(handle);
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -2785,9 +2932,9 @@ fsp_err_t R_SCE_AES256CCM_EncryptInit (sce_ccm_handle_t      * handle,
 
     return R_SCE_Aes256CcmEncryptInitPrivate(wrapped_key,
                                        /* Casting uint32_t pointer is used for address. */
-                                              (uint32_t *) handle->counter,
-                                              (uint32_t *) handle->formatted_data,
-                                              formatted_length);
+                                             (uint32_t *) handle->counter,
+                                             (uint32_t *) handle->formatted_data,
+                                             formatted_length);
 }
 
 /*******************************************************************************************************************//**
@@ -2809,6 +2956,7 @@ fsp_err_t R_SCE_AES256CCM_EncryptInit (sce_ccm_handle_t      * handle,
  * @param[in]     plain_length plaintext data length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  *
@@ -2821,6 +2969,8 @@ fsp_err_t R_SCE_AES256CCM_EncryptUpdate (sce_ccm_handle_t * handle,
                                          uint32_t           plain_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -2841,8 +2991,8 @@ fsp_err_t R_SCE_AES256CCM_EncryptUpdate (sce_ccm_handle_t * handle,
 
         /* Casting uint32_t pointer is used for address. */
         R_SCE_Aes256CcmEncryptUpdatePrivate((uint32_t *) handle->ccm_buffer,
-                                             (uint32_t *) cipher,
-                                             HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                            (uint32_t *) cipher,
+                                            HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
         length_rest = plain_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_length);
         if (length_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
         {
@@ -2883,6 +3033,7 @@ fsp_err_t R_SCE_AES256CCM_EncryptUpdate (sce_ccm_handle_t * handle,
  * @param[in]     mac_length    MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
@@ -2908,6 +3059,8 @@ fsp_err_t R_SCE_AES256CCM_EncryptFinal (sce_ccm_handle_t * handle,
         0
     };
 
+    FSP_ASSERT(handle);
+
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
         return FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION;
@@ -2928,9 +3081,9 @@ fsp_err_t R_SCE_AES256CCM_EncryptFinal (sce_ccm_handle_t * handle,
     length_tmp = change_endian_long(handle->all_received_length);
     ercd       = R_SCE_Aes256CcmEncryptFinalPrivate(&length_tmp,
                                        /* Casting uint32_t pointer is used for address. */
-                                                     (uint32_t *) handle->ccm_buffer,
-                                                     (uint32_t *) cipher_tmp,
-                                                     (uint32_t *) mac_tmp);
+                                                    (uint32_t *) handle->ccm_buffer,
+                                                    (uint32_t *) cipher_tmp,
+                                                    (uint32_t *) mac_tmp);
     if (FSP_SUCCESS == ercd)
     {
         *cipher_length = handle->all_received_length;
@@ -2958,6 +3111,7 @@ fsp_err_t R_SCE_AES256CCM_EncryptFinal (sce_ccm_handle_t * handle,
  * @param[in]     mac_length     MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
@@ -2976,6 +3130,8 @@ fsp_err_t R_SCE_AES256CCM_DecryptInit (sce_ccm_handle_t      * handle,
                                        uint32_t                mac_length)
 {
     uint32_t formatted_length = 0;
+
+    FSP_ASSERT(handle);
 
     memset(handle, 0, sizeof(sce_ccm_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
@@ -2996,9 +3152,9 @@ fsp_err_t R_SCE_AES256CCM_DecryptInit (sce_ccm_handle_t      * handle,
 
     return R_SCE_Aes256CcmDecryptInitPrivate(wrapped_key,
                                        /* Casting uint32_t pointer is used for address. */
-                                              (uint32_t *) handle->counter,
-                                              (uint32_t *) handle->formatted_data,
-                                              formatted_length);
+                                             (uint32_t *) handle->counter,
+                                             (uint32_t *) handle->formatted_data,
+                                             formatted_length);
 }
 
 /*******************************************************************************************************************//**
@@ -3020,6 +3176,7 @@ fsp_err_t R_SCE_AES256CCM_DecryptInit (sce_ccm_handle_t      * handle,
  * @param[in]     cipher_length ciphertext data length
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  *
@@ -3032,6 +3189,8 @@ fsp_err_t R_SCE_AES256CCM_DecryptUpdate (sce_ccm_handle_t * handle,
                                          uint32_t           cipher_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3052,8 +3211,8 @@ fsp_err_t R_SCE_AES256CCM_DecryptUpdate (sce_ccm_handle_t * handle,
 
         /* Casting uint32_t pointer is used for address. */
         R_SCE_Aes256CcmDecryptUpdatePrivate((uint32_t *) handle->ccm_buffer,
-                                             (uint32_t *) plain,
-                                             HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
+                                            (uint32_t *) plain,
+                                            HW_SCE_AES_BLOCK_BYTE_SIZE >> 2);
         length_rest = cipher_length - (HW_SCE_AES_BLOCK_BYTE_SIZE - handle->buffering_length);
         if (length_rest >= HW_SCE_AES_BLOCK_BYTE_SIZE)
         {
@@ -3093,6 +3252,7 @@ fsp_err_t R_SCE_AES256CCM_DecryptUpdate (sce_ccm_handle_t * handle,
  * @param[in]     mac_length   MAC length (4, 6, 8, 10, 12, 14, or 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         Input data is illegal.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              Internal error, or authentication failed.
@@ -3117,6 +3277,8 @@ fsp_err_t R_SCE_AES256CCM_DecryptFinal (sce_ccm_handle_t * handle,
     {
         0
     };
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3165,6 +3327,7 @@ fsp_err_t R_SCE_AES256CCM_DecryptFinal (sce_ccm_handle_t * handle,
  * @param[in]     wrapped_key 128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -3175,6 +3338,8 @@ fsp_err_t R_SCE_AES256CCM_DecryptFinal (sce_ccm_handle_t * handle,
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -3200,6 +3365,7 @@ fsp_err_t R_SCE_AES128CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wra
  * @param[in]     message_length message data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -3209,6 +3375,8 @@ fsp_err_t R_SCE_AES128CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wra
 fsp_err_t R_SCE_AES128CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3261,6 +3429,7 @@ fsp_err_t R_SCE_AES128CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t *
  * @param[in,out] mac    MAC data area (16byte)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -3272,6 +3441,8 @@ fsp_err_t R_SCE_AES128CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t *
 fsp_err_t R_SCE_AES128CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * mac)
 {
     fsp_err_t ercd = FSP_SUCCESS;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3293,8 +3464,8 @@ fsp_err_t R_SCE_AES128CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
 
     ercd = R_SCE_Aes128CmacGenerateFinalPrivate(handle->all_received_length,
                                        /* Casting uint32_t pointer is used for address. */
-                                                 (uint32_t *) (handle->cmac_buffer),
-                                                 (uint32_t *) (mac));
+                                                (uint32_t *) (handle->cmac_buffer),
+                                                (uint32_t *) (mac));
     memset(handle, 0, sizeof(sce_cmac_handle_t));
 
     return ercd;
@@ -3309,6 +3480,7 @@ fsp_err_t R_SCE_AES128CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  * @param[in]     wrapped_key 128-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -3319,6 +3491,8 @@ fsp_err_t R_SCE_AES128CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES128CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -3344,6 +3518,7 @@ fsp_err_t R_SCE_AES128CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapp
  * @param[in]     message_length message data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -3353,6 +3528,8 @@ fsp_err_t R_SCE_AES128CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapp
 fsp_err_t R_SCE_AES128CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3407,6 +3584,7 @@ fsp_err_t R_SCE_AES128CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * m
  * @param[in,out] mac_length MAC data length (2 to 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_AUTHENTICATION    Authentication failed
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
@@ -3423,6 +3601,8 @@ fsp_err_t R_SCE_AES128CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
         0                              /* mac_tmp is initialized with 0. */
     };
     uint32_t mac_length_bit = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3452,9 +3632,9 @@ fsp_err_t R_SCE_AES128CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
 
     ercd = R_SCE_Aes128CmacVerifyFinalPrivate(handle->all_received_length,
                                        /* Casting uint32_t pointer is used for address. */
-                                               (uint32_t *) handle->cmac_buffer,
-                                               (uint32_t *) mac_tmp,
-                                               &mac_length_bit);
+                                              (uint32_t *) handle->cmac_buffer,
+                                              (uint32_t *) mac_tmp,
+                                              &mac_length_bit);
     memset(handle, 0, sizeof(sce_cmac_handle_t));
 
     return ercd;
@@ -3469,6 +3649,7 @@ fsp_err_t R_SCE_AES128CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
  * @param[in]     wrapped_key 256-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -3479,6 +3660,8 @@ fsp_err_t R_SCE_AES128CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -3504,6 +3687,7 @@ fsp_err_t R_SCE_AES256CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wra
  * @param[in]     message_length message data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -3513,6 +3697,8 @@ fsp_err_t R_SCE_AES256CMAC_GenerateInit (sce_cmac_handle_t * handle, sce_aes_wra
 fsp_err_t R_SCE_AES256CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3565,6 +3751,7 @@ fsp_err_t R_SCE_AES256CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t *
  * @param[in,out] mac    MAC data area (16byte)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
@@ -3576,6 +3763,8 @@ fsp_err_t R_SCE_AES256CMAC_GenerateUpdate (sce_cmac_handle_t * handle, uint8_t *
 fsp_err_t R_SCE_AES256CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * mac)
 {
     fsp_err_t ercd = FSP_SUCCESS;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3597,8 +3786,8 @@ fsp_err_t R_SCE_AES256CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
 
     ercd = R_SCE_Aes256CmacGenerateFinalPrivate(handle->all_received_length,
                                        /* Casting uint32_t pointer is used for address. */
-                                                 (uint32_t *) (handle->cmac_buffer),
-                                                 (uint32_t *) (mac));
+                                                (uint32_t *) (handle->cmac_buffer),
+                                                (uint32_t *) (mac));
     memset(handle, 0, sizeof(sce_cmac_handle_t));
 
     return ercd;
@@ -3613,6 +3802,7 @@ fsp_err_t R_SCE_AES256CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  * @param[in]     wrapped_key 256-bit AES wrapped key
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_RESOURCE_CONFLICT A resource conflict occurred because a hardware resource needed
  *                                              by the processing routine was in use by another processing routine.
  * @retval FSP_ERR_CRYPTO_SCE_KEY_SET_FAIL      Invalid wrapped key was input.
@@ -3623,6 +3813,8 @@ fsp_err_t R_SCE_AES256CMAC_GenerateFinal (sce_cmac_handle_t * handle, uint8_t * 
  **********************************************************************************************************************/
 fsp_err_t R_SCE_AES256CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapped_key_t * wrapped_key)
 {
+    FSP_ASSERT(handle);
+
     memset(handle, 0, sizeof(sce_cmac_handle_t));
     handle->flag_call_init = CALL_ONLY_UPDATE_FINAL;
     g_private_id_counter++;
@@ -3648,6 +3840,7 @@ fsp_err_t R_SCE_AES256CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapp
  * @param[in]     message_length message data length (0 or more bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
  * @retval FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION An invalid function was called.
  *
@@ -3657,6 +3850,8 @@ fsp_err_t R_SCE_AES256CMAC_VerifyInit (sce_cmac_handle_t * handle, sce_aes_wrapp
 fsp_err_t R_SCE_AES256CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * message, uint32_t message_length)
 {
     uint32_t length_rest = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3711,6 +3906,7 @@ fsp_err_t R_SCE_AES256CMAC_VerifyUpdate (sce_cmac_handle_t * handle, uint8_t * m
  * @param[in,out] mac_length MAC data length (2 to 16 bytes)
  *
  * @retval FSP_SUCCESS                          Normal termination
+ * @retval FSP_ERR_ASSERTION                    A required parameter is NULL.
  * @retval FSP_ERR_CRYPTO_SCE_FAIL              An internal error occurred.
  * @retval FSP_ERR_CRYPTO_SCE_AUTHENTICATION    Authentication failed
  * @retval FSP_ERR_CRYPTO_SCE_PARAMETER         An invalid handle was input.
@@ -3727,6 +3923,8 @@ fsp_err_t R_SCE_AES256CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
         0                              /* mac_tmp is initialized with 0. */
     };
     uint32_t mac_length_bit = 0;
+
+    FSP_ASSERT(handle);
 
     if (CALL_ONLY_INIT == handle->flag_call_init)
     {
@@ -3756,9 +3954,9 @@ fsp_err_t R_SCE_AES256CMAC_VerifyFinal (sce_cmac_handle_t * handle, uint8_t * ma
 
     ercd = R_SCE_Aes256CmacVerifyFinalPrivate(handle->all_received_length,
                                        /* Casting uint32_t pointer is used for address. */
-                                               (uint32_t *) handle->cmac_buffer,
-                                               (uint32_t *) mac_tmp,
-                                               &mac_length_bit);
+                                              (uint32_t *) handle->cmac_buffer,
+                                              (uint32_t *) mac_tmp,
+                                              &mac_length_bit);
     memset(handle, 0, sizeof(sce_cmac_handle_t));
 
     return ercd;
@@ -3824,8 +4022,8 @@ static fsp_err_t prepare_gcm_iv (uint8_t               * initial_vector,
     /* when iv_len is not 12 (96 bit), add ghash padding */
     else
     {
-        uint32_t indata_keytype = 0; /* For normal */
-        uint32_t indata_cmd = 0;
+        uint32_t indata_keytype = 0;        /* For normal */
+        uint32_t indata_cmd     = 0;
 
         /* generate hash_subkey */
         indata_cmd = change_endian_long(0); /* ECB-Encrypt command */
@@ -3837,6 +4035,7 @@ static fsp_err_t prepare_gcm_iv (uint8_t               * initial_vector,
                 {
                     indata_keytype = change_endian_long(2); /* For ECDH */
                 }
+
                 ret = R_SCE_Aes128EncryptDecryptInitSub(&indata_keytype, &indata_cmd, wrapped_key->value, zero);
                 if (FSP_SUCCESS == ret)
                 {
@@ -3845,12 +4044,13 @@ static fsp_err_t prepare_gcm_iv (uint8_t               * initial_vector,
                 }
             }
         }
-        else    /* if (SCE_KEY_INDEX_TYPE_AES256 == key_index_word_size) */
+        else                                            /* if (SCE_KEY_INDEX_TYPE_AES256 == key_index_word_size) */
         {
             if (SCE_KEY_INDEX_TYPE_AES256_FOR_ECDH == wrapped_key->type)
             {
                 indata_keytype = change_endian_long(2); /* For ECDH */
             }
+
             ret = R_SCE_Aes256EncryptDecryptInitSub(&indata_keytype, &indata_cmd, wrapped_key->value, zero);
             if (FSP_SUCCESS == ret)
             {
@@ -3866,7 +4066,7 @@ static fsp_err_t prepare_gcm_iv (uint8_t               * initial_vector,
                 /* Casting uint32_t pointer is used for address. */
                 ret =
                     R_SCE_Ghash(hash_subkey, zero, (uint32_t *) initial_vector, hashed_ivec_tmp,
-                                 (initial_vector_length / 16U) * 4);
+                                (initial_vector_length / 16U) * 4);
                 if (FSP_SUCCESS == ret)
                 {
                     ivec_length_rest = initial_vector_length % 16;

@@ -15,11 +15,11 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define SCI_B_SPI_PRV_DTC_RX_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL << 30U) | (TRANSFER_SIZE_1_BYTE << 28U) | \
+#define SCI_B_SPI_PRV_DMA_RX_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL << 30U) | (TRANSFER_SIZE_1_BYTE << 28U) | \
                                                    (TRANSFER_ADDR_MODE_FIXED << 26U) | (TRANSFER_IRQ_END << 21U) | \
                                                    (TRANSFER_ADDR_MODE_INCREMENTED << 18U))
 
-#define SCI_B_SPI_PRV_DTC_TX_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL << 30U) | (TRANSFER_SIZE_1_BYTE << 28U) |       \
+#define SCI_B_SPI_PRV_DMA_TX_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL << 30U) | (TRANSFER_SIZE_1_BYTE << 28U) |       \
                                                    (TRANSFER_ADDR_MODE_INCREMENTED << 26U) | (TRANSFER_IRQ_END << 21U) | \
                                                    (TRANSFER_ADDR_MODE_FIXED << 18U))
 
@@ -64,8 +64,10 @@ typedef BSP_CMSE_NONSECURE_CALL void (*volatile sci_b_spi_prv_ns_callback)(spi_c
 
 static void r_sci_b_spi_hw_config(sci_b_spi_instance_ctrl_t * const p_ctrl);
 
-#if SCI_B_SPI_DTC_SUPPORT_ENABLE == 1
+#if SCI_B_SPI_CFG_DMA_SUPPORT_ENABLE == 1
 static fsp_err_t r_sci_b_spi_transfer_config(sci_b_spi_instance_ctrl_t * const p_ctrl);
+void             sci_b_spi_rx_dmac_callback(sci_b_spi_instance_ctrl_t const * const p_ctrl);
+void             sci_b_spi_tx_dmac_callback(sci_b_spi_instance_ctrl_t const * const p_ctrl);
 
 #endif
 static fsp_err_t r_sci_b_spi_write_read_common(sci_b_spi_instance_ctrl_t * const p_ctrl,
@@ -118,9 +120,9 @@ fsp_err_t R_SCI_B_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_c
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ASSERT(NULL != p_cfg->p_callback);
-    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
-    FSP_ASSERT(p_cfg->rxi_irq >= 0);
-    FSP_ASSERT(p_cfg->txi_irq >= 0);
+    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS_MASK & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ASSERT(p_cfg->rxi_irq >= 0 || p_cfg->p_transfer_rx);
+    FSP_ASSERT(p_cfg->txi_irq >= 0 || p_cfg->p_transfer_tx);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
     FSP_ASSERT(p_cfg->eri_irq >= 0);
 #endif
@@ -132,7 +134,7 @@ fsp_err_t R_SCI_B_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_c
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
 
-#if SCI_B_SPI_DTC_SUPPORT_ENABLE == 1
+#if SCI_B_SPI_CFG_DMA_SUPPORT_ENABLE == 1
 
     /* Open the SCI_B_SPI transfer interface if available. */
     err = r_sci_b_spi_transfer_config(p_ctrl);
@@ -142,9 +144,18 @@ fsp_err_t R_SCI_B_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_c
     /* Write user configuration to registers. */
     r_sci_b_spi_hw_config(p_ctrl);
 
-    /* Enable required interrupts. */
-    R_BSP_IrqCfgEnable(p_cfg->rxi_irq, p_cfg->rxi_ipl, p_ctrl);
-    R_BSP_IrqCfgEnable(p_cfg->txi_irq, p_cfg->txi_ipl, p_ctrl);
+    /* Enable optional interrupts. */
+    if (0 <= p_cfg->rxi_irq)
+    {
+        R_BSP_IrqCfgEnable(p_cfg->rxi_irq, p_cfg->rxi_ipl, p_ctrl);
+    }
+
+    if (0 <= p_cfg->txi_irq)
+    {
+        R_BSP_IrqCfgEnable(p_cfg->txi_irq, p_cfg->txi_ipl, p_ctrl);
+    }
+
+    /* Enable required interrupts */
     R_BSP_IrqCfgEnable(p_cfg->tei_irq, p_cfg->tei_ipl, p_ctrl);
     R_BSP_IrqCfgEnable(p_cfg->eri_irq, p_cfg->eri_ipl, p_ctrl);
 
@@ -179,6 +190,7 @@ fsp_err_t R_SCI_B_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_c
  *                                  - Bit width is not 8 bits
  *                                  - Length is equal to 0
  *                                  - Pointer to destination is NULL
+ *                                  - Transfer length is larger than supported by the transfer instances.
  * @retval     FSP_ERR_NOT_OPEN     The channel has not been opened. Open the channel first.
  * @retval     FSP_ERR_UNSUPPORTED  The given bit_width is not supported.
  * @retval     FSP_ERR_IN_USE       A transfer is already in progress.
@@ -233,6 +245,7 @@ fsp_err_t R_SCI_B_SPI_Read (spi_ctrl_t * const    p_api_ctrl,
  *                                  - Pointer to source is NULL
  *                                  - Length is equal to 0
  *                                  - Bit width is not equal to 8 bits
+ *                                  - Transfer length is larger than supported by the transfer instances.
  * @retval     FSP_ERR_NOT_OPEN     The channel has not been opened. Open the channel first.
  * @retval     FSP_ERR_UNSUPPORTED  The given bit_width is not supported.
  * @retval     FSP_ERR_IN_USE       A transfer is already in progress.
@@ -288,6 +301,7 @@ fsp_err_t R_SCI_B_SPI_Write (spi_ctrl_t * const    p_api_ctrl,
  *                                  - Pointer to destination is NULL
  *                                  - Length is equal to 0
  *                                  - Bit width is not equal to 8 bits
+ *                                  - Transfer length is larger than supported by the transfer instances.
  * @retval     FSP_ERR_NOT_OPEN     The channel has not been opened. Open the channel first.
  * @retval     FSP_ERR_UNSUPPORTED  The given bit_width is not supported.
  * @retval     FSP_ERR_IN_USE       A transfer is already in progress.
@@ -386,8 +400,16 @@ fsp_err_t R_SCI_B_SPI_Close (spi_ctrl_t * const p_api_ctrl)
     /* Clear the RE and TE bits in CCR0. */
     p_ctrl->p_reg->CCR0 = 0;
 
-    R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
-    R_BSP_IrqDisable(p_ctrl->p_cfg->rxi_irq);
+    if (0 <= p_ctrl->p_cfg->txi_irq)
+    {
+        R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
+    }
+
+    if (0 <= p_ctrl->p_cfg->rxi_irq)
+    {
+        R_BSP_IrqDisable(p_ctrl->p_cfg->rxi_irq);
+    }
+
     R_BSP_IrqDisable(p_ctrl->p_cfg->eri_irq);
     R_BSP_IrqDisable(p_ctrl->p_cfg->tei_irq);
 
@@ -431,9 +453,9 @@ fsp_err_t R_SCI_B_SPI_CalculateBitrate (uint32_t                  bitrate,
     }
     else
     {
-#if BSP_FEATURE_BSP_HAS_SCISPI_CLOCK
+#if BSP_FEATURE_SCI_HAS_SCISPI_CLOCK
         peripheral_clock = R_FSP_SciSpiClockHzGet();
-#elif BSP_FEATURE_BSP_HAS_SCI_CLOCK
+#elif BSP_FEATURE_SCI_HAS_CLOCK
         peripheral_clock = R_FSP_SciClockHzGet();
 #endif
     }
@@ -492,11 +514,12 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
                     SCI_B_SPI_PRV_CHR_RST_VALUE;
 
     /* CCR4.SCKSEL selects the master receive clock used in simple spi mode on supported MCUs. */
-    uint32_t ccr4  = (BSP_FEATURE_SCI_SPI_SCKSEL_VALUE << R_SCI_B0_CCR4_SCKSEL_Pos);
+    uint32_t ccr4  = (BSP_FEATURE_SCI_SPI_SCKSEL_MASK << R_SCI_B0_CCR4_SCKSEL_Pos);
     uint32_t cfclr = 0U;
     uint32_t ffclr = 0U;
 
-    /* SCI Initialization in Simple SPI Mode (See Section 26.9.5 and 26.6.3 in RA6T2 manual R01UH0951EJ0100). */
+    /* SCI Initialization in Simple SPI Mode (See "SCI Initialization in Simple SPI Mode" in the SCI section
+     * of the relevant hardware manual). */
 
     /* Write settings to CCR3:
      * - Set Bypass Synchronizer circuit between bus clock and operation clock.
@@ -530,7 +553,8 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     /* In order to get sampling on the even clock edge set CCR3.CPHA = 1. */
     if (SPI_CLK_POLARITY_LOW == p_cfg->clk_polarity)
     {
-        /* set CCR3.CPOL = 0 for clock polarity as low during idle. (See Figure 26.97 in RA6T2 manual R01UH0951EJ0100). */
+        /* set CCR3.CPOL = 0 for clock polarity as low during idle. (See figure "Relation between clock signal and transmit or receive data in simple SPI mode"
+         * in the SCI section of the relevant hardware manual). */
         ccr3 &= ~R_SCI_B0_CCR3_CPOL_Msk;
     }
 
@@ -558,7 +582,8 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     /* Set TEIE, TIE, RIE, TE, and RE to 0. */
     p_ctrl->p_reg->CCR0 = 0;
 
-    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See Section 26.20.15 in the RA6T2 user manual r01uh0951ej0100-ra6t2). */
+    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See "Notes regarding register access when operation clock (TCLK) is slower than bus
+     * clock (PCLK)" in the SCI section of the relevant hardware manual). */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR, 0U);
 
     /* Clear status flags. */
@@ -570,7 +595,8 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     /* Set FCR. Reset FIFO/data registers. */
     p_ctrl->p_reg->FCR = R_SCI_B0_FCR_TFRST_Msk | R_SCI_B0_FCR_RFRST_Msk;
 
-    /* Write all settings except MOD[2:0] to CCR3 (See Table 26.36 in RA6T2 manual R01UH0951EJ0130). */
+    /* Write all settings except MOD[2:0] to CCR3 (See Table "Example flow of SCI initialization in clock synchronous mode with
+     * non-FIFO selected" in the SCI section of the relevant hardware manual). */
     p_ctrl->p_reg->CCR3 = ccr3 & ~(R_SCI_B0_CCR3_MOD_Msk);
 
     /* Write settings to registers. */
@@ -583,7 +609,7 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     p_ctrl->p_reg->CCR0  = ccr0;
 }
 
-#if SCI_B_SPI_DTC_SUPPORT_ENABLE == 1
+#if SCI_B_SPI_CFG_DMA_SUPPORT_ENABLE == 1
 
 /*******************************************************************************************************************//**
  * Configures SCI SPI related transfer drivers (if enabled).
@@ -595,8 +621,6 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
  * @retval        FSP_ERR_ASSERTION         One of the following invalid parameters passed:
  *                                          - Pointer p_cfg is NULL
  *                                          - Interrupt is not enabled
- * @retval        FSP_ERR_INVALID_ARGUMENT  DTC is used for data transmission but not used for data reception or
- *                                          vice versa.
  **********************************************************************************************************************/
 static fsp_err_t r_sci_b_spi_transfer_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
 {
@@ -607,7 +631,7 @@ static fsp_err_t r_sci_b_spi_transfer_config (sci_b_spi_instance_ctrl_t * const 
     {
         /* Set the initial configuration for the rx transfer instance. */
         transfer_instance_t const * p_transfer = p_cfg->p_transfer_rx;
-        p_transfer->p_cfg->p_info->transfer_settings_word = SCI_B_SPI_PRV_DTC_RX_TRANSFER_SETTINGS;
+        p_transfer->p_cfg->p_info->transfer_settings_word = SCI_B_SPI_PRV_DMA_RX_TRANSFER_SETTINGS;
         p_transfer->p_cfg->p_info->p_src = (void *) &p_ctrl->p_reg->RDR;
 
         /* Open the transfer instance. */
@@ -619,7 +643,7 @@ static fsp_err_t r_sci_b_spi_transfer_config (sci_b_spi_instance_ctrl_t * const 
     {
         /* Set the initial configuration for the tx transfer instance. */
         transfer_instance_t const * p_transfer = p_cfg->p_transfer_tx;
-        p_transfer->p_cfg->p_info->transfer_settings_word = SCI_B_SPI_PRV_DTC_TX_TRANSFER_SETTINGS;
+        p_transfer->p_cfg->p_info->transfer_settings_word = SCI_B_SPI_PRV_DMA_TX_TRANSFER_SETTINGS;
         p_transfer->p_cfg->p_info->p_dest                 = (void *) &p_ctrl->p_reg->TDR;
 
         /* Open the transfer instance. */
@@ -642,7 +666,7 @@ static fsp_err_t r_sci_b_spi_transfer_config (sci_b_spi_instance_ctrl_t * const 
 #endif
 
 /*******************************************************************************************************************//**
- * Initiates writ or read process. Common routine used by SPI API write or read functions.
+ * Initiates write or read process. Common routine used by SPI API write or read functions.
  *
  * @param[in]  p_ctrl             Pointer to the control block.
  * @param[in]  p_src              Pointer to data buffer which need to be sent.
@@ -654,12 +678,13 @@ static fsp_err_t r_sci_b_spi_transfer_config (sci_b_spi_instance_ctrl_t * const 
  * @retval     FSP_ERR_ASSERTION  One of the following invalid parameters passed:
  *                                  - Pointer p_ctrl is NULL
  *                                  - length == 0
- *                                  - if DTC is used and length > UINT16_MAX
+ *                                  - Transfer length is larger than supported by the transfer instances.
  * @retval     FSP_ERR_IN_USE     A transfer is already in progress.
  *
  * @return     See @ref RENESAS_ERROR_CODES or functions called by this function for other possible return codes. This
  *             function calls:
  *               - @ref transfer_api_t::reconfigure
+ *               - @ref transfer_api_t::infoGet
  **********************************************************************************************************************/
 static fsp_err_t r_sci_b_spi_write_read_common (sci_b_spi_instance_ctrl_t * const p_ctrl,
                                                 void const                      * p_src,
@@ -670,15 +695,31 @@ static fsp_err_t r_sci_b_spi_write_read_common (sci_b_spi_instance_ctrl_t * cons
     FSP_ASSERT(NULL != p_ctrl);
     FSP_ERROR_RETURN(SCI_B_SPI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(0 != length);
-    if ((NULL != p_ctrl->p_cfg->p_transfer_tx) || (NULL != p_ctrl->p_cfg->p_transfer_rx))
+
+ #if SCI_B_SPI_CFG_DMA_SUPPORT_ENABLE
+    transfer_instance_t const * p_transfer_rx = p_ctrl->p_cfg->p_transfer_rx;
+    if (NULL != p_transfer_rx)
     {
-        /* The DTC is only capable of a max of 64K transfers. */
-        FSP_ASSERT(length <= UINT16_MAX);
+        transfer_properties_t transfer_info;
+        fsp_err_t             err = p_transfer_rx->p_api->infoGet(p_transfer_rx->p_ctrl, &transfer_info);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        FSP_ASSERT(length <= transfer_info.transfer_length_max);
     }
+
+    transfer_instance_t const * p_transfer_tx = p_ctrl->p_cfg->p_transfer_tx;
+    if (NULL != p_transfer_tx)
+    {
+        transfer_properties_t transfer_info;
+        fsp_err_t             err = p_transfer_tx->p_api->infoGet(p_transfer_tx->p_ctrl, &transfer_info);
+
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        FSP_ASSERT(length <= transfer_info.transfer_length_max);
+    }
+ #endif
 #endif
 
     /* TE and RE must be zero in order to write one to TE or RE (TE and RE will only be set if there is a transfer in
-     * progress. Reference section 26.2.5 Serial Control Register (SCR) in the RA6T2 manual r01uh0951ej0100-ra6t2. */
+     * progress. See "Serial Control Register (SCR)" description in the SCI section of the relevant hardware manual.) */
     FSP_ERROR_RETURN(0 == (p_ctrl->p_reg->CCR0 & (R_SCI_B0_CCR0_RE_Msk | R_SCI_B0_CCR0_TE_Msk)), FSP_ERR_IN_USE);
 
     /* Setup the control block. */
@@ -688,7 +729,7 @@ static fsp_err_t r_sci_b_spi_write_read_common (sci_b_spi_instance_ctrl_t * cons
     p_ctrl->p_src    = (uint8_t *) p_src;
     p_ctrl->p_dest   = (uint8_t *) p_dest;
 
-#if SCI_B_SPI_DTC_SUPPORT_ENABLE == 1
+#if SCI_B_SPI_CFG_DMA_SUPPORT_ENABLE == 1
     if (p_ctrl->p_cfg->p_transfer_tx)
     {
         /* Configure the tx transfer instance. */
@@ -859,13 +900,50 @@ static void r_sci_b_spi_call_callback (sci_b_spi_instance_ctrl_t * p_ctrl, spi_e
     }
 }
 
+#if SCI_B_SPI_CFG_DMA_SUPPORT_ENABLE == 1
+
+/*******************************************************************************************************************//**
+ * Callback that must be called after a RX DMAC transfer completes.
+ *
+ * @param[in]     p_ctrl     Pointer to SPI instance control block
+ **********************************************************************************************************************/
+void sci_b_spi_rx_dmac_callback (sci_b_spi_instance_ctrl_t const * const p_ctrl)
+{
+    /* Enable the transmit end interrupt once all data has been received
+     * and disable the transmit and reception interrupts. */
+    uint32_t ccr0_temp = p_ctrl->p_reg->CCR0;
+    ccr0_temp          |= R_SCI_B0_CCR0_TEIE_Msk;
+    ccr0_temp          &= (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_RIE_Msk);
+    p_ctrl->p_reg->CCR0 = ccr0_temp;
+}
+
+/*******************************************************************************************************************//**
+ * Callback that must be called after a TX DMAC transfer completes.
+ *
+ * @param[in]     p_ctrl     Pointer to SPI instance control block
+ **********************************************************************************************************************/
+void sci_b_spi_tx_dmac_callback (sci_b_spi_instance_ctrl_t const * const p_ctrl)
+{
+    if (NULL == p_ctrl->p_dest)
+    {
+        /* If the last byte is transmitted and there is no data to receive
+         * then enable the transmit end interrupt and disable the transmit interrupt. */
+        uint32_t ccr0_temp = p_ctrl->p_reg->CCR0;
+        ccr0_temp          |= R_SCI_B0_CCR0_TEIE_Msk;
+        ccr0_temp          &= (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk);
+        p_ctrl->p_reg->CCR0 = ccr0_temp;
+    }
+}
+
+#endif
+
 /*******************************************************************************************************************//**
  * This function is the ISR handler for R_SCI_B_SPI Transmit Buffer Empty IRQ.
  *
  * The Transmit Buffer Empty IRQ is enabled in the following conditions:
  *   - The transfer is started using R_SCI_B_SPI_Write API (There is no data to receive).
- *   - The rxi IRQ is serviced using a DTC instance.
- *   - The txi IRQ is serviced using a DTC instance (The interrupt will fire on the last byte transferred).
+ *   - The rxi IRQ is serviced using a DMA instance.
+ *   - The txi IRQ is serviced using a DMA instance (The interrupt will fire on the last byte transferred).
  *
  **********************************************************************************************************************/
 void sci_b_spi_txi_isr (void)

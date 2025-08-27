@@ -676,6 +676,17 @@ fsp_err_t HW_SCE_ShaGenerateMessageDigestSubAdaptor (const uint32_t InData_InitV
     return HW_SCE_Sha224256GenerateMessageDigestSub(InData_InitVal, InData_PaddedMsg, MAX_CNT, OutData_MsgDigest);
 }
 
+fsp_err_t HW_SCE_Rsa1024ModularExponentDecryptSubAdaptor(const uint32_t InData_KeyMode[],
+                                                         uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa1024ModularExponentDecryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
 fsp_err_t HW_SCE_Rsa2048ModularExponentDecryptSubAdaptor(const uint32_t InData_KeyMode[],
                                                          uint32_t InData_KeyIndex[],
                                                          const uint32_t InData_Key[],
@@ -685,6 +696,15 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentDecryptSubAdaptor(const uint32_t InData_K
     FSP_PARAMETER_NOT_USED (InData_KeyMode);
     FSP_PARAMETER_NOT_USED (InData_Key);
     return HW_SCE_Rsa2048ModularExponentDecryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
+fsp_err_t HW_SCE_Rsa1024ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    return HW_SCE_Rsa1024ModularExponentEncryptSub(InData_KeyIndex, InData_Text, OutData_Text);
 }
 
 fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[],

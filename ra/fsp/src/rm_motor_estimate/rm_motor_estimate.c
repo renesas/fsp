@@ -18,12 +18,12 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_ESTIMATE_OPEN       (0X4D414553ULL)
+#define     MOTOR_ESTIMATE_OPEN       (('M' << 24U) | ('T' << 16U) | ('E' << 8U) | ('S' << 0U))
 
 #define     MOTOR_ESTIMATE_FLG_CLR    (0U)
 #define     MOTOR_ESTIMATE_FLG_SET    (1U)
 
-#define     MOTOR_ESTIMATE_TWOPI      (3.14159265358979F * 2.0F)
+#define     MOTOR_ESTIMATE_TWOPI      (2.0F * 3.1415926535F)
 
 #ifndef MTR_ESTIMATE_ERROR_RETURN
 

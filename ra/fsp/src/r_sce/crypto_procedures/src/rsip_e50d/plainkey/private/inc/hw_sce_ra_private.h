@@ -333,7 +333,9 @@ fsp_err_t HW_SCE_GenerateAes256RandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
 fsp_err_t HW_SCE_GenerateAes128XtsRandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
 fsp_err_t HW_SCE_GenerateAes256XtsRandomKeyIndexSub (uint32_t OutData_KeyIndex[]);
 fsp_err_t HW_SCE_Rsa1024ModularExponentEncryptSub(const uint32_t InData_KeyIndex[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
+fsp_err_t HW_SCE_Rsa1024ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
 fsp_err_t HW_SCE_Rsa1024ModularExponentDecryptSub(const uint32_t InData_KeyIndex[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
+fsp_err_t HW_SCE_Rsa1024ModularExponentDecryptSubAdaptor(const uint32_t InData_KeyMode[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
 fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t InData_KeyIndex[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
 fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
 fsp_err_t HW_SCE_Rsa2048ModularExponentDecryptSub(const uint32_t InData_KeyIndex[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
@@ -451,12 +453,12 @@ fsp_err_t HW_SCE_Aes128XtsDecryptInitSubGeneral (const uint32_t InData_KeyMode[]
                                                  const uint32_t InData_KeyIndex[],
                                                  const uint32_t InData_Key[],
                                                  const uint32_t InData_IV[]);
-fsp_err_t HW_SCE_Sha3GenerateMessageDigestSubAdaptor(const uint32_t InData_HashType[],
-                                                     const uint32_t InData_Cmd[],
-                                                     const uint32_t InData_Msg[],
-                                                     const uint32_t InData_MsgLen[],
-                                                     const uint32_t InData_State[],
-                                                     uint32_t       OutData_MsgDigest[],
-                                                     uint32_t       OutData_State[],
-                                                     const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_Sha3GenerateMessageDigestSubGeneral(const uint32_t InData_HashType[],
+                                                            const uint32_t InData_Cmd[],
+                                                            const uint32_t InData_Msg[],
+                                                            const uint32_t InData_MsgLen[],
+                                                            const uint32_t InData_State[],
+                                                            uint32_t       OutData_MsgDigest[],
+                                                            uint32_t       OutData_State[],
+                                                            const uint32_t MAX_CNT);
 #endif /* HW_SCE_RA_PRIVATE_HEADER_FILE */

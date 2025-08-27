@@ -49,41 +49,6 @@
   #endif
 
   #if BSP_FEATURE_RSIP_SCE9_SUPPORTED
-fsp_err_t HW_SCE_RSA_1024PrivateKeyDecrypt(const uint32_t * InData_Text,
-                                           const uint32_t * InData_PrivateKey,
-                                           const uint32_t * InData_N,
-                                           uint32_t       * OutData_Text);
-
-fsp_err_t HW_SCE_RSA_1024PrivateKeyDecrypt (const uint32_t * InData_Text,
-                                            const uint32_t * InData_PrivateKey,
-                                            const uint32_t * InData_N,
-                                            uint32_t       * OutData_Text)
-
-{
-    FSP_PARAMETER_NOT_USED(InData_PrivateKey);
-    fsp_err_t err = FSP_SUCCESS;
-
-    /* Create storage to hold the generated OEM key index */
-    sce_rsa1024_private_key_index_t encrypted_rsa_key;
-
-    /*This function requires the plaintext RSA key is provided in a single buffer in the order:
-     * Public Key (N) of size RSA_MODULUS_SIZE_BYTES(x)
-     * Private Key (D) of size private_key_size_bytes
-     * The buffer in mbedtls_rsa_private() already contains the data in that format, so InData_N
-     * is directly provided to this function.
-     */
-    err =
-        HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN, SCE_OEM_CMD_RSA1024_PRIVATE, NULL, NULL,
-                                          (const uint8_t *) InData_N, (uint32_t *) &encrypted_rsa_key.value);
-
-    if (FSP_SUCCESS == err)
-    {
-        err = HW_SCE_Rsa1024ModularExponentDecryptSub((uint32_t *) &encrypted_rsa_key.value, InData_Text, OutData_Text);
-    }
-
-    return err;
-}
-
 fsp_err_t HW_SCE_HRK_RSA_1024KeyGenerate(uint32_t   num_tries,
                                          uint32_t * OutData_KeyIndex,
                                          uint32_t * OutData_N,
@@ -132,9 +97,8 @@ fsp_err_t HW_SCE_RSA_1024KeyGenerate (uint32_t   num_tries,
 
 {
     fsp_err_t err = FSP_SUCCESS;
-   #if (BSP_FEATURE_RSIP_SCE9_SUPPORTED)
-    uint32_t local_private_key[HW_SCE_RSA1024_RANDOM_PRIVATE_KEY_BYTE_SIZE / 4U] = {0};
-    uint32_t local_public_key[HW_SCE_RSA1024_RANDOM_PUBLIC_KEY_BYTE_SIZE / 4U]   = {0};
+    uint32_t  local_private_key[HW_SCE_RSA1024_RANDOM_PRIVATE_KEY_BYTE_SIZE / 4U] = {0};
+    uint32_t  local_public_key[HW_SCE_RSA1024_RANDOM_PUBLIC_KEY_BYTE_SIZE / 4U]   = {0};
 
     uint32_t local_dummy[RM_PSA_CRYPTO_DUMMY_KEY_BYTES / 4U];
     uint32_t indata_key_type = SCE_OEM_KEY_TYPE_PLAIN;
@@ -161,46 +125,47 @@ fsp_err_t HW_SCE_RSA_1024KeyGenerate (uint32_t   num_tries,
         memcpy((uint8_t *) OutData_DomainParam, dummy_P_Q, sizeof(dummy_P_Q));
     }
 
-   #else
-    FSP_PARAMETER_NOT_USED(num_tries);
-    FSP_PARAMETER_NOT_USED(OutData_PrivateKey);
-    FSP_PARAMETER_NOT_USED(OutData_N);
-    FSP_PARAMETER_NOT_USED(OutData_DomainParam);
-    err = FSP_ERR_UNSUPPORTED;
-   #endif
-
     return err;
 }
 
-fsp_err_t HW_SCE_RSA_1024PublicKeyEncrypt (const uint32_t * InData_Text,
-                                           const uint32_t * InData_PublicKey,
+  #endif                               /* BSP_FEATURE_RSIP_SCE9_SUPPORTED */
+
+  #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+fsp_err_t HW_SCE_RSA_1024PrivateKeyDecrypt(const uint32_t * InData_Text,
+                                           const uint32_t * InData_PrivateKey,
                                            const uint32_t * InData_N,
-                                           uint32_t       * OutData_Text)
+                                           uint32_t       * OutData_Text);
+
+fsp_err_t HW_SCE_RSA_1024PrivateKeyDecrypt (const uint32_t * InData_Text,
+                                            const uint32_t * InData_PrivateKey,
+                                            const uint32_t * InData_N,
+                                            uint32_t       * OutData_Text)
 
 {
-    fsp_err_t err = FSP_SUCCESS;
+    FSP_PARAMETER_NOT_USED(InData_PrivateKey);
+    fsp_err_t err             = FSP_SUCCESS;
+    uint32_t  indata_key_type = 0;
 
     /* Create storage to hold the generated OEM key index */
-    sce_rsa1024_public_key_index_t formatted_rsa_public_key_output;
-    uint8_t formatted_rsa_public_key_input[HW_SCE_RSA1024_NE_KEY_BYTE_SIZE] = {0};
-    memcpy(&formatted_rsa_public_key_input[0], InData_N, HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE);
-    memcpy(&formatted_rsa_public_key_input[HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE],
-           InData_PublicKey,
-           HW_SCE_RSA_1024_KEY_E_LENGTH_BYTE_SIZE);
+    sce_rsa1024_private_key_index_t encrypted_rsa_key;
 
+    /*This function requires the plaintext RSA key is provided in a single buffer in the order:
+     * Public Key (N) of size RSA_MODULUS_SIZE_BYTES(x)
+     * Private Key (D) of size private_key_size_bytes
+     * The buffer in mbedtls_rsa_private() already contains the data in that format, so InData_N
+     * is directly provided to this function.
+     */
     err =
-        HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
-                                          SCE_OEM_CMD_RSA1024_PUBLIC,
-                                          NULL,
-                                          NULL,
-                                          (const uint8_t *) &formatted_rsa_public_key_input,
-                                          (uint32_t *) &formatted_rsa_public_key_output.value);
+        HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN, SCE_OEM_CMD_RSA1024_PRIVATE, NULL, NULL,
+                                          (const uint8_t *) InData_N, (uint32_t *) &encrypted_rsa_key.value);
 
     if (FSP_SUCCESS == err)
     {
-        err = HW_SCE_Rsa1024ModularExponentEncryptSub((uint32_t *) &formatted_rsa_public_key_output.value,
-                                                      InData_Text,
-                                                      OutData_Text);
+        err = HW_SCE_Rsa1024ModularExponentDecryptSubAdaptor(&indata_key_type,
+                                                             (uint32_t *) &encrypted_rsa_key.value,
+                                                             NULL,
+                                                             InData_Text,
+                                                             OutData_Text);
     }
 
     return err;
@@ -218,15 +183,56 @@ fsp_err_t HW_SCE_HRK_RSA_1024PrivateKeyDecrypt (const uint32_t * InData_Text,
 
 {
     FSP_PARAMETER_NOT_USED(InData_N);
+    fsp_err_t err             = FSP_SUCCESS;
+    uint32_t  indata_key_type = 0;
 
-    fsp_err_t err = FSP_SUCCESS;
-
-    err = HW_SCE_Rsa1024ModularExponentDecryptSub((uint32_t *) InData_KeyIndex, InData_Text, OutData_Text);
+    err = HW_SCE_Rsa1024ModularExponentDecryptSubAdaptor(&indata_key_type,
+                                                         (uint32_t *) InData_KeyIndex,
+                                                         NULL,
+                                                         InData_Text,
+                                                         OutData_Text);
 
     return err;
 }
 
-  #endif
+fsp_err_t HW_SCE_RSA_1024PublicKeyEncrypt (const uint32_t * InData_Text,
+                                           const uint32_t * InData_PublicKey,
+                                           const uint32_t * InData_N,
+                                           uint32_t       * OutData_Text)
+
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+    /* Create storage to hold the generated OEM key index */
+    sce_rsa1024_public_key_index_t formatted_rsa_public_key_output          = {0};
+    uint8_t formatted_rsa_public_key_input[HW_SCE_RSA1024_NE_KEY_BYTE_SIZE] = {0};
+    memcpy(&formatted_rsa_public_key_input[0], InData_N, HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE);
+    memcpy(&formatted_rsa_public_key_input[HW_SCE_RSA_1024_KEY_N_LENGTH_BYTE_SIZE],
+           InData_PublicKey,
+           HW_SCE_RSA_1024_KEY_E_LENGTH_BYTE_SIZE);
+
+   #if (0U == BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED) /* RSA-1024 public key wrap unsupported on RSIP-E51A */
+    err =
+        HW_SCE_GenerateOemKeyIndexPrivate(SCE_OEM_KEY_TYPE_PLAIN,
+                                          SCE_OEM_CMD_RSA1024_PUBLIC,
+                                          NULL,
+                                          NULL,
+                                          (const uint8_t *) &formatted_rsa_public_key_input,
+                                          (uint32_t *) &formatted_rsa_public_key_output.value);
+   #endif
+    if (FSP_SUCCESS == err)
+    {
+        err =
+            HW_SCE_Rsa1024ModularExponentEncryptSubAdaptor((uint32_t *) &formatted_rsa_public_key_output.value,
+                                                           (uint32_t *) &formatted_rsa_public_key_input,
+                                                           InData_Text,
+                                                           OutData_Text);
+    }
+
+    return err;
+}
+
+  #endif                               /* BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED */
 
   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
 fsp_err_t HW_SCE_HRK_RSA_3072KeyGenerate(uint32_t   num_tries,
@@ -438,7 +444,7 @@ fsp_err_t HW_SCE_RSA_4096PrivateKeyDecrypt (const uint32_t * InData_Text,
     return err;
 }
 
-  #endif
+  #endif                               /* BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED */
 
 fsp_err_t HW_SCE_HRK_RSA_2048KeyGenerate(uint32_t   num_tries,
                                          uint32_t * OutData_KeyIndex,
@@ -618,7 +624,9 @@ static const hw_sce_rsa_generatekey_t g_rsa_keygen_lookup_1024[2] =
         HW_SCE_HRK_RSA_1024KeyGenerate,
    #endif
 };
+  #endif
 
+  #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
 static const hw_sce_rsa_private_decrypt_t g_rsa_private_decrypt_lookup_1024[2] =
 {
    #if PSA_CRYPTO_IS_PLAINTEXT_SUPPORT_REQUIRED(PSA_CRYPTO_CFG_RSA_FORMAT)
@@ -966,8 +974,6 @@ int mbedtls_rsa_public (mbedtls_rsa_context * ctx, const unsigned char * input, 
         p_hw_sce_rsa_public_encrypt = HW_SCE_RSA_4096PublicKeyEncrypt;
     }
    #endif
-  #endif
-  #if BSP_FEATURE_RSIP_SCE9_SUPPORTED
     else if (ctx->len == RSA_MODULUS_SIZE_BYTES(RSA_1024_BITS))
     {
         p_hw_sce_rsa_public_encrypt = HW_SCE_RSA_1024PublicKeyEncrypt;
@@ -1100,7 +1106,8 @@ int mbedtls_rsa_private (mbedtls_rsa_context * ctx,
         }
     }
    #endif
-  #elif BSP_FEATURE_RSIP_SCE9_SUPPORTED
+  #endif
+  #if BSP_FEATURE_RSIP_SCE9_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
     else if (ctx->len == RSA_1024_BITS / 8)
     {
         p_hw_sce_rsa_private_decrypt = g_rsa_private_decrypt_lookup_1024[(bool) ctx->vendor_ctx];

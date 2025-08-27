@@ -1604,7 +1604,7 @@ static fsp_err_t flash_hp_write_data (flash_hp_instance_ctrl_t * const p_ctrl, u
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_check_errors (fsp_err_t previous_error, uint32_t error_bits, fsp_err_t return_error)
 {
-    /* See "Recovery from the Command-Locked State": Section 47.9.3.6 of the RA6M4 manual R01UH0890EJ0100.*/
+    /* See "Recovery from the Command-Locked State" in the Flash Memory section of the relevant hardware manual. */
     fsp_err_t err = FSP_SUCCESS;
     if (1U == R_FACI_HP->FASTAT_b.CMDLK)
     {
@@ -2296,7 +2296,7 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
     p_ctrl->timeout_blank_check = (uint32_t) (FLASH_HP_MAX_BLANK_CHECK_US * system_clock_freq_mhz) /
                                   R_FLASH_HP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
 
-    /*  According to RA8M1 manual R01UH0994EJ0110 the max timeout value when
+    /*  According to the device hardware manual the max timeout value when
      *  using the configuration set command is 515 ms (DF max timeout). This
      *  is with a FCLK of 4MHz. The calculation below calculates the number
      *  of ICLK ticks needed for the timeout delay.
@@ -2329,7 +2329,7 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
 
 #if (BSP_FEATURE_FLASH_SUPPORTS_ANTI_ROLLBACK == 1)
 
-    /*  According to RA8M1 manual R01UH0994EJ0110 the max timeout value for
+    /*  According to the device HW manual the max timeout value for
      *  refreshing or incrementing the anti-rollback counter is around 81 ms.
      *  This is with a FCLK of 4MHz. The calculation below  calculates the
      *  number of ICLK ticks needed for the timeout delay.
@@ -2338,7 +2338,7 @@ static fsp_err_t flash_hp_init (flash_hp_instance_ctrl_t * p_ctrl)
         (uint32_t) (FLASH_HP_MAX_INCREMENT_REFRESH_COUNTER_US * system_clock_freq_mhz) /
         R_FLASH_HP_CYCLES_MINIMUM_PER_TIMEOUT_LOOP;
 
-    /*  According to RA8M1 manual R01UH0994EJ0110 the max timeout value for
+    /*  According to the device HW manual the max timeout value for
      *  reading the anti-rollback counter is around 25 ms. This is with
      *  a FCLK of 4MHz. The calculation below  calculates the number of ICLK
      *  ticks needed for the timeout delay.
@@ -2580,7 +2580,7 @@ static fsp_err_t flash_hp_df_erase (flash_hp_instance_ctrl_t * p_ctrl, uint32_t 
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_pe_mode_exit (void)
 {
-    /* See "Transition to Read Mode": Section 47.9.3.5 of the RA6M4 manual R01UH0890EJ0100. */
+    /* See "Transition to Read Mode" in the Flash Memory section of the relevant hardware manual. */
     /* FRDY and CMDLK are checked after the previous commands complete and do not need to be checked again. */
     fsp_err_t err      = FSP_SUCCESS;
     fsp_err_t temp_err = FSP_SUCCESS;
@@ -2613,7 +2613,7 @@ static fsp_err_t flash_hp_pe_mode_exit (void)
 #endif
 
         R_BSP_FlashCacheEnable();
-#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER == 1)
+#if (FLASH_HP_CFG_CODE_FLASH_PROGRAMMING_ENABLE == 1) && (BSP_FEATURE_FLASH_PREFETCH_BUFFER == 1)
         R_FACI_LP->PFBER = 1U;
 #endif
 
@@ -2706,7 +2706,7 @@ static fsp_err_t flash_hp_reset (flash_hp_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_stop (void)
 {
-    /* See "Forced Stop Command": Section 47.9.3.13 of the RA6M4 manual R01UH0890EJ0100. If the CMDLK bit
+    /* See "Forced Stop Command" in the Flash Memory section of the relevant hardware manual. If the CMDLK bit
      * is still set after issuing the force stop command return an error. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 
@@ -2738,7 +2738,7 @@ static fsp_err_t flash_hp_stop (void)
  **********************************************************************************************************************/
 static fsp_err_t flash_hp_status_clear (void)
 {
-    /* See "Status Clear Command": Section 47.9.3.12 of the RA6M4 manual R01UH0890EJ0100. */
+    /* See "Status Clear Command" in the Flash Memory section of the relevant hardware manual. */
     /* Timeout counter. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 
@@ -3017,7 +3017,7 @@ static fsp_err_t flash_hp_configuration_area_write (flash_hp_instance_ctrl_t * p
     }
  #endif
 
-    /* See "Configuration Set Command": Section 47.9.3.15 of the RA6M4 manual R01UH0890EJ0100. */
+    /* See "Configuration Set Command" in the Flash Memory section of the relevant hardware manual. */
     R_FACI_HP->FSADDR        = fsaddr;
     R_FACI_HP_CMD->FACI_CMD8 = FLASH_HP_FACI_CMD_CONFIG_SET_1;
     R_FACI_HP_CMD->FACI_CMD8 = faci_config_set_2;
@@ -3314,7 +3314,7 @@ static fsp_err_t flash_hp_enter_pe_df_mode (flash_hp_instance_ctrl_t * const p_c
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    /* See "Transition to Data Flash P/E Mode": Section 47.9.3.4 of the RA6M4 manual R01UH0890EJ0100. */
+    /* See "Transition to Data Flash P/E Mode" in the Flash Memory section of the relevant hardware manual. */
     /* Timeout counter. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 
@@ -3361,19 +3361,23 @@ static fsp_err_t flash_hp_enter_pe_cf_mode (flash_hp_instance_ctrl_t * const p_c
 {
     fsp_err_t err = FSP_SUCCESS;
 
-    /* See "Transition to Code Flash P/E Mode": Section 47.9.3.3 of the RA6M4 manual R01UH0890EJ0100. */
+    /* See "Transition to Code Flash P/E Mode" in the Flash Memory section of the relevant hardware manual. */
     /* Timeout counter. */
     volatile uint32_t wait_count = FLASH_HP_FRDY_CMD_TIMEOUT;
 
     /* While the Flash API is in use we will disable the flash cache. */
- #if BSP_FEATURE_BSP_FLASH_CACHE_DISABLE_OPM
-    R_BSP_FlashCacheDisable();
- #elif defined(R_CACHE)
+ #if BSP_FEATURE_FLASH_HP_FCACHE_DISABLE_BEFORE_PE
+
+    /* Disable the FCACHE, except for Star/RA40MCU devices that have errata. */
+    R_FCACHE->FCACHEE = 0U;
+ #endif
+
+ #if defined(R_CACHE)
 
     /* Disable the C-Cache. */
     R_CACHE->CCACTL = 0U;
  #endif
- #if BSP_FEATURE_BSP_FLASH_PREFETCH_BUFFER
+ #if BSP_FEATURE_FLASH_PREFETCH_BUFFER
     R_FACI_LP->PFBER = 0U;
  #endif
 

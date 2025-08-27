@@ -10,7 +10,7 @@
 #include "r_rsip_public.h"
 #include "r_rsip_primitive.h"
 #include "r_rsip_wrapper.h"
-#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+#if RSIP_CFG_FW_UPDATE_ENABLE
  #include "r_sb_api.h"
 #endif
 
@@ -98,7 +98,7 @@ fsp_err_t R_RSIP_FSBL_OEM_BL_Digest_Generate (rsip_ctrl_t * const   p_ctrl,
 {
     fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
 
-#if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED
+#if RSIP_CFG_FW_UPDATE_ENABLE
     rsip_instance_ctrl_t * p_instance_ctrl = (rsip_instance_ctrl_t *) p_ctrl;
 
  #if RSIP_CFG_PARAM_CHECKING_ENABLE

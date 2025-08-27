@@ -25,13 +25,10 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_POSITION_CODE_VERSION_MAJOR    (1U)
-#define MOTOR_POSITION_CODE_VERSION_MINOR    (0U)
-
-#define MOTOR_POSITION_TWOPI                 (3.14159265358979F * 2.0F)
-#define MOTOR_POSITION_TWOPI_60              (MOTOR_POSITION_TWOPI / 60.0F) /* To translate rpm => rad/s */
-#define MOTOR_POSITION_TWOPI_360             (MOTOR_POSITION_TWOPI / 360.0F)
-#define MOTOR_POSITION_360_TWOPI             (360.0F / MOTOR_POSITION_TWOPI)
+#define MOTOR_POSITION_TWOPI        (2.0F * 3.1415926535F)
+#define MOTOR_POSITION_TWOPI_60     (MOTOR_POSITION_TWOPI / 60.0F) /* To translate rpm => rad/s */
+#define MOTOR_POSITION_TWOPI_360    (MOTOR_POSITION_TWOPI / 360.0F)
+#define MOTOR_POSITION_360_TWOPI    (360.0F / MOTOR_POSITION_TWOPI)
 
 /***********************************************************************************************************************
  * Library Macro definitions

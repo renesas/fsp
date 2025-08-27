@@ -113,8 +113,8 @@ void NMI_Handler (void)
 #if BSP_CFG_MCU_PART_SERIES == 8
 
     /* Wait for NMISR to be cleared before exiting the ISR to prevent the IRQ from being regenerated.
-     * See section "13.2.12 NMICLR : Non-Maskable Interrupt Status Clear Register" in the RA8M1 manual
-     * R01UH0994EJ0100 */
+     * See "NMICLR : Non-Maskable Interrupt Status Clear Register" description in the ICU section
+     * of the relevant hardware manual */
     FSP_HARDWARE_REGISTER_WAIT((R_ICU->NMISR & nmisr), 0);
 #endif
 }

@@ -297,6 +297,8 @@ fsp_err_t R_RSIP_ECDSA_Verify (rsip_ctrl_t * const              p_ctrl,
  *  - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC
  *
  * Message hash p_hash should be computed in advance.
  * In the case of hash length is less than the key length, padding is required to make it the same as the key length.
@@ -635,6 +637,8 @@ fsp_err_t R_RSIP_PureEdDSA_Verify (rsip_ctrl_t * const              p_ctrl,
  *  - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC
  * @endparblock
  *
  * @par State transition
@@ -739,6 +743,8 @@ fsp_err_t R_RSIP_ECDH_KeyAgree (rsip_ctrl_t * const              p_ctrl,
  *  - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC
  *
  * For secp521r1 operation, the length of the argument p_plain_public_key must be set as 132 byte.
  * Since 521 bit is not a 8-bit multiple, zero padding is required and the data format is as follows:

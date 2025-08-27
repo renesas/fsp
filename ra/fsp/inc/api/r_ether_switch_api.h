@@ -46,6 +46,7 @@ typedef enum e_ether_switch_event
     ETHER_SWITCH_EVENT_TX_COMPLETE,     ///< A descriptor complete to transmit a flame.
     ETHER_SWITCH_EVENT_RX_QUEUE_FULL,   ///< A RX descriptor queue is full.
     ETHER_SWITCH_EVENT_RX_MESSAGE_LOST, ///< Receive a frame when a RX descriptor queue is full.
+    ETHER_SWITCH_EVENT_TAS_ERROR,       ///< TAS gate error.
 } ether_switch_event_t;
 #endif
 

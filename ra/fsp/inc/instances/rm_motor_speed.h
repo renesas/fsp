@@ -127,8 +127,10 @@ typedef struct st_motor_speed_oldamp
     float f4_ol_id_down_step;          ///< The d-axis current reference ramping down rate [A/ms]
     float f4_ol_iq_down_step_ratio;    ///< The Iq reference ramping down proportion to Iqref before open-loop
     float f4_ol_id_ref;                ///< The d-axis current reference in open-loop drive
-    float f4_id_down_speed_rad;        ///< The speed threshold[rad/s] to ramp down the d-axis current
-    float f4_id_up_speed_rad;          ///< The speed threshold[rad/s] to ramp up the d-axis current
+    float f4_id_down_speed_rad;        // [DEPERECATED]The speed threshold[rad/s] to ramp down the d-axis current
+    float f4_id_up_speed_rad;          // [DEPERECATED]The speed threshold[rad/s] to ramp up the d-axis current
+    float f4_id_down_speed_rpm;        ///< The speed threshold[rpm] to ramp down the d-axis current
+    float f4_id_up_speed_rpm;          ///< The speed threshold[rpm] to ramp up the d-axis current
     float f4_opl2less_sw_time;         ///< Time to switch open-loop to sensor-less [s]
     float f4_switch_phase_err_rad;     ///< Phase error to decide sensor-less switch timing [rad]
 } motor_speed_oldamp_t;
@@ -219,9 +221,10 @@ typedef struct st_motor_speed_extended_cfg
 
     float f_speed_ctrl_period;                          ///< Speed control period [sec]
     float f_limit_speed_change;                         ///< Reference speed max change limit [rad/s]
-    float f_max_speed_rad;                              ///< Maximum speed command value [rad/s]
+    float f_max_speed_rad;                              // [DEPERECATED]Maximum speed command value [rad/s]
+    float f_maximum_speed_rpm;                          ///< Maximum speed command value [rpm]
     float f_omega_t;                                    ///< Speed LPF design value
-    float f_id_up_speed_rad;                            ///< The speed threshold[rad/s] to ramp up the d-axis current
+    float f_id_up_speed_rad;                            // [DEPERECATED]The speed threshold[rad/s] to ramp up the d-axis current
     float f_iq_limit;                                   ///< Limit of q-axis current [A]
 
     float f_ol_fb_speed_limit_rate;                     ///< Rate of reference speed for feedback speed limitter

@@ -320,7 +320,8 @@ typedef enum e_elc_event_ra6m1
     ELC_EVENT_SDHIMMC1_ACCS                 = (0x1CB), // Card access
     ELC_EVENT_SDHIMMC1_SDIO                 = (0x1CC), // SDIO access
     ELC_EVENT_SDHIMMC1_CARD                 = (0x1CD), // Card detect
-    ELC_EVENT_SDHIMMC1_DMA_REQ              = (0x1CE)  // DMA transfer request
+    ELC_EVENT_SDHIMMC1_DMA_REQ              = (0x1CE), // DMA transfer request
+    ELC_EVENT_SCE_TADI                      = (0x1E2)  // SCE Tamper Detection
 } elc_event_t;
 
 #define BSP_PRV_VECT_ENUM(event,group)  (ELC_ ## event)

@@ -29,6 +29,11 @@ int mbedtls_hardware_poll (void * data, unsigned char * output, size_t len, size
 {
     ((void) data);
 
+    if (FSP_SUCCESS != HW_SCE_McuSpecificInit())
+    {
+        return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+
     if (FSP_SUCCESS != RM_PSA_CRYPTO_TRNG_Read(output, len, (uint32_t *) olen))
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;

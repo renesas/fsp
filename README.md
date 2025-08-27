@@ -10,7 +10,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 
 ### Current Release
 
-[FSP v6.0.0](https://github.com/renesas/fsp/releases/tag/v6.0.0)
+[FSP v6.1.0](https://github.com/renesas/fsp/releases/tag/v6.1.0)
 
 ### Supported RA MCU Kits
 
@@ -22,6 +22,7 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 - CK-RA6M5 V2
 - FPB-RA0E1
 - FPB-RA0E2
+- FPB-RA0L1
 - FPB-RA2E1
 - FPB-RA2E2
 - FPB-RA2E3
@@ -61,6 +62,8 @@ FSP uses an open software ecosystem and provides flexibility in using your prefe
 - MCK-RA6T2
 - MCK-RA6T3
 - MCK-RA8T1
+- MCK-RA8T2
+- RSSK-RA0L1
 - RSSK-RA2L1
 - RSSK-RA4L1
 - RSSK-RA6T1
@@ -115,6 +118,7 @@ It is important to note that updates for Azure RTOS on these hardware will no lo
 - FSP versions of 5.8.0 and later require a minimum e² studio version of 2025-01.
 - FSP versions of 5.9.0 and later require a minimum e² studio version of 2025-04.
 - FSP versions of 6.0.0 and later require a minimum e² studio version of 2025-04.1.
+- FSP versions of 6.1.0 and later require a minimum e² studio version of 2025-07.
 
 If you have already installed a previous FSP release that included e² studio then you can download the packs separately. These are available for download under the Assets section for each release. There is a zipped version, FSP_Packs_\<version\>.zip, that will work on any supported OS. There is also a self-extracting installer version, FSP_Packs_\<version\>.exe, that will work on Windows.
 
@@ -122,7 +126,7 @@ When using the zipped version of the packs the zip file should be extracted into
 
 #### For new users that are using FSP with e² studio
 
-1.	Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/fsp/releases/tag/v6.0.0).
+1.	Download the FSP with e² studio Installer from the Assets section of the [current release](https://github.com/renesas/fsp/releases/tag/v6.1.0).
 2.	Run the installer. This will install the e² studio tool, FSP packs, chosen toolchains (GCC and/or LLVM) and other tools required to use this software. No additional installations are required.
 
 #### If using RA Smart Configurator (RASC) with IAR Embedded Workbench or Keil MDK ####

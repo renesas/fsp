@@ -468,9 +468,9 @@ fsp_err_t R_GPT_PeriodSet (timer_ctrl_t * const p_ctrl, uint32_t const period_co
     /* Set a 50% duty cycle so the period of the waveform on the output pin matches the requested period. */
     if (TIMER_MODE_PERIODIC == p_instance_ctrl->p_cfg->mode)
     {
-        /* The  GTIOCA/GTIOCB pins transition 1 cycle after compare match when buffer operation is used. Reference
-         * Figure 23.34 "Example setting for saw-wave PWM mode" in the RA6M3 manual R01UH0886EJ0100. To get a duty cycle
-         * as close to 50% as possible, duty cycle (register) = (period (counts) / 2) - 1. */
+        /* The  GTIOCA/GTIOCB pins transition 1 cycle after compare match when buffer operation is used. See
+         * figure "Example setting for saw-wave PWM mode" in the GPT section of the relevant hardware manual.
+         * To get a duty cycle as close to 50% as possible, duty cycle (register) = (period (counts) / 2) - 1. */
         uint32_t duty_cycle_50_percent = (period_counts >> 1) - 1U;
         p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRC] = duty_cycle_50_percent;
         p_instance_ctrl->p_reg->GTCCR[GPT_PRV_GTCCRE] = duty_cycle_50_percent;
@@ -1117,17 +1117,8 @@ fsp_err_t R_GPT_PwmOutputDelayInitialize ()
  #if ((BSP_FEATURE_GPT_ODC_FRANGE_FREQ_MIN > 0) || GPT_CFG_PARAM_CHECKING_ENABLE)
   #if (BSP_PERIPHERAL_GPT_GTCLK_PRESENT && (GPT_CFG_GPTCLK_BYPASS == 0))
 
-    /* Calculate the GPTCK Divider. */
-    uint8_t divider = R_SYSTEM->GPTCKDIVCR;
-
-    if (0U == divider)
-    {
-        divider = 1U;
-    }
-    else
-    {
-        divider *= 2U;
-    }
+    /* Get the GPTCK Divider. */
+    const uint8_t divider = (uint8_t) R_FSP_ClockDividerGet(R_SYSTEM->GPTCKDIVCR_b.GPTCKDIV);
 
     /* Calculate the GPTCK Frequency. */
     uint32_t gpt_frequency = R_BSP_SourceClockHzGet((fsp_priv_source_clock_t) R_SYSTEM->GPTCKCR_b.GPTCKSEL) / divider;
@@ -1322,8 +1313,9 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
 
     /* GTPR, GTCCRn, GTIOR, GTSSR, GTPSR, GTCSR, GTUPSR, GTDNSR, GTPBR, and GTUDDTYC are set by this driver. */
 
-    /* Initialization sets all register required for up counting as described in hardware manual (Figure 23.4 in the
-     * RA6M3 manual R01UH0886EJ0100) and other registers required by the driver. */
+    /* Initialization sets all register required for up counting as described in hardware manual (Figure
+     * "Example setting for a periodic count operation in up-counting by the count clock"
+     * in the GPT section of the relevant hardware manual.) */
 
     /* Dividers for GPT are half the enum value. */
     uint32_t gtcr_tpcs = p_cfg->source_div >> BSP_FEATURE_GPT_TPCS_SHIFT;
@@ -1352,8 +1344,8 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     }
 #endif
 
-    /* Counter must be stopped to update TPCS. Reference section 23.2.12 "General PWM Timer Control Register (GTCR)"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* Counter must be stopped to update TPCS. See "General PWM Timer Control Register (GTCR)" description
+     * in the GPT section of the relevant hardware manual. */
     p_instance_ctrl->p_reg->GTCR = gtcr;
 
     gpt_hardware_events_disable(p_instance_ctrl);
@@ -1379,8 +1371,8 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
 
     if (TIMER_MODE_PERIODIC == p_cfg->mode)
     {
-        /* The  GTIOCA/GTIOCB pins transition 1 cycle after compare match when buffer operation is used. Reference
-         * Figure 23.34 "Example setting for saw-wave PWM mode" in the RA6M3 manual R01UH0886EJ0100. To get a duty cycle
+        /* The  GTIOCA/GTIOCB pins transition 1 cycle after compare match when buffer operation is used. See
+         * "Example setting for saw-wave PWM mode" in the GPT section of the relevant hardware manual. To get a duty cycle
          * as close to 50% as possible, duty cycle (register) = (period (counts) / 2) - 1. */
         uint32_t duty_cycle_50_percent = (p_cfg->period_counts >> 1) - 1U;
         duty_regs.gtccr_buffer = duty_cycle_50_percent;
@@ -1430,8 +1422,8 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     if ((1U << p_cfg->channel) & GPT_PRV_GPTE_OR_GPTEH_CHANNEL_MASK)
     {
         /* This register is available on GPTE and GPTEH only. It must be cleared before setting. When modifying the
-         * IVTT[2:0] bits, first set the IVTC[1:0] bits to 00b.  Reference section 23.2.18 "General PWM Timer Interrupt
-         * and A/D Converter Start Request Skipping Setting Register (GTITC)"" of the RA6M3 manual R01UH0886EJ0100. */
+         * IVTT[2:0] bits, first set the IVTC[1:0] bits to 00b. See "General PWM Timer Interrupt
+         * and A/D Converter Start Request Skipping Setting Register (GTITC)" description in the GPT section of the relevant hardware manual. */
         p_instance_ctrl->p_reg->GTITC = 0U;
     }
 #endif
@@ -1537,9 +1529,17 @@ static void gpt_hardware_initialize (gpt_instance_ctrl_t * const p_instance_ctrl
     /* Set the I/O control register. */
     p_instance_ctrl->p_reg->GTIOR = gtior;
 
+#if BSP_FEATURE_GPT_POLARITY_CONTROL_SUPPORTED
+
+    /* Apply polarity inversion control if supported. Needs to happen after GTIOR is set.
+     * Don't reuse the previous gtcr variable in case it is was updated elsewhere. */
+    p_instance_ctrl->p_reg->GTCR |= ((uint32_t) p_extend->gtioca_polarity << R_GPT0_GTCR_AINV_Pos) |
+                                    ((uint32_t) p_extend->gtiocb_polarity << R_GPT0_GTCR_BINV_Pos);
+#endif
+
     /* Configure duty cycle and force timer to count up. GTUDDTYC must be set, then cleared to force the count
-     * direction to be reflected when counting starts. Reference section 23.2.13 "General PWM Timer Count Direction
-     * and Duty Setting Register (GTUDDTYC)" in the RA6M3 manual R01UH0886EJ0100. */
+     * direction to be reflected when counting starts. See "General PWM Timer Count Direction
+     * and Duty Setting Register (GTUDDTYC)" description in the GPT section of the relevant hardware manual. */
     p_instance_ctrl->p_reg->GTUDDTYC = gtuddtyc | 3U;
     p_instance_ctrl->p_reg->GTUDDTYC = gtuddtyc | 1U;
 
@@ -1683,8 +1683,8 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
         else
  #endif
         {
-            /* The GTIOCA/GTIOCB pins transition 1 cycle after compare match when buffer operation is used. Reference
-             * Figure 23.34 "Example setting for saw-wave PWM mode" in the RA6M3 manual R01UH0886EJ0100. */
+            /* The GTIOCA/GTIOCB pins transition 1 cycle after compare match when buffer operation is used. See
+             * figure "Example setting for saw-wave PWM mode" in the GPT section of the relevant hardware manual. */
             temp_duty_cycle--;
             p_duty_reg->gtccr_buffer = temp_duty_cycle;
         }
@@ -1702,12 +1702,23 @@ static void gpt_calculate_duty_cycle (gpt_instance_ctrl_t * const p_instance_ctr
  **********************************************************************************************************************/
 static uint32_t gpt_clock_frequency_get (gpt_instance_ctrl_t * const p_instance_ctrl)
 {
-    /* Look up PCLKD frequency and divide it by GPT PCLKD divider. */
-    timer_source_div_t pclk_divisor =
+    timer_source_div_t prescaler_divisor =
         (timer_source_div_t) (p_instance_ctrl->p_reg->GTCR_b.TPCS << BSP_FEATURE_GPT_TPCS_SHIFT);
-    uint32_t pclk_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKD);
 
-    return pclk_freq_hz >> pclk_divisor;
+#if BSP_PERIPHERAL_GPT_GTCLK_PRESENT && !GPT_CFG_GPTCLK_BYPASS
+
+    /* Calculate the GPTCK Divider. */
+    const uint8_t divisor = (uint8_t) R_FSP_ClockDividerGet(R_SYSTEM->GPTCKDIVCR_b.GPTCKDIV);
+
+    /* Calculate the GPTCK Frequency. */
+    uint32_t source_freq_hz = R_BSP_SourceClockHzGet((fsp_priv_source_clock_t) R_SYSTEM->GPTCKCR_b.GPTCKSEL) / divisor;
+#else
+
+    /* Look up PCLKD frequency. */
+    uint32_t source_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKD);
+#endif
+
+    return source_freq_hz >> prescaler_divisor;
 }
 
 #if GPT_CFG_OUTPUT_SUPPORT_ENABLE

@@ -157,12 +157,12 @@ fsp_err_t R_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_callback);
     FSP_ASSERT(NULL != p_cfg->p_extend);
-    FSP_ERROR_RETURN(BSP_FEATURE_SPI_MAX_CHANNEL > p_cfg->channel, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(BSP_FEATURE_SPI_NUM_CHANNELS > p_cfg->channel, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
     FSP_ASSERT(p_cfg->eri_irq >= 0);
 
-    /* CPHA=0 is not supported in slave mode because of hardware limitations. Reference section 38.3.10.2(3) "Slave
-     * mode operation" in the RA6M3 manual R01UH0886EJ0100. */
+    /* CPHA=0 is not supported in slave mode because of hardware limitations. See "Slave
+     * mode operation" in the SPI section of the relevant hardware manual. */
     if (SPI_MODE_SLAVE == p_cfg->operating_mode)
     {
         FSP_ERROR_RETURN(SPI_CLK_PHASE_EDGE_EVEN == p_cfg->clk_phase, FSP_ERR_UNSUPPORTED);
@@ -388,8 +388,8 @@ fsp_err_t R_SPI_Close (spi_ctrl_t * const p_api_ctrl)
 
     /* Clear the status register. */
 
-    /* The status register must be read before cleared. Reference section 38.2.4 SPI Status Register (SPSR) in the
-     * RA6M3 manual R01UH0886EJ0100. */
+    /* The status register must be read before cleared. See "SPI Status Register (SPSR)" description
+     * in the relevant hardware manual. */
     p_ctrl->p_regs->SPSR;
     p_ctrl->p_regs->SPSR = 0;
 
@@ -410,7 +410,7 @@ fsp_err_t R_SPI_Close (spi_ctrl_t * const p_api_ctrl)
 fsp_err_t R_SPI_CalculateBitrate (uint32_t bitrate, rspck_div_setting_t * spck_div)
 {
     /* desired_divider = Smallest integer greater than or equal to SPI_CLK / bitrate. */
-    uint32_t desired_divider = (R_FSP_SystemClockHzGet(BSP_FEATURE_SPI_CLK) + bitrate - 1) / bitrate;
+    uint32_t desired_divider = (R_FSP_SystemClockHzGet(BSP_FEATURE_SPI_CLOCK) + bitrate - 1) / bitrate;
 
     /* Can't achieve bitrate slower than desired. */
     if (desired_divider > SPI_CLK_MAX_DIV)
@@ -651,8 +651,8 @@ static void r_spi_hw_config (spi_instance_ctrl_t * p_ctrl)
 
     /* Clear the status register. */
 
-    /* The status register must be read before cleared. Reference section 38.2.4 SPI Status Register (SPSR) in the
-     * RA6M3 manual R01UH0886EJ0100. */
+    /* The status register must be read before cleared. See "SPI Status Register (SPSR)" description
+     * in the relevant hardware manual. */
     p_ctrl->p_regs->SPSR;
     p_ctrl->p_regs->SPSR = 0;
 
@@ -1210,7 +1210,7 @@ void spi_tei_isr (void)
         R_BSP_IrqDisable(irq);
 
         /* Writing 0 to SPE generates a TXI IRQ. Disable the TXI IRQ.
-         * (See Section 38.2.1 SPI Control Register in the RA6M3 manual R01UH0886EJ0100). */
+         * (See "SPI Control Register" description in the relevant hardware manual). */
         if (p_ctrl->p_cfg->txi_irq >= 0)
         {
             R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
@@ -1245,7 +1245,7 @@ void spi_eri_isr (void)
     spi_instance_ctrl_t * p_ctrl = (spi_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
     /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
-     * (See Section 38.2.1 SPI Control Register in the RA6M3 manual R01UH0886EJ0100). */
+     * (See "SPI Control Register" description in the relevant hardware manual). */
     if (p_ctrl->p_cfg->txi_irq >= 0)
     {
         R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);

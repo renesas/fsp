@@ -184,7 +184,7 @@ fsp_err_t R_ADC_B_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     /*  Set synchronous operation period and Enable/Disable for ADC 0/1 */
     R_ADC_B->ADSYCR = p_extend->sync_operation_control;
 
-    /* Configure the ADC clock. See table 36.27 in the RA6T2 user manual, R01UH0951EJ0100 */
+    /* Configure the ADC clock. See Step 4 of "Initial setup procedure" in the A/D Converter section of the relevant hardware manual */
     R_ADC_B->ADCLKENR = 0x00;
     FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADCLKSR, 0x00);
     R_ADC_B->ADCLKCR  = p_extend->clock_control_data;
@@ -352,7 +352,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
 
     /*============================================================================================================
      *  Constraints to check while Synchronous Mode is enabled
-     *   - See section 36.3.17.2, Restrictions on Synchronous Operation, in the RA6T2 User Manual, R01UH0951EJ0100
+     *   - See "Restrictions on Synchronous Operation", in the A/D converter section of the relevant hardware manual
      *============================================================================================================*/
     bool sync_operation_enabled = !p_extend->sync_operation_control_bits.adc_0_disable_sync ||
                                   !p_extend->sync_operation_control_bits.adc_1_disable_sync;
@@ -379,7 +379,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
 
         /*============================================================================================================
          *  Constraints to check while Synchronous Mode is enabled
-         *   - See section 36.3.17.2, Restrictions on Synchronous Operation, in the RA6T2 User Manual, R01UH0951EJ0100
+         *   - See "Restrictions on Synchronous Operation", in the A/D converter section of the relevant hardware manual
          *============================================================================================================*/
         adc_b_unit_id_t converter_selection = p_adc_group->converter_selection;
         uint32_t        cst                 = (converter_selection ? cst0 : cst1);
@@ -436,7 +436,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
 
                 /*============================================================================================================
                  * Constraints to check while Synchronous Mode is enabled and Sample and Hold is enabled
-                 *   - See section 36.3.17.2, Restrictions on Synchronous Operation, in the RA6T2 User Manual, R01UH0951EJ0100
+                 *   - See "Restrictions on Synchronous Operation", in the A/D converter section of the relevant hardware manual
                  *============================================================================================================*/
                 adc_channel_t an_channel_id = (adc_channel_t) p_virtual_channel_cfg->channel_cfg_bits.channel;
                 if (adc_channel_is_sample_hold_enabled(an_channel_id, p_extend->sample_and_hold_enable_mask))
@@ -493,7 +493,7 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
                         R_BSP_MODULE_START(FSP_IP_TSN, 0);
 #if defined(R_SYSTEM_TEMPRCR_TSNKEEP_Msk)
 
-                        /* Follow procedure listed in Figure 6.7 of R01UH1064EJ0090
+                        /* Follow procedure listed in Figure "Setting procedure for temperature monitor sensor" in the Resets section of the relevant hardware manual
                          *  - TEMPRLR accepts only accepts write-access twice per reset. This is currently its only use. New use will require re-evaluation of design. */
                         if (!R_SYSTEM->TEMPRCR_b.TSNKEEP)
                         {
@@ -505,7 +505,8 @@ fsp_err_t R_ADC_B_ScanCfg (adc_ctrl_t * p_ctrl, void const * const p_scan_cfg)
                         }
 #endif
                         R_TSN_CTRL->TSCR_b.TSEN = 1;
-                        R_BSP_SoftwareDelay(30, BSP_DELAY_UNITS_MICROSECONDS);                        // Wait for stabilization. See Figure 38.2 in RA6T2 User Manual, R01UH0951EJ0100
+                        R_BSP_SoftwareDelay(30, BSP_DELAY_UNITS_MICROSECONDS);                        // Wait for stabilization. See "Procedure example for using the TSN" in the TSN section of the relevant hardware manual.
+
                         R_TSN_CTRL->TSCR_b.TSOE = 1;
                     }
 
@@ -934,7 +935,7 @@ fsp_err_t R_ADC_B_Close (adc_ctrl_t * p_ctrl)
     /* Disable interrupts */
     adc_b_disable_interrupts(p_instance_ctrl);
 
-    /* Disable temperature sensor if configured. See Figure 38.2 in RA6T2 User Manual, R01UH0951EJ0100 */
+    /* Disable temperature sensor if configured. See "Procedure example for using the TSN" in the TSN section of the relevant hardware manual. */
     if (R_TSN_CTRL->TSCR_b.TSEN)
     {
         R_TSN_CTRL->TSCR_b.TSOE = 0;
@@ -1079,11 +1080,11 @@ static void adc_b_calculate_wait_time (adc_b_instance_ctrl_t * p_instance_ctrl, 
     p_instance_ctrl->trigger_disable_wait_cycles = wait_cycles + 1;
 }
 
-/***********************************************************************************************************************
- * @brief Helper function - Perform ADC calibration according to Table 36.15 of the RA6T2 User Manual, R01UH0951EJ0130
+/***************************************************************************************************************************************************************
+ * @brief Helper function - Perform ADC calibration according to "Procedure for self-calibration" in the A/D converter section of the relevant hardware manual
  * @param p_instance_ctrl - Pointer to adc_b instance configuration
  * @return uint32_t       - Next ADCCALSR register bits
- **********************************************************************************************************************/
+ ***************************************************************************************************************************************************************/
 static uint32_t adc_b_update_calibrate_state (adc_b_instance_ctrl_t * p_instance_ctrl)
 {
     /* Converters must be calibrated sequentially.
@@ -1107,7 +1108,7 @@ static uint32_t adc_b_update_calibrate_state (adc_b_instance_ctrl_t * p_instance
                 adcalstr = R_ADC_B_ADCALSTR_SAMPLE_HOLD_0_CAL_Msk;
 
                 /* Enable configured Sample-and-Hold settings
-                 * - See table 36.15 Note 2 in the RA6T2 user manual, R01UH0951EJ0130 */
+                 * - See Note 2 of table "Procedure for self-calibration" in the A/D converter section of the relevant hardware manual. */
                 R_ADC_B->ADSHCR0 = ADC_B_SAMPLE_AND_HOLD_MASK_UNIT_012;
             }
             else
@@ -1131,13 +1132,13 @@ static uint32_t adc_b_update_calibrate_state (adc_b_instance_ctrl_t * p_instance
             p_instance_ctrl->adc_state = ADC_B_CONVERTER_STATE_SH_4_6_CALIBRATING;
 
             /* Skip Sample-and-Hold if not enabled
-             * - See table 36.15 Note 1 in the RA6T2 user manual, R01UH0951EJ0130 */
+             * - See Note 1 of table "Procedure for self-calibration" in the A/D converter section of the relevant hardware manual */
             if (R_ADC_B->ADSHCR1 & (ADC_B_SAMPLE_AND_HOLD_MASK_UNIT_456 >> 4))
             {
                 adcalstr = R_ADC_B_ADCALSTR_SAMPLE_HOLD_1_CAL_Msk;
 
                 /* Enable configured Sample-and-Hold settings
-                 * - See table 36.15 Note 2 in the RA6T2 user manual, R01UH0951EJ0130 */
+                 * - See Note 2 of table "Procedure for self-calibration" in the A/D converter section of the relevant hardware manual */
                 R_ADC_B->ADSHCR1 = ADC_B_SAMPLE_AND_HOLD_MASK_UNIT_456 >> 4;
             }
             else
@@ -1182,7 +1183,8 @@ static void adc_b_force_stop (adc_b_instance_ctrl_t * p_instance_ctrl)
     /* Clear ADC Start Trigger Enable */
     R_ADC_B->ADTRGENR = ADC_GROUP_MASK_NONE;
 
-    /* Perform delay according to section 36.5.4.2 of the RA6T2 User Manual, R01UH0951EJ0100 */
+    /* Perform delay according to "Waiting Time after Disabling Trigger Input for Forced Stop Processing" in
+     * the A/D converter section of the relevant hardware manual. */
     for (uint32_t i = p_instance_ctrl->trigger_disable_wait_cycles; i > 0; i--)
     {
         FSP_REGISTER_READ(R_ADC_B->ADSR);
@@ -1435,7 +1437,7 @@ void adc_b_calend0_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Wait for converter stopped to initiate next calibration step
-     * - See table 36.2.10.1 in the RA6T2 user manual, R01UH0951EJ0130 */
+     * - See table "Forced Stop Procedure" in the A/D converter section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADSR, 0x00);
     R_ADC_B->ADCALSTR = adcalstr;
 
@@ -1489,7 +1491,7 @@ void adc_b_calend1_isr (void)
     R_BSP_IrqStatusClear(irq);
 
     /* Wait for converter stopped to initiate next calibration step
-     * - See table 36.2.10.1 in the RA6T2 user manual, R01UH0951EJ0130 */
+     * - See table "Forced Stop Procedure" in the A/D converter section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(R_ADC_B->ADSR, 0x00);
     R_ADC_B->ADCALSTR = adcalstr;
 

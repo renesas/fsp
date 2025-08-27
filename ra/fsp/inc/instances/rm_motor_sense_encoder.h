@@ -21,10 +21,7 @@
 #include "rm_motor_sense_encoder_cfg.h"
 #include "r_timer_api.h"
 #include "r_gpt.h"
-
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
- #include "r_external_irq_api.h"
-#endif
+#include "r_external_irq_api.h"
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
@@ -32,7 +29,8 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define MOTOR_SENSE_ENCODER_AVERAGE    (4U)
+#define MOTOR_SENSE_ENCODER_AVERAGE                (4U)
+#define MOTOR_SENSE_ENCODER_HALL_PATTERN_NUMBER    (6)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -49,6 +47,12 @@ typedef enum e_motor_sense_encoder_mode
     MOTOR_SENSE_ENCODER_MODE_BOOT,     ///< Boot mode (Angle adjustment status)
     MOTOR_SENSE_ENCODER_MODE_DRIVE     ///< Drive mode (Normal work status)
 } motor_sense_encoder_mode_t;
+
+typedef enum e_motor_sense_encoder_speed_detect_type
+{
+    MOTOR_SENSE_ENCODER_SPEED_DETECT_WIDTH = 0, ///< Use captured width
+    MOTOR_SENSE_ENCODER_SPEED_DETECT_CARRIER,   ///< Use carrier interrupt
+} motor_sense_encoder_speed_detect_type_t;
 
 typedef struct st_motor_sense_encoder_motor_parameter
 {
@@ -135,20 +139,21 @@ typedef struct st_motor_sense_encoder_extended_cfg
     timer_instance_t const * p_timer_instance;
     timer_instance_t const * p_input_capture_instance;
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
-
     /* Instances of Hall signal interrupts */
-    external_irq_instance_t const * p_u_hall_irq_instance; ///< U phase Hall Interrupt
-    external_irq_instance_t const * p_v_hall_irq_instance; ///< V phase Hall Interrupt
-    external_irq_instance_t const * p_w_hall_irq_instance; ///< W phase Hall Interrupt
+    external_irq_instance_t const * p_u_hall_irq_instance;            ///< U phase Hall Interrupt
+    external_irq_instance_t const * p_v_hall_irq_instance;            ///< V phase Hall Interrupt
+    external_irq_instance_t const * p_w_hall_irq_instance;            ///< W phase Hall Interrupt
 
-    bsp_io_port_pin_t u_phase_port;
-    bsp_io_port_pin_t v_phase_port;
-    bsp_io_port_pin_t w_phase_port;
-#endif
+    bsp_io_port_pin_t u_phase_port;                                   /// U phase Hall signal port
+    bsp_io_port_pin_t v_phase_port;                                   /// V phase Hall signal port
+    bsp_io_port_pin_t w_phase_port;                                   /// W phase Hall signal port
 
-    float f_current_ctrl_period;       ///< Period of current control
-    float f_speed_ctrl_period;         ///< Period of speed control
+    uint8_t u1_hall_pattern[MOTOR_SENSE_ENCODER_HALL_PATTERN_NUMBER]; /// Hall pattern
+
+    float f_current_ctrl_period;                                      ///< Period of current control
+    float f_speed_ctrl_period;                                        ///< Period of speed control
+
+    motor_sense_encoder_speed_detect_type_t e_speed_detect_type;      ///< Speed detect type
 
     motor_sense_encoder_loop_t            loop_mode;
     motor_sense_encoder_config_t          encoder_config;
@@ -160,7 +165,22 @@ typedef struct st_motor_sense_encoder_instance_ctrl
     uint32_t open;
 
     uint8_t u1_direction;
-    float   f_speed_rad;
+    float   f_speed_rad;                           ///< Rotation speed [radian/sec]
+    float   f_angle_radian;                        ///< Rotor angle [radian]
+
+    // For speed calculation
+    uint32_t u4_last_encoder_interrupt_counts;     ///< Last encoder interrupt counts
+    float    f_last_angle;                         ///< Last rotor angle [radian]
+
+    uint16_t u2_maximum_carrier_pulse_width_count; ///< Limit counts of pulse width [x sampling time]
+    float    f_input_capture_timer_frequency;      ///< Frequency of Inputcapture timer [Hz]
+    uint32_t u4_interrupt_time_correct;            ///< = pulse width limit value + sampling time[clock]
+    uint8_t  u1_interrupt_disable;                 ///< Encoder interrupt disable(guard) flag
+    int32_t  s4_pulse_counts;                      ///< Captured pulse counts during speed calculation cycle
+    int16_t  s2_speed_interrupt_counts;            ///< Counter of speed cyclic interrupt
+
+    timer_info_t freerun_timer_info;               ///< Freerun timer information
+    timer_info_t input_capture_info;               ///< Input capture timer information
 
     motor_sense_encoder_loop_t e_loop_mode;
 
@@ -177,7 +197,7 @@ typedef struct st_motor_sense_encoder_instance_ctrl
     /* input capture callback */
     timer_callback_args_t input_capture_args;
 
-#ifdef MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL
+#if (MOTOR_SENSE_ENCODER_CFG_SUPPORT_HALL == 1)
 
     /* External IRQ callback (Hall interrupt) */
     external_irq_callback_args_t hall_interrupt_args;
@@ -240,6 +260,8 @@ fsp_err_t RM_MOTOR_SENSE_ENCODER_CyclicProcess(motor_angle_ctrl_t * const p_ctrl
 
 fsp_err_t RM_MOTOR_SENSE_ENCODER_SensorDataSet(motor_angle_ctrl_t * const    p_ctrl,
                                                motor_angle_ad_data_t * const p_ad_data);
+
+fsp_err_t RM_MOTOR_SENSE_ENCODER_SpeedCyclicProcess(motor_angle_ctrl_t * const p_ctrl);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

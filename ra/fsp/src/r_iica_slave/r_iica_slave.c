@@ -124,8 +124,8 @@ fsp_err_t R_IICA_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg_
 
     R_BSP_MODULE_START(FSP_IP_IICA, p_cfg->channel);
 
-    /* Open the hardware in slave mode. Performs IICA initialization as described in hardware manual (see Section 22.4.16
-     * Initial Settings for slave mode of the manual). */
+    /* Open the hardware in slave mode. Performs IICA initialization as described in hardware manual (see
+     * Initial Settings for slave mode in the IICA 'Communication Operations' section of the relevant hardware manual). */
     r_iica_open_hw_slave(p_ctrl);
 
     p_ctrl->open = IICA_SLAVE_OPEN;
@@ -297,8 +297,8 @@ static fsp_err_t r_iica_slave_read_write (i2c_slave_ctrl_t * const p_api_ctrl,
 }
 
 /******************************************************************************************************************/ /**
- * Performs the hardware initialization sequence when operating as a slave (see Section 22.4.16
- * Initial setting for slave mode of the manual).
+ * Performs the hardware initialization sequence when operating as a slave (see
+ * Initial setting for slave mode in the IICA 'Communication Operations' section of the relevant hardware manual).
  *
  * @param[in]       p_ctrl     Pointer to the control structure.
  *********************************************************************************************************************/

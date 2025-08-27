@@ -153,8 +153,8 @@ fsp_err_t R_ACMPLP_Open (comparator_ctrl_t * const p_ctrl, comparator_cfg_t cons
     /* Power on ACMPLP before setting any hardware registers.*/
     R_BSP_MODULE_START(FSP_IP_ACMPLP, p_cfg->channel);
 
-    /* ACMPLP register settings described in Table 39.3 "Procedure for setting the ACMPLP associated registers
-     * (i = 0, 1)" of the RA4M1 manual R01UH0887EJ0100 are done here with the exception of enabling interrupts and VCOUT.
+    /* ACMPLP register settings described in table "Procedure for setting the ACMPLP associated registers
+     * (i = 0, 1)" section of the relevant hardware manual are done here with the exception of enabling interrupts and VCOUT.
      * Interrupts and VCOUT are enabled as configured in R_ACMPLP_OutputEnable() because they should only be enabled
      * after the stabilization wait time has elapsed.*/
     acmplp_hardware_initialize(p_instance_ctrl);
@@ -402,7 +402,7 @@ static void acmplp_hardware_initialize (acmplp_instance_ctrl_t * const p_instanc
         R_ACMPLP->COMPSEL0 |= (uint8_t) p_extend->input_voltage;
 
         /* Clear the COMPSEL1 to update the CiWDE bit
-         * See note 5 & 6 in section "39.2.1 ACMPLP Mode Setting Register (COMPMDR)" of the RA4M1 manual R01UH0887EJ0100*/
+         * See note 5 & 6 in section "ACMPLP Mode Setting Register (COMPMDR)" description of the relevant hardware manual.*/
         compsel1           = R_ACMPLP->COMPSEL1;
         compsel1          &= ACMPLP_COMPSEL_CH0_CLEAR;
         R_ACMPLP->COMPSEL1 = compsel1;
@@ -455,10 +455,10 @@ static void acmplp_hardware_initialize (acmplp_instance_ctrl_t * const p_instanc
         else
         {
             /* To change C1WDE and C1VRF, the CRV[6:4] and CRV[2:0] bits must be 000b.
-             * See note 5 & 6 in section "39.2.1 ACMPLP Mode Setting Register (COMPMDR)" of the RA4M1 manual R01UH0887EJ0100*/
+             * See note 5 & 6 in section "ACMPLP Mode Setting Register (COMPMDR)" of the relevant hardware manual.*/
 
             /* To change C1VRF2, bits CRVS[6:4] and CRVS[2:0] must be 000b
-             * See note 3 in section 39.2.5 Comparator Reference Voltage Select Register (COMPSEL1) of the RA4M1 manual R01UH0887EJ0100*/
+             * See note 3 in "Comparator Reference Voltage Select Register (COMPSEL1)" in the ACMPLP section of the relevant hardware manual. */
             R_ACMPLP->COMPSEL1 = 0;
         }
 #endif

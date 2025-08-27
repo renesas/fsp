@@ -55,7 +55,7 @@
 
 /* Worst case ratio of ICLK/PCLKB (RA2E2) or ICLK/PCLKA (RA6T2) = 64 approximately.
  * 3 PCLKB cycles is the number of cycles to wait for IICn.
- * Refer "Table 3.2 Access cycles for non-GPT modules (1 of 2)" of the RA2E2 manual R01UH0919EJ0050)
+ * See Table "Access cycles for non-GPT modules" in the I/O Registers section of the relevant hardware manual.
  */
 #define IIC_B_SLAVE_PERIPHERAL_REG_MAX_WAIT      (0x40U * 0x03U)
 
@@ -175,7 +175,7 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
     /* If rate is configured as Fast mode plus, check whether the channel supports it */
     if (I2C_SLAVE_RATE_FASTPLUS == p_cfg->rate)
     {
-        FSP_ASSERT((BSP_FEATURE_IIC_B_FAST_MODE_PLUS & (1U << p_cfg->channel)));
+        FSP_ASSERT((BSP_FEATURE_IIC_B_FAST_MODE_PLUS_CHANNELS_MASK & (1U << p_cfg->channel)));
     }
 #endif
 #if IIC_B_SLAVE_CFG_DTC_ENABLE
@@ -195,14 +195,14 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
 
-#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+#if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
     R_BSP_MODULE_START(FSP_IP_I3C, p_cfg->channel);
 #else
     R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
 #endif
 
-    /* Open the hardware in slave mode. Performs IIC initialization as described in hardware manual (see Section 27.3.2.1
-     * 'Initial Settings' of the RA6T2 manual R01UH0951EJ0050). */
+    /* Open the hardware in slave mode. Performs IIC initialization as described in hardware manual (see
+     * "Initial Settings Flow" in the IIC section of the relevant hardware manual). */
     iic_b_open_hw_slave(p_ctrl);
 
 #if IIC_B_SLAVE_CFG_DTC_ENABLE
@@ -211,7 +211,11 @@ fsp_err_t R_IIC_B_SLAVE_Open (i2c_slave_ctrl_t * const p_api_ctrl, i2c_slave_cfg
     err = iic_b_slave_transfer_open(p_cfg);
     if (FSP_SUCCESS != err)
     {
+ #if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
+        R_BSP_MODULE_STOP(FSP_IP_I3C, p_cfg->channel);
+ #else
         R_BSP_MODULE_STOP(FSP_IP_IIC, p_cfg->channel);
+ #endif
 
         return err;
     }
@@ -392,7 +396,7 @@ fsp_err_t R_IIC_B_SLAVE_Close (i2c_slave_ctrl_t * const p_api_ctrl)
     /* Waiting for reset completion RSTCTL.RI2CRST = 0;  RSTCTL.INTLRST is already 0. */
     FSP_HARDWARE_REGISTER_WAIT(0U, p_ctrl->p_reg->RSTCTL);
 
-#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+#if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
     R_BSP_MODULE_STOP(FSP_IP_I3C, p_ctrl->p_cfg->channel);
 #else
     R_BSP_MODULE_STOP(FSP_IP_IIC, p_ctrl->p_cfg->channel);
@@ -567,8 +571,8 @@ static void iic_b_slave_callback_request (iic_b_slave_instance_ctrl_t * const p_
      * The application must call MasterWriteSlaveRead API in the callback.*/
     iic_b_slave_call_callback(p_ctrl, slave_event, p_ctrl->transaction_count);
 
-    /* Allow timeouts to be generated on the low value of SCL using long count mode */
-    p_ctrl->p_reg->TMOCTL = R_I3C0_TMOCTL_TOLCTL_Msk;
+    /* Allow timeouts to be generated on both high and low value of SCL using long count mode */
+    p_ctrl->p_reg->TMOCTL = R_I3C0_TMOCTL_TOLCTL_Msk | R_I3C0_TMOCTL_TOHCTL_Msk;
 
     /* Enable timeout function */
     p_ctrl->p_reg->BSTE_b.TODE = 1U;
@@ -576,14 +580,14 @@ static void iic_b_slave_callback_request (iic_b_slave_instance_ctrl_t * const p_
 }
 
 /******************************************************************************************************************//**
- * Performs the hardware initialization sequence when operating as a slave (see Section 27.3.2.1
- * 'Initial Settings' of the RA6T2 manual R01UH0951EJ0050).
+ * Performs the hardware initialization sequence when operating as a slave (see
+ * "Initial Setting Flow" in the IIC section of the relevant hardware manual).
  *
  * @param[in]       p_ctrl     Pointer to the control structure.
  *********************************************************************************************************************/
 static void iic_b_open_hw_slave (iic_b_slave_instance_ctrl_t * const p_ctrl)
 {
-#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK || 1 == BSP_FEATURE_BSP_HAS_IIC_CLOCK)
+#if (1 == BSP_FEATURE_I3C_HAS_CLOCK || 1 == BSP_FEATURE_IIC_HAS_CLOCK)
 
     /* Enable I3CCLK. (Not a part of init sequence in the HW manual, but RA8 must enable it to reset the module ) */
     p_ctrl->p_reg->CECTL = (uint32_t) R_I3C0_CECTL_CLKE_Msk;
@@ -607,8 +611,8 @@ static void iic_b_open_hw_slave (iic_b_slave_instance_ctrl_t * const p_ctrl)
     p_ctrl->p_reg->SVCTL = (uint32_t) (R_I3C0_SVCTL_SVAEn_Msk |
                                        ((uint32_t) p_ctrl->p_cfg->general_call_enable << R_I3C0_SVCTL_GCAE_Pos));
 
-    /* Allow timeouts to be generated on the low value of SCL using long count mode */
-    p_ctrl->p_reg->TMOCTL = R_I3C0_TMOCTL_TOLCTL_Msk;
+    /* Allow timeouts to be generated both high and low value of SCL using long count mode */
+    p_ctrl->p_reg->TMOCTL = R_I3C0_TMOCTL_TOLCTL_Msk | R_I3C0_TMOCTL_TOHCTL_Msk;
 
     /* Setup digital noise filter circuit. */
     uint8_t digital_filter_stages =
@@ -646,9 +650,9 @@ static void iic_b_open_hw_slave (iic_b_slave_instance_ctrl_t * const p_ctrl)
     /* 1. ACKCTL: ACKBT should be set to 0 after reset to send out an ACK upon slave address match. */
 
     /* Set RWE bit based on user config.
-     * Refer Section 27.2.16 SCSTRCTL : SCL Stretch Control Register :
-     * 'RWE bit (RWE)' and 'ACKTWE bit (RDBFF0 Flag Set Timing Select)'
-     * of the RA6T2 manual R01UH0951EJ0050.
+     * See "SCSTRCTL : SCL Stretch Control Register :
+     * 'RWE bit (RWE)' and 'ACKTWE bit (RDBFF0 Flag Set Timing Select)'" description
+     * in the IIC section of the relevant hardware manual.
      * Since ACKTWE = 0:
      * - SCLn line will *not* be held low at the falling edge of the 8th clock cycle.
      * - RDRF flag will be set at the rising edge of the 9th clock cycle. (Cause of iic_b_rxi_slave)
@@ -888,8 +892,8 @@ static void iic_b_rxi_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
             /* Do not dummy read here to allow slave to timeout */
 
             /* Writes to be done together with write protect bit.
-             * See Note 1 in Section 27.2.15 'ACKCTL : Acknowledge Control Register'
-             * of the RA6T2 manual R01UH0951EJ0050
+             * See "ACKCTL : Acknowledge Control Register" description
+             * in the IIC section of the relevant hardware manual.
              */
             p_ctrl->p_reg->ACKCTL = R_I3C0_ACKCTL_ACKTWP_Msk | R_I3C0_ACKCTL_ACKT_Msk;
         }
@@ -908,8 +912,8 @@ static void iic_b_rxi_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
                  * accept any data and hence should eventually result in I2C_SLAVE_EVENT_RX_COMPLETE.
                  *
                  * Writes to be done together with write protect bit.
-                 * See Note 1 in Section 27.2.15 'ACKCTL : Acknowledge Control Register'
-                 * of the RA6T2 manual R01UH0951EJ0050
+                 * See "ACKCTL : Acknowledge Control Register" description
+                 * in the IIC section of the relevant hardware manual.
                  */
                 p_ctrl->p_reg->ACKCTL = R_I3C0_ACKCTL_ACKTWP_Msk | R_I3C0_ACKCTL_ACKT_Msk;
             }
@@ -1103,7 +1107,8 @@ static void iic_b_tei_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
     p_ctrl->p_reg->BIE_b.TENDIE = 0U;
 
     /* Wait for the value to reflect at the peripheral.
-     * See 'Note' under Table 1.138 "Interrupt sources" of the RA2E2 manual: I2C I3C unified IP (R-I3C v2) */
+     * See "Interrupt sources" in the I3C section of the relevant hardware manual
+     * : I2C I3C unified IP (R-I3C v2) */
     IIC_B_SLAVE_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->BIE_b.TENDIE, 0U, timeout_count);
 }
 
@@ -1192,8 +1197,8 @@ static void iic_b_err_slave (iic_b_slave_instance_ctrl_t * p_ctrl)
     {
         /* NACK interrupt will be triggered on MasterReadSlaveWrite operation.
          * Do dummy read to release SCL
-         * Refer point number 5 under Section "27.3.1.1.2 Slave Mode Operation", "(1) I2C Slave Operation",
-         * "(b) Data Read Transfer (Single Buffer transfer)" of the RA6T2 manual R01UH0951EJ0050
+         * Refer point #5 under "Slave Mode Operation, (1) I2C Slave Operation,
+         * (b) Data Read Transfer (Single Buffer transfer)" in the IIC section of the relevant hardware manual.
          */
         volatile uint32_t dummy_read = p_ctrl->p_reg->NTDTBP0;
         FSP_PARAMETER_NOT_USED(dummy_read);

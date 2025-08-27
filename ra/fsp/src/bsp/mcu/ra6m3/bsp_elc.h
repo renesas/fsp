@@ -375,6 +375,7 @@ typedef enum e_elc_event_ra6m3
     ELC_EVENT_SDHIMMC1_SDIO                 = (0x1CC), // SDIO access
     ELC_EVENT_SDHIMMC1_CARD                 = (0x1CD), // Card detect
     ELC_EVENT_SDHIMMC1_DMA_REQ              = (0x1CE), // DMA transfer request
+    ELC_EVENT_SCE_TADI                      = (0x1E2), // SCE Tamper Detection
     ELC_EVENT_GLCDC_LINE_DETECT             = (0x1FA), // Specified line
     ELC_EVENT_GLCDC_UNDERFLOW_1             = (0x1FB), // Graphic 1 underflow
     ELC_EVENT_GLCDC_UNDERFLOW_2             = (0x1FC), // Graphic 2 underflow

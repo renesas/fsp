@@ -24,6 +24,7 @@ FSP_HEADER
 #include "r_layer3_switch_cfg.h"
 #include "r_ether_switch_api.h"
 #include "r_ether_phy_api.h"
+#include "r_gptp_api.h"
 
 /***********************************************************************************************************************
  * Macro definitions
@@ -273,6 +274,13 @@ typedef enum e_layer3_switch_table_status
     LAYER3_SWITCH_TABLE_STATUS_INITIALIZED   = 1  ///< Forwarding table is initialized
 } layer3_switch_table_status_t;
 
+/** TAS gate state. */
+typedef enum e_layer3_switch_tas_gate_state
+{
+    LAYER3_SWITCH_TAS_GATE_STATE_CLOSE = 0, ///< Gate is closed.
+    LAYER3_SWITCH_TAS_GATE_STATE_OPEN  = 1  ///< Gate is opened.
+} layer3_switch_tas_gate_state_t;
+
 /** Configuration of a descriptor queue. */
 typedef struct st_layer3_switch_descriptor_queue_cfg
 {
@@ -284,11 +292,19 @@ typedef struct st_layer3_switch_descriptor_queue_cfg
     uint32_t ports;                                       ///< Bitmap of ports that use this queue.
 } layer3_switch_descriptor_queue_cfg_t;
 
+/** Configuration of Credit Based Shaper. */
+typedef struct st_layer3_switch_cbs_cfg
+{
+    uint8_t band_width_list[8];        ///< CBS band width [%] of each queue.
+    uint8_t max_burst_num_list[8];     ///< Maximum burst frame number of each queue.
+} layer3_switch_cbs_cfg_t;
+
 /** Configuration of each Ethernet port. */
 typedef struct st_layer3_switch_port_cfg
 {
-    uint8_t * p_mac_address;                                    ///< Pointer to MAC address.
-    bool      forwarding_to_cpu_enable;                         ///< Enable or disable reception on CPU.
+    uint8_t                 * p_mac_address;                    ///< Pointer to MAC address.
+    bool                      forwarding_to_cpu_enable;         ///< Enable or disable reception on CPU.
+    layer3_switch_cbs_cfg_t * p_cbs_cfg;                        ///< Pointer to CBS configuration.
     void (* p_callback)(ether_switch_callback_args_t * p_args); ///< Callback provided when an ISR occurs.
     ether_switch_callback_args_t * p_callback_memory;           ///< Pointer to optional callback argument memory
     void * p_context;                                           ///< Pointer to context to be passed into callback function
@@ -455,7 +471,7 @@ typedef struct st_layer3_switch_table
 typedef struct st_layer3_switch_table_cfg
 {
     layer3_switch_table_t             * p_table;                                           ///< Pointer to forwarding table.
-    layer3_switch_forwarding_port_cfg_t port_cfg_list[BSP_FEATURE_ETHER_MAX_CHANNELS + 1]; ///< Forwarding configuration of each port.
+    layer3_switch_forwarding_port_cfg_t port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS + 1]; ///< Forwarding configuration of each port.
     uint32_t unsecure_entry_maximum_num;                                                   ///< Maximum number of unsecure entries.
 
     /* MAC table configuration. */
@@ -472,11 +488,18 @@ typedef struct st_layer3_switch_table_cfg
 /** ESWM extension configures each Ethernet port and forwarding feature. */
 typedef struct st_layer3_switch_extended_cfg
 {
-    ether_phy_instance_t const * p_ether_phy_instances[BSP_FEATURE_ETHER_MAX_CHANNELS]; ///< List of pointers to ETHER_PHY instance.
-    uint32_t  fowarding_target_port_masks[BSP_FEATURE_ETHER_MAX_CHANNELS];              ///< List of ports to which incoming frames are forwarded.
-    uint8_t * p_mac_addresses[BSP_FEATURE_ETHER_MAX_CHANNELS];                          ///< MAC address of each port.
-    layer3_switch_l3_filter_t * l3_filter_list;                                         ///< Filter list of Layer3 routing.
+    ether_phy_instance_t const * p_ether_phy_instances[BSP_FEATURE_ETHER_NUM_CHANNELS]; ///< List of pointers to ETHER_PHY instance.
+    gptp_instance_t const      * p_gptp_instance;                                       ///< Pointer to a gPTP instance.
+    uint32_t  fowarding_target_port_masks[BSP_FEATURE_ETHER_NUM_CHANNELS];              ///< List of ports to which incoming frames are forwarded.
+    uint8_t * p_mac_addresses[BSP_FEATURE_ETHER_NUM_CHANNELS];                          // [DEPRECATED] MAC address of each port.
+    uint32_t  ipv_queue_depth_list[BSP_FEATURE_ETHER_NUM_CHANNELS][8];                  ///< List of IPV queue depth for each port.
+    layer3_switch_l3_filter_t * l3_filter_list;                                         ///< Filter list of layer3 routing.
     uint32_t l3_filter_list_length;                                                     ///< Length of Layer3 filter list.
+    layer3_switch_port_cfg_t * p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];         ///< Configuration for each port.
+    IRQn_Type etha_error_irq_port_0;                                                    ///< ETHA error interrupt number for port 0.
+    IRQn_Type etha_error_irq_port_1;                                                    ///< ETHA error interrupt number for port 1.
+    uint8_t   etha_error_ipl_port_0;                                                    ///< ETHA error interrupt priorirty for port 0.
+    uint8_t   etha_error_ipl_port_1;                                                    ///< ETHA error interrupt priorirty for port 1.
 } layer3_switch_extended_cfg_t;
 
 /** LAYER3_SWITCH control block. DO NOT INITIALIZE. Initialization occurs when @ref ether_switch_api_t::open is called. */
@@ -489,7 +512,7 @@ typedef struct st_layer3_switch_instance_ctrl
     uint32_t allocated_descriptor_queue_index;                                                              ///< Index of the descriptor pool.
     layer3_switch_basic_descriptor_t        p_descriptor_queue_list[LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM]; ///< Descriptor queue lists used by hardware.
     layer3_switch_descriptor_queue_status_t p_queues_status[LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM];         ///< Status of each descriptor queues.
-    layer3_switch_port_cfg_t                p_port_cfg_list[BSP_FEATURE_ETHER_MAX_CHANNELS];                ///< Configuration for each port.
+    layer3_switch_port_cfg_t                p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];                ///< Configuration for each port.
 
     /* Forwarding features. */
     layer3_switch_table_status_t table_status;                                                              ///< Forwarding table is initialized or not.
@@ -501,6 +524,31 @@ typedef struct st_layer3_switch_instance_ctrl
     ether_switch_callback_args_t * p_callback_memory;                                                       ///< Pointer to optional callback argument memory
     void * p_context;                                                                                       ///< Pointer to context to be passed into callback function
 } layer3_switch_instance_ctrl_t;
+
+/** Configuration of the gate operation. */
+typedef struct st_layer3_switch_etha_tas_entry
+{
+    layer3_switch_tas_gate_state_t state; ///< Gate state.
+    uint32_t time;                        ///< Time associated with the entry gate state [nsec].
+} layer3_switch_tas_entry_t;
+
+/** Configuration of the gate. */
+typedef struct st_layer3_switch_tas_gate_cfg
+{
+    layer3_switch_tas_gate_state_t initial_gate_state; ///< Initial gate state when the cycle starts.
+    uint8_t tas_entry_num;                             ///< Number of TAS entries included in this gate.
+    layer3_switch_tas_entry_t * p_tas_entry_list;      ///< List of TAS entries included in this gate.
+} layer3_switch_tas_gate_cfg_t;
+
+/** Configuration of the TAS. */
+typedef struct st_layer3_switch_tas_cfg
+{
+    uint8_t  gptp_timer_number;                    ///< gPTP timer number.
+    uint32_t cycle_time_start_high;                ///< Upper 32 bits of TAS cycle start time [nsec].
+    uint32_t cycle_time_start_low;                 ///< Lower 32 bits of TAS cycle start time [nsec].
+    uint32_t cycle_time;                           ///< TAS cycle time [nsec].
+    layer3_switch_tas_gate_cfg_t gate_cfg_list[8]; ///< List of TAS gate configurations.
+} layer3_switch_tas_cfg_t;
 
 /**********************************************************************************************************************
  * Exported global variables
@@ -551,6 +599,10 @@ fsp_err_t R_LAYER3_SWITCH_SearchTableEntry(ether_switch_ctrl_t * const          
 fsp_err_t R_LAYER3_SWITCH_ConfigureTable(ether_switch_ctrl_t * const             p_ctrl,
                                          layer3_switch_table_cfg_t const * const p_table_cfg);
 fsp_err_t R_LAYER3_SWITCH_GetTable(ether_switch_ctrl_t * const p_ctrl, layer3_switch_table_t * const p_table);
+fsp_err_t R_LAYER3_SWITCH_ConfigureTAS(ether_switch_ctrl_t * const p_ctrl,
+                                       uint8_t                     port,
+                                       layer3_switch_tas_cfg_t   * p_tas_cfg);
+fsp_err_t R_LAYER3_SWITCH_EnableTAS(ether_switch_ctrl_t * const p_ctrl, uint8_t port);
 
 /*******************************************************************************************************************//**
  * @} (end addtogroup LAYER3_SWITCH)

@@ -1061,19 +1061,20 @@ typedef struct
 
         struct
         {
-            __IOM uint16_t PODR  : 1;  /*!< [0..0] Port Output Data                                                   */
+            __IOM uint16_t PODR  : 1;  /*!< [0..0] Pmn Output Data                                                    */
             __IM uint16_t  PIDR  : 1;  /*!< [1..1] Pmn State                                                          */
-            __IOM uint16_t PDR   : 1;  /*!< [2..2] PDR                                                                */
+            __IOM uint16_t PDR   : 1;  /*!< [2..2] Pmn Direction                                                      */
             uint16_t             : 1;
-            __IOM uint16_t PCR   : 1;  /*!< [4..4] PCR                                                                */
-            __IOM uint16_t PIM   : 1;  /*!< [5..5] PIM                                                                */
-            __IOM uint16_t NCODR : 1;  /*!< [6..6] NCODR                                                              */
+            __IOM uint16_t PCR   : 1;  /*!< [4..4] Pull-up Control                                                    */
+            __IOM uint16_t PIM   : 1;  /*!< [5..5] Pin Input Buffer Selection                                         */
+            __IOM uint16_t NCODR : 1;  /*!< [6..6] N-channel Open-drain Control                                       */
             uint16_t             : 1;
-            __IOM uint16_t PSEL  : 4;  /*!< [11..8] These bits select the peripheral function. For individual
-                                        *   pin functions, see the associated tables in this chapter.                 */
+            __IOM uint16_t PSEL  : 4;  /*!< [11..8] Peripheral Select.These bits select the peripheral function.
+                                        *   For individual pin functions, see the associated tables
+                                        *   in I/O Ports chapter.                                                     */
             uint16_t            : 2;
             __IOM uint16_t ISEL : 1;   /*!< [14..14] IRQ Input Enable                                                 */
-            __IOM uint16_t PMC  : 1;   /*!< [15..15] Pin mode control                                                 */
+            __IOM uint16_t PMC  : 1;   /*!< [15..15] Pin Mode Control                                                 */
         } PmnPFS_b;
     };
 } R_PFS_PORT_PIN_Type;                 /*!< Size = 2 (0x2)                                                            */

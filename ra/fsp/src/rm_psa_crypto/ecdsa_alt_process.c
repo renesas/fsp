@@ -428,7 +428,8 @@ fsp_err_t HW_SCE_ECC_384VerifySign (const uint32_t * InData_CurveType,
     return err;
 }
 
- #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+ #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+    BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
 fsp_err_t HW_SCE_ECC_255GenerateSign (const uint32_t * InData_CurveType,
                                       const uint32_t * InData_G,
                                       const uint32_t * InData_PrivKey,
@@ -515,6 +516,8 @@ fsp_err_t HW_SCE_ECC_255HrkGenerateSign (const uint32_t * InData_CurveType,
     return err;
 }
 
+ #endif
+ #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
 fsp_err_t HW_SCE_ECC_521VerifySign (const uint32_t * InData_CurveType,
                                     const uint32_t * InData_G,
                                     const uint32_t * InData_PubKey,

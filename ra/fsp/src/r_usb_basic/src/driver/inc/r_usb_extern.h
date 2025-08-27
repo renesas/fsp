@@ -759,6 +759,12 @@ extern void usb_pmsc_task(void);
  #endif                                /* #if (BSP_CFG_RTOS != 1) */
 #endif                                 /* defined(USB_CFG_PMSC_USE) */
 
+#if defined(USB_CFG_PAUD_USE)
+extern void usb_paud_read_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
+extern void usb_paud_write_complete(usb_utr_t * mess, uint16_t data1, uint16_t data2);
+
+#endif                                 /* defined(USB_CFG_PAUD_USE) */
+
 #if defined(USB_CFG_HCDC_USE)
 extern void usb_hcdc_read_complete(usb_utr_t * mess, uint16_t devadr, uint16_t data2);
 extern void usb_hcdc_write_complete(usb_utr_t * mess, uint16_t devadr, uint16_t data2);

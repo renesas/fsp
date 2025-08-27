@@ -76,10 +76,10 @@ typedef struct st_mipi_phy_timing
     {
         __PACKED_STRUCT
         {
-            uint8_t t_clk_zero;        ///< TCLKZERO setting. See Figure 57.1 in User Manual (R01UH0995EJ0060) for more information
-            uint8_t t_clk_pre;         ///< TCLKPRE setting. See Figure 57.1 in User Manual (R01UH0995EJ0060) for more information
-            uint8_t t_clk_post;        ///< TCLKPOST setting. See Figure 57.1 in User Manual (R01UH0995EJ0060) for more information
-            uint8_t t_clk_trail;       ///< TCLKTRAIL setting. See Figure 57.1 in User Manual (R01UH0995EJ0060) for more information
+            uint8_t t_clk_zero;        ///< TCLKZERO setting. See Figure "High-Speed data transmission in normal mode" in the MIPI PHY section of the relevant hardware manual for more information
+            uint8_t t_clk_pre;         ///< TCLKPRE setting. See Figure "High-Speed data transmission in normal mode" in the MIPI PHY section of the relevant hardware manual for more information
+            uint8_t t_clk_post;        ///< TCLKPOST setting. See Figure "High-Speed data transmission in normal mode" in the MIPI PHY section of the relevant hardware manual for more information
+            uint8_t t_clk_trail;       ///< TCLKTRAIL setting. See Figure "High-Speed data transmission in normal mode" in the MIPI PHY section of the relevant hardware manual for more information
         } dphytim4_b;
         uint32_t dphytim4;             ///< Clock lane pre and post data timing settings
     };
@@ -87,9 +87,9 @@ typedef struct st_mipi_phy_timing
     {
         __PACKED_STRUCT
         {
-            uint8_t t_hs_zero;         ///< THSZERO setting. See Figure 57.1 in User Maual (R01UH0995EJ0060) for more information
-            uint8_t t_hs_trail;        ///< THSTRAIL setting. See Figure 57.1 in User Maual (R01UH0995EJ0060) for more information
-            uint8_t t_hs_exit;         ///< THSEXIT setting. See Figure 57.1 in User Maual (R01UH0995EJ0060) for more information
+            uint8_t t_hs_zero;         ///< THSZERO setting. See Figure "High-Speed data transmission in normal mode" in the MIPI PHY section of the relevant hardware manual for more information
+            uint8_t t_hs_trail;        ///< THSTRAIL setting. See Figure "High-Speed data transmission in normal mode" in the MIPI PHY section of the relevant hardware manual for more information
+            uint8_t t_hs_exit;         ///< THSEXIT setting. See Figure "High-Speed data transmission in normal mode" in the MIPI PHY section of the relevant hardware manual for more information
             uint8_t : 8;
         } dphytim5_b;
         uint32_t dphytim5;             ///< High-Speed data lane timing settings

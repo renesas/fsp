@@ -41,16 +41,16 @@
 #define SCI_B_LIN_HEADER_NUM_BYTES               (2)
 
 /* Macro to clear all Simple LIN related flags in CFCLR (Common Flag Clear Register). Flags are
- * listed in Figure 26.105 "Example of Start Frame Reception Flowchart" of the RA6T2 manual
- * R01UH0951EJ0130  */
+ * listed in Figure "Example of Start Frame Reception Flowchart"
+ * in the SCI section of the relevant hardware manual. */
 #define SCI_B_LIN_CFCLR_CLEAR_LIN_FLAGS          (                                      \
         R_SCI_B0_CFCLR_RDRFC_Msk | R_SCI_B0_CFCLR_FERC_Msk | R_SCI_B0_CFCLR_DPERC_Msk | \
         R_SCI_B0_CFCLR_PERC_Msk | R_SCI_B0_CFCLR_MFFC_Msk | R_SCI_B0_CFCLR_ORERC_Msk |  \
         R_SCI_B0_CFCLR_DFERC_Msk | R_SCI_B0_CFCLR_DCMFC_Msk | R_SCI_B0_CFCLR_ERSC_Msk)
 
 /* Macro to clear all Simple LIN related flags in XFCLR (Simple LIN Flag Clear Register). Flags
- * are listed in Figure 26.105 "Example of Start Frame Reception Flowchart" of the RA6T2 manual
- * R01UH0951EJ0130 */
+ * are listed in Figure "Example of Start Frame Reception Flowchart"
+ * in the SCI section of the relevant hardware manual. */
 #define SCI_B_LIN_XFCLR_CLEAR_LIN_FLAGS          (                                      \
         R_SCI_B0_XFCLR_AEDC_Msk | R_SCI_B0_XFCLR_COFC_Msk | R_SCI_B0_XFCLR_PIBDC_Msk |  \
         R_SCI_B0_XFCLR_CF1MC_Msk | R_SCI_B0_XFCLR_CF0MC_Msk | R_SCI_B0_XFCLR_BFDC_Msk | \
@@ -264,7 +264,7 @@ fsp_err_t R_SCI_B_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * con
     FSP_ERROR_RETURN(p_ctrl->open != SCI_B_LIN_OPEN, FSP_ERR_ALREADY_OPEN);
 
     /* Make sure this channel supports Simple LIN Mode (some MCUs do not support it on all SCI channels) */
-    FSP_ERROR_RETURN(BSP_FEATURE_SCI_LIN_CHANNELS & (1U << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
+    FSP_ERROR_RETURN(BSP_FEATURE_SCI_LIN_CHANNELS_MASK & (1U << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
 
     sci_b_lin_extended_cfg_t const * const p_extend = (sci_b_lin_extended_cfg_t *) p_cfg->p_extend;
 
@@ -491,9 +491,8 @@ fsp_err_t R_SCI_B_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
         (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_RIE_Msk);
 
     /* Wait until internal  state of TE is 0 as it takes some time for the state to be reflected
-     * internally after rewriting the control register. Refer to "26.2.29 CESR : Communication
-     * Enable Status Register" description in the RA6T2 manual R01UH0951EJ0100 or the relevant section
-     * for the MCU being used  */
+     * internally after rewriting the control register. See "CESR : Communication
+     * Enable Status Register" description in the SCI section of the relevant hardware manual */
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
     /* Cancel data or header write */
@@ -664,7 +663,8 @@ fsp_err_t R_SCI_B_LIN_IdFilterSet (lin_ctrl_t * const p_api_ctrl, sci_b_lin_id_f
 
     R_SCI_B0_Type * p_reg = p_ctrl->p_reg;
 
-    /* Disable header reception. See Note 3 in "26.2.14 XCR0 : Simple LIN Control Register 0" R01UH0951EJ0130.
+    /* Disable header reception. See Note 3 in "XCR0 : Simple LIN Control Register 0" description
+     * in the SCI section of the relevant hardware manual.
      * XCR0.PIBS, XCR0.PIBE, and XCR0.CF1DS can be rewritten only when Start Frame reception or transmission is not
      * in progress (XCR1.SDST = 0 and XCR1.TCST = 0) */
     p_reg->XCR1 &= (uint32_t) ~(R_SCI_B0_XCR1_SDST_Msk | R_SCI_B0_XCR1_TCST_Msk);
@@ -801,8 +801,8 @@ fsp_err_t R_SCI_B_LIN_Close (lin_ctrl_t * const p_api_ctrl)
     /* Disable transmission and reception */
     p_reg->CCR0 = 0;
 
-    /* Wait until internal state of TE is 0. See "26.2.29 CESR : Communication Enable Status
-     * Register" description in the RA6T2 manual R01UH0951EJ0100. */
+    /* Wait until internal state of TE is 0. See "CESR : Communication Enable Status
+     * Register" description in the SCI section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
     /* Disable irqs */
@@ -957,7 +957,7 @@ static uint32_t r_sci_b_lin_clock_freq_get (sci_b_lin_clock_source_t clock_sourc
     }
     else
     {
-#if (BSP_FEATURE_BSP_HAS_SCISPI_CLOCK)
+#if (BSP_FEATURE_SCI_HAS_SCISPI_CLOCK)
         freq_hz = R_FSP_SciSpiClockHzGet();
 #else
         freq_hz = R_FSP_SciClockHzGet();
@@ -1216,9 +1216,9 @@ static uint8_t r_sci_b_lin_checksum_calculate (uint8_t               id,
 /*******************************************************************************************************************//**
  * Initializes the SCI common (CCRn) and Simple LIN (XCRn) register settings.
  *
- * Initial settings are based on Figure 26.105 "Example of Start Frame Reception Flowchart" of the RA6T2 manual
- * R01UH0951EJ0130 and related Table 26.26 "Example flow of SCI initialization in asynchronous mode with non-FIFO selected."
- * of the RA6T2 manual R01UH0951EJ0130 (for CCRn settings).
+ * Initial settings are based on Figure "Example of Start Frame Reception Flowchart" and
+ * related Table "Example flow of SCI initialization in asynchronous mode with non-FIFO selected."
+ * in the SCI section of the relevant hardware manual (for CCRn settings).
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
  **********************************************************************************************************************/
@@ -1308,14 +1308,15 @@ static void r_sci_b_lin_hw_configure (sci_b_lin_instance_ctrl_t * const p_ctrl)
     p_reg->CCR1 = ccr1;
     p_reg->CCR4 = 0;
 
-    /* Enable reception. RE and RIE must be set simultaneously (see RA6T2 manual R01UH0951EJ0130 Table 26.26
-     * "Example flow of SCI initialization in asynchronous mode with non-FIFO selected."). The CFCLR
-     * flags do not need to be cleared here, as they were cleared above. */
+    /* Enable reception. RE and RIE must be set simultaneously (see Table
+     * "Example flow of SCI initialization in asynchronous mode with non-FIFO selected" in the SCI section of the
+     * relevant hardware manual).
+     * The CFCLR flags do not need to be cleared here, as they were cleared above. */
     p_reg->CCR0 = (R_SCI_B0_CCR0_RE_Msk | R_SCI_B0_CCR0_RIE_Msk);
 
     /* Wait until internal state of RE is 1 as it takes some time for the state to be reflected internally after
-     * rewriting the control register. Refer to "26.2.29 CESR : Communication Enable Status Register" description
-     * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
+     * rewriting the control register. See "CESR : Communication Enable Status Register" description
+     * in the SCI section of the relevant hardware manual */
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.RIST, 1U);
 
     /* Disable reception interrupts. Reception interrupts are re-enabled on break field detection or a call
@@ -1463,8 +1464,8 @@ static void r_sci_b_lin_irqs_enable_disable (sci_b_lin_instance_ctrl_t * const p
 /*******************************************************************************************************************//**
  * Transmit the LIN frame
  *
- * Header frame transmission is based on flow chart process in Figure 26.101 "Start Frame Transmission Flowchart Example"
- * in R01UH0951EJ0130 manual. Initial settings of XCR0 and XCR2 have already been made in open.
+ * Header frame transmission is based on flow chart process in Figure "Start Frame Transmission Flowchart Example"
+ * in the SCI section of the relevant hardware manual. Initial settings of XCR0 and XCR2 have already been made in open.
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
  * @param[in]  p_transfer_params         Pointer to the transfer parameters for the transfer
@@ -1486,8 +1487,8 @@ static fsp_err_t r_sci_b_lin_write (sci_b_lin_instance_ctrl_t * const   p_ctrl,
         (uint32_t) ~(R_SCI_B0_CCR0_TIE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_RIE_Msk | R_SCI_B0_CCR0_TE_Msk);
 
     /* Wait until internal state of TE is 0 as it takes some time for the state to be reflected internally after
-     * rewriting the control register. Refer to "26.2.29 CESR : Communication Enable Status Register" description
-     * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
+     * rewriting the control register. See "CESR : Communication Enable Status Register" description
+     * in the SCI section of the relevant hardware manual.  */
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 0U);
 
     /* Prepare the data transmission state. */
@@ -1534,8 +1535,8 @@ static fsp_err_t r_sci_b_lin_write (sci_b_lin_instance_ctrl_t * const   p_ctrl,
         p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk);
 
         /* Wait until internal state of TE is 1 as it takes some time for the state to be reflected
-         * internally after rewriting the control register. Refer to "26.2.29 CESR : Communication
-         * Enable Status Register" description in the RA6T2 manual R01UH0951EJ0100.  */
+         * internally after rewriting the control register. See "CESR : Communication
+         * Enable Status Register" description in the SCI section of the relevant hardware manual.  */
         FSP_HARDWARE_REGISTER_WAIT(p_reg->CESR_b.TIST, 1U);
 
         /* Enable transmit interrupt. Because BFOIE was set during SCI initialization,
@@ -2207,8 +2208,8 @@ void sci_b_lin_bfd_isr (void)
     /* Recover ISR context saved in open. */
     sci_b_lin_instance_ctrl_t * p_ctrl = (sci_b_lin_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
 
-    /* Check if break field was detected. XSR0.BFDF must be confirmed according to Figure 26.105
-     * "Example of Start Frame Reception Flowchart" of the RA6T2 manual R01UH0951EJ0130  */
+    /* Check if break field was detected. XSR0.BFDF must be confirmed according to Figure
+     * "Example of Start Frame Reception Flowchart" in the SCI section of the relevant hardware manual. */
     if (p_ctrl->p_reg->XSR0 & R_SCI_B0_XSR0_BFDF_Msk)
     {
         r_sci_b_lin_bfd_handler(p_ctrl);

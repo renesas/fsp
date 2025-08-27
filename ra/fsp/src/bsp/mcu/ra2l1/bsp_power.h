@@ -18,7 +18,7 @@ FSP_HEADER
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#if BSP_FEATURE_BSP_HAS_DCDC_REGULATOR
+#if BSP_FEATURE_SYSC_HAS_DCDC_REGULATOR
  #define BSP_PRV_POWER_USE_DCDC       (BSP_CFG_DCDC_ENABLE)
 #else
  #define BSP_PRV_POWER_USE_DCDC       (0)

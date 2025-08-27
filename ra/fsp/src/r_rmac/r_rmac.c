@@ -712,7 +712,7 @@ static fsp_err_t rmac_open_param_check (rmac_instance_ctrl_t const * const p_ins
     FSP_ERROR_RETURN(NULL != p_cfg, FSP_ERR_INVALID_POINTER);
     FSP_ERROR_RETURN(NULL != p_cfg->p_mac_address, FSP_ERR_INVALID_POINTER);
     FSP_ERROR_RETURN(NULL != p_cfg->p_extend, FSP_ERR_INVALID_POINTER);
-    FSP_ERROR_RETURN(BSP_FEATURE_ETHER_MAX_CHANNELS > p_cfg->channel, FSP_ERR_INVALID_CHANNEL);
+    FSP_ERROR_RETURN(BSP_FEATURE_ETHER_NUM_CHANNELS > p_cfg->channel, FSP_ERR_INVALID_CHANNEL);
 
     /* RMAC does not support padding feature. */
     FSP_ERROR_RETURN(p_cfg->padding == ETHER_PADDING_DISABLE, FSP_ERR_UNSUPPORTED);
@@ -806,7 +806,7 @@ static fsp_err_t rmac_do_link (rmac_instance_ctrl_t * const                 p_in
     layer3_switch_extended_cfg_t * p_switch_extended_cfg;
     const ether_phy_instance_t   * p_phy_instance;
 
-    layer3_switch_port_cfg_t port_cfg;
+    layer3_switch_port_cfg_t port_cfg           = {0};
     uint32_t                 link_speed_duplex  = 0;
     uint32_t                 local_pause_bits   = 0;
     uint32_t                 partner_pause_bits = 0;

@@ -192,8 +192,8 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     FSP_ERROR_RETURN(p_cfg->p_bit_timing->baud_rate_prescaler <= CAN_BAUD_RATE_PRESCALER_MAX, FSP_ERR_CAN_INIT_FAILED);
     FSP_ERROR_RETURN(p_cfg->p_bit_timing->baud_rate_prescaler >= CAN_BAUD_RATE_PRESCALER_MIN, FSP_ERR_CAN_INIT_FAILED);
 
-    /* 'Setting of TSEG1 and TSEG2: TSEG1 > TSEG2 > SJW' as described in hardware manual (see Section 37.4.2
-     * 'Bit Time Setting' of the RA6M3 manual R01UH0886EJ0100). */
+    /* 'Setting of TSEG1 and TSEG2: TSEG1 > TSEG2 > SJW' as described in hardware manual (See "Bit Timing Setting"
+     * in the Data Transfer Rate Configuration section of the relevant hardware manual). */
 
     /* Check Time Segment 1 is greater than Time Segment 2. */
     FSP_ERROR_RETURN((uint32_t) p_cfg->p_bit_timing->time_segment_1 > (uint32_t) p_cfg->p_bit_timing->time_segment_2,
@@ -206,16 +206,13 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
 
     /* Get the frequency of pclkb for later validation */
     uint32_t pclkb_frequency = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB);
- #if BSP_FEATURE_CAN_CHECK_PCLKB_RATIO
+ #if BSP_FEATURE_CAN_CHECK_PCLKB_RATIO_FLAG
 
     /* Check the hardware manual usage note requirements are met. */
     uint32_t pclka_iclk_frequency = 0U;
 
-    /* 'The clock frequency ratio of ICLK and PCLKB must be 2:1' - Refer hardware manual (see Section 29.9.2
-     * 'Settings for the Operating Clock' of the RA2A1 manual R01UH0888EJ0100). */
-
-    /* 'The clock frequency ratio of PCLKA and PCLKB must be 2:1' - Refer hardware manual (see Section 30.9.2
-     * 'Settings for the Operating Clock' of the RA4M1 manual R01UH0886EJ0100). */
+    /* 'The clock frequency ratio of ICLK and PCLKB must be 2:1' - See "Settings for the Operating Clock" in the CAN Usage notes of the relevant hardware manual. */
+    /* 'The clock frequency ratio of PCLKA and PCLKB must be 2:1' - See "Settings for the Operating Clock" in the CAN Usage notes of the relevant hardware manual. */
 
     /* Get the other clock defined by the hardware manual from the bsp and verify there is a 2:1 ratio */
     pclka_iclk_frequency = R_FSP_SystemClockHzGet(BSP_FEATURE_CAN_CLOCK);
@@ -229,14 +226,7 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     /* If the device is configured for CANMCLK or supports only CANMCLK */
     if (CAN_CLOCK_SOURCE_CANMCLK == ((can_extended_cfg_t *) p_cfg->p_extend)->clock_source)
     {
-        /* 'fPCLKB >= fCANMCLK' - Refer hardware manual (see Section 29.9.2
-         * 'Settings for the Operating Clock' of the RA2A1 manual R01UH0888EJ0100). */
-
-        /* 'fPCLKB >= fCANMCLK' - Refer hardware manual (see Section 30.9.2
-         * 'Settings for the Operating Clock' of the RA4M1 manual R01UH0886EJ0100). */
-
-        /* 'fPCLKB >= fCANMCLK' - Refer hardware manual (see Section 37.9.2
-         * 'Settings for the Operating Clock' of the RA6M3 manual R01UH0886EJ0100). */
+        /* 'fPCLKB >= fCANMCLK' - See "Settings for the Operating Clock" in the CAN Usage notes section of the relevant hardware manual. */
         FSP_ERROR_RETURN(pclkb_frequency >= (BSP_CFG_XTAL_HZ), FSP_ERR_CAN_INIT_FAILED);
     }
 
@@ -244,12 +234,7 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     else
     {
         /* Otherwise the device is configured for PCLKB. Verify the source clock is the PLL */
-
-        /* Refer hardware manual (see Section 30.4.1
-         * 'Clock Setting' of the RA4M1 manual R01UH0886EJ0100). */
-
-        /* Refer hardware manual (see Section 37.4.1
-         * 'Clock Setting' of the RA6M3 manual R01UH0886EJ0100). */
+        /* See "Clock Setting" in the Data Transfer Rate Configuration section of the relevant hardware manual. */
         FSP_ERROR_RETURN(R_SYSTEM->SCKSCR == BSP_CLOCKS_SOURCE_CLOCK_PLL, FSP_ERR_CAN_INIT_FAILED);
     }
  #endif
@@ -277,7 +262,7 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
     r_can_mode_transition(p_ctrl, CAN_OPERATION_MODE_RESET, CAN_TEST_MODE_DISABLED);
 
     /* Set up control register fields in reset mode as described in the hardware manual.
-     * (See Note 1.under Section 37.2.1 'Control Register (CTLR)' of the RA6M3 manual R01UH0886EJ0100)
+     * (See Note 1 of "Control Register (CTLR)" description in the CAN section of the relevant hardware manual)
      *
      * MBM: Select requested mailbox mode
      * Select ID mode. Standard or extended
@@ -363,8 +348,7 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
 #if CAN_CFG_FIFO_SUPPORT
 
     /* Set the Mask as invalid for mailboxes that do not use the mask.
-     * Bits 24:31 in MKIVLR must not be set in FIFO mode (see Note 1 in Section 37.2.5 "Mask Invalid Register (MKIVLR)
-     * of the RA6M3 User's Manual (R01UH0886EJ0120)). */
+     * Bits 24:31 in MKIVLR must not be set in FIFO mode (See "Mask Invalid Register (MKIVLR)" description in the CAN section of the relevant hardware manual). */
     p_reg->MKIVLR = ~(mask_enabled) & CAN_MKIVLR_FIFO_MASK;
 
     /* Get pointer to RX FIFO configuration */
@@ -398,8 +382,7 @@ fsp_err_t R_CAN_Open (can_ctrl_t * const p_api_ctrl, can_cfg_t const * const p_c
 
     /* Time Stamp Counter reset. Set the TSRC bit to 1 in CAN Operation mode. */
 
-    /* 'Set the TSRC bit to 1 in CAN operation mode.' - Refer hardware manual (see Section 37.2.1
-     * 'Control Register (CTLR)'- 'Note 4' of the RA4M1 manual R01UH0886EJ0100). */
+    /* 'Set the TSRC bit to 1 in CAN operation mode.' (See 'Note 4' of "Control Register (CTLR)" description in the CAN section of the relevant hardware manual). */
     p_reg->CTLR_b.TSRC = CAN_TIMESTAMP_RESET; /* Set Timestamp counter reset command */
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CTLR_b.TSRC, !CAN_TIMESTAMP_RESET);
 
@@ -776,10 +759,9 @@ static inline void r_can_mailbox_read (can_instance_ctrl_t * p_ctrl, uint32_t ma
     /* Get the frame data length code */
     p_frame->data_length_code = p_reg->MB[mailbox].DL_b.DLC;
 
-    /* Refer Note 1 about DLC[3:0] under Section 37.2.6
-     * 'Mailbox Register j (MBj_ID, MBj_DL, MBj_Dm, MBj_TS) (j = 0 to 31; m = 0 to 7)'
-     * of RA6M3 manual R01UH0886EJ010.
-     */
+    /* See Note 1 about DLC[3:0] of
+     * "Mailbox Register j (MBj_ID, MBj_DL, MBj_Dm, MBj_TS) (j = 0 to 31; m = 0 to 7)"
+     * in the CAN section of the relevant hardware manual. */
     if (p_frame->data_length_code > CAN_MAX_DATA_LENGTH)
     {
         p_frame->data_length_code = CAN_MAX_DATA_LENGTH;
@@ -804,9 +786,9 @@ static inline void r_can_mailbox_read (can_instance_ctrl_t * p_ctrl, uint32_t ma
          * error interrupts to be fired.
          * This flag will be cleared in the error isr.
          * Message Lost flag is written as 1 as that has no effect on this bit.
-         * Refer 'Note 1. Write 0 only. Writing 1 has no effect.' under section
-         * '29.2.10 Message Control Register for Receive (MCTL_RXj) (j = 0 to 31)'
-         * or RA6M3 HW manual R01UH0886EJ0100.
+         * See 'Note 1. Write 0 only. Writing 1 has no effect.' of
+         * "Message Control Register for Receive (MCTL_RXj) (j = 0 to 31)"
+         * in the CAN section of the relevant hardware manual.
          */
         p_reg->MCTL_RX[mailbox] = CAN_MAILBOX_RX_MASK_MSGLOST;
     }
@@ -964,8 +946,8 @@ void can_rx_isr (void)
         uint8_t rfcr = p_reg->RFCR;
         if (rfcr & R_CAN0_RFCR_RFMLF_Msk)
         {
-            /* Clear the Receive FIFO Message Lost Flag if set (see Section 37.2.12 'Receive FIFO Pointer Control
-             * Register (RFPCR)' in the RA6M3 User's Manual (R01UH0886EJ0110))  */
+            /* Clear the Receive FIFO Message Lost Flag if set (See "Receive FIFO Pointer Control
+             * Register (RFPCR)" description in the CAN section of the relevant hardware manual). */
             p_reg->RFCR_b.RFMLF = 0;
 
             /* Add a FIFO message lost flag to the event */
@@ -1062,8 +1044,8 @@ void can_tx_isr (void)
          * Do a byte-write to avoid read-modify-write with HW writing another bit in between.
          * TRMREQ must be set to 0 (or will send again).
          * Do it twice since bits SENTDATA and TRMREQ cannot be set to 0 simultaneously
-         * Refer Section 29.2.9 'Message Control Register for Transmit (MCTL_TXj) (j = 0 to 31)'
-         * under "SENTDATA flag (Transmission Complete Flag)" of RA6M3 HW manual R01UH0886EJ0100.
+         * See "Message Control Register for Transmit (MCTL_TXj) (j = 0 to 31)"
+         * under "SENTDATA flag (Transmission Complete Flag)" in the CAN section of the relevant hardware manual.
          */
         p_reg->MCTL_TX[mailbox] = CAN_TRANSMIT_CLEAR;
         p_reg->MCTL_TX[mailbox] = CAN_TRANSMIT_CLEAR; // Clear SENTDATA and TRMREQ.
@@ -1110,8 +1092,7 @@ static void r_can_mode_transition (can_instance_ctrl_t * p_ctrl,
         /* Switch to halt mode */
         r_can_switch_to_operation_mode(p_ctrl, CAN_OPERATION_MODE_HALT);
 
-        /* 'Write to TCR in CAN halt mode only.' - Refer hardware manual (see Section 37.2.26
-         * 'Test Control Register (TCR)' of the RA6M3 manual R01UH0886EJ0100). */
+        /* 'Write to TCR in CAN halt mode only.' (See "Test Control Register (TCR)" description in the CAN section of the relevant hardware manual). */
         p_reg->TCR = (uint8_t) test_mode; /* Destination test mode */
 
         /* Set current test mode. */
@@ -1126,8 +1107,7 @@ static void r_can_mode_transition (can_instance_ctrl_t * p_ctrl,
             r_can_switch_to_operation_mode(p_ctrl, CAN_OPERATION_MODE_HALT);
 
             /* 'Write to the SLPM bit in CAN reset mode and CAN halt mode.'
-             * Refer hardware manual (see Section 37.3.3
-             * 'CAN Sleep Mode' of the RA6M3 manual R01UH0886EJ0100)
+             * See "CAN Sleep Mode" in the CAN Operation Modes section of the relevant hardware manual
              */
             p_reg->CTLR_b.SLPM = CAN_SLEEP_SLEEP;
             FSP_HARDWARE_REGISTER_WAIT(p_reg->STR_b.SLPST, 1U);
@@ -1154,7 +1134,7 @@ static void r_can_switch_to_operation_mode (can_instance_ctrl_t * p_ctrl, can_op
     p_reg->CTLR_b.SLPM = CAN_SLEEP_AWAKEN;
     p_reg->CTLR_b.CANM = (uint16_t) (canm_mode_setting & CAN_CANM_SETTING_MASK);
 
-    /* Refer notes under Section '29.2.1 Control Register (CTLR)' of RA6M3 HW manual R01UH0886EJ0100 */
+    /* See "Control Register (CTLR)" description in the CAN section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT((p_reg->STR & CAN_CHECK_MODE_MASK),
                                (uint32_t) ((uint8_t) canm_mode_setting << R_CAN0_CTLR_CANM_Pos));
 }

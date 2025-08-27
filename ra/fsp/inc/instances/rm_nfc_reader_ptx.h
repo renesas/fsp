@@ -41,6 +41,13 @@ typedef enum e_nfc_reader_ptx_ndef_read_write
     NFC_READER_PTX_NDEF_READ  = 0x02,  ///< Read flag for NDEF data exchange
 } nfc_reader_ptx_ndef_read_write_t;
 
+/** NFC power mode flags */
+typedef enum e_nfc_reader_ptx_power_mode
+{
+    NFC_READER_PTX_ACTIVE_MODE  = 0x00, ///< Active mode (default), all features enabled
+    NFC_READER_PTX_STANDBY_MODE = 0x01, ///< Stand-by mode, most features disabled for low power
+} nfc_reader_ptx_power_mode_t;
+
 /** NFC state machine status */
 typedef enum e_nfc_reader_ptx_state
 {
@@ -79,6 +86,7 @@ typedef struct st_nfc_reader_ptx_cfg
     bool    poll_type_f;                             ///< Flag to indicate enabling discovery for Type-F tags.
     bool    poll_type_v;                             ///< Flag to indicate enabling discovery for Type-V tags.
     uint8_t device_limit;                            ///< Defines the maximum number of devices that can be connected at once.
+    uint8_t discover_mode;                           ///< Set polling mode, where 0 = Regular Polling, 1 = Low-Power Card Detection (LPCD), 2-255 = LPCD with every n-th Cycle Regular Polling
 
     uint32_t idle_time_ms;                           ///< RF-Discovery Loop. Idle time between polling cycles in milliseconds.
     uint8_t  temp_sensor_calibrate;                  ///< Flag to enable/disable temperature sensor calibration
@@ -132,6 +140,8 @@ fsp_err_t RM_NFC_READER_PTX_DataExchange(nfc_reader_ptx_instance_ctrl_t * const 
                                          nfc_reader_ptx_data_info_t * const     p_data_info);
 fsp_err_t RM_NFC_READER_PTX_ReaderDeactivation(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
                                                nfc_reader_ptx_return_state_t          return_state);
+fsp_err_t RM_NFC_READER_PTX_PowerModeSet(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
+                                         nfc_reader_ptx_power_mode_t            power_mode);
 fsp_err_t RM_NFC_READER_PTX_NDEF_Init(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,
                                       nfc_reader_ptx_data_info_t * const     p_data_info);
 fsp_err_t RM_NFC_READER_PTX_NDEF_DataExchange(nfc_reader_ptx_instance_ctrl_t * const p_ctrl,

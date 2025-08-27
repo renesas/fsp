@@ -549,7 +549,6 @@ fsp_err_t HW_SCE_Aes128GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     FSP_PARAMETER_NOT_USED(InData_KeyType);
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_128_ENC;
     hw_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_128BIT_KEYLEN_BYTES);
-    R_AES_B->AESDCNTL          = R_AES_AESDCNTL_BIT_2_3_MODE_1;
     InputData_IV_GCM_LEN_BYTES = (uint8_t) *((unsigned int *) InData_KeyIndex + SCE_AES_GCM_IN_DATA_IV_LEN_LOC);
     memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, InputData_IV_GCM_LEN_BYTES);
 
@@ -600,7 +599,6 @@ fsp_err_t HW_SCE_Aes128GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     FSP_PARAMETER_NOT_USED(InData_KeyType);
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_128_DEC;
     hw_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_128BIT_KEYLEN_BYTES);
-    R_AES_B->AESDCNTL          = R_AES_AESDCNTL_BIT_2_3_MODE_1;
     InputData_IV_GCM_LEN_BYTES = (uint8_t) *((unsigned int *) InData_KeyIndex + SCE_AES_GCM_IN_DATA_IV_LEN_LOC);
     memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, InputData_IV_GCM_LEN_BYTES);
 
@@ -682,7 +680,6 @@ fsp_err_t HW_SCE_Aes192GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     FSP_PARAMETER_NOT_USED(InData_KeyType);
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_192_ENC;
     hw_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_192BIT_KEYLEN_BYTES);
-    R_AES_B->AESDCNTL          = R_AES_AESDCNTL_BIT_2_3_MODE_1;
     InputData_IV_GCM_LEN_BYTES = (uint8_t) *((unsigned int *) InData_KeyIndex + SCE_AES_GCM_IN_DATA_IV_LEN_LOC);
     memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, InputData_IV_GCM_LEN_BYTES);
 
@@ -733,7 +730,6 @@ fsp_err_t HW_SCE_Aes192GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     FSP_PARAMETER_NOT_USED(InData_KeyType);
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_192_DEC;
     hw_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_192BIT_KEYLEN_BYTES);
-    R_AES_B->AESDCNTL          = R_AES_AESDCNTL_BIT_2_3_MODE_1;
     InputData_IV_GCM_LEN_BYTES = (uint8_t) *((unsigned int *) InData_KeyIndex + SCE_AES_GCM_IN_DATA_IV_LEN_LOC);
     memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, InputData_IV_GCM_LEN_BYTES);
 
@@ -815,7 +811,6 @@ fsp_err_t HW_SCE_Aes256GcmEncryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     FSP_PARAMETER_NOT_USED(InData_KeyType);
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_256_ENC;
     hw_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_256BIT_KEYLEN_BYTES);
-    R_AES_B->AESDCNTL          = R_AES_AESDCNTL_BIT_2_3_MODE_1;
     InputData_IV_GCM_LEN_BYTES = (uint8_t) *((unsigned int *) InData_KeyIndex + SCE_AES_GCM_IN_DATA_IV_LEN_LOC);
     memcpy(&InputData_IV_GCM[0], (uint8_t *) InData_IV, InputData_IV_GCM_LEN_BYTES);
 
@@ -866,7 +861,6 @@ fsp_err_t HW_SCE_Aes256GcmDecryptInitSub (uint32_t * InData_KeyType, uint32_t * 
     FSP_PARAMETER_NOT_USED(InData_KeyType);
     R_AES_B->AESCNTL = R_AES_AESCNTL_GCM_256_DEC;
     hw_aes_set_key((uint8_t *) InData_KeyIndex, SIZE_AES_256BIT_KEYLEN_BYTES);
-    R_AES_B->AESDCNTL          = R_AES_AESDCNTL_BIT_2_3_MODE_1;
     InputData_IV_GCM_LEN_BYTES = (uint8_t) *((unsigned int *) InData_KeyIndex + SCE_AES_GCM_IN_DATA_IV_LEN_LOC);
     memcpy((uint8_t *) &InputData_IV_GCM[0], (uint8_t *) InData_IV, InputData_IV_GCM_LEN_BYTES);
 

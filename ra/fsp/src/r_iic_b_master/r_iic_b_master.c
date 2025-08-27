@@ -72,7 +72,7 @@
 
 /* Worst case ratio of ICLK/PCLKB (RA2E2) or ICLK/PCLKA (RA6T2) = 64 approximately.
  * 3 PCLKB cycles is the number of cycles to wait for IICn.
- * Refer "Table 3.2 Access cycles for non-GPT modules (1 of 2)" of the RA2E2 manual R01UH0919EJ0050)
+ * Refer Table "Access cycles for non-GPT modules" in the I/O Registers section of the relevant hardware manual.
  */
 #define IIC_B_MASTER_PERIPHERAL_REG_MAX_WAIT    (0x40U * 0x03U)
 
@@ -201,7 +201,7 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
     /* If rate is configured as Fast mode plus, check whether the channel supports it */
     if (I2C_MASTER_RATE_FASTPLUS == p_cfg->rate)
     {
-        FSP_ASSERT((BSP_FEATURE_IIC_B_FAST_MODE_PLUS & (1U << p_cfg->channel)));
+        FSP_ASSERT((BSP_FEATURE_IIC_B_FAST_MODE_PLUS_CHANNELS_MASK & (1U << p_cfg->channel)));
     }
 #endif
 #if IIC_B_MASTER_CFG_DTC_ENABLE
@@ -223,14 +223,14 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
 
-#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+#if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
     R_BSP_MODULE_START(FSP_IP_I3C, p_cfg->channel);
 #else
     R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
 #endif
 
-    /* Open the hardware in master mode. Performs IIC initialization as described in hardware manual (see Section 27.3.2.1
-     * 'Initial Settings' of the RA6T2 manual R01UH0951EJ0050). */
+    /* Open the hardware in master mode. Performs IIC initialization as described in hardware manual (see
+     * "Initial Setting Flow" in the IIC section of the relevant hardware manual). */
     iic_b_master_open_hw_master(p_ctrl, p_cfg);
 
 #if IIC_B_MASTER_CFG_DTC_ENABLE
@@ -239,7 +239,11 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
     err = iic_b_master_transfer_open(p_cfg);
     if (FSP_SUCCESS != err)
     {
+ #if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
+        R_BSP_MODULE_STOP(FSP_IP_I3C, p_cfg->channel);
+ #else
         R_BSP_MODULE_STOP(FSP_IP_IIC, p_cfg->channel);
+ #endif
 
         return err;
     }
@@ -521,7 +525,7 @@ fsp_err_t R_IIC_B_MASTER_Close (i2c_master_ctrl_t * const p_api_ctrl)
     R_BSP_IrqDisable(p_ctrl->p_cfg->tei_irq);
     R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
-#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+#if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
     R_BSP_MODULE_STOP(FSP_IP_I3C, p_ctrl->p_cfg->channel);
 #else
     R_BSP_MODULE_STOP(FSP_IP_IIC, p_ctrl->p_cfg->channel);
@@ -595,7 +599,7 @@ static fsp_err_t iic_b_master_read_write (i2c_master_ctrl_t * const   p_api_ctrl
         p_ctrl->addr_low  = (uint8_t) p_ctrl->slave;
 
         /* Addr total = 3 for Read and 2 for Write.
-         * See Section 27.3.1.3.1 "Communication Data Format" of the RA6T2 manual R01UH0951EJ0050
+         * See Section "I2C Communication Data Format" in the IIC section of the relevant hardware manual.
          */
         p_ctrl->addr_total = (uint8_t) ((uint8_t) direction + IIC_B_MASTER_SLAVE_10_BIT_ADDR_LEN_ADJUST);
     }
@@ -726,8 +730,8 @@ static void iic_b_master_abort_seq_master (iic_b_master_instance_ctrl_t * const 
 }
 
 /*******************************************************************************************************************//**
- * Performs the hardware initialization sequence when operating as a master (see Section 27.3.2.1
- * 'Initial Settings' of the RA6T2 manual R01UH0951EJ0050).
+ * Performs the hardware initialization sequence when operating as a master (see
+ * "Initial Setting Flow" in the IIC section of the relevant hardware manual).
  *
  * @param[in]  p_ctrl                Pointer to IIC specific control structure
  * @param[in]  p_cfg                 Pointer to IIC specific configuration structure.
@@ -735,7 +739,7 @@ static void iic_b_master_abort_seq_master (iic_b_master_instance_ctrl_t * const 
 static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_ctrl,
                                          i2c_master_cfg_t const * const       p_cfg)
 {
-#if (1 == BSP_FEATURE_BSP_HAS_I3C_CLOCK)
+#if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
 
     /* Enable I3CCLK. (Not a part of init sequence in the HW manual, but RA8 must enable it to reset the module ) */
     p_ctrl->p_reg->CECTL = (uint32_t) R_I3C0_CECTL_CLKE_Msk;
@@ -750,12 +754,13 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
     /* Waiting for reset completion RSTCTL.RI2CRST = 0;  RSTCTL.INTLRST is already 0. */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->RSTCTL_b.RI3CRST, 0U);
 
-    /* In case of RA2E2, PRTS.PRTMD = 1 and BFCFG.FIFOE = 0 after the above reset.
-     * Refer 25.2.2 'PRTS : Protocol Selection Register' and
-     * 'BFCFG : Buffer Configuration Selection Register' of the RA2E2 manual R01UH0919EJ0050
+    /* In case of RA2E2, PRTS.PRTMD = 1 after the above reset.
+     * Refer "PRTS : Protocol Selection Register" description in the IIC section of the
+     * relevant hardware manual.
      *
      * Default value of SVCTL register is 0.
-     * Default/Reset value is set after IIC reset above. Refer Table 27.9 of the RA6T2 manual R01UH0951EJ0050
+     * Default/Reset value is set after IIC reset above. See table "Register states when issuing each condition"
+     * in the IIC section of the relevant hardware manual.
      * This ensures the HW is in master mode and does not behave as a slave to another master on the same channel.
      * Skip setting slave address length and slave address.
      */
@@ -769,7 +774,8 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
                                           (p_extend->clock_settings.brh_value << R_I3C0_STDBR_SBRHO_Pos));
 
     /* Set OUTCTL, INCTL, TMOCTL, ACKCTL and SCSTRCTL registers.
-     * (Default/Reset value is set after IIC reset above. Refer Table 27.9 of the RA6T2 manual R01UH0951EJ0050)
+     * (Default/Reset value is set after IIC reset above. See table "Register states when issuing each condition"
+     * in the IIC section of the relevant hardware manual.)
      * 1. OUTCTL: Keep default settings in Open.
      *
      * 2. SCSTRCTL: Keep default settings in Open.
@@ -780,12 +786,12 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
      * Digital noise filter circuit is enabled by default after IIC reset.
      * Upon IIC reset, 'DNFS[3:0] Digital Noise Filter Stage Selection' will be set to 0x00
      * This would imply  'Noise of up to one IICφ cycle is filtered out (singlestage filter).'
-     * (see Section 27.2.12 'INCTL : Input Control Register' of the RA6T2 manual R01UH0951EJ0050)
+     * (see "INCTL : Input Control Register" description in the IIC section of the relevant hardware manual.)
      *
      *  Set TOHCTL to enable timeouts when SCLn is high. (Non configurable)
      * Set TOLCTL based on user settings.
      * Set TODTS based on user settings. Only 14 (SHORT) and 16 (LONG) bit counters are allowed.
-     * (see Section 27.2.13 'TMOCTL : Timeout Control Register' of the RA6T2 manual R01UH0951EJ0050).
+     * (see "TMOCTL : Timeout Control Register" description in the IIC section of the relevant hardware manual).
      */
     p_ctrl->p_reg->TMOCTL = (uint32_t) ((uint32_t) R_I3C0_TMOCTL_TOHCTL_Msk |
                                         (uint32_t) (IIC_B_MASTER_TIMEOUT_MODE_SHORT ==
@@ -837,12 +843,12 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
 
     /* Set FRECYC based on IIC reference clock.
      * (Not a part of init sequence in the HW manual)
-     * See section 46.3.11. IIC Timing of the RA6T2 manual R01UH0951EJ0050:
+     * See section "IIC Timing" in the Electrical Characteristics section of the relevant hardware manual:
      * 1. tBUF (Standard Mode) = 5 × tIICcyc + 300 ns
      * 2. tBUF (Fast Mode) = 5 × tIICcyc + 300 ns
      * 3. tBUF (Fast Plus Mode) = 5 × tIICcyc + 120 ns
      *
-     * See section 36.3.10 I3C Timing of the RA2E2 manual R01UH0919EJ0100:
+     * See "I3C Timing" in the Electrical Characteristics section of the relevant hardware manual:
      * 1. tBUF (Standard Mode) = 3 × tIICcyc + 300 ns
      * 2. tBUF (Fast Mode) = 3 × tIICcyc + 300 ns
      * 3. tBUF (Fast Plus Mode) = 3 × tIICcyc + 120 ns
@@ -857,8 +863,8 @@ static void iic_b_master_open_hw_master (iic_b_master_instance_ctrl_t * const p_
 
 /*******************************************************************************************************************//**
  * Performs the data transfer described by the parameters when operating as a master.
- * See 36.3.3 "Master Transmit Operation" and section 36.3.4 "Master Receive Operation"
- * of the RA2E2 manual R01UH0886EJ0100
+ * See "Data Write Transfer (Single Buffer transfer)" and "Data Read Transfer (Single Buffer transfer)"
+ * of 'I2C Master Operation' in the I3C section of the relevant hardware manual.
  *
  * @param[in]       p_ctrl  Pointer to control structure of specific device.
  *
@@ -894,7 +900,7 @@ static fsp_err_t iic_b_master_run_hw_master (iic_b_master_instance_ctrl_t * cons
      * Set TOHCTL to enable timeouts when SCLn is high. (Non configurable)
      * Set TOLCTL based on user settings.
      * Set TODTS based on user settings. Only 14 (SHORT) and 16 (LONG) bit counters are allowed.
-     * (see Section 27.2.13 'TMOCTL : Timeout Control Register' of the RA6T2 manual R01UH0951EJ0050).
+     * (see Section "TMOCTL : Timeout Control Register" description in the IIC section of the relevant hardware manual).
      */
     p_ctrl->p_reg->TMOCTL = (uint32_t) (R_I3C0_TMOCTL_TOHCTL_Msk |
                                         (uint32_t) (IIC_B_MASTER_TIMEOUT_MODE_SHORT ==
@@ -934,15 +940,15 @@ static fsp_err_t iic_b_master_run_hw_master (iic_b_master_instance_ctrl_t * cons
          * See Section 27.3.1.1.1 'Master Mode Operation', '(1) I2C Master Operation',
          * '(a) Data Write Transfer (Single Buffer transfer)' point #2.
          * AND
-         * Table 27.8 'Interrupt Generation' of the RA6T2 manual R01UH0951EJ0050.
+         * Table "Interrupt Generation" in the IIC section of the relevant hardware manual.
          *
          */
         p_ctrl->p_reg->NTSTE = (uint32_t) IIC_B_MASTER_PRV_NTSTE_INIT_MASK;
     }
 
     /*
-     * The Flowchart under 27.3.2.2 "Master Mode Communication Flow"
-     * of the RA6T2 manual R01UH0951EJ0050 is covered in the interrupts:
+     * The Flowchart "Master Mode Communication Flow"
+     * in the IIC section of the relevant hardware manual is covered in the interrupts:
      *
      * 1. NACKF processing is handled in the ERI interrupt.
      *    For receive, dummy reading NTDTBP0 is not required because the NACK processing in this driver resets the IIC peripheral.
@@ -976,8 +982,8 @@ static void iic_b_master_rxi_master (iic_b_master_instance_ctrl_t * p_ctrl)
         if (1U == p_ctrl->remain)
         {
             /* Writes to be done together with write protect bit.
-             * See Note 1 in Section 27.2.15 'ACKCTL : Acknowledge Control Register'
-             * of the RA6T2 manual R01UH0951EJ0050
+             * See "ACKCTL : Acknowledge Control Register" description
+             * in the IIC section of the relevant hardware manual.
              */
             p_ctrl->p_reg->ACKCTL = (uint32_t) (R_I3C0_ACKCTL_ACKTWP_Msk | R_I3C0_ACKCTL_ACKT_Msk);
         }
@@ -1082,7 +1088,7 @@ static void iic_b_master_txi_master (iic_b_master_instance_ctrl_t * p_ctrl)
 #if BSP_FEATURE_IIC_B_CHECK_SCILV_BEFORE_MASTER_WRITE_TX_DATA
 
             /* Confirm that PRSTDBG.SCILV = 0 (check the status of SCL) before writing the transmission data.
-             * Please refer to UMH r01uh0919ej0130-ra2e2 25.3.3.3.1 I2C Master Transmission Flow (Single Buffer Transfer) for details.
+             * Please refer to "I2C Master Transmission Flow (Single Buffer Transfer)" in the I3C Bus Interface section of the relevant hardware manual for details.
              */
             FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->PRSTDBG_b.SCILV, 0);
 #endif
@@ -1106,7 +1112,8 @@ static void iic_b_master_txi_master (iic_b_master_instance_ctrl_t * p_ctrl)
             p_ctrl->p_reg->NTIE = (uint32_t) R_I3C0_NTIE_RDBFIE0_Msk;
 
             /* Wait for the value to reflect at the peripheral.
-             * See 'Note' under Table 1.138 "Interrupt sources" of the RA2E2 manual: I2C I3C unified IP (R-I3C v2) */
+             * See "Interrupt sources" in the I3C section of the relevant hardware manual
+             * : I2C I3C unified IP (R-I3C v2) */
             IIC_B_MASTER_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->NTIE_b.TDBEIE0, 0U, timeout_count);
 
             /* Enable the transmit end IRQ, to issue a STOP or RESTART */
@@ -1203,7 +1210,8 @@ static void iic_b_master_tei_master (iic_b_master_instance_ctrl_t * p_ctrl)
     p_ctrl->p_reg->BIE_b.TENDIE = 0U;
 
     /* Wait for the value to reflect at the peripheral.
-     * See 'Note' under Table 1.138 "Interrupt sources" of the RA2E2 manual: I2C I3C unified IP (R-I3C v2) */
+     * See "Interrupt sources" in the I3C section of the relevant hardware manual
+     * : I2C I3C unified IP (R-I3C v2) */
     IIC_B_MASTER_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->BIE_b.TENDIE, 0U, timeout_count);
 }
 
@@ -1231,8 +1239,8 @@ static void iic_b_master_err_master (iic_b_master_instance_ctrl_t * p_ctrl)
          *     a. In case of an arbitration loss error.also occurs.
          *     b. If the slave timeout is lesser than master timeout and the slave releases
          *        the bus by performing an internal reset.
-         *        Refer Section "27.2.4 PRSST : Present State Register - Clearing conditions for CRMS"
-         *        of the RA6T2 manual R01UH0951EJ0050
+         *        See Clearing conditions for CRMS in "PRSST : Present State Register" description
+         *        in the IIC section of the relevant hardware manual.
          * 3. This is a Timeout error after attempting to issue a stop after detecting a NACK previously.
          */
         p_ctrl->err = true;
@@ -1245,16 +1253,15 @@ static void iic_b_master_err_master (iic_b_master_instance_ctrl_t * p_ctrl)
     else if ((errs_events & (uint32_t) (R_I3C0_BST_NACKDF_Msk)) && (1U == p_ctrl->p_reg->PRSST_b.CRMS))
     {
         /* CRMS bit must be set to issue a stop condition.
-         * Refer Section "1.8.3.3 Issuing a Stop Condition" of the RA2E2 manual: I2C I3C unified IP (R-I3C v2)
-         */
-
-        /* Set the error flag when an error event occurred
+         * See "Issuing a Stop Condition" in the I3C section of the relevant hardware manual.
+         * : I2C I3C unified IP (R-I3C v2)
+         *//* Set the error flag when an error event occurred
          * This will be checked after the stop condition is detected from the request below. */
         p_ctrl->err = true;
 
         /* The sequence below is to handle a NACK received from slave in the middle of a write.
-         * See item '[4]' under 'Figure 27.47 Example of I2C master transmission flowchart' of
-         * the RA6T2 manual R01UH0951EJ0050 */
+         * See item '[4]' under the figure "Example of I2C master transmission flowchart"
+         * in the IIC section of the relevant hardware manual. */
 
         /* Request IIC to issue the stop condition */
         p_ctrl->p_reg->CNDCTL = (uint32_t) R_I3C0_CNDCTL_SPCND_Msk; /* It is safe to write 0's to other bits. */
@@ -1344,8 +1351,8 @@ static void iic_b_master_rxi_read_data (iic_b_master_instance_ctrl_t * const p_c
     else if (2U == p_ctrl->remain)
     {
         /* Writes to be done together with write protect bit.
-         * See Note 1 in Section 27.2.15 'ACKCTL : Acknowledge Control Register'
-         * of the RA6T2 manual R01UH0951EJ0050
+         * See "ACKCTL : Acknowledge Control Register" description
+         * in the IIC section of the relevant hardware manual.
          */
         p_ctrl->p_reg->ACKCTL = (uint32_t) (R_I3C0_ACKCTL_ACKTWP_Msk | R_I3C0_ACKCTL_ACKT_Msk);
     }
@@ -1388,8 +1395,8 @@ static void iic_b_master_rxi_read_data (iic_b_master_instance_ctrl_t * const p_c
 
             /* STOP flag will not be set just yet. STOP will be set only after reading the
              * last byte from NTDTBP0 and clearing the RWE.
-             * See Point #7 under '27.3.1.1.1 Master Mode Operation, (1) I2C Master Operation,
-             * (b) Data Read Transfer (Single Buffer transfer)' of the RA6T2 manual R01UH0951EJ0050.
+             * See Point #7 under "Master Mode Operation, (1) I2C Master Operation,
+             * (b) Data Read Transfer (Single Buffer transfer)" in the IIC section of the relevant hardware manual.
              */
         }
     }
@@ -1438,7 +1445,8 @@ static void iic_b_master_txi_send_address (iic_b_master_instance_ctrl_t * const 
         p_ctrl->p_reg->NTIE = (uint32_t) R_I3C0_NTIE_RDBFIE0_Msk;
 
         /* Wait for the value to reflect at the peripheral.
-         * See 'Note' under Table 1.138 "Interrupt sources" of the RA2E2 manual: I2C I3C unified IP (R-I3C v2) */
+         * See "Interrupt sources" in the I3C section of the relevant hardware manual.
+         * : I2C I3C unified IP (R-I3C v2) */
         IIC_B_MASTER_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->NTIE_b.TDBEIE0, 0U, timeout_count);
 
         /* Enable the transmit end IRQ, so that we can generate a RESTART condition */
@@ -1501,7 +1509,7 @@ static void iic_b_master_txi_send_address (iic_b_master_instance_ctrl_t * const 
 #if BSP_FEATURE_IIC_B_CHECK_SCILV_BEFORE_MASTER_WRITE_TX_DATA
 
         /* Confirm that PRSTDBG.SCILV = 0 (check the status of SCL) before writing the transmission data.
-         * Please refer to UMH r01uh0919ej0130-ra2e2 25.3.3.3.1 I2C Master Transmission Flow (Single Buffer Transfer) for details.
+         * Please refer to "I2C Master Transmission Flow (Single Buffer Transfer)" in the I3C Bus Interface section of the relevant hardware manual for details.
          */
         FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->PRSTDBG_b.SCILV, 0);
 #endif

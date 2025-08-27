@@ -906,7 +906,8 @@ fsp_err_t R_PTP_LocalClockValueSet (ptp_ctrl_t * const p_ctrl, ptp_time_t const 
 #endif
 
     /** IRQs disabled because LCIVRn registers must be set in consecutive operations
-     * (See section 30.2.18 in the RA6M3 manual R01UH0886EJ0100). */
+     * (See "Local Clock Counter Initial Value Register (LCIVRU, LCIVRM, LCIVRL)" description in the
+     *  EPTPC section of the relevant hardware manual). */
     __disable_irq();
 
     /* Set an initial value in the local clock counter. */
@@ -1258,7 +1259,7 @@ static void r_ptp_hw_reset (void)
     R_ETHERC_EPTPC_CFG->PTRSTR = 1;
 
     /* Wait 64 cycles of PCLKA for the PTP peripheral to reset
-     * (See section 30.2.77 of the RA6M3 manual R01UH0886EJ0100). */
+     * (See "PTP Reset Register (PTRSTR)" description in the EPTPC section of the relevant hardware manual). */
     R_BSP_SoftwareDelay(delay_microseconds, BSP_DELAY_UNITS_MICROSECONDS);
 
     R_ETHERC_EPTPC_CFG->PTRSTR = 0;
@@ -1498,7 +1499,8 @@ void r_ptp_local_clock_value_get (ptp_time_t * const p_time)
     R_ETHERC_EPTPC_COMMON->GETINFOR = 1U;
 
     /* Waiting for information capturing to complete.
-     * (See Figure 30.27 in the RA6M3 manual R01UH0886EJ0100) */
+     * (See Figure "Procedure for reading the time kept by the local clock counter"
+     *  in the EPTPC section of the relevant hardware manual) */
     FSP_HARDWARE_REGISTER_WAIT(R_ETHERC_EPTPC_COMMON->GETINFOR, 0U);
 
     /* Read the value of the local clock counter from the LCCVR register. */
@@ -2152,11 +2154,13 @@ void r_ptp_mint_isr (void)
         R_ETHERC_EPTPC_COMMON->GETINFOR = 1U;
 
         /* Waiting for information capturing to complete
-         * (See figure 30.25 of the RA6M3 manual R01UH0886EJ0100). */
+         * (See figure "Example procedure for software-triggered acquisition of the worst 10 values"
+         * in the EPTPC section of the relevant hardware manual). */
         FSP_HARDWARE_REGISTER_WAIT(R_ETHERC_EPTPC_COMMON->GETINFOR, 0U);
 
         /** Disable IRQs because PW10VRn, and MW10Rn registers must be set in consecutive operations
-         * (See section 30.2.20 in the RA6M3 manual R01UH0886EJ0100). */
+         * (See "Positive Gradient Limit Register (PLIMITRU, PLIMITRM, PLIMITRL)" description
+         *  in the EPTPC section of the relevant hardware manual). */
         __disable_irq();
 
         /* Read the gradient worst 10 values. */
@@ -2186,7 +2190,8 @@ void r_ptp_mint_isr (void)
         if (0U == R_ETHERC_EPTPC_COMMON->SYNSTARTR)
         {
             /* Clear SYNTOUT and SYNCOUT flags immediately after starting synchronization
-             * (See 30.2.5 of the RA6M3 manual R01UH0886EJ0100). */
+             * (See "STCA Status Register (STSR)" description
+             * in the EPTPC section of the relevant hardware manual). */
             stsr |= R_ETHERC_EPTPC_COMMON_STSR_SYNTOUT_Msk | R_ETHERC_EPTPC_COMMON_STSR_SYNCOUT_Msk;
 
             /* Start synchronization. */

@@ -140,7 +140,7 @@ fsp_err_t R_CEC_Open (cec_ctrl_t * const p_ctrl, cec_cfg_t const * const p_cfg)
                                 (p_extend->intda_timing_select));
 
     /* CEC Control Register One
-     * 37.2.5 CEC Control Register 1 (CECCTL1) of the RA6M5 User Manual. Rewrite SFT bits only after confirming
+     * See "CEC Control Register 1 (CECCTL1)" description of the relevant hardware manual. Rewrite SFT bits only after confirming
      * that the Signal-Free Time Rewrite Disable Report Flag (CECS.SFTST) is 0. */
     FSP_HARDWARE_REGISTER_WAIT(R_CEC->CECS_b.SFTST, 0x0);
     R_CEC->CECCTL1 = p_extend->ctl1;
@@ -525,7 +525,7 @@ void cec_message_isr (void)
     if ((CEC_STATE_UNINIT == p_instance_ctrl->state) &&
         ((CEC_ADDR_UNREGISTERED == p_instance_ctrl->local_address) || R_CEC->CECEXMON_b.ACKF))
     {
-        /* 37.2.4 CEC Control Register 0 (CECCTL0) of the RA6M5 User Manual. Setting the CECRXEN bit to 1 enables
+        /* See "CEC Control Register 0 (CECCTL0)" description of the relevant hardware manual. Setting the CECRXEN bit to 1 enables
          * reception. Set this bit to 1 after determining the local address (setting the CADR register). */
         R_CEC->CADR               = CEC_LOCAL_ADDR_TO_CADR(p_instance_ctrl->local_address);
         p_instance_ctrl->cecctl0 |= (uint8_t) R_CEC_CECCTL0_CECRXEN_Msk;

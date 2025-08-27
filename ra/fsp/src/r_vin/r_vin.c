@@ -99,7 +99,7 @@ fsp_err_t R_VIN_Open (capture_ctrl_t * const p_api_ctrl, capture_cfg_t const * c
     R_VIN->MB3      = (uint32_t) p_extend->output_ctrl.image_buffer[2];
     R_VIN->UVAOF    = (uint32_t) p_extend->conversion_data.uv_address;
 
-    R_VIN->MC_b.BPS = p_extend->input_ctrl.cfg_bits.color_space_convert_bypass; // Set color space bypass register after other settings, according to Figure 68.17 (R01UH1064EJ0110)
+    R_VIN->MC_b.BPS = p_extend->input_ctrl.cfg_bits.color_space_convert_bypass; // Set color space bypass register after other settings, according to Figure VIN initialization procedure of the relevant hardware manual
 
     R_VIN->CSCE1 = p_extend->conversion_data.yc_rgb_conversion_setting_1_mask;
     R_VIN->CSCE2 = p_extend->conversion_data.yc_rgb_conversion_setting_2_mask;
@@ -118,8 +118,8 @@ fsp_err_t R_VIN_Open (capture_ctrl_t * const p_api_ctrl, capture_cfg_t const * c
     R_VIN->CRCCR2 = p_extend->conversion_data.rgb_to_yuv_conversion_settings[2].setting_2_mask;
     R_VIN->CRCCR3 = p_extend->conversion_data.rgb_to_yuv_conversion_settings[2].setting_3_mask;
 
-    R_VIN->MC_b.YUV444 = p_extend->input_ctrl.cfg_bits.yuv444_conversion; // Set YUV444 conversion register after other settings, according to Figure 68.17 (R01UH1064EJ0110)
-    R_VIN->MC_b.DC     = p_extend->input_ctrl.cfg_bits.dithering_mode;    // Set Dithering mode register after other settings, according to Figure 68.17 (R01UH1064EJ0110)
+    R_VIN->MC_b.YUV444 = p_extend->input_ctrl.cfg_bits.yuv444_conversion; // Set YUV444 conversion register after other settings, according to Figure VIN initialization procedure of the relevant hardware manual
+    R_VIN->MC_b.DC     = p_extend->input_ctrl.cfg_bits.dithering_mode;    // Set Dithering mode register after other settings, according to Figure VIN initialization procedure of the relevant hardware manual
 
     R_VIN->UDS_PASS_BWIDTH = p_extend->conversion_data.uds_bwidth_mask;
     R_VIN->UDS_CLIP_SIZE   = p_extend->conversion_data.uds_clipping_mask;
@@ -297,9 +297,9 @@ fsp_err_t R_VIN_StatusGet (capture_ctrl_t * const p_api_ctrl, capture_status_t *
  * Private helper functions
  **********************************************************************************************************************/
 
-/**********************************************************************************************************************
- * Capture Stop - Follow procedure outlined in Figure 68.18 (R01UH1064EJ0100)
- **********************************************************************************************************************/
+/*************************************************************************************************************************************
+ * Capture Stop - Follow procedure outlined in Figure "Stopping capture operation" in the VIN section  of the relevant hardware manual
+ *************************************************************************************************************************************/
 static fsp_err_t vin_stop (vin_instance_ctrl_t * const p_ctrl)
 {
     capture_cfg_t const * const p_cfg    = p_ctrl->p_cfg;

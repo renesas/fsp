@@ -18,7 +18,7 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_POSITION_OPEN                      (0X4D504F53L)
+#define     MOTOR_POSITION_OPEN                      (('M' << 24U) | ('T' << 16U) | ('P' << 8U) | ('S' << 0U))
 
 #define     MOTOR_POSITION_LIMIT                     ((32767.0F * MOTOR_POSITION_TWOPI) / 360.0F) /* position limit */
 

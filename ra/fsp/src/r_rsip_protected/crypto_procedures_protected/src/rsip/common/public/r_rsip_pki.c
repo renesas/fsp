@@ -106,6 +106,8 @@ fsp_err_t R_RSIP_PKI_VerifiedCertInfoImport (rsip_ctrl_t * const                
  *  - @ref RSIP_KEY_TYPE_ECC_SECP256R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP384R1_PUBLIC
  *  - @ref RSIP_KEY_TYPE_ECC_SECP521R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP256R1_PUBLIC
+ *  - @ref RSIP_KEY_TYPE_ECC_BRAINPOOLP384R1_PUBLIC
  * @endparblock
  *
  * @par State transition

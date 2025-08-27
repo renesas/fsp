@@ -199,7 +199,8 @@ fsp_err_t R_SCI_I2C_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cfg_t
     FSP_ASSERT(p_cfg->txi_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->tei_irq >= (IRQn_Type) 0);
     FSP_ERROR_RETURN(SCI_I2C_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
-    FSP_ERROR_RETURN((p_cfg->channel < 8 * sizeof(unsigned int)) && (BSP_FEATURE_SCI_CHANNELS & (1U << p_cfg->channel)),
+    FSP_ERROR_RETURN((p_cfg->channel < 8 * sizeof(unsigned int)) &&
+                     (BSP_FEATURE_SCI_CHANNELS_MASK & (1U << p_cfg->channel)),
                      FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     sci_i2c_extended_cfg_t * pextend = (sci_i2c_extended_cfg_t *) p_cfg->p_extend;
     if (true == pextend->clock_settings.bitrate_modulation)
@@ -569,7 +570,7 @@ static fsp_err_t sci_i2c_read_write (i2c_master_ctrl_t * const p_api_ctrl,
         p_ctrl->addr_low = (uint8_t) p_ctrl->slave;
 
         /* Addr total = 3 for Read and 2 for Write.
-         * See Section 36.3.1 "Communication Data Format" of the RA6M3 manual R01UH0886EJ0100
+         * See "Communication Data Format" in the IIC section of the relevant hardware manual.
          */
         p_ctrl->addr_total = (uint8_t) ((uint8_t) direction + SCI_I2C_PRV_SLAVE_10_BIT_ADDR_LEN_ADJUST);
     }
@@ -693,9 +694,9 @@ static void sci_i2c_open_hw_master (sci_i2c_instance_ctrl_t * const p_ctrl, i2c_
 {
     sci_i2c_extended_cfg_t * pextend = (sci_i2c_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    /* Refer flow diagram of master I2C initialization as described in hardware manual (see Figure 34.63
-     * 'Example flow of SCI initialization in simple IIC mode'
-     *  of the RA6M3 manual R01UH0886EJ0100). */
+    /* Refer flow diagram of master I2C initialization as described in hardware manual (see
+     * "Example flow of SCI initialization in simple IIC mode"
+     *  in the SCI section of the relevant hardware manual). */
 
     /* Perform the first part of the initialization sequence */
     p_ctrl->p_reg->SCR = 0U;
@@ -1066,9 +1067,9 @@ static fsp_err_t sci_i2c_transfer_configure (sci_i2c_instance_ctrl_t       * p_c
     {
         /* In case of read operation using DTC, the TXI interrupt will trigger the DTC to write 0xFF into TDR. */
 
-        /* Refer flow diagram of master reception as described in hardware manual (see Figure 34.68
-         * 'Example flow of master reception in simple IIC mode with transmission interrupts and reception interrupts'
-         *  of the RA6M3 manual R01UH0886EJ0100). */
+        /* Refer flow diagram of master reception as described in hardware manual (see Figure
+         * "Example flow of master reception in simple IIC mode with transmission interrupts and reception interrupts"
+         *  in the SCI section of the relevant hardware manual). */
 
         /* In case of Write operation this will be reconfigured */
         p_cfg->transfer_settings_word = SCI_I2C_PRV_DTC_TX_FOR_READ_TRANSFER_SETTINGS;
@@ -1242,11 +1243,11 @@ static void sci_i2c_txi_send_data (sci_i2c_instance_ctrl_t * const p_ctrl)
     /* Write 1 byte data to data register.
      * In case of write operation this will be data from user buffer.
      * In case of read operation this will be 0xFF as required by HW.
-     * Refer flow diagram of master transmission and reception as described in hardware manual (see Figure 34.66
-     * 'Example flow of master transmission in simple IIC mode with transmission interrupts and reception interrupts'
-     * and Figure 34.68
-     * 'Example flow of master reception in simple IIC mode with transmission interrupts and reception interrupts'
-     *  of the RA6M3 manual R01UH0886EJ0100).
+     * Refer flow diagram of master transmission and reception as described in hardware manual (see Figure
+     * "Example flow of master transmission in simple IIC mode with transmission interrupts and reception interrupts"
+     * and Figure
+     * "Example flow of master reception in simple IIC mode with transmission interrupts and reception interrupts"
+     *  in the SCI section of the relevant hardware manual).
      */
     p_ctrl->p_reg->TDR = data;
 }

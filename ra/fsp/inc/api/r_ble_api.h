@@ -2296,7 +2296,6 @@ typedef enum
      *  ## Event Data:
      *  st_ble_gattc_svc_chng_evt_t
      */
-
     BLE_GATTC_EVENT_HDL_VAL_SVC_CHNG = 0x401E,          //!< BLE_GATTC_EVENT_HDL_VAL_SVC_CHNG
 
     /**
@@ -2786,44 +2785,44 @@ typedef enum
      */
     BLE_GATTC_EVENT_RELIABLE_WRITES_COMP = 0x40F4,      //!< BLE_GATTC_EVENT_RELIABLE_WRITES_COMP
 
-/**
- *  @brief  This event notifies the application layer that the Execute Write Command has been completed.
- *
- * ## Event Code: 0x40F5
- *
- *  ## result:
- *  <dl class="retval"><dt><dd>
- *          <table class="retval">
- *              <tr>
- *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
- *                  <td>Success </td>
- *              </tr>
- *          </table>
- *  </dd></dt></dl>
- *
- *  ## Event Data:
- *  st_ble_gattc_reliable_writes_comp_evt_t
- */
+    /**
+     *  @brief  This event notifies the application layer that the Execute Write Command has been completed.
+     *
+     * ## Event Code: 0x40F5
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  st_ble_gattc_reliable_writes_comp_evt_t
+     */
     BLE_GATTC_EVENT_EXECUTE_WRITE_COMP = 0x40F5,        //!< BLE_GATTC_EVENT_RELIABLE_WRITES_COMP
 
-/**
- *  @brief  This event notifies the application layer that an Information Request Indication has been received.
- *
- * ## Event Code: 0x40F6
- *
- *  ## result:
- *  <dl class="retval"><dt><dd>
- *          <table class="retval">
- *              <tr>
- *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
- *                  <td>Success </td>
- *              </tr>
- *          </table>
- *  </dd></dt></dl>
- *
- *  ## Event Data:
- *  st_ble_gattc_reliable_writes_comp_evt_t
- */
+    /**
+     *  @brief  This event notifies the application layer that an Information Request Indication has been received.
+     *
+     * ## Event Code: 0x40F6
+     *
+     *  ## result:
+     *  <dl class="retval"><dt><dd>
+     *          <table class="retval">
+     *              <tr>
+     *                  <td class="paramname">BLE_SUCCESS(0x0000)</td>
+     *                  <td>Success </td>
+     *              </tr>
+     *          </table>
+     *  </dd></dt></dl>
+     *
+     *  ## Event Data:
+     *  st_ble_gattc_reliable_writes_comp_evt_t
+     */
     BLE_GATTC_EVENT_ATT_INFO_REQ_IND = 0x40F6,          //!< BLE_GATTC_EVENT_ATT_INFO_REQ_IND
 
     /**

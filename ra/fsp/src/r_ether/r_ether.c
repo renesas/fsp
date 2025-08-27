@@ -1246,7 +1246,7 @@ static fsp_err_t ether_open_param_check (ether_instance_ctrl_t const * const p_i
     ETHER_ERROR_RETURN((NULL != p_cfg), FSP_ERR_INVALID_POINTER);
     ETHER_ERROR_RETURN((NULL != p_cfg->p_mac_address), FSP_ERR_INVALID_POINTER);
     ETHER_ERROR_RETURN((NULL != p_cfg->p_extend), FSP_ERR_INVALID_POINTER);
-    ETHER_ERROR_RETURN((BSP_FEATURE_ETHER_MAX_CHANNELS > p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
+    ETHER_ERROR_RETURN((BSP_FEATURE_ETHER_NUM_CHANNELS > p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
     ETHER_ERROR_RETURN((0 <= p_cfg->irq), FSP_ERR_INVALID_ARGUMENT);
     ETHER_ERROR_RETURN((p_cfg->padding <= ETHER_PADDING_3BYTE), FSP_ERR_INVALID_ARGUMENT);
 

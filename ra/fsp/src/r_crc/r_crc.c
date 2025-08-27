@@ -424,8 +424,8 @@ static void crc_calculate_polynomial (crc_instance_ctrl_t * const p_instance_ctr
             {
                 /* CRCDIR is a 32-bit read/write register to write data to for CRC-32 or CRC-32C calculation.
                  * CRCDIR_BY is an 8-bit read/write register to write data to for CRC-8, CRC-16, or CRC-CCITT
-                 * calculation. Reference section 40.2.3 "CRC Data Input Register (CRCDIR/CRCDIR_BY)" in the RA6M3
-                 * manual R01UH0886EJ0100. Write an 8-bit value to the input register of the CRC Calculator */
+                 * calculation. Reference section "CRC Data Input Register (CRCDIR/CRCDIR_BY)"
+                 * of the relevant hardware manual. Write an 8-bit value to the input register of the CRC Calculator */
                 R_CRC->CRCDIR_BY = *p_data;
                 p_data           = (p_data + 1UL);
             }

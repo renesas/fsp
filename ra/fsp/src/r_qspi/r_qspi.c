@@ -369,8 +369,8 @@ fsp_err_t R_QSPI_Write (spi_flash_ctrl_t    * p_ctrl,
     /* Send command to enable writing */
     write_command(p_instance_ctrl->p_cfg->write_enable_command);
 
-    /* Close the SPI bus cycle. Reference section 39.10.3 "Generating the SPI Bus Cycle during Direct Communication"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* Close the SPI bus cycle. See "Generating the SPI Bus Cycle during Direct Communication"
+     * in the QSPI section of the relevant hardware manual. */
     R_QSPI->SFMCMD = 1;
 
     /* Send command to write data */
@@ -397,8 +397,8 @@ fsp_err_t R_QSPI_Write (spi_flash_ctrl_t    * p_ctrl,
         index++;
     }
 
-    /* Close the SPI bus cycle. Reference section 39.10.3 "Generating the SPI Bus Cycle during Direct Communication"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* Close the SPI bus cycle. See "Generating the SPI Bus Cycle during Direct Communication"
+     * in the QSPI section of the relevant hardware manual. */
     R_QSPI->SFMCMD = 1;
 
     /* If the SPI protocol was modified in this function, restore it. */
@@ -467,8 +467,8 @@ fsp_err_t R_QSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
     /* Enable write. */
     R_QSPI->SFMCOM = p_instance_ctrl->p_cfg->write_enable_command;
 
-    /* Close the SPI bus cycle. Reference section 39.10.3 "Generating the SPI Bus Cycle during Direct Communication"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* Close the SPI bus cycle. See "Generating the SPI Bus Cycle during Direct Communication"
+     * in the QSPI section of the relevant hardware manual. */
     R_QSPI->SFMCMD = 1U;
 
     /* Send erase command. */
@@ -487,8 +487,8 @@ fsp_err_t R_QSPI_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_addr
         R_QSPI->SFMCOM = (uint8_t) (chip_address);
     }
 
-    /* Close the SPI bus cycle. Reference section 39.10.3 "Generating the SPI Bus Cycle during Direct Communication"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* Close the SPI bus cycle. See "Generating the SPI Bus Cycle during Direct Communication"
+     * in the QSPI section of the relevant hardware manual. */
     R_QSPI->SFMCMD = 1U;
 
     /* Exit direct communication mode */
@@ -516,8 +516,8 @@ fsp_err_t R_QSPI_StatusGet (spi_flash_ctrl_t * p_ctrl, spi_flash_status_t * cons
     FSP_ASSERT(NULL != p_status);
     FSP_ERROR_RETURN(QSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
-    /* Do not enter direct communication mode from XIP mode.  Reference note in section 39.10.2 "Using Direct
-     * Communication Mode" in the RA6M3 manual R01UH0886EJ0100. */
+    /* Do not enter direct communication mode from XIP mode. See reference note in "Using Direct
+     * Communication Mode" in the QSPI section of the relevant hardware manual. */
     FSP_ERROR_RETURN(0U == R_QSPI->SFMSDC_b.SFMXST, FSP_ERR_INVALID_MODE);
 #endif
 
@@ -672,8 +672,8 @@ static fsp_err_t r_qspi_xip (qspi_instance_ctrl_t * p_instance_ctrl, uint8_t cod
     i = *(volatile uint8_t *) QSPI_DEVICE_START_ADDRESS;
 
     /* Wait for the controller to XIP mode status to update. To confirm completion of the XIP mode enter/exit procedure,
-     * read 1/0 from the SFMXST bit in the SFMSDC register. Reference section 39.8.1 "Selecting the XIP Mode" and
-     * section 39.8.2 "Releasing the XIP Mode" in the RA6M3 manual R01UH0886EJ0100. */
+     * read 1/0 from the SFMXST bit in the SFMSDC register. See "Selecting the XIP Mode" and
+     * "Releasing the XIP Mode" in the QSPI section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(R_QSPI->SFMSDC_b.SFMXST, (uint32_t) enter_mode);
 
     return FSP_SUCCESS;
@@ -694,8 +694,8 @@ static bool r_qspi_status_sub (qspi_instance_ctrl_t * p_instance_ctrl)
     R_QSPI->SFMCOM = p_instance_ctrl->p_cfg->status_command;
     bool status = (R_QSPI->SFMCOM >> p_instance_ctrl->p_cfg->write_status_bit) & 1;
 
-    /* Close the SPI bus cycle. Reference section 39.10.3 "Generating the SPI Bus Cycle during Direct Communication"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* Close the SPI bus cycle. See "Generating the SPI Bus Cycle during Direct Communication"
+     * in the QSPI section of the relevant hardware manual. */
     R_QSPI->SFMCMD = 1U;
 
     /* Exit direct communication mode */
@@ -724,8 +724,8 @@ static void r_qspi_direct_write_sub (uint8_t const * const p_src, uint32_t const
 
     if (!read_after_write)
     {
-        /* Close the SPI bus cycle. Reference section 39.10.3 "Generating the SPI Bus Cycle during Direct
-         * Communication" in the RA6M3 manual R01UH0886EJ0100. */
+        /* Close the SPI bus cycle. See "Generating the SPI Bus Cycle during Direct
+         * Communication" in the QSPI section of the relevant hardware manual. */
         R_QSPI->SFMCMD = 1U;
 
         /* Return to ROM access mode */
@@ -747,8 +747,8 @@ static void r_qspi_direct_read_sub (uint8_t * const p_dest, uint32_t const bytes
         p_dest[i] = (uint8_t) R_QSPI->SFMCOM;
     }
 
-    /* Close the SPI bus cycle. Reference section 39.10.3 "Generating the SPI Bus Cycle during Direct
-     * Communication" in the RA6M3 manual R01UH0886EJ0100. */
+    /* Close the SPI bus cycle. See "Generating the SPI Bus Cycle during Direct
+     * Communication" in the QSPI section of the relevant hardware manual. */
     R_QSPI->SFMCMD = 1U;
 
     /* Return to ROM access mode */
@@ -839,8 +839,8 @@ static fsp_err_t r_qspi_param_checking_dcom (qspi_instance_ctrl_t * p_instance_c
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(QSPI_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 
-    /* Do not enter direct communication mode from XIP mode.  Reference note in section 39.10.2 "Using Direct
-     * Communication Mode" in the RA6M3 manual R01UH0886EJ0100. */
+    /* Do not enter direct communication mode from XIP mode. See note in "Using Direct
+     * Communication Mode" in the QSPI section of the relevant hardware manual. */
     FSP_ERROR_RETURN(0U == R_QSPI->SFMSDC_b.SFMXST, FSP_ERR_INVALID_MODE);
 
     /* Verify device is not busy. */

@@ -137,8 +137,8 @@ fsp_err_t R_IICA_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_c
         (R_IICA0_Type *) ((uint32_t) R_IICA0 + (p_cfg->channel * ((uint32_t) R_IICA1 - (uint32_t) R_IICA0)));
 #endif
 
-    /* Open the hardware in master mode. Performs IICA initialization as described in hardware manual (see Section 22.4.16
-     * Initial Settings for master mode of the manual). */
+    /* Open the hardware in master mode. Performs IICA initialization as described in hardware manual (see
+     * Initial Settings for master mode in the IICA 'Communication Operations' section of the relevant hardware manual). */
     r_iica_master_open_hw_master(p_ctrl, p_cfg);
     p_ctrl->p_buff    = NULL;
     p_ctrl->total     = 0U;
@@ -493,8 +493,8 @@ static void r_iica_master_abort_seq_master (iica_master_instance_ctrl_t * const 
 }
 
 /*******************************************************************************************************************//**
- * Performs the hardware initialization sequence when operating as a master (see Section 22.4.16
- * Initial setting for master mode of the manual).
+ * Performs the hardware initialization sequence when operating as a master (see
+ * Initial setting for master mode in the IICA 'Communication Operations' section of the relevant hardware manual).
  *
  * @param[in]  p_ctrl                Pointer to IIC specific control structure
  * @param[in]  p_cfg                 Pointer to IIC specific configuration structure.
@@ -552,7 +552,8 @@ static void r_iica_master_open_hw_master (iica_master_instance_ctrl_t * const p_
 
 /*******************************************************************************************************************//**
  * Performs the data transfer described by the parameters when operating as a master.
- * See 22.4.16 Communication processing for master mode of the manual.
+ * See Communication processing for master mode in the IICA 'Communication Operations' section of the relevant
+ * hardware manual.
  *
  * @param[in]       p_ctrl  Pointer to control structure of specific device.
  *

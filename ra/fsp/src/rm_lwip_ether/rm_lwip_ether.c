@@ -14,10 +14,13 @@
 #include "lwip/timeouts.h"
 #include "lwip/priv/memp_priv.h"
 
+#include "lwip/tcpip.h"
+
 /***********************************************************************************************************************
  * Macro definitions
  ***********************************************************************************************************************/
-#define LWIP_ETHER_MINIMUM_FRAME_SIZE    (60U) /* Minimum number of transmitted data */
+#define LWIP_ETHER_MINIMUM_FRAME_SIZE    (60U)   /* Minimum number of transmitted data */
+#define LWIP_ETHER_MAXIMUM_FRAME_SIZE    (1514U) /* Maximum number of transmitted data */
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -37,11 +40,15 @@
 
 /* Static functions */
 static err_t rm_lwip_ether_output(struct netif * p_netif, struct pbuf * p_pbuf);
-static void  rm_lwip_ether_buffer_init(rm_lwip_ether_instance_t * p_lwip_instance);
-static void  rm_lwip_ether_check_link_status(void * p_lwip_instance);
-static void  rm_lwip_ether_free(struct pbuf * p_pbuf);
-static void  rm_lwip_ether_input(rm_lwip_ether_instance_t * p_lwip_instance);
-static void  rm_lwip_ether_remove(struct netif * p_netif);
+
+static void rm_lwip_ether_buffer_init(rm_lwip_ether_instance_t * p_lwip_instance);
+static void rm_lwip_ether_check_link_status(void * p_lwip_instance);
+static void rm_lwip_ether_free_pbuf(struct pbuf * p_pbuf);
+
+static void rm_lwip_ether_input(rm_lwip_ether_instance_t * p_lwip_instance);
+static void rm_lwip_ether_remove(struct netif * p_netif);
+
+static void rm_lwip_ether_free_tx_buffer(rm_lwip_ether_instance_t * p_lwip_instance);
 
 #if !NO_SYS
 static void rm_lwip_ether_input_thread(void * arg);
@@ -107,6 +114,13 @@ err_t rm_lwip_ether_init (struct netif * p_netif)
     /* Initialize Ethernet module */
     fsp_err = p_ether_instance->p_api->open(p_ether_instance->p_ctrl, p_ether_instance->p_cfg);
 
+    /* Initialize variables for zerocopy TX. */
+    if (ETHER_ZEROCOPY_ENABLE == p_ether_instance->p_cfg->zerocopy)
+    {
+        p_lwip_instance->p_ctrl->p_tx_buffer_head = NULL;
+        p_lwip_instance->p_ctrl->p_tx_buffer_tail = NULL;
+    }
+
     if (FSP_SUCCESS == fsp_err)
     {
         lwip_err = ERR_OK;
@@ -135,6 +149,11 @@ err_t rm_lwip_ether_init (struct netif * p_netif)
 
             p_lwip_instance->p_ctrl->input_thread_exist = true;
         }
+
+        /* Create callback_msg to free TX buffers. */
+        p_lwip_instance->p_ctrl->p_tx_buffer_free_callback_msg = tcpip_callbackmsg_new(
+            (tcpip_callback_fn) rm_lwip_ether_free_tx_buffer,
+            p_lwip_instance);
 #endif
     }
     else
@@ -151,8 +170,9 @@ err_t rm_lwip_ether_init (struct netif * p_netif)
  ***********************************************************************************************************************/
 void rm_lwip_ether_callback (ether_callback_args_t * p_args)
 {
-    rm_lwip_ether_instance_t * p_lwip_instance = (rm_lwip_ether_instance_t *) p_args->p_context;
-    struct netif             * p_netif         = p_lwip_instance->p_ctrl->p_netif;
+    rm_lwip_ether_instance_t * p_lwip_instance  = (rm_lwip_ether_instance_t *) p_args->p_context;
+    struct netif             * p_netif          = p_lwip_instance->p_ctrl->p_netif;
+    ether_instance_t         * p_ether_instance = p_lwip_instance->p_cfg->p_ether_instance;
 
     switch (p_args->event)
     {
@@ -188,6 +208,20 @@ void rm_lwip_ether_callback (ether_callback_args_t * p_args)
             break;
         }
 
+        case ETHER_EVENT_TX_COMPLETE:
+        {
+            if (ETHER_ZEROCOPY_ENABLE == p_ether_instance->p_cfg->zerocopy)
+            {
+#if NO_SYS
+                rm_lwip_ether_free_tx_buffer(p_lwip_instance);
+#else
+                tcpip_callbackmsg_trycallback_fromisr(p_lwip_instance->p_ctrl->p_tx_buffer_free_callback_msg);
+#endif
+            }
+
+            break;
+        }
+
         default:
         {
             break;
@@ -206,36 +240,90 @@ void rm_lwip_ether_callback (ether_callback_args_t * p_args)
  */
 static err_t rm_lwip_ether_output (struct netif * p_netif, struct pbuf * p_pbuf)
 {
-    fsp_err_t          fsp_err;
-    ether_instance_t * p_ether_instance = ((rm_lwip_ether_instance_t *) p_netif->state)->p_cfg->p_ether_instance;
-    err_t              lwip_err         = ERR_OK;
-    struct pbuf      * temp             = p_pbuf;
+    fsp_err_t fsp_err;
+    rm_lwip_ether_instance_t * p_lwip_instance  = (rm_lwip_ether_instance_t *) p_netif->state;
+    ether_instance_t         * p_ether_instance = p_lwip_instance->p_cfg->p_ether_instance;
+    err_t         lwip_err         = ERR_OK;
+    struct pbuf * temp             = p_pbuf;
+    uint8_t     * p_current_buffer = NULL;
+    uint16_t      len              = temp->tot_len;
+    struct pbuf * p_send_pbuf      = NULL;
 
-    while (NULL != temp)
+    /* If it is shorter than 60 bytes, change the frame size to 60 bytes. */
+    if (len < LWIP_ETHER_MINIMUM_FRAME_SIZE)
     {
-        /* Sending frame buffer for the frame shorter than 60bytes. */
-        uint8_t minimum_frame[LWIP_ETHER_MINIMUM_FRAME_SIZE] = {0};
+        len = LWIP_ETHER_MINIMUM_FRAME_SIZE;
+    }
 
-        if (temp->len < LWIP_ETHER_MINIMUM_FRAME_SIZE)
+    if ((NULL == temp->next) && (LWIP_ETHER_MINIMUM_FRAME_SIZE <= temp->tot_len))
+    {
+        p_send_pbuf = temp;
+
+        /* Prevent releasing this buffer before transmission completes. */
+        pbuf_ref(p_send_pbuf);
+    }
+    else
+    {
+        p_send_pbuf = pbuf_alloc(PBUF_RAW, len, PBUF_RAM);
+        if (NULL != p_send_pbuf)
         {
-            /* Add padding when shorter than 60bytes. */
-            memcpy(minimum_frame, (char *) temp->payload, temp->len);
-            fsp_err =
-                p_ether_instance->p_api->write(p_ether_instance->p_ctrl, minimum_frame, LWIP_ETHER_MINIMUM_FRAME_SIZE);
+            p_current_buffer = p_send_pbuf->payload;
+
+            /* Merge send buffers into one */
+            while (NULL != temp)
+            {
+                memcpy(p_current_buffer, (char *) temp->payload, temp->len);
+                p_current_buffer += temp->len;
+                temp              = temp->next;
+            }
+        }
+    }
+
+    if (NULL != p_send_pbuf)
+    {
+        fsp_err = p_ether_instance->p_api->write(p_ether_instance->p_ctrl, p_send_pbuf->payload, len);
+    }
+    else
+    {
+        fsp_err = FSP_ERR_INVALID_POINTER;
+    }
+
+    /* If the write operation fails, the buffer is not output. */
+    if (fsp_err != FSP_SUCCESS)
+    {
+        lwip_err = ERR_IF;
+
+        /* Free the buffer. */
+        if (NULL != p_send_pbuf)
+        {
+            p_send_pbuf->p_next_tx_pbuf = NULL;
+            pbuf_free(p_send_pbuf);
+        }
+    }
+    else
+    {
+        /* Free the buffer when non-zerocopy mode. */
+        if (ETHER_ZEROCOPY_DISABLE == p_ether_instance->p_cfg->zerocopy)
+        {
+            p_send_pbuf->p_next_tx_pbuf = NULL;
+            pbuf_free(p_send_pbuf);
         }
         else
         {
-            fsp_err = p_ether_instance->p_api->write(p_ether_instance->p_ctrl, temp->payload, temp->len);
-        }
+            p_send_pbuf->p_next_tx_pbuf = NULL;
 
-        /* If the write operation fails, the remaining pbufs are not output .*/
-        if (fsp_err != FSP_SUCCESS)
-        {
-            lwip_err = ERR_IF;
-            break;
+            /* Store the buffer when zerocopy mode. */
+            if (NULL == p_lwip_instance->p_ctrl->p_tx_buffer_tail)
+            {
+                p_lwip_instance->p_ctrl->p_tx_buffer_tail = p_send_pbuf;
+                p_lwip_instance->p_ctrl->p_tx_buffer_head = p_send_pbuf;
+            }
+            else
+            {
+                p_lwip_instance->p_ctrl->p_tx_buffer_tail->p_next_tx_pbuf = p_send_pbuf;
+                p_lwip_instance->p_ctrl->p_tx_buffer_tail                 = p_send_pbuf;
+            }
         }
-
-        temp = temp->next;
     }
 
     return lwip_err;
@@ -277,7 +365,7 @@ static void rm_lwip_ether_input (rm_lwip_ether_instance_t * p_lwip_instance)
 
         /* Set custom pbuf members. */
         p_custom_pbuf->p_lwip_instance           = p_lwip_instance;
-        p_custom_pbuf->pbuf.custom_free_function = rm_lwip_ether_free;
+        p_custom_pbuf->pbuf.custom_free_function = rm_lwip_ether_free_pbuf;
         p_pbuf = pbuf_alloced_custom(PBUF_RAW,
                                      0,
                                      PBUF_REF,
@@ -338,13 +426,13 @@ static void rm_lwip_ether_input (rm_lwip_ether_instance_t * p_lwip_instance)
         }
 
         /* Continue until all received buffers are read. */
-    } while (FSP_ERR_ETHER_ERROR_NO_DATA != err);
+    } while (FSP_SUCCESS == err);
 }
 
 /**
  * Free buffer for RX.
  */
-static void rm_lwip_ether_free (struct pbuf * p_pbuf)
+static void rm_lwip_ether_free_pbuf (struct pbuf * p_pbuf)
 {
     rm_lwip_rx_pbuf_t * p_custom_pbuf = (rm_lwip_rx_pbuf_t *) p_pbuf;
 
@@ -364,6 +452,7 @@ static void rm_lwip_ether_remove (struct netif * p_netif)
 {
     rm_lwip_ether_instance_t * p_lwip_instance  = (rm_lwip_ether_instance_t *) p_netif->state;
     ether_instance_t         * p_ether_instance = p_lwip_instance->p_cfg->p_ether_instance;
+    struct pbuf              * p_next_pbuf;
 
     /* Remove lwip timer for link check. */
     sys_untimeout(rm_lwip_ether_check_link_status, p_lwip_instance);
@@ -373,6 +462,25 @@ static void rm_lwip_ether_remove (struct netif * p_netif)
 
     /* Close Ethernet driver. */
     p_ether_instance->p_api->close(p_ether_instance->p_ctrl);
+
+    /* Free stored tx buffers. */
+    if (ETHER_ZEROCOPY_ENABLE == p_ether_instance->p_cfg->zerocopy)
+    {
+        while (NULL != p_lwip_instance->p_ctrl->p_tx_buffer_head)
+        {
+            p_next_pbuf = p_lwip_instance->p_ctrl->p_tx_buffer_head->p_next_tx_pbuf;
+            pbuf_free(p_lwip_instance->p_ctrl->p_tx_buffer_head);
+            p_lwip_instance->p_ctrl->p_tx_buffer_head = p_next_pbuf;
+        }
+
+        p_lwip_instance->p_ctrl->p_tx_buffer_tail = NULL;
+    }
+
+#if !NO_SYS
+
+    /* Remove TX callback_msg. */
+    tcpip_callbackmsg_delete(p_lwip_instance->p_ctrl->p_tx_buffer_free_callback_msg);
+#endif
 }
 
 /**
@@ -407,6 +515,50 @@ static void rm_lwip_ether_buffer_init (rm_lwip_ether_instance_t * p_lwip_instanc
         {
             p_rx_buffer = memp_malloc_pool(p_lwip_instance->p_cfg->p_rx_buffers_mempool);
             p_ether_instance->p_api->rxBufferUpdate(p_ether_instance->p_ctrl, p_rx_buffer);
+        }
+    }
+}
+
+static void rm_lwip_ether_free_tx_buffer (rm_lwip_ether_instance_t * p_lwip_instance)
+{
+    ether_instance_t * p_ether_instance = p_lwip_instance->p_cfg->p_ether_instance;
+    void             * p_last_buffer    = NULL;
+    void             * p_current_buffer = NULL;
+    fsp_err_t          err;
+    struct pbuf      * p_current_pbuf = p_lwip_instance->p_ctrl->p_tx_buffer_head;
+    struct pbuf      * p_next_pbuf;
+
+    err = p_ether_instance->p_api->txStatusGet(p_ether_instance->p_ctrl, &p_last_buffer);
+    if (FSP_SUCCESS == err)
+    {
+        do
+        {
+            if (NULL == p_current_pbuf)
+            {
+                break;
+            }
+
+            /* Get the buffer to be released next. */
+            p_current_buffer = p_current_pbuf->payload;
+
+            /* Get the next pbuf of the chain. */
+            p_next_pbuf = p_current_pbuf->p_next_tx_pbuf;
+
+            /* Release the buffer. */
+            pbuf_free(p_current_pbuf);
+
+            p_current_pbuf = p_next_pbuf;
+
+            /* Continue the release process until the last transmitted buffer is reached. */
+        } while (p_current_buffer != p_last_buffer);
+
+        /* Update pbuf list. */
+        p_lwip_instance->p_ctrl->p_tx_buffer_head = p_current_pbuf;
+
+        /* When all TX buffers are released, also initialize tail to NULL. */
+        if (NULL == p_lwip_instance->p_ctrl->p_tx_buffer_head)
+        {
+            p_lwip_instance->p_ctrl->p_tx_buffer_tail = NULL;
         }
     }
 }

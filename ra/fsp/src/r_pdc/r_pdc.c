@@ -18,8 +18,8 @@
 /** "PDC" in ASCII, used to determine if driver is open. */
 #define PDC_PRV_OPEN                      (0x00504443ULL)
 
-/* Performs 8 32bit/4byte transfers per PDC data ready interrupt as described in hardware manual (see Section 44.3.4
- * 'Reception Operation' of the RA6M3 manual R01UH0886EJ0100).
+/* Performs 8 32bit/4byte transfers per PDC data ready interrupt as described in hardware manual (see
+ * "Reception Operation" in the PDC section of the relevant hardware manual).
  * */
 #define PDC_PRV_TRANSFER_SIZE             4U                    /* 32 bit transfer size from PCDR register */
 #define PDC_PRV_TRANSFERS_PER_BLOCK       8U
@@ -36,7 +36,7 @@
 
 /* Worst case ratio of (ICLK/PCLKB) = 64 approximately.
  * 3 PCLKB cycles is the number of cycles to wait for IICn.
- * Refer "Table 3.2 Access cycles (1 of 2)" of the RA6M3 manual R01UH0886EJ0100)
+ * See table "Access cycles" in the I/O Registers section of the relevant hardware manual
  */
 #define PDC_PERIPHERAL_REG_MAX_WAIT       (0x40U * 0x03U)
 
@@ -164,8 +164,8 @@ fsp_err_t R_PDC_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
     /** Disable module stop mode for PDC */
     R_BSP_MODULE_START(FSP_IP_PDC, 0);
 
-    /* Performs PDC initialization as described in hardware manual (see Section 44.3.8
-     * 'Initial Settings' of the RA6M3 manual R01UH0886EJ0100).
+    /* Performs PDC initialization as described in hardware manual (see
+     * "Initial Settings" in the PDC section of the relevant hardware manual).
      * Disable PDC
      * Set PCLKB divider
      * Enable PCLKO output
@@ -314,8 +314,8 @@ fsp_err_t R_PDC_CaptureStart (capture_ctrl_t * const p_ctrl, uint8_t * const p_b
     /* Retain old settings and apply reset */
     R_PDC->PCCR0 = pccr0_initial_setting | (1U << R_PDC_PCCR0_PRST_Pos);
 
-    /* Wait for PDC reset bit (PRST) to clear as described in hardware manual (see Section 44.2.1
-     * 'PDC Control Register 0 (PCCR0): PRST' of the RA6M3 manual R01UH0886EJ0100).
+    /* Wait for PDC reset bit (PRST) to clear as described in hardware manual (see
+     * "PDC Control Register 0 (PCCR0): PRST" description in the relevant hardware manual).
      */
     uint32_t timeout = PDC_PERIPHERAL_REG_MAX_WAIT;
     PDC_HARDWARE_REGISTER_WAIT(R_PDC->PCCR0, pccr0_initial_setting, timeout);
@@ -445,7 +445,8 @@ fsp_err_t R_PDC_CallbackSet (capture_ctrl_t * const          p_ctrl,
  * @brief  Internal transfer complete callback for PDC driver.
  *
  * This is invoked every time a frame has been captured and hence also performs PDC operation flow
- * as described in hardware manual (see Figure 44.19 'Example operation flow' of the RA6M3 manual R01UH0886EJ0100).
+ * as described in hardware manual (see Figure "Example operation flow" in the PDC section of the
+ * relevant hardware manual).
  * Thus eliminating the need of a separate frame end interrupt and its ISR.
  *
  *
@@ -456,8 +457,8 @@ void r_pdc_transfer_callback (pdc_instance_ctrl_t * p_ctrl)
     capture_callback_args_t pdc_args;
     uint16_t                timeout = PDC_PERIPHERAL_REG_MAX_WAIT;
 
-    /* Performs PDC operation flow as described in hardware manual (see Figure 44.19
-     * 'Example operation flow' of the RA6M3 manual R01UH0886EJ0100).
+    /* Performs PDC operation flow as described in hardware manual (see
+     * "Example operation flow" in the PDC section of the relevant hardware manual).
      * */
     while ((0UL == (R_PDC_PCSR_FEMPF_Msk & R_PDC->PCSR)) && (0UL != timeout) &&
            (0UL == (R_PDC_PCSR_UDRF_Msk & R_PDC->PCSR)))
@@ -546,8 +547,8 @@ static void r_pdc_error_handler (pdc_instance_ctrl_t * p_ctrl)
 {
     capture_callback_args_t pdc_args;
 
-    /* Performs PDC error processing flow as described in hardware manual (see Figure 44.20
-     * 'Example error processing flow' of the RA6M3 manual R01UH0886EJ0100).
+    /* Performs PDC error processing flow as described in hardware manual (see Figure
+     * "Example error processing flow" in the PDC section of the relevant hardware manual).
      * All the errors are consolidated and reported through the callback and the status register
      * is cleared in a single write.
      * *//* Stop the PDC */

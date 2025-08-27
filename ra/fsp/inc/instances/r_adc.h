@@ -115,7 +115,7 @@ typedef enum e_adc_clear
 typedef enum e_adc_vref_control
 {
     /* Available selections on MCUs with VREFAMPCNT.
-     * Reference Table 32.12 "VREFADC output voltage control list" in the RA2A1 manual R01UH0888EJ0100.*/
+     * Refer Table "VREFADC output voltage control list" in the ADC section of the relevant hardware manual.*/
 
     ADC_VREF_CONTROL_VREFH       = 0,      ///< VREFAMPCNT reset value. VREFADC Output voltage is Hi-Z
     ADC_VREF_CONTROL_1_5V_OUTPUT = 25,     ///< BGR turn ON. VREFADC Output voltage is 1.5 V
@@ -123,8 +123,8 @@ typedef enum e_adc_vref_control
     ADC_VREF_CONTROL_2_5V_OUTPUT = 31,     ///< BGR turn ON. VREFADC Output voltage is 2.5 V
 
     /* Available selections on MCUs with ADHVREFCNT.
-     * Reference Section 35.2.31 "A/D High-Potential/Low-Potential Reference Voltage Control Register (ADHVREFCNT)"
-     * in the RA4M1 manual R01UH0887EJ0100.*/
+     * Reference Section "A/D High-Potential/Low-Potential Reference Voltage Control Register (ADHVREFCNT)" description
+     * in the ADC section of the relevant hardware manual.*/
 
     ADC_VREF_CONTROL_AVCC0_AVSS0  = 0x0,   ///< High potential is AVCC0, low potential is AVSS0
     ADC_VREF_CONTROL_VREFH0_AVSS0 = 0x1,   ///< High potential is VREFH0, low potential is AVSS0

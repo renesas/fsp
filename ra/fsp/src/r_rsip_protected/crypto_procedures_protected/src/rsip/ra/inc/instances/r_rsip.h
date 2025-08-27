@@ -26,7 +26,7 @@ FSP_HEADER
 
 /* Version Number of Module. */
 #define FSP_R_RSIP_PROTECTED_VERSION_MAJOR    (2U)
-#define FSP_R_RSIP_PROTECTED_VERSION_MINOR    (0U)
+#define FSP_R_RSIP_PROTECTED_VERSION_MINOR    (1U)
 #define FSP_R_RSIP_PROTECTED_VERSION_PATCH    (0U)
 
 /** Returns the plain key size formatted for RSIP driver of the key type. */
@@ -132,6 +132,8 @@ FSP_HEADER
 #define RSIP_PRV_BYTE_SIZE_AES_BLOCK                    (16U)
 #define RSIP_PRV_BYTE_SIZE_CCM_NONCE_MAX                (13U)
 #define RSIP_PRV_BYTE_SIZE_CCM_AAD_MAX                  (110U)
+#define RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK               (64U)
+#define RSIP_PRV_WORD_SIZE_CHACHA20_NONCE               (3U)
 
 /* Return code for SB-Lib */
 #define FSP_ERR_SB_INTERNAL_FAIL                        (0x00030000UL) ///< An internal failure
@@ -379,6 +381,18 @@ typedef struct st_rsip_aes_cmac_handle
     uint32_t     total_length;                         // Total message length
 } rsip_aes_cmac_handle_t;
 
+/* Working area for ChaCha20 */
+typedef struct st_rsip_chacha20_handle
+{
+    const void       * p_func;                                                                // Pointer to primitive functions
+    rsip_wrapped_key_t wrapped_key;                                                           // Wrapped key
+    uint8_t            wrapped_key_value[RSIP_BYTE_SIZE_WRAPPED_KEY(RSIP_KEY_TYPE_CHACHA20)]; // Wrapped key value
+    uint32_t           nonce_buffer[RSIP_PRV_WORD_SIZE_CHACHA20_NONCE];                       // Buffer for nonce
+    uint8_t            buffer[RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK];                             // Buffer for plaintext/ciphertext
+    uint32_t           buffered_length;                                                       // Buffered plaintext/ciphertext length
+    uint32_t           total_length;                                                          // Total plaintext/ciphertext length
+} rsip_chacha20_handle_t;
+
 /** Working area for SHA functions. DO NOT MODIFY. */
 typedef struct st_rsip_sha_handle
 {
@@ -462,6 +476,7 @@ typedef union u_rsip_handle
     rsip_aes_gcm_handle_t    aes_gcm;    // AES-GCM
     rsip_aes_ccm_handle_t    aes_ccm;    // AES-CCM
     rsip_aes_cmac_handle_t   aes_cmac;   // AES-CMAC
+    rsip_chacha20_handle_t   chacha20;   // ChaCha20
     rsip_sha_handle_t        sha;        // SHA
     rsip_hmac_handle_t       hmac;       // HMAC
     rsip_kdf_sha_handle_t    kdf_sha;    // KDF SHA
@@ -488,6 +503,7 @@ typedef enum e_rsip_state
     RSIP_STATE_AES_CCM_DEC_UPDATE_TEXT, // AES-CCM decryption, plaintext/ciphertext input
     RSIP_STATE_AES_CCM_DEC_VERI,        // AES-CCM encryption, verification
     RSIP_STATE_AES_CMAC,                // AES-CMAC
+    RSIP_STATE_CHACHA,                  // ChaCha20
     RSIP_STATE_SHA,                     // SHA
     RSIP_STATE_HMAC,                    // HMAC
     RSIP_STATE_KDF_SHA,                 // KDF SHA
@@ -587,6 +603,19 @@ fsp_err_t R_RSIP_AES_MAC_Update(rsip_ctrl_t * const   p_ctrl,
 fsp_err_t R_RSIP_AES_MAC_SignFinish(rsip_ctrl_t * const p_ctrl, uint8_t * const p_mac);
 fsp_err_t R_RSIP_AES_MAC_VerifyFinish(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_mac,
                                       uint32_t const mac_length);
+
+/* r_rsip_chacha.c */
+fsp_err_t R_RSIP_ChaCha20_Init(rsip_ctrl_t * const              p_ctrl,
+                               rsip_wrapped_key_t const * const p_wrapped_key,
+                               uint8_t const * const            p_nonce,
+                               uint32_t const                   counter);
+fsp_err_t R_RSIP_ChaCha20_Update(rsip_ctrl_t * const   p_ctrl,
+                                 uint8_t const * const p_input,
+                                 uint32_t const        input_length,
+                                 uint8_t * const       p_output,
+                                 uint32_t * const      p_output_length);
+fsp_err_t R_RSIP_ChaCha20_Finish(rsip_ctrl_t * const p_ctrl, uint8_t * const p_output,
+                                 uint32_t * const p_output_length);
 
 /* r_rsip_ecc.c */
 fsp_err_t R_RSIP_ECDSA_Sign(rsip_ctrl_t * const              p_ctrl,

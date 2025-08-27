@@ -316,6 +316,13 @@ typedef enum e_gpt_pwm_output_delay_edge
     GPT_PWM_OUTPUT_DELAY_EDGE_FALLING, ///< Configure the PWM Output Delay setting for falling edge.
 } gpt_pwm_output_delay_edge_t;
 
+/** Polarity inversion control for GTIOCnA/B pins. */
+typedef enum e_gpt_gtioc_polarity
+{
+    GPT_GTIOC_POLARITY_NORMAL   = 0U,  ///< GPTIOCnA/B pin polarity is not changed.
+    GPT_GTIOC_POLARITY_INVERTED = 1U,  ///< GPTIOCnA/B pin polarity is inverted.
+} gpt_gtioc_polarity_t;
+
 /** Channel control block. DO NOT INITIALIZE.  Initialization occurs when @ref timer_api_t::open is called. */
 typedef struct st_gpt_instance_ctrl
 {
@@ -384,6 +391,9 @@ typedef struct st_gpt_extended_cfg
 
     gpt_extended_pwm_cfg_t const * p_pwm_cfg;     ///< Advanced PWM features, optional
     gpt_gtior_setting_t            gtior_setting; ///< Custom GTIOR settings used for configuring GTIOCxA and GTIOCxB pins.
+
+    gpt_gtioc_polarity_t gtioca_polarity;         ///< Polarity control for GTIOCxA input/output pin.
+    gpt_gtioc_polarity_t gtiocb_polarity;         ///< Polarity control for GTIOCxB input/output pin.
 } gpt_extended_cfg_t;
 
 /**********************************************************************************************************************

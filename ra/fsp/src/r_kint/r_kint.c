@@ -229,8 +229,8 @@ void key_int_isr (void)
     /* Only clear the serviced channels in the KINT peripheral.
      * Note:
      * - Writing 0 to a KRF register bit clears the KRF bit. Writing 1 has no effect on a KRF register bit value.
-     * - Clearing a subset of KRFn bits has the effect of generating an additional interrupt request (See section
-     *   21.3.2 Operation when using the key interrupt flags in the RA6M3 manual R01UH0886EJ0100). */
+     * - Clearing a subset of KRFn bits has the effect of generating an additional interrupt request (See
+     *   "Operation when using the key interrupt flags" in the KINT section of the relevant hardware manual). */
     R_KINT->KRF = (uint8_t) ~status;
 
     /* Set data to identify callback to user. */

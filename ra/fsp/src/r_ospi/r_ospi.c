@@ -135,8 +135,8 @@ fsp_err_t R_OSPI_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const * 
     }
 #endif
 
-    /* Perform OSPI initial setup as described in hardware manual (see Section 34.3.6.1
-     * 'Initial Settings' of the RA6M4 manual R01UH0890EJ0100). */
+    /* Perform OSPI initial setup as described in hardware manual (see
+     * "Initial Settings" in the OSPI section of the relevant hardware manual). */
 
     /* Set the device type as OctaFlash or OctaRAM and its corresponding storage capacity */
     R_OSPI->DSR[p_instance_ctrl->channel] = (p_cfg_extend->memory_size & R_OSPI_DSR_DVSZ_Msk) |
@@ -410,8 +410,8 @@ fsp_err_t R_OSPI_Write (spi_flash_ctrl_t * const p_ctrl,
 #else
     uint32_t i = 0;
 
-    /* Perform entire write opetation keeping the same access width to remain in single continuous write mode (see Section 34.5.1, point#3
-     * 'Single continuous write operation' of the RA6M4 manual R01UH0890EJ0100).
+    /* Perform entire write opetation keeping the same access width to remain in single continuous write mode (see point#3 of
+     * "Single continuous write operation" in the OSPI section of the relevant hardware manual).
      *
      * A change in access width will reissue the write command only when the access width change happens at a 128-bit boundary.
      * This is not handled by the code code below.
@@ -696,8 +696,8 @@ static fsp_err_t r_ospi_spi_protocol_specific_settings (ospi_instance_ctrl_t * p
     fsp_err_t               ret          = FSP_SUCCESS;
     ospi_device_number_t    channel      = p_instance_ctrl->channel;
 
-    /* In case of SOPI mode enable pre-cycle as described in hardware manual (see Section 34.2.12
-     * 'CDSR : Controller and Device Setting Register' Note 1 of the RA6M4 manual R01UH0890EJ0100). */
+    /* In case of SOPI mode enable pre-cycle as described in hardware manual (see Note 1 of
+     * "CDSR : Controller and Device Setting Register" description in the OSPI section of the relevant hardware manual). */
     uint32_t cdsr = R_OSPI->CDSR;
     cdsr &= ~((uint32_t) (R_OSPI_CDSR_DV0TTYP_Msk << (channel * R_OSPI_CDSR_DV1TTYP_Pos)) |
               (uint32_t) (R_OSPI_CDSR_DV0PC_Msk << channel));
@@ -728,7 +728,8 @@ static fsp_err_t r_ospi_spi_protocol_specific_settings (ospi_instance_ctrl_t * p
          * Keeping this setting matches the written and read data as with SPI and SOPI protocol.
          *
          * MROx and MWOx setting is ignored for SPI and SOPI modes.
-         * Refer Note 1 below Section "34.2.17 MRWCSR : Memory Map Read/Write Setting Register" of the RA6M4 manual R01UH0890EJ0110
+         * See Note 1 of "MRWCSR : Memory Map Read/Write Setting Register" description
+         * in the OSPI section of the relevant hardware manual
          */
         R_OSPI->MRWCSR = OSPI_PRV_RMW(R_OSPI->MRWCSR,
                                       ((uint32_t) (((uint32_t) p_cfg->address_bytes + 1U) << R_OSPI_MRWCSR_MRAL0_Pos) |

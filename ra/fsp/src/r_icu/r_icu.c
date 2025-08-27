@@ -143,7 +143,7 @@ fsp_err_t R_ICU_ExternalIrqOpen (external_irq_ctrl_t * const p_api_ctrl, externa
 #if BSP_FEATURE_ICU_HAS_IELSR
 
     /* IELSR Must be zero when modifying the IRQCR bits.
-     * (See ICU Section 14.2.1 of the RA6M3 manual R01UH0886EJ0100). */
+     * (See "IRQ Control Register i (IRQCRi) (i = 0 to 15)" description in the ICU section of the relevant hardware manual). */
     uint32_t ielsr = R_ICU->IELSR[p_ctrl->irq];
     R_ICU->IELSR[p_ctrl->irq] = 0;
 #endif

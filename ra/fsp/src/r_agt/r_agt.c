@@ -184,8 +184,8 @@ fsp_err_t R_AGT_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_c
     /* The timer is stopped in sync with the count clock, or in sync with PCLK in event and external count modes. */
     FSP_HARDWARE_REGISTER_WAIT(0U, p_reg_ctrl->AGTCR_b.TCSTF);
 
-    /* Clear AGTMR2 before AGTMR1 is set. Reference Note 3 in section 25.2.6 "AGT Mode Register 2 (AGTMR2)"
-     * of the RA6M3 manual R01UH0886EJ0100. */
+    /* Clear AGTMR2 before AGTMR1 is set. See Note 3 of "AGT Mode Register 2 (AGTMR2)" description
+     * of the relevant hardware manual. */
     p_reg_ctrl->AGTMR2 = 0U;
 
     /* Set count source and divider and configure pins. */
@@ -247,8 +247,8 @@ fsp_err_t R_AGT_Start (timer_ctrl_t * const p_ctrl)
      * ensures the output pin will not toggle again right after the period ends. */
     if (TIMER_MODE_ONE_SHOT == p_instance_ctrl->p_cfg->mode)
     {
-        /* Verify the timer is started before modifying any other AGT registers. Reference section 25.4.1 "Count
-         * Operation Start and Stop Control" in the RA6M3 manual R01UH0886EJ0100. */
+        /* Verify the timer is started before modifying any other AGT registers. See "Count
+         * Operation Start and Stop Control" in the AGT Usage Notes section of the relevant hardware manual. */
         FSP_HARDWARE_REGISTER_WAIT(1U, p_reg_ctrl->AGTCR_b.TCSTF);
 
         if (AGT_PRV_IS_AGTW(p_instance_ctrl))
@@ -766,8 +766,8 @@ static fsp_err_t r_agt_common_preamble (agt_instance_ctrl_t * p_instance_ctrl)
 
     agt_prv_reg_ctrl_ptr_t p_reg_ctrl = AGT_PRV_CTRL_PTR(p_instance_ctrl);
 
-    /* Ensure timer state reflects expected status. Reference section 25.4.1 "Count Operation Start and Stop Control"
-     * in the RA6M3 manual R01UH0886EJ0100. */
+    /* Ensure timer state reflects expected status. See "Count
+     * Operation Start and Stop Control" in the AGT Usage Notes section of the relevant hardware manual. */
     uint32_t agtcr_tstart = p_reg_ctrl->AGTCR_b.TSTART;
     FSP_HARDWARE_REGISTER_WAIT(agtcr_tstart, p_reg_ctrl->AGTCR_b.TCSTF);
 
@@ -1113,7 +1113,8 @@ void agt_int_isr (void)
             else
             {
                 /* Period of input pulse = (initial value of counter [AGT register] - reading value of the read-out buffer) + 1
-                 * Reference section 25.4.5 of the RA6M3 manual R01UH0886EJ0100. */
+                 * Reference section "How to Calculate Event Number, Pulse Width, and Pulse Period" in the AGT Usage Notes section
+                 * of the relevant hardware manual. */
                 p_args->capture++;
             }
         }

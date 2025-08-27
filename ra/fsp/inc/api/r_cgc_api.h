@@ -44,6 +44,8 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+#ifndef BSP_OVERRIDE_CGC_EVENT_T
+
 /** Events that can trigger a callback function */
 typedef enum e_cgc_event
 {
@@ -51,6 +53,7 @@ typedef enum e_cgc_event
     CGC_EVENT_OSC_STOP_DETECT_MAIN_OSC = 1, ///< Main oscillator stop detection has caused the interrupt event
     CGC_EVENT_OSC_STOP_DETECT_SUBCLOCK = 2, ///< Subclock oscillator stop detection has caused the interrupt event
 } cgc_event_t;
+#endif
 
 /** Callback function parameter data */
 typedef struct st_cgc_callback_args

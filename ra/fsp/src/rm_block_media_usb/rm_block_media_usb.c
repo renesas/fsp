@@ -169,7 +169,9 @@ fsp_err_t RM_BLOCK_MEDIA_USB_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
     FSP_ASSERT(NULL != p_extended_cfg->p_usb);
 #endif
 
+#if (USB_CFG_HUB == USB_CFG_DISABLE)
     p_instance_ctrl->device_address = USB_DEVICEADDR; /* Temporary processing for TrustZone. */
+#endif                                                /* USB_CFG_HUB == USB_CFG_DISABLE */
 
     usb_instance_t * p_usb = (usb_instance_t *) p_extended_cfg->p_usb;
     fsp_err_t        err   = R_USB_HMSC_StorageCommand(p_usb->p_ctrl,
@@ -805,7 +807,9 @@ static void rm_block_media_usb_waitloop (void)
         usb_hstd_hcd_task((void *) 0);
         usb_hstd_mgr_task((void *) 0);
 
-        // usb_hhub_task((usb_vp_int_t) 0);
+ #if (USB_CFG_HUB == USB_CFG_ENABLE)
+        usb_hhub_task((void *) 0);
+ #endif                                /* (USB_CFG_HUB == USB_CFG_ENABLE) */
         usb_hmsc_task();               /* HMSC Task */
     }
 

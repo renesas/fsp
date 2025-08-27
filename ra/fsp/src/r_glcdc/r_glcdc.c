@@ -425,7 +425,8 @@ fsp_err_t R_GLCDC_Open (display_ctrl_t * const p_api_ctrl, display_cfg_t const *
 
 #if defined(GLCDC_CFG_USING_DSI)
 
-    /* DSI must be opened after GLCDC configuration. See RA8 UM R01UH0995EJ0050 Section 56.3.1 */
+    /* DSI must be opened after GLCDC configuration. See "Overall Control" in the GLCDC Operation section of the
+     * relevant hardware manual */
     glcdc_extended_cfg_t * p_extend     = (glcdc_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     mipi_dsi_instance_t  * dsi_instance = (mipi_dsi_instance_t *) p_extend->phy_layer;
     err = dsi_instance->p_api->open(dsi_instance->p_ctrl, dsi_instance->p_cfg);
@@ -475,7 +476,8 @@ fsp_err_t R_GLCDC_Close (display_ctrl_t * const p_api_ctrl)
 
 #if defined(GLCDC_CFG_USING_DSI)
 
-    /* DSI must be closed before GLCDC. See RA8 UM R01UH0995EJ0050 Section 56.3.7.2 */
+    /* DSI must be closed before GLCDC. See "Overall Control" in the GLCDC Operation section of the
+     * relevant hardware manual */
     glcdc_extended_cfg_t * p_extend     = (glcdc_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     mipi_dsi_instance_t  * dsi_instance = (mipi_dsi_instance_t *) p_extend->phy_layer;
     err = dsi_instance->p_api->close(dsi_instance->p_ctrl);
@@ -538,7 +540,8 @@ fsp_err_t R_GLCDC_Start (display_ctrl_t * const p_api_ctrl)
 
 #if defined(GLCDC_CFG_USING_DSI)
 
-    /* DSI must be started before GLCDC. See RA8 UM R01UH0995EJ0050 Section 56.3.7.1 */
+    /* DSI must be started before GLCDC. See "Overall Control" in the GLCDC Operation section of the
+     * relevant hardware manual */
     glcdc_extended_cfg_t * p_extend     = (glcdc_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     mipi_dsi_instance_t  * dsi_instance = (mipi_dsi_instance_t *) p_extend->phy_layer;
     err = dsi_instance->p_api->start(dsi_instance->p_ctrl);
@@ -909,7 +912,8 @@ static fsp_err_t r_glcdc_stop (glcdc_instance_ctrl_t * const p_ctrl)
 
 #if defined(GLCDC_CFG_USING_DSI)
 
-    /* DSI must be stopped before GLCDC. See RA8 UM R01UH0995EJ0050 Section 56.3.7.2 */
+    /* DSI must be stopped before GLCDC. See "Overall Control" in the GLCDC Operation section of the
+     * relevant hardware manual */
     glcdc_extended_cfg_t * p_extend     = (glcdc_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     mipi_dsi_instance_t  * dsi_instance = (mipi_dsi_instance_t *) p_extend->phy_layer;
     err = dsi_instance->p_api->stop(dsi_instance->p_ctrl);
@@ -1059,7 +1063,7 @@ static fsp_err_t r_glcdc_param_check_display_timing (display_cfg_t const * const
     FSP_ERROR_RETURN((GLCDC_PRV_TCON_SIGNAL_ASSERT_WIDTH_MAX >= p_cfg->output.vtiming.sync_width),
                      FSP_ERR_INVALID_TIMING_SETTING);
 
-    /* See S7G2 H/W manual figure 57.26 about 3cycles */
+    /* See "Internal configuration of output control block" in the GLCDC section of the relevant hardware manual about 3cycles */
     FSP_ERROR_RETURN((p_cfg->output.htiming.total_cyc >=
                       (p_cfg->output.htiming.back_porch + p_cfg->output.htiming.display_cyc + 3)),
                      FSP_ERR_INVALID_TIMING_SETTING);
@@ -1083,7 +1087,8 @@ static fsp_err_t r_glcdc_open_param_check_sync_signal (display_cfg_t const * con
     error = r_glcdc_param_check_display_timing(p_cfg);
     FSP_ERROR_RETURN(FSP_SUCCESS == error, error);
 
-    /* See RA6M3 User's Manual (R01UH0886EJ0100) Figure 58.26 "Definition of background screen" for explanation of +2 */
+    /* See "Internal definition of background screen" in the GLCDC section of the relevant hardware manual
+     * for explanation of +2 */
     FSP_ERROR_RETURN((p_cfg->output.vtiming.total_cyc >=
                       (p_cfg->output.vtiming.back_porch + p_cfg->output.vtiming.display_cyc + 2)),
                      FSP_ERR_INVALID_TIMING_SETTING);

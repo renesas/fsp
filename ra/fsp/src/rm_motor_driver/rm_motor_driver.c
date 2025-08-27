@@ -20,7 +20,7 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_DRIVER_OPEN                   (0X4D445241L)
+#define     MOTOR_DRIVER_OPEN                   (('M' << 24U) | ('T' << 16U) | ('D' << 8U) | ('R' << 0U))
 #define     MOTOR_DRIVER_SHARED_ADC_OPEN        (('M' << 24U) | ('T' << 16U) | ('S' << 8U) | ('A' << 0U))
 
 #define     MOTOR_DRIVER_FLG_CLR                (0)     /* For flag clear */
@@ -659,22 +659,26 @@ static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
 #else                                           /* MOTOR_DRIVER_CFG_ADC_B_SUPPORTED == 0 */
  #if (MOTOR_DRIVER_CFG_SUPPORT_SHARED_ADC == 0) /* Original ADC module support */
     p_adc_instance = p_cfg->p_adc_instance;
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iu_ad_ch, &u2_addata[0]);
-    if (MOTOR_DRIVER_SHUNT_TYPE_3_SHUNT == p_cfg->shunt)
+    if (NULL != p_adc_instance)
     {
-        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iv_ad_ch, &u2_addata[1]);
-    }
-    else
-    {
-        u2_addata[1] = 0U;
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iu_ad_ch, &u2_addata[0]);
+        if (MOTOR_DRIVER_SHUNT_TYPE_3_SHUNT == p_cfg->shunt)
+        {
+            p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iv_ad_ch, &u2_addata[1]);
+        }
+        else
+        {
+            u2_addata[1] = 0U;
+        }
+
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iw_ad_ch, &u2_addata[2]);
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[3]);
+
+        /* For induction sensor */
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[4]);
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[5]);
     }
 
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iw_ad_ch, &u2_addata[2]);
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[3]);
-
-    /* For induction sensor */
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[4]);
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[5]);
  #else                                 /* SUPPORT_SHARED_ADC == 1 */
     /* Read A/D converted data */
     adc_instance_t const * pp_adc_instance[2] =
@@ -684,29 +688,33 @@ static void rm_motor_driver_current_get (motor_driver_instance_ctrl_t * p_ctrl)
     };
 
     p_adc_instance = pp_adc_instance[p_extend_cfg->iu_ad_unit];
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iu_ad_ch, &u2_addata[0]);
 
-    if (MOTOR_DRIVER_SHUNT_TYPE_3_SHUNT == p_cfg->shunt)
+    if (NULL != p_adc_instance)
     {
-        p_adc_instance = pp_adc_instance[p_extend_cfg->iv_ad_unit];
-        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iv_ad_ch, &u2_addata[1]);
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iu_ad_ch, &u2_addata[0]);
+
+        if (MOTOR_DRIVER_SHUNT_TYPE_3_SHUNT == p_cfg->shunt)
+        {
+            p_adc_instance = pp_adc_instance[p_extend_cfg->iv_ad_unit];
+            p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iv_ad_ch, &u2_addata[1]);
+        }
+        else
+        {
+            u2_addata[1] = 0U;
+        }
+
+        p_adc_instance = pp_adc_instance[p_extend_cfg->iw_ad_unit];
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iw_ad_ch, &u2_addata[2]);
+
+        p_adc_instance = pp_adc_instance[p_extend_cfg->vdc_ad_unit];
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[3]);
+
+        /* For induction sensor */
+        p_adc_instance = pp_adc_instance[p_extend_cfg->sin_ad_unit];
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[4]);
+        p_adc_instance = pp_adc_instance[p_extend_cfg->cos_ad_unit];
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[5]);
     }
-    else
-    {
-        u2_addata[1] = 0U;
-    }
-
-    p_adc_instance = pp_adc_instance[p_extend_cfg->iw_ad_unit];
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->iw_ad_ch, &u2_addata[2]);
-
-    p_adc_instance = pp_adc_instance[p_extend_cfg->vdc_ad_unit];
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[3]);
-
-    /* For induction sensor */
-    p_adc_instance = pp_adc_instance[p_extend_cfg->sin_ad_unit];
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[4]);
-    p_adc_instance = pp_adc_instance[p_extend_cfg->cos_ad_unit];
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[5]);
  #endif                                /* SUPPORT_SHARED_ADC == 1 */
 #endif                                 /* ADC_B_SUPPORTED == 0 */
 
@@ -759,20 +767,24 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
 
     adc_b_fifo_read_t temp_fifo;
 
-    /* Using ADC_B module */
-    /* Get Vdc */
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[0]);
+    if (NULL != p_adc_instance)
+    {
+        /* Using ADC_B module */
+        /* Get Vdc */
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->vdc_ad_ch, &u2_addata[0]);
 
-    /* Get induction sensor output */
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[1]);
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[2]);
+        /* Get induction sensor output */
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->sin_ad_ch, &u2_addata[1]);
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, p_cfg->cos_ad_ch, &u2_addata[2]);
 
-    /* Get FIFO data */
-    R_ADC_B_FifoRead(p_adc_instance->p_ctrl, ADC_GROUP_MASK_0, &temp_fifo);
-    temp_fifo.fifo_data[0].data &= MOTOR_DRIVER_ADC_DATA_MASK;
-    u2_Iac_raw0                  = (uint16_t) temp_fifo.fifo_data[0].data;
-    temp_fifo.fifo_data[1].data &= MOTOR_DRIVER_ADC_DATA_MASK;
-    u2_Iac_raw1                  = (uint16_t) temp_fifo.fifo_data[1].data;
+        /* Get FIFO data */
+        R_ADC_B_FifoRead(p_adc_instance->p_ctrl, ADC_GROUP_MASK_0, &temp_fifo);
+        temp_fifo.fifo_data[0].data &= MOTOR_DRIVER_ADC_DATA_MASK;
+        u2_Iac_raw0                  = (uint16_t) temp_fifo.fifo_data[0].data;
+        temp_fifo.fifo_data[1].data &= MOTOR_DRIVER_ADC_DATA_MASK;
+        u2_Iac_raw1                  = (uint16_t) temp_fifo.fifo_data[1].data;
+    }
+
 #else                                  /* ADC_B_SUPPORTED == 0 */
     /* g_adc module */
     adc_instance_t const * p_adc2_instance;
@@ -786,9 +798,12 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
     p_adc2_instance = p_extend_cfg->p_shared_cfg->p_adc_instance_second;
  #endif
 
-    /* Get double buffer data */
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_A, &u2_Iac_raw0);
-    p_adc_instance->p_api->read(p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_B, &u2_Iac_raw1);
+    if (NULL != p_adc_instance)
+    {
+        /* Get double buffer data */
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_A, &u2_Iac_raw0);
+        p_adc_instance->p_api->read(p_adc_instance->p_ctrl, ADC_CHANNEL_DUPLEX_B, &u2_Iac_raw1);
+    }
 
     /* Read A/D converted data */
     if (p_adc2_instance != NULL)
@@ -797,8 +812,11 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
          * once close the unit and reopen with other configuration. */
         if (p_extend_cfg->iu_ad_unit == p_extend_cfg->vdc_ad_unit)
         {
-            /* Close first ADC instance */
-            p_adc_instance->p_api->close(p_adc_instance->p_ctrl);
+            if (NULL != p_adc_instance)
+            {
+                /* Close first ADC instance */
+                p_adc_instance->p_api->close(p_adc_instance->p_ctrl);
+            }
 
             /* Open second ADC instance */
             p_adc2_instance->p_api->open(p_adc2_instance->p_ctrl, p_adc2_instance->p_cfg);
@@ -823,11 +841,14 @@ static void rm_motor_driver_1shunt_current_get (motor_driver_instance_ctrl_t * p
             /* Close second ADC instance */
             p_adc2_instance->p_api->close(p_adc2_instance->p_ctrl);
 
-            /* Open & Start first ADC instance again */
-            p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
-            p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
-            p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
-            p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+            if (NULL != p_adc_instance)
+            {
+                /* Open & Start first ADC instance again */
+                p_adc_instance->p_api->open(p_adc_instance->p_ctrl, p_adc_instance->p_cfg);
+                p_adc_instance->p_api->scanCfg(p_adc_instance->p_ctrl, p_adc_instance->p_channel_cfg);
+                p_adc_instance->p_api->calibrate(p_adc_instance->p_ctrl, p_adc_instance->p_cfg->p_extend);
+                p_adc_instance->p_api->scanStart(p_adc_instance->p_ctrl);
+            }
         }
     }
 #endif                                 /* ADC_B_SUPPORTED == 0 */

@@ -797,21 +797,19 @@ void HW_SCE_Aes192GcmDecryptUpdateTransitionSub (void)
 {
 }
 
-fsp_err_t HW_SCE_EccEd25519ScalarMultiplicationSubAdaptor(const uint32_t InData_CurveType[],
-                                                      const uint32_t InData_Cmd[],
-                                                      const uint32_t InData_KeyIndex[],
-                                                      const uint32_t InData_PubKey[],
-                                                      const uint32_t InData_DomainParam[],
-                                                      uint32_t OutData_R[])
+fsp_err_t HW_SCE_EccEd25519ScalarMultiplicationSubAdaptor (const uint32_t InData_CurveType[],
+                                                           const uint32_t InData_Cmd[],
+                                                           const uint32_t InData_KeyIndex[],
+                                                           const uint32_t InData_PubKey[],
+                                                           const uint32_t InData_DomainParam[],
+                                                           uint32_t       OutData_R[])
 {
     FSP_PARAMETER_NOT_USED(InData_CurveType);
     FSP_PARAMETER_NOT_USED(InData_Cmd);
-    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
-    FSP_PARAMETER_NOT_USED(InData_PubKey);
-    FSP_PARAMETER_NOT_USED(InData_DomainParam);
-    FSP_PARAMETER_NOT_USED(OutData_R);
-    return FSP_ERR_UNSUPPORTED;
+    uint32_t indata_key_type = 0;
+    return HW_SCE_Ed25519ScalarMultiplicationSub(&indata_key_type, InData_KeyIndex, NULL, InData_PubKey, InData_DomainParam, OutData_R);
 }
+
 fsp_err_t HW_SCE_ShaGenerateMessageDigestSubGeneral (const uint32_t InData_HashType[],
                                                      const uint32_t InData_Cmd[],
                                                      const uint32_t InData_Msg[],

@@ -14,62 +14,124 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
-#define RM_BLOCK_MEDIA_RAM_FAT16_LIMIT            (65525)
-#define RM_BLOCK_MEDIA_RAM_FAT12_LIMIT            (4085)
-#define RM_BLOCK_MEDIA_RAM_JMP_CODE_1             (0xEB)
-#define RM_BLOCK_MEDIA_RAM_JMP_CODE_2             (0x3C)
-#define RM_BLOCK_MEDIA_RAM_JMP_CODE_3             (0x90)
+#define RM_BLOCK_MEDIA_RAM_FAT16_LIMIT                       (65525)
+#define RM_BLOCK_MEDIA_RAM_FAT12_LIMIT                       (4085)
+#define RM_BLOCK_MEDIA_RAM_JMP_CODE_1                        (0xEB)
+#define RM_BLOCK_MEDIA_RAM_JMP_CODE_2                        (0x3C)
+#define RM_BLOCK_MEDIA_RAM_JMP_CODE_3                        (0x90)
 
-#define RM_BLOCK_MEDIA_RAM_SECTOR_SIZE            (512)
-#define RM_BLOCK_MEDIA_RAM_SECTOR_COUNT           (RM_BLOCK_MEDIA_RAM_CFG_MEDIA_SIZE / RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
+#define RM_BLOCK_MEDIA_RAM_SECTOR_SIZE                       (512)
+#define RM_BLOCK_MEDIA_RAM_SECTOR_COUNT                      (RM_BLOCK_MEDIA_RAM_CFG_MEDIA_SIZE / \
+                                                              RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
 
-#define RM_BLOCK_MEDIA_RAM_MEDIATYPE              (0xF8U)
-#define RM_BLOCK_MEDIA_RAM_SIGNATURE              (0xAA55U)
+#define RM_BLOCK_MEDIA_RAM_MEDIATYPE                         (0xF8U)
+#define RM_BLOCK_MEDIA_RAM_SIGNATURE                         (0xAA55U)
 
-#define RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER    (0x01U)
-#define RM_BLOCK_MEDIA_RAM_NUM_FATS               (0x02U)
+#define RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER               (1)
+#define RM_BLOCK_MEDIA_RAM_NUM_FATS                          (2)
 
 /* "SRAM" in ASCII, used to identify general RM_BLOCK_MEDIA_RAM control block */
-#define RM_BLOCK_MEDIA_RAM_OPEN                   (0x5352414D)
-#define RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS       (0x2)
+#define RM_BLOCK_MEDIA_RAM_OPEN                              (0x5352414D)
+
+/* Number of reserved sectors in the Reserved region of the volume
+ * starting at the first sector of the volume. This field must not be 0.
+ * For FAT12 and FAT16 volumes, this value should never be
+ * anything other than 1. For FAT32 volumes, this value is typically
+ * 32. */
+#define RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS                  (1)
+#define RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS_FAT32            (32)
 
 /*
  * FAT12 and FAT16 media typically use 512 root directory
  * entries on non-floppy media. Some third-party tools,
  * like mkdosfs, allow the user to set this parameter.
  */
-#define RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRIES      (0x200)
+#define RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRIES                 (512)
+#define RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRY_SIZE              (32)
 
 /* 32 bytes per directory entry */
-#define RM_BLOCK_MEDIA_RAM_DIRECTORY_SECTORS      (((RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRIES * 32) + \
-                                                    (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE - 1)) /       \
-                                                   RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
+#define RM_BLOCK_MEDIA_RAM_DIRECTORY_SECTORS                 (((RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRIES *     \
+                                                                RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRY_SIZE) + \
+                                                               (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE - 1)) /     \
+                                                              RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
 
-#define RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT          (RM_BLOCK_MEDIA_RAM_SECTOR_COUNT -     \
-                                                   RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS - \
-                                                   RM_BLOCK_MEDIA_RAM_DIRECTORY_SECTORS)
+#define RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT                     ((RM_BLOCK_MEDIA_RAM_SECTOR_COUNT -       \
+                                                               RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS -   \
+                                                               RM_BLOCK_MEDIA_RAM_DIRECTORY_SECTORS) / \
+                                                              (RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER))
+
+/* 1.5 bytes per cluster needed in the FAT */
+#define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT12                 (((((RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT * 3) + 1) / 2) + \
+                                                               (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE - 1)) /              \
+                                                              RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
+
+#define RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS_FAT12             (RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT -      \
+                                                              (RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT12 * \
+                                                               RM_BLOCK_MEDIA_RAM_NUM_FATS))
 
 /* 2 bytes per cluster needed in the FAT */
-#define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT        (((RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT * 2) + \
-                                                    (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE - 1)) /  \
-                                                   RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
+#define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT16                 (((RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT * 2) + \
+                                                               (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE - 1)) /  \
+                                                              RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
 
-#define RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS        (RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT - \
-                                                   (RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT * RM_BLOCK_MEDIA_RAM_NUM_FATS))
+#define RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS_FAT16             (RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT -      \
+                                                              (RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT16 * \
+                                                               RM_BLOCK_MEDIA_RAM_NUM_FATS))
+
+#define RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT_FAT32               ((RM_BLOCK_MEDIA_RAM_SECTOR_COUNT -            \
+                                                               RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS_FAT32) / \
+                                                              (RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER))
+
+/* 4 bytes per cluster needed in the FAT */
+#define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT32                 (((RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT_FAT32 * 4) + \
+                                                               (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE - 1)) /        \
+                                                              RM_BLOCK_MEDIA_RAM_SECTOR_SIZE)
+
+#define RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS_FAT32             (RM_BLOCK_MEDIA_RAM_CLUSTER_COUNT_FAT32 - \
+                                                              (RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT32 *  \
+                                                               RM_BLOCK_MEDIA_RAM_NUM_FATS))
+
+#define RM_BLOCK_MEDIA_RAM_FAT_CLUSTER_BOUNDARY_AVOIDANCE    (16)
 
 /*
- * If the number of data areas of clusters is smaller
- * than that of value 4085(4096-11), it is FAT12.
- * If the number of data areas of clusters is smaller
- * than that of value 65525(65536-11), it is FAT16.
- * Otherwise it is FAT32.
+ * The largest number of clusters in a FAT12 volume is 4084. The largest number of clusters for
+ * a FAT16 volume is 65524. If the configured volume is too large for one FAT type and too small
+ * for the next increase the sectors per cluster and use the smaller FAT type. Avoid using
+ * volumes with a cluster count close to these values to avoid compatibility issues with
+ * other FAT code.
  */
-#if RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS >= RM_BLOCK_MEDIA_RAM_FAT16_LIMIT
- #define RM_BLOCK_MEDIA_RAM_FAT_TYPE              (32)
-#elif RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS >= RM_BLOCK_MEDIA_RAM_FAT12_LIMIT
- #define RM_BLOCK_MEDIA_RAM_FAT_TYPE              (16)
+#if (RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS_FAT12 < \
+     (RM_BLOCK_MEDIA_RAM_FAT12_LIMIT - RM_BLOCK_MEDIA_RAM_FAT_CLUSTER_BOUNDARY_AVOIDANCE))
+ #define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT                  RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT12
+ #define RM_BLOCK_MEDIA_RAM_FAT_TYPE                         (12)
+#elif (RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS_FAT16 < \
+       (RM_BLOCK_MEDIA_RAM_FAT16_LIMIT - RM_BLOCK_MEDIA_RAM_FAT_CLUSTER_BOUNDARY_AVOIDANCE))
+ #if RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS_FAT16 < \
+    (RM_BLOCK_MEDIA_RAM_FAT12_LIMIT + RM_BLOCK_MEDIA_RAM_FAT_CLUSTER_BOUNDARY_AVOIDANCE)
+
+  #define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT                 RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT12
+  #define RM_BLOCK_MEDIA_RAM_FAT_TYPE                        (12)
+  #undef RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER
+  #define RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER             (2)
+
+ #else
+  #define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT                 RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT16
+  #define RM_BLOCK_MEDIA_RAM_FAT_TYPE                        (16)
+ #endif
 #else
- #define RM_BLOCK_MEDIA_RAM_FAT_TYPE              (12)
+ #if RM_BLOCK_MEDIA_RAM_USABLE_CLUSTERS_FAT32 < \
+    (RM_BLOCK_MEDIA_RAM_FAT16_LIMIT + RM_BLOCK_MEDIA_RAM_FAT_CLUSTER_BOUNDARY_AVOIDANCE)
+  #define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT                 RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT16
+  #define RM_BLOCK_MEDIA_RAM_FAT_TYPE                        (16)
+  #undef RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER
+  #define RM_BLOCK_MEDIA_RAM_SECTORS_PER_CLUSTER             (2)
+
+ #else
+  #define RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT                 RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT32
+  #define RM_BLOCK_MEDIA_RAM_FAT_TYPE                        (32)
+  #undef RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS
+  #define RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS                RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS_FAT32
+ #endif
 #endif
 
 /***********************************************************************************************************************
@@ -83,6 +145,8 @@
 /***********************************************************************************************************************
  * Private global variables
  **********************************************************************************************************************/
+
+#if RM_BLOCK_MEDIA_RAM_CFG_FORMAT_DURING_MEDIA_INIT == 1
 
 /* RM_BLOCK_MEDIA_RAM_SECTOR_SIZE = 512 */
 static const uint8_t g_block_media_ram_boot_sector[RM_BLOCK_MEDIA_RAM_SECTOR_SIZE] =
@@ -112,31 +176,31 @@ static const uint8_t g_block_media_ram_boot_sector[RM_BLOCK_MEDIA_RAM_SECTOR_SIZ
     RM_BLOCK_MEDIA_RAM_NUM_FATS,
 
     /* 0x11     2   Number of root directory entries (must be set so that the root directory occupies entire sectors). */
-#if RM_BLOCK_MEDIA_RAM_FAT_TYPE != 32
+ #if RM_BLOCK_MEDIA_RAM_FAT_TYPE != 32
     (uint8_t) (RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRIES & UINT8_MAX),
     ((uint8_t) (RM_BLOCK_MEDIA_RAM_DIRECTORY_ENTRIES >> 8) & UINT8_MAX),
-#else
+ #else
     0x00,                                                                0x00,
-#endif
+ #endif
 
     /* 0x13     2   The total sectors in the logical volume. If this value is 0, it means there are more than 65535 sectors in the volume, and the actual count is stored in the Large Sector Count entry at 0x20. */
-#if RM_BLOCK_MEDIA_RAM_SECTOR_COUNT < 0x10000
+ #if RM_BLOCK_MEDIA_RAM_SECTOR_COUNT < 0x10000
     (uint8_t) (RM_BLOCK_MEDIA_RAM_SECTOR_COUNT & UINT8_MAX),
     ((uint8_t) (RM_BLOCK_MEDIA_RAM_SECTOR_COUNT >> 8) & UINT8_MAX),
-#else
+ #else
     0x00,                                                                0x00,
-#endif
+ #endif
 
     /* 0x15     1   This Byte indicates the media descriptor type. */
     RM_BLOCK_MEDIA_RAM_MEDIATYPE,
 
     /* 0x16     2   Number of sectors per FAT. FAT12/FAT16 only. */
-#if RM_BLOCK_MEDIA_RAM_FAT_TYPE != 32
+ #if RM_BLOCK_MEDIA_RAM_FAT_TYPE != 32
     (uint8_t) (RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT & UINT8_MAX),
     ((uint8_t) (RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT >> 8) & UINT8_MAX),
-#else
+ #else
     0x00,                                                                0x00,
-#endif
+ #endif
 
     /* 0x18    2   Number of sectors per track.  */
     0x00,                                                                0x00,
@@ -149,17 +213,17 @@ static const uint8_t g_block_media_ram_boot_sector[RM_BLOCK_MEDIA_RAM_SECTOR_SIZ
     0x00,                                                                0x00,
 
     /* 0x20     4   Large sector count. This field is set if there are more than 65535 sectors in the volume, resulting in a value which does not fit in the Number of Sectors entry at 0x13. */
-#if RM_BLOCK_MEDIA_RAM_SECTOR_COUNT >= 0x10000
+ #if RM_BLOCK_MEDIA_RAM_SECTOR_COUNT >= 0x10000
     (uint8_t) (RM_BLOCK_MEDIA_RAM_SECTOR_COUNT & UINT8_MAX),
     ((uint8_t) (RM_BLOCK_MEDIA_RAM_SECTOR_COUNT >> 8) & UINT8_MAX),
     ((uint8_t) (RM_BLOCK_MEDIA_RAM_SECTOR_COUNT >> 16) & UINT8_MAX),
     ((uint8_t) (RM_BLOCK_MEDIA_RAM_SECTOR_COUNT >> 24) & UINT8_MAX),
-#else
+ #else
     0x00,                                                                0x00,
     0x00,                                                                0x00,
-#endif
+ #endif
 
-#if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 12 || RM_BLOCK_MEDIA_RAM_FAT_TYPE == 16
+ #if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 12 || RM_BLOCK_MEDIA_RAM_FAT_TYPE == 16
 
     /* 0x024    1   Drive number. The value here should be identical to the value returned by BIOS interrupt 0x13, or passed in the DL register; i.e. 0x00 for a floppy disk and 0x80 for hard disks. This number is useless because the media is likely to be moved to another machine and inserted in a drive with a different drive number. */
     0x00,
@@ -183,17 +247,17 @@ static const uint8_t g_block_media_ram_boot_sector[RM_BLOCK_MEDIA_RAM_SECTOR_SIZ
     ' ',
 
     /* 0x036   8   System identifier string. This field is a string representation of the FAT file system type. It is padded with spaces. The spec says never to trust the contents of this string for any use. */
- #if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 12
+  #if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 12
     'F',                                                                 'A',
     'T',                                                                 '1',
     '2',                                                                 ' ',
     ' ',                                                                 ' ',
- #elif RM_BLOCK_MEDIA_RAM_FAT_TYPE == 16
+  #elif RM_BLOCK_MEDIA_RAM_FAT_TYPE == 16
     'F',                                                                 'A',
     'T',                                                                 '1',
     '6',                                                                 ' ',
     ' ',                                                                 ' ',
- #endif
+  #endif
 
     /* 0x03E    448     Boot code. */
     0x00,                                                                0x00,
@@ -210,7 +274,7 @@ static const uint8_t g_block_media_ram_boot_sector[RM_BLOCK_MEDIA_RAM_SECTOR_SIZ
     0x00,                                                                0x00,
     0x00,                                                                0x00,
     0x00,                                                                0x00,
-#else
+ #else
 
     /* 0x024    4   Sectors per FAT. The size of the FAT in sectors. */
     (uint8_t) (RM_BLOCK_MEDIA_RAM_SECTORS_PER_FAT & UINT8_MAX),
@@ -268,7 +332,7 @@ static const uint8_t g_block_media_ram_boot_sector[RM_BLOCK_MEDIA_RAM_SECTOR_SIZ
     'T',                                                                 '3',
     '2',                                                                 ' ',
     ' ',                                                                 ' ',
-#endif
+ #endif
 
     /* 0x05A    420     Boot code. */
     0x00,                                                                0x00,
@@ -490,19 +554,19 @@ static const uint8_t g_block_media_ram_boot_sector[RM_BLOCK_MEDIA_RAM_SECTOR_SIZ
 /* RM_BLOCK_MEDIA_RAM_SECTOR_SIZE = 512 */
 static const uint8_t g_block_media_ram_tablefat[RM_BLOCK_MEDIA_RAM_SECTOR_SIZE] =
 {
-#if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 12
+ #if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 12
 
     /* Reserve the first two FAT-12 entries. */
     RM_BLOCK_MEDIA_RAM_MEDIATYPE, UINT8_MAX,                    UINT8_MAX,
-#endif
+ #endif
 
-#if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 16
+ #if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 16
 
     /* Reserve the first two FAT-16 entries. */
     RM_BLOCK_MEDIA_RAM_MEDIATYPE, UINT8_MAX,                    UINT8_MAX,                   UINT8_MAX,
-#endif
+ #endif
 
-#if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 32
+ #if RM_BLOCK_MEDIA_RAM_FAT_TYPE == 32
 
     /* Reserve the first two FAT-32 entries.  */
     RM_BLOCK_MEDIA_RAM_MEDIATYPE, UINT8_MAX,                    UINT8_MAX,                   0x0F,
@@ -510,8 +574,9 @@ static const uint8_t g_block_media_ram_tablefat[RM_BLOCK_MEDIA_RAM_SECTOR_SIZE] 
 
     /* Preallocate the first cluster for the root directory. */
     UINT8_MAX,                    UINT8_MAX,                    UINT8_MAX,                   0x0F,
-#endif
+ #endif
 };
+#endif
 
 static uint8_t BSP_PLACE_IN_SECTION(RM_BLOCK_MEDIA_RAM_CFG_SECTION) g_block_media_ram_area[
     RM_BLOCK_MEDIA_RAM_CFG_MEDIA_SIZE];
@@ -587,15 +652,16 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_Open (rm_block_media_ctrl_t * const p_ctrl, rm_bloc
  **********************************************************************************************************************/
 fsp_err_t RM_BLOCK_MEDIA_RAM_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
 {
-    uint32_t adr;
-    uint32_t start_address;
-    rm_block_media_callback_args_t       block_media_ram_args;
     rm_block_media_ram_instance_ctrl_t * p_instance_ctrl = (rm_block_media_ram_instance_ctrl_t *) p_ctrl;
+    rm_block_media_callback_args_t       block_media_ram_args;
+#if RM_BLOCK_MEDIA_RAM_CFG_FORMAT_DURING_MEDIA_INIT == 1
+    uint32_t start_address;
+    uint32_t adr;
 
-#if RM_BLOCK_MEDIA_RAM_CFG_PARAM_CHECKING_ENABLE
+ #if RM_BLOCK_MEDIA_RAM_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(RM_BLOCK_MEDIA_RAM_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-#endif                                 /* RM_BLOCK_MEDIA_RAM_CFG_PARAM_CHECKING_ENABLE */
+ #endif                                /* RM_BLOCK_MEDIA_RAM_CFG_PARAM_CHECKING_ENABLE */
 
     start_address = (uint32_t) &g_block_media_ram_area[0];
 
@@ -606,10 +672,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
 
     /* Copy the boot sector. */
     memcpy((void *) adr, (void *) &g_block_media_ram_boot_sector, RM_BLOCK_MEDIA_RAM_SECTOR_SIZE);
-    adr += (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE);
-
-    /* Leave one sector blank after the boot sector. */
-    adr += (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE);
+    adr += (RM_BLOCK_MEDIA_RAM_SECTOR_SIZE * RM_BLOCK_MEDIA_RAM_RESERVED_SECTORS);
 
     /* Copy the fat table to the first fat copy. */
     memcpy((void *) adr, (void *) &g_block_media_ram_tablefat, sizeof(g_block_media_ram_tablefat));
@@ -617,7 +680,7 @@ fsp_err_t RM_BLOCK_MEDIA_RAM_MediaInit (rm_block_media_ctrl_t * const p_ctrl)
 
     /* Copy the fat table to the second fat copy. */
     memcpy((void *) adr, (void *) &g_block_media_ram_tablefat, sizeof(g_block_media_ram_tablefat));
-
+#endif
     if (NULL != p_instance_ctrl->p_callback)
     {
         block_media_ram_args.event     = RM_BLOCK_MEDIA_EVENT_OPERATION_COMPLETE;

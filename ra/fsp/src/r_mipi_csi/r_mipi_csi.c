@@ -164,7 +164,7 @@ fsp_err_t R_MIPI_CSI_Close (mipi_csi_ctrl_t * const p_api_ctrl)
 /******************************************************************************************************************//**
  * Start video output.
  * Initialize Video Output Registers
- * Perform sequence steps 3 to 5 from section 58.3.6.1 in RA8D1 hardware manual R01UH0995EJ0060.
+ * Perform sequence steps 3 to 5 from "Start of Video Mode Operation" in the MIPI DSI section of the relevant hardware manual".
  *
  * @retval   FSP_SUCCESS                Data is successfully written to the D/A Converter.
  * @retval   FSP_ERR_ASSERTION          p_api_ctrl is NULL.
@@ -208,7 +208,8 @@ fsp_err_t R_MIPI_CSI_Stop (mipi_csi_ctrl_t * const p_api_ctrl)
 #endif
 
     /*----------------------------------------------------------------------------------------------------
-     * Follow procedure identified in Figure 67.2 (R01UH1064EJ0100)
+     * Follow procedure identified in Figure "Receiving operation stopped" in the MIPI CSI section of the
+     * relevant hardware manual
      *  - NOTE: Application shal stop transmission fromperipheral before calling MIPI_CSI Stop function.
      *----------------------------------------------------------------------------------------------------*/
     FSP_ASSERT(R_MIPI_CSI->RXSC_b.RACTDETC); // Reception must not be active when calling Stop(). See note above.

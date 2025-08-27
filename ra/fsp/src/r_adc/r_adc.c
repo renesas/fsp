@@ -129,9 +129,9 @@ static void     r_adc_scan_end_common_isr(adc_event_t event);
 /** Mask of valid channels on this MCU. */
 static const uint32_t g_adc_valid_channels[] =
 {
-    BSP_FEATURE_ADC_UNIT_0_CHANNELS,
- #if BSP_FEATURE_ADC_UNIT_1_CHANNELS
-    BSP_FEATURE_ADC_UNIT_1_CHANNELS
+    BSP_FEATURE_ADC_UNIT_0_CHANNELS_MASK,
+ #if BSP_FEATURE_ADC_UNIT_1_CHANNELS_MASK
+    BSP_FEATURE_ADC_UNIT_1_CHANNELS_MASK
  #endif
 };
 #endif
@@ -615,7 +615,7 @@ fsp_err_t R_ADC_InfoGet (adc_ctrl_t * p_ctrl, adc_info_t * p_adc_info)
 
     p_adc_info->transfer_size = TRANSFER_SIZE_2_BYTE;
 
-#if BSP_FEATURE_ADC_UNIT_1_CHANNELS
+#if BSP_FEATURE_ADC_UNIT_1_CHANNELS_MASK
 
     /* Specify the peripheral name in the ELC list */
     p_adc_info->elc_event =
@@ -701,9 +701,9 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
 
 #if BSP_FEATURE_ADC_HAS_SAMPLE_HOLD_REG
 
-    /* Disable sample and hold before entering module stop state to reduce power consumption (reference section 47.6.8
-     * "Available Functions and Register Settings of AN000 to AN002, AN007, AN100 to AN102, and AN107" in the RA6M3
-     * manual R01UH0886EJ0100. */
+    /* Disable sample and hold before entering module stop state to reduce power consumption (See
+     * "Available Functions and Register Settings of AN000 to AN002, AN007, AN100 to AN102, and AN107" in the ADC section of
+     * the relevant hardware manual. */
     p_instance_ctrl->p_reg->ADSHCR = 0U;
 #endif
 
@@ -724,12 +724,12 @@ fsp_err_t R_ADC_Close (adc_ctrl_t * p_ctrl)
  * a scan on MCUs that require calibration.
  *
  * Calibration is complete when the callback is called with ADC_EVENT_CALIBRATION_COMPLETE or when R_ADC_StatusGet
- * returns ADC_STATUS_IDLE. Reference Figure 32.35 "Software flow and operation example of calibration operation."
- * in the RA2A1 manual R01UH0888EJ0100.
+ * returns ADC_STATUS_IDLE. See figure "Software flow and operation example of calibration operation."
+ * in the ADC section of the relevant hardware manual.
  *
- * ADC calibration time: 12 PCLKB + 774,930 ADCLK. (Reference Table 32.16 "Required calibration time (shown
- * as the number of ADCLK and PCLKB cycles)" in the RA2A1 manual R01UH0888EJ0100. The lowest supported ADCLK
- * is 1MHz.
+ * ADC calibration time: 12 PCLKB + 774,930 ADCLK. See table "Required calibration time (shown
+ * as the number of ADCLK and PCLKB cycles)" in the ADC section of the relevant hardware manual.
+ * The lowest supported ADCLK is 1MHz.
  *
  * Calibration will take a minimum of 24 milliseconds at 32 MHz PCLKB and ADCLK. This wait could take up to 780
  * milliseconds for a 1 MHz PCLKD (ADCLK).
@@ -847,15 +847,15 @@ static fsp_err_t r_adc_open_cfg_check (adc_cfg_t const * const p_cfg)
     /* Verify the unit exists on the MCU. */
     FSP_ERROR_RETURN(((1U << p_cfg->unit) & BSP_FEATURE_ADC_VALID_UNIT_MASK), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
-    /* Verify the ADC clock frequency is at least 1 MHz (reference "Frequency" row of table "60.5 ADC12
-     * Characteristics" in the RA6M3 manual R01UH0886EJ0100. The maximum frequency is the maximum frequency supported
+    /* Verify the ADC clock frequency is at least 1 MHz (See "Frequency" row of table "ADC12
+     * Characteristics" in the relevant hardware manual.) The maximum frequency is the maximum frequency supported
      * by the ADCLK, so it is not verified here. */
     uint32_t freq_hz = R_FSP_SystemClockHzGet(BSP_FEATURE_ADC_CLOCK_SOURCE);
     FSP_ERROR_RETURN(freq_hz >= ADC_PRV_MIN_ADCLK_HZ, FSP_ERR_INVALID_HW_CONDITION);
 
-    /* Check for valid argument values for addition/averaging. Reference section 47.2.10 "A/D-Converted Value
-     * Addition/Average Count Select Register (ADADC)" in the RA6M3 manual R01UH0886EJ0100 and section 32.2.11
-     * "A/D-Converted Value Average Count Select Register (ADADC)" in the RA2A1 manual R01UH0888EJ0100. */
+    /* Check for valid argument values for addition/averaging. See "A/D-Converted Value
+     * Addition/Average Count Select Register (ADADC)" desciption in the ADC section of the relevant hardware manual and
+     * "A/D-Converted Value Average Count Select Register (ADADC)" in the ADC section of the relevant hardware manual. */
     adc_extended_cfg_t const * p_cfg_extend = (adc_extended_cfg_t const *) p_cfg->p_extend;
     if (ADC_ADD_OFF != p_cfg_extend->add_average_count)
     {
@@ -870,15 +870,15 @@ static fsp_err_t r_adc_open_cfg_check (adc_cfg_t const * const p_cfg)
  #endif
     }
 
-    /* If 16 time addition is used only 12 bit accuracy can be selected. Reference Note 1 of section 47.2.10
-     * "A/D-Converted Value Addition/Average Count Select Register (ADADC)" in the RA6M3 manual R01UH0886EJ0100. */
+    /* If 16 time addition is used only 12 bit accuracy can be selected. See Note 1 of
+     * "A/D-Converted Value Addition/Average Count Select Register (ADADC)" description in the ADC section of the relevant hardware manual. */
     if (ADC_ADD_SIXTEEN == p_cfg_extend->add_average_count)
     {
         FSP_ASSERT(ADC_RESOLUTION_12_BIT == p_cfg->resolution);
     }
 
-    /* Only synchronous triggers (ELC) allowed in group scan mode (reference TRSA documentation in section 47.2.12
-     * "A/D Conversion Start Trigger Select Register (ADSTRGR)" in the RA6M3 manual R01UH0886EJ0100.  */
+    /* Only synchronous triggers (ELC) allowed in group scan mode (See
+     * "A/D Conversion Start Trigger Select Register (ADSTRGR)" desciption in the ADC section of the relevant hardware manual.) */
     if ((ADC_MODE_GROUP_SCAN == p_cfg->mode) || (ADC_DOUBLE_TRIGGER_DISABLED != p_cfg_extend->double_trigger_mode))
     {
         FSP_ASSERT((ADC_START_SOURCE_DISABLED != p_cfg_extend->trigger) &&
@@ -911,8 +911,7 @@ static fsp_err_t r_adc_open_cfg_resolution_check (adc_cfg_t const * const p_cfg)
  #if 12U == BSP_FEATURE_ADC_MAX_RESOLUTION_BITS
   #if BSP_FEATURE_ADC_HAS_ADCER_ADPRC
 
-    /* Resolution options for ADC12 (reference section 47.2.11 "A/D Control Extended Register (ADCER)" in the RA6M3
-     * manual R01UH0886EJ0100. */
+    /* Resolution options for ADC12 (reference section "A/D Control Extended Register (ADCER)" in the relevant hardware manual.) */
     FSP_ASSERT((ADC_RESOLUTION_12_BIT == p_cfg->resolution) ||
                (ADC_RESOLUTION_10_BIT == p_cfg->resolution) ||
                (ADC_RESOLUTION_8_BIT == p_cfg->resolution));
@@ -923,16 +922,14 @@ static fsp_err_t r_adc_open_cfg_resolution_check (adc_cfg_t const * const p_cfg)
 
  #if 14U == BSP_FEATURE_ADC_MAX_RESOLUTION_BITS
 
-    /* Resolution options for ADC14 (reference section 35.2.11 "A/D Control Extended Register (ADCER)" in the RA4M1
-     * manual R01UH0886EJ0100. */
+    /* Resolution options for ADC14 (reference section "A/D Control Extended Register (ADCER)" in the relevant hardware manual.) */
     FSP_ASSERT((ADC_RESOLUTION_12_BIT == p_cfg->resolution) ||
                (ADC_RESOLUTION_14_BIT == p_cfg->resolution));
  #endif
 
  #if 16U == BSP_FEATURE_ADC_MAX_RESOLUTION_BITS
 
-    /* ADC16 only offers 16-bit resolution (reference Table 32.1 "ADC16 specifications (1 of 2)" in the RA2A1 manual
-     * R01UH0888EJ0100. */
+    /* ADC16 only offers 16-bit resolution (refer "ADC16 specifications" in the relevant hardware manual.) */
     FSP_ASSERT(ADC_RESOLUTION_16_BIT == p_cfg->resolution);
  #endif
 
@@ -964,8 +961,7 @@ static fsp_err_t r_adc_scan_cfg_check_sample_hold (adc_instance_ctrl_t * const  
     if (0U != p_channel_cfg->sample_hold_mask)
     {
         /* Sample and Hold channels can only be 0, 1, 2 and must have at least minimum state count specified (reference
-         * section 47.2.15 "A/D Sample and Hold Circuit Control Register (ADSHCR)" in the RA6M3 manual
-         * R01UH0886EJ0100. */
+         * section "A/D Sample and Hold Circuit Control Register (ADSHCR)" description in the ADC section of the relevant hardware manual.) */
         FSP_ASSERT(p_channel_cfg->sample_hold_mask <= ADC_SAMPLE_HOLD_CHANNELS);
         FSP_ASSERT(p_channel_cfg->sample_hold_states >= ADC_SAMPLE_STATE_HOLD_COUNT_MIN);
 
@@ -975,8 +971,8 @@ static fsp_err_t r_adc_scan_cfg_check_sample_hold (adc_instance_ctrl_t * const  
             if (ADC_GROUP_A_PRIORITY_OFF != p_channel_cfg->priority_group_a)
             {
                 /* Sample and hold channels cannot be in GroupB if GroupA priority enabled. (reference SHANS[2:0] bits
-                 * in section 47.2.15 "A/D Sample and Hold Circuit Control Register (ADSHCR)" in the RA6M3 manual
-                 * R01UH0886EJ0100.*/
+                 * in section "A/D Sample and Hold Circuit Control Register (ADSHCR)" description in the ADC section of the relevant
+                 * hardware manual.*/
                 FSP_ASSERT(0 == b_mask);
             }
         }
@@ -987,8 +983,8 @@ static fsp_err_t r_adc_scan_cfg_check_sample_hold (adc_instance_ctrl_t * const  
 }
 
 /*******************************************************************************************************************//**
- * Enforces constraints on Window Compare function usage per section 47.3.5.3 "Constraints on the compare function" in
- * the RA6M3 User's Manual (R01UH0886EJ0100)
+ * Enforces constraints on Window Compare function usage per section "Constraints on the compare function" in
+ * the relevant hardware manual
  *
  * @param[in]  p_window_cfg            Pointer to window compare configuration
  *
@@ -1045,8 +1041,8 @@ static fsp_err_t r_adc_scan_cfg_check_sensors (adc_instance_ctrl_t * const     p
 
  #if !BSP_FEATURE_ADC_GROUP_B_SENSORS_ALLOWED
 
-    /* Sensors are not supported in Group B in some MCUs. Reference section 32.2.14 "A/D Conversion Extended Input
-     * Control Register (ADEXICR)" of the RA2A1 manual R01UH0888EJ0100. */
+    /* Sensors are not supported in Group B in some MCUs. Reference section "A/D Conversion Extended Input
+     * Control Register (ADEXICR)" description in the ADC section of the relevant hardware manual. */
     FSP_ASSERT(0U == (p_channel_cfg->scan_mask_group_b & ADC_MASK_SENSORS));
  #endif
 
@@ -1056,8 +1052,8 @@ static fsp_err_t r_adc_scan_cfg_check_sensors (adc_instance_ctrl_t * const     p
     {
         /* If the temperature sensor or the internal voltage reference is used, then none of the channels can be used
          * at the same time. The temperature sensor and the internal voltage reference can only be used in single scan
-         * mode. Reference TSSA and OCSA bits in section 35.2.13 "A/D Conversion Extended Input Control Register
-         * (ADEXICR)" of the RA4M1 manual R01UH0887EJ0100. */
+         * mode. Reference TSSA and OCSA bits in section "A/D Conversion Extended Input Control Register
+         * (ADEXICR)" description in the ADC section of the relevant hardware manual. */
         FSP_ASSERT(ADC_MASK_SENSORS != sensor_mask);
         FSP_ASSERT(p_channel_cfg->scan_mask == sensor_mask);
         FSP_ASSERT(ADC_MODE_SINGLE_SCAN == p_instance_ctrl->p_cfg->mode);
@@ -1200,7 +1196,7 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
     if (ADC_VREF_CONTROL_VREFH != p_cfg_extend->adc_vref_control)
     {
         /* Configure Reference Voltage controls
-         * Reference section "32.6 Selecting Reference Voltage" in the RA2A1 manual R01UH0888EJ0100. */
+         * See "Selecting Reference Voltage" in the ADC section of the relevant hardware manual. */
         p_instance_ctrl->p_reg->VREFAMPCNT =
             (uint8_t) (p_cfg_extend->adc_vref_control &
                        (R_ADC0_VREFAMPCNT_BGREN_Msk | R_ADC0_VREFAMPCNT_VREFADCG_Msk));
@@ -1215,8 +1211,8 @@ static void r_adc_open_sub (adc_instance_ctrl_t * const p_instance_ctrl, adc_cfg
 #if BSP_FEATURE_ADC_HAS_ADHVREFCNT
 
     /* If the internal voltage is set as VREFH, discharge the VREF node for 1 us before setting ADHVREFCNT.HVSEL to 2.
-     * Reference section 35.7 "A/D Conversion Procedure when Selecting Internal Reference Voltage as High-Potential
-     * Reference Voltage" in the RA4M1 manual R01UH0887EJ0100.
+     * See "A/D Conversion Procedure when Selecting Internal Reference Voltage as High-Potential
+     * Reference Voltage" in the ADC section of the relevant hardware manual.
      *
      * Also wait 5 us before using the ADC. This wait is the responsibility of the application. */
     if (ADC_PRV_ADHVREFCNT_VREF_INTERNAL_BIT_1 & p_cfg_extend->adc_vref_control)
@@ -1342,8 +1338,8 @@ static void r_adc_sensor_sample_state_calculation (uint32_t * const p_sample_sta
     /* Retrieve the clock source and frequency used by the ADC peripheral and sampling time required for the sensor. */
     uint32_t freq_hz = R_FSP_SystemClockHzGet(BSP_FEATURE_ADC_CLOCK_SOURCE);
 
-    /* Calculate sample states required for the current ADC conversion clock (reference section 47.2.14 "A/D Sampling
-     * State Register n (ADSSTRn) (n = 00 to 07, L, T, O)" in the RA6M3 manual R01UH0886EJ0100.
+    /* Calculate sample states required for the current ADC conversion clock (See "A/D Sampling
+     * State Register n (ADSSTRn) (n = 00 to 07, L, T, O)" description in the ADC section of the relevant hardware manual).
      *
      * sample_states = required_sample_time / adclk_period
      *               = required_sample_time (nsec) * adclk_frequency (kHz) / 1000000 (usec / sec) + 1

@@ -132,7 +132,7 @@ typedef enum e_lpm_snooze_cancel
     LPM_SNOOZE_CANCEL_SOURCE_ADC1_WCMPUM = ELC_EVENT_ADC1_COMPARE_MISMATCH,    ///< ADC Channel 1 window compare mismatch
   #endif
  #endif
- #if (BSP_FEATURE_SCI_CHANNELS & (1U << 0)) && (2U != BSP_FEATURE_ELC_VERSION) // If SCI has channel 0
+ #if (BSP_FEATURE_SCI_CHANNELS_MASK & (1U << 0)) && (2U != BSP_FEATURE_ELC_VERSION) // If SCI has channel 0
     LPM_SNOOZE_CANCEL_SOURCE_SCI0_AM         = ELC_EVENT_SCI0_AM,              ///< SCI0 address match event
     LPM_SNOOZE_CANCEL_SOURCE_SCI0_RXI_OR_ERI = ELC_EVENT_SCI0_RXI_OR_ERI,      ///< SCI0 receive error
  #endif
@@ -369,6 +369,17 @@ typedef enum e_lpm_deep_standby_cancel_edge
 
 typedef uint64_t lpm_deep_standby_cancel_edge_bits_t;
 
+/** Select soft start mode in deep software standby mode. This setting configures the wake time and
+ *  inrush current when waking from deep software standby mode (See the device user manual for more details).
+ */
+typedef enum e_lpm_deep_standby_soft_start_mode
+{
+    LPM_DEEP_STANDBY_SOFT_START_MODE_0 = 0, ///< Soft Start Mode 0 (DCSSMODE=0)
+    LPM_DEEP_STANDBY_SOFT_START_MODE_1 = 1, ///< Soft Start Mode 1 (DCSSMODE=1)
+    LPM_DEEP_STANDBY_SOFT_START_MODE_2 = 2, ///< Soft Start Mode 2 (DCSSMODE=2)
+    LPM_DEEP_STANDBY_SOFT_START_MODE_3 = 3, ///< Soft Start Mode 3 (DCSSMODE=3)
+} lpm_deep_standby_soft_start_mode_t;
+
 #ifndef BSP_OVERRIDE_LPM_DEEP_STANDBY_WAKE_SOURCE_T
 
 /** Deep Standby cancel sources */
@@ -561,6 +572,11 @@ typedef struct st_lpm_cfg
 
     /** Signal edges for the sources that can trigger exit from deep standby */
     lpm_deep_standby_cancel_edge_bits_t deep_standby_cancel_edge;
+#endif
+
+#if BSP_FEATURE_LPM_HAS_DPSBYCR_DCSSMODE
+    /** Configure the soft start mode when waking from deep standby. */
+    lpm_deep_standby_soft_start_mode_t deep_standby_soft_start_mode;
 #endif
 
 #if BSP_FEATURE_LPM_HAS_PDRAMSCR || BSP_FEATURE_LPM_HAS_DPSBYCR_SRKEEP

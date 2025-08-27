@@ -15,9 +15,9 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_120_CONTROL_HALL_OPEN               (0X3132484CL)
+#define     MOTOR_120_CONTROL_HALL_OPEN               (('1' << 24U) | ('2' << 16U) | ('H' << 8U) | ('L' << 0U))
 
-#define     MOTOR_120_CONTROL_HALL_TWOPI              (3.14159265358979F * 2.0F)
+#define     MOTOR_120_CONTROL_HALL_TWOPI              (2.0F * 3.1415926535F)
 
 /* To translate (rpm) => (rad/s) */
 #define     MOTOR_120_CONTROL_HALL_TWOPI_DIV_60       (MOTOR_120_CONTROL_HALL_TWOPI / 60.0F)
@@ -327,6 +327,9 @@ fsp_err_t RM_MOTOR_120_CONTROL_HALL_Stop (motor_120_control_ctrl_t * const p_ctr
     {
         p_extended_cfg->p_motor_120_driver_instance->p_api->stop(p_extended_cfg->p_motor_120_driver_instance->p_ctrl);
     }
+
+    // Set the flag to wait complete stop
+    p_instance_ctrl->flag_wait_stop = MOTOR_120_CONTROL_WAIT_STOP_FLAG_SET;
 
     return FSP_SUCCESS;
 }
@@ -696,23 +699,26 @@ void rm_motor_120_control_hall_speed_cyclic (timer_callback_args_t * p_args)
             /* Init state */
             case MOTOR_120_CONTROL_RUN_MODE_INIT:
             {
-                p_driver_instance->p_api->flagCurrentOffsetGet(p_driver_instance->p_ctrl, &u1_temp_flag_offset);
-
-                /* When offset calibration finished & motor stopped, motor control starts. */
-                if ((MOTOR_120_DRIVER_FLAG_OFFSET_CALC_ALL_FINISH == u1_temp_flag_offset) &&
-                    (MOTOR_120_CONTROL_WAIT_STOP_FLAG_CLEAR == p_instance_ctrl->flag_wait_stop))
+                if (NULL != p_driver_instance)
                 {
-                    p_instance_ctrl->flag_voltage_ref = MOTOR_120_CONTROL_VOLTAGE_REF_CONST;
-                    rm_motor_120_control_hall_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
+                    p_driver_instance->p_api->flagCurrentOffsetGet(p_driver_instance->p_ctrl, &u1_temp_flag_offset);
 
-                    p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
-                                                              p_instance_ctrl->f4_v_ref,
-                                                              p_instance_ctrl->f4_v_ref,
-                                                              p_instance_ctrl->f4_v_ref);
+                    /* When offset calibration finished & motor stopped, motor control starts. */
+                    if ((MOTOR_120_DRIVER_FLAG_OFFSET_CALC_ALL_FINISH == u1_temp_flag_offset) &&
+                        (MOTOR_120_CONTROL_WAIT_STOP_FLAG_CLEAR == p_instance_ctrl->flag_wait_stop))
+                    {
+                        p_instance_ctrl->flag_voltage_ref = MOTOR_120_CONTROL_VOLTAGE_REF_CONST;
+                        rm_motor_120_control_hall_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
 
-                    rm_motor_120_control_hall_pattern_set(p_instance_ctrl); /* Set voltage pattern */
+                        p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
+                                                                  p_instance_ctrl->f4_v_ref,
+                                                                  p_instance_ctrl->f4_v_ref,
+                                                                  p_instance_ctrl->f4_v_ref);
 
-                    p_instance_ctrl->run_mode = MOTOR_120_CONTROL_RUN_MODE_BOOT;
+                        rm_motor_120_control_hall_pattern_set(p_instance_ctrl); /* Set voltage pattern */
+
+                        p_instance_ctrl->run_mode = MOTOR_120_CONTROL_RUN_MODE_BOOT;
+                    }
                 }
 
                 break;
@@ -733,10 +739,14 @@ void rm_motor_120_control_hall_speed_cyclic (timer_callback_args_t * p_args)
                 rm_motor_120_control_hall_speed_ref_set(p_instance_ctrl);   /* set speed reference */
                 rm_motor_120_control_hall_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
 
-                p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
-                                                          p_instance_ctrl->f4_v_ref,
-                                                          p_instance_ctrl->f4_v_ref,
-                                                          p_instance_ctrl->f4_v_ref);
+                if (NULL != p_driver_instance)
+                {
+                    p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
+                                                              p_instance_ctrl->f4_v_ref,
+                                                              p_instance_ctrl->f4_v_ref,
+                                                              p_instance_ctrl->f4_v_ref);
+                }
+
                 break;
             }
 
@@ -746,11 +756,15 @@ void rm_motor_120_control_hall_speed_cyclic (timer_callback_args_t * p_args)
                 rm_motor_120_control_hall_speed_ref_set(p_instance_ctrl);   /* set speed reference */
                 rm_motor_120_control_hall_voltage_ref_set(p_instance_ctrl); /* set voltage reference */
 
-                /* duty calculate */
-                p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
-                                                          p_instance_ctrl->f4_v_ref,
-                                                          p_instance_ctrl->f4_v_ref,
-                                                          p_instance_ctrl->f4_v_ref);
+                if (NULL != p_driver_instance)
+                {
+                    /* duty calculate */
+                    p_driver_instance->p_api->phaseVoltageSet(p_driver_instance->p_ctrl,
+                                                              p_instance_ctrl->f4_v_ref,
+                                                              p_instance_ctrl->f4_v_ref,
+                                                              p_instance_ctrl->f4_v_ref);
+                }
+
                 break;
             }
 
@@ -817,7 +831,10 @@ void rm_motor_120_control_hall_driver_callback (motor_120_driver_callback_args_t
 
         case MOTOR_120_DRIVER_EVENT_120_CONTROL:
         {
-            p_driver_instance->p_api->currentOffsetCalc(p_driver_instance->p_ctrl);
+            if (NULL != p_driver_instance)
+            {
+                p_driver_instance->p_api->currentOffsetCalc(p_driver_instance->p_ctrl);
+            }
 
             /* wait motor stop */
             rm_motor_120_control_hall_wait_motorstop(p_instance_ctrl);
@@ -907,54 +924,59 @@ static void rm_motor_120_control_hall_speed_calc (motor_120_control_hall_instanc
     motor_120_control_hall_extended_cfg_t * p_extended_cfg =
         (motor_120_control_hall_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
-    uint32_t       u4_temp;
-    float          f4_temp_speed_rad;
+    uint32_t       u4_temp           = 0U;
+    float          f4_temp_speed_rad = 0.0F;
     timer_status_t gpt_timer_status;
+    gpt_timer_status.counter = 0U;
 
-    p_extended_cfg->p_speed_calc_timer_instance->p_api->statusGet(p_extended_cfg->p_speed_calc_timer_instance->p_ctrl,
-                                                                  &gpt_timer_status); /* get value of timer counter */
-    p_ctrl->u4_hall_timer_cnt = gpt_timer_status.counter;
-
-    if (TIMER_DIRECTION_UP == p_ctrl->timer_direction)
+    if (p_extended_cfg->p_speed_calc_timer_instance != NULL)
     {
-        if (p_ctrl->u4_pre_hall_timer_cnt != 0)
-        {
-            if (p_ctrl->u4_hall_timer_cnt >= p_ctrl->u4_pre_hall_timer_cnt)
-            {
-                u4_temp = (p_ctrl->u4_hall_timer_cnt - p_ctrl->u4_pre_hall_timer_cnt);
+        /* get value of timer counter */
+        p_extended_cfg->p_speed_calc_timer_instance
+        ->p_api->statusGet(p_extended_cfg->p_speed_calc_timer_instance->p_ctrl, &gpt_timer_status);
+        p_ctrl->u4_hall_timer_cnt = gpt_timer_status.counter;
 
-                /* calculate timer count in 60 degrees */
+        if (TIMER_DIRECTION_UP == p_ctrl->timer_direction)
+        {
+            if (p_ctrl->u4_pre_hall_timer_cnt != 0)
+            {
+                if (p_ctrl->u4_hall_timer_cnt >= p_ctrl->u4_pre_hall_timer_cnt)
+                {
+                    u4_temp = (p_ctrl->u4_hall_timer_cnt - p_ctrl->u4_pre_hall_timer_cnt);
+
+                    /* calculate timer count in 60 degrees */
+                }
+                else
+                {
+                    u4_temp = ((p_extended_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
+                               p_ctrl->u4_pre_hall_timer_cnt) + p_ctrl->u4_hall_timer_cnt;
+                }
             }
             else
             {
-                u4_temp = ((p_extended_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
-                           p_ctrl->u4_pre_hall_timer_cnt) + p_ctrl->u4_hall_timer_cnt;
+                u4_temp = p_ctrl->u4_hall_timer_cnt;
             }
         }
         else
         {
-            u4_temp = p_ctrl->u4_hall_timer_cnt;
-        }
-    }
-    else
-    {
-        if (p_ctrl->u4_pre_hall_timer_cnt != 0)
-        {
-            if (p_ctrl->u4_hall_timer_cnt <= p_ctrl->u4_pre_hall_timer_cnt)
+            if (p_ctrl->u4_pre_hall_timer_cnt != 0)
             {
-                u4_temp = (p_ctrl->u4_pre_hall_timer_cnt - p_ctrl->u4_hall_timer_cnt);
+                if (p_ctrl->u4_hall_timer_cnt <= p_ctrl->u4_pre_hall_timer_cnt)
+                {
+                    u4_temp = (p_ctrl->u4_pre_hall_timer_cnt - p_ctrl->u4_hall_timer_cnt);
 
-                /* calculate timer count in 60 degrees */
+                    /* calculate timer count in 60 degrees */
+                }
+                else
+                {
+                    u4_temp = ((p_extended_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
+                               p_ctrl->u4_hall_timer_cnt) + p_ctrl->u4_pre_hall_timer_cnt;
+                }
             }
             else
             {
-                u4_temp = ((p_extended_cfg->p_speed_calc_timer_instance->p_cfg->period_counts - 1) -
-                           p_ctrl->u4_hall_timer_cnt) + p_ctrl->u4_pre_hall_timer_cnt;
+                u4_temp = p_ctrl->u4_hall_timer_cnt;
             }
-        }
-        else
-        {
-            u4_temp = p_ctrl->u4_hall_timer_cnt;
         }
     }
 
@@ -1064,7 +1086,10 @@ static void rm_motor_120_control_hall_pattern_set (motor_120_control_hall_instan
 
     if (MOTOR_120_CONTROL_STATUS_ACTIVE == p_ctrl->active) /* check system mode */
     {
-        p_driver_instance->p_api->phasePatternSet(p_driver_instance->p_ctrl, p_ctrl->v_pattern);
+        if (NULL != p_driver_instance)
+        {
+            p_driver_instance->p_api->phasePatternSet(p_driver_instance->p_ctrl, p_ctrl->v_pattern);
+        }
     }
 
     /* Restore the interrupt state */

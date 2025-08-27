@@ -115,7 +115,7 @@ fsp_err_t R_SCI_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
     FSP_ASSERT(NULL != p_cfg);
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ASSERT(NULL != p_cfg->p_callback);
-    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS_MASK & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     FSP_ASSERT(p_cfg->rxi_irq >= 0);
     FSP_ASSERT(p_cfg->txi_irq >= 0);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
@@ -540,7 +540,8 @@ static void r_sci_spi_hw_config (sci_spi_instance_ctrl_t * const p_ctrl)
         if (SPI_CLK_POLARITY_LOW == p_cfg->clk_polarity)
         {
             /* If SPMR.CKPH is set to 0 then CKPOL must be set to 1 to make the clock low during idle (CPOL = 0).
-             * See Figure 34.70 in the RA6M3 manual R01UH0886EJ0100. */
+             * See "Relation between clock signal and transmit or receive data in simple SPI mode"
+             * in the SCI section of the relevant hardware manual. */
             spmr |= R_SCI0_SPMR_CKPOL_Msk;
         }
     }
@@ -552,7 +553,8 @@ static void r_sci_spi_hw_config (sci_spi_instance_ctrl_t * const p_ctrl)
         if (SPI_CLK_POLARITY_HIGH == p_cfg->clk_polarity)
         {
             /* If SPMR.CKPH is set to 1 then CKPOL must be set to 1 to make the clock high during idle (CPOL = 1).
-             * See Figure 34.70 in the RA6M3 manual R01UH0886EJ0100. */
+             * See "Relation between clock signal and transmit or receive data in simple SPI mode"
+             * in the SCI section of the relevant hardware manual. */
             spmr |= R_SCI0_SPMR_CKPOL_Msk;
         }
     }
@@ -566,19 +568,19 @@ static void r_sci_spi_hw_config (sci_spi_instance_ctrl_t * const p_ctrl)
     /* Enable Clock for the SCI Channel. */
     R_BSP_MODULE_START(FSP_IP_SCI, p_cfg->channel);
 
-    /* Clear the RE and TE bits before writing other settings. See section 34.2 Register Descriptions in the
-     * RA6M3 manual R01UH0886EJ0100. */
+    /* Clear the RE and TE bits before writing other settings. See "Register Descriptions"
+     * in the SCI section of the relevant hardware manual. */
     p_ctrl->p_reg->SCR = 0;
 
-    /* Must read SSR in order to clear the RX overflow error. Reference section 34.2.13 Serial Status Register (SSR)
-     * in the RA6M3 manual R01UH0886EJ0100.*/
+    /* Must read SSR in order to clear the RX overflow error. See "Serial Status Register (SSR)" description
+     * in the SCI section of the relevant hardware manual. */
     p_ctrl->p_reg->SSR;
 
     /* Clear the error status flags. */
     p_ctrl->p_reg->SSR = (uint8_t) (R_SCI0_SSR_TDRE_Msk | R_SCI0_SSR_TEND_Msk);
 
-    /* Disable fifo mode. See Figure 34.32 Example flow of SCI initialization in clock synchronous mode with non-FIFO
-     * selected in the RA6M3 manual R01UH0886EJ0100. */
+    /* Disable fifo mode. See "Example flow of SCI initialization in clock synchronous mode with non-FIFO
+     * selected" in the SCI section of the relevant hardware manual. */
     p_ctrl->p_reg->FCR = R_SCI0_FCR_RSTRG_Msk | (8U << R_SCI0_FCR_RTRG_Pos);
 
     /* Write settings to registers. */
@@ -695,7 +697,7 @@ static fsp_err_t r_sci_spi_write_read_common (sci_spi_instance_ctrl_t * const p_
 #endif
 
     /* TE and RE must be zero in order to write one to TE or RE (TE and RE will only be set if there is a transfer in
-     * progress. Reference section 34.2.11 Serial Control Register (SCR) in the RA6M3 manual R01UH0886EJ0100. */
+     * progress. See "Serial Control Register (SCR)" description in the SCI section of the relevant hardware manual.) */
     FSP_ERROR_RETURN(0 == (p_ctrl->p_reg->SCR & (R_SCI0_SCR_RE_Msk | R_SCI0_SCR_TE_Msk)), FSP_ERR_IN_USE);
 
     /* Setup the control block. */
@@ -988,8 +990,8 @@ void sci_spi_eri_isr (void)
     /* Disables receiver, transmitter and transmit end IRQ. */
     p_ctrl->p_reg->SCR &= (uint8_t) R_SCI0_SCR_CKE_Msk;
 
-    /* Must read SSR in order to clear the RX overflow error. Reference section 34.2.13 Serial Status Register (SSR)
-     * in the RA6M3 manual R01UH0886EJ0100.*/
+    /* Must read SSR in order to clear the RX overflow error. See "Serial Status Register (SSR)" description
+     * in the SCI section of the relevant hardware manual. */
     p_ctrl->p_reg->SSR;
 
     /* Clear the error status flags (The only possible error is an RX overflow). */

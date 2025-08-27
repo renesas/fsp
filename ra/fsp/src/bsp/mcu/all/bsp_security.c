@@ -367,7 +367,7 @@ void R_BSP_SecurityInit (void)
   #endif
 
   #if !BSP_SECONDARY_CORE_BUILD
-   #if BSP_FEATURE_BSP_HAS_TZFSAR
+   #if BSP_FEATURE_TZ_HAS_TZFSAR
 
     /* Set TrustZone filter to Secure. */
     R_CPSCU->TZFSAR = ~R_CPSCU_TZFSAR_TZFSA0_Msk;

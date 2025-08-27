@@ -72,8 +72,8 @@ rsip_ret_t r_rsip_pe3 (const uint32_t InData_HashType[], const uint32_t InData_E
                        bswap_32big(0xbcf62444U));
         r_rsip_func410(InData_EncSecret);
 
-        r_rsip_func101(bswap_32big(0x32e05708U), bswap_32big(0xea161a31U), bswap_32big(0xfc9cc7b4U),
-                       bswap_32big(0xb0575584U));
+        r_rsip_func101(bswap_32big(0x392fb035U), bswap_32big(0x19f0d3d6U), bswap_32big(0x1a6c089cU),
+                       bswap_32big(0xa19feaa2U));
     }
 
     r_rsip_func100(bswap_32big(0xb7dfa5c4U),

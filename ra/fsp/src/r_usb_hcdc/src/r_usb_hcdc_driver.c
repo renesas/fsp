@@ -452,9 +452,31 @@ void usb_hcdc_detach (usb_utr_t * ptr, uint16_t devadr, uint16_t data2)
     g_p_usb_hcdc_device_table[ptr->ip]    = 0;
     g_p_usb_hcdc_config_table[ptr->ip]    = 0;
     g_p_usb_hcdc_interface_table[ptr->ip] = 0;
-    g_usb_hcdc_bulk_in_pipe[ptr->ip]      = 0;
-    g_usb_hcdc_bulk_out_pipe[ptr->ip]     = 0;
-    g_usb_hcdc_int_in_pipe[ptr->ip]       = 0;
+    switch (devadr)
+    {
+        case 1:
+        case 2:
+        {
+            g_usb_hcdc_bulk_in_pipe[ptr->ip]  = 0;
+            g_usb_hcdc_bulk_out_pipe[ptr->ip] = 0;
+            g_usb_hcdc_int_in_pipe[ptr->ip]   = 0;
+            break;
+        }
+
+#if (USB_CFG_HCDC_MULTI == USB_CFG_ENABLE)
+        case 3:
+        {
+            g_usb_hcdc2_bulk_in_pipe[ptr->ip]  = 0;
+            g_usb_hcdc2_bulk_out_pipe[ptr->ip] = 0;
+            g_usb_hcdc2_int_in_pipe[ptr->ip]   = 0;
+            break;
+        }
+#endif
+        default:
+        {
+            break;
+        }
+    }
 }
 
 /******************************************************************************

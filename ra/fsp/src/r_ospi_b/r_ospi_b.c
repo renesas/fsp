@@ -280,8 +280,8 @@ fsp_err_t R_OSPI_B_Open (spi_flash_ctrl_t * const p_ctrl, spi_flash_cfg_t const 
         p_reg->BMCTL0 &= ~(R_XSPI0_BMCTL0_CH0CS1ACC_Msk | R_XSPI0_BMCTL0_CH1CS1ACC_Msk);
     }
 
-    /* Perform xSPI Initial configuration as described in hardware manual (see Section 37.3.8
-     * 'Flow of Operations' of the RA8M1 manual R01UH0994EJ0100). */
+    /* Perform xSPI Initial configuration as described in hardware manual (see
+     * "Flows of Operations" in the OSPI section of the relevant hardware manual). */
 
     /* Set xSPI protocol mode. */
     uint32_t liocfg = ((uint32_t) p_cfg->spi_protocol) << R_XSPI0_LIOCFGCS_PRTMD_Pos;
@@ -599,8 +599,9 @@ fsp_err_t R_OSPI_B_Write (spi_flash_ctrl_t    * p_ctrl,
     while (sizeof(uint64_t) <= byte_count)
     {
         /* When combination function is enabled, xSPI master transmits a xSPI
-         * frame with the selected size while the sequential address is incremental. Please read Section 37.3.3.3
-         * Combination Function' of the RA8M1 manual R01UH0994EJ0100. So Basically Enable command should be
+         * frame with the selected size while the sequential address is incremental. Please read
+         * "Combination Function" in the OSPI Operation section of the relevant hardware manual.
+         * So Basically Enable command should be
          * sent only once for a single burst(incremented addresses up to set combination size.). */
         *p_dest64 = *p_src64;
         p_dest64++;
@@ -1000,7 +1001,7 @@ static fsp_err_t r_ospi_b_protocol_specific_settings (ospi_b_instance_ctrl_t * p
     p_reg->LIOCFGCS[p_instance_ctrl->channel] = liocfg;
 
     /* Specifies the read/write commands and Read dummy clocks for Device
-     * (see Section 37.3.8.5 'Flow of Memory-mapping' of the RA8M1 manual R01UH0994EJ0100). */
+     * (see "Flow of Memory-mapping" in the OSPI section of the relevant hardware manual). */
     uint32_t cmcfg0 = ((uint32_t) (p_cmd_set->address_msb_mask << R_XSPI0_CMCFGCS_CMCFG0_ADDRPEN_Pos)) |
                       ((uint32_t) (p_cmd_set->frame_format << R_XSPI0_CMCFGCS_CMCFG0_FFMT_Pos)) |
                       (((uint32_t) p_cmd_set->address_bytes << R_XSPI0_CMCFGCS_CMCFG0_ADDSIZE_Pos) &
@@ -1281,7 +1282,7 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
     p_reg->CDCTL0 = ((((uint32_t) channel) << R_XSPI0_CDCTL0_CSSEL_Pos) & R_XSPI0_CDCTL0_CSSEL_Msk);
 
     /* Direct Read/Write settings
-     * (see RA8M1 User's Manual section "Flow of Manual-command Procedure"). */
+     * (see "Flow of Manual-command Procedure" in the OSPI section of the relevant hardware manual). */
     FSP_HARDWARE_REGISTER_WAIT(p_reg->CDCTL0_b.TRREQ, 0);
 
     p_reg->CDBUF[0].CDT = cdtbuf0;

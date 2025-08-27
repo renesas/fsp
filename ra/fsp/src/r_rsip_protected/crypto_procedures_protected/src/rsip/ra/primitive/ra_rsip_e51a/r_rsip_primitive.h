@@ -521,6 +521,22 @@ rsip_ret_t r_rsip_p52i(const uint32_t InData_KeyIndex[],
                        const uint32_t InData_MsgDgst[],
                        const uint32_t InData_Signature[],
                        const uint32_t InData_DomainParam[]);
+rsip_ret_t r_rsip_peff(const uint32_t InData_Msg1[],
+                       const uint32_t InData_Msg1Length[],
+                       const uint32_t InData_EncMsg[],
+                       const uint32_t InData_EncMsgLength[],
+                       const uint32_t InData_Msg2[],
+                       const uint32_t InData_Msg2Length[],
+                       uint32_t       OutData_KDFInfo[]);
+rsip_ret_t r_rsip_pefi(const uint32_t InData_HashType[], const uint32_t InData_MsgLen[]);
+rsip_ret_t r_rsip_pefr(const uint32_t InData_HashType[], const uint32_t InData_State[]);
+rsip_ret_t r_rsip_pefs(uint32_t OutData_State[]);
+rsip_ret_t r_rsip_pefu(const uint32_t InData_Msg1[],
+                       const uint32_t InData_Msg1Length[],
+                       const uint32_t InData_EncMsg[],
+                       const uint32_t InData_EncMsgLength[],
+                       const uint32_t InData_Msg2[],
+                       const uint32_t InData_Msg2Length[]);
 
 rsip_ret_t r_rsip_p0c(const uint32_t InData_CurrentVer[], const uint32_t InData_NextVer[]);
 rsip_ret_t r_rsip_p0d(const uint32_t InData_KeyCertificate[],

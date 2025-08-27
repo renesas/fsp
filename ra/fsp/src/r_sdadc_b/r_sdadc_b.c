@@ -679,7 +679,7 @@ static void r_sdadc_scan_configure (sdadc_b_instance_ctrl_t * p_instance_ctrl, s
 
     /* Set enabled channel mask - Channels are configured twice internally when hybrid mode is enabled
      * SDADMR.PONs should be set after SDADMR.FR
-     * (see Section 31.4.2 SFR Access (5) of the manual R01UH1005EJ0051) */
+     * (see "SFR Access (5)" in the SDADC section of the relevant hardware manual) */
     uint32_t channel_mask = p_scan_cfg->scan_cfg_mask;
     p_instance_ctrl->channel_mask = channel_mask;
 
@@ -689,8 +689,7 @@ static void r_sdadc_scan_configure (sdadc_b_instance_ctrl_t * p_instance_ctrl, s
     sdadmr           |= channel_mask << R_SDADC_B_SDADMR_PON_Pos;
     R_SDADC_B->SDADMR = sdadmr;
 
-    /* r01uh1005ej0050.pdf user manual, 31.4.2. SFR Access: after powering on the Sigma-Delta A/D converter (SDADMR.PONn = 1),
-     * internal setup time is necessary. Consequently, the data of the first 80 conversions is invalid. */
+    /* See #2 of "SFR Access" in the SDADC section of the relevant hardware manual */
     p_instance_ctrl->setup_time_cnt = SDADC_B_INTERNAL_SETUP_TIME;
 
     /* Set calibration status to false */

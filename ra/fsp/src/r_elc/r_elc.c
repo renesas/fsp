@@ -179,8 +179,8 @@ fsp_err_t R_ELC_SoftwareEventGenerate (elc_ctrl_t * const p_ctrl, elc_software_e
     p_elsegrn = (uint8_t volatile *) ((uint32_t) p_elsegrn | BSP_FEATURE_TZ_NS_OFFSET);
 #endif
 
-    /* Set the ELSEGR bits in the correct order (see Section 19.2.2 "Event Link Software Event Generation Register n
-     * (ELSEGRn) (n = 0, 1)" of the RA6M3 manual R01UH0886EJ0100) */
+    /* Set the ELSEGR bits in the correct order (see "Event Link Software Event Generation Register n
+     * (ELSEGRn) (n = 0, 1)" description in the ELC section of the relevant hardware manual). */
 
     /* Step 1. enable the ELSEGR0 register for writing */
     *p_elsegrn = ELC_ELSEGRN_STEP1;

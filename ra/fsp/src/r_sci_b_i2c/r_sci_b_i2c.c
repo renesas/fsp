@@ -183,7 +183,8 @@ fsp_err_t R_SCI_B_I2C_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cfg
     FSP_ASSERT(p_cfg->txi_irq >= (IRQn_Type) 0);
     FSP_ASSERT(p_cfg->tei_irq >= (IRQn_Type) 0);
     FSP_ERROR_RETURN(SCI_B_I2C_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
-    FSP_ERROR_RETURN((p_cfg->channel < 8 * sizeof(unsigned int)) && (BSP_FEATURE_SCI_CHANNELS & (1U << p_cfg->channel)),
+    FSP_ERROR_RETURN((p_cfg->channel < 8 * sizeof(unsigned int)) &&
+                     (BSP_FEATURE_SCI_CHANNELS_MASK & (1U << p_cfg->channel)),
                      FSP_ERR_IP_CHANNEL_NOT_PRESENT);
     sci_b_i2c_extended_cfg_t * pextend = (sci_b_i2c_extended_cfg_t *) p_cfg->p_extend;
     if (true == pextend->clock_settings.bitrate_modulation)
@@ -549,7 +550,8 @@ static fsp_err_t sci_b_i2c_read_write (i2c_master_ctrl_t * const p_api_ctrl,
             (uint8_t) (((p_ctrl->slave >> 7U) | SCI_B_I2C_PRV_CODE_10BIT) & (uint8_t) ~(SCI_B_I2C_PRV_CODE_READ));
         p_ctrl->addr_low = (uint8_t) p_ctrl->slave;
 
-        /* Addr total = 3 for Read and 2 for Write (See section 27.3.1.3.1 "Communication Data Format" in the RA6T2 manual R01UH0951EJ0100). */
+        /* Addr total = 3 for Read and 2 for Write (See "I2C Communication Data Format" in the IIC section of the relevant
+         * hardware manual). */
         p_ctrl->addr_total = (uint8_t) ((uint8_t) direction + SCI_B_I2C_PRV_SLAVE_10_BIT_ADDR_LEN_ADJUST);
     }
 #endif
@@ -648,7 +650,9 @@ static void sci_b_i2c_abort_seq_master (sci_b_i2c_instance_ctrl_t * const p_ctrl
      */
     p_ctrl->p_reg->CCR0 = 0U;
 
-    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See Section 26.20.15 in the RA6T2 user manual). */
+    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See
+     * "Notes regarding register access when operation clock (TCLK) is slower than bus clock (PCLK)"
+     * in the SCI section of the relevant hardware manual.) */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR, 0U);
 
     /* Set SDA and SCL to high impedance state. */
@@ -675,14 +679,17 @@ static void sci_b_i2c_abort_seq_master (sci_b_i2c_instance_ctrl_t * const p_ctrl
  **********************************************************************************************************************/
 static void sci_b_i2c_open_hw_master (sci_b_i2c_instance_ctrl_t * const p_ctrl, i2c_master_cfg_t const * const p_cfg)
 {
-    /* SCI Initialization in Simple IIC Mode (See Section 26.8.4 in RA6T2 manual R01UH0951EJ0100). */
+    /* SCI Initialization in Simple IIC Mode (See "SCI Initialization in Simple IIC Mode" in the SCI section of the
+     * relevant hardware manual). */
 
     sci_b_i2c_extended_cfg_t * pextend = (sci_b_i2c_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
 
     /* Set TEIE, TIE, RIE, TE, and RE to 0. */
     p_ctrl->p_reg->CCR0 = 0U;
 
-    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See Section 26.20.15 in the RA6T2 user manual). */
+    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See "Notes regarding register
+     * access when operation clock (TCLK) is slower than bus clock (PCLK)" in the SCI section of the relevant
+     * hardware manual.) */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR, 0U);
 
     /* Write settings to ICR:
@@ -786,7 +793,9 @@ static void sci_b_i2c_run_hw_master (sci_b_i2c_instance_ctrl_t * const p_ctrl)
     p_ctrl->p_reg->CCR0 =
         (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_RE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_TIE_Msk);
 
-    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See Section 26.20.15 in the RA6T2 user manual). */
+    /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See
+     * "Notes regarding register access when operation clock (TCLK) is slower than bus clock (PCLK)"
+     * in the SCI section of the relevant hardware manual.) */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR, (R_SCI_B0_CESR_TIST_Msk | R_SCI_B0_CESR_RIST_Msk));
 
 #if SCI_B_I2C_CFG_DTC_ENABLE
@@ -1003,7 +1012,9 @@ static void sci_b_i2c_tei_handler (sci_b_i2c_instance_ctrl_t * const p_ctrl)
             /* Disable the transmitter and receiver */
             p_ctrl->p_reg->CCR0 &= ~(R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_RE_Msk);
 
-            /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See Section 26.20.15 in the RA6T2 user manual). */
+            /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See
+             * "Notes regarding register access when operation clock (TCLK) is slower than bus clock (PCLK)"
+             * in the SCI section of the relevant hardware manual.) */
             FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR, 0U);
         }
 
@@ -1085,7 +1096,10 @@ static fsp_err_t sci_b_i2c_transfer_configure (sci_b_i2c_instance_ctrl_t       *
     }
     else
     {
-        /* In case of read operation using DTC, the TXI interrupt will trigger the DTC to write 0xFF into TDR (See Figure 26.94 in the RA6T2 manual R01UH0951EJ0100). */
+        /* In case of read operation using DTC, the TXI interrupt will trigger the DTC to write 0xFF into TDR (See figure
+         * "Example flow of master reception in simple IIC mode with transmission interrupts and
+         * reception interrupts (ICR.IICINTM = 1)" in the SCI section of the relevant hardware manual.) */
+
         /* In case of Write operation this will be reconfigured */
         p_cfg->transfer_settings_word = SCI_B_I2C_PRV_DTC_TX_FOR_READ_TRANSFER_SETTINGS;
         p_cfg->p_dest                 = (void *) (&(p_ctrl->p_reg->TDR));
@@ -1115,7 +1129,9 @@ static void sci_b_i2c_reconfigure_interrupts_for_transfer (sci_b_i2c_instance_ct
         /* Disable the transmitter and receiver for reconfiguring interrupt source */
         p_ctrl->p_reg->CCR0 = 0;
 
-        /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See Section 26.20.15 in the RA6T2 user manual). */
+        /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See
+         * "Notes regarding register access when operation clock (TCLK) is slower than bus clock (PCLK)"
+         * in the SCI section of the relevant hardware manual.) */
         FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR, 0U);
 
         if (p_ctrl->read)
@@ -1134,7 +1150,9 @@ static void sci_b_i2c_reconfigure_interrupts_for_transfer (sci_b_i2c_instance_ct
         p_ctrl->p_reg->CCR0 =
             (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_RE_Msk | R_SCI_B0_CCR0_TEIE_Msk | R_SCI_B0_CCR0_TIE_Msk);
 
-        /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See Section 26.20.15 in the RA6T2 user manual). */
+        /* If TCLK is slower than the bus clock, then wait for the internal state to be updated (See
+         * "Notes regarding register access when operation clock (TCLK) is slower than bus clock (PCLK)"
+         * in the SCI section of the relevant hardware manual.) */
         FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR, (R_SCI_B0_CESR_TIST_Msk | R_SCI_B0_CESR_RIST_Msk));
     }
 }
@@ -1250,7 +1268,10 @@ static void sci_b_i2c_txi_send_data (sci_b_i2c_instance_ctrl_t * const p_ctrl)
         }
     }
 
-    /* Write 1 byte data to data register (see Figure 26.91 and Figure 26.94 in the RA6T2 manual R01UH0951EJ0100).
+    /* Write 1 byte data to data register (see Figure "Example flow of master transmission in simple IIC mode
+     * with transmission interrupts and reception interrupts" and "Example flow of master reception in simple
+     * IIC mode with transmission interrupts and reception interrupts (ICR.IICINTM = 1)"
+     * in the SCI section of the relevant hardware manual.)
      * - In case of write operation this will be data from user buffer.
      * - In case of read operation this will be 0xFF as required by HW.
      */

@@ -368,6 +368,9 @@ int ecp_can_do_sce (mbedtls_ecp_group_id gid)
             return 1;
         }
    #endif
+   #endif
+   #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+    BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
    #ifdef MBEDTLS_ECP_DP_CURVE25519_ENABLED
         case MBEDTLS_ECP_DP_CURVE25519:
         {
@@ -418,7 +421,9 @@ int ecp_load_curve_attributes_sce (const mbedtls_ecp_group * grp,
             *pp_domain_param = (uint32_t *) &DomainParam_NIST_P521[0];
             break;
         }
-
+        #endif
+    #if BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || \
+    BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED
         case MBEDTLS_ECP_DP_CURVE25519:
         {
             *p_curve_type    = SCE_ECC_CURVE_TYPE_NIST;

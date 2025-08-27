@@ -93,7 +93,7 @@ void sci_smci_eri_isr(void);
 /* this is just a lookup table for S (which is different than F)*/
 
 /* This table is the "Combinations of the SCMR.BCP2 and SMR_SMCI.BCP[1:0] bits" table from the
- * HW user manual */
+ * SCI section of the relevant hardware manual */
 static const sci_smci_bcp_setting_const_t g_bit_clock_conversion_setting_lut[SCI_SMCI_S_LOOKUP_TABLE_ENTRIES] =
 {
     /*bcp01,bcp2,S*/
@@ -150,8 +150,8 @@ static const uint8_t g_d_value_lut[SMCI_BAUDRATE_ADJUSTMENT_INTEGER_MAX] =
     [15] = 0
 };
 
-/* This is the divisor 2^(2n+1) as defined in Table 27.6 "Relationship between N setting in BRR and bit rate B" in the RA4M2 manual
- * R01UH0892EJ0110 or the relevant section for the MCU being used. */
+/* This is the divisor 2^(2n+1) as defined in Table "Relationship between N setting in BRR and bit rate B"
+ * in the SCI section of the relevant hardware manual */
 static const uint8_t g_clock_div_setting[SCI_SMCI_NUM_DIVISORS] =
 {
     2U,
@@ -230,7 +230,7 @@ fsp_err_t R_SCI_SMCI_Open (smci_ctrl_t * const p_api_ctrl, smci_cfg_t const * co
     FSP_ASSERT(p_ext->p_smci_baud_setting);
 
     /* Make sure this channel exists. */
-    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS_MASK & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 #endif
 
     p_ctrl->p_reg = ((R_SCI0_Type *) (R_SCI0_BASE + (SCI_SMCI_SCI_REG_SIZE * p_cfg->channel)));
@@ -250,8 +250,8 @@ fsp_err_t R_SCI_SMCI_Open (smci_ctrl_t * const p_api_ctrl, smci_cfg_t const * co
     /* Enable the SCI channel */
     R_BSP_MODULE_START(FSP_IP_SCI, p_cfg->channel);
 
-    /* Initialize registers as defined in section 34.6.5 "SCI Initialization in Smart Card Mode" in the RA6M3 manual
-     * R01UH0886EJ0100 or the relevant section for the MCU being used. */
+    /* Initialize registers as defined in section "Example flow of SCI initialization in smart card interface mode"
+     * in the SCI section of the relevant hardware manual. */
     r_sci_smci_config_set(p_ctrl, &comm_params);
 
     p_ctrl->p_tx_src          = NULL;
@@ -560,8 +560,8 @@ fsp_err_t R_SCI_SMCI_StatusGet (smci_ctrl_t * const p_api_ctrl, smci_status_t * 
 
 /*******************************************************************************************************************//**
  * Enable or disable the clock signal that is provided by interface the baud rate. When the clock is enabled, reception
- * is enabled at the end of this function. "Clock output control as defined in section 34.6.8 "Clock Output Control in
- * Smart Card Interface Mode" in the RA6M3 manual R01UH0886EJ0100 or the relevant section for the MCU being used.
+ * is enabled at the end of this function. Clock output control as defined in "Clock Output Control" of
+ * "Operation in Smart Card Interface Mode" in the SCI section of the relevant hardware manual.
  * Implements @ref smci_api_t::clockControl
  *
  * @warning This terminates any in-progress transmission and reception.
@@ -823,8 +823,8 @@ static fsp_err_t r_sci_smci_brr_calculate (smci_speed_params_t const * const p_s
          cks_value < (SCI_SMCI_NUM_DIVISORS) && (hit_bit_err > ((int32_t) baud_rate_error_x_1000));
          cks_value++)
     {
-        /* This is the based on smci brr setting as defined in Table 27.6 "Relationship between N setting in BRR and bit rate B" in the RA4M2 manual
-         * R01UH0892EJ0110 or the relevant section for the MCU being used. */
+        /* This is the based on smci brr setting as defined in "Relationship between N setting in BRR and bit rate B"
+         * in the SCI section of the relevant hardware manual */
         divisor = (uint32_t) g_clock_div_setting[cks_value] * target_baudrate *
                   s_value;
         temp_brr = freq_hz / divisor;

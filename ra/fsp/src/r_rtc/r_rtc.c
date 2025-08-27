@@ -67,7 +67,7 @@
  * But as per C standards, tm_year is years since 1900.*/
 #define RTC_C_TIME_OFFSET                  (100)
 
-/* See section 26.2.20 Frequency Register (RFRH/RFRL)" of the RA6M3 manual R01UH0886EJ0100) */
+/* See "Frequency Register (RFRH/RFRL)" description in the RTC section of the relevant hardware manual. */
 #define RTC_RFRL_MIN_VALUE_LOCO            (0x7U)
 #define RTC_RFRL_MAX_VALUE_LOCO            (0x1FFU)
 
@@ -241,7 +241,7 @@ fsp_err_t R_RTC_Open (rtc_ctrl_t * const p_ctrl, rtc_cfg_t const * const p_cfg)
 
     /* Set the clock source for RTC.
      * The count source must be selected only once before making the initial settings of the RTC registers
-     * at power on. (see section 26.2.19 RTC Control Register 4 (RCR4) of the RA6M3 manual R01UH0886EJ0100)*/
+     * at power on. (see "RTC Control Register 4 (RCR4)" description in the relevant hardware manual)*/
     r_rtc_set_clock_source(p_instance_ctrl, p_cfg);
 #endif
 
@@ -275,7 +275,7 @@ fsp_err_t R_RTC_Close (rtc_ctrl_t * const p_ctrl)
     R_RTC->RCR1 = 0U;
 
     /* When the RCR1 register is modified, check that all the bits are updated before proceeding
-     * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
+     * (see "RTC Control Register 1 (RCR1)" description in the relevant hardware manual.)*/
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR1, 0);
 
     /* Set the START bit to 0 */
@@ -343,7 +343,7 @@ fsp_err_t R_RTC_ClockSourceSet (rtc_ctrl_t * const p_ctrl)
 
     /* Set the clock source for RTC.
      * The count source must be selected only once before making the initial settings of the RTC registers
-     * at power on. (see section 26.2.19 RTC Control Register 4 (RCR4) of the RA6M3 manual R01UH0886EJ0100)*/
+     * at power on. (see "RTC Control Register 4 (RCR4)" description in the relevant hardware manual)*/
     r_rtc_set_clock_source(p_instance_ctrl, p_instance_ctrl->p_cfg);
 
     return FSP_SUCCESS;
@@ -375,7 +375,7 @@ fsp_err_t R_RTC_CalendarTimeSet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
     FSP_PARAMETER_NOT_USED(p_ctrl);
 #endif
 
-    /* See section "26.3.3 Setting the Time" of the RA6M3 manual R01UH0886EJ0100 for steps to set the time and error
+    /* See "Setting the Time" in the RTC section of the relevant hardware manual for steps to set the time and error
      * adjustment value */
 
     /* Set the START bit to 0 */
@@ -441,7 +441,8 @@ fsp_err_t R_RTC_CalendarTimeGet (rtc_ctrl_t * const p_ctrl, rtc_time_t * const p
     }
 
     /* If a carry occurs while the 64-Hz counter and time are being read, the correct time is not obtained,
-     * therefore they must be read again. 26.3.5 "Reading 64-Hz Counter and Time" of the RA6M3 manual R01UH0886EJ0100)*/
+     * therefore they must be read again. "Reading 64-Hz Counter and Time" in the RTC section of the relevant
+     * hardware manual.*/
     do
     {
         p_instance_ctrl->carry_isr_triggered = false; /** This flag will be set to 'true' in the carry ISR */
@@ -729,7 +730,7 @@ fsp_err_t R_RTC_PeriodicIrqRateSet (rtc_ctrl_t * const p_ctrl, rtc_periodic_irq_
     R_RTC->RCR1 = (uint8_t) (rcr1 | (rate << R_RTC_RCR1_PES_Pos));
 
     /* When the RCR1 register is modified, check that all the bits are updated before proceeding
-     * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
+     * (see "RTC Control Register 1 (RCR1)" description in the relevant hardware manual)*/
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR1 >> R_RTC_RCR1_PES_Pos, rate);
 
     r_rtc_irq_set(true, R_RTC_RCR1_PIE_Msk);
@@ -883,15 +884,15 @@ fsp_err_t R_RTC_TimeCaptureSet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * 
     R_RTC->RTCCR[p_time_capture->channel].RTCCR = R_RTC_RTCCR_RTCCR_TCEN_Msk;
 
     /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
-     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
-     * manual R01UH1005EJ0100) */
+     * additional processing. (see "RTCCRn : Time Capture Control Register n (n = 0 to 2)"
+     * in the relevant hardware manual) */
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR, (uint8_t) R_RTC_RTCCR_RTCCR_TCEN_Msk);
 
     R_RTC->RTCCR[p_time_capture->channel].RTCCR |=
         (uint8_t) (p_time_capture->noise_filter << R_RTC_RTCCR_RTCCR_TCNF_Pos);
 
     /* When the noise filter is used, set the TCNF[2:0] bits,wait for 3 cycles of the specified sampling period (see
-     * section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the  manual R01UH1005EJ0100) */
+     * "RTCCRn : Time Capture Control Register n (n = 0 to 2)" in the relevant hardware manual) */
     uint32_t noise_filter_delay_us = 0;
     switch (p_time_capture->noise_filter)
     {
@@ -923,16 +924,16 @@ fsp_err_t R_RTC_TimeCaptureSet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * 
     R_BSP_SoftwareDelay(NOISE_FILTER_SET_NUMBER_DELAY * noise_filter_delay_us, BSP_DELAY_UNITS_MICROSECONDS);
 
     /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
-     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
-     * manual R01UH1005EJ0100) */
+     * additional processing. (see "RTCCRn : Time Capture Control Register n (n = 0 to 2)"
+     * in the relevant hardware manual) */
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCNF,
                                (uint8_t) p_time_capture->noise_filter);
 
     R_RTC->RTCCR[p_time_capture->channel].RTCCR |= (uint8_t) (p_time_capture->source << R_RTC_RTCCR_RTCCR_TCCT_Pos);
 
     /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
-     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
-     * manual R01UH1005EJ0100) */
+     * additional processing. (see "RTCCRn : Time Capture Control Register n (n = 0 to 2)"
+     * in the relevant hardware manual) */
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCCT, (uint8_t) p_time_capture->source);
 
     return FSP_SUCCESS;
@@ -981,14 +982,14 @@ fsp_err_t R_RTC_TimeCaptureGet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * 
     p_time_capture->noise_filter = (rtc_time_capture_noise_filter_t) R_RTC->RTCCR[p_time_capture->channel].RTCCR_b.TCNF;
 
     /* Before reading from this register, the time capture event detection should be stopped using the RTCCRn.TCCT[1:0]
-     * bits.(see section 23.2.28 "RSECCPn : Second Capture Register n (n = 0 to 2) (in Calendar Count Mode)" of the
-     *  manual r01uh1005ej0100 */
+     * bits.(see "RSECCPn : Second Capture Register n (n = 0 to 2) (in Calendar Count Mode)"
+     * in the RTC section of the relevant hardware manual.) */
     uint8_t rtccr = R_RTC->RTCCR[p_time_capture->channel].RTCCR;
     R_RTC->RTCCR[p_time_capture->channel].RTCCR = rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCCT_Msk);
 
     /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
-     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
-     * manual R01UH1005EJ0100) */
+     * additional processing. (see "RTCCRn : Time Capture Control Register n (n = 0 to 2)"
+     * in the relevant hardware manual) */
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR,
                                (uint8_t) (rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCCT_Msk)));
 
@@ -1005,8 +1006,8 @@ fsp_err_t R_RTC_TimeCaptureGet (rtc_ctrl_t * const p_ctrl, rtc_time_capture_t * 
     R_RTC->RTCCR[p_time_capture->channel].RTCCR = rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCST_Msk);
 
     /* When RTCCRn is modified, check that all the bits except the TCST bit are updated before continuing with
-     * additional processing. (see section 23.2.27 "RTCCRn : Time Capture Control Register n (n = 0 to 2)" of the
-     * manual R01UH1005EJ0100) */
+     * additional processing. (see "RTCCRn : Time Capture Control Register n (n = 0 to 2)"
+     * in the relevant hardware manual) */
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RTCCR[p_time_capture->channel].RTCCR,
                                (uint8_t) (rtccr & ((uint8_t) ~R_RTC_RTCCR_RTCCR_TCST_Msk)));
 
@@ -1038,7 +1039,7 @@ static void r_rtc_start_bit_update (uint8_t value)
     R_RTC->RCR2_b.START = value & 1U;
 
     /* The START bit is updated in synchronization with the next cycle of the count source. Check if the bit is updated
-     * before proceeding (see section 26.2.18 "RTC Control Register 2 (RCR2)" of the RA6M3 manual R01UH0886EJ0100)*/
+     * before proceeding (see "RTC Control Register 2 (RCR2)" in the relevant hardware manual)*/
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.START, value);
 }
 
@@ -1052,7 +1053,7 @@ static void r_rtc_software_reset (void)
 
     /* When 1 is written to this bit, initialization starts in synchronization with the count source. When the
      * initialization is completed, the RESET bit is automatically set to 0. Check that this bit is 0 before proceeding.
-     * (see section 26.2.18 "RTC Control Register 2 (RCR2)" of the RA6M3 manual R01UH0886EJ0100)*/
+     * (see "RTC Control Register 2 (RCR2)" in the relevant hardware manual)*/
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.RESET, 0U);
 }
 
@@ -1068,15 +1069,15 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
     R_RTC->RCR4 = (uint8_t) p_ctrl->p_cfg->clock_source;
 
     /* Supply 6 clocks of the count source (LOCO/SOSC, 183us, 32kHZ).
-     * See 26.3.2 "Clock and Count Mode Setting Procedure" of the RA6M3 manual R01UH0886EJ0100)*/
+     * See "Clock and Count Mode Setting Procedure" in the RTC section of the relevant hardware manual)*/
     R_BSP_SoftwareDelay(BSP_PRV_RTC_RESET_DELAY_US, BSP_DELAY_UNITS_MICROSECONDS);
 
     r_rtc_start_bit_update(0U);
 
     if (RTC_CLOCK_SOURCE_LOCO == p_ctrl->p_cfg->clock_source)
     {
-        /* Write 0 before writing to the RFRL register after a cold start. (see section 26.2.20
-         * Frequency Register (RFRH/RFRL)" of the RA6M3 manual R01UH0886EJ0100) */
+        /* Write 0 before writing to the RFRL register after a cold start. (see
+         * "Frequency Register (RFRH/RFRL)" description in the RTC section of the relevant hardware manual) */
         R_RTC->RFRH = 0;
 
         R_RTC->RFRL = (uint16_t) p_cfg->freq_compare_value;
@@ -1086,7 +1087,7 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
 
     /* When setting the count mode, execute an RTC software reset and start again from the initial settings.
      * This bit is updated synchronously with the count source, and its value is fixed before the RTC software
-     * reset is completed (see section 26.2.18 "RTC Control Register 2 (RCR2)" of the RA6M3 manual R01UH0886EJ0100)*/
+     * reset is completed (see "RTC Control Register 2 (RCR2)" description in the relevant hardware manual)*/
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.CNTMD, RTC_CALENDAR_MODE);
 
     r_rtc_software_reset();
@@ -1095,14 +1096,14 @@ static void r_rtc_set_clock_source (rtc_instance_ctrl_t * const p_ctrl, rtc_cfg_
     R_RTC->RCR1 = 0;
 
     /* When the RCR1 register is modified, check that all the bits are updated before proceeding
-     * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
+     * (see "RTC Control Register 1 (RCR1)" description in the relevant hardware manual)*/
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR1, 0);
 
     /* Force RTC to 24 hour mode. Set HR24 bit in the RCR2 register */
     R_RTC->RCR2_b.HR24 = 1U;
 
     /*
-     * See 23.6.5 "Notes on Writing to and Reading from Registers" of the RA6M5 manual R01UH0891EJ0120.
+     * See "Notes on Writing to and Reading from Registers" in the RTC section of the relevant hardware manual.
      * The value written is reflected when fourth read operations are performed after writing.
      */
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.HR24, 1);
@@ -1164,7 +1165,7 @@ static void r_rtc_irq_set (bool irq_enable_flag, uint8_t mask)
         R_RTC->RCR1 |= mask;
 
         /* When the RCR1 register is modified, check that all the bits are updated before proceeding
-         * (see section 26.2.17 "RTC Control Register 1 (RCR1)" of the RA6M3 manual R01UH0886EJ0100)*/
+         * (see "RTC Control Register 1 (RCR1)" description in the RTC section of the relevant hardware manual)*/
         FSP_HARDWARE_REGISTER_WAIT((R_RTC->RCR1 & mask), mask);
     }
     else
@@ -1244,8 +1245,8 @@ static fsp_err_t r_rtc_rfrl_validate (uint32_t value)
     fsp_err_t err;
     err = FSP_SUCCESS;
 
-    /* A value from 0007h through 01FFh can be specified as the frequency comparison value (see section 26.2.20
-     * Frequency Register (RFRH/RFRL)" of the RA6M3 manual R01UH0886EJ0100) */
+    /* A value from 0007h through 01FFh can be specified as the frequency comparison value (see
+     * Frequency Register (RFRH/RFRL)" description in the RTC section of the relevant hardware manual.) */
     if ((RTC_RFRL_MIN_VALUE_LOCO >= value) ||
         (RTC_RFRL_MAX_VALUE_LOCO <= value))
     {
@@ -1344,7 +1345,7 @@ static fsp_err_t r_rtc_time_validate (rtc_time_t * p_time)
  * This difference will be taken care in the Set and Get functions.
  *
  * As per HW manual, value of Year is between 0 to 99, the RTC has a 100 year calendar from 2000 to 2099.
- * (see section 26.1 "Overview" of the RA6M3 manual R01UH0886EJ0100)
+ * (see section "Overview" in the RTC section of the relevant hardware manual)
  * But as per C standards, tm_year is years since 1900.
  * A sample year set in an application would be like time.tm_year = 2019-1900; (to set year 2019)
  * Since RTC API follows the Date and time structure defined in C standard library <time.h>, the valid value of year is
@@ -1578,11 +1579,13 @@ static void r_rtc_error_adjustment_set (rtc_error_adjustment_cfg_t const * const
     if (mode != R_RTC->RCR2_b.AADJE)
     {
         /* Clear error adjustment before configuring the error adjustment mode
-         * (see section "26.3.8.3 Procedure for changing the mode of adjustment" of the RA6M3 manual R01UH0886EJ0100) */
+         * (see section "Procedure for changing the mode of adjustment" in the RTC section of the
+         * relevant hardware manual) */
         R_RTC->RADJ = 0U;
 
         /* When RADJ is modified, check that all the bits are updated before continuing with more processing.
-         * (see section 26.2.21 "Time Error Adjustment Register (RADJ)" of the RA6M3 manual R01UH0886EJ0100) */
+         * (see "Time Error Adjustment Register (RADJ)" description in the RTC section of the relevant
+         * hardware manual.) */
         FSP_HARDWARE_REGISTER_WAIT(R_RTC->RADJ, 0U);
 
         /* Set the error adjustment enable, 1: Enable Automatic adjsutment 0: Disable Automatic adjsutment */
@@ -1600,7 +1603,7 @@ static void r_rtc_error_adjustment_set (rtc_error_adjustment_cfg_t const * const
             R_RTC->RCR2_b.AADJP = (uint8_t) (period & 1U);
 
             /* When RCR2 is modified, check that all the bits are updated before continuing with more processing.
-             * (see section 26.2.18 "RTC Control Register 2 (RCR2) of the RA6M3 manual R01UH0886EJ0100) */
+             * (see "RTC Control Register 2 (RCR2)" description in the relevant hardware manual) */
             FSP_HARDWARE_REGISTER_WAIT(R_RTC->RCR2_b.AADJP, period);
         }
     }
@@ -1618,7 +1621,7 @@ static void r_rtc_error_adjustment_set (rtc_error_adjustment_cfg_t const * const
     R_RTC->RADJ = error_adjustment;
 
     /* When RADJ is modified, check that all the bits are updated before continuing with more processing.
-     * (see section 26.2.21 "Time Error Adjustment Register (RADJ)" of the RA6M3 manual R01UH0886EJ0100) */
+     * (see "Time Error Adjustment Register (RADJ)" in the RTC section of the relevant hardware manual) */
     FSP_HARDWARE_REGISTER_WAIT(R_RTC->RADJ, error_adjustment);
 }
 

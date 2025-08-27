@@ -49,9 +49,11 @@
 /******************************************************************************
  * Exported global variables (to be accessed by other files)
  ******************************************************************************/
+#if (BSP_CFG_RTOS == 1)
 extern void usb_peri_usbx_set_control_length(usb_setup_t * p_req);
 
 extern uint8_t g_usb_peri_usbx_is_configured[USB_NUM_USBIP];
+#endif                                 /* #if (BSP_CFG_RTOS == 1) */
 
 #if ((USB_CFG_MODE & USB_CFG_PERI) == USB_CFG_PERI)
 
@@ -273,7 +275,11 @@ void usb_pstd_stand_req3 (usb_utr_t * p_utr)
         }
     }
 
+ #if (BSP_CFG_RTOS == 0 || BSP_CFG_RTOS == 2) && defined(USB_CFG_PAUD_USE)
+    if (USB_SET_INTERFACE == (g_usb_pstd_req_type & USB_BREQUEST))
+ #else
     if (USB_YES == g_usb_pstd_std_request)
+ #endif
     {
         ctrl.setup.request_type   = g_usb_pstd_req_type;   /* Request type */
         ctrl.setup.request_value  = g_usb_pstd_req_value;  /* Value */
@@ -1513,7 +1519,9 @@ static void usb_pstd_set_interface0 (usb_utr_t * p_utr)
  ******************************************************************************/
 
  #define NUM_OF_INTERFACE    (8U)
+ #ifdef  USB_CFG_PAUD_USE
 extern uint8_t g_usb_paud_iso_pipe[NUM_OF_INTERFACE];
+ #endif
  #if (BSP_CFG_RTOS == 1)
 extern TX_SEMAPHORE g_usb_peri_usbx_sem[USB_MAX_PIPE_NO + 1];
  #endif                                /* #if (BSP_CFG_RTOS == 1) */
@@ -1562,8 +1570,8 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
   #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_DFU_USE)
                 usb_pstd_set_pipe_reg(p_utr);
   #endif                               /* #if !defined(USB_CFG_PAUD_USE) && !defined(USB_CFG_DFU_USE) */
-  #if BSP_CFG_RTOS == 1
-   #ifdef  USB_CFG_PAUD_USE
+
+  #ifdef  USB_CFG_PAUD_USE
                 if (0 == (g_usb_pstd_req_value & USB_ALT_SET))
                 {
                     if (current_alt_value == 1)
@@ -1573,7 +1581,8 @@ static void usb_pstd_set_interface3 (usb_utr_t * p_utr)
                         usb_pstd_forced_termination(pipe, (uint16_t) USB_DATA_STOP, p_utr);
                     }
                 }
-   #endif                                                                 // USB_CFG_PAUD_USE
+  #endif
+  #if BSP_CFG_RTOS == 1                // USB_CFG_PAUD_USE
                 _ux_device_stack_alternate_setting_set((ULONG) g_usb_pstd_req_index, (ULONG) g_usb_pstd_req_value);
   #endif
             }

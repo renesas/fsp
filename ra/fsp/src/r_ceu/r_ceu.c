@@ -118,7 +118,7 @@ fsp_err_t R_CEU_Open (capture_ctrl_t * const p_ctrl, capture_cfg_t const * const
     R_BSP_MODULE_START(FSP_IP_CEU, 0U);
 
     /* Wait for module reset, if in progress
-     * Refer to figure 53.6 "Timing of software reset and restart of capturing" in the RA8M1 manual R01UH0994EJ0100. */
+     * See figure "Timing of software reset and restart of capturing" in the CEU section of the relevant hardware manual.. */
     FSP_HARDWARE_REGISTER_WAIT(R_CEU->CSTSR_b.CPTON, 0);
     FSP_HARDWARE_REGISTER_WAIT(R_CEU->CAPSR_b.CPKIL, 0);
 
@@ -255,7 +255,7 @@ fsp_err_t R_CEU_CaptureStart (capture_ctrl_t * const p_ctrl, uint8_t * const p_b
 #endif
 
     /* Return error if peripheral is in use
-     * Refer to figure 53.6 "Timing of software reset and restart of capturing" in the RA8M1 manual R01UH0994EJ0100. */
+     * See figure "Timing of software reset and restart of capturing" in the CEU section of the relevant hardware manual.. */
     FSP_ERROR_RETURN(R_CEU->CSTSR_b.CPTON == 0x0, FSP_ERR_IN_USE);
     FSP_ERROR_RETURN(R_CEU->CAPSR_b.CPKIL == 0x0, FSP_ERR_IN_USE);
     FSP_ERROR_RETURN(R_CEU->CAPSR_b.CE == 0x0, FSP_ERR_INVALID_STATE);

@@ -19,7 +19,7 @@
 
 #define MOTOR_INDUCTION_OPEN                                  (('M' << 24U) | ('T' << 16U) | ('I' << 8U) | ('D' << 0U))
 
-#define MOTOR_INDUCTION_RAD2RPM                               (30.0F / 3.14159265359F)
+#define MOTOR_INDUCTION_RAD2RPM                               (30.0F / 3.1415926535F)
 
 #define MOTOR_INDUCTION_FLAG_CLEAR                            (0)
 #define MOTOR_INDUCTION_FLAG_SET                              (1)
@@ -195,13 +195,20 @@ fsp_err_t RM_MOTOR_INDUCTION_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t cons
 
     p_instance_ctrl->p_cfg = p_cfg;
 
-    err = p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
-                                                       p_cfg->p_motor_current_instance->p_cfg);
+    if (NULL != p_cfg->p_motor_current_instance)
+    {
+        err = p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
+                                                           p_cfg->p_motor_current_instance->p_cfg);
+    }
 
     if (FSP_SUCCESS == err)
     {
-        err = p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
-                                                         p_cfg->p_motor_speed_instance->p_cfg);
+        if (NULL != p_cfg->p_motor_speed_instance)
+        {
+            err = p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
+                                                             p_cfg->p_motor_speed_instance->p_cfg);
+        }
+
         if (FSP_SUCCESS == err)
         {
             // Open Inertia estimate when supported
@@ -268,13 +275,19 @@ fsp_err_t RM_MOTOR_INDUCTION_Close (motor_ctrl_t * const p_ctrl)
 #endif
 
     /* Close using modules */
-    err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(
-        p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    if (NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(
+            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
 
     if (FSP_SUCCESS == err)
     {
-        err = p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
-            p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        if (NULL != p_instance_ctrl->p_cfg->p_motor_current_instance)
+        {
+            err = p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
+                p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        }
 
         // Close Inertia estimate when supported
         if (p_extended_cfg->p_motor_inertia_estimate_instance != NULL)
@@ -454,9 +467,12 @@ fsp_err_t RM_MOTOR_INDUCTION_SpeedSet (motor_ctrl_t * const p_ctrl, float const 
     MOTOR_INDUCTION_ERROR_RETURN(MOTOR_INDUCTION_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->speedReferenceSet(
-        p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
-        speed_rpm);
+    if (NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->speedReferenceSet(
+            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
+            speed_rpm);
+    }
 
     return err;
 }
@@ -489,9 +505,12 @@ fsp_err_t RM_MOTOR_INDUCTION_PositionSet (motor_ctrl_t * const                  
 
     if (MOTOR_FUNCTION_SELECT_NONE == p_instance_ctrl->e_function)
     {
-        err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
-            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
-            p_position);
+        if (NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance)
+        {
+            err = p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+                p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl,
+                p_position);
+        }
     }
 
     return err;
@@ -556,7 +575,10 @@ fsp_err_t RM_MOTOR_INDUCTION_AngleGet (motor_ctrl_t * const p_ctrl, float * cons
 
     motor_current_instance_t const * p_current_instance = p_instance_ctrl->p_cfg->p_motor_current_instance;
 
-    err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    if (NULL != p_current_instance)
+    {
+        err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    }
 
     *p_angle_rad = temp_current_output.f_rotor_angle;
 
@@ -592,7 +614,10 @@ fsp_err_t RM_MOTOR_INDUCTION_SpeedGet (motor_ctrl_t * const p_ctrl, float * cons
 
     motor_current_instance_t const * p_current_instance = p_instance_ctrl->p_cfg->p_motor_current_instance;
 
-    err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    if (NULL != p_current_instance)
+    {
+        err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    }
 
     *p_speed_rpm = temp_current_output.f_speed_rpm;
 
@@ -620,6 +645,8 @@ fsp_err_t RM_MOTOR_INDUCTION_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t *
     float temp_iv = 0.0F;
     float temp_iw = 0.0F;
     motor_driver_current_get_t temp_crnt_get;
+    temp_crnt_get.iu  = 0.0F;
+    temp_crnt_get.iw  = 0.0F;
     temp_crnt_get.vdc = 0.0F;
 
     fsp_err_t err = FSP_SUCCESS;
@@ -638,11 +665,17 @@ fsp_err_t RM_MOTOR_INDUCTION_ErrorCheck (motor_ctrl_t * const p_ctrl, uint16_t *
     motor_current_instance_ctrl_t * p_current_instance_ctrl =
         (motor_current_instance_ctrl_t *) p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl;
 
-    err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    if (NULL != p_current_instance)
+    {
+        err = p_current_instance->p_api->parameterGet(p_current_instance->p_ctrl, &temp_current_output);
+    }
 
     if (FSP_SUCCESS == err)
     {
-        err = p_driver_instance->p_api->currentGet(p_driver_instance->p_ctrl, &temp_crnt_get);
+        if (NULL != p_driver_instance)
+        {
+            err = p_driver_instance->p_api->currentGet(p_driver_instance->p_ctrl, &temp_crnt_get);
+        }
     }
 
     if (FSP_SUCCESS == err)
@@ -1024,10 +1057,17 @@ static motor_induction_action_return_t rm_motor_induction_active (motor_inductio
     fsp_err_t err = FSP_SUCCESS;
     motor_induction_action_return_t ret = MOTOR_INDUCTION_ACTION_RETURN_OK;
 
-    err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->run(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->run(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
     if (FSP_SUCCESS == err)
     {
-        err = p_ctrl->p_cfg->p_motor_current_instance->p_api->run(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+        {
+            err = p_ctrl->p_cfg->p_motor_current_instance->p_api->run(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        }
     }
 
     if (err != FSP_SUCCESS)
@@ -1049,10 +1089,18 @@ static motor_induction_action_return_t rm_motor_induction_inactive (motor_induct
     fsp_err_t err = FSP_SUCCESS;
     motor_induction_action_return_t ret = MOTOR_INDUCTION_ACTION_RETURN_OK;
 
-    err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        err = p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
     if (FSP_SUCCESS == err)
     {
-        err = p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+        {
+            err = p_ctrl->p_cfg->p_motor_current_instance
+                  ->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+        }
     }
 
     if (err != FSP_SUCCESS)
@@ -1087,8 +1135,15 @@ static motor_induction_action_return_t rm_motor_induction_reset (motor_induction
     motor_current_instance_ctrl_t * p_current_ctrl =
         (motor_current_instance_ctrl_t *) p_ctrl->p_cfg->p_motor_current_instance->p_ctrl;
 
-    p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
-    p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
+    if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+    {
+        p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    }
 
     RM_MOTOR_SENSE_INDUCTION_CorrectReset(p_current_ctrl->p_angle_instance->p_ctrl);
 
@@ -1103,8 +1158,15 @@ static motor_induction_action_return_t rm_motor_induction_reset (motor_induction
  **********************************************************************************************************************/
 static motor_induction_action_return_t rm_motor_induction_error (motor_induction_instance_ctrl_t * p_ctrl)
 {
-    p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
-    p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    if (NULL != p_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        p_ctrl->p_cfg->p_motor_speed_instance->p_api->reset(p_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
+
+    if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+    {
+        p_ctrl->p_cfg->p_motor_current_instance->p_api->reset(p_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    }
 
     /* If motor function is working, cancel it. */
     if (p_ctrl->e_function != MOTOR_FUNCTION_SELECT_NONE)
@@ -1150,6 +1212,22 @@ static uint32_t rm_motor_induction_statemachine_event (motor_induction_instance_
     motor_induction_action_return_t action_ret;
 
     p_ctrl->st_statem.u2_error_status = MOTOR_INDUCTION_STATEMACHINE_ERROR_NONE;
+
+    /* Check if accessing state transition table out of bound */
+    if (MOTOR_INDUCTION_STATEMACHINE_SIZE_EVENT <= u1_event)
+    {
+        /* Event is out of bound */
+        u1_event = MOTOR_INDUCTION_CTRL_EVENT_ERROR;
+        p_ctrl->st_statem.u2_error_status |= MOTOR_INDUCTION_STATEMACHINE_ERROR_EVENTOUTBOUND;
+    }
+
+    if (MOTOR_INDUCTION_STATEMACHINE_SIZE_STATE <= p_ctrl->st_statem.status)
+    {
+        /* State is out of bound */
+        u1_event                           = MOTOR_INDUCTION_CTRL_EVENT_ERROR;
+        p_ctrl->st_statem.status           = MOTOR_INDUCTION_CTRL_STOP;
+        p_ctrl->st_statem.u2_error_status |= MOTOR_INDUCTION_STATEMACHINE_ERROR_STATEOUTBOUND;
+    }
 
     /*
      * current_event : Event happening
@@ -1393,7 +1471,15 @@ static void rm_motor_induction_inertia_estimate_current_process (motor_instance_
             p_ctrl->st_ie_set_data.f_iq = p_ctrl->st_current_output.f_iq;
             p_ctrl->st_ie_set_data.f_speed_radian_control = p_ctrl->st_current_input.f_ref_speed_rad_ctrl;
 
-            p_position->p_api->infoGet(p_position->p_ctrl, &temp_position_info);
+            if (NULL != p_position)
+            {
+                p_position->p_api->infoGet(p_position->p_ctrl, &temp_position_info);
+            }
+            else
+            {
+                temp_position_info.s2_position_degree        = 0;
+                temp_position_info.u1_state_position_profile = 0;
+            }
 
             p_ctrl->st_ie_set_data.s2_position_degree = temp_position_info.s2_position_degree;
             p_ctrl->st_ie_set_data.u1_position_state  = temp_position_info.u1_state_position_profile;
@@ -1431,9 +1517,12 @@ static void rm_motor_induction_inertia_estimate_speed_process (motor_instance_t 
                 p_ctrl->st_ie_get_data.s2_position_reference_degree;
 
             /* Set position reference */
-            p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
-                p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
-                &temp_position_data);
+            if (NULL != p_instance->p_cfg->p_motor_speed_instance)
+            {
+                p_instance->p_cfg->p_motor_speed_instance->p_api->positionReferenceSet(
+                    p_instance->p_cfg->p_motor_speed_instance->p_ctrl,
+                    &temp_position_data);
+            }
         }
     }
 }                                      /* End of function rm_motor_induction_inertia_estimate_speed_process() */
@@ -1512,9 +1601,13 @@ void rm_motor_induction_current_callback (motor_current_callback_args_t * p_args
         case MOTOR_CURRENT_EVENT_DATA_SET:
         {
             rm_motor_induction_copy_speed_current(&(p_ctrl->st_speed_output), &(p_ctrl->st_current_input));
-            p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterSet(
-                p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
-                &(p_ctrl->st_current_input));
+            if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+            {
+                p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterSet(
+                    p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
+                    &(p_ctrl->st_current_input));
+            }
+
             break;
         }
 
@@ -1557,9 +1650,13 @@ void rm_motor_induction_speed_callback (motor_speed_callback_args_t * p_args)
         case MOTOR_SPEED_EVENT_FORWARD:
         {
             /* Get speed control input data from current control */
-            p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterGet(
-                p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
-                &(p_ctrl->st_current_output));
+            if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+            {
+                p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterGet(
+                    p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
+                    &(p_ctrl->st_current_output));
+            }
+
             rm_motor_induction_copy_current_speed(&(p_ctrl->st_current_output), &(p_ctrl->st_speed_input));
 
             /* Invoke the callback function if it is set. */

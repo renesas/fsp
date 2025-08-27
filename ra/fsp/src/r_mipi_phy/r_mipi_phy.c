@@ -44,7 +44,8 @@ const mipi_phy_api_t g_mipi_phy =
  **********************************************************************************************************************/
 
 /**********************************************************************************************************************
- * Initialize the MIPI DSI peripheral according to section 57.3.1 D-PHY Start-up Procedure, R01UH0995EJ0060
+ * Initialize the MIPI PHY peripheral according to "D-PHY Start-up Procedure" in the MIPI PHY section of the relevant
+ * hardware manual
  *
  * @retval FSP_SUCCESS                  The channel was successfully opened.
  * @retval FSP_ERR_ASSERTION            One or both of the parameters was NULL.
@@ -106,7 +107,8 @@ fsp_err_t r_mipi_phy_open (mipi_phy_ctrl_t * const p_api_ctrl, mipi_phy_cfg_t co
 /**********************************************************************************************************************
  * Stop filter operations and close the channel instance.
  *
- * NOTE: D_PHY must be stopped and LDO disabled before entering standby mode. See 56.3.2 D-PHY Stop Procedure, R01UH0995EJ0060
+ * NOTE: D_PHY must be stopped and LDO disabled before entering standby mode. See "D-PHY Stop Procedure" in the MIPI PHY
+ * section of the relevant hardware manual.
  *
  * @retval   FSP_SUCCESS           The channel is successfully closed.
  * @retval   FSP_ERR_ASSERTION     p_api_ctrl is NULL.

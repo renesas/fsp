@@ -16,9 +16,9 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define MOTOR_SENSORLESS_OPEN                                  (0X4D4F544ULL)
+#define MOTOR_SENSORLESS_OPEN                                  (('M' << 24U) | ('T' << 16U) | ('S' << 8U) | ('L' << 0U))
 
-#define MOTOR_SENSORLESS_RAD2RPM                               (30.0F / 3.14159265359F)
+#define MOTOR_SENSORLESS_RAD2RPM                               (30.0F / 3.1415926535F)
 
 #define MOTOR_SENSORLESS_FLG_CLR                               (0)
 #define MOTOR_SENSORLESS_FLG_SET                               (1)
@@ -184,11 +184,17 @@ fsp_err_t RM_MOTOR_SENSORLESS_Open (motor_ctrl_t * const p_ctrl, motor_cfg_t con
 
     p_instance_ctrl->p_cfg = p_cfg;
 
-    p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
-                                                 p_cfg->p_motor_current_instance->p_cfg);
+    if (NULL != p_cfg->p_motor_current_instance)
+    {
+        p_cfg->p_motor_current_instance->p_api->open(p_cfg->p_motor_current_instance->p_ctrl,
+                                                     p_cfg->p_motor_current_instance->p_cfg);
+    }
 
-    p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
-                                               p_cfg->p_motor_speed_instance->p_cfg);
+    if (NULL != p_cfg->p_motor_speed_instance)
+    {
+        p_cfg->p_motor_speed_instance->p_api->open(p_cfg->p_motor_speed_instance->p_ctrl,
+                                                   p_cfg->p_motor_speed_instance->p_cfg);
+    }
 
     p_instance_ctrl->u2_error_info = MOTOR_ERROR_NONE;
 
@@ -231,10 +237,17 @@ fsp_err_t RM_MOTOR_SENSORLESS_Close (motor_ctrl_t * const p_ctrl)
 #endif
 
     /* Close using modules */
-    p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    if (NULL != p_instance_ctrl->p_cfg->p_motor_speed_instance)
+    {
+        p_instance_ctrl->p_cfg->p_motor_speed_instance->p_api->close(
+            p_instance_ctrl->p_cfg->p_motor_speed_instance->p_ctrl);
+    }
 
-    p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
-        p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    if (NULL != p_instance_ctrl->p_cfg->p_motor_current_instance)
+    {
+        p_instance_ctrl->p_cfg->p_motor_current_instance->p_api->close(
+            p_instance_ctrl->p_cfg->p_motor_current_instance->p_ctrl);
+    }
 
     rm_motor_sensorless_init_speed_input(&(p_instance_ctrl->st_speed_input));
     rm_motor_sensorless_init_speed_output(&(p_instance_ctrl->st_speed_output));
@@ -1077,9 +1090,13 @@ void rm_motor_sensorless_current_callback (motor_current_callback_args_t * p_arg
         case MOTOR_CURRENT_EVENT_DATA_SET:
         {
             rm_motor_sensorless_copy_speed_current(&(p_ctrl->st_speed_output), &(p_ctrl->st_current_input));
-            p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterSet(
-                p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
-                &(p_ctrl->st_current_input));
+            if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+            {
+                p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterSet(
+                    p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
+                    &(p_ctrl->st_current_input));
+            }
+
             break;
         }
 
@@ -1120,9 +1137,13 @@ void rm_motor_sensorless_speed_callback (motor_speed_callback_args_t * p_args)
         case MOTOR_SPEED_EVENT_FORWARD:
         {
             /* Get speed control input data from current control */
-            p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterGet(
-                p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
-                &(p_ctrl->st_current_output));
+            if (NULL != p_ctrl->p_cfg->p_motor_current_instance)
+            {
+                p_ctrl->p_cfg->p_motor_current_instance->p_api->parameterGet(
+                    p_ctrl->p_cfg->p_motor_current_instance->p_ctrl,
+                    &(p_ctrl->st_current_output));
+            }
+
             rm_motor_sensorless_copy_current_speed(&(p_ctrl->st_current_output), &(p_ctrl->st_speed_input));
 
             /* Invoke the callback function if it is set. */

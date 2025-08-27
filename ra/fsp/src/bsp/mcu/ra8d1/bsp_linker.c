@@ -53,6 +53,24 @@ BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bank
 #if defined BSP_CFG_OPTION_SETTING_BPS_SEL && !BSP_TZ_NONSECURE_BUILD
 BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_bps_sel") g_bsp_cfg_option_setting_bps_sel[] = {BSP_CFG_OPTION_SETTING_BPS_SEL};
 #endif
+#if defined BSP_CFG_OPTION_SETTING_DATA_FLASH_FSBLCTRL0 && !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl0") g_bsp_cfg_option_setting_data_flash_fsblctrl0[] = {BSP_CFG_OPTION_SETTING_DATA_FLASH_FSBLCTRL0};
+#endif
+#if defined BSP_CFG_OPTION_SETTING_DATA_FLASH_FSBLCTRL1 && !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl1") g_bsp_cfg_option_setting_data_flash_fsblctrl1[] = {BSP_CFG_OPTION_SETTING_DATA_FLASH_FSBLCTRL1};
+#endif
+#if defined BSP_CFG_OPTION_SETTING_DATA_FLASH_FSBLCTRL2 && !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_fsblctrl2") g_bsp_cfg_option_setting_data_flash_fsblctrl2[] = {BSP_CFG_OPTION_SETTING_DATA_FLASH_FSBLCTRL2};
+#endif
+#if defined BSP_CFG_OPTION_SETTING_DATA_FLASH_SACC0 && !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_sacc0") g_bsp_cfg_option_setting_data_flash_sacc0[] = {BSP_CFG_OPTION_SETTING_DATA_FLASH_SACC0};
+#endif
+#if defined BSP_CFG_OPTION_SETTING_DATA_FLASH_SACC1 && !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_sacc1") g_bsp_cfg_option_setting_data_flash_sacc1[] = {BSP_CFG_OPTION_SETTING_DATA_FLASH_SACC1};
+#endif
+#if defined BSP_CFG_OPTION_SETTING_DATA_FLASH_SAMR && !BSP_TZ_NONSECURE_BUILD
+BSP_DONT_REMOVE static const uint32_t BSP_PLACE_IN_SECTION(".option_setting_data_flash_samr") g_bsp_cfg_option_setting_data_flash_samr[] = {BSP_CFG_OPTION_SETTING_DATA_FLASH_SAMR};
+#endif
 #endif // BSP_BOOTLOADED_APPLICATION
 
 /******************************/

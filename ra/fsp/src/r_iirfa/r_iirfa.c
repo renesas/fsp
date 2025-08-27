@@ -144,7 +144,7 @@ fsp_err_t R_IIRFA_Filter (iir_ctrl_t * const p_api_ctrl,
     {
         /* Reading an IIRCHnOUT register will cause the bus to wait until data is ready. While the bus is waiting
          * no interrupts will be handled. For this reason, the IIRCHnSTS register is polled for the CPRCFF flag first.
-         * See RA6T2 User's Manual (R01UH0951EJ0100) section 33.3.5.2 "Procedure for Channel Processing Execution" for
+         * See "Procedure for Channel Processing Execution" in the IIRFA section of the relevant hardware manual for
          * further details. */
         IIRFA_PRV_PROCESS_SAMPLE;
 #if (IIRFA_CFG_LOOP_UNROLL_DEPTH >= 2)

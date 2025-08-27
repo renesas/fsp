@@ -18,16 +18,16 @@
  * Macro definitions
  **********************************************************************************************************************/
 
-#define     MOTOR_SPEED_OPEN                               (0X4D535043L)
+#define     MOTOR_SPEED_OPEN                               (('M' << 24U) | ('T' << 16U) | ('S' << 8U) | ('P' << 0U))
 
 #define     MOTOR_SPEED_FLAG_CLEAR                         (0)                         /* For flag clear */
 #define     MOTOR_SPEED_FLAG_SET                           (1)                         /* For flag set */
 
 #define     MOTOR_SPEED_MULTIPLE_2                         (2.0F)
-#define     MOTOR_SPEED_TWOPI                              (3.14159265358979F * 2.0F)
+#define     MOTOR_SPEED_TWOPI                              (2.0F * 3.1415926535F)
 #define     MOTOR_SPEED_TWOPI_60                           (MOTOR_SPEED_TWOPI / 60.0F) /* To translate rpm => rad/s */
 #define     MOTOR_SPEED_DIV_8BIT                           (1.0F / 256.0F)
-#define     MOTOR_SPEED_RAD_TRANS                          (3.14159265359F / 180.0F)
+#define     MOTOR_SPEED_RAD_TRANS                          (3.1415926535F / 180.0F)
 #define     MOTOR_SPEED_ROOT3                              (1.7320508F)
 
 /* Speed reference status */
@@ -152,7 +152,7 @@ fsp_err_t RM_MOTOR_SPEED_Open (motor_speed_ctrl_t * const p_ctrl, motor_speed_cf
 
     FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_speed_ctrl_period, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_limit_speed_change, FSP_ERR_INVALID_ARGUMENT);
-    FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_max_speed_rad, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_maximum_speed_rpm, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(((MOTOR_SPEED_CONTROL_TYPE_ENCODER != p_extended_cfg->control_type) ||
                       (NULL != p_cfg->p_position_instance)),
                      FSP_ERR_INVALID_ARGUMENT);
@@ -205,7 +205,7 @@ fsp_err_t RM_MOTOR_SPEED_Open (motor_speed_ctrl_t * const p_ctrl, motor_speed_cf
                                        p_extended_cfg->d_param.f_ol_damping_zeta,
                                        p_extended_cfg->d_param.f_ed_hpf_omega,
                                        p_extended_cfg->ol_param.f4_ol_id_ref,
-                                       p_extended_cfg->ol_param.f4_id_down_speed_rad * MOTOR_SPEED_TWOPI_60,
+                                       p_extended_cfg->ol_param.f4_id_down_speed_rpm * MOTOR_SPEED_TWOPI_60,
                                        p_extended_cfg->f_speed_ctrl_period);
 
     /* Speed Observer */
@@ -700,7 +700,7 @@ fsp_err_t RM_MOTOR_SPEED_SpeedControl (motor_speed_ctrl_t * const p_ctrl)
         {
             /* f4_temp0 : The absolute value of speed command [rad/s] */
             f4_temp0 = fabsf(p_instance_ctrl->f_speed_lpf_rad);
-            if (f4_temp0 < (p_extended_cfg->ol_param.f4_id_up_speed_rad) * MOTOR_SPEED_TWOPI_60)
+            if (f4_temp0 < (p_extended_cfg->ol_param.f4_id_up_speed_rpm) * MOTOR_SPEED_TWOPI_60)
             {
                 p_instance_ctrl->u1_flag_down_to_ol   = MOTOR_SPEED_FLAG_SET;
                 p_instance_ctrl->f_ref_speed_rad_ctrl = p_instance_ctrl->f_speed_lpf_rad;
@@ -835,7 +835,7 @@ fsp_err_t RM_MOTOR_SPEED_ParameterUpdate (motor_speed_ctrl_t * const p_ctrl, mot
 #if MOTOR_SPEED_CFG_PARAM_CHECKING_ENABLE
     FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_speed_ctrl_period, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_limit_speed_change, FSP_ERR_INVALID_ARGUMENT);
-    FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_max_speed_rad, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(0.0F <= p_extended_cfg->f_maximum_speed_rpm, FSP_ERR_INVALID_ARGUMENT);
 #endif
 
     p_instance_ctrl->p_cfg = p_cfg;
@@ -868,7 +868,7 @@ fsp_err_t RM_MOTOR_SPEED_ParameterUpdate (motor_speed_ctrl_t * const p_ctrl, mot
                                        p_extended_cfg->d_param.f_ol_damping_zeta,
                                        p_extended_cfg->d_param.f_ed_hpf_omega,
                                        p_extended_cfg->ol_param.f4_ol_id_ref,
-                                       p_extended_cfg->ol_param.f4_id_down_speed_rad * MOTOR_SPEED_TWOPI_60,
+                                       p_extended_cfg->ol_param.f4_id_down_speed_rpm * MOTOR_SPEED_TWOPI_60,
                                        p_extended_cfg->f_speed_ctrl_period);
 
     if (MOTOR_SPEED_OBSERVER_SWITCH_ENABLE == p_extended_cfg->u1_observer_swtich)
@@ -1041,7 +1041,7 @@ static float rm_motor_speed_set_speed_ref (motor_speed_instance_ctrl_t * p_ctrl)
 
     /* Speed reference limit */
     f4_speed_rad_ref_buff = rm_motor_speed_limitfabs(f4_speed_rad_ref_buff,
-                                                     (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60);
+                                                     (p_extended_cfg->f_maximum_speed_rpm) * MOTOR_SPEED_TWOPI_60);
 
     /* Return speed reference */
     return f4_speed_rad_ref_buff;
@@ -1083,7 +1083,7 @@ static float rm_motor_speed_set_speed_ref_hall (motor_speed_instance_ctrl_t * p_
     }
 
     /* speed reference limit */
-    f4_speed_ref = rm_motor_speed_limitfabs(f4_speed_ref, (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60);
+    f4_speed_ref = rm_motor_speed_limitfabs(f4_speed_ref, (p_extended_cfg->f_maximum_speed_rpm) * MOTOR_SPEED_TWOPI_60);
 
     /* return speed reference */
     return f4_speed_ref;
@@ -1147,7 +1147,7 @@ static float rm_motor_speed_set_speed_ref_encoder (motor_speed_instance_ctrl_t *
                 if (p_position != NULL)
                 {
                     p_position->p_api->speedReferenceIpdControlGet(p_position->p_ctrl,
-                                                                   (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60,
+                                                                   (p_extended_cfg->f_maximum_speed_rpm) * MOTOR_SPEED_TWOPI_60,
                                                                    &f4_speed_ref_calc_rad);
                 }
             }
@@ -1185,7 +1185,7 @@ static float rm_motor_speed_set_speed_ref_encoder (motor_speed_instance_ctrl_t *
 
     /* speed reference limit */
     f4_speed_ref_calc_rad = rm_motor_speed_limitfabs(f4_speed_ref_calc_rad,
-                                                     (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60);
+                                                     (p_extended_cfg->f_maximum_speed_rpm) * MOTOR_SPEED_TWOPI_60);
 
     /* return speed reference */
     return f4_speed_ref_calc_rad;
@@ -1252,7 +1252,7 @@ static float rm_motor_speed_set_speed_ref_induction (motor_speed_instance_ctrl_t
                 if (p_position != NULL)
                 {
                     p_position->p_api->speedReferenceIpdControlGet(p_position->p_ctrl,
-                                                                   (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60,
+                                                                   (p_extended_cfg->f_maximum_speed_rpm) * MOTOR_SPEED_TWOPI_60,
                                                                    &f4_speed_ref_calc_rad);
                 }
             }
@@ -1314,7 +1314,7 @@ static float rm_motor_speed_set_speed_ref_induction (motor_speed_instance_ctrl_t
 
     /* speed reference limit */
     f4_speed_ref_calc_rad = rm_motor_speed_limitfabs(f4_speed_ref_calc_rad,
-                                                     (p_extended_cfg->f_max_speed_rad) * MOTOR_SPEED_TWOPI_60);
+                                                     (p_extended_cfg->f_maximum_speed_rpm) * MOTOR_SPEED_TWOPI_60);
 
     /* return speed reference */
     return f4_speed_ref_calc_rad;
@@ -1368,7 +1368,7 @@ static float rm_motor_speed_set_iq_ref (motor_speed_instance_ctrl_t * p_ctrl)
                                                  p_ctrl->f_ref_speed_rad_ctrl);
             }
 
-            if (f4_temp0 >= (p_extended_cfg->ol_param.f4_id_down_speed_rad) * MOTOR_SPEED_TWOPI_60)
+            if (f4_temp0 >= (p_extended_cfg->ol_param.f4_id_down_speed_rpm) * MOTOR_SPEED_TWOPI_60)
             {
                 /* State transient to next state */
                 if (MOTOR_SPEED_LESS_SWITCH_ENABLE == p_extended_cfg->u1_less_switch)
@@ -1517,7 +1517,7 @@ static float rm_motor_speed_set_id_ref (motor_speed_instance_ctrl_t * p_ctrl)
         {
             f4_id_ref_buff = p_ctrl->f_id_ref;
             f4_temp0       = fabsf(p_ctrl->f_ref_speed_rad_ctrl);
-            if (f4_temp0 >= (p_extended_cfg->ol_param.f4_id_down_speed_rad) * MOTOR_SPEED_TWOPI_60)
+            if (f4_temp0 >= (p_extended_cfg->ol_param.f4_id_down_speed_rpm) * MOTOR_SPEED_TWOPI_60)
             {
                 p_ctrl->u1_state_id_ref = MOTOR_SPEED_ID_DOWN;
             }

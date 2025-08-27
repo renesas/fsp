@@ -174,8 +174,8 @@ fsp_err_t R_SDADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
     R_SDADC0->STC2   = 0U;
 
     /* Configure the SDADC clock source and divisor to the clock source selected in the clock configuration. This must be
-     * done before the analog power supply is activated (reference Note 1 in section 33.2.1 "Startup Control Register 1
-     * (STC1)" of the RA2A1 manual R01UH0888EJ0100. */
+     * done before the analog power supply is activated (See reference Note 1 of "Startup Control Register 1
+     * (STC1)" description in the SDADC section of the relevant hardware manual). */
 
     /* Set the A/D conversion operation mode (normal mode). */
     /* Set the reference voltage for sensors (internal or external VREF mode). */
@@ -186,8 +186,8 @@ fsp_err_t R_SDADC_Open (adc_ctrl_t * p_ctrl, adc_cfg_t const * const p_cfg)
                     (uint32_t) (p_cfg_extend->vref_voltage << R_SDADC0_STC1_VSBIAS_Pos);
     R_SDADC0->STC1 = (uint16_t) stc1;
 
-    /* Activate the analog power supply as described in Figure 33.23 "Analog power supply activation flow" of the RA2A1
-     * manual R01UH0888EJ0100. */
+    /* Activate the analog power supply as described in Figure "Analog power supply activation flow"
+     * in the SDADC section of the relevant hardware manual. */
 
     /* Supply the 24-bit sigma-delta A/D converter clock (SDADCCLK). */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_CGC);
@@ -636,8 +636,8 @@ fsp_err_t R_SDADC_Calibrate (adc_ctrl_t * const p_ctrl, void const * p_extend)
 
     p_instance_ctrl->calib_status = 1U;
 
-    /* Calibrate the SDADC as described in Figure 33.27 "Internal calibration flow" and Figure 33.28 "External
-     * calibration flow" of the RA2A1 manual R01UH0888EJ0100. */
+    /* Calibrate the SDADC as described in the figures "Internal calibration flow" and "External
+     * calibration flow" in the SDADC section of the relevant hardware manual. */
 
     /* Select software trigger. */
     /* Select single scan mode. */
@@ -687,7 +687,7 @@ fsp_err_t R_SDADC_Close (adc_ctrl_t * p_ctrl)
     /* Mark driver as closed   */
     p_instance_ctrl->opened = 0U;
 
-    /* Follow the procedure in Figure 33.30 "SDADC24 stop setting flow" in the RA2A1 manual R01UH0888EJ0100. */
+    /* Follow the procedure in Figure "SDADC24 stop setting flow" in the SDADC section of the relevant hardware manual. */
 
     /* Stop A/D conversion. */
     R_SDADC0->ADC1 = R_SDADC0_ADC1_SDADBMP_Msk;
@@ -706,7 +706,7 @@ fsp_err_t R_SDADC_Close (adc_ctrl_t * p_ctrl)
     R_SDADC0->STC2 = R_SDADC0_STC2_BGRPON_Msk;
 
     /* Turn off the power of ADBGR, SBIAS, and ADREG. This must be done after clearing ADCPON according to
-     * Figure 33.30 "SDADC24 stop setting flow" in the RA2A1 manual R01UH0888EJ0100. */
+     * Figure "SDADC24 stop setting flow" in the SDADC section of the relevant hardware manual. */
     R_SDADC0->STC2 = 0U;
 
     /* Stop the input clock for the 24-bit sigma-delta A/D converter (SDADCCLK). */
@@ -809,8 +809,9 @@ static fsp_err_t r_sdadc_open_param_check (sdadc_instance_ctrl_t * const p_insta
     /* External trigger mode is not supported. */
     FSP_ASSERT(ADC_TRIGGER_ASYNC_EXTERNAL != p_cfg->trigger);
 
-    /* If hardware trigger is selected, the product always operates in single scan mode. Reference SDADTMD documentation
-     * in section 33.2.4 "Sigma-Delta A/D Converter Control Register 1 (ADC1)" of the RA2A1 manual R01UH0888EJ0100. */
+    /* If hardware trigger is selected, the product always operates in single scan mode. See SDADTMD documentation
+     * in "Sigma-Delta A/D Converter Control Register 1 (ADC1)" description in the SDADC section of the relevant
+     * hardware manual. */
     if (ADC_TRIGGER_SYNC_ELC == p_cfg->trigger)
     {
         FSP_ASSERT(ADC_MODE_SINGLE_SCAN == p_cfg->mode);

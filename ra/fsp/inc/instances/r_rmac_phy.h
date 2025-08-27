@@ -64,7 +64,7 @@ typedef struct st_rmac_phy_extended_cfg
     uint32_t                    mdc_clock_rate;                                                                         ///< MDC frequency division
     uint8_t                     mdio_hold_time;                                                                         ///< MDIO hold time adjustment
     uint8_t                     mdio_capture_time;                                                                      ///< MDIO capture time adjustment
-    ether_phy_lsi_cfg_t const * p_phy_lsi_cfg_list[BSP_FEATURE_ETHER_MAX_CHANNELS];                                     ///< Pointer list of PHY LSI configurations.
+    ether_phy_lsi_cfg_t const * p_phy_lsi_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];                                     ///< Pointer list of PHY LSI configurations.
     uint8_t                     default_phy_lsi_cfg_index;                                                              ///< Index of the default PHY LSI condiguration.
 } rmac_phy_extended_cfg_t;
 

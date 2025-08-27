@@ -762,6 +762,20 @@ fsp_err_t HW_SCE_Aes192EncryptDecryptInitSubAdaptor (const uint32_t InData_KeyMo
     return HW_SCE_Aes192EncryptDecryptInitSub(InData_Cmd, InData_KeyIndex, InData_IV);
 }
 
+fsp_err_t HW_SCE_Rsa1024ModularExponentDecryptSubAdaptor(const uint32_t InData_KeyMode[],
+                                                         const uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyMode);
+    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    FSP_PARAMETER_NOT_USED(InData_Text);
+    FSP_PARAMETER_NOT_USED(OutData_Text);
+    return FSP_ERR_UNSUPPORTED;
+}
+
 fsp_err_t HW_SCE_Rsa2048ModularExponentDecryptSubAdaptor(const uint32_t InData_KeyMode[],
                                                          uint32_t InData_KeyIndex[],
                                                          const uint32_t InData_Key[],
@@ -771,6 +785,18 @@ fsp_err_t HW_SCE_Rsa2048ModularExponentDecryptSubAdaptor(const uint32_t InData_K
     FSP_PARAMETER_NOT_USED (InData_KeyMode);
     FSP_PARAMETER_NOT_USED (InData_Key);
 	return HW_SCE_Rsa2048ModularExponentDecryptSub(InData_KeyIndex, InData_Text, OutData_Text);
+}
+
+fsp_err_t HW_SCE_Rsa1024ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[],
+                                                         const uint32_t InData_Key[],
+                                                         const uint32_t InData_Text[],
+                                                         uint32_t OutData_Text[])
+{
+    FSP_PARAMETER_NOT_USED(InData_KeyIndex);
+    FSP_PARAMETER_NOT_USED(InData_Key);
+    FSP_PARAMETER_NOT_USED(InData_Text);
+    FSP_PARAMETER_NOT_USED(OutData_Text);
+    return FSP_ERR_UNSUPPORTED;
 }
 
 fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[],

@@ -30,8 +30,8 @@
  #define DAC_ADC_UNIT                                (1)
 #endif
 
-/* Conversion time with Output Amplifier. See hardware manual (see Table 60.44
- *'D/A conversion characteristics' of the RA6M3 manual R01UH0886EJ0100). */
+/* Conversion time with Output Amplifier. See hardware manual (see Table
+ * "D/A conversion characteristics" in the DAC12 Characteristics section of the relevant hardware manual.) */
 #define DAC_CONVERSION_TIME_WITH_OUTPUT_AMPLIFIER    (0x04U) /* Unit: Microseconds. */
 
 #define DAC_VREF_DISCHARGING_DELAY_US                (10)
@@ -138,11 +138,10 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
 #if BSP_FEATURE_DAC_HAS_DA_AD_SYNCHRONIZE
  #if BSP_FEATURE_DAC_AD_SYNC_UNIT_MASK
 
-    /* DA/AD Synchronization. Described in hardware manual (see Section 48.2.7
-     * 'D/A A/D Synchronous Unit Select Register (DAADUSR)' and Section 48.2.4
-     * 'D/A A/D Synchronous Start Control Register (DAADSCR)'of the RA6M3 manual R01UH0886EJ0100). */
-
-    /* D/A A/D Synchronous Unit Select Register: Select ADC Unit for synchronization with this DAC channel */
+    /* DA/AD Synchronization. Described in hardware manual (see
+     * "D/A A/D Synchronous Unit Select Register (DAADUSR)" and
+     * "D/A A/D Synchronous Start Control Register (DAADSCR)" descriptions in the DAC section of the relevant hardware manual).
+     * D/A A/D Synchronous Unit Select Register: Select ADC Unit for synchronization with this DAC channel */
     if ((0U == p_ctrl->p_reg->DAADSCR) && (p_cfg->ad_da_synchronized))
     {
         /* For correctly writing to this register:
@@ -180,11 +179,10 @@ fsp_err_t R_DAC_Open (dac_ctrl_t * p_api_ctrl, dac_cfg_t const * const p_cfg)
     /* Set the reference voltage. */
 #if BSP_FEATURE_DAC_HAS_DAVREFCR
 
-    /* D/A Reference Voltage Select. Described in hardware manual (see Section 36.2.5
-     * 'D/A VREF Control Register (DAVREFCR) and Section 36.3.2
-     * 'Notes on Using the Internal Reference Voltage as the Reference Voltage of the RA4M1 manual R01UH0887EJ0110). */
-
-    /* Clear REF bits before changing the value of these bits. */
+    /* D/A Reference Voltage Select. Described in hardware manual (see
+     * "D/A VREF Control Register (DAVREFCR)" description and
+     * "Notes on Using the Internal Reference Voltage as the Reference Voltage" in the DAC Operation section of
+     * the relevant hardware manual). *//* Clear REF bits before changing the value of these bits. */
     p_ctrl->p_reg->DAVREFCR = 0x00;
     if (DAC_VREF_IVREF_AVSS0 == p_extend->ref_volt_sel)
     {
@@ -273,8 +271,8 @@ fsp_err_t R_DAC_Start (dac_ctrl_t * p_api_ctrl)
 
 #if BSP_FEATURE_DAC_HAS_OUTPUT_AMPLIFIER
 
-    /* Initialize output amplifier. Described in hardware manual (see Section 48.6.5
-     * 'Initialization Procedure with the Output Amplifier' of the RA6M3 manual R01UH0878EJ0100). */
+    /* Initialize output amplifier. Described in hardware manual (see
+     * "Initialization Procedure with the Output Amplifier" in the DAC section of the relevant hardware manual). */
     if (p_ctrl->output_amplifier_enabled)
     {
         /* Store value intended to be amplified during DAC output */

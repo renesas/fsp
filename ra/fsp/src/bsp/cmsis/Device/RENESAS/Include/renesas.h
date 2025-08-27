@@ -46,6 +46,8 @@ extern "C" {
   #include "R7FA0E107.h"
  #elif BSP_MCU_GROUP_RA0E2
   #include "R7FA0E209.h"
+ #elif BSP_MCU_GROUP_RA0L1
+  #include "R7FA0L107.h"
  #elif BSP_MCU_GROUP_RA2A1
   #include "R7FA2A1AB.h"
  #elif BSP_MCU_GROUP_RA2A2
@@ -100,10 +102,14 @@ extern "C" {
   #include "R7FA6T2BD.h"
  #elif BSP_MCU_GROUP_RA6T3
   #include "R7FA6T3BB.h"
- #elif BSP_MCU_GROUP_RA8M1
-  #include "R7FA8M1AH.h"
  #elif BSP_MCU_GROUP_RA8D1
   #include "R7FA8D1BH.h"
+ #elif BSP_MCU_GROUP_RA8E1
+  #include "R7FA8E1AF.h"
+ #elif BSP_MCU_GROUP_RA8E2
+  #include "R7FA8E2AF.h"
+ #elif BSP_MCU_GROUP_RA8M1
+  #include "R7FA8M1AH.h"
  #elif BSP_MCU_GROUP_RA8P1
   #if 0U == BSP_CFG_CPU_CORE
    #include "R7KA8P1KF_core0.h"
@@ -114,10 +120,14 @@ extern "C" {
   #endif
  #elif BSP_MCU_GROUP_RA8T1
   #include "R7FA8T1AH.h"
- #elif BSP_MCU_GROUP_RA8E1
-  #include "R7FA8E1AF.h"
- #elif BSP_MCU_GROUP_RA8E2
-  #include "R7FA8E2AF.h"
+ #elif BSP_MCU_GROUP_RA8T2
+  #if 0U == BSP_CFG_CPU_CORE
+   #include "R7KA8T2LF_core0.h"
+  #elif 1U == BSP_CFG_CPU_CORE
+   #include "R7KA8T2LF_core1.h"
+  #else
+   #warning "Unsupported CPU number"
+  #endif
  #else
   #if __has_include("renesas_internal.h")
    #include "renesas_internal.h"

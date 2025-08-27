@@ -1266,8 +1266,8 @@ static fsp_err_t r_sdhi_hw_cfg (sdhi_instance_ctrl_t * const p_ctrl)
      * 6.4.1.1 "Power Up Time of Card" in the SD Physical Layer Specification Version 6.00. */
     R_BSP_SoftwareDelay(1U, BSP_DELAY_UNITS_MILLISECONDS);
 
-    /* Automatic clock control can be enabled only after 74 SD/MMC clock cycles are output.  Reference section 43.4.3
-     * Automatic Control of SD/MMC Clock Output (SD/MMC) of the RA6M3 manual R01UH0886EJ0100. */
+    /* Automatic clock control can be enabled only after 74 SD/MMC clock cycles are output. See
+     * "Automatic Control of SD/MMC Clock Output (SD/MMC)" in the SDHI section of the relevant hardware manual. */
 
     return FSP_SUCCESS;
 }

@@ -431,7 +431,9 @@ fsp_err_t R_LVD_Close (lvd_ctrl_t * const p_api_ctrl)
             R_BSP_GroupIrqWrite((bsp_grp_irq_t) (BSP_GRP_IRQ_LVD1 + monitor_index), NULL);
         }
 
-        /* Shutdown procedure from Table 8.5 in the RA6M3 Hardware Manual R01UH0886EJ0100. */
+        /* See Shutdown procedure from Table "Procedure for setting bits related to the voltage monitor 1
+         * interrupt and voltage monitor 1 reset so that voltage monitoring stops" in the LVD section of
+         * the relevant hardware manual. */
         R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
 
 #if 2U == BSP_FEATURE_LVD_VERSION
@@ -669,7 +671,9 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
     }
  #endif
 
-    /* Setup procedure from Table 8.4 in the RA6M3 Hardware Manual R01UH0886EJ0100. */
+    /* See Setup procedure from Table "Procedure for setting bits related to the voltage monitor 1
+     * interrupt and voltage monitor 1 reset so that voltage monitoring operates"
+     * in the LVD section of the relevant hardware manual. */
 
     /* Enable access to LVD registers. */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_LVD);
@@ -720,8 +724,8 @@ static void r_lvd_hw_configure (lvd_instance_ctrl_t * p_ctrl)
 
     /* To change a LVDNLVL register both voltage detection circuits must be disabled.
      * Disable the voltage detection circuit for all monitors before writing the LVDLVLR register.
-     * See section 7.2.2 "LVD1CMPCR : Voltage Monitoring 1 Comparator Control Register" in the RA6M4 manual R01HUM0890EJ0050. */
-
+     * See "LVD1CMPCR : Voltage Monitoring 1 Comparator Control Register" description in the
+     * relevant hardware manual. */
     for (i = 0; i < LVD_PRV_NUMBER_OF_VCC_MONITOR; i++)
     {
         if (0 != ((1 << i) & BSP_FEATURE_LVD_MONITOR_MASK))

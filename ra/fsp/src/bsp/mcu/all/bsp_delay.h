@@ -39,7 +39,7 @@ FSP_HEADER
   #endif
 
 /* On devices with Flash LP, ROM reads take an additional cycle when ICLK is greater than 32 MHz. */
- #elif BSP_FEATURE_CGC_HAS_MEMWAIT && !BSP_FEATURE_BSP_FLASH_CACHE && (BSP_FEATURE_BSP_CODE_CACHE_VERSION == 0)
+ #elif BSP_FEATURE_CGC_HAS_MEMWAIT && !BSP_FEATURE_FLASH_CACHE && (BSP_FEATURE_FLASH_CODE_CACHE_VERSION == 0)
   #define BSP_DELAY_LOOP_CYCLES     (4 + (2 * (uint32_t) (SystemCoreClock > 32000000)))
  #else
   #define BSP_DELAY_LOOP_CYCLES     (4)

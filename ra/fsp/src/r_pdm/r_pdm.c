@@ -128,8 +128,8 @@ fsp_err_t R_PDM_Open (pdm_ctrl_t * const p_ctrl, pdm_cfg_t const * const p_cfg)
     /* Enable PDM module */
     R_BSP_MODULE_START(FSP_IP_PDM, p_cfg->unit);
 
-    /* Initialize PDM IP according to Figure 50.17 "PDM-IF Start Flow" in
-     * section 50.4.1 "Start Flow" from the RA8P1 user manual. */
+    /* Initialize PDM IP according to Figure "PDM-IF Start Flow" in
+     * in the PDM-IF section of the relevant hardware manual. */
 
     /* Set PCM Width */
     uint32_t pdmdsr = (uint32_t) p_cfg->pcm_width << R_PDM_CH_PDMDSR_DBIS_Pos;
@@ -278,8 +278,8 @@ fsp_err_t R_PDM_Start (pdm_ctrl_t * const p_ctrl,
     p_instance_ctrl->rx_int_count     = 0;
     p_instance_ctrl->rx_int_count_max = number_of_data_to_callback;
 
-    /* Start communication according to Figure 50.19 "PDM-IF normal processing flow" in
-     * section 50.4.3 "Normal Processing Flow" from the RA8P1 user manual. */
+    /* Start communication according to Figure "PDM-IF normal processing flow" in
+     * "Normal Processing Flow" of the relevant hardware manual. */
 
     /* Set Channel's Data Read Enable */
     p_reg->PDDRCR = R_PDM_CH_PDDRCR_DATRE_Msk;
@@ -515,8 +515,8 @@ fsp_err_t R_PDM_Close (pdm_ctrl_t * const p_ctrl)
 
     r_pdm_stop_sub(p_instance_ctrl);
 
-    /* Stop PDM according to Figure 50.18 "PDM-IF Stop Flow" in
-     * section 50.4.2 "Stop Flow" from the RA8P1 user manual. */
+    /* Stop PDM according to Figure "PDM-IF Stop Flow" in
+     * "Stop Flow" of the relevant hardware manual. */
 
     /* Stop target channel's filtering */
     p_reg->PDSTPTR = R_PDM_CH_PDSTPTR_STPTRG_Msk;
@@ -685,8 +685,8 @@ static fsp_err_t r_pdm_dependent_drivers_configure (pdm_instance_ctrl_t * p_inst
  **********************************************************************************************************************/
 static void r_pdm_stop_sub (pdm_instance_ctrl_t * const p_instance_ctrl)
 {
-    /* Stop communication according to Figure 50.19 "PDM-IF normal processing flow" in
-     * section 50.4.3 "Normal Processing Flow" from the RA8P1 user manual. */
+    /* Stop communication according to Figure "PDM-IF normal processing flow" in
+     * "Normal Processing Flow" of the relevant hardware manual. */
     R_PDM_CH_Type         * p_reg = p_instance_ctrl->p_reg;
     pdm_cfg_t const * const p_cfg = p_instance_ctrl->p_cfg;
 

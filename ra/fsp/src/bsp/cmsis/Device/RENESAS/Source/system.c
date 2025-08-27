@@ -361,7 +361,7 @@ void SystemInit (void)
     /* Initialize SystemCoreClock variable. */
     SystemCoreClockUpdate();
 
-#if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_SYSC_HAS_VBTICTLR
+#if BSP_FEATURE_RTC_IS_AVAILABLE || BSP_FEATURE_RTC_HAS_TCEN || BSP_FEATURE_RTC_HAS_VBTICTLR
 
     /* For TZ project, it should be called by the secure application, whether RTC module is to be configured as secure or not. */
  #if !BSP_TZ_NONSECURE_BUILD && !BSP_CFG_BOOT_IMAGE && !BSP_CFG_SKIP_INIT
@@ -546,8 +546,8 @@ static void bsp_reset_trng_circuit (void)
     volatile uint8_t read_port = 0U;
     FSP_PARAMETER_NOT_USED(read_port); /// Prevent compiler 'unused' warning
 
-    /* Release register protection for low power modes (per RA2A1 User's Manual (R01UH0888EJ0100) Figure 11.13 "Example
-     * of initial setting flow for an unused circuit") */
+    /* Release register protection for low power modes (as per Figure "Example
+     * of initial setting flow for an unused circuit" in the LPM section of the relevant hardware manual) */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
 
     /* Enable TRNG function (disable stop function) */
@@ -573,8 +573,8 @@ static void bsp_reset_trng_circuit (void)
   #error "BSP_FEATURE_BSP_RESET_TRNG is defined but not handled."
  #endif
 
-    /* Reapply register protection for low power modes (per RA2A1 User's Manual (R01UH0888EJ0100) Figure 11.13 "Example
-     * of initial setting flow for an unused circuit") */
+    /* Reapply register protection for low power modes (as per Figure "Example
+     * of initial setting flow for an unused circuit" in the LPM section of the relevant hardware manual) */
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
 }
 

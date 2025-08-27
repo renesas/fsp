@@ -81,8 +81,8 @@ fsp_err_t R_DAC8_Open (dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg)
     if ((1U == BSP_FEATURE_DAC8_HAS_DA_AD_SYNCHRONIZE) && (p_cfg->ad_da_synchronized))
     {
         /* Only set this bit while the ADC16 is halted (ADCSR.ADST = 0) and the software trigger is selected as the
-         * ADC16 trigger. Refer 35.2.3 D/A A/D Synchronous Start Control Register (DACADSCR) of the RA2A1 manual
-         * R01UH0888EJ0100*/
+         * ADC16 trigger. See "D/A A/D Synchronous Start Control Register (DACADSCR)" description in the DAC
+         * section relevant hardware manual. */
         FSP_ERROR_RETURN(R_ADC0->ADCSR_b.ADST == 0, FSP_ERR_NOT_ENABLED);
     }
 
@@ -136,8 +136,8 @@ fsp_err_t R_DAC8_Open (dac_ctrl_t * const p_ctrl, dac_cfg_t const * const p_cfg)
         R_BSP_MODULE_START(FSP_IP_ADC, 0);
 
         /* Only set this bit while the ADC16 is halted (ADCSR.ADST = 0) and the software trigger is selected as the
-         * ADC16 trigger. Refer 35.2.3 D/A A/D Synchronous Start Control Register (DACADSCR) of the RA2A1 manual
-         * R01UH0888EJ0100*/
+         * ADC16 trigger. See "D/A A/D Synchronous Start Control Register (DACADSCR)" description in the DAC section
+         * of the relevant hardware manual. */
         R_DAC8->DACADSCR = (uint8_t) p_cfg->ad_da_synchronized;
     }
 #endif

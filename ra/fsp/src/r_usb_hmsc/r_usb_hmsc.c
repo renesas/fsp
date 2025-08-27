@@ -114,8 +114,8 @@ fsp_err_t R_USB_HMSC_StorageCommand (usb_ctrl_t * const p_api_ctrl, uint8_t * bu
         if (USB_HMSC_CSW_ERR == utr.result)
         {
             p_ctrl->status         = USB_CSW_RESULT_FAIL;
-            p_ctrl->module_number  = utr.ip;                /* Module number setting */
-            p_ctrl->pipe           = (uint8_t) utr.keyword; /* Pipe number setting */
+            p_ctrl->module_number  = utr.ip;                                     /* Module number setting */
+            p_ctrl->pipe           = (uint8_t) g_usb_hmsc_in_pipe[utr.ip][side]; /* Pipe number setting */
             p_ctrl->device_address = (uint8_t) (usb_hstd_get_devsel(&utr, p_ctrl->pipe) >> 12);
             p_ctrl->data_size      = 0;
  #if (BSP_CFG_RTOS == 2)
@@ -137,8 +137,8 @@ fsp_err_t R_USB_HMSC_StorageCommand (usb_ctrl_t * const p_api_ctrl, uint8_t * bu
 #if (BSP_CFG_RTOS == 2)
     else
     {
-        p_ctrl->module_number  = utr.ip;                /* Module number setting */
-        p_ctrl->pipe           = (uint8_t) utr.keyword; /* Pipe number setting */
+        p_ctrl->module_number  = utr.ip;                                     /* Module number setting */
+        p_ctrl->pipe           = (uint8_t) g_usb_hmsc_in_pipe[utr.ip][side]; /* Pipe number setting */
         p_ctrl->device_address = (uint8_t) (usb_hstd_get_devsel(&utr, p_ctrl->pipe) >> 12);
         p_ctrl->data_size      = 0;
 

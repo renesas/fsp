@@ -313,8 +313,9 @@ fsp_err_t R_MRAM_Write (flash_ctrl_t * const p_api_ctrl,
                                                 num_bytes,
                                                 FSP_ERR_INVALID_SIZE);
     FSP_ERROR_RETURN((err == FSP_SUCCESS), err);
+
+    FSP_ERROR_RETURN((0 == R_MRMS->MRCPC0) && (0 == R_MRMS->MRCPC1), FSP_ERR_IN_USE);
 #endif
-    FSP_ERROR_RETURN(0 == (R_MRMS->MRCPS & (R_MRMS_MRCPS_ABUFFULL_Msk | R_MRMS_MRCPS_PRGBSYC_Msk)), FSP_ERR_IN_USE);
 
     err = mram_write_data(src_address, mram_address, num_bytes);
 
@@ -353,6 +354,8 @@ fsp_err_t R_MRAM_Erase (flash_ctrl_t * const p_api_ctrl, uint32_t const address,
     FSP_ERROR_RETURN((err == FSP_SUCCESS), err);
 
     FSP_ERROR_RETURN(0 == address % BSP_FEATURE_MRAM_PROGRAMMING_SIZE_BYTES, FSP_ERR_INVALID_ADDRESS);
+
+    FSP_ERROR_RETURN((0 == R_MRMS->MRCPC0) && (0 == R_MRMS->MRCPC1), FSP_ERR_IN_USE);
 #endif
 
     err = mram_erase_blocks(address, num_blocks);
@@ -404,7 +407,8 @@ fsp_err_t R_MRAM_StatusGet (flash_ctrl_t * const p_api_ctrl, flash_status_t * co
 #endif
 
     /* If the MRAM is currently in program/erase mode notify the caller that the MRAM is busy. */
-    if ((R_MRMS->MENTRYR & MRAM_PRV_MENTRYR_PE_MODE_BITS) == 0x0000U)
+    if (((R_MRMS->MENTRYR & MRAM_PRV_MENTRYR_PE_MODE_BITS) == 0x0000U) && (0 == R_MRMS->MRCPC0) &&
+        (0 == R_MRMS->MRCPC1))
     {
         *p_status = FLASH_STATUS_IDLE;
     }
@@ -810,8 +814,8 @@ static fsp_err_t mram_write_data (uint32_t src_address, uint32_t mram_address, u
 
     mram_program_control(mram_address, true);
 
-    /* Follow the "Code MRAM programming procedure (smaller than 32-bytes programming)": Figure 60.4 of the
-     * RA8P1 manual R01UH1064EJ0100. */
+    /* Follow the figure "Code MRAM programming procedure (smaller than 32-bytes programming)" in the MRAM section
+     * of the relevant hardware manual. */
     while (operations_remaining > 0 && FSP_SUCCESS == err)
     {
         FSP_HARDWARE_REGISTER_WAIT(R_MRMS->MRCPS_b.PRGBSYC, 0);
@@ -867,8 +871,8 @@ static fsp_err_t mram_erase_blocks (uint32_t address, uint32_t num_blocks)
 
     mram_program_control(address, true);
 
-    /* Follow the "Code MRAM programming procedure (32-bytes programming)": Figure 60.3 of the
-     * RA8P1 manual R01UH1064EJ0100. */
+    /* Follow the figure "Code MRAM programming procedure (32-bytes programming)" in the MRAM section of the
+     * relevant hardware manual. */
     while (0 < operations_remaining && FSP_SUCCESS == err)
     {
         FSP_HARDWARE_REGISTER_WAIT(R_MRMS->MRCPS_b.PRGBSYC, 0);
@@ -939,7 +943,7 @@ static void mram_program_control (uint32_t address, bool enable)
  **********************************************************************************************************************/
 static fsp_err_t mram_check_errors (mram_instance_ctrl_t * const p_ctrl, fsp_err_t previous_error)
 {
-    /* See "Recovery from the Command-Locked State": Section 60.7.4.4 of the RA8P1 manual R01UH1064EJ0100.*/
+    /* See "Recovery from the Command-Locked State" in the MRAM section of the relevant hardware manual. */
     fsp_err_t err = FSP_SUCCESS;
 
     if (1U == R_MRMS->MASTAT_b.CMDLK)
@@ -1243,25 +1247,25 @@ static void mram_init (mram_instance_ctrl_t * p_ctrl)
 
     /* The calculation below calculates the number of ICLK ticks needed for the timeout delay. */
 
-    /* According to RA8P1 manual R01UH1064EJ0100 the Max Programming Time for 32 bytes is 87.3us. */
+    /* According to "Code MRAM Characteristics" in the Electrical Characteristics section of the relevant hardware manual the Max Programming Time for 32 bytes is 87.3us. */
     p_ctrl->timeout_mram_write = (uint32_t) (MRAM_PRV_MAX_MRAM_WRITE_US * system_clock_freq_mhz) /
                                  MRAM_PRV_MINIMUM_CYCLES_PER_TIMEOUT_LOOP;
 
-    /* According to RA8P1 manual R01UH1064EJ0100 the max time for a MACI command is 3.7us. */
+    /* According to table "MACI command Characteristics" in the Electrical Characteristics section of the relevant hardware manual max time for a MACI command is 3.7us. */
     p_ctrl->timeout_maci_command =
         (uint32_t) (MRAM_PRV_MAX_MACI_COMMAND_US * system_clock_freq_mhz) /
         MRAM_PRV_MINIMUM_CYCLES_PER_TIMEOUT_LOOP;
 
-    /* According to RA8P1 manual R01UH1064EJ0100 the max time for a configuration set command is 9.42ms. */
+    /* According to table "MACI command Characteristics" in the Electrical Characteristics section of the relevant hardware manual the max time for a configuration set command is 9.42ms. */
     p_ctrl->timeout_configuration_set = (uint32_t) (MRAM_PRV_MAX_CONFIGURATION_SET_US * system_clock_freq_mhz) /
                                         MRAM_PRV_MINIMUM_CYCLES_PER_TIMEOUT_LOOP;
 
-    /* According to RA8P1 manual R01UH1064EJ0100 the max time for ARC increment command is 1.61ms. */
+    /* According to table "MACI command Characteristics" in the Electrical Characteristics section of the relevant hardware manual the max time for ARC increment command is 1.61ms. */
     p_ctrl->timeout_arc_increment =
         (uint32_t) (MRAM_PRV_MAX_ARC_INCREMENT_US * system_clock_freq_mhz) /
         MRAM_PRV_MINIMUM_CYCLES_PER_TIMEOUT_LOOP;
 
-    /* According to RA8P1 manual R01UH1064EJ0100 the max time for ARC read command is 0.27us. */
+    /* According to table "MACI command Characteristics" in the Electrical Characteristics section of the relevant hardware manual the max time for ARC read command is 0.27us. */
     p_ctrl->timeout_arc_read =
         (uint32_t) (MRAM_PRV_MAX_ARC_READ_US * system_clock_freq_mhz) /
         MRAM_PRV_MINIMUM_CYCLES_PER_TIMEOUT_LOOP;
@@ -1276,7 +1280,7 @@ static void mram_init (mram_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static fsp_err_t mram_transition_to_read_mode (mram_instance_ctrl_t * p_ctrl)
 {
-    /* See "Transition to Read Mode": Section 60.7.4.3 of the RA8P1 manual R01UH1064EJ0100. */
+    /* See "Transition to Read Mode" in the MRAM section of the relevant hardware manual. */
     /* MRDY and CMDLK are checked after the previous commands complete and do not need to be checked again. */
     fsp_err_t err = FSP_SUCCESS;
 
@@ -1344,7 +1348,7 @@ static fsp_err_t mram_reset (mram_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static fsp_err_t mram_stop (mram_instance_ctrl_t * p_ctrl)
 {
-    /* See "Forced Stop Command": Section 60.7.4.7 of the RA8P1 manual R01UH1064EJ0100. If the CMDLK bit
+    /* See "Forced Stop Command" in the MRAM section of the relevant hardware manual. If the CMDLK bit
      * is still set after issuing the force stop command return an error. */
     volatile uint32_t wait_count = p_ctrl->timeout_maci_command;
 
@@ -1442,7 +1446,7 @@ static fsp_err_t mram_configuration_area_write (mram_instance_ctrl_t * p_ctrl,
 {
     volatile uint32_t timeout = p_ctrl->timeout_configuration_set;
 
-    /* See "Configuration Set Command": Section 60.7.4.8 of the RA8P1 manual R01UH1064EJ0100. */
+    /* See "Configuration Set Command" in the MRAM section of the relevant hardware manual. */
 
     R_MRMS->MSADDR = mram_address;
 
@@ -1473,7 +1477,7 @@ static fsp_err_t mram_configuration_area_write (mram_instance_ctrl_t * p_ctrl,
 
 /*******************************************************************************************************************//**
  * This function switches the peripheral to P/E mode for Extra MRAM.
- * See "Transition to Extra MRAM Program Mode": Section 60.7.4.2 of the RA8P1 manual R01UH1064EJ0100.
+ * See "Transition to Extra MRAM Program Mode" in the MRAM section of the relevant hardware manual.
  **********************************************************************************************************************/
 static void mram_enter_pe_mode (void)
 {

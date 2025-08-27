@@ -91,7 +91,7 @@ int mbedtls_internal_sha3_process_ext (mbedtls_sha3_context * ctx,
         InData_MsgLen[0]         = r_sce_byte_to_bit_convert_upper(ctx->total[0]);
         InData_MsgLen[1]         = r_sce_byte_to_bit_convert_lower(ctx->total[0]);
         if (FSP_SUCCESS !=
-            HW_SCE_Sha3GenerateMessageDigestSubAdaptor(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0],
+            HW_SCE_Sha3GenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0],
                                                        InData_MsgLen, (uint32_t *) &ctx->state[0], outbuff_digest_ptr,
                                                        (uint32_t *) &ctx->rsip_internal_state[0],
                                                        BYTES_TO_WORDS(len)))
@@ -102,7 +102,7 @@ int mbedtls_internal_sha3_process_ext (mbedtls_sha3_context * ctx,
     else if (SCE_OEM_CMD_HASH_RESUME_TO_SUSPEND == ctx->sce_operation_state)
     {
         if (FSP_SUCCESS !=
-            HW_SCE_Sha3GenerateMessageDigestSubAdaptor(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
+            HW_SCE_Sha3GenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
                                                        (uint32_t *) &ctx->rsip_internal_state[0], outbuff_digest_ptr,
                                                        (uint32_t *) &ctx->rsip_internal_state[0],
                                                        BYTES_TO_WORDS(len)))
@@ -113,7 +113,7 @@ int mbedtls_internal_sha3_process_ext (mbedtls_sha3_context * ctx,
     else if (SCE_OEM_CMD_HASH_RESUME_TO_FINAL == ctx->sce_operation_state)
     {
         if (FSP_SUCCESS !=
-            HW_SCE_Sha3GenerateMessageDigestSubAdaptor(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
+            HW_SCE_Sha3GenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t *) &data[0], NULL,
                                                        (uint32_t *) &ctx->rsip_internal_state[0], outbuff_digest_ptr,
                                                        (uint32_t *) &ctx->rsip_internal_state[0],
                                                        BYTES_TO_WORDS(len)))
@@ -131,7 +131,7 @@ int mbedtls_internal_sha3_process_ext (mbedtls_sha3_context * ctx,
         InData_MsgLen[1] = r_sce_byte_to_bit_convert_lower(ctx->total[0]);
 
         if (FSP_SUCCESS !=
-            HW_SCE_Sha3GenerateMessageDigestSubAdaptor(sce_hash_type, sce_hash_cmd, (uint32_t const *) &data[0],
+            HW_SCE_Sha3GenerateMessageDigestSubGeneral(sce_hash_type, sce_hash_cmd, (uint32_t const *) &data[0],
                                                        InData_MsgLen, &ctx->rsip_internal_state[0], outbuff_digest_ptr,
                                                        &ctx->rsip_internal_state[0],
                                                        BYTES_TO_WORDS(len)))

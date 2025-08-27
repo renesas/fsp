@@ -14,86 +14,91 @@
  * Macro definitions
  *********************************************************************************************************************/
 
-#define SCI_LIN_FRAME_ID_MASK                   (0x3FU)
+#define SCI_LIN_FRAME_ID_MASK                     (0x3FU)
 
 /* "LIN" in ASCII.  Used to determine if the control block is open. */
-#define SCI_LIN_OPEN                            (0x4C494EU)
+#define SCI_LIN_OPEN                              (0x4C494EU)
 
 /* Max/Min value of break field length */
-#define SCI_LIN_MAX_TIMER_INTERVAL              (0x10000)
+#define SCI_LIN_MAX_TIMER_INTERVAL                (0x10000)
 
 /* Range of LIN timer supported TCSS values */
-#define SCI_LIN_TCSS_MIN                        (SCI_LIN_TIMER_DIV_1)
-#define SCI_LIN_TCSS_MAX                        (SCI_LIN_TIMER_DIV_128)
-#define SCI_LIN_TCSS_MASK                       (0x07U)
+#define SCI_LIN_TCSS_MIN                          (SCI_LIN_TIMER_DIV_1)
+#define SCI_LIN_TCSS_MAX                          (SCI_LIN_TIMER_DIV_128)
+#define SCI_LIN_TCSS_MASK                         (0x07U)
 
 /* Max value of CKS for setting baud rate */
-#define SCI_LIN_CKS_MAX                         (3U)
+#define SCI_LIN_CKS_MAX                           (3U)
 
-#define SCI_LIN_MIN_BAUD_DIVISOR_SHIFT          (5)
+#define SCI_LIN_MIN_BAUD_DIVISOR_SHIFT            (5)
 
 /* Used to validate the checksum of received data */
-#define SCI_LIN_CHECKSUM_OK                     (0xFFU)
+#define SCI_LIN_CHECKSUM_OK                       (0xFFU)
 
 /* LIN Sync Word (Control Field 0) */
-#define SCI_LIN_SYNC                            (0x55U)
+#define SCI_LIN_SYNC                              (0x55U)
 
 /* Header data length */
-#define SCI_LIN_HEADER_NUM_BYTES                (2U)
+#define SCI_LIN_HEADER_NUM_BYTES                  (2U)
 
 /* SCI SCR register initial value */
-#define SCI_LIN_SCR_INITIAL_VALUE               (0U)
+#define SCI_LIN_SCR_INITIAL_VALUE                 (0U)
 
 /* SCI CR1 register masks */
-#define SCI_LIN_CR1_MASK_SLAVE                  (R_SCI0_CR1_BFE_Msk | R_SCI0_CR1_CF0RE_Msk)
+#define SCI_LIN_CR1_MASK_SLAVE                    (R_SCI0_CR1_BFE_Msk | R_SCI0_CR1_CF0RE_Msk)
 
 /* SCI CR3 register masks */
-#define SCI_LIN_CR3_MASK_SLAVE                  (R_SCI0_CR3_SDST_Msk)
+#define SCI_LIN_CR3_MASK_SLAVE                    (R_SCI0_CR3_SDST_Msk)
 
 /* SCI CF0DR register masks */
-#define SCI_LIN_CF0DR_MASK_SLAVE                (SCI_LIN_SYNC)
+#define SCI_LIN_CF0DR_MASK_SLAVE                  (SCI_LIN_SYNC)
 
 /* SCI CF0CR register masks */
-#define SCI_LIN_CF0CR_MASK_SLAVE                (0xFFU)
+#define SCI_LIN_CF0CR_MASK_SLAVE                  (0xFFU)
 
 /* SCI SCMR register masks */
-#define SCI_LIN_SCMR_DEFAULT_VALUE              (0xF2U)
+#define SCI_LIN_SCMR_DEFAULT_VALUE                (0xF2U)
 
 /* SCI PCR register masks */
-#define SCI_LIN_PCR_DEFAULT_VALUE               (0U)
+#define SCI_LIN_PCR_DEFAULT_VALUE                 (0U)
 
 /* SCI STCR register masks */
-#define SCI_LIN_STCR_CLEAR_MASK                 (R_SCI0_STCR_BFDCL_Msk | R_SCI0_STCR_CF0MCL_Msk |  \
-                                                 R_SCI0_STCR_CF1MCL_Msk | R_SCI0_STCR_PIBDCL_Msk | \
-                                                 R_SCI0_STCR_BCDCL_Msk | R_SCI0_STCR_AEDCL_Msk)
-#define SCI_LIN_ERROR_STCR_EVENTS_CLEAR_MASK    (R_SCI0_STCR_BFDCL_Msk | R_SCI0_STCR_BCDCL_Msk | \
-                                                 R_SCI0_STCR_AEDCL_Msk)
+#define SCI_LIN_STCR_CLEAR_MASK                   (R_SCI0_STCR_BFDCL_Msk | R_SCI0_STCR_CF0MCL_Msk |  \
+                                                   R_SCI0_STCR_CF1MCL_Msk | R_SCI0_STCR_PIBDCL_Msk | \
+                                                   R_SCI0_STCR_BCDCL_Msk | R_SCI0_STCR_AEDCL_Msk)
+#define SCI_LIN_ERROR_STCR_EVENTS_CLEAR_MASK      (R_SCI0_STCR_BFDCL_Msk | R_SCI0_STCR_BCDCL_Msk | \
+                                                   R_SCI0_STCR_AEDCL_Msk)
 
 /* SCI SSR register masks */
-#define SCI_LIN_SSR_CLEAR_MASK                  (R_SCI0_SSR_PER_Msk | R_SCI0_SSR_FER_Msk | \
-                                                 R_SCI0_SSR_ORER_Msk | R_SCI0_SSR_RDRF_Msk)
-#define SCI_LIN_ERROR_SSR_EVENTS_CLEAR_MASK     (SCI_LIN_SSR_CLEAR_MASK)
+#define SCI_LIN_SSR_CLEAR_MASK                    (R_SCI0_SSR_PER_Msk | R_SCI0_SSR_FER_Msk | \
+                                                   R_SCI0_SSR_ORER_Msk | R_SCI0_SSR_RDRF_Msk)
+#define SCI_LIN_ERROR_SSR_EVENTS_CLEAR_MASK       (SCI_LIN_SSR_CLEAR_MASK)
 
 /* SCI ICR register masks for Slave */
-#define SCI_LIN_ICR_CONTROL_FIELD_MASK          (R_SCI0_ICR_CF0MIE_Msk | R_SCI0_ICR_CF1MIE_Msk)
+#define SCI_LIN_ICR_CONTROL_FIELD_MASK            (R_SCI0_ICR_CF0MIE_Msk | R_SCI0_ICR_CF1MIE_Msk)
 
 /* SCI TMR register masks */
-#define SCI_LIN_TIMER_MODE                      (0U)
-#define SCI_LIN_BREAK_FIELD_OUTPUT_MODE         (2U)
-#define SCI_LIN_TIMER_DETERMINATION_MASK        (1U << R_SCI0_TMR_TOMS_Pos)
-#define SCI_LIN_TIMER_OUTPUT_MASK               (2U << R_SCI0_TMR_TOMS_Pos)
+#define SCI_LIN_TIMER_MODE                        (0U)
+#define SCI_LIN_BREAK_FIELD_DETERMINATION_MODE    (1U)
+#define SCI_LIN_BREAK_FIELD_OUTPUT_MODE           (2U)
 
 /* SCI FCR register default value */
-#define SCI_LIN_FCR_DEFAULT_VALUE               (0xF800U)
+#define SCI_LIN_FCR_DEFAULT_VALUE                 (0xF800U)
 
 /* SCI SIMR1 register default value */
-#define SCI_LIN_SIMR1_DEFAULT_VALUE             (0U)
+#define SCI_LIN_SIMR1_DEFAULT_VALUE               (0U)
 
 /* SCI SPMR register default value */
-#define SCI_LIN_SPMR_DEFAULT_VALUE              (0U)
+#define SCI_LIN_SPMR_DEFAULT_VALUE                (0U)
 
 /* SCI MDDR register default value */
-#define SCI_LIN_MDDR_DEFAULT_VALUE              (0xFFU)
+#define SCI_LIN_MDDR_DEFAULT_VALUE                (0xFFU)
+
+/* Number of consecutive measurements used to synchronize the bit rate */
+#define SCI_LIN_SYNC_EDGES                        (8U)
+
+/* Number of bits to wait before CF1 detection */
+#define SCI_LIN_CF1_WAIT_BIT_COUNT                (15U)
 
 /**********************************************************************************************************************
  * Typedef definitions
@@ -158,11 +163,22 @@ static lin_event_t r_sci_lin_scix2_handler(sci_lin_instance_ctrl_t * const p_ctr
 
 #endif
 
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+static void r_sci_lin_scix3_handler(sci_lin_instance_ctrl_t * const p_ctrl);
+
+/* Auto Synchronization helper functions */
+static void r_sci_lin_scix3_synchronize(sci_lin_instance_ctrl_t * const p_ctrl, uint32_t baud_measurement);
+static void r_sci_lin_scix3_reset(sci_lin_instance_ctrl_t * const p_ctrl);
+
+#endif
+
 /* Baud and timing helper functions */
 static fsp_err_t r_sci_lin_baud_setting_calculate(sci_lin_baud_params_t const * const p_baud_params,
                                                   sci_lin_baud_setting_t * const      p_baud_setting);
 static fsp_err_t r_sci_lin_timer_setting_calculate(sci_lin_baud_params_t const * const p_baud_params,
                                                    sci_lin_timer_setting_t * const     p_timer_setting);
+static fsp_err_t r_sci_lin_baud_and_timer_setting_calculate(sci_lin_baud_params_t const * const p_baud_params,
+                                                            sci_lin_baud_setting_t * const      p_baud_setting);
 
 static void r_sci_lin_flags_clear(R_SCI0_Type * const p_reg, uint8_t ssr, uint8_t stcr);
 static void r_sci_lin_break_field_detection_reset(sci_lin_instance_ctrl_t * const p_ctrl);
@@ -178,6 +194,7 @@ void sci_lin_eri_isr(void);
 void sci_lin_scix0_isr(void);
 void sci_lin_scix1_isr(void);
 void sci_lin_scix2_isr(void);
+void sci_lin_scix3_isr(void);
 
 /**********************************************************************************************************************
  * Global variables
@@ -244,7 +261,7 @@ fsp_err_t R_SCI_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const
     FSP_ERROR_RETURN(p_ctrl->open != SCI_LIN_OPEN, FSP_ERR_ALREADY_OPEN);
 
     /* Make sure this channel supports LIN Mode (some MCUs do not support it on all SCI channels) */
-    FSP_ERROR_RETURN(BSP_FEATURE_SCI_LIN_CHANNELS & (1U << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
+    FSP_ERROR_RETURN(BSP_FEATURE_SCI_LIN_CHANNELS_MASK & (1U << p_cfg->channel), FSP_ERR_INVALID_CHANNEL);
 
     sci_lin_extended_cfg_t const * const p_extend = (sci_lin_extended_cfg_t *) p_cfg->p_extend;
 
@@ -254,10 +271,17 @@ fsp_err_t R_SCI_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const
     FSP_ASSERT(p_extend->tei_irq >= 0);
     FSP_ASSERT(p_extend->eri_irq >= 0);
     FSP_ASSERT(p_extend->scix0_irq >= 0);
-    if (LIN_MODE_SLAVE == p_cfg->mode)
-    {
-        FSP_ASSERT(p_extend->scix1_irq >= 0);
-    }
+
+    /* Reception Control Field 1 must be disabled in master mode and enabled in slave mode */
+    FSP_ERROR_RETURN((LIN_MODE_MASTER == p_cfg->mode) ^ (p_extend->scix1_irq >= 0), FSP_ERR_INVALID_MODE);
+
+ #if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /*  Auto Synchronization not supported in master mode */
+    FSP_ERROR_RETURN((LIN_MODE_SLAVE == p_cfg->mode) || (p_extend->scix3_irq < 0), FSP_ERR_INVALID_MODE);
+ #endif
+#else
+    sci_lin_extended_cfg_t const * const p_extend = (sci_lin_extended_cfg_t *) p_cfg->p_extend;
 #endif
 
     /* Initialize control block */
@@ -269,6 +293,26 @@ fsp_err_t R_SCI_LIN_Open (lin_ctrl_t * const p_api_ctrl, lin_cfg_t const * const
 
     /* Initialize variables preparing for transmission/reception */
     r_sci_lin_transfer_state_reset(p_ctrl);
+
+    /* Calculate timer frequency */
+    sci_lin_timer_divider_t timer_divider = (sci_lin_timer_divider_t) p_extend->p_baud_setting->timer_setting.tcss;
+    uint32_t                system_clock  = R_FSP_SystemClockHzGet(BSP_FEATURE_SCI_CLOCK);
+    p_ctrl->timer_freq_hz = (system_clock / (1U << timer_divider));
+
+#if SCI_LIN_CFG_PARAM_CHECKING_ENABLE
+
+    /* Report error if break duration ticks exceed UINT32_MAX */
+    uint64_t break_duration_ticks;
+    if ((LIN_MODE_MASTER == p_cfg->mode) || (p_extend->scix3_irq < 0))
+    {
+        break_duration_ticks = (uint64_t) p_ctrl->timer_freq_hz * p_extend->break_bits;
+    }
+    else
+    {
+        break_duration_ticks = (uint64_t) system_clock * p_extend->break_bits;
+    }
+    FSP_ERROR_RETURN(break_duration_ticks <= UINT32_MAX, FSP_ERR_INVALID_ARGUMENT);
+#endif
 
     /* Configure, but do not enable the interrupts in the NVIC */
     r_sci_lin_irqs_cfg(p_ctrl);
@@ -447,6 +491,12 @@ fsp_err_t R_SCI_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
     /* Reset any in progress transmission/reception */
     r_sci_lin_transfer_state_reset(p_ctrl);
 
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    r_sci_lin_scix3_reset(p_ctrl);
+#endif
+
     /* Reset break field detection in slave mode */
     r_sci_lin_break_field_detection_reset(p_ctrl);
 
@@ -541,22 +591,7 @@ fsp_err_t R_SCI_LIN_BaudCalculate (sci_lin_baud_params_t const * const p_baud_pa
     FSP_ERROR_RETURN((1U <= p_baud_params->delimiter_bits), FSP_ERR_INVALID_ARGUMENT);
 #endif
 
-    fsp_err_t err;
-
-    /* Use temp variable in order to not update output arg unless both baud and timer calculations succeed */
-    sci_lin_baud_setting_t tmp_baud_setting;
-
-    err = r_sci_lin_baud_setting_calculate(p_baud_params, &tmp_baud_setting);
-
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    err = r_sci_lin_timer_setting_calculate(p_baud_params, &tmp_baud_setting.timer_setting);
-
-    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
-
-    *p_baud_setting = tmp_baud_setting;
-
-    return FSP_SUCCESS;
+    return r_sci_lin_baud_and_timer_setting_calculate(p_baud_params, p_baud_setting);
 }
 
 /******************************************************************************************************************//**
@@ -884,6 +919,36 @@ static fsp_err_t r_sci_lin_read_write_parameter_checking (sci_lin_instance_ctrl_
 #endif
 
 /******************************************************************************************************************//**
+ * Calculates both baud rate and timer register settings
+ *
+ * @param[in] p_baud_params    Function inputs required to calculate the baud rate
+ * @param[out] p_baud_setting  Baud rate calculation result
+ *
+ * @retval  FSP_SUCCESS                 Calculation succeeded
+ * @retval  FSP_ERR_INVALID_ARGUMENT    Calculation failed/register settings not possible
+ *********************************************************************************************************************/
+static fsp_err_t r_sci_lin_baud_and_timer_setting_calculate (sci_lin_baud_params_t const * const p_baud_params,
+                                                             sci_lin_baud_setting_t * const      p_baud_setting)
+{
+    fsp_err_t err;
+
+    /* Use temp variable in order to not update output arg unless both baud and timer calculations succeed */
+    sci_lin_baud_setting_t tmp_baud_setting;
+
+    err = r_sci_lin_baud_setting_calculate(p_baud_params, &tmp_baud_setting);
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    err = r_sci_lin_timer_setting_calculate(p_baud_params, &tmp_baud_setting.timer_setting);
+
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    *p_baud_setting = tmp_baud_setting;
+
+    return FSP_SUCCESS;
+}
+
+/******************************************************************************************************************//**
  * Calculates the baud rate register settings
  *
  * @param[in] p_baud_params    Function inputs required to calculate the baud rate
@@ -943,15 +1008,17 @@ static fsp_err_t r_sci_lin_timer_setting_calculate (sci_lin_baud_params_t const 
                                                     sci_lin_timer_setting_t * const     p_timer_setting)
 {
     sci_lin_timer_divider_t tcss;
-    uint32_t                break_field = SCI_LIN_MAX_TIMER_INTERVAL;
+    uint32_t                break_field  = SCI_LIN_MAX_TIMER_INTERVAL;
+    uint32_t                system_clock = R_FSP_SystemClockHzGet(BSP_FEATURE_SCI_CLOCK);
     uint32_t                lin_timer_freq_hz;
 
     /* TCSS is calculated so that the smallest divider that produces a valid value for Break field is selected */
     for (tcss = SCI_LIN_TCSS_MIN; tcss <= SCI_LIN_TCSS_MAX; tcss++)
     {
-        lin_timer_freq_hz = (R_FSP_SystemClockHzGet(BSP_FEATURE_SCI_CLOCK) / (1U << tcss));
-        break_field       =
-            (uint32_t) (((uint64_t) lin_timer_freq_hz * p_baud_params->break_bits) / p_baud_params->baudrate);
+        lin_timer_freq_hz = (system_clock / (1U << tcss));
+
+        /* Compute break field */
+        break_field = (lin_timer_freq_hz * p_baud_params->break_bits) / p_baud_params->baudrate;
 
         if (break_field <= SCI_LIN_MAX_TIMER_INTERVAL)
         {
@@ -961,9 +1028,8 @@ static fsp_err_t r_sci_lin_timer_setting_calculate (sci_lin_baud_params_t const 
 
     FSP_ERROR_RETURN(break_field <= SCI_LIN_MAX_TIMER_INTERVAL, FSP_ERR_INVALID_ARGUMENT);
 
-    /* Calculate break delimiter */
-    uint32_t break_delimiter =
-        (uint32_t) (((uint64_t) lin_timer_freq_hz * p_baud_params->delimiter_bits) / p_baud_params->baudrate);
+    /* Compute break delimiter */
+    uint32_t break_delimiter = (lin_timer_freq_hz * p_baud_params->delimiter_bits) / p_baud_params->baudrate;
 
     FSP_ERROR_RETURN(break_delimiter <= SCI_LIN_MAX_TIMER_INTERVAL, FSP_ERR_INVALID_ARGUMENT);
 
@@ -1101,9 +1167,9 @@ static uint8_t r_sci_lin_checksum_calculate (uint8_t               id,
 /******************************************************************************************************************//**
  * Initializes the SCI common and LIN register settings and enable LIN interrupts.
  *
- * Initial settings are based on Figure 27.103 "Example of Start Frame transmission" and Figure 27.107 "Sample
- * flowchart for reception of a Start Frame" of the RA4M2 manual R01UH0892EJ0130 and related Table 27.28 "Example flow
- * of SCI initialization in asynchronous mode with non-FIFO selected".
+ * Initial settings are based on Figure "Example of Start Frame transmission" and Figure "Sample
+ * flowchart for reception of a Start Frame" and related Table "Example flow of SCI initialization
+ * in asynchronous mode with non-FIFO selected" in the SCI section of the relevant hardware manual.
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
  *********************************************************************************************************************/
@@ -1113,6 +1179,7 @@ static void r_sci_lin_hw_configure (sci_lin_instance_ctrl_t * const p_ctrl)
     sci_lin_extended_cfg_t const * const p_extend = (sci_lin_extended_cfg_t *) p_cfg->p_extend;
     R_SCI0_Type * p_reg = p_ctrl->p_reg;
 
+    uint8_t cr0 = 0;
     uint8_t cr2 = 0;
     uint8_t icr = R_SCI0_ICR_BFDIE_Msk;
     uint8_t tmr;
@@ -1135,17 +1202,17 @@ static void r_sci_lin_hw_configure (sci_lin_instance_ctrl_t * const p_ctrl)
         p_reg->SCF1DR = p_extend->filter_setting.secondary_compare_data;
         p_reg->CF0CR  = SCI_LIN_CF0CR_MASK_SLAVE;
         p_reg->CF0DR  = SCI_LIN_CF0DR_MASK_SLAVE;
-        tmr           = SCI_LIN_TIMER_DETERMINATION_MASK;
+        tmr           = SCI_LIN_BREAK_FIELD_DETERMINATION_MODE << R_SCI0_TMR_TOMS_Pos;
         icr          |= SCI_LIN_ICR_CONTROL_FIELD_MASK;
         icr          |= p_extend->filter_setting.priority_interrupt_enable << R_SCI0_ICR_PIBDIE_Pos;
     }
     else
     {
-        tmr = SCI_LIN_TIMER_OUTPUT_MASK;
+        tmr = SCI_LIN_BREAK_FIELD_OUTPUT_MODE << R_SCI0_TMR_TOMS_Pos;
     }
 
     /* Configure LIN timer divider */
-    tmr |= (p_extend->baud_setting.timer_setting.tcss << R_SCI0_TMR_TCSS_Pos);
+    tmr |= (p_extend->p_baud_setting->timer_setting.tcss << R_SCI0_TMR_TCSS_Pos);
 
 #if SCI_LIN_BUS_CONFLICT_DETECTION_SUPPORT_ENABLE
 
@@ -1159,21 +1226,42 @@ static void r_sci_lin_hw_configure (sci_lin_instance_ctrl_t * const p_ctrl)
     /* Configure digital filter clock */
     cr2 |= (uint8_t) (p_extend->digital_filter_clock << R_SCI0_CR2_DFCS_Pos);
 
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Check whether or not auto synchronize is enabled */
+    if (p_extend->scix3_irq >= 0)
+    {
+        /* Configure SCIX3 interrupt. */
+        icr |= (uint8_t) R_SCI0_ICR_AEDIE_Msk;
+
+        /* Configure auto synchronization setting. */
+        cr0 |= (uint8_t) R_SCI0_CR0_BRME_Msk;
+
+        /* Init current baud rate */
+        uint32_t freq_hz       = R_FSP_SystemClockHzGet(BSP_FEATURE_SCI_CLOCK);
+        uint32_t divisor_shift = SCI_LIN_MIN_BAUD_DIVISOR_SHIFT + \
+                                 ((uint32_t) p_extend->p_baud_setting->cks << 1U) -
+                                 (uint32_t) p_extend->p_baud_setting->semr_baudrate_bits_b.abcs;
+        p_ctrl->current_baudrate = freq_hz / ((uint32_t) (p_extend->p_baud_setting->brr + 1) * (1U << divisor_shift));
+    }
+#endif
+
     /* Set required LIN settings. */
+    p_reg->CR0  = cr0;
     p_reg->CR2  = cr2;
     p_reg->PCR  = SCI_LIN_PCR_DEFAULT_VALUE;
     p_reg->TMR  = tmr;
-    p_reg->TPRE = p_extend->baud_setting.timer_setting.break_field_tpre;
-    p_reg->TCNT = p_extend->baud_setting.timer_setting.break_field_tcnt;
+    p_reg->TPRE = p_extend->p_baud_setting->timer_setting.break_field_tpre;
+    p_reg->TCNT = p_extend->p_baud_setting->timer_setting.break_field_tcnt;
 
     /* Write the settings to the SCI control registers in the order specified by the initialization flow. */
     p_reg->FCR   = SCI_LIN_FCR_DEFAULT_VALUE;
     p_reg->SIMR1 = SCI_LIN_SIMR1_DEFAULT_VALUE;
     p_reg->SPMR  = SCI_LIN_SPMR_DEFAULT_VALUE;
-    p_reg->SMR   = (uint8_t) (p_extend->baud_setting.cks << R_SCI0_SMR_CKS_Pos);
+    p_reg->SMR   = (uint8_t) (p_extend->p_baud_setting->cks << R_SCI0_SMR_CKS_Pos);
     p_reg->SCMR  = SCI_LIN_SCMR_DEFAULT_VALUE;
-    p_reg->SEMR  = (uint8_t) (R_SCI0_SEMR_RXDESEL_Msk | p_extend->baud_setting.semr_baudrate_bits);
-    p_reg->BRR   = p_extend->baud_setting.brr;
+    p_reg->SEMR  = (uint8_t) (R_SCI0_SEMR_RXDESEL_Msk | p_extend->p_baud_setting->semr_baudrate_bits);
+    p_reg->BRR   = p_extend->p_baud_setting->brr;
     p_reg->MDDR  = SCI_LIN_MDDR_DEFAULT_VALUE;
 
     /* Enable reception */
@@ -1283,6 +1371,12 @@ static void r_sci_lin_irqs_cfg (sci_lin_instance_ctrl_t * const p_ctrl)
 #if SCI_LIN_BUS_CONFLICT_DETECTION_SUPPORT_ENABLE
     r_sci_lin_irq_cfg(p_extend->scix2_irq);
 #endif
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+    if (LIN_MODE_SLAVE == p_cfg->mode)
+    {
+        r_sci_lin_irq_cfg(p_extend->scix3_irq);
+    }
+#endif
 }
 
 /******************************************************************************************************************//**
@@ -1314,13 +1408,17 @@ static inline void r_sci_lin_irqs_enable_disable (sci_lin_instance_ctrl_t * cons
 #if SCI_LIN_BUS_CONFLICT_DETECTION_SUPPORT_ENABLE
     irqEnableDisableFunc(p_extend->scix2_irq, p_extend->scix2_ipl, p_ctrl);
 #endif
+
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+    irqEnableDisableFunc(p_extend->scix3_irq, p_extend->scix3_ipl, p_ctrl);
+#endif
 }
 
 /*******************************************************************************************************************//**
  * Transmit the LIN frame
  *
- *  Header transmission is based on flow chart process in Figure 27.103
- * "Example of Start Frame transmission" in RA4M2 manual R01UH0892EJ0130.
+ *  Header transmission is based on flow chart process in Figure
+ * "Example of Start Frame transmission" in the SCI section of the relevant hardware manual.
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
  * @param[in]  p_transfer_params         Pointer to the transfer parameters for the transfer
@@ -1403,6 +1501,96 @@ static fsp_err_t r_sci_lin_write (sci_lin_instance_ctrl_t * const     p_ctrl,
     return FSP_SUCCESS;
 }
 
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+/******************************************************************************************************************//**
+ * Calculates the detected baud rate and updates the baud rate and break field threshold register settings to
+ * synchronize with the master's rate.
+ *
+ * @param[in]  p_ctrl                    Pointer to driver control block
+ * @param[in]  baud_measurement          Baudrate synchronize measurement
+ *********************************************************************************************************************/
+static void r_sci_lin_scix3_synchronize (sci_lin_instance_ctrl_t * const p_ctrl, uint32_t baud_measurement)
+{
+    R_SCI0_Type * const p_reg = p_ctrl->p_reg;
+    sci_lin_extended_cfg_t const * const p_extend       = (sci_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+    sci_lin_baud_setting_t             * p_baud_setting = p_extend->p_baud_setting;
+
+    sci_lin_baud_params_t baud_params =
+    {
+        baud_measurement,
+        p_extend->break_bits,
+        p_extend->delimiter_bits,
+        (sci_lin_base_clock_t) p_extend->p_baud_setting->semr_baudrate_bits_b.abcs,
+    };
+
+    /* Calculate new baud and timer settings. Only update register settings if they are possible in the hardware */
+    if (FSP_SUCCESS == r_sci_lin_baud_and_timer_setting_calculate(&baud_params, p_baud_setting))
+    {
+        /* Disable LIN mode for re-initialization */
+        p_reg->ESMER = 0;
+        p_reg->TCR   = 0;
+
+        /* Disable bit rate measurement */
+        p_reg->CR0_b.BRME = 0;
+
+        /* Disable start frame detection */
+        p_reg->CR3 = 0;
+
+        /* Clearing and resetting RE cancels the in-progress reception. Disable BFE and CF0RE
+         * because we have already received them, and prepare to receive a CF1-only start frame */
+        p_reg->CR1 &= (uint8_t) ~SCI_LIN_CR1_MASK_SLAVE;
+
+        /* Update timer frequency */
+        sci_lin_timer_divider_t timer_divider = (sci_lin_timer_divider_t) p_baud_setting->timer_setting.tcss;
+        p_ctrl->timer_freq_hz = (R_FSP_SystemClockHzGet(BSP_FEATURE_SCI_CLOCK) / (1U << timer_divider));
+        uint8_t tmr = p_reg->TMR;
+        p_reg->TMR = (tmr & (uint8_t) ~R_SCI0_TMR_TCSS_Msk) | (uint8_t) (timer_divider << R_SCI0_TMR_TCSS_Pos);
+
+        /* Save current baud rate */
+        p_ctrl->current_baudrate = baud_measurement;
+
+        /* Apply new baud setting. BRR, SMR, SEMR can only be written to when SCR.TE and SCR.RE are 0.
+         * TE is already 0, but we must clear RE here to update the baud settings. */
+        uint8_t scr = p_reg->SCR & (uint8_t) ~R_SCI0_SCR_RIE_Msk;
+        p_reg->SCR  = scr & (uint8_t) ~R_SCI0_SCR_RE_Msk;
+        p_reg->SMR  = (uint8_t) (p_baud_setting->cks << R_SCI0_SMR_CKS_Pos);
+        p_reg->SEMR = (uint8_t) (R_SCI0_SEMR_RXDESEL_Msk | p_baud_setting->semr_baudrate_bits);
+        p_reg->BRR  = p_baud_setting->brr;
+
+        /* Compute 1.5 bytes (15 Tbit) duration to wait whether CF1 is detected. */
+        uint32_t delay_time = (p_ctrl->timer_freq_hz * SCI_LIN_CF1_WAIT_BIT_COUNT) / baud_measurement;
+        delay_time = (delay_time < SCI_LIN_MAX_TIMER_INTERVAL) ? delay_time : (SCI_LIN_MAX_TIMER_INTERVAL - 1);
+
+        uint8_t delay_tcnt = (uint8_t) (delay_time >> 8U);
+        uint8_t delay_tpre = (uint8_t) (((delay_time + delay_tcnt) / (delay_tcnt + 1)) - 1);
+
+        /* Switch to timer mode to time the CF1 timeout */
+        p_reg->TMR_b.TOMS = SCI_LIN_TIMER_MODE;
+
+        /* Setting counter for delay time */
+        p_reg->TPRE = delay_tpre;
+        p_reg->TCNT = delay_tcnt;
+
+        /* Discard received data and clear the CF0 received flag to advance start frame reception state */
+        r_sci_lin_flags_clear(p_reg, R_SCI0_SSR_RDRF_Msk, R_SCI0_STCR_CF0MCL_Msk);
+
+        /* Enable the timer to start counting 15 Tbit */
+        p_reg->TCR = R_SCI0_TCR_TCST_Msk;
+
+        /* Re-enable reception */
+        p_reg->SCR = scr;
+
+        /* Re-enable LIN mode. */
+        p_reg->ESMER = R_SCI0_ESMER_ESME_Msk;
+
+        /* Restart reception. Expect a start frame with CF1 only. */
+        p_reg->CR3 = SCI_LIN_CR3_MASK_SLAVE;
+    }
+}
+
+#endif
+
 /******************************************************************************************************************//**
  * Handle error interrupt
  *
@@ -1415,9 +1603,9 @@ static lin_event_t r_sci_lin_eri_handler (sci_lin_instance_ctrl_t * const p_ctrl
     uint8_t       scr   = p_reg->SCR;
     uint8_t       ssr   = p_reg->SSR;
 
-    /* Begin error handling according to flow chart process in Figure 27.125
+    /* Begin error handling according to flow chart process in Figure
      * "Example of Flowchart for Receive Error Handling (during Reception of the Start Frame)"
-     * in RA4M2 manual R01UH0892EJ0130. */
+     * in the SCI section of the relevant hardware manual. */
 
     /* Stop counting by the timer */
     p_reg->TCR = 0;
@@ -1507,6 +1695,11 @@ lin_event_t r_sci_lin_rxi_handler (sci_lin_instance_ctrl_t * const p_ctrl)
             p_ctrl->rx_bytes_expected = 0;
             p_ctrl->p_data            = NULL;
             p_reg->SCR_b.RIE          = 0;
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+            /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+            r_sci_lin_scix3_reset(p_ctrl);
+#endif
 
             /* Reset break field detection in slave mode */
             r_sci_lin_break_field_detection_reset(p_ctrl);
@@ -1616,11 +1809,11 @@ static void r_sci_lin_scix0_handler (sci_lin_instance_ctrl_t * const p_ctrl)
             p_reg->TMR_b.TOMS = SCI_LIN_TIMER_MODE;
 
             /* Setting counter for break delimiter */
-            p_reg->TPRE = p_extend->baud_setting.timer_setting.delimiter_tpre;
-            p_reg->TCNT = p_extend->baud_setting.timer_setting.delimiter_tcnt;
+            p_reg->TPRE = p_extend->p_baud_setting->timer_setting.delimiter_tpre;
+            p_reg->TCNT = p_extend->p_baud_setting->timer_setting.delimiter_tcnt;
 
             /* Start the counter */
-            p_reg->TCR = 1;
+            p_reg->TCR = R_SCI0_TCR_TCST_Msk;
         }
         else
         {
@@ -1628,11 +1821,12 @@ static void r_sci_lin_scix0_handler (sci_lin_instance_ctrl_t * const p_ctrl)
             p_reg->TMR_b.TOMS = SCI_LIN_BREAK_FIELD_OUTPUT_MODE;
 
             /* Setting the counter as the original value for the next break field length */
-            p_reg->TPRE = p_extend->baud_setting.timer_setting.break_field_tpre;
-            p_reg->TCNT = p_extend->baud_setting.timer_setting.break_field_tcnt;
+            p_reg->TPRE = p_extend->p_baud_setting->timer_setting.break_field_tpre;
+            p_reg->TCNT = p_extend->p_baud_setting->timer_setting.break_field_tcnt;
 
             /* Disable transmit function, then re-enable it with TIE to generate a TXI interrupt request.
-             * Refer to Figure 27.104 "Example of Start Frame Transmission (2/2)" of the RA4M2 manual R01UH0892EJ0130 */
+             * Refer to Figure "Example of Start Frame Transmission (2/2)" in the SCI section of the
+             * relevant hardware manual. */
             p_reg->SCR &= (uint8_t) (~R_SCI0_SCR_TE_Msk);
             p_reg->SCR |= (uint8_t) (R_SCI0_SCR_TE_Msk | R_SCI0_SCR_TIE_Msk);
         }
@@ -1641,6 +1835,43 @@ static void r_sci_lin_scix0_handler (sci_lin_instance_ctrl_t * const p_ctrl)
     {
         /* Clear flags that may have occurred during previous frames to prepare for reception */
         r_sci_lin_flags_clear(p_reg, SCI_LIN_ERROR_SSR_EVENTS_CLEAR_MASK, SCI_LIN_ERROR_STCR_EVENTS_CLEAR_MASK);
+
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+        if (SCI_LIN_TIMER_MODE == p_reg->TMR_b.TOMS)
+        {
+            /* Disable LIN mode for re-initialization */
+            p_reg->ESMER = 0;
+            p_reg->TCR   = 0;
+
+            /* Switch to break field low width determination mode */
+            p_reg->TMR_b.TOMS = SCI_LIN_BREAK_FIELD_DETERMINATION_MODE;
+
+            /* Set the counter value for the next break field */
+            p_reg->TPRE = p_extend->p_baud_setting->timer_setting.break_field_tpre;
+            p_reg->TCNT = p_extend->p_baud_setting->timer_setting.break_field_tcnt;
+
+            /* Start the timer */
+            p_reg->TCR = R_SCI0_TCR_TCST_Msk;
+
+            /* Re-enable break field start frame receiving */
+            p_reg->CR1 |= (uint8_t) SCI_LIN_CR1_MASK_SLAVE;
+
+            /* Re-enable LIN mode. */
+            p_reg->ESMER = R_SCI0_ESMER_ESME_Msk;
+
+            /* Slave Start Frame Detection Start */
+            p_reg->CR3 = SCI_LIN_CR3_MASK_SLAVE;
+        }
+        else
+        {
+            /* Reset auto synchronization state before starting the next baudrate auto synchronize function */
+            p_ctrl->sync_bits_received = 0;
+            p_reg->CR0_b.BRME          = 1;
+
+            /* Enable reception interrupts to check if any framing error during auto synchronization */
+            p_reg->SCR |= R_SCI0_SCR_RIE_Msk;
+        }
+#endif
     }
 }
 
@@ -1653,16 +1884,46 @@ lin_event_t r_sci_lin_scix1_handler (sci_lin_instance_ctrl_t * const p_ctrl)
 {
     lin_event_t   event = LIN_EVENT_NONE;
     R_SCI0_Type * p_reg = p_ctrl->p_reg;
-    uint8_t       str   = p_reg->STR;
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+    sci_lin_extended_cfg_t const * const p_extend = (sci_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+#endif
+    uint8_t str = p_reg->STR;
 
     /* Check if control field 0 was received*/
     if (str & R_SCI0_STR_CF0MF_Msk)
     {
         /* Discard received data and clear the CF0 received flag to advance header reception state */
         r_sci_lin_flags_clear(p_reg, R_SCI0_SSR_RDRF_Msk, R_SCI0_STCR_CF0MCL_Msk);
+
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+        /* Disable bit rate measurement once CF0 is received. It will have been disabled already in the
+         * SCIX3 handler if bit rate measurement completed successfully. But it is possible for bit rate
+         * measurement to fail and the frame to still be received as long as the baud rates of sender
+         * and receiver are close enough. */
+        p_reg->CR0_b.BRME = 0;
+#endif
     }
     else if (str & (R_SCI0_STR_PIBDF_Msk | R_SCI0_STR_CF1MF_Msk))
     {
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+        if (SCI_LIN_TIMER_MODE == p_reg->TMR_b.TOMS)
+        {
+            /* Stop the timer counting */
+            p_reg->TCR = 0;
+
+            /* Switch to break field low width determination mode */
+            p_reg->TMR_b.TOMS = SCI_LIN_BREAK_FIELD_DETERMINATION_MODE;
+
+            /* Set the counter value for the next break field */
+            p_reg->TPRE = p_extend->p_baud_setting->timer_setting.break_field_tpre;
+            p_reg->TCNT = p_extend->p_baud_setting->timer_setting.break_field_tcnt;
+        }
+
+        /* Re-enable break field start frame receiving */
+        p_reg->CR1 |= (uint8_t) SCI_LIN_CR1_MASK_SLAVE;
+#endif
+
         /*  Clear CF1MF flag in the STR register */
         p_reg->STCR = R_SCI0_STCR_PIBDCL_Msk | R_SCI0_STCR_CF1MCL_Msk;
 
@@ -1717,10 +1978,139 @@ static lin_event_t r_sci_lin_scix2_handler (sci_lin_instance_ctrl_t * const p_ct
     /* Clear error conditions and discard RDR data. */
     r_sci_lin_flags_clear(p_reg, SCI_LIN_ERROR_SSR_EVENTS_CLEAR_MASK, SCI_LIN_ERROR_STCR_EVENTS_CLEAR_MASK);
 
+ #if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    r_sci_lin_scix3_reset(p_ctrl);
+ #endif
+
     /* Reset break field detection in slave mode */
     r_sci_lin_break_field_detection_reset(p_ctrl);
 
     return LIN_EVENT_ERR_BUS_COLLISION_DETECTED;
+}
+
+#endif
+
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+/******************************************************************************************************************//**
+ * Resets bit rate measurement for the next frame by clearing BRME, then resetting it at the same time.
+ *
+ * @param[in]  p_ctrl                    Pointer to driver control block
+ *********************************************************************************************************************/
+static void r_sci_lin_scix3_reset (sci_lin_instance_ctrl_t * const p_ctrl)
+{
+    sci_lin_extended_cfg_t const * const p_extend = (sci_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    if (p_extend->scix3_irq >= 0)
+    {
+        R_SCI0_Type * p_reg = p_ctrl->p_reg;
+
+        uint8_t cr0 = p_reg->CR0;
+
+        /* Stop bit rate measurement and start frame reception */
+        p_reg->CR0 = cr0 & (uint8_t) ~(R_SCI0_CR0_BRME_Msk);
+
+        /* Reset bit rate measurement for next frame */
+        p_reg->CR0 = cr0 | (uint8_t) (R_SCI0_CR0_BRME_Msk);
+    }
+}
+
+#endif
+
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+/******************************************************************************************************************//**
+ * Handles active edge detection when auto synchronization is enabled.
+ *
+ * The SCIX3 interrupt triggers on the rising edge of the first data bit of control field 0, and on each subsequent
+ * edge (rising or falling) of control field 0.
+ *
+ * @par Measurement Synchronization
+ *
+ * The TPRE/TCNT contains the duration, in LIN timer ticks, since the previous detected edge. Since the value of control
+ * field 0 is 0x55 (alternating ones and zeros), it can be used to measure the duration of each bit and update the
+ * baud rate and break field width register settings.
+ *
+ * Every time a control field 0 edge is received, its duration is added to an accumulated sum.
+ * On reception of each edge, if no error occurred, the bit duration is added to a running sum. Once
+ * SCI_LIN_SYNC_EDGES are received, the average bit duration is calculated, and used
+ * to estimate the baud rate and adjust the baud rate and break field threshold register settings.
+ *
+ * @par Measurement Error Avoidance
+ *
+ * On each edge (rising and falling) of control field 0, TCNT/TPRE is read and compared to the previous TCNT/TPRE
+ * capture. If the baudrate differ by more than 6.25%, it is assumed that an error occurred, and the running sum is
+ * reset. If SCI_LIN_SYNC_EDGES are received without error subsequent to the error, the bit rate can still be
+ * estimated. Otherwise, the bit rate will not be updated.
+ *
+ * @param[in]  p_ctrl                    Pointer to driver control block
+ *********************************************************************************************************************/
+static void r_sci_lin_scix3_handler (sci_lin_instance_ctrl_t * const p_ctrl)
+{
+    R_SCI0_Type * p_reg = p_ctrl->p_reg;
+    sci_lin_extended_cfg_t const * const p_extend = (sci_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
+
+    /* Get the bit duration (in LIN timer ticks) of the most recently received bit of control field 0.
+     * For the most accurate measurement, read this register as early as possible in the ISR. */
+    uint8_t tpre = p_reg->TPRE;
+    uint8_t tcnt = p_reg->TCNT;
+
+    uint8_t tcnt_base = p_extend->p_baud_setting->timer_setting.break_field_tcnt;
+    uint8_t tpre_base = p_extend->p_baud_setting->timer_setting.break_field_tpre;
+
+    /* Calculate the elapsed ticks based on the timer counters:
+     * - The prescaler (TPRE) counts down from TPRE_base to 0.
+     * - Each time TPRE reloads back to TPRE_base, the main counter (TCNT) decreases by 1.
+     * 1) The number of times TCNT has decreased: (TCNT_base - TCNT)
+     * 2) Each TCNT decrement corresponds to (TPRE_base + 1) prescaler ticks.
+     * 3) Add the remaining partial prescaler ticks counted so far: (TPRE_base - TPRE) */
+    uint32_t counter = (uint32_t) (((tcnt_base - tcnt) * (tpre_base + 1)) + tpre_base - tpre);
+
+    /* Clear AEDF flag immediately */
+    p_reg->STCR = R_SCI0_STCR_AEDCL_Msk;
+
+    /* Count the valid edge detected */
+    p_ctrl->sync_bits_received++;
+
+    /* Ignore 1st & 2nd valid edge because that is break delimiter bit */
+    if (2 >= p_ctrl->sync_bits_received)
+    {
+        p_ctrl->sync_bits_sum = 0;
+
+        return;
+    }
+
+    /* Accumulate sync bits */
+    p_ctrl->sync_bits_sum += counter;
+
+    /* Check if we have collected all sync edges, except 2 delimiter raising and falling edge */
+    if (SCI_LIN_SYNC_EDGES == (p_ctrl->sync_bits_received - 2))
+    {
+        /* Calculate measured baud rate */
+        uint32_t measured_baudrate = (p_ctrl->timer_freq_hz * SCI_LIN_SYNC_EDGES) / p_ctrl->sync_bits_sum;
+
+        uint32_t current_baudrate = p_ctrl->current_baudrate;
+
+        /* Compute absolute value of difference in baud rate */
+        uint32_t delta = (measured_baudrate > current_baudrate) ?
+                         (measured_baudrate - current_baudrate) :
+                         (current_baudrate - measured_baudrate);
+
+        /* Reset counters */
+        p_ctrl->sync_bits_received = 0;
+        p_ctrl->sync_bits_sum      = 0;
+
+        /* Check if baud rate difference is within 6.25% tolerance */
+        if (delta < (current_baudrate >> 4U))
+        {
+            /* Synchronize the baudrate */
+            r_sci_lin_scix3_synchronize(p_ctrl, measured_baudrate);
+        }
+
+        /* If measurement error, counters are already reset above */
+    }
 }
 
 #endif
@@ -1907,6 +2297,12 @@ void sci_lin_tei_isr (void)
         r_sci_lin_call_callback(p_ctrl, p_ctrl->event);
     }
 
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    r_sci_lin_scix3_reset(p_ctrl);
+#endif
+
     /* Reset break field detection in slave mode */
     r_sci_lin_break_field_detection_reset(p_ctrl);
 
@@ -1938,6 +2334,11 @@ void sci_lin_eri_isr (void)
 
     /* Call user callback */
     r_sci_lin_call_callback(p_ctrl, event);
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+    /* Reset bit rate measurement hardware state in preparation to receive next start frame (slave only) */
+    r_sci_lin_scix3_reset(p_ctrl);
+#endif
 
     /* Reset any in progress transmission/reception */
     r_sci_lin_transfer_state_reset(p_ctrl);
@@ -2034,6 +2435,36 @@ void sci_lin_scix2_isr (void)
     r_sci_lin_transfer_state_reset(p_ctrl);
 
     /* Clear Interrupt Status Flag IR */
+    R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
+}
+
+#endif
+
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+/******************************************************************************************************************//**
+ * SCIX3 interrupt processing for LIN mode auto synchronization during control field 0 reception
+ * (slave only).
+ *
+ * @retval    none
+ *********************************************************************************************************************/
+void sci_lin_scix3_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
+
+    /* Recover ISR context saved in open. */
+    sci_lin_instance_ctrl_t * p_ctrl = (sci_lin_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+
+    /* Process the edge detect event */
+    r_sci_lin_scix3_handler(p_ctrl);
+
+    /* Clear pending IRQ to make sure it doesn't fire again after exiting */
     R_BSP_IrqStatusClear(irq);
 
     /* Restore context if RTOS is used */

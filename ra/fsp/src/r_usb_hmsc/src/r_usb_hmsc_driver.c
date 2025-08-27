@@ -2640,7 +2640,10 @@ static void usb_hmsc_detach (usb_utr_t * ptr, uint16_t addr, uint16_t data2)
         ctrl.p_transfer_rx = p_cfg->p_transfer_rx;
         ctrl.p_transfer_rx = p_cfg->p_transfer_tx;
     }
+
+    xSemaphoreTake(SemaphoreHandleRead, portMAX_DELAY);
     usb_set_event(USB_STATUS_DETACH, &ctrl); /* Set Event()  */
+    xSemaphoreGive(SemaphoreHandleRead);
  #endif /* BSP_CFG_RTOS == 0 */
 }
 
@@ -3976,7 +3979,7 @@ uint16_t usb_hmsc_ref_drvno (uint16_t devadr)
 /******************************************************************************
  * Function Name   : usb_hhub_task
  * Description     : HUB task
- * Arguments       : usb_vp_int_t stacd          : Start Code of Hub Task
+ * Arguments       : void * stacd          : Start Code of Hub Task
  * Return value    : none
  ******************************************************************************/
 void usb_hhub_task (void * stacd)

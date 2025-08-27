@@ -722,8 +722,12 @@ fsp_err_t HW_SCE_TlsServersEphemeralEcdhPublicKeyRetrievesSub(uint32_t *InData_S
 
 fsp_err_t HW_SCE_Rsa1024ModularExponentEncryptSub(const uint32_t *InData_KeyIndex, const uint32_t *InData_Text,
         uint32_t *OutData_Text);
+fsp_err_t HW_SCE_Rsa1024ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[], const uint32_t InData_Key[],
+                const uint32_t InData_Text[], uint32_t OutData_Text[]);
 fsp_err_t HW_SCE_Rsa1024ModularExponentDecryptSub(uint32_t *InData_KeyIndex, const uint32_t *InData_Text,
         uint32_t *OutData_Text);
+fsp_err_t HW_SCE_Rsa1024ModularExponentDecryptSubAdaptor(const uint32_t InData_KeyMode[], uint32_t InData_KeyIndex[], 
+                const uint32_t InData_Key[], const uint32_t InData_Text[], uint32_t OutData_Text[]);
 fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSub(const uint32_t *InData_KeyIndex, const uint32_t *InData_Text,
         uint32_t *OutData_Text);
 fsp_err_t HW_SCE_Rsa2048ModularExponentEncryptSubAdaptor(const uint32_t InData_KeyIndex[], const uint32_t InData_Key[],

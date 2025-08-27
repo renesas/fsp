@@ -390,7 +390,7 @@ static void rm_netxduo_ether_cleanup (rm_netxduo_ether_instance_t * p_netxduo_et
      * If the ETHERC peripheral is reset while packets are being transmitted, then
      * invalid data may be observed on the TXD lines.
      *
-     * See section 31.2.1 "EDMAC Mode Register (EDMR)" in the RA6M3 manual R01UH0886EJ0110.
+     * See "EDMAC Mode Register (EDMR)" description in the relevant hardware manual.
      */
     while (1)
     {
@@ -487,7 +487,8 @@ void rm_netxduo_ether_receive_packet (rm_netxduo_ether_instance_t * p_netxduo_et
         else
         {
             /*
-             * Make sure that the buffer is 32 byte aligned (See section 31.3.1.2 "Receive descriptor" in the RA6M3 User Manual R01UH0886EJ0100)
+             * Make sure that the buffer is 32 byte aligned (See "Receive descriptor" in the EDMAC section
+             * of the relevant hardware manual)
              */
             p_nx_packet->nx_packet_prepend_ptr =
                 (UCHAR *) (((uint32_t) p_nx_packet->nx_packet_prepend_ptr + 31U) & ~(31U));
@@ -766,7 +767,8 @@ void rm_netxduo_ether_callback (ether_callback_args_t * p_args)
                 }
 
                 /*
-                 * Make sure that the buffer is 32 byte aligned (See section 31.3.1.2 "Receive descriptor" in the RA6M3 User Manual R01UH0886EJ0100)
+                 * Make sure that the buffer is 32 byte aligned (See "Receive descriptor"
+                 * in the EDMAC section of the relevant hardware manual)
                  */
                 p_rx_buffers[i]->nx_packet_prepend_ptr =
                     (UCHAR *) (((uint32_t) p_rx_buffers[i]->nx_packet_prepend_ptr + 31U) & ~(31U));

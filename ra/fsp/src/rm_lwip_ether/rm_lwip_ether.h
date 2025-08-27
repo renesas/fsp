@@ -25,6 +25,13 @@ typedef struct st_rm_lwip_ether_ctrl
     /* Mbox for notifing read complete. */
     sys_mbox_t * p_read_complete_mbox;
 
+    /* Pointer to TX buffer list. */
+    struct pbuf * p_tx_buffer_head;
+    struct pbuf * p_tx_buffer_tail;
+
+    /* Callback message for TCP/IP thread to free Tx buffers. */
+    struct tcpip_callback_msg * p_tx_buffer_free_callback_msg;
+
     /* Message to notify that the read process is complete.  */
     bool read_complete_message;
 } rm_lwip_ether_ctrl_t;
@@ -74,7 +81,8 @@ typedef struct st_rm_lwip_rx_pbuf
 } rm_lwip_rx_pbuf_t;
 
 err_t rm_lwip_ether_init(struct netif * netif);
-void  rm_lwip_ether_callback(ether_callback_args_t * p_args);
+
+void rm_lwip_ether_callback(ether_callback_args_t * p_args);
 
 /** Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

@@ -13,12 +13,10 @@
 
 #if BSP_FEATURE_MRAM_IS_AVAILABLE
  #include "r_mram.h"
+#elif BSP_FEATURE_FLASH_HP_VERSION > 0
+ #include "r_flash_hp.h"
 #else
- #if BSP_FEATURE_FLASH_HP_VERSION > 0
-  #include "r_flash_hp.h"
- #else
-  #include "r_flash_lp.h"
- #endif
+ #include "r_flash_lp.h"
 #endif
 
 #ifdef RM_MCUBOOT_PORT_CFG_SECONDARY_USE_XSPI
@@ -27,34 +25,32 @@
 
 /* Definitions for different flash implementation. */
 #if BSP_FEATURE_MRAM_IS_AVAILABLE
- #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN     (BSP_FEATURE_MRAM_PROGRAMMING_SIZE_BYTES)
- #define R_FLASH_Open                                   R_MRAM_Open
- #define R_FLASH_Write                                  R_MRAM_Write
- #define R_FLASH_Erase                                  R_MRAM_Erase
- #define R_FLASH_Close                                  R_MRAM_Close
- #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE      (0x8000)
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_MRAM_PROGRAMMING_SIZE_BYTES)
+ #define R_FLASH_Open                                  R_MRAM_Open
+ #define R_FLASH_Write                                 R_MRAM_Write
+ #define R_FLASH_Erase                                 R_MRAM_Erase
+ #define R_FLASH_Close                                 R_MRAM_Close
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE     (0x8000)
 
+#elif BSP_FEATURE_FLASH_HP_VERSION > 0
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE)
+ #define R_FLASH_Open                                  R_FLASH_HP_Open
+ #define R_FLASH_Write                                 R_FLASH_HP_Write
+ #define R_FLASH_Erase                                 R_FLASH_HP_Erase
+ #define R_FLASH_Close                                 R_FLASH_HP_Close
 #else
- #if BSP_FEATURE_FLASH_HP_VERSION > 0
-  #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_HP_CF_WRITE_SIZE)
-  #define R_FLASH_Open                                  R_FLASH_HP_Open
-  #define R_FLASH_Write                                 R_FLASH_HP_Write
-  #define R_FLASH_Erase                                 R_FLASH_HP_Erase
-  #define R_FLASH_Close                                 R_FLASH_HP_Close
- #else
-  #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE)
-  #define R_FLASH_Open                                  R_FLASH_LP_Open
-  #define R_FLASH_Write                                 R_FLASH_LP_Write
-  #define R_FLASH_Erase                                 R_FLASH_LP_Erase
-  #define R_FLASH_Close                                 R_FLASH_LP_Close
- #endif
+ #define RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_ALIGN    (BSP_FEATURE_FLASH_LP_CF_WRITE_SIZE)
+ #define R_FLASH_Open                                  R_FLASH_LP_Open
+ #define R_FLASH_Write                                 R_FLASH_LP_Write
+ #define R_FLASH_Erase                                 R_FLASH_LP_Erase
+ #define R_FLASH_Close                                 R_FLASH_LP_Close
 #endif
 
 /* Write buffering is not required in overwrite only mode (it is needed for overwrite only fast). */
 #if defined(MCUBOOT_OVERWRITE_ONLY) && !defined(MCUBOOT_OVERWRITE_ONLY_FAST)
- #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE    (0)
+ #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE         (0)
 #else
- #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE    (1)
+ #define RM_MCUBOOT_PORT_BUFFERED_WRITE_ENABLE         (1)
 #endif
 
 /* Instance structure to use this module. */
@@ -398,8 +394,7 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
 #if BSP_FEATURE_MRAM_IS_AVAILABLE
         sector_size      = RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE;
         sectors_to_erase = len / sector_size;
-#else
- #if BSP_FEATURE_FLASH_HP_VERSION > 0
+#elif BSP_FEATURE_FLASH_HP_VERSION > 0
         uint32_t deleted_len = 0;
         while (deleted_len < len)
         {
@@ -416,10 +411,9 @@ int flash_area_erase (const struct flash_area * area, uint32_t off, uint32_t len
             deleted_len += sector_size;
         }
 
- #else
+#else
         sector_size      = BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE;
         sectors_to_erase = len / sector_size;
- #endif
 #endif
 
         FSP_CRITICAL_SECTION_DEFINE;
@@ -506,12 +500,10 @@ int flash_area_get_sectors (int fa_id, uint32_t * count, struct flash_sector * s
      * 32K flash blocks to be usable with QSPI. */
  #if BSP_FEATURE_MRAM_IS_AVAILABLE
     const size_t sector_size = RM_MCUBOOT_PORT_INTERNAL_FLASH_BLOCK_SIZE;
- #else
-  #if BSP_FEATURE_FLASH_HP_VERSION > 0
+ #elif BSP_FEATURE_FLASH_HP_VERSION > 0
     const size_t sector_size = BSP_FEATURE_FLASH_HP_CF_REGION1_BLOCK_SIZE;
-  #else
+ #else
     const size_t sector_size = BSP_FEATURE_FLASH_LP_CF_BLOCK_SIZE;
-  #endif
  #endif
     int retval = -1;
     const struct flash_area * fa = prv_lookup_flash_area(fa_id);

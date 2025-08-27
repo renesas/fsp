@@ -635,7 +635,7 @@ void usb_cstd_usb_task (void)
             usb_hstd_hcd_task((void *) 0);           /* HCD Task */
             usb_hstd_mgr_task((void *) 0);           /* MGR Task */
    #if USB_CFG_HUB == USB_CFG_ENABLE
-            usb_hhub_task((usb_vp_int_t) 0);         /* HUB Task */
+            usb_hhub_task((void *) 0);               /* HUB Task */
    #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
             usb_class_task();
         }
@@ -652,7 +652,7 @@ void usb_cstd_usb_task (void)
         usb_hstd_hcd_task((void *) 0);           /* HCD Task */
         usb_hstd_mgr_task((void *) 0);           /* MGR Task */
    #if USB_CFG_HUB == USB_CFG_ENABLE
-        usb_hhub_task((usb_vp_int_t) 0);         /* HUB Task */
+        usb_hhub_task((void *) 0);               /* HUB Task */
    #endif /* USB_CFG_HUB == USB_CFG_ENABLE */
    #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HVND_USE)
         usb_class_task();

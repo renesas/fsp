@@ -287,7 +287,7 @@ fsp_err_t R_SCI_B_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * 
     FSP_ERROR_RETURN(SCI_B_UART_OPEN != p_ctrl->open, FSP_ERR_ALREADY_OPEN);
 
     /* Make sure this channel exists. */
-    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+    FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS_MASK & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
 
     if (((sci_b_uart_extended_cfg_t *) p_cfg->p_extend)->flow_control == SCI_B_UART_FLOW_CONTROL_CTSRTS)
     {
@@ -308,7 +308,7 @@ fsp_err_t R_SCI_B_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * 
 #if SCI_B_UART_CFG_FIFO_SUPPORT
 
     /* Check if the channel supports fifo */
-    if (BSP_FEATURE_SCI_UART_FIFO_CHANNELS & (1U << p_cfg->channel))
+    if (BSP_FEATURE_SCI_UART_FIFO_CHANNELS_MASK & (1U << p_cfg->channel))
     {
         /* Set fifo depth. */
         p_ctrl->fifo_depth = BSP_FEATURE_SCI_UART_FIFO_DEPTH;
@@ -344,8 +344,8 @@ fsp_err_t R_SCI_B_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * 
     /* Enable the SCI channel */
     R_BSP_MODULE_START(FSP_IP_SCI, p_cfg->channel);
 
-    /* Initialize registers as defined in section 26.3.7 "SCI Initialization in Asynchronous Mode" in the RA6T2 manual
-     * R01UH0951EJ0100 or the relevant section for the MCU being used. */
+    /* Initialize registers as defined in "SCI Initialization in Asynchronous Mode"
+     * in relevant hardware manual. */
     p_ctrl->p_reg->CCR0 = ccr0;
 
     /* Set the UART configuration settings provided in ::uart_cfg_t and ::sci_b_uart_extended_cfg_t. */
@@ -396,8 +396,8 @@ fsp_err_t R_SCI_B_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * 
     p_ctrl->p_reg->CCR0 = ccr0;
 
     /* Wait until interanl state of RE is 1 as it takes some time for the state to be reflected internally after
-     * rewriting the control register. Please refer "26.2.29 CESR : Communication Enable Status Register" description
-     * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
+     * rewriting the control register. See "CESR : Communication Enable Status Register" description
+     * in the SCI section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR_b.RIST, 1U);
 
     p_ctrl->open = SCI_B_UART_OPEN;
@@ -441,8 +441,8 @@ fsp_err_t R_SCI_B_UART_Close (uart_ctrl_t * const p_api_ctrl)
     p_ctrl->p_reg->CCR0 &= (uint32_t) ~(R_SCI_B0_CCR0_TE_Msk);
 
     /* Wait until interanl state of TE is 0 as it takes some time for the state to be reflected internally after
-     * rewriting the control register. Please refer "26.2.29 CESR : Communication Enable Status Register" description
-     * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
+     * rewriting the control register. See "CESR : Communication Enable Status Register" description
+     * in the SCI section of the relevant hardware manual. */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR_b.TIST, 0U);
 
     /* If transmission is enabled at build time, disable transmission irqs. */
@@ -573,13 +573,12 @@ fsp_err_t R_SCI_B_UART_Write (uart_ctrl_t * const p_api_ctrl, uint8_t const * co
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CSR_b.TEND, 1U);
 
     /* Set TE bit to 0. This is done to set TE and TIE bit simultaneously at the end of this function.
-     * Please refer "26.3.8 Serial Data Transmission in Asynchronous Mode" section in the RA6T2 manual R01UH0951EJ0100
-     * or the relevant section for the MCU being used  */
+     * See "Serial Data Transmission in Asynchronous Mode" in the SCI section of the relevant hardware manual. */
     p_ctrl->p_reg->CCR0 &= (uint32_t) ~(R_SCI_B0_CCR0_TE_Msk);
 
     /* Wait until interanl state of TE is 0 as it takes some time for the state to be reflected internally after
-     * rewriting the control register. Please refer "26.2.29 CESR : Communication Enable Status Register" description
-     * in the RA6T2 manual R01UH0951EJ0100 or the relevant section for the MCU being used  */
+     * rewriting the control register. See "CESR : Communication Enable Status Register" description
+     * in the SCI section of the relevant hardware manual.  */
     FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR_b.TIST, 0U);
 
     p_ctrl->tx_src_bytes = bytes;
@@ -609,8 +608,8 @@ fsp_err_t R_SCI_B_UART_Write (uart_ctrl_t * const p_api_ctrl, uint8_t const * co
  #endif
 
     /* Set TE and TIE bits simultaneously by single instruction to enable TIE interrupt.
-     * Please refer "26.3.8 Serial Data Transmission in Asynchronous Mode" section in the RA6T2 manual R01UH0951EJ0100
-     * or the relevant section for the MCU being used  */
+     * See "Serial Data Transmission in Asynchronous Mode" in the SCI section of the relevant
+     * hardware manual. */
     p_ctrl->p_reg->CCR0 |= (uint32_t) (R_SCI_B0_CCR0_TE_Msk | R_SCI_B0_CCR0_TIE_Msk);
 
     return FSP_SUCCESS;
@@ -806,9 +805,8 @@ fsp_err_t R_SCI_B_UART_Abort (uart_ctrl_t * const p_api_ctrl, uart_dir_t communi
         p_ctrl->p_reg->CCR0 &= (uint32_t) ~(R_SCI_B0_CCR0_TE_Msk);
 
         /* Wait until interanl state of TE is 0 as it takes some time for the state to be reflected
-         * internally after rewriting the control register. Please refer "26.2.29 CESR : Communication
-         * Enable Status Register" description in the RA6T2 manual R01UH0951EJ0100 or the relevant section
-         * for the MCU being used  */
+         * internally after rewriting the control register. See "CESR : Communication
+         * Enable Status Register" description in the SCI section of the relevant hardware manual. */
         FSP_HARDWARE_REGISTER_WAIT(p_ctrl->p_reg->CESR_b.TIST, 0U);
 
  #if SCI_B_UART_CFG_DTC_SUPPORTED
@@ -949,7 +947,7 @@ fsp_err_t R_SCI_B_UART_BaudCalculate (uint32_t                     baudrate,
     uint8_t  hit_mddr    = 0U;
     uint32_t divisor     = 0U;
 
-#if (BSP_FEATURE_BSP_HAS_SCISPI_CLOCK)
+#if (BSP_FEATURE_SCI_HAS_SCISPI_CLOCK)
     uint32_t freq_hz = R_FSP_SciSpiClockHzGet();
 #else
     uint32_t freq_hz = R_FSP_SciClockHzGet();
@@ -1314,7 +1312,7 @@ static void r_sci_b_uart_config_set (sci_b_uart_instance_ctrl_t * const p_ctrl, 
 #else
 
     /* If fifo support is disabled and the current channel supports fifo set FCR to default */
-    if (BSP_FEATURE_SCI_UART_FIFO_CHANNELS & (1U << p_cfg->channel))
+    if (BSP_FEATURE_SCI_UART_FIFO_CHANNELS_MASK & (1U << p_cfg->channel))
     {
         p_ctrl->p_reg->FCR = SCI_B_UART_FCR_DEFAULT_VALUE;
     }
@@ -1359,8 +1357,7 @@ static void r_sci_b_uart_fifo_cfg (sci_b_uart_instance_ctrl_t * const p_ctrl)
             /* RTRG(Receive FIFO Data Trigger Number) controls when the RXI interrupt will be generated. If data is
              * received but the trigger number is not met the RXI interrupt will be generated after 15 ETUs from
              * the last stop bit in asynchronous mode. For more information see the FIFO Selected section of "Serial
-             * Data Reception in Asynchronous Mode" in the RA6T2 manual R01UH0951EJ0100 or the relevant section for
-             * the MCU being used. */
+             * Data Reception in Asynchronous Mode" in the SCI section of the relevant hardware manual. */
             fcr |= (((p_ctrl->fifo_depth - 1U) & p_extend->rx_fifo_trigger) & SCI_B_UART_FCR_TRIGGER_MASK) <<
                    R_SCI_B0_FCR_RTRG_Pos;
         }

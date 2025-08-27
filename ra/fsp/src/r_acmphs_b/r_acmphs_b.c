@@ -161,7 +161,7 @@ fsp_err_t R_ACMPHS_B_InfoGet (comparator_ctrl_t * const p_ctrl, comparator_info_
 #endif
 
     /* ACMPHS_B switching delay setting as described in the Step 7 of "Procedure for setting the ACMPHS to Control the Comparators"
-     * as seen in Table 28.3 of the R01UH1089EJ0040 Hardware User Manual. */
+     * of the relevant hardware manual. */
     p_info->min_stabilization_wait_us = BSP_FEATURE_ACMPHS_MIN_WAIT_TIME_US;
 
     return FSP_SUCCESS;

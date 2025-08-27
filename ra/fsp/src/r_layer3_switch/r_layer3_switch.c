@@ -53,6 +53,19 @@
 
 /* Bitmask for the CPU port (GWCA).  */
 #define LAYER3_SWITCH_PORT_CPU_BITMASK                (1 << BSP_FEATURE_ESWM_GWCA_PORT)
+#define LAYER3_SWITCH_EATASIGSC_MASK                  (R_ETHA0_EATASIGSC_TASIGS0_Msk | R_ETHA0_EATASIGSC_TASIGS1_Msk | \
+                                                       R_ETHA0_EATASIGSC_TASIGS2_Msk | R_ETHA0_EATASIGSC_TASIGS3_Msk | \
+                                                       R_ETHA0_EATASIGSC_TASIGS4_Msk |                                 \
+                                                       R_ETHA0_EATASIGSC_TASIGS5_Msk | R_ETHA0_EATASIGSC_TASIGS6_Msk | \
+                                                       R_ETHA0_EATASIGSC_TASIGS7_Msk)
+
+/* For CBS feature */
+#define LAYER3_SWITCH_CBS_REQUEST_DELAY               (50)
+#define LAYER3_SWITCH_CBS_INTERFERENCE_SIZE_OFFSET    (20)
+#define LAYER3_SWITCH_CBS_BITS_PER_BYTE               (8)
+#define LAYER3_SWITCH_LINK_SPEED_100M                 (100000000)
+#define LAYER3_SWITCH_LINK_SPEED_1G                   (1000000000)
+#define LAYER3_SWITCH_MAXIMUM_FRAME_SIZE              (1514U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -76,6 +89,7 @@ typedef enum e_layer3_switch_agent_mode
  * Exported global functions (to be accessed by other files)
  ***********************************************************************************************************************/
 void layer3_switch_gwdi_isr(void);
+void layer3_switch_eaei_isr(void);
 
 /***********************************************************************************************************************
  * Exported global variables (to be accessed by other files)
@@ -104,6 +118,10 @@ static bool r_layer3_switch_is_descriptor_queue_active(
     layer3_switch_instance_ctrl_t * p_instance_ctrl,
     uint32_t                        queue_index);
 static void r_layer3_switch_configure_mac_address(uint8_t * p_mac_address, uint8_t port);
+static void r_layer3_switch_configure_port(
+    layer3_switch_instance_ctrl_t * const  p_instance_ctrl,
+    uint8_t                                port,
+    layer3_switch_port_cfg_t const * const p_port_cfg);
 
 /* Forwarding features. */
 static void r_layer3_switch_configure_forwarding_port(layer3_switch_forwarding_port_cfg_t const * const port_cfg,
@@ -147,8 +165,14 @@ static uint32_t r_layer3_switch_convert_vlan_tag_to_int(layer3_switch_frame_vlan
 static fsp_err_t r_layer3_switch_remapping_l3_update(layer3_switch_instance_ctrl_t    * p_instance_ctrl,
                                                      uint32_t                           routing_number,
                                                      layer3_switch_l3_update_config_t * p_update_cfg);
-
 static uint32_t r_layer3_switch_convert_array_to_int(uint8_t * array, uint8_t length);
+
+/* TSN feature. */
+static void r_layer3_switch_configure_cbs(layer3_switch_instance_ctrl_t const * const p_instance_ctrl,
+                                          uint8_t                                     port,
+                                          layer3_switch_cbs_cfg_t const * const       p_cbs_cfg);
+static uint32_t r_layer3_switch_calculate_max_interference_size(uint8_t               queue_number,
+                                                                uint8_t const * const p_max_burst_num_list);
 
 static void r_layer3_switch_call_callback_for_ports(layer3_switch_instance_ctrl_t * p_instance_ctrl,
                                                     ether_switch_callback_args_t  * p_callback_args,
@@ -194,6 +218,8 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
     layer3_switch_extended_cfg_t  * p_extend;
     ether_phy_instance_t const    * p_ether_phy;
     volatile uint32_t             * p_mfwd_fwpbfc_reg;
+    volatile uint32_t             * p_etha_eatdqdcn_reg;
+    R_ETHA0_Type * p_reg_etha;
     R_RMAC0_Type * p_reg_rmac;
 
     fsp_err_t phy_err = FSP_SUCCESS;
@@ -224,20 +250,20 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
     p_instance_ctrl->l3_entry_count    = 0;
     p_instance_ctrl->l3_routing_number = 0;
 
-    /* Initialize callback functions for each port.*/
-    for (uint32_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS; i++)
-    {
-        p_instance_ctrl->p_port_cfg_list[i].p_callback = NULL;
-    }
-
     /* Clear module stops.*/
     r_layer3_switch_module_start();
 
     /* Reset COMA IP. */
     r_layer3_switch_reset_coma();
 
+    /* When a r_gptp instance is set, initialize it. */
+    if (NULL != p_extend->p_gptp_instance)
+    {
+        p_extend->p_gptp_instance->p_api->open(p_extend->p_gptp_instance->p_ctrl, p_extend->p_gptp_instance->p_cfg);
+    }
+
     /* Configure destination ports of fowarding feature. */
-    for (uint32_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS; i++)
+    for (uint32_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
     {
         p_mfwd_fwpbfc_reg =
             (uint32_t *) ((uintptr_t) &(R_MFWD->FWPBFC0) + (i * LAYER3_SWITCH_FWPBFC_REGISTER_OFFSET));
@@ -265,30 +291,42 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
     r_layer3_switch_update_gwca_operation_mode(p_instance_ctrl, LAYER3_SWITCH_AGENT_MODE_OPERATION);
 
     /* ETHA ports initialization. */
-    for (uint8_t i = 0; (i < BSP_FEATURE_ETHER_MAX_CHANNELS) && (FSP_SUCCESS == phy_err); i++)
+    for (uint8_t channel = 0; (channel < BSP_FEATURE_ETHER_NUM_CHANNELS) && (FSP_SUCCESS == phy_err); channel++)
     {
-        if (NULL != p_extend->p_ether_phy_instances[i])
+        if (NULL != p_extend->p_ether_phy_instances[channel])
         {
             /* Set ETHA to CONFIG mode */
-            r_layer3_switch_update_etha_operation_mode(i, LAYER3_SWITCH_AGENT_MODE_DISABLE);
-            r_layer3_switch_update_etha_operation_mode(i, LAYER3_SWITCH_AGENT_MODE_CONFIG);
+            r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_DISABLE);
+            r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_CONFIG);
 
-            /* Configure MAC address. */
-            r_layer3_switch_configure_mac_address(p_extend->p_mac_addresses[i], i);
+            /* Configure the port specific feature. */
+            if (NULL != p_extend->p_port_cfg_list[channel])
+            {
+                r_layer3_switch_configure_port(p_instance_ctrl, channel, p_extend->p_port_cfg_list[channel]);
+            }
+
+            /* Configure queue depth for each transmission IPV queue. */
+            p_reg_etha          = (R_ETHA0_Type *) (R_ETHA0_BASE + (LAYER3_SWITCH_ETHA_REG_SIZE * channel));
+            p_etha_eatdqdcn_reg = &p_reg_etha->EATDQDC0;
+            for (uint8_t j = 0; j < BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM; j++)
+            {
+                *p_etha_eatdqdcn_reg = p_extend->ipv_queue_depth_list[channel][j] & R_ETHA0_EATDQDC0_DQD_Msk;
+                p_etha_eatdqdcn_reg += 1;
+            }
 
             /* Enable Magic packet detection. */
             p_reg_rmac =
-                (R_RMAC0_Type *) (R_RMAC0_BASE + (i * LAYER3_SWITCH_RMAC_REG_SIZE));
+                (R_RMAC0_Type *) (R_RMAC0_BASE + (channel * LAYER3_SWITCH_RMAC_REG_SIZE));
             p_reg_rmac->MRGC_b.MPDE = 1;
         }
     }
 
     /* Open all ETHER_PHY instances. */
-    for (uint8_t i = 0;
-         (i < BSP_FEATURE_ETHER_MAX_CHANNELS) && ((FSP_SUCCESS == phy_err) | (FSP_ERR_ALREADY_OPEN == phy_err));
-         i++)
+    for (uint8_t channel = 0;
+         (channel < BSP_FEATURE_ETHER_NUM_CHANNELS) && ((FSP_SUCCESS == phy_err) | (FSP_ERR_ALREADY_OPEN == phy_err));
+         channel++)
     {
-        p_ether_phy = p_extend->p_ether_phy_instances[i];
+        p_ether_phy = p_extend->p_ether_phy_instances[channel];
         if (NULL != p_ether_phy)
         {
             p_ether_phy->p_api->open(p_ether_phy->p_ctrl, p_ether_phy->p_cfg);
@@ -296,17 +334,17 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
     }
 
     /* Start operation on ETHA ports. */
-    for (uint8_t i = 0; (i < BSP_FEATURE_ETHER_MAX_CHANNELS) && (FSP_SUCCESS == phy_err); i++)
+    for (uint8_t channel = 0; (channel < BSP_FEATURE_ETHER_NUM_CHANNELS) && (FSP_SUCCESS == phy_err); channel++)
     {
-        p_ether_phy = p_extend->p_ether_phy_instances[i];
+        p_ether_phy = p_extend->p_ether_phy_instances[channel];
         if (NULL != p_ether_phy)
         {
             /* Set ETHA to OPERATION mode */
-            r_layer3_switch_update_etha_operation_mode(i, LAYER3_SWITCH_AGENT_MODE_DISABLE);
-            r_layer3_switch_update_etha_operation_mode(i, LAYER3_SWITCH_AGENT_MODE_OPERATION);
+            r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_DISABLE);
+            r_layer3_switch_update_etha_operation_mode(channel, LAYER3_SWITCH_AGENT_MODE_OPERATION);
 
             /* Initialize each PHY LSI. */
-            R_RMAC_PHY_ChipSelect(p_ether_phy->p_ctrl, i);
+            R_RMAC_PHY_ChipSelect(p_ether_phy->p_ctrl, channel);
             phy_err = p_ether_phy->p_api->chipInit(p_ether_phy->p_ctrl, p_ether_phy->p_cfg);
             if (phy_err != FSP_SUCCESS)
             {
@@ -327,7 +365,7 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
         r_layer3_switch_update_gwca_operation_mode(p_instance_ctrl, LAYER3_SWITCH_AGENT_MODE_DISABLE);
 
         /* Reset destination ports of fowarding feature. */
-        for (uint32_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS; i++)
+        for (uint32_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
         {
             p_mfwd_fwpbfc_reg =
                 (uint32_t *) ((uintptr_t) &(R_MFWD->FWPBFC0) + (i * LAYER3_SWITCH_FWPBFC_REGISTER_OFFSET));
@@ -344,6 +382,15 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
 
     /* Enable GWCA Data Interrupt IRQ. It occurs when a descriptor completes RX/TX or receive frame for a full queue. */
     R_BSP_IrqCfgEnable(p_instance_ctrl->p_cfg->irq, p_instance_ctrl->p_cfg->ipl, p_instance_ctrl);
+    if (p_extend->etha_error_irq_port_0 >= 0)
+    {
+        R_BSP_IrqCfgEnable(p_extend->etha_error_irq_port_0, p_extend->etha_error_ipl_port_0, p_instance_ctrl);
+    }
+
+    if (p_extend->etha_error_irq_port_1 >= 0)
+    {
+        R_BSP_IrqCfgEnable(p_extend->etha_error_irq_port_1, p_extend->etha_error_ipl_port_1, p_instance_ctrl);
+    }
 
     p_instance_ctrl->open = LAYER3_SWITCH_OPEN;
 
@@ -360,15 +407,30 @@ fsp_err_t R_LAYER3_SWITCH_Open (ether_switch_ctrl_t * const p_ctrl, ether_switch
 fsp_err_t R_LAYER3_SWITCH_Close (ether_switch_ctrl_t * const p_ctrl)
 {
     layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) p_ctrl;
+    layer3_switch_extended_cfg_t  * p_extend;
 
 #if LAYER3_SWITCH_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(LAYER3_SWITCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
+    p_extend = (layer3_switch_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
     /* Disable GWCA Data Interrupt IRQ. */
     R_BSP_IrqDisable(p_instance_ctrl->p_cfg->irq);
     R_FSP_IsrContextSet(p_instance_ctrl->p_cfg->irq, NULL);
+
+    if (p_extend->etha_error_irq_port_0 >= 0)
+    {
+        R_BSP_IrqDisable(p_extend->etha_error_irq_port_0);
+        R_FSP_IsrContextSet(p_extend->etha_error_irq_port_0, NULL);
+    }
+
+    if (p_extend->etha_error_irq_port_1 >= 0)
+    {
+        R_BSP_IrqDisable(p_extend->etha_error_irq_port_1);
+        R_FSP_IsrContextSet(p_extend->etha_error_irq_port_1, NULL);
+    }
 
     /* Close ETHA ports and PHY instances. */
     r_layer3_switch_close_etha_ports(p_instance_ctrl);
@@ -650,7 +712,7 @@ fsp_err_t R_LAYER3_SWITCH_StartDescriptorQueue (ether_switch_ctrl_t * const p_ct
     else
     {
         /* When RX queue. */
-        for (uint32_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS; i++)
+        for (uint32_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
         {
             /* Get register address that depend on port number. */
             if (1 & (p_instance_ctrl->p_queues_status[queue_index].p_queue_cfg->ports >> i))
@@ -734,42 +796,23 @@ fsp_err_t R_LAYER3_SWITCH_ConfigurePort (ether_switch_ctrl_t * const p_ctrl,
                                          layer3_switch_port_cfg_t  * p_port_cfg)
 {
     layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) p_ctrl;
-    volatile uint32_t             * p_mfwd_fwpbfc_reg;
 
 #if LAYER3_SWITCH_CFG_PARAM_CHECKING_ENABLE
     FSP_ASSERT(p_instance_ctrl);
     FSP_ERROR_RETURN(LAYER3_SWITCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ERROR_RETURN(port < BSP_FEATURE_ETHER_MAX_CHANNELS, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(port < BSP_FEATURE_ETHER_NUM_CHANNELS, FSP_ERR_INVALID_ARGUMENT);
     FSP_ERROR_RETURN(p_port_cfg, FSP_ERR_INVALID_POINTER);
 #endif
-
-    /* Copy callback settings to the control member. */
-    p_instance_ctrl->p_port_cfg_list[port].p_callback        = p_port_cfg->p_callback;
-    p_instance_ctrl->p_port_cfg_list[port].p_context         = p_port_cfg->p_context;
-    p_instance_ctrl->p_port_cfg_list[port].p_callback_memory = p_port_cfg->p_callback_memory;
 
     /* Set ETHA to CONFIG mode */
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_CONFIG);
 
-    /* Configure MAC address. */
-    r_layer3_switch_configure_mac_address(p_port_cfg->p_mac_address, port);
+    r_layer3_switch_configure_port(p_instance_ctrl, port, p_port_cfg);
 
     /* Set ETHA to OPERATION mode */
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_DISABLE);
     r_layer3_switch_update_etha_operation_mode(port, LAYER3_SWITCH_AGENT_MODE_OPERATION);
-
-    p_mfwd_fwpbfc_reg =
-        (uint32_t *) ((uintptr_t) &(R_MFWD->FWPBFC0) + (port * LAYER3_SWITCH_FWPBFC_REGISTER_OFFSET));
-    if (p_port_cfg->forwarding_to_cpu_enable)
-    {
-        *p_mfwd_fwpbfc_reg |= (R_MFWD_FWPBFC0_PBDV_Msk & (uint32_t) (LAYER3_SWITCH_PORT_CPU_BITMASK));
-    }
-    else
-    {
-        /* Disable forwarding to CPU. But forwarding from the LAN port to the LAN port is still enabled. */
-        *p_mfwd_fwpbfc_reg &= (R_MFWD_FWPBFC0_PBDV_Msk & (uint32_t) (~LAYER3_SWITCH_PORT_CPU_BITMASK));
-    }
 
     return FSP_SUCCESS;
 }
@@ -928,7 +971,7 @@ fsp_err_t R_LAYER3_SWITCH_ConfigureTable (ether_switch_ctrl_t * const           
                        (R_MFWD_FWLTHHEC_LTHHMUE_Msk);
 
     /* Configure each port. */
-    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS + 1; i++)
+    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
     {
         r_layer3_switch_configure_forwarding_port(&p_table_cfg->port_cfg_list[i], i);
 
@@ -1069,6 +1112,143 @@ fsp_err_t R_LAYER3_SWITCH_GetTable (ether_switch_ctrl_t * const p_ctrl, layer3_s
 }
 
 /*******************************************************************************************************************//**
+ * Configure Time Aware Shaper feature.
+ *
+ * @retval  FSP_SUCCESS                  TAS configure successfully.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_INVALID_POINTER      Pointer to a argument is NULL.
+ * @retval  FSP_ERR_INVALID_ARGUMENT     Port number is invalid.
+ * @retval  FSP_ERR_UNSUPPORTED          TAS feature is not enabled in the configuration.
+ **********************************************************************************************************************/
+fsp_err_t R_LAYER3_SWITCH_ConfigureTAS (ether_switch_ctrl_t * const p_ctrl,
+                                        uint8_t                     port,
+                                        layer3_switch_tas_cfg_t   * p_tas_cfg)
+{
+    fsp_err_t err = FSP_SUCCESS;
+
+#if LAYER3_SWITCH_CFG_TAS_ENABLE
+    layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) p_ctrl;
+    uint8_t             tas_entry_addr;
+    uint8_t             learn_count = 0;
+    R_ETHA0_Type      * p_etha_reg;
+    volatile uint32_t * p_eatasenc_reg;
+    uint32_t            initial_gate_state_bitmask = 0;
+
+ #if LAYER3_SWITCH_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(LAYER3_SWITCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(port < BSP_FEATURE_ETHER_NUM_CHANNELS, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(NULL != p_tas_cfg, FSP_ERR_INVALID_POINTER);
+ #else
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+ #endif
+
+    p_etha_reg = (R_ETHA0_Type *) (R_ETHA0_BASE + (LAYER3_SWITCH_ETHA_REG_SIZE * port));
+
+    /* Enable TAS gate error interrupt. */
+    p_etha_reg->EAEIE1 |= (R_ETHA0_EAEIE1_TASGEE0_Msk | R_ETHA0_EAEIE1_TASGEE1_Msk |
+                           R_ETHA0_EAEIE1_TASGEE2_Msk | R_ETHA0_EAEIE1_TASGEE3_Msk | R_ETHA0_EAEIE1_TASGEE4_Msk |
+                           R_ETHA0_EAEIE1_TASGEE5_Msk | R_ETHA0_EAEIE1_TASGEE6_Msk | R_ETHA0_EAEIE1_TASGEE7_Msk);
+
+    /* Initialize TAS RAM. */
+    p_etha_reg->EATASRIRM_b.TASRIOG = 1U;
+    FSP_HARDWARE_REGISTER_WAIT(p_etha_reg->EATASRIRM_b.TASRR, 1);
+
+    /* Wait until TAS Configuration becomes available. */
+    FSP_HARDWARE_REGISTER_WAIT(p_etha_reg->EATASC_b.TASCI, 0);
+
+    /* Set entry count and the initial state of each gate. */
+    tas_entry_addr = p_etha_reg->EATASC_b.TASCA;
+    for (uint8_t i = 0; i < BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM; i++)
+    {
+        p_eatasenc_reg  = &p_etha_reg->EATASENC0 + i;
+        *p_eatasenc_reg = ((p_tas_cfg->gate_cfg_list[i].tas_entry_num - 1) & R_ETHA0_EATASCTENC_TASCTAEN_Msk);
+
+        initial_gate_state_bitmask |= (uint8_t) (p_tas_cfg->gate_cfg_list[i].initial_gate_state << i);
+    }
+
+    p_etha_reg->EATASIGSC = initial_gate_state_bitmask & LAYER3_SWITCH_EATASIGSC_MASK;
+
+    /* Set cycle start time and span. */
+    p_etha_reg->EATASCSTC0_b.TASACSTP0 = (p_tas_cfg->cycle_time_start_low);
+    p_etha_reg->EATASCSTC1_b.TASACSTP1 = (p_tas_cfg->cycle_time_start_high);
+    p_etha_reg->EATASCTC_b.TASACT      = (p_tas_cfg->cycle_time);
+
+    /* Learning TAS gate entries. */
+    for (uint8_t i = 0; i < BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM; i++)
+    {
+        for (uint8_t learn_port_cnt = 0;
+             learn_port_cnt < p_tas_cfg->gate_cfg_list[i].tas_entry_num;
+             learn_port_cnt++)
+        {
+            layer3_switch_tas_entry_t * p_learn_entry =
+                (p_tas_cfg->gate_cfg_list[i].p_tas_entry_list + learn_port_cnt);
+
+            p_etha_reg->EATASGL0_b.TASGAL = (tas_entry_addr + learn_count);
+            p_etha_reg->EATASGL1          =
+                ((p_learn_entry->time << R_ETHA0_EATASGL1_TASGTL_Pos) & R_ETHA0_EATASGL1_TASGTL_Msk) |
+                ((uint32_t) (p_learn_entry->state << R_ETHA0_EATASGL1_TASGSL_Pos) &
+                 R_ETHA0_EATASGL1_TASGSL_Msk);
+            FSP_HARDWARE_REGISTER_WAIT(p_etha_reg->EATASGLR_b.GL, 0);
+
+            learn_count++;
+        }
+    }
+
+    /* Set gPTP timer number. */
+    p_etha_reg->EATASC_b.TASTS = (uint32_t) (p_tas_cfg->gptp_timer_number & 0x01);
+
+    /* When the TAS opearation is already enabled, apply the configuration. */
+    if (p_etha_reg->EATASC_b.TASE == 1)
+    {
+        p_etha_reg->EATASC |= R_ETHA0_EATASC_TASE_Msk | R_ETHA0_EATASC_TASCC_Msk;
+    }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(port);
+    FSP_PARAMETER_NOT_USED(p_tas_cfg);
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
+ * Enable Time Aware Shaper feature.
+ *
+ * @retval  FSP_SUCCESS                  TAS enabled successfully.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_INVALID_ARGUMENT     Port number is invalid.
+ * @retval  FSP_ERR_UNSUPPORTED          TAS feature is not enabled in the configuration.
+ **********************************************************************************************************************/
+fsp_err_t R_LAYER3_SWITCH_EnableTAS (ether_switch_ctrl_t * const p_ctrl, uint8_t port)
+{
+    fsp_err_t err = FSP_SUCCESS;
+#if LAYER3_SWITCH_CFG_TAS_ENABLE
+    layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) p_ctrl;
+ #if LAYER3_SWITCH_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(LAYER3_SWITCH_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(port < BSP_FEATURE_ETHER_NUM_CHANNELS, FSP_ERR_INVALID_ARGUMENT);
+    FSP_ERROR_RETURN(LAYER3_SWITCH_CFG_TAS_ENABLE, FSP_ERR_UNSUPPORTED);
+ #else
+    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
+ #endif
+    R_ETHA0_Type * p_etha_reg = (R_ETHA0_Type *) (R_ETHA0_BASE + (LAYER3_SWITCH_ETHA_REG_SIZE * port));
+
+    /* Enable TAS feature if it is disabled. */
+    p_etha_reg->EATASC |= R_ETHA0_EATASC_TASE_Msk;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(port);
+    err = FSP_ERR_UNSUPPORTED;
+#endif
+
+    return err;
+}
+
+/*******************************************************************************************************************//**
  * @} (end addtogroup LAYER3_SWITCH)
  **********************************************************************************************************************/
 
@@ -1140,7 +1320,7 @@ static void r_layer3_switch_close_etha_ports (layer3_switch_instance_ctrl_t * p_
     ether_phy_instance_t const   * p_ether_phy;
 
     /* Disable ETHA ports. */
-    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS; i++)
+    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
     {
         p_ether_phy = p_extend->p_ether_phy_instances[i];
         if (NULL != p_ether_phy)
@@ -1335,6 +1515,41 @@ static void r_layer3_switch_configure_mac_address (uint8_t * p_mac_address, uint
 
         p_reg_rmac->MRMAC0 = mac_h;
         p_reg_rmac->MRMAC1 = mac_l;
+    }
+}
+
+/*******************************************************************************************************************
+ * Configure the port specific features.
+ **********************************************************************************************************************/
+static void r_layer3_switch_configure_port (layer3_switch_instance_ctrl_t * const  p_instance_ctrl,
+                                            uint8_t                                port,
+                                            layer3_switch_port_cfg_t const * const p_port_cfg)
+{
+    volatile uint32_t * p_mfwd_fwpbfc_reg;
+
+    /* Copy callback settings to the control member. */
+    p_instance_ctrl->p_port_cfg_list[port].p_callback        = p_port_cfg->p_callback;
+    p_instance_ctrl->p_port_cfg_list[port].p_context         = p_port_cfg->p_context;
+    p_instance_ctrl->p_port_cfg_list[port].p_callback_memory = p_port_cfg->p_callback_memory;
+
+    /* Configure MAC address. */
+    r_layer3_switch_configure_mac_address(p_port_cfg->p_mac_address, port);
+
+    p_mfwd_fwpbfc_reg =
+        (uint32_t *) ((uintptr_t) &(R_MFWD->FWPBFC0) + (port * LAYER3_SWITCH_FWPBFC_REGISTER_OFFSET));
+    if (p_port_cfg->forwarding_to_cpu_enable)
+    {
+        *p_mfwd_fwpbfc_reg |= (R_MFWD_FWPBFC0_PBDV_Msk & (uint32_t) (LAYER3_SWITCH_PORT_CPU_BITMASK));
+    }
+    else
+    {
+        /* Disable forwarding to CPU. But forwarding from the LAN port to the LAN port is still enabled. */
+        *p_mfwd_fwpbfc_reg &= (R_MFWD_FWPBFC0_PBDV_Msk & (uint32_t) (~LAYER3_SWITCH_PORT_CPU_BITMASK));
+    }
+
+    if (NULL != p_port_cfg->p_cbs_cfg)
+    {
+        r_layer3_switch_configure_cbs(p_instance_ctrl, port, p_port_cfg->p_cbs_cfg);
     }
 }
 
@@ -2114,7 +2329,7 @@ static void r_layer3_switch_initialize_vlan_port (layer3_switch_instance_ctrl_t 
                                 (p_port_cfg->vlan_s_tag.pcp << R_ETHA0_EAVTC_STP_Pos) |
                                 (p_port_cfg->vlan_s_tag.dei << R_ETHA0_EAVTC_STD_Pos));
 
-    if (port < BSP_FEATURE_ETHER_MAX_CHANNELS)
+    if (port < BSP_FEATURE_ETHER_NUM_CHANNELS)
     {
         /* When port is external(ETHA).  */
         /* Set ETHA to CONFIG mode */
@@ -2548,6 +2763,127 @@ static uint32_t r_layer3_switch_convert_array_to_int (uint8_t * array, uint8_t l
 }
 
 /*******************************************************************************************************************
+ * Configure CBS feature for a port.
+ **********************************************************************************************************************/
+static void r_layer3_switch_configure_cbs (layer3_switch_instance_ctrl_t const * p_instance_ctrl,
+                                           uint8_t                               port,
+                                           layer3_switch_cbs_cfg_t const       * p_cbs_cfg)
+{
+    R_ETHA0_Type * p_etha_reg =
+        (R_ETHA0_Type *) (R_ETHA0_BASE + (LAYER3_SWITCH_ETHA_REG_SIZE * port));
+
+    /* CBS registers for the target queue. */
+    volatile uint32_t * p_eacaivc_reg;
+    volatile uint32_t * p_eacaulc_reg;
+
+    double   bandwidth_fraction;
+    double   civ_raw_value;
+    uint32_t civ_int_value;
+    uint32_t max_interference_size;
+    uint8_t  enable_cbs_bitmask = 0;
+    uint32_t eswclk_frequency;
+    uint32_t link_speed = 0;
+    ether_phy_instance_t const * p_phy_instance =
+        ((layer3_switch_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend)->p_ether_phy_instances[port];
+
+    /*Get frequency of ESWCLK. */
+    eswclk_frequency = R_BSP_SourceClockHzGet((fsp_priv_source_clock_t) (R_SYSTEM->ESWCKCR_b.CKSEL)) /
+                       R_FSP_ClockDividerGet(R_SYSTEM->ESWCKDIVCR_b.CKDIV);
+
+    /* Get link speed. */
+    switch (p_phy_instance->p_cfg->mii_type)
+    {
+        /* 100 Mbps. */
+        case ETHER_PHY_MII_TYPE_MII:
+        case ETHER_PHY_MII_TYPE_RMII:
+        {
+            link_speed = LAYER3_SWITCH_LINK_SPEED_100M;
+            break;
+        }
+
+        /* 1000 Mbps. */
+        case ETHER_PHY_MII_TYPE_GMII:
+        case ETHER_PHY_MII_TYPE_RGMII:
+        {
+            link_speed = LAYER3_SWITCH_LINK_SPEED_1G;
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+
+    for (uint8_t i = 0; i < BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM; i++)
+    {
+        if (0 != p_cbs_cfg->band_width_list[i])
+        {
+            p_eacaivc_reg = (volatile uint32_t *) ((uint8_t *) &p_etha_reg->EACAIVC0 + (4 * i));
+            p_eacaulc_reg = (volatile uint32_t *) ((uint8_t *) &p_etha_reg->EACAULC0 + (4 * i));
+
+            /* Calculate CIV (Credit Increment Value) */
+            bandwidth_fraction = p_cbs_cfg->band_width_list[i] / 100.0;
+            civ_raw_value      = (link_speed / LAYER3_SWITCH_CBS_BITS_PER_BYTE) * bandwidth_fraction / eswclk_frequency;
+            civ_int_value      =
+                (uint32_t) (((uint8_t) civ_raw_value << 16) | (uint16_t) (civ_raw_value * (UINT16_MAX + 1)));
+
+            /* Set CIV value to the register.  */
+            *p_eacaivc_reg = civ_int_value;
+
+            /* Calculate credit upper limit. */
+            max_interference_size = r_layer3_switch_calculate_max_interference_size(i, p_cbs_cfg->max_burst_num_list);
+            *p_eacaulc_reg        = 0 *
+                                    max_interference_size *
+                                    (eswclk_frequency / (link_speed + LAYER3_SWITCH_CBS_REQUEST_DELAY)) * civ_int_value;
+            enable_cbs_bitmask |= (1 << i);
+        }
+    }
+
+    /* Enable and apply CBS configuration. */
+    p_etha_reg->EACAEC = enable_cbs_bitmask;
+    p_etha_reg->EACC   = enable_cbs_bitmask;
+}
+
+/*******************************************************************************************************************
+ * Calculate max interference size which used to configure CBS.
+ **********************************************************************************************************************/
+static uint32_t r_layer3_switch_calculate_max_interference_size (uint8_t         queue_number,
+                                                                 uint8_t const * p_max_burst_num_list)
+{
+    uint32_t queue_interference_size = (LAYER3_SWITCH_MAXIMUM_FRAME_SIZE + LAYER3_SWITCH_CBS_INTERFERENCE_SIZE_OFFSET) *
+                                       LAYER3_SWITCH_CBS_BITS_PER_BYTE;
+    uint32_t queue_interference_size_low  = 0;
+    uint32_t queue_interference_size_high = 0;
+
+    /* Get the interference size of the queues with lower priority than the target queue. */
+    if (queue_number > 0)
+    {
+        queue_interference_size_low = (LAYER3_SWITCH_MAXIMUM_FRAME_SIZE + LAYER3_SWITCH_CBS_INTERFERENCE_SIZE_OFFSET) *
+                                      LAYER3_SWITCH_CBS_BITS_PER_BYTE;
+    }
+
+    /* Get the interference size of the queues with higher priority than the target queue. */
+    for (uint8_t i = queue_number + 1; i < BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM; i++)
+    {
+        if (0 != p_max_burst_num_list[i])
+        {
+            queue_interference_size_high +=
+                (LAYER3_SWITCH_MAXIMUM_FRAME_SIZE * 2 + LAYER3_SWITCH_CBS_INTERFERENCE_SIZE_OFFSET * 2) *
+                LAYER3_SWITCH_CBS_BITS_PER_BYTE;
+        }
+        else
+        {
+            queue_interference_size_high +=
+                ((p_max_burst_num_list[i] + 1) * LAYER3_SWITCH_MAXIMUM_FRAME_SIZE +
+                 LAYER3_SWITCH_CBS_INTERFERENCE_SIZE_OFFSET * 2) * LAYER3_SWITCH_CBS_BITS_PER_BYTE;
+        }
+    }
+
+    return queue_interference_size_low + queue_interference_size + queue_interference_size_high;
+}
+
+/*******************************************************************************************************************
  * Calls user callback for each ports.
  *
  * @param[in]     p_instance_ctrl      Pointer to a instance control
@@ -2559,7 +2895,7 @@ static void r_layer3_switch_call_callback_for_ports (layer3_switch_instance_ctrl
                                                      uint32_t                        ports)
 {
     /* Call port-specific callback for each port. */
-    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS; i++)
+    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
     {
         /* Check if event occurred on this port. */
         if (0 != (ports & (1 << i)))
@@ -2656,7 +2992,7 @@ void layer3_switch_gwdi_isr (void)
     volatile uint32_t * p_gwca_gwei2_reg;
 
     /* Check if port-specific callbacks are set. */
-    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_MAX_CHANNELS; i++)
+    for (uint8_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
     {
         if (NULL != p_instance_ctrl->p_port_cfg_list[i].p_callback)
         {
@@ -2746,3 +3082,55 @@ void layer3_switch_gwdi_isr (void)
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
 }                                      /* End of function layer3_switch_gwdi_isr() */
+
+/***********************************************************************************************************************
+ * Interrupt handler for ETHA error interrupts that includes TAS error events.
+ ***********************************************************************************************************************/
+void layer3_switch_eaei_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+
+    IRQn_Type irq = R_FSP_CurrentIrqGet();
+    layer3_switch_instance_ctrl_t * p_instance_ctrl = (layer3_switch_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+    ether_switch_callback_args_t    callback_arg    = {0};
+
+    R_ETHA0_Type * p_etha_reg;
+    uint32_t       eaei_status;
+
+    callback_arg.channel   = p_instance_ctrl->p_cfg->channel;
+    callback_arg.p_context = p_instance_ctrl->p_context;
+
+    for (uint32_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
+    {
+        /* Get status register address. */
+        p_etha_reg  = (R_ETHA0_Type *) (R_ETHA0_BASE + (LAYER3_SWITCH_ETHA_REG_SIZE * i));
+        eaei_status = p_etha_reg->EAEIS1;
+
+        /* Clear status register. */
+        p_etha_reg->EAEIS1 = eaei_status;
+
+        /* Check TAS gate error events. */
+        if (eaei_status & (R_ETHA0_EAEIS1_TASGES0_Msk | R_ETHA0_EAEIS1_TASGES1_Msk |
+                           R_ETHA0_EAEIS1_TASGES2_Msk | R_ETHA0_EAEIS1_TASGES3_Msk | R_ETHA0_EAEIS1_TASGES4_Msk |
+                           R_ETHA0_EAEIS1_TASGES5_Msk | R_ETHA0_EAEIS1_TASGES6_Msk | R_ETHA0_EAEIS1_TASGES7_Msk))
+        {
+            /* Call callback function for the port. */
+            callback_arg.ports |= (1 << i);
+            callback_arg.event  = ETHER_SWITCH_EVENT_TAS_ERROR;
+        }
+    }
+
+    /* Call callback of the switch. */
+    if (0 != callback_arg.ports)
+    {
+        r_layer3_switch_call_callback(p_instance_ctrl->p_callback, &callback_arg, p_instance_ctrl->p_callback_memory);
+    }
+
+    /* Clear pending interrupt flag to make sure it doesn't fire again
+     * after exiting. */
+    R_BSP_IrqStatusClear(R_FSP_CurrentIrqGet());
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
+}                                      /* End of function layer3_switch_eaei_isr() */

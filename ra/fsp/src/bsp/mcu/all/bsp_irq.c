@@ -64,7 +64,7 @@ void R_BSP_IrqStatusClear (IRQn_Type irq)
     R_ICU->IELSR_b[irq].IR = 0U;
 
     /* Read back the IELSR register to ensure that the IR bit is cleared.
-     * See section "13.5.1 Operations During an Interrupt" in the RA8M1 manual R01UH0994EJ0100. */
+     * See "Operations During an Interrupt" in the ICU section of the relevant hardware manual. */
     FSP_REGISTER_READ(R_ICU->IELSR[irq]);
 }
 
@@ -239,7 +239,7 @@ void bsp_irq_cfg (void)
     }
 
     /* The Secure Attribute managed within the ARM CPU NVIC must match the security attribution of IELSEn
-     * (Reference section 13.2.9 in the RA6M4 manual R01UH0890EJ0050). */
+     * (Refer "ICUSARI : Interrupt Controller Unit Security Attribution Register I" description in the ICU section of the relevant hardware manual). */
     uint32_t volatile * p_icusarg = &R_CPSCU->ICUSARG;
     for (uint32_t i = 0U; i < BSP_ICU_VECTOR_MAX_ENTRIES / BSP_PRV_BITS_PER_WORD; i++)
     {

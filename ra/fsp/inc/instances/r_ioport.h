@@ -31,6 +31,7 @@ FSP_HEADER
 
 /* Private definition to set enumeration values. */
 #define IOPORT_PRV_PFS_PSEL_OFFSET    (24)
+#define IOPORT_PRV_CCD_PIN_COUNT      (8)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -480,6 +481,23 @@ typedef enum e_ioport_cfg_options
     IOPORT_CFG_PERIPHERAL_PIN        = 0x00010000  ///< Enables pin to operate as a peripheral pin
 } ioport_cfg_options_t;
 #endif
+
+/** Output current settings for CCD pins */
+typedef enum e_ioport_output_current_t
+{
+    IOPORT_OUTPUT_CURRENT_HI_Z    = 0,  ///< High-impedance state
+    IOPORT_OUTPUT_CURRENT_2_MA    = 1,  ///< 2 mA output current
+    IOPORT_OUTPUT_CURRENT_5_MA    = 2,  ///< 5 mA output current
+    IOPORT_OUTPUT_CURRENT_10_MA   = 3,  ///< 10 mA output current
+    IOPORT_OUTPUT_CURRENT_15_MA   = 4,  ///< 15 mA output current
+    IOPORT_OUTPUT_CURRENT_DISABLE = -1, ///< Disables output current control
+} ioport_output_current_t;
+
+/** R_IOPORT extended configuration */
+typedef struct st_ioport_extended_cfg
+{
+    ioport_output_current_t const ccd_pin_cfg_data[IOPORT_PRV_CCD_PIN_COUNT]; ///< Low-level output current for the CCD pins
+} ioport_extended_cfg_t;
 
 /**********************************************************************************************************************
  * Exported global variables

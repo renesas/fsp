@@ -37,7 +37,8 @@ FSP_HEADER
 /** User configuration structure, used in open function */
 typedef struct st_rm_littlefs_flash_cfg
 {
-    flash_instance_t const * p_flash;  ///< Pointer to a flash instance
+    flash_instance_t const * p_flash;        ///< Pointer to a flash instance
+    uint32_t const           memory_address; ///< Address of the LittleFS volume
 } rm_littlefs_flash_cfg_t;
 
 /** Instance control block.  This is private to the FSP and should not be used or modified by the application. */
