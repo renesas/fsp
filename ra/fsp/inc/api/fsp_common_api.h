@@ -339,6 +339,8 @@ typedef enum e_fsp_err
     FSP_ERR_CRYPTO_SCE_AUTHENTICATION    = 0x10013,  ///< Authentication failed
     FSP_ERR_CRYPTO_SCE_PARAMETER         = 0x10014,  ///< Input date is illegal.
     FSP_ERR_CRYPTO_SCE_PROHIBIT_FUNCTION = 0x10015,  ///< An invalid function call occurred.
+    FSP_ERR_CRYPTO_SCE_PASS_1            = 0x10016,  //   Private SCE return code
+    FSP_ERR_CRYPTO_SCE_PASS_2            = 0x10017,  //   Private SCE return code
 
     FSP_ERR_CRYPTO_SCE_LBIST_CHECK_BUSY  = 0x100ff,  ///< LBIST Check BUSY
 

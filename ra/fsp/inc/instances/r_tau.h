@@ -95,7 +95,8 @@ typedef enum e_tau_input_source
 {
     TAU_INPUT_SOURCE_TI_PIN   = 0U,    ///< Timer Input Source is input pin
     TAU_INPUT_SOURCE_ELC      = 1U,    ///< ELC Timer Input Source
-    TAU_INPUT_SOURCE_RXD2_PIN = 2U,    ///< Timer Input Source is RXD2 pin
+    TAU_INPUT_SOURCE_RXD_PIN  = 2U,    ///< Timer Input Source is RXD pin
+    TAU_INPUT_SOURCE_RXD2_PIN = 2U,    ///< DEPRECATED, do not use
     TAU_INPUT_SOURCE_MOCO     = 3U,    ///< Timer Input Source is MOCO
     TAU_INPUT_SOURCE_LOCO     = 4U,    ///< Timer Input Source is LOCO
     TAU_INPUT_SOURCE_FSUB     = 5U,    ///< Timer Input Source is FSUB

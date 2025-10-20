@@ -15,6 +15,7 @@
 /***********************************************************************************************************************
  * Macro definitions
  **********************************************************************************************************************/
+
 #define RMAC_OPEN                                   (('R' << 24U) | ('M' << 16U) | ('A' << 8U) | ('C' << 0U))
 
 #define RMAC_ETHA_REG_SIZE                          (R_ETHA1_BASE - R_ETHA0_BASE)
@@ -47,7 +48,14 @@
 #define RMAC_INVALID_QUEUE_INDEX                    (0xFFFFFFFF)
 
 /* Increments a index and wraps around to 0 if it exceeds the maximum value */
-#define RMAC_INCREMENT_INDEX(x, max)    (x = (x + 1) % max)
+#define RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(x, max)    (x = (x + 1) % max)
+
+/* TX Timestamp feature. */
+#define RMAC_WRITE_CFG_TX_TIMESTAMP_ENABLE    (1)
+#define RMAC_GET_TX_TIMESTAMP_WAIT_TIME       (10000)
+
+/* Timestamp sequence number mask. */
+#define RMAC_TS_SEQUENCE_NUMBER_MASK          (0x7F)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -76,10 +84,22 @@ static fsp_err_t rmac_do_link(rmac_instance_ctrl_t * const                 p_ins
                               const layer3_switch_magic_packet_detection_t mode);
 static fsp_err_t rmac_link_status_check(rmac_instance_ctrl_t const * const p_instance_ctrl);
 
-static void      rmac_call_callback(rmac_instance_ctrl_t * p_instance_ctrl, ether_callback_args_t * p_callback_args);
+static void rmac_call_callback(rmac_instance_ctrl_t  * p_instance_ctrl,
+                               ether_callback_args_t * p_callback_args);
 static void      r_rmac_switch_interrupt_callback(ether_switch_callback_args_t * p_args);
-static fsp_err_t r_rmac_reset_rx_descriptor(rmac_instance_ctrl_t * p_instance_ctrl, void * p_buffer);
-static void      r_rmac_disable_reception(rmac_instance_ctrl_t * p_instance_ctrl);
+static fsp_err_t r_rmac_set_rx_buffer(rmac_instance_ctrl_t * p_instance_ctrl,
+                                      rmac_buffer_node_t   * p_buffer_node);
+static fsp_err_t r_rmac_set_tx_buffer(rmac_instance_ctrl_t * p_instance_ctrl,
+                                      void                 * p_write_buffer,
+                                      uint32_t               frame_length,
+                                      uint32_t               queue_index);
+static fsp_err_t            r_rmac_start_tx_queue(rmac_instance_ctrl_t * p_instance_ctrl, uint32_t queue_index);
+static void                 r_rmac_disable_reception(rmac_instance_ctrl_t * p_instance_ctrl);
+static rmac_buffer_node_t * r_rmac_buffer_dequeue(rmac_buffer_queue_t * p_queue);
+static void                 r_rmac_buffer_enqueue(rmac_buffer_queue_t * p_queue, rmac_buffer_node_t * p_node);
+static fsp_err_t            r_rmac_get_rx_queue(rmac_instance_ctrl_t * p_instance_ctrl, uint32_t queue_index);
+static fsp_err_t            r_rmac_set_rx_queue(rmac_instance_ctrl_t * p_instance_ctrl, uint32_t queue_index);
+static fsp_err_t            r_rmac_get_tx_timestamp(rmac_instance_ctrl_t * p_instance_ctrl);
 
 /***********************************************************************************************************************
  * ISR prototypes
@@ -162,9 +182,18 @@ fsp_err_t R_RMAC_Open (ether_ctrl_t * const p_ctrl, ether_cfg_t const * const p_
     p_instance_ctrl->link_change           = ETHER_LINK_CHANGE_NO_CHANGE;
     p_instance_ctrl->previous_link_status  = ETHER_PREVIOUS_LINK_STATUS_DOWN;
     p_instance_ctrl->wake_on_lan           = ETHER_WAKE_ON_LAN_DISABLE;
+    p_instance_ctrl->p_last_sent_buffer    = NULL;
 
     /* Initialize configuration of Ethernet module. */
     p_instance_ctrl->p_cfg = p_cfg;
+
+    /* Initialize configuration of timestamp. */
+    p_instance_ctrl->p_rx_timestamp                = NULL;
+    p_instance_ctrl->tx_timestamp.ns               = 0;
+    p_instance_ctrl->tx_timestamp.sec_lower        = 0;
+    p_instance_ctrl->tx_timestamp.sec_upper        = 0;
+    p_instance_ctrl->tx_timestamp_seq_num          = 0;
+    p_instance_ctrl->write_cfg.tx_timestamp_enable = 0;
 
     /* Set callback and context pointers, if configured */
     p_instance_ctrl->p_callback        = p_cfg->p_callback;
@@ -238,20 +267,46 @@ fsp_err_t R_RMAC_Close (ether_ctrl_t * const p_ctrl)
 }                                      /* End of function R_RMAC_Close() */
 
 /********************************************************************************************************************//**
- * @brief Move to the next buffer in the circular receive buffer list. Implements @ref ether_api_t::bufferRelease.
+ * @brief Move to the next buffer in the receive buffer list. Implements @ref ether_api_t::bufferRelease.
  *
  * @retval  FSP_SUCCESS                             Processing completed successfully.
- * @retval  FSP_ERR_ASSERTION                       Pointer to ETHER control block is NULL.
+ * @retval  FSP_ERR_ASSERTION                       Pointer to ETHER control block or internal buffers is NULL.
  * @retval  FSP_ERR_NOT_OPEN                        The control block has not been opened
  * @retval  FSP_ERR_ETHER_ERROR_LINK                Auto-negotiation is not completed, and reception is not enabled.
+ * @retval  FSP_ERR_BUFFER_EMPTY                    There is no available internal RX buffer.
  ***********************************************************************************************************************/
 fsp_err_t R_RMAC_BufferRelease (ether_ctrl_t * const p_ctrl)
 {
+    fsp_err_t              err             = FSP_SUCCESS;
     rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
 
-    return FSP_ERR_UNSUPPORTED;
+    rmac_buffer_node_t * p_read_buffer_node; /* Buffer location controlled by the Ethernet driver */
+
+    /* Check argument */
+#if (RMAC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(RMAC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->pp_ether_buffers != NULL, FSP_ERR_ASSERTION)
+#endif
+
+    /* When the Link up processing is not completed, return error */
+    FSP_ERROR_RETURN(ETHER_LINK_ESTABLISH_STATUS_UP == p_instance_ctrl->link_establish_status,
+                     FSP_ERR_ETHER_ERROR_LINK);
+
+    /* When the zerocopy mode, dequeue a unreleased buffer. */
+    p_read_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->rx_unreleased_buffer_queue);
+
+    if (NULL != p_read_buffer_node)
+    {
+        /* Try to set to the buffer */
+        r_rmac_set_rx_buffer(p_instance_ctrl, p_read_buffer_node);
+    }
+    else
+    {
+        err = FSP_ERR_BUFFER_EMPTY;
+    }
+
+    return err;
 }                                      /* End of function R_RMAC_BufferRelease() */
 
 /********************************************************************************************************************//**
@@ -262,16 +317,47 @@ fsp_err_t R_RMAC_BufferRelease (ether_ctrl_t * const p_ctrl)
  * @retval  FSP_ERR_NOT_OPEN                        The control block has not been opened.
  * @retval  FSP_ERR_INVALID_POINTER                 The pointer of buffer is NULL or not aligned on a 32-bit boundary.
  * @retval  FSP_ERR_INVALID_MODE                    Driver is configured to non zero copy mode.
- * @retval  FSP_ERR_ETHER_RECEIVE_BUFFER_ACTIVE     All descriptor is active.
+ * @retval  FSP_ERR_BUFFER_EMPTY                    There is no available internal RX buffer.
  ***********************************************************************************************************************/
 fsp_err_t R_RMAC_RxBufferUpdate (ether_ctrl_t * const p_ctrl, void * const p_buffer)
 {
+    fsp_err_t              err             = FSP_SUCCESS;
     rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
-    FSP_PARAMETER_NOT_USED(p_buffer);
+    rmac_buffer_node_t   * p_read_buffer_node;
 
-    return FSP_ERR_UNSUPPORTED;
+    /* Check argument */
+#if (RMAC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(RMAC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(NULL != p_buffer, FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(ETHER_ZEROCOPY_ENABLE == p_instance_ctrl->p_cfg->zerocopy, FSP_ERR_INVALID_MODE);
+#endif
+
+    if (p_instance_ctrl->rx_initialized_buffer_num < p_instance_ctrl->p_cfg->num_rx_descriptors)
+    {
+        p_instance_ctrl->rx_initialized_buffer_num++;
+    }
+
+    /* Discard unreleased buffer and set the passed new buffer. */
+    p_read_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->rx_unreleased_buffer_queue);
+
+    /* When the unreleased buffer queue is empty, use the buffer node pool. */
+    if (NULL == p_read_buffer_node)
+    {
+        p_read_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->buffer_node_pool);
+    }
+
+    if (NULL != p_read_buffer_node)
+    {
+        p_read_buffer_node->p_buffer = p_buffer;
+        r_rmac_set_rx_buffer(p_instance_ctrl, p_read_buffer_node);
+    }
+    else
+    {
+        err = FSP_ERR_BUFFER_EMPTY;
+    }
+
+    return err;
 }
 
 /********************************************************************************************************************//**
@@ -446,17 +532,17 @@ fsp_err_t R_RMAC_WakeOnLANEnable (ether_ctrl_t * const p_ctrl)
  * @retval  FSP_ERR_ETHER_ERROR_FILTERING               Multicast Frame filter is enable, and Multicast Address Frame is
  *                                                      received.
  * @retval  FSP_ERR_INVALID_POINTER                     Value of the pointer is NULL.
+ * @retval  FSP_ERR_BUFFER_EMPTY                        There is no available internal RX buffer.
  ***********************************************************************************************************************/
 fsp_err_t R_RMAC_Read (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint32_t * const length_bytes)
 {
-    fsp_err_t              err             = FSP_SUCCESS;
-    rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
-    uint8_t              * p_read_buffer   = NULL; /* Buffer location controlled by the Ethernet driver */
-    uint64_t               buffer_address;
-    uint32_t               received_size = RMAC_NO_DATA;
-
-    layer3_switch_descriptor_t descriptor;
-    rmac_extended_cfg_t      * p_extend;
+    fsp_err_t              err                = FSP_SUCCESS;
+    rmac_instance_ctrl_t * p_instance_ctrl    = (rmac_instance_ctrl_t *) p_ctrl;
+    rmac_buffer_node_t   * p_read_buffer_node = NULL; /* Buffer location controlled by the Ethernet driver */
+    uint32_t               received_size      = RMAC_NO_DATA;
+    uint8_t              * p_read_buffer      = NULL;
+    uint8_t             ** pp_read_buffer     = (uint8_t **) p_buffer;
+    rmac_extended_cfg_t  * p_extend;
 
     /* Check argument */
 #if (RMAC_CFG_PARAM_CHECKING_ENABLE)
@@ -466,44 +552,58 @@ fsp_err_t R_RMAC_Read (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint3
     FSP_ERROR_RETURN(NULL != length_bytes, FSP_ERR_INVALID_POINTER);
 #endif
 
-    p_extend = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-
     /* (1) Retrieve the receive buffer location controlled by the  descriptor. */
     /* When the Link up processing is not completed, return error */
     FSP_ERROR_RETURN(ETHER_LINK_ESTABLISH_STATUS_UP == p_instance_ctrl->link_establish_status,
                      FSP_ERR_ETHER_ERROR_LINK);
 
-    err =
-        R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl,
-                                      p_extend->p_rx_queue_list[p_instance_ctrl->read_queue_index].index, &descriptor);
+    p_extend = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
 
-    /* When receive data exists. */
-    if (FSP_SUCCESS == err)
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+
+    p_read_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->rx_completed_buffer_queue);
+    if (NULL != p_read_buffer_node)
     {
-        /**
-         * Pass the pointer to received data to application.  This is
-         * zero-copy operation.
-         */
-        buffer_address  = (uint64_t) (descriptor.basic.ptr_h) << RMAC_DESCRIPTOR_FIELD_PTR_UPPER_POSITION;
-        buffer_address += descriptor.basic.ptr_l;
-        p_read_buffer   = (void *) (uintptr_t) buffer_address;
-
-        /* Get bytes received */
-        received_size =
-            (uint32_t) ((descriptor.basic.ds_h << RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION) + descriptor.basic.ds_l);
+        p_read_buffer = p_read_buffer_node->p_buffer;
+        received_size = p_read_buffer_node->size;
     }
 
     /* When there is data to receive */
     if (received_size > RMAC_NO_DATA)
     {
-        /* (2) Copy the data read from the receive buffer which is controlled
-         *     by the descriptor to the buffer which is specified by the user (up to 1024 bytes). */
-        memcpy(p_buffer, p_read_buffer, received_size);
+#if LAYER3_SWITCH_CFG_GPTP_ENABLE
 
-        /* (3) Read the receive data from the receive buffer controlled by the descriptor,
-         * and then release the receive buffer. */
+        /* Get timestamp. */
+        if (NULL != p_instance_ctrl->p_rx_timestamp)
+        {
+            p_instance_ctrl->p_rx_timestamp->ns        = p_read_buffer_node->timestamp.ns;
+            p_instance_ctrl->p_rx_timestamp->sec_lower = p_read_buffer_node->timestamp.sec_lower;
 
-        err = r_rmac_reset_rx_descriptor(p_instance_ctrl, p_read_buffer);
+            /* Clear for next read. */
+            p_instance_ctrl->p_rx_timestamp = NULL;
+        }
+#endif
+
+        if (ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_cfg->zerocopy)
+        {
+            /* (2) Copy the data read from the receive buffer which is controlled
+             *     by the descriptor to the buffer which is specified by the user (up to 1024 bytes). */
+            memcpy(p_buffer, p_read_buffer, received_size);
+
+            /* (3) Read the receive data from the receive buffer controlled by the descriptor,
+             * and then release the receive buffer. */
+
+            /* Read a pending buffer, try to set this buffer to the descriptor queue. If failed, it will be enqueued to the buffer pool. */
+            r_rmac_set_rx_buffer(p_instance_ctrl, p_read_buffer_node);
+        }
+        else
+        {
+            *pp_read_buffer = p_read_buffer;
+
+            /* Add this buffer to the buffer pool. It becomes reusable after being released via the BufferRelease API. */
+            r_rmac_buffer_enqueue(&p_instance_ctrl->rx_unreleased_buffer_queue, p_read_buffer_node);
+        }
 
         *length_bytes = received_size;
     }
@@ -511,7 +611,23 @@ fsp_err_t R_RMAC_Read (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint3
     else
     {
         err = FSP_ERR_ETHER_ERROR_NO_DATA;
+
+        if (RMAC_INVALID_QUEUE_INDEX == p_instance_ctrl->rx_running_queue_index)
+        {
+            /*Try to set a new empty buffer and restart reception. */
+            fsp_err_t serr = R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
+                                                                  p_extend->p_rx_queue_list[p_instance_ctrl->
+                                                                                            read_queue_index].index);
+            if (FSP_SUCCESS == serr)
+            {
+                p_instance_ctrl->rx_running_queue_index = p_instance_ctrl->read_queue_index;
+            }
+
+            RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(p_instance_ctrl->read_queue_index, p_extend->rx_queue_num);
+        }
     }
+
+    FSP_CRITICAL_SECTION_EXIT;
 
     return err;
 }                                      /* End of function R_RMAC_Read() */
@@ -529,7 +645,7 @@ fsp_err_t R_RMAC_Read (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint3
  * @retval  FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL    Transmit buffer is not empty.
  * @retval  FSP_ERR_INVALID_POINTER                     Value of the pointer is NULL.
  * @retval  FSP_ERR_INVALID_ARGUMENT                    Value of the send frame size is out of range.
- *
+ * @retval  FSP_ERR_BUFFER_EMPTY                        There is no available internal TX buffer.
  ***********************************************************************************************************************/
 fsp_err_t R_RMAC_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint32_t const frame_length)
 {
@@ -537,9 +653,9 @@ fsp_err_t R_RMAC_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint
     rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
     rmac_extended_cfg_t  * p_extend;
 
-    uint8_t * p_write_buffer;
-    layer3_switch_descriptor_t descriptor;
-    uint64_t buffer_address;
+    void               * p_write_buffer;
+    rmac_buffer_node_t * p_write_buffer_node = NULL;
+    uint32_t             next_write_queue;
 
     /* Check argument */
 #if (RMAC_CFG_PARAM_CHECKING_ENABLE)
@@ -551,71 +667,121 @@ fsp_err_t R_RMAC_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint
     FSP_ERROR_RETURN(p_instance_ctrl->p_cfg->ether_buffer_size >= frame_length, FSP_ERR_OVERFLOW);
 #endif
 
-    p_extend = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    p_extend         = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    next_write_queue = p_instance_ctrl->write_queue_index;
 
     /* When the Link up processing is not completed, return error */
     FSP_ERROR_RETURN(ETHER_LINK_ESTABLISH_STATUS_UP == p_instance_ctrl->link_establish_status,
                      FSP_ERR_ETHER_ERROR_LINK);
 
-    err =
-        R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl,
-                                      p_extend->p_tx_queue_list[p_instance_ctrl->write_queue_index].index, &descriptor);
-
-    /* When target queue is full, use a next one. */
-    if ((FSP_ERR_NOT_INITIALIZED == err) || (NULL == (void *) descriptor.basic.ptr_l))
+    /* Get TX buffer. */
+    if (ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_cfg->zerocopy)
     {
-        RMAC_INCREMENT_INDEX(p_instance_ctrl->write_queue_index, p_extend->tx_queue_num);
-        err =
-            R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl,
-                                          p_extend->p_tx_queue_list[p_instance_ctrl->write_queue_index].index,
-                                          &descriptor);
+        p_write_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->tx_empty_buffer_queue);
+        FSP_ERROR_RETURN(NULL != p_write_buffer_node, FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL);
+        p_write_buffer_node->size = frame_length;
+
+        /* Get a buffer from internal buffers. */
+        p_write_buffer = p_write_buffer_node->p_buffer;
+
+        /* Copy data to the transmit buffer. */
+        memcpy(p_write_buffer, p_buffer, frame_length);
+    }
+    else
+    {
+        /* In zerocopy mode, use a passed buffer. */
+        p_write_buffer = p_buffer;
     }
 
-    /* Retrieve the transmit buffer location controlled by the  descriptor. */
-    if (FSP_SUCCESS == err)
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+
+    /* If a pending buffer exists, this buffer will be also pending. */
+    if (NULL != p_instance_ctrl->tx_pending_buffer_queue.p_head)
     {
-        /* Get buffer address. */
-        buffer_address  = (uint64_t) (descriptor.basic.ptr_h) << RMAC_DESCRIPTOR_FIELD_PTR_UPPER_POSITION;
-        buffer_address += descriptor.basic.ptr_l;
-
-        p_write_buffer = (void *) (uintptr_t) buffer_address;
-
-        /* Write the data to the transmit buffer that controlled by the  descriptor. */
-        memcpy(p_write_buffer, p_buffer, frame_length);
-
-        /* Configure transmission descriptor. */
-        descriptor.basic.ds_h = (RMAC_DESCRIPTOR_FIELD_DS_UPPER_MASK & frame_length) >>
-                                RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION;
-        descriptor.basic.ds_l = RMAC_DESCRIPTOR_FIELD_DS_LOWER_MASK & frame_length;
-        descriptor.basic.dt   = LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE;
-
-        R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl,
-                                      p_extend->p_tx_queue_list[p_instance_ctrl->write_queue_index].index, &descriptor);
-
-        /* Check if any TX queue is running. */
-        if (p_instance_ctrl->tx_running_queue_index != RMAC_INVALID_QUEUE_INDEX)
+        err = FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL;
+    }
+    else
+    {
+        /* If the write target is the running queue, don't write to the descriptor queue. */
+        if (RMAC_INVALID_QUEUE_INDEX != p_instance_ctrl->tx_running_queue_index)
         {
-            /* Pending this data until the complete transmission of other queues. */
-            p_instance_ctrl->tx_pending_queue_map |= p_instance_ctrl->write_queue_index;
+            next_write_queue = p_instance_ctrl->tx_running_queue_index;
+            RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(next_write_queue, p_extend->tx_queue_num);
         }
         else
         {
-            /* When all TX queues are stopped, start transmission. */
-            p_instance_ctrl->tx_running_queue_index = p_instance_ctrl->write_queue_index;
-            R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
-                                                 p_extend->p_tx_queue_list[p_instance_ctrl->tx_running_queue_index].index);
+            next_write_queue = p_instance_ctrl->write_queue_index;
+        }
 
-            /* Update the queue that used to next write operation. */
-            RMAC_INCREMENT_INDEX(p_instance_ctrl->write_queue_index, p_extend->tx_queue_num);
+        err =
+            r_rmac_set_tx_buffer(p_instance_ctrl, p_write_buffer, frame_length,
+                                 p_extend->p_tx_queue_list[next_write_queue].index);
+
+        /* Try to write to the next queue. */
+        if (FSP_ERR_OVERFLOW == err)
+        {
+            RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(next_write_queue, p_extend->tx_queue_num);
+            if (p_instance_ctrl->tx_running_queue_index != next_write_queue)
+            {
+                err =
+                    r_rmac_set_tx_buffer(p_instance_ctrl, p_write_buffer, frame_length,
+                                         p_extend->p_tx_queue_list[next_write_queue].index);
+            }
+        }
+    }
+
+    FSP_CRITICAL_SECTION_EXIT;
+
+    if (FSP_SUCCESS == err)
+    {
+        /* If non-zerocoy mode, move the internal buffer node to the pool. */
+        if (ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_cfg->zerocopy)
+        {
+            r_rmac_buffer_enqueue(&p_instance_ctrl->buffer_node_pool, p_write_buffer_node);
         }
     }
     else
     {
-        err = FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL; /* Transmit buffer overflow */
+        /* Copy the zerocopy buffer to a new buffer node. */
+        if (NULL == p_write_buffer_node)
+        {
+            p_write_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->buffer_node_pool);
+            FSP_ERROR_RETURN(NULL != p_write_buffer_node, FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL);
+            p_write_buffer_node->p_buffer = p_write_buffer;
+            p_write_buffer_node->size     = frame_length;
+        }
+
+        /* If write process fails, add the buffer to the pending queue. */
+        r_rmac_buffer_enqueue(&p_instance_ctrl->tx_pending_buffer_queue, p_write_buffer_node);
+        err = FSP_SUCCESS;
     }
 
+    /* Check if all TX queues are stopped. */
+    if (p_instance_ctrl->tx_running_queue_index == RMAC_INVALID_QUEUE_INDEX)
+    {
+        FSP_CRITICAL_SECTION_ENTER;
+
+        /* When all TX queues are stopped, start transmission  */
+        if (FSP_SUCCESS ==
+            r_rmac_start_tx_queue(p_instance_ctrl, p_extend->p_tx_queue_list[next_write_queue].index))
+        {
+            p_instance_ctrl->tx_running_queue_index = next_write_queue;
+        }
+        else
+        {
+            p_instance_ctrl->tx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+        }
+
+        RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(next_write_queue, p_extend->tx_queue_num);
+
+        FSP_CRITICAL_SECTION_EXIT;
+    }
+
+    p_instance_ctrl->write_queue_index = next_write_queue;
+
     return err;
-}                                                       /* End of function R_RMAC_Write() */
+}                                      /* End of function R_RMAC_Write() */
 
 /**********************************************************************************************************************//**
  * Provides status of Ethernet driver in the user provided pointer. Implements @ref ether_api_t::txStatusGet.
@@ -628,12 +794,34 @@ fsp_err_t R_RMAC_Write (ether_ctrl_t * const p_ctrl, void * const p_buffer, uint
  ***********************************************************************************************************************/
 fsp_err_t R_RMAC_TxStatusGet (ether_ctrl_t * const p_ctrl, void * const p_buffer_address)
 {
-    rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
-    FSP_PARAMETER_NOT_USED(p_ctrl);
-    FSP_PARAMETER_NOT_USED(p_instance_ctrl);
-    FSP_PARAMETER_NOT_USED(p_buffer_address);
+    rmac_instance_ctrl_t * p_instance_ctrl       = (rmac_instance_ctrl_t *) p_ctrl;
+    uint8_t             ** p_sent_buffer_address = (uint8_t **) p_buffer_address;
+    fsp_err_t              err;
 
-    return FSP_ERR_UNSUPPORTED;
+#if (RMAC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(RMAC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(NULL != p_buffer_address, FSP_ERR_INVALID_POINTER);
+#endif
+
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+
+    if (NULL != p_instance_ctrl->p_last_sent_buffer)
+    {
+        *p_sent_buffer_address              = p_instance_ctrl->p_last_sent_buffer;
+        p_instance_ctrl->p_last_sent_buffer = NULL;
+        err = FSP_SUCCESS;
+    }
+    else
+    {
+        /* No descriptors have been sent. */
+        err = FSP_ERR_NOT_FOUND;
+    }
+
+    FSP_CRITICAL_SECTION_EXIT;
+
+    return err;
 }                                      /* End of function R_RMAC_VersionGet() */
 
 /*******************************************************************************************************************//**
@@ -687,6 +875,80 @@ fsp_err_t R_RMAC_CallbackSet (ether_ctrl_t * const          p_api_ctrl,
     return FSP_SUCCESS;
 }
 
+/********************************************************************************************************************//**
+ * @brief Set configuration for tx frame. This API must call before @ref ether_api_t::write.
+ *
+ * @retval  FSP_SUCCESS                             Processing completed successfully.
+ * @retval  FSP_ERR_ASSERTION                       A pointer argument is NULL.
+ * @retval  FSP_ERR_NOT_OPEN                        The control block has not been opened.
+ ***********************************************************************************************************************/
+fsp_err_t R_RMAC_SetWriteConfig (ether_ctrl_t * const p_ctrl, rmac_write_cfg_t * const p_write_cfg)
+{
+    rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
+
+    /* Check argument */
+#if (RMAC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(NULL != p_write_cfg, FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(RMAC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    p_instance_ctrl->write_cfg.tx_timestamp_enable = p_write_cfg->tx_timestamp_enable;
+
+    return FSP_SUCCESS;
+}
+
+/********************************************************************************************************************//**
+ * @brief Get timestamp of transmitted frame. This API must call after @ref ether_api_t::write.
+ *
+ * @retval  FSP_SUCCESS                             Processing completed successfully.
+ * @retval  FSP_ERR_ASSERTION                       A pointer argument is NULL.
+ * @retval  FSP_ERR_NOT_OPEN                        The control block has not been opened.
+ ***********************************************************************************************************************/
+fsp_err_t R_RMAC_GetTxTimestamp (ether_ctrl_t * const p_ctrl, rmac_timestamp_t * const p_timestamp)
+{
+    rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
+
+    /* Check argument */
+#if (RMAC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(NULL != p_timestamp, FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(RMAC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    p_timestamp->ns        = p_instance_ctrl->tx_timestamp.ns;
+    p_timestamp->sec_lower = p_instance_ctrl->tx_timestamp.sec_lower;
+
+    /* Clear timestamp */
+    p_instance_ctrl->tx_timestamp.ns        = 0;
+    p_instance_ctrl->tx_timestamp.sec_lower = 0;
+
+    return FSP_SUCCESS;
+}
+
+/********************************************************************************************************************//**
+ * @brief Get timestamp of received frame. This API must call before @ref ether_api_t::read.
+ *
+ * @retval  FSP_SUCCESS                             Processing completed successfully.
+ * @retval  FSP_ERR_ASSERTION                       A pointer argument is NULL.
+ * @retval  FSP_ERR_NOT_OPEN                        The control block has not been opened.
+ ***********************************************************************************************************************/
+fsp_err_t R_RMAC_GetRxTimestamp (ether_ctrl_t * const p_ctrl, rmac_timestamp_t * const p_timestamp)
+{
+    rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_ctrl;
+
+    /* Check argument */
+#if (RMAC_CFG_PARAM_CHECKING_ENABLE)
+    FSP_ASSERT(p_instance_ctrl);
+    FSP_ERROR_RETURN(NULL != p_timestamp, FSP_ERR_INVALID_POINTER);
+    FSP_ERROR_RETURN(RMAC_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
+#endif
+
+    p_instance_ctrl->p_rx_timestamp = p_timestamp;
+
+    return FSP_SUCCESS;
+}
+
 /*******************************************************************************************************************//**
  * @} (end addtogroup RMAC)
  **********************************************************************************************************************/
@@ -714,11 +976,13 @@ static fsp_err_t rmac_open_param_check (rmac_instance_ctrl_t const * const p_ins
     FSP_ERROR_RETURN(NULL != p_cfg->p_extend, FSP_ERR_INVALID_POINTER);
     FSP_ERROR_RETURN(BSP_FEATURE_ETHER_NUM_CHANNELS > p_cfg->channel, FSP_ERR_INVALID_CHANNEL);
 
+    if (p_cfg->zerocopy == ETHER_ZEROCOPY_DISABLE)
+    {
+        FSP_ERROR_RETURN((p_cfg->pp_ether_buffers != NULL), FSP_ERR_INVALID_ARGUMENT);
+    }
+
     /* RMAC does not support padding feature. */
     FSP_ERROR_RETURN(p_cfg->padding == ETHER_PADDING_DISABLE, FSP_ERR_UNSUPPORTED);
-
-    /* Zerocopy mode is not support now. */
-    FSP_ERROR_RETURN(p_cfg->zerocopy == ETHER_ZEROCOPY_DISABLE, FSP_ERR_UNSUPPORTED);
 
     return FSP_SUCCESS;
 }
@@ -846,9 +1110,12 @@ static fsp_err_t rmac_do_link (rmac_instance_ctrl_t * const                 p_in
                                           &port_cfg);
 
             /* Reload RX queue. */
-            p_instance_ctrl->rx_running_queue_index = 0;
-            err = R_LAYER3_SWITCH_StartDescriptorQueue(p_rmac_extended_cfg->p_ether_switch->p_ctrl,
-                                                       p_rmac_extended_cfg->p_rx_queue_list[0].index);
+            if (NULL != p_instance_ctrl->p_cfg->pp_ether_buffers)
+            {
+                p_instance_ctrl->rx_running_queue_index = 0;
+                err = R_LAYER3_SWITCH_StartDescriptorQueue(p_rmac_extended_cfg->p_ether_switch->p_ctrl,
+                                                           p_rmac_extended_cfg->p_rx_queue_list[0].index);
+            }
 
             /* Set callback for switch data interrupt. */
             port_cfg.p_callback        = r_rmac_switch_interrupt_callback;
@@ -896,6 +1163,9 @@ static fsp_err_t rmac_link_status_check (rmac_instance_ctrl_t const * const p_in
     rmac_extended_cfg_t          * p_rmac_extended_cfg;
     layer3_switch_extended_cfg_t * p_switch_extended_cfg;
     const ether_phy_instance_t   * p_phy_instance;
+    uint32_t line_speed_duplex;
+    uint32_t local_pause;
+    uint32_t partner_pause;
 
     p_rmac_extended_cfg   = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
     p_switch_extended_cfg = (layer3_switch_extended_cfg_t *) p_rmac_extended_cfg->p_ether_switch->p_cfg->p_extend;
@@ -917,6 +1187,12 @@ static fsp_err_t rmac_link_status_check (rmac_instance_ctrl_t const * const p_in
     {
         /* Link is up */
         err = FSP_SUCCESS;
+
+        /* Call LinkPartnerAbilityGet to configure link speed. */
+        p_phy_instance->p_api->linkPartnerAbilityGet(p_phy_instance->p_ctrl,
+                                                     &line_speed_duplex,
+                                                     &local_pause,
+                                                     &partner_pause);
     }
 
     return err;
@@ -989,28 +1265,58 @@ static void rmac_init_descriptors (rmac_instance_ctrl_t * const p_instance_ctrl)
 {
     layer3_switch_descriptor_t descriptor = {0};
 
-    rmac_extended_cfg_t * p_extend = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    uint32_t              buffers_index;
+    rmac_extended_cfg_t * p_extend      = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    uint32_t              buffers_index = 0;
+    uint32_t              nodes_index   = 0;
+    rmac_buffer_node_t  * p_buffer_node;
 
-    /* Enable Data interrupt for RX and TX descriptor. */
+    /* Initialize common buffer pool. */
+    p_instance_ctrl->buffer_node_pool.p_head      = NULL;
+    p_instance_ctrl->buffer_node_pool.p_tail      = NULL;
+    p_instance_ctrl->tx_empty_buffer_queue.p_head = NULL;
+    p_instance_ctrl->tx_empty_buffer_queue.p_tail = NULL;
+    p_instance_ctrl->rx_empty_buffer_queue.p_head = NULL;
+    p_instance_ctrl->rx_empty_buffer_queue.p_tail = NULL;
+
+    /* Enable Data interrupt for RX descriptor. */
     descriptor.basic.die = 1;
 
-    /* Initialize descriptors of each RX queue if buffers are allocated by configuration. */
+    /* Initialize variables that used for RX. */
+    p_instance_ctrl->read_queue_index                  = 0;
+    p_instance_ctrl->rx_running_queue_index            = RMAC_INVALID_QUEUE_INDEX;
+    p_instance_ctrl->rx_completed_buffer_queue.p_head  = NULL;
+    p_instance_ctrl->rx_completed_buffer_queue.p_tail  = NULL;
+    p_instance_ctrl->rx_unreleased_buffer_queue.p_head = NULL;
+    p_instance_ctrl->rx_unreleased_buffer_queue.p_tail = NULL;
+
     if (NULL != p_instance_ctrl->p_cfg->pp_ether_buffers)
     {
+        p_instance_ctrl->rx_initialized_buffer_num = p_instance_ctrl->p_cfg->num_rx_descriptors;
+
         /* Settings for RX descriptors */
         descriptor.basic.ds_h = (RMAC_DESCRIPTOR_FIELD_DS_UPPER_MASK & RMAC_MAXIMUM_FRAME_SIZE) >>
                                 RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION;
         descriptor.basic.ds_l = RMAC_DESCRIPTOR_FIELD_DS_LOWER_MASK & RMAC_MAXIMUM_FRAME_SIZE;
         descriptor.basic.dt   = LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY;
+    }
+    else
+    {
+        p_instance_ctrl->rx_initialized_buffer_num = 0;
+    }
 
-        for (uint32_t i = 0; i < p_extend->rx_queue_num; i++)
+    /* Initialize descriptors of each RX queue if buffers are allocated by configuration. */
+    for (uint32_t i = 0; i < p_extend->rx_queue_num; i++)
+    {
+        /* For each RX descriptor exclude the last. */
+        for (uint32_t j = 0; j < p_extend->p_rx_queue_list[0].queue_cfg.array_length - 1; j++)
         {
-            /* For each RX descriptor exclude the last. */
-            for (uint32_t j = 0; j < p_extend->p_rx_queue_list[i].queue_cfg.array_length - 1; j++)
+            /* Get a node without buffer. */
+            p_buffer_node           = &p_extend->p_buffer_node_list[nodes_index];
+            p_buffer_node->p_buffer = NULL;
+            nodes_index++;
+
+            if (NULL != p_instance_ctrl->p_cfg->pp_ether_buffers)
             {
-                /* Initialize buffer address. */
-                buffers_index          = i * (p_extend->p_rx_queue_list[i].queue_cfg.array_length - 1) + j;
                 descriptor.basic.ptr_h =
                     (RMAC_DESCRIPTOR_FIELD_PTR_UPPER_MASK &
                      (uint64_t) (uintptr_t) p_instance_ctrl->p_cfg->pp_ether_buffers[buffers_index]) >>
@@ -1022,54 +1328,82 @@ static void rmac_init_descriptors (rmac_instance_ctrl_t * const p_instance_ctrl)
                 R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl,
                                               p_extend->p_rx_queue_list[i].index,
                                               &descriptor);
+
+                /* Add to RX buffer pool without a buffer. */
+                r_rmac_buffer_enqueue(&p_instance_ctrl->buffer_node_pool, p_buffer_node);
+                buffers_index++;
+            }
+            else
+            {
+                /* Add to unreleased buffer queue without a buffer. */
+                r_rmac_buffer_enqueue(&p_instance_ctrl->rx_unreleased_buffer_queue, p_buffer_node);
             }
         }
     }
 
-    /* Initialize variables that used for RX. */
-    p_instance_ctrl->read_queue_index          = 0;
-    p_instance_ctrl->rx_reset_descriptor_count = 0;
-    p_instance_ctrl->rx_running_queue_index    = RMAC_INVALID_QUEUE_INDEX;
+    /* Save the remaining reception buffers as reserves. */
+    if (NULL != p_instance_ctrl->p_cfg->pp_ether_buffers)
+    {
+        while (nodes_index < p_instance_ctrl->p_cfg->num_rx_descriptors)
+        {
+            p_buffer_node           = &p_extend->p_buffer_node_list[nodes_index];
+            p_buffer_node->p_buffer = p_instance_ctrl->p_cfg->pp_ether_buffers[buffers_index];
+            r_rmac_buffer_enqueue(&p_instance_ctrl->rx_empty_buffer_queue, p_buffer_node);
+            nodes_index++;
+            buffers_index++;
+        }
+    }
 
-    /* The running queue is assumed to be non-empty. */
-    p_instance_ctrl->rx_pending_queue_map = 1;
+    /* Settings for TX descriptors.*/
+    /* Initialize variables that used for TX. */
+    p_instance_ctrl->write_queue_index      = 0;
+    p_instance_ctrl->tx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
 
-    /* Settings for TX descriptors */
-    /* Set output port. */
-    descriptor.info1_tx.dv  = RMAC_DESCRIPTOR_FIELD_DV_MASK & (1 << p_instance_ctrl->p_cfg->channel);
-    descriptor.info1_tx.fmt = 1;
+    p_instance_ctrl->tx_pending_buffer_queue.p_head = NULL;
+    p_instance_ctrl->tx_pending_buffer_queue.p_tail = NULL;
 
-    /*  Set descriptor type as no data. */
-    descriptor.basic.dt = LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY;
+    /* Set descriptor type as terminate descriptor. TX descriptors will be set actual buffer in Write() API. */
+    descriptor.basic.dt    = LAYER3_SWITCH_DESCRIPTOR_TYPE_LEMPTY;
+    descriptor.basic.ptr_h = 0;
+    descriptor.basic.ptr_l = (uintptr_t) NULL;
+    descriptor.basic.ds_h  = 0;
+    descriptor.basic.ds_l  = 0;
+    descriptor.basic.die   = 0;
+    descriptor.basic.ds_l  = 0;
 
     /* Initialize descriptors of each TX queue */
     for (uint32_t i = 0; i < p_extend->tx_queue_num; i++)
     {
         /* For each TX descriptor exclude the last. */
-        for (uint32_t j = 0; j < p_extend->p_tx_queue_list[i].queue_cfg.array_length - 1; j++)
+        for (uint32_t j = 0; j < p_extend->p_tx_queue_list[0].queue_cfg.array_length - 1; j++)
         {
-            if (NULL != p_instance_ctrl->p_cfg->pp_ether_buffers)
-            {
-                /* Initialize buffer address. */
-                buffers_index = i * (p_extend->p_tx_queue_list[i].queue_cfg.array_length - 1) + j +
-                                p_instance_ctrl->p_cfg->num_rx_descriptors;
-                descriptor.basic.ptr_l = (uintptr_t) p_instance_ctrl->p_cfg->pp_ether_buffers[buffers_index];
-
-                /* Set data to descriptor. */
-                R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl,
-                                              p_extend->p_tx_queue_list[i].index,
-                                              &descriptor);
-            }
+            /* Set data to descriptor. */
+            R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl,
+                                          p_extend->p_tx_queue_list[i].index,
+                                          &descriptor);
         }
 
         /* Performing a null transmission to initialize the TX queue.  */
         R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl, p_extend->p_tx_queue_list[i].index);
     }
 
-    /* Initialize application transmission queue index. */
-    p_instance_ctrl->write_queue_index      = 0;
-    p_instance_ctrl->tx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
-    p_instance_ctrl->tx_pending_queue_map   = 0;
+    /* Save the remaining transmit buffers as reserves. */
+    while (nodes_index < p_extend->buffer_node_num)
+    {
+        p_buffer_node = &p_extend->p_buffer_node_list[nodes_index];
+        nodes_index++;
+        if ((ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_cfg->zerocopy) &&
+            (buffers_index < (p_instance_ctrl->p_cfg->num_tx_descriptors + p_instance_ctrl->p_cfg->num_rx_descriptors)))
+        {
+            p_buffer_node->p_buffer = p_instance_ctrl->p_cfg->pp_ether_buffers[buffers_index];
+            r_rmac_buffer_enqueue(&p_instance_ctrl->tx_empty_buffer_queue, p_buffer_node);
+            buffers_index++;
+        }
+        else
+        {
+            r_rmac_buffer_enqueue(&p_instance_ctrl->buffer_node_pool, p_buffer_node);
+        }
+    }
 }                                      /* End of function ether_init_descriptors() */
 
 /***********************************************************************************************************************
@@ -1121,6 +1455,16 @@ static fsp_err_t rmac_init_descriptor_queues (rmac_instance_ctrl_t * const p_ins
         }
     }
 
+#if LAYER3_SWITCH_CFG_GPTP_ENABLE
+    if (FSP_SUCCESS == err)
+    {
+        /* Initialize TS queues. */
+        err = R_LAYER3_SWITCH_CreateDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
+                                                    &p_extend->p_ts_queue->index,
+                                                    &p_extend->p_ts_queue->queue_cfg);
+    }
+#endif
+
     if (FSP_SUCCESS == err)
     {
         /* Initialize RX queues. */
@@ -1139,25 +1483,38 @@ static fsp_err_t rmac_init_descriptor_queues (rmac_instance_ctrl_t * const p_ins
     return err;
 }
 
-static fsp_err_t r_rmac_reset_rx_descriptor (rmac_instance_ctrl_t * p_instance_ctrl, void * p_buffer)
+/***********************************************************************************************************************
+ * Reset RX descriptor. If a buffer is passed, set it to descriptor.
+ * When all descriptors in the queue are reset, increment index of the queue and restart next queue.
+ ***********************************************************************************************************************/
+static fsp_err_t r_rmac_set_rx_buffer (rmac_instance_ctrl_t * p_instance_ctrl, rmac_buffer_node_t * p_buffer_node)
 {
-    rmac_extended_cfg_t      * p_extend = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    layer3_switch_descriptor_t descriptor;
+    rmac_extended_cfg_t      * p_extend   = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    layer3_switch_descriptor_t descriptor = {0};
     fsp_err_t err;
+
+    FSP_ERROR_RETURN(NULL != p_buffer_node, FSP_ERR_BUFFER_EMPTY);
 
     /* Reset descriptor as waiting for reception.  */
     descriptor.basic.err  = 0;
     descriptor.basic.ds_h = (RMAC_DESCRIPTOR_FIELD_DS_UPPER_MASK & RMAC_MAXIMUM_FRAME_SIZE) >>
                             RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION;
-    descriptor.basic.ds_l  = RMAC_DESCRIPTOR_FIELD_DS_LOWER_MASK & RMAC_MAXIMUM_FRAME_SIZE;
-    descriptor.basic.dt    = LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY;
-    descriptor.basic.ptr_h =
-        (RMAC_DESCRIPTOR_FIELD_PTR_UPPER_MASK & (uint64_t) (uintptr_t) p_buffer) >>
-        RMAC_DESCRIPTOR_FIELD_PTR_UPPER_POSITION;
-    descriptor.basic.ptr_l = RMAC_DESCRIPTOR_FIELD_PTR_LOWER_MASK & (uintptr_t) p_buffer;
+    descriptor.basic.ds_l = RMAC_DESCRIPTOR_FIELD_DS_LOWER_MASK & RMAC_MAXIMUM_FRAME_SIZE;
+    descriptor.basic.dt   = LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY;
+    descriptor.basic.die  = 1;
 
-    /* Enable Data interrupt for RX and TX descriptor. */
-    descriptor.basic.die = 1;
+    /* Update the buffer when a new buffer is passed. */
+    descriptor.basic.ptr_h =
+        (RMAC_DESCRIPTOR_FIELD_PTR_UPPER_MASK & (uint64_t) (uintptr_t) p_buffer_node->p_buffer) >>
+        RMAC_DESCRIPTOR_FIELD_PTR_UPPER_POSITION;
+    descriptor.basic.ptr_l = RMAC_DESCRIPTOR_FIELD_PTR_LOWER_MASK & (uintptr_t) p_buffer_node->p_buffer;
+
+    /* Set new buffer to the descriptor. */
+    if (RMAC_INVALID_QUEUE_INDEX != p_instance_ctrl->rx_running_queue_index)
+    {
+        p_instance_ctrl->read_queue_index = p_instance_ctrl->rx_running_queue_index;
+        RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(p_instance_ctrl->read_queue_index, p_extend->rx_queue_num);
+    }
 
     err =
         R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl,
@@ -1165,30 +1522,122 @@ static fsp_err_t r_rmac_reset_rx_descriptor (rmac_instance_ctrl_t * p_instance_c
 
     if (FSP_SUCCESS == err)
     {
-        p_instance_ctrl->rx_reset_descriptor_count += 1;
+        r_rmac_buffer_enqueue(&p_instance_ctrl->buffer_node_pool, p_buffer_node);
     }
-
-    /* When all descriptors in the queue are reset. */
-    if ((p_extend->p_rx_queue_list[p_instance_ctrl->read_queue_index].queue_cfg.array_length - 1 ==
-         p_instance_ctrl->rx_reset_descriptor_count))
+    else
     {
-        if (RMAC_INVALID_QUEUE_INDEX == p_instance_ctrl->rx_running_queue_index)
+        /* Failed to set to the descriptor, store the buffer. */
+        r_rmac_buffer_enqueue(&p_instance_ctrl->rx_empty_buffer_queue, p_buffer_node);
+        if (FSP_ERR_OVERFLOW == err)
         {
             /* If any RX queue is not running, restart this queue. */
-            p_instance_ctrl->rx_running_queue_index = p_instance_ctrl->read_queue_index;
-            err =
-                R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
-                                                     p_extend->p_rx_queue_list[p_instance_ctrl->rx_running_queue_index].index);
+            if ((RMAC_INVALID_QUEUE_INDEX == p_instance_ctrl->rx_running_queue_index) &&
+                (p_instance_ctrl->rx_initialized_buffer_num == p_instance_ctrl->p_cfg->num_rx_descriptors))
+            {
+                fsp_err_t serr = R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
+                                                                      p_extend->p_rx_queue_list[p_instance_ctrl->
+                                                                                                read_queue_index].index);
+                if (FSP_SUCCESS == serr)
+                {
+                    p_instance_ctrl->rx_running_queue_index = p_instance_ctrl->read_queue_index;
+                }
+                else
+                {
+                    p_instance_ctrl->rx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+                }
+            }
+
+            RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(p_instance_ctrl->read_queue_index, p_extend->rx_queue_num);
         }
-        else
+    }
+
+    return err;
+}
+
+/***********************************************************************************************************************
+ * Set a buffer to the TX descriptor queue.
+ ***********************************************************************************************************************/
+static fsp_err_t r_rmac_set_tx_buffer (rmac_instance_ctrl_t * p_instance_ctrl,
+                                       void                 * p_write_buffer,
+                                       uint32_t               frame_length,
+                                       uint32_t               queue_index)
+{
+    layer3_switch_descriptor_t descriptor = {0};
+    fsp_err_t                      err;
+    rmac_extended_cfg_t          * p_extend               = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    layer3_switch_extended_cfg_t * p_layer3_switch_extend =
+        (layer3_switch_extended_cfg_t *) p_extend->p_ether_switch->p_cfg->p_extend;
+
+    /* Set the buffer address to the descriptor. */
+    descriptor.basic.ptr_h = (RMAC_DESCRIPTOR_FIELD_PTR_UPPER_MASK & (uint64_t) (uintptr_t) p_write_buffer) >>
+                             RMAC_DESCRIPTOR_FIELD_PTR_UPPER_POSITION;
+    descriptor.basic.ptr_l = RMAC_DESCRIPTOR_FIELD_PTR_LOWER_MASK & (uintptr_t) p_write_buffer;
+
+    /* Configure transmission descriptor. */
+    descriptor.basic.ds_h = (RMAC_DESCRIPTOR_FIELD_DS_UPPER_MASK & frame_length) >>
+                            RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION;
+    descriptor.basic.ds_l   = RMAC_DESCRIPTOR_FIELD_DS_LOWER_MASK & frame_length;
+    descriptor.basic.dt     = LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE;
+    descriptor.basic.die    = 1;
+    descriptor.info1_tx.dv  = RMAC_DESCRIPTOR_FIELD_DV_MASK & (1 << p_instance_ctrl->p_cfg->channel);
+    descriptor.info1_tx.fmt = 1;
+
+    if (RMAC_WRITE_CFG_TX_TIMESTAMP_ENABLE == p_instance_ctrl->write_cfg.tx_timestamp_enable)
+    {
+        descriptor.info1_tx.txc = 1;
+        descriptor.info1_tx.tn  =
+            (uint8_t) (p_layer3_switch_extend->gptp_timer_numbers[p_instance_ctrl->p_cfg->channel] & 0x1);
+        descriptor.info1_tx.tsun =
+            (p_instance_ctrl->tx_timestamp_seq_num & RMAC_TS_SEQUENCE_NUMBER_MASK);
+        p_instance_ctrl->tx_timestamp_seq_num = (p_instance_ctrl->tx_timestamp_seq_num + 1) &
+                                                RMAC_TS_SEQUENCE_NUMBER_MASK;
+    }
+    else
+    {
+        descriptor.info1_tx.txc  = 0;
+        descriptor.info1_tx.tn   = 0;
+        descriptor.info1_tx.tsun = 0;
+    }
+
+    err =
+        R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl, queue_index, &descriptor);
+
+    return err;
+}
+
+/***********************************************************************************************************************
+ * Start a TX descriptor queue.
+ ***********************************************************************************************************************/
+static fsp_err_t r_rmac_start_tx_queue (rmac_instance_ctrl_t * p_instance_ctrl, uint32_t queue_index)
+{
+    layer3_switch_descriptor_t descriptor = {0};
+    fsp_err_t             err             = FSP_SUCCESS;
+    rmac_extended_cfg_t * p_extend        = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+
+    /* Try to set a terminate descriptor to imply the end of the queue. */
+    descriptor.basic.dt = LAYER3_SWITCH_DESCRIPTOR_TYPE_LEMPTY;
+
+    while (FSP_SUCCESS == err)
+    {
+        err = R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl, queue_index, &descriptor);
+    }
+
+    /* Start transmission. */
+    err = R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl, queue_index);
+
+    if (RMAC_WRITE_CFG_TX_TIMESTAMP_ENABLE == p_instance_ctrl->write_cfg.tx_timestamp_enable)
+    {
+        for (uint32_t i = 0; i < RMAC_GET_TX_TIMESTAMP_WAIT_TIME; i++)
         {
-            /* Clear pending queue bitmap for this reading queue. */
-            p_instance_ctrl->rx_pending_queue_map &= ~(uint32_t) (1 << p_instance_ctrl->read_queue_index);
+            /* If found tx timestamp, break from wait time. */
+            if (FSP_SUCCESS == r_rmac_get_tx_timestamp(p_instance_ctrl))
+            {
+                break;
+            }
         }
 
-        /* Update the queue index that used for next Read(). */
-        RMAC_INCREMENT_INDEX(p_instance_ctrl->read_queue_index, p_extend->rx_queue_num);
-        p_instance_ctrl->rx_reset_descriptor_count = 0;
+        /* Clear write configuration for next write */
+        p_instance_ctrl->write_cfg.tx_timestamp_enable = 0;
     }
 
     return err;
@@ -1199,10 +1648,9 @@ static fsp_err_t r_rmac_reset_rx_descriptor (rmac_instance_ctrl_t * p_instance_c
  **********************************************************************************************************************/
 static void r_rmac_disable_reception (rmac_instance_ctrl_t * p_instance_ctrl)
 {
-    rmac_extended_cfg_t      * p_extend           = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    layer3_switch_port_cfg_t   port_cfg           = {0};
-    layer3_switch_descriptor_t descriptor         = {0};
-    rmac_queue_info_t          running_queue_info = p_extend->p_rx_queue_list[p_instance_ctrl->rx_running_queue_index];
+    rmac_extended_cfg_t      * p_extend   = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    layer3_switch_port_cfg_t   port_cfg   = {0};
+    layer3_switch_descriptor_t descriptor = {0};
 
     /* When magic packet detection is enabled, disable data interrupt. */
     port_cfg.p_callback = NULL;
@@ -1211,15 +1659,218 @@ static void r_rmac_disable_reception (rmac_instance_ctrl_t * p_instance_ctrl)
     port_cfg.forwarding_to_cpu_enable = false;
     R_LAYER3_SWITCH_ConfigurePort(p_extend->p_ether_switch->p_ctrl, p_instance_ctrl->p_cfg->channel, &port_cfg);
 
-    /* Set descriptors in RX running queue to stop state. */
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+
+    /* Set the all RX descriptors to stop state. */
     descriptor.basic.dt = LAYER3_SWITCH_DESCRIPTOR_TYPE_LEMPTY;
-    for (size_t i = 0; i < running_queue_info.queue_cfg.array_length; i++)
+    for (uint32_t j = 0; j < p_extend->rx_queue_num; ++j)
     {
-        R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl, running_queue_info.index, &descriptor);
+        /* Perform starting reception to initialize queue status. */
+        R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl, p_extend->p_rx_queue_list[j].index);
+
+        for (uint32_t i = 0; i < p_extend->p_rx_queue_list[j].queue_cfg.array_length; i++)
+        {
+            R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl,
+                                          p_extend->p_rx_queue_list[j].index,
+                                          &descriptor);
+        }
+
+        /* Perform starting reception to initialize queue status. */
+        R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl, p_extend->p_rx_queue_list[j].index);
     }
 
-    /* Perform starting reception to initialize queue status. */
-    R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl, running_queue_info.index);
+    p_instance_ctrl->rx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+
+    FSP_CRITICAL_SECTION_EXIT;
+}
+
+/** Get the node from head of the queue and remove it. */
+static rmac_buffer_node_t * r_rmac_buffer_dequeue (rmac_buffer_queue_t * p_queue)
+{
+    /* Use critical section to prevent concurrent access to the queue. */
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+
+    rmac_buffer_node_t * p_node = p_queue->p_head;
+    if (NULL != p_node)
+    {
+        p_queue->p_head = p_node->p_next;
+        if (NULL == p_queue->p_head)
+        {
+            /* If the queue become empty, set the tail to the empty. */
+            p_queue->p_tail = NULL;
+        }
+
+        p_node->p_next = NULL;
+    }
+
+    FSP_CRITICAL_SECTION_EXIT;
+
+    return p_node;
+}
+
+/** Add the node to tail of the queue.  */
+static void r_rmac_buffer_enqueue (rmac_buffer_queue_t * p_queue, rmac_buffer_node_t * p_node)
+{
+    /* Use critical section to prevent concurrent access to the queue. */
+    FSP_CRITICAL_SECTION_DEFINE;
+    FSP_CRITICAL_SECTION_ENTER;
+
+    /* To add as a terminal node, set the next node to NULL. */
+    if (NULL != p_node)
+    {
+        p_node->p_next = NULL;
+
+        if (NULL != p_queue->p_tail)
+        {
+            p_queue->p_tail->p_next = p_node;
+        }
+        else
+        {
+            /* If the queue is empty, set the node also to the head. */
+            p_queue->p_head = p_node;
+        }
+
+        p_queue->p_tail = p_node;
+    }
+
+    FSP_CRITICAL_SECTION_EXIT;
+}
+
+static fsp_err_t r_rmac_get_rx_queue (rmac_instance_ctrl_t * p_instance_ctrl, uint32_t queue_index)
+{
+    rmac_extended_cfg_t      * p_extend = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    layer3_switch_descriptor_t descriptor;
+    rmac_buffer_node_t       * p_buffer_node = NULL;
+    fsp_err_t get_err;
+
+    /* Read all descriptors in the queue. */
+    get_err = R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl, queue_index, &descriptor);
+    while (FSP_SUCCESS == get_err)
+    {
+        /* Store the read buffer as the RX completed buffer. */
+        p_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->buffer_node_pool);
+        if (NULL != p_buffer_node)
+        {
+            if ((RMAC_INVALID_QUEUE_INDEX != p_instance_ctrl->rx_running_queue_index) &&
+                (queue_index != p_extend->p_rx_queue_list[p_instance_ctrl->rx_running_queue_index].index))
+            {
+                /* When the queue raising this interrupt is not the same as the currently running queue, discard data. */
+                p_buffer_node->p_buffer = (void *) (uintptr_t) descriptor.basic.ptr_l;
+                r_rmac_buffer_enqueue(&p_instance_ctrl->rx_empty_buffer_queue, p_buffer_node);
+            }
+            else
+            {
+                /* Store the received buffer. */
+                p_buffer_node->p_buffer = (void *) (uintptr_t) descriptor.basic.ptr_l;
+                p_buffer_node->size     =
+                    (uint32_t) ((descriptor.basic.ds_h << RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION) +
+                                descriptor.basic.ds_l);
+                r_rmac_buffer_enqueue(&p_instance_ctrl->rx_completed_buffer_queue, p_buffer_node);
+
+#if LAYER3_SWITCH_CFG_GPTP_ENABLE
+
+                /* Get timestamp. */
+                if (1 == descriptor.reception_ethernet_descriptor.tsv)
+                {
+                    p_buffer_node->timestamp.ns        = descriptor.reception_ethernet_descriptor.tsns;
+                    p_buffer_node->timestamp.sec_lower = descriptor.reception_ethernet_descriptor.tss;
+                }
+                else
+                {
+                    p_buffer_node->timestamp.ns        = 0;
+                    p_buffer_node->timestamp.sec_lower = 0;
+                }
+#endif
+            }
+        }
+
+        get_err = R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl, queue_index, &descriptor);
+    }
+
+    return get_err;
+}
+
+static fsp_err_t r_rmac_set_rx_queue (rmac_instance_ctrl_t * p_instance_ctrl, uint32_t queue_index)
+{
+    rmac_extended_cfg_t      * p_extend = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    layer3_switch_descriptor_t descriptor;
+    rmac_buffer_node_t       * p_new_buffer_node = NULL;
+    fsp_err_t set_err = FSP_SUCCESS;
+
+    /* When get the all descriptors in the queue, set new descriptors. */
+    while (FSP_SUCCESS == set_err)
+    {
+        p_new_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->rx_empty_buffer_queue);
+        if (NULL != p_new_buffer_node)
+        {
+            descriptor.basic.err  = 0;
+            descriptor.basic.ds_h = (RMAC_DESCRIPTOR_FIELD_DS_UPPER_MASK & RMAC_MAXIMUM_FRAME_SIZE) >>
+                                    RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION;
+            descriptor.basic.ds_l  = RMAC_DESCRIPTOR_FIELD_DS_LOWER_MASK & RMAC_MAXIMUM_FRAME_SIZE;
+            descriptor.basic.dt    = LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY;
+            descriptor.basic.die   = 1;
+            descriptor.basic.ptr_h =
+                (RMAC_DESCRIPTOR_FIELD_PTR_UPPER_MASK & (uint64_t) (uintptr_t) p_new_buffer_node->p_buffer) >>
+                RMAC_DESCRIPTOR_FIELD_PTR_UPPER_POSITION;
+            descriptor.basic.ptr_l = RMAC_DESCRIPTOR_FIELD_PTR_LOWER_MASK &
+                                     (uintptr_t) p_new_buffer_node->p_buffer;
+        }
+        else
+        {
+            /* If no buffer is available, set LEMPTY. */
+            descriptor.basic.dt    = LAYER3_SWITCH_DESCRIPTOR_TYPE_LEMPTY;
+            descriptor.basic.ptr_l = 0;
+        }
+
+        set_err = R_LAYER3_SWITCH_SetDescriptor(p_extend->p_ether_switch->p_ctrl, queue_index, &descriptor);
+        if (NULL != p_new_buffer_node)
+        {
+            if (FSP_SUCCESS == set_err)
+            {
+                /* Store the buffer node. */
+                r_rmac_buffer_enqueue(&p_instance_ctrl->buffer_node_pool, p_new_buffer_node);
+            }
+            else
+            {
+                /* Back the buffer node to the pool. */
+                r_rmac_buffer_enqueue(&p_instance_ctrl->rx_empty_buffer_queue, p_new_buffer_node);
+            }
+        }
+    }
+
+    return set_err;
+}
+
+static fsp_err_t r_rmac_get_tx_timestamp (rmac_instance_ctrl_t * p_instance_ctrl)
+{
+    fsp_err_t                            err                 = FSP_ERR_NOT_FOUND;
+    rmac_extended_cfg_t                * p_rmac_extended_cfg = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    layer3_switch_descriptor_queue_cfg_t queue_cfg           = p_rmac_extended_cfg->p_ts_queue->queue_cfg;
+
+    /* Search tx timestamp from ts reception descriptor that has same timestamp id and not empty. */
+    for (uint8_t i = 0; i < (queue_cfg.array_length - 1); i++)
+    {
+        if ((LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND !=
+             queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.dt) &&
+            (((p_instance_ctrl->tx_timestamp_seq_num - 1) & RMAC_TS_SEQUENCE_NUMBER_MASK) ==
+             queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.tsun))
+        {
+            p_instance_ctrl->tx_timestamp.sec_lower =
+                queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.tss;
+            p_instance_ctrl->tx_timestamp.ns =
+                queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.tsns;
+
+            queue_cfg.p_ts_descriptor_array[i].ts_reception_descriptor_result.dt =
+                LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY_ND;
+
+            err = FSP_SUCCESS;
+            break;
+        }
+    }
+
+    return err;
 }
 
 /***********************************************************************************************************************
@@ -1228,37 +1879,96 @@ static void r_rmac_disable_reception (rmac_instance_ctrl_t * p_instance_ctrl)
  ***********************************************************************************************************************/
 static void r_rmac_switch_interrupt_callback (ether_switch_callback_args_t * p_args)
 {
-    rmac_instance_ctrl_t * p_instance_ctrl = (rmac_instance_ctrl_t *) p_args->p_context;
-    rmac_extended_cfg_t  * p_extend        = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
-    ether_callback_args_t  callback_args   = {0};
-    uint32_t               next_running_queue_index;
+    rmac_instance_ctrl_t     * p_instance_ctrl          = (rmac_instance_ctrl_t *) p_args->p_context;
+    rmac_extended_cfg_t      * p_extend                 = (rmac_extended_cfg_t *) p_instance_ctrl->p_cfg->p_extend;
+    ether_callback_args_t      callback_args            = {0};
+    uint32_t                   next_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+    layer3_switch_descriptor_t descriptor;
+    rmac_buffer_node_t       * p_buffer_node = NULL;
+    fsp_err_t                  get_err       = FSP_SUCCESS;
+    fsp_err_t                  err           = FSP_SUCCESS;
 
     switch (p_args->event)
     {
         case ETHER_SWITCH_EVENT_TX_COMPLETE:
         {
             callback_args.event = ETHER_EVENT_TX_COMPLETE;
-
-            /* Finish transmission on the queue. */
-            p_instance_ctrl->tx_pending_queue_map &= ~(uint32_t) (1 << p_instance_ctrl->tx_running_queue_index);
-
-            next_running_queue_index = p_instance_ctrl->tx_running_queue_index;
-            RMAC_INCREMENT_INDEX(next_running_queue_index, p_extend->tx_queue_num);
-
-            /* Check if pending data exists on a next TX queue. */
-            if (0 != (p_instance_ctrl->tx_pending_queue_map & (1 << next_running_queue_index)))
+            get_err             = R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl,
+                                                                p_args->queue_index,
+                                                                &descriptor);
+            while (FSP_SUCCESS == get_err)
             {
-                /* When pending TX data exits, start the next queue. */
-                p_instance_ctrl->tx_running_queue_index = next_running_queue_index;
-                R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
-                                                     p_extend->p_tx_queue_list[next_running_queue_index].index);
+                /* If zerocopy is enabled, save the last sent buffer. */
+                if (ETHER_ZEROCOPY_ENABLE == p_instance_ctrl->p_cfg->zerocopy)
+                {
+                    if (LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY == descriptor.basic.dt)
+                    {
+                        p_instance_ctrl->p_last_sent_buffer = (void *) (uintptr_t) descriptor.basic.ptr_l;
+                    }
+                }
+                else
+                {
+                    /* Store the buffer to the buffer pool. */
+                    p_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->buffer_node_pool);
+                    if (NULL != p_buffer_node)
+                    {
+                        p_buffer_node->p_buffer = (void *) (uintptr_t) descriptor.basic.ptr_l;
+                        r_rmac_buffer_enqueue(&p_instance_ctrl->tx_empty_buffer_queue, p_buffer_node);
+                    }
+                }
 
-                /* Update internal variables. */
-                RMAC_INCREMENT_INDEX(p_instance_ctrl->write_queue_index, p_extend->tx_queue_num);
+                get_err = R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl,
+                                                        p_args->queue_index,
+                                                        &descriptor);
             }
-            else
+
+            /* When finish transmission on the queue. */
+            if (get_err == FSP_ERR_NOT_INITIALIZED)
             {
-                p_instance_ctrl->tx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+                p_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->tx_pending_buffer_queue);
+                while (NULL != p_buffer_node)
+                {
+                    err = r_rmac_set_tx_buffer(p_instance_ctrl,
+                                               p_buffer_node->p_buffer,
+                                               p_buffer_node->size,
+                                               p_args->queue_index);
+
+                    if (FSP_SUCCESS == err)
+                    {
+                        r_rmac_buffer_enqueue(&p_instance_ctrl->buffer_node_pool, p_buffer_node);
+
+                        /* Dequeue the next pending buffer. */
+                        p_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->tx_pending_buffer_queue);
+                    }
+                    else
+                    {
+                        if (ETHER_ZEROCOPY_DISABLE == p_instance_ctrl->p_cfg->zerocopy)
+                        {
+                            r_rmac_buffer_enqueue(&p_instance_ctrl->tx_empty_buffer_queue, p_buffer_node);
+                        }
+                        else
+                        {
+                            r_rmac_buffer_enqueue(&p_instance_ctrl->buffer_node_pool, p_buffer_node);
+                        }
+
+                        p_buffer_node = NULL;
+                    }
+                }
+
+                /* When pending TX data exits, start the next queue. */
+                next_running_queue_index = p_instance_ctrl->tx_running_queue_index;
+                RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(next_running_queue_index, p_extend->tx_queue_num);
+                err =
+                    r_rmac_start_tx_queue(p_instance_ctrl, p_extend->p_tx_queue_list[next_running_queue_index].index);
+
+                if (err == FSP_SUCCESS)
+                {
+                    p_instance_ctrl->tx_running_queue_index = next_running_queue_index;
+                }
+                else
+                {
+                    p_instance_ctrl->tx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+                }
             }
 
             break;
@@ -1266,46 +1976,130 @@ static void r_rmac_switch_interrupt_callback (ether_switch_callback_args_t * p_a
 
         case ETHER_SWITCH_EVENT_RX_COMPLETE:
         {
+            p_instance_ctrl->is_lost_rx_packet = false;
+
+            /* When the link is down, ignore this event. */
+            FSP_ERROR_RETURN(ETHER_LINK_ESTABLISH_STATUS_UP == p_instance_ctrl->link_establish_status, );
+
+            /* Read all descriptors in the queue. */
+            err = r_rmac_get_rx_queue(p_instance_ctrl, p_args->queue_index);
+            if (FSP_ERR_NOT_INITIALIZED == err)
+            {
+                err = r_rmac_set_rx_queue(p_instance_ctrl, p_args->queue_index);
+            }
+
+            if (FSP_ERR_OVERFLOW == err)
+            {
+                /* Start reception on next queue. */
+                next_running_queue_index = p_instance_ctrl->rx_running_queue_index;
+                RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(next_running_queue_index, p_extend->rx_queue_num);
+                err =
+                    R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
+                                                         p_extend->p_rx_queue_list[next_running_queue_index].index);
+
+                if (FSP_SUCCESS == err)
+                {
+                    p_instance_ctrl->rx_running_queue_index = next_running_queue_index;
+                }
+                else
+                {
+                    p_instance_ctrl->rx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+                }
+            }
+
             callback_args.event = ETHER_EVENT_RX_COMPLETE;
             break;
         }
 
         case ETHER_SWITCH_EVENT_RX_QUEUE_FULL:
         {
+            p_instance_ctrl->is_lost_rx_packet = false;
+
+            /* When the link is down, ignore this event. */
+            FSP_ERROR_RETURN(ETHER_LINK_ESTABLISH_STATUS_UP == p_instance_ctrl->link_establish_status, );
+
+            if ((RMAC_INVALID_QUEUE_INDEX != p_instance_ctrl->rx_running_queue_index) &&
+                (p_args->queue_index == p_extend->p_rx_queue_list[p_instance_ctrl->rx_running_queue_index].index))
+            {
+                get_err = R_LAYER3_SWITCH_GetDescriptor(p_extend->p_ether_switch->p_ctrl,
+                                                        p_args->queue_index,
+                                                        &descriptor);
+                if (FSP_SUCCESS == get_err)
+                {
+                    /* Start reception on next queue. */
+                    next_running_queue_index = p_instance_ctrl->rx_running_queue_index;
+                    RMAC_INCREMENT_DESCRIPTOR_QUEUE_INDEX(next_running_queue_index, p_extend->rx_queue_num);
+                    err =
+                        R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
+                                                             p_extend->p_rx_queue_list[next_running_queue_index].index);
+
+                    /* Store the read buffer as the RX completed buffer. */
+                    p_buffer_node = r_rmac_buffer_dequeue(&p_instance_ctrl->buffer_node_pool);
+                    if (NULL != p_buffer_node)
+                    {
+                        /* Store the received buffer. */
+                        p_buffer_node->p_buffer = (void *) (uintptr_t) descriptor.basic.ptr_l;
+                        p_buffer_node->size     =
+                            (uint32_t) ((descriptor.basic.ds_h << RMAC_DESCRIPTOR_FIELD_DS_UPPER_POSITION) +
+                                        descriptor.basic.ds_l);
+                        r_rmac_buffer_enqueue(&p_instance_ctrl->rx_completed_buffer_queue, p_buffer_node);
+
+#if LAYER3_SWITCH_CFG_GPTP_ENABLE
+
+                        /* Get timestamp. */
+                        if (1 == descriptor.reception_ethernet_descriptor.tsv)
+                        {
+                            p_buffer_node->timestamp.ns        = descriptor.reception_ethernet_descriptor.tsns;
+                            p_buffer_node->timestamp.sec_lower = descriptor.reception_ethernet_descriptor.tss;
+                        }
+                        else
+                        {
+                            p_buffer_node->timestamp.ns        = 0;
+                            p_buffer_node->timestamp.sec_lower = 0;
+                        }
+#endif
+                    }
+
+                    if (FSP_SUCCESS == err)
+                    {
+                        p_instance_ctrl->rx_running_queue_index = next_running_queue_index;
+                    }
+                    else
+                    {
+                        p_instance_ctrl->rx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+                    }
+
+                    r_rmac_get_rx_queue(p_instance_ctrl, p_args->queue_index);
+                    r_rmac_set_rx_queue(p_instance_ctrl, p_args->queue_index);
+                }
+            }
+
             callback_args.event = ETHER_EVENT_RX_COMPLETE;
-
-            if (p_args->queue_index != p_extend->p_rx_queue_list[p_instance_ctrl->rx_running_queue_index].index)
-            {
-                /* If the queue raising this interrupt is not the same as the currently running queue, no RX queue switch is needed. */
-                break;
-            }
-
-            next_running_queue_index = p_instance_ctrl->rx_running_queue_index;
-            RMAC_INCREMENT_INDEX(next_running_queue_index, p_extend->rx_queue_num);
-
-            /* When next queue is empty. */
-            if (0 == (p_instance_ctrl->rx_pending_queue_map & (1 << next_running_queue_index)))
-            {
-                /* Start reception on next queue. */
-                p_instance_ctrl->rx_running_queue_index = next_running_queue_index;
-                R_LAYER3_SWITCH_StartDescriptorQueue(p_extend->p_ether_switch->p_ctrl,
-                                                     p_extend->p_rx_queue_list[next_running_queue_index].index);
-
-                /* The running queue is assumed to have data. */
-                p_instance_ctrl->rx_pending_queue_map |= (1 << next_running_queue_index);
-            }
-            else
-            {
-                /* Stop reception if the next queue is not empty. */
-                p_instance_ctrl->rx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
-            }
-
             break;
         }
 
         case ETHER_SWITCH_EVENT_RX_MESSAGE_LOST:
         {
+            /* When the link is down, ignore this event. */
+            FSP_ERROR_RETURN(ETHER_LINK_ESTABLISH_STATUS_UP == p_instance_ctrl->link_establish_status, );
+
             callback_args.event = ETHER_EVENT_RX_MESSAGE_LOST;
+
+            /* When the lost error occurs repeatedly, treat the queue as stopped. */
+            if (p_instance_ctrl->is_lost_rx_packet)
+            {
+                r_rmac_get_rx_queue(p_instance_ctrl, p_args->queue_index);
+                r_rmac_set_rx_queue(p_instance_ctrl, p_args->queue_index);
+                p_instance_ctrl->rx_running_queue_index = RMAC_INVALID_QUEUE_INDEX;
+                p_instance_ctrl->is_lost_rx_packet      = false;
+            }
+
+            if ((RMAC_INVALID_QUEUE_INDEX != p_instance_ctrl->rx_running_queue_index) &&
+                (p_args->queue_index == p_extend->p_rx_queue_list[p_instance_ctrl->rx_running_queue_index].index))
+            {
+                p_instance_ctrl->is_lost_rx_packet = true;
+            }
+
             break;
         }
 

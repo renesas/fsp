@@ -217,7 +217,7 @@ fsp_err_t get_rfc3394_key_wrap_param (rsip_key_type_t key_type,
     return err;
 }
 
-rsip_ret_t r_rsip_sha1sha2_init_update (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_init_update (rsip_hash_type_t hash_type,
                                         const uint8_t  * p_message,
                                         uint64_t         message_length,
                                         uint32_t       * internal_state)
@@ -255,15 +255,15 @@ rsip_ret_t r_rsip_sha1sha2_init_update (rsip_hash_type_t hash_type,
     return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_resume_update (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_resume_update (rsip_hash_type_t hash_type,
                                           const uint8_t  * p_message,
                                           uint64_t         message_length,
                                           uint32_t       * internal_state)
 {
-    return r_rsip_sha1sha2_update(hash_type, p_message, message_length, internal_state);
+    return r_rsip_sha_hash_update(hash_type, p_message, message_length, internal_state);
 }
 
-rsip_ret_t r_rsip_sha1sha2_update (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_update (rsip_hash_type_t hash_type,
                                    const uint8_t  * p_message,
                                    uint64_t         message_length,
                                    uint32_t       * internal_state)
@@ -275,14 +275,15 @@ rsip_ret_t r_rsip_sha1sha2_update (rsip_hash_type_t hash_type,
                       r_rsip_byte_to_word_convert((uint32_t) message_length), internal_state);
 }
 
-rsip_ret_t r_rsip_sha1sha2_suspend (uint32_t * internal_state)
+rsip_ret_t r_rsip_sha_hash_suspend (rsip_hash_type_t hash_type, uint32_t * internal_state)
 {
+    FSP_PARAMETER_NOT_USED(hash_type);
     FSP_PARAMETER_NOT_USED(internal_state);
 
     return RSIP_RET_PASS;
 }
 
-rsip_ret_t r_rsip_sha1sha2_init_final (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_init_final (rsip_hash_type_t hash_type,
                                        const uint8_t  * p_message,
                                        uint64_t         message_length,
                                        uint8_t        * p_digest)
@@ -347,17 +348,17 @@ rsip_ret_t r_rsip_sha1sha2_init_final (rsip_hash_type_t hash_type,
     return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_resume_final (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_resume_final (rsip_hash_type_t hash_type,
                                          uint8_t        * p_message,
                                          uint64_t         message_length,
                                          uint64_t         total_message_length,
                                          uint8_t        * p_digest,
                                          uint32_t       * internal_state)
 {
-    return r_rsip_sha1sha2_final(hash_type, p_message, message_length, total_message_length, p_digest, internal_state);
+    return r_rsip_sha_hash_final(hash_type, p_message, message_length, total_message_length, p_digest, internal_state);
 }
 
-rsip_ret_t r_rsip_sha1sha2_final (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_final (rsip_hash_type_t hash_type,
                                   uint8_t        * p_message,
                                   uint64_t         message_length,
                                   uint64_t         total_message_length,
@@ -913,9 +914,14 @@ rsip_ret_t r_rsip_kdf_sha_init_final (rsip_kdf_sha_handle_t * p_handle,
     rsip_dword_data_t total_bit_length = {.dword = total_length << 3};
     uint8_t           padded_buffer2[SHA_BLOCK8_LEN * 2 + SHA_PADDING_DATA_LEN] = {0};
     uint32_t          zero_padding_len = 0;
+    uint32_t          tmp_len          = (total_length + SHA_PADDING_DATA_LEN) & (SHA_BLOCK8_LEN - 1);
+
+    if (0 != tmp_len)
+    {
+        zero_padding_len = SHA_BLOCK8_LEN - tmp_len;
+    }
 
     memcpy(padded_buffer2, p_handle->buffer2, p_handle->buffered_length2);
-    zero_padding_len = SHA_BLOCK8_LEN - ((total_length + SHA_PADDING_DATA_LEN) & (SHA_BLOCK8_LEN - 1));
 
     padded_buffer2[p_handle->buffered_length2] = SHA_STOP_BIT;
     padded_buffer2[p_handle->buffered_length2 + zero_padding_len + 1] = total_bit_length.byte.pos_8th;

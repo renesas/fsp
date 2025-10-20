@@ -6,12 +6,19 @@
 
 #include "nx_api.h"
 #include "r_ether_api.h"
+#include "rm_netxduo_ether_cfg.h"
 
 #ifndef RM_NETXDUO_ETHER_H
  #define RM_NETXDUO_ETHER_H
 
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
+
+ #if !RM_NETXDUO_ETHER_ZERO_COPY_SUPPORT
+  #ifndef RM_NETXDUO_ETHER_RECEIVE_THREAD_STACK_SIZE
+   #define RM_NETXDUO_ETHER_RECEIVE_THREAD_STACK_SIZE    1024
+  #endif
+ #endif
 
 typedef struct
 {
@@ -27,6 +34,16 @@ typedef struct
     /* Timer instance for polling the Ethernet link status. */
     TX_TIMER event_timer;
 
+ #if !RM_NETXDUO_ETHER_ZERO_COPY_SUPPORT
+
+    /* Semaphore used to synchronize the receive thread with the receive complete ISR. */
+    TX_SEMAPHORE ether_rx_semaphore;
+
+    /* Thread to handle receiving data */
+    TX_THREAD receive_thread;
+    UCHAR     receive_thread_stack[RM_NETXDUO_ETHER_RECEIVE_THREAD_STACK_SIZE];
+ #else
+
     /* Index to store the next transmit packet. */
     UINT tx_packet_index;
 
@@ -35,6 +52,7 @@ typedef struct
 
     /* Index into the receive descriptor list. */
     UINT rx_packet_index;
+ #endif
 
     /* Multicast MAC addresses to process during packet reception. */
     struct

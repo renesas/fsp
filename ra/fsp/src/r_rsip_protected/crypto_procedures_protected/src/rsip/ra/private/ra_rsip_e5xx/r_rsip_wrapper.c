@@ -75,6 +75,9 @@ typedef enum e_cmd
     CMD_AES_CMAC_VERIFY_WITHOUT_REMAINDER   = 2,
     CMD_AES_CMAC_VERIFY_WITH_REMAINDER      = 3,
 
+    CMD_CHACHA20_POLY1305_MODE_ENCRYPT = 0,
+    CMD_CHACHA20_POLY1305_MODE_DECRYPT = 1,
+
     CMD_ECC_TYPE_NIST      = 0,
     CMD_ECC_TYPE_BRAINPOOL = 1,
     CMD_ECC_TYPE_KOBLITZ   = 2,
@@ -1346,6 +1349,47 @@ rsip_ret_t r_rsip_wrapper_p44f_aes256mac_verify (const uint32_t * InData_Text,
 
     return r_rsip_p44f(InData_Cmd, InData_Text, InData_DataT, InData_DataTLen, OutData_DataT);
 }
+
+#if BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+rsip_ret_t r_rsip_wrapper_p97i_enc (const uint32_t * InData_KeyIndex,
+                                    const uint32_t * InData_Nonce,
+                                    const uint32_t * InData_TextLen,
+                                    const uint32_t * InData_DataALen)
+{
+    return r_rsip_p97i(InData_KeyIndex,
+                       &gs_cmd[CMD_CHACHA20_POLY1305_MODE_ENCRYPT],
+                       InData_Nonce,
+                       InData_TextLen,
+                       InData_DataALen);
+}
+
+rsip_ret_t r_rsip_wrapper_p97i_dec (const uint32_t * InData_KeyIndex,
+                                    const uint32_t * InData_Nonce,
+                                    const uint32_t * InData_TextLen,
+                                    const uint32_t * InData_DataALen)
+{
+    return r_rsip_p97i(InData_KeyIndex,
+                       &gs_cmd[CMD_CHACHA20_POLY1305_MODE_DECRYPT],
+                       InData_Nonce,
+                       InData_TextLen,
+                       InData_DataALen);
+}
+
+rsip_ret_t r_rsip_wrapper_p97r_enc (const uint32_t * InData_KeyIndex,
+                                    const uint32_t * InData_Nonce,
+                                    const uint32_t * InData_State)
+{
+    return r_rsip_p97r(InData_KeyIndex, &gs_cmd[CMD_CHACHA20_POLY1305_MODE_ENCRYPT], InData_Nonce, InData_State);
+}
+
+rsip_ret_t r_rsip_wrapper_p97r_dec (const uint32_t * InData_KeyIndex,
+                                    const uint32_t * InData_Nonce,
+                                    const uint32_t * InData_State)
+{
+    return r_rsip_p97r(InData_KeyIndex, &gs_cmd[CMD_CHACHA20_POLY1305_MODE_DECRYPT], InData_Nonce, InData_State);
+}
+
+#endif
 
 rsip_ret_t r_rsip_wrapper_pe2_wrapped_secp256r1 (const uint32_t InData_PubKey[],
                                                  const uint32_t InData_KeyIndex[],

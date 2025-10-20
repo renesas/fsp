@@ -50,7 +50,7 @@
   #endif
 
   #if defined(MBEDTLS_CIPHER_MODE_XTS)
-   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
+   #if !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
 int aes_xts_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key, unsigned int keybits)
 {
     FSP_ASSERT(ctx);
@@ -124,7 +124,7 @@ int aes_xts_setkey_generic (mbedtls_aes_context * ctx, const unsigned char * key
     return ret;
 }
 
-   #endif
+   #endif                              // !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
   #endif                               // defined(MBEDTLS_AES_SETKEY_ENC_ALT) || defined(MBEDTLS_AES_SETKEY_DEC_ALT)
 
   #if defined(MBEDTLS_AES_SETKEY_ENC_ALT) || defined(MBEDTLS_AES_SETKEY_DEC_ALT)
@@ -297,7 +297,7 @@ int mbedtls_aes_setkey_dec (mbedtls_aes_context * ctx, const unsigned char * key
 
   #if defined(MBEDTLS_CIPHER_MODE_XTS)
 
-   #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
+   #if (BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
 static int mbedtls_aes_xts_decode_keys (const unsigned char  * key,
                                         unsigned int           keybits,
                                         const unsigned char ** key1,
@@ -331,7 +331,7 @@ static int mbedtls_aes_xts_decode_keys (const unsigned char  * key,
     return 0;
 }
 
-   #endif
+   #endif                              // (BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
 
 int mbedtls_aes_xts_setkey_enc (mbedtls_aes_xts_context * ctx, const unsigned char * key, unsigned int keybits)
 {
@@ -340,15 +340,14 @@ int mbedtls_aes_xts_setkey_enc (mbedtls_aes_xts_context * ctx, const unsigned ch
     (void) key;
     (void) keybits;
 
-   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
+   #if !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
     ret = aes_xts_setkey_generic(&ctx->tweak, key, keybits);
     if (ret != 0)
     {
         return ret;
     }
-   #endif
 
-   #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
+   #else
     const unsigned char * key1;
     const unsigned char * key2;
     unsigned int          key1bits;
@@ -369,7 +368,7 @@ int mbedtls_aes_xts_setkey_enc (mbedtls_aes_xts_context * ctx, const unsigned ch
 
     /* Set crypt key for encryption. */
     ret = mbedtls_aes_setkey_enc(&ctx->crypt, key1, key1bits);
-   #endif
+   #endif                              // !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
 
     return ret;
 }
@@ -381,15 +380,14 @@ int mbedtls_aes_xts_setkey_dec (mbedtls_aes_xts_context * ctx, const unsigned ch
     (void) key;
     (void) keybits;
 
-   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
+   #if !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
     ret = aes_xts_setkey_generic(&ctx->tweak, key, keybits);
     if (ret != 0)
     {
         return ret;
     }
-   #endif
 
-   #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
+   #else
     const unsigned char * key1;
     const unsigned char * key2;
     unsigned int          key1bits;
@@ -410,7 +408,7 @@ int mbedtls_aes_xts_setkey_dec (mbedtls_aes_xts_context * ctx, const unsigned ch
 
     /* Set crypt key for decryption. */
     ret = mbedtls_aes_setkey_dec(&ctx->crypt, key1, key1bits);
-   #endif
+   #endif                              // !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
 
     return ret;
 }
@@ -577,7 +575,7 @@ int mbedtls_internal_aes_encrypt_cbc (mbedtls_aes_context * ctx,
     return ret;
 }
 
-   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
+   #if !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
 int mbedtls_internal_aes_encrypt_xts (mbedtls_aes_context * ctx,
                                       unsigned int          length,
                                       const unsigned char * iv,
@@ -689,7 +687,7 @@ int mbedtls_internal_aes_encrypt_xts (mbedtls_aes_context * ctx,
     return ret;
 }
 
-   #endif
+   #endif                              // !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
   #endif                               /* !MBEDTLS_AES_ENCRYPT_ALT */
 
 /*
@@ -851,7 +849,7 @@ int mbedtls_internal_aes_decrypt_cbc (mbedtls_aes_context * ctx,
     return ret;
 }
 
-   #if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
+   #if !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
 int mbedtls_internal_aes_decrypt_xts (mbedtls_aes_context * ctx,
                                       unsigned int          length,
                                       const unsigned char * iv,
@@ -959,7 +957,7 @@ int mbedtls_internal_aes_decrypt_xts (mbedtls_aes_context * ctx,
     return ret;
 }
 
-   #endif
+   #endif                              // !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
   #endif                               /* !MBEDTLS_AES_DECRYPT_ALT */
 
   #if defined(MBEDTLS_AES_DECRYPT_ALT) || defined(MBEDTLS_AES_ENCRYPT_ALT)

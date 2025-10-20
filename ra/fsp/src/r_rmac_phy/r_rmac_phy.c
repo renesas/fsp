@@ -160,8 +160,9 @@ extern bool rmac_phy_target_gpy111_is_support_link_partner_ability(rmac_phy_inst
 static void rmac_phy_targets_initialize(rmac_phy_instance_ctrl_t * p_instance_ctrl);
 static bool rmac_phy_targets_is_support_link_partner_ability(rmac_phy_instance_ctrl_t * p_instance_ctrl,
                                                              uint32_t                   line_speed_duplex);
-static uint32_t r_rmac_phy_calculate_mpic(rmac_phy_instance_ctrl_t * p_instance_ctrl);
+static uint32_t r_rmac_phy_calculate_mpic(rmac_phy_instance_ctrl_t * p_instance_ctrl, uint32_t line_speed_duplex);
 static uint8_t  r_rmac_phy_get_operation_mode(rmac_phy_instance_ctrl_t * p_instance_ctrl);
+static void     r_rmac_phy_set_operation_mode(uint8_t channel, uint8_t mode);
 static void     r_rmac_phy_set_mii_type_configuration(rmac_phy_instance_ctrl_t * p_instance_ctrl, uint8_t port);
 
 /** RMAC_PHY HAL API mapping for Ethernet PHY Controller interface */
@@ -203,6 +204,8 @@ fsp_err_t R_RMAC_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t cons
     fsp_err_t err = FSP_SUCCESS;
     rmac_phy_instance_ctrl_t * p_instance_ctrl = (rmac_phy_instance_ctrl_t *) p_ctrl;
     rmac_phy_extended_cfg_t  * p_extend;
+    uint32_t       link_speed = ETHER_PHY_LINK_SPEED_10F;
+    R_RMAC0_Type * p_reg_rmac;
 
 #if (RMAC_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(NULL != p_instance_ctrl);
@@ -231,8 +234,31 @@ fsp_err_t R_RMAC_PHY_Open (ether_phy_ctrl_t * const p_ctrl, ether_phy_cfg_t cons
     /* Copy default PHY LSI settings. */
     p_instance_ctrl->phy_lsi_cfg_index = p_extend->default_phy_lsi_cfg_index;
 
-    /* Configure PHY interface. */
-    p_instance_ctrl->p_reg_rmac->MPIC = r_rmac_phy_calculate_mpic(p_instance_ctrl);
+    /* Configure maximum link speed for each interface. */
+    if ((ETHER_PHY_MII_TYPE_MII == p_instance_ctrl->p_ether_phy_cfg->mii_type) ||
+        (ETHER_PHY_MII_TYPE_RMII == p_instance_ctrl->p_ether_phy_cfg->mii_type))
+    {
+        link_speed = ETHER_PHY_LINK_SPEED_100F;
+    }
+    else if ((ETHER_PHY_MII_TYPE_GMII == p_instance_ctrl->p_ether_phy_cfg->mii_type) ||
+             (ETHER_PHY_MII_TYPE_RGMII == p_instance_ctrl->p_ether_phy_cfg->mii_type))
+    {
+        link_speed = ETHER_PHY_LINK_SPEED_1000F;
+    }
+    else
+    {
+        ;
+    }
+
+    /* Configure PHY interface for each available channels. */
+    for (uint32_t i = 0; i < BSP_FEATURE_ETHER_NUM_CHANNELS; i++)
+    {
+        if (NULL != p_extend->p_phy_lsi_cfg_list[i])
+        {
+            p_reg_rmac       = (R_RMAC0_Type *) (R_RMAC0_BASE + (RMAC_REG_SIZE * i));
+            p_reg_rmac->MPIC = r_rmac_phy_calculate_mpic(p_instance_ctrl, link_speed);
+        }
+    }
 
     p_instance_ctrl->open = RMAC_PHY_OPEN;
 
@@ -360,8 +386,10 @@ fsp_err_t R_RMAC_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
 {
     fsp_err_t err = FSP_SUCCESS;
     rmac_phy_instance_ctrl_t * p_instance_ctrl = (rmac_phy_instance_ctrl_t *) p_ctrl;
-    uint32_t reg               = 0;
-    uint32_t line_speed_duplex = ETHER_PHY_LINK_SPEED_NO_LINK;
+    uint32_t       reg               = 0;
+    uint32_t       line_speed_duplex = ETHER_PHY_LINK_SPEED_NO_LINK;
+    uint32_t       mpic;
+    R_RMAC0_Type * p_reg_rmac;
 
 #if (RMAC_PHY_CFG_PARAM_CHECKING_ENABLE)
     FSP_ASSERT(NULL != p_instance_ctrl);
@@ -464,6 +492,21 @@ fsp_err_t R_RMAC_PHY_LinkPartnerAbilityGet (ether_phy_ctrl_t * const p_ctrl,
     else
     {
         (*p_line_speed_duplex) = line_speed_duplex;
+    }
+
+    mpic       = r_rmac_phy_calculate_mpic(p_instance_ctrl, line_speed_duplex);
+    p_reg_rmac = (R_RMAC0_Type *) (R_RMAC0_BASE + (RMAC_REG_SIZE * p_instance_ctrl->phy_lsi_cfg_index));
+    if (mpic != p_reg_rmac->MPIC)
+    {
+        /* Set ETHA to CONFIG mode */
+        r_rmac_phy_set_operation_mode(p_instance_ctrl->phy_lsi_cfg_index, RMAC_PHY_ETHA_DISABLE_MODE);
+        r_rmac_phy_set_operation_mode(p_instance_ctrl->phy_lsi_cfg_index, RMAC_PHY_ETHA_CONFIG_MODE);
+
+        p_reg_rmac->MPIC = mpic;
+
+        /* Set ETHA to OPERATION mode */
+        r_rmac_phy_set_operation_mode(p_instance_ctrl->phy_lsi_cfg_index, RMAC_PHY_ETHA_DISABLE_MODE);
+        r_rmac_phy_set_operation_mode(p_instance_ctrl->phy_lsi_cfg_index, RMAC_PHY_ETHA_OPERATION_MODE);
     }
 
     return err;
@@ -870,9 +913,11 @@ static bool rmac_phy_targets_is_support_link_partner_ability (rmac_phy_instance_
  * Description  : Calculate MPIC register value.
  * Arguments    : p_instance_ctrl -
  *                    Ethernet control block
+ *                line_speed_duplex -
+ *                    Line speed duplex of link partner PHY-LSI
  * Return Value : uint32_t
  ***********************************************************************************************************************/
-static uint32_t r_rmac_phy_calculate_mpic (rmac_phy_instance_ctrl_t * p_instance_ctrl)
+static uint32_t r_rmac_phy_calculate_mpic (rmac_phy_instance_ctrl_t * p_instance_ctrl, uint32_t line_speed_duplex)
 {
     rmac_phy_extended_cfg_t * p_extend = (rmac_phy_extended_cfg_t *) p_instance_ctrl->p_ether_phy_cfg->p_extend;
     uint32_t mpic;
@@ -888,26 +933,48 @@ static uint32_t r_rmac_phy_calculate_mpic (rmac_phy_instance_ctrl_t * p_instance
     /* Calculate cycle of MDC clock. */
     mpic_psmcs = ((eswclk_frequency / p_extend->mdc_clock_rate) / 2) - 1;
 
-    /* Configure interface and link speed. */
+    /* Configure interface. */
     if ((ETHER_PHY_MII_TYPE_MII == p_instance_ctrl->p_ether_phy_cfg->mii_type) ||
         (ETHER_PHY_MII_TYPE_RMII == p_instance_ctrl->p_ether_phy_cfg->mii_type))
     {
         /* MII, 100Mbps */
         mpic_pis = 0;
-        mpic_lsc = 0;
-    }
-    else if ((ETHER_PHY_MII_TYPE_GMII == p_instance_ctrl->p_ether_phy_cfg->mii_type) ||
-             (ETHER_PHY_MII_TYPE_RGMII == p_instance_ctrl->p_ether_phy_cfg->mii_type))
-    {
-        /* GMII, 1000Mbps */
-        mpic_pis = 2;
-        mpic_lsc = 2;
     }
     else
     {
-        /* XGMII, 1000Mbps */
-        mpic_pis = 7;
-        mpic_lsc = 2;
+        /* GMII, 1000Mbps */
+        mpic_pis = 2;
+    }
+
+    /* Configure link speed. */
+    switch (line_speed_duplex)
+    {
+        case ETHER_PHY_LINK_SPEED_10H:
+        case ETHER_PHY_LINK_SPEED_10F:
+        {
+            mpic_lsc = 0;
+            break;
+        }
+
+        case ETHER_PHY_LINK_SPEED_100H:
+        case ETHER_PHY_LINK_SPEED_100F:
+        {
+            mpic_lsc = 1;
+            break;
+        }
+
+        case ETHER_PHY_LINK_SPEED_1000H:
+        case ETHER_PHY_LINK_SPEED_1000F:
+        {
+            mpic_lsc = 2;
+            break;
+        }
+
+        default:
+        {
+            mpic_lsc = 0;
+            break;
+        }
     }
 
     mpic = (R_RMAC0_MPIC_PSMCS_Msk & (mpic_psmcs << R_RMAC0_MPIC_PSMCS_Pos)) |
@@ -933,6 +1000,21 @@ static uint8_t r_rmac_phy_get_operation_mode (rmac_phy_instance_ctrl_t * p_insta
 
     /* Return operation mode of ETHA IP. */
     return p_etha_reg->EAMS_b.OPS;
+}
+
+/***********************************************************************************************************************
+ * Change operation mode of ETHA.
+ *
+ * @param[in] mode New operation mode
+ ***********************************************************************************************************************/
+static void r_rmac_phy_set_operation_mode (uint8_t channel, uint8_t mode)
+{
+    R_ETHA0_Type * p_etha_reg =
+        (R_ETHA0_Type *) (R_ETHA0_BASE + (ETHA_REG_SIZE * channel));
+
+    /* Mode transition */
+    p_etha_reg->EAMC_b.OPC = R_ETHA0_EAMC_OPC_Msk & mode;
+    FSP_HARDWARE_REGISTER_WAIT(p_etha_reg->EAMS_b.OPS, mode);
 }
 
 /***********************************************************************************************************************

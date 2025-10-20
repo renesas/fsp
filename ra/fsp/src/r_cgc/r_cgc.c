@@ -21,7 +21,7 @@
 
 #define CGC_PRV_OSTDCR_OSC_STOP_ENABLE        (0x81U)
 
-#if (3U == BSP_FEATURE_CGC_PLLCCR_TYPE) || (6U == BSP_FEATURE_CGC_PLLCCR_TYPE)
+#if 3U == BSP_FEATURE_CGC_PLLCCR_TYPE
 
 /* PLLMUL starts at bit 8, but PLLMULNF at bits 7:6 which can be treated as part of PLLMUL when setting it. */
  #define CGC_PRV_PLLCCR_PLLMUL_BIT            (6U)
@@ -39,6 +39,13 @@
 
 /* PLLMUL in PLLCCR is 5 bits wide. */
  #define CGC_PRV_PLLCCR_PLLMUL_MASK           (0x1FU)
+#elif 6U == BSP_FEATURE_CGC_PLLCCR_TYPE
+
+/* PLLMUL starts at bit 8, but PLLMULNF at bits 7:6 which can be treated as part of PLLMUL when setting it. */
+ #define CGC_PRV_PLLCCR_PLLMUL_BIT            (6U)
+
+/* PLLMUL + PLLMULNF in PLLCCR is 11 bits wide. */
+ #define CGC_PRV_PLLCCR_PLLMUL_MASK           (0x7FFU)
 #else
 
 /* PLLMUL in PLLCCR is 6 bits wide. */
@@ -48,104 +55,89 @@
 #if (3U != BSP_FEATURE_CGC_PLLCCR_TYPE) && (6U != BSP_FEATURE_CGC_PLLCCR_TYPE)
 
 /* PLLMUL in PLLCCR starts at bit 8. */
- #define CGC_PRV_PLLCCR_PLLMUL_BIT            (8U)
+ #define CGC_PRV_PLLCCR_PLLMUL_BIT         (8U)
 #endif
 
 /* PLSRCSEL in PLLCCR starts at bit 4. */
-#define CGC_PRV_PLLCCR_PLSRCSEL_BIT           (4U)
-
-/* PLSET in PLLCCR starts at bit 6. */
-#define CGC_PRV_PLLCCR_PLSET_BIT              (6U)
+#define CGC_PRV_PLLCCR_PLSRCSEL_BIT        (4U)
 
 /* PLLMUL in PLLCCR2 is 5 bits wide. */
-#define CGC_PRV_PLLCCR2_PLLMUL_MASK           (0x1FU)
+#define CGC_PRV_PLLCCR2_PLLMUL_MASK        (0x1FU)
 
 /* PLODIV in PLLCCR2 starts at bit 6. */
-#define CGC_PRV_PLLCCR2_PLODIV_BIT            (6U)
-
-/* CKODIV in CKOCR starts at bit 4. */
-#define CGC_PRV_CKOCR_CKODIV_BIT              (4)
+#define CGC_PRV_PLLCCR2_PLODIV_BIT         (6U)
 
 /* PLODIVx in PLLCCR2 are 4 bits wide. */
-#define CGC_PRV_PLLCCR2_PLODIVX_MASK          (0xFU)
+#define CGC_PRV_PLLCCR2_PLODIVX_MASK       (0xFU)
 
 /* PLODIVP in PLLCCR2 starts at bit 0. */
-#define CGC_PRV_PLLCCR2_PLODIVP_BIT           (0U)
+#define CGC_PRV_PLLCCR2_PLODIVP_BIT        (0U)
 
 /* PLODIVP in PLLCCR2 starts at bit 4. */
-#define CGC_PRV_PLLCCR2_PLODIVQ_BIT           (4U)
+#define CGC_PRV_PLLCCR2_PLODIVQ_BIT        (4U)
 
 /* PLODIVP in PLLCCR2 starts at bit 8. */
-#define CGC_PRV_PLLCCR2_PLODIVR_BIT           (8U)
+#define CGC_PRV_PLLCCR2_PLODIVR_BIT        (8U)
 
 #if 4U == BSP_FEATURE_CGC_PLLCCR_TYPE
 
 /* Bit-mask of values that must be 1 for PLLCCR type 4. */
- #define CGC_PRV_PLLCCR_RESET_VALUE           (0x04U)
+ #define CGC_PRV_PLLCCR_RESET_VALUE        (0x04U)
 #endif
 
 #if BSP_PRV_PLL_SUPPORTED
  #if BSP_PRV_PLL2_SUPPORTED
-  #define CGC_PRV_NUM_CLOCKS                  ((uint8_t) CGC_CLOCK_PLL2 + 1U)
-  #define CGC_PRV_MAX_PLL_OUTPUTS             ((BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS >  \
-                                                BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS) ? \
-                                               BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS     \
-                                               : BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS)
+  #define CGC_PRV_NUM_CLOCKS               ((uint8_t) CGC_CLOCK_PLL2 + 1U)
+  #define CGC_PRV_MAX_PLL_OUTPUTS          ((BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS >  \
+                                             BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS) ? \
+                                            BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS     \
+                                            : BSP_FEATURE_CGC_PLL2_NUM_OUTPUT_CLOCKS)
  #else
-  #define CGC_PRV_NUM_CLOCKS                  ((uint8_t) CGC_CLOCK_PLL + 1U)
-  #define CGC_PRV_MAX_PLL_OUTPUTS             (BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS)
+  #define CGC_PRV_NUM_CLOCKS               ((uint8_t) CGC_CLOCK_PLL + 1U)
+  #define CGC_PRV_MAX_PLL_OUTPUTS          (BSP_FEATURE_CGC_PLL1_NUM_OUTPUT_CLOCKS)
  #endif
 #else
- #define CGC_PRV_NUM_CLOCKS                   ((uint8_t) CGC_CLOCK_SUBCLOCK + 1U)
+ #define CGC_PRV_NUM_CLOCKS                ((uint8_t) CGC_CLOCK_SUBCLOCK + 1U)
 #endif
 
 /* Mask used to isolate dividers for ICLK and FCLK. */
-#define CGC_PRV_SCKDIVCR_ICLK_FCLK_MASK       (0x77000000U)
+#define CGC_PRV_SCKDIVCR_ICLK_FCLK_MASK    (0x77000000U)
 
-#define CGC_PRV_HOCOCR                        ((uint8_t *) &R_SYSTEM->HOCOCR)
-#define CGC_PRV_MOCOCR                        ((uint8_t *) &R_SYSTEM->MOCOCR)
-#define CGC_PRV_LOCOCR                        ((uint8_t *) &R_SYSTEM->LOCOCR)
-#define CGC_PRV_MOSCCR                        ((uint8_t *) &R_SYSTEM->MOSCCR)
-#define CGC_PRV_SOSCCR                        ((uint8_t *) &R_SYSTEM->SOSCCR)
-#define CGC_PRV_PLLCR                         ((uint8_t *) &R_SYSTEM->PLLCR)
-#define CGC_PRV_PLL2CR                        ((uint8_t *) &R_SYSTEM->PLL2CR)
+#define CGC_PRV_HOCOCR                     ((uint8_t *) &R_SYSTEM->HOCOCR)
+#define CGC_PRV_MOCOCR                     ((uint8_t *) &R_SYSTEM->MOCOCR)
+#define CGC_PRV_LOCOCR                     ((uint8_t *) &R_SYSTEM->LOCOCR)
+#define CGC_PRV_MOSCCR                     ((uint8_t *) &R_SYSTEM->MOSCCR)
+#define CGC_PRV_SOSCCR                     ((uint8_t *) &R_SYSTEM->SOSCCR)
+#define CGC_PRV_PLLCR                      ((uint8_t *) &R_SYSTEM->PLLCR)
+#define CGC_PRV_PLL2CR                     ((uint8_t *) &R_SYSTEM->PLL2CR)
 
 /* The closest supported power mode to use when exiting low speed or low voltage mode. */
 #if BSP_FEATURE_CGC_MIDDLE_SPEED_MAX_FREQ_HZ > 0U
- #define CGC_PRV_EXIT_LOW_SPEED_MODE          (BSP_PRV_OPERATING_MODE_MIDDLE_SPEED)
+ #define CGC_PRV_EXIT_LOW_SPEED_MODE       (BSP_PRV_OPERATING_MODE_MIDDLE_SPEED)
 #else
- #define CGC_PRV_EXIT_LOW_SPEED_MODE          (BSP_PRV_OPERATING_MODE_HIGH_SPEED)
-#endif
-
-#if BSP_FEATURE_CGC_LOW_VOLTAGE_MAX_FREQ_HZ > 0U
- #define CGC_PRV_USE_LOW_VOLTAGE_MODE         (CGC_CFG_USE_LOW_VOLTAGE_MODE)
-#else
- #define CGC_PRV_USE_LOW_VOLTAGE_MODE         (0)
+ #define CGC_PRV_EXIT_LOW_SPEED_MODE       (BSP_PRV_OPERATING_MODE_HIGH_SPEED)
 #endif
 
 /* Scaling factor for calculating the multiplier for PLLCCR type 3. */
-#define CGC_PRV_PLL_MUL_FACTOR                (6U)
+#define CGC_PRV_PLL_MUL_FACTOR             (6U)
 
 /* Scaling factor for PLLMUL values; using scaling of 6. */
-#define CGC_PRV_PLL_MUL_COEFF                 (6U)
-#define CGC_PRV_PLL_MUL_NF_COEFF              (2U)
+#define CGC_PRV_PLL_MUL_COEFF              (6U)
+#define CGC_PRV_PLL_MUL_NF_COEFF           (2U)
 
 /* Mask of the uppermost bit of all dividers in SCKDIVCR that are valid when oscillation stop detection is enabled. */
-#define CGC_PRV_SCKDIVCR_UPPER_BIT            (BSP_PRV_SCKDIVCR_MASK & 0x44444444U)
-#define CGC_PRV_SCKDIVCR_DIV_3_BITS           (0x88888888U)
+#define CGC_PRV_SCKDIVCR_UPPER_BIT         (BSP_PRV_SCKDIVCR_MASK & 0x44444444U)
+#define CGC_PRV_SCKDIVCR_DIV_3_BITS        (0x88888888U)
 
 #if BSP_FEATURE_CGC_HAS_CPUCLK
  #if BSP_FEATURE_CGC_SCKDIVCR2_HAS_EXTRA_CLOCKS
-  #define CGC_PRV_SCKDIVCR2_DIV_3_BITS        (0x8888U)
-  #define CGC_PRV_SCKDIVCR2_NUM_CLOCKS        (4U)
+  #define CGC_PRV_SCKDIVCR2_DIV_3_BITS     (0x8888U)
+  #define CGC_PRV_SCKDIVCR2_NUM_CLOCKS     (4U)
  #else
-  #define CGC_PRV_SCKDIVCR2_DIV_3_BITS        (0x8U)
-  #define CGC_PRV_SCKDIVCR2_NUM_CLOCKS        (1U)
+  #define CGC_PRV_SCKDIVCR2_DIV_3_BITS     (0x8U)
+  #define CGC_PRV_SCKDIVCR2_NUM_CLOCKS     (1U)
  #endif
 #endif
-
-/* Offset factor to convert PLL MUL values to register values. */
-#define CGC_PRV_PLLCCR_TYPE4_PLLMUL_OFFSET    (574U)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -210,6 +202,7 @@ static void r_cgc_operating_mode_reduce(uint32_t sckdivcr);
 #if CGC_CFG_PARAM_CHECKING_ENABLE
 static fsp_err_t r_cgc_common_parameter_checking(cgc_instance_ctrl_t * p_instance_ctrl);
 static fsp_err_t r_cgc_check_config_dividers(cgc_divider_cfg_t const * const p_divider_cfg);
+static fsp_err_t r_cgc_clock_source_has_support(cgc_clock_t const clock_source);
 
  #if BSP_FEATURE_CGC_HAS_CPUCLK
 static fsp_err_t r_cgc_divider_constraint_check(cgc_divider_cfg_t const * const p_divider_cfg);
@@ -434,6 +427,17 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
 
  #if 0 == BSP_FEATURE_CGC_EXECUTE_FROM_LOCO
     FSP_ASSERT(CGC_CLOCK_LOCO != p_clock_cfg->system_clock);
+ #endif
+
+    /* Check the system clock source */
+    err = r_cgc_clock_source_has_support(p_clock_cfg->system_clock);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+ #if !BSP_FEATURE_CGC_HAS_MOCO
+    FSP_ASSERT(CGC_CLOCK_CHANGE_NONE == p_clock_cfg->moco_state);
+ #endif
+ #if !BSP_FEATURE_CGC_HAS_MOSC
+    FSP_ASSERT(CGC_CLOCK_CHANGE_NONE == p_clock_cfg->mainosc_state);
  #endif
 #else
     FSP_PARAMETER_NOT_USED(p_instance_ctrl);
@@ -704,7 +708,7 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
 #if !BSP_FEATURE_CGC_REGISTER_SET_B
     bsp_prv_clock_set(requested_system_clock, divider_cfg.sckdivcr_w, divider_cfg.sckdivcr2);
 #else
- #if !BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE
+ #if BSP_FEATURE_CGC_HAS_MOSC && !BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE
     if ((requested_system_clock == CGC_CLOCK_MAIN_OSC) && (options[requested_system_clock] == CGC_CLOCK_CHANGE_START))
     {
         uint8_t mainosc_stable_value = (uint8_t) ~(BSP_PRV_OSTC_OFFSET >> BSP_CLOCK_CFG_MAIN_OSC_WAIT);
@@ -714,8 +718,14 @@ fsp_err_t R_CGC_ClocksCfg (cgc_ctrl_t * const p_ctrl, cgc_clocks_cfg_t const * c
 
     /* Set which clock to use for system clock and dividers. */
     uint8_t hoco_divider = (uint8_t) divider_cfg.hoco_divider;
-    uint8_t moco_divider = (uint8_t) divider_cfg.moco_divider;
-    uint8_t mosc_divider = (uint8_t) divider_cfg.mosc_divider;
+    uint8_t moco_divider = CGC_SYS_CLOCK_DIV_1;
+    uint8_t mosc_divider = CGC_SYS_CLOCK_DIV_1;
+ #if BSP_FEATURE_CGC_HAS_MOCO
+    moco_divider = (uint8_t) divider_cfg.moco_divider;
+ #endif
+ #if BSP_FEATURE_CGC_HAS_MOSC
+    mosc_divider = (uint8_t) divider_cfg.mosc_divider;
+ #endif
     bsp_prv_clock_set(requested_system_clock, hoco_divider, moco_divider, mosc_divider);
 #endif
 
@@ -778,12 +788,10 @@ fsp_err_t R_CGC_ClockStart (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source,
     err = r_cgc_common_parameter_checking(p_instance_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
- #if !BSP_PRV_PLL_SUPPORTED
-    FSP_ASSERT(CGC_CLOCK_PLL != clock_source);
- #endif
- #if !BSP_PRV_PLL2_SUPPORTED
-    FSP_ASSERT(CGC_CLOCK_PLL2 != clock_source);
- #endif
+    /* Check the target clock source */
+    err = r_cgc_clock_source_has_support(clock_source);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
  #if BSP_PRV_PLL_SUPPORTED
     if ((CGC_CLOCK_PLL == clock_source)
   #if BSP_PRV_PLL2_SUPPORTED
@@ -888,6 +896,10 @@ fsp_err_t R_CGC_ClockStop (cgc_ctrl_t * const p_ctrl, cgc_clock_t clock_source)
 
     /* Verify p_instance_ctrl is not NULL and the module is open. */
     fsp_err_t err = r_cgc_common_parameter_checking(p_instance_ctrl);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+
+    /* Check the target clock source */
+    err = r_cgc_clock_source_has_support(clock_source);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
  #if BSP_CFG_USE_LOW_VOLTAGE_MODE
@@ -1017,8 +1029,12 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
  #endif
 #else
     divider_cfg.hoco_divider = p_divider_cfg->hoco_divider;
+ #if BSP_FEATURE_CGC_HAS_MOCO
     divider_cfg.moco_divider = p_divider_cfg->moco_divider;
+ #endif
+ #if BSP_FEATURE_CGC_HAS_MOSC
     divider_cfg.mosc_divider = p_divider_cfg->mosc_divider;
+ #endif
 #endif
 
 #if BSP_FEATURE_CGC_SCKDIVCR_BCLK_MATCHES_PCLKB
@@ -1040,6 +1056,10 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
 #endif
 
 #if CGC_CFG_PARAM_CHECKING_ENABLE
+
+    /* Check the system clock source */
+    err = r_cgc_clock_source_has_support(clock_source);
+    FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 
     /* Check divider constraints. */
     err = r_cgc_check_config_dividers(&divider_cfg);
@@ -1066,10 +1086,16 @@ fsp_err_t R_CGC_SystemClockSet (cgc_ctrl_t * const              p_ctrl,
     r_cgc_pre_change(CGC_PRV_CHANGE_LPM_CGC);
 
 #if BSP_FEATURE_CGC_REGISTER_SET_B
-    bsp_prv_clock_set(clock_source,
-                      (uint8_t) divider_cfg.hoco_divider,
-                      (uint8_t) divider_cfg.moco_divider,
-                      (uint8_t) divider_cfg.mosc_divider);
+    uint8_t hoco_divider = (uint8_t) divider_cfg.hoco_divider;
+    uint8_t moco_divider = CGC_SYS_CLOCK_DIV_1;
+    uint8_t mosc_divider = CGC_SYS_CLOCK_DIV_1;
+ #if BSP_FEATURE_CGC_HAS_MOCO
+    moco_divider = (uint8_t) divider_cfg.moco_divider;
+ #endif
+ #if BSP_FEATURE_CGC_HAS_MOSC
+    mosc_divider = (uint8_t) divider_cfg.mosc_divider;
+ #endif
+    bsp_prv_clock_set(clock_source, hoco_divider, moco_divider, mosc_divider);
 #else
     bsp_prv_clock_set(clock_source, divider_cfg.sckdivcr_w, divider_cfg.sckdivcr2);
 #endif
@@ -1116,9 +1142,13 @@ fsp_err_t R_CGC_SystemClockGet (cgc_ctrl_t * const        p_ctrl,
     if (NULL != p_divider_cfg)
     {
 #if BSP_FEATURE_CGC_REGISTER_SET_B
+ #if BSP_FEATURE_CGC_HAS_MOCO
         p_divider_cfg->moco_divider = (cgc_sys_clock_div_t) R_SYSTEM->MOCODIV;
-        p_divider_cfg->hoco_divider = (cgc_sys_clock_div_t) R_SYSTEM->HOCODIV;
+ #endif
+ #if BSP_FEATURE_CGC_HAS_MOSC
         p_divider_cfg->mosc_divider = (cgc_sys_clock_div_t) R_SYSTEM->MOSCDIV;
+ #endif
+        p_divider_cfg->hoco_divider = (cgc_sys_clock_div_t) R_SYSTEM->HOCODIV;
 #else
         p_divider_cfg->sckdivcr_w = R_SYSTEM->SCKDIVCR;
  #if BSP_FEATURE_CGC_HAS_CPUCLK
@@ -1829,12 +1859,14 @@ static bool r_cgc_stabilization_check (cgc_clock_t clock, cgc_prv_clock_state_t 
         return true;
     }
 
+ #if BSP_FEATURE_CGC_HAS_MOSC
     if (CGC_CLOCK_MAIN_OSC == clock)
     {
         return BSP_CLOCK_CFG_MAIN_OSC_CLOCK_SOURCE ? true : (R_SYSTEM->OSTC ==
                                                              (uint8_t) ~(BSP_PRV_OSTC_OFFSET >>
                                                                          BSP_CLOCK_CFG_MAIN_OSC_WAIT));
     }
+ #endif
 #endif
 
     /* MOCO, LOCO, and subclock have no stabilization flags, so return true if the clock is any of these. */
@@ -1933,11 +1965,14 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
  #endif
 
  #if BSP_FEATURE_CGC_REGISTER_SET_B
+  #if BSP_FEATURE_CGC_HAS_MOCO
 
     /* MOCODIV only supports CGC_SYS_CLOCK_DIV_1, CGC_SYS_CLOCK_DIV_2, CGC_SYS_CLOCK_DIV_4 */
     FSP_ASSERT((p_divider_cfg->moco_divider == CGC_SYS_CLOCK_DIV_1) ||
                (p_divider_cfg->moco_divider == CGC_SYS_CLOCK_DIV_2) ||
                (p_divider_cfg->moco_divider == CGC_SYS_CLOCK_DIV_4));
+  #endif
+  #if BSP_FEATURE_CGC_HAS_MOSC
 
     /* MOSCDIV only supports CGC_SYS_CLOCK_DIV_1, CGC_SYS_CLOCK_DIV_2, CGC_SYS_CLOCK_DIV_4, CGC_SYS_CLOCK_DIV_8, CGC_SYS_CLOCK_DIV_16 */
     FSP_ASSERT((p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_1) ||
@@ -1945,6 +1980,7 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
                (p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_4) ||
                (p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_8) ||
                (p_divider_cfg->mosc_divider == CGC_SYS_CLOCK_DIV_16));
+  #endif
 
   #if (BSP_CFG_HOCO_FREQUENCY == 0)
 
@@ -1954,6 +1990,33 @@ static fsp_err_t r_cgc_check_config_dividers (cgc_divider_cfg_t const * const p_
                (p_divider_cfg->hoco_divider == CGC_SYS_CLOCK_DIV_4));
   #endif
  #endif
+
+    return FSP_SUCCESS;
+}
+
+/*******************************************************************************************************************//**
+ * Check if the specified clock is valid
+ *
+ * @param[in]   clock_source            Clock to be verified
+ *
+ * @retval      FSP_SUCCESS              Clock source is supported.
+ * @retval      FSP_ERR_ASSERTION        Clock source is not supported.
+ **********************************************************************************************************************/
+static fsp_err_t r_cgc_clock_source_has_support (cgc_clock_t const clock_source)
+{
+ #if !BSP_FEATURE_CGC_HAS_MOCO
+    FSP_ASSERT(CGC_CLOCK_MOCO != clock_source);
+ #endif
+ #if !BSP_FEATURE_CGC_HAS_MOSC
+    FSP_ASSERT(CGC_CLOCK_MAIN_OSC != clock_source);
+ #endif
+ #if !BSP_PRV_PLL_SUPPORTED
+    FSP_ASSERT(CGC_CLOCK_PLL != clock_source);
+ #endif
+ #if !BSP_PRV_PLL2_SUPPORTED
+    FSP_ASSERT(CGC_CLOCK_PLL2 != clock_source);
+ #endif
+    FSP_PARAMETER_NOT_USED(clock_source); // unused in some build configurations
 
     return FSP_SUCCESS;
 }
@@ -2510,14 +2573,22 @@ static void r_cgc_pll_cfg (cgc_pll_cfg_t const * const p_pll_cfg,
     if (CGC_CLOCK_PLL == pll)
   #endif
     {
-        R_SYSTEM->PLLCCR  = (uint16_t) pllccr;
+  #if 6U == BSP_FEATURE_CGC_PLLCCR_TYPE
+        R_SYSTEM->PLLCCR = pllccr;
+  #else
+        R_SYSTEM->PLLCCR = (uint16_t) pllccr;
+  #endif
         R_SYSTEM->PLLCCR2 = pllccr2;
     }
 
   #if BSP_PRV_PLL2_SUPPORTED
     else
     {
-        R_SYSTEM->PLL2CCR  = (uint16_t) pllccr;
+   #if 6U == BSP_FEATURE_CGC_PLLCCR_TYPE
+        R_SYSTEM->PLL2CCR = pllccr;
+   #else
+        R_SYSTEM->PLL2CCR = (uint16_t) pllccr;
+   #endif
         R_SYSTEM->PLL2CCR2 = pllccr2;
     }
   #endif

@@ -38,17 +38,29 @@
  #define SAU_RX_INDEX              (SAU_TX_INDEX + 1)
  #define SAU_SPS_REG_INIT          (SAU0_SPS_REG_INIT)
 #else
- #define SAU_DEFINE_LOCALS(p_ctrl)    R_SAU0_Type * const _p_reg = (p_ctrl)->p_reg;     \
+ #ifdef R_SAU1
+  #define SAU_DEFINE_LOCALS(p_ctrl)    R_SAU0_Type * const _p_reg = (p_ctrl)->p_reg;    \
     const uint8_t _sau_unit     = (p_ctrl)->sau_unit;                                   \
     const uint8_t _sau_tx_index = (p_ctrl)->sau_tx_channel;                             \
     const uint8_t _sau_rx_index = (p_ctrl)->sau_tx_channel + 1;                         \
     /* These locals will not always be used. Void cast to quiet unused variable warn */ \
     (void) _p_reg; (void) _sau_unit; (void) _sau_tx_index; (void) _sau_rx_index
- #define SAU_REG                   (_p_reg)
- #define SAU_UNIT                  (_sau_unit)
- #define SAU_TX_INDEX              (_sau_tx_index)
- #define SAU_RX_INDEX              (_sau_rx_index)
- #define SAU_SPS_REG_INIT          (SAU_UNIT ? SAU1_SPS_REG_INIT : SAU0_SPS_REG_INIT)
+  #define SAU_REG                  (_p_reg)
+  #define SAU_UNIT                 (_sau_unit)
+  #define SAU_TX_INDEX             (_sau_tx_index)
+  #define SAU_RX_INDEX             (_sau_rx_index)
+  #define SAU_SPS_REG_INIT         (SAU_UNIT ? SAU1_SPS_REG_INIT : SAU0_SPS_REG_INIT)
+ #else
+  #define SAU_DEFINE_LOCALS(p_ctrl)    const uint8_t _sau_tx_index = (p_ctrl)->sau_tx_channel; \
+    const uint8_t _sau_rx_index = (p_ctrl)->sau_tx_channel + 1;                                \
+    /* These locals will not always be used. Void cast to quiet unused variable warn */        \
+    (void) _sau_tx_index; (void) _sau_rx_index
+  #define SAU_TX_INDEX             (_sau_tx_index)
+  #define SAU_RX_INDEX             (_sau_rx_index)
+  #define SAU_REG                  (R_SAU0)
+  #define SAU_UNIT                 (0)
+  #define SAU_SPS_REG_INIT         (SAU0_SPS_REG_INIT)
+ #endif
 #endif
 
 #if SAU_UART_CFG_CRITICAL_SECTION_ENABLE
@@ -215,13 +227,22 @@ fsp_err_t R_SAU_UART_Open (uart_ctrl_t * const p_api_ctrl, uart_cfg_t const * co
 
     /* Don't use the macros here since the macros use defined locals which copy from p_ctrl. */
 
+ #ifdef R_SAU1
+
     /* Each SAU can contain up to two UART channels */
     p_ctrl->sau_unit = p_cfg->channel / 2;
+ #else
+    p_ctrl->sau_unit = 0;
+ #endif
 
     /* The transmission channel only occupies the even channels of the current SAU unit. */
     p_ctrl->sau_tx_channel = (uint8_t) ((p_cfg->channel & 1) << 1);
 
+ #ifdef R_SAU1
     p_ctrl->p_reg = (R_SAU0_Type *) (R_SAU0_BASE + (SAU_REG_CHANNEL_SIZE * p_ctrl->sau_unit));
+ #else
+    p_ctrl->p_reg = R_SAU0;
+ #endif
 
     SAU_DEFINE_LOCALS(p_ctrl);
 #endif

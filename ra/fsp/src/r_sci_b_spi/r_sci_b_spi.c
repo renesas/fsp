@@ -30,6 +30,9 @@
 #define SCI_B_SPI_PRV_CHR_RST_VALUE               (0x0200U)
 #define SCI_B_SPI_PRV_DATA_REG_MASK               (0xFFFFFF00)
 #define SCI_B_SPI_PRV_RDAT_MASK                   (0xFFU)
+#define SCI_B_SPI_PRV_FCR_TRIGGER_MASK            (R_SCI_B0_FCR_RSTRG_Msk)
+#define SCI_B_SPI_PRV_FCR_RESET_FIFOS_MASK        (R_SCI_B0_FCR_TFRST_Msk | R_SCI_B0_FCR_RFRST_Msk)
+#define SCI_B_SPI_PRV_FCR_RST_VALUE               (R_SCI_B0_FCR_RSTRG_Msk | R_SCI_B0_FCR_RTRG_Msk)
 
 /** "SCIBS" in ASCII, used to determine if channel is open. */
 #define SCI_B_SPI_OPEN                            (0x53434953ULL)
@@ -108,6 +111,7 @@ void sci_b_spi_eri_isr(void);
  * @retval     FSP_ERR_ASSERTION               An input parameter is invalid or NULL.
  * @retval     FSP_ERR_ALREADY_OPEN            The instance has already been opened.
  * @retval     FSP_ERR_IP_CHANNEL_NOT_PRESENT  The channel number is invalid.
+ * @retval     FSP_ERR_UNSUPPORTED             Fifo mode is requested but a transfer interface is not used
  **********************************************************************************************************************/
 fsp_err_t R_SCI_B_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
 {
@@ -121,6 +125,16 @@ fsp_err_t R_SCI_B_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_c
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ASSERT(NULL != p_cfg->p_callback);
     FSP_ERROR_RETURN(BSP_FEATURE_SCI_CHANNELS_MASK & (1U << p_cfg->channel), FSP_ERR_IP_CHANNEL_NOT_PRESENT);
+
+ #if SCI_B_SPI_CFG_FIFO_SUPPORT
+
+    /* FIFO mode is only supported when using a transfer interface for both transmission and reception */
+    sci_b_spi_extended_cfg_t * p_extend = (sci_b_spi_extended_cfg_t *) p_cfg->p_extend;
+    FSP_ERROR_RETURN(((SCI_B_SPI_TX_FIFO_TRIGGER_DISABLED == p_extend->tx_fifo_trigger) ||
+                      (p_cfg->p_transfer_tx && p_cfg->p_transfer_rx)),
+                     FSP_ERR_UNSUPPORTED);
+ #endif
+
     FSP_ASSERT(p_cfg->rxi_irq >= 0 || p_cfg->p_transfer_rx);
     FSP_ASSERT(p_cfg->txi_irq >= 0 || p_cfg->p_transfer_tx);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
@@ -397,7 +411,20 @@ fsp_err_t R_SCI_B_SPI_Close (spi_ctrl_t * const p_api_ctrl)
     FSP_ERROR_RETURN(SCI_B_SPI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    /* Clear the RE and TE bits in CCR0. */
+#if SCI_B_SPI_CFG_FIFO_SUPPORT
+
+    /* Set all bits in CCR0 to 0, except TE */
+    p_ctrl->p_reg->CCR0 &= R_SCI_B0_CCR0_TE_Msk;
+
+    /* Reset the transmit fifo */
+    p_ctrl->p_reg->FCR_b.TFRST = 1U;
+
+    /* Clear the CCR3_b.FM bit. This is necessary to set the TEND bit before setting the TE bit. If TEND is 0
+     * when TE is set to 0, the SCI peripheral works abnormally next time the TE made to 1.*/
+    p_ctrl->p_reg->CCR3 = 0U;
+#endif
+
+    /* Disable transmission */
     p_ctrl->p_reg->CCR0 = 0;
 
     if (0 <= p_ctrl->p_cfg->txi_irq)
@@ -517,6 +544,7 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     uint32_t ccr4  = (BSP_FEATURE_SCI_SPI_SCKSEL_MASK << R_SCI_B0_CCR4_SCKSEL_Pos);
     uint32_t cfclr = 0U;
     uint32_t ffclr = 0U;
+    uint32_t fcr   = SCI_B_SPI_PRV_FCR_RST_VALUE;
 
     /* SCI Initialization in Simple SPI Mode (See "SCI Initialization in Simple SPI Mode" in the SCI section
      * of the relevant hardware manual). */
@@ -564,16 +592,37 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
     /* Set Simple SPI mode. */
     ccr3 |= 3U << R_SCI_B0_CCR3_MOD_Pos;
 
-    /* Write settings to CCR2:
-     * - Write the BRR setting.
-     * - Write the clock divider setting.
-     * - Write the Baud Rate Generator Double-Speed Mode setting.
-     */
+#if SCI_B_SPI_CFG_FIFO_SUPPORT
+
+    /* Select FIFO mode enabled/disabled */
+    uint8_t fifo_mode = p_extend->tx_fifo_trigger > SCI_B_SPI_TX_FIFO_TRIGGER_DISABLED;
+    ccr3 |= (uint32_t) (fifo_mode << R_SCI_B0_CCR3_FM_Pos);
+#endif
+
     if (SPI_MODE_MASTER == p_cfg->operating_mode)
     {
+        /* Write settings to CCR2:
+         * - Write the BRR setting.
+         * - Write the clock divider setting.
+         * - Write the Baud Rate Generator Double-Speed Mode setting.
+         */
         ccr2 |= (uint32_t) (p_extend->clk_div.cks << R_SCI_B0_CCR2_CKS_Pos);
         ccr2 |= (uint32_t) ((p_extend->clk_div.brr) << R_SCI_B0_CCR2_BRR_Pos);
         ccr2 |= (uint32_t) ((p_extend->clk_div.bgdm) << R_SCI_B0_CCR2_BGDM_Pos);
+
+        /* Write the receive sampling adjustment setting. This setting adjusts
+         * the master receive sampling timing to account for the propagation delay
+         * of SCK and MISO. Refer to the diagram "Reception Sampling Timing
+         * Adjustment Operation in Clock Synchronous Mode (Master)" in the
+         * SCI section of the relevant hardware manual.
+         *
+         * Note the enum value is 1 greater than the AST register value.
+         */
+        if (p_extend->rx_sampling_delay > SCI_B_SPI_RX_SAMPLING_DELAY_CYCLES_0)
+        {
+            ccr4 |= R_SCI_B0_CCR4_ASEN_Msk |
+                    ((p_extend->rx_sampling_delay - 1U) << R_SCI_B0_CCR4_AST_Pos);
+        }
     }
 
     /* Enable Clock for the SCI Channel. */
@@ -592,15 +641,33 @@ static void r_sci_b_spi_hw_config (sci_b_spi_instance_ctrl_t * const p_ctrl)
             R_SCI_B0_CFCLR_ERSC_Msk;
     ffclr = R_SCI_B0_FFCLR_DRC_Msk;
 
-    /* Set FCR. Reset FIFO/data registers. */
-    p_ctrl->p_reg->FCR = R_SCI_B0_FCR_TFRST_Msk | R_SCI_B0_FCR_RFRST_Msk;
+#if SCI_B_SPI_CFG_FIFO_SUPPORT
+    if (fifo_mode)
+    {
+        /* Keep receive trigger at default level of 0 (1 byte RX trigger level) so that the
+         * transfer IP pulls out data as soon as it is available. */
+        fcr = SCI_B_SPI_PRV_FCR_TRIGGER_MASK | (uint32_t) (p_extend->tx_fifo_trigger << R_SCI_B0_FCR_TTRG_Pos);
+    }
+#endif
+
+    /* Initialize FCR and Reset FIFO/data registers. */
+    p_ctrl->p_reg->FCR = fcr | SCI_B_SPI_PRV_FCR_RESET_FIFOS_MASK;
 
     /* Write all settings except MOD[2:0] to CCR3 (See Table "Example flow of SCI initialization in clock synchronous mode with
      * non-FIFO selected" in the SCI section of the relevant hardware manual). */
     p_ctrl->p_reg->CCR3 = ccr3 & ~(R_SCI_B0_CCR3_MOD_Msk);
 
     /* Write settings to registers. */
-    p_ctrl->p_reg->CCR3  = ccr3;
+    p_ctrl->p_reg->CCR3 = ccr3;
+
+#if SCI_B_SPI_CFG_FIFO_SUPPORT
+    if (fifo_mode)
+    {
+        /* In FIFO mode, the FIFOs need to be reset after CCF3.FM has been enabled */
+        p_ctrl->p_reg->FCR = fcr | SCI_B_SPI_PRV_FCR_RESET_FIFOS_MASK;
+    }
+#endif
+
     p_ctrl->p_reg->CCR2  = ccr2;
     p_ctrl->p_reg->CCR1  = ccr1;
     p_ctrl->p_reg->CCR4  = ccr4;

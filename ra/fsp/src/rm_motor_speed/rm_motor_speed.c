@@ -1593,12 +1593,15 @@ static float rm_motor_speed_set_iq_ref_hall (motor_speed_instance_ctrl_t * p_ctr
         }
         else
         {
-            float f4_torque_num = 0.0F;
+            float f4_torque_num         = 0.0F;
+            float f_temp_motor_polepair = (float) p_extended_cfg->mtr_param.u2_mtr_pp;
             f4_torque_num = ((float) p_extended_cfg->mtr_param.u2_mtr_pp * p_extended_cfg->mtr_param.f4_mtr_m) *
                             p_ctrl->f_iq_ref;
-            f4_temp_speed_rad = rm_motor_speed_disturbance_observer_run(&p_ctrl->st_disturbance_observer,
-                                                                        f4_torque_num,
-                                                                        p_ctrl->st_input.f_speed_rad);
+            f4_temp_speed_rad =
+                rm_motor_speed_disturbance_observer_run(&p_ctrl->st_disturbance_observer,
+                                                        f4_torque_num,
+                                                        p_ctrl->st_input.f_speed_rad / f_temp_motor_polepair);
+            f4_temp_speed_rad *= f_temp_motor_polepair;
         }
     }
     else
@@ -1714,12 +1717,15 @@ static float rm_motor_speed_set_iq_ref_encoder (motor_speed_instance_ctrl_t * p_
             }
             else
             {
-                float f4_torque_num = 0.0F;
+                float f4_torque_num         = 0.0F;
+                float f_temp_motor_polepair = (float) p_extended_cfg->mtr_param.u2_mtr_pp;
                 f4_torque_num = ((float) p_extended_cfg->mtr_param.u2_mtr_pp * p_extended_cfg->mtr_param.f4_mtr_m) *
                                 p_ctrl->f_iq_ref;
-                f4_temp_speed_rad = rm_motor_speed_disturbance_observer_run(&p_ctrl->st_disturbance_observer,
-                                                                            f4_torque_num,
-                                                                            p_ctrl->st_input.f_speed_rad);
+                f4_temp_speed_rad =
+                    rm_motor_speed_disturbance_observer_run(&p_ctrl->st_disturbance_observer,
+                                                            f4_torque_num,
+                                                            p_ctrl->st_input.f_speed_rad / f_temp_motor_polepair);
+                f4_temp_speed_rad *= f_temp_motor_polepair;
             }
         }
         else

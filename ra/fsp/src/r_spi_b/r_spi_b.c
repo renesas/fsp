@@ -22,8 +22,6 @@
                                                   ((uint32_t) R_SPI_B1 - (uint32_t) R_SPI_B0) * \
                                                   (channel)))
 
-#define SPI_B_DTC_MAX_TRANSFER            (0x10000)
-
 #define SPI_B_DTC_RX_TRANSFER_SETTINGS    ((TRANSFER_MODE_NORMAL << TRANSFER_SETTINGS_MODE_BITS) |         \
                                            (TRANSFER_SIZE_1_BYTE << TRANSFER_SETTINGS_SIZE_BITS) |         \
                                            (TRANSFER_ADDR_MODE_FIXED << TRANSFER_SETTINGS_SRC_ADDR_BITS) | \
@@ -77,6 +75,9 @@ void spi_b_rxi_isr(void);
 void spi_b_txi_isr(void);
 void spi_b_tei_isr(void);
 void spi_b_eri_isr(void);
+
+void spi_b_rx_dmac_callback(spi_b_instance_ctrl_t const * const p_ctrl);
+void spi_b_tx_dmac_callback(spi_b_instance_ctrl_t const * const p_ctrl);
 
 /***********************************************************************************************************************
  * Private global variables
@@ -137,8 +138,6 @@ fsp_err_t R_SPI_B_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg)
     FSP_ASSERT(NULL != p_cfg->p_callback);
     FSP_ASSERT(NULL != p_cfg->p_extend);
     FSP_ERROR_RETURN(BSP_FEATURE_SPI_NUM_CHANNELS > p_cfg->channel, FSP_ERR_IP_CHANNEL_NOT_PRESENT);
-    FSP_ASSERT(p_cfg->rxi_irq >= 0);
-    FSP_ASSERT(p_cfg->txi_irq >= 0);
     FSP_ASSERT(p_cfg->tei_irq >= 0);
     FSP_ASSERT(p_cfg->eri_irq >= 0);
 
@@ -321,7 +320,7 @@ fsp_err_t R_SPI_B_Close (spi_ctrl_t * const p_api_ctrl)
 
     p_ctrl->open = 0;
 
-#if SPI_B_DTC_SUPPORT_ENABLE == 1
+#if SPI_B_CFG_DMA_SUPPORT_ENABLE == 1
     if (NULL != p_ctrl->p_cfg->p_transfer_rx)
     {
         p_ctrl->p_cfg->p_transfer_rx->p_api->close(p_ctrl->p_cfg->p_transfer_rx->p_ctrl);
@@ -333,9 +332,19 @@ fsp_err_t R_SPI_B_Close (spi_ctrl_t * const p_api_ctrl)
     }
 #endif
 
-    /* Disable interrupts in NVIC. */
-    R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
-    R_BSP_IrqDisable(p_ctrl->p_cfg->rxi_irq);
+    /* Disable interrupts in NVIC. When using DMA for data transfer, TXI and RXI interrupts
+     * are not required and typically disabled. Check if the IRQ number is valid (>= 0) before calling R_BSP_IrqDisable()
+     * to avoid disabling nonexistent interrupts. */
+    if (p_ctrl->p_cfg->txi_irq >= 0)
+    {
+        R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
+    }
+
+    if (p_ctrl->p_cfg->rxi_irq >= 0)
+    {
+        R_BSP_IrqDisable(p_ctrl->p_cfg->rxi_irq);
+    }
+
     R_BSP_IrqDisable(p_ctrl->p_cfg->tei_irq);
     R_BSP_IrqDisable(p_ctrl->p_cfg->eri_irq);
 
@@ -454,7 +463,7 @@ static fsp_err_t r_spi_b_transfer_config (spi_cfg_t const * const p_cfg)
 {
     fsp_err_t err = FSP_SUCCESS;
 
-#if SPI_B_DTC_SUPPORT_ENABLE == 1
+#if SPI_B_CFG_DMA_SUPPORT_ENABLE == 1
     const transfer_instance_t * p_transfer_tx = p_cfg->p_transfer_tx;
     void * p_spdr = (void *) &(SPI_B_REG(p_cfg->channel)->SPDR);
     if (p_transfer_tx)
@@ -637,8 +646,16 @@ static void r_spi_b_hw_config (spi_b_instance_ctrl_t * p_ctrl)
  **********************************************************************************************************************/
 static void r_spi_b_nvic_config (spi_b_instance_ctrl_t * p_ctrl)
 {
-    R_BSP_IrqCfgEnable(p_ctrl->p_cfg->txi_irq, p_ctrl->p_cfg->txi_ipl, p_ctrl);
-    R_BSP_IrqCfgEnable(p_ctrl->p_cfg->rxi_irq, p_ctrl->p_cfg->rxi_ipl, p_ctrl);
+    if (p_ctrl->p_cfg->txi_irq >= 0)
+    {
+        R_BSP_IrqCfgEnable(p_ctrl->p_cfg->txi_irq, p_ctrl->p_cfg->txi_ipl, p_ctrl);
+    }
+
+    if (p_ctrl->p_cfg->rxi_irq >= 0)
+    {
+        R_BSP_IrqCfgEnable(p_ctrl->p_cfg->rxi_irq, p_ctrl->p_cfg->rxi_ipl, p_ctrl);
+    }
+
     R_BSP_IrqCfgEnable(p_ctrl->p_cfg->eri_irq, p_ctrl->p_cfg->eri_ipl, p_ctrl);
 
     R_BSP_IrqCfg(p_ctrl->p_cfg->tei_irq, p_ctrl->p_cfg->tei_ipl, p_ctrl);
@@ -702,14 +719,14 @@ static void r_spi_b_start_transfer (spi_b_instance_ctrl_t * p_ctrl)
     }
     else
     {
-        /* Enable the SPI Transfer. */
-        p_ctrl->p_regs->SPCR_b.SPE = 1;
+        /* Enable the SPI Transfer and TX buffer empty interrupt */
+        p_ctrl->p_regs->SPCR |= R_SPI_B0_SPCR_SPTIE_Msk | R_SPI_B0_SPCR_SPE_Msk;
     }
 
 #else
 
-    /* Enable the SPI Transfer. */
-    p_ctrl->p_regs->SPCR_b.SPE = 1;
+    /* Enable the SPI Transfer and TX buffer empty interrupt */
+    p_ctrl->p_regs->SPCR |= R_SPI_B0_SPCR_SPTIE_Msk | R_SPI_B0_SPCR_SPE_Msk;
 #endif
 }
 
@@ -742,10 +759,26 @@ static fsp_err_t r_spi_b_write_read_common (spi_ctrl_t * const    p_api_ctrl,
     FSP_ERROR_RETURN(SPI_B_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ASSERT(p_src || p_dest);
     FSP_ASSERT(0 != length);
-    if (p_ctrl->p_cfg->p_transfer_tx || p_ctrl->p_cfg->p_transfer_rx)
+
+ #if SPI_B_CFG_DMA_SUPPORT_ENABLE
+    if (NULL != p_ctrl->p_cfg->p_transfer_rx)
     {
-        FSP_ASSERT(length <= SPI_B_DTC_MAX_TRANSFER);
+        transfer_properties_t transfer_info;
+        fsp_err_t             err = p_ctrl->p_cfg->p_transfer_rx->p_api->infoGet(p_ctrl->p_cfg->p_transfer_rx->p_ctrl,
+                                                                                 &transfer_info);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        FSP_ASSERT(length <= transfer_info.transfer_length_max);
     }
+
+    if (NULL != p_ctrl->p_cfg->p_transfer_tx)
+    {
+        transfer_properties_t transfer_info;
+        fsp_err_t             err = p_ctrl->p_cfg->p_transfer_tx->p_api->infoGet(p_ctrl->p_cfg->p_transfer_tx->p_ctrl,
+                                                                                 &transfer_info);
+        FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
+        FSP_ASSERT(length <= transfer_info.transfer_length_max);
+    }
+ #endif
 #endif
 
     /* Check to ensure SPE is cleared after the last transmission.
@@ -759,7 +792,7 @@ static fsp_err_t r_spi_b_write_read_common (spi_ctrl_t * const    p_api_ctrl,
     p_ctrl->count     = length;
     p_ctrl->bit_width = bit_width;
 
-#if SPI_B_DTC_SUPPORT_ENABLE == 1
+#if SPI_B_CFG_DMA_SUPPORT_ENABLE == 1
 
     /* Determine DTC transfer size */
     transfer_size_t size;
@@ -821,6 +854,9 @@ static fsp_err_t r_spi_b_write_read_common (spi_ctrl_t * const    p_api_ctrl,
             p_info->transfer_settings_word_b.src_addr_mode = TRANSFER_ADDR_MODE_FIXED;
             p_info->p_src = &dummy_tx;
         }
+
+        /* Disable the TX buffer empty interrupt before enabling transfer. */
+        p_ctrl->p_regs->SPCR_b.SPTIE = 0;
 
         fsp_err_t err = p_transfer_tx->p_api->reconfigure(p_transfer_tx->p_ctrl, p_info);
         FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
@@ -973,6 +1009,19 @@ static void r_spi_b_call_callback (spi_b_instance_ctrl_t * p_ctrl, spi_event_t e
 }
 
 /*******************************************************************************************************************//**
+ * Callback that must be called after a RX DMAC transfer completes.
+ *
+ * @param[in]     p_ctrl     Pointer to SPI_B instance control block
+ **********************************************************************************************************************/
+void spi_b_rx_dmac_callback (spi_b_instance_ctrl_t const * const p_ctrl)
+{
+    /* If the transmit and receive ISRs are too slow to keep up at high bitrates,
+     * the hardware will generate an interrupt before all of the transfers are completed.
+     * By enabling the transfer end ISR here, all of the transfers are guaranteed to be completed. */
+    R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
+}
+
+/*******************************************************************************************************************//**
  * ISR called when data is loaded into SPI data register from the shift register.
  **********************************************************************************************************************/
 void spi_b_rxi_isr (void)
@@ -1072,13 +1121,22 @@ void spi_b_tei_isr (void)
 
         /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
          * (See "SPI Control Register (SPCR)" description in the relevant hardware manual). */
-        R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
+        if (p_ctrl->p_cfg->txi_irq >= 0)
+        {
+            /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.* (See "SPI Control Register (SPCR)" description in the relevant hardware manual). */
+            R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
-        /* Disable the SPI Transfer. */
-        p_ctrl->p_regs->SPCR_b.SPE = 0;
+            /* Disable the SPI Transfer. */
+            p_ctrl->p_regs->SPCR_b.SPE = 0;
 
-        /* Re-enable the TXI IRQ and clear the pending IRQ. */
-        R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
+            /* Re-enable the TXI IRQ and clear the pending IRQ. */
+            R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
+        }
+        else
+        {
+            /* Disable the SPI Transfer. */
+            p_ctrl->p_regs->SPCR_b.SPE = 0;
+        }
 
         /* Signal that a transfer has completed. */
         r_spi_b_call_callback(p_ctrl, SPI_EVENT_TRANSFER_COMPLETE);
@@ -1101,13 +1159,22 @@ void spi_b_eri_isr (void)
 
     /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.
      * (See "SPI Control Register (SPCR)" description in the relevant hardware manual). */
-    R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
+    if (p_ctrl->p_cfg->txi_irq >= 0)
+    {
+        /* Writing 0 to SPE generatates a TXI IRQ. Disable the TXI IRQ.* (See "SPI Control Register (SPCR)" description in the relevant hardware manual). */
+        R_BSP_IrqDisable(p_ctrl->p_cfg->txi_irq);
 
-    /* Disable the SPI Transfer. */
-    p_ctrl->p_regs->SPCR_b.SPE = 0;
+        /* Disable the SPI Transfer. */
+        p_ctrl->p_regs->SPCR_b.SPE = 0;
 
-    /* Re-enable the TXI IRQ and clear the pending IRQ. */
-    R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
+        /* Re-enable the TXI IRQ and clear the pending IRQ. */
+        R_BSP_IrqEnable(p_ctrl->p_cfg->txi_irq);
+    }
+    else
+    {
+        /* Disable the SPI Transfer. */
+        p_ctrl->p_regs->SPCR_b.SPE = 0;
+    }
 
     /* Read the status register. */
     uint32_t status = p_ctrl->p_regs->SPSR;
@@ -1141,6 +1208,30 @@ void spi_b_eri_isr (void)
 
     /* Restore context if RTOS is used */
     FSP_CONTEXT_RESTORE
+}
+
+/*******************************************************************************************************************//**
+ * Callback that must be called after a TX DMAC transfer completes.
+ *
+ * @param[in]     p_ctrl     Pointer to SPI_B instance control block
+ **********************************************************************************************************************/
+void spi_b_tx_dmac_callback (spi_b_instance_ctrl_t const * const p_ctrl)
+{
+#if SPI_B_TRANSMIT_FROM_RXI_ISR == 0
+    spi_b_extended_cfg_t * p_extend = ((spi_b_extended_cfg_t *) p_ctrl->p_cfg->p_extend);
+    if (p_extend && (SPI_B_COMMUNICATION_TRANSMIT_ONLY == p_extend->spi_comm))
+    {
+        /* Only enable the transfer end ISR if there are no receive buffer full interrupts expected to be handled
+         * after this interrupt. */
+
+        /* If DMA is used to transmit data, enable the interrupt after all the data has been transferred, but do not
+         * clear the IRQ Pending Bit. */
+        R_BSP_IrqEnableNoClear(p_ctrl->p_cfg->tei_irq);
+    }
+
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+#endif
 }
 
 /* End of file R_SPI. */

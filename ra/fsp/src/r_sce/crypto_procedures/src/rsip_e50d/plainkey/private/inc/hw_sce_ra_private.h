@@ -48,6 +48,10 @@
 #define SIZE_AES_XTS_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_AES_XTS_256BIT_KEYLEN_BITS_WRAPPED) / 8)
 #define SIZE_AES_XTS_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_AES_XTS_256BIT_KEYLEN_BITS_WRAPPED) / 32)
 
+#define SIZE_CHACHA20_256BIT_KEYLEN_BITS_WRAPPED     (416)
+#define SIZE_CHACHA20_256BIT_KEYLEN_BYTES_WRAPPED    ((SIZE_CHACHA20_256BIT_KEYLEN_BITS_WRAPPED) / 8)
+#define SIZE_CHACHA20_256BIT_KEYLEN_WORDS_WRAPPED    ((SIZE_CHACHA20_256BIT_KEYLEN_BITS_WRAPPED) / 32)
+
  /** Return RSA wrapped private key size in bytes from the specified RSA modulus size in bits */
  #define RSA_WRAPPED_PRIVATE_KEY_SIZE_BYTES(RSA_SIZE_BITS)    (800U)
 
@@ -395,6 +399,15 @@ fsp_err_t HW_SCE_Sha3GenerateMessageDigestResumeSub (const uint32_t InData_HashT
 fsp_err_t HW_SCE_Chacha20InitSub (const uint32_t InData_KeyMode[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_Ctr[], const uint32_t InData_Nonce[], const uint32_t InData_TextLen[]);
 void HW_SCE_Chacha20UpdateSub (const uint32_t InData_Text[], uint32_t OutData_Text[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_Chacha20FinalSub (const uint32_t InData_Text[], uint32_t OutData_Text[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_Chacha20SuspendSub (uint32_t OutData_State[]);
+fsp_err_t HW_SCE_Chacha20ResumeSub (const uint32_t InData_KeyMode[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_Nonce[], const uint32_t InData_State[]);
+fsp_err_t HW_SCE_Chacha20Poly1305InitSub(const uint32_t InData_KeyMode[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_Cmd[], const uint32_t InData_Nonce[], const uint32_t InData_TextLen[], const uint32_t InData_DataALen[]);
+void HW_SCE_Chacha20Poly1305UpdateAADSub(const uint32_t InData_DataA[], const uint32_t MAX_CNT);
+void HW_SCE_Chacha20Poly1305UpdateTransitionSub(void);
+void HW_SCE_Chacha20Poly1305UpdateSub(const uint32_t InData_Text[], uint32_t OutData_Text[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_Chacha20Poly1305FinalSub(const uint32_t InData_Text[], const uint32_t InData_DataT[], uint32_t OutData_Text[], uint32_t OutData_DataT[], const uint32_t MAX_CNT);
+fsp_err_t HW_SCE_Chacha20Poly1305SuspendSub(uint32_t OutData_State[]);
+fsp_err_t HW_SCE_Chacha20Poly1305ResumeSub(const uint32_t InData_KeyMode[], const uint32_t InData_KeyIndex[], const uint32_t InData_Key[], const uint32_t InData_Cmd[], const uint32_t InData_Nonce[], const uint32_t InData_State[]);
 fsp_err_t HW_SCE_EddsaSignatureGenerateSub(const uint32_t InData_PrivKeyIndex[], const uint32_t InData_PubKeyIndex[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_DomainParam[], uint32_t OutData_Signature[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_EddsaSignatureVerificationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_Msg[], const uint32_t InData_MsgLen[], const uint32_t InData_Signature[], const uint32_t InData_DomainParam[], const uint32_t MAX_CNT);
 fsp_err_t HW_SCE_Ed25519ScalarMultiplicationSub(const uint32_t InData_KeyIndex[], const uint32_t InData_XYZ[], const uint32_t InData_DomainParam[], uint32_t OutData_XYZ[]);

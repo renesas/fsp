@@ -197,10 +197,11 @@ void usb_hdriver_init (usb_utr_t * ptr)
  #if (BSP_CFG_RTOS == 1)
     usb_host_registration(ptr);        /* Class Registration */
  #else
-  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || defined(USB_CFG_HVND_USE)
+  #if defined(USB_CFG_HCDC_USE) || defined(USB_CFG_HHID_USE) || defined(USB_CFG_HMSC_USE) || \
+    defined(USB_CFG_HVND_USE) || defined(USB_CFG_HAUD_USE)
     usb_class_driver_start(ptr);       /* Init host class driver task. */
     usb_host_registration(ptr);        /* Class Registration */
-  #endif /* defined(USB_CFG_HCDC_USE)||defined(USB_CFG_HHID_USE)||defined(USB_CFG_HMSC_USE)||defined(USB_CFG_HVND_USE) */
+  #endif /* defined(USB_CFG_HCDC_USE)||defined(USB_CFG_HHID_USE)||defined(USB_CFG_HMSC_USE)||defined(USB_CFG_HVND_USE)|| defined(USB_CFG_HAUD_USE) */
  #endif
 } /* End of function usb_hdriver_init() */
 

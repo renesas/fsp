@@ -33,11 +33,13 @@ static rsip_ret_t hmac_verify_finish(rsip_ctrl_t * const p_ctrl, const uint8_t *
 
 static const uint32_t gs_hmac_length[] =
 {
-    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA1]   = RSIP_PRV_BYTE_SIZE_DIGEST_SHA1,
-    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA224] = RSIP_PRV_BYTE_SIZE_DIGEST_SHA224,
-    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256] = RSIP_PRV_BYTE_SIZE_DIGEST_SHA256,
-    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA384] = RSIP_PRV_BYTE_SIZE_DIGEST_SHA384,
-    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512] = RSIP_PRV_BYTE_SIZE_DIGEST_SHA512,
+    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA1]       = RSIP_PRV_BYTE_SIZE_DIGEST_SHA1,
+    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA224]     = RSIP_PRV_BYTE_SIZE_DIGEST_SHA224,
+    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256]     = RSIP_PRV_BYTE_SIZE_DIGEST_SHA256,
+    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA384]     = RSIP_PRV_BYTE_SIZE_DIGEST_SHA384,
+    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512]     = RSIP_PRV_BYTE_SIZE_DIGEST_SHA512,
+    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512_224] = RSIP_PRV_BYTE_SIZE_DIGEST_SHA512_224,
+    [RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512_256] = RSIP_PRV_BYTE_SIZE_DIGEST_SHA512_256,
 };
 
 /***********************************************************************************************************************
@@ -100,7 +102,7 @@ fsp_err_t R_RSIP_SHA_Compute (rsip_ctrl_t * const    p_ctrl,
     FSP_ERROR_RETURN(RSIP_STATE_MAIN == p_instance_ctrl->state, FSP_ERR_INVALID_STATE);
 
     /* Call function (cast to match the argument type with the function) */
-    rsip_ret_t rsip_ret = r_rsip_sha1sha2_init_final(hash_type, p_message, message_length, p_digest);
+    rsip_ret_t rsip_ret = r_rsip_sha_hash_init_final(hash_type, p_message, message_length, p_digest);
 
     /* Check error */
     fsp_err_t err = FSP_ERR_CRYPTO_RSIP_FATAL;
@@ -205,10 +207,10 @@ fsp_err_t R_RSIP_SHA_Update (rsip_ctrl_t * const p_ctrl, uint8_t const * const p
  *
  * @par Output length
  * Output length to p_digest depends on hash_function.
- *   - 28 ( @ref RSIP_HASH_TYPE_SHA224, @ref RSIP_HASH_TYPE_SHA512_224)
- *   - 32 ( @ref RSIP_HASH_TYPE_SHA256, @ref RSIP_HASH_TYPE_SHA512_256)
- *   - 48 ( @ref RSIP_HASH_TYPE_SHA384)
- *   - 64 ( @ref RSIP_HASH_TYPE_SHA512)
+ *   - 28 ( @ref RSIP_HASH_TYPE_SHA224, @ref RSIP_HASH_TYPE_SHA512_224, @ref RSIP_HASH_TYPE_SHA3_224)
+ *   - 32 ( @ref RSIP_HASH_TYPE_SHA256, @ref RSIP_HASH_TYPE_SHA512_256, @ref RSIP_HASH_TYPE_SHA3_256)
+ *   - 48 ( @ref RSIP_HASH_TYPE_SHA384, @ref RSIP_HASH_TYPE_SHA3_384)
+ *   - 64 ( @ref RSIP_HASH_TYPE_SHA512, @ref RSIP_HASH_TYPE_SHA3_512)
  *
  * @par State transition
  * @parblock
@@ -290,7 +292,8 @@ fsp_err_t R_RSIP_SHA_Suspend (rsip_ctrl_t * const p_ctrl, rsip_sha_handle_t * co
         case RSIP_USER_HANDLE_STATE_UPDATE:
         {
             /* Read internal state */
-            rsip_ret = r_rsip_sha1sha2_suspend(p_instance_ctrl->handle.sha.internal_state);
+            rsip_ret = r_rsip_sha_hash_suspend(p_instance_ctrl->handle.sha.type,
+                                               p_instance_ctrl->handle.sha.internal_state);
 
             /* Handle state transition */
             p_instance_ctrl->handle.sha.handle_state = RSIP_USER_HANDLE_STATE_RESUME;
@@ -568,6 +571,8 @@ fsp_err_t R_RSIP_HMAC_Verify (rsip_ctrl_t * const        p_ctrl,
  * - @ref RSIP_KEY_TYPE_HMAC_SHA256
  * - @ref RSIP_KEY_TYPE_HMAC_SHA384
  * - @ref RSIP_KEY_TYPE_HMAC_SHA512
+ * - @ref RSIP_KEY_TYPE_HMAC_SHA512_224
+ * - @ref RSIP_KEY_TYPE_HMAC_SHA512_256
  *
  * @par State transition
  * @parblock
@@ -765,8 +770,8 @@ fsp_err_t R_RSIP_HMAC_Update (rsip_ctrl_t * const p_ctrl, uint8_t const * const 
  *
  * @par Output length
  * Output length to p_mac depends on key type of p_wrapped_key.
- * - 28 ( @ref RSIP_KEY_TYPE_HMAC_SHA224)
- * - 32 ( @ref RSIP_KEY_TYPE_HMAC_SHA256)
+ * - 28 ( @ref RSIP_KEY_TYPE_HMAC_SHA224, @ref RSIP_KEY_TYPE_HMAC_SHA512_224)
+ * - 32 ( @ref RSIP_KEY_TYPE_HMAC_SHA256, @ref RSIP_KEY_TYPE_HMAC_SHA512_256)
  * - 48 ( @ref RSIP_KEY_TYPE_HMAC_SHA384)
  * - 64 ( @ref RSIP_KEY_TYPE_HMAC_SHA512)
  *
@@ -851,8 +856,8 @@ fsp_err_t R_RSIP_HMAC_SignFinish (rsip_ctrl_t * const p_ctrl, uint8_t * const p_
  *
  * @par Conditions
  * Argument mac_length depends on key type of p_wrapped_key. Usually the longest length is recommended.
- * - 4 to 28 ( @ref RSIP_KEY_TYPE_HMAC_SHA224)
- * - 4 to 32 ( @ref RSIP_KEY_TYPE_HMAC_SHA256)
+ * - 4 to 28 ( @ref RSIP_KEY_TYPE_HMAC_SHA224, @ref RSIP_KEY_TYPE_HMAC_SHA512_224)
+ * - 4 to 32 ( @ref RSIP_KEY_TYPE_HMAC_SHA256, @ref RSIP_KEY_TYPE_HMAC_SHA512_256)
  * - 4 to 48 ( @ref RSIP_KEY_TYPE_HMAC_SHA384)
  * - 4 to 64 ( @ref RSIP_KEY_TYPE_HMAC_SHA512)
  *
@@ -1113,9 +1118,40 @@ fsp_err_t r_rsip_sha_init (rsip_ctrl_t * const p_ctrl, rsip_hash_type_t const ha
         }
 
         /* SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
-        default:
+        case RSIP_HASH_TYPE_SHA384:
+        case RSIP_HASH_TYPE_SHA512:
+        case RSIP_HASH_TYPE_SHA512_224:
+        case RSIP_HASH_TYPE_SHA512_256:
         {
             p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA384_SHA512;
+            break;
+        }
+
+        /* SHA3-224 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        {
+            p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_224;
+            break;
+        }
+
+        /* SHA3-256 */
+        case RSIP_HASH_TYPE_SHA3_256:
+        {
+            p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_256;
+            break;
+        }
+
+        /* SHA3-384 */
+        case RSIP_HASH_TYPE_SHA3_384:
+        {
+            p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_384;
+            break;
+        }
+
+        /* SHA3-512 */
+        default:
+        {
+            p_handle->block_size = RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_512;
         }
     }
 
@@ -1292,20 +1328,20 @@ static rsip_ret_t sha_update (rsip_ctrl_t * const p_ctrl, const uint8_t * p_mess
     {
         case RSIP_USER_HANDLE_STATE_INIT:
         {
-            ret = r_rsip_sha1sha2_init_update(p_handle->type, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_sha_hash_init_update(p_handle->type, p_message, message_length, p_handle->internal_state);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_sha1sha2_resume_update(p_handle->type, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_sha_hash_resume_update(p_handle->type, p_message, message_length, p_handle->internal_state);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_sha1sha2_update(p_handle->type, p_message, message_length, p_handle->internal_state);
+            ret = r_rsip_sha_hash_update(p_handle->type, p_message, message_length, p_handle->internal_state);
         }
     }
 
@@ -1346,13 +1382,13 @@ static rsip_ret_t sha_finish (rsip_ctrl_t * const p_ctrl, uint8_t * p_digest)
     {
         case RSIP_USER_HANDLE_STATE_INIT:
         {
-            ret = r_rsip_sha1sha2_init_final(p_handle->type, p_handle->buffer, p_handle->buffered_length, p_digest);
+            ret = r_rsip_sha_hash_init_final(p_handle->type, p_handle->buffer, p_handle->buffered_length, p_digest);
             break;
         }
 
         case RSIP_USER_HANDLE_STATE_RESUME:
         {
-            ret = r_rsip_sha1sha2_resume_final(p_handle->type,
+            ret = r_rsip_sha_hash_resume_final(p_handle->type,
                                                p_handle->buffer,
                                                p_handle->buffered_length,
                                                p_handle->total_length + p_handle->buffered_length,
@@ -1364,7 +1400,7 @@ static rsip_ret_t sha_finish (rsip_ctrl_t * const p_ctrl, uint8_t * p_digest)
         case RSIP_USER_HANDLE_STATE_UPDATE:
         default:
         {
-            ret = r_rsip_sha1sha2_final(p_handle->type,
+            ret = r_rsip_sha_hash_final(p_handle->type,
                                         p_handle->buffer,
                                         p_handle->buffered_length,
                                         p_handle->total_length + p_handle->buffered_length,

@@ -41,9 +41,11 @@
 #define TAU_DIVIDER_MODE_CAPABLE_CHANNEL_MASK               (1 << TAU_CH0)
 #define TAU_8BIT_MODE_SUPPORT_CAPABLE_CHANNEL_MASK          ((1 << TAU_CH1) | (1 << TAU_CH3))
 #define TAU_CK02_CK03_CAPABLE_CHANNELS_MASK                 ((1 << TAU_CH1) | (1 << TAU_CH3))
-#define TAU_INPUT_RXD2_CAPABLE_CHANNEL_MASK                 (1 << TAU_CH7)
+#define TAU_INPUT_RXD_CAPABLE_CHANNEL_MASK                  (1 << TAU_CH7)
 #define TAU_INPUT_CLOCK_CAPABLE_CHANNEL_MASK                (1 << TAU_CH5)
-#define TAU_ELC_CAPABLE_CHANNELS_MASK                       ((1 << TAU_CH0) | (1 << TAU_CH1))
+#if BSP_FEATURE_ELC_VERSION
+ #define TAU_ELC_CAPABLE_CHANNELS_MASK                      ((1 << TAU_CH0) | (1 << TAU_CH1))
+#endif
 
 /* These bit fields are for the TS0 and TT0 registers. */
 #define TAU_TS0_TT0_16BIT_MODE_MASK                         (0x0001)
@@ -253,6 +255,7 @@ const timer_api_t g_timer_on_tau =
  *                                        ISR must be enabled to use callback
  * @retval FSP_ERR_INVALID_MODE           Invalid configuration for p_extend.
  * @retval FSP_ERR_IP_CHANNEL_NOT_PRESENT The channel requested in the p_cfg parameter is not available on this device.
+ * @retval FSP_ERR_UNSUPPORTED            Input source is not supported.
  **********************************************************************************************************************/
 fsp_err_t R_TAU_Open (timer_ctrl_t * const p_ctrl, timer_cfg_t const * const p_cfg)
 {
@@ -802,16 +805,17 @@ fsp_err_t R_TAU_LinMeasurementFuncSwitch (timer_ctrl_t * const p_ctrl, tau_funct
 /*******************************************************************************************************************//**
  * Parameter checking for R_TAU_Open.
  *
- * @param[in]  p_instance_ctrl         Pointer to instance control structure.
- * @param[in]  p_cfg                   Configuration structure for this instance
+ * @param[in]  p_instance_ctrl             Pointer to instance control structure.
+ * @param[in]  p_cfg                       Configuration structure for this instance
  *
- * @retval FSP_SUCCESS                 Initialization was successful and timer has started.
- * @retval FSP_ERR_ALREADY_OPEN        R_TAU_Open has already been called for this p_ctrl.
- * @retval FSP_ERR_INVALID_CHANNEL     The channel does not support this feature.
- * @retval FSP_ERR_INVALID_MODE        Invalid configuration for p_extend.
- * @retval FSP_ERR_IRQ_BSP_DISABLED    Timer_cfg_t::p_callback is not NULL, but ISR is not enabled.
- *                                     ISR must be enabled to use callback
+ * @retval FSP_SUCCESS                     Initialization was successful and timer has started.
+ * @retval FSP_ERR_ALREADY_OPEN            R_TAU_Open has already been called for this p_ctrl.
+ * @retval FSP_ERR_INVALID_CHANNEL         The channel does not support this feature.
+ * @retval FSP_ERR_INVALID_MODE            Invalid configuration for p_extend.
+ * @retval FSP_ERR_IRQ_BSP_DISABLED        Timer_cfg_t::p_callback is not NULL, but ISR is not enabled.
+ *                                         ISR must be enabled to use callback
  * @retval FSP_ERR_IP_CHANNEL_NOT_PRESENT  Requested channel number is not available on TAU.
+ * @retval FSP_ERR_UNSUPPORTED             The selected input source is not supported on this MCU.
  **********************************************************************************************************************/
 static fsp_err_t r_tau_open_param_checking (tau_instance_ctrl_t * p_instance_ctrl, timer_cfg_t const * const p_cfg)
 {
@@ -863,24 +867,35 @@ static fsp_err_t r_tau_open_param_checking (tau_instance_ctrl_t * p_instance_ctr
         /* Input source is different to No input signal When this function used input pin */
         FSP_ERROR_RETURN((TAU_INPUT_SOURCE_NONE != p_extend->input_source), FSP_ERR_INVALID_MODE)
 
-        /* Input signal of RXD2 is only available in channels 7 */
-        FSP_ERROR_RETURN((TAU_INPUT_SOURCE_RXD2_PIN != p_extend->input_source) ||
-                         (p_instance_ctrl->channel_mask & TAU_INPUT_RXD2_CAPABLE_CHANNEL_MASK),
+        /* Input signal of RXD is only available in channels 7 */
+        FSP_ERROR_RETURN((TAU_INPUT_SOURCE_RXD_PIN != p_extend->input_source) ||
+                         (p_instance_ctrl->channel_mask & TAU_INPUT_RXD_CAPABLE_CHANNEL_MASK),
                          FSP_ERR_INVALID_CHANNEL);
 
-        /* Input signal of the RXD2 pin is only available in Input Pulse and
+        /* Input signal of the RXD pin is only available in Input Pulse and
          * High-Low Level Pulse Width Measure Function */
-        FSP_ERROR_RETURN((TAU_INPUT_SOURCE_RXD2_PIN != p_extend->input_source) ||
+        FSP_ERROR_RETURN((TAU_INPUT_SOURCE_RXD_PIN != p_extend->input_source) ||
                          (TAU_FUNCTION_INPUT_PULSE_INTERVAL_MEASUREMENT == p_extend->tau_func) ||
                          (TAU_FUNCTION_LOW_LEVEL_WIDTH_MEASUREMENT == p_extend->tau_func) ||
                          (TAU_FUNCTION_HIGH_LEVEL_WIDTH_MEASUREMENT == p_extend->tau_func),
                          FSP_ERR_INVALID_MODE);
+  #if !BSP_FEATURE_CGC_HAS_MOCO
+
+        /* MOCO input source is not supported */
+        FSP_ERROR_RETURN((TAU_INPUT_SOURCE_MOCO != p_extend->input_source), FSP_ERR_UNSUPPORTED);
+  #endif
+  #if !BSP_FEATURE_CGC_HAS_SOSC
+
+        /* FSUB input source is not supported */
+        FSP_ERROR_RETURN((TAU_INPUT_SOURCE_FSUB != p_extend->input_source), FSP_ERR_UNSUPPORTED);
+  #endif
 
         /* Input signal of MOCO, LOCO, FSUB are only available in channels 5 */
         FSP_ERROR_RETURN((TAU_INPUT_SOURCE_MOCO > p_extend->input_source) ||
                          (TAU_INPUT_SOURCE_FSUB < p_extend->input_source) ||
                          (p_instance_ctrl->channel_mask & TAU_INPUT_CLOCK_CAPABLE_CHANNEL_MASK),
                          FSP_ERR_INVALID_CHANNEL);
+  #if BSP_FEATURE_ELC_VERSION
 
         /* ELC input source is only available in channels 0 and 1 */
         FSP_ERROR_RETURN((TAU_INPUT_SOURCE_ELC != p_extend->input_source) ||
@@ -898,6 +913,11 @@ static fsp_err_t r_tau_open_param_checking (tau_instance_ctrl_t * p_instance_ctr
                          (TAU_FUNCTION_INPUT_PULSE_INTERVAL_MEASUREMENT == p_extend->tau_func) ||
                          (TAU_FUNCTION_DELAY_COUNT == p_extend->tau_func),
                          FSP_ERR_INVALID_MODE);
+  #else
+
+        /* ELC input source is not supported */
+        FSP_ERROR_RETURN((TAU_INPUT_SOURCE_ELC != p_extend->input_source), FSP_ERR_UNSUPPORTED);
+  #endif
     }
  #endif
 
@@ -1128,12 +1148,12 @@ static void r_tau_config_input_set (tau_instance_ctrl_t * const p_ctrl)
 
     tau_input_source_t input_source = p_extend->input_source;
 
-    if (channel_mask & TAU_INPUT_RXD2_CAPABLE_CHANNEL_MASK)
+    if (channel_mask & TAU_INPUT_RXD_CAPABLE_CHANNEL_MASK)
     {
         uint8_t isc_value = R_PORGA->ISC;
         isc_value &= (uint8_t) (~R_PORGA_ISC_ISC1_Msk);
 
-        if (TAU_INPUT_SOURCE_RXD2_PIN == input_source)
+        if (TAU_INPUT_SOURCE_RXD_PIN == input_source)
         {
             isc_value |= R_PORGA_ISC_ISC1_Msk;
         }
@@ -1141,6 +1161,7 @@ static void r_tau_config_input_set (tau_instance_ctrl_t * const p_ctrl)
         R_PORGA->ISC = isc_value;
     }
 
+  #if BSP_FEATURE_ELC_VERSION
     if (channel_mask & TAU_ELC_CAPABLE_CHANNELS_MASK)
     {
         uint8_t tis1_value = R_PORGA->TIS1;
@@ -1153,6 +1174,7 @@ static void r_tau_config_input_set (tau_instance_ctrl_t * const p_ctrl)
 
         R_PORGA->TIS1 = tis1_value;
     }
+  #endif
 
     if (channel_mask & TAU_INPUT_CLOCK_CAPABLE_CHANNEL_MASK)
     {

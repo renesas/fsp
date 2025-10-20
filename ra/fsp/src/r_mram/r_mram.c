@@ -197,6 +197,10 @@ static fsp_err_t r_mram_arc_common_parameter_checking(mram_instance_ctrl_t * con
 
 #endif
 
+void mram_err_isr(void);
+
+static void mram_call_callback(mram_instance_ctrl_t * p_ctrl, flash_event_t event, uint32_t address);
+
 /***********************************************************************************************************************
  * Exported global variables
  **********************************************************************************************************************/
@@ -262,11 +266,30 @@ fsp_err_t R_MRAM_Open (flash_ctrl_t * const p_api_ctrl, flash_cfg_t const * cons
 
     FSP_ERROR_RETURN(false == p_cfg->data_flash_bgo, FSP_ERR_IRQ_BSP_DISABLED);
     FSP_ERROR_RETURN(FSP_INVALID_VECTOR == p_cfg->irq, FSP_ERR_IRQ_BSP_DISABLED);
-    FSP_ERROR_RETURN(FSP_INVALID_VECTOR == p_cfg->err_irq, FSP_ERR_IRQ_BSP_DISABLED);
     FSP_ERROR_RETURN(BSP_IRQ_DISABLED == p_cfg->ipl, FSP_ERR_IRQ_BSP_DISABLED);
-    FSP_ERROR_RETURN(BSP_IRQ_DISABLED == p_cfg->err_ipl, FSP_ERR_IRQ_BSP_DISABLED);
-    FSP_ERROR_RETURN(NULL == p_cfg->p_callback, FSP_ERR_IRQ_BSP_DISABLED);
 #endif
+
+    if (0 <= p_cfg->err_irq)
+    {
+#if (MRAM_CFG_PARAM_CHECKING_ENABLE)
+        FSP_ERROR_RETURN(BSP_IRQ_DISABLED != p_cfg->err_ipl, FSP_ERR_IRQ_BSP_DISABLED);
+        FSP_ASSERT(p_cfg->p_callback);
+#endif
+        p_ctrl->p_callback = p_cfg->p_callback;
+        p_ctrl->p_context  = p_cfg->p_context;
+
+        /* Enable MRAM Error interrupts. */
+        R_MRMS->MRCRAEINT = 0x3;
+        R_BSP_IrqCfgEnable(p_cfg->err_irq, p_cfg->err_ipl, p_ctrl);
+    }
+    else
+    {
+#if (MRAM_CFG_PARAM_CHECKING_ENABLE)
+        FSP_ERROR_RETURN(FSP_INVALID_VECTOR == p_cfg->err_irq, FSP_ERR_IRQ_BSP_DISABLED);
+        FSP_ERROR_RETURN(BSP_IRQ_DISABLED == p_cfg->err_ipl, FSP_ERR_IRQ_BSP_DISABLED);
+        FSP_ERROR_RETURN(NULL == p_cfg->p_callback, FSP_ERR_IRQ_BSP_DISABLED);
+#endif
+    }
 
     /* Calculate timeout values */
     mram_init(p_ctrl);
@@ -644,23 +667,54 @@ fsp_err_t R_MRAM_Close (flash_ctrl_t * const p_api_ctrl)
 }
 
 /*******************************************************************************************************************//**
- * Stub function
+ * Updates the user callback with the option to provide memory for the callback argument structure.
  * Implements @ref flash_api_t::callbackSet.
  *
- * @retval     FSP_ERR_UNSUPPORTED       Interrupt driven operation is not supported on this MCU.
+ * @retval  FSP_SUCCESS                  Callback updated successfully.
+ * @retval  FSP_ERR_ASSERTION            A required pointer is NULL.
+ * @retval  FSP_ERR_NOT_OPEN             The control block has not been opened.
+ * @retval  FSP_ERR_NO_CALLBACK_MEMORY   p_callback is non-secure and p_callback_memory is either secure or NULL.
  **********************************************************************************************************************/
 fsp_err_t R_MRAM_CallbackSet (flash_ctrl_t * const          p_api_ctrl,
                               void (                      * p_callback)(flash_callback_args_t *),
                               void * const                  p_context,
                               flash_callback_args_t * const p_callback_memory)
 {
-    /* Eliminate warning. */
-    FSP_PARAMETER_NOT_USED(p_api_ctrl);
-    FSP_PARAMETER_NOT_USED(p_callback);
-    FSP_PARAMETER_NOT_USED(p_context);
-    FSP_PARAMETER_NOT_USED(p_callback_memory);
+    mram_instance_ctrl_t * p_ctrl = (mram_instance_ctrl_t *) p_api_ctrl;
 
-    return FSP_ERR_UNSUPPORTED;
+#if MRAM_CFG_PARAM_CHECKING_ENABLE
+    FSP_ASSERT(p_ctrl);
+    FSP_ASSERT(p_callback);
+    FSP_ERROR_RETURN(MRAM_PRV_OPEN == p_ctrl->opened, FSP_ERR_NOT_OPEN);
+    FSP_ERROR_RETURN(BSP_IRQ_DISABLED != p_ctrl->p_cfg->err_ipl, FSP_ERR_IRQ_BSP_DISABLED);
+#endif
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* Get security state of p_callback */
+    bool callback_is_secure =
+        (NULL == cmse_check_address_range((void *) p_callback, sizeof(void *), CMSE_AU_NONSECURE));
+
+ #if MRAM_CFG_PARAM_CHECKING_ENABLE
+
+    /* In secure projects, p_callback_memory must be provided in non-secure space if p_callback is non-secure */
+    flash_callback_args_t * const p_callback_memory_checked = cmse_check_pointed_object(p_callback_memory,
+                                                                                        CMSE_AU_NONSECURE);
+    FSP_ERROR_RETURN(callback_is_secure || (NULL != p_callback_memory_checked), FSP_ERR_NO_CALLBACK_MEMORY);
+ #endif
+#endif
+
+    /* Store callback and context */
+#if BSP_TZ_SECURE_BUILD
+    p_ctrl->p_callback = callback_is_secure ? p_callback :
+                         (void (*)(flash_callback_args_t *))cmse_nsfptr_create(p_callback);
+#else
+    p_ctrl->p_callback = p_callback;
+#endif
+    p_ctrl->p_context         = p_context;
+    p_ctrl->p_callback_memory = p_callback_memory;
+
+    return FSP_SUCCESS;
 }
 
 /*******************************************************************************************************************//**
@@ -885,6 +939,10 @@ static fsp_err_t mram_erase_blocks (uint32_t address, uint32_t num_blocks)
         }
 
         operations_remaining--;
+        __DMB();
+        __DSB();
+        __ISB();
+        R_MRMS->MRCFLR = MRAM_PRV_MRCFLR_FLUSH;
 
         FSP_HARDWARE_REGISTER_WAIT(R_MRMS->MRCPS_b.ABUFEMP, 1);
         FSP_HARDWARE_REGISTER_WAIT(R_MRMS->MRCPS_b.PRGBSYC, 0);
@@ -1489,4 +1547,104 @@ static void mram_enter_pe_mode (void)
 
     /* Wait until MENTRYR has entered P/E mode. */
     FSP_HARDWARE_REGISTER_WAIT(R_MRMS->MENTRYR, MRAM_PRV_MENTRYR_PE_MODE);
+}
+
+/*******************************************************************************************************************//**
+ * Calls user callback.
+ *
+ * @param[in]     p_ctrl     Pointer to MRAM instance control block
+ * @param[in]     event      Event code
+ * @param[in]     address    Address of the ECC error
+ **********************************************************************************************************************/
+static void mram_call_callback (mram_instance_ctrl_t * p_ctrl, flash_event_t event, uint32_t address)
+{
+    flash_callback_args_t args;
+
+    /* Store callback arguments in memory provided by user if available.  This allows callback arguments to be
+     * stored in non-secure memory so they can be accessed by a non-secure callback function. */
+    flash_callback_args_t * p_args = p_ctrl->p_callback_memory;
+    if (NULL == p_args)
+    {
+        /* Store on stack */
+        p_args = &args;
+    }
+    else
+    {
+        /* Save current arguments on the stack in case this is a nested interrupt. */
+        args = *p_args;
+    }
+
+    p_args->event     = event;
+    p_args->data      = address;
+    p_args->p_context = p_ctrl->p_context;
+
+#if BSP_TZ_SECURE_BUILD
+
+    /* p_callback can point to a secure function or a non-secure function. */
+    if (!cmse_is_nsfptr(p_ctrl->p_callback))
+    {
+        /* If p_callback is secure, then the project does not need to change security state. */
+        p_ctrl->p_callback(p_args);
+    }
+    else
+    {
+        /* If p_callback is Non-secure, then the project must change to Non-secure state in order to call the callback. */
+        mram_prv_ns_callback p_callback = (mram_prv_ns_callback) (p_ctrl->p_callback);
+        p_callback(p_args);
+    }
+
+#else
+
+    /* If the project is not Trustzone Secure, then it will never need to change security state in order to call the callback. */
+    p_ctrl->p_callback(p_args);
+#endif
+    if (NULL != p_ctrl->p_callback_memory)
+    {
+        /* Restore callback memory in case this is a nested interrupt. */
+        *p_ctrl->p_callback_memory = args;
+    }
+}
+
+/*******************************************************************************************************************//**
+ * MRAM error interrupt routine.
+ *
+ * This function implements the MRAM error isr. The function clears the interrupt request source on entry, populates the
+ * callback structure with the FLASH_IRQ_EVENT_ERR_ECC event, and providing a callback routine has been provided, calls
+ * the callback function with the event.
+ **********************************************************************************************************************/
+void mram_err_isr (void)
+{
+    /* Save context if RTOS is used */
+    FSP_CONTEXT_SAVE
+    flash_event_t event;
+    uint32_t      address = 0;
+    IRQn_Type     irq     = R_FSP_CurrentIrqGet();
+
+    mram_instance_ctrl_t * p_ctrl = (mram_instance_ctrl_t *) R_FSP_IsrContextGet(irq);
+
+    if (1 == R_MRMS->MRCRAES_b.TEDERRC)
+    {
+        event   = FLASH_EVENT_ERR_ECC;
+        address = R_MRMS->MRCRTEA;
+    }
+    else if (1 == R_MRMS->MRCRAES_b.DECERRC)
+    {
+        event   = FLASH_EVENT_ERR_TWO_BIT;
+        address = R_MRMS->MRCRDEA;
+    }
+    else
+    {
+        event = FLASH_EVENT_ERR_FAILURE;
+    }
+
+    /* Call the user callback. */
+    mram_call_callback(p_ctrl, event, address);
+
+    R_MRMS->MRCRAES = 0;
+
+    /* Clear the Error Interrupt. */
+    R_BSP_IrqStatusClear(irq);
+
+    /* Restore context if RTOS is used */
+    FSP_CONTEXT_RESTORE
 }

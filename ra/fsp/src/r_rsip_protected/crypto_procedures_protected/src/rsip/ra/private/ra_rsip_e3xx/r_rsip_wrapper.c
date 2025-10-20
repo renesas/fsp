@@ -77,14 +77,16 @@ typedef enum e_cmd
     CMD_KDF_HASH_TYPE_SHA384 = 1,
     CMD_KDF_HASH_TYPE_SHA512 = 2,
 
-    CMD_KDF_OUTDATA_TYPE_AES128      = 0,
-    CMD_KDF_OUTDATA_TYPE_AES256      = 1,
-    CMD_KDF_OUTDATA_TYPE_IV_AES      = 2,
-    CMD_KDF_OUTDATA_TYPE_IV_TLS12    = 3,
-    CMD_KDF_OUTDATA_TYPE_HMAC_SHA1   = 5,
-    CMD_KDF_OUTDATA_TYPE_HMAC_SHA256 = 6,
-    CMD_KDF_OUTDATA_TYPE_HMAC_SHA384 = 7,
-    CMD_KDF_OUTDATA_TYPE_HMAC_SHA512 = 8,
+    CMD_KDF_OUTDATA_TYPE_AES128          = 0,
+    CMD_KDF_OUTDATA_TYPE_AES256          = 1,
+    CMD_KDF_OUTDATA_TYPE_IV_AES          = 2,
+    CMD_KDF_OUTDATA_TYPE_IV_TLS12        = 3,
+    CMD_KDF_OUTDATA_TYPE_HMAC_SHA1       = 5,
+    CMD_KDF_OUTDATA_TYPE_HMAC_SHA256     = 6,
+    CMD_KDF_OUTDATA_TYPE_HMAC_SHA384     = 7,
+    CMD_KDF_OUTDATA_TYPE_HMAC_SHA512     = 8,
+    CMD_KDF_OUTDATA_TYPE_HMAC_SHA512_224 = 9,
+    CMD_KDF_OUTDATA_TYPE_HMAC_SHA512_256 = 10,
 
     CMD_AUTH_HASH_TYPE_JTAG_DEBUG_LEVEL1 = 0,
     CMD_AUTH_HASH_TYPE_JTAG_DEBUG_LEVEL2 = 1,
@@ -549,6 +551,30 @@ rsip_ret_t r_rsip_wrapper_p6f_hmacsha512 (const uint32_t InData_IV[],
     uint32_t LC[1]  = {0};
     LC[0]          = R_PSCU->DLMMON;
     INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_HMAC_SHA512_KEY_INST_DATA_WORD;
+
+    return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_p6f_hmacsha512_224 (const uint32_t InData_IV[],
+                                              const uint32_t InData_InstData[],
+                                              uint32_t       OutData_KeyIndex[])
+{
+    uint32_t CMD[1] = {bswap_32big(RSIP_OEM_CMD_HMAC_SHA512_224)};
+    uint32_t LC[1]  = {0};
+    LC[0]          = R_PSCU->DLMMON;
+    INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_HMAC_SHA512_224_KEY_INST_DATA_WORD;
+
+    return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_p6f_hmacsha512_256 (const uint32_t InData_IV[],
+                                              const uint32_t InData_InstData[],
+                                              uint32_t       OutData_KeyIndex[])
+{
+    uint32_t CMD[1] = {bswap_32big(RSIP_OEM_CMD_HMAC_SHA512_256)};
+    uint32_t LC[1]  = {0};
+    LC[0]          = R_PSCU->DLMMON;
+    INST_DATA_SIZE = RSIP_OEM_KEY_SIZE_HMAC_SHA512_256_KEY_INST_DATA_WORD;
 
     return r_rsip_p6f(LC, CMD, InData_IV, InData_InstData, OutData_KeyIndex);
 }
@@ -1077,6 +1103,40 @@ rsip_ret_t r_rsip_wrapper_pe3_sha384 (const uint32_t InData_EncSecret[], uint32_
     return r_rsip_pe3(&gs_cmd[CMD_KDF_HASH_TYPE_SHA384], InData_EncSecret, OutData_EncMsg);
 }
 
+rsip_ret_t r_rsip_wrapper_pe4_sha256 (const uint32_t InData_EncSecret[], uint32_t OutData_KeyIndex[])
+{
+    return r_rsip_pe4(&gs_cmd[CMD_KDF_HASH_TYPE_SHA256], InData_EncSecret, OutData_KeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_pe4_sha384 (const uint32_t InData_EncSecret[], uint32_t OutData_KeyIndex[])
+{
+    return r_rsip_pe4(&gs_cmd[CMD_KDF_HASH_TYPE_SHA384], InData_EncSecret, OutData_KeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_pe6_sha256 (const uint32_t InData_KDFInfo[],
+                                      const uint32_t InData_KDFInfo_Count[],
+                                      const uint32_t InData_OutDataLength[],
+                                      uint32_t       OutData_KeyIndex[])
+{
+    return r_rsip_pe6(&gs_cmd[CMD_KDF_HASH_TYPE_SHA256],
+                      InData_KDFInfo,
+                      InData_KDFInfo_Count,
+                      InData_OutDataLength,
+                      OutData_KeyIndex);
+}
+
+rsip_ret_t r_rsip_wrapper_pe6_sha384 (const uint32_t InData_KDFInfo[],
+                                      const uint32_t InData_KDFInfo_Count[],
+                                      const uint32_t InData_OutDataLength[],
+                                      uint32_t       OutData_KeyIndex[])
+{
+    return r_rsip_pe6(&gs_cmd[CMD_KDF_HASH_TYPE_SHA384],
+                      InData_KDFInfo,
+                      InData_KDFInfo_Count,
+                      InData_OutDataLength,
+                      OutData_KeyIndex);
+}
+
 rsip_ret_t r_rsip_wrapper_pe7_sha256_aes128 (const uint32_t InData_KDFInfo[],
                                              const uint32_t InData_KDFInfo_Count[],
                                              const uint32_t InData_OutDataLocation[],
@@ -1093,6 +1153,36 @@ rsip_ret_t r_rsip_wrapper_pe7_sha256_aes256 (const uint32_t InData_KDFInfo[],
 {
     return r_rsip_pe7(&gs_cmd[CMD_KDF_HASH_TYPE_SHA256], InData_KDFInfo, InData_KDFInfo_Count,
                       &gs_cmd[CMD_KDF_OUTDATA_TYPE_AES256], InData_OutDataLocation, NULL, OutData_KeyIndex, NULL);
+}
+
+rsip_ret_t r_rsip_wrapper_pe7_sha256_hmac_sha256 (const uint32_t InData_KDFInfo[],
+                                                  const uint32_t InData_KDFInfo_Count[],
+                                                  const uint32_t InData_OutDataLocation[],
+                                                  uint32_t       OutData_HMACKeyIndex[])
+{
+    return r_rsip_pe7(&gs_cmd[CMD_KDF_HASH_TYPE_SHA256],
+                      InData_KDFInfo,
+                      InData_KDFInfo_Count,
+                      &gs_cmd[CMD_KDF_OUTDATA_TYPE_HMAC_SHA256],
+                      InData_OutDataLocation,
+                      OutData_HMACKeyIndex,
+                      NULL,
+                      NULL);
+}
+
+rsip_ret_t r_rsip_wrapper_pe7_sha256_hmac_sha384 (const uint32_t InData_KDFInfo[],
+                                                  const uint32_t InData_KDFInfo_Count[],
+                                                  const uint32_t InData_OutDataLocation[],
+                                                  uint32_t       OutData_HMACKeyIndex[])
+{
+    return r_rsip_pe7(&gs_cmd[CMD_KDF_HASH_TYPE_SHA256],
+                      InData_KDFInfo,
+                      InData_KDFInfo_Count,
+                      &gs_cmd[CMD_KDF_OUTDATA_TYPE_HMAC_SHA384],
+                      InData_OutDataLocation,
+                      OutData_HMACKeyIndex,
+                      NULL,
+                      NULL);
 }
 
 rsip_ret_t r_rsip_wrapper_pe7_sha256_iv_aes (const uint32_t InData_KDFInfo[],
@@ -1123,6 +1213,36 @@ rsip_ret_t r_rsip_wrapper_pe7_sha384_aes256 (const uint32_t InData_KDFInfo[],
 {
     return r_rsip_pe7(&gs_cmd[CMD_KDF_HASH_TYPE_SHA384], InData_KDFInfo, InData_KDFInfo_Count,
                       &gs_cmd[CMD_KDF_OUTDATA_TYPE_AES256], InData_OutDataLocation, NULL, OutData_KeyIndex, NULL);
+}
+
+rsip_ret_t r_rsip_wrapper_pe7_sha384_hmac_sha256 (const uint32_t InData_KDFInfo[],
+                                                  const uint32_t InData_KDFInfo_Count[],
+                                                  const uint32_t InData_OutDataLocation[],
+                                                  uint32_t       OutData_HMACKeyIndex[])
+{
+    return r_rsip_pe7(&gs_cmd[CMD_KDF_HASH_TYPE_SHA384],
+                      InData_KDFInfo,
+                      InData_KDFInfo_Count,
+                      &gs_cmd[CMD_KDF_OUTDATA_TYPE_HMAC_SHA256],
+                      InData_OutDataLocation,
+                      OutData_HMACKeyIndex,
+                      NULL,
+                      NULL);
+}
+
+rsip_ret_t r_rsip_wrapper_pe7_sha384_hmac_sha384 (const uint32_t InData_KDFInfo[],
+                                                  const uint32_t InData_KDFInfo_Count[],
+                                                  const uint32_t InData_OutDataLocation[],
+                                                  uint32_t       OutData_HMACKeyIndex[])
+{
+    return r_rsip_pe7(&gs_cmd[CMD_KDF_HASH_TYPE_SHA384],
+                      InData_KDFInfo,
+                      InData_KDFInfo_Count,
+                      &gs_cmd[CMD_KDF_OUTDATA_TYPE_HMAC_SHA384],
+                      InData_OutDataLocation,
+                      OutData_HMACKeyIndex,
+                      NULL,
+                      NULL);
 }
 
 rsip_ret_t r_rsip_wrapper_pe7_sha384_iv_aes (const uint32_t InData_KDFInfo[],

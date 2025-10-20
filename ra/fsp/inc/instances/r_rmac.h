@@ -44,11 +44,45 @@ typedef enum e_ether_link_establish_status
     ETHER_LINK_ESTABLISH_STATUS_UP   = 1, ///< Link establish status is up
 } ether_link_establish_status_t;
 
+/** Information of a descriptor queue. */
 typedef struct st_rmac_queue_info
 {
     layer3_switch_descriptor_queue_cfg_t queue_cfg; ///< Queue configuration.
     uint32_t index;                                 ///< Queue index.
 } rmac_queue_info_t;
+
+/** Write configuration. */
+typedef struct st_rmac_write_cfg
+{
+    uint32_t tx_timestamp_enable : 1;  ///< Enable to get TX timestamp.
+    uint32_t reserved            : 31;
+} rmac_write_cfg_t;
+
+/** Timestamp. */
+typedef struct st_rmac_timestamp
+{
+    uint16_t sec_upper;                ///< Timestamp second (Upper 16 bit).
+    uint32_t sec_lower;                ///< Timestamp second (Lower 32 bit).
+    uint32_t ns;                       ///< Timestamp nanosecond.
+} rmac_timestamp_t;
+
+/** Node to manage buffer. */
+typedef struct st_rmac_buffer_node
+{
+    void   * p_buffer;                   ///< Pointer to the buffer.
+    uint32_t size;                       ///< Buffer size.
+#if LAYER3_SWITCH_CFG_GPTP_ENABLE
+    rmac_timestamp_t timestamp;          ///< RX timestamp value.
+#endif
+    struct st_rmac_buffer_node * p_next; ///< Pointer to the next node.
+} rmac_buffer_node_t;
+
+/** Queue of internal buffers. */
+typedef struct st_rmac_buffer_queue
+{
+    rmac_buffer_node_t * p_head;       ///< Pointer to the head of the queue.
+    rmac_buffer_node_t * p_tail;       ///< Pointer to the tail of the queue.
+} rmac_buffer_queue_t;
 
 /* Extended configuration. */
 typedef struct st_rmac_extended_cfg
@@ -58,11 +92,14 @@ typedef struct st_rmac_extended_cfg
     uint32_t tx_queue_num;                          ///< Number of TX descriptor queues.
     uint32_t rx_queue_num;                          ///< Number of RX descriptor queues.
 
+    rmac_queue_info_t * p_ts_queue;                 ///< Configuration of TS queue.
     rmac_queue_info_t * p_tx_queue_list;            ///< TX queue list.
     rmac_queue_info_t * p_rx_queue_list;            ///< RX queue list.
 
-    IRQn_Type rmpi_irq;                             ///< Magic packet detection interrupt number
-    uint32_t  rmpi_ipl;                             ///< Magic packet detection interrupt priority
+    IRQn_Type            rmpi_irq;                  ///< Magic packet detection interrupt number.
+    uint32_t             rmpi_ipl;                  ///< Magic packet detection interrupt priority.
+    rmac_buffer_node_t * p_buffer_node_list;        ///< List of buffer nodes for managing TX/RX buffers.
+    uint32_t             buffer_node_num;           ///< Length of buffer nodes list.
 } rmac_extended_cfg_t;
 
 /** Instance control block. DO NOT INITIALIZE.  Initialization occurs when @ref spi_flash_api_t::open is called */
@@ -71,22 +108,35 @@ typedef struct st_rmac_instance_ctrl
     uint32_t            open;          // Whether or not driver is open
     ether_cfg_t const * p_cfg;         // Pointer to initial configuration
 
+    bool is_lost_rx_packet;
+
     /* IP dependent members. */
     R_ETHA0_Type * p_reg_etha;
     R_RMAC0_Type * p_reg_rmac;
 
-    /* Descriptor queue indexes. */
-    uint32_t read_queue_index;                           ///< RX queue that used for next Read API.
-    uint32_t write_queue_index;                          ///< TX queue that used for next Write API.
+    /* RX statuses. */
+    uint32_t            read_queue_index;                ///< RX queue that used for next BufferRelease API.
+    uint32_t            rx_running_queue_index;          ///< Whether a RX queue is running or not.
+    rmac_buffer_queue_t rx_completed_buffer_queue;       ///< RX buffers that have completed reception.
+    rmac_buffer_queue_t rx_unreleased_buffer_queue;      ///< RX buffers that  have been read but not yet released.
+    rmac_buffer_queue_t rx_empty_buffer_queue;           ///< RX Buffers that have no data.
+    uint32_t            rx_initialized_buffer_num;       ///< RX buffer num of initialized. This is used in RxBufferUpdate API.
 
-    uint32_t rx_pending_queue_map;                       ///< Count of empty RX queue.
-    uint32_t rx_running_queue_index;                     ///< Whether a RX queue is running or not.
+    /* TX statuses. */
+    uint32_t            write_queue_index;               ///< TX queue that used for next Write API.
+    uint32_t            tx_running_queue_index;          ///< Index of the queue that is running now.
+    void              * p_last_sent_buffer;              ///< Pointer to the last sent TX buffer.
+    rmac_buffer_queue_t tx_pending_buffer_queue;         ///< Delayed TX buffers.
+    rmac_buffer_queue_t tx_empty_buffer_queue;           ///< TX Buffers that have no data.
+    uint32_t            write_descriptor_count;          ///< Count of descriptor that already write in active queue.
 
-    uint32_t tx_pending_queue_map;                       ///< TX data is pending because it has been written but not yet sent.
-    uint32_t tx_running_queue_index;                     ///< Whether a TX queue is running or not.
+    rmac_buffer_queue_t buffer_node_pool;                ///< Buffer nodes pool.
 
-    /* FIXME: It is not needed if using internal buffer. */
-    uint32_t rx_reset_descriptor_count;                  ///< Count of descriptor that already read in active queue.
+    /* Timestamp features. */
+    rmac_timestamp_t * p_rx_timestamp;                   ///< RX timestamp pointer.
+    rmac_timestamp_t   tx_timestamp;                     ///< TX timestamp.
+    uint32_t           tx_timestamp_seq_num;             ///< Sequence number of TX timestamp.
+    rmac_write_cfg_t   write_cfg;                        ///< Configuration of transmission.
 
     /* Status of ethernet driver. */
     ether_previous_link_status_t  previous_link_status;  ///< Previous link status
@@ -125,6 +175,9 @@ fsp_err_t R_RMAC_CallbackSet(ether_ctrl_t * const          p_api_ctrl,
                              void (                      * p_callback)(ether_callback_args_t *),
                              void * const                  p_context,
                              ether_callback_args_t * const p_callback_memory);
+fsp_err_t R_RMAC_SetWriteConfig(ether_ctrl_t * const p_ctrl, rmac_write_cfg_t * const p_write_cfg);
+fsp_err_t R_RMAC_GetTxTimestamp(ether_ctrl_t * const p_ctrl, rmac_timestamp_t * const p_timestamp);
+fsp_err_t R_RMAC_GetRxTimestamp(ether_ctrl_t * const p_ctrl, rmac_timestamp_t * const p_timestamp);
 
 /* Common macro for FSP header files. There is also a corresponding FSP_HEADER macro at the top of this file. */
 FSP_FOOTER

@@ -80,7 +80,9 @@ FSP_HEADER
 #define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256            (0x2)
 #define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA384            (0x3)
 #define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512            (0x4)
-#define RSIP_PRV_KEY_SUBTYPE_HMAC_NUM               (0x5)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512_224        (0x5)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512_256        (0x6)
+#define RSIP_PRV_KEY_SUBTYPE_HMAC_NUM               (0x7)
 #define RSIP_PRV_KEY_SUBTYPE_MISC_KUK               (0x0)
 #define RSIP_PRV_KEY_SUBTYPE_MISC_NUM               (0x1)
 
@@ -178,6 +180,10 @@ typedef enum e_rsip_key_type
         RSIP_PRV_KEY_TYPE_VAL(12, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA384),                ///< HMAC-SHA384
     RSIP_KEY_TYPE_HMAC_SHA512 =
         RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512),                ///< HMAC-SHA512
+    RSIP_KEY_TYPE_HMAC_SHA512_224 =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512_224),            ///< HMAC-SHA512/224
+    RSIP_KEY_TYPE_HMAC_SHA512_256 =
+        RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA512_256),            ///< HMAC-SHA512/256
     RSIP_KEY_TYPE_KDF_HMAC_SHA256 =
         RSIP_PRV_KEY_TYPE_VAL(16, RSIP_PRV_ALG_KDF_HMAC, RSIP_PRV_KEY_SUBTYPE_HMAC_SHA256),            ///< HMAC-SHA256
     RSIP_KEY_TYPE_KDF_HMAC_SHA384 =
@@ -215,6 +221,13 @@ typedef enum e_rsip_aes_aead_mode
     RSIP_AES_AEAD_MODE_GCM_DEC_WRAPPED_IV, ///< Galois/Counter Mode (GCM) decryption with wrapped IV
 } rsip_aes_aead_mode_t;
 
+/** ChaCha20-Poly1305 mode */
+typedef enum e_rsip_chacha_poly_mode
+{
+    RSIP_CHACHA20_POLY1305_MODE_ENC,   ///< ChaCha20-Poly1305 encryption
+    RSIP_CHACHA20_POLY1305_MODE_DEC,   ///< ChaCha20-Poly1305 decryption
+} rsip_chacha_poly_mode_t;
+
 /** MAC modes of operation for AES */
 typedef enum e_rsip_aes_mac_mode
 {
@@ -231,6 +244,11 @@ typedef enum e_rsip_hash_type
     RSIP_HASH_TYPE_SHA512,             ///< SHA-512
     RSIP_HASH_TYPE_SHA512_224,         ///< SHA-512/224
     RSIP_HASH_TYPE_SHA512_256,         ///< SHA-512/256
+    RSIP_HASH_TYPE_SHA3_224,           ///< SHA3-224
+    RSIP_HASH_TYPE_SHA3_256,           ///< SHA3-256
+    RSIP_HASH_TYPE_SHA3_384,           ///< SHA3-384
+    RSIP_HASH_TYPE_SHA3_512,           ///< SHA3-512
+
     RSIP_HASH_TYPE_NUM                 // Number of hash types
 } rsip_hash_type_t;
 
@@ -608,6 +626,67 @@ typedef struct st_rsip_api
      */
     fsp_err_t (* chacha20Finish)(rsip_ctrl_t * const p_ctrl, uint8_t * const p_output,
                                  uint32_t * const p_output_length);
+
+    /**
+     * Prepares a ChaCha20-Poly1305 function.
+     *
+     * @param[in,out] p_ctrl        Pointer to control block.
+     * @param[in]     mode          AEAD mode of operation.
+     * @param[in]     p_wrapped_key Pointer to wrapped key of AES key.
+     * @param[in]     p_nonce       Pointer to nonce. The length is nonce_length.
+     * @param[in]     nonce_length  Byte length of nonce. Input 1 or more.
+     */
+    fsp_err_t (* chacha20Poly1305Init)(rsip_ctrl_t * const p_ctrl, rsip_chacha_poly_mode_t const mode,
+                                       rsip_wrapped_key_t const * const p_wrapped_key, uint8_t const * const p_nonce,
+                                       uint32_t const nonce_length);
+
+    /**
+     * Inputs Additional Authentication Data (AAD).
+     *
+     * @param[in,out] p_ctrl     Pointer to control block.
+     * @param[in]     p_aad      Additional authentication data. The length depends on aad_length.
+     * @param[in]     aad_length Byte length of additional authentication data (0 or more bytes).
+     *                           After starting input of plaintext, this value must always be 0.
+     */
+    fsp_err_t (* chacha20Poly1305AadUpdate)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_aad,
+                                            uint32_t const aad_length);
+
+    /**
+     * Encrypts plaintext or decrypts ciphertext.
+     *
+     * @param[in,out] p_ctrl          Pointer to control block.
+     * @param[in]     p_input         Pointer to input text. The length is input_length.
+     * @param[in]     input_length    Byte length of input text (0 or more bytes).
+     * @param[out]    p_output        Pointer to destination of output text. The length is p_output_length.
+     * @param[out]    p_output_length Pointer to destination of output text length.
+     */
+    fsp_err_t (* chacha20Poly1305Update)(rsip_ctrl_t * const p_ctrl, uint8_t const * const p_input,
+                                         uint32_t const input_length, uint8_t * const p_output,
+                                         uint32_t * const p_output_length);
+
+    /**
+     * Finalizes a ChaCha20-Poly1305 encryption.
+     *
+     * @param[in,out] p_ctrl          Pointer to control block.
+     * @param[out]    p_output        Pointer to destination of output text. The fractional block is output.
+     * @param[out]    p_output_length Pointer to destination of output text length.
+     * @param[out]    p_tag           Pointer to destination of tag for authentication. The length is 16 bytes.
+     */
+    fsp_err_t (* chacha20Poly1305Finish)(rsip_ctrl_t * const p_ctrl, uint8_t * const p_output,
+                                         uint32_t * const p_output_length, uint8_t * const p_tag);
+
+    /**
+     * Finalizes a ChaCha20-Poly1305 decryption.
+     *
+     * @param[in,out] p_ctrl          Pointer to control block.
+     * @param[out]    p_output        Pointer to destination of decrypted data.
+     * @param[out]    p_output_length Pointer to destination of decrypted data length.
+     * @param[in]     p_tag           Pointer to destination of tag for authentication. The length depends on tag_length.
+     * @param[in]     tag_length      Byte length of tag. Must be 16.
+     */
+    fsp_err_t (* chacha20Poly1305Verify)(rsip_ctrl_t * const p_ctrl, uint8_t * const p_output,
+                                         uint32_t * const p_output_length, uint8_t const * const p_tag,
+                                         uint32_t const tag_length);
 
     /**
      * Signs a hashed message. The message hash should be generated in advance.

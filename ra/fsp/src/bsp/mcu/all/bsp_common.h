@@ -27,6 +27,7 @@
 #include "../../src/bsp/mcu/all/bsp_sdram.h"
 #include "../../src/bsp/mcu/all/bsp_mmf.h"
 #include "../../src/bsp/mcu/all/bsp_ipc.h"
+#include "../../src/bsp/mcu/all/bsp_ospi_b.h"
 
 #include "bsp_linker_info.h"
 

@@ -2886,6 +2886,10 @@ void usb_host_registration (usb_utr_t * ptr)
   #if defined(USB_CFG_HVND_USE)
     usb_hvnd_registration(ptr);
   #endif                               /* defined(USB_CFG_HVND_USE) */
+
+  #if defined(USB_CFG_HAUD_USE)
+    usb_haud_registration(ptr);
+  #endif                               /* defined(USB_CFG_HAUD_USE) */
  #endif /* BSP_CFG_RTOS == 1 */
 }
 

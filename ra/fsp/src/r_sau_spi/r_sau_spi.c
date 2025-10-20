@@ -235,7 +235,11 @@ fsp_err_t R_SAU_SPI_Open (spi_ctrl_t * p_api_ctrl, spi_cfg_t const * const p_cfg
 #endif
     sau_spi_extended_cfg_t const * const p_extend = (sau_spi_extended_cfg_t *) p_cfg->p_extend;
 #if -1 == SAU_SPI_CFG_SINGLE_CHANNEL_ENABLE
+ #ifdef R_SAU1
     p_ctrl->p_reg = ((R_SAU0_Type *) (R_SAU0_BASE + (SAU_REG_SIZE * SAU_SPI_PRV_UNIT)));
+ #else
+    p_ctrl->p_reg = R_SAU0;
+ #endif
 #endif
     p_ctrl->p_cfg = p_cfg;
 
@@ -479,10 +483,8 @@ fsp_err_t R_SAU_SPI_CallbackSet (spi_ctrl_t * const          p_api_ctrl,
     FSP_ASSERT(p_ctrl);
     FSP_ASSERT(p_callback);
     FSP_ERROR_RETURN(SAU_SPI_OPEN == p_ctrl->open, FSP_ERR_NOT_OPEN);
-    FSP_ASSERT(NULL == p_callback_memory);
-#else
-    FSP_PARAMETER_NOT_USED(p_callback_memory);
 #endif
+    FSP_PARAMETER_NOT_USED(p_callback_memory);
 
     p_ctrl->p_callback = p_callback;
     p_ctrl->p_context  = p_context;

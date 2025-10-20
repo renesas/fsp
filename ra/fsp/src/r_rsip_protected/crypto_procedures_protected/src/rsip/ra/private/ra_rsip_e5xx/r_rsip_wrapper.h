@@ -167,6 +167,28 @@
 #define RSIP_PRV_FUNC_NAME_CHACHA20_SUSPEND                                 r_rsip_p96s
 #define RSIP_PRV_FUNC_NAME_CHACHA20_RESUME                                  r_rsip_p96r
 
+#if BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_ENC_INIT                      r_rsip_wrapper_p97i_enc
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_DEC_INIT                      r_rsip_wrapper_p97i_dec
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_UPDATE_AAD                    r_rsip_p97a
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_UPDATE_TRANSITION             r_rsip_p97t
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_UPDATE                        r_rsip_p97u
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_FINAL                         r_rsip_p97f
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_SUSPEND                       r_rsip_p97s
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_ENC_RESUME                    r_rsip_wrapper_p97r_enc
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_DEC_RESUME                    r_rsip_wrapper_p97r_dec
+#else
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_ENC_INIT                      NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_DEC_INIT                      NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_UPDATE_AAD                    NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_UPDATE_TRANSITION             NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_UPDATE                        NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_FINAL                         NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_SUSPEND                       NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_ENC_RESUME                    NULL
+ #define RSIP_PRV_FUNC_NAME_CHACHA20_POLY1305_DEC_RESUME                    NULL
+#endif
+
 #define RSIP_PRV_FUNC_NAME_KEY_PAIR_GENERATE_ECC_SECP256R1                  r_rsip_wrapper_pf4_secp256r1
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_ECC_SECP256R1_PUBLIC                r_rsip_wrapper_p6f_secp256r1_pub
 #define RSIP_PRV_FUNC_NAME_ENC_KEY_WRAP_ECC_SECP256R1_PRIVATE               r_rsip_wrapper_p6f_secp256r1_priv
@@ -714,6 +736,22 @@ rsip_ret_t r_rsip_wrapper_p44f_aes256mac_verify(const uint32_t * InData_Text,
                                                 const uint32_t * InData_DataT,
                                                 const uint32_t * InData_DataTLen,
                                                 const uint32_t   all_msg_len);
+
+/* ChaCha20-Poly1305 */
+rsip_ret_t r_rsip_wrapper_p97i_enc(const uint32_t * InData_KeyIndex,
+                                   const uint32_t * InData_Nonce,
+                                   const uint32_t * InData_TextLen,
+                                   const uint32_t * InData_DataALen);
+rsip_ret_t r_rsip_wrapper_p97i_dec(const uint32_t * InData_KeyIndex,
+                                   const uint32_t * InData_Nonce,
+                                   const uint32_t * InData_TextLen,
+                                   const uint32_t * InData_DataALen);
+rsip_ret_t r_rsip_wrapper_p97r_enc(const uint32_t * InData_KeyIndex,
+                                   const uint32_t * InData_Nonce,
+                                   const uint32_t * InData_State);
+rsip_ret_t r_rsip_wrapper_p97r_dec(const uint32_t * InData_KeyIndex,
+                                   const uint32_t * InData_Nonce,
+                                   const uint32_t * InData_State);
 
 /* ECDH */
 rsip_ret_t r_rsip_wrapper_pe2_wrapped_secp256r1(const uint32_t InData_PubKey[],

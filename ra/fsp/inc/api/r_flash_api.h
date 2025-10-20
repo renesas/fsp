@@ -66,7 +66,9 @@ typedef enum e_flash_event
     FLASH_EVENT_ERR_CF_ACCESS,         ///< Code Flash operation failed. Can occur when writing an unerased section.
     FLASH_EVENT_ERR_CMD_LOCKED,        ///< Operation failed, FCU is in Locked state (often result of an illegal command)
     FLASH_EVENT_ERR_FAILURE,           ///< Erase or Program Operation failed
-    FLASH_EVENT_ERR_ONE_BIT            ///< A 1-bit error has been corrected when reading the flash memory area by the sequencer.
+    FLASH_EVENT_ERR_ONE_BIT,           ///< A 1-bit error has been corrected when reading the flash memory area by the sequencer. See callback 'data' field for address.
+    FLASH_EVENT_ERR_TWO_BIT,           ///< A 2-bit error has been corrected when reading the flash memory area by the sequencer. See callback 'data' field for address.
+    FLASH_EVENT_ERR_ECC,               ///< An uncorrectable error has been detected while reading memory. See callback 'data' field for address.
 } flash_event_t;
 
 /** ID Code Modes for writing to ID code registers */
@@ -126,6 +128,7 @@ typedef void flash_ctrl_t;
 typedef struct st_flash_user_cb_data
 {
     flash_event_t event;               ///< Event can be used to identify what caused the callback (flash ready or error).
+    uint32_t      data;                ///< Event specific data. Invalid unless specified by the event.
     void        * p_context;           ///< Placeholder for user data.  Set in @ref flash_api_t::open function in::flash_cfg_t.
 } flash_callback_args_t;
 

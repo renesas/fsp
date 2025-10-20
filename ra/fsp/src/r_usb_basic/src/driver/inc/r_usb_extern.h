@@ -802,6 +802,15 @@ extern void usb_hvnd_write_complete(usb_utr_t * ptr, uint16_t data1, uint16_t da
 
 #endif                                 /* defined(USB_CFG_HVND_USE) */
 
+#if defined(USB_CFG_HAUD_USE)
+extern void usb_haud_read_complete(usb_utr_t * mess, uint16_t devadr, uint16_t data2);
+extern void usb_haud_write_complete(usb_utr_t * mess, uint16_t devadr, uint16_t data2);
+extern void usb_haud_registration(usb_utr_t * ptr);
+extern void usb_haud_task(usb_vp_int_t stacd);
+extern void usb_haud_driver_start(usb_utr_t * ptr);
+
+#endif                                 /* defined(USB_CFG_HAUD_USE) */
+
 extern uint16_t g_usb_pstd_eptbl[];
 
 #if defined(USB_CFG_PMSC_USE)

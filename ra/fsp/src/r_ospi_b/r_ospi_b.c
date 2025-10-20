@@ -38,6 +38,39 @@ extern rsip_instance_t const * const gp_rsip_instance;
 #define OSPI_B_PRV_UNIT_CHANNELS_SHIFT    (OSPI_B_PRV_CHANNELS_PER_UNIT)
 #define OSPI_B_PRV_UNIT_CHANNELS_MASK     ((1U << OSPI_B_PRV_UNIT_CHANNELS_SHIFT) - 1U)
 
+/* If any of the BSP memory macros are not defined, give them a default value of 0 for use in this file. */
+#ifndef BSP_OSPI0_CS0_START_ADDRESS
+ #define BSP_OSPI0_CS0_START_ADDRESS      (0U)
+#endif
+
+#ifndef BSP_OSPI0_CS0_SIZE_BYTES
+ #define BSP_OSPI0_CS0_SIZE_BYTES         (0U)
+#endif
+
+#ifndef BSP_OSPI0_CS1_START_ADDRESS
+ #define BSP_OSPI0_CS1_START_ADDRESS      (0U)
+#endif
+
+#ifndef BSP_OSPI0_CS1_SIZE_BYTES
+ #define BSP_OSPI0_CS1_SIZE_BYTES         (0U)
+#endif
+
+#ifndef BSP_OSPI1_CS0_START_ADDRESS
+ #define BSP_OSPI1_CS0_START_ADDRESS      (0U)
+#endif
+
+#ifndef BSP_OSPI1_CS0_SIZE_BYTES
+ #define BSP_OSPI1_CS0_SIZE_BYTES         (0U)
+#endif
+
+#ifndef BSP_OSPI1_CS1_START_ADDRESS
+ #define BSP_OSPI1_CS1_START_ADDRESS      (0U)
+#endif
+
+#ifndef BSP_OSPI1_CS1_SIZE_BYTES
+ #define BSP_OSPI1_CS1_SIZE_BYTES         (0U)
+#endif
+
 /**
  * Mask of all channels for a given OSPI_B unit.
  * @param p_ext_cfg Pointer to a OSPI_B extended config struct with the unit to mask.
@@ -113,6 +146,10 @@ extern rsip_instance_t const * const gp_rsip_instance;
 #define OSPI_B_PRV_BMCTL1_PUSH_COMBINATION_WRITE_MASK    (0x03 << R_XSPI0_BMCTL1_MWRPUSHCH_Pos)
 
 #define OSPI_B_PRV_COMSTT_MEMACCCH_MASK                  (0x03 << R_XSPI0_COMSTT_MEMACCCH_Pos)
+#define OSPI_B_PRV_COMSTT_WRBUFNECH_MASK                 (0x03 << R_XSPI0_COMSTT_WRBUFNECH_Pos)
+
+#define OSPI_B_PRV_COMSTT_PENDING_ACTION_MASK            (OSPI_B_PRV_COMSTT_MEMACCCH_MASK | \
+                                                          OSPI_B_PRV_COMSTT_WRBUFNECH_MASK)
 
 #define OSPI_B_SOFTWARE_DELAY                            (50U)
 
@@ -163,6 +200,7 @@ static void r_ospi_b_row_load_store(ospi_b_instance_ctrl_t * const p_ctrl, uint3
 #endif
 
 #if OSPI_B_CFG_XIP_SUPPORT_ENABLE
+static void r_ospi_b_dummy_read(uint32_t * p_read_address);
 static void r_ospi_b_xip(ospi_b_instance_ctrl_t * p_instance_ctrl, bool is_entering);
 
 #endif
@@ -641,15 +679,18 @@ fsp_err_t R_OSPI_B_Erase (spi_flash_ctrl_t * p_ctrl, uint8_t * const p_device_ad
     FSP_ERROR_RETURN(OSPI_B_PRV_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
 #endif
 
-    spi_flash_cfg_t const * p_cfg             = p_instance_ctrl->p_cfg;
-    uint16_t                erase_command     = 0;
-    const uint32_t          chip_address_base = p_instance_ctrl->channel ?
-                                                BSP_FEATURE_OSPI_B_DEVICE_1_START_ADDRESS :
-                                                BSP_FEATURE_OSPI_B_DEVICE_0_START_ADDRESS;
-    uint32_t chip_address = (uint32_t) p_device_address - chip_address_base;
-    bool     send_address = true;
+    spi_flash_cfg_t const * p_cfg         = p_instance_ctrl->p_cfg;
+    uint16_t                erase_command = 0;
+    bool send_address = true;
 
     ospi_b_xspi_command_set_t const * p_cmd_set = p_instance_ctrl->p_cmd_set;
+
+    /* Use the address bytes and MSB mask to convert from system address to chip addresses.
+     * This is better than using pointer subtraction because some devices (i.e., SiP) have different start addresses.
+     * This method better mimics how memory-mapped addresses are converted in the hardware. */
+    uint32_t addr_mask = (uint32_t) (~UINT8_MAX | p_cmd_set->address_msb_mask);          // Start with a full 32-bit mask with the address MSB mask in the lower byte.
+    addr_mask <<= 8U * (OSPI_B_PRV_ADDR_BYTES_TO_LENGTH(p_cmd_set->address_bytes) - 1U); // Shift the MSB to the correct position.
+    uint32_t chip_address = (uint32_t) ((uint32_t) p_device_address & ~addr_mask);       // Mask off the address bits that aren't needed.
 
     FSP_ERROR_RETURN(false == r_ospi_b_status_sub(p_instance_ctrl, p_cfg->write_status_bit), FSP_ERR_DEVICE_BUSY);
 
@@ -1317,6 +1358,30 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
 #if OSPI_B_CFG_XIP_SUPPORT_ENABLE
 
 /*******************************************************************************************************************//**
+ * Performs a dummy read from the provided address.
+ *
+ * Some scenarios, mainly XiP state changes, require a memory-mapped read operation to emit the proper bus symbol. This
+ * function will perform a read at the provided address, throw out the result, then toggle b3 of the address. The
+ * toggling of b3 ensures the next dummy read will occur at an address that is not currently available in the OSPI_B
+ * peripheral's 1-line (8-byte) data read buffer (this is not the same as the prefetch buffer). If the same address is
+ * read twice in a row, the peripheral may return the buffered value instead of issuing a new bus transaction.
+ *
+ * @param[in,out] p_read_address Address as a uint32_t to read dummy data from
+ **********************************************************************************************************************/
+static void r_ospi_b_dummy_read (uint32_t * p_read_address)
+{
+    volatile uint64_t dummy_value = 0;
+
+    if (0U != *p_read_address)
+    {
+        dummy_value     = *((volatile uint64_t *) *p_read_address);
+        *p_read_address = ((*p_read_address) ^ 0x08U);
+    }
+
+    FSP_PARAMETER_NOT_USED(dummy_value);
+}
+
+/*******************************************************************************************************************//**
  * Configures the device to enter or exit XiP mode.
  *
  * @param[in]   p_instance_ctrl    Pointer to the instance ctrl struct.
@@ -1324,59 +1389,96 @@ static void r_ospi_b_direct_transfer (ospi_b_instance_ctrl_t            * p_inst
  **********************************************************************************************************************/
 static void r_ospi_b_xip (ospi_b_instance_ctrl_t * p_instance_ctrl, bool is_entering)
 {
-    R_XSPI0_Type * const    p_reg                = p_instance_ctrl->p_reg;
-    const spi_flash_cfg_t * p_cfg                = p_instance_ctrl->p_cfg;
-    volatile uint8_t      * p_dummy_read_address = (volatile uint8_t *)
-                                                   ((OSPI_B_DEVICE_NUMBER_0 == p_instance_ctrl->channel) ?
-                                                    BSP_FEATURE_OSPI_B_DEVICE_0_START_ADDRESS :
-                                                    BSP_FEATURE_OSPI_B_DEVICE_1_START_ADDRESS);
-    volatile uint8_t dummy_read = 0;
+    R_XSPI0_Type * const    p_reg              = p_instance_ctrl->p_reg;
+    const spi_flash_cfg_t * p_cfg              = p_instance_ctrl->p_cfg;
+    uint32_t                dummy_read_address = 0;
 
-    FSP_PARAMETER_NOT_USED(dummy_read); // Suppress variable not used error.
+    /* Get the initial address to perform dummy reads.
+     * This is just the first word of the appropriate memory-mapped CS region.*/
+    if (0U == p_instance_ctrl->ospi_b_unit)
+    {
+        dummy_read_address = ((OSPI_B_DEVICE_NUMBER_0 == p_instance_ctrl->channel) ?
+                              BSP_OSPI0_CS0_START_ADDRESS :
+                              BSP_OSPI0_CS1_START_ADDRESS);
+    }
+    else if (1U == p_instance_ctrl->ospi_b_unit)
+    {
+        dummy_read_address = ((OSPI_B_DEVICE_NUMBER_0 == p_instance_ctrl->channel) ?
+                              BSP_OSPI1_CS0_START_ADDRESS :
+                              BSP_OSPI1_CS1_START_ADDRESS);
+    }
+    else
+    {
+        /* Not a valid unit. */
+    }
 
-    /* Clear the pre-fetch buffer for this bank so the next read is guaranteed to use the XiP code. */
+    const uint32_t reg_cmctlch = ((uint32_t) (p_cfg->xip_enter_command << R_XSPI0_CMCTLCH_XIPENCODE_Pos)) |
+                                 ((uint32_t) (p_cfg->xip_exit_command << R_XSPI0_CMCTLCH_XIPEXCODE_Pos));
+
+    /* Save the bus bridge config to restore it after the XiP mode change. */
+    const uint32_t reg_bmcfgch0 = p_reg->BMCFGCH[0];
+    const uint32_t reg_bmcfgch1 = p_reg->BMCFGCH[1];
+
  #if OSPI_B_CFG_PREFETCH_FUNCTION
-    p_reg->BMCTL1 |= 0x03U << R_XSPI0_BMCTL1_PBUFCLRCH_Pos;
+
+    /* Clear the pre-fetch buffer so following reads always send a read transaction to the xSPI memory. */
+    p_reg->BMCTL1 = OSPI_B_PRV_BMCTL1_CLEAR_PREFETCH_MASK;
+
+    /* Disable the prefetch buffer. */
+    p_reg->BMCFGCH[0] = reg_bmcfgch0 & ~R_XSPI0_BMCFGCH_PREEN_Msk;
+    p_reg->BMCFGCH[1] = reg_bmcfgch1 & ~R_XSPI0_BMCFGCH_PREEN_Msk;
  #endif
 
+    if (OSPI_B_COMBINATION_FUNCTION_DISABLE != OSPI_B_CFG_COMBINATION_FUNCTION)
+    {
+        /* Flush any combination writes before disabling. */
+        p_reg->BMCTL1 = OSPI_B_PRV_BMCTL1_PUSH_COMBINATION_WRITE_MASK;
+    }
+
+    /* Perform a dummy read before disabling memory mapping. */
+    r_ospi_b_dummy_read(&dummy_read_address);
+
+    /* Disable bus bridge buffering. */
+    p_reg->BMCFGCH[0] = 0U;
+    p_reg->BMCFGCH[1] = 0U;
+
     /* Wait for any on-going access to complete. */
-    FSP_HARDWARE_REGISTER_WAIT((p_reg->COMSTT & OSPI_B_PRV_COMSTT_MEMACCCH_MASK), 0);
+    FSP_HARDWARE_REGISTER_WAIT((p_reg->COMSTT & OSPI_B_PRV_COMSTT_PENDING_ACTION_MASK), 0);
 
     if (is_entering)
     {
         /* Change memory-mapping to read-only mode. */
         p_reg->BMCTL0 = OSPI_B_PRV_BMCTL0_READ_ONLY_VALUE;
 
-        /* Configure XiP codes and enable. */
-        const uint32_t cmctlch = R_XSPI0_CMCTLCH_XIPEN_Msk |
-                                 ((uint32_t) (p_cfg->xip_enter_command << R_XSPI0_CMCTLCH_XIPENCODE_Pos)) |
-                                 ((uint32_t) (p_cfg->xip_exit_command << R_XSPI0_CMCTLCH_XIPEXCODE_Pos));
-
         /* XiP enter/exit codes are configured only for memory mapped operations and affects both OSPI slave channels. */
-        p_reg->CMCTLCH[0] = cmctlch;
-        p_reg->CMCTLCH[1] = cmctlch;
+        p_reg->CMCTLCH[0] = reg_cmctlch | R_XSPI0_CMCTLCH_XIPEN_Msk;
+        p_reg->CMCTLCH[1] = reg_cmctlch | R_XSPI0_CMCTLCH_XIPEN_Msk;
 
         /* Perform a read to send the enter code. All further reads will use the enter code and will not send a read command code. */
-        dummy_read = *p_dummy_read_address;
-
-        /* Wait for the read to complete. */
-        FSP_HARDWARE_REGISTER_WAIT((p_reg->COMSTT & OSPI_B_PRV_COMSTT_MEMACCCH_MASK), 0);
+        r_ospi_b_dummy_read(&dummy_read_address);
     }
     else
     {
-        /* Disable XiP. */
-        p_reg->CMCTLCH[0] &= ~R_XSPI0_CMCTLCH_XIPEN_Msk;
-        p_reg->CMCTLCH[1] &= ~R_XSPI0_CMCTLCH_XIPEN_Msk;
+        /* Disable XiP. The exit code needs to available at this stage. */
+        p_reg->CMCTLCH[0] = reg_cmctlch;
 
-        /* Perform a read to send the exit code. All further reads will not send an exit code. */
-        dummy_read = *p_dummy_read_address;
+        /* Perform a read to send the exit code. */
+        r_ospi_b_dummy_read(&dummy_read_address);
 
-        /* Wait for the read to complete. */
-        FSP_HARDWARE_REGISTER_WAIT((p_reg->COMSTT & OSPI_B_PRV_COMSTT_MEMACCCH_MASK), 0);
+        /* Clear all XiP settings. */
+        p_reg->CMCTLCH[0] = 0U;
+        p_reg->CMCTLCH[1] = 0U;
+
+        /* This read should be without XiP. */
+        r_ospi_b_dummy_read(&dummy_read_address);
 
         /* Change memory-mapping back to R/W mode. */
         p_reg->BMCTL0 = OSPI_B_PRV_BMCTL0_READ_WRITE_VALUE;
     }
+
+    /* Restore bus bridge buffering to the previous state. */
+    p_reg->BMCFGCH[0] = reg_bmcfgch0;
+    p_reg->BMCFGCH[1] = reg_bmcfgch1;
 }
 
 #endif

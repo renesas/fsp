@@ -19,9 +19,17 @@
  **********************************************************************************************************************/
 
 /* For SHA, HMAC-SHA */
-#define RSIP_PRV_SHA_INIT_VAL1                (0x80000000U)
-#define RSIP_PRV_SHA_INIT_VAL2                (0x00000000U)
-#define RSIP_PRV_WORD_SIZE_HMAC_MAC_BUFFER    (16U)
+#define RSIP_PRV_SHA_INIT_VAL1                    (0x80000000U)
+#define RSIP_PRV_SHA_INIT_VAL2                    (0x00000000U)
+#define RSIP_PRV_WORD_SIZE_HMAC_MAC_BUFFER        (16U)
+
+/* Internal state */
+#define INTERNAL_STATE_TOTAL_MSG_LEN_BIT_LOWER    (16)
+#define INTERNAL_STATE_TOTAL_MSG_LEN_BIT_UPPER    (17)
+#define INTERNAL_STATE_MSG_LEN_BIT_LOWER          (19)
+#define INTERNAL_STATE_MSG_LEN_BIT_UPPER          (18)
+#define INTERNAL_STATE_SHA3_MSG_LEN_BIT_LOWER     (51)
+#define INTERNAL_STATE_SHA3_MSG_LEN_BIT_UPPER     (50)
 
 /***********************************************************************************************************************
  * Typedef definitions
@@ -52,6 +60,10 @@ static const uint32_t gs_sha_hash_type[] =
     [RSIP_HASH_TYPE_SHA512]     = BSWAP_32BIG_C(6U),
     [RSIP_HASH_TYPE_SHA512_224] = BSWAP_32BIG_C(3U),
     [RSIP_HASH_TYPE_SHA512_256] = BSWAP_32BIG_C(4U),
+    [RSIP_HASH_TYPE_SHA3_224]   = BSWAP_32BIG_C(0U),
+    [RSIP_HASH_TYPE_SHA3_256]   = BSWAP_32BIG_C(1U),
+    [RSIP_HASH_TYPE_SHA3_384]   = BSWAP_32BIG_C(2U),
+    [RSIP_HASH_TYPE_SHA3_512]   = BSWAP_32BIG_C(3U),
 };
 
 static const uint32_t gs_hmac_hash_type[] =
@@ -188,39 +200,97 @@ fsp_err_t get_rfc3394_key_wrap_param (rsip_key_type_t key_type,
     return err;
 }
 
-rsip_ret_t r_rsip_sha1sha2_init_update (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_init_update (rsip_hash_type_t hash_type,
                                         const uint8_t  * p_message,
                                         uint64_t         message_length,
                                         uint32_t       * internal_state)
 {
     FSP_PARAMETER_NOT_USED(internal_state);
 
+    rsip_ret_t rsip_ret = RSIP_RET_FAIL;
+
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_p73i(&gs_sha_hash_type[hash_type], gs_sha_msg_len_multi);
-    if (RSIP_RET_PASS == rsip_ret)
+    switch (hash_type)
     {
-        rsip_ret = r_rsip_p73u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+        /* SHA3-224, SHA3-256, SHA3-384, SHA3-512 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        case RSIP_HASH_TYPE_SHA3_256:
+        case RSIP_HASH_TYPE_SHA3_384:
+        case RSIP_HASH_TYPE_SHA3_512:
+        {
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+            rsip_ret = r_rsip_p78i(&gs_sha_hash_type[hash_type], gs_sha_msg_len_multi);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p78u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+            }
+#endif
+            break;
+        }
+
+        /* SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
+        default:
+        {
+            rsip_ret = r_rsip_p73i(&gs_sha_hash_type[hash_type], gs_sha_msg_len_multi);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p73u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+            }
+
+            break;
+        }
     }
 
     return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_resume_update (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_resume_update (rsip_hash_type_t hash_type,
                                           const uint8_t  * p_message,
                                           uint64_t         message_length,
                                           uint32_t       * internal_state)
 {
+    rsip_ret_t rsip_ret = RSIP_RET_FAIL;
+
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_p73r(&gs_sha_hash_type[hash_type], internal_state);
-    if (RSIP_RET_PASS == rsip_ret)
+    switch (hash_type)
     {
-        rsip_ret = r_rsip_p73u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+        /* SHA3-224, SHA3-256, SHA3-384, SHA3-512 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        case RSIP_HASH_TYPE_SHA3_256:
+        case RSIP_HASH_TYPE_SHA3_384:
+        case RSIP_HASH_TYPE_SHA3_512:
+        {
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+            rsip_ret = r_rsip_p78r(&gs_sha_hash_type[hash_type], internal_state);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p78u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+            }
+#endif
+            break;
+        }
+
+        /* SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
+        default:
+        {
+            rsip_ret = r_rsip_p73r(&gs_sha_hash_type[hash_type], internal_state);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p73u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+            }
+
+            break;
+        }
     }
 
     return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_update (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_update (rsip_hash_type_t hash_type,
                                    const uint8_t  * p_message,
                                    uint64_t         message_length,
                                    uint32_t       * internal_state)
@@ -228,22 +298,73 @@ rsip_ret_t r_rsip_sha1sha2_update (rsip_hash_type_t hash_type,
     FSP_PARAMETER_NOT_USED(hash_type);
     FSP_PARAMETER_NOT_USED(internal_state);
 
+    rsip_ret_t rsip_ret = RSIP_RET_FAIL;
+
     /* Call primitive (cast to match the argument type with the primitive function) */
-    return r_rsip_p73u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+    switch (hash_type)
+    {
+        /* SHA3-224, SHA3-256, SHA3-384, SHA3-512 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        case RSIP_HASH_TYPE_SHA3_256:
+        case RSIP_HASH_TYPE_SHA3_384:
+        case RSIP_HASH_TYPE_SHA3_512:
+        {
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+            rsip_ret =
+                r_rsip_p78u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+#endif
+            break;
+        }
+
+        /* SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
+        default:
+        {
+            rsip_ret =
+                r_rsip_p73u((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length));
+            break;
+        }
+    }
+
+    return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_suspend (uint32_t * internal_state)
+rsip_ret_t r_rsip_sha_hash_suspend (rsip_hash_type_t hash_type, uint32_t * internal_state)
 {
+    rsip_ret_t rsip_ret = RSIP_RET_FAIL;
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    return r_rsip_p73s(internal_state);
+    switch (hash_type)
+    {
+        /* SHA3-224, SHA3-256, SHA3-384, SHA3-512 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        case RSIP_HASH_TYPE_SHA3_256:
+        case RSIP_HASH_TYPE_SHA3_384:
+        case RSIP_HASH_TYPE_SHA3_512:
+        {
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+            rsip_ret = r_rsip_p78s(internal_state);
+#endif
+            break;
+        }
+
+        /* SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
+        default:
+        {
+            rsip_ret = r_rsip_p73s(internal_state);
+            break;
+        }
+    }
+
+    return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_init_final (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_init_final (rsip_hash_type_t hash_type,
                                        const uint8_t  * p_message,
                                        uint64_t         message_length,
                                        uint8_t        * p_digest)
 {
+    rsip_ret_t rsip_ret = RSIP_RET_FAIL;
+
     uint32_t msg_len[2] =
     {
         r_rsip_byte_to_bit_convert_upper(message_length),
@@ -251,54 +372,140 @@ rsip_ret_t r_rsip_sha1sha2_init_final (rsip_hash_type_t hash_type,
     };
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_p73i(&gs_sha_hash_type[hash_type], msg_len);
-    if (RSIP_RET_PASS == rsip_ret)
+    switch (hash_type)
     {
-        rsip_ret =
-            r_rsip_p73f((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length),
-                        (uint32_t *) p_digest);
+        /* SHA3-224, SHA3-256, SHA3-384, SHA3-512 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        case RSIP_HASH_TYPE_SHA3_256:
+        case RSIP_HASH_TYPE_SHA3_384:
+        case RSIP_HASH_TYPE_SHA3_512:
+        {
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+            rsip_ret = r_rsip_p78i(&gs_sha_hash_type[hash_type], msg_len);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p78f((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length),
+                                (uint32_t *) p_digest);
+            }
+#endif
+            break;
+        }
+
+        /* SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
+        default:
+        {
+            rsip_ret = r_rsip_p73i(&gs_sha_hash_type[hash_type], msg_len);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p73f((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length),
+                                (uint32_t *) p_digest);
+            }
+
+            break;
+        }
     }
 
     return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_resume_final (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_resume_final (rsip_hash_type_t hash_type,
                                          uint8_t        * p_message,
                                          uint64_t         message_length,
                                          uint64_t         total_message_length,
                                          uint8_t        * p_digest,
                                          uint32_t       * internal_state)
 {
-    /* Overwrite internal state */
-    internal_state[16] = r_rsip_byte_to_bit_convert_lower(total_message_length);
-    internal_state[17] = r_rsip_byte_to_bit_convert_upper(total_message_length);
-    internal_state[18] = r_rsip_byte_to_bit_convert_upper(message_length);
-    internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
+    rsip_ret_t rsip_ret = RSIP_RET_FAIL;
 
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_p73r(&gs_sha_hash_type[hash_type], internal_state);
-    if (RSIP_RET_PASS == rsip_ret)
+    switch (hash_type)
     {
-        rsip_ret =
-            r_rsip_p73f((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length),
-                        (uint32_t *) p_digest);
+        /* SHA3-224, SHA3-256, SHA3-384, SHA3-512 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        case RSIP_HASH_TYPE_SHA3_256:
+        case RSIP_HASH_TYPE_SHA3_384:
+        case RSIP_HASH_TYPE_SHA3_512:
+        {
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+
+            /* Overwrite internal state */
+            internal_state[INTERNAL_STATE_SHA3_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(message_length);
+            internal_state[INTERNAL_STATE_SHA3_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(message_length);
+
+            rsip_ret = r_rsip_p78r(&gs_sha_hash_type[hash_type], internal_state);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p78f((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length),
+                                (uint32_t *) p_digest);
+            }
+#endif
+            break;
+        }
+
+        /* SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
+        default:
+        {
+            /* Overwrite internal state */
+            internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(
+                total_message_length);
+            internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(
+                total_message_length);
+            internal_state[INTERNAL_STATE_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(message_length);
+            internal_state[INTERNAL_STATE_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(message_length);
+
+            rsip_ret = r_rsip_p73r(&gs_sha_hash_type[hash_type], internal_state);
+            if (RSIP_RET_PASS == rsip_ret)
+            {
+                rsip_ret =
+                    r_rsip_p73f((const uint32_t *) p_message, r_rsip_byte_to_word_convert((uint32_t) message_length),
+                                (uint32_t *) p_digest);
+            }
+
+            break;
+        }
     }
 
     return rsip_ret;
 }
 
-rsip_ret_t r_rsip_sha1sha2_final (rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_final (rsip_hash_type_t hash_type,
                                   uint8_t        * p_message,
                                   uint64_t         message_length,
                                   uint64_t         total_message_length,
                                   uint8_t        * p_digest,
                                   uint32_t       * internal_state)
 {
+    rsip_ret_t rsip_ret = RSIP_RET_FAIL;
+
     /* Call primitive (cast to match the argument type with the primitive function) */
-    rsip_ret_t rsip_ret = r_rsip_p73s(internal_state);
+    switch (hash_type)
+    {
+        /* SHA3-224, SHA3-256, SHA3-384, SHA3-512 */
+        case RSIP_HASH_TYPE_SHA3_224:
+        case RSIP_HASH_TYPE_SHA3_256:
+        case RSIP_HASH_TYPE_SHA3_384:
+        case RSIP_HASH_TYPE_SHA3_512:
+        {
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+            rsip_ret = r_rsip_p78s(internal_state);
+#endif
+            break;
+        }
+
+        /* SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224, SHA-512/256 */
+        default:
+        {
+            rsip_ret = r_rsip_p73s(internal_state);
+            break;
+        }
+    }
+
     if (RSIP_RET_PASS == rsip_ret)
     {
-        rsip_ret = r_rsip_sha1sha2_resume_final(hash_type,
+        rsip_ret = r_rsip_sha_hash_resume_final(hash_type,
                                                 p_message,
                                                 message_length,
                                                 total_message_length,
@@ -406,10 +613,10 @@ rsip_ret_t r_rsip_hmac_resume_final (const rsip_wrapped_key_t * p_wrapped_key,
     rsip_key_type_extend_t key_type_ext = r_rsip_key_type_parse(p_wrapped_key->type);
 
     /* Overwrite internal state */
-    internal_state[16] = r_rsip_byte_to_bit_convert_lower(total_message_length);
-    internal_state[17] = r_rsip_byte_to_bit_convert_upper(total_message_length);
-    internal_state[18] = r_rsip_byte_to_bit_convert_upper(message_length);
-    internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
+    internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(total_message_length);
+    internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(total_message_length);
+    internal_state[INTERNAL_STATE_MSG_LEN_BIT_UPPER]       = r_rsip_byte_to_bit_convert_upper(message_length);
+    internal_state[INTERNAL_STATE_MSG_LEN_BIT_LOWER]       = r_rsip_byte_to_bit_convert_lower(message_length);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
     rsip_ret_t rsip_ret =
@@ -500,10 +707,10 @@ rsip_ret_t r_rsip_hmac_resume_verify (const rsip_wrapped_key_t * p_wrapped_key,
     rsip_key_type_extend_t key_type_ext = r_rsip_key_type_parse(p_wrapped_key->type);
 
     /* Overwrite internal state */
-    internal_state[16] = r_rsip_byte_to_bit_convert_lower(total_message_length);
-    internal_state[17] = r_rsip_byte_to_bit_convert_upper(total_message_length);
-    internal_state[18] = r_rsip_byte_to_bit_convert_upper(message_length);
-    internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
+    internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(total_message_length);
+    internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(total_message_length);
+    internal_state[INTERNAL_STATE_MSG_LEN_BIT_UPPER]       = r_rsip_byte_to_bit_convert_upper(message_length);
+    internal_state[INTERNAL_STATE_MSG_LEN_BIT_LOWER]       = r_rsip_byte_to_bit_convert_lower(message_length);
 
     uint32_t InData_MAC[RSIP_PRV_WORD_SIZE_HMAC_MAC_BUFFER] =
     {
@@ -669,10 +876,12 @@ rsip_ret_t r_rsip_kdf_sha_resume_final (rsip_kdf_sha_handle_t * p_handle,
                                         uint8_t               * p_digest)
 {
     /* Overwrite internal state */
-    p_handle->internal_state[16] = r_rsip_byte_to_bit_convert_lower(total_message_length);
-    p_handle->internal_state[17] = r_rsip_byte_to_bit_convert_upper(total_message_length);
-    p_handle->internal_state[18] = r_rsip_byte_to_bit_convert_upper(message_length);
-    p_handle->internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
+    p_handle->internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(
+        total_message_length);
+    p_handle->internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(
+        total_message_length);
+    p_handle->internal_state[INTERNAL_STATE_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(message_length);
+    p_handle->internal_state[INTERNAL_STATE_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(message_length);
 
     /* Call primitive (cast to match the argument type with the primitive function) */
     rsip_ret_t rsip_ret = r_rsip_pefr(&gs_kdf_sha_hash_type[p_handle->type], p_handle->internal_state);
@@ -838,10 +1047,10 @@ rsip_ret_t r_rsip_kdf_hmac_resume_final (const rsip_wrapped_key_t * p_wrapped_ke
                                          uint32_t                 * internal_state)
 {
     /* Overwrite internal state */
-    internal_state[16] = r_rsip_byte_to_bit_convert_lower(total_message_length);
-    internal_state[17] = r_rsip_byte_to_bit_convert_upper(total_message_length);
-    internal_state[18] = r_rsip_byte_to_bit_convert_upper(message_length);
-    internal_state[19] = r_rsip_byte_to_bit_convert_lower(message_length);
+    internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_LOWER] = r_rsip_byte_to_bit_convert_lower(total_message_length);
+    internal_state[INTERNAL_STATE_TOTAL_MSG_LEN_BIT_UPPER] = r_rsip_byte_to_bit_convert_upper(total_message_length);
+    internal_state[INTERNAL_STATE_MSG_LEN_BIT_UPPER]       = r_rsip_byte_to_bit_convert_upper(message_length);
+    internal_state[INTERNAL_STATE_MSG_LEN_BIT_LOWER]       = r_rsip_byte_to_bit_convert_lower(message_length);
 
     rsip_key_type_extend_t key_type_ext = r_rsip_key_type_parse(p_wrapped_key->type);
     uint32_t               cmd_key_type = get_cmd_kdf_hmac_alg(key_type_ext.alg);

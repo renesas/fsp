@@ -20,6 +20,7 @@ typedef enum e_rsip_ret
     /* Branching */
     RSIP_RET_PASS_0,
     RSIP_RET_PASS_1,
+    RSIP_RET_PASS_2,
 
     /* Error */
     RSIP_RET_RESOURCE_CONFLICT,

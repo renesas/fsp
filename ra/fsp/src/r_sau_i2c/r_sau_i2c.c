@@ -224,9 +224,13 @@ fsp_err_t R_SAU_I2C_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cfg_t
 
 #if -1 == SAU_I2C_CFG_SINGLE_CHANNEL_ENABLE
     sau_i2c_extended_cfg_t const * const p_extend = (sau_i2c_extended_cfg_t *) p_cfg->p_extend;
+ #ifdef R_SAU1
     SAU_REG =
         (R_SAU0_Type *) ((uint32_t) R_SAU0_BASE +
                          (SAU_I2C_PRV_UNIT * ((uint32_t) R_SAU1_BASE - (uint32_t) R_SAU0_BASE)));
+ #else
+    SAU_REG = R_SAU0;
+ #endif
 #endif
 
     /* Record the configuration on the device for use later */

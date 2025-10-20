@@ -341,11 +341,7 @@ extern "C" {
 
 /*Max position pipe for USB class */
  #define USB_MAX_PIPE_POS_PERI              (18U)
- #define USB_MAX_PIPE_POS_HOST              (24U)
-
-/*Max position pipe for USB class */
- #define USB_MAX_PIPE_POS_PERI              (18U)
- #define USB_MAX_PIPE_POS_HOST              (24U)
+ #define USB_MAX_PIPE_POS_HOST              (72U)
 
 /* SPEED mode */
  #define USB_HS_DISABLE                     ((uint16_t) 0U)

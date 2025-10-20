@@ -26,7 +26,7 @@ FSP_HEADER
 
 /* Version Number of Module. */
 #define FSP_R_RSIP_PROTECTED_VERSION_MAJOR    (2U)
-#define FSP_R_RSIP_PROTECTED_VERSION_MINOR    (1U)
+#define FSP_R_RSIP_PROTECTED_VERSION_MINOR    (2U)
 #define FSP_R_RSIP_PROTECTED_VERSION_PATCH    (0U)
 
 /** Returns the plain key size formatted for RSIP driver of the key type. */
@@ -49,13 +49,27 @@ FSP_HEADER
 #define RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_384      RSIP_PRV_BYTE_SIZE_WRAPPED_DATA(12)
 #define RSIP_PRV_BYTE_SIZE_ECDH_WRAPPED_SECRET_521      RSIP_PRV_BYTE_SIZE_WRAPPED_DATA(20)
 
-/* Buffer size for SHA and HMAC */
-#define RSIP_PRV_WORD_SIZE_SHA_INTERNAL_STATE_BUF       (20U)
+/* Internal state Buffer size for SHA */
+#if RSIP_CFG_SHA3_224_ENABLE || RSIP_CFG_SHA3_256_ENABLE || RSIP_CFG_SHA3_384_ENABLE || RSIP_CFG_SHA3_512_ENABLE
+ #define RSIP_PRV_WORD_SIZE_SHA_INTERNAL_STATE_BUF      (52U)
+#else
+ #define RSIP_PRV_WORD_SIZE_SHA_INTERNAL_STATE_BUF      (20U)
+#endif
+
+/* Internal state Buffer size for HMAC */
 #define RSIP_PRV_WORD_SIZE_HMAC_INTERNAL_STATE_BUF      (20U)
 
 /* Buffer size for SHA */
-#if RSIP_CFG_SHA512_ENABLE || RSIP_CFG_SHA512_224_ENABLE || RSIP_CFG_SHA512_256_ENABLE || RSIP_CFG_SHA384_ENABLE
+#if RSIP_CFG_SHA3_224_ENABLE
+ #define RSIP_PRV_BYTE_SIZE_SHA_BLOCK_BUF               (144U * RSIP_CFG_SHA_BUF_BLOCKS)
+#elif RSIP_CFG_SHA3_256_ENABLE
+ #define RSIP_PRV_BYTE_SIZE_SHA_BLOCK_BUF               (136U * RSIP_CFG_SHA_BUF_BLOCKS)
+#elif RSIP_CFG_SHA512_ENABLE || RSIP_CFG_SHA512_224_ENABLE || RSIP_CFG_SHA512_256_ENABLE || RSIP_CFG_SHA384_ENABLE
  #define RSIP_PRV_BYTE_SIZE_SHA_BLOCK_BUF               (128U * RSIP_CFG_SHA_BUF_BLOCKS)
+#elif RSIP_CFG_SHA3_384_ENABLE
+ #define RSIP_PRV_BYTE_SIZE_SHA_BLOCK_BUF               (104U * RSIP_CFG_SHA_BUF_BLOCKS)
+#elif RSIP_CFG_SHA3_512_ENABLE
+ #define RSIP_PRV_BYTE_SIZE_SHA_BLOCK_BUF               (72U * RSIP_CFG_SHA_BUF_BLOCKS)
 #else
  #define RSIP_PRV_BYTE_SIZE_SHA_BLOCK_BUF               (64U * RSIP_CFG_SHA_BUF_BLOCKS)
 #endif
@@ -393,6 +407,19 @@ typedef struct st_rsip_chacha20_handle
     uint32_t           total_length;                                                          // Total plaintext/ciphertext length
 } rsip_chacha20_handle_t;
 
+/* Working area for ChaCha20-Poly1305 */
+typedef struct st_rsip_chacha20_poly1305_handle
+{
+    const void       * p_func;                                                                // Pointer to primitive functions
+    rsip_wrapped_key_t wrapped_key;                                                           // Wrapped key
+    uint8_t            wrapped_key_value[RSIP_BYTE_SIZE_WRAPPED_KEY(RSIP_KEY_TYPE_CHACHA20)]; // Wrapped key value
+    uint32_t           nonce_buffer[RSIP_PRV_WORD_SIZE_CHACHA20_NONCE];                       // Buffer for nonce
+    uint8_t            buffer[RSIP_PRV_BYTE_SIZE_CHACHA20_BLOCK];                             // Buffer for plaintext/ciphertext
+    uint32_t           buffered_length;                                                       // Buffered plaintext/ciphertext length
+    uint32_t           total_length;                                                          // Total plaintext/ciphertext length
+    uint32_t           total_aad_length;                                                      // Total AAD length
+} rsip_chacha20_poly1305_handle_t;
+
 /** Working area for SHA functions. DO NOT MODIFY. */
 typedef struct st_rsip_sha_handle
 {
@@ -472,42 +499,47 @@ typedef struct st_rsip_wrapped_secret
 /* Working area for RSIP cryptographic algorithms. This union is included in private control block. */
 typedef union u_rsip_handle
 {
-    rsip_aes_cipher_handle_t aes_cipher; // AES block cipher
-    rsip_aes_gcm_handle_t    aes_gcm;    // AES-GCM
-    rsip_aes_ccm_handle_t    aes_ccm;    // AES-CCM
-    rsip_aes_cmac_handle_t   aes_cmac;   // AES-CMAC
-    rsip_chacha20_handle_t   chacha20;   // ChaCha20
-    rsip_sha_handle_t        sha;        // SHA
-    rsip_hmac_handle_t       hmac;       // HMAC
-    rsip_kdf_sha_handle_t    kdf_sha;    // KDF SHA
-    rsip_kdf_hmac_handle_t   kdf_hmac;   // KDF HMAC
+    rsip_aes_cipher_handle_t        aes_cipher;        // AES block cipher
+    rsip_aes_gcm_handle_t           aes_gcm;           // AES-GCM
+    rsip_aes_ccm_handle_t           aes_ccm;           // AES-CCM
+    rsip_aes_cmac_handle_t          aes_cmac;          // AES-CMAC
+    rsip_chacha20_handle_t          chacha20;          // ChaCha20
+    rsip_chacha20_poly1305_handle_t chacha20_poly1305; // ChaCha20-Poly1305
+    rsip_sha_handle_t               sha;               // SHA
+    rsip_hmac_handle_t              hmac;              // HMAC
+    rsip_kdf_sha_handle_t           kdf_sha;           // KDF SHA
+    rsip_kdf_hmac_handle_t          kdf_hmac;          // KDF HMAC
 } rsip_handle_t;
 
 /* State that specifies functions that can be called next */
 typedef enum e_rsip_state
 {
-    RSIP_STATE_MAIN,                    // Main
-    RSIP_STATE_AES_CIPHER,              // AES-ECB, AES-CBC, AES-CTR
-    RSIP_STATE_AES_XTS_UPDATE,          // XTS-AES update
-    RSIP_STATE_AES_XTS_FINISH,          // XTS-AES finalization
-    RSIP_STATE_AES_GCM_ENC_UPDATE_AAD,  // AES-GCM encryption, AAD input
-    RSIP_STATE_AES_GCM_ENC_UPDATE_TEXT, // AES-GCM encryption, plaintext/ciphertext input
-    RSIP_STATE_AES_GCM_DEC_UPDATE_AAD,  // AES-GCM decryption, AAD input
-    RSIP_STATE_AES_GCM_DEC_UPDATE_TEXT, // AES-GCM decryption, plaintext/ciphertext input
-    RSIP_STATE_AES_CCM_ENC_SET_LENGTH,  // AES-CCM encryption, length setting
-    RSIP_STATE_AES_CCM_ENC_UPDATE_AAD,  // AES-CCM encryption, AAD input
-    RSIP_STATE_AES_CCM_ENC_UPDATE_TEXT, // AES-CCM encryption, plaintext/ciphertext input
-    RSIP_STATE_AES_CCM_ENC_FINISH,      // AES-CCM encryption, finish
-    RSIP_STATE_AES_CCM_DEC_SET_LENGTH,  // AES-CCM decryption, length setting
-    RSIP_STATE_AES_CCM_DEC_UPDATE_AAD,  // AES-CCM decryption, AAD input
-    RSIP_STATE_AES_CCM_DEC_UPDATE_TEXT, // AES-CCM decryption, plaintext/ciphertext input
-    RSIP_STATE_AES_CCM_DEC_VERI,        // AES-CCM encryption, verification
-    RSIP_STATE_AES_CMAC,                // AES-CMAC
-    RSIP_STATE_CHACHA,                  // ChaCha20
-    RSIP_STATE_SHA,                     // SHA
-    RSIP_STATE_HMAC,                    // HMAC
-    RSIP_STATE_KDF_SHA,                 // KDF SHA
-    RSIP_STATE_KDF_HMAC,                // KDF HMAC
+    RSIP_STATE_MAIN,                        // Main
+    RSIP_STATE_AES_CIPHER,                  // AES-ECB, AES-CBC, AES-CTR
+    RSIP_STATE_AES_XTS_UPDATE,              // XTS-AES update
+    RSIP_STATE_AES_XTS_FINISH,              // XTS-AES finalization
+    RSIP_STATE_AES_GCM_ENC_UPDATE_AAD,      // AES-GCM encryption, AAD input
+    RSIP_STATE_AES_GCM_ENC_UPDATE_TEXT,     // AES-GCM encryption, plaintext/ciphertext input
+    RSIP_STATE_AES_GCM_DEC_UPDATE_AAD,      // AES-GCM decryption, AAD input
+    RSIP_STATE_AES_GCM_DEC_UPDATE_TEXT,     // AES-GCM decryption, plaintext/ciphertext input
+    RSIP_STATE_AES_CCM_ENC_SET_LENGTH,      // AES-CCM encryption, length setting
+    RSIP_STATE_AES_CCM_ENC_UPDATE_AAD,      // AES-CCM encryption, AAD input
+    RSIP_STATE_AES_CCM_ENC_UPDATE_TEXT,     // AES-CCM encryption, plaintext/ciphertext input
+    RSIP_STATE_AES_CCM_ENC_FINISH,          // AES-CCM encryption, finish
+    RSIP_STATE_AES_CCM_DEC_SET_LENGTH,      // AES-CCM decryption, length setting
+    RSIP_STATE_AES_CCM_DEC_UPDATE_AAD,      // AES-CCM decryption, AAD input
+    RSIP_STATE_AES_CCM_DEC_UPDATE_TEXT,     // AES-CCM decryption, plaintext/ciphertext input
+    RSIP_STATE_AES_CCM_DEC_VERI,            // AES-CCM encryption, verification
+    RSIP_STATE_AES_CMAC,                    // AES-CMAC
+    RSIP_STATE_CHACHA,                      // ChaCha20
+    RSIP_STATE_CHACHA_POLY_ENC_UPDATE_AAD,  // ChaCha20-Poly1305 encryption, AAD input
+    RSIP_STATE_CHACHA_POLY_ENC_UPDATE_TEXT, // ChaCha20-Poly1305 encryption, plaintext/ciphertext input
+    RSIP_STATE_CHACHA_POLY_DEC_UPDATE_AAD,  // ChaCha20-Poly1305 decryption, AAD input
+    RSIP_STATE_CHACHA_POLY_DEC_UPDATE_TEXT, // ChaCha20-Poly1305 decryption, plaintext/ciphertext input
+    RSIP_STATE_SHA,                         // SHA
+    RSIP_STATE_HMAC,                        // HMAC
+    RSIP_STATE_KDF_SHA,                     // KDF SHA
+    RSIP_STATE_KDF_HMAC,                    // KDF HMAC
 } rsip_state_t;
 
 /** RSIP private control block. DO NOT MODIFY. Initialization occurs when R_RSIP_Open() is called. */
@@ -616,6 +648,28 @@ fsp_err_t R_RSIP_ChaCha20_Update(rsip_ctrl_t * const   p_ctrl,
                                  uint32_t * const      p_output_length);
 fsp_err_t R_RSIP_ChaCha20_Finish(rsip_ctrl_t * const p_ctrl, uint8_t * const p_output,
                                  uint32_t * const p_output_length);
+fsp_err_t R_RSIP_ChaCha20_Poly1305_Init(rsip_ctrl_t * const              p_ctrl,
+                                        rsip_chacha_poly_mode_t const    mode,
+                                        rsip_wrapped_key_t const * const p_wrapped_key,
+                                        uint8_t const * const            p_nonce,
+                                        uint32_t const                   nonce_length);
+fsp_err_t R_RSIP_ChaCha20_Poly1305_AADUpdate(rsip_ctrl_t * const   p_ctrl,
+                                             uint8_t const * const p_aad,
+                                             uint32_t const        aad_length);
+fsp_err_t R_RSIP_ChaCha20_Poly1305_Update(rsip_ctrl_t * const   p_ctrl,
+                                          uint8_t const * const p_input,
+                                          uint32_t const        input_length,
+                                          uint8_t * const       p_output,
+                                          uint32_t * const      p_output_length);
+fsp_err_t R_RSIP_ChaCha20_Poly1305_Finish(rsip_ctrl_t * const p_ctrl,
+                                          uint8_t * const     p_output,
+                                          uint32_t * const    p_output_length,
+                                          uint8_t * const     p_tag);
+fsp_err_t R_RSIP_ChaCha20_Poly1305_Verify(rsip_ctrl_t * const   p_ctrl,
+                                          uint8_t * const       p_output,
+                                          uint32_t * const      p_output_length,
+                                          uint8_t const * const p_tag,
+                                          uint32_t const        tag_length);
 
 /* r_rsip_ecc.c */
 fsp_err_t R_RSIP_ECDSA_Sign(rsip_ctrl_t * const              p_ctrl,

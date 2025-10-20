@@ -115,6 +115,7 @@
 /***********************************************************************************************************************
  * Exported global variables (to be accessed by other files)
  **********************************************************************************************************************/
+void R_BSP_SAUInit(void);
 void R_BSP_SecurityInit(void);
 void R_BSP_PinCfgSecurityInit(void);
 void R_BSP_ElcCfgSecurityInit(void);
@@ -190,74 +191,14 @@ void R_BSP_NonSecureEnter (void)
 /** @} (end addtogroup BSP_MCU) */
 
 /*******************************************************************************************************************//**
- * Initialize security features for TrustZone.
+ * Initialize SAU regions for TrustZone.
  *
- * This function initializes ARM security register and Renesas SAR registers for secure projects.
+ * This function initializes ARM SAU regions for secure projects.
  *
  * @note IDAU settings must be configured to match project settings with a separate configuration tool.
  **********************************************************************************************************************/
-void R_BSP_SecurityInit (void)
+void R_BSP_SAUInit (void)
 {
-    /* Disable PRCR for SARs. */
-    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
-
-  #if 0 == BSP_FEATURE_TZ_HAS_DLM
-
-    /* If DLM is not implemented, then the TrustZone partitions must be set at run-time. */
-    R_PSCU->CFSAMONA = (uint32_t) FLASH_NS_START & ~BSP_FEATURE_TZ_NS_OFFSET & R_PSCU_CFSAMONA_CFS2_Msk;
-    R_PSCU->CFSAMONB = (uint32_t) FLASH_NSC_START & R_PSCU_CFSAMONB_CFS1_Msk;
-    R_PSCU->DFSAMON  = (uint32_t) DATA_FLASH_NS_START & R_PSCU_DFSAMON_DFS_Msk;
-    R_PSCU->SSAMONA  = (uint32_t) RAM_NS_START_S_ALIAS & R_PSCU_SSAMONA_SS2_Msk;
-    R_PSCU->SSAMONB  = (uint32_t) RAM_NSC_START & R_PSCU_SSAMONB_SS1_Msk;
-  #endif
-
-  #if (BSP_CFG_CPU_CORE == 0) && (BSP_FEATURE_BSP_HAS_ITCM)
-
-    /* Total ITCM block size in bytes is equal to 2 ^ (BLKSZ + 5). */
-    uint32_t itcm_block_exponent =
-        ((MEMSYSCTL->ITGU_CFG & MEMSYSCTL_ITGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_ITGU_CFG_BLKSZ_Pos) +
-        5U;
-    uint32_t itcm_block_size = (1U << itcm_block_exponent);
-
-    /* The number of secure ITCM blocks is equal to size of the secure region in bytes divided by the ITCM block size. */
-    uint32_t itcm_num_sec_blocks =
-        ((uint32_t) gp_ddsc_ITCM_END + itcm_block_size - 1 - (uint32_t) gp_ddsc_ITCM_START) >>
-        itcm_block_exponent;
-
-    /* Set all secure blocks to '0' and all non-secure blocks to 1. */
-    MEMSYSCTL->ITGU_LUT[0] = ~((1U << itcm_num_sec_blocks) - 1U);
-  #endif
-
-  #if (BSP_CFG_CPU_CORE == 0) && (BSP_FEATURE_BSP_HAS_DTCM)
-
-    /* Total DTCM block size in bytes is equal to 2 ^ (BLKSZ + 5). */
-    uint32_t dtcm_block_exponent =
-        ((MEMSYSCTL->DTGU_CFG & MEMSYSCTL_DTGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_DTGU_CFG_BLKSZ_Pos) +
-        5U;
-    uint32_t dtcm_block_size = (1U << dtcm_block_exponent);
-
-    /* The number of secure DTCM blocks is equal to size of the secure region in bytes divided by the DTCM block size. */
-    uint32_t dtcm_num_sec_blocks =
-        ((uint32_t) gp_ddsc_DTCM_END + dtcm_block_size - 1 - (uint32_t) gp_ddsc_DTCM_START) >>
-        dtcm_block_exponent;
-
-    /* Set all secure blocks to '0' and all non-secure blocks to 1. */
-    MEMSYSCTL->DTGU_LUT[0] = ~((1U << dtcm_num_sec_blocks) - 1U);
-  #endif
-
-  #if (BSP_CFG_CPU_CORE == 1) && defined(R_TCM)
-   #ifdef BSP_PARTITION_CTCM_CPU1_S_START
-
-    /* Set boundary address for CTCM S/NS */
-    R_CPSCU->TCMSABARC = BSP_PARTITION_CTCM_CPU1_S_START + BSP_PARTITION_CTCM_CPU1_S_SIZE;
-   #endif
-   #ifdef BSP_PARTITION_STCM_CPU1_S_START
-
-    /* Set boundary address for STCM S/NS */
-    R_CPSCU->TCMSABARS = BSP_PARTITION_STCM_CPU1_S_START + BSP_PARTITION_STCM_CPU1_S_SIZE;
-   #endif
-  #endif
-
   #if __SAUREGION_PRESENT
    #if !BSP_SECONDARY_CORE_BUILD
 
@@ -334,6 +275,82 @@ void R_BSP_SecurityInit (void)
     /* Setting SAU_CTRL.ALLNS to 1 allows the security attribution of all addresses to be set by the IDAU in the
      * system. */
     SAU->CTRL = SAU_CTRL_ALLNS_Msk;
+  #endif
+}
+
+/*******************************************************************************************************************//**
+ * Initialize security features for TrustZone.
+ *
+ * This function initializes ARM security register and Renesas SAR registers for secure projects.
+ *
+ * @note IDAU settings must be configured to match project settings with a separate configuration tool.
+ **********************************************************************************************************************/
+void R_BSP_SecurityInit (void)
+{
+    /* Disable PRCR for SARs. */
+    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
+
+  #if 0 == BSP_FEATURE_TZ_HAS_DLM
+
+    /* If DLM is not implemented, then the TrustZone partitions must be set at run-time. */
+    R_PSCU->CFSAMONA = (uint32_t) FLASH_NS_START & ~BSP_FEATURE_TZ_NS_OFFSET & R_PSCU_CFSAMONA_CFS2_Msk;
+    R_PSCU->CFSAMONB = (uint32_t) FLASH_NSC_START & R_PSCU_CFSAMONB_CFS1_Msk;
+    R_PSCU->DFSAMON  = (uint32_t) DATA_FLASH_NS_START & R_PSCU_DFSAMON_DFS_Msk;
+    R_PSCU->SSAMONA  = (uint32_t) RAM_NS_START_S_ALIAS & R_PSCU_SSAMONA_SS2_Msk;
+    R_PSCU->SSAMONB  = (uint32_t) RAM_NSC_START & R_PSCU_SSAMONB_SS1_Msk;
+  #endif
+
+  #if (BSP_CFG_CPU_CORE == 0) && (BSP_FEATURE_BSP_HAS_ITCM)
+
+    /* Total ITCM block size in bytes is equal to 2 ^ (BLKSZ + 5). */
+    uint32_t itcm_block_exponent =
+        ((MEMSYSCTL->ITGU_CFG & MEMSYSCTL_ITGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_ITGU_CFG_BLKSZ_Pos) +
+        5U;
+    uint32_t itcm_block_size = (1U << itcm_block_exponent);
+
+    /* The number of secure ITCM blocks is equal to size of the secure region in bytes divided by the ITCM block size. */
+    uint32_t itcm_num_sec_blocks =
+        ((uint32_t) gp_ddsc_ITCM_END + itcm_block_size - 1 - (uint32_t) gp_ddsc_ITCM_START) >>
+        itcm_block_exponent;
+
+    /* Set all secure blocks to '0' and all non-secure blocks to 1. */
+    MEMSYSCTL->ITGU_LUT[0] = ~((1U << itcm_num_sec_blocks) - 1U);
+  #endif
+
+  #if (BSP_CFG_CPU_CORE == 0) && (BSP_FEATURE_BSP_HAS_DTCM)
+
+    /* Total DTCM block size in bytes is equal to 2 ^ (BLKSZ + 5). */
+    uint32_t dtcm_block_exponent =
+        ((MEMSYSCTL->DTGU_CFG & MEMSYSCTL_DTGU_CFG_BLKSZ_Msk) >> MEMSYSCTL_DTGU_CFG_BLKSZ_Pos) +
+        5U;
+    uint32_t dtcm_block_size = (1U << dtcm_block_exponent);
+
+    /* The number of secure DTCM blocks is equal to size of the secure region in bytes divided by the DTCM block size. */
+    uint32_t dtcm_num_sec_blocks =
+        ((uint32_t) gp_ddsc_DTCM_END + dtcm_block_size - 1 - (uint32_t) gp_ddsc_DTCM_START) >>
+        dtcm_block_exponent;
+
+    /* Set all secure blocks to '0' and all non-secure blocks to 1. */
+    MEMSYSCTL->DTGU_LUT[0] = ~((1U << dtcm_num_sec_blocks) - 1U);
+  #endif
+
+  #if (BSP_CFG_CPU_CORE == 1) && defined(R_TCM)
+   #ifdef BSP_PARTITION_CTCM_CPU1_S_START
+
+    /* Set boundary address for CTCM S/NS */
+    R_CPSCU->TCMSABARC = BSP_PARTITION_CTCM_CPU1_S_START + BSP_PARTITION_CTCM_CPU1_S_SIZE;
+   #endif
+   #ifdef BSP_PARTITION_STCM_CPU1_S_START
+
+    /* Set boundary address for STCM S/NS */
+    R_CPSCU->TCMSABARS = BSP_PARTITION_STCM_CPU1_S_START + BSP_PARTITION_STCM_CPU1_S_SIZE;
+   #endif
+  #endif
+
+  #if !BSP_SECONDARY_CORE_BUILD
+
+    /* Skip SAU init on secondary build since it is being done earlier in system initialization. */
+    R_BSP_SAUInit();
   #endif
 
     /* The following section of code to configure SCB->AIRCR, SCB->NSACR, and FPU->FPCCR is taken from
@@ -422,9 +439,9 @@ void R_BSP_SecurityInit (void)
   #endif
 
     BSP_PRV_SAR_WRITE(R_CPSCU->ICUSARA, BSP_TZ_CFG_ICUSARA); /* External IRQ Security Attribution. */
+    BSP_PRV_SAR_WRITE(R_CPSCU->ICUSARB, BSP_TZ_CFG_ICUSARB); /* NMI Security Attribution. */
 
   #if !BSP_SECONDARY_CORE_BUILD
-    R_CPSCU->ICUSARB = BSP_TZ_CFG_ICUSARB;                   /* NMI Security Attribution. */
    #ifdef BSP_TZ_CFG_ICUSARC
     R_CPSCU->ICUSARC = BSP_TZ_CFG_ICUSARC;                   /* DMAC Channel Security Attribution. */
    #endif

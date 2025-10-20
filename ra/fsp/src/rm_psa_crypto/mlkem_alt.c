@@ -6,6 +6,7 @@
 #include "mbedtls/threading.h"
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
+#include "psa/crypto.h"
 
 #include <string.h>
 
@@ -13,7 +14,7 @@
 #include "r_pqc_api.h"
 #include "r_sha_api.h"
 
-#define PQC_BUF_BYTESIZE    (8496U)
+#define PQC_BUF_BYTESIZE    (15664U)
 #define PQC_SHA_BYTESIZE    (224U)
 #define PQC_MLKEM_DKD_LEN_CALC_VAL      (0xCU)
 #define PQC_MLKEM_N                     (256U)
@@ -25,16 +26,40 @@
 static uint32_t pqc_buf[PQC_BUF_BYTESIZE / 4];
 static uint32_t sha_buf[PQC_SHA_BYTESIZE / 4];
 
+#if defined(MBEDTLS_SHA3_C) 
+typedef struct pqc_hash_ctx
+{
+    psa_hash_operation_t hash_operation;
+    psa_algorithm_t alg;
+    size_t hash_buf_len;
+
+} pqc_hash_ctx_t;
+#endif /* MBEDTLS_SHA3_C */
+
 st_pqc_hash_t      hash_info_sha3_256;
 st_pqc_hash_t      hash_info_sha3_512;
 st_pqc_hash_t      hash_info_shake128;
 st_pqc_hash_t      hash_info_shake256;
+#if defined(MBEDTLS_SHA3_C) 
+pqc_hash_ctx_t       ctx_sw_sha3_256;
+pqc_hash_ctx_t       ctx_sw_sha3_512;
+#else
 st_sha_ctx_t       ctx_sw_sha3_256;
 st_sha_ctx_t       ctx_sw_sha3_512;
+#endif /* MBEDTLS_SHA3_C */
 st_sha_ctx_t       ctx_sw_shake128;
 st_sha_ctx_t       ctx_sw_shake256; 
 
 static void pqc_initialize_hash(st_pqc_mlkem_ctx_t * ctx, mbedtls_mlkem_bits_t bits);
+#if defined(MBEDTLS_SHA3_C) 
+uint32_t pqc_sha3_accel_init (void * const p_hash_ctx);
+uint32_t pqc_sha3_accel_update (void * const p_hash_ctx,
+                                const uint32_t * const p_data,
+                                const uint32_t data_len);
+uint32_t pqc_sha3_accel_final (void * const p_hash_ctx,
+                                uint32_t * const p_md,
+                                uint32_t * const p_md_len);
+#endif /* MBEDTLS_SHA3_C */
 uint32_t pqc_sha3_internal_init (void * const p_hash_ctx);
 uint32_t pqc_sha3_internal_update (void * const p_hash_ctx,
                                 const uint32_t * const p_data,
@@ -66,15 +91,31 @@ void pqc_initialize_hash(st_pqc_mlkem_ctx_t * ctx, mbedtls_mlkem_bits_t bits)
     ctx->p_hash_info_shake128    = &hash_info_shake128;
     ctx->p_hash_info_shake256    = &hash_info_shake256;
 
+#if defined(MBEDTLS_SHA3_C) 
+    ctx_sw_sha3_256.alg                 = PSA_ALG_SHA3_256;
+    ctx_sw_sha3_512.alg                 = PSA_ALG_SHA3_512;
+#else
     ctx_sw_sha3_256.algo_opt            = SHA_ALGO_SHA3_256;
     ctx_sw_sha3_256.p_buf               = sha_buf;
     ctx_sw_sha3_512.algo_opt            = SHA_ALGO_SHA3_512;
     ctx_sw_sha3_512.p_buf               = sha_buf;
+#endif /* MBEDTLS_SHA3_C */
     ctx_sw_shake128.algo_opt            = SHA_ALGO_SHAKE128;
     ctx_sw_shake128.p_buf               = sha_buf;
     ctx_sw_shake256.algo_opt            = SHA_ALGO_SHAKE256;
     ctx_sw_shake256.p_buf               = sha_buf;
 
+#if defined(MBEDTLS_SHA3_C) 
+    hash_info_sha3_256.p_hash_ctx               = &ctx_sw_sha3_256;
+    hash_info_sha3_256.p_hash_init_api          = pqc_sha3_accel_init;
+    hash_info_sha3_256.p_hash_update_api        = pqc_sha3_accel_update;
+    hash_info_sha3_256.p_hash_final_api         = pqc_sha3_accel_final;
+
+    hash_info_sha3_512.p_hash_ctx               = &ctx_sw_sha3_512;
+    hash_info_sha3_512.p_hash_init_api          = pqc_sha3_accel_init;
+    hash_info_sha3_512.p_hash_update_api        = pqc_sha3_accel_update;
+    hash_info_sha3_512.p_hash_final_api         = pqc_sha3_accel_final;
+#else
     hash_info_sha3_256.p_hash_ctx               = &ctx_sw_sha3_256;
     hash_info_sha3_256.p_hash_init_api          = pqc_sha3_internal_init;
     hash_info_sha3_256.p_hash_update_api        = pqc_sha3_internal_update;
@@ -84,6 +125,7 @@ void pqc_initialize_hash(st_pqc_mlkem_ctx_t * ctx, mbedtls_mlkem_bits_t bits)
     hash_info_sha3_512.p_hash_init_api          = pqc_sha3_internal_init;
     hash_info_sha3_512.p_hash_update_api        = pqc_sha3_internal_update;
     hash_info_sha3_512.p_hash_final_api         = pqc_sha3_internal_final;
+#endif /* MBEDTLS_SHA3_C */
 
     hash_info_shake128.p_hash_ctx               = &ctx_sw_shake128;
     hash_info_shake128.p_hash_init_api          = pqc_sha3_internal_init;
@@ -95,6 +137,34 @@ void pqc_initialize_hash(st_pqc_mlkem_ctx_t * ctx, mbedtls_mlkem_bits_t bits)
     hash_info_shake256.p_hash_update_api        = pqc_sha3_internal_update;
     hash_info_shake256.p_hash_final_api         = pqc_sha3_internal_final;
 }
+
+#if defined(MBEDTLS_SHA3_C) 
+uint32_t pqc_sha3_accel_init (void * const p_hash_ctx)
+{
+    pqc_hash_ctx_t *ctx = (pqc_hash_ctx_t*)p_hash_ctx;
+    ctx->hash_buf_len = PSA_HASH_LENGTH(ctx->alg);
+    psa_status_t status = psa_hash_setup(&ctx->hash_operation, ctx->alg);
+    return (PSA_SUCCESS == status) ? PQC_RET_OK : PQC_RET_INTERNALERR;
+}
+
+uint32_t pqc_sha3_accel_update (void * const p_hash_ctx,
+                                const uint32_t * const p_data,
+                                const uint32_t data_len)
+{
+    pqc_hash_ctx_t *ctx = (pqc_hash_ctx_t*)p_hash_ctx;
+    psa_status_t status = psa_hash_update(&ctx->hash_operation, (uint8_t*)p_data, (size_t)data_len);
+    return (PSA_SUCCESS == status) ? PQC_RET_OK : PQC_RET_INTERNALERR;
+}
+
+uint32_t pqc_sha3_accel_final (void * const p_hash_ctx,
+                                uint32_t * const p_md,
+                                uint32_t * const p_md_len)
+{
+    pqc_hash_ctx_t *ctx = (pqc_hash_ctx_t*)p_hash_ctx;
+    psa_status_t status = psa_hash_finish(&ctx->hash_operation, (uint8_t*)p_md, ctx->hash_buf_len, (size_t*)p_md_len);
+    return (PSA_SUCCESS == status) ? PQC_RET_OK : PQC_RET_INTERNALERR;
+}
+#endif /* MBEDTLS_SHA3_C */
 
 uint32_t pqc_sha3_internal_init (void * const p_hash_ctx)
 {

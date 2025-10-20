@@ -105,8 +105,9 @@ const timer_api_t g_timer_on_tau_pwm =
  * @snippet r_tau_pwm_example.c R_TAU_PWM_Open
  *
  * @retval FSP_SUCCESS                    Initialization was successful
- * @retval FSP_ERR_ASSERTION              A required input pointer is NULL, the source divider/period/duty cycle counts
- *                                        or number of slave channels is invalid.
+ * @retval FSP_ERR_ASSERTION              A required input pointer is NULL, or one of the following is invalid: the
+ *                                        count of source divider/period/duty cycle/slave channels, or the trigger
+ *                                        source.
  * @retval FSP_ERR_ALREADY_OPEN           Module is already open.
  * @retval FSP_ERR_IRQ_BSP_DISABLED       ISR of master channel must be enabled
  * @retval FSP_ERR_INVALID_MODE           Invalid configuration option provided for selected timer mode
@@ -584,8 +585,9 @@ fsp_err_t R_TAU_PWM_Close (timer_ctrl_t * const p_ctrl)
  * @param[in]  p_cfg                   Pointer to timer configuration.
  *
  * @retval FSP_SUCCESS                    Initialization was successful and timer has started.
- * @retval FSP_ERR_ASSERTION              A required input pointer is NULL, the source divider/period/duty cycle counts
- *                                        or number of slave channels is invalid.
+ * @retval FSP_ERR_ASSERTION              A required input pointer is NULL, or one of the following is invalid: the
+ *                                        count of source divider/period/duty cycle/slave channels, or the trigger
+ *                                        source.
  * @retval FSP_ERR_ALREADY_OPEN           Module is already open.
  * @retval FSP_ERR_IRQ_BSP_DISABLED       ISR of master channel must be enabled
  * @retval FSP_ERR_INVALID_MODE           Simultaneous Channel Operation Function of TAU only support
@@ -613,6 +615,7 @@ static fsp_err_t r_tau_pwm_parameter_checking (tau_pwm_instance_ctrl_t * const p
     tau_pwm_extended_cfg_t * p_extend = (tau_pwm_extended_cfg_t *) p_cfg->p_extend;
     uint32_t                 slave_channels_configured = 0U;
 
+ #if BSP_FEATURE_ELC_VERSION
     if (TAU_PWM_SOURCE_ELC_EVENT == p_extend->trigger_source)
     {
         /* ELC event trigger source only supported in TIMER_MODE_ONE_SHOT mode. */
@@ -624,6 +627,12 @@ static fsp_err_t r_tau_pwm_parameter_checking (tau_pwm_instance_ctrl_t * const p
         /* PCLK (undivided) must be selected when ELC is used as the trigger source. */
         FSP_ASSERT(TIMER_SOURCE_DIV_1 == p_cfg->source_div);
     }
+
+ #else
+
+    /* Trigger source must be TAU_PWM_SOURCE_PIN_INPUT if ELC is not supported. */
+    FSP_ASSERT(TAU_PWM_SOURCE_PIN_INPUT == p_extend->trigger_source);
+ #endif
 
  #if (0 == TAU_PWM_CFG_MULTI_SLAVE_ENABLE)
     const uint8_t index = 0;
@@ -731,6 +740,7 @@ static void r_tau_pwm_master_channel_initialize (tau_pwm_instance_ctrl_t * p_ins
 #if TAU_PWM_CFG_ONE_SHOT_MODE_ENABLE
     if (TIMER_MODE_ONE_SHOT == p_cfg->mode)
     {
+ #if BSP_FEATURE_ELC_VERSION
         if (0U == p_cfg->channel)
         {
             /* Sets the trigger source in case master channel is 0 */
@@ -739,6 +749,7 @@ static void r_tau_pwm_master_channel_initialize (tau_pwm_instance_ctrl_t * p_ins
             tis1         |= (uint8_t) p_extend->trigger_source;
             R_PORGA->TIS1 = tis1;
         }
+ #endif
 
         /* Clear the noise filter */
         uint8_t tnfen = R_PORGA->TNFEN & (uint8_t) ~(p_instance_ctrl->master_channel_mask);

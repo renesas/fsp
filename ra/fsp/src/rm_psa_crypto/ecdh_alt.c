@@ -531,7 +531,7 @@ static int ecdh_make_public_internal(mbedtls_ecdh_context_mbed *ctx,
         return ret;
     }
 #else
-#if BSP_FEATURE_CRYPTO_HAS_ECC_WRAPPED
+#if BSP_FEATURE_RSIP_RSIP_E11A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E31A_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E50D_SUPPORTED || BSP_FEATURE_RSIP_RSIP_E51A_SUPPORTED || BSP_FEATURE_RSIP_SCE7_SUPPORTED || BSP_FEATURE_RSIP_SCE9_SUPPORTED
     ctx->grp.vendor_ctx = (void *) true;
 #endif
     if ((ret = mbedtls_ecdh_gen_public(&ctx->grp, &ctx->d, &ctx->Q,

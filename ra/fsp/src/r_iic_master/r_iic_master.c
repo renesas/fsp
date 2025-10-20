@@ -46,9 +46,6 @@
 /* The transmit data empty interrupt enable bit */
 #define IIC_MASTER_TXI_EN_BIT                       (0x80)
 
-/* Bit position for STOP condition flag in ICSR2 */
-#define IIC_MASTER_ICSR2_STOP_BIT                   (0x08U)
-
 #define IIC_MASTER_BUS_RATE_REG_RESERVED_BITS       (0xE0U)
 #define IIC_MASTER_INTERNAL_REF_CLOCK_SELECT_MAX    (0x07U)
 
@@ -237,6 +234,15 @@ fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cf
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
 
+    p_ctrl->p_buff    = NULL;
+    p_ctrl->total     = 0U;
+    p_ctrl->remain    = 0U;
+    p_ctrl->loaded    = 0U;
+    p_ctrl->read      = false;
+    p_ctrl->restart   = false;
+    p_ctrl->err       = false;
+    p_ctrl->restarted = false;
+
     R_BSP_MODULE_START(FSP_IP_IIC, p_cfg->channel);
 
     /* Open the hardware in master mode. Performs IIC initialization as described in hardware manual (see
@@ -255,15 +261,7 @@ fsp_err_t R_IIC_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_cf
     }
 #endif
 
-    p_ctrl->p_buff    = NULL;
-    p_ctrl->total     = 0U;
-    p_ctrl->remain    = 0U;
-    p_ctrl->loaded    = 0U;
-    p_ctrl->read      = false;
-    p_ctrl->restart   = false;
-    p_ctrl->err       = false;
-    p_ctrl->restarted = false;
-    p_ctrl->open      = IIC_MASTER_OPEN;
+    p_ctrl->open = IIC_MASTER_OPEN;
 
     return FSP_SUCCESS;
 }
@@ -893,6 +891,9 @@ static fsp_err_t iic_master_run_hw_master (iic_master_instance_ctrl_t * const p_
      */
     NVIC_EnableIRQ(p_ctrl->p_cfg->txi_irq);
 
+    /* Clear error flags in case they are set unexpectedly, e.g stop condition in multil-master use case */
+    p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(R_IIC0_ICSR2_STOP_Msk | R_IIC0_ICSR2_START_Msk);
+
     /* Enable SPIE to detect unexpected STOP condition. This is disabled between communication events as it can lead
      * to undesired interrupts in multi-master setups. */
     p_ctrl->p_reg->ICIER = IIC_MASTER_INTERRUPT_ENABLE_INIT_MASK | R_IIC0_ICIER_STIE_Msk | R_IIC0_ICIER_SPIE_Msk;
@@ -1144,7 +1145,7 @@ static void iic_master_tei_master (iic_master_instance_ctrl_t * p_ctrl)
             /* Clear STOP flag and set SP.
              * It is ok to clear other status' as this transaction is over.
              */
-            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(IIC_MASTER_ICSR2_STOP_BIT);
+            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(R_IIC0_ICSR2_STOP_Msk);
 
             /* Request IIC to issue the stop condition */
             p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */
@@ -1227,16 +1228,16 @@ static void iic_master_err_master (iic_master_instance_ctrl_t * p_ctrl)
         /* This interrupt will be fired again when wither stop condition is sent
          * or the hardware detects the line is stuck low causing a timeout */
     }
-    /* This is a STOP, START or RESTART event. We need to process these events only at the
-     * end of the requisite transfers.
+    /* This is a STOP or RESTART event. Please note there may be expected start/stop condition in multi-master use case.
      * NOTE: Do not use p_transfer->loaded or p_transfer->remain to check whether the transfer is
      * completed, since using them would lead to a race condition between txi and eri interrupts in case
-     * of one byte transfer which will result in BUS arbitration loss error */
+     * of one byte transfer which will result in BUS arbitration loss error.
+     */
     else if ((errs_events & (uint8_t) IIC_MASTER_ERR_EVENT_STOP) ||
              ((p_ctrl->restarted) && (errs_events & (uint8_t) IIC_MASTER_ERR_EVENT_START)))
     {
         i2c_master_event_t event = I2C_MASTER_EVENT_ABORTED;
-        if (false == p_ctrl->err)      /* Successful transaction */
+        if ((0 == p_ctrl->remain) && (false == p_ctrl->err)) /* Successful transaction */
         {
             /* Get the correct event to notify the user */
             event = (p_ctrl->read) ? I2C_MASTER_EVENT_RX_COMPLETE : I2C_MASTER_EVENT_TX_COMPLETE;
@@ -1327,7 +1328,7 @@ static void iic_master_rxi_read_data (iic_master_instance_ctrl_t * const p_ctrl)
             /* Clear STOP flag and set SP.
              * It is ok to clear other status' as this transaction is over.
              */
-            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(IIC_MASTER_ICSR2_STOP_BIT);
+            p_ctrl->p_reg->ICSR2 &= (uint8_t) ~(R_IIC0_ICSR2_STOP_Msk);
 
             /* Request IIC to issue the stop condition */
             p_ctrl->p_reg->ICCR2 = (uint8_t) IIC_MASTER_ICCR2_SP_BIT_MASK; /* It is safe to write 0's to other bits. */

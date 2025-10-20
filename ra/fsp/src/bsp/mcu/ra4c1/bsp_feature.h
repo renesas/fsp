@@ -89,8 +89,6 @@
 #define BSP_FEATURE_BSP_HAS_ITCM                                  (0UL)             // Indicates ITCM is available.
 #define BSP_FEATURE_BSP_HAS_OFS2                                  (0UL)             // Indicates the OFS2 register is available.
 #define BSP_FEATURE_BSP_HAS_OFS3                                  (0UL)             // OSF3 register is available; currently only available for RA8.
-#define BSP_FEATURE_BSP_HAS_SCE_ON_RA2                            (0UL)             // Indicates the AES peripheral is available for an RA2 device.
-#define BSP_FEATURE_BSP_HAS_SCE5                                  (0UL)             // Indicates the SCE5 crypto engine is available.
 #define BSP_FEATURE_BSP_HAS_SECURITY_MPU                          (0UL)             // Indicates the MCU has security MPU systems available.
 #define BSP_FEATURE_BSP_HAS_SP_MON                                (0UL)             // Indicates the Stack Pointer monitor is available.
 #define BSP_FEATURE_BSP_HAS_SYRACCR                               (0UL)             // SYRACCR register is available.
@@ -136,6 +134,8 @@
 #define BSP_FEATURE_CGC_HAS_FLWT                                  (0UL)             // FLWT register is available.
 #define BSP_FEATURE_CGC_HAS_HOCOWTCR                              (0UL)             // HOCOWTCR register is available.
 #define BSP_FEATURE_CGC_HAS_MEMWAIT                               (1UL)             // MEMWAIT register is available.
+#define BSP_FEATURE_CGC_HAS_MOCO                                  (1UL)             // Middle clock oscillator is available.
+#define BSP_FEATURE_CGC_HAS_MOSC                                  (1UL)             // Main clock oscillator is available.
 #define BSP_FEATURE_CGC_HAS_MRICLK                                (0UL)             // MRAM bus clock is available.
 #define BSP_FEATURE_CGC_HAS_NPUCLK                                (0UL)             // NPU clock is available.
 #define BSP_FEATURE_CGC_HAS_OSTDCSE                               (0UL)             // OSTDCSE register is available.
@@ -199,15 +199,6 @@
 #define BSP_FEATURE_CRC_POLYNOMIAL_MASK                           (0x3EU)           // Mask of available CRC polynomials; should match the mask of indexes relating to r_crc_api.h::crc_polynomial_t.
 #define BSP_FEATURE_CRC_SNOOP_ADDRESS_TYPE_TDR                    (0x00UL)          // Used to indicate the type of register being snooped on; derived from the least-significant nybble of the address of SCI TDR registers.
 
-#define BSP_FEATURE_CRYPTO_HAS_AES                                (1UL)             // AES support is available.
-#define BSP_FEATURE_CRYPTO_HAS_AES_WRAPPED                        (1UL)             // AES support with key-wrapping is available.
-#define BSP_FEATURE_CRYPTO_HAS_CTR_DRBG                           (1UL)             // AES CTR-DRBG pseudo random number support is available.
-#define BSP_FEATURE_CRYPTO_HAS_ECC                                (1UL)             // ECC support is available.
-#define BSP_FEATURE_CRYPTO_HAS_ECC_WRAPPED                        (1UL)             // ECC support with key-wrapping is available.
-#define BSP_FEATURE_CRYPTO_HAS_HASH                               (1UL)             // Hashing support is available.
-#define BSP_FEATURE_CRYPTO_HAS_RSA                                (0UL)             // RSA support is available.
-#define BSP_FEATURE_CRYPTO_HAS_RSA_WRAPPED                        (0UL)             // RSA support with key-wrapping is available.
-
 #define BSP_FEATURE_CTSU_IS_AVAILABLE                             (0UL)
 #define BSP_FEATURE_CTSU_CTSUCHAC_REGISTER_COUNT                  (0UL)             // Feature not available on this device.
 #define BSP_FEATURE_CTSU_CTSUCHTRC_REGISTER_COUNT                 (0UL)             // Feature not available on this device.
@@ -255,6 +246,7 @@
 
 #define BSP_FEATURE_ESWM_IS_AVAILABLE                             (0UL)
 #define BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM                       (0UL)             // Feature not available on this device.
+#define BSP_FEATURE_ESWM_FRER_TABLE_SIZE                          (0UL)             // Feature not available on this device.
 #define BSP_FEATURE_ESWM_GPTP_PULSE_GENERATOR_NUM                 (0UL)             // Feature not available on this device.
 #define BSP_FEATURE_ESWM_GPTP_TIMER_NUM                           (0UL)             // Feature not available on this device.
 #define BSP_FEATURE_ESWM_GWCA_PORT                                (0UL)             // Feature not available on this device.
@@ -262,6 +254,7 @@
 #define BSP_FEATURE_ESWM_HAS_DOMAIN                               (0UL)             // Feature not available on this device.
 #define BSP_FEATURE_ESWM_HAS_ESWPHY_CLOCK                         (0UL)             // Feature not available on this device.
 #define BSP_FEATURE_ESWM_MAX_QUEUE_NUM                            (0UL)             // Feature not available on this device.
+#define BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM              (0UL)             // Feature not available on this device.
 
 #define BSP_FEATURE_ETHER_IS_AVAILABLE                            (0UL)
 #define BSP_FEATURE_ETHER_FIFO_DEPTH                              (0x00UL)          // Feature not available on this device.
@@ -371,6 +364,7 @@
 
 #define BSP_FEATURE_IOPORT_CCD_PINS_MASK                          (0x00UL)          // Mask of valid indices for CCD pins.
 #define BSP_FEATURE_IOPORT_ELC_PORTS_MASK                         (0x1EUL)          // Mask of valid indices for ELC signal mapping of port input data.
+#define BSP_FEATURE_IOPORT_HAS_LVOCR                              (0UL)             // The LVOCR register is available.
 #define BSP_FEATURE_IOPORT_VERSION                                (1UL)             // Version of the system PFS block.
 
 #define BSP_FEATURE_IWDT_IS_AVAILABLE                             (1UL)

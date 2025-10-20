@@ -2010,6 +2010,7 @@ void fcu_frdyi_isr (void)
         if (NULL != p_ctrl->p_cfg->p_callback)
         {
             cb_data.p_context = p_ctrl->p_cfg->p_context;
+            cb_data.data      = 0U;
 
             /* Set data to identify callback to user, then call user callback. */
             p_ctrl->p_cfg->p_callback(&cb_data);

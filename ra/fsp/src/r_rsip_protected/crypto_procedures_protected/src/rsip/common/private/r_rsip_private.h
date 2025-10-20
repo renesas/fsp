@@ -59,6 +59,12 @@ typedef rsip_ret_t (* rsip_func_aes_gcm_init_t)(const uint32_t InData_KeyIndex[]
 typedef rsip_ret_t (* rsip_func_ghash_t)(const uint32_t InData_HV[], const uint32_t InData_IV[],
                                          const uint32_t InData_Text[], uint32_t OutData_DataT[], uint32_t MAX_CNT);
 
+/* ChaCha20-Poly1305 */
+typedef rsip_ret_t (* rsip_func_chacha_poly_init_t)(const uint32_t * InData_KeyIndex, const uint32_t * InData_Nonce,
+                                                    const uint32_t * InData_TextLen, const uint32_t * InData_DataALen);
+typedef rsip_ret_t (* rsip_func_chacha_poly_resume_t)(const uint32_t * InData_KeyIndex, const uint32_t * InData_Nonce,
+                                                      const uint32_t * InData_State);
+
 /* ECDSA */
 typedef rsip_ret_t (* rsip_func_ecdsa_sign_t)(const uint32_t InData_KeyIndex[], const uint32_t InData_MsgDgst[],
                                               uint32_t OutData_Signature[]);
@@ -191,6 +197,21 @@ typedef struct st_rsip_func_subset_chacha20
                             const uint32_t * InData_State);
 } rsip_func_subset_chacha20_t;
 
+/* ChaCha20-Poly1305 */
+typedef struct st_rsip_func_subset_chacha20_poly1305
+{
+    rsip_func_chacha_poly_init_t p_init_enc;
+    rsip_func_chacha_poly_init_t p_init_dec;
+    void (* p_updateAad)(const uint32_t * InData_DataA, uint32_t MAX_CNT);
+    void (* p_updateTransition)();
+    void (* p_update)(const uint32_t * InData_Text, uint32_t * OutData_Text, uint32_t MAX_CNT);
+    rsip_ret_t (* p_final)(const uint32_t * InData_Text, const uint32_t * InData_DataT, uint32_t * OutData_Text,
+                           uint32_t * OutData_DataT, uint32_t MAX_CNT);
+    rsip_ret_t (* p_suspend)(uint32_t * OutData_State);
+    rsip_func_chacha_poly_resume_t p_resume_enc;
+    rsip_func_chacha_poly_resume_t p_resume_dec;
+} rsip_func_subset_chacha20_poly1305_t;
+
 /* PKI */
 typedef struct st_rsip_func_subset_pki_ecdsa_verify
 {
@@ -255,7 +276,8 @@ extern const rsip_func_subset_aes_ccm_t    gp_func_aes_ccm_enc[RSIP_PRV_KEY_SUBT
 extern const rsip_func_subset_aes_ccm_t    gp_func_aes_ccm_dec[RSIP_PRV_KEY_SUBTYPE_AES_NUM];
 extern const rsip_func_subset_aes_cmac_t   gp_func_aes_cmac[RSIP_PRV_KEY_SUBTYPE_AES_NUM];
 
-extern const rsip_func_subset_chacha20_t gp_func_chacha20[RSIP_PRV_KEY_SUBTYPE_CHACHA_NUM];
+extern const rsip_func_subset_chacha20_t          gp_func_chacha20[RSIP_PRV_KEY_SUBTYPE_CHACHA_NUM];
+extern const rsip_func_subset_chacha20_poly1305_t gp_func_chacha20_poly1305[RSIP_PRV_KEY_SUBTYPE_CHACHA_NUM];
 
 extern const rsip_func_ecdsa_sign_t   gp_func_ecdsa_sign[RSIP_PRV_KEY_SUBTYPE_ECC_NUM];
 extern const rsip_func_ecdsa_verify_t gp_func_ecdsa_verify[RSIP_PRV_KEY_SUBTYPE_ECC_NUM];
@@ -352,7 +374,7 @@ fsp_err_t get_rfc3394_key_wrap_param(rsip_key_type_t key_type,
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_sha1sha2_init_update(rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_init_update(rsip_hash_type_t hash_type,
                                        const uint8_t  * p_message,
                                        uint64_t         message_length,
                                        uint32_t       * internal_state);
@@ -370,7 +392,7 @@ rsip_ret_t r_rsip_sha1sha2_init_update(rsip_hash_type_t hash_type,
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_sha1sha2_resume_update(rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_resume_update(rsip_hash_type_t hash_type,
                                          const uint8_t  * p_message,
                                          uint64_t         message_length,
                                          uint32_t       * internal_state);
@@ -387,7 +409,7 @@ rsip_ret_t r_rsip_sha1sha2_resume_update(rsip_hash_type_t hash_type,
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_sha1sha2_update(rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_update(rsip_hash_type_t hash_type,
                                   const uint8_t  * p_message,
                                   uint64_t         message_length,
                                   uint32_t       * internal_state);
@@ -395,11 +417,12 @@ rsip_ret_t r_rsip_sha1sha2_update(rsip_hash_type_t hash_type,
 /*******************************************************************************************************************//**
  * Suspend hash operation.
  *
+ * @param[in]     hash_type      Generating hash type.
  * @param[in,out] internal_state Buffer of internal state.
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_sha1sha2_suspend(uint32_t * internal_state);
+rsip_ret_t r_rsip_sha_hash_suspend(rsip_hash_type_t hash_type, uint32_t * internal_state);
 
 /*******************************************************************************************************************//**
  * 1. Initialize hash operation.
@@ -414,7 +437,7 @@ rsip_ret_t r_rsip_sha1sha2_suspend(uint32_t * internal_state);
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_sha1sha2_init_final(rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_init_final(rsip_hash_type_t hash_type,
                                       const uint8_t  * p_message,
                                       uint64_t         message_length,
                                       uint8_t        * p_digest);
@@ -434,7 +457,7 @@ rsip_ret_t r_rsip_sha1sha2_init_final(rsip_hash_type_t hash_type,
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_sha1sha2_resume_final(rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_resume_final(rsip_hash_type_t hash_type,
                                         uint8_t        * p_message,
                                         uint64_t         message_length,
                                         uint64_t         total_message_length,
@@ -455,7 +478,7 @@ rsip_ret_t r_rsip_sha1sha2_resume_final(rsip_hash_type_t hash_type,
  *
  * @return The return value of the internally called primitive function.
  **********************************************************************************************************************/
-rsip_ret_t r_rsip_sha1sha2_final(rsip_hash_type_t hash_type,
+rsip_ret_t r_rsip_sha_hash_final(rsip_hash_type_t hash_type,
                                  uint8_t        * p_message,
                                  uint64_t         message_length,
                                  uint64_t         total_message_length,

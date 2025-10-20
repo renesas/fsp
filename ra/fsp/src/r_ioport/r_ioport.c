@@ -48,7 +48,10 @@
  **********************************************************************************************************************/
 static void r_ioport_pins_config(const ioport_cfg_t * p_cfg);
 
+#if BSP_FEATURE_ELC_VERSION
 static void r_ioport_hw_pin_event_output_data_write(bsp_io_port_t port, ioport_size_t pin, bsp_io_level_t pin_level);
+
+#endif
 
 static void r_ioport_pfs_write(bsp_io_port_pin_t pin, uint32_t value);
 
@@ -613,6 +616,7 @@ fsp_err_t R_IOPORT_PinEventInputRead (ioport_ctrl_t * const p_ctrl, bsp_io_port_
  * @retval FSP_ERR_INVALID_ARGUMENT   Port or Mask not valid
  * @retval FSP_ERR_NOT_OPEN           The module has not been opened
  * @retval FSP_ERR_ASSERTION          NULL pointer
+ * @retval FSP_ERR_UNSUPPORTED        Function not supported
  *
  * @note This function is re-entrant for different ports.
  **********************************************************************************************************************/
@@ -621,19 +625,20 @@ fsp_err_t R_IOPORT_PortEventOutputWrite (ioport_ctrl_t * const p_ctrl,
                                          ioport_size_t         event_data,
                                          ioport_size_t         mask_value)
 {
+#if BSP_FEATURE_ELC_VERSION
     ioport_size_t set_bits;
     ioport_size_t reset_bits;
 
-#if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
+ #if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
     ioport_instance_ctrl_t * p_instance_ctrl = (ioport_instance_ctrl_t *) p_ctrl;
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(IOPORT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN(mask_value > (ioport_size_t) 0, FSP_ERR_INVALID_ARGUMENT);
     uint32_t port_number = port >> IOPORT_PRV_PORT_OFFSET;
     FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS_MASK & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
-#else
+ #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
-#endif
+ #endif
 
     set_bits = event_data & mask_value;
 
@@ -642,18 +647,27 @@ fsp_err_t R_IOPORT_PortEventOutputWrite (ioport_ctrl_t * const p_ctrl,
 
     /* Get the port address */
     R_PORT0_Type * p_ioport_regs = IOPORT_PRV_PORT_ADDRESS((port >> IOPORT_PRV_PORT_OFFSET) & IOPORT_PRV_8BIT_MASK);
-#if (3U == BSP_FEATURE_IOPORT_VERSION)
+ #if (3U == BSP_FEATURE_IOPORT_VERSION)
 
     /* Reset data in EORR, set data in EOSR register */
     p_ioport_regs->EOSR = (uint16_t) set_bits;
     p_ioport_regs->EORR = (uint16_t) reset_bits;
-#else
+ #else
 
     /* PCNTR4 register: lower word = set data, upper word = reset_data */
     p_ioport_regs->PCNTR4 = (uint32_t) (((uint32_t) reset_bits << 16) | set_bits);
-#endif
+ #endif
 
     return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(port);
+    FSP_PARAMETER_NOT_USED(event_data);
+    FSP_PARAMETER_NOT_USED(mask_value);
+
+    /* Return the unsupported error. */
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /**********************************************************************************************************************//**
@@ -666,27 +680,37 @@ fsp_err_t R_IOPORT_PortEventOutputWrite (ioport_ctrl_t * const p_ctrl,
  * @retval FSP_ERR_INVALID_ARGUMENT  Port or Pin or value not valid
  * @retval FSP_ERR_NOT_OPEN          The module has not been opened
  * @retval FSP_ERR_ASSERTION         NULL pointer
+ * @retval FSP_ERR_UNSUPPORTED       Function not supported
  *
  * @note This function is re-entrant for different ports.
  *
  **********************************************************************************************************************/
 fsp_err_t R_IOPORT_PinEventOutputWrite (ioport_ctrl_t * const p_ctrl, bsp_io_port_pin_t pin, bsp_io_level_t pin_value)
 {
-#if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
+#if BSP_FEATURE_ELC_VERSION
+ #if (1 == IOPORT_CFG_PARAM_CHECKING_ENABLE)
     ioport_instance_ctrl_t * p_instance_ctrl = (ioport_instance_ctrl_t *) p_ctrl;
     FSP_ASSERT(NULL != p_instance_ctrl);
     FSP_ERROR_RETURN(IOPORT_OPEN == p_instance_ctrl->open, FSP_ERR_NOT_OPEN);
     FSP_ERROR_RETURN((pin_value == BSP_IO_LEVEL_HIGH) || (pin_value == BSP_IO_LEVEL_LOW), FSP_ERR_INVALID_ARGUMENT);
     uint32_t port_number = pin >> IOPORT_PRV_PORT_OFFSET;
     FSP_ERROR_RETURN((BSP_FEATURE_IOPORT_ELC_PORTS_MASK & (1 << port_number)), FSP_ERR_INVALID_ARGUMENT);
-#else
+ #else
     FSP_PARAMETER_NOT_USED(p_ctrl);
-#endif
+ #endif
 
     r_ioport_hw_pin_event_output_data_write((bsp_io_port_t) (pin & IOPORT_PRV_PORT_BITS),
                                             (ioport_size_t) (pin & IOPORT_PRV_PIN_BITS), pin_value);
 
     return FSP_SUCCESS;
+#else
+    FSP_PARAMETER_NOT_USED(p_ctrl);
+    FSP_PARAMETER_NOT_USED(pin);
+    FSP_PARAMETER_NOT_USED(pin_value);
+
+    /* Return the unsupported error. */
+    return FSP_ERR_UNSUPPORTED;
+#endif
 }
 
 /*******************************************************************************************************************//**
@@ -725,6 +749,8 @@ void r_ioport_pins_config (const ioport_cfg_t * p_cfg)
     R_BSP_PinAccessDisable();
 }
 
+#if BSP_FEATURE_ELC_VERSION
+
 /*******************************************************************************************************************//**
  * Writes the set and clear values on a pin of the port when an ELC event occurs. This allows accurate timing of
  * pin output level.
@@ -737,8 +763,7 @@ static void r_ioport_hw_pin_event_output_data_write (bsp_io_port_t port, ioport_
 {
     /* Get the port address */
     R_PORT0_Type * p_ioport_regs = IOPORT_PRV_PORT_ADDRESS((port >> IOPORT_PRV_PORT_OFFSET) & IOPORT_PRV_8BIT_MASK);
-
-#if (3U == BSP_FEATURE_IOPORT_VERSION)
+ #if (3U == BSP_FEATURE_IOPORT_VERSION)
     uint16_t set_value_high = (uint16_t) (pin_level << pin);
     uint16_t set_value_low  = (uint16_t) ((!pin_level) << pin);
 
@@ -746,7 +771,7 @@ static void r_ioport_hw_pin_event_output_data_write (bsp_io_port_t port, ioport_
     p_ioport_regs->EORR &= ~set_value_high;
     p_ioport_regs->EOSR  = (p_ioport_regs->EOSR & ~set_value_low) | set_value_high;
     p_ioport_regs->EORR |= set_value_low;
-#else
+ #else
     uint32_t set_value = (uint32_t) (1 << pin);
 
     /* Read current value of PCNTR4 register */
@@ -769,8 +794,10 @@ static void r_ioport_hw_pin_event_output_data_write (bsp_io_port_t port, ioport_
         port_value |= set_value << 16;
     }
     p_ioport_regs->PCNTR4 = port_value;
-#endif
+ #endif
 }
+
+#endif
 
 /*******************************************************************************************************************//**
  * Writes to the specified pin's PFS register

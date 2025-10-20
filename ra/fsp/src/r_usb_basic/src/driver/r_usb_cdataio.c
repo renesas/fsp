@@ -232,7 +232,18 @@ void (* g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) =
     /* HUVC */
 
     USB_NULL, USB_NULL,                /* USB_HUVC (17) */
-};                                     /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
+
+    /* HAUD */
+#if defined(USB_CFG_HAUD_USE)
+ #if (BSP_CFG_RTOS == 1)
+    USB_NULL, USB_NULL,                              /* USB_HAUD (18) */
+ #else                                               /* #if (BSP_CFG_RTOS == 1) */
+    usb_haud_read_complete, usb_haud_write_complete, /* USB_HAUD  (18) */
+ #endif /* #if (BSP_CFG_RTOS == 1) */
+#else
+    USB_NULL, USB_NULL,                              /* USB_HAUD  (18) */
+#endif
+};                                                   /* const void (g_usb_callback[])(usb_utr_t *, uint16_t, uint16_t) */
 
 #if defined(USB_CFG_PCDC_USE)
 

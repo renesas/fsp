@@ -746,6 +746,10 @@ static uint16_t usb_hstd_enumeration (usb_utr_t * ptr)
                             {
                                 usb_shstd_reg_pointer[ptr->ip] = md;
                                 flg = 1; /* break; */
+   #if defined(USB_CFG_HAUD_USE)
+                                driver->devaddr = g_usb_hstd_device_addr[ptr->ip];
+                                g_usb_hstd_enum_seq[ptr->ip]++;
+   #endif                                /* defined(USB_CFG_HAUD_USE) */
                             }
   #endif /* (BSP_CFG_RTOS != 0) */
                         }

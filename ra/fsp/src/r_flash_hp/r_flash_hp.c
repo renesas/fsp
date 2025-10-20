@@ -3275,6 +3275,7 @@ static void r_flash_hp_call_callback (flash_hp_instance_ctrl_t * p_ctrl, flash_e
     }
 
     p_args->event     = event;
+    p_args->data      = 0U;
     p_args->p_context = p_ctrl->p_context;
 
 #if BSP_TZ_SECURE_BUILD

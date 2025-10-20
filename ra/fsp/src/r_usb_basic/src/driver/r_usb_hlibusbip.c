@@ -2197,6 +2197,12 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                             if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                             {
                                 g_usb_haud_iso_in_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_haud_iso_in_pipe[ip_no];
+
                                 break;
                             }
                         }
@@ -2206,6 +2212,12 @@ uint8_t usb_hstd_get_pipe_no (uint16_t ip_no, uint16_t address, uint16_t usb_cla
                             if ((USB_ADDRESS1 == address) || (USB_ADDRESS2 == address))
                             {
                                 g_usb_haud_iso_out_pipe[ip_no] = pipe;
+
+                                /* Store the used pipe for a specific USB class based on the usb_class_internal_t enum. */
+                                idx = (uint8_t) (((((usb_class_internal_t) usb_class - USB_CLASS_INTERNAL_HCDC) * 8) +
+                                                  ((address - 1) * 2)) + dir);
+                                g_usb_pipe_host[idx] = g_usb_haud_iso_out_pipe[ip_no];
+
                                 break;
                             }
                         }
@@ -2456,11 +2468,11 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
   #if defined(USB_CFG_HUVC_USE)
     if (pipe_no == g_usb_huvc_iso_in_pipe[USB_IP1])
     {
-        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(8u));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
     }
     else if (pipe_no == g_usb_huvc_iso_out_pipe[USB_IP1])
     {
-        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(72u));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
     }
     else
     {
@@ -2471,11 +2483,11 @@ uint16_t usb_hstd_get_pipe_buf_value (uint16_t pipe_no)
   #if defined(USB_CFG_HAUD_USE)
     if (pipe_no == g_usb_haud_iso_in_pipe[USB_IP1])
     {
-        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(8u));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(8U));
     }
     else if (pipe_no == g_usb_haud_iso_out_pipe[USB_IP1])
     {
-        pipe_buf = (USB_BUF_SIZE(2048u) | USB_BUF_NUMB(72u));
+        pipe_buf = (USB_BUF_SIZE(2048U) | USB_BUF_NUMB(72U));
     }
     else
     {

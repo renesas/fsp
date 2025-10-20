@@ -88,6 +88,7 @@ extern void __call_ctors(void const *, void const *);
 extern void  * __VECTOR_TABLE[];
 extern uint8_t g_main_stack[];
 
+extern void R_BSP_SAUInit(void);
 extern void R_BSP_SecurityInit(void);
 
 /***********************************************************************************************************************
@@ -223,7 +224,7 @@ void SystemInit (void)
  #if BSP_SECONDARY_CORE_BUILD
 
     /* Configure SAU early for secondary core since primary has already configured SAR registers */
-    R_BSP_SecurityInit();
+    R_BSP_SAUInit();
  #endif
 #endif
 
@@ -300,6 +301,22 @@ void SystemInit (void)
      * of the TRNG circuit after the clocks are initialized */
 
     bsp_reset_trng_circuit();
+ #endif
+#endif
+
+#if BSP_FEATURE_IOPORT_HAS_LVOCR
+ #if !BSP_TZ_NONSECURE_BUILD && !BSP_SECONDARY_CORE_BUILD
+
+    /* Unlock LVOCR register. */
+    R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_PRC1_UNLOCK;
+
+    /* Set LVOCR according to BSP configuration.
+     * Configure prior to warm start post clock, since OSPI_B may initialize within and begin using I/O. */
+    R_SYSTEM->LVOCR = ((BSP_CFG_IOPORT_VOLTAGE_MODE_VCC2 << R_SYSTEM_LVOCR_LVO1E_Pos) & R_SYSTEM_LVOCR_LVO1E_Msk) |
+                      ((BSP_CFG_IOPORT_VOLTAGE_MODE_VCC << R_SYSTEM_LVOCR_LVO0E_Pos) & R_SYSTEM_LVOCR_LVO0E_Msk);
+
+    /* Lock LVOCR register. */
+    R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_LOCK;
  #endif
 #endif
 
@@ -397,12 +414,12 @@ void SystemInit (void)
     R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_SAR);
 #endif
 
-#if BSP_TZ_SECURE_BUILD && !BSP_SECONDARY_CORE_BUILD
+#if BSP_TZ_SECURE_BUILD
 
     /* Initialize security features. */
     R_BSP_SecurityInit();
 #else
- #if FSP_PRIV_TZ_USE_SECURE_REGS
+ #if FSP_PRIV_TZ_USE_SECURE_REGS && !BSP_SECONDARY_CORE_BUILD
 
     /* Initialize peripherals to secure mode for flat projects */
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_SAR);
@@ -421,8 +438,8 @@ void SystemInit (void)
 #endif
 
 #if BSP_FEATURE_BSP_HAS_GRAPHICS_DOMAIN && !BSP_CFG_SKIP_INIT
-    if ((((0 == R_SYSTEM->PGCSAR) && FSP_PRIV_TZ_USE_SECURE_REGS) ||
-         ((1 == R_SYSTEM->PGCSAR) && BSP_TZ_NONSECURE_BUILD)) && (0 != R_SYSTEM->PDCTRGD))
+    if ((((0 == R_SYSTEM->PGCSAR_b.NONSEC1) && FSP_PRIV_TZ_USE_SECURE_REGS) ||
+         ((1 == R_SYSTEM->PGCSAR_b.NONSEC1) && BSP_TZ_NONSECURE_BUILD)) && (0 != R_SYSTEM->PDCTRGD))
     {
         /* Turn on graphics power domain.
          * This requires MOCO to be enabled, but MOCO is always enabled after bsp_clock_init(). */
@@ -435,15 +452,19 @@ void SystemInit (void)
     }
 #endif
 
-#if BSP_FEATURE_CGC_HAS_NPUCLK && !BSP_CFG_SKIP_INIT && !BSP_TZ_NONSECURE_BUILD
-
-    /* Turn on NPU power domain */
-    R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
-    FSP_HARDWARE_REGISTER_WAIT((R_SYSTEM->PDCTRNPU & (R_SYSTEM_PDCTRGD_PDCSF_Msk | R_SYSTEM_PDCTRGD_PDPGSF_Msk)),
-                               R_SYSTEM_PDCTRGD_PDPGSF_Msk);
-    R_SYSTEM->PDCTRNPU = 0;
-    FSP_HARDWARE_REGISTER_WAIT((R_SYSTEM->PDCTRNPU & (R_SYSTEM_PDCTRGD_PDCSF_Msk | R_SYSTEM_PDCTRGD_PDPGSF_Msk)), 0);
-    R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
+#if BSP_FEATURE_CGC_HAS_NPUCLK && !BSP_CFG_SKIP_INIT
+    if ((((0 == R_SYSTEM->PGCSAR_b.NONSEC2) && FSP_PRIV_TZ_USE_SECURE_REGS) ||
+         ((1 == R_SYSTEM->PGCSAR_b.NONSEC2) && BSP_TZ_NONSECURE_BUILD)) && (0 != R_SYSTEM->PDCTRNPU))
+    {
+        /* Turn on NPU power domain */
+        R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
+        FSP_HARDWARE_REGISTER_WAIT((R_SYSTEM->PDCTRNPU & (R_SYSTEM_PDCTRNPU_PDCSF_Msk | R_SYSTEM_PDCTRNPU_PDPGSF_Msk)),
+                                   R_SYSTEM_PDCTRNPU_PDPGSF_Msk);
+        R_SYSTEM->PDCTRNPU = 0;
+        FSP_HARDWARE_REGISTER_WAIT((R_SYSTEM->PDCTRNPU & (R_SYSTEM_PDCTRNPU_PDCSF_Msk | R_SYSTEM_PDCTRNPU_PDPGSF_Msk)),
+                                   0);
+        R_BSP_RegisterProtectEnable(BSP_REG_PROTECT_OM_LPC_BATT);
+    }
 #endif
 
     /* Call Post C runtime initialization hook. */
@@ -551,9 +572,9 @@ static void bsp_reset_trng_circuit (void)
     R_BSP_RegisterProtectDisable(BSP_REG_PROTECT_OM_LPC_BATT);
 
     /* Enable TRNG function (disable stop function) */
- #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
+ #if (BSP_FEATURE_RSIP_AES_SUPPORTED || BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_TRNG_SUPPORTED)
     R_BSP_MODULE_START(FSP_IP_TRNG, 0); ///< TRNG Module Stop needs to be started/stopped for RA2 series.
- #elif BSP_FEATURE_BSP_HAS_SCE5
+ #elif BSP_FEATURE_RSIP_SCE5_SUPPORTED
     R_BSP_MODULE_START(FSP_IP_SCE, 0);  ///< TRNG Module Stop needs to be started/stopped for RA4 series.
  #else
   #error "BSP_FEATURE_BSP_RESET_TRNG is defined but not handled."
@@ -565,9 +586,9 @@ static void bsp_reset_trng_circuit (void)
     read_port = R_PFS->PORT[0].PIN[0].PmnPFS_b.PODR;
 
     /* Disable TRNG function */
- #if BSP_FEATURE_BSP_HAS_SCE_ON_RA2
+ #if (BSP_FEATURE_RSIP_AES_SUPPORTED || BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_TRNG_SUPPORTED)
     R_BSP_MODULE_STOP(FSP_IP_TRNG, 0); ///< TRNG Module Stop needs to be started/stopped for RA2 series.
- #elif BSP_FEATURE_BSP_HAS_SCE5
+ #elif BSP_FEATURE_RSIP_SCE5_SUPPORTED
     R_BSP_MODULE_STOP(FSP_IP_SCE, 0);  ///< TRNG Module Stop needs to be started/stopped for RA4 series.
  #else
   #error "BSP_FEATURE_BSP_RESET_TRNG is defined but not handled."
@@ -601,10 +622,14 @@ static void bsp_init_uninitialized_vars (void)
         g_bsp_group_irq_sources[i] = 0;
     }
 
- #if BSP_CFG_EARLY_INIT
+ #if BSP_FEATURE_CGC_HAS_MOCO
 
     /* Set SystemCoreClock to MOCO */
     SystemCoreClock = BSP_MOCO_HZ;
+ #else
+
+    /* Set SystemCoreClock to HOCO */
+    SystemCoreClock = BSP_HOCO_HZ;
  #endif
 }
 

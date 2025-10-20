@@ -4810,7 +4810,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_FACI_LP_BASE     0x407EC000UL
  #define R_ICU_BASE         0x40006000UL
  #define R_IICA0_BASE       0x400A3000UL
- #define R_IICA1_BASE       0x400A3008UL
  #define R_IWDT_BASE        0x40044400UL
  #define R_MSTP_BASE        (0x40047000UL - 4UL) /* MSTPCRA is not located in R_MSTP so the base address must be moved so that MSTPCRB is located at 0x40047000. */
  #define R_PCLBUZ_BASE      0x400A3B00UL
@@ -4819,7 +4818,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_PORT2_BASE       0x400A0040UL
  #define R_PORT3_BASE       0x400A0060UL
  #define R_PORT4_BASE       0x400A0080UL
- #define R_PORT5_BASE       0x400A00A0UL
  #define R_PORT9_BASE       0x400A0120UL
  #define R_PORGA_BASE       0x400A1000UL
  #define R_PFS_BASE         0x400A0200UL
@@ -4854,7 +4852,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_FACI_LP     ((R_FACI_LP_Type *) R_FACI_LP_BASE)
  #define R_ICU         ((R_ICU_Type *) R_ICU_BASE)
  #define R_IICA0       ((R_IICA0_Type *) R_IICA0_BASE)
- #define R_IICA1       ((R_IICA0_Type *) R_IICA1_BASE)
  #define R_IWDT        ((R_IWDT_Type *) R_IWDT_BASE)
  #define R_MSTP        ((R_MSTP_Type *) R_MSTP_BASE)
  #define R_PCLBUZ      ((R_PCLBUZ_Type *) R_PCLBUZ_BASE)
@@ -4863,7 +4860,6 @@ typedef struct                         /*!< (@ 0x400A2C00) R_RTC_C Structure    
  #define R_PORT2       ((R_PORT0_Type *) R_PORT2_BASE)
  #define R_PORT3       ((R_PORT0_Type *) R_PORT3_BASE)
  #define R_PORT4       ((R_PORT0_Type *) R_PORT4_BASE)
- #define R_PORT5       ((R_PORT0_Type *) R_PORT5_BASE)
  #define R_PORT9       ((R_PORT0_Type *) R_PORT9_BASE)
  #define R_PORGA       ((R_PORGA_Type *) R_PORGA_BASE)
  #define R_PFS         ((R_PFS_Type *) R_PFS_BASE)

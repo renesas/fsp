@@ -35,7 +35,8 @@ typedef enum e_sci_lin_priority_interrupt_bit
 /** Compare Data Select options for ID filtering. */
 typedef enum e_sci_lin_compare_data_select
 {
-    SCI_LIN_COMPARE_DATA_SELECT_PRIORITY  = 0, ///< Select the priority/primary compare data filter as the compare data
+    SCI_LIN_COMPARE_DATA_SELECT_PRIORITY  = 0, ///< Deprecated
+    SCI_LIN_COMPARE_DATA_SELECT_PRIMARY   = 0, ///< Select the primary compare data filter as the compare data
     SCI_LIN_COMPARE_DATA_SELECT_SECONDARY = 1, ///< Select the secondary compare data filter as the compare data
     SCI_LIN_COMPARE_DATA_SELECT_BOTH      = 2, ///< Select both the priority/primary compare data filter and the secondary compare data filter as the compare data. The priority filter will be checked first.
 } sci_lin_compare_data_select_t;
@@ -206,7 +207,6 @@ typedef struct st_sci_lin_instance_ctrl
     uint8_t               validate_checksum;    // Indicates whether checksum should be validated by driver
     uint8_t               last_pid;             // Last PID transmitted or received
     uint8_t               sync_bits_received;   // Number of sync bits successfully measured so far during auto synchronization
-    uint32_t              current_baudrate;     // Current baud rate during auto synchronization process.
 } sci_lin_instance_ctrl_t;
 
 /**********************************************************************************************************************

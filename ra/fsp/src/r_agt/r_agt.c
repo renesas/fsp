@@ -766,10 +766,18 @@ static fsp_err_t r_agt_common_preamble (agt_instance_ctrl_t * p_instance_ctrl)
 
     agt_prv_reg_ctrl_ptr_t p_reg_ctrl = AGT_PRV_CTRL_PTR(p_instance_ctrl);
 
+    uint32_t agtcr  = 0U;
+    bool     tstart = false;
+    bool     tcstf  = false;
+
     /* Ensure timer state reflects expected status. See "Count
      * Operation Start and Stop Control" in the AGT Usage Notes section of the relevant hardware manual. */
-    uint32_t agtcr_tstart = p_reg_ctrl->AGTCR_b.TSTART;
-    FSP_HARDWARE_REGISTER_WAIT(agtcr_tstart, p_reg_ctrl->AGTCR_b.TCSTF);
+    do
+    {
+        agtcr  = p_reg_ctrl->AGTCR;
+        tstart = (bool) (agtcr & R_AGTX0_AGT16_CTRL_AGTCR_TSTART_Msk);
+        tcstf  = (bool) (agtcr & R_AGTX0_AGT16_CTRL_AGTCR_TCSTF_Msk);
+    } while (tstart != tcstf);
 
     return FSP_SUCCESS;
 }

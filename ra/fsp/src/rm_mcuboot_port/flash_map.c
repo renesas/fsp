@@ -679,7 +679,7 @@ int flash_on_chip_cleanup (void)
             }
         }
 
-        g_internal_flash_driver_open = false;
+        g_external_flash_driver_open = false;
     }
 #endif
 

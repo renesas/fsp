@@ -18,6 +18,7 @@
  *
  *  This file is part of mbed TLS (https://tls.mbed.org)
  */
+
 /*
  *  The AES block cipher was designed by Vincent Rijmen and Joan Daemen.
  *
@@ -1219,7 +1220,7 @@ int mbedtls_aes_crypt_xts(mbedtls_aes_xts_context *ctx,
         return MBEDTLS_ERR_AES_INVALID_INPUT_LENGTH;
     }
 
-#if !(BSP_FEATURE_BSP_HAS_SCE_ON_RA2)
+#if !(BSP_FEATURE_RSIP_AES_B_SUPPORTED || BSP_FEATURE_RSIP_AES_SUPPORTED)
     if( mode == MBEDTLS_AES_ENCRYPT )
         return( mbedtls_internal_aes_encrypt_xts( &ctx->tweak, length, data_unit, input, output ) );
     else

@@ -40,12 +40,12 @@ typedef struct st_layer3_switch_basic_descriptor
 #if ((defined(__GNUC__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || (defined(__ARMCC_VERSION) && \
     !defined(__ARM_BIG_ENDIAN)) || (defined(__ICCARM__) && (__LITTLE_ENDIAN__)))
 
-    /* Little endian */
+    /* Little endian. */
     volatile uint8_t  ds_l;            ///< 0.. 8 (8 bits),   Descriptor size (low).
     volatile uint8_t  ds_h  : 4;       ///< 9..12 (4 bits),   Descriptor size (High).
     volatile uint8_t  info0 : 4;       ///< 12..15 (4 bits),  Information 0.
-    volatile uint8_t  err   : 3;       ///< 16..19 (4 bits),  Error, data size error, AXI bus error.
-    volatile uint8_t  die   : 1;       ///< 16..19 (4 bits),  Descriptor interrupt enable.
+    volatile uint8_t  err   : 3;       ///< 16..18 (3 bits),  Error, data size error, AXI bus error.
+    volatile uint8_t  die   : 1;       ///< 19 (1 bit),       Descriptor interrupt enable.
     volatile uint8_t  dt    : 4;       ///< 20..23 (4 bits),  Descriptor type.
     volatile uint8_t  ptr_h;           ///< 24..31 (8 bits),  Pointer (High).
     volatile uint32_t ptr_l;           ///< 32..63 (32 bits), Pointer (Low).
@@ -55,7 +55,7 @@ typedef struct st_layer3_switch_basic_descriptor
 /** GWCA extended descriptor. */
 typedef struct st_layer3_switch_descriptor
 {
-    /* Little endian */
+    /* Little endian. */
 #if ((defined(__GNUC__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || (defined(__ARMCC_VERSION) && \
     !defined(__ARM_BIG_ENDIAN)) || (defined(__ICCARM__) && (__LITTLE_ENDIAN__)))
 
@@ -110,8 +110,89 @@ typedef struct st_layer3_switch_descriptor
             volatile uint8_t reserved2;   ///< 56..63 (8 bits), Reserved.
         } info1_tx;
     };
+
+ #if LAYER3_SWITCH_CFG_GPTP_ENABLE
+
+    /* Reception descriptor TS fields. */
+    union
+    {
+        /* Reception direct descriptor TS. */
+        struct st_reception_direct_descriptor
+        {
+            volatile uint8_t  csd0    : 7; ///< 0..6 (7 bit),    CPU sub destination for GWCA0
+            volatile          uint8_t : 1; ///< 7 (1 bit),       Reserved
+            volatile uint8_t  csd1    : 7; ///< 8..14 (7 bit),   CPU sub destination for GWCA1
+            volatile          uint8_t : 1; ///< 15 (1 bit),      Reserved
+            volatile uint8_t  dv      : 7; ///< 16..22 (7 bit),  Destination vector
+            volatile          uint8_t : 1; ///< 23 (1 bit),      Reserved
+            volatile uint8_t  reserved1;   ///< 24..31 (8 bit),  Reserved
+            volatile uint32_t reserved2;   ///< 32..63 (32 bit), Reserved
+        } reception_direct_descriptor;
+
+        /* Reception ethernet descriptor TS. */
+        struct st_reception_ethernet_descriptor
+        {
+            volatile uint32_t tsns : 30; ///< 0..29 (30 bit),  Timestamp nanosecond [gPTP] PCH header timestamp
+            volatile uint32_t tsv  : 1;  ///< 30 (1 bit),      Timestamp valid
+            volatile uint32_t tsd  : 1;  ///< 31 (1 bit),      Timestamp default
+            volatile uint32_t tss;       ///< 32..63 (32 bit), Timestamp second [gPTP] PCH header timestamp
+        } reception_ethernet_descriptor;
+    };
+ #endif
 #endif
 } layer3_switch_descriptor_t;
+
+/**
+ * GWCA TS reception process descriptor.
+ */
+typedef struct st_layer3_switch_ts_reception_process_descriptor
+{
+    /* Little endian. */
+#if ((defined(__GNUC__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)) || (defined(__ARMCC_VERSION) && \
+    !defined(__ARM_BIG_ENDIAN)) || (defined(__ICCARM__) && (__LITTLE_ENDIAN__)))
+    union
+    {
+        struct st_ts_reception_descriptor_basic
+        {
+            volatile uint8_t  ds_l;      ///< 0..7 (8 bit),     Descriptor size
+            volatile uint8_t  ds_h  : 4; ///< 8..11 (4 bit),    Descriptor size
+            volatile uint8_t  info0 : 4; ///< 12..15 (4 bit),   Information 0
+            volatile uint8_t  err   : 1; ///< 16 (1 bit),       Error
+            volatile uint8_t  dse   : 1; ///< 17 (1 bit),       Data Size Error
+            volatile uint8_t  axie  : 1; ///< 18 (1 bit),       AXI Bus Error
+            volatile uint8_t  die   : 1; ///< 19 (1 bit),       Descriptor Interrupt Enable
+            volatile uint8_t  dt    : 4; ///< 20..23 (4 bit),   Descriptor Type
+            volatile uint8_t  ptr_h;     ///< 24..31 (8 bit),   Pointer
+            volatile uint32_t ptr_l;     ///< 32..63 (32 bit),  Pointer
+            volatile uint32_t reserved1; ///< 64..95 (32 bit),  Reserved
+            volatile uint32_t reserved2; ///< 96..127 (32 bit), Reserved
+        } ts_reception_descriptor_basic;
+
+        struct st_ts_reception_descriptor_result
+        {
+            volatile uint8_t  ds_l;          ///< 0..7 (8 bit),     Descriptor size
+            volatile uint8_t  ds_h  : 4;     ///< 8..11 (4 bit),    Descriptor size
+            volatile uint8_t  info0 : 4;     ///< 12..15 (4 bit),   Information 0
+            volatile uint8_t  err   : 1;     ///< 16 (1 bit),       Error
+            volatile uint8_t  dse   : 1;     ///< 17 (1 bit),       Data Size Error
+            volatile uint8_t  axie  : 1;     ///< 18 (1 bit),       AXI Bus Error
+            volatile uint8_t  die   : 1;     ///< 19 (1 bit),       Descriptor Interrupt Enable
+            volatile uint8_t  dt    : 4;     ///< 20..23 (4 bit),   Descriptor Type
+            volatile uint8_t  ptr;           ///< 24..31 (8 bit),   Pointer
+            volatile uint8_t  tsun;          ///< 32..39 (8 bit),   Timestamp unique number
+            volatile uint8_t  spn      : 2;  ///< 40..41 (2 bit),   Port number from which the timestamp corresponding frame entered the switch
+            volatile          uint8_t  : 6;  ///< 42..47 (6 bit),   Reserved
+            volatile uint8_t  dpn      : 1;  ///< 48 (1 bit),       Port number by which the timestamp has been taken
+            volatile          uint8_t  : 7;  ///< 49..55 (7 bit),   Reserved
+            volatile uint8_t  tn       : 1;  ///< 56 (1 bit),       Timer Number
+            volatile          uint8_t  : 7;  ///< 57..63 (7 bit),   Reserved
+            volatile uint32_t tsns     : 30; ///< 64..93 (30 bit),  Timestamp nanosecond
+            volatile          uint32_t : 2;  ///< 94..95 (2 bit),   Reserved
+            volatile uint32_t tss;           ///< 96..127 (32 bit), Timestamp second
+        } ts_reception_descriptor_result;
+    };
+#endif
+} layer3_switch_ts_reception_process_descriptor_t;
 
 /** GWCA descriptor type. */
 typedef enum e_layer3_switch_descriptor_type
@@ -152,8 +233,9 @@ typedef enum e_layer3_switch_queue_type
 /** Descriptor format type. */
 typedef enum e_layer3_switch_descriptor_format
 {
-    LAYER3_SWITCH_DISCRIPTOR_FORMTAT_BASIC    = 0U, ///< Using basic descriptor.
-    LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED = 1U, ///< Using extended descriptor with additional fields.
+    LAYER3_SWITCH_DISCRIPTOR_FORMTAT_BASIC        = 0U, ///< Using basic descriptor.
+    LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED     = 1U, ///< Using extended descriptor with additional fields.
+    LAYER3_SWITCH_DISCRIPTOR_FORMTAT_TX_TIMESTAMP = 2U, ///< Using TX timestamp descriptor.
 } layer3_switch_descriptor_format_t;
 
 /** Write back mode. */
@@ -281,15 +363,62 @@ typedef enum e_layer3_switch_tas_gate_state
     LAYER3_SWITCH_TAS_GATE_STATE_OPEN  = 1  ///< Gate is opened.
 } layer3_switch_tas_gate_state_t;
 
+/** Enable or disable rx timestamp storage. */
+typedef enum e_layer3_switch_rx_timestamp_storage
+{
+    LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_DISABLE = 0U, ///< Timestamp is not added in the descriptor.
+    LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_ENABLE  = 1U, ///< Timestamp is added in the descriptor.
+} layer3_switch_rx_timestamp_storage_t;
+
+/** Used or not timestamp descriptor queue. */
+typedef enum e_layer3_switch_ts_descriptor_queue_status
+{
+    LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_UNUSED = 0U, ///< TS descriptor queue is unused.
+    LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_USED   = 1U, ///< TS descriptor queue is used.
+} layer3_switch_ts_descriptor_queue_status_t;
+
+/**  Configuration of FRER feature. */
+typedef struct st_layer3_switch_frer_cfg
+{
+    uint32_t sys_clock;                ///< Timeout check time.
+    uint32_t timeout_enable;           ///< Timeout check valid.
+    uint32_t check_period;             ///< Microsecond prescaler used to creates an internal clock for aging at 1 MHz to derive the timeout 1 kHz clock.
+} layer3_switch_frer_cfg_t;
+
+/** FRER table entry. */
+typedef struct st_layer3_switch_frer_entry
+{
+    uint32_t take_no_sequence;            ///< Reject frames without R-TAG.
+    uint32_t sequence_history_len;        ///< Sequence history length.
+    uint32_t set_recovery_remaining_tick; ///< Time in tick before timeout.
+} layer3_switch_frer_entry_t;
+
+/** Configuration of FRER entry (individual and sequence recovery). */
+typedef struct st_layer3_switch_frer_entry_cfg
+{
+    layer3_switch_frer_entry_t   individual_recovery; ///< FRER table entry for individual recovery.
+    layer3_switch_frer_entry_t * p_sequence_recovery; ///< Pointer to FRER entry(sequence recovery) information referenced by `FRERN` in this FRER entry(individual recovery).
+    uint32_t sequence_recovery_id;
+} layer3_switch_frer_entry_cfg_t;
+
+/** Status of FRER sequence recovery table. */
+typedef struct st_layer3_switch_frer_sequence_recovery_status
+{
+    bool     learned;                  ///< Flags whether the FRER entry(sequence recovery) related to this entry has been learned.
+    uint32_t frer_entry_index;         ///< Real FRER table index of the FRER entry(sequence recovery) related to this entry.
+} layer3_switch_frer_sequence_recovery_status_t;
+
 /** Configuration of a descriptor queue. */
 typedef struct st_layer3_switch_descriptor_queue_cfg
 {
-    layer3_switch_descriptor_format_t descriptor_format;  ///< Enable or disable extended descriptors.
-    layer3_switch_queue_type_t        type;               ///< Reception queue or transmission queue.
-    layer3_switch_write_back_mode_t   write_back_mode;    ///< Configure write-back to descriptor fields.
-    layer3_switch_descriptor_t      * p_descriptor_array; ///< Descriptor array that use to create queue.
-    uint32_t array_length;                                ///< Length of descriptor array. This length includes terminate descriptor at the end.
-    uint32_t ports;                                       ///< Bitmap of ports that use this queue.
+    layer3_switch_descriptor_format_t                 descriptor_format;     ///< Enable or disable extended descriptors.
+    layer3_switch_queue_type_t                        type;                  ///< Reception queue or transmission queue.
+    layer3_switch_write_back_mode_t                   write_back_mode;       ///< Configure write-back to descriptor fields.
+    layer3_switch_descriptor_t                      * p_descriptor_array;    ///< Descriptor array that use to create queue.
+    layer3_switch_ts_reception_process_descriptor_t * p_ts_descriptor_array; ///< TS descriptor array that use to create queue.
+    layer3_switch_rx_timestamp_storage_t              rx_timestamp_storage;  ///< Configure RX timestamp storage.
+    uint32_t array_length;                                                   ///< Length of descriptor array. This length includes terminate descriptor at the end.
+    uint32_t ports;                                                          ///< Bitmap of ports that use this queue.
 } layer3_switch_descriptor_queue_cfg_t;
 
 /** Configuration of Credit Based Shaper. */
@@ -317,6 +446,7 @@ typedef struct st_layer3_switch_descriptor_queue_status
     uint32_t tail;                                            ///< Index at the tail of the queue. This used for SetDescriptor API.
     bool     created;                                         ///< This queue is already created.
     layer3_switch_descriptor_queue_cfg_t const * p_queue_cfg; ///< Configuration of this queue.
+    bool rx_available;                                        ///< Indicates whether the queue is available for reception.
 } layer3_switch_descriptor_queue_status_t;
 
 /** IP address offset for creating IPv6 filter of Layer3 forwarding. */
@@ -345,7 +475,7 @@ typedef struct st_layer3_switch_stream_id
     };
 } layer3_switch_stream_id_t;
 
-/** VLAN tag structre. */
+/** VLAN tag structure. */
 typedef struct st_layer3_switch_frame_vlan_tag
 {
     uint16_t pcp : 3;                  ///< Priority Code Point (3 bit).
@@ -357,7 +487,7 @@ typedef struct st_layer3_switch_frame_vlan_tag
 typedef struct st_layer3_switch_frame_filter
 {
     /* Entry type. */
-    layer3_switch_table_entry_type_t entry_type; ///< Type of this entry. Selcet MAC, VLAN or Layer3.
+    layer3_switch_table_entry_type_t entry_type; ///< Type of this entry. Select MAC, VLAN or Layer3.
 
     /* Used for MAC and Layer3 entry. */
     uint8_t * p_destination_mac_address;         ///< Destination MAC address.
@@ -387,33 +517,37 @@ typedef struct st_layer3_switch_l3_update_config
 {
     uint32_t  enable_destination_ports;                 ///< Destination ports that this update config is enabled.
     uint32_t  update_field_bitmask;                     ///< Bit mask of which fields will be updated. Use @ref layer3_switch_l3_update_bitmask_t.
-    uint8_t * p_mac_destination_address;                ///< MAC Destination Address
-    layer3_switch_frame_vlan_tag_t   vlan_c_tag;        ///< VLAN C-tag
-    layer3_switch_frame_vlan_tag_t   vlan_s_tag;        ///< VLAN S-tag
+    uint8_t * p_mac_destination_address;                ///< MAC Destination Address.
+    layer3_switch_frame_vlan_tag_t   vlan_c_tag;        ///< VLAN C-tag.
+    layer3_switch_frame_vlan_tag_t   vlan_s_tag;        ///< VLAN S-tag.
     layer3_switch_forwarding_r_tag_t r_tag_update_mode; ///< R-TAG update setting.
+    bool sequence_number_generation_enable;             ///< Flags whether sequence number generation (FRER) is enabled for this entry.
 } layer3_switch_l3_update_config_t;
 
 /** Table entry configuration of MAC/VLAN/Layer3 forwarding. */
 typedef struct st_layer3_switch_table_entry_cfg
 {
     /* Entry settings. */
-    bool entry_enable;                        ///< Enable or disable entry. If this field is false, entry will be removed.
-    bool security_enable;                     ///< Entry is secure or not.
+    bool entry_enable;                                 ///< Enable or disable entry. If this field is false, entry will be removed.
+    bool security_enable;                              ///< Entry is secure or not.
+
+    /* FRER setting. */
+    layer3_switch_frer_entry_cfg_t * p_frer_entry_cfg; ///< Configuration of the FRER entry(individual recovery) for this L3 entry (set to `NULL` : FRER is not valid in this L3 entry).
 
     /* Forwarding settings. */
-    uint32_t destination_ports;               ///< Destination ports of forwarding.
-    uint32_t source_ports;                    ///< Source ports that enable forwarding of incoming frame.
-    uint32_t destination_queue_index;         ///< Destination queue. This fields is only used when a destination port is CPU.
-    uint32_t internal_priority_update_enable; ///< Enable to update internal priority
-    uint32_t internal_priority_update_value;  ///< Internal priority when updating is enabled.
+    uint32_t destination_ports;                        ///< Destination ports of forwarding.
+    uint32_t source_ports;                             ///< Source ports that enable forwarding of incoming frame.
+    uint32_t destination_queue_index;                  ///< Destination queue. This fields is only used when a destination port is CPU.
+    uint32_t internal_priority_update_enable;          ///< Enable to update internal priority
+    uint32_t internal_priority_update_value;           ///< Internal priority when updating is enabled.
 
-    /* Fowarding protocol specific features. */
+    /* Forwarding protocol specific features. */
     union
     {
         /* MAC forwarding entry fields. */
         struct st_mac
         {
-            bool dinamic_entry;        ///< This entry is dinamic entry or not. Dinamic entry enable aging feature.
+            bool dinamic_entry;        ///< This entry is dynamic entry or not. Dynamic entry enable aging feature.
         } mac;
 
         /* Layer3 forwarding specific feature. */
@@ -478,11 +612,12 @@ typedef struct st_layer3_switch_table_cfg
     bool     mac_entry_aging_enable;                                                       ///< Enable aging feature of MAC table.
     uint32_t mac_entry_aging_time_sec;                                                     ///< Time[s] to delete an entry by aging.
 
-    /* VLAN table configuration */
+    /* VLAN table configuration. */
     layer3_switch_vlan_mode_t vlan_mode;                                                   ///< VLAN mode options: NO VLAN, C-TAG, or SC-TAG.
 
     /* Layer3 table configuration. */
     layer3_switch_l3_stream_filter_cfg_t l3_stream_filter_cfg;                             ///< Configuration of stream filter in Layer3 forwarding.
+    layer3_switch_frer_cfg_t             frer_cfg;                                         ///< Configuration of FRER feature.
 } layer3_switch_table_cfg_t;
 
 /** ESWM extension configures each Ethernet port and forwarding feature. */
@@ -498,31 +633,41 @@ typedef struct st_layer3_switch_extended_cfg
     layer3_switch_port_cfg_t * p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];         ///< Configuration for each port.
     IRQn_Type etha_error_irq_port_0;                                                    ///< ETHA error interrupt number for port 0.
     IRQn_Type etha_error_irq_port_1;                                                    ///< ETHA error interrupt number for port 1.
-    uint8_t   etha_error_ipl_port_0;                                                    ///< ETHA error interrupt priorirty for port 0.
-    uint8_t   etha_error_ipl_port_1;                                                    ///< ETHA error interrupt priorirty for port 1.
+    uint8_t   etha_error_ipl_port_0;                                                    ///< ETHA error interrupt priority for port 0.
+    uint8_t   etha_error_ipl_port_1;                                                    ///< ETHA error interrupt priority for port 1.
+    uint8_t   gptp_timer_numbers[BSP_FEATURE_ESWM_GPTP_TIMER_NUM];                      ///< List of timer numbers for transmission/reception timestamp.
 } layer3_switch_extended_cfg_t;
 
 /** LAYER3_SWITCH control block. DO NOT INITIALIZE. Initialization occurs when @ref ether_switch_api_t::open is called. */
 typedef struct st_layer3_switch_instance_ctrl
 {
-    uint32_t open;                                                                                          ///< Used to determine if the channel is configured
-    ether_switch_cfg_t const * p_cfg;                                                                       ///< Pointer to initial configurations.
-    R_GWCA0_Type             * p_gwca_reg;                                                                  ///< Pointer to GWCA register.
+    uint32_t open;                                                                                                 ///< Used to determine if the channel is configured
+    ether_switch_cfg_t const * p_cfg;                                                                              ///< Pointer to initial configurations.
+    R_GWCA0_Type             * p_gwca_reg;                                                                         ///< Pointer to GWCA register.
 
-    uint32_t allocated_descriptor_queue_index;                                                              ///< Index of the descriptor pool.
-    layer3_switch_basic_descriptor_t        p_descriptor_queue_list[LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM]; ///< Descriptor queue lists used by hardware.
-    layer3_switch_descriptor_queue_status_t p_queues_status[LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM];         ///< Status of each descriptor queues.
-    layer3_switch_port_cfg_t                p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];                ///< Configuration for each port.
+    uint32_t allocated_descriptor_queue_index;                                                                     ///< Index of the descriptor pool.
+    layer3_switch_basic_descriptor_t        p_descriptor_queue_list[LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM];        ///< Descriptor queue lists used by hardware.
+    layer3_switch_descriptor_queue_status_t p_queues_status[LAYER3_SWITCH_CFG_AVAILABLE_QUEUE_NUM];                ///< Status of each descriptor queues.
+    layer3_switch_port_cfg_t                p_port_cfg_list[BSP_FEATURE_ETHER_NUM_CHANNELS];                       ///< Configuration for each port.
 
     /* Forwarding features. */
-    layer3_switch_table_status_t table_status;                                                              ///< Forwarding table is initialized or not.
-    uint32_t l3_entry_count;                                                                                ///< Counts of valid LAYER3 entry.
-    uint8_t  l3_routing_number;                                                                             ///< Routing number for L2/L3 update feature.
-    uint8_t  l3_remapping_number;                                                                           ///< Remapping number for L2/L3 update feature.
+    layer3_switch_table_status_t table_status;                                                                     ///< Forwarding table is initialized or not.
+    uint32_t l3_entry_count;                                                                                       ///< Counts of valid LAYER3 entry.
+    uint8_t  l3_routing_number;                                                                                    ///< Routing number for L2/L3 update feature.
+    uint8_t  l3_remapping_number;                                                                                  ///< Remapping number for L2/L3 update feature.
 
-    void (* p_callback)(ether_switch_callback_args_t * p_args);                                             ///< Callback provided when an ISR occurs.
-    ether_switch_callback_args_t * p_callback_memory;                                                       ///< Pointer to optional callback argument memory
-    void * p_context;                                                                                       ///< Pointer to context to be passed into callback function
+    /* Timestamp features. */
+    layer3_switch_ts_descriptor_queue_status_t ts_descriptor_queue_status_list[
+        BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM];                                                             ///< Status of TS reception descriptor queues.
+
+    /* FRER features. */
+    uint32_t valid_frer_entry_num;                                                                                 ///< Number of valid FRER entry.
+    layer3_switch_frer_sequence_recovery_status_t frer_sequence_recovery_status[BSP_FEATURE_ESWM_FRER_TABLE_SIZE]; ///< Status of table for each FRER sequence recovery entry.
+    uint32_t used_frer_sequence_generator_num;                                                                     ///< Number of the sequence number generator.
+
+    void (* p_callback)(ether_switch_callback_args_t * p_args);                                                    ///< Callback provided when an ISR occurs.
+    ether_switch_callback_args_t * p_callback_memory;                                                              ///< Pointer to optional callback argument memory
+    void * p_context;                                                                                              ///< Pointer to context to be passed into callback function
 } layer3_switch_instance_ctrl_t;
 
 /** Configuration of the gate operation. */

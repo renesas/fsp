@@ -260,6 +260,11 @@ rsip_ret_t r_rsip_p73r(const uint32_t InData_HashType[], const uint32_t InData_S
 rsip_ret_t r_rsip_p73u(const uint32_t InData_Msg[], uint32_t MAX_CNT);
 rsip_ret_t r_rsip_p73s(uint32_t OutData_State[]);
 rsip_ret_t r_rsip_p73f(const uint32_t InData_Msg[], uint32_t MAX_CNT, uint32_t OutData_MsgDigest[]);
+rsip_ret_t r_rsip_p78i(const uint32_t InData_HashType[], const uint32_t InData_MsgLen[]);
+rsip_ret_t r_rsip_p78r(const uint32_t InData_HashType[], const uint32_t InData_State[]);
+rsip_ret_t r_rsip_p78u(const uint32_t InData_Msg[], uint32_t MAX_CNT);
+rsip_ret_t r_rsip_p78s(uint32_t OutData_State[]);
+rsip_ret_t r_rsip_p78f(const uint32_t InData_Msg[], uint32_t MAX_CNT, uint32_t OutData_MsgDigest[]);
 rsip_ret_t r_rsip_p81(void);
 rsip_ret_t r_rsip_p82(void);
 rsip_ret_t r_rsip_p95f(const uint32_t InData_Text[], uint32_t OutData_Text[], uint32_t OutData_MAC[]);
@@ -547,6 +552,24 @@ rsip_ret_t r_rsip_p96r(const uint32_t InData_KeyIndex[], const uint32_t InData_N
 rsip_ret_t r_rsip_p96s(uint32_t OutData_State[]);
 void       r_rsip_p96u(const uint32_t InData_Text[], uint32_t OutData_Text[], uint32_t MAX_CNT);
 rsip_ret_t r_rsip_p96f(const uint32_t InData_Text[], uint32_t OutData_Text[], uint32_t MAX_CNT);
+rsip_ret_t r_rsip_p97i(const uint32_t InData_KeyIndex[],
+                       const uint32_t InData_Cmd[],
+                       const uint32_t InData_Nonce[],
+                       const uint32_t InData_TextLen[],
+                       const uint32_t InData_DataALen[]);
+rsip_ret_t r_rsip_p97r(const uint32_t InData_KeyIndex[],
+                       const uint32_t InData_Cmd[],
+                       const uint32_t InData_Nonce[],
+                       const uint32_t InData_State[]);
+rsip_ret_t r_rsip_p97s(uint32_t OutData_State[]);
+void       r_rsip_p97a(const uint32_t InData_DataA[], uint32_t MAX_CNT);
+void       r_rsip_p97t(void);
+void       r_rsip_p97u(const uint32_t InData_Text[], uint32_t OutData_Text[], uint32_t MAX_CNT);
+rsip_ret_t r_rsip_p97f(const uint32_t InData_Text[],
+                       const uint32_t InData_DataT[],
+                       uint32_t       OutData_Text[],
+                       uint32_t       OutData_DataT[],
+                       uint32_t       MAX_CNT);
 
 rsip_ret_t r_rsip_p0c(const uint32_t InData_CurrentVer[], const uint32_t InData_NextVer[]);
 rsip_ret_t r_rsip_p0d(const uint32_t InData_KeyCertificate[],

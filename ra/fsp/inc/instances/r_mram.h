@@ -51,6 +51,10 @@ typedef struct st_mram_instance_ctrl
     uint32_t timeout_arc_read;
     uint32_t timeout_configuration_set;
     uint32_t timeout_maci_command;
+
+    void (* p_callback)(flash_callback_args_t *); // Pointer to callback
+    flash_callback_args_t * p_callback_memory;    // Pointer to optional callback argument memory
+    void * p_context;                             // Pointer to context to be passed into callback function
 } mram_instance_ctrl_t;
 
 /**********************************************************************************************************************

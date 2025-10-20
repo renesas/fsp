@@ -12,6 +12,7 @@
 #include "qe_ble_profile.h"
 #include "r_ble_gtl.h"
 #include "r_ble_gtl_security.h"
+#include "rm_ble_abs_gtl_storage.h"
 
 /***********************************************************************************************************************
  * Defines
@@ -466,7 +467,7 @@ ble_status_t R_BLE_GAP_StartEnc (uint16_t conn_hdl)
     }
     else
     {
-        status = BLE_ERR_UNSUPPORTED;
+        status = r_ble_gtl_security_cmd(conn_hdl);
     }
 
     return status;
@@ -603,36 +604,24 @@ ble_status_t R_BLE_GAP_ReplyLtkReq (uint16_t conn_hdl, uint16_t ediv, uint8_t * 
 
     FSP_PARAMETER_NOT_USED(response);
 
-    if (r_ble_gtl_sec_get_sec_conn_var() != BLE_GAP_SC_STRICT)
+    /* Handle LEGACY PAIRING */
+    bool comp_resp = r_ble_gtl_sec_encryption_req_resp(conn_hdl, ediv, p_peer_rand);
+
+    if (comp_resp)
     {
-        /* Handle LEGACY PAIRING */
-        bool comp_resp = r_ble_gtl_sec_encryption_req_resp(conn_hdl, ediv, p_peer_rand);
-
-        if (comp_resp)
-        {
-            /* Values found in db */
-            status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_ACCEPT);
-        }
-        else
-        {
-            /* Values NOT found in db */
-            status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_DENY);
-        }
-
-        /* Notify the application */
-        if (status == BLE_SUCCESS)
-        {
-            status = r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, comp_resp);
-        }
+        /* Values found in db */
+        status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_ACCEPT);
     }
     else
     {
-        /* Handle SECURE CONNECTIONS */
-        status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_ACCEPT);
-        if (status == BLE_SUCCESS)
-        {
-            status = r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, true);
-        }
+        /* Values NOT found in db */
+        status = r_ble_gtl_send_gapc_encrypt_cfm(conn_hdl, BLE_GAP_LTK_REQ_DENY);
+    }
+
+    /* Notify the application */
+    if (status == BLE_SUCCESS)
+    {
+        status = r_ble_gtl_gapc_ltk_rsp_comp(conn_hdl, comp_resp);
     }
 
     return status;
@@ -967,7 +956,14 @@ ble_status_t R_BLE_VS_SetBdAddr (uint8_t area, st_ble_dev_addr_t * p_addr)
     else if (BLE_VS_ADDR_AREA_DATA_FLASH == area)
     {
 #ifdef ENABLE_STORAGE
-        status = R_BLE_GTL_VS_SetBdAddr_dflash(p_addr);
+        if (rm_ble_abs_gtl_storage_set_addr(p_addr))
+        {
+            status = BLE_ERR_UNSPECIFIED;
+        }
+        else
+        {
+            status = BLE_SUCCESS;
+        }
 #endif
     }
     else

@@ -1044,9 +1044,13 @@ void SystemCoreClockUpdate (void)
         if (BSP_CLOCKS_FMAIN_SOURCE_CLOCK_FOCO == R_SYSTEM->FMAINSCR_b.CKST)
  #endif
         {
+ #if BSP_FEATURE_CGC_HAS_MOCO
             SystemCoreClock = R_SYSTEM->FOCOSCR_b.CKST ?                                        \
                               g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_MOCO] >> R_SYSTEM->MOCODIV : \
                               g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_HOCO] >> R_SYSTEM->HOCODIV;
+ #else
+            SystemCoreClock = g_clock_freq[BSP_CLOCKS_SOURCE_CLOCK_HOCO] >> R_SYSTEM->HOCODIV;
+ #endif
         }
     }
 #endif
@@ -1525,16 +1529,27 @@ uint32_t bsp_prv_clock_source_get (void)
      * | SOSC                | x             | x              | 0U            | 1U            |
      *
      * */
+ #if BSP_FEATURE_CGC_HAS_MOSC
     uint32_t clock = BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC;
+ #else
+    uint32_t clock = BSP_CLOCKS_SOURCE_CLOCK_HOCO;
+ #endif
 
     if (BSP_CLOCKS_SOURCE_CLOCK_FSUB == R_SYSTEM->ICLKSCR_b.CKST)
     {
+ #if BSP_FEATURE_CGC_HAS_SOSC
         clock = R_SYSTEM->FSUBSCR ? BSP_CLOCKS_SOURCE_CLOCK_LOCO : BSP_CLOCKS_SOURCE_CLOCK_SUBCLOCK;
+ #else
+        clock = BSP_CLOCKS_SOURCE_CLOCK_LOCO;
+ #endif
     }
+
+ #if BSP_FEATURE_CGC_HAS_MOCO
     else if (BSP_CLOCKS_FMAIN_SOURCE_CLOCK_FOCO == R_SYSTEM->FMAINSCR_b.CKST)
     {
         clock = R_SYSTEM->FOCOSCR_b.CKST ? BSP_CLOCKS_SOURCE_CLOCK_MOCO : BSP_CLOCKS_SOURCE_CLOCK_HOCO;
     }
+ #endif
     else
     {
         /* Do nothing. */
@@ -1567,6 +1582,7 @@ void bsp_prv_clock_set (uint32_t clock, uint8_t hocodiv, uint8_t mocodiv, uint8_
     R_SYSTEM->ICLKSCR_b.CKSEL = BSP_CLOCKS_SOURCE_CLOCK_FMAIN;
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->ICLKSCR_b.CKST, BSP_CLOCKS_SOURCE_CLOCK_FMAIN);
 
+ #if BSP_FEATURE_CGC_HAS_MOCO
     if ((BSP_CLOCKS_SOURCE_CLOCK_HOCO == clock) || (BSP_CLOCKS_SOURCE_CLOCK_MOCO == clock))
     {
         R_SYSTEM->FMAINSCR_b.CKSEL = BSP_CLOCKS_FMAIN_SOURCE_CLOCK_FOCO;
@@ -1577,7 +1593,8 @@ void bsp_prv_clock_set (uint32_t clock, uint8_t hocodiv, uint8_t mocodiv, uint8_
             R_SYSTEM->FOCOSCR_b.CKSEL = BSP_CLOCKS_FOCO_SOURCE_CLOCK_HOCO;
             FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->FOCOSCR_b.CKST, BSP_CLOCKS_FOCO_SOURCE_CLOCK_HOCO);
 
-            /* Due to register access restrictions (see 8.6.1 Register Access), only set the HOCODIV when system clock source is HOCO */
+            /* Due to register access restrictions, only set the HOCODIV when system clock source is HOCO. *
+             * See in hardware manual: Clock Generation Circuit > Usage Notes > Register Access */
             R_SYSTEM->HOCODIV = hocodiv;
         }
         else
@@ -1586,6 +1603,15 @@ void bsp_prv_clock_set (uint32_t clock, uint8_t hocodiv, uint8_t mocodiv, uint8_
             FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->FOCOSCR_b.CKST, BSP_CLOCKS_FOCO_SOURCE_CLOCK_MOCO);
         }
     }
+
+ #else
+    if (BSP_CLOCKS_SOURCE_CLOCK_HOCO == clock)
+    {
+        /* Due to register access restrictions, only set the HOCODIV when system clock source is HOCO. *
+         * See in hardware manual: Clock Generation Circuit > Usage Notes > Register Access */
+        R_SYSTEM->HOCODIV = hocodiv;
+    }
+ #endif
 
  #if BSP_CLOCK_CFG_MAIN_OSC_POPULATED
     else if (BSP_CLOCKS_SOURCE_CLOCK_MAIN_OSC == clock)
@@ -1612,8 +1638,17 @@ void bsp_prv_clock_set (uint32_t clock, uint8_t hocodiv, uint8_t mocodiv, uint8_
         FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->ICLKSCR_b.CKST, BSP_CLOCKS_SOURCE_CLOCK_FSUB);
     }
 
+ #if BSP_FEATURE_CGC_HAS_MOCO
     R_SYSTEM->MOCODIV = mocodiv;
+ #else
+    FSP_PARAMETER_NOT_USED(mocodiv);
+ #endif
+
+ #if BSP_FEATURE_CGC_HAS_MOSC
     R_SYSTEM->MOSCDIV = moscdiv;
+ #else
+    FSP_PARAMETER_NOT_USED(moscdiv);
+ #endif
 
     /* Clock is now at requested frequency. Update the CMSIS core clock variable so that it reflects the new ICLK frequency.*/
     SystemCoreClockUpdate();
@@ -2111,33 +2146,39 @@ void bsp_soft_reset_prepare (void)
  **********************************************************************************************************************/
 void bsp_prv_cmc_init (void)
 {
+ #if BSP_FEATURE_CGC_HAS_MOSC || BSP_FEATURE_CGC_HAS_SOSC
+
     /* The CMC register can be written only once after release from the reset state. If clock registers not reset
      * values during startup, assume CMC register has already been set appropriately. */
     uint8_t cmc_reg = 0x00U;
 
     /* Set main clock oscillator drive capability */
- #if BSP_CLOCK_CFG_MAIN_OSC_POPULATED
+  #if BSP_CLOCK_CFG_MAIN_OSC_POPULATED
     cmc_reg |= BSP_PRV_CMC_MOSC;
- #endif
+  #endif
 
     /* Set sub-clock oscillator drive capability and pin switching */
- #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
+  #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
     cmc_reg |= BSP_PRV_CMC_SOSC;
- #endif
+  #endif
 
     R_SYSTEM->CMC = cmc_reg;
+ #endif
 
  #if (BSP_CFG_FSXP_SOURCE != BSP_CLOCKS_CLOCK_DISABLED)
     uint8_t osmc = R_SYSTEM->OSMC;
 
     if (BSP_PRV_OSMC != osmc)
     {
+  #if BSP_PERIPHERAL_RTC_C_PRESENT || BSP_PERIPHERAL_RTC_PRESENT
+
         /* Stop RTC counter operation to update the OSMC register. */
         BSP_MSTP_REG_FSP_IP_RTC(0) &= ~BSP_MSTP_BIT_FSP_IP_RTC(0);
         FSP_REGISTER_READ(BSP_MSTP_REG_FSP_IP_RTC(0));
         R_RTC_C->RTCC0_b.RTCE       = 0U;
         BSP_MSTP_REG_FSP_IP_RTC(0) |= BSP_MSTP_BIT_FSP_IP_RTC(0);
         FSP_REGISTER_READ(BSP_MSTP_REG_FSP_IP_RTC(0));
+  #endif
 
   #if BSP_CLOCK_CFG_SUBCLOCK_POPULATED
         if (0U == osmc)
@@ -3216,6 +3257,11 @@ static void bsp_prv_sosc_init (void)
 void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
 {
 #if BSP_FEATURE_OSPI_HAS_CLOCK
+ #if BSP_FEATURE_OSPI_B_IS_AVAILABLE
+  #define OSPI_UNIT_COUNT    BSP_FEATURE_OSPI_B_UNIT_COUNT
+ #else
+  #define OSPI_UNIT_COUNT    (1U)
+ #endif
 
     /* Store initial value of CGC and LPM protection registers. */
  #if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1
@@ -3230,6 +3276,29 @@ void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
  #else
     R_SYSTEM->PRCR = (uint16_t) BSP_PRV_PRCR_UNLOCK;
  #endif
+
+    /* All OSPI_B peripherals need to be stopped before the clock change.
+     * Technical Update TN-RA*-A0147A/E. */
+    uint32_t started_modules = 0;
+    for (uint32_t i = 0; i < OSPI_UNIT_COUNT; i++)
+    {
+        /* BSP_MSTP_BIT_FSP_IP_OSPI has a semi-colon at the end of the macro which messes up using
+         * it in an expression. Save the flag then if it is zero the IP is stopped. */
+        const uint32_t ip_stopped = BSP_MSTP_REG_FSP_IP_OSPI(i) & BSP_MSTP_BIT_FSP_IP_OSPI(i);
+        if (0 == ip_stopped)
+        {
+            /* Save the module index as a flag then stop it. */
+            started_modules |= (1U << i);
+            R_BSP_MODULE_STOP(FSP_IP_OSPI, i);
+        }
+    }
+
+    /* Must wait 2 OCTACLK cycles after the module has been stopped before changing the clock: TU TN-RA*-A0147A/E. */
+    const uint32_t octaclk_freq_hz = R_BSP_SourceClockHzGet((fsp_priv_source_clock_t) R_SYSTEM->OCTACKCR_b.OCTACKSEL) /
+                                     R_FSP_ClockDividerGet(R_SYSTEM->OCTACKDIVCR_b.OCTACKDIV);
+    const uint32_t octaclk_period_us = octaclk_freq_hz / BSP_PRV_HZ_PER_MHZ;
+
+    R_BSP_SoftwareDelay(2U * octaclk_period_us, BSP_DELAY_UNITS_MICROSECONDS);
 
     /* Request to change the OCTASPI Clock. */
     R_SYSTEM->OCTACKCR_b.OCTACKSREQ = 1;
@@ -3246,6 +3315,15 @@ void R_BSP_OctaclkUpdate (bsp_octaclk_settings_t * p_octaclk_setting)
 
     /* Wait for the OCTASPI Clock to be started. */
     FSP_HARDWARE_REGISTER_WAIT(R_SYSTEM->OCTACKCR_b.OCTACKSRDY, 0U);
+
+    /* Restore any OSPI_B peripherals that were stopped. */
+    for (uint32_t i = 0; i < OSPI_UNIT_COUNT; i++)
+    {
+        if (started_modules & (1U << i))
+        {
+            R_BSP_MODULE_START(FSP_IP_OSPI, i);
+        }
+    }
 
     /* Restore CGC and LPM protection registers. */
  #if BSP_FEATURE_TZ_VERSION == 2 && BSP_TZ_NONSECURE_BUILD == 1

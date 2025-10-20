@@ -158,7 +158,6 @@ fsp_err_t R_IICA_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_c
  *
  * @retval  FSP_SUCCESS             Function executed without issue.
  * @retval  FSP_ERR_ASSERTION       p_api_ctrl, p_dest or bytes is NULL.
- * @retval  FSP_ERR_INVALID_SIZE    Provided number of bytes more than uint16_t size (65535) for data transfer.
  * @retval  FSP_ERR_NOT_OPEN        Handle is not initialized.  Call R_IICA_MASTER_Open to initialize the control block.
  **********************************************************************************************************************/
 fsp_err_t R_IICA_MASTER_Read (i2c_master_ctrl_t * const p_api_ctrl,
@@ -190,7 +189,6 @@ fsp_err_t R_IICA_MASTER_Read (i2c_master_ctrl_t * const p_api_ctrl,
  *
  * @retval  FSP_SUCCESS           Function executed without issue.
  * @retval  FSP_ERR_ASSERTION     p_api_ctrl or p_src is NULL.
- * @retval  FSP_ERR_INVALID_SIZE  Provided number of bytes more than uint16_t size (65535) for data transfer.
  * @retval  FSP_ERR_NOT_OPEN      Handle is not initialized.  Call R_IICA_MASTER_Open to initialize the control block.
  **********************************************************************************************************************/
 fsp_err_t R_IICA_MASTER_Write (i2c_master_ctrl_t * const p_api_ctrl,
@@ -373,7 +371,6 @@ fsp_err_t R_IICA_MASTER_Close (i2c_master_ctrl_t * const p_api_ctrl)
  *
  * @retval  FSP_SUCCESS           Function executed successfully.
  * @retval  FSP_ERR_ASSERTION     p_api_ctrl or p_buffer is NULL.
- * @retval  FSP_ERR_INVALID_SIZE  Provided number of bytes more than UINT16_MAX(= 65535).
  * @retval  FSP_ERR_IN_USE        Another transfer was in progress.
  * @retval  FSP_ERR_NOT_OPEN      Handle is not initialized. Call R_IICA_MASTER_Open to initialize the control block.
  **********************************************************************************************************************/

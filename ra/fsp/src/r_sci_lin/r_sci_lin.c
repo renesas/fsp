@@ -165,9 +165,10 @@ static lin_event_t r_sci_lin_scix2_handler(sci_lin_instance_ctrl_t * const p_ctr
 
 #if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
 static void r_sci_lin_scix3_handler(sci_lin_instance_ctrl_t * const p_ctrl);
+static bool r_sci_lin_scix3_latest_bit_has_error(sci_lin_instance_ctrl_t * const p_ctrl, uint32_t count);
 
 /* Auto Synchronization helper functions */
-static void r_sci_lin_scix3_synchronize(sci_lin_instance_ctrl_t * const p_ctrl, uint32_t baud_measurement);
+static void r_sci_lin_scix3_synchronize(sci_lin_instance_ctrl_t * const p_ctrl);
 static void r_sci_lin_scix3_reset(sci_lin_instance_ctrl_t * const p_ctrl);
 
 #endif
@@ -482,6 +483,7 @@ fsp_err_t R_SCI_LIN_CommunicationAbort (lin_ctrl_t * const p_api_ctrl)
     fsp_err_t err = r_sci_lin_common_parameter_checking(p_ctrl);
     FSP_ERROR_RETURN(FSP_SUCCESS == err, err);
 #endif
+
     R_SCI0_Type * p_reg = p_ctrl->p_reg;
 
     /* Disable transmit interrupts, transmission, and reception interrupts */
@@ -1236,13 +1238,6 @@ static void r_sci_lin_hw_configure (sci_lin_instance_ctrl_t * const p_ctrl)
 
         /* Configure auto synchronization setting. */
         cr0 |= (uint8_t) R_SCI0_CR0_BRME_Msk;
-
-        /* Init current baud rate */
-        uint32_t freq_hz       = R_FSP_SystemClockHzGet(BSP_FEATURE_SCI_CLOCK);
-        uint32_t divisor_shift = SCI_LIN_MIN_BAUD_DIVISOR_SHIFT + \
-                                 ((uint32_t) p_extend->p_baud_setting->cks << 1U) -
-                                 (uint32_t) p_extend->p_baud_setting->semr_baudrate_bits_b.abcs;
-        p_ctrl->current_baudrate = freq_hz / ((uint32_t) (p_extend->p_baud_setting->brr + 1) * (1U << divisor_shift));
     }
 #endif
 
@@ -1508,17 +1503,19 @@ static fsp_err_t r_sci_lin_write (sci_lin_instance_ctrl_t * const     p_ctrl,
  * synchronize with the master's rate.
  *
  * @param[in]  p_ctrl                    Pointer to driver control block
- * @param[in]  baud_measurement          Baudrate synchronize measurement
  *********************************************************************************************************************/
-static void r_sci_lin_scix3_synchronize (sci_lin_instance_ctrl_t * const p_ctrl, uint32_t baud_measurement)
+static void r_sci_lin_scix3_synchronize (sci_lin_instance_ctrl_t * const p_ctrl)
 {
     R_SCI0_Type * const p_reg = p_ctrl->p_reg;
     sci_lin_extended_cfg_t const * const p_extend       = (sci_lin_extended_cfg_t *) p_ctrl->p_cfg->p_extend;
     sci_lin_baud_setting_t             * p_baud_setting = p_extend->p_baud_setting;
 
+    /* Calculate the baud rate from the measured bit time */
+    uint32_t baudrate = (p_ctrl->timer_freq_hz * SCI_LIN_SYNC_EDGES) / p_ctrl->sync_bits_sum;
+
     sci_lin_baud_params_t baud_params =
     {
-        baud_measurement,
+        baudrate,
         p_extend->break_bits,
         p_extend->delimiter_bits,
         (sci_lin_base_clock_t) p_extend->p_baud_setting->semr_baudrate_bits_b.abcs,
@@ -1547,9 +1544,6 @@ static void r_sci_lin_scix3_synchronize (sci_lin_instance_ctrl_t * const p_ctrl,
         uint8_t tmr = p_reg->TMR;
         p_reg->TMR = (tmr & (uint8_t) ~R_SCI0_TMR_TCSS_Msk) | (uint8_t) (timer_divider << R_SCI0_TMR_TCSS_Pos);
 
-        /* Save current baud rate */
-        p_ctrl->current_baudrate = baud_measurement;
-
         /* Apply new baud setting. BRR, SMR, SEMR can only be written to when SCR.TE and SCR.RE are 0.
          * TE is already 0, but we must clear RE here to update the baud settings. */
         uint8_t scr = p_reg->SCR & (uint8_t) ~R_SCI0_SCR_RIE_Msk;
@@ -1559,7 +1553,7 @@ static void r_sci_lin_scix3_synchronize (sci_lin_instance_ctrl_t * const p_ctrl,
         p_reg->BRR  = p_baud_setting->brr;
 
         /* Compute 1.5 bytes (15 Tbit) duration to wait whether CF1 is detected. */
-        uint32_t delay_time = (p_ctrl->timer_freq_hz * SCI_LIN_CF1_WAIT_BIT_COUNT) / baud_measurement;
+        uint32_t delay_time = (p_ctrl->timer_freq_hz * SCI_LIN_CF1_WAIT_BIT_COUNT) / baudrate;
         delay_time = (delay_time < SCI_LIN_MAX_TIMER_INTERVAL) ? delay_time : (SCI_LIN_MAX_TIMER_INTERVAL - 1);
 
         uint8_t delay_tcnt = (uint8_t) (delay_time >> 8U);
@@ -1572,8 +1566,8 @@ static void r_sci_lin_scix3_synchronize (sci_lin_instance_ctrl_t * const p_ctrl,
         p_reg->TPRE = delay_tpre;
         p_reg->TCNT = delay_tcnt;
 
-        /* Discard received data and clear the CF0 received flag to advance start frame reception state */
-        r_sci_lin_flags_clear(p_reg, R_SCI0_SSR_RDRF_Msk, R_SCI0_STCR_CF0MCL_Msk);
+        /* Discard received data and clear the CF0 received and FER flags to advance start frame reception state */
+        r_sci_lin_flags_clear(p_reg, R_SCI0_SSR_RDRF_Msk | R_SCI0_SSR_FER_Msk, R_SCI0_STCR_CF0MCL_Msk);
 
         /* Enable the timer to start counting 15 Tbit */
         p_reg->TCR = R_SCI0_TCR_TCST_Msk;
@@ -1587,6 +1581,48 @@ static void r_sci_lin_scix3_synchronize (sci_lin_instance_ctrl_t * const p_ctrl,
         /* Restart reception. Expect a start frame with CF1 only. */
         p_reg->CR3 = SCI_LIN_CR3_MASK_SLAVE;
     }
+}
+
+#endif
+
+#if SCI_LIN_AUTO_SYNC_SUPPORT_ENABLE
+
+/*******************************************************************************************************************//**
+ * Check for errors in received SCIX3 measurement data. Because the SCIX3 interrupt detects edges, the level of the
+ * RXDn line is of limited usefulness (it will always alternate between 0 and 1 as we expect in the sync byte because
+ * we are detecting all edge changes). But in the event of a bit error, it will appear as if multiple bit times have
+ * elapsed between edges instead of just 1. Comparing the duration of each bit to the average bit duration received
+ * so far can detect bit errors/missed bits and avoid adjusting the baud rate to the wrong value.
+ *
+ * @param[in]  p_ctrl                    Pointer to driver control block
+ * @param[in]  count                     Latest counter measurement
+ *
+ * @returns true if an error occurred, false otherwise
+ **********************************************************************************************************************/
+static bool r_sci_lin_scix3_latest_bit_has_error (sci_lin_instance_ctrl_t * const p_ctrl, uint32_t count)
+{
+    bool has_error = false;
+
+    /* Increment of sync bit received */
+    p_ctrl->sync_bits_received++;
+
+    /* Check collected all sync edges, except 2 delimiter raising and falling edge */
+    if (p_ctrl->sync_bits_received > 2)
+    {
+        p_ctrl->sync_bits_sum += count;
+
+        uint32_t avg_count = (p_ctrl->sync_bits_sum / (uint32_t) (p_ctrl->sync_bits_received - 2));
+
+        /* Compute absolute value of difference in bit duration */
+        uint32_t delta = avg_count > count ? (avg_count - count) : (count - avg_count);
+
+        /* Check that this bit is within 12.5% of the duration of the average */
+        uint32_t threshold = (avg_count >> 3U);
+
+        has_error = delta > threshold;
+    }
+
+    return has_error;
 }
 
 #endif
@@ -1866,10 +1902,8 @@ static void r_sci_lin_scix0_handler (sci_lin_instance_ctrl_t * const p_ctrl)
         {
             /* Reset auto synchronization state before starting the next baudrate auto synchronize function */
             p_ctrl->sync_bits_received = 0;
+            p_ctrl->sync_bits_sum      = 0;
             p_reg->CR0_b.BRME          = 1;
-
-            /* Enable reception interrupts to check if any framing error during auto synchronization */
-            p_reg->SCR |= R_SCI0_SCR_RIE_Msk;
         }
 #endif
     }
@@ -2071,45 +2105,33 @@ static void r_sci_lin_scix3_handler (sci_lin_instance_ctrl_t * const p_ctrl)
     /* Clear AEDF flag immediately */
     p_reg->STCR = R_SCI0_STCR_AEDCL_Msk;
 
-    /* Count the valid edge detected */
-    p_ctrl->sync_bits_received++;
-
-    /* Ignore 1st & 2nd valid edge because that is break delimiter bit */
-    if (2 >= p_ctrl->sync_bits_received)
+    /* Check for bit errors  */
+    if (false == r_sci_lin_scix3_latest_bit_has_error(p_ctrl, counter))
     {
-        p_ctrl->sync_bits_sum = 0;
+        /* Check if we received enough bits to syncrhonize, except 2 delimiter raising and falling edge */
+        if (SCI_LIN_SYNC_EDGES == (p_ctrl->sync_bits_received - 2))
+        {
+            /* Perform synchronization. */
+            r_sci_lin_scix3_synchronize(p_ctrl);
 
-        return;
+            /* Clear the data after synchronization */
+            p_ctrl->sync_bits_received = 0;
+            p_ctrl->sync_bits_sum      = 0;
+        }
     }
-
-    /* Accumulate sync bits */
-    p_ctrl->sync_bits_sum += counter;
-
-    /* Check if we have collected all sync edges, except 2 delimiter raising and falling edge */
-    if (SCI_LIN_SYNC_EDGES == (p_ctrl->sync_bits_received - 2))
+    else
     {
-        /* Calculate measured baud rate */
-        uint32_t measured_baudrate = (p_ctrl->timer_freq_hz * SCI_LIN_SYNC_EDGES) / p_ctrl->sync_bits_sum;
-
-        uint32_t current_baudrate = p_ctrl->current_baudrate;
-
-        /* Compute absolute value of difference in baud rate */
-        uint32_t delta = (measured_baudrate > current_baudrate) ?
-                         (measured_baudrate - current_baudrate) :
-                         (current_baudrate - measured_baudrate);
-
-        /* Reset counters */
+        /* Measurement error occurred.
+         *
+         * The frame can stil be received, even if there was a measurement error.
+         * We set BRME=0 here in case the measurement error to not receive another edge
+         * Enable reception interrupts to check if any framing error during auto synchronization.
+         * If there is a reception error, it will be caught and handled in the ERI handler. */
+        p_reg->CR0_b.BRME          = 0;
         p_ctrl->sync_bits_received = 0;
         p_ctrl->sync_bits_sum      = 0;
 
-        /* Check if baud rate difference is within 6.25% tolerance */
-        if (delta < (current_baudrate >> 4U))
-        {
-            /* Synchronize the baudrate */
-            r_sci_lin_scix3_synchronize(p_ctrl, measured_baudrate);
-        }
-
-        /* If measurement error, counters are already reset above */
+        p_reg->SCR |= R_SCI0_SCR_RIE_Msk;
     }
 }
 
@@ -2202,9 +2224,9 @@ static void r_sci_lin_break_field_detection_reset (sci_lin_instance_ctrl_t * con
 static void r_sci_lin_transfer_state_reset (sci_lin_instance_ctrl_t * const p_ctrl)
 {
     /* Reset any in progress transmission/reception */
-    p_ctrl->rx_bytes_expected = 0;
-    p_ctrl->rx_bytes_received = 0;
-    p_ctrl->tx_src_bytes      = 0;
+    p_ctrl->rx_bytes_expected = 0U;
+    p_ctrl->rx_bytes_received = 0U;
+    p_ctrl->tx_src_bytes      = 0U;
     p_ctrl->tx_header_bytes   = 0U;
     p_ctrl->p_data            = NULL;
     p_ctrl->p_callback_memory = NULL;

@@ -902,7 +902,8 @@ void r_tml_period_counts_set (tml_instance_ctrl_t * const p_instance_ctrl, uint3
  * @param[in]  p_cfg                  Pointer to timer configuration.
  *
  * @retval FSP_SUCCESS                    Initialization was successful and timer has started.
- * @retval FSP_ERR_ASSERTION              A required input pointer is NULL or the source divider is invalid.
+ * @retval FSP_ERR_ASSERTION              A required input pointer is NULL, the source divider is invalid or
+ *                                        the capture trigger source is invalid.
  * @retval FSP_ERR_ALREADY_OPEN           Module is already open.
  * @retval FSP_ERR_IRQ_BSP_DISABLED       timer_cfg_t::p_callback is not NULL, but ISR is not enabled.
  *                                        ISR must be enabled to use one-shot mode or callback.
@@ -958,6 +959,12 @@ fsp_err_t r_tml_open_param_checking (tml_instance_ctrl_t * const p_instance_ctrl
     /* Check the maximum range of counter clock source division. */
     FSP_ASSERT(p_cfg->source_div <= BSP_FEATURE_TML_MAX_CLOCK_DIVIDER);
  #if TML_CFG_16_BIT_CAPTURE_MODE_ENABLE
+  #if !BSP_FEATURE_ELC_VERSION
+
+    /* Triggering capture with ELC event is not supported. */
+    FSP_ASSERT(TML_CAPTURE_TRIGGER_EVENT_ELC !=
+               ((tml_extended_cfg_t *) p_cfg->p_extend)->capture_trigger);
+  #endif
 
     /* The clock source division must be 0 if 16-bit counter channel use CSEL as clock source. */
     if (R_TML->ITLCC0_b.CAPEN && (TIMER_MODE_16_BIT_COUNTER == mode))

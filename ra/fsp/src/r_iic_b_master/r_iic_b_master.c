@@ -223,6 +223,15 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
     p_ctrl->p_context         = p_cfg->p_context;
     p_ctrl->p_callback_memory = NULL;
 
+    p_ctrl->p_buff    = NULL;
+    p_ctrl->total     = 0U;
+    p_ctrl->remain    = 0U;
+    p_ctrl->loaded    = 0U;
+    p_ctrl->read      = false;
+    p_ctrl->restart   = false;
+    p_ctrl->err       = false;
+    p_ctrl->restarted = false;
+
 #if (1 == BSP_FEATURE_I3C_HAS_CLOCK)
     R_BSP_MODULE_START(FSP_IP_I3C, p_cfg->channel);
 #else
@@ -249,15 +258,7 @@ fsp_err_t R_IIC_B_MASTER_Open (i2c_master_ctrl_t * const p_api_ctrl, i2c_master_
     }
 #endif
 
-    p_ctrl->p_buff    = NULL;
-    p_ctrl->total     = 0U;
-    p_ctrl->remain    = 0U;
-    p_ctrl->loaded    = 0U;
-    p_ctrl->read      = false;
-    p_ctrl->restart   = false;
-    p_ctrl->err       = false;
-    p_ctrl->restarted = false;
-    p_ctrl->open      = IIC_B_MASTER_OPEN;
+    p_ctrl->open = IIC_B_MASTER_OPEN;
 
     return FSP_SUCCESS;
 }
@@ -909,6 +910,9 @@ static fsp_err_t iic_b_master_run_hw_master (iic_b_master_instance_ctrl_t * cons
                                         (uint32_t) (((iic_b_master_extended_cfg_t *) p_ctrl->p_cfg->p_extend)->
                                                     timeout_scl_low << R_I3C0_TMOCTL_TOLCTL_Pos));
 
+    /* Clear error flags in case they are set unexpectedly, e.g stop condition in multil-master use case */
+    p_ctrl->p_reg->BST &= (uint32_t) ~(R_I3C0_BST_STCNDDF_Msk | R_I3C0_BST_SPCNDDF_Msk);
+
     /* Enable START condition and timeout detection
      * Enable SPCNDDIE to detect unexpected STOP condition. This is disabled between communication events as it can lead
      * to undesired interrupts in multi-master setups.
@@ -1288,7 +1292,7 @@ static void iic_b_master_err_master (iic_b_master_instance_ctrl_t * p_ctrl)
              ((p_ctrl->restarted) && (errs_events & (uint8_t) R_I3C0_BST_STCNDDF_Msk)))
     {
         i2c_master_event_t event = I2C_MASTER_EVENT_ABORTED;
-        if (false == p_ctrl->err)      /* Successful transaction */
+        if ((0 == p_ctrl->remain) && (false == p_ctrl->err)) /* Successful transaction */
         {
             /* Get the correct event to notify the user */
             event = (p_ctrl->read) ? I2C_MASTER_EVENT_RX_COMPLETE : I2C_MASTER_EVENT_TX_COMPLETE;

@@ -25,11 +25,15 @@ FSP_HEADER
  * Typedef definitions
  **********************************************************************************************************************/
 
+#if BSP_PERIPHERAL_ELC_PRESENT || BSP_PERIPHERAL_ELC_B_PRESENT
 typedef struct st_bsp_event_info
 {
     IRQn_Type   irq;
     elc_event_t event;
 } bsp_event_info_t;
+#endif
+
+#ifndef BSP_OVERRIDE_BSP_CLOCKS_OCTACLK_DIV_T
 
 typedef enum e_bsp_clocks_octaclk_div
 {
@@ -39,8 +43,12 @@ typedef enum e_bsp_clocks_octaclk_div
     BSP_CLOCKS_OCTACLK_DIV_6,          ///< Divide OCTA source clock by 6
     BSP_CLOCKS_OCTACLK_DIV_8,          ///< Divide OCTA source clock by 8
     BSP_CLOCKS_OCTACLK_DIV_3,          ///< Divide OCTA source clock by 3
-    BSP_CLOCKS_OCTACLK_DIV_5           ///< Divide OCTA source clock by 5
+    BSP_CLOCKS_OCTACLK_DIV_5,          ///< Divide OCTA source clock by 5
+    BSP_CLOCKS_OCTACLK_DIV_10,         ///< Divide OCTA source clock by 10
+    BSP_CLOCKS_OCTACLK_DIV_16,         ///< Divide OCTA source clock by 16
+    BSP_CLOCKS_OCTACLK_DIV_32,         ///< Divide OCTA source clock by 32
 } bsp_clocks_octaclk_div_t;
+#endif
 
 typedef enum e_bsp_clocks_source
 {

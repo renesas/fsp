@@ -618,8 +618,6 @@ fsp_err_t R_ADC_D_OffsetSet (adc_ctrl_t * const p_ctrl, adc_channel_t const reg_
  *
  * @param[in] p_ctrl              Pointer to the ADC control block
  *
- * @pre The R_ADC_D_ScanStart must be called in advance.
- *
  * @retval FSP_SUCCESS            ADC is configured to request Snooze mode.
  * @retval FSP_ERR_ASSERTION      An input argument is invalid.
  * @retval FSP_ERR_NOT_OPEN       ADC_D is not open.
@@ -647,9 +645,13 @@ fsp_err_t R_ADC_D_SnoozeModePrepare (adc_ctrl_t * const p_ctrl)
     FSP_PARAMETER_NOT_USED(p_ctrl);
  #endif
 
+    /* Stop A/D operation before setting ADM2.AWC bit */
+    R_ADC_D->ADM0 &= ((uint8_t) ~(R_ADC_D_ADM0_ADCS_Msk | R_ADC_D_ADM0_ADCE_Msk));
+
     /* Set AWC prior to entering software standby mode.
      * See in hardware manual: ADC12 > Snooze Mode Function > A/D Conversion by Inputting a Hardware Trigger */
-    R_ADC_D->ADM2_b.AWC = 1;
+    R_ADC_D->ADM2_b.AWC  = 1;
+    R_ADC_D->ADM0_b.ADCE = 1;
 
     return FSP_SUCCESS;
 #else

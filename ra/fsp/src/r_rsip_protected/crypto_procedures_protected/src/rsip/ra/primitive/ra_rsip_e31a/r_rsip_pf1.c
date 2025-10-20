@@ -10,6 +10,7 @@
 #include "r_rsip_primitive.h"
 #include "r_rsip_reg.h"
 #include "r_rsip_util.h"
+#include "r_rsip_sub_func.h"
 
 /***********************************************************************************************************************
  * Functions
@@ -108,18 +109,14 @@ rsip_ret_t r_rsip_pf1 (const uint32_t InData_CurveType[],
     WR4_ADDR(REG_002CH, &InData_KeyIndex[5]);
 
     WR1_PROG(REG_00B0H, 0x0000347aU);
-    WR1_PROG(REG_0000H, 0x00c10021U);
-    WAIT_STS(REG_0004H, 30, 0);
-    WR1_PROG(REG_0040H, 0x00001800U);
+    r_rsip_func_sub002(0x00c10021U, 0x00001800U);
 
     WAIT_STS(REG_0014H, 31, 1);
     WR4_ADDR(REG_002CH, &InData_KeyIndex[9]);
     WAIT_STS(REG_0014H, 31, 1);
     WR4_ADDR(REG_002CH, &InData_KeyIndex[13]);
 
-    WR1_PROG(REG_0000H, 0x00c10021U);
-    WAIT_STS(REG_0004H, 30, 0);
-    WR1_PROG(REG_0040H, 0x00001800U);
+    r_rsip_func_sub002(0x00c10021U, 0x00001800U);
 
     WR1_PROG(REG_0014H, 0x000003c1U);
     WR1_PROG(REG_00D4H, 0x40000000U);
@@ -128,9 +125,7 @@ rsip_ret_t r_rsip_pf1 (const uint32_t InData_CurveType[],
     WR4_ADDR(REG_002CH, &InData_KeyIndex[17]);
 
     WR1_PROG(REG_00D0H, 0x9c100005U);
-    WR1_PROG(REG_0000H, 0x00410011U);
-    WAIT_STS(REG_0004H, 30, 0);
-    WR1_PROG(REG_0040H, 0x00001800U);
+    r_rsip_func_sub002(0x00410011U, 0x00001800U);
 
     r_rsip_func100(bswap_32big(0x50941591U),
                    bswap_32big(0x006473ebU),

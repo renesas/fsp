@@ -60,9 +60,15 @@
 #define RSIP_PRV_BYTE_SIZE_DIGEST_SHA256                           (32U)
 #define RSIP_PRV_BYTE_SIZE_DIGEST_SHA384                           (48U)
 #define RSIP_PRV_BYTE_SIZE_DIGEST_SHA512                           (64U)
+#define RSIP_PRV_BYTE_SIZE_DIGEST_SHA512_224                       (28U)
+#define RSIP_PRV_BYTE_SIZE_DIGEST_SHA512_256                       (32U)
 
 #define RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA1_SHA224_SHA256           (64U)
 #define RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA384_SHA512                (128U)
+#define RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_224                     (144U)
+#define RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_256                     (136U)
+#define RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_384                     (104U)
+#define RSIP_PRV_BYTE_SIZE_HASH_BLOCK_SHA3_512                     (72U)
 
 /* RNG */
 #define RSIP_PRV_BYTE_SIZE_RNG                                     (16U)

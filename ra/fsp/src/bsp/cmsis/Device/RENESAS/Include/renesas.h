@@ -128,6 +128,22 @@ extern "C" {
   #else
    #warning "Unsupported CPU number"
   #endif
+ #elif BSP_MCU_GROUP_RA8M2
+  #if 0U == BSP_CFG_CPU_CORE
+   #include "R7KA8M2JF_core0.h"
+  #elif 1U == BSP_CFG_CPU_CORE
+   #include "R7KA8M2JF_core1.h"
+  #else
+   #warning "Unsupported CPU number"
+  #endif
+ #elif BSP_MCU_GROUP_RA8D2
+  #if 0U == BSP_CFG_CPU_CORE
+   #include "R7KA8D2KF_core0.h"
+  #elif 1U == BSP_CFG_CPU_CORE
+   #include "R7KA8D2KF_core1.h"
+  #else
+   #warning "Unsupported CPU number"
+  #endif
  #else
   #if __has_include("renesas_internal.h")
    #include "renesas_internal.h"
