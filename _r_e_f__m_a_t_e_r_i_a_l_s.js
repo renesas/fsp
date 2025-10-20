@@ -27,12 +27,25 @@ var _r_e_f__m_a_t_e_r_i_a_l_s =
       [ "References", "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-references", null ]
     ] ],
     [ "Using Ocrypto", "_u_s_i_n_g__o_c_r_y_p_t_o.html", "_u_s_i_n_g__o_c_r_y_p_t_o" ],
-    [ "Linker Section Naming Guide", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html", [
-      [ "Overview", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-overview", null ],
-      [ "Memory Class Dictionaries", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class", [
-        [ "RAM-Resident Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class-ram", null ],
-        [ "ROM-Resident Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class-rom", null ],
-        [ "Summary", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-memory-class-summary", null ]
+    [ "Linker Script Generation Guide", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html", [
+      [ "FSP Linker Scripts", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section", [
+        [ "Why we changed", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-why", null ],
+        [ "New section model (high level)", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-model", null ],
+        [ "Interacting with the new flow", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-flow", [
+          [ "A) Place objects or code without source edits (recommended)", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-mapping", null ]
+        ] ],
+        [ "Migration guide (step‑by‑step)", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-migration", null ],
+        [ "Legacy (gcc, llvm) → New **output** section translation", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-translation", null ],
+        [ "Behavior differences worth noting", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-behavior-differences", null ],
+        [ "Examples", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-examples", null ]
+      ] ],
+      [ "FAQ", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-faq", null ],
+      [ "Summary", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-summary", null ],
+      [ "Appendix: Linker Input Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-appendix", [
+        [ "Memory Class Dictionaries", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-appendix-memory-class", null ],
+        [ "RAM-Resident Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_sectio-appendix-memory-class-ram", null ],
+        [ "ROM-Resident Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-appendix-memory-class-rom", null ],
+        [ "Summary", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-appendix-memory-class-summary", null ]
       ] ]
     ] ]
 ];

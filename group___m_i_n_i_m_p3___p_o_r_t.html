@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -250,7 +250,9 @@ Usage</h1>
 <h2>ARM Helium Support</h2>
 <p>Helium (with SIMD support) can be enabled to accelerate the decoding process on devices that support it.</p>
 <h2>Limitations</h2>
-<p><b>minimp3</b> requires an MCU with a <b>FPU (Floating-Point Unit)</b> to function properly. Devices without FPU capability will not be supported by this library.</p>
+<p><b>Minimp3</b> requires a MCU with 32KB of RAM size or more to function properly.</p>
+<p>Minimum stack usage is 18KB that must be considered the stack size under BSP configuration tab to ensure provide enough stack for the software operation.</p>
+<p>This library uses floating-point numbers in its operation, therefore it shall be used on MCUs that have FPU. Non-FPUs are still able to use this library but the performance will be significantly degraded.</p>
 <h2>How to use</h2>
 <p>To use minimp3 library, follow the steps below:</p>
 <ul>
@@ -303,7 +305,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

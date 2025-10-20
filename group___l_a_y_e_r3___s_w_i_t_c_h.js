@@ -2,11 +2,32 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
 [
     [ "layer3_switch_basic_descriptor_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__basic__descriptor__t", null ],
     [ "layer3_switch_descriptor_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t", null ],
+    [ "layer3_switch_ts_reception_process_descriptor_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__ts__reception__process__descriptor__t", null ],
+    [ "layer3_switch_frer_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__cfg__t", [
+      [ "sys_clock", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab913e67017c67b8d2ad083324c1dc077", null ],
+      [ "timeout_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa7a629212d1240886efe92bf403ff280", null ],
+      [ "check_period", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a7f710de31a752f1b1c4735af12330f0f", null ]
+    ] ],
+    [ "layer3_switch_frer_entry_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__entry__t", [
+      [ "take_no_sequence", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a582ad43eca6443cdc49cfd7af62d7bd1", null ],
+      [ "sequence_history_len", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0bb26c65c830de74986bbf0ca8de03eb", null ],
+      [ "set_recovery_remaining_tick", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a01cab222731854fef754abde90c93e", null ]
+    ] ],
+    [ "layer3_switch_frer_entry_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__entry__cfg__t", [
+      [ "individual_recovery", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a831a1f6687fbcebe24b5131f9ac137fb", null ],
+      [ "p_sequence_recovery", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af8825d0b85f27699843a1e625f935ea5", null ]
+    ] ],
+    [ "layer3_switch_frer_sequence_recovery_status_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__sequence__recovery__status__t", [
+      [ "learned", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a9bdd7f79aa6be9dc0bac12bdd386fce2", null ],
+      [ "frer_entry_index", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a50784b68564f50aa4444cc7e1050f2dc", null ]
+    ] ],
     [ "layer3_switch_descriptor_queue_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t", [
       [ "descriptor_format", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002", null ],
       [ "type", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a501ccb8383c797945fec346ccfab36a6", null ],
       [ "write_back_mode", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad887e6021caf1d7d20ef54057375dfdb", null ],
       [ "p_descriptor_array", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a41547671737fdd412141c0c017c9591d", null ],
+      [ "p_ts_descriptor_array", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a31fd9826dcb867fca4defe09d8aca16b", null ],
+      [ "rx_timestamp_storage", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af10fe9a5fc32a902cb770b83ccf6a376", null ],
       [ "array_length", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ae66a70d6241552d2bb029944991e3bc6", null ],
       [ "ports", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ade0b6f513f0df12dbf183d260b5127b3", null ]
     ] ],
@@ -26,7 +47,8 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "head", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a7773cd221d8fc6315383815eb2063bb6", null ],
       [ "tail", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a18e04947dae6835141614e2e7c72b2b1", null ],
       [ "created", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0a7139c9654d1561636a7c50d0c51ab7", null ],
-      [ "p_queue_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a9efb9c42c056ae8017afdf3d55b5f503", null ]
+      [ "p_queue_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a9efb9c42c056ae8017afdf3d55b5f503", null ],
+      [ "rx_available", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af2f9fa8ff5ab992729a14f01177f7b2f", null ]
     ] ],
     [ "layer3_switch_ipv6_filter_address_offset_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__ipv6__filter__address__offset__t", [
       [ "offset", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a39e8b85d4ebfde2e103aae0deebe9598", null ],
@@ -64,11 +86,13 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "p_mac_destination_address", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a3fa87af1ce79e9bfcacdc275ccfbce00", null ],
       [ "vlan_c_tag", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0f89776bc87a2aed3c6cf15901b4bbab", null ],
       [ "vlan_s_tag", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0f1291914d078f84777fae9928b2d1ad", null ],
-      [ "r_tag_update_mode", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a32d91a13fd5e19d14530afedce8912db", null ]
+      [ "r_tag_update_mode", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a32d91a13fd5e19d14530afedce8912db", null ],
+      [ "sequence_number_generation_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a1e0999ffafd8e703b8e509b27f44d86c", null ]
     ] ],
     [ "layer3_switch_table_entry_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t", [
       [ "entry_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#acbd5ea9cfb996323c9b54b79d91e8093", null ],
       [ "security_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab7c67b6a8af420660f048163476dc46e", null ],
+      [ "p_frer_entry_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a318bca9dce298ed8053b483b50e7fd33", null ],
       [ "destination_ports", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699", null ],
       [ "source_ports", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a6fc334dfc9c9199ba78e5549473f5cf0", null ],
       [ "destination_queue_index", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab4624dbaba71621612168c388d750e69", null ],
@@ -110,7 +134,8 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "mac_entry_aging_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a127b972a405fabaebda44b15571446fd", null ],
       [ "mac_entry_aging_time_sec", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0eb8fe0936c3f76da9e1d7d7fed2599e", null ],
       [ "vlan_mode", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ae4697eb48c7a9513a0fdce2a956d4882", null ],
-      [ "l3_stream_filter_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a159f5b02b1a13417d6454222eb0bd312", null ]
+      [ "l3_stream_filter_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a159f5b02b1a13417d6454222eb0bd312", null ],
+      [ "frer_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a7455b806fa32f0972a4f3a13cdf1bf5a", null ]
     ] ],
     [ "layer3_switch_extended_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__extended__cfg__t", [
       [ "p_ether_phy_instances", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a115f29d9a0dba98d78c5d2f7ad0a5418", null ],
@@ -123,7 +148,8 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "etha_error_irq_port_0", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a4d7adf3c5d4676c2b444d19eeddf0168", null ],
       [ "etha_error_irq_port_1", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa76ccc390c654ed65fb78e3db5ccb43e", null ],
       [ "etha_error_ipl_port_0", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa5bd626c191f80e4e2e2546c34e6037a", null ],
-      [ "etha_error_ipl_port_1", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a22e478c02b9e0ba43a4750a6257c63f5", null ]
+      [ "etha_error_ipl_port_1", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a22e478c02b9e0ba43a4750a6257c63f5", null ],
+      [ "gptp_timer_numbers", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab15c221ba393d2f504045d1baab7b7ad", null ]
     ] ],
     [ "layer3_switch_instance_ctrl_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__instance__ctrl__t", [
       [ "open", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af81e9ca24eba70ee70c0b58e33cfaa2e", null ],
@@ -137,6 +163,10 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "l3_entry_count", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a322984452143b7e30846083586d22d7e", null ],
       [ "l3_routing_number", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad3888ccc411391ce068c1e5803b891bc", null ],
       [ "l3_remapping_number", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ae96451e0b5053be4c141516ae3a8e62f", null ],
+      [ "ts_descriptor_queue_status_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a43be6c87f8e905d8d4a2c49633ce6891", null ],
+      [ "valid_frer_entry_num", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0b2875311f2e6593fbe909304b1e2a4d", null ],
+      [ "frer_sequence_recovery_status", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a4ff072a28aa5e5af6797951a6ff93fe5", null ],
+      [ "used_frer_sequence_generator_num", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49b2dfefb121b00bbffe622872dd910", null ],
       [ "p_callback", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa252f8417c88002cef8353a56060156a", null ],
       [ "p_callback_memory", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a15a12fed4bee9a79d56adce303e5cd1c", null ],
       [ "p_context", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a28b4e51a85668041308a749383cbc976", null ]
@@ -186,7 +216,8 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     ] ],
     [ "layer3_switch_descriptor_format_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5bf3e03175ddd4e81e4068df21dab440", [
       [ "LAYER3_SWITCH_DISCRIPTOR_FORMTAT_BASIC", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a5d9a40d500734beb1cf2ca11f173e00a", null ],
-      [ "LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0", null ]
+      [ "LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0", null ],
+      [ "LAYER3_SWITCH_DISCRIPTOR_FORMTAT_TX_TIMESTAMP", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a4b5d6d96093f0d51304896fba02a241f", null ]
     ] ],
     [ "layer3_switch_write_back_mode_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga97af1e0d115b4f3b917e9095f1edfde3", [
       [ "LAYER3_SWITCH_WRITE_BACK_MODE_FULL", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013", null ],
@@ -271,10 +302,18 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "LAYER3_SWITCH_TAS_GATE_STATE_CLOSE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f", null ],
       [ "LAYER3_SWITCH_TAS_GATE_STATE_OPEN", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a021cfd019a4e8477677578938ae3e811", null ]
     ] ],
+    [ "layer3_switch_rx_timestamp_storage_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga3cbdd15f35d8df20dadd04e3bed2956b", [
+      [ "LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_DISABLE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga3cbdd15f35d8df20dadd04e3bed2956ba0896324dcefe5e70f877085f4e5cdfb2", null ],
+      [ "LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_ENABLE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga3cbdd15f35d8df20dadd04e3bed2956baa4636628d0878af1b1687e97cd74638a", null ]
+    ] ],
+    [ "layer3_switch_ts_descriptor_queue_status_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa34ababd9cf10b17acc2999b36ac2c5e", [
+      [ "LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_UNUSED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaa34ababd9cf10b17acc2999b36ac2c5eacfb90de527d6cb0c7c881ead963bc5c8", null ],
+      [ "LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_USED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaa34ababd9cf10b17acc2999b36ac2c5ea52868efdbbc36aca2168c8cf3c106225", null ]
+    ] ],
     [ "R_LAYER3_SWITCH_Open", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c", null ],
     [ "R_LAYER3_SWITCH_Close", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911", null ],
     [ "R_LAYER3_SWITCH_CreateDescriptorQueue", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f", null ],
-    [ "R_LAYER3_SWITCH_SetDescriptor", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4490ebda9cf2fcc83c076bbd66237e28", null ],
+    [ "R_LAYER3_SWITCH_SetDescriptor", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga591564b96d8309b49c31b2ed2f19965a", null ],
     [ "R_LAYER3_SWITCH_GetDescriptor", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4d4d3d661e020ca06ddb863b16f756de", null ],
     [ "R_LAYER3_SWITCH_StartDescriptorQueue", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e", null ],
     [ "R_LAYER3_SWITCH_CallbackSet", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5a03b0bbb0118e95215c472e3f08491b", null ],

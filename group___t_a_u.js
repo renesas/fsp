@@ -38,6 +38,7 @@ var group___t_a_u =
     [ "tau_input_source_t", "group___t_a_u.html#ga9a26bac075067f52ed7fac6ee6e40bf4", [
       [ "TAU_INPUT_SOURCE_TI_PIN", "group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4ac3c51103ffa1296f78cd9945141c2b05", null ],
       [ "TAU_INPUT_SOURCE_ELC", "group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4a063d0b75b143f4f6cc0be2e59e3cd6d2", null ],
+      [ "TAU_INPUT_SOURCE_RXD_PIN", "group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4ab20436fe60320374c1d4f37321c8fe89", null ],
       [ "TAU_INPUT_SOURCE_RXD2_PIN", "group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4ae1389fcb62491aefc12736f65de43aca", null ],
       [ "TAU_INPUT_SOURCE_MOCO", "group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4a6f6dcd35275a8d3c8cd1380cad3a4153", null ],
       [ "TAU_INPUT_SOURCE_LOCO", "group___t_a_u.html#gga9a26bac075067f52ed7fac6ee6e40bf4a2b799b65de1e7c7b0daa93d2f7fea736", null ],

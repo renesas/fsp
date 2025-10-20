@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -447,6 +447,11 @@ SDRAM Initialization</h3>
 <p>Before entering Software Standby or Deep Software Standby, the user must call <a class="el" href="group___b_s_p___s_d_r_a_m.html#ga58298a848222b3b49fda6c26e57e5adb" title="Changes SDRAM from Auto-refresh to Self-refresh. ">R_BSP_SdramSelfRefreshEnable()</a> to change from Auto-Refresh to Self-Refresh in order to preserve data during the low power state. No SDRAM access is allowed after this function is called. The user must not place FSP code or data or their wakeup interrupt handling functions into SDRAM to ensure there are no issues around transitions into and out of Software Standby since SDRAM access will be disabled then and trigger a fault if access is requested.</p>
 <p>When resuming from Software Standby, the user must call <a class="el" href="group___b_s_p___s_d_r_a_m.html#ga3181a42141ec41a24e8ff0d392840b21" title="Changes SDRAM from Self-refresh to Auto-refresh. ">R_BSP_SdramSelfRefreshDisable()</a> to change from Self-Refresh to Auto-Refresh and restore SDRAM access.</p>
 <p>When resuming operation after Deep Software Standby or another situation where there is already data present in the SDRAM modules that must be preserved, the user must call R_BSP_SdramInit(false) before pin initialization and then call <a class="el" href="group___b_s_p___s_d_r_a_m.html#ga3181a42141ec41a24e8ff0d392840b21" title="Changes SDRAM from Self-refresh to Auto-refresh. ">R_BSP_SdramSelfRefreshDisable()</a> after pins have been configured in order to resume operations with the SDRAM.</p>
+<h3><a class="anchor" id="ospi_b_initialization"></a>
+OSPI_B Initialization</h3>
+<p>The BSP provides support for usage of external or SiP OSPI memories on MCUs with OSPI_B support. OSPI_B intialization is enabled in the BSP tab of the RA configuration editor, but an OSPI_B stack component must also be added. It requires the "Early BSP Initialization" option to be enabled. The default location for initialization is during the <code>BSP_WARM_START_POST_CLOCK</code> event of <code>R_BSP_WarmStart</code> callback. When enabled, the function specified in the macro <code>BSP_CFG_OSPI_B_STARTUP_FN</code> will be executed by the BSP and any internal memory regions sourced from OSPI_B memory will be initialized. The BSP will not initialize any memory sections in the OSPI memory; the user is responsible for initializing any code or data stored in the OSPI memory.</p>
+<p>OSPI must be initialized before other external memories (for example, HyperRAM) if they source initialization data from OSPI. If required, the call to <code>R_BSP_OspiBInit()</code> can be moved anywhere after the clock initialization, but must be called once after reset. Moving initilization to be after the <code>BSP_WARM_START_POST_C</code> event will prevent external memories from automatically being initialized if sourced from OSPI.</p>
+<p>On low voltage devices, for example, RA8P1 SiP, the BSP must be configured to the appropriate I/O port driver voltage or instabilities can occur.</p>
 <h3><a class="anchor" id="c-runtime-initialization"></a>
 C Runtime Initialization</h3>
 <p>This BSP configuration allows the user to skip the FSP C runtime initialization code by setting the "C Runtime Initialization" to "Disabled" on the BSP tab of the RA Configuration editor. Disabling this option is useful in cases where a non-standard linker script is being used or other modifications to the runtime initialization are desired. If this macro is disabled, the user must use the 'Post Clock Init' event from the warm start (described above) to run their own runtime initialization code.</p>
@@ -537,6 +542,10 @@ OctaClock Update</h3>
 Devices with OFS1.INITECCEN</h3>
 <p>By default, FSP disables ECC for the caches and TCM with OFS1.INITECCEN. For best performance, it is recommended to keep ECC for cache and TCM disabled.</p>
 <dl class="section note"><dt>Note</dt><dd>When ECC is enabled for TCM, a full and unconditional zero-initialization of all TCM memory will occur at startup of the first project after reset. This may be either a bootloader if present, or a Flat or Secure application. Because of this, any <code>noinit</code> section contained within TCM will be functionally a zero-initialized section, if ECC is enabled. This is an unavoidable requirement of ECC initialization. Also see <a class="el" href="_c_m85__c_a_c_h_e_s.html#CM85_CACHES-other-information-cache-ecc-with-fsp">Cache ECC with FSP</a>.</dd></dl>
+<h3><a class="anchor" id="devices-with-lvocr"></a>
+Devices with LVOCR</h3>
+<p>By default, FSP disables I/O port low voltage mode for devices with the LVOCR register. Presently, RA8 devices are the only RA devices with the LVOCR register, which configures I/O ports based on VCC and VCC2 voltage levels. For cases where VCC and/or VCC2 will be less than 2.7 V for these devices, the I/O port low voltage mode should be enabled for VCC and/or VCC2.</p>
+<dl class="section note"><dt>Note</dt><dd>If the I/O port low voltage mode is not enabled for VCC and/or VCC2 when less than 2.7 V, device electrical characteristics cannot be guaranteed. Do not enable I/O port low voltage mode for VCC or VCC2 when they are greater than or equal to 2.7 V.</dd></dl>
 <h2><a class="anchor" id="bsp-seal-msp"></a>
 Sealing the Main Stack (TrustZone Secure Projects)</h2>
 <p>In TrustZone secure projects, the BSP seals the main stack by placing the value 0xFEF5EDA5 above the stack top. For more information, refer to section 3.5 "Sealing a Stack" in "Secure software guidelines for ARMv8-M": <a href="https://developer.arm.com/documentation/100720/0300">https://developer.arm.com/documentation/100720/0300</a>.</p>
@@ -778,11 +787,15 @@ Modules</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a8_d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_d1.html">RA8D1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a8_d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_d2.html">RA8D2</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a8_e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_e1.html">RA8E1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a8_e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_e2.html">RA8E2</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a8_m1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_m1.html">RA8M1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___b_s_p___m_c_u___r_a8_m2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_m2.html">RA8M2</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_s_p___m_c_u___r_a8_p1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_p1.html">RA8P1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1377,6 +1390,8 @@ Semaphore number, controls which IPCSEMn register is used. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a2143b0cbaf6c092a3b7ae0e068f01f2d"></a>BSP_GRP_IRQ_LVD2&#160;</td><td class="fielddoc"><p>Voltage monitoring 2 interrupt. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2aeca488c03742581ac72a35dd0e60e334"></a>BSP_GRP_IRQ_SOSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Sub Oscillation stop is detected. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6aa6c2d5336d3155c9351648f0d31261"></a>BSP_GRP_IRQ_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillation stop is detected. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2afa4ac718dea042da5e98c84c8640a6aa"></a>BSP_GRP_IRQ_NMI_PIN&#160;</td><td class="fielddoc"><p>NMI Pin interrupt. </p>
@@ -1385,7 +1400,17 @@ Semaphore number, controls which IPCSEMn register is used. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab255184fb96484f560129b75b4bfe90f"></a>BSP_GRP_IRQ_COMMON_MEMORY&#160;</td><td class="fielddoc"><p>SRAM ECC or SRAM Parity Error. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2af7582827c980365176133116b61e9064"></a>BSP_GRP_IRQ_LOCAL_MEMORY&#160;</td><td class="fielddoc"><p>Local Memory Error. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abbc5b2f82e01b6a9f1a695a556365f2b"></a>BSP_GRP_IRQ_LOCKUP&#160;</td><td class="fielddoc"><p>LockUp Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2acb58670824a0842ba755ad85dda33fc8"></a>BSP_GRP_IRQ_FPU&#160;</td><td class="fielddoc"><p>FPU Exception. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a3e995598c0c99c94ff4f778e6a1fd428"></a>BSP_GRP_IRQ_MRC&#160;</td><td class="fielddoc"><p>MRAM Code read error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a1f8c1eebd20d16b6273554dfb5c00d17"></a>BSP_GRP_IRQ_MRE&#160;</td><td class="fielddoc"><p>MRAM Extra read error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab4b12d9532fc1ebd76e2ab1de827ee81"></a>BSP_GRP_IRQ_IPC&#160;</td><td class="fielddoc"><p>IPC Interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
 </td></tr>
@@ -1422,6 +1447,54 @@ Semaphore number, controls which IPCSEMn register is used. </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab255184fb96484f560129b75b4bfe90f"></a>BSP_GRP_IRQ_COMMON_MEMORY&#160;</td><td class="fielddoc"><p>SRAM ECC or SRAM Parity Error. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abbc5b2f82e01b6a9f1a695a556365f2b"></a>BSP_GRP_IRQ_LOCKUP&#160;</td><td class="fielddoc"><p>LockUp Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a4b08e432eb15f525ffaff6618e486282"></a>BSP_GRP_IRQ_WDT_ERROR&#160;</td><td class="fielddoc"><p>WDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a73d715e6454b59d168076be06d10bdec"></a>BSP_GRP_IRQ_LVD1&#160;</td><td class="fielddoc"><p>Voltage monitoring 1 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a2143b0cbaf6c092a3b7ae0e068f01f2d"></a>BSP_GRP_IRQ_LVD2&#160;</td><td class="fielddoc"><p>Voltage monitoring 2 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6aa6c2d5336d3155c9351648f0d31261"></a>BSP_GRP_IRQ_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillation stop is detected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2afa4ac718dea042da5e98c84c8640a6aa"></a>BSP_GRP_IRQ_NMI_PIN&#160;</td><td class="fielddoc"><p>NMI Pin interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6b144cfec9387e8320632484e8e775da"></a>BSP_GRP_IRQ_MPU_BUS_TZF&#160;</td><td class="fielddoc"><p>MPU Bus or TrustZone Filter Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab255184fb96484f560129b75b4bfe90f"></a>BSP_GRP_IRQ_COMMON_MEMORY&#160;</td><td class="fielddoc"><p>SRAM ECC or SRAM Parity Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abbc5b2f82e01b6a9f1a695a556365f2b"></a>BSP_GRP_IRQ_LOCKUP&#160;</td><td class="fielddoc"><p>LockUp Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a4b08e432eb15f525ffaff6618e486282"></a>BSP_GRP_IRQ_WDT_ERROR&#160;</td><td class="fielddoc"><p>WDT underflow/refresh error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a73d715e6454b59d168076be06d10bdec"></a>BSP_GRP_IRQ_LVD1&#160;</td><td class="fielddoc"><p>Voltage monitoring 1 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a2143b0cbaf6c092a3b7ae0e068f01f2d"></a>BSP_GRP_IRQ_LVD2&#160;</td><td class="fielddoc"><p>Voltage monitoring 2 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2aeca488c03742581ac72a35dd0e60e334"></a>BSP_GRP_IRQ_SOSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Sub Oscillation stop is detected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6aa6c2d5336d3155c9351648f0d31261"></a>BSP_GRP_IRQ_OSC_STOP_DETECT&#160;</td><td class="fielddoc"><p>Oscillation stop is detected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2afa4ac718dea042da5e98c84c8640a6aa"></a>BSP_GRP_IRQ_NMI_PIN&#160;</td><td class="fielddoc"><p>NMI Pin interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a6b144cfec9387e8320632484e8e775da"></a>BSP_GRP_IRQ_MPU_BUS_TZF&#160;</td><td class="fielddoc"><p>MPU Bus or TrustZone Filter Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab255184fb96484f560129b75b4bfe90f"></a>BSP_GRP_IRQ_COMMON_MEMORY&#160;</td><td class="fielddoc"><p>SRAM ECC or SRAM Parity Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2af7582827c980365176133116b61e9064"></a>BSP_GRP_IRQ_LOCAL_MEMORY&#160;</td><td class="fielddoc"><p>Local Memory Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2abbc5b2f82e01b6a9f1a695a556365f2b"></a>BSP_GRP_IRQ_LOCKUP&#160;</td><td class="fielddoc"><p>LockUp Error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2acb58670824a0842ba755ad85dda33fc8"></a>BSP_GRP_IRQ_FPU&#160;</td><td class="fielddoc"><p>FPU Exception. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a3e995598c0c99c94ff4f778e6a1fd428"></a>BSP_GRP_IRQ_MRC&#160;</td><td class="fielddoc"><p>MRAM Code read error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2a1f8c1eebd20d16b6273554dfb5c00d17"></a>BSP_GRP_IRQ_MRE&#160;</td><td class="fielddoc"><p>MRAM Extra read error. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ab4b12d9532fc1ebd76e2ab1de827ee81"></a>BSP_GRP_IRQ_IPC&#160;</td><td class="fielddoc"><p>IPC Interrupt. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ga72e70676360e6a4d753a8d235e6b93a2ad9d9dca80dfc54781be54f4d2168af7d"></a>BSP_GRP_IRQ_IWDT_ERROR&#160;</td><td class="fielddoc"><p>IWDT underflow/refresh error has occurred. </p>
 </td></tr>
@@ -2941,7 +3014,7 @@ Delays may be longer than expected when compiler optimization is turned off.</dd
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

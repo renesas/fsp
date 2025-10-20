@@ -82,6 +82,7 @@ var searchData=
   ['gpio',['Gpio',['../structptx_p_l_a_t___spi__t.html#a587ae10c9a40eff7addf3dec96f0f4ef',1,'ptxPLAT_Spi_t']]],
   ['gpt_5ftrigger_5fenable_5fmask',['gpt_trigger_enable_mask',['../group___a_d_c___b.html#abb18b3404175e52b7a04b537e357bc14',1,'adc_b_group_cfg_t']]],
   ['gptp_5ftimer_5fnumber',['gptp_timer_number',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#afed8f7a61f8dde01a66942143dbfad3b',1,'layer3_switch_tas_cfg_t']]],
+  ['gptp_5ftimer_5fnumbers',['gptp_timer_numbers',['../group___l_a_y_e_r3___s_w_i_t_c_h.html#ab15c221ba393d2f504045d1baab7b7ad',1,'layer3_switch_extended_cfg_t']]],
   ['gradient_5fworst10_5finterval',['gradient_worst10_interval',['../group___p_t_p___a_p_i.html#a6a29b1beb38a9e80b6d945c8c37c9e8e',1,'ptp_stca_cfg_t']]],
   ['group_5fcount',['group_count',['../group___a_d_c___b.html#a1339a1728e5b205cf8c7bc2cd76fc5f4',1,'adc_b_scan_cfg_t']]],
   ['group_5fhdl',['group_hdl',['../group___i_s_o___a_p_i.html#a3e4a1f726f105856b663e35d2568bbc4',1,'st_ble_iso_group_hdl_evt_t']]],

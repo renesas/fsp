@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -842,8 +842,8 @@ Getting Started</h2>
 <p>Including and building the examples in a user project are the same steps, but set the <code>LV_BUILD_EXAMPLES</code> macro to <code>1</code> in the custom header instead. No <code>LV_USE_</code> macros should be required for the examples.</p>
 <dl class="section note"><dt>Note</dt><dd>Not all upstream demos and examples material are available, so some demos or examples may not build or execute.</dd></dl>
 <h2>Libraries</h2>
-<p>The LVGL packed with FSP also includes the <code>libs</code> directory that is in the LVGL project. Only <code>bin_decoder</code> is packed as a mandatory library. The source for the remaining libraries is omitted.</p>
-<dl class="section note"><dt>Note</dt><dd>This means that some third party libraries included with upstream LVGL are unavailable. The excluded libraries are mostly inapplicable to an RA embedded context.</dd></dl>
+<p>The LVGL packed with FSP also includes the <code>src/libs</code> directory that is in the LVGL project. Only <code>bin_decoder</code> is a mandatory library used by LVGL. Other libraries are either first-party or third-party libraries available for use within LVGL.</p>
+<dl class="section note"><dt>Note</dt><dd>The included libraries may not be applicable to an RA embedded context. The included libraries may not compile or function without further modification. Libraries like ThorVG require a C++ based FSP project. These libraries are included for convenience but are not validated or officially supported as part of the FSP LVGL integration. Not all libraries have been included.</dd></dl>
 <h2>Multi-thread Support</h2>
 <p>LVGL is not a thread safe library. Please refer to <a href="https://docs.lvgl.io/master/porting/os.html#tasks-and-threads">Tasks and threads</a> for information on how to use LVGL in a multi-thread environment.</p>
 <dl class="section note"><dt>Note</dt><dd>This includes both bare metal and FreeRTOS projects. RTOS support is optionally configured depending on whether FreeRTOS is used in the project.</dd></dl>
@@ -1034,7 +1034,7 @@ Error code if RM_LVGL_PORT_EVENT_ERROR. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

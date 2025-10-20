@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -410,6 +410,12 @@ Information about the code flash regions. </td></tr>
 event</td>
 <td class="fielddoc">
 Event can be used to identify what caused the callback (flash ready or error). </td></tr>
+<tr><td class="fieldtype">
+<a id="ae1a555ea3ea64d53f19a65a365c94638"></a>uint32_t</td>
+<td class="fieldname">
+data</td>
+<td class="fielddoc">
+Event specific data. Invalid unless specified by the event. </td></tr>
 <tr><td class="fieldtype">
 <a id="a9bb2faa6e34b87b5fcd128a63eabe68a"></a>void *</td>
 <td class="fieldname">
@@ -1097,7 +1103,11 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga44753f7d426ae0121c94a307a95314a5a72edb6a3157ef6a937e6cb6af5c1998b"></a>FLASH_EVENT_ERR_FAILURE&#160;</td><td class="fielddoc"><p>Erase or Program Operation failed. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga44753f7d426ae0121c94a307a95314a5a416c2c08801d97af315facc443baa2ed"></a>FLASH_EVENT_ERR_ONE_BIT&#160;</td><td class="fielddoc"><p>A 1-bit error has been corrected when reading the flash memory area by the sequencer. </p>
+<tr><td class="fieldname"><a id="gga44753f7d426ae0121c94a307a95314a5a416c2c08801d97af315facc443baa2ed"></a>FLASH_EVENT_ERR_ONE_BIT&#160;</td><td class="fielddoc"><p>A 1-bit error has been corrected when reading the flash memory area by the sequencer. See callback 'data' field for address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga44753f7d426ae0121c94a307a95314a5acce5b1272d35c9309b5b7e1e3c2b3f3d"></a>FLASH_EVENT_ERR_TWO_BIT&#160;</td><td class="fielddoc"><p>A 2-bit error has been corrected when reading the flash memory area by the sequencer. See callback 'data' field for address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga44753f7d426ae0121c94a307a95314a5a8c771e5aaca1a943a932d34223325e35"></a>FLASH_EVENT_ERR_ECC&#160;</td><td class="fielddoc"><p>An uncorrectable error has been detected while reading memory. See callback 'data' field for address. </p>
 </td></tr>
 </table>
 
@@ -1182,7 +1192,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: Linker Section Naming Guide</title>
+<title>RA Flexible Software Package Documentation: Linker Script Generation Guide</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -237,14 +237,185 @@ $(document).ready(function(){initNavTree('_l_i_n_k_e_r__s_e_c_t_i_o_n.html','');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">Linker Section Naming Guide </div>  </div>
+<div class="title">Linker Script Generation Guide </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="linker_section-overview"></a>
-Overview</h1>
-<p>This guide documents the valid <code>linker_section</code> values that appear in the linker script and may be referenced from user code or configuration macros.</p>
-<p>Each section name is based on a <b>RAM or ROM class</b>, using a structured naming convention depending on the content type.</p>
-<h2>RAM Target Capability Matrix</h2>
+<div class="textblock"><h1><a class="anchor" id="linker_section"></a>
+FSP Linker Scripts</h1>
+<p>FSP prior to v6.0.0 provided linker scripts that were common to all MCUs. Only having a single linker script per toolchain had become increasingly complex as the RA MCU family continued to grow and diversify. Starting in FSP v6.0.0, linker scripts are specific to the toolchain, MCU, and type of project being built. This means that users will need to migrate any existing linker script modifications that might have been made when migrating to FSP v6.0.0 or later.</p>
+<p>In this guide, we will examine the methodology behind the FSP6 linker script mechanism, highlighting key areas that have changed from earlier FSP releases and providing details of how to migrate user-modified linker scripts from earlier releases to the new mechanism.</p>
+<blockquote class="doxtable">
+<p><b>Audience:</b> customers wishing deeper knowledge of the new linker scripting or migrating existing Renesas RA projects utilizing BSP_PLACE_IN_SECTION or custom linker scripts to the policy‑generated linker scripts. </p>
+</blockquote>
+<blockquote class="doxtable">
+<p><b>Note:</b> When using a Solution project it is recommended to use the Memories tab in the configuration editor to modify memory region sizes and location as necessary. </p>
+</blockquote>
+<hr/>
+<h2><a class="anchor" id="linker_section-why"></a>
+Why we changed</h2>
+<p>Hand‑edited linker scripts had become <b>non‑maintainable</b> as devices and project styles grew more complex:</p><ul>
+<li>Multiple projects per MCU (bootloader, TrustZone, multicore), each with different <b>memory partitions</b></li>
+<li>Device‑specific <b>capabilities</b> (OFS/BPS layouts, ITCM/DTCM, SDRAM, OSPI, etc.)</li>
+<li>Divergent behavior across <b>toolchains</b> (GCC/LLVM/IAR/ArmCC6)</li>
+<li>Customer requests for <b>non‑invasive placement</b> (no source edits) and <b>multi‑RAM init</b></li>
+</ul>
+<h3>What the new system delivers</h3>
+<ul>
+<li><b>One policy for four toolchains</b>: scripts are <b>generated</b> from a common policy so behavior is equivalent across GCC, LLVM/Clang, IAR, and AC6.</li>
+<li><b>Per‑device awareness</b>: OFS register locations and available memories (ITCM/DTCM/SDRAM/OSPI) are baked in at generation time.</li>
+<li><b>Non‑invasive placement</b>: place variables/functions/sections into arbitrary memories <b>without touching source</b> via the DDSC <b>Linker Section Mapping</b> dialog.</li>
+<li><b>Multi‑RAM initialization</b>: support for multiple RAM families (internal RAM, TCMs, SDRAM) with correct copy/zero at startup.</li>
+<li><b>Solution‑level partitioning</b>: allocate FLASH/RAM across projects in a <b>Solution Partitioning</b> dialog; scripts follow those partitions automatically.</li>
+<li><b>Fine‑grained OFS Registers</b>: separate, explicit sections for each register region instead of one all‑or‑nothing block. <hr/>
+</li>
+</ul>
+<h2>What changed (layout &amp; file model)</h2>
+<p>Each toolchain now uses the same two‑file include pattern:</p>
+<ul>
+<li><b>Region Information</b> <code>memory_regions.*</code> – <em>generated</em>. Declares device/solution memory bases &amp; lengths (e.g., FLASH/RAM/ITCM/DTCM/SDRAM/OSPI, OFS/OTP, etc.). <b>Do not edit</b>; update via the Solution Partitioning dialog.</li>
+<li><b>Linker Script</b> <code>fsp_gen.*</code> – <em>generated</em>. Defines output sections and default mappings for the current device and toolchain. <b>Do not edit</b>; change behavior with mapping rules.</li>
+<li><b>Top‑level</b> <code>fsp.*</code> – a tiny wrapper that <code>INCLUDE</code>s the two files above. This file is stable and meant to be referenced by the project.</li>
+</ul>
+<blockquote class="doxtable">
+<p>If you need custom script logic, prefer <b>mapping rules</b> first. If absolutely necessary, either: 1) keep a <b>patched copy</b> of the generated files (applied during your build before link), or 2) <b>fork</b> to new filenames and <code>INCLUDE</code> them from <code>fsp.*</code> (works, but you <b>disconnect</b> from tool‑assisted mapping/partitioning). </p>
+</blockquote>
+<hr/>
+<h2><a class="anchor" id="linker_section-model"></a>
+New section model (high level)</h2>
+<p>Instead of monolithic <code>.text/.data/.bss</code> outputs, the new scripts split into <b>semantically named outputs</b> per memory and init behavior. These names are <b>consistent across toolchains</b> and expose <b>Base/Limit symbols</b> per region.</p>
+<p>Common outputs (examples; presence depends on device/memory availability):</p>
+<ul>
+<li><b>FLASH</b><ul>
+<li><code>__flash_vectors$$</code> – Vector table / Reset handler</li>
+<li><code>__flash_readonly_gap$$</code> – On devices with OFS registers at 0x400, this is space before that space, where we default map content to optimize memory utilization via the DDSC linker section mapping</li>
+<li><code>__flash_readonly$$</code> – Code &amp; const data (also GOT/EXIDX/ctor arrays: <code>__flash_.got$$</code>, <code>__flash_arm.exidx$$</code>, <code>__flash_{preinit,init,fini}_array$$</code>)</li>
+<li><code>__flash_noinit$$</code> – Reserved/no‑load content in flash</li>
+</ul>
+</li>
+<li><b>Internal RAM</b><ul>
+<li><code>__ram_dtc_vector$$</code> - The vector table for the dtc peripheral (located at start of ram for alignment restrictions)</li>
+<li><code>__ram_from_{ROM REGION}$$</code> – Initialized data copied from each available persistent source</li>
+<li><code>__ram_zero$$</code> – Zero‑initialized bss/tbss</li>
+<li><code>__ram_noinit$$</code> – Non‑initialized (e.g., heaps, main stack)</li>
+<li>Thread/ELF TLS helpers: <code>__ram_tdata$$</code>, <code>__ram_tbss$$</code>, <code>__ram_thread_stack$$</code></li>
+<li>Optional <b>no‑cache</b> variants (device‑dependent): <code>__ram_zero_nocache$$</code>, <code>__ram_noinit_nocache$$</code></li>
+</ul>
+</li>
+<li><b>Secondary ROM Memories</b> (such as data flash, qspi, ospi)<ul>
+<li><code>__{ROM Region}_readonly$$</code> - Initialized space in this region (constants, code)</li>
+<li><code>__{ROM Region}_noinit$$</code> - Uninitialized space in this region that application code can write at runtime</li>
+</ul>
+</li>
+<li><b>Secondary RAM Memories</b> (such as tcm, ospi, sdram)<ul>
+<li><code>__{RAM Region}_from_{ROM Region}$$</code> - Initialized data copied from each available persistent source</li>
+<li><code>__{RAM Region}_zero$$</code> – Zero‑initialized data in this region</li>
+<li><code>__{RAM Region}_noinit$$</code> – Non‑initialized data in this region</li>
+</ul>
+</li>
+<li><b>OFS Registers</b> (fine‑grained)<ul>
+<li><code>__option_setting_{OFS Register}_reg$$</code> - Fine grained output section for each OFS register</li>
+</ul>
+</li>
+</ul>
+<p>Each output exposes <code>...$$Base</code> / <code>...$$Limit</code> symbols for portable startup code and diagnostics across toolchains. </p><hr/>
+<h2><a class="anchor" id="linker_section-flow"></a>
+Interacting with the new flow</h2>
+<h3><a class="anchor" id="linker_section-mapping"></a>
+A) Place objects or code without source edits (recommended)</h3>
+<p>Use <b>DDSC → Linker Section Mapping</b></p>
+<p>Here you can see typical default mappings for a device with the OFS flash gap.</p><ul>
+<li>The heap and stack are mapped to uninitialized RAM (otherwise they would be placed in zeroed RAM memory)<ul>
+<li>Unchecking the default selection will remove the mapping and allow standard linker placement.</li>
+<li>These allocations can be overridden to other regions. For example the stack could be placed in DTCM by unchecking the selection and creating a new input section mapping.</li>
+</ul>
+</li>
+<li>Additionally, we are default placing content into the flash gap to maximize flash utilization. <div class="image">
+<img src="linker_default_mappings.png" alt="linker_default_mappings.png"/>
+</div>
+</li>
+</ul>
+<p>To create a new user mapping select the desired destination (and the intialization source if appropriate)</p><ul>
+<li>Here we are selecting <code>ITCM</code> <code>Code initialized from</code> <code>ITCM code from OSPI0_CS1</code></li>
+<li>In the dialog that is presented, we enter <code>*(.text.*_isr)</code></li>
+<li>The syntax of these mappings follow gnu ld input section selection rules (including wildcard patterns) regardless of the toolchain <div class="image">
+<img src="linker_new_mapping_select.png" alt="linker_new_mapping_select.png"/>
+</div>
+</li>
+</ul>
+<p>This means any function that ends in <code>_isr</code> will be persistently stored in <code>OSPI0_CS1</code> space (in the output elf and srecord) and loaded to <code>ITCM</code> by the fsp startup code. </p><div class="image">
+<img src="linker_mapping.png" alt="linker_mapping.png"/>
+</div>
+<h3>B) Source‑level placement (still supported)</h3>
+<p><code>BSP_PLACE_IN_SECTION("&lt;name&gt;")</code> continues to work. Some legacy section names changed for consistency; <a href="#linker_section-mapping"><b>prefer mapping rules</b></a> when migrating. If you keep the macro, use the <b>input names</b> as defined in <a href="#linker_section-appendix">the appendix</a>.</p>
+<h3>C) Solution‑level partitioning</h3>
+<p>Use <b>Solution Partitioning</b> to assign FLASH/RAM ranges across bootloader/app/TZ projects. <code>memory_regions.*</code> is regenerated to reflect those partitions; all scripts honor them automatically. Please refer to solution project documentation for details. </p><hr/>
+<h2><a class="anchor" id="linker_section-migration"></a>
+Migration guide (step‑by‑step)</h2>
+<ol type="1">
+<li><b>Update</b> to FSP 6.0 or later that includes the new behavior.</li>
+<li><b>Reference any customer edits</b> made to the legacy linker scripts and determine how to apply to the generated scripts.</li>
+<li><b>Review defaults</b> in <b>Linker Section Mapping</b>. Add rules for any special placements you previously had in hand‑edited scripts.</li>
+<li>If you used <code>BSP_PLACE_IN_SECTION</code>, either <b>remove</b> it and add a mapping rule, or <b>rename</b> the section to the new input names shown below.</li>
+<li><b>Build &amp; verify</b> the project using the new scripts and compare the map files to prior.</li>
+<li>Only if needed, implement a <b>patch step</b> (or a <b>fork + INCLUDE</b>) to carry forward any exotic script logic. <hr/>
+</li>
+</ol>
+<h2><a class="anchor" id="linker_section-translation"></a>
+Legacy (gcc, llvm) → New **output** section translation</h2>
+<div class="fragment"><div class="line">legacy_to_new_output_sections:</div><div class="line">  .text: [__flash_vectors$$ (Reset handler &amp; vectors), __flash_readonly$$ (code/rodata)]</div><div class="line">  .data: __ram_from_flash$$</div><div class="line">  .bss: __ram_zero$$</div><div class="line">  .noinit: __ram_noinit$$</div><div class="line">  .tdata: __ram_tdata$$</div><div class="line">  .tbss: __ram_tbss$$</div><div class="line">  .data_flash: [__data_flash_readonly$$, __data_flash_noinit$$]</div><div class="line">  .qspi_flash/.OSPI_DEVICE_0/.OSPI_DEVICE_1: OSPI family outputs #(e.g., __ospi0_cs0_from_flash$$, __ospi0_cs1_readonly$$) – pick readonly/from/zero/noinit as needed</div><div class="line">  .got: __flash_.got$$</div><div class="line">  .ARM.exidx/.ARM.extab: __flash_arm.exidx$$</div><div class="line">  .option_setting_* (old single blob): fine‑grained __option_setting_*_reg$$</div></div><!-- fragment --> <blockquote class="doxtable">
+<p><b>Note:</b> In the e2 Studio tooling, dialogs related to obj-copy do not properly parse the <code>$$</code> suffix, so use globbing if required (such as <code>--remove-section=__option_setting_*</code>) </p>
+</blockquote>
+<blockquote class="doxtable">
+<p><b>Note:</b> exact availability of *_from_* and *_nocache outputs depends on the device and selected memories. </p>
+</blockquote>
+<hr/>
+<h2><a class="anchor" id="linker_section-behavior-differences"></a>
+Behavior differences worth noting</h2>
+<ul>
+<li><b>Generated files overwrite</b>: <code>fsp_gen.*</code> and <code>memory_regions.*</code> are regenerated. Put customizations in <b>mapping rules</b> or in <b>patches/forks</b>.</li>
+<li><b>Vectors moved</b>: Reset/ISR vectors live in <code>__flash_vectors$$</code>. General code/rodata live in <code>__flash_readonly$$</code> (placed after <b>OFS flash gap</b> where required).</li>
+<li><b>Copy/zero tables generalized</b>: initialization now spans multiple memories (RAM/TCM/SDRAM/OSPI) with per‑output Base/Limit symbols.</li>
+<li><b>Fine‑grained protection</b>: OFS/BPS/OTP/SAS are each their own small section; tools can preserve or omit them independently. <hr/>
+</li>
+</ul>
+<h2><a class="anchor" id="linker_section-examples"></a>
+Examples</h2>
+<h3>A) Place a DMA buffer in non‑cached RAM (no source edits)</h3>
+<ul>
+<li><b>Mapping path:</b> <code>RAM Zero (No‑Cache)</code></li>
+<li><b>Input pattern:</b> <code>my_dma.o(.bss.my_buffer)</code></li>
+<li><b>Input section placed in:</b> <code>.ram_nocache</code></li>
+<li><b>Output section placed in:</b> <code>__ram_zero_nocache$$</code></li>
+</ul>
+<h3>B) Run a hot ISR from ITCM (copied from FLASH)</h3>
+<ul>
+<li><b>Mapping path:</b> <code>ITCM Code from FLASH</code></li>
+<li><b>Input pattern:</b> <code>isr_fast.o(.text.my_isr)</code></li>
+<li><b>Input section placed in:</b> <code>.itcm_code_from_flash</code></li>
+<li><b>Output section placed in:</b> <code>__itcm_from_flash$$</code></li>
+</ul>
+<h3>C) Put firmware asset in OSPI1 CS1 ReadOnly</h3>
+<ul>
+<li><b>Mapping path:</b> <code>OSPI_CS1 Constant Data</code></li>
+<li><b>Input pattern:</b> <code>assets.o(.rodata*)</code></li>
+<li><b>Input section placed in:</b> <code>.ospi1_cs1</code></li>
+<li><b>Output section placed in:</b> <code>__ospi1_cs1_readonly$$</code> <hr/>
+</li>
+</ul>
+<h1><a class="anchor" id="linker_section-faq"></a>
+FAQ</h1>
+<p><b>Q: Can I still edit the scripts directly?</b> A: You can, but we <b>don’t recommend it</b>. Copy to new filenames and <code>INCLUDE</code> them, or maintain a <b>patch</b> step. Otherwise, tool‑driven mapping/partitioning will be out of sync.</p>
+<p><b>Q: Will old <code>BSP_PLACE_IN_SECTION()</code> break?</b> A: It’s still supported. A few legacy section names changed; prefer the mapping dialog or update the section names as in the quick translation above.</p>
+<p><b>Q: How do I share memory between bootloader and app?</b> A: Use <b>Solution Partitioning</b>. The generator will rebuild <code>memory_regions.*</code> and all projects will align automatically.</p>
+<p><b>Q: What about data that must <em>not</em> be re‑initialized?</b> A: Use <code>.noinit</code>/<code>.ram_noinit</code> (or the mapping to <b>RAM Non‑Initialized</b> → <code>__ram_noinit$$</code>).</p>
+<p><b>Q: What is the bsp_linker_info.h file located in the <code>&lt;configuration&gt;</code> folder?</b> A: To support the seamless support of the new linker process, we must pass information to the source code (such as the source and destination of memory initializers). Unfortunately, the current DDSC tooling has limitations that only allow us to generate a header file to this location. Future releases will likely change the location of this information. </p><hr/>
+<h1><a class="anchor" id="linker_section-summary"></a>
+Summary</h1>
+<p>The new generator brings <b>consistency, scalability, and zero‑touch placement</b> across toolchains and devices. Start with <b>Solution Partitioning</b> and the <b>Linker Section Mapping</b> dialog; reserve script edits for exceptional cases via patches or forked includes. </p><hr/>
+<h1><a class="anchor" id="linker_section-appendix"></a>
+Appendix: Linker Input Sections</h1>
+<p>This appendix documents the valid <b>input</b> <code>linker_section</code> values that appear in the linker script and may be referenced from user code or configuration macros.</p>
+<p>Each section name is based on a <b>RAM or ROM class</b>, using a structured naming convention depending on the content type. </p><h2>RAM Target Capability Matrix</h2>
 <table class="doxtable">
 <tr>
 <th>RAM Class </th><th>ROM Init </th><th></th><th>Zeroed </th><th></th><th>NoInit </th><th></th></tr>
@@ -264,11 +435,11 @@ Overview</h1>
 <tr>
 <td>FLASH (Gap) </td><td>✅ </td><td>✅ </td><td></td></tr>
 </table>
-<h1><a class="anchor" id="linker_section-memory-class"></a>
-Memory Class Dictionaries</h1>
+<h2><a class="anchor" id="linker_section-appendix-memory-class"></a>
+Memory Class Dictionaries</h2>
 <p>These are the valid memory class identifiers used in <code>linker_section</code> names.</p>
 <div class="fragment"><div class="line">ram_class ::= &quot;ram&quot; | &quot;itcm&quot; | &quot;dtcm&quot; | &quot;stcm&quot; | &quot;ctcm&quot; | &quot;sdram&quot; | &quot;ospi0_cs0&quot;</div><div class="line">rom_class ::= &quot;flash&quot; | &quot;data_flash&quot; | &quot;qspi_flash&quot; | &quot;ospi0_cs1&quot; | &quot;ospi1_cs1&quot;</div></div><!-- fragment --><p><b>The available memory classes depend on the capabilities of your specific device. Not all devices support all RAM or ROM types.</b></p>
-<h2><a class="anchor" id="linker_section-memory-class-ram"></a>
+<h2><a class="anchor" id="linker_sectio-appendix-memory-class-ram"></a>
 RAM-Resident Sections</h2>
 <h3>Zero-Initialized RAM</h3>
 <div class="fragment"><div class="line">.&lt;ram_class&gt;</div></div><!-- fragment --><p>Used for memory cleared to zero at startup.</p>
@@ -293,7 +464,7 @@ RAM-Resident Sections</h2>
 <li><code>*(.dtcm_from_data_flash)</code></li>
 <li><code>*(.tcm_code_from_qspi_flash)</code></li>
 </ul>
-<h2><a class="anchor" id="linker_section-memory-class-rom"></a>
+<h2><a class="anchor" id="linker_section-appendix-memory-class-rom"></a>
 ROM-Resident Sections</h2>
 <h3>Standard ROM Sections</h3>
 <div class="fragment"><div class="line">.&lt;rom_class&gt;</div><div class="line">.&lt;rom_class&gt;_code</div><div class="line">.&lt;rom_class&gt;_noinit</div></div><!-- fragment --><ul>
@@ -309,7 +480,7 @@ ROM-Resident Sections</h2>
 </ul>
 <h3>Flash Gap Sections</h3>
 <div class="fragment"><div class="line">.flash_gap_code</div><div class="line">.flash_gap_readonly</div></div><!-- fragment --><p>Used only on devices with restricted flash regions (e.g., 0x400–0x43F). These sections support only code and constant data.</p>
-<h2><a class="anchor" id="linker_section-memory-class-summary"></a>
+<h2><a class="anchor" id="linker_section-appendix-memory-class-summary"></a>
 Summary</h2>
 <ul>
 <li><code>linker_section</code> names follow consistent, structured patterns.</li>
@@ -323,7 +494,7 @@ Summary</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

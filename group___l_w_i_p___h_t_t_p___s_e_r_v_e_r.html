@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -593,6 +593,9 @@ Limitations</h2>
 </li>
 </ul>
 </dd></dl>
+<h2>TLS connection</h2>
+<p>The stack and heap sizes must be properly configured when using the TLS layer with MbedTLS. Depending on the specific configuration and use case, these values may need to be increased from their defaults. For more information on memory requirements, refer to the <b>Memory Usage</b> section in <a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html">Mbed Crypto H/W Acceleration (rm_psa_crypto)</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>When using hardware acceleration for the MbedTLS implementation, verify that the target device supports all required mbedCrypto features for the TLS layer of lwIP. Refer to the <b>HW Overview</b> and <b>Features</b> sections in <a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html">Mbed Crypto H/W Acceleration (rm_psa_crypto)</a> to check hardware support. If any required feature is not supported, configure the corresponding features to use the software crypto implementation instead.</dd></dl>
 <h1><a class="anchor" id="rm-lwip_http_server-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -603,7 +606,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

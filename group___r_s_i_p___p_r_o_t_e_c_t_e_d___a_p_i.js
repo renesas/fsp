@@ -34,6 +34,11 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "chacha20Init", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ae0b604ae8a762ef57712be4ade3bdf88", null ],
       [ "chacha20Update", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a59909d27e121e03dc2d0ae43f9ab3af6", null ],
       [ "chacha20Finish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a37a131a8cb619af4eea30a57dfd2dbc5", null ],
+      [ "chacha20Poly1305Init", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a7610cb81e93cb2de7abc7eafbc3b4c81", null ],
+      [ "chacha20Poly1305AadUpdate", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a638f5c0c8689981a28868c495b69c293", null ],
+      [ "chacha20Poly1305Update", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a443884896698b7440fdb6539f9ded0d3", null ],
+      [ "chacha20Poly1305Finish", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a821132c0d8405255192e3b6d5f431e93", null ],
+      [ "chacha20Poly1305Verify", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a53ae78e688dd33a9b91eef2f3123a48d", null ],
       [ "ecdsaSign", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a25851c0dd479946a30efa9de0a147865", null ],
       [ "ecdsaVerify", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a044eb8526276e854afd14ef9b7ca27bb", null ],
       [ "eddsaSign", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a226a03a040b76d54d5fc3d43515e4ea0", null ],
@@ -137,6 +142,8 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "RSIP_KEY_TYPE_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ad06544b015f3cb6936a8edb30fd76795", null ],
       [ "RSIP_KEY_TYPE_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533abf2c534a5b4e38bdd3e03578026cab80", null ],
       [ "RSIP_KEY_TYPE_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac0d24ca2cee6665e07acc3e48d3f176f", null ],
+      [ "RSIP_KEY_TYPE_HMAC_SHA512_224", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a53a7d54c1a083fe8a1207cd4d645b51e", null ],
+      [ "RSIP_KEY_TYPE_HMAC_SHA512_256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a94dec72d2f6d3020bdab4785a9010d05", null ],
       [ "RSIP_KEY_TYPE_KDF_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ae44bae3f3fbafdb56622281e1a3ad6d8", null ],
       [ "RSIP_KEY_TYPE_KDF_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a9e4ceea38c4f77257dae5da3ea8f0f9f", null ],
       [ "RSIP_KEY_TYPE_KDF_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533aaf56fc68dee40d3cc126fe88c7f3f8e8", null ],
@@ -161,6 +168,10 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "RSIP_AES_AEAD_MODE_GCM_ENC_WRAPPED_IV", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga245b0a15ea6b2cca7b56224fda3e7522a98db12f6bb357c6c45545c01502add69", null ],
       [ "RSIP_AES_AEAD_MODE_GCM_DEC_WRAPPED_IV", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga245b0a15ea6b2cca7b56224fda3e7522a27a0bf20f50bda3c12841d97e80de984", null ]
     ] ],
+    [ "rsip_chacha_poly_mode_t", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga653db507859094e0c26820a7a27e3075", [
+      [ "RSIP_CHACHA20_POLY1305_MODE_ENC", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga653db507859094e0c26820a7a27e3075a5ee7fe52f431e37b85522981d5c2faef", null ],
+      [ "RSIP_CHACHA20_POLY1305_MODE_DEC", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga653db507859094e0c26820a7a27e3075a9d7863691e10a58e829d965933b36bc9", null ]
+    ] ],
     [ "rsip_aes_mac_mode_t", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadccd218cdf9941b64b6b13b949a2985c", [
       [ "RSIP_AES_MAC_MODE_CMAC", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ggadccd218cdf9941b64b6b13b949a2985cae82c4ed8936f022e9bd689f557a6e240", null ]
     ] ],
@@ -171,7 +182,11 @@ var group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i =
       [ "RSIP_HASH_TYPE_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a5d99501259f33a56446b2e924bce8dff", null ],
       [ "RSIP_HASH_TYPE_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89aa3336966c98485838aef21db86b4c9c4", null ],
       [ "RSIP_HASH_TYPE_SHA512_224", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a42459c435a6732056efc9b0026efb69e", null ],
-      [ "RSIP_HASH_TYPE_SHA512_256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a42c1bdd5072314a38acd3f128577c1b5", null ]
+      [ "RSIP_HASH_TYPE_SHA512_256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a42c1bdd5072314a38acd3f128577c1b5", null ],
+      [ "RSIP_HASH_TYPE_SHA3_224", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a3e81aaa54d7189a5e43f72568b7da4e1", null ],
+      [ "RSIP_HASH_TYPE_SHA3_256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a74338ab32086e2ec5e5c8498b6de68a0", null ],
+      [ "RSIP_HASH_TYPE_SHA3_384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a936dee0d594828a4e6a345b048f87b08", null ],
+      [ "RSIP_HASH_TYPE_SHA3_512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga3820283ceb2beb99656e71bbb3ba4f89a73d751282ddf1725c0f8646cb3d88ca6", null ]
     ] ],
     [ "rsip_mgf_type_t", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gaed858ab9713b13797a5e7e50589fbf52", [
       [ "RSIP_MGF_TYPE_MGF1_SHA1", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ggaed858ab9713b13797a5e7e50589fbf52a467853f1da9a4d991cfa8a5dcd0bac8c", null ],

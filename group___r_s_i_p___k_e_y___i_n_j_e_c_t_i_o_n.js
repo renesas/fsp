@@ -37,6 +37,8 @@ var group___r_s_i_p___k_e_y___i_n_j_e_c_t_i_o_n =
       [ "RSIP_KEY_TYPE_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ad06544b015f3cb6936a8edb30fd76795", null ],
       [ "RSIP_KEY_TYPE_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533abf2c534a5b4e38bdd3e03578026cab80", null ],
       [ "RSIP_KEY_TYPE_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ac0d24ca2cee6665e07acc3e48d3f176f", null ],
+      [ "RSIP_KEY_TYPE_HMAC_SHA512_224", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a53a7d54c1a083fe8a1207cd4d645b51e", null ],
+      [ "RSIP_KEY_TYPE_HMAC_SHA512_256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a94dec72d2f6d3020bdab4785a9010d05", null ],
       [ "RSIP_KEY_TYPE_KDF_HMAC_SHA256", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533ae44bae3f3fbafdb56622281e1a3ad6d8", null ],
       [ "RSIP_KEY_TYPE_KDF_HMAC_SHA384", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533a9e4ceea38c4f77257dae5da3ea8f0f9f", null ],
       [ "RSIP_KEY_TYPE_KDF_HMAC_SHA512", "group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gga123baeaebf3b0eb3092b446a3aeed533aaf56fc68dee40d3cc126fe88c7f3f8e8", null ],

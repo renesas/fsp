@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -252,7 +252,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gac014279a2fa944ef2326bb5a727ce9c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables interrupts. Removes power and releases hardware lock. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a84ae3c1816a60c8fc45ccc2084805088">ether_api_t::close</a>.  <a href="#gac014279a2fa944ef2326bb5a727ce9c0">More...</a><br /></td></tr>
 <tr class="separator:gac014279a2fa944ef2326bb5a727ce9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0fb1dfa67bcada0ce7fafed44a772519"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c.html#ga0fb1dfa67bcada0ce7fafed44a772519">R_RMAC_BufferRelease</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl)</td></tr>
-<tr class="memdesc:ga0fb1dfa67bcada0ce7fafed44a772519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move to the next buffer in the circular receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5">ether_api_t::bufferRelease</a>.  <a href="#ga0fb1dfa67bcada0ce7fafed44a772519">More...</a><br /></td></tr>
+<tr class="memdesc:ga0fb1dfa67bcada0ce7fafed44a772519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move to the next buffer in the receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5">ether_api_t::bufferRelease</a>.  <a href="#ga0fb1dfa67bcada0ce7fafed44a772519">More...</a><br /></td></tr>
 <tr class="separator:ga0fb1dfa67bcada0ce7fafed44a772519"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae264a546790ece09ebf725e0b7c06213"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c.html#gae264a546790ece09ebf725e0b7c06213">R_RMAC_RxBufferUpdate</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, void *const p_buffer)</td></tr>
 <tr class="memdesc:gae264a546790ece09ebf725e0b7c06213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the buffer pointer of the current rx buffer descriptor. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a6d088fd3b1a5326af7bedad146491d74">ether_api_t::rxBufferUpdate</a>.  <a href="#gae264a546790ece09ebf725e0b7c06213">More...</a><br /></td></tr>
@@ -273,6 +273,15 @@ Functions</h2></td></tr>
 <tr class="separator:ga080a8964701568116bf95212b8a6d452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3d04bd2fdf0676a7a2d992b5e8ff0b65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c.html#ga3d04bd2fdf0676a7a2d992b5e8ff0b65">R_RMAC_CallbackSet</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_api_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *), void *const p_context, <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__callback__args__t">ether_callback_args_t</a> *const p_callback_memory)</td></tr>
 <tr class="separator:ga3d04bd2fdf0676a7a2d992b5e8ff0b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabae2f3adcc92fae91041af247affc43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c.html#gaabae2f3adcc92fae91041af247affc43">R_RMAC_SetWriteConfig</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, <a class="el" href="structrmac__write__cfg__t.html">rmac_write_cfg_t</a> *const p_write_cfg)</td></tr>
+<tr class="memdesc:gaabae2f3adcc92fae91041af247affc43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set configuration for tx frame. This API must call before <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa61e5ba4dd1de3a50864c0b1970c3b51">ether_api_t::write</a>.  <a href="#gaabae2f3adcc92fae91041af247affc43">More...</a><br /></td></tr>
+<tr class="separator:gaabae2f3adcc92fae91041af247affc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade9b7430ef877c3ff44c9601339932e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c.html#gade9b7430ef877c3ff44c9601339932e9">R_RMAC_GetTxTimestamp</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, <a class="el" href="structrmac__timestamp__t.html">rmac_timestamp_t</a> *const p_timestamp)</td></tr>
+<tr class="memdesc:gade9b7430ef877c3ff44c9601339932e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get timestamp of transmitted frame. This API must call after <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa61e5ba4dd1de3a50864c0b1970c3b51">ether_api_t::write</a>.  <a href="#gade9b7430ef877c3ff44c9601339932e9">More...</a><br /></td></tr>
+<tr class="separator:gade9b7430ef877c3ff44c9601339932e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga338bb68cc016993825595068ee274302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c.html#ga338bb68cc016993825595068ee274302">R_RMAC_GetRxTimestamp</a> (<a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const p_ctrl, <a class="el" href="structrmac__timestamp__t.html">rmac_timestamp_t</a> *const p_timestamp)</td></tr>
+<tr class="memdesc:ga338bb68cc016993825595068ee274302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get timestamp of received frame. This API must call before <a class="el" href="group___e_t_h_e_r___a_p_i.html#a58975a11436cc5980698b6e843eea3f3">ether_api_t::read</a>.  <a href="#ga338bb68cc016993825595068ee274302">More...</a><br /></td></tr>
+<tr class="separator:ga338bb68cc016993825595068ee274302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Driver for the Ethernet peripheral on RA MCUs. This module implements the <a class="el" href="group___e_t_h_e_r___a_p_i.html">Ethernet Interface</a>. </p>
@@ -288,12 +297,14 @@ ESWM block diagram</div></div>
 Features</h2>
 <p>The RMAC module supports the following features:</p><ul>
 <li>Transmit/Receive processing</li>
+<li>Optional zero-copy buffering</li>
 <li>Callback function with returned event code</li>
 <li>Auto negotiation support</li>
 <li>Flow control support</li>
 <li>Multicast filtering support<a class="anchor" id="um_rmac_skipping_multicast_frame_when_multicast_filter_enabled"></a></li>
 <li>Broadcast filtering support<a class="anchor" id="um_rmac_regurating_broadcast_packet_when_broadcast_filter_enable"></a></li>
-<li>Promiscuous mode support<a class="anchor" id="um_rmac_receiving_all_frame_when_promiscuous_mode_enabled"></a> </li>
+<li>Promiscuous mode support<a class="anchor" id="um_rmac_receiving_all_frame_when_promiscuous_mode_enabled"></a></li>
+<li>Get the frame transmission and reception times</li>
 </ul>
 <h1><a class="anchor" id="r-rmac-configuration"></a>
 Configuration</h1>
@@ -369,13 +380,17 @@ Enable</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Padding offset</td><td>Must be less than 64 bytes.</td><td>0 </td><td>The offset into a receive buffer to insert padding bytes. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">TX queue length</td><td>Value must be an integer</td><td>4 </td><td>TX queue length </td></tr>
+<td class="tree_lvl_1_cell">TX queue length</td><td>Value must be an integer</td><td>3 </td><td>Number of buffers per TX queue. </td></tr>
 <tr class="tree_lvl_1_item">
-<td class="tree_lvl_1_cell">RX queue length</td><td>Value must be an integer</td><td>4 </td><td>RX queue length </td></tr>
+<td class="tree_lvl_1_cell">RX queue length</td><td>Value must be an integer</td><td>3 </td><td>Number of buffers per RX queue. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">TX queue num</td><td>Value must be an integer</td><td>2 </td><td>TX queue num </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">RX queue num</td><td>Value must be an integer</td><td>2 </td><td>RX queue num </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Number of TX buffer</td><td>Value must be an integer</td><td>12 </td><td>Number of transmit buffers </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Number of RX buffer</td><td>Value must be an integer</td><td>12 </td><td>Number of receive buffers </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Buffer size</td><td>Must be at least 1514 which is the maximum Ethernet frame size.</td><td>1514 </td><td>Size of Ethernet buffer </td></tr>
 <tr class="tree_lvl_1_item">
@@ -386,12 +401,18 @@ Disable</li>
 Enable</li>
 </ul>
 </td><td>Enable </td><td>Allocates the RX buffer when generating the configuration structure </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Number of node num</td><td>Value must be an integer</td><td>24 </td><td>Number of receive buffers </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Magic packet interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the magic packet detection interrupt priority. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Timestamp  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">TS queue length</td><td>Value must be an integer</td><td>8 </td><td>Timestamp queue length. </td></tr>
 </table>
 </p>
 <p><a class="anchor" id="um_rmac_configuration_for_connection_mode"></a><a class="anchor" id="um_rmac_configuration_of_mac_address"></a> </p>
@@ -444,7 +465,9 @@ Examples</h1>
 <h2>ETHER Basic Example</h2>
 <p>This is a basic example of minimal use of the ETHER in an application.</p>
 <dl class="section note"><dt>Note</dt><dd>In this example zero-copy mode is disabled and there are no restrictions on buffer alignment.</dd></dl>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE     (1514)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE    (60)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_SOURCE_MAC_ADDRESS              0x74, 0x90, 0x50, 0x00, 0x79, 0x01</span></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_DESTINATION_MAC_ADDRESS         0x74, 0x90, 0x50, 0x00, 0x79, 0x02</span></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_FRAME_TYPE                      0x00, 0x2E</span></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_PAYLOAD                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                  \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                  \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                  \</span></div><div class="line"><span class="preprocessor"></span></div><div class="line"></div><div class="line"><span class="comment">/* Receive data buffer */</span></div><div class="line"><span class="keyword">static</span> uint8_t gp_read_buffer[RMAC_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE] = {0};</div><div class="line"></div><div class="line"><span class="comment">/* Transmit data buffer */</span></div><div class="line"><span class="keyword">static</span> uint8_t gp_send_data[RMAC_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">{</div><div class="line">    RMAC_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    RMAC_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    RMAC_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    RMAC_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rmac_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err            = FSP_SUCCESS;</div><div class="line">    uint32_t  read_data_size = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the rmac instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#ga052caff07274427357117507a538e8c2">R_RMAC_Open</a>(&amp;g_ether0_ctrl, &amp;g_ether0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* When the Ethernet link status read from the PHY-LSI Basic Status register is link-up,</span></div><div class="line"><span class="comment">         * Initializes the module and make auto negotiation. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c.html#ga876a68d8ec34d3736ff1c3e98927c888">R_RMAC_LinkProcess</a>(&amp;g_ether0_ctrl);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Transmission is non-blocking. */</span></div><div class="line">    <span class="comment">/* User data copy to internal buffer and is transferred by DMA in the background. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#gaab393ab423c240b4a4dba7472e1cf534">R_RMAC_Write</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_send_data, <span class="keyword">sizeof</span>(gp_send_data));</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Received data copy to user buffer from internal buffer. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#ga121ae669c4f311ecd10fd189dfa1de12">R_RMAC_Read</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_read_buffer, &amp;read_data_size);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the rmac instance. */</span></div><div class="line">    <a class="code" href="group___r_m_a_c.html#gac014279a2fa944ef2326bb5a727ce9c0">R_RMAC_Close</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE     (1514)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE    (60)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_SOURCE_MAC_ADDRESS              0x74, 0x90, 0x50, 0x00, 0x79, 0x01</span></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_DESTINATION_MAC_ADDRESS         0x74, 0x90, 0x50, 0x00, 0x79, 0x02</span></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_FRAME_TYPE                      0x00, 0x2E</span></div><div class="line"><span class="preprocessor">#define RMAC_EXAMPLE_PAYLOAD                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                  \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                  \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                  \</span></div><div class="line"><span class="preprocessor"></span></div><div class="line"></div><div class="line"><span class="comment">/* Receive data buffer */</span></div><div class="line"><span class="keyword">static</span> uint8_t gp_read_buffer[RMAC_EXAMPLE_MAXIMUM_ETHERNET_FRAME_SIZE] = {0};</div><div class="line"></div><div class="line"><span class="comment">/* Transmit data buffer */</span></div><div class="line"><span class="keyword">static</span> uint8_t gp_send_data[RMAC_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">{</div><div class="line">    RMAC_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    RMAC_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    RMAC_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    RMAC_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> rmac_basic_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err            = FSP_SUCCESS;</div><div class="line">    uint32_t  read_data_size = 0;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the rmac instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#ga052caff07274427357117507a538e8c2">R_RMAC_Open</a>(&amp;g_ether0_ctrl, &amp;g_ether0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* When the Ethernet link status read from the PHY-LSI Basic Status register is link-up,</span></div><div class="line"><span class="comment">         * Initializes the module and make auto negotiation. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c.html#ga876a68d8ec34d3736ff1c3e98927c888">R_RMAC_LinkProcess</a>(&amp;g_ether0_ctrl);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Transmission is non-blocking. */</span></div><div class="line">    <span class="comment">/* User data copy to internal buffer and is transferred by DMA in the background. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#gaab393ab423c240b4a4dba7472e1cf534">R_RMAC_Write</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_send_data, <span class="keyword">sizeof</span>(gp_send_data));</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Received data copy to user buffer from internal buffer. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#ga121ae669c4f311ecd10fd189dfa1de12">R_RMAC_Read</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_read_buffer, &amp;read_data_size);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the rmac instance. */</span></div><div class="line">    <a class="code" href="group___r_m_a_c.html#gac014279a2fa944ef2326bb5a727ce9c0">R_RMAC_Close</a>(&amp;g_ether0_ctrl);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>Timestamp Example</h2>
+<p>This is a example of getting transmission and reception timestamps.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="keywordtype">void</span> rmac_timestamp_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err            = FSP_SUCCESS;</div><div class="line">    uint32_t  read_data_size = 0;</div><div class="line"></div><div class="line">    <a class="code" href="structrmac__timestamp__t.html">rmac_timestamp_t</a> rx_timestamp;</div><div class="line">    <a class="code" href="structrmac__timestamp__t.html">rmac_timestamp_t</a> tx_timestamp;</div><div class="line">    <a class="code" href="structrmac__write__cfg__t.html">rmac_write_cfg_t</a> write_cfg = {.<a class="code" href="structrmac__write__cfg__t.html#a66c8e2efbcabe6a2b1531ac492dbd79d">tx_timestamp_enable</a> = 1};</div><div class="line"></div><div class="line">    <span class="comment">/* Open the rmac instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#ga052caff07274427357117507a538e8c2">R_RMAC_Open</a>(&amp;g_ether0_ctrl, &amp;g_ether0_cfg);</div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* When the Ethernet link status read from the PHY-LSI Basic Status register is link-up,</span></div><div class="line"><span class="comment">         * Initializes the module and make auto negotiation. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c.html#ga876a68d8ec34d3736ff1c3e98927c888">R_RMAC_LinkProcess</a>(&amp;g_ether0_ctrl);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set write configuration. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#gaabae2f3adcc92fae91041af247affc43">R_RMAC_SetWriteConfig</a>(&amp;g_ether0_ctrl, &amp;write_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Transmission is non-blocking. */</span></div><div class="line">    <span class="comment">/* User data copy to internal buffer and is transferred by DMA in the background. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#gaab393ab423c240b4a4dba7472e1cf534">R_RMAC_Write</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_send_data, <span class="keyword">sizeof</span>(gp_send_data));</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get TX timestamp value. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#gade9b7430ef877c3ff44c9601339932e9">R_RMAC_GetTxTimestamp</a>(&amp;g_ether0_ctrl, &amp;tx_timestamp);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get RX timestamp value. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#ga338bb68cc016993825595068ee274302">R_RMAC_GetRxTimestamp</a>(&amp;g_ether0_ctrl, &amp;rx_timestamp);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Received data copy to user buffer from internal buffer. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c.html#ga121ae669c4f311ecd10fd189dfa1de12">R_RMAC_Read</a>(&amp;g_ether0_ctrl, (<span class="keywordtype">void</span> *) gp_read_buffer, &amp;read_data_size);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the rmac instance. */</span></div><div class="line">    <a class="code" href="group___r_m_a_c.html#gac014279a2fa944ef2326bb5a727ce9c0">R_RMAC_Close</a>(&amp;g_ether0_ctrl);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga052caff07274427357117507a538e8c2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga052caff07274427357117507a538e8c2">&#9670;&nbsp;</a></span>R_RMAC_Open()</h2>
 
@@ -533,13 +556,14 @@ Examples</h1>
       </table>
 </div><div class="memdoc">
 
-<p>Move to the next buffer in the circular receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5">ether_api_t::bufferRelease</a>. </p>
+<p>Move to the next buffer in the receive buffer list. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5">ether_api_t::bufferRelease</a>. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>Pointer to ETHER control block or internal buffers is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_BUFFER_EMPTY</td><td>There is no available internal RX buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -580,7 +604,7 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>The pointer of buffer is NULL or not aligned on a 32-bit boundary. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Driver is configured to non zero copy mode. </td></tr>
-    <tr><td class="paramname">FSP_ERR_ETHER_RECEIVE_BUFFER_ACTIVE</td><td>All descriptor is active. </td></tr>
+    <tr><td class="paramname">FSP_ERR_BUFFER_EMPTY</td><td>There is no available internal RX buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -694,6 +718,7 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_LINK</td><td>Auto-negotiation is not completed, and reception is not enabled. </td></tr>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_FILTERING</td><td>Multicast Frame filter is enable, and Multicast Address Frame is received. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_BUFFER_EMPTY</td><td>There is no available internal RX buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -742,6 +767,7 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_TRANSMIT_BUFFER_FULL</td><td>Transmit buffer is not empty. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Value of the send frame size is out of range. </td></tr>
+    <tr><td class="paramname">FSP_ERR_BUFFER_EMPTY</td><td>There is no available internal TX buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -837,13 +863,127 @@ Examples</h1>
 
 </div>
 </div>
+<a id="gaabae2f3adcc92fae91041af247affc43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaabae2f3adcc92fae91041af247affc43">&#9670;&nbsp;</a></span>R_RMAC_SetWriteConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RMAC_SetWriteConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrmac__write__cfg__t.html">rmac_write_cfg_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_write_cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set configuration for tx frame. This API must call before <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa61e5ba4dd1de3a50864c0b1970c3b51">ether_api_t::write</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A pointer argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gade9b7430ef877c3ff44c9601339932e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gade9b7430ef877c3ff44c9601339932e9">&#9670;&nbsp;</a></span>R_RMAC_GetTxTimestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RMAC_GetTxTimestamp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrmac__timestamp__t.html">rmac_timestamp_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_timestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get timestamp of transmitted frame. This API must call after <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa61e5ba4dd1de3a50864c0b1970c3b51">ether_api_t::write</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A pointer argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga338bb68cc016993825595068ee274302"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga338bb68cc016993825595068ee274302">&#9670;&nbsp;</a></span>R_RMAC_GetRxTimestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RMAC_GetRxTimestamp </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___a_p_i.html#gad9e606976602503ffeb95f3e2c717e6f">ether_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structrmac__timestamp__t.html">rmac_timestamp_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_timestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get timestamp of received frame. This API must call before <a class="el" href="group___e_t_h_e_r___a_p_i.html#a58975a11436cc5980698b6e843eea3f3">ether_api_t::read</a>. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Processing completed successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A pointer argument is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

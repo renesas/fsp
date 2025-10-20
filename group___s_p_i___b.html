@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -293,6 +293,7 @@ Features</h2>
 <li>Configurable bitrate</li>
 <li>Supports Full Duplex or Transmit Only Mode</li>
 <li>DTC Support</li>
+<li>DMAC Support</li>
 <li>Callback Events<ul>
 <li>Transfer Complete <a class="anchor" id="um_spi_api_rx_overflow_callback"></a></li>
 <li>RX Overflow Error (The SPI shift register is copied to the data register before previous data was read) <a class="anchor" id="um_spi_api_tx_underrun_callback"></a></li>
@@ -319,13 +320,13 @@ Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
 <tr class="tree_none">
-<td>Enable Support for using DTC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<td>Enable Support for using a transfer API</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Enabled</li>
 <li>
 Disabled</li>
 </ul>
-</td><td>Enabled </td><td>If enabled, DTC instances will be included in the build for both transmission and reception. </td></tr>
+</td><td>Enabled </td><td>If enabled, transfer instances will be included in the build for both transmission and reception. </td></tr>
 <tr class="tree_none">
 <td>Enable Transmitting from RXI Interrupt</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -535,11 +536,11 @@ Pin Configuration</h2>
 Usage Notes</h1>
 <h2>Performance</h2>
 <p>At high bitrates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in TX Underrun and RX Overflow errors.</p>
-<p>In order to improve performance at high bitrates, it is recommended that the instance be configured to service transfers using the DTC.</p>
+<p>In order to improve performance at high bitrates, it is recommended that the instance be configured to service transfers using the DTC or DMAC.</p>
 <p>Another way to improve performance is to transfer the data in 16/32 bit wide data frames when possible. A typical use-case where this is possible is when reading/writing to a block device.</p>
 <h3>Transmit From RXI Interrupt</h3>
-<p>After every data frame the SPI peripheral generates a transmit buffer empty interrupt and a receive buffer full interrupt. It is possible to configure the driver to handle transmit buffer empty interrupts in the receive buffer full ISR. This only improves performance when the DTC is not being used.</p>
-<dl class="section note"><dt>Note</dt><dd>Configuring the module to use RX DTC instance without also providing a TX DTC instance results in an invalid configuration when RXI transmit is enabled.</dd>
+<p>After every data frame the SPI peripheral generates a transmit buffer empty interrupt and a receive buffer full interrupt. It is possible to configure the driver to handle transmit buffer empty interrupts in the receive buffer full ISR. This only improves performance when the DTC nor DMAC is not being used.</p>
+<dl class="section note"><dt>Note</dt><dd>Configuring the module to use RX DTC/DMAC instance without also providing a TX DTC/DMAC instance results in an invalid configuration when RXI transmit is enabled.</dd>
 <dd>
 Transmit Only mode is not supported when Transmit from RXI is enabled.</dd></dl>
 <h3>Clock Auto-Stopping</h3>
@@ -554,7 +555,7 @@ Limitations</h2>
 <li>The module does not support communicating with multiple slaves using different SSL pins. In order to achieve this, the module must either be closed and re-opened to change the SSL pin or drive SSL in software. It is recommended that SSL be driven in software when controlling multiple slave devices.</li>
 <li>The SPI peripheral has a minimum 3 SPI CLK delay between each data frame.</li>
 <li>The behavior for Byte Swap operation is not guaranteed for data frames other than 8-bit, 16-bit and 32bit.</li>
-<li>Full-duplex transmission and reception (writeRead) may experience RX overflows at very high bitrates when using DTC. In this case, use half-duplex (write and read) functions.</li>
+<li>Full-duplex transmission and reception (writeRead) may experience RX overflows at very high bitrates when using DTC or DMAC. In this case, use half-duplex (write and read) functions.</li>
 </ul>
 <h1><a class="anchor" id="r-spi-b-examples"></a>
 Examples</h1>
@@ -1327,7 +1328,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -9,5 +9,8 @@ var group___r_m_a_c =
     [ "R_RMAC_Read", "group___r_m_a_c.html#ga121ae669c4f311ecd10fd189dfa1de12", null ],
     [ "R_RMAC_Write", "group___r_m_a_c.html#gaab393ab423c240b4a4dba7472e1cf534", null ],
     [ "R_RMAC_TxStatusGet", "group___r_m_a_c.html#ga080a8964701568116bf95212b8a6d452", null ],
-    [ "R_RMAC_CallbackSet", "group___r_m_a_c.html#ga3d04bd2fdf0676a7a2d992b5e8ff0b65", null ]
+    [ "R_RMAC_CallbackSet", "group___r_m_a_c.html#ga3d04bd2fdf0676a7a2d992b5e8ff0b65", null ],
+    [ "R_RMAC_SetWriteConfig", "group___r_m_a_c.html#gaabae2f3adcc92fae91041af247affc43", null ],
+    [ "R_RMAC_GetTxTimestamp", "group___r_m_a_c.html#gade9b7430ef877c3ff44c9601339932e9", null ],
+    [ "R_RMAC_GetRxTimestamp", "group___r_m_a_c.html#ga338bb68cc016993825595068ee274302", null ]
 ];

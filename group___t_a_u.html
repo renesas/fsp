@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -315,8 +315,9 @@ Features</h2>
 <tr>
 <td>TAU06 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI06 </td><td>TO06 </td></tr>
 <tr>
-<td>TAU07 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI07, RXD2 </td><td>TO07 </td></tr>
+<td>TAU07 </td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>✓ </td><td>✓ </td><td>✓ </td><td></td><td>CK00, CK01 </td><td>TI07, RXD2 (*) </td><td>TO07 </td></tr>
 </table>
+<p>(*) Remark: RXD0 for the MCU with only SAU0.</p>
 <h1><a class="anchor" id="r-tau-configuration"></a>
 Configuration</h1>
 <p><a class="anchor" id="um_timer_multiple_channels"></a> <h2>Build Time Configurations for r_tau</h2>
@@ -597,12 +598,12 @@ Usage Notes</h1>
 <p><a class="anchor" id="um_tau_inputpulse"></a> The count value can be captured at the TI0n valid edge and the interval of the pulse input to TI0n can be measured. The pulse interval can be calculated by the following expression.</p><ul>
 <li>TI0n input pulse interval = Period of count clock × ((0x10000 × TSR0n.OVF) + (Captured value of TDR0n + 1))</li>
 </ul>
-<p>Instead of using the TI0n pin input, a channel specified for the Input Pulse Interval Measurement can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", "Input signal of the RXD2 pin", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
+<p>Instead of using the TI0n pin input, a channel specified for the Input Pulse Interval Measurement can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", "Input signal of the RXD pin", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
 <h2>High-Low Level Pulse Width Measurement</h2>
 <p><a class="anchor" id="um_tau_highlow_measurement"></a> By starting counting at one edge of the TI0n pin input and capturing the number of counts at another edge, the signal width (high-level width or low-level width) of TI0n can be measured. The signal width of TI0n can be calculated by the following expression.</p><ul>
 <li>Signal width of TI0n input = Period of count clock × ((0x10000 × TSR0n.OVF) + (Captured value of TDR0n + 1))</li>
 </ul>
-<p>Instead of using the TI0n pin input, a channel specified for the High-Low Level Pulse Width Function can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", "Input signal of the RXD2 pin", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
+<p>Instead of using the TI0n pin input, a channel specified for the High-Low Level Pulse Width Function can also use the signal as "Middle-speed on-chip oscillator (MOCO)", "Low-speed on-chip oscillator (LOCO)", "Subsystem clock (FSUB)", "Input signal of the RXD pin", and ELC event which selected in <b>Input&gt;Input Source</b> property as its input source to drive counting.</p>
 <h2>Triggering ELC Events with TAU</h2>
 <p><a class="anchor" id="um_tau_event_count_elc"></a>The TAU timer can trigger the start of other peripherals. The <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a> guide provides a list of all available peripherals.</p>
 <h2>Limitations</h2>
@@ -886,7 +887,9 @@ Cycle higher 8-bit end interrupt. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4a063d0b75b143f4f6cc0be2e59e3cd6d2"></a>TAU_INPUT_SOURCE_ELC&#160;</td><td class="fielddoc"><p>ELC Timer Input Source. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4ae1389fcb62491aefc12736f65de43aca"></a>TAU_INPUT_SOURCE_RXD2_PIN&#160;</td><td class="fielddoc"><p>Timer Input Source is RXD2 pin. </p>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4ab20436fe60320374c1d4f37321c8fe89"></a>TAU_INPUT_SOURCE_RXD_PIN&#160;</td><td class="fielddoc"><p>Timer Input Source is RXD pin. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4ae1389fcb62491aefc12736f65de43aca"></a>TAU_INPUT_SOURCE_RXD2_PIN&#160;</td><td class="fielddoc"><p>DEPRECATED, do not use. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9a26bac075067f52ed7fac6ee6e40bf4a6f6dcd35275a8d3c8cd1380cad3a4153"></a>TAU_INPUT_SOURCE_MOCO&#160;</td><td class="fielddoc"><p>Timer Input Source is MOCO. </p>
 </td></tr>
@@ -981,6 +984,7 @@ Cycle higher 8-bit end interrupt. </td></tr>
     <tr><td class="paramname">FSP_ERR_IRQ_BSP_DISABLED</td><td>Timer_cfg_t::p_callback is not NULL, but ISR is not enabled. ISR must be enabled to use callback </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>Invalid configuration for p_extend. </td></tr>
     <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel requested in the p_cfg parameter is not available on this device. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Input source is not supported. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1445,7 +1449,7 @@ Cycle higher 8-bit end interrupt. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,7 @@ var group___f_l_a_s_h___a_p_i =
     ] ],
     [ "flash_callback_args_t", "group___f_l_a_s_h___a_p_i.html#structflash__callback__args__t", [
       [ "event", "group___f_l_a_s_h___a_p_i.html#a85ce087229ae1cb0076dfb4e38238d7e", null ],
+      [ "data", "group___f_l_a_s_h___a_p_i.html#ae1a555ea3ea64d53f19a65a365c94638", null ],
       [ "p_context", "group___f_l_a_s_h___a_p_i.html#a9bb2faa6e34b87b5fcd128a63eabe68a", null ]
     ] ],
     [ "flash_cfg_t", "group___f_l_a_s_h___a_p_i.html#structflash__cfg__t", [
@@ -74,7 +75,9 @@ var group___f_l_a_s_h___a_p_i =
       [ "FLASH_EVENT_ERR_CF_ACCESS", "group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a6167eb1835398201b00b5c939f6bb97b", null ],
       [ "FLASH_EVENT_ERR_CMD_LOCKED", "group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a2df4cbfb326d2c2817f28344373a990f", null ],
       [ "FLASH_EVENT_ERR_FAILURE", "group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a72edb6a3157ef6a937e6cb6af5c1998b", null ],
-      [ "FLASH_EVENT_ERR_ONE_BIT", "group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a416c2c08801d97af315facc443baa2ed", null ]
+      [ "FLASH_EVENT_ERR_ONE_BIT", "group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a416c2c08801d97af315facc443baa2ed", null ],
+      [ "FLASH_EVENT_ERR_TWO_BIT", "group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5acce5b1272d35c9309b5b7e1e3c2b3f3d", null ],
+      [ "FLASH_EVENT_ERR_ECC", "group___f_l_a_s_h___a_p_i.html#gga44753f7d426ae0121c94a307a95314a5a8c771e5aaca1a943a932d34223325e35", null ]
     ] ],
     [ "flash_id_code_mode_t", "group___f_l_a_s_h___a_p_i.html#ga5879fbdf1d24018416c1c7ccf448b64f", [
       [ "FLASH_ID_CODE_MODE_UNLOCKED", "group___f_l_a_s_h___a_p_i.html#gga5879fbdf1d24018416c1c7ccf448b64fabdf06d50ec5d6ea007d6b95e52da1c41", null ],

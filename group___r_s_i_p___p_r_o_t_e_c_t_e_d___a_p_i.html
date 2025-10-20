@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -288,6 +288,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga7c66b456dbaadee4c68a3afe29f52fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga245b0a15ea6b2cca7b56224fda3e7522"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga245b0a15ea6b2cca7b56224fda3e7522">rsip_aes_aead_mode_t</a> </td></tr>
 <tr class="separator:ga245b0a15ea6b2cca7b56224fda3e7522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga653db507859094e0c26820a7a27e3075"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga653db507859094e0c26820a7a27e3075">rsip_chacha_poly_mode_t</a> </td></tr>
+<tr class="separator:ga653db507859094e0c26820a7a27e3075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadccd218cdf9941b64b6b13b949a2985c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#gadccd218cdf9941b64b6b13b949a2985c">rsip_aes_mac_mode_t</a> </td></tr>
 <tr class="separator:gadccd218cdf9941b64b6b13b949a2985c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3820283ceb2beb99656e71bbb3ba4f89"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga3820283ceb2beb99656e71bbb3ba4f89">rsip_hash_type_t</a> </td></tr>
@@ -435,6 +437,16 @@ Hardware-dependent configuration. </td></tr>
 <tr class="separator:a59909d27e121e03dc2d0ae43f9ab3af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37a131a8cb619af4eea30a57dfd2dbc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a37a131a8cb619af4eea30a57dfd2dbc5">chacha20Finish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length)</td></tr>
 <tr class="separator:a37a131a8cb619af4eea30a57dfd2dbc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7610cb81e93cb2de7abc7eafbc3b4c81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a7610cb81e93cb2de7abc7eafbc3b4c81">chacha20Poly1305Init</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga653db507859094e0c26820a7a27e3075">rsip_chacha_poly_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_nonce, uint32_t const nonce_length)</td></tr>
+<tr class="separator:a7610cb81e93cb2de7abc7eafbc3b4c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a638f5c0c8689981a28868c495b69c293"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a638f5c0c8689981a28868c495b69c293">chacha20Poly1305AadUpdate</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_aad, uint32_t const aad_length)</td></tr>
+<tr class="separator:a638f5c0c8689981a28868c495b69c293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a443884896698b7440fdb6539f9ded0d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a443884896698b7440fdb6539f9ded0d3">chacha20Poly1305Update</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_input, uint32_t const input_length, uint8_t *const p_output, uint32_t *const p_output_length)</td></tr>
+<tr class="separator:a443884896698b7440fdb6539f9ded0d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a821132c0d8405255192e3b6d5f431e93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a821132c0d8405255192e3b6d5f431e93">chacha20Poly1305Finish</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t *const p_tag)</td></tr>
+<tr class="separator:a821132c0d8405255192e3b6d5f431e93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53ae78e688dd33a9b91eef2f3123a48d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a53ae78e688dd33a9b91eef2f3123a48d">chacha20Poly1305Verify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t const *const p_tag, uint32_t const tag_length)</td></tr>
+<tr class="separator:a53ae78e688dd33a9b91eef2f3123a48d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25851c0dd479946a30efa9de0a147865"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a25851c0dd479946a30efa9de0a147865">ecdsaSign</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_private_key, uint8_t const *const p_hash, uint8_t *const p_signature)</td></tr>
 <tr class="separator:a25851c0dd479946a30efa9de0a147865"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a044eb8526276e854afd14ef9b7ca27bb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#a044eb8526276e854afd14ef9b7ca27bb">ecdsaVerify</a> )(<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_public_key, uint8_t const *const p_hash, uint8_t const *const p_signature)</td></tr>
@@ -1131,6 +1143,128 @@ Hardware-dependent configuration. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of output text. The fractional block is output. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_output_length</td><td>Pointer to destination of output text length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7610cb81e93cb2de7abc7eafbc3b4c81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7610cb81e93cb2de7abc7eafbc3b4c81">&#9670;&nbsp;</a></span>chacha20Poly1305Init</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::chacha20Poly1305Init) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga653db507859094e0c26820a7a27e3075">rsip_chacha_poly_mode_t</a> const mode, <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#structrsip__wrapped__key__t">rsip_wrapped_key_t</a> const *const p_wrapped_key, uint8_t const *const p_nonce, uint32_t const nonce_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepares a ChaCha20-Poly1305 function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>AEAD mode of operation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_wrapped_key</td><td>Pointer to wrapped key of AES key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_nonce</td><td>Pointer to nonce. The length is nonce_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nonce_length</td><td>Byte length of nonce. Input 1 or more. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a638f5c0c8689981a28868c495b69c293"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a638f5c0c8689981a28868c495b69c293">&#9670;&nbsp;</a></span>chacha20Poly1305AadUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::chacha20Poly1305AadUpdate) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_aad, uint32_t const aad_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inputs Additional Authentication Data (AAD).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_aad</td><td>Additional authentication data. The length depends on aad_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">aad_length</td><td>Byte length of additional authentication data (0 or more bytes). After starting input of plaintext, this value must always be 0. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a443884896698b7440fdb6539f9ded0d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a443884896698b7440fdb6539f9ded0d3">&#9670;&nbsp;</a></span>chacha20Poly1305Update</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::chacha20Poly1305Update) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t const *const p_input, uint32_t const input_length, uint8_t *const p_output, uint32_t *const p_output_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts plaintext or decrypts ciphertext.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_input</td><td>Pointer to input text. The length is input_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_length</td><td>Byte length of input text (0 or more bytes). </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of output text. The length is p_output_length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output_length</td><td>Pointer to destination of output text length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a821132c0d8405255192e3b6d5f431e93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a821132c0d8405255192e3b6d5f431e93">&#9670;&nbsp;</a></span>chacha20Poly1305Finish</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::chacha20Poly1305Finish) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t *const p_tag)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes a ChaCha20-Poly1305 encryption.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of output text. The fractional block is output. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output_length</td><td>Pointer to destination of output text length. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_tag</td><td>Pointer to destination of tag for authentication. The length is 16 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a53ae78e688dd33a9b91eef2f3123a48d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53ae78e688dd33a9b91eef2f3123a48d">&#9670;&nbsp;</a></span>chacha20Poly1305Verify</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  rsip_api_t::chacha20Poly1305Verify) (<a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga2042507aed5dec71014a96b91aeaa4fa">rsip_ctrl_t</a> *const p_ctrl, uint8_t *const p_output, uint32_t *const p_output_length, uint8_t const *const p_tag, uint32_t const tag_length)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Finalizes a ChaCha20-Poly1305 decryption.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ctrl</td><td>Pointer to control block. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output</td><td>Pointer to destination of decrypted data. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_output_length</td><td>Pointer to destination of decrypted data length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tag</td><td>Pointer to destination of tag for authentication. The length depends on tag_length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tag_length</td><td>Byte length of tag. Must be 16. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2632,6 +2766,10 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ac0d24ca2cee6665e07acc3e48d3f176f"></a>RSIP_KEY_TYPE_HMAC_SHA512&#160;</td><td class="fielddoc"><p>HMAC-SHA512. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a53a7d54c1a083fe8a1207cd4d645b51e"></a>RSIP_KEY_TYPE_HMAC_SHA512_224&#160;</td><td class="fielddoc"><p>HMAC-SHA512/224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a94dec72d2f6d3020bdab4785a9010d05"></a>RSIP_KEY_TYPE_HMAC_SHA512_256&#160;</td><td class="fielddoc"><p>HMAC-SHA512/256. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533ae44bae3f3fbafdb56622281e1a3ad6d8"></a>RSIP_KEY_TYPE_KDF_HMAC_SHA256&#160;</td><td class="fielddoc"><p>HMAC-SHA256. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga123baeaebf3b0eb3092b446a3aeed533a9e4ceea38c4f77257dae5da3ea8f0f9f"></a>RSIP_KEY_TYPE_KDF_HMAC_SHA384&#160;</td><td class="fielddoc"><p>HMAC-SHA384. </p>
@@ -2708,6 +2846,27 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga653db507859094e0c26820a7a27e3075"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga653db507859094e0c26820a7a27e3075">&#9670;&nbsp;</a></span>rsip_chacha_poly_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#ga653db507859094e0c26820a7a27e3075">rsip_chacha_poly_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ChaCha20-Poly1305 mode </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga653db507859094e0c26820a7a27e3075a5ee7fe52f431e37b85522981d5c2faef"></a>RSIP_CHACHA20_POLY1305_MODE_ENC&#160;</td><td class="fielddoc"><p>ChaCha20-Poly1305 encryption. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga653db507859094e0c26820a7a27e3075a9d7863691e10a58e829d965933b36bc9"></a>RSIP_CHACHA20_POLY1305_MODE_DEC&#160;</td><td class="fielddoc"><p>ChaCha20-Poly1305 decryption. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="gadccd218cdf9941b64b6b13b949a2985c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadccd218cdf9941b64b6b13b949a2985c">&#9670;&nbsp;</a></span>rsip_aes_mac_mode_t</h2>
 
@@ -2753,6 +2912,14 @@ Pointer to the API structure for this instance. </td></tr>
 <tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a42459c435a6732056efc9b0026efb69e"></a>RSIP_HASH_TYPE_SHA512_224&#160;</td><td class="fielddoc"><p>SHA-512/224. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a42c1bdd5072314a38acd3f128577c1b5"></a>RSIP_HASH_TYPE_SHA512_256&#160;</td><td class="fielddoc"><p>SHA-512/256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a3e81aaa54d7189a5e43f72568b7da4e1"></a>RSIP_HASH_TYPE_SHA3_224&#160;</td><td class="fielddoc"><p>SHA3-224. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a74338ab32086e2ec5e5c8498b6de68a0"></a>RSIP_HASH_TYPE_SHA3_256&#160;</td><td class="fielddoc"><p>SHA3-256. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a936dee0d594828a4e6a345b048f87b08"></a>RSIP_HASH_TYPE_SHA3_384&#160;</td><td class="fielddoc"><p>SHA3-384. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3820283ceb2beb99656e71bbb3ba4f89a73d751282ddf1725c0f8646cb3d88ca6"></a>RSIP_HASH_TYPE_SHA3_512&#160;</td><td class="fielddoc"><p>SHA3-512. </p>
 </td></tr>
 </table>
 
@@ -2864,7 +3031,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -284,8 +284,8 @@ Features</h2>
 </ul>
 </li>
 <li>Configurable bit rate</li>
-<li>DTC Support</li>
-<li>DMAC Support</li>
+<li>DTC Support (with or without FIFO mode)<a class="anchor" id="um_sci_b_spi_fifo_mode"></a></li>
+<li>DMAC Support (with or without FIFO mode)</li>
 <li>Callback Events<ul>
 <li>Transfer Complete <a class="anchor" id="um_spi_api_rx_overflow_callback"></a></li>
 <li>RX Overflow Error (The SCI shift register is copied to the data register before previous data was read)</li>
@@ -317,6 +317,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Enabled </td><td>Select whether to include support for DMAC or DTC transfers in the build. </td></tr>
+<tr class="tree_none">
+<td>FIFO Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable FIFO support for the SCI_B_SPI module. </td></tr>
 </table>
  <h2>Configurations for Connectivity &gt; SPI (r_sci_b_spi)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Connectivity &gt; SPI (r_sci_b_spi). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -389,6 +397,22 @@ SCISPICLK</li>
 <td>Bitrate</td><td>Value must be an integer greater than 0</td><td>8000000 </td><td>Enter the desired bitrate.<br />
 <br />
 If the requested bitrate cannot be achieved, the settings with the largest possible value that is less than or equal to the requested bitrate is used. The actual bitrate is printed in a comment in the generated <a class="el" href="structsci__spi__extended__cfg__t.html">sci_spi_extended_cfg_t</a> structure. </td></tr>
+<tr class="tree_none">
+<td>Transmit FIFO Trigger Level</td><td>Refer to the RA Configuration tool for available options.</td><td>Disabled </td><td>Set to 1 to trigger DMAC/DTC TX FIFO reload immediately when each byte is transmitted. Set to 15 to trigger the reload when the FIFO is full or after 15 bit times with no data. </td></tr>
+<tr class="tree_none">
+<td>Receive Sampling Timing Adjustment (Master Only)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Default (No Delay)</li>
+<li>
+1 TCLK Cycle</li>
+<li>
+2 TCLK Cycles</li>
+<li>
+3 TCLK Cycles</li>
+<li>
+4 TCLK Cycles</li>
+</ul>
+</td><td>Default (No Delay) </td><td>Select the sampling timing delay of the RXDn pin (master mode only). Configuring this property may be required at high bitrates for the master to sample the received data accurately. This setting has no effect in slave mode. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="r_sci_b_spi-clock-configuration"></a>
@@ -402,11 +426,15 @@ Clock Configuration</h2>
 <tr>
 <td>RA8D1</td><td>PCLKA</td></tr>
 <tr>
+<td>RA8D2</td><td>PCLKA</td></tr>
+<tr>
 <td>RA8E1</td><td>PCLKA</td></tr>
 <tr>
 <td>RA8E2</td><td>PCLKA</td></tr>
 <tr>
 <td>RA8M1</td><td>PCLKA</td></tr>
+<tr>
+<td>RA8M2</td><td>PCLKA</td></tr>
 <tr>
 <td>RA8P1</td><td>PCLKA</td></tr>
 <tr>
@@ -425,8 +453,15 @@ Usage Notes</h1>
 <h2>Transfer Complete Event</h2>
 <p>The transfer complete event is triggered when all of the data has been transferred. In slave mode if the SS pin is de-asserted then no transfer complete event is generated until the SS pin is asserted and the remaining data is transferred.</p>
 <h2>Performance</h2>
-<p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. In slave mode this could result in RX Overflow errors.</p>
-<p>In order to improve performance at high bit rates, it is recommended that the instance be configured to service transfers using the DTC or DMAC.</p>
+<p>At high bit rates, interrupts may not be able to service transfers fast enough. In master mode this means there will be a delay between each data frame. This may also result in <a class="el" href="group___s_p_i___a_p_i.html#gga6e4960e8b344a8a8ec60f0c11d60f54ca71a3d6fe1922346e01054bb11993b26a">SPI_EVENT_ERR_READ_OVERFLOW</a> errors.</p>
+<p>In order to improve performance at high bit rates, consider the following recommendations:</p>
+<ul>
+<li>Enable DTC or DMAC. Note that DMAC will provide the best performance.</li>
+<li>Enable the Transmit Fifo Trigger in the module properties.</li>
+<li>Configure the Receive Sampling Timing Adjustment in the module properties (master mode only). For more information about Receive Sampling Timing Adjustment, refer to the diagram "Reception Sampling Timing Adjustment Operation in Clock Synchronous Mode (Master)" in the HW User's Manual for the selected MCU.</li>
+<li>When using DMAC, set the RX DMAC channel to a higher priority (lower channel number) than the TX channel.</li>
+<li>When using DMAC, consider pausing operation of higher-priority DMAC instances in the project during SPI transfers or reassigning priorities to ensure high-speed SPI channels have top priority to avoid bus contention.</li>
+</ul>
 <h3>Transmit From RXI Interrupt</h3>
 <p>After every byte, the SCI SPI peripheral generates a transmit buffer empty interrupt and a receive buffer full interrupt. Whenever possible, the SCI SPI module handles both interrupts in the receive buffer full interrupt. This improves performance when the DTC or DMAC is not being used.</p>
 <h2>Slave Select Pin</h2>
@@ -506,6 +541,7 @@ Data Structures</h2></td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>An input parameter is invalid or NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_ALREADY_OPEN</td><td>The instance has already been opened. </td></tr>
     <tr><td class="paramname">FSP_ERR_IP_CHANNEL_NOT_PRESENT</td><td>The channel number is invalid. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Fifo mode is requested but a transfer interface is not used </td></tr>
   </table>
   </dd>
 </dl>
@@ -909,7 +945,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

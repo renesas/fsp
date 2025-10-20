@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -398,6 +398,16 @@ Disabled</li>
 </ul>
 </td><td>16-bit </td><td>Specifies the data bus width for SDRAM. </td></tr>
 <tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> OSPI_B  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Startup Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If enabled, the OSPI_B driver will be initialized and configured by the BSP. A 'Storage &gt; OSPI (r_ospi_b)' or 'Storage &gt; SiP Flash (r_ospi_b)' stack must be configured. </td></tr>
+<tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Security  </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Security &gt; Exceptions  </td></tr>
@@ -591,6 +601,26 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Disabled </td><td>Enable limited D-Cache support. See BSP usage notes for limitations. </td></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> I/O Ports  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> I/O Ports &gt; Voltage Mode  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">VCC</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Low (VCC &lt; 2.7 V)</li>
+<li>
+High (VCC &gt;= 2.7 V)</li>
+</ul>
+</td><td>High (VCC &gt;= 2.7 V) </td><td>When VCC is lower than 2.7 V, set VCC I/O Ports Voltage Mode to Low. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">VCC2</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Low (VCC2 &lt; 2.7 V)</li>
+<li>
+High (VCC2 &gt;= 2.7 V)</li>
+</ul>
+</td><td>High (VCC2 &gt;= 2.7 V) </td><td>When VCC2 is lower than 2.7 V, set VCC2 I/O Ports Voltage Mode to Low. </td></tr>
 <tr class="tree_none">
 <td>Enable inline BSP IRQ functions</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
@@ -637,6 +667,8 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaebe723200f2a7f181f08324128b9d7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5bf5e18ceb8cf51ac6dce985f9230a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_m1.html#gaa5bf5e18ceb8cf51ac6dce985f9230a7">elc_peripheral_t</a> </td></tr>
 <tr class="separator:gaa5bf5e18ceb8cf51ac6dce985f9230a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaaeced63fc5b7bbda1697f2a215a1192"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_s_p___m_c_u___r_a8_m1.html#gaaaeced63fc5b7bbda1697f2a215a1192">bsp_clocks_octaclk_div_t</a> </td></tr>
+<tr class="separator:gaaaeced63fc5b7bbda1697f2a215a1192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga6f3d583a26d5f1f1f94756903fb3a935"></a>
@@ -685,13 +717,106 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<a id="gaaaeced63fc5b7bbda1697f2a215a1192"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaaeced63fc5b7bbda1697f2a215a1192">&#9670;&nbsp;</a></span>bsp_clocks_octaclk_div_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum bsp_clocks_octaclk_div_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>OCTACLK divider values. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192abcceba3029f0826c6f865d88cb354210"></a>BSP_CLOCKS_OCTACLK_DIV_1&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5693f70a322545ff1cb2391206d03d71"></a>BSP_CLOCKS_OCTACLK_DIV_2&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a00ad54fecb7ed63dc8920e683f22f79c"></a>BSP_CLOCKS_OCTACLK_DIV_4&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192af6f986ede7ee0fa83da6a3d0c1715861"></a>BSP_CLOCKS_OCTACLK_DIV_6&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192acded1e8a02422f727f9133b2e860a5e5"></a>BSP_CLOCKS_OCTACLK_DIV_8&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a8bf29a17d787aaee1ec513044de47d95"></a>BSP_CLOCKS_OCTACLK_DIV_3&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5853e8afd618f97caab80c23d2f3e493"></a>BSP_CLOCKS_OCTACLK_DIV_5&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a59666978df19140f79964521a3bd5496"></a>BSP_CLOCKS_OCTACLK_DIV_10&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 10. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a6ecd9991cf252c81a8ddfc6491c33b5b"></a>BSP_CLOCKS_OCTACLK_DIV_16&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 16. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192abf7aae61b9351f57c0fd637f211d11b7"></a>BSP_CLOCKS_OCTACLK_DIV_32&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 32. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192abcceba3029f0826c6f865d88cb354210"></a>BSP_CLOCKS_OCTACLK_DIV_1&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5693f70a322545ff1cb2391206d03d71"></a>BSP_CLOCKS_OCTACLK_DIV_2&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a00ad54fecb7ed63dc8920e683f22f79c"></a>BSP_CLOCKS_OCTACLK_DIV_4&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192af6f986ede7ee0fa83da6a3d0c1715861"></a>BSP_CLOCKS_OCTACLK_DIV_6&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192acded1e8a02422f727f9133b2e860a5e5"></a>BSP_CLOCKS_OCTACLK_DIV_8&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a8bf29a17d787aaee1ec513044de47d95"></a>BSP_CLOCKS_OCTACLK_DIV_3&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5853e8afd618f97caab80c23d2f3e493"></a>BSP_CLOCKS_OCTACLK_DIV_5&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192abcceba3029f0826c6f865d88cb354210"></a>BSP_CLOCKS_OCTACLK_DIV_1&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5693f70a322545ff1cb2391206d03d71"></a>BSP_CLOCKS_OCTACLK_DIV_2&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a00ad54fecb7ed63dc8920e683f22f79c"></a>BSP_CLOCKS_OCTACLK_DIV_4&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192af6f986ede7ee0fa83da6a3d0c1715861"></a>BSP_CLOCKS_OCTACLK_DIV_6&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192acded1e8a02422f727f9133b2e860a5e5"></a>BSP_CLOCKS_OCTACLK_DIV_8&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a8bf29a17d787aaee1ec513044de47d95"></a>BSP_CLOCKS_OCTACLK_DIV_3&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5853e8afd618f97caab80c23d2f3e493"></a>BSP_CLOCKS_OCTACLK_DIV_5&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192abcceba3029f0826c6f865d88cb354210"></a>BSP_CLOCKS_OCTACLK_DIV_1&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5693f70a322545ff1cb2391206d03d71"></a>BSP_CLOCKS_OCTACLK_DIV_2&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a00ad54fecb7ed63dc8920e683f22f79c"></a>BSP_CLOCKS_OCTACLK_DIV_4&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192af6f986ede7ee0fa83da6a3d0c1715861"></a>BSP_CLOCKS_OCTACLK_DIV_6&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192acded1e8a02422f727f9133b2e860a5e5"></a>BSP_CLOCKS_OCTACLK_DIV_8&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a8bf29a17d787aaee1ec513044de47d95"></a>BSP_CLOCKS_OCTACLK_DIV_3&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5853e8afd618f97caab80c23d2f3e493"></a>BSP_CLOCKS_OCTACLK_DIV_5&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192abcceba3029f0826c6f865d88cb354210"></a>BSP_CLOCKS_OCTACLK_DIV_1&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5693f70a322545ff1cb2391206d03d71"></a>BSP_CLOCKS_OCTACLK_DIV_2&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a00ad54fecb7ed63dc8920e683f22f79c"></a>BSP_CLOCKS_OCTACLK_DIV_4&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192af6f986ede7ee0fa83da6a3d0c1715861"></a>BSP_CLOCKS_OCTACLK_DIV_6&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192acded1e8a02422f727f9133b2e860a5e5"></a>BSP_CLOCKS_OCTACLK_DIV_8&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a8bf29a17d787aaee1ec513044de47d95"></a>BSP_CLOCKS_OCTACLK_DIV_3&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaaeced63fc5b7bbda1697f2a215a1192a5853e8afd618f97caab80c23d2f3e493"></a>BSP_CLOCKS_OCTACLK_DIV_5&#160;</td><td class="fielddoc"><p>Divide OCTA source clock by 5. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

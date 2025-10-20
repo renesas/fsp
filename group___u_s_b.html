@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -394,7 +394,7 @@ Support Device Class</h1>
 <tr>
 <td align="left"></td><td align="left">HVND </td><td align="left">Yes </td><td align="left">Yes </td><td align="left">&ndash; </td></tr>
 <tr>
-<td align="left"></td><td align="left">HAUD </td><td align="left">&ndash; </td><td align="left">&ndash; </td><td align="left">Yes </td></tr>
+<td align="left"></td><td align="left">HAUD </td><td align="left">Yes </td><td align="left">Yes </td><td align="left">Yes </td></tr>
 <tr>
 <td align="left"></td><td align="left">HCDC+HMSC (Composite) </td><td align="left">&ndash; </td><td align="left">Yes </td><td align="left">&ndash; </td></tr>
 <tr>
@@ -616,6 +616,7 @@ Limitations</h2>
 <li>This driver does not support CPU transfers using the D0FIFO/D1FIFO register.</li>
 <li>In USB host mode, this USB driver does not support the composite device other than "HMSC + HCDC (for FreeRTOS)".</li>
 <li>The user can not specify DMA transfer to USB IP0 and IP1 modules at the same time when using USB multi-port feature. USB multi-port function: Simultaneous operation feature of USB Host and Peripheral.</li>
+<li>In USB host mode, When using a USB High-speed module, enumeration may not start when the user slowly detach the USB cable and attach USB cable.</li>
 </ul>
 <h2><a class="anchor" id="r-usb_basic-compliancetest"></a>
 Compliance Test</h2>
@@ -2262,7 +2263,7 @@ In the FreeRTOS, please specify one of the following to the 1st argument of this
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.1.0</span>
+   &#160;<span id="projectnumber">Release v6.2.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -249,32 +249,72 @@ $(document).ready(function(){initNavTree('structrmac__instance__ctrl__t.html',''
 Data Fields</h2></td></tr>
 <tr class="memitem:ac6d305c4fb973e8d588cee2ffc5877cb"><td class="memItemLeft" align="right" valign="top"><a id="ac6d305c4fb973e8d588cee2ffc5877cb"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#ac6d305c4fb973e8d588cee2ffc5877cb">read_queue_index</a></td></tr>
-<tr class="memdesc:ac6d305c4fb973e8d588cee2ffc5877cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX queue that used for next Read API. <br /></td></tr>
+<tr class="memdesc:ac6d305c4fb973e8d588cee2ffc5877cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX queue that used for next BufferRelease API. <br /></td></tr>
 <tr class="separator:ac6d305c4fb973e8d588cee2ffc5877cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab37f91b591707937fa84778bcf0224f8"><td class="memItemLeft" align="right" valign="top"><a id="ab37f91b591707937fa84778bcf0224f8"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#ab37f91b591707937fa84778bcf0224f8">write_queue_index</a></td></tr>
-<tr class="memdesc:ab37f91b591707937fa84778bcf0224f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX queue that used for next Write API. <br /></td></tr>
-<tr class="separator:ab37f91b591707937fa84778bcf0224f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab34a81cf98260ff223e4fd6796dd1ae3"><td class="memItemLeft" align="right" valign="top"><a id="ab34a81cf98260ff223e4fd6796dd1ae3"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#ab34a81cf98260ff223e4fd6796dd1ae3">rx_pending_queue_map</a></td></tr>
-<tr class="memdesc:ab34a81cf98260ff223e4fd6796dd1ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of empty RX queue. <br /></td></tr>
-<tr class="separator:ab34a81cf98260ff223e4fd6796dd1ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a419c1c2863415c2180aebb8ec9b532ca"><td class="memItemLeft" align="right" valign="top"><a id="a419c1c2863415c2180aebb8ec9b532ca"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a419c1c2863415c2180aebb8ec9b532ca">rx_running_queue_index</a></td></tr>
 <tr class="memdesc:a419c1c2863415c2180aebb8ec9b532ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether a RX queue is running or not. <br /></td></tr>
 <tr class="separator:a419c1c2863415c2180aebb8ec9b532ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae37b63e414429f99f1fe55b74763a64a"><td class="memItemLeft" align="right" valign="top"><a id="ae37b63e414429f99f1fe55b74763a64a"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#ae37b63e414429f99f1fe55b74763a64a">tx_pending_queue_map</a></td></tr>
-<tr class="memdesc:ae37b63e414429f99f1fe55b74763a64a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX data is pending because it has been written but not yet sent. <br /></td></tr>
-<tr class="separator:ae37b63e414429f99f1fe55b74763a64a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660f0ff6bc4c0f61d8edd418689a72ab"><td class="memItemLeft" align="right" valign="top"><a id="a660f0ff6bc4c0f61d8edd418689a72ab"></a>
+<a class="el" href="structrmac__buffer__queue__t.html">rmac_buffer_queue_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a660f0ff6bc4c0f61d8edd418689a72ab">rx_completed_buffer_queue</a></td></tr>
+<tr class="memdesc:a660f0ff6bc4c0f61d8edd418689a72ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX buffers that have completed reception. <br /></td></tr>
+<tr class="separator:a660f0ff6bc4c0f61d8edd418689a72ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d20fb353aed63f1049227cb77fd303b"><td class="memItemLeft" align="right" valign="top"><a id="a9d20fb353aed63f1049227cb77fd303b"></a>
+<a class="el" href="structrmac__buffer__queue__t.html">rmac_buffer_queue_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a9d20fb353aed63f1049227cb77fd303b">rx_unreleased_buffer_queue</a></td></tr>
+<tr class="memdesc:a9d20fb353aed63f1049227cb77fd303b"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX buffers that have been read but not yet released. <br /></td></tr>
+<tr class="separator:a9d20fb353aed63f1049227cb77fd303b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa3b54ab37e3256284245f8e20a0e83b"><td class="memItemLeft" align="right" valign="top"><a id="afa3b54ab37e3256284245f8e20a0e83b"></a>
+<a class="el" href="structrmac__buffer__queue__t.html">rmac_buffer_queue_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#afa3b54ab37e3256284245f8e20a0e83b">rx_empty_buffer_queue</a></td></tr>
+<tr class="memdesc:afa3b54ab37e3256284245f8e20a0e83b"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX Buffers that have no data. <br /></td></tr>
+<tr class="separator:afa3b54ab37e3256284245f8e20a0e83b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95bf35ad94b1a9f89434647085f5f9c1"><td class="memItemLeft" align="right" valign="top"><a id="a95bf35ad94b1a9f89434647085f5f9c1"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a95bf35ad94b1a9f89434647085f5f9c1">rx_initialized_buffer_num</a></td></tr>
+<tr class="memdesc:a95bf35ad94b1a9f89434647085f5f9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX buffer num of initialized. This is used in RxBufferUpdate API. <br /></td></tr>
+<tr class="separator:a95bf35ad94b1a9f89434647085f5f9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab37f91b591707937fa84778bcf0224f8"><td class="memItemLeft" align="right" valign="top"><a id="ab37f91b591707937fa84778bcf0224f8"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#ab37f91b591707937fa84778bcf0224f8">write_queue_index</a></td></tr>
+<tr class="memdesc:ab37f91b591707937fa84778bcf0224f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX queue that used for next Write API. <br /></td></tr>
+<tr class="separator:ab37f91b591707937fa84778bcf0224f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b5b5bd2fc6764756a30a75c8b7039e8"><td class="memItemLeft" align="right" valign="top"><a id="a4b5b5bd2fc6764756a30a75c8b7039e8"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a4b5b5bd2fc6764756a30a75c8b7039e8">tx_running_queue_index</a></td></tr>
-<tr class="memdesc:a4b5b5bd2fc6764756a30a75c8b7039e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether a TX queue is running or not. <br /></td></tr>
+<tr class="memdesc:a4b5b5bd2fc6764756a30a75c8b7039e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the queue that is running now. <br /></td></tr>
 <tr class="separator:a4b5b5bd2fc6764756a30a75c8b7039e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bc163582ab5701b74e49a0828e376b6"><td class="memItemLeft" align="right" valign="top"><a id="a2bc163582ab5701b74e49a0828e376b6"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a2bc163582ab5701b74e49a0828e376b6">rx_reset_descriptor_count</a></td></tr>
-<tr class="memdesc:a2bc163582ab5701b74e49a0828e376b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of descriptor that already read in active queue. <br /></td></tr>
-<tr class="separator:a2bc163582ab5701b74e49a0828e376b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab06e788c829eb14da5e5b457fc61986a"><td class="memItemLeft" align="right" valign="top"><a id="ab06e788c829eb14da5e5b457fc61986a"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#ab06e788c829eb14da5e5b457fc61986a">p_last_sent_buffer</a></td></tr>
+<tr class="memdesc:ab06e788c829eb14da5e5b457fc61986a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the last sent TX buffer. <br /></td></tr>
+<tr class="separator:ab06e788c829eb14da5e5b457fc61986a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3232b23182d955b309b8f59d4334d454"><td class="memItemLeft" align="right" valign="top"><a id="a3232b23182d955b309b8f59d4334d454"></a>
+<a class="el" href="structrmac__buffer__queue__t.html">rmac_buffer_queue_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a3232b23182d955b309b8f59d4334d454">tx_pending_buffer_queue</a></td></tr>
+<tr class="memdesc:a3232b23182d955b309b8f59d4334d454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delayed TX buffers. <br /></td></tr>
+<tr class="separator:a3232b23182d955b309b8f59d4334d454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac774e7c09a3a12a341d8653469375ad4"><td class="memItemLeft" align="right" valign="top"><a id="ac774e7c09a3a12a341d8653469375ad4"></a>
+<a class="el" href="structrmac__buffer__queue__t.html">rmac_buffer_queue_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#ac774e7c09a3a12a341d8653469375ad4">tx_empty_buffer_queue</a></td></tr>
+<tr class="memdesc:ac774e7c09a3a12a341d8653469375ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX Buffers that have no data. <br /></td></tr>
+<tr class="separator:ac774e7c09a3a12a341d8653469375ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa892fd243595792c91ec81a2bed6dec7"><td class="memItemLeft" align="right" valign="top"><a id="aa892fd243595792c91ec81a2bed6dec7"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#aa892fd243595792c91ec81a2bed6dec7">write_descriptor_count</a></td></tr>
+<tr class="memdesc:aa892fd243595792c91ec81a2bed6dec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of descriptor that already write in active queue. <br /></td></tr>
+<tr class="separator:aa892fd243595792c91ec81a2bed6dec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a6ab039cfeee8de8de9049e3bf8fd7"><td class="memItemLeft" align="right" valign="top"><a id="a97a6ab039cfeee8de8de9049e3bf8fd7"></a>
+<a class="el" href="structrmac__buffer__queue__t.html">rmac_buffer_queue_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a97a6ab039cfeee8de8de9049e3bf8fd7">buffer_node_pool</a></td></tr>
+<tr class="memdesc:a97a6ab039cfeee8de8de9049e3bf8fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer nodes pool. <br /></td></tr>
+<tr class="separator:a97a6ab039cfeee8de8de9049e3bf8fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7400d6e941195429665e54fd9b5fdf6d"><td class="memItemLeft" align="right" valign="top"><a id="a7400d6e941195429665e54fd9b5fdf6d"></a>
+<a class="el" href="structrmac__timestamp__t.html">rmac_timestamp_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a7400d6e941195429665e54fd9b5fdf6d">p_rx_timestamp</a></td></tr>
+<tr class="memdesc:a7400d6e941195429665e54fd9b5fdf6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX timestamp pointer. <br /></td></tr>
+<tr class="separator:a7400d6e941195429665e54fd9b5fdf6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d6572796742a8bedd7589589e0235a5"><td class="memItemLeft" align="right" valign="top"><a id="a9d6572796742a8bedd7589589e0235a5"></a>
+<a class="el" href="structrmac__timestamp__t.html">rmac_timestamp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a9d6572796742a8bedd7589589e0235a5">tx_timestamp</a></td></tr>
+<tr class="memdesc:a9d6572796742a8bedd7589589e0235a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX timestamp. <br /></td></tr>
+<tr class="separator:a9d6572796742a8bedd7589589e0235a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec2c5f6219dbf82a6c999439dbc62c8f"><td class="memItemLeft" align="right" valign="top"><a id="aec2c5f6219dbf82a6c999439dbc62c8f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#aec2c5f6219dbf82a6c999439dbc62c8f">tx_timestamp_seq_num</a></td></tr>
+<tr class="memdesc:aec2c5f6219dbf82a6c999439dbc62c8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence number of TX timestamp. <br /></td></tr>
+<tr class="separator:aec2c5f6219dbf82a6c999439dbc62c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a2c78769fbbdb945fd9d494a1d51a9c"><td class="memItemLeft" align="right" valign="top"><a id="a7a2c78769fbbdb945fd9d494a1d51a9c"></a>
+<a class="el" href="structrmac__write__cfg__t.html">rmac_write_cfg_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a7a2c78769fbbdb945fd9d494a1d51a9c">write_cfg</a></td></tr>
+<tr class="memdesc:a7a2c78769fbbdb945fd9d494a1d51a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration of transmission. <br /></td></tr>
+<tr class="separator:a7a2c78769fbbdb945fd9d494a1d51a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76fee7e8ba7944c175a580bb943a23f2"><td class="memItemLeft" align="right" valign="top"><a id="a76fee7e8ba7944c175a580bb943a23f2"></a>
 <a class="el" href="group___e_t_h_e_r.html#ga84685e14baf908ba6180ecbfafc18621">ether_previous_link_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrmac__instance__ctrl__t.html#a76fee7e8ba7944c175a580bb943a23f2">previous_link_status</a></td></tr>
 <tr class="memdesc:a76fee7e8ba7944c175a580bb943a23f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Previous link status. <br /></td></tr>
@@ -304,7 +344,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structrmac__instance__ctrl__t.html">rmac_instance_ctrl_t</a></li>
-        <li class="footer">FSP Release v6.1.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

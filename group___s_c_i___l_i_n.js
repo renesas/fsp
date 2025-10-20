@@ -57,6 +57,7 @@ var group___s_c_i___l_i_n =
     ] ],
     [ "sci_lin_compare_data_select_t", "group___s_c_i___l_i_n.html#gad66f7cb3a0746bedefae980e31cdef4f", [
       [ "SCI_LIN_COMPARE_DATA_SELECT_PRIORITY", "group___s_c_i___l_i_n.html#ggad66f7cb3a0746bedefae980e31cdef4fac488575170fc5f96492fbb8e8025b034", null ],
+      [ "SCI_LIN_COMPARE_DATA_SELECT_PRIMARY", "group___s_c_i___l_i_n.html#ggad66f7cb3a0746bedefae980e31cdef4fa22bb115b5721245c8963ee38c0cf7c6c", null ],
       [ "SCI_LIN_COMPARE_DATA_SELECT_SECONDARY", "group___s_c_i___l_i_n.html#ggad66f7cb3a0746bedefae980e31cdef4fa86a161e2063b51d8b6c386b10a83fc42", null ],
       [ "SCI_LIN_COMPARE_DATA_SELECT_BOTH", "group___s_c_i___l_i_n.html#ggad66f7cb3a0746bedefae980e31cdef4fad7aed536fcfebcf6b8c55d80a73a1210", null ]
     ] ],
