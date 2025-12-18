@@ -1,5 +1,11 @@
 var group___e_t_h_e_r___p_h_y___a_p_i =
 [
+    [ "ether_phy_callback_args_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t", [
+      [ "channel", "group___e_t_h_e_r___p_h_y___a_p_i.html#af3f0beda9d25f63842ac2ef1e39e8cd9", null ],
+      [ "port", "group___e_t_h_e_r___p_h_y___a_p_i.html#a729eda937701c2cc1dbb80575ada05d8", null ],
+      [ "event", "group___e_t_h_e_r___p_h_y___a_p_i.html#a49b5af6f8efedc366edfb6c708c4bc25", null ],
+      [ "p_context", "group___e_t_h_e_r___p_h_y___a_p_i.html#a4bd9225f2b163b3c5a6c26984a45ed44", null ]
+    ] ],
     [ "ether_phy_cfg_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t", [
       [ "channel", "group___e_t_h_e_r___p_h_y___a_p_i.html#a21d0aa8fd1e5ea959537002d6de6131e", null ],
       [ "phy_lsi_address", "group___e_t_h_e_r___p_h_y___a_p_i.html#a9907944861b61fe8644b4b5d02ae4d48", null ],
@@ -58,5 +64,10 @@ var group___e_t_h_e_r___p_h_y___a_p_i =
       [ "ETHER_PHY_MII_TYPE_RMII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122a4a69b11865eb1f04c1e6726f34d32aeb", null ],
       [ "ETHER_PHY_MII_TYPE_GMII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122aa10a91dcf39a722cdc50e918cce8a735", null ],
       [ "ETHER_PHY_MII_TYPE_RGMII", "group___e_t_h_e_r___p_h_y___a_p_i.html#ggaafbecb98180b1f07abe8449332b5a122aef0f7560aa2acc87ebef70f9323eee53", null ]
+    ] ],
+    [ "ether_phy_event_t", "group___e_t_h_e_r___p_h_y___a_p_i.html#ga118294e3043fe8486e757ea45c792bde", [
+      [ "ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_FAIL", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga118294e3043fe8486e757ea45c792bdea209902097191fb7e72d0c75e0461f854", null ],
+      [ "ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_SUCCESS", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga118294e3043fe8486e757ea45c792bdea2c929292e59bcffb1f2d5084907a4b27", null ],
+      [ "ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_RECEIVE", "group___e_t_h_e_r___p_h_y___a_p_i.html#gga118294e3043fe8486e757ea45c792bdea2883ef45e2155a2b00b411b0ccc1625c", null ]
     ] ]
 ];

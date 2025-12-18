@@ -1,0 +1,307 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: lwIP Iperf</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.3.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_w_i_p___i_p_e_r_f.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">lwIP Iperf<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>This module provides the lwIP Iperf integration documentation. </p>
+<h1><a class="anchor" id="rm-lwip_iperf-overview"></a>
+Overview</h1>
+<p>The lwIP Iperf is a simple performance measuring bandwidth using iPerf2. The documentation for the library can be found at the following link: <a href="https://www.nongnu.org/lwip/2_1_x/group__iperf.html">lwIPerf</a>.</p>
+<h2><a class="anchor" id="rm-lwip_iperf-features"></a>
+Features</h2>
+<ul>
+<li>Check your bandwidth using Iperf2.</li>
+<li>Supports TCP stream.</li>
+<li>Compatible with Iperf2.</li>
+<li>Both iPerf2 server and client modes are supported.</li>
+</ul>
+<h1><a class="anchor" id="rm-lwip_iperf-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for source</h2>
+The following build time configurations are defined in lwip/lwip/apps/lwiperf_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Idle Timeout</td><td>Value must be a positive integer value and less than or equal to 255.</td><td>10 </td><td>Specify the idle timeout (in seconds) after that the test fails. </td></tr>
+<tr class="tree_none">
+<td>lwIPerf IP version</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+IPv4</li>
+<li>
+IPv6</li>
+<li>
+IPv4+IPv6(Dual-stack)</li>
+</ul>
+</td><td>IPv4+IPv6(Dual-stack) </td><td>Configure whether lwIPerf listens on all IP versions. </td></tr>
+<tr class="tree_none">
+<td>Check format of received data</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enabled to verify the format of received data. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="rm-lwip_iperf-usage_notes"></a>
+Usage Notes</h1>
+<h2><a class="anchor" id="rm-lwip_iperf-limitations"></a>
+Limitations</h2>
+<ul>
+<li>UDP is not supported due to the limitation of lwIP OSS.</li>
+<li>Iperf3 is not supported due to the limitation of lwIP OSS.</li>
+</ul>
+<h1><a class="anchor" id="rm-lwip_iperf-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the lwIP Iperf APIs in an application.</p>
+<dl class="section note"><dt>Note</dt><dd>When using <code>printf</code> with e² studio, build errors may occur. Please refer to <a href="https://en-support.renesas.com/knowledgeBase/16979385">https://en-support.renesas.com/knowledgeBase/16979385</a> and follow Method 2, which is recommended for smooth integration and to avoid build errors.</dd></dl>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;lwip/timeouts.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/netif.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/lwiperf.h&quot;</span></div><div class="line"></div><div class="line"><span class="comment">/* LwIP Iperf example */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwiperf_report_example(<span class="keywordtype">void</span>                   * arg,</div><div class="line">                                   <span class="keyword">enum</span> lwiperf_report_type report_type,</div><div class="line">                                   <span class="keyword">const</span> ip_addr_t        * local_addr,</div><div class="line">                                   uint16_t                 local_port,</div><div class="line">                                   <span class="keyword">const</span> ip_addr_t        * remote_addr,</div><div class="line">                                   uint16_t                 remote_port,</div><div class="line">                                   uint32_t                 bytes_transferred,</div><div class="line">                                   uint32_t                 ms_duration,</div><div class="line">                                   uint32_t                 bandwidth_kbitpsec);</div><div class="line"></div><div class="line"><span class="comment">/* Define a report callback function */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwiperf_report_example (<span class="keywordtype">void</span>                   * arg,</div><div class="line">                                    <span class="keyword">enum</span> lwiperf_report_type report_type,</div><div class="line">                                    <span class="keyword">const</span> ip_addr_t        * local_addr,</div><div class="line">                                    uint16_t                 local_port,</div><div class="line">                                    <span class="keyword">const</span> ip_addr_t        * remote_addr,</div><div class="line">                                    uint16_t                 remote_port,</div><div class="line">                                    uint32_t                 bytes_transferred,</div><div class="line">                                    uint32_t                 ms_duration,</div><div class="line">                                    uint32_t                 bandwidth_kbitpsec)</div><div class="line"></div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(arg);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(local_addr);</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(local_port);</div><div class="line"></div><div class="line">    printf(</div><div class="line">        <span class="stringliteral">&quot;IPERF report: type=%d, remote: %s:%u, total bytes: %&quot;</span> PRIu32 <span class="stringliteral">&quot; bytes, duration in ms: %&quot;</span> PRIu32 <span class="stringliteral">&quot; ms, kbits/s: %&quot;</span> PRIu32 <span class="stringliteral">&quot; kbit/s\n&quot;</span>,</div><div class="line">        (<span class="keywordtype">int</span>) report_type,</div><div class="line">        ipaddr_ntoa(remote_addr),</div><div class="line">        (<span class="keywordtype">int</span>) remote_port,</div><div class="line">        bytes_transferred,</div><div class="line">        ms_duration,</div><div class="line">        bandwidth_kbitpsec);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_iperf_server_example () {</div><div class="line">    <span class="keyword">struct </span>netif netif;</div><div class="line"></div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable. */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line">    <span class="comment">/* Start lwiperf server */</span></div><div class="line">    lwiperf_start_tcp_server_default(lwiperf_report_example, NULL);</div><div class="line"></div><div class="line">    <span class="comment">/* Program main loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        sys_check_timeouts();</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_iperf_client_example ()</div><div class="line">{</div><div class="line">    <span class="keyword">struct </span>netif netif;</div><div class="line"></div><div class="line">    ip_addr_t   ipaddr;</div><div class="line">    ip_addr_t   netmask;</div><div class="line">    ip_addr_t   gw;</div><div class="line">    ip_addr_t * server_ip_address;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable. */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line">    <span class="comment">/* Start lwiperf client */</span></div><div class="line">    server_ip_address = &amp;netif.gw;</div><div class="line">    lwiperf_start_tcp_client_default(server_ip_address, lwiperf_report_example, NULL);</div><div class="line"></div><div class="line">    <span class="comment">/* Program main loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        sys_check_timeouts();</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

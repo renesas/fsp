@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -253,13 +253,29 @@ Functions</h2></td></tr>
 <tr class="separator:gac502829b40c31d68275fda898a46a50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Ocrypto software only crypto on RA2E1. </p>
+<p>Oberon Ocrypto crypto library for limited RA0 and RA2 devices. </p>
 <h1><a class="anchor" id="rm-ocrypto-port-overview"></a>
 Overview</h1>
-<p>Ocrypto is designed as a small footprint software crypto implementation to be used on resource constrained devices. The software only module is available in FSP only on RA2E1.</p>
+<p>Ocrypto is designed as a small footprint software crypto implementation to be used on resource constrained devices. The software is only licensed for a limited set of devices. Hardware acceleration varies by device.</p>
 <dl class="section note"><dt>Note</dt><dd><b>The Ocrypto port module does not provide any crypto interfaces to the user. See <a class="el" href="_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_functions">Ocrypto Licensed Functions</a>.</b></dd></dl>
 <h2>Hardware Overview</h2>
-<p>Limited to RA2E1 only.</p>
+<p>Currently licensed for:</p>
+<table class="doxtable">
+<tr>
+<th>Device </th><th>TRNG </th><th>AES  </th></tr>
+<tr>
+<td>RA0E1 </td><td>Yes </td><td>No </td></tr>
+<tr>
+<td>RA0E2 </td><td>Yes </td><td>No </td></tr>
+<tr>
+<td>RA0L1 </td><td>Yes </td><td>No </td></tr>
+<tr>
+<td>RA2E1 </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>RA2E2 </td><td>Yes </td><td>Yes </td></tr>
+<tr>
+<td>RA2L1 </td><td>Yes </td><td>Yes </td></tr>
+</table>
 <h2><a class="anchor" id="rm-ocrypto-port-features"></a>
 Features</h2>
 <p>For features supported by the software-only version, refer to the Ocrypto documentation.</p>
@@ -284,7 +300,7 @@ Disabled</li>
 </p>
 <h2><a class="anchor" id="rm-ocrypto-aes-configuration"></a>
 AES Configuration</h2>
-<p>To enable hardware acceleration for the AES-EBC, CBC, and CTR operations, choose Ocrypto (H/W Accelerated) from the stack options. Be sure to <a class="el" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#rm-ocrypto-port-hardware-init">initialize the hardware</a></p>
+<p>To enable hardware acceleration (RA2 devices only) for the AES-EBC, CBC, and CTR operations, choose Ocrypto (H/W Accelerated) from the stack options. Be sure to <a class="el" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#rm-ocrypto-port-hardware-init">initialize the hardware</a></p>
 <h1><a class="anchor" id="rm-ocrypto-port-usage-notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="rm-ocrypto-port-hardware-init"></a>
@@ -303,8 +319,15 @@ Side Channel Safety Statement</h2>
 <h2><a class="anchor" id="rm-ocrypto-port-function-overview"></a>
 Function Overview</h2>
 <h2>Limitations</h2>
-<h3>Usage with RA2E1</h3>
-<p>Ocrypto can only be used on RA2E1.</p>
+<h3>Licensed Devices</h3>
+<p>Ocrypto is only licensed to be used with:</p><ul>
+<li>RA0E1</li>
+<li>RA0E2</li>
+<li>RA0L1</li>
+<li>RA2E1</li>
+<li>RA2E2</li>
+<li>RA2L1</li>
+</ul>
 <h3>Ocrypto</h3>
 <p>Ocrypto does provide any API to generate keys. It is the responsibility of the caller to provide generated keys.</p>
 <h3>AES Reentrancy</h3>
@@ -315,7 +338,7 @@ Examples</h1>
 <p>For examples of how to use Ocrypto APIs, see Ocrypto test code under <code>ra/oberon/ocrypto/tests/</code>. These tests are not meant to be built or run in FSP and have been compiled out by the macro <code>OCRYPTO_REFERENCE_TEST_CODE_DOES_NOT_BUILD</code> by default.</p>
 <h2>TRNG Example</h2>
 <p>This is an example on using Ocrypto to generate a random number</p>
-<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define TEST_SECRET_KEY_SIZE    32U</span></div><div class="line"><span class="preprocessor">#define TEST_PUBLIC_KEY_SIZE    64U</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ocrypto_trng_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> status       = FSP_SUCCESS;</div><div class="line">    uint8_t   ecdsa_msg[3] = <span class="stringliteral">&quot;abc&quot;</span>;</div><div class="line">    uint8_t   secret_key[TEST_SECRET_KEY_SIZE];</div><div class="line">    uint8_t   session_key[TEST_SECRET_KEY_SIZE];</div><div class="line">    uint8_t   ecdsa_public_key[TEST_PUBLIC_KEY_SIZE];</div><div class="line">    uint8_t   signature[TEST_PUBLIC_KEY_SIZE];</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the crypto engine. */</span></div><div class="line">    status = <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#ga14e01509849f92d314bd4426669ec3b1">RM_OCRYPTO_PORT_Init</a>();</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != status)</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read random data from the TRNG to use as secret key. */</span></div><div class="line">    status = <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#gac502829b40c31d68275fda898a46a50a">RM_OCRYPTO_PORT_TRNG_Read</a>(secret_key, <span class="keyword">sizeof</span>(secret_key));</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != status)</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != ocrypto_ecdsa_p256_public_key(ecdsa_public_key, secret_key))</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read random data from the TRNG to use as session key */</span></div><div class="line">    status = <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#gac502829b40c31d68275fda898a46a50a">RM_OCRYPTO_PORT_TRNG_Read</a>(session_key, <span class="keyword">sizeof</span>(session_key));</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != status)</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != ocrypto_ecdsa_p256_sign(signature, ecdsa_msg, <span class="keyword">sizeof</span>(ecdsa_msg), secret_key, session_key))</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != ocrypto_ecdsa_p256_verify(signature, ecdsa_msg, <span class="keyword">sizeof</span>(ecdsa_msg), ecdsa_public_key))</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Operation successful. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define TEST_SECRET_KEY_SIZE    32U</span></div><div class="line"><span class="preprocessor">#define TEST_PUBLIC_KEY_SIZE    64U</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> ocrypto_trng_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> status       = FSP_SUCCESS;</div><div class="line">    uint8_t   ecdsa_msg[3] = {<span class="charliteral">&#39;a&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;c&#39;</span>};</div><div class="line">    uint8_t   secret_key[TEST_SECRET_KEY_SIZE];</div><div class="line">    uint8_t   session_key[TEST_SECRET_KEY_SIZE];</div><div class="line">    uint8_t   ecdsa_public_key[TEST_PUBLIC_KEY_SIZE];</div><div class="line">    uint8_t   signature[TEST_PUBLIC_KEY_SIZE];</div><div class="line"></div><div class="line">    <span class="comment">/* Setup the platform; initialize the crypto engine. */</span></div><div class="line">    status = <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#ga14e01509849f92d314bd4426669ec3b1">RM_OCRYPTO_PORT_Init</a>();</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != status)</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read random data from the TRNG to use as secret key. */</span></div><div class="line">    status = <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#gac502829b40c31d68275fda898a46a50a">RM_OCRYPTO_PORT_TRNG_Read</a>(secret_key, <span class="keyword">sizeof</span>(secret_key));</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != status)</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != ocrypto_ecdsa_p256_public_key(ecdsa_public_key, secret_key))</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Read random data from the TRNG to use as session key */</span></div><div class="line">    status = <a class="code" href="group___r_m___o_c_r_y_p_t_o___p_o_r_t.html#gac502829b40c31d68275fda898a46a50a">RM_OCRYPTO_PORT_TRNG_Read</a>(session_key, <span class="keyword">sizeof</span>(session_key));</div><div class="line">    <span class="keywordflow">if</span> (FSP_SUCCESS != status)</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != ocrypto_ecdsa_p256_sign(signature, ecdsa_msg, <span class="keyword">sizeof</span>(ecdsa_msg), secret_key, session_key))</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span> (0 != ocrypto_ecdsa_p256_verify(signature, ecdsa_msg, <span class="keyword">sizeof</span>(ecdsa_msg), ecdsa_public_key))</div><div class="line">    {</div><div class="line">        assert(0);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Operation successful. */</span></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        ;</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><h2 class="groupheader">Function Documentation</h2>
 <a id="ga14e01509849f92d314bd4426669ec3b1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga14e01509849f92d314bd4426669ec3b1">&#9670;&nbsp;</a></span>RM_OCRYPTO_PORT_Init()</h2>
 
@@ -393,7 +416,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

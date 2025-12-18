@@ -1,6 +1,7 @@
 var searchData=
 [
   ['nanoseconds',['nanoseconds',['../group___p_t_p___a_p_i.html#a1b51aaa1cc5d99d8721c53e96d611ec9',1,'ptp_time_t']]],
+  ['native_5ftag_5fopen',['native_tag_open',['../group___r_m___n_f_c___r_e_a_d_e_r___p_t_x.html#a95a131db320debbc273ce7bdfcf3ba10',1,'nfc_reader_ptx_instance_ctrl_t']]],
   ['nc_5f0p3',['nc_0p3',['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#addd99b9bbe5187b4b59bdd2d1a3d2406',1,'rm_air_sensor_data_t']]],
   ['nc_5f0p5',['nc_0p5',['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a324a3cd4e1887dac80393381c3abc931',1,'rm_air_sensor_data_t']]],
   ['nc_5f1',['nc_1',['../group___r_m___a_i_r___s_e_n_s_o_r___a_p_i.html#a3379f2156a11904d6c9ee6997652b32c',1,'rm_air_sensor_data_t']]],
@@ -45,7 +46,7 @@ var searchData=
   ['num_5fbis',['num_bis',['../group___i_s_o___a_p_i.html#a9291dcff9203f9ee411b699d4ab29849',1,'st_ble_iso_big_param_t::num_bis()'],['../group___i_s_o___a_p_i.html#a7a0b759adacd0086e67e8ea284187731',1,'st_ble_iso_big_sync_param_t::num_bis()'],['../group___i_s_o___a_p_i.html#af050afd8f9d49137394eeb7d8f9fb8d7',1,'st_ble_iso_create_big_test_param_t::num_bis()'],['../group___i_s_o___a_p_i.html#a2f82874cc839ee4cd9f4693ab3090327',1,'st_ble_iso_big_comp_evt_t::num_bis()'],['../group___i_s_o___a_p_i.html#a50bca39ede3221488abf699e841c47ef',1,'st_ble_iso_biginfo_rept_evt_t::num_bis()']]],
   ['num_5fblocks',['num_blocks',['../group___t_r_a_n_s_f_e_r___a_p_i.html#a9781e58bb7cb2ee40de446936d523814',1,'transfer_info_t']]],
   ['num_5fbuttons',['num_buttons',['../group___t_o_u_c_h___a_p_i.html#a68265729f298e4df5fd06dc7327a7b09',1,'touch_cfg_t']]],
-  ['num_5fbytes',['num_bytes',['../group___c_r_c___a_p_i.html#aaed97c9ce40d9d7209348114b819bf02',1,'crc_input_t::num_bytes()'],['../group___l_i_n___a_p_i.html#afe681d74e72baac9af01cb15e732f1ee',1,'lin_transfer_params_t::num_bytes()']]],
+  ['num_5fbytes',['num_bytes',['../group___c_r_c___a_p_i.html#aaed97c9ce40d9d7209348114b819bf02',1,'crc_input_t::num_bytes()'],['../group___l_i_n___a_p_i.html#a3f0e298c6c0bca252be729bf1f9bb9e4',1,'lin_transfer_params_t::num_bytes()']]],
   ['num_5fcis',['num_cis',['../group___i_s_o___a_p_i.html#a2e6d2c1f10d1dabf398492794541fa98',1,'st_ble_iso_cig_param_t::num_cis()'],['../group___i_s_o___a_p_i.html#a8a2c273e7dfe30c60665963e4156b0e7',1,'st_ble_iso_cis_conn_t::num_cis()'],['../group___i_s_o___a_p_i.html#ad59f9b463e8014f6d82f959cf8736259',1,'st_ble_iso_set_cig_param_test_param_t::num_cis()'],['../group___i_s_o___a_p_i.html#a69f5e78a64a81f5ef432881fa74d53cf',1,'st_ble_iso_cig_set_evt_t::num_cis()']]],
   ['num_5fcomp_5fext_5fadv_5fevts',['num_comp_ext_adv_evts',['../group___g_a_p___a_p_i.html#a5200bc70721b264a5b011884e122ae84',1,'st_ble_gap_adv_off_evt_t']]],
   ['num_5fcreatable_5fsockets',['num_creatable_sockets',['../group___w_i_f_i___o_n_c_h_i_p___s_i_l_e_x.html#acfe7cadd1f2fb8d3461f50baa3e32389',1,'wifi_onchip_silex_instance_ctrl_t::num_creatable_sockets()'],['../group___w_i_f_i___d_a16_x_x_x.html#a95a5ad4bdc7bbcb32a811af988d0c840',1,'wifi_da16xxx_instance_ctrl_t::num_creatable_sockets()']]],

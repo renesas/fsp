@@ -6,6 +6,12 @@ var group___u_s_b___h_a_u_d___a_p_i =
       [ "resolution", "group___u_s_b___h_a_u_d___a_p_i.html#abfc0b8f7f690ea0ad14f5da079856096", null ],
       [ "frequency_setting", "group___u_s_b___h_a_u_d___a_p_i.html#a11490954628cf408e5abce4439db6d17", null ],
       [ "alternate_setting", "group___u_s_b___h_a_u_d___a_p_i.html#aeeefdec6dcd61cbb7c686f78dc102f60", null ],
+      [ "found_channels", "group___u_s_b___h_a_u_d___a_p_i.html#a33f5f20a95ba7c1873752bc87f77af4d", null ],
+      [ "found_resolution", "group___u_s_b___h_a_u_d___a_p_i.html#ad641702c8dad821997b952b27d3ef616", null ],
+      [ "p_clock_source", "group___u_s_b___h_a_u_d___a_p_i.html#a4c38a41038fb10e419efe72ce95ea30e", null ],
+      [ "clock_source_id", "group___u_s_b___h_a_u_d___a_p_i.html#ac1208217ec701266e99035690f808f16", null ],
+      [ "clock_numerator", "group___u_s_b___h_a_u_d___a_p_i.html#ae68c8b20670c10bd44548e88e9f51274", null ],
+      [ "clock_denominator", "group___u_s_b___h_a_u_d___a_p_i.html#add583c1b72d82d4437df914b8e0e4892", null ],
       [ "interface_number", "group___u_s_b___h_a_u_d___a_p_i.html#ac2a62c885f0811401abcc2d691cd32dc", null ],
       [ "alternate_number", "group___u_s_b___h_a_u_d___a_p_i.html#ab661198cba87bd00d3948ff109a5d133", null ],
       [ "p_sampling_descriptor", "group___u_s_b___h_a_u_d___a_p_i.html#a5c643a7ea0ff899ab774d2ef48baa934", null ],
@@ -17,6 +23,7 @@ var group___u_s_b___h_a_u_d___a_p_i =
     ] ],
     [ "usb_haud_api_t", "group___u_s_b___h_a_u_d___a_p_i.html#structusb__haud__api__t", [
       [ "infoGet", "group___u_s_b___h_a_u_d___a_p_i.html#a7f0596e031cd80062422e619af6f48da", null ],
+      [ "clockSourceGet", "group___u_s_b___h_a_u_d___a_p_i.html#a13582267d5573b3dce2b3f9873258ad5", null ],
       [ "alternateNumberGet", "group___u_s_b___h_a_u_d___a_p_i.html#a8cc55e928dcca90a3ad25dfe4778606c", null ],
       [ "pipeSet", "group___u_s_b___h_a_u_d___a_p_i.html#a541a0ac0a4346a7080c29d08a33c39c0", null ]
     ] ]

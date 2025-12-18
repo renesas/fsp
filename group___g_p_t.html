@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -390,7 +390,7 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
 <tr class="tree_lvl_3_item">
-<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0 </td><td>Specify the compare match A value in units that selected in Period Unit section. </td></tr>
+<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be greater than 0 and less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the value of compare match A in units matching those selected in the 'Period Unit' property. </td></tr>
 <tr class="tree_lvl_3">
 <td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> General &gt; Compare Match &gt; Compare Match B  </td></tr>
 <tr class="tree_lvl_3_item">
@@ -402,7 +402,55 @@ Disabled</li>
 </ul>
 </td><td>Disabled </td><td></td></tr>
 <tr class="tree_lvl_3_item">
-<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be a non-negative integer less than or equal to 0x40000000000</td><td>0 </td><td>Specify the compare match B value in units that selected in Period Unit section. </td></tr>
+<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be greater than 0 and less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the value of compare match B in units matching those selected in the 'Period Unit' property. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> General &gt; Compare Match &gt; Compare Match C  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Status</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td></td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be greater than 0 and less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the value of compare match C in units matching those selected in the 'Period Unit' property. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> General &gt; Compare Match &gt; Compare Match D  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Status</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td></td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be greater than 0 and less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the value of compare match D in units matching those selected in the 'Period Unit' property. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> General &gt; Compare Match &gt; Compare Match E  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Status</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td></td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be greater than 0 and less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the value of compare match E in units matching those selected in the 'Period Unit' property. </td></tr>
+<tr class="tree_lvl_3">
+<td class="tree_lvl_3" colspan="4"><span class="chevron-collapsed"></span> General &gt; Compare Match &gt; Compare Match F  </td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Status</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td></td></tr>
+<tr class="tree_lvl_3_item">
+<td class="tree_lvl_3_cell">Compare match value</td><td>Value must be greater than 0 and less than or equal to 0x40000000000</td><td>0x10000 </td><td>Specify the value of compare match F in units matching those selected in the 'Period Unit' property. </td></tr>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Name</td><td>Name must be a valid C symbol</td><td>g_timer0 </td><td>Module name. </td></tr>
 <tr class="tree_lvl_1_item">
@@ -661,6 +709,14 @@ Inverted</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Capture/Compare match B Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for Capture/Compare match B. </td></tr>
 <tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Compare Match C Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for Compare match C. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Compare Match D Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for Compare match D. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Compare Match E Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for Compare match E. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Compare Match F Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for Compare match F. </td></tr>
+<tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Underflow/Trough Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the interrupt priority for the trough interrupt (triangle-wave PWM only). </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Extra Features  </td></tr>
@@ -872,6 +928,9 @@ The event links for the ELC must be configured outside this module.</dd></dl>
 <p>The GPT timer can trigger the start of other peripherals. The <a class="el" href="group___e_l_c.html">Event Link Controller (r_elc)</a> guide provides a list of all available peripherals.</p>
 <h2>Enabling External Sources for Start, Stop, Clear, or Capture</h2>
 <p><a class="anchor" id="um_timer_enable_disable"></a> <a class="el" href="group___g_p_t.html#ga6e14d15c781e316e640c280b4983be28">R_GPT_Enable()</a> must be called when external sources are used for start, stop, clear, or capture.</p>
+<h2>Compare Match Feature</h2>
+<p>In One-Shot mode, Overflow event must be enabled when using Compare match feature. The interrupt progress of Compare match in One-Shot mode is: CMP_1 -&gt; CMP_2 -&gt; ... -&gt; OVF. The Overflow isr will stop the timer counter at the end of period so all Compare match events will not occur again.</p>
+<p>Additionally, the priorities of Overflow and Compare match events in One-shot mode must be equal to ensure the expected order of interrupt occurrence.</p>
 <h2>Interrupt Skipping</h2>
 <p>When an interrupt skipping source is selected a hardware counter will increment each time the selected event occurs. Each interrupt past the first (up to the specified skip count) will be suppressed. If ADC events are selected for skipping they will also be suppressed except during the timer period leading to the selected interrupt skipping event (see below diagram).</p>
 <div class="image">
@@ -1200,29 +1259,77 @@ capture_filter_gtiocb</td>
 <td class="fieldname">
 capture_a_ipl</td>
 <td class="fielddoc">
-Capture A interrupt priority. </td></tr>
+Capture/Compare match A interrupt priority. </td></tr>
 <tr><td class="fieldtype">
 <a id="aae4ebebdd346531add1c9ce3bee52106"></a>uint8_t</td>
 <td class="fieldname">
 capture_b_ipl</td>
 <td class="fielddoc">
-Capture B interrupt priority. </td></tr>
+Capture/Compare match B interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2b8b298fbc54778715548570f2a5a20b"></a>uint8_t</td>
+<td class="fieldname">
+compare_match_c_ipl</td>
+<td class="fielddoc">
+Compare match C interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="af46012922cc25cc82d06283f2a2188dd"></a>uint8_t</td>
+<td class="fieldname">
+compare_match_d_ipl</td>
+<td class="fielddoc">
+Compare match D interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a029a944a7e65307281e9a54a46170080"></a>uint8_t</td>
+<td class="fieldname">
+compare_match_e_ipl</td>
+<td class="fielddoc">
+Compare match E interrupt priority. </td></tr>
+<tr><td class="fieldtype">
+<a id="a658157471b2b35444fb3d2220f962083"></a>uint8_t</td>
+<td class="fieldname">
+compare_match_f_ipl</td>
+<td class="fielddoc">
+Compare match F interrupt priority. </td></tr>
 <tr><td class="fieldtype">
 <a id="a630c77adb426ddddb5eac8b974fd7c85"></a>IRQn_Type</td>
 <td class="fieldname">
 capture_a_irq</td>
 <td class="fielddoc">
-Capture A interrupt. </td></tr>
+Capture/Compare match A interrupt. </td></tr>
 <tr><td class="fieldtype">
 <a id="a22eb63abdf43064c9c83d81287c67c88"></a>IRQn_Type</td>
 <td class="fieldname">
 capture_b_irq</td>
 <td class="fielddoc">
-Capture B interrupt. </td></tr>
+Capture/Compare match B interrupt. </td></tr>
 <tr><td class="fieldtype">
-<a id="a675417f6a403fed9258fe678ae934171"></a>uint32_t</td>
+<a id="a70b41c27e7fab3cb9a0abf7c752112d1"></a>IRQn_Type</td>
 <td class="fieldname">
-compare_match_value[2]</td>
+compare_match_c_irq</td>
+<td class="fielddoc">
+Compare match C interrupt. </td></tr>
+<tr><td class="fieldtype">
+<a id="a99576ac4479deee2ac6eb79ca31f2e57"></a>IRQn_Type</td>
+<td class="fieldname">
+compare_match_d_irq</td>
+<td class="fielddoc">
+Compare match D interrupt. </td></tr>
+<tr><td class="fieldtype">
+<a id="aa71ec637adfa01b556146258e582131c"></a>IRQn_Type</td>
+<td class="fieldname">
+compare_match_e_irq</td>
+<td class="fielddoc">
+Compare match E interrupt. </td></tr>
+<tr><td class="fieldtype">
+<a id="a18f3c593acde4dab02051182a405b989"></a>IRQn_Type</td>
+<td class="fieldname">
+compare_match_f_irq</td>
+<td class="fielddoc">
+Compare match F interrupt. </td></tr>
+<tr><td class="fieldtype">
+<a id="a97243b974db869452fae74aeea44d13c"></a>uint32_t</td>
+<td class="fieldname">
+compare_match_value[6]</td>
 <td class="fielddoc">
 Storing compare match value for channels. </td></tr>
 <tr><td class="fieldtype">
@@ -1230,7 +1337,7 @@ Storing compare match value for channels. </td></tr>
 <td class="fieldname">
 compare_match_status</td>
 <td class="fielddoc">
-Storing the compare match register status. </td></tr>
+Storing the compare match registers status. </td></tr>
 <tr><td class="fieldtype">
 <a id="a55e5f85f57b77fd7ee5a1de7ff39da27"></a><a class="el" href="group___g_p_t.html#structgpt__extended__pwm__cfg__t">gpt_extended_pwm_cfg_t</a> const  *</td>
 <td class="fieldname">
@@ -2067,7 +2174,8 @@ Polarity control for GTIOCxB input/output pin. </td></tr>
     <tr><td class="paramname">FSP_SUCCESS</td><td>Set the compare match value successfully. </td></tr>
     <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>p_ctrl was NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The instance is not opened. </td></tr>
-    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Requested compare channel is disabled. </td></tr>
+    <tr><td class="paramname">FSP_ERR_UNSUPPORTED</td><td>Requested compare match channel is not supported. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_ENABLED</td><td>Requested compare match channel is disabled. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2467,7 +2575,7 @@ Polarity control for GTIOCxB input/output pin. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

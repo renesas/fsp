@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -404,6 +404,14 @@ Clock Synchronous Operation</li>
 </ul>
 </td><td>Clock Synchronous Operation </td><td>Select the clock sync mode. </td></tr>
 <tr class="tree_none">
+<td>SPI burst transfer without delay between frames</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Disable </td><td>Select SPI burst transfer without delay between frames </td></tr>
+<tr class="tree_none">
 <td>Full or Transmit Only Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Full Duplex</li>
@@ -588,6 +596,8 @@ Usage Notes</h1>
 <dl class="section note"><dt>Note</dt><dd>Configuring the module to use an RX DTC/DMAC instance without also providing a TX DTC/DMAC instance results in an invalid configuration when RXI transmit is enabled.</dd>
 <dd>
 Transmit Only mode is not supported when Transmit from RXI is enabled.</dd></dl>
+<h3>Burst Transfer</h3>
+<p>The burst transfer allows multiple data frames to be sent consecutively, improving performance. It operates in a 4-Wire SPI configuration and supports two operating styles: with delay (frames are spaced) and without delay (frames are sent back-to-back, if supported). This feature requires SSL Level Keeping to keep the SSL pin asserted during the entire burst transfer.</p>
 <h3>Clock Auto-Stopping</h3>
 <p>In master mode, if the Receive Buffer Full Interrupts are not handled fast enough, instead of generating a RX Overflow error, the last clock cycle will be stretched until the receive buffer is read.</p>
 <h2>Parity Mode</h2>
@@ -624,6 +634,8 @@ Data Structures</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga1e93e8027d068a045c2334b026f75576"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga1e93e8027d068a045c2334b026f75576">spi_ssl_mode_t</a> </td></tr>
 <tr class="separator:ga1e93e8027d068a045c2334b026f75576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94ce9217d6b1aa42a4336b0ec87106a1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga94ce9217d6b1aa42a4336b0ec87106a1">spi_burst_transfer_without_delay_t</a> </td></tr>
+<tr class="separator:ga94ce9217d6b1aa42a4336b0ec87106a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5f3808f9dce40a385183acad20a04eb5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#ga5f3808f9dce40a385183acad20a04eb5">spi_communication_t</a> </td></tr>
 <tr class="separator:ga5f3808f9dce40a385183acad20a04eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac319d4e8467280b16095a9d00e9c2606"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i.html#gac319d4e8467280b16095a9d00e9c2606">spi_ssl_polarity_t</a> </td></tr>
@@ -750,6 +762,12 @@ SPI Slave Select Negation Delay Register Setting. </td></tr>
 next_access_delay</td>
 <td class="fielddoc">
 SPI Next-Access Delay Register Setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="a88784061752c17436932629cdf742dff"></a><a class="el" href="group___s_p_i.html#ga94ce9217d6b1aa42a4336b0ec87106a1">spi_burst_transfer_without_delay_t</a></td>
+<td class="fieldname">
+burst_interframe_delay</td>
+<td class="fielddoc">
+SPI Between Burst Transfer Frames Delay Select. </td></tr>
 </table>
 
 </div>
@@ -825,6 +843,27 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1e93e8027d068a045c2334b026f75576a09bd332dd1c1c2ce39a14b325da53ba6"></a>SPI_SSL_MODE_SPI&#160;</td><td class="fielddoc"><p>SPI operation (4-wire method) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga1e93e8027d068a045c2334b026f75576ac1f94fe7856ca127298840e2441baebd"></a>SPI_SSL_MODE_CLK_SYN&#160;</td><td class="fielddoc"><p>Clock Synchronous operation (3-wire method) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga94ce9217d6b1aa42a4336b0ec87106a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga94ce9217d6b1aa42a4336b0ec87106a1">&#9670;&nbsp;</a></span>spi_burst_transfer_without_delay_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_p_i.html#ga94ce9217d6b1aa42a4336b0ec87106a1">spi_burst_transfer_without_delay_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Burst Transfer Without Delay. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga94ce9217d6b1aa42a4336b0ec87106a1a66bbcf27fbd8fb373002a92807c484f2"></a>SPI_BURST_TRANSFER_WITH_DELAY&#160;</td><td class="fielddoc"><p>Interframe delay. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga94ce9217d6b1aa42a4336b0ec87106a1a2e39042edc65b99914c0007174fc7bfa"></a>SPI_BURST_TRANSFER_WITHOUT_DELAY&#160;</td><td class="fielddoc"><p>No interframe delay. </p>
 </td></tr>
 </table>
 
@@ -1343,7 +1382,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

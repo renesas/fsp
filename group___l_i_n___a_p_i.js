@@ -2,13 +2,13 @@ var group___l_i_n___a_p_i =
 [
     [ "lin_transfer_params_t", "group___l_i_n___a_p_i.html#structlin__transfer__params__t", [
       [ "id", "group___l_i_n___a_p_i.html#aa24c43c5df396418efba7f93c71c2f6b", null ],
-      [ "num_bytes", "group___l_i_n___a_p_i.html#afe681d74e72baac9af01cb15e732f1ee", null ],
+      [ "num_bytes", "group___l_i_n___a_p_i.html#a3f0e298c6c0bca252be729bf1f9bb9e4", null ],
       [ "checksum_type", "group___l_i_n___a_p_i.html#afac4c23e70ff74f53a1247625dbd6940", null ]
     ] ],
     [ "lin_callback_args_t", "group___l_i_n___a_p_i.html#structlin__callback__args__t", [
       [ "channel", "group___l_i_n___a_p_i.html#a1bda5e9b9760868f3004ef1e35d3faa1", null ],
       [ "event", "group___l_i_n___a_p_i.html#a6dc50b21f5754e10404f94f8a83cc7a3", null ],
-      [ "bytes_received", "group___l_i_n___a_p_i.html#a8d57becd55ba155f218e98327f1dddc3", null ],
+      [ "bytes_received", "group___l_i_n___a_p_i.html#a773419efbbc3ec73b05b1a0c4696af8d", null ],
       [ "pid", "group___l_i_n___a_p_i.html#a56d7dcf4d2acb8e0b5a209eecc676ef0", null ],
       [ "checksum", "group___l_i_n___a_p_i.html#ac34b61415600ab875af5dda8fb7fe748", null ],
       [ "p_context", "group___l_i_n___a_p_i.html#acf635b625bbfd5d3f83cc2d9e41a5f0c", null ]
@@ -39,6 +39,7 @@ var group___l_i_n___a_p_i =
       [ "p_cfg", "group___l_i_n___a_p_i.html#a1a4c7859d9c992416aa39c173b99d26e", null ],
       [ "p_api", "group___l_i_n___a_p_i.html#ac2089d30410e6101c67600293588fe96", null ]
     ] ],
+    [ "lin_data_length_t", "group___l_i_n___a_p_i.html#ga7c9ec12840b6f786933fa5abec133888", null ],
     [ "lin_ctrl_t", "group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8", null ],
     [ "lin_mode_t", "group___l_i_n___a_p_i.html#ga82f45fff4983671b387f6e0b3ec9e12f", [
       [ "LIN_MODE_SLAVE", "group___l_i_n___a_p_i.html#gga82f45fff4983671b387f6e0b3ec9e12fafaf6c54788c17ab86e6feb0e8933c764", null ],
@@ -62,7 +63,11 @@ var group___l_i_n___a_p_i =
       [ "LIN_EVENT_ERR_INVALID_CHECKSUM", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72acea570521e62d8c7ed7788d5b954ff48", null ],
       [ "LIN_EVENT_TX_WAKEUP_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ae61c7a9be7adadae38b3564e7238d759", null ],
       [ "LIN_EVENT_RX_WAKEUP_COMPLETE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a2f0a3f2cd095b347aebce928d11b6bc3", null ],
+      [ "LIN_EVENT_ERR_TIMEOUT", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72adb4deb2702dc1e4817256463ff595d7d", null ],
       [ "LIN_EVENT_ERR_BUS_COLLISION_DETECTED", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96", null ],
+      [ "LIN_EVENT_ERR_SYNC", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a40276e902d1cda938a748d18ec610e99", null ],
+      [ "LIN_EVENT_ERR_RESPONSE_PREPARE", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ab463471538d30c062b6647cdbc4060e1", null ],
+      [ "LIN_EVENT_ERR_PHYSICAL_BUS", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a86c4dffee8faa6fb1c1a9cfb5992828f", null ],
       [ "LIN_EVENT_ERR_COUNTER_OVERFLOW", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72a1b5e897b9f7b6c31df9e99b119d71551", null ],
       [ "LIN_EVENT_ERR_OVERRUN", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ae3376187275c3f4b572e77b89ec80348", null ],
       [ "LIN_EVENT_ERR_PARITY", "group___l_i_n___a_p_i.html#gga7348cb44dbe95ba7bcd29c82cfbf8a72ab651808839cddeec7ee56e86a12c76d9", null ],

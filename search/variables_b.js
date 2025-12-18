@@ -27,5 +27,6 @@ var searchData=
   ['keyid',['keyid',['../group___r_m___b_l_e___m_e_s_h___p_r_o_v_i_s_i_o_n___a_p_i.html#a69a3ff7929c4b2ea3d122246a777ecf4',1,'rm_ble_mesh_provision_data_t']]],
   ['keypairgenerate',['keyPairGenerate',['../group___r_s_i_p___p_r_o_t_e_c_t_e_d___a_p_i.html#adb39feed00019b84f803f21cc862037d',1,'rsip_api_t']]],
   ['keys',['keys',['../group___g_a_p___a_p_i.html#a92ff8aaef443b5cde52a35cffc3846c8',1,'st_ble_gap_key_ex_param_t']]],
+  ['keystream_5fbytes_5fused',['keystream_bytes_used',['../structmbedtls__chacha20__context.html#ae50a9c2dee34270257435b29ead74f7c',1,'mbedtls_chacha20_context']]],
   ['keyupdatekeywrap',['KeyUpdateKeyWrap',['../group___s_c_e___k_e_y___i_n_j_e_c_t_i_o_n___a_p_i.html#af240f4f39e5eeb5514616b5be0ab1bb3',1,'sce_key_injection_api_t']]]
 ];

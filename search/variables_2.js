@@ -115,6 +115,7 @@ var searchData=
   ['bufferrelease',['bufferRelease',['../group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a590d88eb0da4ce601d816d501f1fbb39',1,'rai_data_collector_api_t::bufferRelease()'],['../group___e_t_h_e_r___a_p_i.html#a4f988e111dadbfab48e9eccec8d462b5',1,'ether_api_t::bufferRelease()']]],
   ['bufferreset',['bufferReset',['../group___r_m___r_a_i___d_a_t_a___c_o_l_l_e_c_t_o_r___a_p_i.html#a7b44e69907b8e7268e13cb159a588010',1,'rai_data_collector_api_t']]],
   ['build',['build',['../group___r_e_n_e_s_a_s___c_o_m_m_o_n.html#ac43952692411ec98dc1a9b9ac2a828a8',1,'fsp_pack_version_t::version_id_b_s']]],
+  ['burst_5finterframe_5fdelay',['burst_interframe_delay',['../group___s_p_i.html#a88784061752c17436932629cdf742dff',1,'spi_extended_cfg_t::burst_interframe_delay()'],['../group___s_p_i___b.html#ab5913c6205485da6d482e33364c36b7e',1,'spi_b_extended_cfg_t::burst_interframe_delay()']]],
   ['burst_5fmode',['burst_mode',['../group___c_e_u.html#a3e81a7205e50aeded47359113092a712',1,'ceu_extended_cfg_t']]],
   ['burst_5fnumber',['burst_number',['../group___i_s_o___a_p_i.html#a1c0d64a5937f006f520c41478ab9975d',1,'st_ble_iso_biginfo_rept_evt_t']]],
   ['bus_5favailable_5fdetection_5ftime',['bus_available_detection_time',['../group___i3_c.html#a4be13893424cf10022b808362d19941a',1,'i3c_extended_cfg_t']]],
@@ -127,6 +128,6 @@ var searchData=
   ['byte_5fswapping',['byte_swapping',['../group___c_e_u.html#aef895119adbf5dba85327bbe4dd67f4c',1,'ceu_extended_cfg_t']]],
   ['bytes',['bytes',['../group___i2_c___s_l_a_v_e___a_p_i.html#a43903d76b59b527cef993d5cdbe9a2b9',1,'i2c_slave_callback_args_t']]],
   ['bytes_5fper_5fpixel',['bytes_per_pixel',['../group___c_a_p_t_u_r_e___a_p_i.html#ac1de73c3720c90585ce65b2a236e209a',1,'capture_cfg_t']]],
-  ['bytes_5freceived',['bytes_received',['../group___l_i_n___a_p_i.html#a8d57becd55ba155f218e98327f1dddc3',1,'lin_callback_args_t']]],
+  ['bytes_5freceived',['bytes_received',['../group___l_i_n___a_p_i.html#a773419efbbc3ec73b05b1a0c4696af8d',1,'lin_callback_args_t']]],
   ['bytes_5frecvd',['bytes_recvd',['../group___s_m_c_i___a_p_i.html#a01380440d67d90170b2157583ab8a4df',1,'smci_status_t']]]
 ];

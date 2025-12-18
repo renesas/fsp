@@ -1,6 +1,7 @@
 var searchData=
 [
   ['mbedtls_5fccm_5fcontext',['mbedtls_ccm_context',['../structmbedtls__ccm__context.html',1,'']]],
+  ['mbedtls_5fchacha20_5fcontext',['mbedtls_chacha20_context',['../structmbedtls__chacha20__context.html',1,'']]],
   ['mbedtls_5fgcm_5fcontext',['mbedtls_gcm_context',['../structmbedtls__gcm__context.html',1,'']]],
   ['mbedtls_5fplatform_5fcontext',['mbedtls_platform_context',['../structmbedtls__platform__context.html',1,'']]],
   ['mbedtls_5fsha256_5fcontext',['mbedtls_sha256_context',['../structmbedtls__sha256__context.html',1,'']]],

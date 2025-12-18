@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -333,8 +333,6 @@ Pin Configuration</h2>
 <h1><a class="anchor" id="r-usb_hmsc-usage_notes"></a>
 Usage Notes</h1>
 <dl class="section warning"><dt>Warning</dt><dd>Due to the wide variety of USB mass storage device implementations, this driver is not guaranteed to work with all devices. When implementing the driver it is important to verify correct operation with the mass storage devices that the end user is expected to use.</dd></dl>
-<h2>Multi Port</h2>
-<p>This driver supports simultaneous operation with Peripheral Communication Device Class(PCDC). If the user are using MCU that supports 2 USB modules, such as RA6M3, the user can run HMSC on one USB module and PCDC on the other. This driver does not support simultaneous operation using device classes other than PCDC.</p>
 <h2>For Bare Metal</h2>
 <ol type="1">
 <li>To use FreeRTOS+FAT without FreeRTOS, copy FreeRTOSConfigMinimal.h to one of your project's include paths and rename it FreeRTOSConfig.h.</li>
@@ -658,7 +656,7 @@ usb_apl_task</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

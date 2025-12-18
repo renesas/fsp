@@ -26,12 +26,14 @@ var group___a_d_c___d =
       [ "ADC_D_VOLTAGE_MODE_LOW_2", "group___a_d_c___d.html#gga2c9e8acd064d7ffc4c78e6b30f995fbfaccf778b5e33b9396b639d7411391f84d", null ]
     ] ],
     [ "adc_d_clock_div_t", "group___a_d_c___d.html#ga97c9e58c7a646465245305d94f6071b4", [
+      [ "ADC_D_CLOCK_DIV_64", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4ae09f87330e2d60f966fac8fb8f037f64", null ],
       [ "ADC_D_CLOCK_DIV_32", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4a20ce488c5b0d56b78d027373a6ae87c7", null ],
       [ "ADC_D_CLOCK_DIV_16", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4aec0ffed41811d4c687e9ad1e3efd2c8e", null ],
       [ "ADC_D_CLOCK_DIV_8", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4a6267c785fe7e62571e39bf84f3c28c74", null ],
+      [ "ADC_D_CLOCK_DIV_6", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4acc1d82531de539c79e2edb15aec78910", null ],
+      [ "ADC_D_CLOCK_DIV_5", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4a0053d7c9c4ce83534754f88476704b3c", null ],
       [ "ADC_D_CLOCK_DIV_4", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4a54a229e36d27e9513d1a2ed4d0e3af64", null ],
-      [ "ADC_D_CLOCK_DIV_2", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4a9612b5edd5d5de20896b5c591e203be3", null ],
-      [ "ADC_D_CLOCK_DIV_1", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4a4478f2581119dc008b4c4834e62cfc31", null ]
+      [ "ADC_D_CLOCK_DIV_2", "group___a_d_c___d.html#gga97c9e58c7a646465245305d94f6071b4a9612b5edd5d5de20896b5c591e203be3", null ]
     ] ],
     [ "adc_d_trigger_source_t", "group___a_d_c___d.html#ga6a352e8fc883fe4f5d54eaa3e4831563", [
       [ "ADC_D_TRIGGER_SOURCE_TAU0_TMI01", "group___a_d_c___d.html#gga6a352e8fc883fe4f5d54eaa3e4831563a97f7a3e5c892d7d3f734bd7cb563bbb9", null ],

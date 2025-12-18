@@ -16,7 +16,8 @@ var group___s_p_i___b =
       [ "spck_div", "group___s_p_i___b.html#a5e759f1a2e0e50733ffe773b84e009b0", null ],
       [ "spck_delay", "group___s_p_i___b.html#aa76a96bdfe3843e023c076e906cdedbb", null ],
       [ "ssl_negation_delay", "group___s_p_i___b.html#ad0e864b3954e9abc6b864bb20c56b146", null ],
-      [ "next_access_delay", "group___s_p_i___b.html#a91917729fb266000e5c493d9a4021c43", null ]
+      [ "next_access_delay", "group___s_p_i___b.html#a91917729fb266000e5c493d9a4021c43", null ],
+      [ "burst_interframe_delay", "group___s_p_i___b.html#ab5913c6205485da6d482e33364c36b7e", null ]
     ] ],
     [ "spi_b_instance_ctrl_t", "group___s_p_i___b.html#structspi__b__instance__ctrl__t", [
       [ "open", "group___s_p_i___b.html#a63826f2e79dbe1834c3d99084558f71f", null ],
@@ -32,6 +33,10 @@ var group___s_p_i___b =
     [ "spi_b_ssl_mode_t", "group___s_p_i___b.html#gaacc78eca6792fd5aeb2aef6a458d8fb7", [
       [ "SPI_B_SSL_MODE_SPI", "group___s_p_i___b.html#ggaacc78eca6792fd5aeb2aef6a458d8fb7a0cad981405018e399b84bce877574709", null ],
       [ "SPI_B_SSL_MODE_CLK_SYN", "group___s_p_i___b.html#ggaacc78eca6792fd5aeb2aef6a458d8fb7a7f839e42cba15c37a4698c894630739b", null ]
+    ] ],
+    [ "spi_b_burst_transfer_without_delay_t", "group___s_p_i___b.html#ga6f58ffb812e6df4b1c664315cbe49515", [
+      [ "SPI_B_BURST_TRANSFER_WITH_DELAY", "group___s_p_i___b.html#gga6f58ffb812e6df4b1c664315cbe49515a3864911bae512e233a7104e1315e5414", null ],
+      [ "SPI_B_BURST_TRANSFER_WITHOUT_DELAY", "group___s_p_i___b.html#gga6f58ffb812e6df4b1c664315cbe49515a8e67fb0e1bb81586a992ce2b06df0ba0", null ]
     ] ],
     [ "spi_b_communication_t", "group___s_p_i___b.html#gae6d270a0823aeddcacb4a5006546e391", [
       [ "SPI_B_COMMUNICATION_FULL_DUPLEX", "group___s_p_i___b.html#ggae6d270a0823aeddcacb4a5006546e391ae3954204fe4e76df8af7fcf26786f861", null ],

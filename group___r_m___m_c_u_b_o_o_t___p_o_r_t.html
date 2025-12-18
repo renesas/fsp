@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -461,6 +461,7 @@ Bootloader region encoding in FSP 6.0.0</h4>
 <li><code>I</code> indicates the MCUboot Secondary (<code>S</code>) Image allocation space (not used with Primary images).</li>
 </ul>
 </li>
+<li>Bootloader flash area size must be an integer multiple of the largest erase size on the mcu.</li>
 <li>Primary or Secondary area size (including header and trailer) must be an integer multiple of the largest erase size on the mcu.</li>
 <li>Examples:<ul>
 <li><code>__BL_0_P_H</code>: Image 0 Primary Header.</li>
@@ -470,7 +471,9 @@ Bootloader region encoding in FSP 6.0.0</h4>
 </ul>
 </li>
 </ul>
-<ol type="1">
+<h4><a class="anchor" id="r-mcuboot-solution-single-images-steps"></a>
+Single-Image Bootloader Setup</h4>
+<ul>
 <li>Create the bootloader and set up any required configurations.</li>
 <li>Build the bootloader project.</li>
 <li>Create the application project, selecting the bootloader project as the "Preceding project" in the e2 studio wizard. The SmartBundle (.sbd) will be automatically linked.</li>
@@ -478,7 +481,36 @@ Bootloader region encoding in FSP 6.0.0</h4>
 <li>Create an "FSP Solution Project (Advanced)" and chose the final project in the chain (typically the application project).</li>
 <li>Create the Header and Image regions according to the encoding described above.</li>
 <li>Build the Solution project.</li>
-</ol>
+</ul>
+<h4><a class="anchor" id="r-mcuboot-solution-multi-images-steps"></a>
+Multi-Image Bootloader Setup</h4>
+<ul>
+<li>Create the bootloader and set up any required configurations.</li>
+<li>Build the bootloader project.</li>
+<li>Repeat the following steps for each application image (Image 0, Image 1, ..., Image n):<ul>
+<li>Create an application project, selecting the bootloader project as the "Preceding project" in the e2 studio wizard. The SmartBundle (.sbd) will be automatically linked.</li>
+<li>Build the application project.</li>
+</ul>
+</li>
+<li>Create an "FSP Solution Project (Advanced)" and select the final project in the chain (typically the first application project). <code>&lt;raSmartBundles\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/bootloader_project}/Debug/bootloader_project.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image0}/Debug/app_image0.sbd\&lt;/bundle\&gt;</code> <code>&lt;/raSmartBundles\&gt;</code></li>
+<li>Create the Header and Image regions according to the encoding described in the previous section. Example for Image 0, 1, 2, 3: __BL_0_P_H 0x10000 0x200 __BL_0_P_I 0x10200 0xFE00 __BL_0_S_H 0x20000 0x200 __BL_0_S_I 0x20200 0xFE00 __BL_1_P_H 0x30000 0x200 __BL_1_P_I 0x30200 0xFE00 __BL_1_S_H 0x40000 0x200 __BL_1_S_I 0x40200 0xFE00 __BL_2_P_H 0x50000 0x200 __BL_2_P_I 0x50200 0xFE00 __BL_2_S_H 0x60000 0x200 __BL_2_S_I 0x60200 0xFE00 __BL_3_P_H 0x70000 0x200 __BL_3_P_I 0x70200 0xFE00 __BL_3_S_H 0x80000 0x200 __BL_3_S_I 0x80200 0xFE00</li>
+<li>Manually edit solution.xml to add the required primary image paths (Image 1, 2, 3). Then refresh the solution project. <code>&lt;raSmartBundles\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/bootloader_project}/Debug/bootloader_project.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image0}/Debug/app_image0.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image1}/Debug/app_image1.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image2}/Debug/app_image2.sbd\&lt;/bundle\&gt;</code> <code>&lt;bundle\&gt;${workspace_loc:/app_image3}/Debug/app_image3.sbd\&lt;/bundle\&gt;</code> <code>&lt;/raSmartBundles\&gt;</code></li>
+<li>Build the Solution project.</li>
+<li>Repeat the following steps for each application image (Image 0, Image 1, ..., Image n):<ul>
+<li>Create an alternate memory regions file with <code>FLASH_START</code> and <code>FLASH_LENGTH</code> values to match the corresponding <code>__BL_&lt;n&gt;_P_I</code> partition.<ul>
+<li>Create the alternate memory regions file (For example: <code>memory_regions_ext.lld</code> for LLVM) in the application project directory by making a copy of the generated memory regions file in the Debug folder.</li>
+<li>In that file, set <code>FLASH_START</code> to the start address of <code>__BL_&lt;n&gt;_P_I</code> and <code>FLASH_LENGTH</code> to the partition size. For example: FLASH_START = 0x10200; FLASH_LENGTH = 0xFE00;</li>
+<li>Save the file.</li>
+</ul>
+</li>
+<li>Add the alternate memory regions files to the linker script.<ul>
+<li>Edit the fsp.lld file to include the new memory regions file instead of the default.</li>
+</ul>
+</li>
+<li>Build the project.</li>
+</ul>
+</li>
+</ul>
 <h2>Getting Started: Download and Debug</h2>
 <p>For projects that do not use TrustZone, debug the MCUboot project using the default configuration. Before running, load the signed image to the address specified in the signing comment in ra_cfg/mcu-tools/include/mcuboot_config/mcuboot_config.h. This can be done with the Load Ancillary File button when debugging in e&sup2; studio. Upgrade images can be loaded to the upgrade image slots using the same method.</p>
 <dl class="section note"><dt>Note</dt><dd>e&sup2; studio projects targeting RA8 devices that do not use TrustZone must disable the "Set TrustZone secure/non-secure boundaries" setting (Debug Configurations &gt; Debugger &gt; Connection Settings &gt; TrustZone &gt; Set TrustZone secure/non-secure boundaries).</dd></dl>
@@ -616,7 +648,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

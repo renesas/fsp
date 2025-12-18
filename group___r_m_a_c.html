@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -323,6 +323,14 @@ Enabled</li>
 Disabled</li>
 </ul>
 </td><td>Default (BSP) </td><td>If selected code for parameter checking is included in the build. </td></tr>
+<tr class="tree_none">
+<td>Read Buffer Size Checking</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>If selected code for buffer size checking is included in the build. </td></tr>
 </table>
  <h2>Configurations for Networking &gt; Ethernet MAC (r_rmac)</h2>
 This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Ethernet MAC (r_rmac). Non-secure callable guard functions can be generated for this module by right clicking the module in the RA Configuration tool and checking the "Non-secure Callable" box.<br />
@@ -719,6 +727,7 @@ Examples</h1>
     <tr><td class="paramname">FSP_ERR_ETHER_ERROR_FILTERING</td><td>Multicast Frame filter is enable, and Multicast Address Frame is received. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_POINTER</td><td>Value of the pointer is NULL. </td></tr>
     <tr><td class="paramname">FSP_ERR_BUFFER_EMPTY</td><td>There is no available internal RX buffer. </td></tr>
+    <tr><td class="paramname">FSP_ERR_INVALID_SIZE</td><td>The buffer size is smaller than <a class="el" href="group___e_t_h_e_r___a_p_i.html#abe9247fcd1556396eb74c76c899f5256">ether_cfg_t::ether_buffer_size</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -983,7 +992,7 @@ Examples</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

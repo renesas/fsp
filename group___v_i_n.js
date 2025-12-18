@@ -4,7 +4,8 @@ var group___v_i_n =
       [ "image_stride", "group___v_i_n.html#ad13856480fe7a2f087eb94a7eb671c43", null ]
     ] ],
     [ "vin_output_ctrl_t", "group___v_i_n.html#structvin__output__ctrl__t", [
-      [ "image_buffer", "group___v_i_n.html#a158bc58ad9c4b9cb493a6792c0bb3d04", null ]
+      [ "image_buffer", "group___v_i_n.html#a158bc58ad9c4b9cb493a6792c0bb3d04", null ],
+      [ "use_runtime_buffer", "group___v_i_n.html#aeaa2e252a1e3604616911840820bbc1e", null ]
     ] ],
     [ "vin_conversion_ctrl_t", "group___v_i_n.html#structvin__conversion__ctrl__t", null ],
     [ "vin_conversion_data_t", "group___v_i_n.html#structvin__conversion__data__t", [

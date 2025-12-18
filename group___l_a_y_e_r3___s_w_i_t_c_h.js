@@ -3,6 +3,35 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     [ "layer3_switch_basic_descriptor_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__basic__descriptor__t", null ],
     [ "layer3_switch_descriptor_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t", null ],
     [ "layer3_switch_ts_reception_process_descriptor_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__ts__reception__process__descriptor__t", null ],
+    [ "layer3_switch_psfp_msdu_filter_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__cfg__t", [
+      [ "msdu_filter_id", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a7869e7b6523dd8a1170d2125fd1f937f", null ],
+      [ "maximum_frame_size", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0bfae4766447f87b7230424d4110f8a3", null ],
+      [ "mode", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ae197f024af4144d56fd098505b348c43", null ]
+    ] ],
+    [ "layer3_switch_psfp_msdu_filter_info_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__info__t", [
+      [ "status", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a33b1b636b0b9cba4ac6851bed8eecace", null ],
+      [ "p_psfp_msdu_filter_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a787a35228e54bc85e839d220e18ba9d4", null ]
+    ] ],
+    [ "layer3_switch_psfp_meter_filter_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__cfg__t", [
+      [ "meter_filter_id", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a48a035152ed114c9d1aad797a7d28207", null ],
+      [ "cbs", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a2d7cf9735bc42aed0997de151ede4a5c", null ],
+      [ "cir", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a7292037c377c42f6024310973a803a44", null ],
+      [ "ebs", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aed939df0a8552653a88810b549edf2e9", null ],
+      [ "eir", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab09df2fdb3ff392425519ac58a534fe2", null ],
+      [ "mode", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a6e7b307b9dee7412d98118d040b2f35d", null ],
+      [ "drop_red_frame", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a688bfeab8e12f355d76902c6df664c5c", null ],
+      [ "coupling_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a2fbac3e9194cf8adf0dbb023a18bfe4a", null ],
+      [ "dei_handling_policy", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad76edc4d64ec704598fc1007c0832125", null ],
+      [ "pcp_handling_policy", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab78c43d212c2c57d3bbff55cf8c8e74e", null ]
+    ] ],
+    [ "layer3_switch_psfp_meter_filter_info_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__info__t", [
+      [ "status", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a56000cabbb38f01b244a7f9d86a4c90b", null ],
+      [ "p_psfp_meter_filter_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0dd3c83c3a63b2bcb208c126a7f12565", null ]
+    ] ],
+    [ "layer3_switch_psfp_error_status_bitmask_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__error__status__bitmask__t", [
+      [ "msdu_filter_bitmask", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a625ae9d27d68b21b04d05a86d34be9ea", null ],
+      [ "meter_filter_bitmask", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af6e358b809ddb0174ea2efb1f57f712a", null ]
+    ] ],
     [ "layer3_switch_frer_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__cfg__t", [
       [ "sys_clock", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab913e67017c67b8d2ad083324c1dc077", null ],
       [ "timeout_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa7a629212d1240886efe92bf403ff280", null ],
@@ -92,6 +121,7 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     [ "layer3_switch_table_entry_cfg_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t", [
       [ "entry_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#acbd5ea9cfb996323c9b54b79d91e8093", null ],
       [ "security_enable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ab7c67b6a8af420660f048163476dc46e", null ],
+      [ "p_psfp_meter_filter_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#afc2c5ca7dbf170847324e728dfe6805f", null ],
       [ "p_frer_entry_cfg", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a318bca9dce298ed8053b483b50e7fd33", null ],
       [ "destination_ports", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699", null ],
       [ "source_ports", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a6fc334dfc9c9199ba78e5549473f5cf0", null ],
@@ -141,7 +171,9 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "p_ether_phy_instances", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a115f29d9a0dba98d78c5d2f7ad0a5418", null ],
       [ "p_gptp_instance", "group___l_a_y_e_r3___s_w_i_t_c_h.html#acceba339796b50a217ff1d9f1b6fd75e", null ],
       [ "fowarding_target_port_masks", "group___l_a_y_e_r3___s_w_i_t_c_h.html#afdfe4de0b2b55880bb33486afde41347", null ],
-      [ "ipv_queue_depth_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0995618e1dac947a7d867a62f4058441", null ],
+      [ "ipv_queue_depth_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa30b618784f5587b312ee65a0a87bf2e", null ],
+      [ "ipv_queue_preemptable_bitmask", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a143d3007f22a530b922ae92e4624d302", null ],
+      [ "frame_preemption_fragment_size", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a44b356e79b140c3d1e2f4aa185be30ff", null ],
       [ "l3_filter_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#af953b505c992bd5dc7ce07cdcc8ccb51", null ],
       [ "l3_filter_list_length", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a008bae8da99e0dad1c77e6e55fc37dc9", null ],
       [ "p_port_cfg_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ac5244924866e0ed746d3d1b3b2d7e99f", null ],
@@ -164,9 +196,12 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "l3_routing_number", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad3888ccc411391ce068c1e5803b891bc", null ],
       [ "l3_remapping_number", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ae96451e0b5053be4c141516ae3a8e62f", null ],
       [ "ts_descriptor_queue_status_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a43be6c87f8e905d8d4a2c49633ce6891", null ],
+      [ "psfp_msdu_filter_info_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a5fa38a220dc4fd18faf25fc3858205c5", null ],
+      [ "psfp_meter_filter_info_list", "group___l_a_y_e_r3___s_w_i_t_c_h.html#adb770851d28276003cebb0ebd10b0625", null ],
       [ "valid_frer_entry_num", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a0b2875311f2e6593fbe909304b1e2a4d", null ],
       [ "frer_sequence_recovery_status", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a4ff072a28aa5e5af6797951a6ff93fe5", null ],
       [ "used_frer_sequence_generator_num", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49b2dfefb121b00bbffe622872dd910", null ],
+      [ "frame_preemption_available", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ac2d75d550a43625c3285f7bf5980e4a4", null ],
       [ "p_callback", "group___l_a_y_e_r3___s_w_i_t_c_h.html#aa252f8417c88002cef8353a56060156a", null ],
       [ "p_callback_memory", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a15a12fed4bee9a79d56adce303e5cd1c", null ],
       [ "p_context", "group___l_a_y_e_r3___s_w_i_t_c_h.html#a28b4e51a85668041308a749383cbc976", null ]
@@ -310,6 +345,47 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
       [ "LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_UNUSED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaa34ababd9cf10b17acc2999b36ac2c5eacfb90de527d6cb0c7c881ead963bc5c8", null ],
       [ "LAYER3_SWITCH_TS_DESCRIPTOR_QUEUE_STATUS_USED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaa34ababd9cf10b17acc2999b36ac2c5ea52868efdbbc36aca2168c8cf3c106225", null ]
     ] ],
+    [ "layer3_switch_preemptable_frame_fragment_size_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8911180c6fe4a23650855ecfe5f9529f", [
+      [ "LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_64BYTE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga8911180c6fe4a23650855ecfe5f9529faa3be6d4ed9f934feecd5bb522064d63b", null ],
+      [ "LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_128BYTE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga8911180c6fe4a23650855ecfe5f9529fac81148de999b45fdeabcd9f27cf3b79d", null ],
+      [ "LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_192BYTE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga8911180c6fe4a23650855ecfe5f9529faa5f747f2c663047d355565e47c219af2", null ],
+      [ "LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_256BYTE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga8911180c6fe4a23650855ecfe5f9529faa4a3619fbb61933c188caaa59a6c663a", null ]
+    ] ],
+    [ "layer3_switch_psfp_filter_status_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa1dfe849dedd707bdc2665d84b13c687", [
+      [ "LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaa1dfe849dedd707bdc2665d84b13c687ae798719247a0ef12693545a2e3ddb44c", null ],
+      [ "LAYER3_SWITCH_PSFP_FILTER_STATUS_USED", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaa1dfe849dedd707bdc2665d84b13c687a79667d596ca94a84250fd8fd94e0af21", null ]
+    ] ],
+    [ "layer3_switch_msdu_filter_mode_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5dd284d342730c0a4779b3c79becdceb", [
+      [ "LAYER3_SWITCH_MSDU_FILTER_NORMAL_MODE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5dd284d342730c0a4779b3c79becdceba62ed605c58d8b35f0d142775117d8d70", null ],
+      [ "LAYER3_SWITCH_MSDU_FILTER_THROTTLE_MODE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5dd284d342730c0a4779b3c79becdcebab2ea1a8cb3d955c05b53165f4a4d4035", null ]
+    ] ],
+    [ "layer3_switch_meter_filter_mode_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gaaa067e0df85f58ee4c59aa1809d93e94", [
+      [ "LAYER3_SWITCH_METER_FILTER_NORMAL_MODE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaaa067e0df85f58ee4c59aa1809d93e94a01af836a4514c2d52c15ac5de6c08fa3", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_THROTTLE_MODE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaaa067e0df85f58ee4c59aa1809d93e94a0d140805de27f90ab2b9640fdf09a504", null ]
+    ] ],
+    [ "layer3_switch_meter_filter_coupling_status_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gae873ec9f4806a8eea47c8e8097b753e9", [
+      [ "LAYER3_SWITCH_METER_FILTER_COUPLING_STATUS_DISABLE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggae873ec9f4806a8eea47c8e8097b753e9a02b936e3905dddb953ed4c29834b3f69", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_COUPLING_STATUS_ENABLE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggae873ec9f4806a8eea47c8e8097b753e9a0250d627bc9efc230d3bd38f6e6ad8cc", null ]
+    ] ],
+    [ "layer3_switch_meter_filter_drop_red_frame_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gafa2dbc72c967e166d6514ad1e5d01c2a", [
+      [ "LAYER3_SWITCH_METER_FILTER_NOT_DROP_RED_FRAME", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggafa2dbc72c967e166d6514ad1e5d01c2aa2bce1427bc347dfc0dd3f18f961c58be", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_DROP_RED_FRAME", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggafa2dbc72c967e166d6514ad1e5d01c2aa321e0f2a457f0e4f849d145a5f84b5e1", null ]
+    ] ],
+    [ "layer3_switch_meter_filter_dei_handling_policy_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gaac60bf9f8ad5627e642b94bb972f0ae7", [
+      [ "LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_IGNORE", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaac60bf9f8ad5627e642b94bb972f0ae7a1557472e9dd4b775f9846672b2e45105", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_YELLOW", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaac60bf9f8ad5627e642b94bb972f0ae7a14807f39f0adbde0d5cd41f93738d1df", null ]
+    ] ],
+    [ "layer3_switch_meter_filter_pcp_handling_policy_t", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga32883f63056b4de0786ed3ab259d84b7", [
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_GREEN_ALL", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7a36732d61673e3ed15ae759be17014406", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_1", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7a16de376338a7795eeb4db2bc3ddcc3c6", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_2", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7af0bbcb7df70290c75a410bde7f4f103c", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_3", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7ae5c6d6d3181967369572bb1682920eec", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_4", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7a17c704ef570c39f8551115d2d8c8e400", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_5", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7adc644d8ad21b538d86ab127b8eae325a", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_6", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7a7f09768bbc9558f5f8262deaa9bbece6", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_7", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7a67252d753da0c4e6d8e375b1eb597803", null ],
+      [ "LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_ALL", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7a512b67dd884604b971391ebe0f4a7ed3", null ]
+    ] ],
     [ "R_LAYER3_SWITCH_Open", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c", null ],
     [ "R_LAYER3_SWITCH_Close", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911", null ],
     [ "R_LAYER3_SWITCH_CreateDescriptorQueue", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f", null ],
@@ -323,5 +399,6 @@ var group___l_a_y_e_r3___s_w_i_t_c_h =
     [ "R_LAYER3_SWITCH_ConfigureTable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c", null ],
     [ "R_LAYER3_SWITCH_GetTable", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga7202ab557137d6fe7c540e3cbb45f59b", null ],
     [ "R_LAYER3_SWITCH_ConfigureTAS", "group___l_a_y_e_r3___s_w_i_t_c_h.html#gac4be6fe5872b4fdf2fe7fc6f056fd0e4", null ],
-    [ "R_LAYER3_SWITCH_EnableTAS", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f", null ]
+    [ "R_LAYER3_SWITCH_EnableTAS", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f", null ],
+    [ "R_LAYER3_SWITCH_PsfpClearErrorStatus", "group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4fd61c68e2c1b1328e469a1c81a74d08", null ]
 ];

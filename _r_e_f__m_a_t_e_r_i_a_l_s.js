@@ -47,5 +47,11 @@ var _r_e_f__m_a_t_e_r_i_a_l_s =
         [ "ROM-Resident Sections", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-appendix-memory-class-rom", null ],
         [ "Summary", "_l_i_n_k_e_r__s_e_c_t_i_o_n.html#linker_section-appendix-memory-class-summary", null ]
       ] ]
+    ] ],
+    [ "e2 Studio 2025-12 Pin Configuration Workarounds", "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html", [
+      [ "Changes", "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-changes", null ],
+      [ "Overview", "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-overview", null ],
+      [ "Affected Project Types", "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-affected-project-types", null ],
+      [ "Workarounds for Affected Project Types", "_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-workarounds-for-affected-project-types", null ]
     ] ]
 ];

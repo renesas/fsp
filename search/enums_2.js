@@ -41,6 +41,8 @@ var searchData=
   ['ceu_5fdata_5fbus_5fsize_5ft',['ceu_data_bus_size_t',['../group___c_e_u.html#gaaa369fc7b221162c5b203dde1e8117f6',1,'r_ceu.h']]],
   ['ceu_5fevent_5ft',['ceu_event_t',['../group___c_e_u.html#ga36b9c0db3014482fb6e6af88997d3341',1,'r_ceu.h']]],
   ['ceu_5fhsync_5fpolarity_5ft',['ceu_hsync_polarity_t',['../group___c_e_u.html#gaebbdc8cdcf0315650d36eacb15e6555a',1,'r_ceu.h']]],
+  ['ceu_5finput_5forder_5ft',['ceu_input_order_t',['../group___c_e_u.html#ga724a9af22e75db9889cef50afe37a04f',1,'r_ceu.h']]],
+  ['ceu_5foutput_5fformat_5ft',['ceu_output_format_t',['../group___c_e_u.html#ga75cdc2264176d93c445f8f4a5410b7f2',1,'r_ceu.h']]],
   ['ceu_5fvsync_5fpolarity_5ft',['ceu_vsync_polarity_t',['../group___c_e_u.html#ga86d40e3aeed05103767a4839ce91289c',1,'r_ceu.h']]],
   ['cgc_5fclock_5fchange_5ft',['cgc_clock_change_t',['../group___c_g_c___a_p_i.html#ga67f8525be602a7cce075f0b33d5f2ad8',1,'r_cgc_api.h']]],
   ['cgc_5fclock_5ft',['cgc_clock_t',['../group___c_g_c___a_p_i.html#ga4dcbe960cf591207eef834969b83f8a6',1,'r_cgc_api.h']]],

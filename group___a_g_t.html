@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -516,6 +516,11 @@ Usage Notes</h1>
 <dl class="section warning"><dt>Warning</dt><dd>The subclock can take seconds to stabilize. The RA startup code does not wait for subclock stabilization unless the subclock is the main clock source. When running AGT or RTC off the subclock, the application must ensure the subclock is stable before starting operation.</dd></dl>
 <h2>Low Power Modes</h2>
 <p>The AGT1 (channel 1 only) can be used to enter snooze mode or to wake the MCU from snooze, software standby, or deep software standby modes when a counter underflow occurs. The compare match A and B events can also be used to wake from software standby or snooze modes.</p>
+<dl class="section warning"><dt>Warning</dt><dd>The event counter may decrement unexpectedly when transitioning between normal operation and a low power mode (see Technical Update TN-RA*-A0133B/E). Event counting should be stopped before entering the low power mode and restarted when returning to normal operation in the following cases:<ul>
+<li>Transitioning to/from Software Standby mode when external event input is disabled (<code>AGTIOSEL.TIES = 0b0</code>).</li>
+<li>Transitioning to/from Deep Software Standby mode when AGTIO is configured as an input pin (<code>AGTIOSEL.SEL = 0b00</code>).</li>
+</ul>
+</dd></dl>
 <h2>One-Shot Mode</h2>
 <p><a class="anchor" id="um_timer_one_shot_mode"></a> The AGT timer does not support one-shot mode natively. One-shot mode is achieved by stopping the timer in the interrupt service routine before the callback is called. If the interrupt is not serviced before the timer period expires again, the timer generates more than one event. The callback is only called once in this case, but multiple events may be generated if the timer is linked to the <a class="el" href="group___d_t_c.html">Transfer (r_dtc)</a>.</p>
 <h3>One-Shot Mode Output</h3>
@@ -1324,7 +1329,7 @@ Stop the timer before calling this function if one-shot output is used.</dd></dl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

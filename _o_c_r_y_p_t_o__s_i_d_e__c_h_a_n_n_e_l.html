@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -272,6 +272,9 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <p class="startli">ML-DSA and ML-KEM are not constant-time because of <code>rejection sampling</code> in several places. However, the timing can only disclose information on values that are not used.</p>
 <p class="startli">ML-DSA is not table-free because the <code>SampleInBall</code> algorithm permutes array elements with pseudo-randomly derived indices. However, the seed of the resulting polynomial is part of the signature and thus public anyway.</p>
 </li>
+<li><p class="startli">AES-CBC-PKCS7 decrypt</p>
+<p class="startli">AES-CBC with PKCS#7 padding is prone to padding oracle attacks. While <em>ocrypto</em> ensures that the corresponding decrypt operation is constant-time, this is necessary but not sufficient: clients on all layers of the software stack above <em>ocrypto</em> must ensure that they do not leak, through timing variations, whether a decrypt operation has resulted in a padding error or not.</p>
+</li>
 </ul>
 <h2>5) List of ocrypto functions</h2>
 <p>This is the list of functions supported by <em>ocrypto</em>. Note that your specific distribution of <em>ocrypto</em> may contain just a subset of these functions.</p>
@@ -338,13 +341,13 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <tr>
 <td align="left">ECDH (X25519, X448) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
+<td align="left">ML-KEM (512, 768, 1024) </td><td align="left">* </td><td align="left">safe </td></tr>
+<tr>
 <td align="left">EC-JPAKE (P-256) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">SPAKE2+ (P-256, HMAC) </td><td align="left">yes </td><td align="left">safe </td></tr>
 <tr>
 <td align="left">SRP-6 (SHA512) </td><td align="left">* </td><td align="left">safe </td></tr>
-<tr>
-<td align="left">ML-KEM (512, 768, 1024) </td><td align="left">* </td><td align="left">safe </td></tr>
 </table>
 <p><b>*</b> See comments in chapter 4.</p>
 <p><em>Note: If you build for the pure C <code>Generic</code> platform, make sure that your compiler issues constant-time multiply operations.</em> </p>
@@ -354,7 +357,7 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__s_i_d_e__c_h_a_n_n_e_l
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

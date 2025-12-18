@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: baremetal Directory Reference</title>
+<title>RA Flexible Software Package Documentation: lwIP NETBIOSNS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dir_1aca87e43266464c5b2c0173aa1ac0e3.html','');});
+$(document).ready(function(){initNavTree('group___l_w_i_p___n_e_t_b_i_o_s_n_s.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -237,21 +237,70 @@ $(document).ready(function(){initNavTree('dir_1aca87e43266464c5b2c0173aa1ac0e3.h
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">baremetal Directory Reference</div>  </div>
+<div class="title">lwIP NETBIOSNS<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="subdirs"></a>
-Directories</h2></td></tr>
+<p>This module implements the lwIP NETBIOSNS integration documentation. </p>
+<h1><a class="anchor" id="rm-lwip-netbiosns-overview"></a>
+Overview</h1>
+<p>This is a simple lwIP NetBIOS nameserver. It responds to name queries from a configurable name.</p>
+<h2><a class="anchor" id="rm-lwip-netbiosns-features"></a>
+Features</h2>
+<p>The lwIP NetBIOS Responder opens a UDP socket on port 137 to handle NetBIOS name resolution requests:</p><ul>
+<li>Respond to NB name query type, resolving the configured hostname to IPv4 address (always enabled).</li>
+<li>Respond to NBSTAT name query type with both exact-name and wildcard (*) queries (configurable).</li>
+</ul>
+<h1><a class="anchor" id="rm-lwip-netbiosns-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for source</h2>
+The following build time configurations are defined in lwip/lwip/apps/netbiosns_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>NetBIOS Name Query Response</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enabling responses to NBSTAT queries is configurable, while responses to NB name queries are always enabled. </td></tr>
+<tr class="tree_none">
+<td>Use static NETBIOS name</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Disable this option to allow changing the NetBIOS host name at runtime using netbiosns_set_name(). </td></tr>
+<tr class="tree_none">
+<td>NetBIOS Name</td><td>String length minimum 1 maximum 15, allow A-Z,0-9, -, ., must not start with period (.).</td><td>LWIPDEVICE </td><td>Specifies a string for NetBIOS name.<br />
+String length 1 to 15.<br />
+Allowed uppercase letters A-Z, digit0-9, hyphen -, period ..<br />
+Must not start with period. </td></tr>
 </table>
-</div><!-- contents -->
+</p>
+<h1><a class="anchor" id="rm-lwip-netbiosns-usage_notes"></a>
+Usage Notes</h1>
+<dl class="section note"><dt>Note</dt><dd>It is recommended to call netbiosns_stop() before reinitializing the NetBIOS Responder to avoid a potential memory leak.</dd></dl>
+<h2><a class="anchor" id="rm-lwip-netbiosns-limitations"></a>
+Limitations</h2>
+<dl class="section note"><dt>Note</dt><dd>1. Name conflict resolving is not supported. </dd>
+<dd>
+2. The socket does not broadcast it's own name, thus can not detect duplicate names. </dd>
+<dd>
+3. The socket always resolves name queries using the IP address of the default network interface.</dd></dl>
+<h1><a class="anchor" id="rm-lwip-netbiosns-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of initailize NETBIOSNS responder and change hostname in run time.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;lwip/timeouts.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/ip4.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/netbiosns.h&quot;</span></div><div class="line"></div><div class="line"><span class="keyword">struct </span>netif g_netbiosns_netif;</div><div class="line"></div><div class="line"><span class="comment">/* LwIP netbiosns example */</span></div><div class="line"><span class="keywordtype">void</span> lwip_netbiosns_example () {</div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;g_netbiosns_netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable. */</span></div><div class="line">    netif_set_default(&amp;g_netbiosns_netif);</div><div class="line">    netif_set_up(&amp;g_netbiosns_netif);</div><div class="line">    netif_set_link_up(&amp;g_netbiosns_netif);</div><div class="line"></div><div class="line"><span class="preprocessor">#ifndef NETBIOS_LWIP_NAME</span></div><div class="line"></div><div class="line">    <span class="comment">/* Set the NetBIOS name, host name can be change again during run time using netbiosns_set_name */</span></div><div class="line">    netbiosns_set_name(<span class="stringliteral">&quot;LWIPDEVICE&quot;</span>);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Init netbios responder */</span></div><div class="line">    netbiosns_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Program main loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">        sys_check_timeouts();</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b18d2d13694890cc5ac49a5be67e3b2d.html">ra</a></li><li class="navelem"><a class="el" href="dir_d71e6481d15bd93e41670a57fe245af4.html">fsp</a></li><li class="navelem"><a class="el" href="dir_cc90537d9d9120754144c336f41d5945.html">src</a></li><li class="navelem"><a class="el" href="dir_9344c909cf66201fb1d7131daec869d0.html">rm_lwip_sys_port</a></li><li class="navelem"><a class="el" href="dir_1aca87e43266464c5b2c0173aa1ac0e3.html">baremetal</a></li>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

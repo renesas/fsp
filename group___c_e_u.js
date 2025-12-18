@@ -12,12 +12,17 @@ var group___c_e_u =
     ] ],
     [ "ceu_extended_cfg_t", "group___c_e_u.html#structceu__extended__cfg__t", [
       [ "capture_format", "group___c_e_u.html#afd3ddd7c857bac1c43700eb504880eea", null ],
+      [ "input_order", "group___c_e_u.html#a0ed3f2022d5c2d7bd0557fe53679b9be", null ],
+      [ "output_format", "group___c_e_u.html#a236b36f834905782f6bf2075858690d4", null ],
       [ "data_bus_width", "group___c_e_u.html#a72b64d8fc1663beb5174d45d25199140", null ],
       [ "hsync_polarity", "group___c_e_u.html#a626e620e4e84dbea3dbd2578ff2830d1", null ],
       [ "vsync_polarity", "group___c_e_u.html#a1003dd34d291e06749ca6258ec731a59", null ],
       [ "image_area_size", "group___c_e_u.html#a2391a195b2e60feac64a3b8c17b71149", null ],
       [ "byte_swapping", "group___c_e_u.html#aef895119adbf5dba85327bbe4dd67f4c", null ],
       [ "burst_mode", "group___c_e_u.html#a3e81a7205e50aeded47359113092a712", null ],
+      [ "scale_down_factor", "group___c_e_u.html#a9b3e7e470995c382ffe81632cf82b97a", null ],
+      [ "h_output_size", "group___c_e_u.html#af9ab59d5dc98a2eeea0d1bee7a39aef9", null ],
+      [ "v_output_size", "group___c_e_u.html#ae1fde53e5e769afd12ab3b671ecbc4ba", null ],
       [ "interrupts_enabled", "group___c_e_u.html#aaa40a8e4651da547249153a59fd2529f", null ],
       [ "ceu_ipl", "group___c_e_u.html#a8d29f87455ee7a8183024c7cba86d834", null ],
       [ "ceu_irq", "group___c_e_u.html#a8ca8b42f301fbd731b602e5f90f44908", null ]
@@ -58,8 +63,19 @@ var group___c_e_u =
       [ "CEU_EVENT_VD_MISSING", "group___c_e_u.html#gga36b9c0db3014482fb6e6af88997d3341aa707f22324ce1a545e67ffc8f4ec674a", null ]
     ] ],
     [ "ceu_capture_format_t", "group___c_e_u.html#gac6b65e70754e487d9e9e519bef166b8d", [
+      [ "CEU_CAPTURE_FORMAT_IMAGE_CAPTURE", "group___c_e_u.html#ggac6b65e70754e487d9e9e519bef166b8da8187f0f9451d147e44ac52c4a2fa7013", null ],
       [ "CEU_CAPTURE_FORMAT_DATA_SYNCHRONOUS", "group___c_e_u.html#ggac6b65e70754e487d9e9e519bef166b8da937dca7bc35afe1775be357d8846e739", null ],
       [ "CEU_CAPTURE_FORMAT_DATA_ENABLE", "group___c_e_u.html#ggac6b65e70754e487d9e9e519bef166b8da210a1bd6917f7cf7d64ff14a55b424a6", null ]
+    ] ],
+    [ "ceu_input_order_t", "group___c_e_u.html#ga724a9af22e75db9889cef50afe37a04f", [
+      [ "CEU_INPUT_ORDER_CB0Y0CR0Y1", "group___c_e_u.html#gga724a9af22e75db9889cef50afe37a04fa4f591a5baea0e71e56d5419a5a7631e3", null ],
+      [ "CEU_INPUT_ORDER_CR0Y0CB0Y1", "group___c_e_u.html#gga724a9af22e75db9889cef50afe37a04fa02d0274e8d3f5b17de7215880584561a", null ],
+      [ "CEU_INPUT_ORDER_Y0CB0Y1CR0", "group___c_e_u.html#gga724a9af22e75db9889cef50afe37a04fa8a27198ab734f2d99b0905e84d731645", null ],
+      [ "CEU_INPUT_ORDER_Y0CR0Y1CB0", "group___c_e_u.html#gga724a9af22e75db9889cef50afe37a04fa2cbec90ef0129fcd171811d667f2b28e", null ]
+    ] ],
+    [ "ceu_output_format_t", "group___c_e_u.html#ga75cdc2264176d93c445f8f4a5410b7f2", [
+      [ "CEU_OUTPUT_FORMAT_YCBCR420", "group___c_e_u.html#gga75cdc2264176d93c445f8f4a5410b7f2a16aa7ea71d95b5adb0702751a1cac279", null ],
+      [ "CEU_OUTPUT_FORMAT_YCBCR422", "group___c_e_u.html#gga75cdc2264176d93c445f8f4a5410b7f2aac7a71c06e71ea8fdb1616aba050af28", null ]
     ] ],
     [ "R_CEU_Open", "group___c_e_u.html#ga160a6d072bdc63cbe5ae43d054e64eb8", null ],
     [ "R_CEU_Close", "group___c_e_u.html#ga4395a4040b13c2a49a4140c31063997a", null ],

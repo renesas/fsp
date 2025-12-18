@@ -50,6 +50,9 @@ var searchData=
   ['ether_5fmagic_5fpacket_5fnot_5fdetected',['ETHER_MAGIC_PACKET_NOT_DETECTED',['../group___e_t_h_e_r.html#ggac38559e233d4678a9b24d2ee16aa9d7ba655f088c230f2c5495ef492408337e09',1,'r_ether.h']]],
   ['ether_5fmulticast_5fdisable',['ETHER_MULTICAST_DISABLE',['../group___e_t_h_e_r___a_p_i.html#ggae306f2239ef51705ac7e2dc962837947a8a5b70a7524e8553859ad2fc9a56d326',1,'r_ether_api.h']]],
   ['ether_5fmulticast_5fenable',['ETHER_MULTICAST_ENABLE',['../group___e_t_h_e_r___a_p_i.html#ggae306f2239ef51705ac7e2dc962837947abeb2aad110a5ee2c2160d1fdd9945806',1,'r_ether_api.h']]],
+  ['ether_5fphy_5fevent_5fpreemption_5flink_5fverify_5ffail',['ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_FAIL',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga118294e3043fe8486e757ea45c792bdea209902097191fb7e72d0c75e0461f854',1,'r_ether_phy_api.h']]],
+  ['ether_5fphy_5fevent_5fpreemption_5flink_5fverify_5freceive',['ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_RECEIVE',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga118294e3043fe8486e757ea45c792bdea2883ef45e2155a2b00b411b0ccc1625c',1,'r_ether_phy_api.h']]],
+  ['ether_5fphy_5fevent_5fpreemption_5flink_5fverify_5fsuccess',['ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_SUCCESS',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga118294e3043fe8486e757ea45c792bdea2c929292e59bcffb1f2d5084907a4b27',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5fflow_5fcontrol_5fdisable',['ETHER_PHY_FLOW_CONTROL_DISABLE',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea7bf987185751192bc208fd008e45b2a2',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5fflow_5fcontrol_5fenable',['ETHER_PHY_FLOW_CONTROL_ENABLE',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gga113895595732b38ac87e4efecacb87dea72cae4de16169f3d9d11aa3436947232',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5finterface_5fstatus_5finitialized',['ETHER_PHY_INTERFACE_STATUS_INITIALIZED',['../group___e_t_h_e_r___p_h_y.html#gga42a75f14ab026764468078631e8d0260ac53543202bb312f3ab2e486166a25f31',1,'r_ether_phy.h']]],
@@ -180,5 +183,10 @@ var searchData=
   ['external_5firq_5ftrig_5ffalling',['EXTERNAL_IRQ_TRIG_FALLING',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57caace14d51313fed5f17da4b9828fd5412',1,'r_external_irq_api.h']]],
   ['external_5firq_5ftrig_5flevel_5fhigh',['EXTERNAL_IRQ_TRIG_LEVEL_HIGH',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca95c925c82cb30d0d54b8de8981c0cdd7',1,'r_external_irq_api.h']]],
   ['external_5firq_5ftrig_5flevel_5flow',['EXTERNAL_IRQ_TRIG_LEVEL_LOW',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57cae0ae8739569bb4721c7ed289397b9c4f',1,'r_external_irq_api.h']]],
-  ['external_5firq_5ftrig_5frising',['EXTERNAL_IRQ_TRIG_RISING',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca2d7a4f8fd21fad6f5a671336152d46b0',1,'r_external_irq_api.h']]]
+  ['external_5firq_5ftrig_5frising',['EXTERNAL_IRQ_TRIG_RISING',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca2d7a4f8fd21fad6f5a671336152d46b0',1,'r_external_irq_api.h']]],
+  ['external_5firq_5ftrigger_5fboth_5fedge',['EXTERNAL_IRQ_TRIGGER_BOTH_EDGE',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57cac10d825f3f880bd793da60e33a7cb710',1,'r_external_irq_api.h']]],
+  ['external_5firq_5ftrigger_5ffalling',['EXTERNAL_IRQ_TRIGGER_FALLING',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca844b8e1d71f072e3851ae09cb35f4446',1,'r_external_irq_api.h']]],
+  ['external_5firq_5ftrigger_5flevel_5fhigh',['EXTERNAL_IRQ_TRIGGER_LEVEL_HIGH',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca88f2fa1dbf960a6eea261ba0504b8b79',1,'r_external_irq_api.h']]],
+  ['external_5firq_5ftrigger_5flevel_5flow',['EXTERNAL_IRQ_TRIGGER_LEVEL_LOW',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca1ea0cbe55d01890d65e586ec51ca853c',1,'r_external_irq_api.h']]],
+  ['external_5firq_5ftrigger_5frising',['EXTERNAL_IRQ_TRIGGER_RISING',['../group___e_x_t_e_r_n_a_l___i_r_q___a_p_i.html#gga2d1960d763da14da209e16fbb972d57ca2807fd02e94df49de80d4a98d377294b',1,'r_external_irq_api.h']]]
 ];

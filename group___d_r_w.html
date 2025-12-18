@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -245,7 +245,9 @@ $(document).ready(function(){initNavTree('group___d_r_w.html','');});
 Overview</h1>
 <dl class="section note"><dt>Note</dt><dd><b>The D/AVE 2D Port Interface (D1 layer) is a HAL layer for the D/AVE D2 layer API and does not provide any interfaces to the user. Consult the <a href="https://www.renesas.com/us/en/document/lbr/tes-dave2d-driver-documentation">TES Dave2D Driver Documentation</a> for further information on using the D2 API.</b></dd>
 <dd>
-For cross-platform compatibility purposes the D1 and D2 APIs are not bound by FSP coding guidelines for function names and general module functionality.</dd></dl>
+For cross-platform compatibility purposes the D1 and D2 APIs are not bound by FSP coding guidelines for function names and general module functionality.</dd>
+<dd>
+The <code>d1_cacheflush()</code> and <code>d1_cacheblockflush()</code> functions provided by the D1 layer are weakly defined and may be overridden by the user to perform cache maintenance if necessary for a given RA device and configuration.</dd></dl>
 <p><a class="anchor" id="um_drw_allocate_memory"></a><a class="anchor" id="um_drw_allocate_video_memory"></a><a class="anchor" id="um_drw_check_device_capability"></a><a class="anchor" id="um_drw_close_device"></a><a class="anchor" id="um_drw_copy_from_video_memory"></a><a class="anchor" id="um_drw_copy_to_video_memory"></a><a class="anchor" id="um_drw_disable_interrupt"></a><a class="anchor" id="um_drw_enable_interrupt"></a><a class="anchor" id="um_drw_flush_cache"></a><a class="anchor" id="um_drw_flush_cache_block"></a><a class="anchor" id="um_drw_free_memory"></a><a class="anchor" id="um_drw_free_video_memory"></a><a class="anchor" id="um_drw_get_memory_size"></a><a class="anchor" id="um_drw_get_register"></a><a class="anchor" id="um_drw_isr"></a><a class="anchor" id="um_drw_map_from_video_memory"></a><a class="anchor" id="um_drw_map_to_video_memory"></a><a class="anchor" id="um_drw_map_video_memory"></a><a class="anchor" id="um_drw_no_support_for_non_d1_dave2d"></a><a class="anchor" id="um_drw_open_device"></a><a class="anchor" id="um_drw_query_irq"></a><a class="anchor" id="um_drw_query_memory_architecture"></a><a class="anchor" id="um_drw_query_video_memory"></a><a class="anchor" id="um_drw_resume_a_thread"></a><a class="anchor" id="um_drw_return_d1_device_handle"></a><a class="anchor" id="um_drw_set_register"></a><a class="anchor" id="um_drw_support_d1_dave2d"></a><a class="anchor" id="um_drw_suspend_a_thread"></a><a class="anchor" id="um_drw_unmap_video_memory"></a><a class="anchor" id="um_drw_d2_layer"></a> </p>
 <h1><a class="anchor" id="r-drw-configuration"></a>
 Configuration</h1>
@@ -330,7 +332,7 @@ Limitations</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

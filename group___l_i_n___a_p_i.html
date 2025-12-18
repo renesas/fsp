@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -271,6 +271,9 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:ga7c9ec12840b6f786933fa5abec133888"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#ga7c9ec12840b6f786933fa5abec133888">lin_data_length_t</a></td></tr>
+<tr class="memdesc:ga7c9ec12840b6f786933fa5abec133888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data length type uint8_t.  <a href="#ga7c9ec12840b6f786933fa5abec133888">More...</a><br /></td></tr>
+<tr class="separator:ga7c9ec12840b6f786933fa5abec133888"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf205a9f901ded2429ea55d18117d99b8"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_i_n___a_p_i.html#gaf205a9f901ded2429ea55d18117d99b8">lin_ctrl_t</a></td></tr>
 <tr class="separator:gaf205a9f901ded2429ea55d18117d99b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -305,13 +308,13 @@ id</td>
 <td class="fielddoc">
 The unprotected frame ID associated with the data transfer. </td></tr>
 <tr><td class="fieldtype">
-<a id="a0a0a70261885dacfdd52d914592868e6"></a>union <a class="el" href="group___l_i_n___a_p_i.html#unionlin__transfer__params__t_8____unnamed____">lin_transfer_params_t</a></td>
+<a id="ac6d5f0bee8e1485dc99d57ccd05a1378"></a>union <a class="el" href="group___l_i_n___a_p_i.html#unionlin__transfer__params__t_8____unnamed____">lin_transfer_params_t</a></td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="afe681d74e72baac9af01cb15e732f1ee"></a>uint8_t</td>
+<a id="a3f0e298c6c0bca252be729bf1f9bb9e4"></a><a class="el" href="group___l_i_n___a_p_i.html#ga7c9ec12840b6f786933fa5abec133888">lin_data_length_t</a></td>
 <td class="fieldname">
 num_bytes</td>
 <td class="fielddoc">
@@ -353,7 +356,7 @@ event</td>
 <td class="fielddoc">
 Event code. </td></tr>
 <tr><td class="fieldtype">
-<a id="a8d57becd55ba155f218e98327f1dddc3"></a>uint8_t</td>
+<a id="a773419efbbc3ec73b05b1a0c4696af8d"></a><a class="el" href="group___l_i_n___a_p_i.html#ga7c9ec12840b6f786933fa5abec133888">lin_data_length_t</a></td>
 <td class="fieldname">
 bytes_received</td>
 <td class="fielddoc">
@@ -753,6 +756,23 @@ Pointer to the API structure for this instance. </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga7c9ec12840b6f786933fa5abec133888"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c9ec12840b6f786933fa5abec133888">&#9670;&nbsp;</a></span>lin_data_length_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___l_i_n___a_p_i.html#ga7c9ec12840b6f786933fa5abec133888">lin_data_length_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Data length type uint8_t. </p>
+<p>LIN data length type </p>
+
+</div>
+</div>
 <a id="gaf205a9f901ded2429ea55d18117d99b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf205a9f901ded2429ea55d18117d99b8">&#9670;&nbsp;</a></span>lin_ctrl_t</h2>
 
@@ -850,7 +870,15 @@ Pointer to the API structure for this instance. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a2f0a3f2cd095b347aebce928d11b6bc3"></a>LIN_EVENT_RX_WAKEUP_COMPLETE&#160;</td><td class="fielddoc"><p>Receive wake up complete event. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72adb4deb2702dc1e4817256463ff595d7d"></a>LIN_EVENT_ERR_TIMEOUT&#160;</td><td class="fielddoc"><p>Timeout error event. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a5ae1fa1893ba610f5b4ca13c0aff3b96"></a>LIN_EVENT_ERR_BUS_COLLISION_DETECTED&#160;</td><td class="fielddoc"><p>Bus collision detection event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a40276e902d1cda938a748d18ec610e99"></a>LIN_EVENT_ERR_SYNC&#160;</td><td class="fielddoc"><p>Sync field error event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72ab463471538d30c062b6647cdbc4060e1"></a>LIN_EVENT_ERR_RESPONSE_PREPARE&#160;</td><td class="fielddoc"><p>Response preparation error event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a86c4dffee8faa6fb1c1a9cfb5992828f"></a>LIN_EVENT_ERR_PHYSICAL_BUS&#160;</td><td class="fielddoc"><p>Physical bus error detection event. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga7348cb44dbe95ba7bcd29c82cfbf8a72a1b5e897b9f7b6c31df9e99b119d71551"></a>LIN_EVENT_ERR_COUNTER_OVERFLOW&#160;</td><td class="fielddoc"><p>Counter overflow event. </p>
 </td></tr>
@@ -870,7 +898,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

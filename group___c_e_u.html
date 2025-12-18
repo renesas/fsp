@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -269,8 +269,13 @@ Features</h2>
 <li>Supports 8 or 16-bit camera bus<a class="anchor" id="um_ceu_continuous_capture"></a></li>
 <li>Capture images up to 5 MP (2560x1920)<a class="anchor" id="um_ceu_synchronous_capture"></a><a class="anchor" id="um_ceu_data_enable_capture"></a></li>
 <li>Capture incoming data directly into a user defined memory location without the need for DTC/DMAC</li>
-<li>Capture specified size 'raw' image data using Data Synchronous Fetch mode (e.g. RGB565, YUV422, etc.)</li>
-<li>Capture binary image data using Data Enable fetch mode (e.g. JPEG)</li>
+<li>Capture specified size 'raw' image data using Data Synchronous Fetch Mode (e.g. RGB565, YUV422, etc.)</li>
+<li>Capture binary image data using Data Enable Fetch Mode (e.g. JPEG)</li>
+<li>Capture YCbCr image data using Image Capture Mode<a class="anchor" id="um_ceu_image_capture"></a><ul>
+<li>Optional hardware conversion from YCbCr422 to YCbCr420<a class="anchor" id="um_ceu_convert_format"></a></li>
+<li>Optional scale down<a class="anchor" id="um_ceu_scale_down"></a></li>
+</ul>
+</li>
 <li>Perform basic timing signal validation<a class="anchor" id="um_ceu_data_validation"></a> </li>
 </ul>
 <h1><a class="anchor" id="r-ceu-configuration"></a>
@@ -361,13 +366,43 @@ Falling edge of the camera clock</li>
 <tr class="tree_lvl_1_item">
 <td class="tree_lvl_1_cell">Capture Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
+Image Capture</li>
+<li>
 Data Synchronous Fetch</li>
 <li>
 Data Enable Fetch</li>
 </ul>
 </td><td>Data Synchronous Fetch </td><td>Capture mode of incoming data. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Image Component Input Order (Image Capture Mode Only)</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Cb0, Y0, Cr0, Y1</li>
+<li>
+Cr0, Y0, Cb0, Y1</li>
+<li>
+Y0, Cb0, Y1, Cr0</li>
+<li>
+Y0, Cr0, Y1, Cb0</li>
+</ul>
+</td><td>Cb0, Y0, Cr0, Y1 </td><td>Set the input order of the luminance component and chrominance component (Image Capture Mode only). This setting must match your camera's output format. </td></tr>
 <tr class="tree_lvl_1">
 <td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Output  </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Format  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Conversion</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+YCbCr422 (No Conversion)</li>
+<li>
+YCbCr420 (Hardware Conversion from YCbCr422)</li>
+</ul>
+</td><td>YCbCr422 (No Conversion) </td><td>Set the output format for captured CEU data. This setting is applicable in Image Capture Mode only. </td></tr>
+<tr class="tree_lvl_2">
+<td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Scale-Down  </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Horizontal Size</td><td>Value must be an integer.</td><td>0 </td><td>Specify the scaled down output image horizontal size (pixels). This setting is applicable in Image Capture Mode only. If set to 0, horizontal scale-down is disabled. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Vertical Size</td><td>Value must be an integer.</td><td>0 </td><td>Specify the scaled down output image vertical size (lines). This setting is applicable in Image Capture Mode only. If set to 0, vertical scale-down is disabled. </td></tr>
 <tr class="tree_lvl_2">
 <td class="tree_lvl_2" colspan="4"><span class="chevron-collapsed"></span> Output &gt; Buffer  </td></tr>
 <tr class="tree_lvl_2_item">
@@ -486,17 +521,24 @@ Pin Configuration</h2>
 <dl class="section note"><dt>Note</dt><dd>Camera control and serial communication pins must be configured separately and are not controlled by this module.</dd></dl>
 <h2>Capture Resolution</h2>
 <ul>
-<li>For Data Synchronous Fetch mode, capture size is calculated using the configured Horizontal Resolution, Vertical Resolution, and Bytes Per Pixel.</li>
-<li>For Data Enable Fetch mode, the capture size is controlled by the external module and is defined as a period from a VD rising edge to the VD falling edge. For this mode Horizontal Resolution and Vertical Resolution are not used. However, the maximum capture size is configured using the 'Data Enable Buffer Size' option, which is used to configure the maximum write 'Firewall Address' location.</li>
+<li>For Data Synchronous Fetch Mode and Image Capture Mode, capture size is calculated using the configured Horizontal Resolution, Vertical Resolution, and Bytes Per Pixel.</li>
+<li>For Data Enable Fetch Mode, the capture size is controlled by the external module and is defined as a period from a VD rising edge to the VD falling edge. For this mode Horizontal Resolution and Vertical Resolution are not used. However, the maximum capture size is configured using the 'Data Enable Buffer Size' option, which is used to configure the maximum write 'Firewall Address' location.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>For Data Enable Fetch mode, the external module must transmit data in 4-byte units.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>For Data Enable Fetch Mode, the external module must transmit data in 4-byte units.</dd></dl>
 <h2>Capture Offset</h2>
 <p><a class="anchor" id="um_ceu_capture_offset"></a>The blanking period from a horizontal or vertical sync signal differs among external modules. Therefore, the capture start location must be specified in terms of external cycles from the sync signal so that an image can be captured from the valid image area. Some external modules output a horizontal sync signal as a data enable signal. In this case, there is no blanking period so the configured offsets must be cleared to 0.</p>
 <ul>
 <li>The horizontal capture start location must be specified in terms of the number of pixels from a horizontal sync signal.</li>
 <li>The vertical capture start location must be specified in terms of the number of H-cycles from a vertical sync signal.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Capture offset is not used when Data Enable Fetch mode is configured.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Capture offset is not used when Data Enable Fetch Mode is configured.</dd></dl>
+<h2><a class="anchor" id="r-ceu-scale-down"></a>
+Scale Down</h2>
+<p>Scale down is configured by setting Output &gt; Scale-Down properties to the desired output image dimensions in the configurator. When the configured output image size is less than the output input image size, the image will be scaled down to the output size before writing the data to memory.</p>
+<p>The configurator automatically calculates the appropriate capture filter register scaling settings based on the requested output size. The filter output must be a multiple of 4 (vertical lines) or 8 (horizontal pixels).</p>
+<dl class="section note"><dt>Note</dt><dd>Hardware scale-down is available only in Image Capture Mode.</dd>
+<dd>
+See also: <a href="#r-ceu-scale-down-limitations">Scale Down Limitations</a>.</dd></dl>
 <h1><a class="anchor" id="r-ceu-usage_notes"></a>
 Usage Notes</h1>
 <h2><a class="anchor" id="r-ceu-interrupt-configuration"></a>
@@ -509,10 +551,37 @@ Interrupt Configuration</h2>
 CEU Setup With External Camera</h2>
 <ul>
 <li>Ensure that the memory pointed to by p_buffer is both valid and large enough to store a complete image.</li>
-<li>When Data Synchronous Fetch mode is configured, the amount of space required (in bytes) may be calculated as size (bytes) = image width (pixels) * image height (lines) * number of bytes per pixel.</li>
 <li>Ensure that the capture buffer address is 4-byte aligned and the buffer size is divisible by 32 bytes.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Any required configuration for external cameras must be performed by the application.</dd></dl>
+<h3>Notes on Buffer Allocation in Data Synchronous Fetch Mode</h3>
+<ul>
+<li>When Data Synchronous Fetch Mode is configured, the amount of space required (in bytes) may be calculated as size (bytes) = image width (pixels) * image height (lines) * number of bytes per pixel.</li>
+</ul>
+<h3>Notes on Buffer Allocation in Image Capture Mode</h3>
+<p>Image Capture Mode captures luminance (Y) and chrominance (Cb/Cr) components of the image in separate memory locations and can be selected by the Input &gt; Capture Mode property.</p>
+<ul>
+<li>The Y and Cb/Cr buffers must be contiguously allocated in memory, with the chrominance buffer located immediately after the luminance buffer.</li>
+<li>The size of the luminance buffer in bytes should be the <code>image width (pixels) * image height (lines) * 2</code>.</li>
+<li>The size of the chrominance buffer varies depending on whether YCbCr420 format conversion is enabled<ul>
+<li><b>YCbCr422 (no conversion)</b>: Same size as luminance buffer</li>
+<li><b>YCbCr420 (format conversion enabled)</b>: Half size of luminance buffer</li>
+</ul>
+</li>
+<li>Pass the contiguous buffer pointer to <code>R_CEU_CaptureStart</code>. The firmware will automatically calculate the chrominance buffer address based on the expected luminance data size.</li>
+</ul>
+<h4>YCbCr422 Buffer Example in Image Capture Mode</h4>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Allocation example */</span></div><div class="line"><span class="preprocessor">#define LUMINANCE_BUFFER_SIZE_BYTES      (IMAGE_WIDTH * IMAGE_HEIGHT)</span></div><div class="line"><span class="preprocessor">#define CHROMINANCE_BUFFER_SIZE_BYTES    (LUMINANCE_BUFFER_SIZE_BYTES)</span></div><div class="line"></div><div class="line">__ALIGNED(32) uint8_t buffer_ycbcr422[LUMINANCE_BUFFER_SIZE_BYTES +</div><div class="line">                                      CHROMINANCE_BUFFER_SIZE_BYTES] __attribute__((section(BSP_UNINIT_SECTION_PREFIX</div><div class="line">                                                                                            &quot;.sdram_noinit&quot;)));</div><div class="line"></div><div class="line"><span class="comment">/* Access example */</span></div><div class="line">uint8_t * p_luma_ycbcr422   = &amp;buffer_ycbcr422[0];</div><div class="line">uint8_t * p_chroma_ycbcr422 = &amp;buffer_ycbcr422[LUMINANCE_BUFFER_SIZE_BYTES];</div><div class="line"></div></div><!-- fragment --> <h4>YCbCr420 Buffer Example in Image Capture Mode</h4>
+<div class="fragment"><div class="line"></div><div class="line"><span class="comment">/* Allocation example */</span></div><div class="line"><span class="preprocessor">#define LUMINANCE_BUFFER_SIZE_BYTES      (IMAGE_WIDTH * IMAGE_HEIGHT)</span></div><div class="line"><span class="preprocessor">#define CHROMINANCE_BUFFER_SIZE_BYTES    (LUMINANCE_BUFFER_SIZE_BYTES / 2)</span></div><div class="line"></div><div class="line">__ALIGNED(32) uint8_t buffer_ycbcr420[LUMINANCE_BUFFER_SIZE_BYTES +</div><div class="line">                                      CHROMINANCE_BUFFER_SIZE_BYTES] __attribute__((section(BSP_UNINIT_SECTION_PREFIX</div><div class="line">                                                                                            &quot;.sdram_noinit&quot;)));</div><div class="line"></div><div class="line"><span class="comment">/* Access example */</span></div><div class="line">uint8_t * p_luma_ycbcr420   = &amp;buffer_ycbcr420[0];</div><div class="line">uint8_t * p_chroma_ycbcr420 = &amp;buffer_ycbcr420[LUMINANCE_BUFFER_SIZE_BYTES];</div><div class="line"></div></div><!-- fragment --> <h2><a class="anchor" id="r-ceu-limitations"></a>
+Limitations</h2>
+<h3><a class="anchor" id="r-ceu-scale-down-limitations"></a>
+Scale Down Limitations</h3>
+<ul>
+<li>Scale down is available only in Image Capture Mode</li>
+<li>When the input image is larger than VGA (640×480) the output image size must be between SubQCIF (128×96) and VGA (640×480), inclusive.</li>
+<li>The scaled output image cannot be larger than VGA, regardless of input size</li>
+<li>Images cannot be scaled down by more than 1/16</li>
+</ul>
 <h1><a class="anchor" id="r-ceu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -545,6 +614,10 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga36b9c0db3014482fb6e6af88997d3341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6b65e70754e487d9e9e519bef166b8d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_u.html#gac6b65e70754e487d9e9e519bef166b8d">ceu_capture_format_t</a> </td></tr>
 <tr class="separator:gac6b65e70754e487d9e9e519bef166b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga724a9af22e75db9889cef50afe37a04f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_u.html#ga724a9af22e75db9889cef50afe37a04f">ceu_input_order_t</a> </td></tr>
+<tr class="separator:ga724a9af22e75db9889cef50afe37a04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75cdc2264176d93c445f8f4a5410b7f2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_e_u.html#ga75cdc2264176d93c445f8f4a5410b7f2">ceu_output_format_t</a> </td></tr>
+<tr class="separator:ga75cdc2264176d93c445f8f4a5410b7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structceu__byte__swapping__t" id="structceu__byte__swapping__t"></a>
@@ -640,6 +713,18 @@ capture_format</td>
 <td class="fielddoc">
 Capture format for incoming data. </td></tr>
 <tr><td class="fieldtype">
+<a id="a0ed3f2022d5c2d7bd0557fe53679b9be"></a><a class="el" href="group___c_e_u.html#ga724a9af22e75db9889cef50afe37a04f">ceu_input_order_t</a></td>
+<td class="fieldname">
+input_order</td>
+<td class="fielddoc">
+Input Y and CbCr order (Used for image capture mode) </td></tr>
+<tr><td class="fieldtype">
+<a id="a236b36f834905782f6bf2075858690d4"></a><a class="el" href="group___c_e_u.html#ga75cdc2264176d93c445f8f4a5410b7f2">ceu_output_format_t</a></td>
+<td class="fieldname">
+output_format</td>
+<td class="fielddoc">
+Output format for storing to memory (Used for image capture mode) </td></tr>
+<tr><td class="fieldtype">
 <a id="a72b64d8fc1663beb5174d45d25199140"></a><a class="el" href="group___c_e_u.html#gaaa369fc7b221162c5b203dde1e8117f6">ceu_data_bus_size_t</a></td>
 <td class="fieldname">
 data_bus_width</td>
@@ -681,6 +766,24 @@ Controls byte swapping in 8-bit, 16-bit and 32-bit units. </td></tr>
 burst_mode</td>
 <td class="fielddoc">
 Bus transfer data size. </td></tr>
+<tr><td class="fieldtype">
+<a id="a9b3e7e470995c382ffe81632cf82b97a"></a>uint32_t</td>
+<td class="fieldname">
+scale_down_factor</td>
+<td class="fielddoc">
+Scale down capture filter register setting (Used for image capture mode) </td></tr>
+<tr><td class="fieldtype">
+<a id="af9ab59d5dc98a2eeea0d1bee7a39aef9"></a>uint16_t</td>
+<td class="fieldname">
+h_output_size</td>
+<td class="fielddoc">
+Output image horizontal size, in pixels (Used for image capture mode) </td></tr>
+<tr><td class="fieldtype">
+<a id="ae1fde53e5e769afd12ab3b671ecbc4ba"></a>uint16_t</td>
+<td class="fieldname">
+v_output_size</td>
+<td class="fielddoc">
+Output image vertical size, in lines (Used for image capture mode) </td></tr>
 <tr><td class="fieldtype">
 <a id="aaa40a8e4651da547249153a59fd2529f"></a>uint32_t</td>
 <td class="fieldname">
@@ -876,9 +979,57 @@ PDC IRQ number. </td></tr>
 </div><div class="memdoc">
 <p>Capture mode for CEU. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac6b65e70754e487d9e9e519bef166b8da937dca7bc35afe1775be357d8846e739"></a>CEU_CAPTURE_FORMAT_DATA_SYNCHRONOUS&#160;</td><td class="fielddoc"><p>Raw formatted data. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac6b65e70754e487d9e9e519bef166b8da8187f0f9451d147e44ac52c4a2fa7013"></a>CEU_CAPTURE_FORMAT_IMAGE_CAPTURE&#160;</td><td class="fielddoc"><p>YCbCr data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac6b65e70754e487d9e9e519bef166b8da937dca7bc35afe1775be357d8846e739"></a>CEU_CAPTURE_FORMAT_DATA_SYNCHRONOUS&#160;</td><td class="fielddoc"><p>Raw formatted data. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggac6b65e70754e487d9e9e519bef166b8da210a1bd6917f7cf7d64ff14a55b424a6"></a>CEU_CAPTURE_FORMAT_DATA_ENABLE&#160;</td><td class="fielddoc"><p>JPG formatted data. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga724a9af22e75db9889cef50afe37a04f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga724a9af22e75db9889cef50afe37a04f">&#9670;&nbsp;</a></span>ceu_input_order_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_e_u.html#ga724a9af22e75db9889cef50afe37a04f">ceu_input_order_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the input order of the luminance component and chrominance component (Y and CbCr). Used for image capture mode only. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga724a9af22e75db9889cef50afe37a04fa4f591a5baea0e71e56d5419a5a7631e3"></a>CEU_INPUT_ORDER_CB0Y0CR0Y1&#160;</td><td class="fielddoc"><p>Image input data is fetched in the order of Cb0, Y0, Cr0, Y1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga724a9af22e75db9889cef50afe37a04fa02d0274e8d3f5b17de7215880584561a"></a>CEU_INPUT_ORDER_CR0Y0CB0Y1&#160;</td><td class="fielddoc"><p>Image input data is fetched in the order of Cr0, Y0, Cb0, Y1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga724a9af22e75db9889cef50afe37a04fa8a27198ab734f2d99b0905e84d731645"></a>CEU_INPUT_ORDER_Y0CB0Y1CR0&#160;</td><td class="fielddoc"><p>Image input data is fetched in the order of Y0, Cb0, Y1, Cr0. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga724a9af22e75db9889cef50afe37a04fa2cbec90ef0129fcd171811d667f2b28e"></a>CEU_INPUT_ORDER_Y0CR0Y1CB0&#160;</td><td class="fielddoc"><p>Image input data is fetched in the order of Y0, Cr0, Y1, Cb0. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga75cdc2264176d93c445f8f4a5410b7f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga75cdc2264176d93c445f8f4a5410b7f2">&#9670;&nbsp;</a></span>ceu_output_format_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___c_e_u.html#ga75cdc2264176d93c445f8f4a5410b7f2">ceu_output_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Format for outputting captured CEU data to memory. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga75cdc2264176d93c445f8f4a5410b7f2a16aa7ea71d95b5adb0702751a1cac279"></a>CEU_OUTPUT_FORMAT_YCBCR420&#160;</td><td class="fielddoc"><p>Output the data in YCbCr 4:2:0 format (hardware conversion from YCbCr 4:2:2) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga75cdc2264176d93c445f8f4a5410b7f2aac7a71c06e71ea8fdb1616aba050af28"></a>CEU_OUTPUT_FORMAT_YCBCR422&#160;</td><td class="fielddoc"><p>Output the data in YCbCr 4:2:2 format (no conversion) </p>
 </td></tr>
 </table>
 
@@ -1091,7 +1242,7 @@ PDC IRQ number. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

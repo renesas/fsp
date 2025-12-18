@@ -20,6 +20,7 @@ var searchData=
   ['ether_5flink_5festablish_5fstatus_5ft',['ether_link_establish_status_t',['../group___e_t_h_e_r.html#ga9a49b9f7718ca059e906c12de43c0784',1,'r_ether.h']]],
   ['ether_5fmagic_5fpacket_5ft',['ether_magic_packet_t',['../group___e_t_h_e_r.html#gac38559e233d4678a9b24d2ee16aa9d7b',1,'r_ether.h']]],
   ['ether_5fmulticast_5ft',['ether_multicast_t',['../group___e_t_h_e_r___a_p_i.html#gae306f2239ef51705ac7e2dc962837947',1,'r_ether_api.h']]],
+  ['ether_5fphy_5fevent_5ft',['ether_phy_event_t',['../group___e_t_h_e_r___p_h_y___a_p_i.html#ga118294e3043fe8486e757ea45c792bde',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5fflow_5fcontrol_5ft',['ether_phy_flow_control_t',['../group___e_t_h_e_r___p_h_y___a_p_i.html#ga113895595732b38ac87e4efecacb87de',1,'r_ether_phy_api.h']]],
   ['ether_5fphy_5finterface_5fstatus_5ft',['ether_phy_interface_status_t',['../group___e_t_h_e_r___p_h_y.html#ga42a75f14ab026764468078631e8d0260',1,'r_ether_phy.h']]],
   ['ether_5fphy_5flink_5fspeed_5ft',['ether_phy_link_speed_t',['../group___e_t_h_e_r___p_h_y___a_p_i.html#gaf227c12b47e90edc8ec5729bfccf9bfb',1,'r_ether_phy_api.h']]],

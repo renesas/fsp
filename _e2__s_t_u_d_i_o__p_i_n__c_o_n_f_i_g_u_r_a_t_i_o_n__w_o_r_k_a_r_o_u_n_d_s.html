@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
-<title>RA Flexible Software Package Documentation: arch Directory Reference</title>
+<title>RA Flexible Software Package Documentation: e2 Studio 2025-12 Pin Configuration Workarounds</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dir_2cfdf753873a30368e558ff3e32b76d9.html','');});
+$(document).ready(function(){initNavTree('_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html','');});
 </script>
 
 <script src="search/mark.min.js"></script>
@@ -237,17 +237,110 @@ $(document).ready(function(){initNavTree('dir_2cfdf753873a30368e558ff3e32b76d9.h
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">arch Directory Reference</div>  </div>
+<div class="title">e2 Studio 2025-12 Pin Configuration Workarounds </div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-changes"></a>
+Changes</h1>
+<table class="doxtable">
+<tr>
+<th>FSP Version </th><th>Changes  </th></tr>
+<tr>
+<td>6.3.0 </td><td>Initial version. </td></tr>
+</table>
+<h1><a class="anchor" id="E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-overview"></a>
+Overview</h1>
+<p>The minimum e2 Studio version for FSP v6.3.0 is e2 Studio 2025-12. e2 Studio 2025-12 has known issues with the pin configuration tooling that is accessed within the project configuration view, which is the "Pins" tab of an open solution or project configuration. This guide serves to document these known issues and to provide workarounds for different affected project types.</p>
+<h1><a class="anchor" id="E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-affected-project-types"></a>
+Affected Project Types</h1>
+<p>Generally, any project chain which contains <b>three or more</b> projects will see issues with the pin configuration tooling. A solution counts towards the project chain length. For example, a (Solution + Project) would count as a project chain of length two. Pin configuration actions like assignments, unassignments, and configuration changes that are meant to appear downstream in the project chain beyond the project in which they are made, may fail to propagate correctly beyond the first encountered downstream project.</p>
+<p>FSP Solution Templates which create affected project chains include the following.</p><ul>
+<li>Single Core, TrustZone (Solution + Secure Project + Nonsecure project)</li>
+<li>Multicore, Flat (Solution + CPU0 Project + CPU1 Project)</li>
+<li>Multicore, TrustZone (Solution + CPU0 Secure Project + CPU1 Secure Project + CPU0 Nonsecure Project + CPU1 Nonsecure Project)</li>
+</ul>
+<p>The currently available choices of Bare Metal, FreeRTOS, or ThreadX for a template do not matter since those categories only affect the inclusion of additional packs or configuration and do not affect project chain length.</p>
+<h1><a class="anchor" id="E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-workarounds-for-affected-project-types"></a>
+Workarounds for Affected Project Types</h1>
+<dl class="section note"><dt>Note</dt><dd>"project chain" refers to the combination of the solution (if present) and all projects. "project" only refers to a project and not a solution.</dd>
+<dd>
+Consult the below legend to understand the pin configuration UI elements referred to in the workarounds.</dd></dl>
+<div class="image">
+<img src="e2_studio_pin_configuration_ui.png" alt="e2_studio_pin_configuration_ui.png"/>
+<div class="caption">
+e2 Studio Pin Configuration UI</div></div>
+ <h2>(Single Core, TrustZone) and (Multicore, Flat) Solution Templates (Solution + Two Projects)</h2>
+<dl class="section note"><dt>Note</dt><dd>Under this section, "first project" may be either a Secure project or CPU0 project while "second project" may be either a Nonsecure project or a CPU1 project depending on the template type which was generated.</dd></dl>
+<h3>Workaround</h3>
+<p>Disable all pin configuration generation in the solution before the propagation of pin information to the second project. Do not use the solution for pin configuration. The first and second projects may further perform pin configuration.</p>
+<p>In the solution.</p><ol type="1">
+<li>Immediately after creating the template, the solution and all projects will build. Wait until this is complete and the solution configuration opens automatically.</li>
+<li>Open the pin configuration tool ("Pins" tab) in the now open solution configuration.</li>
+<li>Select each pin configuration in the listbox, and if the "Generated data:" checkbox is checked for the pin configuration, uncheck the box.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>In the first project.</p><ol type="1">
+<li>Open the first project configuration and navigate to the pin configuration tool ("Pins" tab).</li>
+<li>Assign and configure any pins which should belong to the first project, and unassign (disable) any pins which should be configurable in the second project.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>In the second project.</p><ol type="1">
+<li>Open the second project configuration and navigate to the pin configuration tool ("Pins" tab).</li>
+<li>If any pins are marked as an Error or Warning, modify their configuration to be identical to the configuration of the first project which owns the pin.</li>
+<li>Review all pins which have a green checkmark, and if any configuration field of the pin has a yellow triangle, modify that configuration field to be identical to the configuration of the first project in the chain which owns the pin.</li>
+<li>Assign and configure any pins which are unassigned, if necessary.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>As a final optional step.</p><ol type="1">
+<li>The <code>ra_gen/pin_data.c</code> of each project may be checked for correctness as a final means of detecting a misconfigured pin.</li>
+</ol>
+<p>The solution must remain unused for any pin configuration. The solution may still be used as a means to build all projects sequentially. Further pin configuration modifications may occur in the first and second project configurations.</p>
+<h2>(Multicore, TrustZone) Solution Template (Solution + Four Projects)</h2>
+<h3>Workaround</h3>
+<p>Disable all pin configuration generation in the solution before the propagation of pin information to the remaining projects. Do not use the solution for pin configuration. Perform all pin configuration in order of the project chain, from the CPU0 Secure project through the CPU1 Nonsecure project. The CPU0 Nonsecure and CPU1 Nonsecure projects may further perform pin configuration.</p>
+<p>In the solution.</p><ol type="1">
+<li>Immediately after creating the template, the solution and all projects will build. Wait until this is complete and the solution configuration opens automatically.</li>
+<li>Open the pin configuration tool ("Pins" tab) in the now open solution configuration.</li>
+<li>Select each pin configuration in the listbox, and if the "Generated data:" checkbox is checked for the pin configuration, uncheck the box.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>In the CPU0 Secure project.</p><ol type="1">
+<li>Open the CPU0 Secure project configuration and navigate to the pin configuration tool ("Pins" tab).</li>
+<li>Assign and configure any pins which should belong to the CPU0 Secure project, and unassign (disable) any pins which should be configurable in the CPU1 Secure, CPU0 Nonsecure, or CPU1 Nonsecure projects.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>In the CPU1 Secure project.</p><ol type="1">
+<li>Open the CPU1 Secure configuration and navigate to the pin configuration tool ("Pins" tab).</li>
+<li>If any pins are marked as an Error, modify their configuration to be identical to the configuration of the CPU0 Secure project which owns the pin.</li>
+<li>Review all pins which have a green checkmark, and if any configuration field of the pin has a yellow triangle, modify that configuration field to be identical to the configuration of the CPU0 Secure project which owns the pin.</li>
+<li>Assign and configure any pins which are unassigned, if necessary.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>In the CPU0 Nonsecure project.</p><ol type="1">
+<li>Open the CPU0 Nonsecure configuration and navigate to the pin configuration tool ("Pins" tab).</li>
+<li>If any pins are marked as an Error, modify their configuration to be identical to the configuration of the previous project in the chain which owns the pin. This might be the CPU0 Secure or CPU1 Secure project.</li>
+<li>Review all pins which have a green checkmark, and if any configuration field of the pin has a yellow triangle, modify that configuration field to be identical to the configuration of the previous project in the chain which owns the pin. This might be the CPU0 Secure or CPU1 Secure project.</li>
+<li>Assign and configure any pins which are unassigned, if necessary.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>In the CPU1 Nonsecure project.</p><ol type="1">
+<li>Open the CPU1 Nonsecure configuration and navigate to the pin configuration tool ("Pins" tab).</li>
+<li>If any pins are marked as an Error, modify their configuration to be identical to the configuration of the previous project in the chain which owns the pin. This might be the CPU0 Secure, CPU1 Secure, or CPU0 Nonsecure project.</li>
+<li>Review all pins which have a green checkmark, and if any configuration field of the pin has a yellow triangle, modify that configuration field to be identical to the configuration of the previous project in the chain which owns the pin. This might be the CPU0 Secure, CPU1 Secure, or CPU0 Nonsecure project.</li>
+<li>Assign and configure any pins which are unassigned, if necessary.</li>
+<li>Rebuild the solution.</li>
+</ol>
+<p>As a final optional step.</p><ol type="1">
+<li>The <code>ra_gen/pin_data.c</code> of each project may be checked for correctness as a final means of detecting a misconfigured pin.</li>
+</ol>
+<p>The solution must remain unused for any pin configuration. The solution may still be used as a means to build all projects sequentially. Further pin configuration modifications may occur in the CPU0 Nonsecure and CPU1 Nonsecure projects. The solution should be used to rebuild all projects if further pin configuration modifications are made in the CPU0 Nonsecure and CPU1 Nonsecure projects. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_b18d2d13694890cc5ac49a5be67e3b2d.html">ra</a></li><li class="navelem"><a class="el" href="dir_d71e6481d15bd93e41670a57fe245af4.html">fsp</a></li><li class="navelem"><a class="el" href="dir_cc90537d9d9120754144c336f41d5945.html">src</a></li><li class="navelem"><a class="el" href="dir_9344c909cf66201fb1d7131daec869d0.html">rm_lwip_sys_port</a></li><li class="navelem"><a class="el" href="dir_1aca87e43266464c5b2c0173aa1ac0e3.html">baremetal</a></li><li class="navelem"><a class="el" href="dir_2cfdf753873a30368e558ff3e32b76d9.html">arch</a></li>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

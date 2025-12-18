@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -303,6 +303,42 @@ alternate_setting</td>
 <td class="fielddoc">
 Whether the ALT number is set. </td></tr>
 <tr><td class="fieldtype">
+<a id="a33f5f20a95ba7c1873752bc87f77af4d"></a>uint32_t</td>
+<td class="fieldname">
+found_channels</td>
+<td class="fielddoc">
+Set by HAUD Driver : [Audio20] Acquired channel number from Descriptor. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad641702c8dad821997b952b27d3ef616"></a>uint32_t</td>
+<td class="fieldname">
+found_resolution</td>
+<td class="fielddoc">
+Set by HAUD Driver : [Audio20] Acquired resolution from Descriptor. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4c38a41038fb10e419efe72ce95ea30e"></a>uint8_t *</td>
+<td class="fieldname">
+p_clock_source</td>
+<td class="fielddoc">
+Set by HAUD Driver : [Audio20] Pointer to Clock Source Descriptor (Audio2.0) </td></tr>
+<tr><td class="fieldtype">
+<a id="ac1208217ec701266e99035690f808f16"></a>uint32_t</td>
+<td class="fieldname">
+clock_source_id</td>
+<td class="fielddoc">
+Set by HAUD Driver : [Audio20] Clock Source ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae68c8b20670c10bd44548e88e9f51274"></a>uint32_t</td>
+<td class="fieldname">
+clock_numerator</td>
+<td class="fielddoc">
+Set by HAUD Driver : [Audio20] Clock Source numerator. </td></tr>
+<tr><td class="fieldtype">
+<a id="add583c1b72d82d4437df914b8e0e4892"></a>uint32_t</td>
+<td class="fieldname">
+clock_denominator</td>
+<td class="fielddoc">
+Set by HAUD Driver : [Audio20] Clock Source denominator. </td></tr>
+<tr><td class="fieldtype">
 <a id="ac2a62c885f0811401abcc2d691cd32dc"></a>uint32_t</td>
 <td class="fieldname">
 interface_number</td>
@@ -319,7 +355,7 @@ Set by HAUD Driver : Alternate number. </td></tr>
 <td class="fieldname">
 p_sampling_descriptor</td>
 <td class="fielddoc">
-Set by HAUD Driver : Pointer to Audio Streaming Format Type Descriptor (Audio1.0) </td></tr>
+Set by HAUD Driver : [Audio10] Pointer to Audio Streaming Format Type Descriptor (Audio1.0) </td></tr>
 <tr><td class="fieldtype">
 <a id="a9895279da8f19d9e62acb1e7b263b232"></a>uint16_t</td>
 <td class="fieldname">
@@ -376,6 +412,8 @@ Protocol code. </td></tr>
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:a7f0596e031cd80062422e619af6f48da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#a7f0596e031cd80062422e619af6f48da">infoGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, <a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#structusb__haud__device__info__t">usb_haud_device_info_t</a> *p_info, uint8_t device_address)</td></tr>
 <tr class="separator:a7f0596e031cd80062422e619af6f48da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13582267d5573b3dce2b3f9873258ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#a13582267d5573b3dce2b3f9873258ad5">clockSourceGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, <a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#structusb__haud__sampling__t">usb_haud_sampling_t</a> *p_info, uint8_t direction, uint8_t device_address)</td></tr>
+<tr class="separator:a13582267d5573b3dce2b3f9873258ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cc55e928dcca90a3ad25dfe4778606c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#a8cc55e928dcca90a3ad25dfe4778606c">alternateNumberGet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, <a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#structusb__haud__sampling__t">usb_haud_sampling_t</a> *p_info, uint8_t direction, uint8_t device_address)</td></tr>
 <tr class="separator:a8cc55e928dcca90a3ad25dfe4778606c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a541a0ac0a4346a7080c29d08a33c39c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#a541a0ac0a4346a7080c29d08a33c39c0">pipeSet</a> )(<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, uint32_t interface_number, uint32_t alternate_number, uint8_t device_address)</td></tr>
@@ -398,6 +436,30 @@ Protocol code. </td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_info</td><td>Pointer to store Audio device information. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">device_address</td><td>Device address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a13582267d5573b3dce2b3f9873258ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13582267d5573b3dce2b3f9873258ad5">&#9670;&nbsp;</a></span>clockSourceGet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>(*  usb_haud_api_t::clockSourceGet) (<a class="el" href="group___u_s_b___a_p_i.html#ga00a5a797b57dec247564f11056ac7230">usb_ctrl_t</a> *const p_ctrl, <a class="el" href="group___u_s_b___h_a_u_d___a_p_i.html#structusb__haud__sampling__t">usb_haud_sampling_t</a> *p_info, uint8_t direction, uint8_t device_address)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get clock source and related information.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Pointer to control structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_info</td><td>Pointer to store Audio device information. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td>Streaming data direction. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">device_address</td><td>Device address. </td></tr>
   </table>
   </dd>
@@ -462,7 +524,7 @@ Protocol code. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

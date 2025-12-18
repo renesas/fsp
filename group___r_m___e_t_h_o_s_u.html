@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -311,22 +311,6 @@ This module can be added to the Stacks tab via New Stack &gt; AI &gt; Arm Ethos-
 <td>Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>A user callback function that will be called from the interrupt service routine (ISR). </td></tr>
 <tr class="tree_none">
 <td>NPU Interrupt Priority</td><td>MCU Specific Options</td><td></td><td>Select the NPU interrupt priority. </td></tr>
-<tr class="tree_none">
-<td>Enable Secure Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>Enabled </td><td>Set Ethos-U NPU secure mode. </td></tr>
-<tr class="tree_none">
-<td>Enable Privilege Mode</td><td><ul style="margin-top:0;margin-bottom:0;">
-<li>
-Disabled</li>
-<li>
-Enabled</li>
-</ul>
-</td><td>Enabled </td><td>Set Ethos-U NPU privilege mode. </td></tr>
 </table>
 </p>
 <h2><a class="anchor" id="rm_ethosu-clock-configuration"></a>
@@ -376,6 +360,8 @@ Usage Notes</h1>
 Limitations</h2>
 <p>Users have to implement weak functions if needed. Please refer to <a href="https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md">https://git.mlplatform.org/ml/ethos-u/ethos-u-core-driver.git/tree/README.md</a> for further information.</p>
 <p>Users have to update linker script if they want to save AI model and data to external memories.</p>
+<p>OFS2 must be enabled to configure NPU secure and privilege attributes.</p>
+<p>When used as non-secure, please make sure OFS2 NPU attributes are the same in secure and non-secure projects.</p>
 <h1><a class="anchor" id="rm_ethosu-examples"></a>
 Examples</h1>
 <h2>Basic Example</h2>
@@ -543,7 +529,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

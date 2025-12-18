@@ -13,6 +13,11 @@ var NAVTREEINDEX0 =
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-references":[1,2,9],
 "_c_m85__c_a_c_h_e_s.html#CM85_CACHES-typical-cache-maintenance-scenarios":[1,2,5],
 "_c_o_p_y_r_i_g_h_t.html":[4],
+"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html":[1,5],
+"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-affected-project-types":[1,5,2],
+"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-changes":[1,5,0],
+"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-overview":[1,5,1],
+"_e2__s_t_u_d_i_o__p_i_n__c_o_n_f_i_g_u_r_a_t_i_o_n__w_o_r_k_a_r_o_u_n_d_s.html#E2_STUDIO_PIN_CONFIGURATION_WORKAROUNDS-workarounds-for-affected-project-types":[1,5,3],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html":[1,1],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html#FREERTOS_MIGRATION-code-changes":[1,1,2],
 "_f_r_e_e_r_t_o_s__m_i_g_r_a_t_i_o_n.html#FREERTOS_MIGRATION-migration-steps":[1,1,1],
@@ -244,10 +249,5 @@ var NAVTREEINDEX0 =
 "_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-licensed_functions":[1,3,2],
 "_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-limitations":[1,3,1],
 "_u_s_i_n_g__o_c_r_y_p_t_o.html#USING_OCRYPTO-overview":[1,3,0],
-"group___a_c_m_p_h_s.html":[5,1,0,3],
-"group___a_c_m_p_h_s.html#ga4c3e2f1898bc9a020367cd0b5285edda":[5,1,0,3,1],
-"group___a_c_m_p_h_s.html#gac7869c5964b098497c2eb1d1747ae888":[5,1,0,3,0],
-"group___a_c_m_p_h_s.html#gae6cceb0647ded468eb7da79d02136e89":[5,1,0,3,2],
-"group___a_c_m_p_h_s.html#gaeaba464c71478a7277eb529bbed7db4f":[5,1,0,3,4],
-"group___a_c_m_p_h_s.html#gaec510482bbca5aaa1357960079c30e23":[5,1,0,3,3]
+"group___a_c_m_p_h_s.html":[5,1,0,3]
 };

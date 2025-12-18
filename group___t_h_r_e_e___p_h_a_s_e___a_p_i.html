@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -293,15 +293,13 @@ Enumerations</h2></td></tr>
 <td class="fieldname">
 duty[3]</td>
 <td class="fielddoc">
-<p>Duty cycle. Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3, this value sets the duty cycle count that is transferred to GTCCRA/B at the trough. </p>
-</td></tr>
+Duty cycle. </td></tr>
 <tr><td class="fieldtype">
 <a id="a12e51857fcd253e9b3e35d1532e66694"></a>uint32_t</td>
 <td class="fieldname">
 duty_buffer[3]</td>
 <td class="fielddoc">
-<p>Double-buffer for duty cycle values. Note: When the GPT instances are configured in TIMER_MODE_TRIANGLE_WAVE_ASYMMETRIC_PWM_MODE3, this value sets the duty cycle count that is transferred to GTCCRA/B at the crest. </p>
-</td></tr>
+Double-buffer for duty cycle values. </td></tr>
 </table>
 
 </div>
@@ -513,7 +511,7 @@ Extension parameter for hardware specific settings. </td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ctrl</td><td>Control block set in <a class="el" href="group___t_h_r_e_e___p_h_a_s_e___a_p_i.html#a17727ce358ca8b02f4e1a060416302b1">three_phase_api_t::open</a> call. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register with GPT U-channel </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_callback</td><td>Callback function to register with timer channel </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>Pointer to send to callback function </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_working_memory</td><td>Pointer to volatile memory where callback structure can be allocated. Callback arguments allocated here are only valid during the callback. </td></tr>
   </table>
@@ -649,7 +647,7 @@ Pointer to the API structure for this instance. </td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -2,6 +2,7 @@ var searchData=
 [
   ['virtual_20eeprom_20interface',['Virtual EEPROM Interface',['../group___r_m___v_e_e___a_p_i.html',1,'']]],
   ['virtual_20eeprom_20on_20flash_20_28rm_5fvee_5fflash_29',['Virtual EEPROM on Flash (rm_vee_flash)',['../group___r_m___v_e_e___f_l_a_s_h.html',1,'']]],
+  ['v_5foutput_5fsize',['v_output_size',['../group___c_e_u.html#ae1fde53e5e769afd12ab3b671ecbc4ba',1,'ceu_extended_cfg_t']]],
   ['v_5fpattern',['v_pattern',['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___s_e_n_s_o_r_l_e_s_s.html#a8559b44d164df03406b68090fd77b927',1,'motor_120_control_sensorless_instance_ctrl_t::v_pattern()'],['../group___m_o_t_o_r__120___c_o_n_t_r_o_l___h_a_l_l.html#aa69969a331c0c8382bb092fdbf85d034',1,'motor_120_control_hall_instance_ctrl_t::v_pattern()']]],
   ['v_5fvoltage',['v_voltage',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a03e1390d905a7006e53d205981a4ccf9',1,'motor_current_get_voltage_t']]],
   ['va_5fmax',['va_max',['../group___m_o_t_o_r___c_u_r_r_e_n_t___a_p_i.html#a1b415bcb42d7afeb6b6e03994c733636',1,'motor_current_input_voltage_t::va_max()'],['../group___m_o_t_o_r___d_r_i_v_e_r___a_p_i.html#af4ebbd3916982bd0dca8e8f06180f67c',1,'motor_driver_current_get_t::va_max()']]],

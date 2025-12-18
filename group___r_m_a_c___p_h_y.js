@@ -6,7 +6,8 @@ var group___r_m_a_c___p_h_y =
       [ "p_reg_rmac", "group___r_m_a_c___p_h_y.html#a12305490677685f2dfc640ea4c781a62", null ],
       [ "local_advertise", "group___r_m_a_c___p_h_y.html#a182211c13c1f7ae036a41e5d077200cf", null ],
       [ "interface_status", "group___r_m_a_c___p_h_y.html#a3c851497ec69177d33df14fb6b940c60", null ],
-      [ "phy_lsi_cfg_index", "group___r_m_a_c___p_h_y.html#a3bd020699dda406d6494889beff2a2f3", null ]
+      [ "phy_lsi_cfg_index", "group___r_m_a_c___p_h_y.html#a3bd020699dda406d6494889beff2a2f3", null ],
+      [ "p_callback", "group___r_m_a_c___p_h_y.html#a640647be6ece2fe1d169ce461e69f6bc", null ]
     ] ],
     [ "rmac_phy_extended_cfg_t", "group___r_m_a_c___p_h_y.html#structrmac__phy__extended__cfg__t", [
       [ "p_target_init", "group___r_m_a_c___p_h_y.html#ae7886a095d4e292a6ed5c1bb1cb2ead1", null ],
@@ -16,7 +17,12 @@ var group___r_m_a_c___p_h_y =
       [ "mdio_hold_time", "group___r_m_a_c___p_h_y.html#ab836117887ec4c442a66fade78d84a46", null ],
       [ "mdio_capture_time", "group___r_m_a_c___p_h_y.html#aec3916d9e5ae97104d29d7f6ff48f2b7", null ],
       [ "p_phy_lsi_cfg_list", "group___r_m_a_c___p_h_y.html#abf973c8d578696c4b6c0314e4c240ab5", null ],
-      [ "default_phy_lsi_cfg_index", "group___r_m_a_c___p_h_y.html#a2ec5bc1df86d2588d5e9fb5aab9cc837", null ]
+      [ "default_phy_lsi_cfg_index", "group___r_m_a_c___p_h_y.html#a2ec5bc1df86d2588d5e9fb5aab9cc837", null ],
+      [ "frame_preemption_verification_interval", "group___r_m_a_c___p_h_y.html#a01cbb50d5ca11325d845462b44f6b0e7", null ],
+      [ "easi_irq", "group___r_m_a_c___p_h_y.html#aa902b69b17eb9b6c61137c306249c951", null ],
+      [ "easi_ipl", "group___r_m_a_c___p_h_y.html#aa6535f211a20b40f49f45d5e89ea758e", null ],
+      [ "p_callback", "group___r_m_a_c___p_h_y.html#afdb671673a5f8f7f17f8291b13afd411", null ],
+      [ "p_context", "group___r_m_a_c___p_h_y.html#add393b40429563483161e64b495bed91", null ]
     ] ],
     [ "rmac_phy_interface_status_t", "group___r_m_a_c___p_h_y.html#gae18231839d7b5b411f8a100a8ff00c0a", [
       [ "RMAC_PHY_INTERFACE_STATUS_UNINITIALIZED", "group___r_m_a_c___p_h_y.html#ggae18231839d7b5b411f8a100a8ff00c0aaf326a4f834c4668cc49a60878bd5791a", null ],
@@ -34,5 +40,6 @@ var group___r_m_a_c___p_h_y =
     [ "R_RMAC_PHY_ChipInit", "group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e", null ],
     [ "R_RMAC_PHY_Read", "group___r_m_a_c___p_h_y.html#ga37e608861ca84059c9835166f42472d0", null ],
     [ "R_RMAC_PHY_Write", "group___r_m_a_c___p_h_y.html#ga3905d7604b8e52b6f619b2ebf387944c", null ],
-    [ "R_RMAC_PHY_ChipSelect", "group___r_m_a_c___p_h_y.html#ga5f000ff2386c4e1e48137e5fe3e6f20d", null ]
+    [ "R_RMAC_PHY_ChipSelect", "group___r_m_a_c___p_h_y.html#ga5f000ff2386c4e1e48137e5fe3e6f20d", null ],
+    [ "R_RMAC_PHY_CallbackSet", "group___r_m_a_c___p_h_y.html#ga56fee611cb20e3e12dd9b851cff25416", null ]
 ];

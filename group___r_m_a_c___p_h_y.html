@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -274,6 +274,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5f000ff2386c4e1e48137e5fe3e6f20d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#ga5f000ff2386c4e1e48137e5fe3e6f20d">R_RMAC_PHY_ChipSelect</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, uint8_t port)</td></tr>
 <tr class="memdesc:ga5f000ff2386c4e1e48137e5fe3e6f20d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the target PHY LSI of this driver.  <a href="#ga5f000ff2386c4e1e48137e5fe3e6f20d">More...</a><br /></td></tr>
 <tr class="separator:ga5f000ff2386c4e1e48137e5fe3e6f20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56fee611cb20e3e12dd9b851cff25416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#ga56fee611cb20e3e12dd9b851cff25416">R_RMAC_PHY_CallbackSet</a> (<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const p_ctrl, void(*p_callback)(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a> *), void *const p_context, <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a> *const p_callback_memory)</td></tr>
+<tr class="separator:ga56fee611cb20e3e12dd9b851cff25416"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The RMAC PHY module (r_rmac_phy) provides an API for standard Ethernet PHY communications applications that use the RMAC peripheral. It implements the <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html">Ethernet PHY Interface</a>. </p>
@@ -387,6 +389,16 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Et
 </p><table class="doxtable">
 <tr>
 <th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_lvl_1">
+<td class="tree_lvl_1" colspan="4"><span class="chevron-collapsed"></span> Interrupts  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Context</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Placeholder for user data. Passed to the user callback in <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a>.  </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ETHA0 status interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the ETHA0 status interrupt priority. </td></tr>
+<tr class="tree_lvl_1_item">
+<td class="tree_lvl_1_cell">ETHA1 status interrupt priority</td><td>MCU Specific Options</td><td></td><td>Select the ETHA1 status interrupt priority. </td></tr>
 <tr class="tree_none">
 <td>Name</td><td>Name must be a valid C symbol</td><td>g_rmac_phy0 </td><td>Module name. </td></tr>
 <tr class="tree_none">
@@ -439,6 +451,16 @@ Enable</li>
 <td>MDIO hold timing adjustment</td><td>Value must be a non-negative integer less than 8</td><td>0 </td><td>Specify the clock cycle for hold timing. </td></tr>
 <tr class="tree_none">
 <td>MDIO capture timing adjustment</td><td>Value must be a non-negative integer less than 8</td><td>0 </td><td>Specify the clock cycle for capture timing. </td></tr>
+<tr class="tree_none">
+<td>Frame preemption</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Disable </td><td>Select whether to enable or disable frame preemption feature. </td></tr>
+<tr class="tree_none">
+<td>Verify frame interval</td><td>Value must be a non-negative integer less than 128</td><td>10 </td><td>Interval for sending verify frame [ms]. </td></tr>
 </table>
 </p>
 <p><a class="anchor" id="um_ether_phy_cfg_pfenet"></a> </p>
@@ -568,44 +590,36 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>RMAC PHY control block. DO NOT INITIALIZE. Initialization occurs when <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#aa566d14c1e722f4b1abdd65bae92393e">ether_phy_api_t::open</a> is called. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a20e45d04961d2eeb3ded9e45855a2c0f"></a>uint32_t</td>
-<td class="fieldname">
-open</td>
-<td class="fielddoc">
-Used to determine if the channel is configured. </td></tr>
-<tr><td class="fieldtype">
-<a id="a9f682020ecaa6f176925ad26926c038e"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const  *</td>
-<td class="fieldname">
-p_ether_phy_cfg</td>
-<td class="fielddoc">
-Pointer to initial configurations. </td></tr>
-<tr><td class="fieldtype">
-<a id="a12305490677685f2dfc640ea4c781a62"></a>R_RMAC0_Type *</td>
-<td class="fieldname">
-p_reg_rmac</td>
-<td class="fielddoc">
-Pointer to RMAC peripheral registers. </td></tr>
-<tr><td class="fieldtype">
-<a id="a182211c13c1f7ae036a41e5d077200cf"></a>uint32_t</td>
-<td class="fieldname">
-local_advertise</td>
-<td class="fielddoc">
-Capabilities bitmap for local advertising. </td></tr>
-<tr><td class="fieldtype">
-<a id="a3c851497ec69177d33df14fb6b940c60"></a><a class="el" href="group___r_m_a_c___p_h_y.html#gae18231839d7b5b411f8a100a8ff00c0a">rmac_phy_interface_status_t</a></td>
-<td class="fieldname">
-interface_status</td>
-<td class="fielddoc">
-Initialized status of ETHER PHY interface. </td></tr>
-<tr><td class="fieldtype">
-<a id="a3bd020699dda406d6494889beff2a2f3"></a>uint8_t</td>
-<td class="fieldname">
-phy_lsi_cfg_index</td>
-<td class="fielddoc">
-Index of the PHY LSI that is currently the target of operation. </td></tr>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a20e45d04961d2eeb3ded9e45855a2c0f"><td class="memItemLeft" align="right" valign="top"><a id="a20e45d04961d2eeb3ded9e45855a2c0f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a20e45d04961d2eeb3ded9e45855a2c0f">open</a></td></tr>
+<tr class="memdesc:a20e45d04961d2eeb3ded9e45855a2c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine if the channel is configured. <br /></td></tr>
+<tr class="separator:a20e45d04961d2eeb3ded9e45855a2c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f682020ecaa6f176925ad26926c038e"><td class="memItemLeft" align="right" valign="top"><a id="a9f682020ecaa6f176925ad26926c038e"></a>
+<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a> const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a9f682020ecaa6f176925ad26926c038e">p_ether_phy_cfg</a></td></tr>
+<tr class="memdesc:a9f682020ecaa6f176925ad26926c038e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to initial configurations. <br /></td></tr>
+<tr class="separator:a9f682020ecaa6f176925ad26926c038e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12305490677685f2dfc640ea4c781a62"><td class="memItemLeft" align="right" valign="top"><a id="a12305490677685f2dfc640ea4c781a62"></a>
+R_RMAC0_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a12305490677685f2dfc640ea4c781a62">p_reg_rmac</a></td></tr>
+<tr class="memdesc:a12305490677685f2dfc640ea4c781a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to RMAC peripheral registers. <br /></td></tr>
+<tr class="separator:a12305490677685f2dfc640ea4c781a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a182211c13c1f7ae036a41e5d077200cf"><td class="memItemLeft" align="right" valign="top"><a id="a182211c13c1f7ae036a41e5d077200cf"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a182211c13c1f7ae036a41e5d077200cf">local_advertise</a></td></tr>
+<tr class="memdesc:a182211c13c1f7ae036a41e5d077200cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Capabilities bitmap for local advertising. <br /></td></tr>
+<tr class="separator:a182211c13c1f7ae036a41e5d077200cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c851497ec69177d33df14fb6b940c60"><td class="memItemLeft" align="right" valign="top"><a id="a3c851497ec69177d33df14fb6b940c60"></a>
+<a class="el" href="group___r_m_a_c___p_h_y.html#gae18231839d7b5b411f8a100a8ff00c0a">rmac_phy_interface_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a3c851497ec69177d33df14fb6b940c60">interface_status</a></td></tr>
+<tr class="memdesc:a3c851497ec69177d33df14fb6b940c60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialized status of ETHER PHY interface. <br /></td></tr>
+<tr class="separator:a3c851497ec69177d33df14fb6b940c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd020699dda406d6494889beff2a2f3"><td class="memItemLeft" align="right" valign="top"><a id="a3bd020699dda406d6494889beff2a2f3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a3bd020699dda406d6494889beff2a2f3">phy_lsi_cfg_index</a></td></tr>
+<tr class="memdesc:a3bd020699dda406d6494889beff2a2f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the PHY LSI that is currently the target of operation. <br /></td></tr>
+<tr class="separator:a3bd020699dda406d6494889beff2a2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640647be6ece2fe1d169ce461e69f6bc"><td class="memItemLeft" align="right" valign="top"><a id="a640647be6ece2fe1d169ce461e69f6bc"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a640647be6ece2fe1d169ce461e69f6bc">p_callback</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:a640647be6ece2fe1d169ce461e69f6bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when an ISR occurs. <br /></td></tr>
+<tr class="separator:a640647be6ece2fe1d169ce461e69f6bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -656,6 +670,26 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a2ec5bc1df86d2588d5e9fb5aab9cc837">default_phy_lsi_cfg_index</a></td></tr>
 <tr class="memdesc:a2ec5bc1df86d2588d5e9fb5aab9cc837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of the default PHY LSI condiguration. <br /></td></tr>
 <tr class="separator:a2ec5bc1df86d2588d5e9fb5aab9cc837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01cbb50d5ca11325d845462b44f6b0e7"><td class="memItemLeft" align="right" valign="top"><a id="a01cbb50d5ca11325d845462b44f6b0e7"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#a01cbb50d5ca11325d845462b44f6b0e7">frame_preemption_verification_interval</a></td></tr>
+<tr class="memdesc:a01cbb50d5ca11325d845462b44f6b0e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interval for sending verify frame [ms]. <br /></td></tr>
+<tr class="separator:a01cbb50d5ca11325d845462b44f6b0e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa902b69b17eb9b6c61137c306249c951"><td class="memItemLeft" align="right" valign="top"><a id="aa902b69b17eb9b6c61137c306249c951"></a>
+IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#aa902b69b17eb9b6c61137c306249c951">easi_irq</a> [BSP_FEATURE_ETHER_NUM_CHANNELS]</td></tr>
+<tr class="memdesc:aa902b69b17eb9b6c61137c306249c951"><td class="mdescLeft">&#160;</td><td class="mdescRight">EASI interrupt number. <br /></td></tr>
+<tr class="separator:aa902b69b17eb9b6c61137c306249c951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6535f211a20b40f49f45d5e89ea758e"><td class="memItemLeft" align="right" valign="top"><a id="aa6535f211a20b40f49f45d5e89ea758e"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#aa6535f211a20b40f49f45d5e89ea758e">easi_ipl</a> [BSP_FEATURE_ETHER_NUM_CHANNELS]</td></tr>
+<tr class="memdesc:aa6535f211a20b40f49f45d5e89ea758e"><td class="mdescLeft">&#160;</td><td class="mdescRight">EASI interrupt priority. <br /></td></tr>
+<tr class="separator:aa6535f211a20b40f49f45d5e89ea758e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdb671673a5f8f7f17f8291b13afd411"><td class="memItemLeft" align="right" valign="top"><a id="afdb671673a5f8f7f17f8291b13afd411"></a>
+void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#afdb671673a5f8f7f17f8291b13afd411">p_callback</a> )(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a> *p_args)</td></tr>
+<tr class="memdesc:afdb671673a5f8f7f17f8291b13afd411"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when an ISR occurs. <br /></td></tr>
+<tr class="separator:afdb671673a5f8f7f17f8291b13afd411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add393b40429563483161e64b495bed91"><td class="memItemLeft" align="right" valign="top"><a id="add393b40429563483161e64b495bed91"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_m_a_c___p_h_y.html#add393b40429563483161e64b495bed91">p_context</a></td></tr>
+<tr class="memdesc:add393b40429563483161e64b495bed91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Placeholder for user data. <br /></td></tr>
+<tr class="separator:add393b40429563483161e64b495bed91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -1061,13 +1095,63 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 
 </div>
 </div>
+<a id="ga56fee611cb20e3e12dd9b851cff25416"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga56fee611cb20e3e12dd9b851cff25416">&#9670;&nbsp;</a></span>R_RMAC_PHY_CallbackSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_RMAC_PHY_CallbackSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga3896c518dba03a28855c9a86f747e03c">ether_phy_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(<a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a> *)&#160;</td>
+          <td class="paramname"><em>p_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *const&#160;</td>
+          <td class="paramname"><em>p_context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_callback_memory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Updates the user callback with the option to provide memory for the callback argument structure. Implements <a class="el" href="group___e_t_h_e_r___a_p_i.html#a2d85d35c6eb31690a2c050dffed7a0df">ether_api_t::callbackSet</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Callback updated successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NO_CALLBACK_MEMORY</td><td>p_callback is non-secure and p_callback_memory is either secure or NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

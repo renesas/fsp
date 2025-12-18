@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -245,42 +245,52 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__f_u_n_c_t_i_o_n_s.html
 <p>This version of <em>ocrypto</em> supports the following algorithms:</p>
 <table class="doxtable">
 <tr>
-<th align="left">Message digests (hashes) </th><th align="left">Specification  </th></tr>
+<th align="left">Algorithms </th><th align="left">Specification </th><th align="left">PQC-Resistant  </th></tr>
 <tr>
-<td align="left">SHA2 (224, 256, 384, 512) </td><td align="left">FIPS-PUB-180-4 </td></tr>
+<td align="left"><em>Message digests (hashes)</em> </td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left">SHA2 (224, 256, 384, 512) </td><td align="left">FIPS-180-4 </td><td align="left">yes 1) </td></tr>
+<tr>
+<td align="left"></td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left"><em>Message authentication codes (MAC)</em> </td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left">HMAC (SHA256, SHA512) </td><td align="left">RFC2104 </td><td align="left">yes 1) </td></tr>
+<tr>
+<td align="left">AES-CMAC </td><td align="left">RFC4493, NIST SP 800-38B </td><td align="left">yes 2) </td></tr>
+<tr>
+<td align="left"></td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left"><em>Unauthenticated ciphers</em> </td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left">AES (CTR, ECB, CBC) </td><td align="left">FIPS-197, NIST SP 800-38* </td><td align="left">yes 2) </td></tr>
+<tr>
+<td align="left"></td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left"><em>Authenticated encryption with associated data (AEAD)</em> </td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left">AES (GCM) </td><td align="left">FIPS-197, NIST SP 800-38* </td><td align="left">yes 2) </td></tr>
+<tr>
+<td align="left"></td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left"><em>Key wrap</em> </td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left">AES KW/KWP </td><td align="left">NIST SP 800-38F </td><td align="left">yes 2) </td></tr>
+<tr>
+<td align="left"></td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left"><em>Asymmetric signature</em> </td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left">ECDSA / Deterministic ECDSA (P-256) </td><td align="left">FIPS-186-5 </td><td align="left">no </td></tr>
+<tr>
+<td align="left"></td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left"><em>Key agreement</em> </td><td align="left"></td><td align="left"></td></tr>
+<tr>
+<td align="left">ECDH (P-256) </td><td align="left">NIST SP 800-56A </td><td align="left">no </td></tr>
 </table>
-<table class="doxtable">
-<tr>
-<th align="left">Message authentication codes (MAC) </th><th align="left">Specification  </th></tr>
-<tr>
-<td align="left">HMAC (SHA256, SHA512) </td><td align="left">RFC2104 </td></tr>
-<tr>
-<td align="left">AES-CMAC </td><td align="left">RFC4493, NIST SP 800-38B </td></tr>
-</table>
-<table class="doxtable">
-<tr>
-<th align="left">Unauthenticated ciphers </th><th align="left">Specification  </th></tr>
-<tr>
-<td align="left">AES (CTR, ECB, CBC) </td><td align="left">FIPS-PUB-197, NIST SP 800-38* </td></tr>
-</table>
-<table class="doxtable">
-<tr>
-<th align="left">Authenticated encryption with associated data (AEAD) </th><th align="left">Specification  </th></tr>
-<tr>
-<td align="left">AES (GCM) </td><td align="left">FIPS-PUB-197, NIST SP 800-38* </td></tr>
-</table>
-<table class="doxtable">
-<tr>
-<th align="left">Asymmetric signature </th><th align="left">Specification  </th></tr>
-<tr>
-<td align="left">ECDSA / Deterministic ECDSA (P-256) </td><td align="left">FIPS-PUB-186-5 </td></tr>
-</table>
-<table class="doxtable">
-<tr>
-<th align="left">Key agreement </th><th align="left">Specification  </th></tr>
-<tr>
-<td align="left">ECDH (P-256) </td><td align="left">NIST SP 800-56A </td></tr>
-</table>
+<p>1) Use of SHA384/SHA512 recommended.</p>
+<p>2) Use of AES-256 recommended.</p>
 <h2>Key Sizes</h2>
 <ul>
 <li>AES: 128, 192, and 256 bit keys are supported for all uses of AES.</li>
@@ -331,7 +341,7 @@ $(document).ready(function(){initNavTree('_o_c_r_y_p_t_o__f_u_n_c_t_i_o_n_s.html
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

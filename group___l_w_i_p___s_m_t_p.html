@@ -1,0 +1,369 @@
+<!-- HTML header for doxygen 1.8.7-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<title>RA Flexible Software Package Documentation: lwIP SMTP</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+    <script type="text/javascript" src="search/lunr.js"></script>
+    <link href="search/lunrsearch.css" rel="stylesheet" type="text/css">
+    <script src="search/lunr_index.js"></script>
+    <script src="search/lunrclient.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("tr.tree_lvl_1").nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+		$("tr.tree_lvl_1").data("expanded","0");
+		$("tr.tree_lvl_2").data("expanded","0");
+		$("tr.tree_lvl_3").data("expanded","0");
+		$("tr.tree_lvl_4").data("expanded","0");
+		$("tr.tree_lvl_5").data("expanded","0");
+        $("tr.tree_lvl_1").click(function() {
+		    var lvl_1_is_open = $(this).data("expanded");
+		    if (lvl_1_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2, tr.tree_lvl_1_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_2,tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_2").click(function() {
+		    var lvl_2_is_open = $(this).data("expanded");
+		    if (lvl_2_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3, tr.tree_lvl_2_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_3,tr.tree_lvl_4,tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_3").click(function() {
+		    var lvl_3_is_open = $(this).data("expanded");
+		    if (lvl_3_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_3_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_4, tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_4").click(function() {
+		    var lvl_4_is_open = $(this).data("expanded");
+		    if (lvl_4_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5, tr.tree_lvl_4_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+                $(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).nextUntil("tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5").data("expanded","0");
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+		$("tr.tree_lvl_5").click(function() {
+		    var lvl_5_is_open = $(this).data("expanded");
+		    if (lvl_5_is_open == "0") {
+                $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4,tr.tree_lvl_3,tr.tree_lvl_2,tr.tree_lvl_1,tr.tree_none", "tr.tree_lvl_5_item").show();
+                $(this).find("span").removeClass("chevron-collapsed").addClass("chevron-expanded");
+				$(this).data("expanded","1");
+			} else {
+			    $(this).nextUntil("tr.tree_lvl_5,tr.tree_lvl_4_item,tr.tree_lvl_4,tr.tree_lvl_3_item,tr.tree_lvl_3,tr.tree_lvl_2_item,tr.tree_lvl_2,tr.tree_lvl_1_item,tr.tree_lvl_1,tr.tree_none").hide();
+				$(this).find("span").removeClass("chevron-expanded").addClass("chevron-collapsed");
+				$(this).data("expanded","0");
+			    }
+        });
+     });
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">RA Flexible Software Package Documentation
+   &#160;<span id="projectnumber">Release v6.3.0</span>
+   </div>
+  </td>
+   <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
+
+    <form id="lunrSearchForm" name="lunrSearchForm">
+      <span class="left" >
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               alt=""/>
+         <input class="search-input" id="MSearchField" name="q" placeholder="Search" type="text">
+      </span>
+      <span class="right">
+          &nbsp;
+      </span>
+        <!--<input type="submit" value="Search">-->
+    </form>
+</div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('group___l_w_i_p___s_m_t_p.html','');});
+</script>
+
+<script src="search/mark.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var options = {         // allows highlighting across element boundaries.
+      "acrossElements": true
+    };
+    var bodyText = $("div.contents").text(); // try contents instead of body.
+    // If using body: Problem may be that text inside <script> tags is included in .text() - but not in cheerio?
+    // If using div.contents - works
+    var fullURL = $(location).attr('href');
+    var splitURL = fullURL.split("?");  // Get param string: content after "?" in URL
+    if (splitURL.length > 1) {          // If any content after "?"
+      var paramStr = splitURL[1];
+      var params = paramStr.split("&"); // Split params on "&"
+      for (i = 0; i < params.length; i++) {
+        var paramPair = params[i].split("=");
+        if (paramPair[0] == "pos") {     // If any param starts "pos", get the content after "="
+          posStr = paramPair[1];
+          var splitPos = posStr.split(",");
+          var termArray = [];
+        // termArray will have the search terms
+            for (i=0; i < splitPos.length; i += 2) {
+            start = splitPos[i];
+            len = splitPos[i+1]; // Needs error detection! Vulnerable if non-even # of pos entries
+            term = bodyText.substr(start,len);
+            if (termArray.includes(term) == false) {     // List all unique terms
+                termArray.push(bodyText.substr(start,len));
+            }
+          }
+    //      console.log(termArray);
+          var context = document.querySelector("div.contents");
+          var instance = new Mark(context);
+          for(i=0;i<termArray.length; i+=1) {
+            instance.mark(termArray[i],options);  // Use Mark.js to mark all terms in termArray
+            }
+          var firstMark = document.querySelector("mark");
+          firstMark.scrollIntoView(true);
+          //      console.log($("mark").first().text()); // Trying to scroll to first Mark element.
+        }
+            }
+    }
+  });
+</script>
+
+<link href="fsp_customdoxygen.css" rel="stylesheet" type="text/css" />
+
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+
+<!-- Lunr search results -->
+<div id="lunrResultBox" style="
+        position: fixed;
+        border: 1px solid black;
+        background-color: WhiteSmoke;
+        padding: 10px;
+        width: 500px;
+        height: 500px;
+        top: 30;
+        right: 0;
+        overflow: auto;
+        display: none">
+    <button onclick="closeLunrResults()" style="float: right;">X</button>
+    <div class="resultCount" id="resultCount"></div>
+    <div id="searchResults"></div>
+</div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">lwIP SMTP<div class="ingroups"><a class="el" href="group___r_e_n_e_s_a_s___m_o_d_u_l_e_s.html">Modules</a> &raquo; <a class="el" href="group___r_e_n_e_s_a_s___n_e_t_w_o_r_k_i_n_g___m_o_d_u_l_e_s.html">Networking</a></div></div>  </div>
+</div><!--header-->
+<div class="contents">
+<p>This module provides the lwIP SMTP integration documentation. </p>
+<h1><a class="anchor" id="rm-lwip_smtp-overview"></a>
+Overview</h1>
+<p>The documentation for the library can be found at the following link: <a href="https://www.nongnu.org/lwip/2_1_x/group__smtp.html">lwIPSMTP</a>.</p>
+<h2><a class="anchor" id="rm-lwip_smtp-features"></a>
+Features</h2>
+<ul>
+<li>Support authentication methods and send an email via the currently selected server, username and password.</li>
+<li>Support set up TLS connection handling with one-way server authentication or two-way server/client authentication.</li>
+<li>The common ports that used for SMTP:<ul>
+<li>Port 25:<ul>
+<li>Default port for SMTP since the beginning of email.</li>
+<li>Supports plain, unencrypted SMTP.</li>
+</ul>
+</li>
+<li>Port 465:<ul>
+<li>Used for SMTPS (SMTP Secure), where the connection is immediately encrypted using SSL/TLS upon connection.</li>
+</ul>
+</li>
+<li>Custom ports: Based on the port of SMTP server. <dl class="section note"><dt>Note</dt><dd>SMTP port usage reference in the RFC8314 documentation.</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="rm-lwip_smtp-configuration"></a>
+Configuration</h1>
+<p><h2>Build Time Configurations for source</h2>
+The following build time configurations are defined in lwip/lwip/apps/smtp_opts.h:<br />
+</p><table class="doxtable">
+<tr>
+<th>Configuration</th><th>Options</th><th>Default</th><th>Description </th></tr>
+<tr class="tree_none">
+<td>Data Handler Callback on BODY</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Disabled </td><td>Enable this option to invoke the user-defined callback for SMTP message BODY data. </td></tr>
+<tr class="tree_none">
+<td>SMTP Debug</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+LWIP_DBG_ON</li>
+<li>
+LWIP_DBG_OFF</li>
+</ul>
+</td><td>LWIP_DBG_OFF </td><td>Set this to 1 to debug SMTP. </td></tr>
+<tr class="tree_none">
+<td>Maximum SMTP Server Name Length</td><td>Value must be a positive integer value</td><td>256 </td><td>Specifies the maximum length of the SMTP server name. </td></tr>
+<tr class="tree_none">
+<td>Maximum SMTP Username Length</td><td>Value must be a positive integer value</td><td>32 </td><td>Specifies the maximum length of the SMTP username. </td></tr>
+<tr class="tree_none">
+<td>Maximum Password Length</td><td>Value must be a positive integer value</td><td>32 </td><td>Specifies the maximum length of the SMTP password. </td></tr>
+<tr class="tree_none">
+<td>Copy Authentication Data</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable to copy username and password into internal buffers instead of using pointers to user data. Disabling this if you know the authentication data will not change during the smtp session, which saves some heap space. </td></tr>
+<tr class="tree_none">
+<td>Check Email Data</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable to verify SMTP message fields for validity before transmission. Disabling this to save some code space if you know for sure that all data passed to this module conforms to the requirements in the SMTP RFC.<br />
+<br />
+WARNING: Use this with care! </td></tr>
+<tr class="tree_none">
+<td>AUTH PLAIN Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable to support SMTP AUTH PLAIN authentication. </td></tr>
+<tr class="tree_none">
+<td>AUTH LOGIN Support</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Enabled</li>
+<li>
+Disabled</li>
+</ul>
+</td><td>Enabled </td><td>Enable to support SMTP AUTH LOGIN authentication. </td></tr>
+<tr class="tree_none">
+<td>Memory allocation</td><td>Name must be a valid C symbol</td><td>mem_malloc </td><td>Define the allocation function used for SMTP state machine memory. By default, uses lwIP mem_malloc. Override to FreeRTOS heap for RTOS-based systems. </td></tr>
+<tr class="tree_none">
+<td>Memory deallocation</td><td>Name must be a valid C symbol</td><td>mem_free </td><td>Define the free function used for SMTP state machine memory. By default, uses lwIP mem_free. Override to FreeRTOS heap for RTOS-based systems. </td></tr>
+</table>
+</p>
+<h1><a class="anchor" id="rm-lwip_smtp-usage_notes"></a>
+Usage Notes</h1>
+<h2>TLS connection</h2>
+<p>The stack and heap sizes must be properly configured when using the TLS layer with MbedTLS. Depending on the specific configuration and use case, these values may need to be increased from their defaults. For more information on memory requirements, refer to the <b>Memory Usage</b> section in <a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html">Mbed Crypto H/W Acceleration (rm_psa_crypto)</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>When using hardware acceleration for the MbedTLS implementation, verify that the target device supports all required mbedCrypto features for the TLS layer of lwIP. Refer to the <b>HW Overview</b> and <b>Features</b> sections in <a class="el" href="group___r_m___p_s_a___c_r_y_p_t_o.html">Mbed Crypto H/W Acceleration (rm_psa_crypto)</a> to check hardware support. If any required feature is not supported, configure the corresponding features to use the software crypto implementation instead.</dd></dl>
+<h2>Authetication</h2>
+<p>The lwIP SMTP module supports the following authentication methods:</p><ul>
+<li><b>No Authentication</b>: Use <code>smtp_set_auth(NULL, NULL)</code> for servers that don't require authentication.</li>
+<li><b>Authentication</b>: Use smtp_set_auth(username, password) for username/password authentication.<ul>
+<li>AUTH LOGIN: The username and password are sent separately. The server first asks for the username, then the password.</li>
+<li>AUTH PLAIN: The username and password are sent together.</li>
+<li>The client automatically selects PLAIN or LOGIN based on server capabilities.</li>
+<li>Both methods use Base64 encoding (NOT encryption).</li>
+</ul>
+</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Authentication credentials are sent in plain text (Base64 encoded only) unless TLS is enabled. Base64 can be easily decoded by anyone intercepting network traffic.</dd></dl>
+<p>Always use TLS when sending credentials:</p>
+<div class="fragment"><div class="line"><span class="comment">// INSECURE - Credentials visible on network</span></div><div class="line">smtp_set_tls_config(NULL);</div><div class="line">smtp_set_auth(<span class="stringliteral">&quot;user&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>);</div><div class="line"></div><div class="line"><span class="comment">// SECURE - Credentials encrypted</span></div><div class="line">smtp_set_tls_config(tls_config);  <span class="comment">// Enable TLS encryption</span></div><div class="line">smtp_set_auth(<span class="stringliteral">&quot;user&quot;</span>, <span class="stringliteral">&quot;password&quot;</span>);</div></div><!-- fragment --><h1><a class="anchor" id="rm-lwip_smtp-examples"></a>
+Examples</h1>
+<h2>Basic Example</h2>
+<p>This is a basic example of minimal use of the lwIP SMTP APIs in an application.</p>
+<dl class="section note"><dt>Note</dt><dd>When using <code>printf</code> with e² studio, build errors may occur. Please refer to <a href="https://en-support.renesas.com/knowledgeBase/16979385">https://en-support.renesas.com/knowledgeBase/16979385</a> and follow Method 2, which is recommended for smooth integration and to avoid build errors.</dd></dl>
+<div class="fragment"><div class="line"><span class="preprocessor">#if LWIP_ALTCP &amp;&amp; LWIP_ALTCP_TLS</span></div><div class="line"><span class="preprocessor"> #include &quot;lwip/altcp_tls.h&quot;</span></div><div class="line"><span class="preprocessor"> #include &quot;mbedtls/platform.h&quot;</span></div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/timeouts.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/init.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/netif.h&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;lwip/apps/smtp.h&quot;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define LWIP_SMTP_GW_ADDR    &quot;192.168.10.1&quot;</span></div><div class="line"><span class="preprocessor">#define LWIP_SMTP_PORT       (1025)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#if LWIP_ALTCP &amp;&amp; LWIP_ALTCP_TLS</span></div><div class="line"></div><div class="line"><span class="comment">/* Example ca certificate, needs to be updated. */</span></div><div class="line"><span class="keyword">static</span> uint8_t gs_ca_crt[] =</div><div class="line">    <span class="stringliteral">&quot;-----BEGIN CERTIFICATE-----\n&quot;</span>                                      \</div><div class="line">    <span class="stringliteral">&quot;MIIDQTCCAimgAwIBAgITBmyfz5m/jAo54vB4ikPmljZbyjANBgkqhkiG9w0BAQsF\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;ADA5MQswCQYDVQQGEwJVUzEPMA0GA1UEChMGQW1hem9uMRkwFwYDVQQDExBBbWF6\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;b24gUm9vdCBDQSAxMB4XDTE1MDUyNjAwMDAwMFoXDTM4MDExNzAwMDAwMFowOTEL\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;MAkGA1UEBhMCVVMxDzANBgNVBAoTBkFtYXpvbjEZMBcGA1UEAxMQQW1hem9uIFJv\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;b3QgQ0EgMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALJ4gHHKeNXj\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;ca9HgFB0fW7Y14h29Jlo91ghYPl0hAEvrAIthtOgQ3pOsqTQNroBvo3bSMgHFzZM\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;9O6II8c+6zf1tRn4SWiw3te5djgdYZ6k/oI2peVKVuRF4fn9tBb6dNqcmzU5L/qw\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;IFAGbHrQgLKm+a/sRxmPUDgH3KKHOVj4utWp+UhnMJbulHheb4mjUcAwhmahRWa6\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;VOujw5H5SNz/0egwLX0tdHA114gk957EWW67c4cX8jJGKLhD+rcdqsq08p8kDi1L\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;93FcXmn/6pUCyziKrlA4b9v7LWIbxcceVOF34GfID5yHI9Y/QCB/IIDEgEw+OyQm\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;jgSubJrIqg0CAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMC\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;AYYwHQYDVR0OBBYEFIQYzIU07LwMlJQuCFmcx7IQTgoIMA0GCSqGSIb3DQEBCwUA\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;A4IBAQCY8jdaQZChGsV2USggNiMOruYou6r4lK5IpDB/G/wkjUu0yKGX9rbxenDI\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;U5PMCCjjmCXPI6T53iHTfIUJrU6adTrCC2qJeHZERxhlbI1Bjjt/msv0tadQ1wUs\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;N+gDS63pYaACbvXy8MWy7Vu33PqUXHeeE6V/Uq2V8viTO96LXFvKWlJbYK8U90vv\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;o/ufQJVtMVT8QtPHRh8jrdkPSHCa2XV4cdFyQzR1bldZwgJcJmApzyMZFo6IQ6XU\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;5MsI+yMRQ+hDKXJioaldXgjUkK642M4UwtBV8ob2xJNDd2ZhwLnoQdeXeGADbkpy\n&quot;</span> \</div><div class="line">    <span class="stringliteral">&quot;rqXRfboQnoZsG4q5WTP468SQvvG5\n&quot;</span>                                     \</div><div class="line">    <span class="stringliteral">&quot;-----END CERTIFICATE-----&quot;</span>;</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line"><span class="comment">/* LwIP SMTP example */</span></div><div class="line"></div><div class="line"><span class="comment">/* Declare the result callback function */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_smtp_result_example(<span class="keywordtype">void</span> * arg, uint8_t smtp_result, uint16_t srv_err, err_t err);</div><div class="line"></div><div class="line"><span class="comment">/* Define the result callback function */</span></div><div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> lwip_smtp_result_example (<span class="keywordtype">void</span> * arg, uint8_t smtp_result, uint16_t srv_err, err_t err)</div><div class="line"></div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gaf0afcbc9a110ac9366a811d96ee06029">FSP_PARAMETER_NOT_USED</a>(arg);</div><div class="line"></div><div class="line">    printf(<span class="stringliteral">&quot;Mail sent with results: %d, srv_err: %d, err: %d\n&quot;</span>, smtp_result, srv_err, err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lwip_smtp_example () {</div><div class="line">    <span class="keyword">struct </span>netif netif;</div><div class="line"></div><div class="line">    ip_addr_t ipaddr;</div><div class="line">    ip_addr_t netmask;</div><div class="line">    ip_addr_t gw;</div><div class="line"></div><div class="line">    <span class="comment">/* Initializing lwIP core. */</span></div><div class="line">    lwip_init();</div><div class="line"></div><div class="line">    <span class="comment">/* Set ip address of the board. */</span></div><div class="line">    IP4_ADDR(&amp;ipaddr, 192, 168, 10, 4);</div><div class="line">    IP4_ADDR(&amp;netmask, 255, 255, 255, 0);</div><div class="line">    IP4_ADDR(&amp;gw, 192, 168, 10, 1);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize netif. Please pass rm_lwip_ether_init() function and the instance of rm_lwip_ether to netif_add(). */</span></div><div class="line">    netif_add(&amp;netif, &amp;ipaddr, &amp;netmask, &amp;gw, &amp;g_lwip_ether0_instance, <a class="code" href="group___r_m___l_w_i_p___e_t_h_e_r.html#ga12068ee8c9da22277d4b0aaa7aa7b7f8">rm_lwip_ether_init</a>, netif_input);</div><div class="line"></div><div class="line">    <span class="comment">/* Set netif as default and enable. */</span></div><div class="line">    netif_set_default(&amp;netif);</div><div class="line">    netif_set_up(&amp;netif);</div><div class="line">    netif_set_link_up(&amp;netif);</div><div class="line"></div><div class="line"><span class="preprocessor">#if LWIP_ALTCP &amp;&amp; LWIP_ALTCP_TLS</span></div><div class="line"></div><div class="line">    <span class="comment">/* Create a TLS client configuration */</span></div><div class="line">    <span class="keyword">struct </span>altcp_tls_config * configuration =</div><div class="line">        altcp_tls_create_config_client((<span class="keyword">const</span> u8_t *) gs_ca_crt, <span class="keyword">sizeof</span>(gs_ca_crt));</div><div class="line"></div><div class="line">    <span class="comment">/* Set TLS configuration */</span></div><div class="line">    smtp_set_tls_config(configuration);</div><div class="line"><span class="preprocessor">#endif</span></div><div class="line"></div><div class="line">    <span class="comment">/* Set the server address */</span></div><div class="line">    smtp_set_server_addr(LWIP_SMTP_GW_ADDR);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the server port */</span></div><div class="line">    smtp_set_server_port(LWIP_SMTP_PORT);</div><div class="line"></div><div class="line">    <span class="comment">/* Set the authentication data */</span></div><div class="line">    smtp_set_auth(<span class="stringliteral">&quot;YourUserName&quot;</span>, <span class="stringliteral">&quot;YourPassword&quot;</span>);</div><div class="line"></div><div class="line">    <span class="comment">/* Send mail */</span></div><div class="line">    smtp_send_mail(<span class="stringliteral">&quot;***@YourDomain.com&quot;</span>,</div><div class="line">                   <span class="stringliteral">&quot;***@SomeOtherDomain.com&quot;</span>,</div><div class="line">                   <span class="stringliteral">&quot;Subject&quot;</span>,</div><div class="line">                   <span class="stringliteral">&quot;Email Body&quot;</span>,</div><div class="line">                   lwip_smtp_result_example,</div><div class="line">                   NULL);</div><div class="line"></div><div class="line">    <span class="comment">/* Program main loop. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        sys_check_timeouts();</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.7-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+  </ul>
+</div>
+</body>
+</html>

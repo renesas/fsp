@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -248,7 +248,7 @@ $(document).ready(function(){initNavTree('group___e_t_h_e_r___p_h_y___a_p_i.html
 <p>Interface for Ethernet PHY functions. </p>
 <h1><a class="anchor" id="ETHER_PHY_API_Summary"></a>
 Summary</h1>
-<p>The Ethernet PHY module (r_ether_phy) provides an API for standard Ethernet PHY communications applications that use the ETHERC peripheral.</p>
+<p>The Ethernet PHY module (r_ether_phy) provides an API for standard Ethernet PHY communications applications that use the Ethernet peripheral.</p>
 <p>The Ethernet PHY interface supports the following features:</p><ul>
 <li>Auto negotiation support</li>
 <li>Flow control support</li>
@@ -257,6 +257,8 @@ Summary</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:structether__phy__callback__args__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a></td></tr>
+<tr class="separator:structether__phy__callback__args__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structether__phy__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t">ether_phy_cfg_t</a></td></tr>
 <tr class="separator:structether__phy__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structether__phy__lsi__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__lsi__cfg__t">ether_phy_lsi_cfg_t</a></td></tr>
@@ -281,8 +283,52 @@ Enumerations</h2></td></tr>
 <tr class="separator:gaf227c12b47e90edc8ec5729bfccf9bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaafbecb98180b1f07abe8449332b5a122"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#gaafbecb98180b1f07abe8449332b5a122">ether_phy_mii_type_t</a> </td></tr>
 <tr class="separator:gaafbecb98180b1f07abe8449332b5a122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga118294e3043fe8486e757ea45c792bde"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga118294e3043fe8486e757ea45c792bde">ether_phy_event_t</a> </td></tr>
+<tr class="separator:ga118294e3043fe8486e757ea45c792bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="structether__phy__callback__args__t" id="structether__phy__callback__args__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structether__phy__callback__args__t">&#9670;&nbsp;</a></span>ether_phy_callback_args_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ether_phy_callback_args_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Callback function parameter data </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="af3f0beda9d25f63842ac2ef1e39e8cd9"></a>uint32_t</td>
+<td class="fieldname">
+channel</td>
+<td class="fielddoc">
+Device channel number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a729eda937701c2cc1dbb80575ada05d8"></a>uint32_t</td>
+<td class="fieldname">
+port</td>
+<td class="fielddoc">
+Device port number. </td></tr>
+<tr><td class="fieldtype">
+<a id="a49b5af6f8efedc366edfb6c708c4bc25"></a><a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga118294e3043fe8486e757ea45c792bde">ether_phy_event_t</a></td>
+<td class="fieldname">
+event</td>
+<td class="fielddoc">
+Event code. </td></tr>
+<tr><td class="fieldtype">
+<a id="a4bd9225f2b163b3c5a6c26984a45ed44"></a>void *</td>
+<td class="fieldname">
+p_context</td>
+<td class="fielddoc">
+Placeholder for user data. Set in <a class="el" href="group___e_t_h_e_r___a_p_i.html#aa0c703be12efe73efdd0d47168239470">ether_api_t::open</a> function in <a class="el" href="group___e_t_h_e_r___a_p_i.html#structether__cfg__t">ether_cfg_t</a>. </td></tr>
+</table>
+
+</div>
+</div>
 <a name="structether__phy__cfg__t" id="structether__phy__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structether__phy__cfg__t">&#9670;&nbsp;</a></span>ether_phy_cfg_t</h2>
 
@@ -344,7 +390,7 @@ Interface type is MII or RMII. </td></tr>
 <td class="fieldname">
 p_context</td>
 <td class="fielddoc">
-<p>Placeholder for user data. Passed to the user callback in ether_phy_callback_args_t. </p>
+<p>Placeholder for user data. Passed to the user callback in <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t">ether_phy_callback_args_t</a>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a53025f3bbf4ba6d1e5666eb6b2a390e7"></a>void const  *</td>
@@ -759,13 +805,36 @@ Pointer to the API structure for this instance. </td></tr>
 
 </div>
 </div>
+<a id="ga118294e3043fe8486e757ea45c792bde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga118294e3043fe8486e757ea45c792bde">&#9670;&nbsp;</a></span>ether_phy_event_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___e_t_h_e_r___p_h_y___a_p_i.html#ga118294e3043fe8486e757ea45c792bde">ether_phy_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event code of callback function </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga118294e3043fe8486e757ea45c792bdea209902097191fb7e72d0c75e0461f854"></a>ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_FAIL&#160;</td><td class="fielddoc"><p>Preemption link verification failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga118294e3043fe8486e757ea45c792bdea2c929292e59bcffb1f2d5084907a4b27"></a>ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_SUCCESS&#160;</td><td class="fielddoc"><p>Preemption link verification succeeded. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga118294e3043fe8486e757ea45c792bdea2883ef45e2155a2b00b411b0ccc1625c"></a>ETHER_PHY_EVENT_PREEMPTION_LINK_VERIFY_RECEIVE&#160;</td><td class="fielddoc"><p>Preemption link verification frame received. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

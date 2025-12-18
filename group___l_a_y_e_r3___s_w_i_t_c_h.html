@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -280,6 +280,8 @@ Functions</h2></td></tr>
 <tr class="separator:gac4be6fe5872b4fdf2fe7fc6f056fd0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga76739c8992c8227be3b585bca901e04f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f">R_LAYER3_SWITCH_EnableTAS</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, uint8_t port)</td></tr>
 <tr class="separator:ga76739c8992c8227be3b585bca901e04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fd61c68e2c1b1328e469a1c81a74d08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4fd61c68e2c1b1328e469a1c81a74d08">R_LAYER3_SWITCH_PsfpClearErrorStatus</a> (<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const p_ctrl, <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__error__status__bitmask__t">layer3_switch_psfp_error_status_bitmask_t</a> bitmasks)</td></tr>
+<tr class="separator:ga4fd61c68e2c1b1328e469a1c81a74d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>The LAYER3 SWITCH module (r_layer3_switch) provides an API for standard Ethernet communications applications that use the ESWM peripheral. It implements the <a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html">Ethernet Switch Interface</a>. </p>
@@ -298,6 +300,7 @@ Features</h2>
 <li>Timestamp feature</li>
 <li>Optional callback function when transmit/receive complete or an error occurs</li>
 <li>Frame Replication and Elimination for Reliability (FRER) feature.</li>
+<li>Per Stream Filtering and Policing (PSFP) feature</li>
 </ul>
 <h1><a class="anchor" id="r-layer3-switch-configuration"></a>
 Configuration</h1>
@@ -373,6 +376,38 @@ This module can be added to the Stacks tab via New Stack &gt; Networking &gt; Sw
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 0 fowarding </td></tr>
 <tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">IPV queues for preemptable frames</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Queue 0</li>
+<li>
+Queue 1</li>
+<li>
+Queue 2</li>
+<li>
+Queue 3</li>
+<li>
+Queue 4</li>
+<li>
+Queue 5</li>
+<li>
+Queue 6</li>
+<li>
+Queue 7</li>
+</ul>
+</td><td></td><td>Select IPV queues that send preemptable frames from port 0. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Minimum fragment size of preemptable frames</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+64 bytes</li>
+<li>
+128 bytes</li>
+<li>
+192 bytes</li>
+<li>
+256 bytes</li>
+</ul>
+</td><td>64 bytes </td><td>Select minimum fragment size of preemptable frames that send from port 0. </td></tr>
+<tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 0. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Callback</td><td>Name must be a valid C symbol</td><td>NULL </td><td>Callback provided when an ISR occurs for port0. </td></tr>
@@ -408,6 +443,38 @@ Timer 1</li>
 <td class="tree_lvl_3_cell">Queue 7</td><td>Value must be an integer more than 1</td><td>64 </td><td>queue7 dept of port 1. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">Fowarding</td><td>MCU Specific Options</td><td></td><td>Destination ports for port 1 fowarding </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">IPV queues for preemptable frames</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Queue 0</li>
+<li>
+Queue 1</li>
+<li>
+Queue 2</li>
+<li>
+Queue 3</li>
+<li>
+Queue 4</li>
+<li>
+Queue 5</li>
+<li>
+Queue 6</li>
+<li>
+Queue 7</li>
+</ul>
+</td><td></td><td>Select IPV queues that send preemptable frames from port 1. </td></tr>
+<tr class="tree_lvl_2_item">
+<td class="tree_lvl_2_cell">Minimum fragment size of preemptable frames</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+64 bytes</li>
+<li>
+128 bytes</li>
+<li>
+192 bytes</li>
+<li>
+256 bytes</li>
+</ul>
+</td><td>64 bytes </td><td>Select minimum fragment size of preemptable frames that send from port 1. </td></tr>
 <tr class="tree_lvl_2_item">
 <td class="tree_lvl_2_cell">MAC address</td><td>Must be a valid MAC address</td><td>00:11:22:33:44:55 </td><td>MAC address of port 1. </td></tr>
 <tr class="tree_lvl_2_item">
@@ -527,10 +594,39 @@ CBS operation image</div></div>
 TAS operation image</div></div>
 <p> In the r_layer3_switch module, TAS gates can be configured for each IPV queue of the transmission ports. Each gate learns entries that represent windows. An entry contains the window time and state. TAS feature is configured using the ConfigureTAS() API, and enabled using the EnableTAS() API.</p>
 <dl class="section note"><dt>Note</dt><dd>This TAS feature uses the gPTP timer.</dd></dl>
+<h3>Frame preemption [802.3br, 802.1Qbu]</h3>
+<p>Frame preemption is a standard defined in IEEE 802.3br and 802.1Qbu. This standard allows preempting low-priority frames to send high-priority frames.</p>
+<h4>Verification process</h4>
+<p>Frame preemption needs to verify the frame preemption capability of the link partner. The figure below shows the verification process. Verify frames have special preambles, so these frames are rejected on devices which do not support frame preemption.</p>
+<div class="image">
+<img src="r_layer3_switch_preemption_verification.png" alt="r_layer3_switch_preemption_verification.png"/>
+<div class="caption">
+Frame preemption verification</div></div>
+<p> In the r_layer3_switch module, the verification process is performed when the r_rmac_phy module links up and frame preemption is enabled in the configuration.</p>
+<h4>Preemption</h4>
+<p>The figure below shows the behavior of frame preemption. The low-priority frame (preemptable frame) is separated into several fragments, and they can be transferred in the intervals between high-priority frames (express frames). As a result, the negative influence on the throughput of high-priority frames is prevented.</p>
+<div class="image">
+<img src="r_layer3_switch_preemption_behavior.png" alt="r_layer3_switch_preemption_behavior.png"/>
+<div class="caption">
+Frame preemption behavior</div></div>
+<p> In the r_layer3_switch module, each IPV queue can be configured to send either preemptable frames or express frames. ESWM IP automatically assembles separated frames when receiving them.</p>
+<dl class="section note"><dt>Note</dt><dd>Sending preemptable frames is enabled when the verification process succeeds.</dd></dl>
+<h2>Per Stream Filtering and Policing (PSFP) [802.1Qci]</h2>
+<p>Per Stream Filtering and Policing (PSFP) feature is a standard defined in IEEE 802.1Qci that supports MSDU and Meter filters.</p>
+<h3>MAC Service Data Unit (MSDU) Filter</h3>
+<p>MAC Service Data Unit (MSDU)filter filters packets when Ethernet frame size (payload) is more than a threshold.</p>
+<h3>Meter Filter</h3>
+<p>Meter filter filters packets when information rate is more than a threshold.</p>
+<p>The filtered packets are sent to green or yellow bucket by Meter filter configuration.</p>
+<h3>Normal Mode and Throttle Mode</h3>
+<p>MSDU and Meter filters support normal mode and throttle mode.</p>
+<p>In normal mode, the driver does not send packets filtered MSDU or Meter filter. Also, error status flag becomes 1 when the packet is more than a threshold.</p>
+<p>In throttle mode, the driver keeps not to send all packets when error status flag is 1. User can clear error status flag using PsfpClearErrorStatus() API.</p>
 <h2><a class="anchor" id="r-layer3-switch-limitations"></a>
 Limitations</h2>
 <p>Developers should be aware of the following limitations when using the r_layer3_switch:</p><ul>
 <li>CBS feature supports only 100 Mbps and 1 Gbps link speeds.</li>
+<li>PSFP feature supports only Meter filter and MSDU filter. PSFP stream gates are not supported.</li>
 </ul>
 <h1><a class="anchor" id="r-layer3-switch-examples"></a>
 Examples</h1>
@@ -539,8 +635,13 @@ Examples</h1>
 <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE            (8)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE              (1514)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER        ((uint8_t) ((LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE &amp; \</span></div><div class="line"><span class="preprocessor">                                                                           0xFF00) &gt;&gt; 8))</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER        ((uint8_t) LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE &amp; \</span></div><div class="line"><span class="preprocessor">                                                               0x00FF)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE    (60)</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_SOURCE_MAC_ADDRESS              0x74, 0x90, 0x50, 0x00, 0x79, 0x01</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_DESTINATION_MAC_ADDRESS         0x74, 0x90, 0x50, 0x00, 0x79, 0x02</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_FRAME_TYPE                      0x00, 0x2E</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PAYLOAD                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, \</span></div><div class="line"><span class="preprocessor">    0x00,                                                                                                           \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                     \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,                                                     \</span></div><div class="line"><span class="preprocessor">    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00</span></div><div class="line"></div><div class="line"><a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> gp_descriptor_pool[LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE];</div><div class="line">uint8_t gp_ether_buffer0[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer1[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer2[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer3[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer4[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer5[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer6[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line">uint8_t gp_ether_buffer7[LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE];</div><div class="line"></div><div class="line">uint8_t * gpp_ether_buffers[8] =</div><div class="line">{</div><div class="line">    &amp;gp_ether_buffer0[0],</div><div class="line">    &amp;gp_ether_buffer1[0],</div><div class="line">    &amp;gp_ether_buffer2[0],</div><div class="line">    &amp;gp_ether_buffer3[0],</div><div class="line">    &amp;gp_ether_buffer4[0],</div><div class="line">    &amp;gp_ether_buffer5[0],</div><div class="line">    &amp;gp_ether_buffer6[0],</div><div class="line">    &amp;gp_ether_buffer7[0],</div><div class="line">};</div><div class="line"></div><div class="line"><span class="comment">/* Transmit data buffer */</span></div><div class="line">uint8_t gp_send_data[LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE] =</div><div class="line">{</div><div class="line">    LAYER3_SWITCH_EXAMPLE_DESTINATION_MAC_ADDRESS, <span class="comment">/* Destination MAC address */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_SOURCE_MAC_ADDRESS,      <span class="comment">/* Source MAC address */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_FRAME_TYPE,              <span class="comment">/* Type field */</span></div><div class="line">    LAYER3_SWITCH_EXAMPLE_PAYLOAD                  <span class="comment">/* Payload value (46byte) */</span></div><div class="line">};</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_transmit_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err         = FSP_SUCCESS;</div><div class="line">    uint32_t  queue_index = 0;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure transmission queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> transmission_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type                  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04af29cf0e59d9c0e555490c288acb0df9e">LAYER3_SWITCH_QUEUE_TYPE_TX</a>,</div><div class="line">        .write_back_mode       = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array    = gp_descriptor_pool,</div><div class="line">        .p_ts_descriptor_array = NULL,</div><div class="line">        .rx_timestamp_storage  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga3cbdd15f35d8df20dadd04e3bed2956ba0896324dcefe5e70f877085f4e5cdfb2">LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_DISABLE</a>,</div><div class="line">        .array_length          = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports                 = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Prepare data for transmission. */</span></div><div class="line">    memcpy(gpp_ether_buffers[0], gp_send_data, LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize transmission descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> transmission_descriptor = {0};</div><div class="line">    transmission_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    transmission_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    transmission_descriptor.basic.die    = 1;</div><div class="line">    transmission_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    transmission_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58a6da12aac07fab773f2ff28c2eb91251f">LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE</a>;</div><div class="line">    transmission_descriptor.info1_tx.fmt = 1;</div><div class="line">    transmission_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Handle any errors. This function should be defined by the user. */</span></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize PHY-LSI chip. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e">R_RMAC_PHY_ChipInit</a>(&amp;g_rmac_phy0_ctrl, &amp;g_rmac_phy0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#gac96ef5fa0c9eb9c86c89ab5aae7e20ea">R_RMAC_PHY_StartAutoNegotiate</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Get the Ethernet link status read from the PHY-LSI Basic Status registers until link-up. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga25794f823211f7b3de4605787738a22e">R_RMAC_PHY_LinkStatusGet</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;transmission_queue_cfg);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Set descriptor to queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga591564b96d8309b49c31b2ed2f19965a">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Start transmission. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Get descriptor status. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4d4d3d661e020ca06ddb863b16f756de">R_LAYER3_SWITCH_GetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Check if transmission is completed. */</span></div><div class="line">    assert(<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe">LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY</a> == transmission_descriptor.basic.dt);</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the layer3 switch instance. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a>(&amp;g_layer3_switch0_ctrl);</div><div class="line"></div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> This is a basic example of reception use of the LAYER3 SWITCH.</p>
 <div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH    (4)</span></div><div class="line"></div><div class="line"><span class="keywordtype">bool</span> g_complete_reception_flag;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_receive_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err         = FSP_SUCCESS;</div><div class="line">    uint32_t  queue_index = 1;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure reception queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> reception_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type                  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04aaca4e31e8b9e516e20c50be9c8408d7a">LAYER3_SWITCH_QUEUE_TYPE_RX</a>,</div><div class="line">        .write_back_mode       = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array    = gp_descriptor_pool,</div><div class="line">        .p_ts_descriptor_array = NULL,</div><div class="line">        .rx_timestamp_storage  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga3cbdd15f35d8df20dadd04e3bed2956ba0896324dcefe5e70f877085f4e5cdfb2">LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_DISABLE</a>,</div><div class="line">        .array_length          = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports                 = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize reception descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> reception_descriptor = {0};</div><div class="line">    reception_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    reception_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    reception_descriptor.basic.die    = 1;</div><div class="line">    reception_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    reception_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58aa7fe6564416d270e7e2221677183debe">LAYER3_SWITCH_DESCRIPTOR_TYPE_FEMPTY</a>;</div><div class="line">    reception_descriptor.info1_tx.fmt = 1;</div><div class="line">    reception_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize PHY-LSI chip. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga91a0f726a228c182cfe97707bce5680e">R_RMAC_PHY_ChipInit</a>(&amp;g_rmac_phy0_ctrl, &amp;g_rmac_phy0_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start auto negotiation. */</span></div><div class="line">    err = <a class="code" href="group___r_m_a_c___p_h_y.html#gac96ef5fa0c9eb9c86c89ab5aae7e20ea">R_RMAC_PHY_StartAutoNegotiate</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">do</span></div><div class="line">    {</div><div class="line">        <span class="comment">/* Get the Ethernet link status read from the PHY-LSI Basic Status registers until link-up. */</span></div><div class="line">        err = <a class="code" href="group___r_m_a_c___p_h_y.html#ga25794f823211f7b3de4605787738a22e">R_RMAC_PHY_LinkStatusGet</a>(&amp;g_rmac_phy0_ctrl);</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    } <span class="keywordflow">while</span> (FSP_SUCCESS != err);</div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;reception_queue_cfg);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Copy descriptor to queue. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; LAYER3_SWITCH_EXAMPLE_RECEPTION_QUEUE_LENGTH - 1; i++)</div><div class="line">    {</div><div class="line">        memset(gpp_ether_buffers[i], 0, LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE);</div><div class="line">        reception_descriptor.basic.ptr_l = (uintptr_t) gpp_ether_buffers[i];</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga591564b96d8309b49c31b2ed2f19965a">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;reception_descriptor);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    g_complete_reception_flag = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Start reception. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Wait to complete reception. */</span></div><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span> != g_complete_reception_flag)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(10, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Disable transmission and receive function and close the layer3 switch instance. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga2091f6bf45559fb944aecf2e5ab65911">R_LAYER3_SWITCH_Close</a>(&amp;g_layer3_switch0_ctrl);</div><div class="line"></div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_example_callback (<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> * p_args) {</div><div class="line">    <span class="keywordflow">switch</span> (p_args-&gt;<a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#a4fe5367c86c4967b3ab5b240536cfb8b">event</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524aa0a0514df6bac40c835e4fcda32073b4">ETHER_SWITCH_EVENT_RX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            g_complete_reception_flag = <span class="keyword">true</span>;</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a0487493c21c16952bd6586b0230c88d7">ETHER_SWITCH_EVENT_TX_COMPLETE</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524a200ad7f19a1e015a4212e6fc5a9f164f">ETHER_SWITCH_EVENT_RX_QUEUE_FULL</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">case</span> <a class="code" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ggacd79a4b5f23db68c622b963ff8aa8524af64610e3efae1b13eeaa962e5928891e">ETHER_SWITCH_EVENT_RX_MESSAGE_LOST</a>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keywordflow">default</span>:</div><div class="line">        {</div><div class="line">            <span class="keywordflow">break</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>TSN Example</h2>
 <p>The below is an example of forwarding frames with Credit Based Shaper (CBS).</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> layer3_switch_cbs_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                err              = FSP_SUCCESS;</div><div class="line">    uint8_t                  source_port      = 0;</div><div class="line">    uint8_t                  destination_port = 1;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a> port_cfg         = {0};</div><div class="line"></div><div class="line">    <span class="comment">/* Set bandwidth of queue 0 to 30 Mbps, queue 1 to 20 Mbps. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__cbs__cfg__t">layer3_switch_cbs_cfg_t</a> cbs_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a56b6c1cc343312b63f1dae8a343d6f8a">band_width_list</a>    = {30, 20, 0,  0,  0,  0,  0,  0   },</div><div class="line">        .max_burst_num_list = {10, 10, 10, 10, 10, 10, 10, 10  },</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Destination of forwarding target frames are 00:01:02:03:04:05 and 10:11:12:13:14:15*/</span></div><div class="line">    uint8_t p_mac_address_list[2][6] =</div><div class="line">    {</div><div class="line">        {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, },</div><div class="line">        {0x10, 0x11, 0x12, 0x13, 0x14, 0x15, },</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__cfg__t">layer3_switch_table_cfg_t</a> mac_table_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aafa99fb3fb46c7c884a079dbe63ee313">port_cfg_list</a>              = {{.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a3bfd9a3b5cc9fa61cc6bd4a7b3569122">mac_table_enable</a> = <span class="keyword">true</span>}, {.mac_table_enable = <span class="keyword">true</span>}},</div><div class="line">        .unsecure_entry_maximum_num = 2,</div><div class="line">    };</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a>    mac_entry_frame;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a> mac_entry_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (1 &lt;&lt; destination_port),</div><div class="line">        .source_ports                    = (1 &lt;&lt; source_port),</div><div class="line">        .internal_priority_update_enable = <span class="keyword">true</span>,</div><div class="line">        .entry_enable                    = <span class="keyword">true</span>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    mac_entry_frame.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66da313bda2569c67577a5fdc2faaccfa1d2">LAYER3_SWITCH_TABLE_ENTRY_TYPE_MAC</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Reset MAC table. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn destination MAC address of a forwarding frame. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_entry_frame.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>    = p_mac_address_list[i];</div><div class="line">        mac_entry_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl, &amp;mac_entry_frame, &amp;mac_entry_cfg);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Configure and enable CBS. */</span></div><div class="line">    port_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa434b97ae5a4ba8b57c861eeede897aa">p_cbs_cfg</a> = &amp;cbs_cfg;</div><div class="line">    err                = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga08a836e498d5995d4472630c294c15cb">R_LAYER3_SWITCH_ConfigurePort</a>(&amp;g_layer3_switch0_ctrl, destination_port, &amp;port_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The below is an example of forwarding frames with Credit Based Shaper (TAS).</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_GPTP_TIMER           (0)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_GPTP_CLOCK_PERIOD    (4)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_tas_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err              = FSP_SUCCESS;</div><div class="line">    uint8_t   source_port      = 0;</div><div class="line">    uint8_t   destination_port = 1;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a>  mac_table_entry;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__cfg__t">layer3_switch_tas_cfg_t</a>      tas_cfg;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__entry__t">layer3_switch_tas_entry_t</a>    closed_entry_list[1] = {{.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7b44825feefa57ed9b4a731ebb447519">state</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f">LAYER3_SWITCH_TAS_GATE_STATE_CLOSE</a>, .time = 0}};</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__gate__cfg__t">layer3_switch_tas_gate_cfg_t</a> tas_gate_closed      =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa8f8d33d9c699ac3eb1f697f13c9ace0">tas_entry_num</a>    = 1, .initial_gate_state = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f">LAYER3_SWITCH_TAS_GATE_STATE_CLOSE</a>,</div><div class="line">        .p_tas_entry_list = closed_entry_list</div><div class="line">    };</div><div class="line">    <a class="code" href="group___g_p_t_p___a_p_i.html#structgptp__instance__t">gptp_instance_t</a> <span class="keyword">const</span> * p_gptp_instance = g_layer3_switch0_extended_cfg.p_gptp_instance;</div><div class="line">    <a class="code" href="group___g_p_t_p___a_p_i.html#structgptp__timer__cfg__t">gptp_timer_cfg_t</a>        timer_cfg       = {.<a class="code" href="group___g_p_t_p___a_p_i.html#a8cbceecf8886532224a8a63fde73f4d3">clock_period</a> = LAYER3_SWITCH_EXAMPLE_GPTP_CLOCK_PERIOD};</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Gate 0 and 1 are repeat Open/Close. Other gates are alwayes closed. */</span></div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[0] = g_layer3_switch_example_tas_gate_0_cfg;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[1] = g_layer3_switch_example_tas_gate_1_cfg;</div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 2; i &lt; 8; i++)</div><div class="line">    {</div><div class="line">        tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[i] = tas_gate_closed;</div><div class="line">    }</div><div class="line"></div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#afed8f7a61f8dde01a66942143dbfad3b">gptp_timer_number</a>     = LAYER3_SWITCH_EXAMPLE_GPTP_TIMER;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7eab2df4ee1ea546363432b3aac84928">cycle_time_start_high</a> = LAYER3_SWITCH_EXAMPLE_CYCLE_START_TIME_UPPER_32BIT;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af22b5495960141edc45298452419400f">cycle_time_start_low</a>  = LAYER3_SWITCH_EXAMPLE_CYCLE_START_TIME_UPPER_32BIT;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a37233b0d0c92467f82dd352276071531">cycle_time</a>            = LAYER3_SWITCH_EXAMPLE_CYCLE_TIME;</div><div class="line"></div><div class="line">    <span class="comment">/* Start gPTP timer before enable TAS feature. */</span></div><div class="line">    p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a87565dd76e1bc5094ffa252de03003ac">p_api</a>-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#aa4ac1991651a09cbde5bdbe7eabf1502">timerCfg</a>(p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a0aa84d7e3111657b030753a83e41c738">p_ctrl</a>, LAYER3_SWITCH_EXAMPLE_GPTP_TIMER, &amp;timer_cfg);</div><div class="line">    p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a87565dd76e1bc5094ffa252de03003ac">p_api</a>-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a728aa7d21ee51c9147cfca9c4e849d40">start</a>(p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a0aa84d7e3111657b030753a83e41c738">p_ctrl</a>, LAYER3_SWITCH_EXAMPLE_GPTP_TIMER);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure and enable TAS. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gac4be6fe5872b4fdf2fe7fc6f056fd0e4">R_LAYER3_SWITCH_ConfigureTAS</a>(&amp;g_layer3_switch0_ctrl, destination_port, &amp;tas_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f">R_LAYER3_SWITCH_EnableTAS</a>(&amp;g_layer3_switch0_ctrl, destination_port);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch_example_mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn a MAC entry. */</span></div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a>                   = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66da313bda2569c67577a5fdc2faaccfa1d2">LAYER3_SWITCH_TABLE_ENTRY_TYPE_MAC</a>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#acbd5ea9cfb996323c9b54b79d91e8093">entry_enable</a>                    = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ab7c67b6a8af420660f048163476dc46e">security_enable</a>                 = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (uint32_t) (1 &lt;&lt; destination_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6fc334dfc9c9199ba78e5549473f5cf0">source_ports</a>                    = (1 &lt;&lt; source_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa2df8fe4f9d9e29adf04da8b02378011">internal_priority_update_enable</a> = <span class="keyword">true</span>;</div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>   = g_layer3_switch_example_mac_address_list[i];</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> layer3_switch_cbs_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a>                err              = FSP_SUCCESS;</div><div class="line">    uint8_t                  source_port      = 0;</div><div class="line">    uint8_t                  destination_port = 1;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__port__cfg__t">layer3_switch_port_cfg_t</a> port_cfg         = {0};</div><div class="line"></div><div class="line">    <span class="comment">/* Set bandwidth of queue 0 to 30 Mbps, queue 1 to 20 Mbps. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__cbs__cfg__t">layer3_switch_cbs_cfg_t</a> cbs_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a56b6c1cc343312b63f1dae8a343d6f8a">band_width_list</a>    = {30, 20, 0,  0,  0,  0,  0,  0   },</div><div class="line">        .max_burst_num_list = {10, 10, 10, 10, 10, 10, 10, 10  },</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Destination of forwarding target frames are 00:01:02:03:04:05 and 10:11:12:13:14:15*/</span></div><div class="line">    uint8_t p_mac_address_list[2][6] =</div><div class="line">    {</div><div class="line">        {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, },</div><div class="line">        {0x10, 0x11, 0x12, 0x13, 0x14, 0x15, },</div><div class="line">    };</div><div class="line"></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__cfg__t">layer3_switch_table_cfg_t</a> mac_table_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aafa99fb3fb46c7c884a079dbe63ee313">port_cfg_list</a>              = {{.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a3bfd9a3b5cc9fa61cc6bd4a7b3569122">mac_table_enable</a> = <span class="keyword">true</span>}, {.mac_table_enable = <span class="keyword">true</span>}},</div><div class="line">        .unsecure_entry_maximum_num = 2,</div><div class="line">    };</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frame__filter__t">layer3_switch_frame_filter_t</a>    mac_entry_frame;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__cfg__t">layer3_switch_table_entry_cfg_t</a> mac_entry_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (1 &lt;&lt; destination_port),</div><div class="line">        .source_ports                    = (1 &lt;&lt; source_port),</div><div class="line">        .internal_priority_update_enable = <span class="keyword">true</span>,</div><div class="line">        .entry_enable                    = <span class="keyword">true</span>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    mac_entry_frame.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66da313bda2569c67577a5fdc2faaccfa1d2">LAYER3_SWITCH_TABLE_ENTRY_TYPE_MAC</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Reset MAC table. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn destination MAC address of a forwarding frame. */</span></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_entry_frame.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>    = p_mac_address_list[i];</div><div class="line">        mac_entry_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl, &amp;mac_entry_frame, &amp;mac_entry_cfg);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Configure and enable CBS. */</span></div><div class="line">    port_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa434b97ae5a4ba8b57c861eeede897aa">p_cbs_cfg</a> = &amp;cbs_cfg;</div><div class="line">    err                = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga08a836e498d5995d4472630c294c15cb">R_LAYER3_SWITCH_ConfigurePort</a>(&amp;g_layer3_switch0_ctrl, destination_port, &amp;port_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><p> The below is an example of forwarding frames with Time Aware Shaper (TAS).</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_GPTP_TIMER           (0)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_GPTP_CLOCK_PERIOD    (4)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_tas_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err              = FSP_SUCCESS;</div><div class="line">    uint8_t   source_port      = 0;</div><div class="line">    uint8_t   destination_port = 1;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a>  mac_table_entry;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__cfg__t">layer3_switch_tas_cfg_t</a>      tas_cfg;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__entry__t">layer3_switch_tas_entry_t</a>    closed_entry_list[1] = {{.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7b44825feefa57ed9b4a731ebb447519">state</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f">LAYER3_SWITCH_TAS_GATE_STATE_CLOSE</a>, .time = 0}};</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__tas__gate__cfg__t">layer3_switch_tas_gate_cfg_t</a> tas_gate_closed      =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa8f8d33d9c699ac3eb1f697f13c9ace0">tas_entry_num</a>    = 1, .initial_gate_state = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggace3cf9b3a8666a95726fda9e6b14dd33a14c1495082f1194cf4f3b337d132ca9f">LAYER3_SWITCH_TAS_GATE_STATE_CLOSE</a>,</div><div class="line">        .p_tas_entry_list = closed_entry_list</div><div class="line">    };</div><div class="line">    <a class="code" href="group___g_p_t_p___a_p_i.html#structgptp__instance__t">gptp_instance_t</a> <span class="keyword">const</span> * p_gptp_instance = g_layer3_switch0_extended_cfg.p_gptp_instance;</div><div class="line">    <a class="code" href="group___g_p_t_p___a_p_i.html#structgptp__timer__cfg__t">gptp_timer_cfg_t</a>        timer_cfg       = {.<a class="code" href="group___g_p_t_p___a_p_i.html#a8cbceecf8886532224a8a63fde73f4d3">clock_period</a> = LAYER3_SWITCH_EXAMPLE_GPTP_CLOCK_PERIOD};</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Gate 0 and 1 are repeat Open/Close. Other gates are alwayes closed. */</span></div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[0] = g_layer3_switch_example_tas_gate_0_cfg;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[1] = g_layer3_switch_example_tas_gate_1_cfg;</div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 2; i &lt; 8; i++)</div><div class="line">    {</div><div class="line">        tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a481418a4fbad572d35aca90fd53c7d57">gate_cfg_list</a>[i] = tas_gate_closed;</div><div class="line">    }</div><div class="line"></div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#afed8f7a61f8dde01a66942143dbfad3b">gptp_timer_number</a>     = LAYER3_SWITCH_EXAMPLE_GPTP_TIMER;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7eab2df4ee1ea546363432b3aac84928">cycle_time_start_high</a> = LAYER3_SWITCH_EXAMPLE_CYCLE_START_TIME_UPPER_32BIT;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af22b5495960141edc45298452419400f">cycle_time_start_low</a>  = LAYER3_SWITCH_EXAMPLE_CYCLE_START_TIME_UPPER_32BIT;</div><div class="line">    tas_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a37233b0d0c92467f82dd352276071531">cycle_time</a>            = LAYER3_SWITCH_EXAMPLE_CYCLE_TIME;</div><div class="line"></div><div class="line">    <span class="comment">/* Start gPTP timer before enable TAS feature. */</span></div><div class="line">    p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a87565dd76e1bc5094ffa252de03003ac">p_api</a>-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#aa4ac1991651a09cbde5bdbe7eabf1502">timerCfg</a>(p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a0aa84d7e3111657b030753a83e41c738">p_ctrl</a>, LAYER3_SWITCH_EXAMPLE_GPTP_TIMER, &amp;timer_cfg);</div><div class="line">    p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a87565dd76e1bc5094ffa252de03003ac">p_api</a>-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a728aa7d21ee51c9147cfca9c4e849d40">start</a>(p_gptp_instance-&gt;<a class="code" href="group___g_p_t_p___a_p_i.html#a0aa84d7e3111657b030753a83e41c738">p_ctrl</a>, LAYER3_SWITCH_EXAMPLE_GPTP_TIMER);</div><div class="line"></div><div class="line">    <span class="comment">/* Configure and enable TAS. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gac4be6fe5872b4fdf2fe7fc6f056fd0e4">R_LAYER3_SWITCH_ConfigureTAS</a>(&amp;g_layer3_switch0_ctrl, destination_port, &amp;tas_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga76739c8992c8227be3b585bca901e04f">R_LAYER3_SWITCH_EnableTAS</a>(&amp;g_layer3_switch0_ctrl, destination_port);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch_example_mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn a MAC entry. */</span></div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a>                   = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66da313bda2569c67577a5fdc2faaccfa1d2">LAYER3_SWITCH_TABLE_ENTRY_TYPE_MAC</a>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#acbd5ea9cfb996323c9b54b79d91e8093">entry_enable</a>                    = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ab7c67b6a8af420660f048163476dc46e">security_enable</a>                 = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (uint32_t) (1 &lt;&lt; destination_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6fc334dfc9c9199ba78e5549473f5cf0">source_ports</a>                    = (1 &lt;&lt; source_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa2df8fe4f9d9e29adf04da8b02378011">internal_priority_update_enable</a> = <span class="keyword">true</span>;</div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>   = g_layer3_switch_example_mac_address_list[i];</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">while</span> (1)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___b_s_p___m_c_u.html#gaf3219448adfd1531cf69f68697ab184b">R_BSP_SoftwareDelay</a>(1, <a class="code" href="group___b_s_p___m_c_u.html#ggafd98e2a6f080d6a52a3ef72e3d731b2ba59fcc4e8d51046d4a1bd63c87ac64913">BSP_DELAY_UNITS_MILLISECONDS</a>);</div><div class="line">    }</div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h2>PSFP Example</h2>
+<h3>MSDU Filter</h3>
+<p>The below is an example of PSFP MSDU filter.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_MSDU_FILTER_ID                (0)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_MSDU_FILTER_FRAME_MAX_SIZE    (60)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_MSDU_FILTER_CLEAR_BITMASK     (0xFFFF)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_psfp_msdu_filter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err              = FSP_SUCCESS;</div><div class="line">    uint8_t   source_port      = 0;</div><div class="line">    uint8_t   destination_port = 1;</div><div class="line">    uint32_t  queue_index      = 0;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a>               mac_table_entry;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__error__status__bitmask__t">layer3_switch_psfp_error_status_bitmask_t</a> bitmasks;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__cfg__t">layer3_switch_psfp_msdu_filter_cfg_t</a>      psfp_msdu_filter_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure transmission queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> transmission_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type                  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04af29cf0e59d9c0e555490c288acb0df9e">LAYER3_SWITCH_QUEUE_TYPE_TX</a>,</div><div class="line">        .write_back_mode       = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array    = gp_descriptor_pool,</div><div class="line">        .p_ts_descriptor_array = NULL,</div><div class="line">        .rx_timestamp_storage  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga3cbdd15f35d8df20dadd04e3bed2956ba0896324dcefe5e70f877085f4e5cdfb2">LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_DISABLE</a>,</div><div class="line">        .array_length          = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports                 = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Prepare data for transmission. */</span></div><div class="line">    memcpy(gpp_ether_buffers[0], gp_send_data, LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize transmission descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> transmission_descriptor = {0};</div><div class="line">    transmission_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    transmission_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    transmission_descriptor.basic.die    = 1;</div><div class="line">    transmission_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    transmission_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58a6da12aac07fab773f2ff28c2eb91251f">LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE</a>;</div><div class="line">    transmission_descriptor.info1_tx.fmt = 1;</div><div class="line">    transmission_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch_example_mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn a MAC entry. */</span></div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a>                   = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66daf3bd7fd944c9e37134072e2fb702b103">LAYER3_SWITCH_TABLE_ENTRY_TYPE_LAYER3</a>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#acbd5ea9cfb996323c9b54b79d91e8093">entry_enable</a>                    = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ab7c67b6a8af420660f048163476dc46e">security_enable</a>                 = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (uint32_t) (1 &lt;&lt; destination_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6fc334dfc9c9199ba78e5549473f5cf0">source_ports</a>                    = (1 &lt;&lt; source_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa2df8fe4f9d9e29adf04da8b02378011">internal_priority_update_enable</a> = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure PSFP MSDU filter. */</span></div><div class="line">    psfp_msdu_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7869e7b6523dd8a1170d2125fd1f937f">msdu_filter_id</a>              = LAYER3_SWITCH_EXAMPLE_PSFP_MSDU_FILTER_ID;</div><div class="line">    psfp_msdu_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0bfae4766447f87b7230424d4110f8a3">maximum_frame_size</a>          = LAYER3_SWITCH_EXAMPLE_PSFP_MSDU_FILTER_FRAME_MAX_SIZE;</div><div class="line">    psfp_msdu_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ae197f024af4144d56fd098505b348c43">mode</a>                        = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5dd284d342730c0a4779b3c79becdcebab2ea1a8cb3d955c05b53165f4a4d4035">LAYER3_SWITCH_MSDU_FILTER_THROTTLE_MODE</a>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.p_psfp_msdu_filter_cfg = &amp;psfp_msdu_filter_cfg;</div><div class="line"></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>   = g_layer3_switch_example_mac_address_list[i];</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;transmission_queue_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set descriptor to queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga591564b96d8309b49c31b2ed2f19965a">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start transmission. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set bitmask for clearing error status. */</span></div><div class="line">    bitmasks.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a625ae9d27d68b21b04d05a86d34be9ea">msdu_filter_bitmask</a>  = LAYER3_SWITCH_EXAMPLE_PSFP_MSDU_FILTER_CLEAR_BITMASK;</div><div class="line">    bitmasks.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6e358b809ddb0174ea2efb1f57f712a">meter_filter_bitmask</a> = 0;</div><div class="line"></div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4fd61c68e2c1b1328e469a1c81a74d08">R_LAYER3_SWITCH_PsfpClearErrorStatus</a>(&amp;g_layer3_switch0_ctrl, bitmasks);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">}</div><div class="line"></div></div><!-- fragment --> <h3>Meter Filter</h3>
+<p>The below is an example of PSFP Meter filter.</p>
+<div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_METER_FILTER_ID                    (0)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_METER_CBS                          (1000)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_METER_CIR                          (10)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_METER_EBS                          (1000)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_METER_EIR                          (10)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_METER_SYSTEM_CLOCK                 (250)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_INFORMATION_RATE_DIVIDE_VALUE      (8)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_INFORMATION_RATE_1M                (1000000)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_INFORMATION_RATE_MULTIPLY_VALUE    (65536)</span></div><div class="line"><span class="preprocessor">#define LAYER3_SWITCH_EXAMPLE_PSFP_METER_FILTER_CLEAR_BITMASK         (0xFFFFFFFF)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> layer3_switch_psfp_meter_filter_example (<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> err              = FSP_SUCCESS;</div><div class="line">    uint8_t   source_port      = 0;</div><div class="line">    uint8_t   destination_port = 1;</div><div class="line">    uint32_t  queue_index      = 0;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__table__entry__t">layer3_switch_table_entry_t</a>               mac_table_entry;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__error__status__bitmask__t">layer3_switch_psfp_error_status_bitmask_t</a> bitmasks;</div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__cfg__t">layer3_switch_psfp_meter_filter_cfg_t</a>     psfp_meter_filter_cfg;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure transmission queue. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__queue__cfg__t">layer3_switch_descriptor_queue_cfg_t</a> transmission_queue_cfg =</div><div class="line">    {</div><div class="line">        .<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a09902b4ef8f11a9d954aac33fe36b002">descriptor_format</a>     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5bf3e03175ddd4e81e4068df21dab440a410bb8c1d5d49323100d72233ce147d0">LAYER3_SWITCH_DISCRIPTOR_FORMTAT_EXTENDED</a>,</div><div class="line">        .type                  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga5037f4e98ab3c474ec9cfde36b0e4f04af29cf0e59d9c0e555490c288acb0df9e">LAYER3_SWITCH_QUEUE_TYPE_TX</a>,</div><div class="line">        .write_back_mode       = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga97af1e0d115b4f3b917e9095f1edfde3a58b154d7ee64db04d3e5062fe892f013">LAYER3_SWITCH_WRITE_BACK_MODE_FULL</a>,</div><div class="line">        .p_descriptor_array    = gp_descriptor_pool,</div><div class="line">        .p_ts_descriptor_array = NULL,</div><div class="line">        .rx_timestamp_storage  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga3cbdd15f35d8df20dadd04e3bed2956ba0896324dcefe5e70f877085f4e5cdfb2">LAYER3_SWITCH_RX_TIMESTAMP_STORAGE_DISABLE</a>,</div><div class="line">        .array_length          = LAYER3_SWITCH_EXAMPLE_DESCRIPTOR_POOL_SIZE,</div><div class="line">        .ports                 = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>,</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="comment">/* Prepare data for transmission. */</span></div><div class="line">    memcpy(gpp_ether_buffers[0], gp_send_data, LAYER3_SWITCH_EXAMPLE_TRANSMIT_ETHERNET_FRAME_SIZE);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize transmission descriptor. */</span></div><div class="line">    <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__descriptor__t">layer3_switch_descriptor_t</a> transmission_descriptor = {0};</div><div class="line">    transmission_descriptor.basic.ds_l   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_LOWER;</div><div class="line">    transmission_descriptor.basic.ds_h   = LAYER3_SWITCH_EXAMPLE_MAXIMUM_FRAME_SIZE_UPPER;</div><div class="line">    transmission_descriptor.basic.die    = 1;</div><div class="line">    transmission_descriptor.basic.ptr_l  = (uintptr_t) gpp_ether_buffers;</div><div class="line">    transmission_descriptor.basic.dt     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga6e36f8895c3397d72343e2df2de37a58a6da12aac07fab773f2ff28c2eb91251f">LAYER3_SWITCH_DESCRIPTOR_TYPE_FSINGLE</a>;</div><div class="line">    transmission_descriptor.info1_tx.fmt = 1;</div><div class="line">    transmission_descriptor.info1_tx.dv  = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga7363c7f13ca6d95350e732c699fca85ba680cd06f19f1617c7ae1431ed4f0ea78">LAYER3_SWITCH_PORT_BITMASK_PORT0</a>;</div><div class="line"></div><div class="line">    <span class="comment">/* Open the layer3 switch instance with initial configuration. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4aec278118b9d59cbeebbe42e373344c">R_LAYER3_SWITCH_Open</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch0_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Initialize MAC table entry.*/</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga584a1c701442875d7e3f29f1360fdc7c">R_LAYER3_SWITCH_ConfigureTable</a>(&amp;g_layer3_switch0_ctrl, &amp;g_layer3_switch_example_mac_table_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Learn a MAC entry. */</span></div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0227c6168c0c59e1de2efeebb8a4c336">entry_type</a>                   = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga972628bbf4d3df0f61f064bac5e7e66daf3bd7fd944c9e37134072e2fb702b103">LAYER3_SWITCH_TABLE_ENTRY_TYPE_LAYER3</a>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#acbd5ea9cfb996323c9b54b79d91e8093">entry_enable</a>                    = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ab7c67b6a8af420660f048163476dc46e">security_enable</a>                 = <span class="keyword">true</span>;</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a8a1047a9e331a283dc402d4220ccf699">destination_ports</a>               = (uint32_t) (1 &lt;&lt; destination_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6fc334dfc9c9199ba78e5549473f5cf0">source_ports</a>                    = (1 &lt;&lt; source_port);</div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa2df8fe4f9d9e29adf04da8b02378011">internal_priority_update_enable</a> = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="comment">/* Configure PSFP Meter filter. */</span></div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a48a035152ed114c9d1aad797a7d28207">meter_filter_id</a> = LAYER3_SWITCH_EXAMPLE_PSFP_METER_FILTER_ID;</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a2d7cf9735bc42aed0997de151ede4a5c">cbs</a>             = LAYER3_SWITCH_EXAMPLE_PSFP_METER_CBS;</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a7292037c377c42f6024310973a803a44">cir</a>             = layer3_switch_psfp_information_rate_example(</div><div class="line">        LAYER3_SWITCH_EXAMPLE_PSFP_METER_CIR,</div><div class="line">        LAYER3_SWITCH_EXAMPLE_PSFP_METER_SYSTEM_CLOCK);</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aed939df0a8552653a88810b549edf2e9">ebs</a> = LAYER3_SWITCH_EXAMPLE_PSFP_METER_EBS;</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ab09df2fdb3ff392425519ac58a534fe2">eir</a> = layer3_switch_psfp_information_rate_example(</div><div class="line">        LAYER3_SWITCH_EXAMPLE_PSFP_METER_EIR,</div><div class="line">        LAYER3_SWITCH_EXAMPLE_PSFP_METER_SYSTEM_CLOCK);</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a6e7b307b9dee7412d98118d040b2f35d">mode</a>                = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaaa067e0df85f58ee4c59aa1809d93e94a0d140805de27f90ab2b9640fdf09a504">LAYER3_SWITCH_METER_FILTER_THROTTLE_MODE</a>;</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a688bfeab8e12f355d76902c6df664c5c">drop_red_frame</a>      = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggafa2dbc72c967e166d6514ad1e5d01c2aa321e0f2a457f0e4f849d145a5f84b5e1">LAYER3_SWITCH_METER_FILTER_DROP_RED_FRAME</a>;</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a2fbac3e9194cf8adf0dbb023a18bfe4a">coupling_enable</a>     = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggae873ec9f4806a8eea47c8e8097b753e9a02b936e3905dddb953ed4c29834b3f69">LAYER3_SWITCH_METER_FILTER_COUPLING_STATUS_DISABLE</a>;</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad76edc4d64ec704598fc1007c0832125">dei_handling_policy</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ggaac60bf9f8ad5627e642b94bb972f0ae7a14807f39f0adbde0d5cd41f93738d1df">LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_YELLOW</a>;</div><div class="line">    psfp_meter_filter_cfg.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ab78c43d212c2c57d3bbff55cf8c8e74e">pcp_handling_policy</a> = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gga32883f63056b4de0786ed3ab259d84b7a36732d61673e3ed15ae759be17014406">LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_GREEN_ALL</a>;</div><div class="line"></div><div class="line">    mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#afc2c5ca7dbf170847324e728dfe6805f">p_psfp_meter_filter_cfg</a> = &amp;psfp_meter_filter_cfg;</div><div class="line"></div><div class="line">    <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 2; i++)</div><div class="line">    {</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aeb32d19171dc949791510fe19c36f646">p_destination_mac_address</a>   = g_layer3_switch_example_mac_address_list[i];</div><div class="line">        mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49a9c36e935dba56058a7b63a6940cf">internal_priority_update_value</a> = i;</div><div class="line">        err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa73731a934620002b891c5c14ad46699">R_LAYER3_SWITCH_AddTableEntry</a>(&amp;g_layer3_switch0_ctrl,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6d1ef31a86f3cd5e5b22dea77a86ef5">target_frame</a>,</div><div class="line">                                            &amp;mac_table_entry.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a850337a2e605b3eb95a40d7731af0758">entry_cfg</a>);</div><div class="line">        assert(FSP_SUCCESS == err);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">/* Create descriptor queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga9609b328abab50cc2e311079077d3d5f">R_LAYER3_SWITCH_CreateDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, &amp;queue_index, &amp;transmission_queue_cfg);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set descriptor to queue. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga591564b96d8309b49c31b2ed2f19965a">R_LAYER3_SWITCH_SetDescriptor</a>(&amp;g_layer3_switch0_ctrl, queue_index, &amp;transmission_descriptor);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Start transmission. */</span></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga764348620bb502a2f564e06d3a251a1e">R_LAYER3_SWITCH_StartDescriptorQueue</a>(&amp;g_layer3_switch0_ctrl, queue_index);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line"></div><div class="line">    <span class="comment">/* Set bitmask for clearing error status. */</span></div><div class="line">    bitmasks.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a625ae9d27d68b21b04d05a86d34be9ea">msdu_filter_bitmask</a>  = 0;</div><div class="line">    bitmasks.<a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#af6e358b809ddb0174ea2efb1f57f712a">meter_filter_bitmask</a> = LAYER3_SWITCH_EXAMPLE_PSFP_METER_FILTER_CLEAR_BITMASK;</div><div class="line"></div><div class="line">    err = <a class="code" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga4fd61c68e2c1b1328e469a1c81a74d08">R_LAYER3_SWITCH_PsfpClearErrorStatus</a>(&amp;g_layer3_switch0_ctrl, bitmasks);</div><div class="line">    assert(FSP_SUCCESS == err);</div><div class="line">}</div><div class="line"></div></div><!-- fragment --><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:structlayer3__switch__basic__descriptor__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__basic__descriptor__t">layer3_switch_basic_descriptor_t</a></td></tr>
@@ -549,6 +650,16 @@ Data Structures</h2></td></tr>
 <tr class="separator:structlayer3__switch__descriptor__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlayer3__switch__ts__reception__process__descriptor__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__ts__reception__process__descriptor__t">layer3_switch_ts_reception_process_descriptor_t</a></td></tr>
 <tr class="separator:structlayer3__switch__ts__reception__process__descriptor__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__psfp__msdu__filter__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__cfg__t">layer3_switch_psfp_msdu_filter_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__psfp__msdu__filter__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__psfp__msdu__filter__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__info__t">layer3_switch_psfp_msdu_filter_info_t</a></td></tr>
+<tr class="separator:structlayer3__switch__psfp__msdu__filter__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__psfp__meter__filter__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__cfg__t">layer3_switch_psfp_meter_filter_cfg_t</a></td></tr>
+<tr class="separator:structlayer3__switch__psfp__meter__filter__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__psfp__meter__filter__info__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__info__t">layer3_switch_psfp_meter_filter_info_t</a></td></tr>
+<tr class="separator:structlayer3__switch__psfp__meter__filter__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structlayer3__switch__psfp__error__status__bitmask__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__error__status__bitmask__t">layer3_switch_psfp_error_status_bitmask_t</a></td></tr>
+<tr class="separator:structlayer3__switch__psfp__error__status__bitmask__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlayer3__switch__frer__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__cfg__t">layer3_switch_frer_cfg_t</a></td></tr>
 <tr class="separator:structlayer3__switch__frer__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structlayer3__switch__frer__entry__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__entry__t">layer3_switch_frer_entry_t</a></td></tr>
@@ -640,6 +751,22 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga3cbdd15f35d8df20dadd04e3bed2956b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa34ababd9cf10b17acc2999b36ac2c5e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa34ababd9cf10b17acc2999b36ac2c5e">layer3_switch_ts_descriptor_queue_status_t</a> </td></tr>
 <tr class="separator:gaa34ababd9cf10b17acc2999b36ac2c5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8911180c6fe4a23650855ecfe5f9529f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8911180c6fe4a23650855ecfe5f9529f">layer3_switch_preemptable_frame_fragment_size_t</a> </td></tr>
+<tr class="separator:ga8911180c6fe4a23650855ecfe5f9529f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1dfe849dedd707bdc2665d84b13c687"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa1dfe849dedd707bdc2665d84b13c687">layer3_switch_psfp_filter_status_t</a> </td></tr>
+<tr class="separator:gaa1dfe849dedd707bdc2665d84b13c687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dd284d342730c0a4779b3c79becdceb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5dd284d342730c0a4779b3c79becdceb">layer3_switch_msdu_filter_mode_t</a> </td></tr>
+<tr class="separator:ga5dd284d342730c0a4779b3c79becdceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa067e0df85f58ee4c59aa1809d93e94"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaaa067e0df85f58ee4c59aa1809d93e94">layer3_switch_meter_filter_mode_t</a> </td></tr>
+<tr class="separator:gaaa067e0df85f58ee4c59aa1809d93e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae873ec9f4806a8eea47c8e8097b753e9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gae873ec9f4806a8eea47c8e8097b753e9">layer3_switch_meter_filter_coupling_status_t</a> </td></tr>
+<tr class="separator:gae873ec9f4806a8eea47c8e8097b753e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa2dbc72c967e166d6514ad1e5d01c2a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gafa2dbc72c967e166d6514ad1e5d01c2a">layer3_switch_meter_filter_drop_red_frame_t</a> </td></tr>
+<tr class="separator:gafa2dbc72c967e166d6514ad1e5d01c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac60bf9f8ad5627e642b94bb972f0ae7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaac60bf9f8ad5627e642b94bb972f0ae7">layer3_switch_meter_filter_dei_handling_policy_t</a> </td></tr>
+<tr class="separator:gaac60bf9f8ad5627e642b94bb972f0ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32883f63056b4de0786ed3ab259d84b7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga32883f63056b4de0786ed3ab259d84b7">layer3_switch_meter_filter_pcp_handling_policy_t</a> </td></tr>
+<tr class="separator:ga32883f63056b4de0786ed3ab259d84b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structlayer3__switch__basic__descriptor__t" id="structlayer3__switch__basic__descriptor__t"></a>
@@ -685,6 +812,224 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"><p>GWCA TS reception process descriptor. </p>
 </div>
+</div>
+</div>
+<a name="structlayer3__switch__psfp__msdu__filter__cfg__t" id="structlayer3__switch__psfp__msdu__filter__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__psfp__msdu__filter__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_psfp_msdu_filter_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_psfp_msdu_filter_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of PSFP MSDU filter. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a7869e7b6523dd8a1170d2125fd1f937f"></a>uint32_t</td>
+<td class="fieldname">
+msdu_filter_id</td>
+<td class="fielddoc">
+PSFP MSDU filter ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0bfae4766447f87b7230424d4110f8a3"></a>uint32_t</td>
+<td class="fieldname">
+maximum_frame_size</td>
+<td class="fielddoc">
+Maximum frame size is rejected by PSFP MSDU filter. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae197f024af4144d56fd098505b348c43"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5dd284d342730c0a4779b3c79becdceb">layer3_switch_msdu_filter_mode_t</a></td>
+<td class="fieldname">
+mode</td>
+<td class="fielddoc">
+PSFP MSDU filter mode. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__psfp__msdu__filter__info__t" id="structlayer3__switch__psfp__msdu__filter__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__psfp__msdu__filter__info__t">&#9670;&nbsp;</a></span>layer3_switch_psfp_msdu_filter_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_psfp_msdu_filter_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Information of PSFP MSDU filter. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="acaef0fda3bab3fabde9f7ec9cf4a8f05"></a>uint32_t</td>
+<td class="fieldname">
+msdu_filter_hw_id</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a33b1b636b0b9cba4ac6851bed8eecace"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa1dfe849dedd707bdc2665d84b13c687">layer3_switch_psfp_filter_status_t</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+PSFP MSDU filter ID for hardware. </td></tr>
+<tr><td class="fieldtype">
+<a id="a787a35228e54bc85e839d220e18ba9d4"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__cfg__t">layer3_switch_psfp_msdu_filter_cfg_t</a> *</td>
+<td class="fieldname">
+p_psfp_msdu_filter_cfg</td>
+<td class="fielddoc">
+Status of PSFP MSDU filter. <p>Pointer to configuration of PSFP MSDU filter. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__psfp__meter__filter__cfg__t" id="structlayer3__switch__psfp__meter__filter__cfg__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__psfp__meter__filter__cfg__t">&#9670;&nbsp;</a></span>layer3_switch_psfp_meter_filter_cfg_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_psfp_meter_filter_cfg_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Configuration of PSFP Meter filter for user. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a48a035152ed114c9d1aad797a7d28207"></a>uint32_t</td>
+<td class="fieldname">
+meter_filter_id</td>
+<td class="fielddoc">
+PSFP Meter filter ID. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2d7cf9735bc42aed0997de151ede4a5c"></a>uint32_t</td>
+<td class="fieldname">
+cbs</td>
+<td class="fielddoc">
+Maximum number of tokens (in bytes) contained in green bucket. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7292037c377c42f6024310973a803a44"></a>uint32_t</td>
+<td class="fieldname">
+cir</td>
+<td class="fielddoc">
+Used to increment green tokens when green bucket is not full. </td></tr>
+<tr><td class="fieldtype">
+<a id="aed939df0a8552653a88810b549edf2e9"></a>uint32_t</td>
+<td class="fieldname">
+ebs</td>
+<td class="fielddoc">
+Maximum number of tokens (in bytes) contained in yellow bucket. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab09df2fdb3ff392425519ac58a534fe2"></a>uint32_t</td>
+<td class="fieldname">
+eir</td>
+<td class="fielddoc">
+Used to increment yellow tokens when yellow bucket is not full. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6e7b307b9dee7412d98118d040b2f35d"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaaa067e0df85f58ee4c59aa1809d93e94">layer3_switch_meter_filter_mode_t</a></td>
+<td class="fieldname">
+mode</td>
+<td class="fielddoc">
+Meter filter mode. </td></tr>
+<tr><td class="fieldtype">
+<a id="a688bfeab8e12f355d76902c6df664c5c"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gafa2dbc72c967e166d6514ad1e5d01c2a">layer3_switch_meter_filter_drop_red_frame_t</a></td>
+<td class="fieldname">
+drop_red_frame</td>
+<td class="fielddoc">
+Drop or not red frame by Meter filter. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2fbac3e9194cf8adf0dbb023a18bfe4a"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gae873ec9f4806a8eea47c8e8097b753e9">layer3_switch_meter_filter_coupling_status_t</a></td>
+<td class="fieldname">
+coupling_enable</td>
+<td class="fielddoc">
+When green bucket is full, CIR tokens are 0:lost, 1:added the yellow bucket. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad76edc4d64ec704598fc1007c0832125"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaac60bf9f8ad5627e642b94bb972f0ae7">layer3_switch_meter_filter_dei_handling_policy_t</a></td>
+<td class="fieldname">
+dei_handling_policy</td>
+<td class="fielddoc">
+DEI handling policy for determining a frame color. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab78c43d212c2c57d3bbff55cf8c8e74e"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga32883f63056b4de0786ed3ab259d84b7">layer3_switch_meter_filter_pcp_handling_policy_t</a></td>
+<td class="fieldname">
+pcp_handling_policy</td>
+<td class="fielddoc">
+PCP handling policy for determining a frame color. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__psfp__meter__filter__info__t" id="structlayer3__switch__psfp__meter__filter__info__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__psfp__meter__filter__info__t">&#9670;&nbsp;</a></span>layer3_switch_psfp_meter_filter_info_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_psfp_meter_filter_info_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Information of PSFP Meter filter. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a6f8e3f00e72d28d96d4a0e4e5abc6214"></a>uint32_t</td>
+<td class="fieldname">
+meter_filter_hw_id</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a56000cabbb38f01b244a7f9d86a4c90b"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa1dfe849dedd707bdc2665d84b13c687">layer3_switch_psfp_filter_status_t</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+PSFP Meter filter ID for hardware. </td></tr>
+<tr><td class="fieldtype">
+<a id="a0dd3c83c3a63b2bcb208c126a7f12565"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__cfg__t">layer3_switch_psfp_meter_filter_cfg_t</a> *</td>
+<td class="fieldname">
+p_psfp_meter_filter_cfg</td>
+<td class="fielddoc">
+Status of PSFP Meter filter. <p>Pointer to configuration of PSFP Meter filter. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structlayer3__switch__psfp__error__status__bitmask__t" id="structlayer3__switch__psfp__error__status__bitmask__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structlayer3__switch__psfp__error__status__bitmask__t">&#9670;&nbsp;</a></span>layer3_switch_psfp_error_status_bitmask_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct layer3_switch_psfp_error_status_bitmask_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Bitmasks for clearing error status of throttle mode. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a625ae9d27d68b21b04d05a86d34be9ea"></a>uint32_t</td>
+<td class="fieldname">
+msdu_filter_bitmask</td>
+<td class="fielddoc">
+Bitmask for clearing error status bit of PSFP MSDU filter. </td></tr>
+<tr><td class="fieldtype">
+<a id="af6e358b809ddb0174ea2efb1f57f712a"></a>uint32_t</td>
+<td class="fieldname">
+meter_filter_bitmask</td>
+<td class="fielddoc">
+Bitmask for clearing error status bit of PSFP Meter filter. </td></tr>
+</table>
+
 </div>
 </div>
 <a name="structlayer3__switch__frer__cfg__t" id="structlayer3__switch__frer__cfg__t"></a>
@@ -1309,6 +1654,19 @@ security_enable</td>
 <td class="fielddoc">
 Entry is secure or not. </td></tr>
 <tr><td class="fieldtype">
+<a id="a2e551a5925c9827e284407bc80eb4c13"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__cfg__t">layer3_switch_psfp_msdu_filter_cfg_t</a> *</td>
+<td class="fieldname">
+p_psfp_msdu_filter_cfg</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="afc2c5ca7dbf170847324e728dfe6805f"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__cfg__t">layer3_switch_psfp_meter_filter_cfg_t</a> *</td>
+<td class="fieldname">
+p_psfp_meter_filter_cfg</td>
+<td class="fielddoc">
+Pointer to configuration of PSFP MDSU filter. <p>Pointer to configuration of PSFP Meter filter. </p>
+</td></tr>
+<tr><td class="fieldtype">
 <a id="a318bca9dce298ed8053b483b50e7fd33"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__frer__entry__cfg__t">layer3_switch_frer_entry_cfg_t</a> *</td>
 <td class="fieldname">
 p_frer_entry_cfg</td>
@@ -1645,11 +2003,23 @@ p_mac_addresses[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a0995618e1dac947a7d867a62f4058441"></a>uint32_t</td>
+<a id="aa30b618784f5587b312ee65a0a87bf2e"></a>uint32_t</td>
 <td class="fieldname">
-ipv_queue_depth_list[BSP_FEATURE_ETHER_NUM_CHANNELS][8]</td>
+ipv_queue_depth_list[BSP_FEATURE_ETHER_NUM_CHANNELS][BSP_FEATURE_ESWM_ETHA_IPV_QUEUE_NUM]</td>
 <td class="fielddoc">
 List of IPV queue depth for each port. </td></tr>
+<tr><td class="fieldtype">
+<a id="a143d3007f22a530b922ae92e4624d302"></a>uint32_t</td>
+<td class="fieldname">
+ipv_queue_preemptable_bitmask[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
+<td class="fielddoc">
+Bitmask of IPV queues that contain preemptable frames. </td></tr>
+<tr><td class="fieldtype">
+<a id="a44b356e79b140c3d1e2f4aa185be30ff"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8911180c6fe4a23650855ecfe5f9529f">layer3_switch_preemptable_frame_fragment_size_t</a></td>
+<td class="fieldname">
+frame_preemption_fragment_size[BSP_FEATURE_ETHER_NUM_CHANNELS]</td>
+<td class="fielddoc">
+Minimum fragment size of preemptable frame. </td></tr>
 <tr><td class="fieldtype">
 <a id="af953b505c992bd5dc7ce07cdcc8ccb51"></a><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__l3__filter__t">layer3_switch_l3_filter_t</a> *</td>
 <td class="fieldname">
@@ -1764,6 +2134,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="g
 <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa34ababd9cf10b17acc2999b36ac2c5e">layer3_switch_ts_descriptor_queue_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a43be6c87f8e905d8d4a2c49633ce6891">ts_descriptor_queue_status_list</a> [BSP_FEATURE_ESWM_TS_DESCRIPTOR_QUEUE_MAX_NUM]</td></tr>
 <tr class="memdesc:a43be6c87f8e905d8d4a2c49633ce6891"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status of TS reception descriptor queues. <br /></td></tr>
 <tr class="separator:a43be6c87f8e905d8d4a2c49633ce6891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fa38a220dc4fd18faf25fc3858205c5"><td class="memItemLeft" align="right" valign="top"><a id="a5fa38a220dc4fd18faf25fc3858205c5"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__msdu__filter__info__t">layer3_switch_psfp_msdu_filter_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a5fa38a220dc4fd18faf25fc3858205c5">psfp_msdu_filter_info_list</a> [BSP_FEATURE_ESWM_PSFP_MSDU_FILTER_MAX_NUM]</td></tr>
+<tr class="memdesc:a5fa38a220dc4fd18faf25fc3858205c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of information of PSFP MSDU filter. <br /></td></tr>
+<tr class="separator:a5fa38a220dc4fd18faf25fc3858205c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb770851d28276003cebb0ebd10b0625"><td class="memItemLeft" align="right" valign="top"><a id="adb770851d28276003cebb0ebd10b0625"></a>
+<a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__meter__filter__info__t">layer3_switch_psfp_meter_filter_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#adb770851d28276003cebb0ebd10b0625">psfp_meter_filter_info_list</a> [BSP_FEATURE_ESWM_PSFP_METER_FILTER_SINGLE_BUCKET_METERS_MAX_NUM]</td></tr>
+<tr class="memdesc:adb770851d28276003cebb0ebd10b0625"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of information of PSFP Meter filter. <br /></td></tr>
+<tr class="separator:adb770851d28276003cebb0ebd10b0625"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b2875311f2e6593fbe909304b1e2a4d"><td class="memItemLeft" align="right" valign="top"><a id="a0b2875311f2e6593fbe909304b1e2a4d"></a>
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#a0b2875311f2e6593fbe909304b1e2a4d">valid_frer_entry_num</a></td></tr>
 <tr class="memdesc:a0b2875311f2e6593fbe909304b1e2a4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of valid FRER entry. <br /></td></tr>
@@ -1776,6 +2154,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ad49b2dfefb121b00bbffe622872dd910">used_frer_sequence_generator_num</a></td></tr>
 <tr class="memdesc:ad49b2dfefb121b00bbffe622872dd910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of the sequence number generator. <br /></td></tr>
 <tr class="separator:ad49b2dfefb121b00bbffe622872dd910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2d75d550a43625c3285f7bf5980e4a4"><td class="memItemLeft" align="right" valign="top"><a id="ac2d75d550a43625c3285f7bf5980e4a4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ac2d75d550a43625c3285f7bf5980e4a4">frame_preemption_available</a> [BSP_FEATURE_ETHER_NUM_CHANNELS]</td></tr>
+<tr class="memdesc:ac2d75d550a43625c3285f7bf5980e4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status of the frame preemption verification. <br /></td></tr>
+<tr class="separator:ac2d75d550a43625c3285f7bf5980e4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa252f8417c88002cef8353a56060156a"><td class="memItemLeft" align="right" valign="top"><a id="aa252f8417c88002cef8353a56060156a"></a>
 void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#aa252f8417c88002cef8353a56060156a">p_callback</a> )(<a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#structether__switch__callback__args__t">ether_switch_callback_args_t</a> *p_args)</td></tr>
 <tr class="memdesc:aa252f8417c88002cef8353a56060156a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback provided when an ISR occurs. <br /></td></tr>
@@ -2413,6 +2795,192 @@ List of TAS gate configurations. </td></tr>
 
 </div>
 </div>
+<a id="ga8911180c6fe4a23650855ecfe5f9529f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8911180c6fe4a23650855ecfe5f9529f">&#9670;&nbsp;</a></span>layer3_switch_preemptable_frame_fragment_size_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga8911180c6fe4a23650855ecfe5f9529f">layer3_switch_preemptable_frame_fragment_size_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fragment size of preemptable frame. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8911180c6fe4a23650855ecfe5f9529faa3be6d4ed9f934feecd5bb522064d63b"></a>LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_64BYTE&#160;</td><td class="fielddoc"><p>Minimum fragment size is 64 byte. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8911180c6fe4a23650855ecfe5f9529fac81148de999b45fdeabcd9f27cf3b79d"></a>LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_128BYTE&#160;</td><td class="fielddoc"><p>Minimum fragment size is 64 byte. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8911180c6fe4a23650855ecfe5f9529faa5f747f2c663047d355565e47c219af2"></a>LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_192BYTE&#160;</td><td class="fielddoc"><p>Minimum fragment size is 64 byte. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8911180c6fe4a23650855ecfe5f9529faa4a3619fbb61933c188caaa59a6c663a"></a>LAYER3_SWITCH_PREEMPTABLE_FRAME_FRAGMENT_SIZE_256BYTE&#160;</td><td class="fielddoc"><p>Minimum fragment size is 64 byte. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaa1dfe849dedd707bdc2665d84b13c687"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa1dfe849dedd707bdc2665d84b13c687">&#9670;&nbsp;</a></span>layer3_switch_psfp_filter_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaa1dfe849dedd707bdc2665d84b13c687">layer3_switch_psfp_filter_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Used or not PSFP MSDU filter. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa1dfe849dedd707bdc2665d84b13c687ae798719247a0ef12693545a2e3ddb44c"></a>LAYER3_SWITCH_PSFP_FILTER_STATUS_UNUSED&#160;</td><td class="fielddoc"><p>PSFP filter is unused. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaa1dfe849dedd707bdc2665d84b13c687a79667d596ca94a84250fd8fd94e0af21"></a>LAYER3_SWITCH_PSFP_FILTER_STATUS_USED&#160;</td><td class="fielddoc"><p>PSFP filter is used. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5dd284d342730c0a4779b3c79becdceb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5dd284d342730c0a4779b3c79becdceb">&#9670;&nbsp;</a></span>layer3_switch_msdu_filter_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga5dd284d342730c0a4779b3c79becdceb">layer3_switch_msdu_filter_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PSFP MSDU filter mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5dd284d342730c0a4779b3c79becdceba62ed605c58d8b35f0d142775117d8d70"></a>LAYER3_SWITCH_MSDU_FILTER_NORMAL_MODE&#160;</td><td class="fielddoc"><p>Filtering occurs if LDESCR.TPL[GWCA] is greater than FWPMPCi.MSDUV. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5dd284d342730c0a4779b3c79becdcebab2ea1a8cb3d955c05b53165f4a4d4035"></a>LAYER3_SWITCH_MSDU_FILTER_THROTTLE_MODE&#160;</td><td class="fielddoc"><p>Filtering occurs if LDESCR.TPL[GWCA] is greater than FWPMPCi.MSDUV. Frames with FWEIS2.PMFS[i] set are also filtered. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaaa067e0df85f58ee4c59aa1809d93e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaa067e0df85f58ee4c59aa1809d93e94">&#9670;&nbsp;</a></span>layer3_switch_meter_filter_mode_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaaa067e0df85f58ee4c59aa1809d93e94">layer3_switch_meter_filter_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PSFP Meter filter mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaaa067e0df85f58ee4c59aa1809d93e94a01af836a4514c2d52c15ac5de6c08fa3"></a>LAYER3_SWITCH_METER_FILTER_NORMAL_MODE&#160;</td><td class="fielddoc"><p>Any frame linked to Meter filter i thanks to L3 table received when not enough token is available will be red. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaaa067e0df85f58ee4c59aa1809d93e94a0d140805de27f90ab2b9640fdf09a504"></a>LAYER3_SWITCH_METER_FILTER_THROTTLE_MODE&#160;</td><td class="fielddoc"><p>Any frame linked to Meter filter i thanks to L3 table received when not enough token is available or when FWEIS5.PMRFSi is set will be red. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gae873ec9f4806a8eea47c8e8097b753e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae873ec9f4806a8eea47c8e8097b753e9">&#9670;&nbsp;</a></span>layer3_switch_meter_filter_coupling_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gae873ec9f4806a8eea47c8e8097b753e9">layer3_switch_meter_filter_coupling_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable or disable copling flag. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae873ec9f4806a8eea47c8e8097b753e9a02b936e3905dddb953ed4c29834b3f69"></a>LAYER3_SWITCH_METER_FILTER_COUPLING_STATUS_DISABLE&#160;</td><td class="fielddoc"><p>When green bucket is full, CIR tokens are lost. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae873ec9f4806a8eea47c8e8097b753e9a0250d627bc9efc230d3bd38f6e6ad8cc"></a>LAYER3_SWITCH_METER_FILTER_COUPLING_STATUS_ENABLE&#160;</td><td class="fielddoc"><p>When green bucket is full, CIR tokens are added to the yellow bucket. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gafa2dbc72c967e166d6514ad1e5d01c2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa2dbc72c967e166d6514ad1e5d01c2a">&#9670;&nbsp;</a></span>layer3_switch_meter_filter_drop_red_frame_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gafa2dbc72c967e166d6514ad1e5d01c2a">layer3_switch_meter_filter_drop_red_frame_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Drop or not red frames. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggafa2dbc72c967e166d6514ad1e5d01c2aa2bce1427bc347dfc0dd3f18f961c58be"></a>LAYER3_SWITCH_METER_FILTER_NOT_DROP_RED_FRAME&#160;</td><td class="fielddoc"><p>Red frames are not dropped by Meter filter. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggafa2dbc72c967e166d6514ad1e5d01c2aa321e0f2a457f0e4f849d145a5f84b5e1"></a>LAYER3_SWITCH_METER_FILTER_DROP_RED_FRAME&#160;</td><td class="fielddoc"><p>Red frames are dropped by Meter filter. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaac60bf9f8ad5627e642b94bb972f0ae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaac60bf9f8ad5627e642b94bb972f0ae7">&#9670;&nbsp;</a></span>layer3_switch_meter_filter_dei_handling_policy_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#gaac60bf9f8ad5627e642b94bb972f0ae7">layer3_switch_meter_filter_dei_handling_policy_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DEI handling policy for determining a frame color. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaac60bf9f8ad5627e642b94bb972f0ae7a1557472e9dd4b775f9846672b2e45105"></a>LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_IGNORE&#160;</td><td class="fielddoc"><p>Ignore the DEI of the VLAN TAG, and the frame color is determined only by the PCP value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaac60bf9f8ad5627e642b94bb972f0ae7a14807f39f0adbde0d5cd41f93738d1df"></a>LAYER3_SWITCH_METER_FILTER_DEI_HANDLING_POLICY_YELLOW&#160;</td><td class="fielddoc"><p>When the DEI of the VLAN TAG is 1, treat it as a yellow frame. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga32883f63056b4de0786ed3ab259d84b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga32883f63056b4de0786ed3ab259d84b7">&#9670;&nbsp;</a></span>layer3_switch_meter_filter_pcp_handling_policy_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#ga32883f63056b4de0786ed3ab259d84b7">layer3_switch_meter_filter_pcp_handling_policy_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>PCP handling policy for determining a frame color. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7a36732d61673e3ed15ae759be17014406"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_GREEN_ALL&#160;</td><td class="fielddoc"><p>Treat all frames as green, regardless of the PCP. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7a16de376338a7795eeb4db2bc3ddcc3c6"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_1&#160;</td><td class="fielddoc"><p>Treat a frame as yellow when the PCP is less than 1. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7af0bbcb7df70290c75a410bde7f4f103c"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_2&#160;</td><td class="fielddoc"><p>Treat a frame as yellow when the PCP is less than 2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7ae5c6d6d3181967369572bb1682920eec"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_3&#160;</td><td class="fielddoc"><p>Treat a frame as yellow when the PCP is less than 3. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7a17c704ef570c39f8551115d2d8c8e400"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_4&#160;</td><td class="fielddoc"><p>Treat a frame as yellow when the PCP is less than 4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7adc644d8ad21b538d86ab127b8eae325a"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_5&#160;</td><td class="fielddoc"><p>Treat a frame as yellow when the PCP is less than 5. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7a7f09768bbc9558f5f8262deaa9bbece6"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_6&#160;</td><td class="fielddoc"><p>Treat a frame as yellow when the PCP is less than 6. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7a67252d753da0c4e6d8e375b1eb597803"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_BELOW_7&#160;</td><td class="fielddoc"><p>Treat a frame as yellow when the PCP is less than 7. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32883f63056b4de0786ed3ab259d84b7a512b67dd884604b971391ebe0f4a7ed3"></a>LAYER3_SWITCH_METER_FILTER_PCP_HANDLING_POLICY_YELLOW_ALL&#160;</td><td class="fielddoc"><p>Treat all frames as yellow, regardless of the PCP. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga4aec278118b9d59cbeebbe42e373344c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga4aec278118b9d59cbeebbe42e373344c">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_Open()</h2>
@@ -2804,6 +3372,7 @@ List of TAS gate configurations. </td></tr>
     <tr><td class="paramname">FSP_ERR_WRITE_FAILED</td><td>A hardware error occurred while learning the entry. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_ARGUMENT</td><td>Target frame or entry type is invalid. </td></tr>
     <tr><td class="paramname">FSP_ERR_INVALID_MODE</td><td>VLAN feature is disabled and a VLAN entry is passed. </td></tr>
+    <tr><td class="paramname">FSP_ERR_BUFFER_EMPTY</td><td>PSFP MSDU or Meter filter ID is invalid. </td></tr>
   </table>
   </dd>
 </dl>
@@ -3018,13 +3587,50 @@ List of TAS gate configurations. </td></tr>
 
 </div>
 </div>
+<a id="ga4fd61c68e2c1b1328e469a1c81a74d08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4fd61c68e2c1b1328e469a1c81a74d08">&#9670;&nbsp;</a></span>R_LAYER3_SWITCH_PsfpClearErrorStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___r_e_n_e_s_a_s___e_r_r_o_r___c_o_d_e_s.html#gadfb1288da0fcc7ae1dc88c58601374f8">fsp_err_t</a> R_LAYER3_SWITCH_PsfpClearErrorStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___e_t_h_e_r___s_w_i_t_c_h___a_p_i.html#ga64fa5aecbe46856bea7ed1bf4ff56bed">ether_switch_ctrl_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ctrl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___l_a_y_e_r3___s_w_i_t_c_h.html#structlayer3__switch__psfp__error__status__bitmask__t">layer3_switch_psfp_error_status_bitmask_t</a>&#160;</td>
+          <td class="paramname"><em>bitmasks</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clear error status bit of throttle mode.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">FSP_SUCCESS</td><td>Status bit cleared successfully. </td></tr>
+    <tr><td class="paramname">FSP_ERR_ASSERTION</td><td>A required pointer is NULL. </td></tr>
+    <tr><td class="paramname">FSP_ERR_NOT_OPEN</td><td>The control block has not been opened. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -404,6 +404,14 @@ Clock Synchronous Operation</li>
 </ul>
 </td><td>Clock Synchronous Operation </td><td>Select the clock sync mode. </td></tr>
 <tr class="tree_none">
+<td>SPI burst transfer without delay between frames</td><td><ul style="margin-top:0;margin-bottom:0;">
+<li>
+Disable</li>
+<li>
+Enable</li>
+</ul>
+</td><td>Disable </td><td>Select SPI burst transfer without delay between frames </td></tr>
+<tr class="tree_none">
 <td>Communication Mode Select</td><td><ul style="margin-top:0;margin-bottom:0;">
 <li>
 Full Duplex</li>
@@ -543,6 +551,8 @@ Usage Notes</h1>
 <dl class="section note"><dt>Note</dt><dd>Configuring the module to use RX DTC/DMAC instance without also providing a TX DTC/DMAC instance results in an invalid configuration when RXI transmit is enabled.</dd>
 <dd>
 Transmit Only mode is not supported when Transmit from RXI is enabled.</dd></dl>
+<h3>Burst Transfer</h3>
+<p>The burst transfer allows multiple data frames to be sent consecutively, improving performance. It operates in a 4-Wire SPI configuration and supports two operating styles: with delay (frames are spaced) and without delay (frames are sent back-to-back, if supported). This feature requires SSL Level Keeping to keep the SSL pin asserted during the entire burst transfer.</p>
 <h3>Clock Auto-Stopping</h3>
 <p>In master mode, if the Receive Buffer Full Interrupts are not handled fast enough, instead of generating a RX Overflow error, the last clock cycle will be stretched until the receive buffer is read.</p>
 <h2>Parity Mode</h2>
@@ -579,6 +589,8 @@ Data Structures</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:gaacc78eca6792fd5aeb2aef6a458d8fb7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___b.html#gaacc78eca6792fd5aeb2aef6a458d8fb7">spi_b_ssl_mode_t</a> </td></tr>
 <tr class="separator:gaacc78eca6792fd5aeb2aef6a458d8fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f58ffb812e6df4b1c664315cbe49515"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___b.html#ga6f58ffb812e6df4b1c664315cbe49515">spi_b_burst_transfer_without_delay_t</a> </td></tr>
+<tr class="separator:ga6f58ffb812e6df4b1c664315cbe49515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae6d270a0823aeddcacb4a5006546e391"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___b.html#gae6d270a0823aeddcacb4a5006546e391">spi_b_communication_t</a> </td></tr>
 <tr class="separator:gae6d270a0823aeddcacb4a5006546e391"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaaaa1d37089a7f8d222de49d8295c116"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_i___b.html#gaaaaa1d37089a7f8d222de49d8295c116">spi_b_ssl_polarity_t</a> </td></tr>
@@ -713,6 +725,12 @@ SPI Slave Select Negation Delay Register Setting. </td></tr>
 next_access_delay</td>
 <td class="fielddoc">
 SPI Next-Access Delay Register Setting. </td></tr>
+<tr><td class="fieldtype">
+<a id="ab5913c6205485da6d482e33364c36b7e"></a><a class="el" href="group___s_p_i___b.html#ga6f58ffb812e6df4b1c664315cbe49515">spi_b_burst_transfer_without_delay_t</a></td>
+<td class="fieldname">
+burst_interframe_delay</td>
+<td class="fielddoc">
+SPI Between Burst Transfer Frames Delay Select. </td></tr>
 </table>
 
 </div>
@@ -788,6 +806,27 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaacc78eca6792fd5aeb2aef6a458d8fb7a0cad981405018e399b84bce877574709"></a>SPI_B_SSL_MODE_SPI&#160;</td><td class="fielddoc"><p>SPI operation (4-wire method) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaacc78eca6792fd5aeb2aef6a458d8fb7a7f839e42cba15c37a4698c894630739b"></a>SPI_B_SSL_MODE_CLK_SYN&#160;</td><td class="fielddoc"><p>Clock Synchronous operation (3-wire method) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga6f58ffb812e6df4b1c664315cbe49515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6f58ffb812e6df4b1c664315cbe49515">&#9670;&nbsp;</a></span>spi_b_burst_transfer_without_delay_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___s_p_i___b.html#ga6f58ffb812e6df4b1c664315cbe49515">spi_b_burst_transfer_without_delay_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Burst Transfer Without Delay. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6f58ffb812e6df4b1c664315cbe49515a3864911bae512e233a7104e1315e5414"></a>SPI_B_BURST_TRANSFER_WITH_DELAY&#160;</td><td class="fielddoc"><p>Interframe delay. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga6f58ffb812e6df4b1c664315cbe49515a8e67fb0e1bb81586a992ce2b06df0ba0"></a>SPI_B_BURST_TRANSFER_WITHOUT_DELAY&#160;</td><td class="fielddoc"><p>No interframe delay. </p>
 </td></tr>
 </table>
 
@@ -1328,7 +1367,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

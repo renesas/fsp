@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -2387,7 +2387,7 @@ Semaphore number, controls which IPCSEMn register is used. </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Delay for at least the specified duration in units and return. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Delay for at least the specified duration in units and return. It is recommended to only use this function for short delays since it can be inaccurate and it can block the CPU from executing other tasks. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">delay</td><td>The number of 'units' to delay. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">units</td><td>The 'base' (bsp_delay_units_t) for the units specified. Valid values are: BSP_DELAY_UNITS_SECONDS, BSP_DELAY_UNITS_MILLISECONDS, BSP_DELAY_UNITS_MICROSECONDS.<br />
@@ -2398,10 +2398,20 @@ Semaphore number, controls which IPCSEMn register is used. </td></tr>
   </table>
   </dd>
 </dl>
-<p>The 'theoretical' maximum delay that may be obtained is determined by a full 32 bit loop count and the system clock rate. @120MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 120000000) = 143 seconds. @32MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 32000000) = 536 seconds</p>
-<p>Note that requests for very large delays will be affected by rounding in the calculations and the actual delay achieved may be slightly longer. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.</p>
-<p>Note also that if the calculations result in a loop_cnt of zero, the bsp_prv_software_delay_loop() function is not called at all. In this case the requested delay is too small (nanoseconds) to be carried out by the loop itself, and the overhead associated with executing the code to just get to this point has certainly satisfied the requested delay.</p>
-<dl class="section note"><dt>Note</dt><dd>This function calls bsp_cpu_clock_get() which ultimately calls R_CGC_SystemClockFreqGet() and therefore requires that the BSP has already initialized the CGC (which it does as part of the Sysinit). Care should be taken to ensure this remains the case if in the future this function were to be called as part of the BSP initialization.</dd>
+<dl class="section note"><dt>Note</dt><dd>The 'theoretical' maximum delay that may be obtained is determined by a full 32 bit loop count and the system clock rate.<ul>
+<li>@120MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 120000000) = 143 seconds.</li>
+<li>@32MHz: ((0xFFFFFFFF loops * 4 cycles /loop) / 32000000) = 536 seconds.</li>
+<li>@1GHz: ((0xFFFFFFFF loops * 1 cycles /loop) / 1000000000) = 4.29 seconds.</li>
+</ul>
+</dd>
+<dd>
+Number of cycles per loop is defined based on the CPU core in the following macro: BSP_DELAY_LOOP_CYCLES</dd>
+<dd>
+Requests for very large delays will be affected by rounding in the calculations and the actual delay achieved may be slightly longer. @32 MHz, for example, a request for 532 seconds will be closer to 536 seconds.</dd>
+<dd>
+If the calculations result in a loop_cnt of zero, the bsp_prv_software_delay_loop() function is not called at all. In this case the requested delay is too small (nanoseconds) to be carried out by the loop itself, and the overhead associated with executing the code to just get to this point has certainly satisfied the requested delay.</dd>
+<dd>
+This function calls bsp_cpu_clock_get() which ultimately calls R_CGC_SystemClockFreqGet() and therefore requires that the BSP has already initialized the CGC (which it does as part of the Sysinit). Care should be taken to ensure this remains the case if in the future this function were to be called as part of the BSP initialization.</dd>
 <dd>
 This function will delay for <b>at least</b> the specified duration. Due to overhead in calculating the correct number of loops to delay, very small delay values (generally 1-5 microseconds) may be significantly longer than specified. Approximate overhead for this function is as follows:<ul>
 <li>CM4: 20-50 cycles</li>
@@ -2412,8 +2422,7 @@ This function will delay for <b>at least</b> the specified duration. Due to over
 <dd>
 If more accurate microsecond timing must be performed in software it is recommended to use bsp_prv_software_delay_loop() directly. In this case, use BSP_DELAY_LOOP_CYCLES or BSP_DELAY_LOOPS_CALCULATE() to convert a calculated delay cycle count to a number of software delay loops.</dd>
 <dd>
-Delays may be longer than expected when compiler optimization is turned off.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The delay will be longer than specified on CM23 devices when the core clock is greater than 32 MHz. Setting BSP_DELAY_LOOP_CYCLES to 6 will improve accuracy at 48 MHz but will result in shorter than expected delays at lower speeds. </dd></dl>
+Delay timing may be significantly affected by compiler optimization levels. Higher levels of optimization will result in more accurate software delays. </dd></dl>
 
 </div>
 </div>
@@ -3014,7 +3023,7 @@ Delays may be longer than expected when compiler optimization is turned off.</dd
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

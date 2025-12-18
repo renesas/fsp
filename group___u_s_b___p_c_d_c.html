@@ -115,7 +115,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo_scaled.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">RA Flexible Software Package Documentation
-   &#160;<span id="projectnumber">Release v6.2.0</span>
+   &#160;<span id="projectnumber">Release v6.3.0</span>
    </div>
   </td>
    <td>        <br /><div id="MSearchBox" class="MSearchBoxInactive">
@@ -327,8 +327,6 @@ Usage Notes</h1>
 <p>Registering the CDC device as a virtual COM-port in Windows Device Manager enables data communication with the CDC device via a terminal app such as <a href="https://www.putty.org/">PuTTY</a>. When changing settings of the serial port in the terminal application, the UART setting is propagated to the firmware via the class request SetLineCoding.</p>
 <p>Data input (or file transmission) from the terminal app window is transmitted to the board using endpoint 2 (EP2); data from the board side is transmitted to the PC using EP1.</p>
 <p>When the last packet of data received is the maximum packet size, and the terminal determines that there is continuous data, the received data may not be displayed in the terminal. If the received data is smaller than the maximum packet size, the data received up to that point is displayed in the terminal.</p>
-<h2>Multi Port</h2>
-<p>This driver supports simultaneous operation with Host Mass Storage Class(HMSC). If the user are using MCU that supports 2 USB modules, such as RA6M3, the user can run PCDC on one USB module and HMSC on the other. This driver does not support simultaneous operation using device classes other than HMSC.</p>
 <h2><a class="anchor" id="r-usb_pcdc-limitations"></a>
 Limitations</h2>
 <ul>
@@ -361,7 +359,7 @@ Descriptor</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-        <li class="footer">FSP Release v6.2.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
+        <li class="footer">FSP Release v6.3.0 User's Manual Copyright © (2025) Renesas Electronics Corporation. All Rights Reserved.</li>
   </ul>
 </div>
 </body>

@@ -13,6 +13,7 @@ var searchData=
   ['ether_5finstance_5ft',['ether_instance_t',['../group___e_t_h_e_r___a_p_i.html#structether__instance__t',1,'']]],
   ['ether_5fnic_5finfo_5ft',['ether_nic_info_t',['../group___e_t_h_e_r___a_p_i.html#structether__nic__info__t',1,'']]],
   ['ether_5fphy_5fapi_5ft',['ether_phy_api_t',['../group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__api__t',1,'']]],
+  ['ether_5fphy_5fcallback_5fargs_5ft',['ether_phy_callback_args_t',['../group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__callback__args__t',1,'']]],
   ['ether_5fphy_5fcfg_5ft',['ether_phy_cfg_t',['../group___e_t_h_e_r___p_h_y___a_p_i.html#structether__phy__cfg__t',1,'']]],
   ['ether_5fphy_5fextended_5fcfg_5ft',['ether_phy_extended_cfg_t',['../group___e_t_h_e_r___p_h_y.html#structether__phy__extended__cfg__t',1,'']]],
   ['ether_5fphy_5finstance_5fctrl_5ft',['ether_phy_instance_ctrl_t',['../group___e_t_h_e_r___p_h_y.html#structether__phy__instance__ctrl__t',1,'']]],
